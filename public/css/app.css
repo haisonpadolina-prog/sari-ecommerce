@@ -1,0 +1,4100 @@
+    /* =========================================================
+       SARI — PREMIUM MARKETPLACE
+       COMPLETE HOME PAGE STYLES
+    ========================================================= */
+
+    :root {
+        --sari-black: #0A0A0A;
+        --sari-dark: #111111;
+        --sari-dark-soft: #171717;
+
+        --sari-cream: #F5F3EF;
+        --sari-light: #FAF9F6;
+        --sari-white: #FFFFFF;
+
+        --sari-accent: #C9BFAF;
+
+        --sari-text-dark: #111111;
+        --sari-text-dark-soft: rgba(17, 17, 17, 0.65);
+
+        --sari-text-light: #F5F3EF;
+        --sari-text-light-soft: rgba(245, 243, 239, 0.65);
+
+        --sari-border-dark: rgba(17, 17, 17, 0.10);
+        --sari-border-light: rgba(245, 243, 239, 0.14);
+
+        --sari-transition: 350ms cubic-bezier(0.22, 1, 0.36, 1);
+
+        --navbar-height: 88px;
+    }
+
+    /* =========================================================
+       LIGHT MODE VARIABLES
+    ========================================================= */
+
+    html.light-mode {
+        --sari-black: #FAF9F6;
+        --sari-dark: #F5F3EF;
+        --sari-dark-soft: #FFFFFF;
+
+        --sari-cream: #111111;
+        --sari-light: #FAF9F6;
+        --sari-white: #111111;
+
+        --sari-text-dark: #111111;
+        --sari-text-dark-soft: rgba(17, 17, 17, 0.65);
+
+        --sari-text-light: #111111;
+        --sari-text-light-soft: rgba(17, 17, 17, 0.65);
+
+        --sari-border-dark: rgba(17, 17, 17, 0.10);
+        --sari-border-light: rgba(17, 17, 17, 0.10);
+    }
+
+    /* =========================================================
+       GLOBAL
+    ========================================================= */
+
+    .sari-page,
+    .sari-page * {
+        box-sizing: border-box;
+    }
+
+    .sari-page {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+
+        background: var(--sari-light);
+        color: var(--sari-text-dark);
+
+        font-family: 'Poppins', sans-serif;
+
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+
+        transition:
+            background-color 450ms ease,
+            color 450ms ease;
+    }
+
+    .sari-page img {
+        max-width: 100%;
+    }
+
+    .sari-page a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .sari-page button {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .sari-container {
+        width: min(1280px, calc(100% - 48px));
+        margin: 0 auto;
+    }
+
+    .sari-container-wide {
+        width: min(1440px, calc(100% - 48px));
+        margin: 0 auto;
+    }
+
+    .sari-section {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sari-dark-section {
+        background: var(--sari-dark);
+        color: var(--sari-text-light);
+    }
+
+    .sari-light-section {
+        background: var(--sari-light);
+        color: var(--sari-text-dark);
+    }
+
+    /* =========================================================
+       ACCESSIBILITY
+    ========================================================= */
+
+    .sari-page a:focus-visible,
+    .sari-page button:focus-visible {
+        outline: 2px solid var(--sari-accent);
+        outline-offset: 4px;
+    }
+
+    /* =========================================================
+       NAVBAR
+    ========================================================= */
+
+    .sari-navbar {
+        position: fixed;
+        z-index: 1000;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: var(--navbar-height);
+
+        display: flex;
+        align-items: center;
+
+        background: transparent;
+
+        border-bottom: 1px solid transparent;
+
+        transition:
+            background-color var(--sari-transition),
+            border-color var(--sari-transition),
+            backdrop-filter var(--sari-transition),
+            box-shadow var(--sari-transition);
+    }
+
+    .sari-navbar.scrolled {
+        background: rgba(10, 10, 10, 0.76);
+        border-bottom-color: rgba(245, 243, 239, 0.10);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.16);
+    }
+
+    html.light-mode .sari-navbar.scrolled {
+        background: rgba(250, 249, 246, 0.86);
+        border-bottom-color: rgba(17, 17, 17, 0.08);
+
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .sari-navbar-inner {
+        width: min(1440px, calc(100% - 64px));
+        height: 100%;
+
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 32px;
+    }
+
+    .sari-logo-link {
+        display: flex;
+        align-items: center;
+
+        flex-shrink: 0;
+    }
+
+    .sari-navbar-logo {
+        display: block;
+
+        width: auto;
+        height: 42px;
+
+        object-fit: contain;
+        object-position: center;
+
+        transition: opacity var(--sari-transition);
+    }
+
+    .sari-navbar-logo:hover {
+        opacity: 0.82;
+    }
+
+    .sari-navbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: clamp(24px, 3vw, 48px);
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .sari-nav-link {
+        position: relative;
+
+        color: rgba(245, 243, 239, 0.72);
+
+        font-size: 12px;
+        font-weight: 500;
+
+        letter-spacing: 0.20em;
+        text-transform: uppercase;
+
+        white-space: nowrap;
+
+        transition: color var(--sari-transition);
+    }
+
+    .sari-nav-link::after {
+        content: '';
+
+        position: absolute;
+
+        left: 0;
+        bottom: -8px;
+
+        width: 0;
+        height: 1px;
+
+        background: currentColor;
+
+        transition: width var(--sari-transition);
+    }
+
+    .sari-nav-link:hover {
+        color: #F5F3EF;
+    }
+
+    .sari-nav-link:hover::after {
+        width: 100%;
+    }
+
+    html.light-mode .sari-nav-link {
+        color: rgba(17, 17, 17, 0.60);
+    }
+
+    html.light-mode .sari-nav-link:hover {
+        color: #111111;
+    }
+
+    .sari-navbar-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        flex-shrink: 0;
+    }
+
+    .sari-search-button,
+    .sari-theme-toggle {
+        width: 38px;
+        height: 38px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(245, 243, 239, 0.14);
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        color: #F5F3EF;
+
+        cursor: pointer;
+
+        transition:
+            background-color var(--sari-transition),
+            border-color var(--sari-transition),
+            color var(--sari-transition),
+            transform var(--sari-transition);
+    }
+
+    .sari-search-button:hover,
+    .sari-theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(245, 243, 239, 0.28);
+        transform: translateY(-1px);
+    }
+
+    html.light-mode .sari-search-button,
+    html.light-mode .sari-theme-toggle {
+        border-color: rgba(17, 17, 17, 0.12);
+        background: rgba(17, 17, 17, 0.03);
+        color: #111111;
+    }
+
+    html.light-mode .sari-search-button:hover,
+    html.light-mode .sari-theme-toggle:hover {
+        background: rgba(17, 17, 17, 0.07);
+        border-color: rgba(17, 17, 17, 0.20);
+    }
+
+    .sari-search-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .sari-theme-icon {
+        font-size: 15px;
+        line-height: 1;
+    }
+
+    .sari-login {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 42px;
+        padding: 0 18px;
+
+        color: rgba(245, 243, 239, 0.72);
+
+        font-size: 12px;
+        font-weight: 500;
+
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+
+        transition:
+            color var(--sari-transition),
+            background-color var(--sari-transition);
+    }
+
+    .sari-login:hover {
+        color: #F5F3EF;
+    }
+
+    html.light-mode .sari-login {
+        color: rgba(17, 17, 17, 0.68);
+    }
+
+    html.light-mode .sari-login:hover {
+        color: #111111;
+    }
+
+    .sari-register {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 48px;
+        padding: 0 25px;
+
+        border: 1px solid rgba(245, 243, 239, 0.28);
+
+        color: #F5F3EF;
+        background: transparent;
+
+        font-size: 12px;
+        font-weight: 500;
+
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+
+        transition:
+            color var(--sari-transition),
+            background-color var(--sari-transition),
+            border-color var(--sari-transition);
+    }
+
+    .sari-register:hover {
+        background: #F5F3EF;
+        color: #111111;
+        border-color: #F5F3EF;
+    }
+
+    html.light-mode .sari-register {
+        border-color: rgba(17, 17, 17, 0.20);
+        color: #111111;
+    }
+
+    html.light-mode .sari-register:hover {
+        background: #111111;
+        color: #FAF9F6;
+        border-color: #111111;
+    }
+
+    .sari-mobile-menu-button {
+        display: none;
+
+        width: 42px;
+        height: 42px;
+
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(245, 243, 239, 0.16);
+
+        background: rgba(255, 255, 255, 0.04);
+
+        color: #F5F3EF;
+
+        cursor: pointer;
+    }
+
+    html.light-mode .sari-mobile-menu-button {
+        border-color: rgba(17, 17, 17, 0.12);
+        background: rgba(17, 17, 17, 0.03);
+        color: #111111;
+    }
+
+    .sari-menu-lines {
+        width: 18px;
+        height: 12px;
+
+        position: relative;
+
+        display: block;
+    }
+
+    .sari-menu-lines::before,
+    .sari-menu-lines::after,
+    .sari-menu-lines span {
+        content: '';
+
+        position: absolute;
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+
+        background: currentColor;
+
+        transition:
+            transform 250ms ease,
+            top 250ms ease,
+            opacity 250ms ease;
+    }
+
+    .sari-menu-lines::before {
+        top: 0;
+    }
+
+    .sari-menu-lines span {
+        top: 5px;
+    }
+
+    .sari-menu-lines::after {
+        top: 10px;
+    }
+
+    .sari-mobile-menu-button.active .sari-menu-lines::before {
+        top: 5px;
+        transform: rotate(45deg);
+    }
+
+    .sari-mobile-menu-button.active .sari-menu-lines span {
+        opacity: 0;
+    }
+
+    .sari-mobile-menu-button.active .sari-menu-lines::after {
+        top: 5px;
+        transform: rotate(-45deg);
+    }
+
+    /* =========================================================
+       MOBILE NAVIGATION
+    ========================================================= */
+
+    .sari-mobile-menu {
+        position: fixed;
+        z-index: 999;
+
+        top: var(--navbar-height);
+        left: 0;
+
+        width: 100%;
+
+        padding: 20px 24px 28px;
+
+        background: rgba(10, 10, 10, 0.96);
+
+        border-bottom: 1px solid rgba(245, 243, 239, 0.10);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateY(-12px);
+
+        transition:
+            opacity 250ms ease,
+            visibility 250ms ease,
+            transform 250ms ease;
+    }
+
+    .sari-mobile-menu.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    html.light-mode .sari-mobile-menu {
+        background: rgba(250, 249, 246, 0.97);
+        border-bottom-color: rgba(17, 17, 17, 0.08);
+    }
+
+    .sari-mobile-nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sari-mobile-nav a {
+        padding: 16px 0;
+
+        border-bottom: 1px solid rgba(245, 243, 239, 0.08);
+
+        color: rgba(245, 243, 239, 0.72);
+
+        font-size: 12px;
+        font-weight: 500;
+
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    html.light-mode .sari-mobile-nav a {
+        border-bottom-color: rgba(17, 17, 17, 0.08);
+        color: rgba(17, 17, 17, 0.68);
+    }
+
+    .sari-mobile-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+
+        margin-top: 18px;
+    }
+
+    .sari-mobile-actions a,
+    .sari-mobile-theme {
+        min-height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(245, 243, 239, 0.14);
+
+        color: #F5F3EF;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        font-size: 11px;
+        font-weight: 500;
+
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .sari-mobile-theme {
+        width: 100%;
+
+        grid-column: 1 / -1;
+
+        gap: 8px;
+
+        cursor: pointer;
+    }
+
+    html.light-mode .sari-mobile-actions a,
+    html.light-mode .sari-mobile-theme {
+        border-color: rgba(17, 17, 17, 0.12);
+        color: #111111;
+        background: rgba(17, 17, 17, 0.03);
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .sari-hero {
+        position: relative;
+
+        min-height: 100svh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            #080808
+            url('../images/hero.jpg')
+            center center / cover
+            no-repeat;
+
+        color: #F5F3EF;
+    }
+
+    .sari-hero::before {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.66) 0%,
+                rgba(0, 0, 0, 0.42) 38%,
+                rgba(0, 0, 0, 0.66) 100%
+            );
+    }
+
+    .sari-hero::after {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            radial-gradient(
+                circle at 50% 50%,
+                rgba(255, 255, 255, 0.025),
+                transparent 48%
+            );
+    }
+
+    .sari-hero-content {
+        position: relative;
+        z-index: 2;
+
+        width: min(1100px, calc(100% - 40px));
+
+        margin: 0 auto;
+
+        padding-top: 80px;
+
+        text-align: center;
+    }
+
+    .sari-hero-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin-bottom: 55px;
+    }
+
+    .sari-hero-logo {
+        display: block;
+
+        width: auto;
+       height: clamp(90px, 8vw, 125px);
+
+        object-fit: contain;
+    }
+
+    .sari-hero-tagline {
+        margin-top: 18px;
+
+        color: rgba(245, 243, 239, 0.72);
+
+        font-size: clamp(9px, 1vw, 12px);
+        font-weight: 500;
+
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+
+        padding-left: 0.42em;
+    }
+
+    .sari-hero-rule {
+        display: none;
+    }
+
+    .sari-hero-title {
+        max-width: 1050px;
+
+        margin: 0 auto;
+
+        color: #F5F3EF;
+
+        font-family: 'Poppins', sans-serif;
+
+        font-size: clamp(42px, 6vw, 88px);
+        font-weight: 300;
+
+        line-height: 1.04;
+        letter-spacing: -0.045em;
+
+        text-wrap: balance;
+    }
+
+    .sari-hero-description {
+        max-width: 720px;
+
+        margin: 38px auto 0;
+
+        color: rgba(245, 243, 239, 0.68);
+
+        font-size: clamp(13px, 1.2vw, 16px);
+        font-weight: 400;
+
+        line-height: 1.9;
+    }
+
+    .sari-hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 16px;
+
+        margin-top: 48px;
+    }
+
+    .sari-button {
+        min-height: 62px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 38px;
+
+        border: 1px solid transparent;
+
+        font-size: 11px;
+        font-weight: 500;
+
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+
+        cursor: pointer;
+
+        transition:
+            transform var(--sari-transition),
+            background-color var(--sari-transition),
+            color var(--sari-transition),
+            border-color var(--sari-transition);
+    }
+
+    .sari-button:hover {
+        transform: translateY(-3px);
+    }
+
+    .sari-button-primary {
+        background: #F5F3EF;
+        color: #111111;
+    }
+
+    .sari-button-primary:hover {
+        background: #FFFFFF;
+    }
+
+    .sari-button-outline {
+        border-color: rgba(245, 243, 239, 0.28);
+        background: transparent;
+        color: #F5F3EF;
+    }
+
+    .sari-button-outline:hover {
+        border-color: rgba(245, 243, 239, 0.65);
+        background: rgba(245, 243, 239, 0.06);
+    }
+
+    .sari-scroll-indicator {
+        position: absolute;
+        z-index: 2;
+
+        left: 50%;
+        bottom: 26px;
+
+        transform: translateX(-50%);
+
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        color: rgba(245, 243, 239, 0.56);
+
+        font-size: 9px;
+        font-weight: 500;
+
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+
+        white-space: nowrap;
+    }
+
+    .sari-scroll-line {
+        width: 34px;
+        height: 1px;
+
+        background: rgba(245, 243, 239, 0.32);
+    }
+
+    /* =========================================================
+       SECTION HEADINGS
+    ========================================================= */
+
+    .sari-section-header {
+        max-width: 850px;
+
+        margin-bottom: 64px;
+    }
+
+    .sari-section-header.center {
+        margin-left: auto;
+        margin-right: auto;
+
+        text-align: center;
+    }
+
+    .sari-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+
+        margin-bottom: 18px;
+
+        font-size: 10px;
+        font-weight: 600;
+
+        letter-spacing: 0.30em;
+        text-transform: uppercase;
+    }
+
+    .sari-eyebrow::before {
+        content: '';
+
+        width: 28px;
+        height: 1px;
+
+        background: currentColor;
+
+        opacity: 0.55;
+    }
+
+    .sari-section-title {
+        margin: 0;
+
+        font-family: 'Poppins', sans-serif;
+
+        font-size: clamp(34px, 4.3vw, 62px);
+        font-weight: 300;
+
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+    }
+
+    .sari-section-description {
+        max-width: 680px;
+
+        margin-top: 22px;
+
+        font-size: 14px;
+        font-weight: 400;
+
+        line-height: 1.9;
+    }
+
+    .sari-dark-section .sari-section-description {
+        color: var(--sari-text-light-soft);
+    }
+
+    .sari-light-section .sari-section-description {
+        color: var(--sari-text-dark-soft);
+    }
+
+    /* =========================================================
+       IDEA / INTRODUCTION
+    ========================================================= */
+
+    .sari-intro {
+        padding: 150px 0 155px;
+    }
+
+    .sari-intro-inner {
+        max-width: 1050px;
+
+        margin: 0 auto;
+
+        text-align: center;
+    }
+
+    .sari-intro-title {
+        margin: 0;
+
+        font-size: clamp(34px, 5vw, 70px);
+        font-weight: 300;
+
+        line-height: 1.12;
+        letter-spacing: -0.045em;
+    }
+
+    .sari-intro-copy {
+        max-width: 690px;
+
+        margin: 30px auto 0;
+
+        color: var(--sari-text-dark-soft);
+
+        font-size: 15px;
+        line-height: 2;
+    }
+
+    /* =========================================================
+       ABOUT
+    ========================================================= */
+
+    .sari-about {
+        padding: 140px 0;
+    }
+
+    .sari-about-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+
+        gap: clamp(55px, 8vw, 120px);
+
+        align-items: center;
+    }
+
+    .sari-about-image-wrap {
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 12px;
+
+        aspect-ratio: 4 / 5;
+
+        background: #080808;
+    }
+
+    .sari-about-image {
+        width: 100%;
+        height: 100%;
+
+        display: block;
+
+        object-fit: cover;
+
+        transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sari-about-image-wrap:hover .sari-about-image {
+        transform: scale(1.035);
+    }
+
+    .sari-about-copy {
+        max-width: 600px;
+    }
+
+    .sari-about-copy .sari-section-title {
+        margin-bottom: 24px;
+    }
+
+    .sari-about-text {
+        color: var(--sari-text-light-soft);
+
+        font-size: 14px;
+        line-height: 2;
+    }
+
+    .sari-about-points {
+        margin-top: 44px;
+    }
+
+    .sari-about-point {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+
+        gap: 18px;
+
+        padding: 20px 0;
+
+        border-top: 1px solid rgba(245, 243, 239, 0.11);
+    }
+
+    .sari-about-point:last-child {
+        border-bottom: 1px solid rgba(245, 243, 239, 0.11);
+    }
+
+    .sari-about-point-number {
+        color: var(--sari-accent);
+
+        font-size: 11px;
+        font-weight: 500;
+
+        letter-spacing: 0.15em;
+    }
+
+    .sari-about-point-title {
+        margin: 0 0 5px;
+
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .sari-about-point-text {
+        color: var(--sari-text-light-soft);
+
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    /* =========================================================
+       HOW SARI WORKS
+    ========================================================= */
+
+    .sari-works {
+        padding: 145px 0;
+    }
+
+    .sari-works-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        border-top: 1px solid rgba(245, 243, 239, 0.12);
+        border-bottom: 1px solid rgba(245, 243, 239, 0.12);
+    }
+
+    .sari-work-card {
+        min-height: 370px;
+
+        padding: 48px 42px;
+
+        position: relative;
+    }
+
+    .sari-work-card + .sari-work-card {
+        border-left: 1px solid rgba(245, 243, 239, 0.12);
+    }
+
+    .sari-work-number {
+        color: var(--sari-accent);
+
+        font-size: 12px;
+        font-weight: 500;
+
+        letter-spacing: 0.16em;
+    }
+
+    .sari-work-label {
+        margin-top: 75px;
+
+        font-size: 11px;
+        font-weight: 600;
+
+        letter-spacing: 0.28em;
+    }
+
+    .sari-work-title {
+        margin: 16px 0 18px;
+
+        font-size: 30px;
+        font-weight: 300;
+
+        letter-spacing: -0.025em;
+    }
+
+    .sari-work-description {
+        max-width: 330px;
+
+        color: var(--sari-text-light-soft);
+
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .sari-work-arrow {
+        position: absolute;
+
+        right: 38px;
+        bottom: 38px;
+
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(245, 243, 239, 0.14);
+
+        font-size: 16px;
+
+        transition:
+            transform var(--sari-transition),
+            background-color var(--sari-transition);
+    }
+
+    .sari-work-card:hover .sari-work-arrow {
+        transform: translate(3px, -3px);
+        background: rgba(245, 243, 239, 0.06);
+    }
+
+    /* =========================================================
+       CATEGORIES
+    ========================================================= */
+
+    .sari-categories {
+        padding: 145px 0;
+    }
+
+    .sari-category-grid {
+        display: grid;
+
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+
+    .sari-category-card {
+        position: relative;
+
+        min-width: 0;
+
+        aspect-ratio: 1 / 1.18;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+
+        background: #EAE7E1;
+    }
+
+    .sari-category-image {
+        width: 100%;
+        height: 100%;
+
+        display: block;
+
+        object-fit: cover;
+
+        transition:
+            transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sari-category-card::after {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.72),
+                rgba(0, 0, 0, 0.03) 65%
+            );
+    }
+
+    .sari-category-card:hover .sari-category-image {
+        transform: scale(1.06);
+    }
+
+    .sari-category-content {
+        position: absolute;
+        z-index: 2;
+
+        left: 22px;
+        right: 22px;
+        bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        color: #FFFFFF;
+    }
+
+    .sari-category-name {
+        font-size: 14px;
+        font-weight: 500;
+
+        letter-spacing: 0.02em;
+    }
+
+    .sari-category-arrow {
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(255, 255, 255, 0.32);
+
+        font-size: 13px;
+
+        transition:
+            background-color var(--sari-transition),
+            transform var(--sari-transition);
+    }
+
+    .sari-category-card:hover .sari-category-arrow {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translate(2px, -2px);
+    }
+
+    /* =========================================================
+       SARI ECOSYSTEM
+    ========================================================= */
+
+    .sari-ecosystem {
+        padding: 145px 0;
+    }
+
+    .sari-ecosystem-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+
+    .sari-ecosystem-card {
+        min-height: 330px;
+
+        padding: 38px;
+
+        border: 1px solid rgba(17, 17, 17, 0.09);
+
+        background: rgba(255, 255, 255, 0.48);
+
+        transition:
+            transform var(--sari-transition),
+            box-shadow var(--sari-transition);
+    }
+
+    .sari-ecosystem-card:hover {
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 24px 60px rgba(0, 0, 0, 0.07);
+    }
+
+    .sari-ecosystem-number {
+        color: #8E8372;
+
+        font-size: 11px;
+        font-weight: 600;
+
+        letter-spacing: 0.20em;
+    }
+
+    .sari-ecosystem-title {
+        margin: 95px 0 8px;
+
+        font-size: 27px;
+        font-weight: 500;
+
+        letter-spacing: -0.025em;
+    }
+
+    .sari-ecosystem-subtitle {
+        color: var(--sari-text-dark-soft);
+
+        font-size: 13px;
+    }
+
+    .sari-ecosystem-line {
+        width: 100%;
+        height: 1px;
+
+        margin-top: 30px;
+
+        background: rgba(17, 17, 17, 0.10);
+    }
+
+    /* =========================================================
+       PLATFORM EXPERIENCE
+    ========================================================= */
+
+    .sari-platform {
+        padding: 145px 0 165px;
+    }
+
+    .sari-platform-header {
+        max-width: 760px;
+
+        margin-bottom: 70px;
+    }
+
+    .sari-platform-stage {
+        position: relative;
+
+        min-height: 650px;
+
+        padding: 65px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(245, 243, 239, 0.10);
+
+        background:
+            radial-gradient(
+                circle at 50% 45%,
+                rgba(201, 191, 175, 0.07),
+                transparent 42%
+            ),
+            #0C0C0C;
+
+        overflow: hidden;
+    }
+
+    .sari-browser {
+        position: relative;
+        z-index: 2;
+
+        width: min(900px, 88%);
+
+        overflow: hidden;
+
+        border: 1px solid rgba(245, 243, 239, 0.15);
+        border-radius: 14px;
+
+        background: #151515;
+
+        box-shadow:
+            0 45px 100px rgba(0, 0, 0, 0.42);
+    }
+
+    .sari-browser-top {
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 16px;
+
+        border-bottom: 1px solid rgba(245, 243, 239, 0.09);
+
+        background: #111111;
+    }
+
+    .sari-browser-dots {
+        display: flex;
+        gap: 6px;
+    }
+
+    .sari-browser-dot {
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: rgba(245, 243, 239, 0.30);
+    }
+
+    .sari-browser-content {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+
+        min-height: 470px;
+    }
+
+    .sari-mock-sidebar {
+        padding: 28px 20px;
+
+        border-right: 1px solid rgba(245, 243, 239, 0.08);
+
+        background: #101010;
+    }
+
+    .sari-mock-brand {
+        width: 55px;
+        height: 12px;
+
+        margin-bottom: 38px;
+
+        background: rgba(245, 243, 239, 0.72);
+    }
+
+    .sari-mock-nav-line {
+        width: 100%;
+        height: 7px;
+
+        margin-bottom: 18px;
+
+        background: rgba(245, 243, 239, 0.09);
+    }
+
+    .sari-mock-nav-line.active {
+        width: 70%;
+        background: rgba(201, 191, 175, 0.48);
+    }
+
+    .sari-mock-main {
+        padding: 34px;
+
+        background: #161616;
+    }
+
+    .sari-mock-heading {
+        width: 210px;
+        height: 16px;
+
+        background: rgba(245, 243, 239, 0.72);
+    }
+
+    .sari-mock-subheading {
+        width: 310px;
+        max-width: 80%;
+        height: 7px;
+
+        margin-top: 12px;
+
+        background: rgba(245, 243, 239, 0.10);
+    }
+
+    .sari-mock-products {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 14px;
+
+        margin-top: 36px;
+    }
+
+    .sari-mock-product {
+        overflow: hidden;
+
+        border: 1px solid rgba(245, 243, 239, 0.08);
+        border-radius: 7px;
+
+        background: #111111;
+    }
+
+    .sari-mock-product-image {
+        aspect-ratio: 1 / 1;
+
+        background:
+            linear-gradient(
+                135deg,
+                #272727,
+                #101010
+            );
+    }
+
+    .sari-mock-product-info {
+        padding: 14px;
+    }
+
+    .sari-mock-product-line {
+        width: 70%;
+        height: 6px;
+
+        background: rgba(245, 243, 239, 0.16);
+    }
+
+    .sari-mock-product-line.small {
+        width: 42%;
+        margin-top: 9px;
+    }
+
+    .sari-floating-card {
+        position: absolute;
+        z-index: 3;
+
+        right: 8%;
+        bottom: 8%;
+
+        width: 220px;
+
+        padding: 20px;
+
+        border: 1px solid rgba(245, 243, 239, 0.14);
+        border-radius: 10px;
+
+        background: rgba(18, 18, 18, 0.88);
+
+        box-shadow:
+            0 25px 60px rgba(0, 0, 0, 0.35);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    .sari-floating-label {
+        color: rgba(245, 243, 239, 0.46);
+
+        font-size: 9px;
+        font-weight: 500;
+
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .sari-floating-value {
+        margin-top: 8px;
+
+        color: #F5F3EF;
+
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .sari-floating-status {
+        margin-top: 8px;
+
+        color: #C9BFAF;
+
+        font-size: 10px;
+    }
+
+    /* =========================================================
+       TRUST
+    ========================================================= */
+
+    .sari-trust {
+        padding: 140px 0;
+    }
+
+    .sari-trust-grid {
+        display: grid;
+
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+        border-top: 1px solid rgba(245, 243, 239, 0.12);
+        border-bottom: 1px solid rgba(245, 243, 239, 0.12);
+    }
+
+    .sari-trust-card {
+        min-height: 260px;
+
+        padding: 40px 30px;
+    }
+
+    .sari-trust-card + .sari-trust-card {
+        border-left: 1px solid rgba(245, 243, 239, 0.12);
+    }
+
+    .sari-trust-number {
+        color: var(--sari-accent);
+
+        font-size: 10px;
+        font-weight: 500;
+
+        letter-spacing: 0.18em;
+    }
+
+    .sari-trust-title {
+        margin-top: 75px;
+
+        font-size: 17px;
+        font-weight: 500;
+    }
+
+    .sari-trust-description {
+        margin-top: 12px;
+
+        color: var(--sari-text-light-soft);
+
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    /* =========================================================
+       FINAL CTA
+    ========================================================= */
+
+    .sari-cta {
+        position: relative;
+
+        min-height: 680px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            #080808
+            url('../images/cta.jpg')
+            center center / cover
+            no-repeat;
+
+        color: #F5F3EF;
+
+        text-align: center;
+    }
+
+    .sari-cta::before {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.66),
+                rgba(0, 0, 0, 0.48),
+                rgba(0, 0, 0, 0.72)
+            );
+    }
+
+    .sari-cta-content {
+        position: relative;
+        z-index: 2;
+
+        width: min(800px, calc(100% - 40px));
+    }
+
+    .sari-cta-logo {
+        width: auto;
+        height: 62px;
+
+        margin: 0 auto 20px;
+
+        display: block;
+
+        object-fit: contain;
+    }
+
+    .sari-cta-tagline {
+        color: rgba(245, 243, 239, 0.68);
+
+        font-size: 10px;
+        font-weight: 500;
+
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+
+        padding-left: 0.35em;
+    }
+
+    .sari-cta-title {
+        margin: 40px 0 0;
+
+        font-size: clamp(40px, 5vw, 72px);
+        font-weight: 300;
+
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+    }
+
+    .sari-cta-description {
+        max-width: 550px;
+
+        margin: 25px auto 0;
+
+        color: rgba(245, 243, 239, 0.65);
+
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    .sari-cta-button {
+        margin-top: 40px;
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .sari-footer {
+        padding: 80px 0 30px;
+
+        background: #0A0A0A;
+
+        color: #F5F3EF;
+    }
+
+    .sari-footer-top {
+        display: grid;
+
+        grid-template-columns: 1.6fr repeat(3, 1fr);
+
+        gap: 50px;
+
+        padding-bottom: 70px;
+    }
+
+    .sari-footer-logo {
+        width: auto;
+        height: 42px;
+
+        display: block;
+    }
+
+    .sari-footer-tagline {
+        max-width: 250px;
+
+        margin-top: 20px;
+
+        color: rgba(245, 243, 239, 0.52);
+
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .sari-footer-column-title {
+        margin: 0 0 20px;
+
+        color: rgba(245, 243, 239, 0.40);
+
+        font-size: 9px;
+        font-weight: 600;
+
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+    }
+
+    .sari-footer-links {
+        display: flex;
+        flex-direction: column;
+
+        gap: 11px;
+    }
+
+    .sari-footer-link {
+        color: rgba(245, 243, 239, 0.68);
+
+        font-size: 12px;
+
+        transition: color var(--sari-transition);
+    }
+
+    .sari-footer-link:hover {
+        color: #F5F3EF;
+    }
+
+    .sari-footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        padding-top: 25px;
+
+        border-top: 1px solid rgba(245, 243, 239, 0.09);
+    }
+
+    .sari-footer-copy {
+        color: rgba(245, 243, 239, 0.38);
+
+        font-size: 10px;
+    }
+
+    .sari-footer-status {
+        color: rgba(245, 243, 239, 0.38);
+
+        font-size: 10px;
+    }
+
+    /* =========================================================
+       SEARCH OVERLAY
+    ========================================================= */
+
+    .sari-search-overlay {
+        position: fixed;
+        z-index: 2000;
+
+        inset: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 30px;
+
+        background: rgba(5, 5, 5, 0.90);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 250ms ease,
+            visibility 250ms ease;
+    }
+
+    .sari-search-overlay.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .sari-search-box {
+        width: min(700px, 100%);
+    }
+
+    .sari-search-label {
+        margin-bottom: 14px;
+
+        color: rgba(245, 243, 239, 0.50);
+
+        font-size: 10px;
+        font-weight: 500;
+
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+    }
+
+    .sari-search-form {
+        display: flex;
+
+        border-bottom: 1px solid rgba(245, 243, 239, 0.35);
+    }
+
+    .sari-search-input {
+        flex: 1;
+
+        min-width: 0;
+
+        padding: 14px 0;
+
+        border: 0;
+        outline: 0;
+
+        background: transparent;
+
+        color: #F5F3EF;
+
+        font-family: 'Poppins', sans-serif;
+
+        font-size: clamp(24px, 4vw, 42px);
+        font-weight: 300;
+    }
+
+    .sari-search-input::placeholder {
+        color: rgba(245, 243, 239, 0.25);
+    }
+
+    .sari-search-submit {
+        border: 0;
+
+        background: transparent;
+
+        color: #F5F3EF;
+
+        font-size: 20px;
+
+        cursor: pointer;
+    }
+
+    .sari-search-close {
+        position: absolute;
+
+        top: 30px;
+        right: 30px;
+
+        width: 42px;
+        height: 42px;
+
+        border: 1px solid rgba(245, 243, 239, 0.16);
+
+        background: transparent;
+
+        color: #F5F3EF;
+
+        cursor: pointer;
+
+        font-size: 20px;
+    }
+
+
+   /* =========================================================
+   SARI SCROLL REVEAL — SAFE VERSION
+   ========================================================= */
+
+.sari-reveal {
+    opacity: 1;
+    transform: translateY(0);
+
+    transition:
+        opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sari-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+    .sari-delay-1 {
+        transition-delay: 80ms;
+    }
+
+    .sari-delay-2 {
+        transition-delay: 160ms;
+    }
+
+    .sari-delay-3 {
+        transition-delay: 240ms;
+    }
+
+    .sari-delay-4 {
+        transition-delay: 320ms;
+    }
+
+    /* =========================================================
+       RESPONSIVE — 1200px
+    ========================================================= */
+
+    @media (max-width: 1200px) {
+
+        .sari-navbar-inner {
+            width: min(100% - 40px, 1200px);
+        }
+
+        .sari-navbar-nav {
+            gap: 25px;
+        }
+
+        .sari-nav-link {
+            font-size: 10px;
+        }
+
+        .sari-category-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .sari-platform-stage {
+            padding: 45px;
+        }
+    }
+
+    /* =========================================================
+       RESPONSIVE — 1024px
+    ========================================================= */
+
+    @media (max-width: 1024px) {
+
+        .sari-navbar-nav {
+            gap: 18px;
+        }
+
+        .sari-navbar-actions {
+            gap: 4px;
+        }
+
+        .sari-login {
+            padding: 0 10px;
+        }
+
+        .sari-register {
+            padding: 0 18px;
+        }
+
+        .sari-about-grid {
+            gap: 50px;
+        }
+
+        .sari-category-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sari-ecosystem-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .sari-trust-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sari-trust-card:nth-child(3) {
+            border-left: 0;
+            border-top: 1px solid rgba(245, 243, 239, 0.12);
+        }
+
+        .sari-trust-card:nth-child(4) {
+            border-top: 1px solid rgba(245, 243, 239, 0.12);
+        }
+
+        .sari-platform-stage {
+            min-height: 560px;
+        }
+    }
+
+    /* =========================================================
+       RESPONSIVE — 768px
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+        :root {
+            --navbar-height: 76px;
+        }
+
+        .sari-container,
+        .sari-container-wide {
+            width: calc(100% - 36px);
+        }
+
+        .sari-navbar-inner {
+            width: calc(100% - 32px);
+        }
+
+        .sari-navbar-nav,
+        .sari-navbar-actions {
+            display: none;
+        }
+
+        .sari-mobile-menu-button {
+            display: flex;
+        }
+
+        .sari-navbar-logo {
+            height: 35px;
+        }
+
+        .sari-hero {
+            min-height: 100svh;
+        }
+
+        .sari-hero-content {
+            padding-top: 55px;
+        }
+
+        .sari-hero-brand {
+            margin-bottom: 38px;
+        }
+
+        .sari-hero-logo {
+            height: 52px;
+        }
+
+        .sari-hero-title {
+            font-size: clamp(40px, 9vw, 65px);
+        }
+
+        .sari-hero-description {
+            max-width: 580px;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+        .sari-hero-actions {
+            flex-direction: column;
+
+            width: min(380px, 100%);
+
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .sari-button {
+            width: 100%;
+
+            min-height: 56px;
+        }
+
+        .sari-intro,
+        .sari-about,
+        .sari-works,
+        .sari-categories,
+        .sari-ecosystem,
+        .sari-platform,
+        .sari-trust {
+            padding: 100px 0;
+        }
+
+        .sari-about-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-about-image-wrap {
+            aspect-ratio: 16 / 11;
+        }
+
+        .sari-works-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-work-card {
+            min-height: 300px;
+        }
+
+        .sari-work-card + .sari-work-card {
+            border-left: 0;
+            border-top: 1px solid rgba(245, 243, 239, 0.12);
+        }
+
+        .sari-work-label {
+            margin-top: 55px;
+        }
+
+        .sari-category-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+        }
+
+        .sari-category-card {
+            aspect-ratio: 1 / 1.08;
+        }
+
+        .sari-category-content {
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+        }
+
+        .sari-category-name {
+            font-size: 12px;
+        }
+
+        .sari-category-arrow {
+            width: 28px;
+            height: 28px;
+        }
+
+        .sari-ecosystem-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-ecosystem-card {
+            min-height: 270px;
+        }
+
+        .sari-ecosystem-title {
+            margin-top: 65px;
+        }
+
+        .sari-platform-stage {
+            min-height: 480px;
+
+            padding: 30px 15px;
+        }
+
+        .sari-browser {
+            width: 96%;
+        }
+
+        .sari-browser-content {
+            grid-template-columns: 105px minmax(0, 1fr);
+        }
+
+        .sari-mock-main {
+            padding: 22px 16px;
+        }
+
+        .sari-mock-sidebar {
+            padding: 22px 14px;
+        }
+
+        .sari-mock-products {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sari-mock-product:nth-child(3) {
+            display: none;
+        }
+
+        .sari-floating-card {
+            right: 4%;
+            bottom: 4%;
+
+            width: 180px;
+
+            padding: 16px;
+        }
+
+        .sari-floating-value {
+            font-size: 18px;
+        }
+
+        .sari-trust-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-trust-card + .sari-trust-card,
+        .sari-trust-card:nth-child(3) {
+            border-left: 0;
+            border-top: 1px solid rgba(245, 243, 239, 0.12);
+        }
+
+        .sari-trust-card {
+            min-height: 220px;
+        }
+
+        .sari-trust-title {
+            margin-top: 55px;
+        }
+
+        .sari-cta {
+            min-height: 580px;
+        }
+
+        .sari-footer-top {
+            grid-template-columns: 1fr 1fr;
+
+            gap: 45px 30px;
+        }
+
+        .sari-footer-brand {
+            grid-column: 1 / -1;
+        }
+    }
+
+    /* =========================================================
+       RESPONSIVE — 480px
+    ========================================================= */
+
+    @media (max-width: 480px) {
+
+        .sari-container,
+        .sari-container-wide {
+            width: calc(100% - 28px);
+        }
+
+        .sari-navbar-inner {
+            width: calc(100% - 24px);
+        }
+
+        .sari-navbar-logo {
+            height: 33px;
+        }
+
+        .sari-mobile-menu {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        .sari-hero-content {
+            width: calc(100% - 28px);
+
+            padding-top: 35px;
+        }
+
+        .sari-hero-brand {
+            margin-bottom: 32px;
+        }
+
+        .sari-hero-logo {
+            height: 46px;
+        }
+
+        .sari-hero-tagline {
+            margin-top: 13px;
+
+            font-size: 8px;
+
+            letter-spacing: 0.32em;
+        }
+
+        .sari-hero-rule {
+            width: 80px;
+
+            margin-bottom: 24px;
+        }
+
+        .sari-hero-title {
+            font-size: clamp(36px, 11vw, 52px);
+
+            letter-spacing: -0.055em;
+        }
+
+        .sari-hero-description {
+            margin-top: 24px;
+
+            font-size: 12px;
+        }
+
+        .sari-hero-actions {
+            margin-top: 32px;
+        }
+
+        .sari-button {
+            min-height: 53px;
+
+            padding: 0 20px;
+
+            font-size: 9px;
+
+            letter-spacing: 0.16em;
+        }
+
+        .sari-scroll-indicator {
+            bottom: 17px;
+
+            font-size: 7px;
+
+            letter-spacing: 0.24em;
+        }
+
+        .sari-section-header {
+            margin-bottom: 45px;
+        }
+
+        .sari-section-title {
+            font-size: 35px;
+        }
+
+        .sari-section-description {
+            font-size: 13px;
+        }
+
+        .sari-intro,
+        .sari-about,
+        .sari-works,
+        .sari-categories,
+        .sari-ecosystem,
+        .sari-platform,
+        .sari-trust {
+            padding: 82px 0;
+        }
+
+        .sari-intro-title {
+            font-size: 34px;
+        }
+
+        .sari-about-image-wrap {
+            aspect-ratio: 4 / 3;
+        }
+
+        .sari-about-point {
+            grid-template-columns: 42px minmax(0, 1fr);
+
+            gap: 12px;
+        }
+
+        .sari-work-card {
+            min-height: 285px;
+
+            padding: 35px 25px;
+        }
+
+        .sari-work-title {
+            font-size: 27px;
+        }
+
+        .sari-work-arrow {
+            right: 24px;
+            bottom: 25px;
+        }
+
+        .sari-category-grid {
+            gap: 8px;
+        }
+
+        .sari-category-content {
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+        }
+
+        .sari-category-name {
+            font-size: 10px;
+        }
+
+        .sari-category-arrow {
+            width: 25px;
+            height: 25px;
+
+            font-size: 11px;
+        }
+
+        .sari-ecosystem-card {
+            min-height: 245px;
+
+            padding: 28px;
+        }
+
+        .sari-ecosystem-title {
+            font-size: 24px;
+
+            margin-top: 55px;
+        }
+
+        .sari-platform-stage {
+            min-height: 390px;
+
+            padding: 18px 8px;
+        }
+
+        .sari-browser {
+            width: 100%;
+
+            border-radius: 9px;
+        }
+
+        .sari-browser-content {
+            grid-template-columns: 72px minmax(0, 1fr);
+
+            min-height: 300px;
+        }
+
+        .sari-browser-top {
+            height: 32px;
+        }
+
+        .sari-mock-sidebar {
+            padding: 18px 10px;
+        }
+
+        .sari-mock-main {
+            padding: 18px 12px;
+        }
+
+        .sari-mock-brand {
+            width: 38px;
+            height: 8px;
+
+            margin-bottom: 28px;
+        }
+
+        .sari-mock-nav-line {
+            height: 5px;
+
+            margin-bottom: 14px;
+        }
+
+        .sari-mock-heading {
+            width: 130px;
+            height: 11px;
+        }
+
+        .sari-mock-subheading {
+            width: 170px;
+            height: 5px;
+
+            margin-top: 8px;
+        }
+
+        .sari-mock-products {
+            gap: 7px;
+
+            margin-top: 22px;
+        }
+
+        .sari-mock-product-info {
+            padding: 8px;
+        }
+
+        .sari-mock-product-line {
+            height: 4px;
+        }
+
+        .sari-mock-product-line.small {
+            height: 4px;
+
+            margin-top: 6px;
+        }
+
+        .sari-floating-card {
+            width: 145px;
+
+            right: 3%;
+            bottom: 3%;
+
+            padding: 12px;
+        }
+
+        .sari-floating-label {
+            font-size: 7px;
+        }
+
+        .sari-floating-value {
+            margin-top: 5px;
+
+            font-size: 15px;
+        }
+
+        .sari-floating-status {
+            margin-top: 5px;
+
+            font-size: 8px;
+        }
+
+        .sari-trust-card {
+            min-height: 200px;
+
+            padding: 30px 24px;
+        }
+
+        .sari-cta {
+            min-height: 520px;
+        }
+
+        .sari-cta-logo {
+            height: 48px;
+        }
+
+        .sari-cta-title {
+            font-size: 40px;
+        }
+
+        .sari-cta-description {
+            font-size: 12px;
+        }
+
+        .sari-footer {
+            padding-top: 65px;
+        }
+
+        .sari-footer-top {
+            grid-template-columns: 1fr 1fr;
+
+            gap: 35px 18px;
+        }
+
+        .sari-footer-brand {
+            grid-column: 1 / -1;
+        }
+
+        .sari-footer-logo {
+            height: 35px;
+        }
+
+        .sari-footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sari-search-overlay {
+            padding: 20px;
+        }
+
+        .sari-search-close {
+            top: 18px;
+            right: 18px;
+        }
+
+        .sari-mobile-actions {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .sari-page *,
+        .sari-page *::before,
+        .sari-page *::after {
+            scroll-behavior: auto !important;
+
+            transition-duration: 0.01ms !important;
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+        }
+
+        .sari-reveal {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    /* =========================================================
+       FINAL UI FIXES — HERO + LIGHT/DARK NAV + BUTTON CONTRAST
+    ========================================================= */
+
+    /* Hero composition: centered logo with editorial side rules */
+    .sari-hero-brand {
+        margin-bottom: 62px;
+    }
+
+    .sari-hero-brand-mark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(28px, 4.2vw, 72px);
+        width: min(760px, 100%);
+    }
+
+    .sari-hero-brand-line {
+        display: block;
+        width: clamp(70px, 9vw, 122px);
+        height: 1px;
+        flex: 0 1 122px;
+        background: rgba(201, 191, 175, 0.72);
+    }
+
+    .sari-hero-logo {
+        height: clamp(54px, 5.4vw, 76px);
+        width: auto;
+        flex: 0 0 auto;
+    }
+
+    .sari-hero-tagline {
+        margin-top: 19px;
+        color: rgba(245, 243, 239, 0.72);
+    }
+
+    .sari-hero-title {
+        max-width: 1100px;
+        font-size: clamp(43px, 5.75vw, 82px);
+        line-height: 1.06;
+    }
+
+    .sari-hero-description {
+        max-width: 760px;
+        margin-top: 36px;
+    }
+
+    .sari-hero-actions {
+        margin-top: 46px;
+        gap: 18px;
+    }
+
+    /* Make every filled light button readable, regardless of inherited section color. */
+    .sari-page .sari-button-primary,
+    .sari-page .sari-button-primary:visited {
+        background: #F5F3EF;
+        color: #111111 !important;
+        border-color: #F5F3EF;
+    }
+
+    .sari-page .sari-button-primary:hover {
+        background: #FFFFFF;
+        color: #111111 !important;
+        border-color: #FFFFFF;
+    }
+
+    .sari-page .sari-button-outline,
+    .sari-page .sari-button-outline:visited {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.34);
+    }
+
+    .sari-page .sari-button-outline:hover {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.72);
+        background: rgba(245, 243, 239, 0.08);
+    }
+
+    /* ---------------------------------------------------------
+       LIGHT MODE NAVBAR FIX
+       The hero remains dark/cinematic, so the transparent navbar
+       must stay light. Once scrolled over the light-mode surface,
+       it switches to dark text/icons and a light glass background.
+    --------------------------------------------------------- */
+
+    html.light-mode .sari-navbar:not(.scrolled) {
+        background: transparent;
+        border-bottom-color: transparent;
+        box-shadow: none;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-login {
+        color: rgba(245, 243, 239, 0.78);
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link:hover,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-login:hover {
+        color: #FFFFFF;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-search-button,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-theme-toggle {
+        color: #F5F3EF;
+        border-color: rgba(245, 243, 239, 0.16);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-search-button:hover,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-theme-toggle:hover {
+        color: #FFFFFF;
+        border-color: rgba(245, 243, 239, 0.32);
+        background: rgba(255, 255, 255, 0.09);
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-register {
+        color: #F5F3EF;
+        border-color: rgba(245, 243, 239, 0.28);
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-register:hover {
+        color: #111111;
+        background: #F5F3EF;
+        border-color: #F5F3EF;
+    }
+
+    /* Keep the actual white logo visible over the dark hero. */
+    html.light-mode .sari-navbar:not(.scrolled) .sari-navbar-logo {
+        filter: none;
+    }
+
+    /* Once scrolled in light mode, turn the same transparent logo black. */
+    html.light-mode .sari-navbar.scrolled .sari-navbar-logo {
+        filter: brightness(0) saturate(100%);
+    }
+
+    /* Scrolled light-mode navbar controls remain dark and readable. */
+    html.light-mode .sari-navbar.scrolled .sari-nav-link,
+    html.light-mode .sari-navbar.scrolled .sari-login {
+        color: rgba(17, 17, 17, 0.68);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-nav-link:hover,
+    html.light-mode .sari-navbar.scrolled .sari-login:hover {
+        color: #111111;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-search-button,
+    html.light-mode .sari-navbar.scrolled .sari-theme-toggle {
+        color: #111111;
+        border-color: rgba(17, 17, 17, 0.12);
+        background: rgba(17, 17, 17, 0.03);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-search-button:hover,
+    html.light-mode .sari-navbar.scrolled .sari-theme-toggle:hover {
+        color: #111111;
+        border-color: rgba(17, 17, 17, 0.22);
+        background: rgba(17, 17, 17, 0.07);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-register {
+        color: #111111;
+        border-color: rgba(17, 17, 17, 0.20);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-register:hover {
+        color: #FAF9F6;
+        background: #111111;
+        border-color: #111111;
+    }
+
+    /* Mobile: same rule — white over the hero, dark over the light glass menu. */
+    html.light-mode .sari-navbar:not(.scrolled) .sari-mobile-menu-button {
+        color: #F5F3EF;
+        border-color: rgba(245, 243, 239, 0.16);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-mobile-menu-button {
+        color: #111111;
+        border-color: rgba(17, 17, 17, 0.12);
+        background: rgba(17, 17, 17, 0.03);
+    }
+
+    /* Light-mode logo visibility in CTA/footer where the background is dark. */
+    html.light-mode .sari-cta-logo,
+    html.light-mode .sari-footer-logo {
+        filter: none;
+    }
+
+    /* Prevent button labels from becoming low-contrast on narrow screens. */
+    @media (max-width: 768px) {
+        .sari-hero-brand {
+            margin-bottom: 40px;
+        }
+
+        .sari-hero-brand-mark {
+            gap: 18px;
+        }
+
+        .sari-hero-brand-line {
+            width: 58px;
+            flex-basis: 58px;
+        }
+
+        .sari-hero-logo {
+            height: 52px;
+        }
+
+        .sari-hero-title {
+            font-size: clamp(38px, 9.2vw, 62px);
+            line-height: 1.08;
+        }
+
+        .sari-hero-description {
+            max-width: 600px;
+            margin-top: 28px;
+        }
+
+        .sari-hero-actions {
+            margin-top: 34px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .sari-hero-brand {
+            margin-bottom: 34px;
+        }
+
+        .sari-hero-brand-mark {
+            gap: 11px;
+        }
+
+        .sari-hero-brand-line {
+            width: 38px;
+            flex-basis: 38px;
+        }
+
+        .sari-hero-logo {
+            height: 46px;
+        }
+
+        .sari-hero-tagline {
+            margin-top: 13px;
+        }
+
+        .sari-hero-title {
+            font-size: clamp(35px, 10.7vw, 50px);
+        }
+
+        .sari-hero-description {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+    }
+
+
+    /* =========================================================
+       FINAL POLISH — REMOVE PAGE BORDER + STABLE NAVBAR THEME
+    ========================================================= */
+
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        min-height: 100%;
+        background: #0A0A0A;
+    }
+
+    html {
+        overflow-x: hidden;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .sari-page {
+        display: block;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        border: 0 !important;
+        outline: 0 !important;
+    }
+
+    /* ---------------------------------------------------------
+       DARK MODE NAVBAR
+       The hero is dark, so the navbar ALWAYS uses light text
+       and controls in dark mode, whether scrolled or not.
+    --------------------------------------------------------- */
+
+    html:not(.light-mode) .sari-navbar {
+        background: rgba(10, 10, 10, 0.16);
+        border-bottom-color: transparent;
+        box-shadow: none;
+    }
+
+    html:not(.light-mode) .sari-navbar.scrolled {
+        background: rgba(10, 10, 10, 0.82);
+        border-bottom-color: rgba(245, 243, 239, 0.10);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-navbar-logo {
+        filter: none !important;
+        opacity: 1;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-nav-link,
+    html:not(.light-mode) .sari-navbar .sari-login {
+        color: rgba(245, 243, 239, 0.78) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-nav-link:hover,
+    html:not(.light-mode) .sari-navbar .sari-login:hover {
+        color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-search-button,
+    html:not(.light-mode) .sari-navbar .sari-theme-toggle {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.16) !important;
+        background: rgba(255, 255, 255, 0.035) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-search-button:hover,
+    html:not(.light-mode) .sari-navbar .sari-theme-toggle:hover {
+        color: #FFFFFF !important;
+        border-color: rgba(245, 243, 239, 0.32) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-register {
+        color: #F5F3EF !important;
+        background: transparent !important;
+        border-color: rgba(245, 243, 239, 0.30) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-register:hover {
+        color: #111111 !important;
+        background: #F5F3EF !important;
+        border-color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-mobile-menu-button {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.16) !important;
+        background: rgba(255, 255, 255, 0.035) !important;
+    }
+
+    /* ---------------------------------------------------------
+       LIGHT MODE NAVBAR
+       At the top of the dark hero: keep the navbar LIGHT.
+       After scrolling: switch it to DARK text on light glass.
+    --------------------------------------------------------- */
+
+    html.light-mode .sari-navbar:not(.scrolled) {
+        background: rgba(10, 10, 10, 0.16);
+        border-bottom-color: transparent;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-navbar-logo {
+        filter: none !important;
+        opacity: 1;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-login {
+        color: rgba(245, 243, 239, 0.80) !important;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link:hover,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-login:hover {
+        color: #FFFFFF !important;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-search-button,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-theme-toggle,
+    html.light-mode .sari-navbar:not(.scrolled) .sari-mobile-menu-button {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.16) !important;
+        background: rgba(255, 255, 255, 0.035) !important;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-register {
+        color: #F5F3EF !important;
+        border-color: rgba(245, 243, 239, 0.30) !important;
+        background: transparent !important;
+    }
+
+    html.light-mode .sari-navbar:not(.scrolled) .sari-register:hover {
+        color: #111111 !important;
+        background: #F5F3EF !important;
+        border-color: #F5F3EF !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled {
+        background: rgba(250, 249, 246, 0.92);
+        border-bottom-color: rgba(17, 17, 17, 0.08);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-navbar-logo {
+        filter: brightness(0) saturate(100%) !important;
+        opacity: 1;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-nav-link,
+    html.light-mode .sari-navbar.scrolled .sari-login {
+        color: rgba(17, 17, 17, 0.72) !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-nav-link:hover,
+    html.light-mode .sari-navbar.scrolled .sari-login:hover {
+        color: #111111 !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-search-button,
+    html.light-mode .sari-navbar.scrolled .sari-theme-toggle,
+    html.light-mode .sari-navbar.scrolled .sari-mobile-menu-button {
+        color: #111111 !important;
+        border-color: rgba(17, 17, 17, 0.12) !important;
+        background: rgba(17, 17, 17, 0.035) !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-search-button:hover,
+    html.light-mode .sari-navbar.scrolled .sari-theme-toggle:hover,
+    html.light-mode .sari-navbar.scrolled .sari-mobile-menu-button:hover {
+        color: #111111 !important;
+        border-color: rgba(17, 17, 17, 0.22) !important;
+        background: rgba(17, 17, 17, 0.07) !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-register {
+        color: #111111 !important;
+        background: transparent !important;
+        border-color: rgba(17, 17, 17, 0.20) !important;
+    }
+
+    html.light-mode .sari-navbar.scrolled .sari-register:hover {
+        color: #FAF9F6 !important;
+        background: #111111 !important;
+        border-color: #111111 !important;
+    }
+
+    /* No accidental white body strip at the bottom/edges. */
+    .sari-page,
+    .sari-page > section,
+    .sari-page > footer {
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+
+    /* =========================================================
+       FINAL DARK MODE FIX
+       Dark mode = the ENTIRE SARI page is dark.
+       Light mode keeps the existing light/dark section contrast.
+    ========================================================= */
+
+    html:not(.light-mode),
+    html:not(.light-mode) body {
+        background: #0A0A0A !important;
+        color: #F5F3EF;
+    }
+
+    html:not(.light-mode) .sari-page {
+        background: #0A0A0A !important;
+        color: #F5F3EF !important;
+    }
+
+    /* Every section that was intentionally light becomes dark
+       when the user selects Dark Mode. */
+    html:not(.light-mode) .sari-light-section {
+        background: #0A0A0A !important;
+        color: #F5F3EF !important;
+    }
+
+    /* Intro */
+    html:not(.light-mode) .sari-intro,
+    html:not(.light-mode) .sari-intro * {
+        color: #F5F3EF;
+    }
+
+    html:not(.light-mode) .sari-intro-copy {
+        color: rgba(245, 243, 239, 0.65) !important;
+    }
+
+    /* Shared headings/descriptions inside former light sections */
+    html:not(.light-mode) .sari-light-section .sari-eyebrow,
+    html:not(.light-mode) .sari-light-section .sari-section-title {
+        color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-light-section .sari-section-description {
+        color: rgba(245, 243, 239, 0.65) !important;
+    }
+
+    /* Ecosystem cards */
+    html:not(.light-mode) .sari-ecosystem-card {
+        background: #111111 !important;
+        border-color: rgba(245, 243, 239, 0.10) !important;
+        color: #F5F3EF !important;
+        box-shadow: none;
+    }
+
+    html:not(.light-mode) .sari-ecosystem-card:hover {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    html:not(.light-mode) .sari-ecosystem-number {
+        color: #C9BFAF !important;
+    }
+
+    html:not(.light-mode) .sari-ecosystem-title {
+        color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-ecosystem-subtitle {
+        color: rgba(245, 243, 239, 0.65) !important;
+    }
+
+    html:not(.light-mode) .sari-ecosystem-line {
+        background: rgba(245, 243, 239, 0.10) !important;
+    }
+
+    /* Category section itself is dark, while the image cards
+       remain exactly as designed. */
+    html:not(.light-mode) .sari-category-grid {
+        background: transparent;
+    }
+
+    html:not(.light-mode) .sari-category-card {
+        background: #171717;
+    }
+
+    /* Any light-section utility/content text that has an
+       explicit dark color gets converted to the dark theme. */
+    html:not(.light-mode) .sari-light-section .sari-meta,
+    html:not(.light-mode) .sari-light-section .sari-label,
+    html:not(.light-mode) .sari-light-section p,
+    html:not(.light-mode) .sari-light-section h1,
+    html:not(.light-mode) .sari-light-section h2,
+    html:not(.light-mode) .sari-light-section h3,
+    html:not(.light-mode) .sari-light-section h4,
+    html:not(.light-mode) .sari-light-section h5,
+    html:not(.light-mode) .sari-light-section h6 {
+        color: inherit;
+    }
+
+    /* Keep the category labels white over the image overlay. */
+    html:not(.light-mode) .sari-category-content {
+        color: #FFFFFF !important;
+    }
+
+    /* Light-mode-specific rules must NEVER accidentally affect
+       the dark theme. */
+    html:not(.light-mode) .sari-navbar.scrolled {
+        background: rgba(10, 10, 10, 0.84) !important;
+        border-bottom-color: rgba(245, 243, 239, 0.10) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-nav-link,
+    html:not(.light-mode) .sari-navbar .sari-login {
+        color: rgba(245, 243, 239, 0.78) !important;
+    }
+
+    html:not(.light-mode) .sari-navbar .sari-nav-link:hover,
+    html:not(.light-mode) .sari-navbar .sari-login:hover {
+        color: #F5F3EF !important;
+    }
+
+    /* Filled buttons remain dark-text-on-light in both themes. */
+    html:not(.light-mode) .sari-button-primary {
+        background: #F5F3EF !important;
+        color: #111111 !important;
+        border-color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-button-primary:hover {
+        background: #FFFFFF !important;
+        color: #111111 !important;
+        border-color: #FFFFFF !important;
+    }
+
+    /* No white strips around the page in dark mode. */
+    html:not(.light-mode) .sari-page,
+    html:not(.light-mode) .sari-page > section,
+    html:not(.light-mode) .sari-page > footer {
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+
+    /* =========================================================
+       ADAPTIVE FOOTER — LIGHT + DARK MODE
+    ========================================================= */
+
+    /* DARK MODE */
+    html:not(.light-mode) .sari-footer {
+        background: #0A0A0A !important;
+        color: #F5F3EF !important;
+        border-top: 1px solid rgba(245, 243, 239, 0.06);
+    }
+
+    html:not(.light-mode) .sari-footer-logo {
+        filter: none !important;
+    }
+
+    html:not(.light-mode) .sari-footer-tagline {
+        color: rgba(245, 243, 239, 0.52) !important;
+    }
+
+    html:not(.light-mode) .sari-footer-column-title {
+        color: rgba(245, 243, 239, 0.40) !important;
+    }
+
+    html:not(.light-mode) .sari-footer-link {
+        color: rgba(245, 243, 239, 0.68) !important;
+    }
+
+    html:not(.light-mode) .sari-footer-link:hover {
+        color: #F5F3EF !important;
+    }
+
+    html:not(.light-mode) .sari-footer-bottom {
+        border-top-color: rgba(245, 243, 239, 0.09) !important;
+    }
+
+    html:not(.light-mode) .sari-footer-copy,
+    html:not(.light-mode) .sari-footer-status {
+        color: rgba(245, 243, 239, 0.38) !important;
+    }
+
+    /* LIGHT MODE */
+    html.light-mode .sari-footer {
+        background: #FAF9F6 !important;
+        color: #111111 !important;
+        border-top: 1px solid rgba(17, 17, 17, 0.07);
+    }
+
+    /* The logo asset is white/transparent, so invert it for the
+       light footer to keep it visible without replacing the file. */
+    html.light-mode .sari-footer-logo {
+        filter: brightness(0) saturate(100%) !important;
+    }
+
+    html.light-mode .sari-footer-tagline {
+        color: rgba(17, 17, 17, 0.58) !important;
+    }
+
+    html.light-mode .sari-footer-column-title {
+        color: rgba(17, 17, 17, 0.42) !important;
+    }
+
+    html.light-mode .sari-footer-link {
+        color: rgba(17, 17, 17, 0.68) !important;
+    }
+
+    html.light-mode .sari-footer-link:hover {
+        color: #111111 !important;
+    }
+
+    html.light-mode .sari-footer-bottom {
+        border-top-color: rgba(17, 17, 17, 0.09) !important;
+    }
+
+    html.light-mode .sari-footer-copy,
+    html.light-mode .sari-footer-status {
+        color: rgba(17, 17, 17, 0.42) !important;
+    }
+
+    /* Keep the footer clean on small screens too. */
+    @media (max-width: 768px) {
+        .sari-footer {
+            padding-top: 64px;
+        }
+
+        .sari-footer-bottom {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+/* ==========================================================================
+   SARI — Intro section ("The SARI Idea")
+   Palette:  cream #FBF8F2 | ink #16140F | charcoal #4A453D
+             gold #B8863B | line #EBE3D2
+   Font:     Poppins
+   No gradients — flat, warm, welcoming.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.sari-intro {
+    position: relative;
+    overflow: hidden;
+    background: #FBF8F2;
+    padding: 130px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sari-intro-monogram {
+    position: absolute;
+    top: -100px;
+    right: -70px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 400px;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(184, 134, 59, 0.12);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+}
+
+.sari-intro-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sari-intro-eyebrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+.sari-intro-rule {
+    width: 28px;
+    height: 2px;
+    background: #B8863B;
+}
+
+.sari-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8863B;
+}
+
+.sari-intro-title {
+    font-weight: 700;
+    font-size: clamp(32px, 4.4vw, 50px);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: #16140F;
+    margin: 0 0 22px;
+}
+
+.sari-intro-title em {
+    font-style: normal;
+    font-weight: 700;
+    color: #B8863B;
+}
+
+.sari-intro-copy {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #4A453D;
+    max-width: 520px;
+    margin: 0 auto 56px;
+}
+
+/* ---------- connection strip ---------- */
+
+.sari-connect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.sari-connect-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.sari-connect-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    color: #16140F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sari-connect-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.sari-connect-label {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #4A453D;
+}
+
+.sari-connect-line {
+    width: 44px;
+    height: 1px;
+    background: #DDD2B8;
+    margin: 0 4px;
+    align-self: center;
+    margin-bottom: 28px;
+}
+
+.sari-connect-node-center .sari-connect-mark {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #332e2e;
+    border: 1px solid #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+}
+
+.sari-connect-node-center .sari-connect-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 720px) {
+    .sari-connect {
+        flex-wrap: wrap;
+        row-gap: 24px;
+    }
+
+    .sari-connect-line {
+        display: none;
+    }
+
+    .sari-connect-node {
+        width: 33%;
+    }
+
+    .sari-intro-monogram {
+        font-size: 220px;
+        top: -50px;
+        right: -60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sari-intro {
+        padding: 90px 0;
+    }
+
+    .sari-intro-copy {
+        margin-bottom: 44px;
+    }
+
+    .sari-connect-node {
+        width: 45%;
+    }
+}
+
+
+
+
+
+
+/* =========================================================
+   SARI HERO — CENTERED EDITORIAL VERSION
+========================================================= */
+
+.sari-page .sari-hero .sari-hero-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(1200px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding-top: 80px;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   BRAND
+--------------------------------------------------------- */
+
+.sari-page .sari-hero .sari-hero-brand {
+    align-items: center;
+
+    margin-bottom: 42px;
+}
+
+.sari-page .sari-hero .sari-hero-brand-mark {
+    justify-content: center;
+
+    width: min(760px, 100%);
+}
+
+.sari-page .sari-hero .sari-hero-tagline {
+    padding-left: 0;
+}
+
+
+/* ---------------------------------------------------------
+   BIG EDITORIAL TITLE
+--------------------------------------------------------- */
+
+.sari-page .sari-hero .sari-hero-title {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    color: #F5F3EF;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: clamp(
+        58px,
+        8vw,
+        118px
+    );
+
+    font-weight: 800;
+
+    line-height: 0.88;
+
+    letter-spacing: -0.065em;
+
+    text-align: center;
+
+    text-wrap: unset;
+}
+
+
+/* GOLD */
+
+.sari-page .sari-hero .sari-hero-title span {
+    color: #C98A12;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+--------------------------------------------------------- */
+
+.sari-page .sari-hero .sari-hero-description {
+    max-width: 560px;
+
+    margin: 42px auto 0;
+
+    color: rgba(245, 243, 239, 0.68);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+--------------------------------------------------------- */
+
+.sari-page .sari-hero .sari-hero-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 34px;
+}
+
+
+.sari-page .sari-hero .sari-button {
+    min-height: 52px;
+
+    padding: 0 22px;
+
+    border-radius: 0;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.14em;
+}
+
+
+/* PRIMARY */
+
+.sari-page .sari-hero .sari-button-primary {
+    background: #C98A12;
+
+    color: #FFFFFF !important;
+
+    border: 1px solid #C98A12;
+}
+
+
+.sari-page .sari-hero .sari-button-primary:hover {
+    background: #D99A22;
+
+    border-color: #D99A22;
+
+    transform: translateY(-2px);
+}
+
+
+/* OUTLINE */
+
+.sari-page .sari-hero .sari-button-outline {
+    background: transparent;
+
+    color: #F5F3EF !important;
+
+    border: 1px solid rgba(245, 243, 239, 0.30);
+}
+
+
+.sari-page .sari-hero .sari-button-outline:hover {
+    background: rgba(245, 243, 239, 0.08);
+
+    border-color: rgba(245, 243, 239, 0.65);
+
+    transform: translateY(-2px);
+}
+
+
+/* ARROW */
+
+.sari-page .sari-hero .sari-button-arrow {
+    display: inline-block;
+
+    margin-left: 12px;
+
+    font-size: 15px;
+
+    transition: transform 300ms ease;
+}
+
+
+.sari-page .sari-hero .sari-button:hover .sari-button-arrow {
+    transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .sari-page .sari-hero .sari-hero-content {
+        width: calc(100% - 36px);
+
+        padding-top: 55px;
+
+        text-align: center;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-brand {
+        align-items: center;
+
+        margin-bottom: 38px;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-brand-mark {
+        justify-content: center;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-title {
+        max-width: 680px;
+
+        font-size: clamp(
+            50px,
+            11vw,
+            75px
+        );
+
+        line-height: 0.9;
+
+        text-align: center;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-description {
+        margin: 28px auto 0;
+
+        text-align: center;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-actions {
+        justify-content: center;
+
+        flex-direction: row;
+
+        width: auto;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .sari-page .sari-hero .sari-hero-content {
+        width: calc(100% - 28px);
+
+        padding-top: 35px;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-title {
+        font-size: clamp(
+            43px,
+            13vw,
+            60px
+        );
+
+        line-height: 0.9;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-description {
+        max-width: 350px;
+
+        font-size: 12px;
+    }
+
+
+    .sari-page .sari-hero .sari-hero-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .sari-page .sari-hero .sari-button {
+        width: auto;
+    }
+
+}/* =========================================================
+   HERO — FORCE 2-LINE HEADLINE
+========================================================= */
+
+.sari-page .sari-hero .sari-hero-title {
+    width: 100%;
+    max-width: none;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: clamp(52px, 6.5vw, 100px);
+
+    line-height: 0.92;
+
+    letter-spacing: -0.06em;
+
+    white-space: nowrap;
+
+    text-align: center;
+}
+
+.sari-page .sari-hero .sari-hero-title span {
+    color: #C98A12;
+}
+
+
+/* Desktop */
+@media (min-width: 769px) {
+
+    .sari-page .sari-hero .sari-hero-content {
+        width: min(1450px, calc(100% - 60px));
+    }
+
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+
+    .sari-page .sari-hero .sari-hero-title {
+        font-size: clamp(38px, 8vw, 65px);
+        white-space: normal;
+    }
+
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+
+    .sari-page .sari-hero .sari-hero-title {
+        font-size: clamp(34px, 9.5vw, 50px);
+        line-height: 0.95;
+        white-space: normal;
+    }
+
+}
+
+/* =========================================================
+   HERO LOGO — MAKE IT LARGER
+========================================================= */
+
+.sari-page .sari-hero .sari-hero-logo {
+    height: clamp(75px, 7vw, 105px);
+    width: auto;
+}
+
+
+/* Give the logo more breathing room before the headline */
+
+.sari-page .sari-hero .sari-hero-brand {
+    margin-bottom: 55px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .sari-page .sari-hero .sari-hero-logo {
+        height: 68px;
+    }
+
+    .sari-page .sari-hero .sari-hero-brand {
+        margin-bottom: 42px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .sari-page .sari-hero .sari-hero-logo {
+        height: 58px;
+    }
+
+    .sari-page .sari-hero .sari-hero-brand {
+        margin-bottom: 35px;
+    }
+}
+
+
+
+/* =========================================================
+   SARI NAVBAR — FINAL VISIBILITY FIX
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   BASE NAVBAR
+--------------------------------------------------------- */
+
+.sari-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    z-index: 9999;
+
+    transition:
+        background-color 300ms ease,
+        border-color 300ms ease,
+        box-shadow 300ms ease,
+        backdrop-filter 300ms ease;
+}
+
+
+/* ---------------------------------------------------------
+   DARK MODE
+   Hero = dark
+   Navbar = WHITE
+--------------------------------------------------------- */
+
+html:not(.light-mode) .sari-navbar {
+
+    background: rgba(10, 10, 10, 0.18) !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08) !important;
+
+    box-shadow: none !important;
+}
+
+html:not(.light-mode) .sari-navbar .sari-navbar-logo {
+
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+html:not(.light-mode) .sari-navbar .sari-nav-link,
+html:not(.light-mode) .sari-navbar .sari-login {
+
+    color: #F5F3EF !important;
+}
+
+html:not(.light-mode) .sari-navbar .sari-nav-link:hover,
+html:not(.light-mode) .sari-navbar .sari-login:hover {
+
+    color: #FFFFFF !important;
+}
+
+html:not(.light-mode) .sari-navbar .sari-search-button,
+html:not(.light-mode) .sari-navbar .sari-mobile-menu-button {
+
+    color: #F5F3EF !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.18) !important;
+
+    background:
+        rgba(255, 255, 255, 0.04) !important;
+}
+
+html:not(.light-mode) .sari-navbar .sari-register {
+
+    color: #F5F3EF !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.28) !important;
+
+    background: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   DARK MODE — SCROLLED
+--------------------------------------------------------- */
+
+html:not(.light-mode) .sari-navbar.scrolled {
+
+    background:
+        rgba(10, 10, 10, 0.88) !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.10) !important;
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.20) !important;
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* ---------------------------------------------------------
+   LIGHT MODE — TOP OF HERO
+   Hero remains dark, therefore navbar remains WHITE.
+--------------------------------------------------------- */
+
+html.light-mode .sari-navbar:not(.scrolled) {
+
+    background:
+        rgba(10, 10, 10, 0.18) !important;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.light-mode .sari-navbar:not(.scrolled) .sari-navbar-logo {
+
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link,
+html.light-mode .sari-navbar:not(.scrolled) .sari-login {
+
+    color: #F5F3EF !important;
+}
+
+html.light-mode .sari-navbar:not(.scrolled) .sari-nav-link:hover,
+html.light-mode .sari-navbar:not(.scrolled) .sari-login:hover {
+
+    color: #FFFFFF !important;
+}
+
+html.light-mode .sari-navbar:not(.scrolled) .sari-search-button,
+html.light-mode .sari-navbar:not(.scrolled) .sari-mobile-menu-button {
+
+    color: #F5F3EF !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.18) !important;
+
+    background:
+        rgba(255, 255, 255, 0.04) !important;
+}
+
+html.light-mode .sari-navbar:not(.scrolled) .sari-register {
+
+    color: #F5F3EF !important;
+
+    border-color:
+        rgba(255, 255, 255, 0.28) !important;
+
+    background: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   LIGHT MODE — SCROLLED
+   Now we're over the light sections.
+--------------------------------------------------------- */
+
+html.light-mode .sari-navbar.scrolled {
+
+    background:
+        rgba(250, 249, 246, 0.94) !important;
+
+    border-bottom:
+        1px solid rgba(17, 17, 17, 0.08) !important;
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.07) !important;
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+}
+
+html.light-mode .sari-navbar.scrolled .sari-navbar-logo {
+
+    filter:
+        brightness(0)
+        saturate(100%) !important;
+
+    opacity: 1 !important;
+}
+
+html.light-mode .sari-navbar.scrolled .sari-nav-link,
+html.light-mode .sari-navbar.scrolled .sari-login {
+
+    color: #171717 !important;
+}
+
+html.light-mode .sari-navbar.scrolled .sari-nav-link:hover,
+html.light-mode .sari-navbar.scrolled .sari-login:hover {
+
+    color: #000000 !important;
+}
+
+html.light-mode .sari-navbar.scrolled .sari-search-button,
+html.light-mode .sari-navbar.scrolled .sari-mobile-menu-button {
+
+    color: #171717 !important;
+
+    border-color:
+        rgba(17, 17, 17, 0.14) !important;
+
+    background:
+        rgba(17, 17, 17, 0.035) !important;
+}
+
+html.light-mode .sari-navbar.scrolled .sari-register {
+
+    color: #171717 !important;
+
+    border-color:
+        rgba(17, 17, 17, 0.20) !important;
+
+    background: transparent !important;
+}
+
+html.light-mode .sari-navbar.scrolled .sari-register:hover {
+
+    color: #FAF9F6 !important;
+
+    background: #111111 !important;
+
+    border-color: #111111 !important;
+}
+
+
+/* ---------------------------------------------------------
+   TRANSITIONS
+--------------------------------------------------------- */
+
+.sari-navbar-logo,
+.sari-nav-link,
+.sari-login,
+.sari-register,
+.sari-search-button,
+.sari-mobile-menu-button {
+
+    transition:
+        color 250ms ease,
+        background-color 250ms ease,
+        border-color 250ms ease,
+        filter 250ms ease,
+        opacity 250ms ease,
+        transform 250ms ease;
+}

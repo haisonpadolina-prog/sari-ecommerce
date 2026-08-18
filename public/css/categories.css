@@ -1,0 +1,744 @@
+/* =========================================================
+   SARI CATEGORIES
+   Premium Editorial Marketplace Layout
+   ========================================================= */
+
+.sari-categories {
+    position: relative;
+    overflow: hidden;
+    background: #f7f5f0;
+    color: #111318;
+
+    /* Larger vertical presence */
+    padding: clamp(72px, 7vw, 105px) 0 clamp(65px, 6vw, 95px);
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.sari-categories .sari-container-wide {
+    /*
+     * IMPORTANT:
+     * Increased from 1100px to 1400px
+     * so the section matches the wide reference design.
+     */
+    width: min(1400px, calc(100% - 72px));
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.sari-categories-header {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(300px, .65fr);
+
+    align-items: end;
+
+    gap: clamp(50px, 7vw, 100px);
+
+    margin-bottom: 40px;
+}
+
+
+/* Eyebrow */
+
+.sari-categories .sari-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 18px;
+
+    color: #b77b08;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.sari-categories .sari-eyebrow::before {
+    content: "";
+
+    width: 25px;
+    height: 1px;
+
+    background: #c88a12;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+   ========================================================= */
+
+.sari-categories .sari-section-title {
+    margin: 0;
+
+    color: #111318;
+
+    /*
+     * Slightly larger than the original.
+     */
+    font-size: clamp(48px, 5vw, 72px);
+
+    line-height: .92;
+
+    letter-spacing: -.058em;
+
+    font-weight: 700;
+
+    max-width: 720px;
+}
+
+.sari-categories .sari-section-title em {
+    color: #c98a0c;
+    font-style: normal;
+}
+
+
+/* =========================================================
+   HEADER DESCRIPTION
+   ========================================================= */
+
+.sari-categories-intro {
+    width: 100%;
+    max-width: 390px;
+
+    padding-bottom: 5px;
+}
+
+.sari-categories-meta {
+    display: block;
+
+    margin-bottom: 14px;
+
+    color: #b27a13;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: .17em;
+}
+
+.sari-categories .sari-section-description {
+    margin: 0;
+
+    color: #6f706f;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    max-width: 370px;
+}
+
+
+/* =========================================================
+   CATEGORY GRID
+   ========================================================= */
+
+.sari-category-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    /*
+     * Slightly larger gap like the reference.
+     */
+    gap: 14px;
+}
+
+
+/* =========================================================
+   CATEGORY CARD
+   ========================================================= */
+
+.sari-category-card {
+    position: relative;
+    isolation: isolate;
+
+    display: block;
+
+    /*
+     * Taller cards for a more premium editorial look.
+     */
+    min-height: 320px;
+
+    overflow: hidden;
+
+    border-radius: 9px;
+
+    background: #161616;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 1px 0 rgba(17, 19, 24, .08);
+
+    transform: translateY(0);
+
+    transition:
+        transform .55s cubic-bezier(.2, .75, .25, 1),
+        box-shadow .55s ease;
+}
+
+.sari-category-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 42px rgba(17, 19, 24, .15);
+}
+
+
+/* =========================================================
+   CATEGORY IMAGE
+   ========================================================= */
+
+.sari-category-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transform: scale(1.001);
+
+    transition:
+        transform .8s cubic-bezier(.2, .7, .2, 1),
+        filter .7s ease;
+}
+
+.sari-category-card:hover .sari-category-image {
+    transform: scale(1.045);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
+
+.sari-category-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, .08) 0%,
+            rgba(0, 0, 0, .02) 36%,
+            rgba(0, 0, 0, .18) 58%,
+            rgba(0, 0, 0, .84) 100%
+        );
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.sari-category-top {
+    position: absolute;
+
+    z-index: 2;
+
+    top: 19px;
+    left: 19px;
+    right: 19px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* Number */
+
+.sari-category-index {
+    color: #fff;
+
+    font-size: 40px;
+
+    line-height: 1;
+
+    font-weight: 750;
+
+    letter-spacing: -.055em;
+
+    text-shadow:
+        0 2px 18px rgba(0, 0, 0, .25);
+}
+
+
+/* Arrow */
+
+.sari-category-arrow {
+    display: grid;
+
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid rgba(255, 255, 255, .48);
+
+    color: #fff;
+
+    font-size: 14px;
+
+    line-height: 1;
+
+    transition:
+        background .35s ease,
+        border-color .35s ease,
+        color .35s ease,
+        transform .35s ease;
+}
+
+.sari-category-card:hover .sari-category-arrow {
+    background: #c98a0c;
+
+    border-color: #c98a0c;
+
+    color: #111318;
+
+    transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.sari-category-content {
+    position: absolute;
+
+    z-index: 2;
+
+    right: 19px;
+    bottom: 19px;
+    left: 19px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+
+/* Category name */
+
+.sari-category-name {
+    color: #fff;
+
+    font-size: 17px;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    letter-spacing: -.015em;
+}
+
+
+/* Subtitle */
+
+.sari-category-subtitle {
+    margin-top: 6px;
+
+    color: #d8a13c;
+
+    font-size: 12px;
+
+    line-height: 1.35;
+
+    font-weight: 600;
+
+    letter-spacing: .01em;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.sari-categories-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 24px;
+
+    color: #777771;
+
+    font-size: 12px;
+}
+
+.sari-categories-footer > span:first-child {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.sari-categories-footer i {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #c98a0c;
+}
+
+.sari-categories-footer-arrow {
+    color: #a87815;
+
+    font-weight: 600;
+}
+
+.sari-categories-footer-arrow b {
+    margin-left: 5px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   REVEAL ANIMATION — SAFE
+   Content stays visible even if JS fails
+   ========================================================= */
+
+.sari-categories .sari-reveal {
+    opacity: 1;
+    transform: translateY(0);
+
+    transition:
+        opacity .7s ease,
+        transform .7s cubic-bezier(.2, .75, .25, 1);
+
+    transition-delay: var(--card-delay, 0ms);
+}
+
+.sari-categories .sari-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   LARGE TABLETS
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .sari-categories .sari-container-wide {
+        width: min(1120px, calc(100% - 48px));
+    }
+
+    .sari-categories-header {
+        gap: 50px;
+    }
+
+    .sari-categories .sari-section-title {
+        font-size: clamp(46px, 5vw, 64px);
+    }
+
+    .sari-category-card {
+        min-height: 300px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 980px) {
+
+    .sari-categories {
+        padding: 75px 0;
+    }
+
+    .sari-categories .sari-container-wide {
+        width: min(760px, calc(100% - 40px));
+    }
+
+    .sari-categories-header {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+
+        margin-bottom: 35px;
+    }
+
+    .sari-categories-intro {
+        max-width: 600px;
+    }
+
+    .sari-categories .sari-section-description {
+        max-width: 560px;
+    }
+
+    .sari-category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+    .sari-category-card {
+        min-height: 330px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+
+    .sari-categories {
+        padding: 65px 0;
+    }
+
+    .sari-categories .sari-container-wide {
+        width: min(100% - 28px, 520px);
+    }
+
+    .sari-categories .sari-section-title {
+        font-size: clamp(38px, 12vw, 54px);
+
+        line-height: .94;
+    }
+
+    .sari-categories .sari-section-description {
+        font-size: 13px;
+    }
+
+    .sari-category-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .sari-category-card {
+        min-height: 300px;
+    }
+
+    .sari-category-top {
+        top: 17px;
+        left: 17px;
+        right: 17px;
+    }
+
+    .sari-category-content {
+        right: 17px;
+        bottom: 17px;
+        left: 17px;
+    }
+
+    .sari-category-index {
+        font-size: 38px;
+    }
+
+    .sari-category-name {
+        font-size: 16px;
+    }
+
+    .sari-categories-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sari-categories .sari-reveal,
+    .sari-category-card,
+    .sari-category-image,
+    .sari-category-arrow {
+        transition: none !important;
+    }
+}
+
+/* =========================================================
+   SARI CATEGORIES — QUIET MOTION LAYER
+   Smooth, clean, formal, and restrained.
+   ========================================================= */
+
+.sari-categories.sari-categories-motion-ready .sari-reveal {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition:
+        opacity .72s cubic-bezier(.22,1,.36,1),
+        transform .82s cubic-bezier(.22,1,.36,1);
+    transition-delay: var(--card-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.sari-categories.sari-categories-motion-ready .sari-reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Header reveal is slightly calmer than cards. */
+.sari-categories.sari-categories-motion-ready .sari-categories-header.sari-reveal {
+    transform: translate3d(0, 12px, 0);
+}
+
+/* Cards: subtle lift only. */
+.sari-category-card {
+    transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        box-shadow .45s ease;
+}
+
+.sari-category-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Image movement stays slow and premium. */
+.sari-category-image {
+    transition:
+        transform .9s cubic-bezier(.22,1,.36,1),
+        filter .55s ease;
+}
+
+.sari-category-card:hover .sari-category-image {
+    transform: scale(1.035);
+}
+
+/* Slight overlay deepening for better visual focus. */
+.sari-category-overlay {
+    transition: opacity .45s ease;
+}
+
+.sari-category-card:hover .sari-category-overlay {
+    opacity: .94;
+}
+
+/* Top number gets a tiny lift. */
+.sari-category-index {
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1),
+        opacity .35s ease;
+}
+
+.sari-category-card:hover .sari-category-index {
+    transform: translateY(-2px);
+}
+
+/* Arrow movement stays restrained. */
+.sari-category-arrow {
+    transition:
+        background-color .35s ease,
+        border-color .35s ease,
+        color .35s ease,
+        transform .4s cubic-bezier(.22,1,.36,1);
+}
+
+.sari-category-card:hover .sari-category-arrow {
+    transform: translate(2px, -2px);
+}
+
+/* Category text settles upward slightly. */
+.sari-category-content {
+    transition: transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.sari-category-card:hover .sari-category-content {
+    transform: translateY(-2px);
+}
+
+/* Footer entrance as one quiet element. */
+.sari-categories.sari-categories-motion-ready .sari-categories-footer {
+    opacity: 0;
+    transform: translateY(9px);
+    transition:
+        opacity .7s ease,
+        transform .75s cubic-bezier(.22,1,.36,1);
+}
+
+.sari-categories.sari-categories-motion-ready .sari-categories-footer.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Small status pulse, intentionally slow. */
+.sari-categories-footer i {
+    animation: sariCategoryPulse 4s ease-in-out infinite;
+}
+
+@keyframes sariCategoryPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(201,138,12,0);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(201,138,12,.07);
+    }
+}
+
+/* Footer arrow responds gently. */
+.sari-categories-footer-arrow b {
+    display: inline-block;
+    transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.sari-categories-footer:hover .sari-categories-footer-arrow b {
+    transform: translateY(2px);
+}
+
+@media (max-width: 980px) {
+    .sari-categories.sari-categories-motion-ready .sari-reveal {
+        transform: translate3d(0, 13px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sari-categories.sari-categories-motion-ready .sari-reveal,
+    .sari-categories.sari-categories-motion-ready .sari-categories-footer,
+    .sari-category-card,
+    .sari-category-image,
+    .sari-category-overlay,
+    .sari-category-index,
+    .sari-category-arrow,
+    .sari-category-content,
+    .sari-categories-footer-arrow b {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .sari-categories-footer i {
+        animation: none !important;
+    }
+}

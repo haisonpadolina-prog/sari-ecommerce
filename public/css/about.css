@@ -1,0 +1,2216 @@
+/* =========================================================
+   SARI ABOUT V2 — Premium Editorial Design
+   Scoped to .sari-about-v2 so it will not overwrite app.css.
+   ========================================================= */
+
+.sari-about-v2 {
+    --sari-gold: #c98a12;
+    --sari-gold-deep: #a96d06;
+    --sari-ink: #111111;
+    --sari-muted: #6d6a65;
+    --sari-cream: #f7f3eb;
+    --sari-paper: #fcfbf8;
+    --sari-line: #e6dfd3;
+    background: #fff;
+    color: var(--sari-ink);
+    overflow: hidden;
+}
+
+.sari-about-v2 *,
+.sari-about-v2 *::before,
+.sari-about-v2 *::after {
+    box-sizing: border-box;
+}
+
+.sari-about-v2 img {
+    display: block;
+    max-width: 100%;
+}
+
+.sari-about-v2 a {
+    text-decoration: none;
+}
+
+.sari-about-v2__hero {
+    min-height: 760px;
+    display: grid;
+    grid-template-columns: minmax(0, 48%) minmax(0, 52%);
+    background: var(--sari-paper);
+    position: relative;
+}
+
+.sari-about-v2__hero-copy {
+    position: relative;
+    z-index: 4;
+    padding: 92px clamp(28px, 7vw, 110px) 90px max(6vw, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sari-about-v2__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--sari-gold);
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: .19em;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.sari-about-v2__eyebrow span {
+    width: 26px;
+    height: 1px;
+    background: currentColor;
+}
+
+.sari-about-v2__hero h1,
+.sari-about-v2__hero-title {
+    margin: 32px 0 25px;
+    max-width: 900px;
+    font-size: clamp(58px, 5.2vw, 94px);
+    line-height: .94;
+    letter-spacing: -.018em;
+    font-weight: 700;
+    text-wrap: balance;
+}
+
+.sari-about-v2__hero-title em {
+    letter-spacing: 0;
+}
+
+.sari-about-v2__hero h1 em,
+.sari-about-v2__story-copy h2 em,
+.sari-about-v2__section-heading h2 em,
+.sari-about-v2__vision-copy h2 em {
+    color: var(--sari-gold);
+    font-style: normal;
+}
+
+.sari-about-v2__lead {
+    max-width: 570px;
+    color: var(--sari-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.sari-about-v2__pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 38px;
+    max-width: 680px;
+}
+
+.sari-about-v2__pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+.sari-about-v2__icon {
+    width: 51px;
+    height: 51px;
+    flex: 0 0 51px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(201,138,18,.55);
+    border-radius: 50%;
+    color: var(--sari-gold);
+}
+
+.sari-about-v2__icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sari-about-v2__pillar strong {
+    display: block;
+    font-size: 13px;
+    margin: 4px 0 5px;
+}
+
+.sari-about-v2__pillar small {
+    display: block;
+    max-width: 130px;
+    color: #77736c;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.sari-about-v2__button,
+.sari-about-v2__outline-button {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 30px;
+    min-height: 50px;
+    padding: 0 20px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.sari-about-v2__button {
+    margin-top: 35px;
+    background: var(--sari-gold);
+    color: #fff;
+    box-shadow: 0 13px 30px rgba(201,138,18,.22);
+}
+
+.sari-about-v2__button span,
+.sari-about-v2__outline-button span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.sari-about-v2__button:hover,
+.sari-about-v2__outline-button:hover {
+    transform: translateY(-3px);
+}
+
+.sari-about-v2__button:hover {
+    background: var(--sari-gold-deep);
+    box-shadow: 0 17px 34px rgba(201,138,18,.28);
+}
+
+.sari-about-v2__hero-media {
+    position: relative;
+    min-height: 760px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.sari-about-v2__hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.sari-about-v2__hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(16,16,16,.05), transparent 35%, rgba(16,16,16,.13));
+    pointer-events: none;
+}
+
+/* The curved/wave seam requested by the user */
+.sari-about-v2__wave {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 56%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+    filter: drop-shadow(16px 0 28px rgba(31,25,17,.055));
+}
+
+.sari-about-v2__wave path {
+    fill: var(--sari-paper);
+}
+
+.sari-about-v2__movement {
+    position: absolute;
+    z-index: 5;
+    left: 12%;
+    right: 10%;
+    bottom: 34px;
+    min-height: 95px;
+    padding: 17px 20px 17px 28px;
+    display: grid;
+    grid-template-columns: minmax(150px, .75fr) 1px minmax(190px, 1.2fr) 42px;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgba(255,255,255,.62);
+    border-radius: 17px;
+    background: rgba(255,255,255,.91);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.13);
+}
+
+.sari-about-v2__movement span,
+.sari-about-v2__movement strong {
+    display: block;
+}
+
+.sari-about-v2__movement span {
+    font-size: 12px;
+}
+
+.sari-about-v2__movement strong {
+    margin-top: 4px;
+    color: var(--sari-gold);
+    font-size: 21px;
+}
+
+.sari-about-v2__movement i {
+    width: 1px;
+    height: 52px;
+    background: #e6dfd3;
+}
+
+.sari-about-v2__movement p {
+    margin: 0;
+    color: #66625c;
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+.sari-about-v2__movement a {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sari-gold);
+    color: #fff;
+    font-size: 21px;
+    transition: transform .25s ease;
+}
+
+.sari-about-v2__movement a:hover {
+    transform: rotate(-25deg);
+}
+
+/* STATS */
+.sari-about-v2__stats {
+    width: min(1320px, calc(100% - 64px));
+    margin: -1px auto 0;
+    min-height: 128px;
+    padding: 25px 42px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 1.35fr;
+    align-items: center;
+    border: 1px solid var(--sari-line);
+    border-top: 0;
+    border-radius: 0 0 22px 22px;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 20px 55px rgba(37,31,22,.06);
+    position: relative;
+    z-index: 8;
+}
+
+.sari-about-v2__stat {
+    min-height: 66px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 22px;
+    border-right: 1px solid var(--sari-line);
+}
+
+.sari-about-v2__stat b {
+    font-size: 28px;
+    letter-spacing: -.04em;
+}
+
+.sari-about-v2__stat b span {
+    color: var(--sari-gold);
+}
+
+.sari-about-v2__stat small {
+    color: #77736d;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.sari-about-v2__stat-note {
+    padding-left: 30px;
+}
+
+.sari-about-v2__stat-note span {
+    color: var(--sari-gold);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.sari-about-v2__stat-note strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+/* STORY */
+.sari-about-v2__story {
+    min-height: 720px;
+    width: min(1320px, calc(100% - 64px));
+    margin: 90px auto 120px;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: clamp(35px, 6vw, 105px);
+}
+
+.sari-about-v2__story-art {
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sari-about-v2__story-glow {
+    position: absolute;
+    width: 76%;
+    height: 70%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,138,18,.16), rgba(201,138,18,0) 68%);
+    filter: blur(5px);
+}
+
+.sari-about-v2__story-art img {
+    position: relative;
+    z-index: 2;
+    width: 112%;
+    max-width: 780px;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 25px rgba(34,25,12,.11));
+}
+
+.sari-about-v2__story-caption {
+    position: absolute;
+    z-index: 4;
+    left: 7%;
+    bottom: 9%;
+    padding: 10px 16px;
+    border: 1px solid rgba(201,138,18,.25);
+    border-radius: 30px;
+    background: rgba(255,255,255,.86);
+    color: #8a641b;
+    font-size: 9px;
+    letter-spacing: .12em;
+    font-weight: 800;
+    backdrop-filter: blur(8px);
+}
+
+.sari-about-v2__story-copy {
+    padding-right: 5%;
+}
+
+.sari-about-v2__story-copy h2,
+.sari-about-v2__vision-copy h2 {
+    margin: 27px 0 22px;
+    font-size: clamp(43px, 4.1vw, 70px);
+    line-height: .99;
+    letter-spacing: -.055em;
+}
+
+.sari-about-v2__story-copy > p {
+    max-width: 580px;
+    margin: 0;
+    color: #69655e;
+    font-size: 14px;
+    line-height: 1.85;
+}
+
+.sari-about-v2__outline-button {
+    margin-top: 27px;
+    border: 1px solid #d9b267;
+    color: var(--sari-ink);
+}
+
+.sari-about-v2__outline-button:hover {
+    background: #fffaf0;
+}
+
+.sari-about-v2__features {
+    margin-top: 42px;
+    display: grid;
+    gap: 19px;
+}
+
+.sari-about-v2__features > div {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 15px;
+    align-items: center;
+}
+
+.sari-about-v2__feature-icon {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e5bf77;
+    border-radius: 50%;
+    color: var(--sari-gold);
+    font-size: 20px;
+}
+
+.sari-about-v2__features p {
+    margin: 0;
+}
+
+.sari-about-v2__features strong,
+.sari-about-v2__features small {
+    display: block;
+}
+
+.sari-about-v2__features strong {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.sari-about-v2__features small {
+    color: #78736c;
+    font-size: 10.5px;
+    line-height: 1.5;
+}
+
+/* VALUES */
+.sari-about-v2__values {
+    padding: 92px max(6vw, 32px) 105px;
+    background:
+        radial-gradient(circle at 50% 0, rgba(201,138,18,.08), transparent 33%),
+        var(--sari-cream);
+}
+
+.sari-about-v2__section-heading {
+    max-width: 1320px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+
+.sari-about-v2__section-heading .sari-about-v2__eyebrow {
+    justify-content: center;
+}
+
+.sari-about-v2__section-heading h2 {
+    margin: 22px 0 0;
+    font-size: clamp(37px, 3.6vw, 60px);
+    line-height: 1;
+    letter-spacing: -.05em;
+}
+
+.sari-about-v2__value-grid {
+    width: min(1320px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+}
+
+.sari-about-v2__value-grid article {
+    min-height: 137px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    border: 1px solid #e3dacb;
+    border-radius: 13px;
+    background: rgba(255,255,255,.72);
+    transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.sari-about-v2__value-grid article:hover {
+    transform: translateY(-5px);
+    background: #fff;
+    box-shadow: 0 17px 38px rgba(55,43,25,.08);
+}
+
+.value-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 21px;
+}
+
+.value-icon--gold { background: #d28d0c; }
+.value-icon--blue { background: #6096bd; }
+.value-icon--green { background: #4c9b82; }
+.value-icon--coral { background: #db7b64; }
+
+.sari-about-v2__value-grid h3 {
+    margin: 0 0 5px;
+    font-size: 13px;
+}
+
+.sari-about-v2__value-grid p {
+    margin: 0;
+    color: #77736d;
+    font-size: 10.5px;
+    line-height: 1.5;
+}
+
+/* VISION / TRUCK */
+.sari-about-v2__vision {
+    width: min(1320px, calc(100% - 64px));
+    min-height: 450px;
+    margin: 85px auto 120px;
+    display: grid;
+    grid-template-columns: 1.08fr .92fr;
+    overflow: hidden;
+    border-radius: 22px;
+    background: #f5efe4;
+}
+
+.sari-about-v2__truck {
+    min-height: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sari-about-v2__truck img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.sari-about-v2__vision:hover .sari-about-v2__truck img {
+    transform: scale(1.035);
+}
+
+.sari-about-v2__truck::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.48));
+}
+
+.sari-about-v2__truck-overlay {
+    position: absolute;
+    z-index: 3;
+    left: 26px;
+    bottom: 24px;
+    color: #fff;
+}
+
+.sari-about-v2__truck-overlay strong {
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 27px;
+    letter-spacing: .2em;
+}
+
+.sari-about-v2__truck-overlay span {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    letter-spacing: .08em;
+    opacity: .86;
+}
+
+.sari-about-v2__vision-copy {
+    position: relative;
+    padding: 72px 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sari-about-v2__vision-copy h2 {
+    font-size: clamp(38px, 3.4vw, 57px);
+    margin-bottom: 20px;
+}
+
+.sari-about-v2__vision-copy p {
+    max-width: 480px;
+    margin: 0;
+    color: #6f6a61;
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__button {
+    margin-top: 28px;
+}
+
+.sari-about-v2__rings {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    right: -80px;
+    bottom: -115px;
+    border: 1px dashed rgba(201,138,18,.34);
+    border-radius: 50%;
+}
+
+.sari-about-v2__rings i {
+    position: absolute;
+    inset: 27px;
+    border: 1px dashed rgba(201,138,18,.27);
+    border-radius: 50%;
+}
+
+.sari-about-v2__rings i:nth-child(2) {
+    inset: 54px;
+}
+
+.sari-about-v2__rings i:nth-child(3) {
+    inset: 81px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .sari-about-v2__hero {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sari-about-v2__hero-copy {
+        padding-left: 5vw;
+        padding-right: 4vw;
+    }
+
+    .sari-about-v2__hero h1,
+    .sari-about-v2__hero-title {
+        font-size: clamp(52px, 6vw, 74px);
+    }
+
+    .sari-about-v2__pillars {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .sari-about-v2__pillar {
+        max-width: 290px;
+    }
+
+    .sari-about-v2__stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .sari-about-v2__stat-note {
+        display: none;
+    }
+}
+
+@media (max-width: 820px) {
+    .sari-about-v2__hero {
+        display: block;
+        min-height: auto;
+    }
+
+    .sari-about-v2__hero-copy {
+        padding: 72px 24px 54px;
+    }
+
+    .sari-about-v2__hero h1,
+    .sari-about-v2__hero-title {
+        font-size: clamp(51px, 14vw, 78px);
+    }
+
+    .sari-about-v2__pillars {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .sari-about-v2__pillar {
+        display: block;
+    }
+
+    .sari-about-v2__pillar small {
+        max-width: 100%;
+        margin-top: 6px;
+    }
+
+    .sari-about-v2__hero-media {
+        min-height: 520px;
+    }
+
+    .sari-about-v2__wave {
+        width: 60%;
+    }
+
+    .sari-about-v2__stats {
+        width: calc(100% - 30px);
+        padding: 20px 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 0;
+        border-radius: 0 0 17px 17px;
+    }
+
+    .sari-about-v2__stat {
+        border-right: 0;
+        padding: 0 15px;
+    }
+
+    .sari-about-v2__story,
+    .sari-about-v2__vision {
+        width: calc(100% - 30px);
+        grid-template-columns: 1fr;
+    }
+
+    .sari-about-v2__story {
+        margin-top: 60px;
+        margin-bottom: 75px;
+        gap: 15px;
+    }
+
+    .sari-about-v2__story-art {
+        min-height: 460px;
+    }
+
+    .sari-about-v2__story-art img {
+        width: 100%;
+    }
+
+    .sari-about-v2__story-copy {
+        padding: 0 8px 20px;
+    }
+
+    .sari-about-v2__value-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sari-about-v2__vision {
+        margin-top: 60px;
+        margin-bottom: 70px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sari-about-v2__pillars {
+        grid-template-columns: 1fr;
+    }
+
+    .sari-about-v2__pillar {
+        display: flex;
+    }
+
+    .sari-about-v2__hero-media {
+        min-height: 470px;
+    }
+
+    .sari-about-v2__movement {
+        grid-template-columns: 1fr 40px;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .sari-about-v2__movement i {
+        display: none;
+    }
+
+    .sari-about-v2__movement p {
+        grid-column: 1 / -1;
+    }
+
+    .sari-about-v2__movement a {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .sari-about-v2__stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sari-about-v2__story {
+        width: calc(100% - 28px);
+    }
+
+    .sari-about-v2__story-art {
+        min-height: 350px;
+    }
+
+    .sari-about-v2__story-caption {
+        left: 2%;
+        bottom: 4%;
+        font-size: 7px;
+    }
+
+    .sari-about-v2__story-copy h2,
+    .sari-about-v2__vision-copy h2 {
+        font-size: 43px;
+    }
+
+    .sari-about-v2__value-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sari-about-v2__vision {
+        width: calc(100% - 28px);
+        border-radius: 16px;
+    }
+
+    .sari-about-v2__truck {
+        min-height: 300px;
+    }
+
+    .sari-about-v2__vision-copy {
+        padding: 50px 27px 58px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sari-about-v2 * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+
+
+/* =========================================================
+   THEME BRIDGE
+   Uses the same html.light-mode class controlled by SARI navbar.
+   Dark mode is the default; light mode overrides it.
+   ========================================================= */
+
+.sari-about-v2 {
+    --sari-bg: #0b0b0b;
+    --sari-surface: #11110f;
+    --sari-surface-2: #171612;
+    --sari-text: #f5f3ef;
+    --sari-muted-theme: #a9a49b;
+    --sari-line-theme: rgba(245,243,239,.12);
+    background: var(--sari-bg);
+    color: var(--sari-text);
+    transition: background-color .35s ease, color .35s ease;
+}
+
+/* DARK MODE */
+html:not(.light-mode) .sari-about-v2 {
+    --sari-paper: #0b0b0b;
+    --sari-cream: #11100e;
+    --sari-ink: #f5f3ef;
+    --sari-muted: #a9a49b;
+    --sari-line: rgba(245,243,239,.12);
+}
+
+html:not(.light-mode) .sari-about-v2__hero {
+    background: #0b0b0b;
+}
+
+html:not(.light-mode) .sari-about-v2__hero h1,
+html:not(.light-mode) .sari-about-v2__story-copy h2,
+html:not(.light-mode) .sari-about-v2__section-heading h2,
+html:not(.light-mode) .sari-about-v2__vision-copy h2,
+html:not(.light-mode) .sari-about-v2__pillar strong,
+html:not(.light-mode) .sari-about-v2__features strong,
+html:not(.light-mode) .sari-about-v2__value-grid h3,
+html:not(.light-mode) .sari-about-v2__stat b,
+html:not(.light-mode) .sari-about-v2__stat-note strong {
+    color: #f5f3ef;
+}
+
+html:not(.light-mode) .sari-about-v2__lead,
+html:not(.light-mode) .sari-about-v2__pillar small,
+html:not(.light-mode) .sari-about-v2__story-copy > p,
+html:not(.light-mode) .sari-about-v2__features small,
+html:not(.light-mode) .sari-about-v2__value-grid p,
+html:not(.light-mode) .sari-about-v2__vision-copy p,
+html:not(.light-mode) .sari-about-v2__stat small {
+    color: #a9a49b;
+}
+
+html:not(.light-mode) .sari-about-v2__wave {
+    background: #0b0b0b;
+    box-shadow: 16px 0 45px rgba(0,0,0,.28);
+}
+
+html:not(.light-mode) .sari-about-v2__stats {
+    background: rgba(18,18,16,.96);
+    border-color: rgba(245,243,239,.12);
+    box-shadow: 0 20px 55px rgba(0,0,0,.25);
+}
+
+html:not(.light-mode) .sari-about-v2__stat {
+    border-right-color: rgba(245,243,239,.12);
+}
+
+html:not(.light-mode) .sari-about-v2__stat-note span {
+    color: #d69a21;
+}
+
+html:not(.light-mode) .sari-about-v2__outline-button {
+    color: #f5f3ef;
+    border-color: rgba(201,138,18,.65);
+}
+
+html:not(.light-mode) .sari-about-v2__outline-button:hover {
+    background: rgba(201,138,18,.10);
+}
+
+html:not(.light-mode) .sari-about-v2__values {
+    background:
+        radial-gradient(circle at 50% 0, rgba(201,138,18,.10), transparent 33%),
+        #11100e;
+}
+
+html:not(.light-mode) .sari-about-v2__value-grid article {
+    background: rgba(255,255,255,.025);
+    border-color: rgba(245,243,239,.11);
+}
+
+html:not(.light-mode) .sari-about-v2__value-grid article:hover {
+    background: rgba(255,255,255,.055);
+    box-shadow: 0 17px 38px rgba(0,0,0,.20);
+}
+
+html:not(.light-mode) .sari-about-v2__vision {
+    background: #171511;
+}
+
+html:not(.light-mode) .sari-about-v2__vision-copy {
+    background: #171511;
+}
+
+html:not(.light-mode) .sari-about-v2__story-glow {
+    background: radial-gradient(circle, rgba(201,138,18,.13), rgba(201,138,18,0) 68%);
+}
+
+/* LIGHT MODE — follows the navbar's existing html.light-mode state */
+html.light-mode .sari-about-v2 {
+    --sari-paper: #fcfbf8;
+    --sari-cream: #f7f3eb;
+    --sari-ink: #111111;
+    --sari-muted: #6d6a65;
+    --sari-line: #e6dfd3;
+    --sari-bg: #fff;
+    --sari-text: #111111;
+    --sari-muted-theme: #6d6a65;
+    --sari-line-theme: #e6dfd3;
+    background: #fff;
+    color: #111;
+}
+
+html.light-mode .sari-about-v2__hero {
+    background: #fcfbf8;
+}
+
+html.light-mode .sari-about-v2__values {
+    background:
+        radial-gradient(circle at 50% 0, rgba(201,138,18,.08), transparent 33%),
+        #f7f3eb;
+}
+
+/* Smooth theme transition for the main visual surfaces */
+.sari-about-v2__hero,
+.sari-about-v2__stats,
+.sari-about-v2__story,
+.sari-about-v2__values,
+.sari-about-v2__value-grid article,
+.sari-about-v2__vision,
+.sari-about-v2__vision-copy,
+.sari-about-v2__outline-button {
+    transition:
+        background-color .35s ease,
+        border-color .35s ease,
+        color .35s ease,
+        box-shadow .35s ease;
+}
+
+/* Make the transparent story artwork feel correct in either theme. */
+html:not(.light-mode) .sari-about-v2__story-art img {
+    filter: drop-shadow(0 24px 28px rgba(0,0,0,.34));
+}
+
+
+/* =========================================================
+   VISION V2 — CINEMATIC CONTAINER
+   The truck is now the hero of the section instead of
+   sitting in a 50/50 split card.
+   ========================================================= */
+
+.sari-about-v2__vision {
+    position: relative;
+    width: min(1320px, calc(100% - 64px));
+    min-height: 560px;
+    margin: 95px auto 120px;
+    display: block;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 28px;
+    background: #17130e;
+    box-shadow:
+        0 28px 80px rgba(25, 20, 12, .14),
+        0 2px 0 rgba(255,255,255,.55) inset;
+}
+
+.sari-about-v2__truck {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    z-index: -2;
+}
+
+.sari-about-v2__truck img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+    transform: scale(1.01);
+    transition: transform 1s cubic-bezier(.2,.7,.2,1);
+}
+
+.sari-about-v2__vision:hover .sari-about-v2__truck img {
+    transform: scale(1.045);
+}
+
+.sari-about-v2__truck::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(90deg,
+            rgba(8,8,7,.84) 0%,
+            rgba(8,8,7,.70) 27%,
+            rgba(8,8,7,.32) 54%,
+            rgba(8,8,7,.08) 100%),
+        linear-gradient(0deg,
+            rgba(0,0,0,.58) 0%,
+            transparent 38%,
+            rgba(0,0,0,.08) 100%);
+}
+
+.sari-about-v2__truck-overlay {
+    left: 42px;
+    bottom: 34px;
+    z-index: 4;
+}
+
+.sari-about-v2__truck-overlay strong {
+    font-size: 30px;
+    letter-spacing: .26em;
+    text-shadow: 0 3px 16px rgba(0,0,0,.35);
+}
+
+.sari-about-v2__truck-overlay span {
+    margin-top: 6px;
+    font-size: 11px;
+    letter-spacing: .12em;
+}
+
+.sari-about-v2__vision-copy {
+    position: relative;
+    z-index: 5;
+    width: min(610px, 58%);
+    min-height: 560px;
+    padding: 78px 64px 74px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: #fff;
+    background:
+        linear-gradient(90deg,
+            rgba(8,8,7,.60) 0%,
+            rgba(8,8,7,.28) 72%,
+            transparent 100%);
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__eyebrow {
+    color: #d69a21;
+}
+
+.sari-about-v2__vision-copy h2 {
+    max-width: 560px;
+    margin: 18px 0 20px;
+    color: #fff;
+    font-size: clamp(42px, 4.2vw, 68px);
+    line-height: .98;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+}
+
+.sari-about-v2__vision-copy h2 em {
+    color: #d69a21;
+    font-style: normal;
+}
+
+.sari-about-v2__vision-copy p {
+    max-width: 500px;
+    margin: 0;
+    color: rgba(255,255,255,.78);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__button {
+    margin-top: 30px;
+    box-shadow: 0 14px 32px rgba(0,0,0,.22);
+}
+
+.sari-about-v2__rings {
+    width: 360px;
+    height: 360px;
+    right: -180px;
+    bottom: -170px;
+    border-color: rgba(215,156,35,.44);
+    z-index: -1;
+}
+
+.sari-about-v2__rings i {
+    border-color: rgba(215,156,35,.32);
+}
+
+/* Light mode keeps the same cinematic image but gives the
+   content a softer premium veil rather than a dark rectangle. */
+html.light-mode .sari-about-v2__vision {
+    background: #1a1510;
+    box-shadow:
+        0 28px 80px rgba(25,20,12,.12),
+        0 2px 0 rgba(255,255,255,.65) inset;
+}
+
+html.light-mode .sari-about-v2__vision-copy {
+    background:
+        linear-gradient(90deg,
+            rgba(10,9,8,.66) 0%,
+            rgba(10,9,8,.34) 72%,
+            transparent 100%);
+}
+
+html.light-mode .sari-about-v2__vision-copy p {
+    color: rgba(255,255,255,.78);
+}
+
+@media (max-width: 900px) {
+    .sari-about-v2__vision {
+        width: min(100% - 32px, 720px);
+        min-height: 610px;
+        margin-top: 70px;
+        margin-bottom: 80px;
+        border-radius: 22px;
+    }
+
+    .sari-about-v2__truck {
+        min-height: 610px;
+    }
+
+    .sari-about-v2__truck img {
+        object-position: 62% center;
+    }
+
+    .sari-about-v2__truck::after {
+        background:
+            linear-gradient(180deg,
+                rgba(8,8,7,.10) 0%,
+                rgba(8,8,7,.34) 42%,
+                rgba(8,8,7,.88) 100%);
+    }
+
+    .sari-about-v2__vision-copy {
+        width: 100%;
+        min-height: 610px;
+        padding: 55px 38px 120px;
+        justify-content: flex-start;
+        background:
+            linear-gradient(180deg,
+                rgba(8,8,7,.12) 0%,
+                rgba(8,8,7,.30) 35%,
+                rgba(8,8,7,.76) 72%,
+                rgba(8,8,7,.88) 100%);
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        font-size: clamp(40px, 9vw, 58px);
+    }
+
+    .sari-about-v2__truck-overlay {
+        left: 28px;
+        bottom: 24px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sari-about-v2__vision {
+        width: calc(100% - 24px);
+        min-height: 570px;
+        border-radius: 18px;
+    }
+
+    .sari-about-v2__truck,
+    .sari-about-v2__vision-copy {
+        min-height: 570px;
+    }
+
+    .sari-about-v2__vision-copy {
+        padding: 38px 24px 100px;
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        font-size: 39px;
+    }
+
+    .sari-about-v2__vision-copy p {
+        font-size: 12px;
+    }
+
+    .sari-about-v2__rings {
+        width: 260px;
+        height: 260px;
+        right: -130px;
+        bottom: -120px;
+    }
+}
+
+/* =========================================================
+   SARI VISION — FULL-BLEED CINEMATIC EDITORIAL
+   Replaces the boxed vision container with a full-width
+   immersive truck scene. Blade markup stays unchanged.
+   ========================================================= */
+
+.sari-about-v2__vision {
+    position: relative;
+    width: 100%;
+    min-height: 680px;
+    margin: 110px 0 0;
+    display: block;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 0;
+    background: #11100d;
+    box-shadow: none;
+}
+
+.sari-about-v2__truck {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 680px;
+    overflow: hidden;
+    z-index: -2;
+}
+
+.sari-about-v2__truck img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 52%;
+    transform: scale(1.015);
+    transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .6s ease;
+}
+
+.sari-about-v2__vision:hover .sari-about-v2__truck img {
+    transform: scale(1.04);
+}
+
+/* Deep editorial gradient: text remains readable without creating a box. */
+.sari-about-v2__truck::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(90deg,
+            rgba(8, 8, 7, .90) 0%,
+            rgba(8, 8, 7, .78) 18%,
+            rgba(8, 8, 7, .48) 38%,
+            rgba(8, 8, 7, .12) 64%,
+            rgba(8, 8, 7, .02) 100%),
+        linear-gradient(0deg,
+            rgba(0, 0, 0, .62) 0%,
+            rgba(0, 0, 0, .08) 42%,
+            rgba(0, 0, 0, .08) 100%);
+}
+
+/* Soft gold atmospheric glow for the SARI palette. */
+.sari-about-v2__vision::before {
+    content: "";
+    position: absolute;
+    width: 680px;
+    height: 680px;
+    left: -260px;
+    top: -240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(211, 151, 34, .16), rgba(211, 151, 34, 0) 68%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Editorial wave at the left edge of the copy — subtle, not a card. */
+.sari-about-v2__vision-copy::before {
+    content: "";
+    position: absolute;
+    top: -8%;
+    bottom: -8%;
+    right: -105px;
+    width: 150px;
+    border-radius: 50%;
+    background: rgba(9, 9, 8, .13);
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+.sari-about-v2__vision-copy {
+    position: relative;
+    z-index: 5;
+    width: min(680px, 58vw);
+    min-height: 680px;
+    padding: 100px clamp(28px, 6vw, 105px) 110px max(7vw, 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #fff;
+    background: linear-gradient(90deg,
+        rgba(7, 7, 6, .48) 0%,
+        rgba(7, 7, 6, .22) 58%,
+        transparent 100%);
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__eyebrow {
+    color: #e0a329;
+    position: relative;
+    z-index: 2;
+}
+
+.sari-about-v2__vision-copy h2 {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    margin: 20px 0 22px;
+    color: #fff;
+    font-size: clamp(48px, 5.2vw, 82px);
+    line-height: .94;
+    letter-spacing: -.055em;
+    text-wrap: balance;
+    text-shadow: 0 10px 35px rgba(0,0,0,.28);
+}
+
+.sari-about-v2__vision-copy h2 em {
+    color: #e0a329;
+    font-style: normal;
+}
+
+.sari-about-v2__vision-copy p {
+    position: relative;
+    z-index: 2;
+    max-width: 510px;
+    margin: 0;
+    color: rgba(255,255,255,.82);
+    font-size: 14px;
+    line-height: 1.8;
+    text-shadow: 0 4px 18px rgba(0,0,0,.3);
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__button {
+    position: relative;
+    z-index: 3;
+    margin-top: 32px;
+    box-shadow: 0 18px 42px rgba(0,0,0,.28);
+}
+
+.sari-about-v2__truck-overlay {
+    left: max(32px, 4vw);
+    bottom: 34px;
+    z-index: 4;
+    opacity: .92;
+}
+
+.sari-about-v2__truck-overlay strong {
+    font-size: 30px;
+    letter-spacing: .28em;
+    text-shadow: 0 4px 18px rgba(0,0,0,.5);
+}
+
+.sari-about-v2__truck-overlay span {
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-shadow: 0 3px 12px rgba(0,0,0,.5);
+}
+
+.sari-about-v2__rings {
+    width: 430px;
+    height: 430px;
+    right: -215px;
+    bottom: -220px;
+    border-color: rgba(224,163,41,.48);
+    z-index: 1;
+}
+
+.sari-about-v2__rings i {
+    border-color: rgba(224,163,41,.30);
+}
+
+/* LIGHT MODE: preserve the cinematic photo while making the section
+   feel warmer and cleaner against the light page. */
+html.light-mode .sari-about-v2__vision {
+    background: #17120b;
+}
+
+html.light-mode .sari-about-v2__truck::after {
+    background:
+        linear-gradient(90deg,
+            rgba(12, 10, 7, .82) 0%,
+            rgba(12, 10, 7, .66) 20%,
+            rgba(12, 10, 7, .34) 42%,
+            rgba(12, 10, 7, .08) 68%,
+            transparent 100%),
+        linear-gradient(0deg,
+            rgba(0,0,0,.54) 0%,
+            transparent 48%);
+}
+
+html.light-mode .sari-about-v2__vision-copy {
+    background: linear-gradient(90deg,
+        rgba(12, 10, 7, .28) 0%,
+        rgba(12, 10, 7, .10) 60%,
+        transparent 100%);
+}
+
+/* Desktop ultra-wide: give the image more breathing room. */
+@media (min-width: 1600px) {
+    .sari-about-v2__vision,
+    .sari-about-v2__truck {
+        min-height: 760px;
+    }
+
+    .sari-about-v2__vision-copy {
+        min-height: 760px;
+        padding-left: 9vw;
+    }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .sari-about-v2__vision {
+        width: 100%;
+        min-height: 680px;
+        margin: 80px 0 0;
+        border-radius: 0;
+    }
+
+    .sari-about-v2__truck {
+        min-height: 680px;
+    }
+
+    .sari-about-v2__truck img {
+        object-position: 60% center;
+    }
+
+    .sari-about-v2__truck::after {
+        background:
+            linear-gradient(180deg,
+                rgba(7,7,6,.10) 0%,
+                rgba(7,7,6,.34) 40%,
+                rgba(7,7,6,.88) 100%);
+    }
+
+    .sari-about-v2__vision-copy {
+        width: 100%;
+        min-height: 680px;
+        padding: 78px 38px 130px;
+        justify-content: flex-start;
+        background: linear-gradient(180deg,
+            rgba(7,7,6,.08) 0%,
+            rgba(7,7,6,.18) 34%,
+            rgba(7,7,6,.68) 68%,
+            rgba(7,7,6,.90) 100%);
+    }
+
+    .sari-about-v2__vision-copy::before {
+        display: none;
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        max-width: 700px;
+        font-size: clamp(46px, 9vw, 70px);
+    }
+}
+
+/* Phone */
+@media (max-width: 560px) {
+    .sari-about-v2__vision {
+        min-height: 620px;
+        margin-top: 60px;
+    }
+
+    .sari-about-v2__truck,
+    .sari-about-v2__vision-copy {
+        min-height: 620px;
+    }
+
+    .sari-about-v2__vision-copy {
+        padding: 46px 24px 108px;
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        margin-top: 16px;
+        font-size: 42px;
+        line-height: .98;
+    }
+
+    .sari-about-v2__vision-copy p {
+        max-width: 360px;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .sari-about-v2__vision-copy .sari-about-v2__button {
+        margin-top: 24px;
+    }
+
+    .sari-about-v2__truck-overlay {
+        left: 24px;
+        bottom: 22px;
+    }
+
+    .sari-about-v2__truck-overlay strong {
+        font-size: 24px;
+    }
+
+    .sari-about-v2__rings {
+        width: 280px;
+        height: 280px;
+        right: -140px;
+        bottom: -130px;
+    }
+}
+
+/* =========================================================
+   SARI MOTION SYSTEM — QUIET / PREMIUM
+   Soft editorial reveals, subtle image movement, and restrained
+   hover states. Designed to feel polished rather than flashy.
+   ========================================================= */
+
+.sari-about-v2.sari-motion-ready .sari-motion-item {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+        opacity .75s cubic-bezier(.22,1,.36,1),
+        transform .85s cubic-bezier(.22,1,.36,1);
+    will-change: opacity, transform;
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-item.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Gentle left/right editorial entrance for the two large story blocks. */
+.sari-about-v2.sari-motion-ready .sari-motion-left {
+    transform: translate3d(-24px, 0, 0);
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-right {
+    transform: translate3d(24px, 0, 0);
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-left.is-visible,
+.sari-about-v2.sari-motion-ready .sari-motion-right.is-visible {
+    transform: translate3d(0, 0, 0);
+}
+
+/* Stagger without making the page feel like a presentation. */
+.sari-about-v2 .sari-motion-delay-1 { transition-delay: .08s !important; }
+.sari-about-v2 .sari-motion-delay-2 { transition-delay: .16s !important; }
+.sari-about-v2 .sari-motion-delay-3 { transition-delay: .24s !important; }
+.sari-about-v2 .sari-motion-delay-4 { transition-delay: .32s !important; }
+
+/* Hero gets a very short, understated entrance. */
+.sari-about-v2.sari-motion-ready .sari-about-v2__hero-copy {
+    animation: sariHeroIn .9s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes sariHeroIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Vision: cinematic image starts slightly closer and settles into place. */
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision .sari-about-v2__truck img {
+    transform: scale(1.055);
+    transition: transform 1.45s cubic-bezier(.16,1,.3,1);
+}
+
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision.sari-is-visible .sari-about-v2__truck img {
+    transform: scale(1.015);
+}
+
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision:hover .sari-about-v2__truck img {
+    transform: scale(1.035);
+}
+
+/* A restrained light sweep on the primary CTA. */
+.sari-about-v2__vision .sari-about-v2__button,
+.sari-about-v2__outline-button {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.sari-about-v2__vision .sari-about-v2__button::after,
+.sari-about-v2__outline-button::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -85%;
+    width: 55%;
+    height: 180%;
+    background: linear-gradient(
+        100deg,
+        transparent,
+        rgba(255,255,255,.18),
+        transparent
+    );
+    transform: skewX(-18deg);
+    transition: left .8s cubic-bezier(.22,1,.36,1);
+    pointer-events: none;
+}
+
+.sari-about-v2__vision .sari-about-v2__button:hover::after,
+.sari-about-v2__outline-button:hover::after {
+    left: 135%;
+}
+
+/* Value cards: slight lift only, no exaggerated scaling. */
+.sari-about-v2__value-grid article {
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1),
+        background-color .35s ease,
+        border-color .35s ease,
+        box-shadow .4s ease;
+}
+
+.sari-about-v2__value-grid article:hover {
+    transform: translateY(-5px);
+}
+
+/* Feature icons get a tiny premium motion on hover. */
+.sari-about-v2__feature-icon {
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1),
+        box-shadow .4s ease;
+}
+
+.sari-about-v2__features > div:hover .sari-about-v2__feature-icon {
+    transform: translateY(-2px);
+}
+
+/* Gold rings slowly breathe instead of spinning. */
+.sari-about-v2__rings,
+.sari-about-v2__rings i {
+    animation: sariRingBreathe 6s ease-in-out infinite;
+}
+
+.sari-about-v2__rings i:nth-child(2) { animation-delay: -1.2s; }
+.sari-about-v2__rings i:nth-child(3) { animation-delay: -2.4s; }
+
+@keyframes sariRingBreathe {
+    0%, 100% { opacity: .42; }
+    50% { opacity: .72; }
+}
+
+@media (max-width: 900px) {
+    .sari-about-v2.sari-motion-ready .sari-motion-left,
+    .sari-about-v2.sari-motion-ready .sari-motion-right {
+        transform: translate3d(0, 22px, 0);
+    }
+
+    .sari-about-v2.sari-motion-ready .sari-motion-left.is-visible,
+    .sari-about-v2.sari-motion-ready .sari-motion-right.is-visible {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sari-about-v2.sari-motion-ready .sari-motion-item,
+    .sari-about-v2.sari-motion-ready .sari-motion-left,
+    .sari-about-v2.sari-motion-ready .sari-motion-right,
+    .sari-about-v2.sari-motion-ready .sari-about-v2__hero-copy {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .sari-about-v2__rings,
+    .sari-about-v2__rings i {
+        animation: none !important;
+    }
+}
+
+/* =========================================================
+   SARI VISION V7 — SEAMLESS EDITORIAL TRANSITION
+   Values flows directly into the cinematic vision scene.
+   No card, no white gap, no heavy decorative treatment.
+   ========================================================= */
+
+.sari-about-v2__values {
+    padding-bottom: 82px;
+}
+
+.sari-about-v2__vision {
+    width: 100%;
+    min-height: clamp(590px, 68vh, 760px);
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: #100e0b;
+}
+
+.sari-about-v2__truck {
+    min-height: 100%;
+}
+
+.sari-about-v2__truck img {
+    object-position: center 54%;
+    transform: scale(1.025);
+}
+
+/* Richer cinematic veil: darkest at the copy, nearly invisible over the truck. */
+.sari-about-v2__truck::after {
+    background:
+        linear-gradient(90deg,
+            rgba(7,7,6,.93) 0%,
+            rgba(7,7,6,.78) 16%,
+            rgba(7,7,6,.48) 34%,
+            rgba(7,7,6,.16) 55%,
+            rgba(7,7,6,0) 76%),
+        linear-gradient(0deg,
+            rgba(0,0,0,.58) 0%,
+            rgba(0,0,0,.12) 42%,
+            rgba(0,0,0,.02) 100%);
+}
+
+/* A very soft gold atmosphere connects Values to Vision. */
+.sari-about-v2__vision::before {
+    width: 760px;
+    height: 760px;
+    left: -300px;
+    top: -300px;
+    background: radial-gradient(circle,
+        rgba(211,151,34,.18) 0%,
+        rgba(211,151,34,.07) 30%,
+        rgba(211,151,34,0) 70%);
+    opacity: .9;
+}
+
+/* Fine route line = connected commerce, not decorative noise. */
+.sari-about-v2__vision::after {
+    content: "";
+    position: absolute;
+    left: 8vw;
+    right: 8vw;
+    bottom: 42px;
+    height: 1px;
+    z-index: 4;
+    transform-origin: left center;
+    transform: scaleX(0);
+    background: linear-gradient(90deg,
+        rgba(215,156,35,.72),
+        rgba(215,156,35,.30) 48%,
+        rgba(215,156,35,0));
+    transition: transform 1.2s cubic-bezier(.16,1,.3,1) .25s;
+}
+
+.sari-about-v2__vision.sari-is-visible::after {
+    transform: scaleX(1);
+}
+
+/* Three understated route points. */
+.sari-about-v2__vision .sari-about-v2__rings::before,
+.sari-about-v2__vision .sari-about-v2__rings::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #d79c23;
+    box-shadow: 0 0 0 5px rgba(215,156,35,.10);
+}
+
+.sari-about-v2__vision .sari-about-v2__rings::before {
+    left: 20%;
+}
+
+.sari-about-v2__vision .sari-about-v2__rings::after {
+    left: 48%;
+}
+
+.sari-about-v2__vision-copy {
+    width: min(600px, 49vw);
+    min-height: clamp(590px, 68vh, 760px);
+    padding: 90px 0 120px max(7vw, 42px);
+    background: linear-gradient(90deg,
+        rgba(7,7,6,.38) 0%,
+        rgba(7,7,6,.17) 70%,
+        transparent 100%);
+}
+
+.sari-about-v2__vision-copy::before {
+    right: -130px;
+    width: 180px;
+    background: rgba(9,9,8,.11);
+    filter: blur(18px);
+}
+
+.sari-about-v2__vision-copy::after {
+    content: "SARI NETWORK  ·  150+ COUNTRIES  ·  10M+ PRODUCTS";
+    position: absolute;
+    left: max(7vw, 42px);
+    bottom: 60px;
+    z-index: 5;
+    color: rgba(255,255,255,.54);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .20em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .8s ease .45s, transform .8s cubic-bezier(.22,1,.36,1) .45s;
+}
+
+.sari-about-v2__vision.sari-is-visible .sari-about-v2__vision-copy::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sari-about-v2__vision-copy h2 {
+    max-width: 590px;
+    margin: 18px 0 22px;
+    font-size: clamp(44px, 4.8vw, 76px);
+    line-height: .94;
+    letter-spacing: -.052em;
+}
+
+.sari-about-v2__vision-copy p {
+    max-width: 470px;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.sari-about-v2__vision-copy .sari-about-v2__button {
+    margin-top: 28px;
+    box-shadow: 0 16px 38px rgba(0,0,0,.26);
+}
+
+/* Turn the existing SARI stamp into a quiet editorial signature. */
+.sari-about-v2__truck-overlay {
+    left: max(7vw, 42px);
+    bottom: 70px;
+}
+
+.sari-about-v2__truck-overlay strong {
+    font-size: 27px;
+    letter-spacing: .30em;
+}
+
+.sari-about-v2__truck-overlay span {
+    font-size: 9px;
+    letter-spacing: .16em;
+}
+
+/* The image settles very gently when the section enters the viewport. */
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision .sari-about-v2__truck img {
+    transform: scale(1.055);
+    transition: transform 1.6s cubic-bezier(.16,1,.3,1), filter .7s ease;
+}
+
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision.sari-is-visible .sari-about-v2__truck img {
+    transform: scale(1.025);
+}
+
+.sari-about-v2.sari-motion-ready .sari-about-v2__vision:hover .sari-about-v2__truck img {
+    transform: scale(1.04);
+}
+
+@media (max-width: 900px) {
+    .sari-about-v2__values {
+        padding-bottom: 58px;
+    }
+
+    .sari-about-v2__vision {
+        min-height: 650px;
+    }
+
+    .sari-about-v2__truck,
+    .sari-about-v2__vision-copy {
+        min-height: 650px;
+    }
+
+    .sari-about-v2__truck img {
+        object-position: 63% center;
+    }
+
+    .sari-about-v2__truck::after {
+        background:
+            linear-gradient(180deg,
+                rgba(8,8,7,.04) 0%,
+                rgba(8,8,7,.18) 34%,
+                rgba(8,8,7,.76) 72%,
+                rgba(8,8,7,.94) 100%);
+    }
+
+    .sari-about-v2__vision-copy {
+        width: 100%;
+        padding: 54px 32px 120px;
+        background: linear-gradient(180deg,
+            rgba(7,7,6,.04) 0%,
+            rgba(7,7,6,.16) 35%,
+            rgba(7,7,6,.68) 68%,
+            rgba(7,7,6,.92) 100%);
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        max-width: 620px;
+        font-size: clamp(43px, 9vw, 62px);
+    }
+
+    .sari-about-v2__vision-copy::after {
+        left: 32px;
+        bottom: 58px;
+    }
+
+    .sari-about-v2__truck-overlay {
+        left: 32px;
+        bottom: 28px;
+    }
+
+    .sari-about-v2__vision::after {
+        left: 32px;
+        right: 32px;
+        bottom: 22px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sari-about-v2__vision {
+        min-height: 610px;
+    }
+
+    .sari-about-v2__truck,
+    .sari-about-v2__vision-copy {
+        min-height: 610px;
+    }
+
+    .sari-about-v2__vision-copy {
+        padding: 38px 24px 100px;
+    }
+
+    .sari-about-v2__vision-copy h2 {
+        max-width: 100%;
+        font-size: 42px;
+    }
+
+    .sari-about-v2__vision-copy p {
+        max-width: 330px;
+        font-size: 12px;
+    }
+
+    .sari-about-v2__vision-copy::after {
+        left: 24px;
+        bottom: 50px;
+        font-size: 7px;
+        letter-spacing: .14em;
+    }
+
+    .sari-about-v2__truck-overlay {
+        left: 24px;
+        bottom: 22px;
+    }
+
+    .sari-about-v2__vision::after {
+        left: 24px;
+        right: 24px;
+        bottom: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sari-about-v2__vision::after,
+    .sari-about-v2__vision-copy::after {
+        transition: none !important;
+    }
+}
+
+/* =========================================================
+   SARI MOTION POLISH — FINAL SUBTLE OVERRIDES
+   Clean, formal, restrained motion. No bounce or heavy zoom.
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+.sari-about-v2 {
+    --sari-motion-ease: cubic-bezier(.22, 1, .36, 1);
+    --sari-motion-fast: .32s;
+    --sari-motion-normal: .72s;
+}
+
+/* Keep scroll reveals quiet and consistent. */
+.sari-about-v2.sari-motion-ready .sari-motion-item {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    transition:
+        opacity var(--sari-motion-normal) ease,
+        transform var(--sari-motion-normal) var(--sari-motion-ease);
+    will-change: opacity, transform;
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-item.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-left {
+    transform: translate3d(-16px, 0, 0);
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-right {
+    transform: translate3d(16px, 0, 0);
+}
+
+.sari-about-v2.sari-motion-ready .sari-motion-left.is-visible,
+.sari-about-v2.sari-motion-ready .sari-motion-right.is-visible {
+    transform: translate3d(0, 0, 0);
+}
+
+/* Softer stagger — enough to guide the eye, not feel animated. */
+.sari-about-v2 .sari-motion-delay-1 { transition-delay: .04s !important; }
+.sari-about-v2 .sari-motion-delay-2 { transition-delay: .09s !important; }
+.sari-about-v2 .sari-motion-delay-3 { transition-delay: .14s !important; }
+.sari-about-v2 .sari-motion-delay-4 { transition-delay: .19s !important; }
+
+/* Hero: copy and image settle in independently. */
+.sari-about-v2.sari-motion-ready .sari-about-v2__hero-copy {
+    animation: sariHeroSoftIn .82s var(--sari-motion-ease) both;
+}
+
+.sari-about-v2.sari-motion-ready .sari-about-v2__hero-image {
+    animation: sariHeroImageIn 1.05s var(--sari-motion-ease) both;
+}
+
+@keyframes sariHeroSoftIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 12px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes sariHeroImageIn {
+    from {
+        opacity: .86;
+        transform: scale(1.018);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Buttons: refined hover with tiny movement only. */
+.sari-about-v2__button,
+.sari-about-v2__outline-button {
+    transition:
+        transform var(--sari-motion-fast) var(--sari-motion-ease),
+        background-color var(--sari-motion-fast) ease,
+        border-color var(--sari-motion-fast) ease,
+        color var(--sari-motion-fast) ease,
+        box-shadow var(--sari-motion-fast) ease;
+}
+
+.sari-about-v2__button:hover,
+.sari-about-v2__outline-button:hover {
+    transform: translateY(-2px);
+}
+
+.sari-about-v2__button:active,
+.sari-about-v2__outline-button:active {
+    transform: translateY(0);
+}
+
+/* Icons stay composed — only a tiny lift on the parent hover. */
+.sari-about-v2__icon,
+.sari-about-v2__feature-icon,
+.value-icon {
+    transition:
+        transform .34s var(--sari-motion-ease),
+        border-color .34s ease,
+        box-shadow .34s ease;
+}
+
+.sari-about-v2__pillar:hover .sari-about-v2__icon,
+.sari-about-v2__features > div:hover .sari-about-v2__feature-icon,
+.sari-about-v2__value-grid article:hover .value-icon {
+    transform: translateY(-2px);
+}
+
+/* Cards: reduce the original lift slightly for a more formal feel. */
+.sari-about-v2__value-grid article:hover {
+    transform: translateY(-3px);
+}
+
+/* Artwork: very subtle depth on hover, desktop only. */
+@media (hover: hover) and (pointer: fine) {
+    .sari-about-v2__story-art img {
+        transition: transform .65s var(--sari-motion-ease), filter .45s ease;
+    }
+
+    .sari-about-v2__story-art:hover img {
+        transform: translateY(-3px) scale(1.006);
+    }
+}
+
+/* Theme changes stay smooth but never slow the interface down. */
+.sari-about-v2,
+.sari-about-v2__hero,
+.sari-about-v2__stats,
+.sari-about-v2__values,
+.sari-about-v2__value-grid article {
+    transition-property: background-color, border-color, color, box-shadow;
+    transition-duration: .3s;
+    transition-timing-function: ease;
+}
+
+@media (max-width: 900px) {
+    .sari-about-v2.sari-motion-ready .sari-motion-left,
+    .sari-about-v2.sari-motion-ready .sari-motion-right {
+        transform: translate3d(0, 14px, 0);
+    }
+
+    .sari-about-v2.sari-motion-ready .sari-motion-left.is-visible,
+    .sari-about-v2.sari-motion-ready .sari-motion-right.is-visible {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .sari-about-v2 *,
+    .sari-about-v2 *::before,
+    .sari-about-v2 *::after {
+        animation: none !important;
+        transition-duration: .01ms !important;
+        transition-delay: 0s !important;
+    }
+
+    .sari-about-v2.sari-motion-ready .sari-motion-item,
+    .sari-about-v2.sari-motion-ready .sari-motion-left,
+    .sari-about-v2.sari-motion-ready .sari-motion-right {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

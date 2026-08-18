@@ -1,0 +1,436 @@
+/* ==========================================================================
+   SARI — Ecosystem section ("One marketplace. Three connected journeys.")
+   Palette:  cream #FBF8F2 | ink #16140F | charcoal #4A453D
+             gold #B8863B | line #EBE3D2
+   Font:     Poppins — flat, no gradients.
+   ========================================================================== */
+
+.sari-ecosystem {
+    background: #FBF8F2;
+    padding: 130px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- header ---------- */
+
+.sari-ecosystem-header {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-bottom: 72px;
+}
+
+.sari-section-title {
+    font-weight: 700;
+    font-size: clamp(32px, 3.6vw, 46px);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: #16140F;
+    margin: 0;
+}
+
+.sari-section-title em {
+    font-style: normal;
+    color: #B8863B;
+}
+
+.sari-ecosystem-header-side {
+    padding-top: 8px;
+}
+
+.sari-eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #B8863B;
+    margin-bottom: 14px;
+}
+
+.sari-section-description {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #4A453D;
+    max-width: 340px;
+    margin: 0;
+}
+
+/* ---------- card grid ---------- */
+
+.sari-ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.sari-ecosystem-card {
+    position: relative;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    border-radius: 20px;
+    padding: 32px 28px 36px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sari-ecosystem-blob {
+    position: absolute;
+    top: -34px;
+    right: -34px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.sari-blob-gold { background: #F3E4C5; }
+.sari-blob-stone { background: #E7E3D6; }
+.sari-blob-sage { background: #DEE6DA; }
+
+.sari-ecosystem-card-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+}
+
+.sari-ecosystem-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #16140F;
+}
+
+/* ---------- mockup ---------- */
+
+.sari-mockup {
+    position: relative;
+    z-index: 1;
+    background: #FBF8F2;
+    border: 1px solid #EBE3D2;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
+.sari-mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 14px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #EBE3D2;
+}
+
+.sari-mockup-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #DDD2B8;
+}
+
+.sari-mockup-bar-label {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A9488;
+}
+
+.sari-mockup-body {
+    padding: 14px;
+}
+
+/* buy card mockup */
+
+.sari-mockup-product {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.sari-mockup-thumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #16140F;
+    flex-shrink: 0;
+}
+
+.sari-mockup-product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.sari-mockup-product-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #16140F;
+}
+
+.sari-mockup-product-meta {
+    font-size: 11px;
+    color: #9A9488;
+}
+
+.sari-mockup-add {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: #B8863B;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sari-mockup-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #4A453D;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    border-radius: 10px;
+    padding: 9px 12px;
+}
+
+.sari-mockup-footer-cta {
+    color: #16140F;
+    font-weight: 600;
+}
+
+/* sell card mockup */
+
+.sari-mockup-seller-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.sari-mockup-seller-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #16140F;
+}
+
+.sari-mockup-pill {
+    font-size: 10px;
+    font-weight: 600;
+    color: #4A453D;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    border-radius: 999px;
+    padding: 3px 9px;
+}
+
+.sari-mockup-stats {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sari-mockup-stat {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1px solid #EBE3D2;
+    border-radius: 8px;
+    padding: 7px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sari-mockup-stat-label {
+    font-size: 9.5px;
+    color: #9A9488;
+    font-weight: 500;
+}
+
+.sari-mockup-stat-value {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #16140F;
+}
+
+.sari-mockup-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 44px;
+}
+
+.sari-mockup-chart span {
+    flex: 1;
+    background: #EBE3D2;
+    border-radius: 3px 3px 0 0;
+}
+
+.sari-mockup-chart-active {
+    background: #B8863B !important;
+}
+
+/* deliver card mockup */
+
+.sari-mockup-pill-tracking {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.sari-mockup-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sari-mockup-track li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    padding-bottom: 16px;
+}
+
+.sari-mockup-track li:last-child {
+    padding-bottom: 0;
+}
+
+.sari-mockup-track li:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 12px;
+    width: 1px;
+    height: calc(100% - 8px);
+    background: #EBE3D2;
+}
+
+.sari-mockup-track-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 2px solid #DDD2B8;
+    background: #FBF8F2;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.sari-mockup-track-done .sari-mockup-track-dot {
+    border-color: #B8863B;
+    background: #B8863B;
+}
+
+.sari-mockup-track-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #16140F;
+}
+
+.sari-mockup-track-meta {
+    display: block;
+    font-size: 10.5px;
+    color: #9A9488;
+    margin-top: 1px;
+}
+
+/* ---------- title / copy / link ---------- */
+
+.sari-ecosystem-title {
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.25;
+    color: #16140F;
+    margin: 0 0 14px;
+}
+
+.sari-ecosystem-title em {
+    font-style: normal;
+    color: #B8863B;
+}
+
+.sari-ecosystem-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #4A453D;
+    margin: 0 0 20px;
+}
+
+.sari-ecosystem-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: auto;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #16140F;
+    text-decoration: none;
+}
+
+.sari-ecosystem-link svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.sari-ecosystem-card:hover .sari-ecosystem-link {
+    color: #B8863B;
+}
+
+.sari-ecosystem-card:hover .sari-ecosystem-link svg {
+    transform: translateX(3px);
+}
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+    .sari-ecosystem-header {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .sari-section-description {
+        max-width: none;
+    }
+
+    .sari-ecosystem-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .sari-ecosystem {
+        padding: 90px 0;
+    }
+
+    .sari-ecosystem-card {
+        padding: 28px 22px 32px;
+    }
+}
