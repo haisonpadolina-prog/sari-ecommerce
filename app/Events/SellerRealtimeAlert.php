@@ -21,13 +21,13 @@ class SellerRealtimeAlert implements ShouldBroadcastNow
         public ?string $productName = null,
         public ?int $warningNumber = null,
         public ?string $suspendedUntil = null,
-    ) {
-        $this->seller->ensureRealtimeToken();
-    }
+    ) {}
 
-    public function broadcastOn(): Channel
+    public function broadcastOn(): array
     {
-        return new Channel('sari.seller.' . $this->seller->realtime_token);
+        return [
+            new Channel('sari.seller.' . $this->seller->realtime_token),
+        ];
     }
 
     public function broadcastAs(): string
@@ -38,6 +38,7 @@ class SellerRealtimeAlert implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return [
+            'seller_id' => $this->seller->id,
             'type' => $this->type,
             'title' => $this->title,
             'message' => $this->message,
@@ -45,7 +46,6 @@ class SellerRealtimeAlert implements ShouldBroadcastNow
             'warning_number' => $this->warningNumber,
             'max_warnings' => 3,
             'suspended_until' => $this->suspendedUntil,
-            'sent_at' => now()->toIso8601String(),
         ];
     }
 }

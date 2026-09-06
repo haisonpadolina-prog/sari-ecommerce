@@ -283,3 +283,126 @@
     }
 })();
 </script>
+
+<style>
+/* ==========================================================
+   SARI ABOUT V2 REFINEMENT
+   Cleaner premium editorial layout
+   ========================================================== */
+
+.sari-about-v2 {
+    background:#faf8f3;
+    overflow:hidden;
+}
+
+/* VALUES SECTION */
+.sari-about-v2__values {
+    background:#fff !important;
+    padding:120px 0 !important;
+}
+
+.sari-about-v2__values .sari-about-v2__section-heading {
+    max-width:800px;
+    margin:auto;
+    text-align:center;
+}
+
+.sari-about-v2__values h2 {
+    color:#17140e;
+    font-size:clamp(36px,5vw,56px);
+    letter-spacing:-.05em;
+}
+
+.sari-about-v2__values h2 em {
+    color:#c99128;
+    font-style:normal;
+}
+
+.sari-about-v2__value-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+    margin-top:60px;
+}
+
+.sari-about-v2__value-grid article {
+    background:white;
+    border:1px solid #ece3d4;
+    border-radius:30px;
+    padding:36px 30px;
+    min-height:230px;
+    box-shadow:0 15px 40px rgba(0,0,0,.04);
+    transition:.35s ease;
+}
+
+.sari-about-v2__value-grid article:hover {
+    transform:translateY(-8px);
+    border-color:#d6b36c;
+    box-shadow:0 25px 60px rgba(0,0,0,.10);
+}
+
+.value-icon {
+    width:68px;
+    height:68px;
+    border-radius:22px;
+    display:grid;
+    place-items:center;
+    font-size:27px;
+    font-weight:700;
+    margin-bottom:25px;
+    transition:.35s ease;
+}
+
+.sari-about-v2__value-grid article:hover .value-icon {
+    transform:scale(1.1);
+}
+
+.value-icon--gold {
+    color:#bd8300;
+    background:#fff7df;
+}
+
+.value-icon--blue {
+    color:#3d78ad;
+    background:#edf6ff;
+}
+
+.value-icon--green {
+    color:#438766;
+    background:#edf8f1;
+}
+
+.value-icon--coral {
+    color:#c86f55;
+    background:#fff0eb;
+}
+
+
+/* STORY FEATURE BOX */
+.sari-about-v2__features > div {
+    background:white;
+    border:1px solid #eee4d5;
+    border-radius:20px;
+    padding:18px;
+    transition:.3s ease;
+}
+
+.sari-about-v2__features > div:hover {
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
+}
+
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+    .sari-about-v2__value-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+    .sari-about-v2__value-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>

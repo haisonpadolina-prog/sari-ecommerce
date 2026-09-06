@@ -1,3 +1,429 @@
+<style>
+/* ==========================================================
+   SARI HOW IT WORKS
+   PREMIUM WHITE COMMERCE DESIGN
+========================================================== */
+
+.sari-dark-section.sari-works {
+    background:#ffffff !important;
+    color:#17140e;
+    position:relative;
+    overflow:hidden;
+    padding:120px 0;
+}
+
+
+/* soft background decoration */
+
+.sari-works::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    top:-250px;
+    left:-200px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(201,145,40,.08),
+        transparent 70%
+    );
+
+    pointer-events:none;
+
+}
+
+
+.sari-works::after {
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    bottom:-250px;
+    right:-150px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(201,145,40,.06),
+        transparent 70%
+    );
+
+}
+
+
+/* Heading */
+
+
+.sari-works-title {
+
+    color:#15130f !important;
+
+    font-weight:700;
+
+    letter-spacing:-0.06em;
+
+}
+
+
+.sari-works-title em {
+
+    color:#c99128 !important;
+
+    font-style:normal;
+
+}
+
+
+.sari-eyebrow,
+.sari-works-kicker {
+
+    color:#c99128 !important;
+
+    font-weight:700;
+
+}
+
+
+.sari-works-intro {
+
+    color:#746b5d !important;
+
+    line-height:1.8;
+
+}
+
+
+/* CARD AREA */
+
+
+.sari-work-card {
+
+    background:#ffffff !important;
+
+    border:1px solid #eadfcd !important;
+
+    border-radius:32px !important;
+
+    padding:26px;
+
+    box-shadow:
+
+    0 20px 60px rgba(20,15,5,.06);
+
+    transition:.35s ease;
+
+}
+
+
+.sari-work-card:hover {
+
+    transform:translateY(-12px);
+
+    box-shadow:
+
+    0 30px 80px rgba(20,15,5,.12);
+
+    border-color:#d9b66a !important;
+
+}
+
+
+
+/* NUMBER */
+
+
+.sari-work-number {
+
+    color:#c99128 !important;
+
+    font-weight:700;
+
+}
+
+
+.sari-work-label {
+
+    color:#8b806f !important;
+
+}
+
+
+
+/* SCENE */
+
+
+.sari-commerce-scene {
+
+    background:#faf8f3 !important;
+
+    border-radius:26px;
+
+    border:1px solid #eee3d3;
+
+    min-height:230px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+
+/* inner windows */
+
+
+.sari-shopping-window,
+.sari-dashboard-window,
+.sari-delivery-window {
+
+
+    background:white !important;
+
+    border:1px solid #eee4d6 !important;
+
+    border-radius:18px;
+
+    box-shadow:
+
+    0 15px 40px rgba(0,0,0,.08);
+
+}
+
+
+
+/* browser header */
+
+
+.sari-window-top {
+
+    background:#faf7f1 !important;
+
+    border-bottom:1px solid #eee3d3;
+
+}
+
+
+.sari-window-top b {
+
+    color:#4d463b !important;
+
+}
+
+
+
+/* Text */
+
+
+.sari-work-copy h3 {
+
+    color:#17140e !important;
+
+}
+
+
+.sari-work-copy h3 span {
+
+    color:#c99128 !important;
+
+}
+
+
+.sari-work-copy p {
+
+    color:#756b5c !important;
+
+    line-height:1.8;
+
+}
+
+
+
+/* Badge */
+
+
+.sari-scene-badge {
+
+    background:white !important;
+
+    color:#51483c !important;
+
+    border:1px solid #e8dcc7;
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.08);
+
+}
+
+
+.sari-scene-badge i {
+
+    background:#c99128 !important;
+
+}
+
+
+
+/* SELLER STATS */
+
+
+.sari-stats-row div {
+
+    background:#faf8f3 !important;
+
+    border:1px solid #eee2d0;
+
+}
+
+
+.sari-stats-row strong {
+
+    color:#17140e !important;
+
+}
+
+
+
+/* DELIVERY */
+
+
+.sari-route-step strong {
+
+    color:#17140e !important;
+
+}
+
+
+.sari-route-step small {
+
+    color:#827869 !important;
+
+}
+
+
+.sari-route-step i {
+
+    background:white;
+
+    border:2px solid #c99128;
+
+    color:#c99128;
+
+}
+
+
+.sari-route-step.active i {
+
+    background:#c99128;
+
+    color:white;
+
+}
+
+
+.sari-route-line.active {
+
+    background:#c99128 !important;
+
+}
+
+
+
+/* Bottom journey */
+
+
+.sari-works-bottom {
+
+    border-top:1px solid #eee3d3;
+
+}
+
+
+.sari-connected-status {
+
+    color:#51483c;
+
+}
+
+
+.sari-connected-status i {
+
+    background:#c99128;
+
+}
+
+
+.sari-journey span {
+
+    color:#51483c;
+
+}
+
+
+.sari-journey b {
+
+    color:#c99128;
+
+}
+
+
+
+/* Animation */
+
+
+.sari-reveal {
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:
+
+    opacity .8s ease,
+
+    transform .8s ease;
+
+}
+
+
+.sari-reveal.is-visible {
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+.sari-delay-1 {
+
+    transition-delay:.15s;
+
+}
+
+
+.sari-delay-2 {
+
+    transition-delay:.3s;
+
+}
+    
+</style>
+
+
 <!-- =========================================================
      SARI HOW IT WORKS — V5 NAVY + GOLD EDITORIAL COMMERCE
      Smooth / formal motion enabled

@@ -2,311 +2,489 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SellerRealtimeAlert;
+use App\Jobs\DispatchAdminSellerRealtime;
 use App\Models\ComplianceMessage;
 use App\Models\SellerAccount;
 use App\Models\SellerProduct;
 use App\Models\SellerWarning;
+use App\Services\SellerAccountStatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class AdminSellerComplianceController extends Controller
 {
+    public function __construct(
+        private SellerAccountStatusService $statusService
+    ) {}
+
+    private function guard(Request $request): void
+    {
+        abort_unless(
+            $request->session()->get('is_admin'),
+            403,
+            'Administrator session required.'
+        );
+    }
+
+    /**
+     * Realtime delivery is pushed to the Laravel queue so Reverb/network work
+     * never holds the Admin HTTP request open.
+     */
+    private function queueBroadcast(
+        SellerAccount $seller,
+        string $type,
+        string $title,
+        string $message,
+        ?string $productName = null,
+        ?int $warningNumber = null
+    ): void {
+        try {
+            DispatchAdminSellerRealtime::dispatch(
+                sellerId: (int) $seller->id,
+                kind: 'alert',
+                payload: [
+                    'type' => $type,
+                    'title' => $title,
+                    'message' => $message,
+                    'product_name' => $productName,
+                    'warning_number' => $warningNumber,
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::warning(
+                'SARI seller realtime alert could not be queued.',
+                [
+                    'seller_id' => $seller->id,
+                    'type' => $type,
+                    'error' => $e->getMessage(),
+                ]
+            );
+        }
+    }
+
+    private function createComplianceMessage(
+        SellerAccount $seller,
+        string $message
+    ): void {
+        $record = new ComplianceMessage();
+
+        $record->forceFill([
+            'seller_account_id' => $seller->id,
+            'sender_role' => 'admin',
+            'message' => $message,
+        ]);
+
+        $record->save();
+    }
+
     public function index(Request $request)
     {
-        $this->ensureAdmin($request);
+        $this->guard($request);
 
+        /*
+        |--------------------------------------------------------------------------
+        | NORMALIZE ONLY POSSIBLY EXPIRED SUSPENSIONS
+        |--------------------------------------------------------------------------
+        |
+        | The old page refreshed every SellerAccount on every visit.
+        | That becomes very expensive as sellers grow. Only records whose
+        | suspension timestamp has already passed can require normalization.
+        */
         SellerAccount::query()
-            ->where('account_status', 'suspended')
             ->whereNotNull('suspended_until')
             ->where('suspended_until', '<=', now())
             ->get()
-            ->each(fn (SellerAccount $seller) => $seller->refreshSuspensionStatus());
+            ->each(function (SellerAccount $seller) {
+                $this->statusService->refresh($seller);
+            });
+
+        $flaggedProducts = SellerProduct::query()
+            ->with(['seller', 'latestVersion'])
+            ->whereNull('archived_at')
+            ->where('moderation_status', 'flagged')
+            ->latest('created_at')
+            ->get();
+
+        $pendingProducts = SellerProduct::query()
+            ->with(['seller', 'latestVersion'])
+            ->whereNull('archived_at')
+            ->where('moderation_status', 'pending')
+            ->latest('created_at')
+            ->get();
+
+        $recentWarnings = SellerWarning::query()
+            ->with(['seller', 'product'])
+            ->latest('issued_at')
+            ->limit(100)
+            ->get();
+
+        $suspendedSellers = SellerAccount::query()
+            ->where(function ($query) {
+                $query
+                    ->where('warning_count', '>=', 3)
+                    ->orWhere(function ($query) {
+                        $query
+                            ->whereNotNull('suspended_until')
+                            ->where('suspended_until', '>', now());
+                    });
+            })
+            ->where(function ($query) {
+                $query
+                    ->whereNull('account_status')
+                    ->orWhere('account_status', 'active');
+            })
+            ->latest('updated_at')
+            ->get();
+
+        $complianceMessages = ComplianceMessage::query()
+            ->with('seller')
+            ->latest('created_at')
+            ->limit(100)
+            ->get();
 
         $stats = [
-            'total_sellers' => SellerAccount::count(),
-            'under_review' => SellerProduct::whereIn('moderation_status', ['pending', 'flagged'])->count(),
-            'flagged_products' => SellerProduct::where('moderation_status', 'flagged')->count(),
-            'active_warnings' => SellerWarning::count(),
-            'suspended_sellers' => SellerAccount::where('account_status', 'suspended')
-                ->where('suspended_until', '>', now())
-                ->count(),
+            'total_sellers' => SellerAccount::query()->count(),
+            'under_review' => $flaggedProducts->count() + $pendingProducts->count(),
+            'flagged_products' => $flaggedProducts->count(),
+            'active_warnings' => SellerWarning::query()->count(),
+            'suspended_sellers' => $suspendedSellers->count(),
         ];
 
-        $flaggedProducts = SellerProduct::with(['seller', 'latestVersion'])
-            ->where('moderation_status', 'flagged')
-            ->latest()
-            ->get();
-
-        $pendingProducts = SellerProduct::with(['seller', 'latestVersion'])
-            ->where('moderation_status', 'pending')
-            ->latest()
-            ->get();
-
-        $recentWarnings = SellerWarning::with(['seller', 'product'])
-            ->latest('issued_at')
-            ->take(20)
-            ->get();
-
-        $suspendedSellers = SellerAccount::where('account_status', 'suspended')
-            ->where('suspended_until', '>', now())
-            ->latest('suspended_at')
-            ->get();
-
-        $complianceMessages = ComplianceMessage::with('seller')
-            ->latest()
-            ->take(30)
-            ->get();
-
         return view('admin.seller-compliance', compact(
-            'stats',
             'flaggedProducts',
             'pendingProducts',
             'recentWarnings',
             'suspendedSellers',
-            'complianceMessages'
+            'complianceMessages',
+            'stats',
         ));
     }
 
     public function approve(Request $request, SellerProduct $product)
     {
-        $this->ensureAdmin($request);
+        $this->guard($request);
 
-        $product->update([
-            'moderation_status' => 'approved',
-            'admin_review_note' => 'Approved by administrator.',
-            'reviewed_at' => now(),
-            'requires_re_review' => false,
-        ]);
+        $product->load('seller');
 
-        $seller = $product->seller;
-        $seller->ensureRealtimeToken();
+        $seller = $this->statusService->refresh(
+            $product->seller
+        );
 
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: 'product_approved',
-            title: 'Product Approved',
-            message: 'Your product has been approved by the SARI administrator.',
-            productName: $product->name,
-        ));
+        if ($this->statusService->isTerminated($seller)) {
+            return $this->error(
+                $request,
+                'product',
+                'This seller account is banned or deactivated. Restore/unban the seller before approving listings.'
+            );
+        }
 
-        return back()->with('success', 'Product approved. Seller was updated in real time.');
+        DB::transaction(function () use ($product, $seller) {
+            $freshProduct = SellerProduct::query()
+                ->whereKey($product->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $freshProduct->forceFill([
+                'moderation_status' => 'approved',
+                'admin_review_note' => 'Approved by SARI Administrator.',
+                'reviewed_at' => now(),
+                'requires_re_review' => false,
+            ])->save();
+
+            $this->createComplianceMessage(
+                $seller,
+                'Product "' .
+                $freshProduct->name .
+                '" was approved by the administrator.'
+            );
+        });
+
+        $this->queueBroadcast(
+            $seller,
+            'approved',
+            'Product Approved',
+            'Your product was approved by the SARI Administrator.',
+            $product->name
+        );
+
+        return $this->success(
+            $request,
+            'Product approved successfully.'
+        );
     }
 
     public function reject(Request $request, SellerProduct $product)
     {
-        $this->ensureAdmin($request);
+        $this->guard($request);
 
         $validated = $request->validate([
-            'reason' => ['required', 'string', 'max:1000'],
+            'reason' => ['nullable', 'string', 'max:1500'],
         ]);
 
-        $product->update([
-            'moderation_status' => 'rejected',
-            'admin_review_note' => $validated['reason'],
-            'reviewed_at' => now(),
-            'requires_re_review' => false,
-        ]);
+        $product->load('seller');
 
         $seller = $product->seller;
-        $seller->ensureRealtimeToken();
 
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: 'product_rejected',
-            title: 'Product Review Update',
-            message: 'Your product was rejected. Admin reason: ' . $validated['reason'],
-            productName: $product->name,
-        ));
+        $reason = trim((string) ($validated['reason'] ?? ''))
+            ?: 'Product rejected after administrator review.';
 
-        return back()->with('success', 'Product rejected without issuing a warning.');
+        DB::transaction(function () use (
+            $product,
+            $seller,
+            $reason
+        ) {
+            $freshProduct = SellerProduct::query()
+                ->whereKey($product->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $freshProduct->forceFill([
+                'moderation_status' => 'rejected',
+                'admin_review_note' => $reason,
+                'reviewed_at' => now(),
+                'requires_re_review' => false,
+            ])->save();
+
+            $this->createComplianceMessage(
+                $seller,
+                'Product "' .
+                $freshProduct->name .
+                '" was rejected. Reason: ' .
+                $reason
+            );
+        });
+
+        $this->queueBroadcast(
+            $seller,
+            'rejected',
+            'Product Rejected',
+            'Your product was rejected after administrator review. Reason: ' .
+            $reason,
+            $product->name
+        );
+
+        return $this->success(
+            $request,
+            'Product rejected.'
+        );
     }
 
     public function warn(Request $request, SellerProduct $product)
     {
-        $this->ensureAdmin($request);
-
-        if ($product->warnings()->exists()) {
-            return back()->withErrors([
-                'warning' => 'A compliance warning has already been issued for this product. Use another confirmed violation for the next warning.',
-            ]);
-        }
+        $this->guard($request);
 
         $validated = $request->validate([
-            'reason' => ['required', 'string', 'max:255'],
-            'admin_note' => ['nullable', 'string', 'max:2000'],
+            'reason' => ['required', 'string', 'max:500'],
+            'admin_note' => ['nullable', 'string', 'max:1500'],
         ]);
 
-        $result = DB::transaction(function () use ($product, $validated) {
-            /** @var SellerAccount $seller */
-            $seller = SellerAccount::query()
+        $result = DB::transaction(function () use (
+            $product,
+            $validated
+        ) {
+            $lockedProduct = SellerProduct::query()
+                ->whereKey($product->id)
                 ->lockForUpdate()
-                ->findOrFail($product->seller_account_id);
+                ->firstOrFail();
 
-            $seller->refreshSuspensionStatus();
-            $nextWarning = min($seller->warning_count + 1, 3);
+            $seller = SellerAccount::query()
+                ->whereKey($lockedProduct->seller_account_id)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-            SellerWarning::create([
+            $seller = $this->statusService->refresh($seller);
+
+            if ($this->statusService->isTerminated($seller)) {
+                throw ValidationException::withMessages([
+                    'seller' => 'A warning cannot be issued to a banned or deactivated seller.',
+                ]);
+            }
+
+            $alreadyWarned = SellerWarning::query()
+                ->where(
+                    'seller_product_id',
+                    $lockedProduct->id
+                )
+                ->exists();
+
+            if ($alreadyWarned) {
+                throw ValidationException::withMessages([
+                    'product' => 'A seller warning has already been issued for this product. Use a different confirmed violating product.',
+                ]);
+            }
+
+            $currentWarnings = max(
+                0,
+                (int) ($seller->warning_count ?? 0)
+            );
+
+            if (
+                $currentWarnings >= 3 ||
+                $this->statusService->isSuspended($seller)
+            ) {
+                throw ValidationException::withMessages([
+                    'seller' => 'This seller is already suspended. Use Seller Account Control for the next administrator action.',
+                ]);
+            }
+
+            $warningNumber = min(
+                3,
+                $currentWarnings + 1
+            );
+
+            $warning = new SellerWarning();
+
+            $warning->forceFill([
                 'seller_account_id' => $seller->id,
-                'seller_product_id' => $product->id,
-                'warning_number' => $nextWarning,
+                'seller_product_id' => $lockedProduct->id,
+                'warning_number' => $warningNumber,
                 'reason' => $validated['reason'],
                 'admin_note' => $validated['admin_note'] ?? null,
                 'issued_at' => now(),
             ]);
 
-            $product->update([
+            $warning->save();
+
+            $lockedProduct->forceFill([
                 'moderation_status' => 'removed',
-                'admin_review_note' => $validated['admin_note'] ?? $validated['reason'],
+                'admin_review_note' =>
+                    ($validated['admin_note'] ?? null)
+                    ?: $validated['reason'],
                 'reviewed_at' => now(),
                 'requires_re_review' => false,
-            ]);
+            ])->save();
 
-            $seller->warning_count = $nextWarning;
+            $sellerValues = [
+                'warning_count' => $warningNumber,
+            ];
 
-            if ($nextWarning >= 3) {
-                $seller->account_status = 'suspended';
-                $seller->suspended_at = now();
-                $seller->suspended_until = now()->addDays(30);
-                $seller->suspension_reason = 'Automatic 30-day suspension after the third confirmed marketplace compliance warning.';
-            } else {
-                $seller->account_status = 'warning';
+            if ($warningNumber >= 3) {
+                $sellerValues['suspended_until'] =
+                    now()->addDays(30);
+
+                $sellerValues['suspension_reason'] =
+                    'Automatic 30-day suspension after warning #3. Latest violation: ' .
+                    $validated['reason'];
             }
 
-            $seller->ensureRealtimeToken();
-            $seller->save();
+            $seller->forceFill($sellerValues)->save();
 
-            ComplianceMessage::create([
-                'seller_account_id' => $seller->id,
-                'sender_role' => 'admin',
-                'message' => $nextWarning >= 3
-                    ? 'Compliance warning #' . $nextWarning . ' was issued for "' . $product->name . '". Your selling privileges are suspended for 30 days. You may message the administrator to appeal.'
-                    : 'Compliance warning #' . $nextWarning . ' was issued for "' . $product->name . '". Reason: ' . $validated['reason'],
-            ]);
+            $this->createComplianceMessage(
+                $seller,
+                'Compliance warning #' .
+                $warningNumber .
+                ' was issued for "' .
+                $lockedProduct->name .
+                '". Reason: ' .
+                $validated['reason'] .
+                (
+                    $warningNumber >= 3
+                        ? ' The account is now suspended for 30 days.'
+                        : ''
+                )
+            );
 
             return [
-                'seller' => $seller->fresh(),
-                'warning_number' => $nextWarning,
+                'seller_id' => (int) $seller->id,
+                'warning_number' => $warningNumber,
+                'product_name' => $lockedProduct->name,
             ];
         });
 
-        /** @var SellerAccount $seller */
-        $seller = $result['seller'];
-        $warningNumber = $result['warning_number'];
+        $seller = SellerAccount::findOrFail(
+            $result['seller_id']
+        );
 
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: $warningNumber >= 3 ? 'suspended' : 'warning',
-            title: $warningNumber >= 3 ? 'Account Temporarily Suspended' : 'Compliance Warning Issued',
-            message: $warningNumber >= 3
-                ? 'You reached 3 of 3 confirmed compliance warnings. Selling privileges are suspended for 30 days.'
-                : 'The administrator issued warning ' . $warningNumber . ' of 3. Reason: ' . $validated['reason'],
-            productName: $product->name,
-            warningNumber: $warningNumber,
-            suspendedUntil: $seller->suspended_until?->toIso8601String(),
-        ));
+        $warningNumber = (int) $result['warning_number'];
 
-        return back()->with(
-            'success',
+        $this->queueBroadcast(
+            $seller,
             $warningNumber >= 3
-                ? 'Third warning issued. Seller suspended for 30 days and notified in real time.'
-                : 'Warning issued and seller notified in real time.'
+                ? 'suspended'
+                : 'warning',
+            $warningNumber >= 3
+                ? 'Account Temporarily Suspended'
+                : 'Compliance Warning Issued',
+            $warningNumber >= 3
+                ? 'You reached 3 of 3 confirmed compliance warnings. Selling privileges are suspended for 30 days. Please message the administrator from your locked dashboard if you want to request a review.'
+                : 'The administrator issued warning ' .
+                    $warningNumber .
+                    ' of 3. Reason: ' .
+                    $validated['reason'],
+            $result['product_name'],
+            $warningNumber
+        );
+
+        return $this->success(
+            $request,
+            $warningNumber >= 3
+                ? 'Warning 3 / 3 issued. Seller automatically suspended for 30 days.'
+                : 'Warning ' .
+                    $warningNumber .
+                    ' / 3 issued successfully.'
         );
     }
 
-    public function suspend30(Request $request, SellerAccount $seller)
-    {
-        $this->ensureAdmin($request);
-
-        $validated = $request->validate([
-            'reason' => ['required', 'string', 'max:1000'],
-        ]);
-
-        $seller->update([
-            'account_status' => 'suspended',
-            'suspended_at' => now(),
-            'suspended_until' => now()->addDays(30),
-            'suspension_reason' => $validated['reason'],
-        ]);
-
-        $seller->ensureRealtimeToken();
-
-        ComplianceMessage::create([
-            'seller_account_id' => $seller->id,
-            'sender_role' => 'admin',
-            'message' => 'Your seller account was manually suspended for 30 days. Reason: ' . $validated['reason'],
-        ]);
-
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: 'suspended',
-            title: 'Account Temporarily Suspended',
-            message: 'The administrator suspended your selling privileges for 30 days. Reason: ' . $validated['reason'],
-            warningNumber: $seller->warning_count,
-            suspendedUntil: $seller->suspended_until?->toIso8601String(),
-        ));
-
-        return back()->with('success', 'Seller suspended for 30 days and notified in real time.');
-    }
-
-    public function unsuspend(Request $request, SellerAccount $seller)
-    {
-        $this->ensureAdmin($request);
-
-        $seller->update([
-            'account_status' => $seller->warning_count > 0 ? 'warning' : 'active',
-            'suspended_at' => null,
-            'suspended_until' => null,
-            'suspension_reason' => null,
-        ]);
-
-        $seller->ensureRealtimeToken();
-
-        ComplianceMessage::create([
-            'seller_account_id' => $seller->id,
-            'sender_role' => 'admin',
-            'message' => 'Your seller suspension has been lifted by the administrator.',
-        ]);
-
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: 'suspension_lifted',
-            title: 'Suspension Lifted',
-            message: 'Your seller suspension has been lifted. Selling actions are available again.',
-            warningNumber: $seller->warning_count,
-        ));
-
-        return back()->with('success', 'Seller suspension lifted.');
-    }
-
-    public function reply(Request $request, SellerAccount $seller)
-    {
-        $this->ensureAdmin($request);
+    public function reply(
+        Request $request,
+        SellerAccount $seller
+    ) {
+        $this->guard($request);
 
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:3000'],
         ]);
 
-        ComplianceMessage::create([
-            'seller_account_id' => $seller->id,
-            'sender_role' => 'admin',
-            'message' => $validated['message'],
-        ]);
+        $this->createComplianceMessage(
+            $seller,
+            $validated['message']
+        );
 
-        $seller->ensureRealtimeToken();
+        $this->queueBroadcast(
+            $seller,
+            'admin_message',
+            'Message from SARI Administrator',
+            $validated['message']
+        );
 
-        event(new SellerRealtimeAlert(
-            seller: $seller,
-            type: 'admin_message',
-            title: 'New Message from SARI Admin',
-            message: $validated['message'],
-        ));
-
-        return back()->with('success', 'Reply sent to seller.');
+        return $this->success(
+            $request,
+            'Reply sent to seller.'
+        );
     }
 
-    private function ensureAdmin(Request $request): void
-    {
-        abort_unless($request->session()->get('is_admin'), 403);
+    private function success(
+        Request $request,
+        string $message
+    ) {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'ok' => true,
+                'message' => $message,
+            ]);
+        }
+
+        return back()->with('success', $message);
+    }
+
+    private function error(
+        Request $request,
+        string $key,
+        string $message
+    ) {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => $message,
+                'errors' => [
+                    $key => [$message],
+                ],
+            ], 422);
+        }
+
+        return back()->withErrors([
+            $key => $message,
+        ]);
     }
 }

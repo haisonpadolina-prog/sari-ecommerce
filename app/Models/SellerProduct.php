@@ -13,10 +13,19 @@ class SellerProduct extends Model
         'seller_account_id',
         'name',
         'category',
+        'brand',
+        'condition',
         'sku',
         'price',
         'stock',
+        'low_stock_threshold',
         'discount',
+        'free_shipping',
+        'package_weight',
+        'package_length',
+        'package_width',
+        'package_height',
+        'preparation_days',
         'voucher_code',
         'description',
         'image_path',
@@ -37,6 +46,13 @@ class SellerProduct extends Model
         return [
             'price' => 'decimal:2',
             'discount' => 'decimal:2',
+            'free_shipping' => 'boolean',
+            'package_weight' => 'decimal:3',
+            'package_length' => 'decimal:2',
+            'package_width' => 'decimal:2',
+            'package_height' => 'decimal:2',
+            'preparation_days' => 'integer',
+            'low_stock_threshold' => 'integer',
             'matched_terms' => 'array',
             'reviewed_at' => 'datetime',
             'requires_re_review' => 'boolean',
@@ -53,6 +69,25 @@ class SellerProduct extends Model
     public function warnings(): HasMany
     {
         return $this->hasMany(SellerWarning::class);
+    }
+
+    public function activeVariants(): HasMany
+    {
+        return $this->hasMany(SellerProductVariant::class, 'seller_product_id')
+            ->where('is_active', true)
+            ->orderBy('id');
+    }
+
+    public function galleryImages(): HasMany
+    {
+        return $this->hasMany(SellerProductImage::class, 'seller_product_id')
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class, 'seller_product_id');
     }
 
     public function versions(): HasMany

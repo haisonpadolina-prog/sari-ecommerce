@@ -1,0 +1,639 @@
+    const modal = document.getElementById('sellerAddProductModal');
+    const addProductForm = document.getElementById('sellerAddProductForm');
+
+    const openButtons = [
+        document.getElementById('openAddProductModal'),
+        document.getElementById('openAddProductModalSecondary'),
+        document.getElementById('openAddProductModalInventory'),
+        document.getElementById('openAddProductModalQuick')
+    ].filter(Boolean);
+
+    const closeButton = document.getElementById('closeAddProductModal');
+    const cancelButton = document.getElementById('cancelAddProductModal');
+
+    const searchInput = document.getElementById('sellerProductSearch');
+    const statusFilter = document.getElementById('sellerProductStatus');
+    const emptyState = document.getElementById('sellerProductEmpty');
+
+    const imageInput = document.getElementById('sellerNewProductImage');
+    const imagePreview = document.getElementById('sellerImagePreview');
+    const imagePlaceholder = document.getElementById('sellerImagePlaceholder');
+
+    const productSteps = Array.from(document.querySelectorAll('[data-product-step]'));
+    const productWizardEyebrow = document.getElementById('productWizardEyebrow');
+    const productWizardTitle = document.getElementById('productWizardTitle');
+    const productWizardCount = document.getElementById('productWizardCount');
+    const productWizardBar = document.getElementById('productWizardBar');
+    const productBackButton = document.getElementById('sellerProductBackButton');
+    const productNextButton = document.getElementById('sellerProductNextButton');
+    const productSubmitButton = document.getElementById('sellerProductSubmitButton');
+
+    const productNameInput = document.getElementById('sellerNewProductName');
+    const productCategoryInput = document.getElementById('sellerNewProductCategory');
+    const productSkuInput = document.getElementById('sellerNewProductSku');
+    const basePriceInput = document.getElementById('sellerBasePrice');
+    const baseStockInput = document.getElementById('sellerBaseStock');
+    const stockLabel = document.getElementById('sellerStockLabel');
+    const stockHint = document.getElementById('sellerStockHint');
+    const hasOptionsInput = document.getElementById('sellerHasOptions');
+    const optionsArea = document.getElementById('sellerOptionsArea');
+    const addOptionButton = document.getElementById('sellerAddOptionButton');
+    const optionSuggestions = document.getElementById('sellerOptionSuggestions');
+    const optionList = document.getElementById('sellerOptionList');
+    const variantSection = document.getElementById('sellerVariantSection');
+    const variantRows = document.getElementById('sellerVariantRows');
+    const variantCount = document.getElementById('sellerVariantCount');
+    const addSpecificationButton = document.getElementById('sellerAddSpecificationButton');
+    const specificationList = document.getElementById('sellerSpecificationList');
+    const reviewBox = document.getElementById('sellerProductReview');
+
+    const optionsPayload = document.getElementById('productOptionsPayload');
+    const variantsPayload = document.getElementById('productVariantsPayload');
+    const specificationsPayload = document.getElementById('productSpecificationsPayload');
+
+    const productStepNames = ['basic', 'pricing', 'options', 'review'];
+    const productStepTitles = {
+        basic: 'Product Information',
+        pricing: 'Price & Stock',
+        options: 'Options & Details',
+        review: 'Review Product'
+    };
+
+    let currentProductStep = 0;
+    let productOptions = [];
+    let productSpecifications = [];
+    let productVariants = [];
+
+    const optionSuggestionsByCategory = {
+        'Electronics': ['Color', 'Storage', 'RAM', 'Size'],
+        'Fashion': ['Color', 'Size', 'Style'],
+        'Home & Living': ['Color', 'Size', 'Material'],
+        'Beauty': ['Shade', 'Scent', 'Volume'],
+        'Books': ['Format', 'Edition', 'Language'],
+        'Food & Beverage': ['Flavor', 'Pack Size', 'Weight'],
+        'Jewelry & Watches': ['Color', 'Size', 'Material'],
+        'Furniture & Office': ['Color', 'Size', 'Finish'],
+        'Others': ['Color', 'Size', 'Type']
+    };
+
+    function openModal() {
+        modal?.classList.remove('hidden');
+        modal?.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+        setProductStep(0);
+        renderOptionSuggestions();
+    }
+
+    function closeModal() {
+        modal?.classList.add('hidden');
+        modal?.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    openButtons.forEach(function (button) {
+        button.addEventListener('click', openModal);
+    });
+
+    closeButton?.addEventListener('click', closeModal);
+    cancelButton?.addEventListener('click', closeModal);
+
+    modal?.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal?.classList.contains('flex')) {
+            closeModal();
+        }
+    });
+
+    function setProductStep(index) {
+        currentProductStep = Math.max(0, Math.min(index, productStepNames.length - 1));
+        const name = productStepNames[currentProductStep];
+
+        productSteps.forEach(function (step) {
+            step.hidden = step.dataset.productStep !== name;
+        });
+
+        productWizardEyebrow.textContent = 'Step ' + (currentProductStep + 1);
+        productWizardTitle.textContent = productStepTitles[name];
+        productWizardCount.textContent = (currentProductStep + 1) + ' of ' + productStepNames.length;
+        productWizardBar.style.width = (((currentProductStep + 1) / productStepNames.length) * 100) + '%';
+
+        productBackButton.disabled = currentProductStep === 0;
+        productNextButton.classList.toggle('hidden', currentProductStep === productStepNames.length - 1);
+        productSubmitButton.classList.toggle('hidden', currentProductStep !== productStepNames.length - 1);
+
+        if (name === 'options') {
+            syncOptionsMode();
+            renderOptionSuggestions();
+            renderOptions();
+            renderSpecifications();
+        }
+
+        if (name === 'review') {
+            syncProductPayloads();
+            renderProductReview();
+        }
+    }
+
+    function visibleFieldsInCurrentStep() {
+        const step = productSteps.find(function (item) {
+            return item.dataset.productStep === productStepNames[currentProductStep];
+        });
+
+        return Array.from(step?.querySelectorAll('input, select, textarea') || [])
+            .filter(function (field) {
+                return !field.disabled && field.type !== 'hidden';
+            });
+    }
+
+    function validateProductStep() {
+        for (const field of visibleFieldsInCurrentStep()) {
+            if (!field.checkValidity()) {
+                field.reportValidity();
+                field.focus();
+                return false;
+            }
+        }
+
+        if (productStepNames[currentProductStep] === 'options' && hasOptionsInput.checked) {
+            if (productOptions.length === 0) {
+                window.alert('Add at least one option, or turn off “Add product options”.');
+                return false;
+            }
+
+            const incomplete = productOptions.some(function (option) {
+                return !option.name.trim() || option.values.length === 0;
+            });
+
+            if (incomplete) {
+                window.alert('Each option needs a name and at least one value.');
+                return false;
+            }
+
+            if (productVariants.length > 100) {
+                window.alert('Too many variants. Reduce the number of option values to 100 combinations or fewer.');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    productNextButton?.addEventListener('click', function () {
+        if (!validateProductStep()) return;
+        setProductStep(currentProductStep + 1);
+    });
+
+    productBackButton?.addEventListener('click', function () {
+        setProductStep(currentProductStep - 1);
+    });
+
+    /* IMAGE PREVIEW */
+    imageInput?.addEventListener('change', function () {
+        const file = this.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            imagePreview.src = event.target.result;
+            imagePreview.classList.remove('hidden');
+            imagePlaceholder?.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function syncOptionsMode() {
+        const enabled = hasOptionsInput.checked;
+        optionsArea.hidden = !enabled;
+
+        if (enabled) {
+            baseStockInput.readOnly = true;
+            baseStockInput.classList.add('bg-[#f6f3ef]');
+            stockLabel.textContent = 'Total Stock *';
+            stockHint.textContent = 'Calculated automatically from all variant stocks.';
+            if (productOptions.length === 0) {
+                addProductOption('Color');
+            }
+        } else {
+            baseStockInput.readOnly = false;
+            baseStockInput.classList.remove('bg-[#f6f3ef]');
+            stockLabel.textContent = 'Stock *';
+            stockHint.textContent = 'Available quantity for this product.';
+            productVariants = [];
+            variantSection.hidden = true;
+        }
+
+        syncProductPayloads();
+    }
+
+    hasOptionsInput?.addEventListener('change', syncOptionsMode);
+
+    productCategoryInput?.addEventListener('change', renderOptionSuggestions);
+
+    function renderOptionSuggestions() {
+        if (!optionSuggestions) return;
+        optionSuggestions.innerHTML = '';
+
+        const suggestions = optionSuggestionsByCategory[productCategoryInput.value] || ['Color', 'Size', 'Type'];
+
+        suggestions.forEach(function (suggestion) {
+            const alreadyExists = productOptions.some(function (option) {
+                return option.name.toLowerCase() === suggestion.toLowerCase();
+            });
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.disabled = alreadyExists || productOptions.length >= 3;
+            button.className = 'rounded-full border border-[#e7dfd4] bg-white px-2.5 py-1 text-[7px] font-semibold text-[#786f64] disabled:opacity-40';
+            button.textContent = '+ ' + suggestion;
+            button.addEventListener('click', function () {
+                addProductOption(suggestion);
+            });
+            optionSuggestions.appendChild(button);
+        });
+    }
+
+    function addProductOption(name = '') {
+        if (productOptions.length >= 3) {
+            window.alert('You can add up to 3 product options.');
+            return;
+        }
+
+        productOptions.push({ name: name, values: [] });
+        renderOptions();
+        renderOptionSuggestions();
+    }
+
+    addOptionButton?.addEventListener('click', function () {
+        addProductOption('');
+    });
+
+    function renderOptions() {
+        optionList.innerHTML = '';
+
+        productOptions.forEach(function (option, optionIndex) {
+            const wrap = document.createElement('div');
+            wrap.className = 'rounded-[14px] border border-[#e9e2d8] bg-white p-3';
+
+            wrap.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <input
+                        type="text"
+                        value="${escapeHtml(option.name)}"
+                        maxlength="60"
+                        placeholder="Option name: Color, Size, Storage..."
+                        class="option-name-input h-9 flex-1 rounded-lg border border-[#e2dbd1] px-3 text-[8px] text-[#342e28] outline-none focus:border-[#c99128]"
+                    >
+                    <button type="button" class="remove-option grid h-9 w-9 place-items-center rounded-lg border border-[#ead8d8] text-[#a76464]" title="Remove option">
+                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7h14"></path><path d="M9 7V4h6v3"></path><path d="m8 7 1 13h6l1-13"></path></svg>
+                    </button>
+                </div>
+
+                <div class="mt-2 flex gap-2">
+                    <input type="text" class="option-value-input h-9 min-w-0 flex-1 rounded-lg border border-[#e2dbd1] px-3 text-[8px] text-[#342e28] outline-none focus:border-[#c99128]" placeholder="Add value: Black, Large, 256GB...">
+                    <button type="button" class="add-option-value h-9 rounded-lg bg-[#f3eee5] px-3 text-[7px] font-semibold text-[#6d6254]">Add Value</button>
+                </div>
+
+                <div class="option-value-chips mt-2 flex flex-wrap gap-1.5"></div>
+            `;
+
+            const nameInput = wrap.querySelector('.option-name-input');
+            const valueInput = wrap.querySelector('.option-value-input');
+            const chips = wrap.querySelector('.option-value-chips');
+
+            nameInput.addEventListener('input', function () {
+                productOptions[optionIndex].name = this.value.slice(0, 60);
+                generateVariants();
+                syncProductPayloads();
+            });
+
+            function addValue() {
+                const value = valueInput.value.trim().slice(0, 100);
+                if (!value) return;
+
+                const duplicate = productOptions[optionIndex].values.some(function (existing) {
+                    return existing.toLowerCase() === value.toLowerCase();
+                });
+
+                if (duplicate) {
+                    valueInput.value = '';
+                    return;
+                }
+
+                if (productOptions[optionIndex].values.length >= 10) {
+                    window.alert('Each option can have up to 10 values.');
+                    return;
+                }
+
+                productOptions[optionIndex].values.push(value);
+                valueInput.value = '';
+                renderOptions();
+                generateVariants();
+                syncProductPayloads();
+            }
+
+            wrap.querySelector('.add-option-value').addEventListener('click', addValue);
+            valueInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    addValue();
+                }
+            });
+
+            wrap.querySelector('.remove-option').addEventListener('click', function () {
+                productOptions.splice(optionIndex, 1);
+                renderOptions();
+                renderOptionSuggestions();
+                generateVariants();
+                syncProductPayloads();
+            });
+
+            option.values.forEach(function (value, valueIndex) {
+                const chip = document.createElement('span');
+                chip.className = 'inline-flex items-center gap-1 rounded-full bg-[#f7f3ec] px-2 py-1 text-[7px] font-semibold text-[#6c6256]';
+                chip.innerHTML = `${escapeHtml(value)} <button type="button" class="text-[#a06c60]">×</button>`;
+                chip.querySelector('button').addEventListener('click', function () {
+                    productOptions[optionIndex].values.splice(valueIndex, 1);
+                    renderOptions();
+                    generateVariants();
+                    syncProductPayloads();
+                });
+                chips.appendChild(chip);
+            });
+
+            optionList.appendChild(wrap);
+        });
+
+        addOptionButton.disabled = productOptions.length >= 3;
+        addOptionButton.classList.toggle('opacity-40', productOptions.length >= 3);
+        generateVariants();
+    }
+
+    function generateCombinations(options) {
+        if (!options.length || options.some(function (option) { return !option.name.trim() || option.values.length === 0; })) {
+            return [];
+        }
+
+        let combinations = [[]];
+        options.forEach(function (option) {
+            const next = [];
+            combinations.forEach(function (existing) {
+                option.values.forEach(function (value) {
+                    next.push(existing.concat([{ name: option.name.trim(), value: value }]));
+                });
+            });
+            combinations = next;
+        });
+        return combinations;
+    }
+
+    function variantKey(values) {
+        return values.map(function (value) { return value.toLowerCase().trim(); }).join(' | ');
+    }
+
+    function generateVariants() {
+        if (!hasOptionsInput.checked) {
+            productVariants = [];
+            variantSection.hidden = true;
+            return;
+        }
+
+        const combinations = generateCombinations(productOptions);
+        const oldMap = {};
+        productVariants.forEach(function (variant) {
+            oldMap[variantKey(variant.values)] = variant;
+        });
+
+        productVariants = combinations.slice(0, 101).map(function (combination, index) {
+            const values = combination.map(function (item) { return item.value; });
+            const key = variantKey(values);
+            const previous = oldMap[key];
+
+            return {
+                values: values,
+                labels: combination,
+                sku: previous?.sku || buildVariantSku(values, index),
+                price: previous?.price ?? Number(basePriceInput.value || 0),
+                stock: previous?.stock ?? 0
+            };
+        });
+
+        renderVariants();
+        syncTotalVariantStock();
+        syncProductPayloads();
+    }
+
+    function buildVariantSku(values, index) {
+        const base = (productSkuInput.value.trim() || 'SARI').replace(/[^A-Za-z0-9-]/g, '').toUpperCase();
+        const suffix = values.map(function (value) {
+            return value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 5) || 'V';
+        }).join('-');
+        return (base + '-' + (suffix || (index + 1))).slice(0, 120);
+    }
+
+    function renderVariants() {
+        variantRows.innerHTML = '';
+        variantSection.hidden = productVariants.length === 0;
+        variantCount.textContent = productVariants.length + (productVariants.length === 1 ? ' variant' : ' variants');
+
+        if (productVariants.length > 100) {
+            const warning = document.createElement('div');
+            warning.className = 'rounded-lg border border-[#edcccc] bg-[#fff5f5] px-3 py-2 text-[7px] text-[#a45e5e]';
+            warning.textContent = 'Too many combinations. Reduce your option values to 100 variants or fewer.';
+            variantRows.appendChild(warning);
+            return;
+        }
+
+        productVariants.forEach(function (variant, index) {
+            const row = document.createElement('div');
+            row.className = 'grid grid-cols-1 gap-2 rounded-xl border border-[#e9e3da] bg-white p-2.5 md:grid-cols-[1.4fr_1fr_.8fr_.65fr] md:items-end';
+
+            row.innerHTML = `
+                <div>
+                    <p class="text-[6px] font-semibold uppercase tracking-[.08em] text-[#9b9287]">Variant</p>
+                    <p class="mt-1 text-[8px] font-bold text-[#4a4239]">${variant.labels.map(function (item) { return escapeHtml(item.value); }).join(' / ')}</p>
+                </div>
+                <div>
+                    <label class="mb-1 block text-[6px] text-[#958c80]">SKU</label>
+                    <input data-variant-sku="${index}" type="text" value="${escapeHtml(variant.sku)}" maxlength="120" class="h-8 w-full rounded-lg border border-[#e3ddd4] px-2 text-[7px] text-[#342e28] outline-none">
+                </div>
+                <div>
+                    <label class="mb-1 block text-[6px] text-[#958c80]">Price</label>
+                    <input data-variant-price="${index}" type="number" min="0" step="0.01" value="${Number(variant.price || 0).toFixed(2)}" class="h-8 w-full rounded-lg border border-[#e3ddd4] px-2 text-[7px] text-[#342e28] outline-none">
+                </div>
+                <div>
+                    <label class="mb-1 block text-[6px] text-[#958c80]">Stock</label>
+                    <input data-variant-stock="${index}" type="number" min="0" step="1" value="${Number(variant.stock || 0)}" class="h-8 w-full rounded-lg border border-[#e3ddd4] px-2 text-[7px] text-[#342e28] outline-none">
+                </div>
+            `;
+
+            row.querySelector(`[data-variant-sku="${index}"]`).addEventListener('input', function () {
+                productVariants[index].sku = this.value.slice(0, 120);
+                syncProductPayloads();
+            });
+            row.querySelector(`[data-variant-price="${index}"]`).addEventListener('input', function () {
+                productVariants[index].price = Math.max(0, Number(this.value || 0));
+                syncProductPayloads();
+            });
+            row.querySelector(`[data-variant-stock="${index}"]`).addEventListener('input', function () {
+                productVariants[index].stock = Math.max(0, Number.parseInt(this.value || '0', 10));
+                syncTotalVariantStock();
+                syncProductPayloads();
+            });
+
+            variantRows.appendChild(row);
+        });
+    }
+
+    function syncTotalVariantStock() {
+        if (!hasOptionsInput.checked) return;
+        const total = productVariants.reduce(function (sum, variant) {
+            return sum + Math.max(0, Number.parseInt(variant.stock || 0, 10));
+        }, 0);
+        baseStockInput.value = total;
+    }
+
+    basePriceInput?.addEventListener('input', function () {
+        productVariants.forEach(function (variant) {
+            if (!Number.isFinite(Number(variant.price)) || Number(variant.price) === 0) {
+                variant.price = Number(basePriceInput.value || 0);
+            }
+        });
+        renderVariants();
+        syncProductPayloads();
+    });
+
+    productSkuInput?.addEventListener('change', function () {
+        productVariants.forEach(function (variant, index) {
+            variant.sku = buildVariantSku(variant.values, index);
+        });
+        renderVariants();
+        syncProductPayloads();
+    });
+
+    addSpecificationButton?.addEventListener('click', function () {
+        if (productSpecifications.length >= 20) {
+            window.alert('You can add up to 20 product details.');
+            return;
+        }
+        productSpecifications.push({ name: '', value: '' });
+        renderSpecifications();
+    });
+
+    function renderSpecifications() {
+        specificationList.innerHTML = '';
+
+        if (productSpecifications.length === 0) {
+            const empty = document.createElement('p');
+            empty.className = 'text-[7px] text-[#9a9186]';
+            empty.textContent = 'No additional details added. This is optional.';
+            specificationList.appendChild(empty);
+            return;
+        }
+
+        productSpecifications.forEach(function (specification, index) {
+            const row = document.createElement('div');
+            row.className = 'grid grid-cols-[1fr_1.4fr_auto] gap-2';
+            row.innerHTML = `
+                <input type="text" value="${escapeHtml(specification.name)}" maxlength="80" placeholder="Detail name: Material" class="spec-name h-9 min-w-0 rounded-lg border border-[#e3ddd4] px-2.5 text-[8px] text-[#342e28] outline-none">
+                <input type="text" value="${escapeHtml(specification.value)}" maxlength="255" placeholder="Value: Cotton" class="spec-value h-9 min-w-0 rounded-lg border border-[#e3ddd4] px-2.5 text-[8px] text-[#342e28] outline-none">
+                <button type="button" class="remove-spec grid h-9 w-9 place-items-center rounded-lg border border-[#ead8d8] text-[#a76464]">×</button>
+            `;
+
+            row.querySelector('.spec-name').addEventListener('input', function () {
+                productSpecifications[index].name = this.value.slice(0, 80);
+                syncProductPayloads();
+            });
+            row.querySelector('.spec-value').addEventListener('input', function () {
+                productSpecifications[index].value = this.value.slice(0, 255);
+                syncProductPayloads();
+            });
+            row.querySelector('.remove-spec').addEventListener('click', function () {
+                productSpecifications.splice(index, 1);
+                renderSpecifications();
+                syncProductPayloads();
+            });
+
+            specificationList.appendChild(row);
+        });
+    }
+
+    function syncProductPayloads() {
+        optionsPayload.value = JSON.stringify(hasOptionsInput.checked ? productOptions : []);
+        variantsPayload.value = JSON.stringify(hasOptionsInput.checked ? productVariants.map(function (variant) {
+            return {
+                values: variant.values,
+                sku: variant.sku,
+                price: Number(variant.price || 0),
+                stock: Number.parseInt(variant.stock || 0, 10)
+            };
+        }) : []);
+        specificationsPayload.value = JSON.stringify(productSpecifications.filter(function (item) {
+            return item.name.trim() && item.value.trim();
+        }));
+    }
+
+    function renderProductReview() {
+        const optionsText = hasOptionsInput.checked && productOptions.length
+            ? productOptions.map(function (option) { return option.name + ': ' + option.values.join(', '); }).join(' • ')
+            : 'No product options';
+
+        const detailText = productSpecifications.filter(function (item) {
+            return item.name.trim() && item.value.trim();
+        }).map(function (item) { return item.name + ': ' + item.value; }).join(' • ') || 'No additional details';
+
+        const cards = [
+            ['Product', productNameInput.value || '—'],
+            ['Category', productCategoryInput.value || '—'],
+            ['Base Price', '₱' + Number(basePriceInput.value || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })],
+            ['Total Stock', baseStockInput.value || '0'],
+            ['Options', optionsText],
+            ['Details', detailText]
+        ];
+
+        reviewBox.innerHTML = cards.map(function (card) {
+            return `<div class="rounded-xl border border-[#e9e2d8] bg-white p-3"><p class="text-[6px] font-semibold uppercase tracking-[.08em] text-[#9a9186]">${escapeHtml(card[0])}</p><p class="mt-1.5 text-[8px] font-semibold leading-4 text-[#4b433a]">${escapeHtml(String(card[1]))}</p></div>`;
+        }).join('');
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    addProductForm?.addEventListener('submit', function (event) {
+        syncProductPayloads();
+
+        if (!addProductForm.checkValidity()) {
+            event.preventDefault();
+            const invalid = addProductForm.querySelector(':invalid');
+            const parentStep = invalid?.closest('[data-product-step]');
+            if (parentStep) {
+                const index = productStepNames.indexOf(parentStep.dataset.productStep);
+                if (index >= 0) setProductStep(index);
+            }
+            window.setTimeout(function () {
+                invalid?.reportValidity();
+                invalid?.focus();
+            }, 100);
+            return;
+        }
+
+        if (hasOptionsInput.checked && productVariants.length > 100) {
+            event.preventDefault();
+            setProductStep(2);
+            window.alert('Too many product variants. Keep the total combinations at 100 or fewer.');
+        }
+    });
+
+    renderSpecifications();
+    syncProductPayloads();
+

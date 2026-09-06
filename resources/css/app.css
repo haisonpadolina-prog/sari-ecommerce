@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+/* SARI compiled Tailwind theme tokens */
+@theme {
+    --font-poppins: "Poppins", sans-serif;
+}

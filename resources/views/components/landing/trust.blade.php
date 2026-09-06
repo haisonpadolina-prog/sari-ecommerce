@@ -5,7 +5,7 @@
    ============================================================ */
 
 .sari-trust-final {
-    --tf-bg: #fbf8f2;
+    --tf-bg: #ffffff;
     --tf-card: #ffffff;
     --tf-ink: #111111;
     --tf-muted: #57534d;

@@ -1,778 +1,520 @@
-<style>
-    /* ============================================================
-       SARI EDITORIAL CTA
-       Fully isolated component
-       ============================================================ */
-
-    .sari-editorial-hero {
-        position: relative;
-        width: 100%;
-        min-height: 720px;
-
-        display: flex;
-        align-items: center;
-
-        overflow: hidden;
-        isolation: isolate;
-
-        background:
-            url("{{ asset('images/sari-hero-bg.png') }}")
-            center center / cover no-repeat;
-
-        font-family: 'Poppins', sans-serif;
-    }
-
-
-    /* Soft overlay */
-
-    .sari-editorial-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-
-        background:
-            linear-gradient(
-                90deg,
-                rgba(250, 247, 240, 0.97) 0%,
-                rgba(250, 247, 240, 0.92) 32%,
-                rgba(250, 247, 240, 0.42) 63%,
-                rgba(250, 247, 240, 0.05) 100%
-            );
-
-        z-index: -1;
-    }
-
-
-    /* ============================================================
-       CONTAINER
-       ============================================================ */
-
-    .sari-editorial-hero__container {
-        position: relative;
-
-        width: min(1400px, 100%);
-
-        margin: 0 auto;
-
-        padding: 80px 7%;
-    }
-
-
-    .sari-editorial-hero__content {
-        width: min(720px, 100%);
-    }
-
-
-    /* ============================================================
-       LOGO
-       ============================================================ */
-
-    .sari-editorial-hero__logo {
-        display: block;
-
-        width: 190px;
-        height: auto;
-
-        margin-bottom: 12px;
-
-        object-fit: contain;
-
-        /*
-         * Your current logo is white.
-         * brightness(0) converts it to a clean black logo
-         * so it becomes visible on the light background.
-         */
-        filter: brightness(0);
-    }
-
-
-    /* Gold tagline */
-
-    .sari-editorial-hero__tagline {
-        margin-bottom: 48px;
-
-        color: #c98a08;
-
-        font-size: 11px;
-        font-weight: 700;
-
-        letter-spacing: 0.30em;
-
-        text-transform: uppercase;
-    }
-
-
-    /* ============================================================
-       HEADLINE
-       ============================================================ */
-
-    .sari-editorial-hero__title {
-        margin: 0;
-
-        color: #111111;
-
-        font-size: clamp(
-            58px,
-            7vw,
-            108px
-        );
-
-        font-weight: 700;
-
-        line-height: 0.91;
-
-        letter-spacing: -0.065em;
-    }
-
-
-    .sari-editorial-hero__title-accent {
-        color: #c98a08;
-    }
-
-
-    /* ============================================================
-       DESCRIPTION
-       ============================================================ */
-
-    .sari-editorial-hero__description {
-        width: min(620px, 100%);
-
-        margin: 32px 0 0;
-
-        color: #514d47;
-
-        font-size: 17px;
-        font-weight: 400;
-
-        line-height: 1.7;
-    }
-
-
-    /* ============================================================
-       SINGLE CTA BUTTON
-       ============================================================ */
-
-    .sari-editorial-hero__actions {
-        margin-top: 38px;
-    }
-
-
-    .sari-hero-enter-btn {
-        min-width: 205px;
-        height: 58px;
-
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        gap: 16px;
-
-        padding: 0 32px;
-
-        border: 1px solid #c98a08;
-        border-radius: 10px;
-
-        background: #c98a08;
-
-        color: #ffffff !important;
-
-        font-size: 14px;
-        font-weight: 400;
-
-        letter-spacing: 0.08em;
-
-        text-decoration: none;
-        text-transform: uppercase;
-
-        transition:
-            transform .25s ease,
-            background .25s ease,
-            border-color .25s ease,
-            box-shadow .25s ease;
-    }
-
-
-    .sari-hero-enter-btn:hover {
-        background: #b77b05;
-        border-color: #b77b05;
-
-        color: #ffffff !important;
-
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 12px 30px rgba(201, 138, 8, 0.20);
-    }
-
-
-    .sari-hero-enter-arrow {
-        font-size: 20px;
-        font-weight: 300;
-
-        color: #ffffff !important;
-
-        transition:
-            transform .25s ease;
-    }
-
-
-    .sari-hero-enter-btn:hover
-    .sari-hero-enter-arrow {
-        transform: translateX(5px);
-    }
-
-
-    /* ============================================================
-       SMALL LABEL
-       ============================================================ */
-
-    .sari-editorial-hero__bottom-label {
-        position: absolute;
-
-        left: 7%;
-        bottom: 28px;
-
-        display: flex;
-        align-items: center;
-
-        gap: 12px;
-
-        color: #8b8479;
-
-        font-size: 9px;
-        font-weight: 600;
-
-        letter-spacing: .18em;
-
-        text-transform: uppercase;
-    }
-
-
-    .sari-editorial-hero__bottom-label::before {
-        content: "";
-
-        width: 32px;
-        height: 1px;
-
-        background: #c98a08;
-    }
-
-
-    /* ============================================================
-       DARK MODE
-       ============================================================ */
-
-    html.dark .sari-editorial-hero::before,
-    body.dark .sari-editorial-hero::before,
-    html.dark-mode .sari-editorial-hero::before,
-    body.dark-mode .sari-editorial-hero::before,
-    html[data-theme="dark"] .sari-editorial-hero::before {
-
-        background:
-            linear-gradient(
-                90deg,
-                rgba(18, 16, 13, .97) 0%,
-                rgba(18, 16, 13, .91) 35%,
-                rgba(18, 16, 13, .40) 68%,
-                rgba(18, 16, 13, .10) 100%
-            );
-    }
-
-
-    html.dark .sari-editorial-hero__title,
-    body.dark .sari-editorial-hero__title,
-    html.dark-mode .sari-editorial-hero__title,
-    body.dark-mode .sari-editorial-hero__title,
-    html[data-theme="dark"] .sari-editorial-hero__title {
-
-        color: #f7f3eb;
-    }
-
-
-    html.dark .sari-editorial-hero__description,
-    body.dark .sari-editorial-hero__description,
-    html.dark-mode .sari-editorial-hero__description,
-    body.dark-mode .sari-editorial-hero__description,
-    html[data-theme="dark"] .sari-editorial-hero__description {
-
-        color: #c5beb1;
-    }
-
-
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
-
-    @media (max-width: 900px) {
-
-        .sari-editorial-hero {
-            min-height: 680px;
-
-            background-position: 65% center;
-        }
-
-
-        .sari-editorial-hero::before {
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(250, 247, 240, .97) 0%,
-                    rgba(250, 247, 240, .88) 58%,
-                    rgba(250, 247, 240, .35) 100%
-                );
-        }
-
-
-        .sari-editorial-hero__container {
-            padding: 70px 28px;
-        }
-
-
-        .sari-editorial-hero__logo {
-            width: 155px;
-        }
-
-
-        .sari-editorial-hero__title {
-            font-size: clamp(
-                54px,
-                12vw,
-                80px
-            );
-        }
-    }
-
-
-    @media (max-width: 600px) {
-
-        .sari-editorial-hero {
-            min-height: 700px;
-
-            align-items: flex-start;
-
-            background-position: 67% center;
-        }
-
-
-        .sari-editorial-hero::before {
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(250, 247, 240, .97) 0%,
-                    rgba(250, 247, 240, .92) 52%,
-                    rgba(250, 247, 240, .48) 100%
-                );
-        }
-
-
-        .sari-editorial-hero__container {
-            padding: 65px 22px;
-        }
-
-
-        .sari-editorial-hero__logo {
-            width: 135px;
-        }
-
-
-        .sari-editorial-hero__tagline {
-            margin-bottom: 34px;
-
-            font-size: 9px;
-
-            letter-spacing: .24em;
-        }
-
-
-        .sari-editorial-hero__title {
-            font-size: clamp(
-                48px,
-                14vw,
-                68px
-            );
-
-            line-height: .94;
-        }
-
-
-        .sari-editorial-hero__description {
-            margin-top: 24px;
-
-            font-size: 14px;
-
-            line-height: 1.7;
-        }
-
-
-        .sari-editorial-hero__actions {
-            margin-top: 30px;
-        }
-
-
-        .sari-hero-enter-btn {
-            width: 100%;
-            max-width: 230px;
-        }
-
-
-        .sari-editorial-hero__bottom-label {
-            display: none;
-        }
-    }
-
-
-    @media (prefers-reduced-motion: reduce) {
-
-        .sari-hero-enter-btn,
-        .sari-hero-enter-arrow {
-            transition: none;
-        }
-    }
-</style>
-
-
+{{-- resources/views/components/cta.blade.php --}}
 <section
-    class="sari-editorial-hero"
+    class="sari-cta-v2"
     id="register"
-    aria-labelledby="sari-editorial-hero-title"
+    aria-labelledby="sari-cta-v2-title"
 >
+    <div class="sari-cta-v2__overlay"></div>
 
-    <div class="sari-editorial-hero__container">
+    <div class="sari-cta-v2__container">
+        <div class="sari-cta-v2__content">
 
-        <div class="sari-editorial-hero__content">
+            <div class="sari-cta-v2__brand sari-cta-v2__reveal">
+                <img
+                    src="{{ asset('images/sari-logo.png') }}"
+                    alt="SARI"
+                    class="sari-cta-v2__logo"
+                >
 
-            <!-- SARI LOGO -->
-            <img
-                src="{{ asset('images/sari-logo.png') }}"
-                alt="SARI"
-                class="sari-editorial-hero__logo"
-            >
-
-
-            <!-- TAGLINE -->
-            <div class="sari-editorial-hero__tagline">
-                Elevated Everyday
+                <span class="sari-cta-v2__eyebrow">
+                    Curated · Local · Everyday
+                </span>
             </div>
 
-
-            <!-- HEADLINE -->
             <h1
-                class="sari-editorial-hero__title"
-                id="sari-editorial-hero-title"
+                class="sari-cta-v2__title sari-cta-v2__reveal"
+                id="sari-cta-v2-title"
             >
                 Elevate the way
                 <br>
-                you <span class="sari-editorial-hero__title-accent">shop.</span>
+                you <span>shop.</span>
             </h1>
 
-
-            <!-- DESCRIPTION -->
-            <p class="sari-editorial-hero__description">
-                Step into a marketplace designed around discovery,
-                connection, and everyday convenience.
+            <p class="sari-cta-v2__description sari-cta-v2__reveal">
+                Discover a more connected marketplace built for everyday
+                shopping — from trusted sellers to convenient delivery.
             </p>
 
-
-            <!-- SINGLE BUTTON -->
-            <div class="sari-editorial-hero__actions">
-
-                <a
-                    href="{{ route('login') }}"
-                    class="sari-hero-enter-btn"
-                >
-                    <span>Enter SARI</span>
-
-                    <span
-                        class="sari-hero-enter-arrow"
-                        aria-hidden="true"
-                    >
-                        →
-                    </span>
+            <div class="sari-cta-v2__actions sari-cta-v2__reveal">
+                <a href="{{ route('login') }}" class="sari-cta-v2__primary">
+                    Enter SARI
+                    <span aria-hidden="true">→</span>
                 </a>
 
+                <a href="#categories" class="sari-cta-v2__secondary">
+                    Explore categories
+                    <span aria-hidden="true">↗</span>
+                </a>
             </div>
 
+            <div class="sari-cta-v2__trust sari-cta-v2__reveal">
+                <span><i></i>Verified Sellers</span>
+                <span><i></i>Secure Shopping</span>
+                <span><i></i>Connected Delivery</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sari-cta-v2__floating sari-cta-v2__reveal" aria-hidden="true">
+        <div class="sari-cta-v2__floating-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M4 7h16l-1 13H5L4 7Z"/>
+                <path d="M8 9V6a4 4 0 0 1 8 0v3"/>
+            </svg>
         </div>
 
+        <div>
+            <small>MARKETPLACE</small>
+            <strong>Curated for everyday life.</strong>
+        </div>
     </div>
-
-
-    <div class="sari-editorial-hero__bottom-label">
-        Elevated Everyday
-    </div>
-
 </section>
 
 <style>
-/* =========================================================
-   SARI EDITORIAL HERO — CINEMATIC MOTION ENHANCEMENT
-   Smooth, premium, restrained.
-   ========================================================= */
-
-/* Background settles in gently */
-.sari-editorial-hero {
-    background-size: 103% auto;
-    transition:
-        background-size 1.4s cubic-bezier(.22,1,.36,1),
-        background-position 1.2s cubic-bezier(.22,1,.36,1);
+.sari-cta-v2,
+.sari-cta-v2 *,
+.sari-cta-v2 *::before,
+.sari-cta-v2 *::after {
+    box-sizing: border-box;
 }
 
-.sari-editorial-hero.sari-editorial-motion-ready {
-    background-size: 100% auto;
-}
+.sari-cta-v2 {
+    --cta-gold: #c98a08;
+    --cta-gold-dark: #b77b05;
+    --cta-ink: #111111;
+    --cta-muted: #625d55;
+    --cta-soft: #91897d;
 
-/* Overlay transition for theme changes */
-.sari-editorial-hero::before {
-    transition: background .5s ease;
-}
-
-/* Content reveal */
-.sari-editorial-hero.sari-editorial-motion-ready .sari-editorial-reveal {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
-    transition:
-        opacity .8s cubic-bezier(.22,1,.36,1),
-        transform .9s cubic-bezier(.22,1,.36,1);
-    will-change: opacity, transform;
-}
-
-.sari-editorial-hero.sari-editorial-motion-ready .sari-editorial-reveal.is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-}
-
-.sari-editorial-delay-1 { transition-delay: .05s !important; }
-.sari-editorial-delay-2 { transition-delay: .14s !important; }
-.sari-editorial-delay-3 { transition-delay: .24s !important; }
-.sari-editorial-delay-4 { transition-delay: .34s !important; }
-.sari-editorial-delay-5 { transition-delay: .46s !important; }
-
-/* Logo polish */
-.sari-editorial-hero__logo {
-    transition:
-        transform .6s cubic-bezier(.22,1,.36,1),
-        filter .4s ease;
-}
-
-.sari-editorial-hero__logo:hover {
-    transform: translateY(-2px) scale(1.01);
-}
-
-/* Accent word gets tiny editorial response */
-.sari-editorial-hero__title-accent {
-    display: inline-block;
-    transition:
-        transform .5s cubic-bezier(.22,1,.36,1),
-        text-shadow .4s ease;
-}
-
-.sari-editorial-hero__title:hover .sari-editorial-hero__title-accent {
-    transform: translateY(-2px);
-    text-shadow: 0 8px 22px rgba(201,138,8,.10);
-}
-
-/* Tagline gold line effect */
-.sari-editorial-hero__tagline {
     position: relative;
-    width: fit-content;
+    width: 100%;
+    min-height: 760px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    color: var(--cta-ink);
+    font-family: 'Poppins', sans-serif;
+
+    background-image: url("{{ asset('images/sari-hero-bg.png') }}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 56% center;
 }
 
-.sari-editorial-hero__tagline::after {
+.sari-cta-v2__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        rgba(255,253,249,.995) 0%,
+        rgba(255,253,249,.985) 28%,
+        rgba(255,253,249,.90) 43%,
+        rgba(255,253,249,.50) 59%,
+        rgba(255,253,249,.10) 77%,
+        rgba(255,253,249,0) 100%
+    );
+}
+
+.sari-cta-v2__container {
+    position: relative;
+    z-index: 3;
+    width: min(1440px, 100%);
+    margin: 0 auto;
+    padding: 86px 7%;
+}
+
+.sari-cta-v2__content {
+    width: min(650px, 52vw);
+}
+
+.sari-cta-v2__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.sari-cta-v2__logo {
+    display: block;
+    width: 182px;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0);
+}
+
+.sari-cta-v2__eyebrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-left: 39px;
+    color: var(--cta-gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .27em;
+    text-transform: uppercase;
+}
+
+.sari-cta-v2__eyebrow::before {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -9px;
-    width: 28px;
+    width: 27px;
     height: 1px;
-    background: #c98a08;
-    transform-origin: left center;
-    transition: width .45s cubic-bezier(.22,1,.36,1);
+    background: currentColor;
 }
 
-.sari-editorial-hero__tagline:hover::after {
-    width: 46px;
+.sari-cta-v2__title {
+    max-width: 650px;
+    margin: 0;
+    color: var(--cta-ink);
+    font-size: clamp(62px, 5.15vw, 90px);
+    font-weight: 700;
+    line-height: .97;
+    letter-spacing: -.062em;
 }
 
-/* =========================================================
-   CTA — PREMIUM BUTTON
-   ========================================================= */
-
-.sari-hero-enter-btn {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    font-weight: 600;
-
-    transition:
-        transform .35s cubic-bezier(.22,1,.36,1),
-        background-color .35s ease,
-        border-color .35s ease,
-        box-shadow .4s ease;
+.sari-cta-v2__title span {
+    color: var(--cta-gold);
 }
 
-.sari-hero-enter-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(
-        110deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.16) 48%,
-        rgba(255,255,255,.04)
-    );
-    opacity: 0;
-    transition: opacity .35s ease;
+.sari-cta-v2__description {
+    width: min(570px, 100%);
+    margin: 28px 0 0;
+    color: var(--cta-muted);
+    font-size: 16px;
+    line-height: 1.75;
 }
 
-.sari-hero-enter-btn::after {
-    content: "";
-    position: absolute;
-    top: -45%;
-    left: -80%;
-    width: 46%;
-    height: 190%;
-    z-index: 0;
-    transform: skewX(-18deg);
-    background: linear-gradient(
-        100deg,
-        transparent,
-        rgba(255,255,255,.20),
-        transparent
-    );
-    transition: left .85s cubic-bezier(.22,1,.36,1);
-    pointer-events: none;
+.sari-cta-v2__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 34px;
 }
 
-.sari-hero-enter-btn > span {
-    position: relative;
-    z-index: 2;
+.sari-cta-v2__primary {
+    min-width: 190px;
+    height: 54px;
+    padding: 0 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: 1px solid var(--cta-gold);
+    border-radius: 8px;
+    background: var(--cta-gold);
+    color: #fff !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
 }
 
-.sari-hero-enter-btn:hover {
+.sari-cta-v2__primary:hover {
     transform: translateY(-3px);
-    box-shadow:
-        0 16px 34px rgba(201,138,8,.24);
+    background: var(--cta-gold-dark);
+    box-shadow: 0 14px 34px rgba(201,138,8,.20);
 }
 
-.sari-hero-enter-btn:hover::before {
-    opacity: 1;
+.sari-cta-v2__primary span {
+    font-size: 18px;
+    font-weight: 300;
+    transition: transform .3s ease;
 }
 
-.sari-hero-enter-btn:hover::after {
-    left: 135%;
+.sari-cta-v2__primary:hover span {
+    transform: translateX(4px);
 }
 
-.sari-hero-enter-arrow {
-    transition: transform .35s cubic-bezier(.22,1,.36,1);
+.sari-cta-v2__secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cta-ink);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .25s ease, transform .25s ease;
 }
 
-.sari-hero-enter-btn:hover .sari-hero-enter-arrow {
-    transform: translateX(5px);
+.sari-cta-v2__secondary span {
+    color: var(--cta-gold);
 }
 
-.sari-hero-enter-btn:active {
-    transform: translateY(-1px);
+.sari-cta-v2__secondary:hover {
+    color: var(--cta-gold);
+    transform: translateX(2px);
 }
 
-/* Bottom label: quiet motion */
-.sari-editorial-hero__bottom-label {
-    opacity: .85;
+.sari-cta-v2__trust {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px 20px;
+    margin-top: 35px;
+}
+
+.sari-cta-v2__trust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cta-soft);
+    font-size: 10.5px;
+    font-weight: 500;
+}
+
+.sari-cta-v2__trust i {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cta-gold);
+}
+
+.sari-cta-v2__floating {
+    position: absolute;
+    right: 7%;
+    bottom: 62px;
+    z-index: 4;
+
+    width: 248px;
+    min-height: 76px;
+    padding: 16px 17px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border: 1px solid rgba(255,255,255,.64);
+    border-radius: 15px;
+    background: rgba(255,255,255,.80);
+    box-shadow: 0 18px 45px rgba(66,47,18,.11);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    animation: sariCtaFloat 7s ease-in-out infinite;
+}
+
+.sari-cta-v2__floating-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(201,138,8,.11);
+    color: var(--cta-gold);
+}
+
+.sari-cta-v2__floating-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sari-cta-v2__floating small,
+.sari-cta-v2__floating strong {
+    display: block;
+}
+
+.sari-cta-v2__floating small {
+    margin-bottom: 3px;
+    color: var(--cta-soft);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+.sari-cta-v2__floating strong {
+    color: var(--cta-ink);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+@keyframes sariCtaFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+/* reveal */
+.sari-cta-v2__reveal {
+    opacity: 0;
+    transform: translateY(18px);
     transition:
-        opacity .35s ease,
-        transform .35s ease;
+        opacity .75s cubic-bezier(.22,1,.36,1),
+        transform .85s cubic-bezier(.22,1,.36,1);
 }
 
-.sari-editorial-hero__bottom-label:hover {
+.sari-cta-v2__reveal.is-visible {
     opacity: 1;
-    transform: translateX(3px);
+    transform: translateY(0);
 }
 
-.sari-editorial-hero__bottom-label::before {
-    transform-origin: left center;
-    animation: sariEditorialLine 4.5s ease-in-out infinite;
+/* dark mode */
+html.dark .sari-cta-v2,
+body.dark .sari-cta-v2,
+html.dark-mode .sari-cta-v2,
+body.dark-mode .sari-cta-v2,
+html[data-theme="dark"] .sari-cta-v2 {
+    --cta-ink: #f7f3eb;
+    --cta-muted: #c8c1b5;
+    --cta-soft: #aaa295;
 }
 
-@keyframes sariEditorialLine {
-    0%, 100% {
-        transform: scaleX(.72);
-        opacity: .55;
-    }
-    50% {
-        transform: scaleX(1);
-        opacity: 1;
-    }
+html.dark .sari-cta-v2__overlay,
+body.dark .sari-cta-v2__overlay,
+html.dark-mode .sari-cta-v2__overlay,
+body.dark-mode .sari-cta-v2__overlay,
+html[data-theme="dark"] .sari-cta-v2__overlay {
+    background: linear-gradient(
+        90deg,
+        rgba(16,14,11,.985) 0%,
+        rgba(16,14,11,.95) 31%,
+        rgba(16,14,11,.83) 47%,
+        rgba(16,14,11,.40) 67%,
+        rgba(16,14,11,.08) 100%
+    );
 }
 
-/* Desktop hover: almost imperceptible cinematic zoom */
-@media (hover: hover) and (pointer: fine) {
-    .sari-editorial-hero:hover {
-        background-size: 101% auto;
-    }
+html.dark .sari-cta-v2__logo,
+body.dark .sari-cta-v2__logo,
+html.dark-mode .sari-cta-v2__logo,
+body.dark-mode .sari-cta-v2__logo,
+html[data-theme="dark"] .sari-cta-v2__logo {
+    filter: brightness(0) invert(1);
+}
+
+html.dark .sari-cta-v2__floating,
+body.dark .sari-cta-v2__floating,
+html.dark-mode .sari-cta-v2__floating,
+body.dark-mode .sari-cta-v2__floating,
+html[data-theme="dark"] .sari-cta-v2__floating {
+    background: rgba(28,25,20,.80);
+    border-color: rgba(255,255,255,.10);
+    box-shadow: 0 18px 45px rgba(0,0,0,.24);
 }
 
 @media (max-width: 900px) {
-    .sari-editorial-hero,
-    .sari-editorial-hero.sari-editorial-motion-ready {
-        background-size: cover;
+    .sari-cta-v2 {
+        min-height: 720px;
+        background-position: 68% center;
     }
 
-    .sari-editorial-hero.sari-editorial-motion-ready .sari-editorial-reveal {
-        transform: translate3d(0, 15px, 0);
+    .sari-cta-v2__overlay {
+        background: linear-gradient(
+            90deg,
+            rgba(255,253,249,.99) 0%,
+            rgba(255,253,249,.95) 56%,
+            rgba(255,253,249,.55) 80%,
+            rgba(255,253,249,.12) 100%
+        );
+    }
+
+    .sari-cta-v2__container {
+        padding: 72px 28px;
+    }
+
+    .sari-cta-v2__content {
+        width: min(610px, 72vw);
+    }
+
+    .sari-cta-v2__floating {
+        display: none;
+    }
+}
+
+@media (max-width: 620px) {
+    .sari-cta-v2 {
+        min-height: 760px;
+        align-items: flex-start;
+        background-position: 72% center;
+    }
+
+    .sari-cta-v2__overlay {
+        background: linear-gradient(
+            180deg,
+            rgba(255,253,249,.995) 0%,
+            rgba(255,253,249,.965) 50%,
+            rgba(255,253,249,.75) 73%,
+            rgba(255,253,249,.32) 100%
+        );
+    }
+
+    .sari-cta-v2__container {
+        padding: 60px 20px 88px;
+    }
+
+    .sari-cta-v2__content {
+        width: 100%;
+    }
+
+    .sari-cta-v2__brand {
+        margin-bottom: 33px;
+    }
+
+    .sari-cta-v2__logo {
+        width: 145px;
+    }
+
+    .sari-cta-v2__title {
+        font-size: clamp(49px, 14vw, 64px);
+        line-height: .98;
+    }
+
+    .sari-cta-v2__description {
+        margin-top: 23px;
+        font-size: 14px;
+    }
+
+    .sari-cta-v2__actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .sari-cta-v2__trust {
+        margin-top: 29px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .sari-editorial-hero,
-    .sari-editorial-hero.sari-editorial-motion-ready .sari-editorial-reveal,
-    .sari-editorial-hero__logo,
-    .sari-editorial-hero__title-accent,
-    .sari-editorial-hero__tagline::after,
-    .sari-hero-enter-btn,
-    .sari-hero-enter-btn::before,
-    .sari-hero-enter-btn::after,
-    .sari-hero-enter-arrow,
-    .sari-editorial-hero__bottom-label,
-    .sari-editorial-hero__bottom-label::before {
+    .sari-cta-v2__reveal,
+    .sari-cta-v2__floating,
+    .sari-cta-v2__primary,
+    .sari-cta-v2__primary span,
+    .sari-cta-v2__secondary {
         opacity: 1 !important;
         transform: none !important;
-        animation: none !important;
         transition: none !important;
+        animation: none !important;
     }
 }
 </style>
 
 <script>
 (function () {
-    const hero = document.querySelector('.sari-editorial-hero');
-    if (!hero) return;
+    const section = document.querySelector('.sari-cta-v2');
+    if (!section) return;
 
-    const logo = hero.querySelector('.sari-editorial-hero__logo');
-    const tagline = hero.querySelector('.sari-editorial-hero__tagline');
-    const title = hero.querySelector('.sari-editorial-hero__title');
-    const description = hero.querySelector('.sari-editorial-hero__description');
-    const actions = hero.querySelector('.sari-editorial-hero__actions');
-    const bottomLabel = hero.querySelector('.sari-editorial-hero__bottom-label');
+    const items = section.querySelectorAll('.sari-cta-v2__reveal');
 
-    [
-        [logo, 'sari-editorial-delay-1'],
-        [tagline, 'sari-editorial-delay-2'],
-        [title, 'sari-editorial-delay-3'],
-        [description, 'sari-editorial-delay-4'],
-        [actions, 'sari-editorial-delay-5'],
-        [bottomLabel, 'sari-editorial-delay-5']
-    ].forEach(([el, delay]) => {
-        if (!el) return;
-        el.classList.add('sari-editorial-reveal', delay);
-    });
-
-    hero.classList.add('sari-editorial-motion-ready');
-
-    requestAnimationFrame(() => {
-        hero.querySelectorAll('.sari-editorial-reveal').forEach(el => {
-            el.classList.add('is-visible');
+    requestAnimationFrame(function () {
+        items.forEach(function (item, index) {
+            setTimeout(function () {
+                item.classList.add('is-visible');
+            }, index * 90);
         });
     });
 })();

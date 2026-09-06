@@ -1,0 +1,19 @@
+FILE:
+resources/views/components/buyer/sidebar.blade.php
+
+FIND THIS inside the MY ORDERS link:
+
+{{ request()->routeIs('buyer.orders')
+    ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)] font-semibold'
+    : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05] font-medium' }}
+
+REPLACE ONLY THE FIRST LINE WITH:
+
+{{ request()->routeIs('buyer.orders*')
+    ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)] font-semibold'
+    : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05] font-medium' }}
+
+WHY:
+This keeps "My Orders" highlighted both on:
+- /buyer/orders
+- /buyer/orders/{order}

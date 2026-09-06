@@ -1,10 +1,46 @@
 <?php
-
+use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\BuyerPageController;
+use App\Http\Controllers\BuyerProductController;
+use App\Http\Controllers\BuyerCartController;
+use App\Http\Controllers\BuyerCheckoutController;
+use App\Http\Controllers\BuyerOrderController;
+use App\Http\Controllers\BuyerSellerMessageController;
+use App\Http\Controllers\SellerBuyerMessageController;
+use App\Http\Controllers\BuyerReviewController;
+use App\Http\Controllers\SellerReviewController;
+use App\Http\Controllers\BuyerAccountController;
+use App\Http\Controllers\CourierPageController;
 use App\Http\Controllers\AdminSellerComplianceController;
 use App\Http\Controllers\SellerComplianceMessageController;
 use App\Http\Controllers\SellerDashboardController;
+use App\Http\Controllers\SellerLayoutStateController;
 use App\Http\Controllers\SellerAdminChatController;
 use App\Http\Controllers\SellerProductController;
+use App\Http\Controllers\SellerOrderController;
+use App\Http\Controllers\CourierDeliveryController;
+use App\Http\Middleware\EnsureSellerNotRestricted;
+use App\Http\Middleware\EnsureSellerAccountAccessible;
+use App\Http\Controllers\AdminSellerAccountStatusController;
+use App\Services\SellerAccountStatusService;
+use App\Http\Controllers\ChatMessageReactionController;
+use App\Http\Controllers\AdminSellerChatActionController;
+use App\Http\Middleware\HandleSellerSupportChat;
+/*
+|--------------------------------------------------------------------------
+| NEW — COURIER CONTROLLER
+|--------------------------------------------------------------------------
+*/
+use App\Http\Controllers\CourierDashboardController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\AddressLookupController;
+
+use App\Models\BuyerAccount;
+use App\Models\CourierAccount;
+use App\Models\RegistrationApplication;
+use Illuminate\Support\Facades\Hash;
+
 use App\Models\SellerAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,11 +55,41 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
+
 Route::get('/login', function () {
     return view('pages.login');
 })->name('login');
 
+
+/*
+|--------------------------------------------------------------------------
+| SOCIAL LOGIN — GOOGLE / FACEBOOK
+|--------------------------------------------------------------------------
+|
+| Social authentication always enters SARI as a Buyer.
+| It never grants Seller, Courier, or Admin privileges automatically.
+|
+*/
+
+Route::get(
+    '/auth/{provider}/redirect',
+    [SocialAuthController::class, 'redirect']
+)
+    ->whereIn('provider', ['google', 'facebook'])
+    ->name('oauth.redirect');
+
+
+Route::get(
+    '/auth/{provider}/callback',
+    [SocialAuthController::class, 'callback']
+)
+    ->whereIn('provider', ['google', 'facebook'])
+    ->name('oauth.callback');
+
+
+
 Route::post('/login', function (Request $request) {
+
     $request->validate([
         'email' => ['required', 'email'],
         'password' => ['required'],
@@ -46,10 +112,17 @@ Route::post('/login', function (Request $request) {
         $request->session()->forget([
             'is_seller',
             'seller_account_id',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+            'is_buyer',
+            'buyer_account_id',
         ]);
 
         return redirect()->route('admin.dashboard');
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -70,15 +143,35 @@ Route::post('/login', function (Request $request) {
             ]
         );
 
-        $seller->refreshSuspensionStatus();
+        $seller = app(SellerAccountStatusService::class)->refresh($seller);
         $seller->ensureRealtimeToken();
+
+        if (($seller->account_status ?: 'active') === 'banned') {
+            return back()->withErrors([
+                'email' => 'This seller account has been banned. Please contact the SARI Administrator if you need a review.',
+            ])->onlyInput('email');
+        }
+
+        if (($seller->account_status ?: 'active') === 'deactivated') {
+            return back()->withErrors([
+                'email' => 'This seller account has been deactivated by the administrator.',
+            ])->onlyInput('email');
+        }
 
         $request->session()->regenerate();
 
         $request->session()->put('is_seller', true);
         $request->session()->put('seller_account_id', $seller->id);
 
-        $request->session()->forget('is_admin');
+        $request->session()->forget([
+            'is_admin',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+            'is_buyer',
+            'buyer_account_id',
+        ]);
 
         /*
         | Suspended sellers are still allowed to log in so they can
@@ -87,16 +180,389 @@ Route::post('/login', function (Request $request) {
         return redirect()->route('seller.dashboard');
     }
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | NEW — TEMPORARY COURIER ACCOUNT
+    |--------------------------------------------------------------------------
+    |
+    | Email: courier@gmail.com
+    | Password: courier123
+    |
+    */
+
+    if (
+        $request->email === 'courier@gmail.com' &&
+        $request->password === 'courier123'
+    ) {
+        $request->session()->regenerate();
+
+        $request->session()->put('is_courier', true);
+        $request->session()->put('courier_email', 'courier@gmail.com');
+        $request->session()->put('courier_name', 'SARI Courier');
+
+        /*
+        | Prevent another role from remaining active in the same session.
+        */
+        $request->session()->forget([
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_buyer',
+            'buyer_account_id',
+        ]);
+
+        return redirect()->route('courier.dashboard');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | TEMPORARY BUYER TEST ACCOUNT
+    |--------------------------------------------------------------------------
+    |
+    | Email: buyer@gmail.com
+    | Password: buyer123
+    |
+    | A real buyer_accounts row is created/updated so the Buyer pages can
+    | safely use buyer_account_id during testing.
+    |
+    */
+
+    if (
+        $request->email === 'buyer@gmail.com' &&
+        $request->password === 'buyer123'
+    ) {
+        $buyer = BuyerAccount::query()->updateOrCreate(
+            [
+                'email' => 'buyer@gmail.com',
+            ],
+            [
+                'registration_application_id' => null,
+                'last_name' => 'Buyer',
+                'first_name' => 'SARI',
+                'middle_initial' => null,
+                'sex' => 'Male',
+                'contact_no' => '09123456789',
+                'birthday' => '2000-01-01',
+                'age' => 26,
+
+                'province_code' => 'TEST-PROVINCE',
+                'province_name' => 'Metro Manila',
+                'municipality_code' => 'TEST-CITY',
+                'municipality_name' => 'Manila',
+                'barangay_code' => 'TEST-BARANGAY',
+                'barangay_name' => 'Test Barangay',
+                'street_address' => 'SARI Buyer Test Address',
+
+                'password' => Hash::make('buyer123'),
+                'id_path' => null,
+                'account_status' => 'active',
+                'approved_at' => now(),
+            ]
+        );
+
+        $request->session()->regenerate();
+
+        $request->session()->put('is_buyer', true);
+        $request->session()->put('buyer_account_id', $buyer->id);
+        $request->session()->put('buyer_email', $buyer->email);
+        $request->session()->put(
+            'buyer_name',
+            trim($buyer->first_name . ' ' . $buyer->last_name)
+        );
+
+        /*
+        | Prevent another role/social Buyer identity from remaining active
+        | in the same browser session.
+        */
+        $request->session()->forget([
+            'buyer_social_account_id',
+            'buyer_avatar',
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+        ]);
+
+        return redirect()->route('buyer.dashboard');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | APPROVED DATABASE ACCOUNTS
+    |--------------------------------------------------------------------------
+    */
+
+    $email = strtolower(trim($request->email));
+
+    $buyer = BuyerAccount::query()->where('email', $email)->first();
+
+    if ($buyer && Hash::check($request->password, $buyer->password)) {
+        if ($buyer->account_status !== 'active') {
+            return back()->withErrors([
+                'email' => 'This buyer account is not currently active.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        $request->session()->put('is_buyer', true);
+        $request->session()->put('buyer_account_id', $buyer->id);
+        $request->session()->put('buyer_email', $buyer->email);
+        $request->session()->put(
+            'buyer_name',
+            trim($buyer->first_name . ' ' . $buyer->last_name) ?: 'SARI Buyer'
+        );
+
+        $request->session()->forget([
+            'buyer_social_account_id',
+            'buyer_avatar',
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+        ]);
+
+        return redirect()->route('buyer.dashboard');
+    }
+
+    $registeredSeller = SellerAccount::query()
+        ->where('email', $email)
+        ->whereNotNull('password')
+        ->first();
+
+    if (
+        $registeredSeller
+        && Hash::check($request->password, $registeredSeller->password)
+    ) {
+        if (($registeredSeller->registration_status ?? 'approved') !== 'approved') {
+            return back()->withErrors([
+                'email' => 'This seller registration has not been approved yet.',
+            ])->onlyInput('email');
+        }
+
+        $registeredSeller = app(SellerAccountStatusService::class)
+            ->refresh($registeredSeller);
+
+        $registeredSeller->ensureRealtimeToken();
+
+        if (($registeredSeller->account_status ?: 'active') === 'banned') {
+            return back()->withErrors([
+                'email' => 'This seller account has been banned.',
+            ])->onlyInput('email');
+        }
+
+        if (($registeredSeller->account_status ?: 'active') === 'deactivated') {
+            return back()->withErrors([
+                'email' => 'This seller account has been deactivated.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        $request->session()->put('is_seller', true);
+        $request->session()->put('seller_account_id', $registeredSeller->id);
+
+        $request->session()->forget([
+            'is_admin',
+            'is_buyer',
+            'buyer_account_id',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+        ]);
+
+        return redirect()->route('seller.dashboard');
+    }
+
+    $courier = CourierAccount::query()->where('email', $email)->first();
+
+    if ($courier && Hash::check($request->password, $courier->password)) {
+        if ($courier->account_status !== 'active') {
+            return back()->withErrors([
+                'email' => 'This courier account is not currently active.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        $request->session()->put('is_courier', true);
+        $request->session()->put('courier_account_id', $courier->id);
+        $request->session()->put('courier_email', $courier->email);
+        $request->session()->put(
+            'courier_name',
+            trim($courier->first_name . ' ' . $courier->last_name)
+        );
+
+        $request->session()->forget([
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_buyer',
+            'buyer_account_id',
+        ]);
+
+        return redirect()->route('courier.dashboard');
+    }
+
+    $application = RegistrationApplication::query()
+        ->where('email', $email)
+        ->latest('id')
+        ->first();
+
+    if ($application && $application->status === 'pending') {
+        return back()->withErrors([
+            'email' => 'Your registration is still waiting for administrator approval.',
+        ])->onlyInput('email');
+    }
+
+    if ($application && $application->status === 'rejected') {
+        return back()->withErrors([
+            'email' => 'Your registration was not approved. You may submit a corrected registration using the same email address.',
+        ])->onlyInput('email');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | INVALID LOGIN
+    |--------------------------------------------------------------------------
+    */
+
     return back()
         ->withErrors([
             'email' => 'Invalid email or password.',
         ])
         ->onlyInput('email');
+
 })->name('login.submit');
 
-Route::get('/register', function () {
-    return view('pages.register');
-})->name('register');
+
+Route::get(
+    '/register',
+    [RegistrationController::class, 'create']
+)->name('register');
+
+Route::post(
+    '/register',
+    [RegistrationController::class, 'store']
+)->name('register.submit');
+
+Route::get(
+    '/registration/pending',
+    [RegistrationController::class, 'pending']
+)->name('registration.pending');
+
+
+/*
+|--------------------------------------------------------------------------
+| ADDRESS LOOKUP
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/address/provinces',
+    [AddressLookupController::class, 'provinces']
+)->name('address.provinces');
+
+Route::get(
+    '/address/provinces/{provinceCode}/municipalities',
+    [AddressLookupController::class, 'municipalities']
+)->name('address.municipalities');
+
+Route::get(
+    '/address/municipalities/{municipalityCode}/barangays',
+    [AddressLookupController::class, 'barangays']
+)->name('address.barangays');
+
+
+/*
+|--------------------------------------------------------------------------
+| BUYER ROUTES — FULL BUYER ↔ SELLER INTEGRATION
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/buyer/dashboard', [BuyerPageController::class, 'home'])
+    ->name('buyer.dashboard');
+
+Route::get('/buyer/home', [BuyerPageController::class, 'home'])
+    ->name('buyer.home');
+
+Route::get('/buyer/products', [BuyerProductController::class, 'index'])
+    ->name('buyer.products');
+
+Route::get('/buyer/products/{product}/image', [BuyerProductController::class, 'image'])
+    ->whereNumber('product')
+    ->name('buyer.product.image');
+
+Route::get('/buyer/product-images/{image}/image', [BuyerProductController::class, 'galleryImage'])
+    ->whereNumber('image')
+    ->name('buyer.product.gallery-image');
+
+Route::get('/buyer/product-variants/{variant}/image', [BuyerProductController::class, 'variantImage'])
+    ->whereNumber('variant')
+    ->name('buyer.product.variant-image');
+
+Route::get('/buyer/shop/{shop}', [BuyerProductController::class, 'shop'])
+    ->name('buyer.shop');
+
+Route::get('/buyer/products/{product}', [BuyerProductController::class, 'show'])
+    ->whereNumber('product')
+    ->name('buyer.product.details');
+
+/* Buyer cart — MySQL backed */
+Route::get('/buyer/cart', [BuyerCartController::class, 'index'])
+    ->name('buyer.cart');
+Route::post('/buyer/cart/items', [BuyerCartController::class, 'store'])
+    ->name('buyer.cart.items.store');
+Route::patch('/buyer/cart/items/{item}', [BuyerCartController::class, 'update'])
+    ->name('buyer.cart.items.update');
+Route::delete('/buyer/cart/items/{item}', [BuyerCartController::class, 'destroy'])
+    ->name('buyer.cart.items.destroy');
+Route::get('/buyer/cart-summary', [BuyerCartController::class, 'summary'])
+    ->name('buyer.cart.summary');
+
+/* Checkout creates real MarketplaceOrder records grouped by seller */
+Route::get('/buyer/checkout', [BuyerCheckoutController::class, 'index'])
+    ->name('buyer.checkout');
+Route::post('/buyer/checkout', [BuyerCheckoutController::class, 'store'])
+    ->name('buyer.checkout.store');
+
+/* Buyer order history + live tracking + early cancellation */
+Route::get('/buyer/orders', [BuyerOrderController::class, 'index'])
+    ->name('buyer.orders');
+
+Route::get('/buyer/orders/{order}', [BuyerOrderController::class, 'show'])
+    ->name('buyer.orders.show');
+
+Route::post('/buyer/orders/{order}/cancel', [BuyerOrderController::class, 'cancel'])
+    ->name('buyer.orders.cancel');
+Route::get('/buyer/orders-live-state', [BuyerOrderController::class, 'liveState'])
+    ->name('buyer.orders.live-state');
+Route::post('/buyer/orders/{order}/reviews', [BuyerReviewController::class, 'store'])
+    ->name('buyer.orders.reviews.store');
+
+/* Buyer ↔ Seller direct messaging */
+Route::get('/buyer/messages', [BuyerSellerMessageController::class, 'buyerIndex'])
+    ->name('buyer.messages');
+Route::post('/buyer/messages/{seller}', [BuyerSellerMessageController::class, 'buyerSend'])
+    ->name('buyer.messages.send');
+
+/* Buyer account + dynamic rewards */
+Route::get('/buyer/account', [BuyerAccountController::class, 'index'])
+    ->name('buyer.account');
+Route::patch('/buyer/account', [BuyerAccountController::class, 'update'])
+    ->name('buyer.account.update');
+Route::get('/buyer/rewards', [BuyerPageController::class, 'rewards'])
+    ->name('buyer.rewards');
+
+Route::post('/buyer/logout', [BuyerPageController::class, 'logout'])
+    ->name('buyer.logout');
 
 
 /*
@@ -106,29 +572,45 @@ Route::get('/register', function () {
 */
 
 Route::get('/admin/dashboard', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.dashboard');
+
 })->name('admin.dashboard');
 
 
-Route::get('/admin/registrations', function (Request $request) {
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
+Route::get(
+    '/admin/registrations',
+    [AdminRegistrationController::class, 'index']
+)->name('admin.registrations');
 
-    return view('admin.registrations');
-})->name('admin.registrations');
+Route::post(
+    '/admin/registrations/{application}/approve',
+    [AdminRegistrationController::class, 'approve']
+)->name('admin.registrations.approve');
+
+Route::post(
+    '/admin/registrations/{application}/reject',
+    [AdminRegistrationController::class, 'reject']
+)->name('admin.registrations.reject');
+
+Route::get(
+    '/admin/registrations/{application}/document/{document}',
+    [AdminRegistrationController::class, 'document']
+)->name('admin.registrations.document');
 
 
 Route::get('/admin/users', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.users');
+
 })->name('admin.users');
 
 
@@ -164,13 +646,13 @@ Route::post(
 
 Route::post(
     '/admin/seller-compliance/sellers/{seller}/suspend-30',
-    [AdminSellerComplianceController::class, 'suspend30']
+    [AdminSellerAccountStatusController::class, 'suspend30']
 )->name('admin.compliance.sellers.suspend30');
 
 
 Route::post(
     '/admin/seller-compliance/sellers/{seller}/unsuspend',
-    [AdminSellerComplianceController::class, 'unsuspend']
+    [AdminSellerAccountStatusController::class, 'liftSuspension']
 )->name('admin.compliance.sellers.unsuspend');
 
 
@@ -180,68 +662,119 @@ Route::post(
 )->name('admin.compliance.sellers.reply');
 
 
+/*
+|--------------------------------------------------------------------------
+| ADMIN — SELLER ACCOUNT CONTROL
+|--------------------------------------------------------------------------
+*/
+Route::get(
+    '/admin/seller-account-control',
+    [AdminSellerAccountStatusController::class, 'index']
+)->name('admin.seller-accounts.control');
+
+Route::post(
+    '/admin/seller-account-control/{seller}/ban',
+    [AdminSellerAccountStatusController::class, 'ban']
+)->name('admin.seller-accounts.ban');
+
+Route::post(
+    '/admin/seller-account-control/{seller}/unban',
+    [AdminSellerAccountStatusController::class, 'unban']
+)->name('admin.seller-accounts.unban');
+
+Route::post(
+    '/admin/seller-account-control/{seller}/deactivate',
+    [AdminSellerAccountStatusController::class, 'deactivate']
+)->name('admin.seller-accounts.deactivate');
+
+Route::post(
+    '/admin/seller-account-control/{seller}/restore',
+    [AdminSellerAccountStatusController::class, 'restore']
+)->name('admin.seller-accounts.restore');
+
+
 Route::get('/admin/complaints', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.complaints');
+
 })->name('admin.complaints');
 
 
 Route::get('/admin/commissions', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.commissions');
+
 })->name('admin.commissions');
 
 
 Route::get('/admin/reports', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.reports');
+
 })->name('admin.reports');
 
 
 Route::get('/admin/platform-settings', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.platform-settings');
+
 })->name('admin.platform-settings');
 
 
-Route::get('/admin/messages', [SellerAdminChatController::class, 'adminIndex'])
-    ->name('admin.messages');
+Route::get(
+    '/admin/messages',
+    [SellerAdminChatController::class, 'adminIndex']
+)->name('admin.messages');
 
-Route::post('/admin/messages/{seller}', [SellerAdminChatController::class, 'adminSend'])
-    ->name('admin.messages.send');
 
-Route::post('/admin/messages/{seller}/read', [SellerAdminChatController::class, 'adminRead'])
-    ->name('admin.messages.read');
+Route::post(
+    '/admin/messages/{seller}',
+    [SellerAdminChatController::class, 'adminSend']
+)->name('admin.messages.send');
+
+
+Route::post(
+    '/admin/messages/{seller}/read',
+    [SellerAdminChatController::class, 'adminRead']
+)->name('admin.messages.read');
 
 
 Route::get('/admin/account', function (Request $request) {
+
     if (!$request->session()->get('is_admin')) {
         return redirect()->route('login');
     }
 
     return view('admin.account');
+
 })->name('admin.account');
 
 
 Route::post('/admin/logout', function (Request $request) {
+
     $request->session()->forget('is_admin');
 
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
     return redirect()->route('login');
+
 })->name('admin.logout');
 
 
@@ -254,7 +787,62 @@ Route::post('/admin/logout', function (Request $request) {
 Route::get(
     '/seller/dashboard',
     [SellerDashboardController::class, 'index']
-)->name('seller.dashboard');
+)->middleware(EnsureSellerAccountAccessible::class)
+  ->name('seller.dashboard');
+
+
+/*
+|--------------------------------------------------------------------------
+| SELLER ACCOUNT STATE — REALTIME FALLBACK
+|--------------------------------------------------------------------------
+|
+| Reverb handles instant account-status events when it is running.
+| This JSON endpoint is a lightweight fallback used by the Seller layout
+| so an Admin manual suspension still locks an already-open Seller page
+| even when Reverb is temporarily unavailable.
+|
+*/
+Route::get('/seller/account-state', function (Request $request) {
+
+    if (!$request->session()->get('is_seller')) {
+        return response()->json([
+            'authenticated' => false,
+        ], 401);
+    }
+
+    $seller = SellerAccount::find(
+        $request->session()->get('seller_account_id')
+    );
+
+    if (!$seller) {
+        return response()->json([
+            'authenticated' => false,
+        ], 401);
+    }
+
+    $seller = app(\App\Services\SellerAccountStatusService::class)
+        ->refresh($seller);
+
+    $status = (string) ($seller->account_status ?: 'active');
+
+    $activeSuspension = $seller->suspended_until
+        ? now()->lt(\Illuminate\Support\Carbon::parse($seller->suspended_until))
+        : false;
+
+    return response()->json([
+        'authenticated' => true,
+        'account_status' => $status,
+        'warning_count' => (int) ($seller->warning_count ?? 0),
+        'suspended_until' => $seller->suspended_until?->toIso8601String(),
+        'restricted' => $status === 'active'
+            && (
+                (int) ($seller->warning_count ?? 0) >= 3
+                || $activeSuspension
+            ),
+    ]);
+
+})->name('seller.account-state');
+
 
 
 /*
@@ -271,12 +859,64 @@ Route::get(
 */
 
 /*
+| Dedicated Products Page
+| Presentation only: it reuses the existing library + CRUD endpoints below.
+*/
+Route::get(
+    '/seller/products',
+    [SellerProductController::class, 'index']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.index');
+
+
+/*
 | Add Product
 */
 Route::post(
     '/seller/products',
     [SellerProductController::class, 'store']
-)->name('seller.products.store');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.store');
+
+
+/*
+| Persistent Add Product Draft
+*/
+Route::get(
+    '/seller/product-draft',
+    [SellerProductController::class, 'draft']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.draft');
+
+Route::post(
+    '/seller/product-draft',
+    [SellerProductController::class, 'saveDraft']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.draft.save');
+
+Route::delete(
+    '/seller/product-draft',
+    [SellerProductController::class, 'deleteDraft']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.draft.delete');
+
+Route::get(
+    '/seller/product-draft/media/{kind}/{key?}',
+    [SellerProductController::class, 'draftMedia']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->whereIn('kind', ['cover', 'gallery', 'variant'])
+  ->name('seller.products.draft-media');
+
+
+/*
+| Lazy Product Library JSON
+| Loaded only when the Seller opens the full Product Library modal.
+*/
+Route::get(
+    '/seller/products/library-data',
+    [SellerProductController::class, 'library']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.library');
 
 
 /*
@@ -286,7 +926,8 @@ Route::post(
 Route::get(
     '/seller/products/archive',
     [SellerProductController::class, 'archived']
-)->name('seller.products.archive');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.archive');
 
 
 /*
@@ -307,13 +948,27 @@ Route::get(
 )->name('seller.products.image');
 
 
+Route::get(
+    '/seller/product-images/{image}/image',
+    [SellerProductController::class, 'galleryImage']
+)->whereNumber('image')
+  ->name('seller.products.gallery-image');
+
+Route::get(
+    '/seller/product-variants/{variant}/image',
+    [SellerProductController::class, 'variantImage']
+)->whereNumber('variant')
+  ->name('seller.products.variant-image');
+
+
 /*
 | Update / Edit Product
 */
 Route::put(
     '/seller/products/{product}',
     [SellerProductController::class, 'update']
-)->name('seller.products.update');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.update');
 
 
 /*
@@ -322,7 +977,8 @@ Route::put(
 Route::post(
     '/seller/products/{product}/archive',
     [SellerProductController::class, 'archive']
-)->name('seller.products.archive-product');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.archive-product');
 
 
 /*
@@ -331,7 +987,8 @@ Route::post(
 Route::post(
     '/seller/products/{product}/delete',
     [SellerProductController::class, 'destroy']
-)->name('seller.products.delete');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.delete');
 
 
 /*
@@ -340,7 +997,27 @@ Route::post(
 Route::post(
     '/seller/products/{product}/restore',
     [SellerProductController::class, 'restore']
-)->name('seller.products.restore');
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.restore');
+
+
+/*
+|--------------------------------------------------------------------------
+| SELLER — BUYER INBOX + PRODUCT REVIEWS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/seller/buyer-messages', [SellerBuyerMessageController::class, 'index'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.buyer-messages');
+
+Route::post('/seller/buyer-messages/{buyerKey}', [SellerBuyerMessageController::class, 'send'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.buyer-messages.send');
+
+Route::get('/seller/reviews', [SellerReviewController::class, 'index'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.reviews');
 
 
 /*
@@ -352,7 +1029,8 @@ Route::post(
 Route::post(
     '/seller/compliance/message',
     [SellerComplianceMessageController::class, 'store']
-)->name('seller.compliance.message');
+)->middleware(EnsureSellerAccountAccessible::class)
+  ->name('seller.compliance.message');
 
 
 /*
@@ -361,51 +1039,98 @@ Route::post(
 |--------------------------------------------------------------------------
 */
 
-Route::get('/seller/orders', function (Request $request) {
-    if (!$request->session()->get('is_seller')) {
-        return redirect()->route('login');
-    }
+Route::get(
+    '/seller/orders',
+    [SellerOrderController::class, 'index']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders');
 
-    return view('seller.orders');
-})->name('seller.orders');
+Route::post(
+    '/seller/orders/{order}/prepare',
+    [SellerOrderController::class, 'prepare']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders.prepare');
+
+Route::post(
+    '/seller/orders/{order}/ready-pickup',
+    [SellerOrderController::class, 'readyForPickup']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders.ready-pickup');
+
+Route::get(
+    '/seller/orders/{order}/waybill',
+    [SellerOrderController::class, 'waybill']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders.waybill');
+
+Route::get(
+    '/seller/orders-live-state',
+    [SellerOrderController::class, 'liveState']
+)->name('seller.orders.live-state');
 
 
-Route::get('/seller/reports', function (Request $request) {
-    if (!$request->session()->get('is_seller')) {
-        return redirect()->route('login');
-    }
+Route::get(
+    '/seller/reports',
+    [\App\Http\Controllers\SellerReportController::class, 'index']
+)
+    ->middleware(\App\Http\Middleware\EnsureSellerNotRestricted::class)
+    ->name('seller.reports');
 
-    return view('seller.reports');
-})->name('seller.reports');
+
+Route::get(
+    '/seller/reports/download',
+    [\App\Http\Controllers\SellerReportController::class, 'downloadCsv']
+)
+    ->middleware(\App\Http\Middleware\EnsureSellerNotRestricted::class)
+    ->name('seller.reports.download');
 
 
-Route::get('/seller/messages', [SellerAdminChatController::class, 'sellerIndex'])
-    ->name('seller.messages');
+Route::get(
+    '/seller/messages',
+    [SellerAdminChatController::class, 'sellerIndex']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.messages');
 
-Route::post('/seller/messages', [SellerAdminChatController::class, 'sellerSend'])
-    ->name('seller.messages.send');
 
-Route::post('/seller/messages/read', [SellerAdminChatController::class, 'sellerRead'])
-    ->name('seller.messages.read');
+Route::post(
+    '/seller/messages',
+    [SellerAdminChatController::class, 'sellerSend']
+)->middleware([
+    EnsureSellerNotRestricted::class,
+    HandleSellerSupportChat::class,
+])->name('seller.messages.send');
+
+
+Route::post(
+    '/seller/messages/read',
+    [SellerAdminChatController::class, 'sellerRead']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.messages.read');
 
 
 Route::get('/seller/account', function (Request $request) {
+
     if (!$request->session()->get('is_seller')) {
         return redirect()->route('login');
     }
 
     return view('seller.account');
-})->name('seller.account');
+
+})->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.account');
 
 
 /*
 | Protected seller/admin chat attachment
 */
-Route::get('/messages/attachments/{message}', [SellerAdminChatController::class, 'attachment'])
-    ->name('chat.attachments.show');
+Route::get(
+    '/messages/attachments/{message}',
+    [SellerAdminChatController::class, 'attachment']
+)->name('chat.attachments.show');
 
 
 Route::post('/seller/logout', function (Request $request) {
+
     $request->session()->forget([
         'is_seller',
         'seller_account_id',
@@ -415,4 +1140,232 @@ Route::post('/seller/logout', function (Request $request) {
     $request->session()->regenerateToken();
 
     return redirect()->route('login');
+
 })->name('seller.logout');
+
+
+/*
+|--------------------------------------------------------------------------
+| NEW — COURIER ROUTES
+|--------------------------------------------------------------------------
+|
+| Temporary courier authentication.
+| Later, we will connect this to a real courier_accounts MySQL table.
+|
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| COURIER DASHBOARD
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/courier/dashboard',
+    [CourierDashboardController::class, 'index']
+)->name('courier.dashboard');
+
+
+/*
+|--------------------------------------------------------------------------
+| COURIER DELIVERY PROCESS
+|--------------------------------------------------------------------------
+|
+| Added for the Courier Dashboard delivery workflow only.
+| Existing Admin, Seller, Product, Compliance, and Chat backend routes
+| above are left unchanged.
+|
+*/
+
+Route::get(
+    '/courier/requests',
+    [CourierDeliveryController::class, 'requests']
+)->name('courier.requests');
+
+Route::post(
+    '/courier/orders/{order}/accept',
+    [CourierDeliveryController::class, 'accept']
+)->name('courier.orders.accept');
+
+Route::post(
+    '/courier/orders/{order}/proceed-pickup',
+    [CourierDeliveryController::class, 'proceedToPickup']
+)->name('courier.orders.proceed-pickup');
+
+Route::post(
+    '/courier/orders/{order}/arrived-pickup',
+    [CourierDeliveryController::class, 'arrivedAtPickup']
+)->name('courier.orders.arrived-pickup');
+
+Route::post(
+    '/courier/orders/{order}/confirm-pickup',
+    [CourierDeliveryController::class, 'confirmPickup']
+)->name('courier.orders.confirm-pickup');
+
+Route::post(
+    '/courier/orders/{order}/arrived-buyer',
+    [CourierDeliveryController::class, 'arrivedAtBuyer']
+)->name('courier.orders.arrived-buyer');
+
+Route::post(
+    '/courier/orders/{order}/complete',
+    [CourierDeliveryController::class, 'complete']
+)->name('courier.orders.complete');
+
+Route::get(
+    '/courier/orders-live-state',
+    [CourierDeliveryController::class, 'liveState']
+)->name('courier.orders.live-state');
+
+
+/*
+|--------------------------------------------------------------------------
+| COURIER LOGOUT
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/courier/logout', function (Request $request) {
+
+    $request->session()->forget([
+        'is_courier',
+        'courier_account_id',
+        'courier_email',
+        'courier_name',
+    ]);
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');
+
+})->name('courier.logout');
+
+
+/*
+|--------------------------------------------------------------------------
+| COURIER PAGES
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/courier/pickups', function (Request $request) {
+    if (!$request->session()->get('is_courier')) {
+        return redirect()->route('login');
+    }
+
+    $orders = \App\Models\MarketplaceOrder::query()
+        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+        ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
+        ->latest('updated_at')
+        ->get();
+
+    return view('courier.pickups', compact('orders'));
+})->name('courier.pickups');
+
+Route::get('/courier/deliveries', function (Request $request) {
+    if (!$request->session()->get('is_courier')) {
+        return redirect()->route('login');
+    }
+
+    $orders = \App\Models\MarketplaceOrder::query()
+        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+        ->whereIn('status', ['in_transit', 'arrived_buyer'])
+        ->latest('updated_at')
+        ->get();
+
+    return view('courier.deliveries', compact('orders'));
+})->name('courier.deliveries');
+
+Route::get(
+    '/courier/earnings',
+    [\App\Http\Controllers\CourierPageController::class, 'earnings']
+)->name('courier.earnings');
+
+
+Route::get(
+    '/courier/history',
+    [\App\Http\Controllers\CourierPageController::class, 'history']
+)->name('courier.history');
+
+
+Route::get(
+    '/courier/messages',
+    [\App\Http\Controllers\CourierPageController::class, 'messages']
+)->name('courier.messages');
+
+
+Route::get(
+    '/courier/profile',
+    [\App\Http\Controllers\CourierPageController::class, 'profile']
+)->name('courier.profile');
+
+Route::post(
+    '/admin/message-notifications/read-all',
+    function (\Illuminate\Http\Request $request) {
+
+        if (!$request->session()->get('is_admin')) {
+            abort(403, 'Admin session required.');
+        }
+
+        $updated = \App\Models\ChatMessage::query()
+            ->where('sender_role', 'seller')
+            ->whereNull('read_by_admin_at')
+            ->update([
+                'read_by_admin_at' => now(),
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'updated' => $updated,
+        ]);
+    }
+)->name('admin.message-notifications.read-all');
+
+
+
+Route::get(
+    '/seller/messages/{message}/meta',
+    [ChatMessageReactionController::class, 'sellerMeta']
+)->name('seller.messages.meta');
+
+Route::post(
+    '/seller/messages/{message}/reaction',
+    [ChatMessageReactionController::class, 'sellerToggle']
+)->name('seller.messages.react');
+
+
+
+
+
+
+
+Route::post(
+    '/admin/messages/presence',
+    [AdminSellerChatActionController::class, 'presence']
+)->name('admin.messages.presence');
+
+Route::post(
+    '/admin/messages/{seller}/warning',
+    [AdminSellerChatActionController::class, 'warning']
+)->name('admin.messages.warning');
+
+Route::post(
+    '/admin/messages/{seller}/suspend',
+    [AdminSellerChatActionController::class, 'suspend']
+)->name('admin.messages.suspend');
+
+Route::post(
+    '/admin/messages/{seller}/block',
+    [AdminSellerChatActionController::class, 'block']
+)->name('admin.messages.block');
+
+Route::post(
+    '/admin/messages/{seller}/unblock',
+    [AdminSellerChatActionController::class, 'unblock']
+)->name('admin.messages.unblock');
+
+Route::get(
+    '/seller/layout-state',
+    SellerLayoutStateController::class
+)->middleware(EnsureSellerAccountAccessible::class)
+  ->name('seller.layout-state');

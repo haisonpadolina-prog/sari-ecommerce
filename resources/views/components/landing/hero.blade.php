@@ -1,367 +1,446 @@
-<section 
-    class="sari-hero sari-section" 
-    id="home" 
-> 
+<section class="sari-hero sari-section" id="home">
 
-    <div class="sari-hero-content"> 
+    <div class="sari-hero-content">
 
-        {{-- SARI BRAND --}} 
-        <div class="sari-hero-brand sari-hero-reveal sari-hero-delay-1"> 
+        {{-- BRAND --}}
+        <div class="sari-hero-brand sari-hero-reveal sari-hero-delay-1">
+            <div class="sari-hero-brand-mark" aria-hidden="true">
+                <span class="sari-hero-brand-line"></span>
 
-            <div class="sari-hero-brand-mark" aria-hidden="true"> 
+                <img
+                    src="{{ asset('images/sari-logo.png') }}"
+                    alt="SARI"
+                    class="sari-hero-logo"
+                >
 
-                <span class="sari-hero-brand-line"></span> 
+                <span class="sari-hero-brand-line"></span>
+            </div>
 
-                <img 
-                    src="{{ asset('images/sari-logo.png') }}" 
-                    alt="SARI" 
-                    class="sari-hero-logo" 
-                > 
+            <p class="sari-hero-tagline">Elevated Everyday</p>
+        </div>
 
-                <span class="sari-hero-brand-line"></span> 
+        {{-- HERO COPY --}}
+        <div class="sari-hero-copy">
+            <p class="sari-hero-eyebrow sari-hero-reveal sari-hero-delay-2">
+                Your everyday marketplace, made better.
+            </p>
 
-            </div> 
+            <h1 class="sari-hero-title sari-hero-reveal sari-hero-delay-3">
+                Discover more.<br>
+                Shop with <span>ease.</span>
+            </h1>
 
-            <div class="sari-hero-tagline"> 
-                Elevated Everyday 
-            </div> 
+            <p class="sari-hero-description sari-hero-reveal sari-hero-delay-4">
+                Find products from trusted sellers, enjoy a simpler shopping experience,
+                and stay connected from checkout to delivery — all in one marketplace.
+            </p>
+        </div>
 
-        </div> 
+        {{-- HERO ACTIONS --}}
+        <div class="sari-hero-actions sari-hero-reveal sari-hero-delay-5">
+            <a href="#discover" class="sari-button sari-button-primary">
+                <span>Start Exploring</span>
 
+                <svg viewBox="0 0 24 24" class="sari-button-icon" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                    <path d="M5 12h14"></path>
+                    <path d="m14 7 5 5-5 5"></path>
+                </svg>
+            </a>
 
-        {{-- HERO TITLE --}} 
-        <h1 class="sari-hero-title sari-hero-reveal sari-hero-delay-2"> 
-            Redefining Shopping.<br> 
-            Connecting <span>Everything.</span> 
-        </h1> 
+            <a href="#how-it-works" class="sari-button sari-button-secondary">
+                <span>How SARI Works</span>
 
+                <svg viewBox="0 0 24 24" class="sari-button-icon" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8"></circle>
+                    <path d="m10 9 5 3-5 3V9Z"></path>
+                </svg>
+            </a>
+        </div>
 
-        {{-- HERO DESCRIPTION --}} 
-        <p class="sari-hero-description sari-hero-reveal sari-hero-delay-3"> 
-            A modern marketplace designed to bring 
-            discovery, shopping, and delivery together 
-            in one seamless experience. 
-        </p> 
+    </div>
 
-
-        {{-- HERO ACTIONS --}} 
-        <div class="sari-hero-actions sari-hero-reveal sari-hero-delay-4"> 
-
-            <a 
-                href="#discover" 
-                class="sari-button sari-button-primary" 
-            > 
-                <span class="sari-button-label">Explore SARI</span>
-                <span class="sari-button-arrow">↗</span> 
-            </a> 
-
-            <a 
-                href="#how-it-works" 
-                class="sari-button sari-button-outline" 
-            > 
-                <span class="sari-button-label">How It Works</span>
-                <span class="sari-button-arrow">↗</span> 
-            </a> 
-
-        </div> 
-
-    </div> 
-
-
-    {{-- SCROLL INDICATOR --}} 
-    <a 
-        href="#discover" 
-        class="sari-scroll-indicator sari-hero-reveal sari-hero-delay-5" 
-        aria-label="Scroll to discover" 
-    > 
-
-        <span class="sari-scroll-line"></span> 
-
-        <span> 
-            Scroll to Discover 
-        </span> 
-
-        <span class="sari-scroll-line"></span> 
-
-    </a> 
+    {{-- SCROLL INDICATOR --}}
+    <a
+        href="#discover"
+        class="sari-scroll-indicator sari-hero-reveal sari-hero-delay-6"
+        aria-label="Scroll to explore SARI"
+    >
+        <span class="sari-scroll-line"></span>
+        <span class="sari-scroll-label">Scroll to explore</span>
+        <span class="sari-scroll-line"></span>
+    </a>
 
 </section>
 
 <style>
-/* =========================================================
-   SARI HERO — PREMIUM MOTION + BUTTON ENHANCEMENT
-   Quiet, formal, smooth.
-   ========================================================= */
-
 .sari-hero {
     position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 88px 24px 110px;
 }
 
-/* Entrance */
-.sari-hero.sari-hero-motion-ready .sari-hero-reveal {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
-    transition:
-        opacity .8s cubic-bezier(.22,1,.36,1),
-        transform .9s cubic-bezier(.22,1,.36,1);
-    will-change: opacity, transform;
+.sari-hero-content {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 980px);
+    margin-inline: auto;
+    text-align: center;
 }
 
-.sari-hero.sari-hero-motion-ready .sari-hero-reveal.is-visible {
-    opacity: 1;
-    transform: translate3d(0,0,0);
+.sari-hero-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.sari-hero-delay-1 { transition-delay: .05s !important; }
-.sari-hero-delay-2 { transition-delay: .14s !important; }
-.sari-hero-delay-3 { transition-delay: .23s !important; }
-.sari-hero-delay-4 { transition-delay: .32s !important; }
-.sari-hero-delay-5 { transition-delay: .48s !important; }
+.sari-hero-brand-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
 
-/* Logo settle */
 .sari-hero-logo {
-    transition:
-        transform .7s cubic-bezier(.22,1,.36,1),
-        filter .45s ease;
+    display: block;
+    width: clamp(92px, 8vw, 126px);
+    height: auto;
+    object-fit: contain;
+    transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .3s ease;
 }
 
 .sari-hero-brand:hover .sari-hero-logo {
-    transform: translateY(-2px) scale(1.015);
+    transform: translateY(-2px);
 }
 
-/* Brand lines subtly extend */
 .sari-hero-brand-line {
-    transform-origin: center;
-    transition:
-        transform .6s cubic-bezier(.22,1,.36,1),
-        opacity .4s ease;
+    width: clamp(36px, 5vw, 64px);
+    height: 1px;
+    background: rgba(47, 42, 36, .24);
 }
 
-.sari-hero-brand:hover .sari-hero-brand-line {
-    transform: scaleX(1.08);
+.sari-hero-tagline {
+    margin: 11px 0 0;
+    color: #968b7d;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+.sari-hero-copy {
+    margin-top: 33px;
+}
+
+.sari-hero-eyebrow {
+    margin: 0 0 14px;
+    color: #a8731f;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.sari-hero-title {
+    margin: 0;
+    color: #1e1a15;
+    font-size: clamp(44px, 6.4vw, 82px);
+    font-weight: 700;
+    line-height: .98;
+    letter-spacing: -.055em;
+}
+
+.sari-hero-title span {
+    position: relative;
+    display: inline-block;
+    color: #c88712;
+}
+
+.sari-hero-description {
+    max-width: 650px;
+    margin: 24px auto 0;
+    color: #746c62;
+    font-size: clamp(13px, 1.15vw, 15px);
+    font-weight: 400;
+    line-height: 1.8;
+}
+
+.sari-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 34px;
+}
 
 .sari-hero .sari-button {
     position: relative;
-    isolation: isolate;
-    overflow: hidden;
-
     display: inline-flex;
+    min-width: 174px;
+    min-height: 50px;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-
-    min-height: 52px;
-    padding: 0 22px;
-
-    border-radius: 8px;
-
+    gap: 10px;
+    padding: 0 19px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: .01em;
-
-    transform: translateZ(0);
-
-    transition:
-        transform .35s cubic-bezier(.22,1,.36,1),
-        box-shadow .35s ease,
-        background-color .35s ease,
-        border-color .35s ease,
-        color .35s ease;
+    letter-spacing: -.01em;
+    text-decoration: none;
+    transition: transform .28s cubic-bezier(.22,1,.36,1), background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .28s ease;
 }
 
-/* Primary */
+.sari-button-icon {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+    transition: transform .28s cubic-bezier(.22,1,.36,1);
+}
+
 .sari-hero .sari-button-primary {
-    box-shadow:
-        0 12px 28px rgba(184,134,59,.18);
-}
-
-.sari-hero .sari-button-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0;
-    background:
-        linear-gradient(
-            110deg,
-            rgba(255,255,255,.06),
-            rgba(255,255,255,.18) 48%,
-            rgba(255,255,255,.04)
-        );
-    transition: opacity .35s ease;
-}
-
-.sari-hero .sari-button-primary::after {
-    content: "";
-    position: absolute;
-    top: -45%;
-    left: -80%;
-    width: 46%;
-    height: 190%;
-    z-index: 0;
-    transform: skewX(-18deg);
-    background: linear-gradient(
-        100deg,
-        transparent,
-        rgba(255,255,255,.20),
-        transparent
-    );
-    transition: left .8s cubic-bezier(.22,1,.36,1);
-    pointer-events: none;
+    color: #fff;
+    border-color: #d48f08;
+    background: #d48f08;
+    box-shadow: 0 10px 24px rgba(212, 143, 8, .18);
 }
 
 .sari-hero .sari-button-primary:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 17px 34px rgba(184,134,59,.24);
+    transform: translateY(-2px);
+    border-color: #bd7d05;
+    background: #bd7d05;
+    box-shadow: 0 14px 30px rgba(189, 125, 5, .22);
 }
 
-.sari-hero .sari-button-primary:hover::before {
-    opacity: 1;
+.sari-hero .sari-button-primary:hover .sari-button-icon {
+    transform: translateX(3px);
 }
 
-.sari-hero .sari-button-primary:hover::after {
-    left: 135%;
+.sari-hero .sari-button-secondary {
+    color: #3f3932;
+    border-color: #dcd4ca;
+    background: rgba(255,255,255,.72);
+    box-shadow: 0 5px 14px rgba(32, 27, 21, .035);
+    backdrop-filter: blur(8px);
 }
 
-/* Outline */
-.sari-hero .sari-button-outline {
-    background: transparent;
+.sari-hero .sari-button-secondary:hover {
+    transform: translateY(-2px);
+    color: #9a6817;
+    border-color: #d8bb85;
+    background: #fffaf1;
+    box-shadow: 0 10px 24px rgba(36, 28, 19, .07);
 }
 
-.sari-hero .sari-button-outline::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    transform: scaleX(0);
-    transform-origin: left center;
-    background: rgba(184,134,59,.08);
-    transition: transform .45s cubic-bezier(.22,1,.36,1);
-}
-
-.sari-hero .sari-button-outline:hover {
-    transform: translateY(-3px);
-    border-color: rgba(184,134,59,.72);
-    box-shadow:
-        0 12px 26px rgba(22,20,15,.08);
-}
-
-.sari-hero .sari-button-outline:hover::before {
-    transform: scaleX(1);
-}
-
-/* Labels stay crisp over effects */
-.sari-button-label,
-.sari-button-arrow {
-    position: relative;
-    z-index: 2;
-}
-
-/* Arrow */
-.sari-hero .sari-button-arrow {
-    display: inline-block;
-    font-size: 17px;
-    line-height: 1;
-
-    transition:
-        transform .35s cubic-bezier(.22,1,.36,1);
-}
-
-.sari-hero .sari-button:hover .sari-button-arrow {
-    transform: translate(3px, -3px);
+.sari-hero .sari-button-secondary:hover .sari-button-icon {
+    transform: scale(1.06);
 }
 
 .sari-hero .sari-button:active {
-    transform: translateY(-1px);
+    transform: translateY(0);
 }
-
-/* =========================================================
-   SCROLL INDICATOR
-   ========================================================= */
 
 .sari-scroll-indicator {
-    transition:
-        opacity .35s ease,
-        transform .35s ease;
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    color: #91877a;
+    text-decoration: none;
+    transform: translateX(-50%);
+    transition: color .25s ease, opacity .3s ease;
 }
 
-.sari-scroll-indicator:hover {
-    transform: translateY(2px);
+.sari-scroll-label {
+    display: block;
+    white-space: nowrap;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .sari-scroll-line {
     position: relative;
+    display: block;
+    width: 38px;
+    height: 1px;
     overflow: hidden;
+    background: rgba(145, 135, 122, .28);
 }
 
 .sari-scroll-line::after {
     content: "";
     position: absolute;
     inset: 0;
-    transform: translateX(-100%);
-    background: currentColor;
-    opacity: .65;
-    animation: sariScrollLine 3.4s ease-in-out infinite;
+    background: #c58a1c;
+    transform: translateX(-105%);
+    animation: sariScrollLine 2.8s ease-in-out infinite;
+}
+
+.sari-scroll-indicator:hover {
+    color: #a8731f;
 }
 
 @keyframes sariScrollLine {
-    0%, 20% {
-        transform: translateX(-100%);
+    0%, 25% {
+        transform: translateX(-105%);
         opacity: 0;
     }
+
     45% {
-        opacity: .7;
+        opacity: .8;
     }
+
     75%, 100% {
-        transform: translateX(100%);
+        transform: translateX(105%);
         opacity: 0;
     }
 }
 
-/* Optional tiny motion on highlighted word */
-.sari-hero-title span {
-    display: inline-block;
-    transition: transform .5s cubic-bezier(.22,1,.36,1);
+.sari-hero.sari-hero-motion-ready .sari-hero-reveal {
+    opacity: 0;
+    transition: opacity .72s cubic-bezier(.22,1,.36,1), transform .82s cubic-bezier(.22,1,.36,1);
+    will-change: opacity, transform;
 }
 
-.sari-hero-title:hover span {
-    transform: translateY(-2px);
+.sari-hero.sari-hero-motion-ready .sari-hero-reveal:not(.sari-scroll-indicator) {
+    transform: translate3d(0, 15px, 0);
 }
 
-/* Mobile */
-@media (max-width: 620px) {
+.sari-hero.sari-hero-motion-ready .sari-scroll-indicator {
+    transform: translateX(-50%) translateY(10px);
+}
+
+.sari-hero.sari-hero-motion-ready .sari-hero-reveal.is-visible:not(.sari-scroll-indicator) {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.sari-hero.sari-hero-motion-ready .sari-scroll-indicator.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.sari-hero-delay-1 { transition-delay: .03s !important; }
+.sari-hero-delay-2 { transition-delay: .10s !important; }
+.sari-hero-delay-3 { transition-delay: .17s !important; }
+.sari-hero-delay-4 { transition-delay: .25s !important; }
+.sari-hero-delay-5 { transition-delay: .33s !important; }
+.sari-hero-delay-6 { transition-delay: .48s !important; }
+
+@media (max-width: 768px) {
+    .sari-hero {
+        min-height: 100vh;
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding: 72px 20px 100px;
+    }
+
+    .sari-hero-copy {
+        margin-top: 28px;
+    }
+
+    .sari-hero-title {
+        font-size: clamp(42px, 12.5vw, 62px);
+        line-height: 1.01;
+    }
+
+    .sari-hero-description {
+        max-width: 520px;
+        margin-top: 20px;
+        font-size: 12px;
+        line-height: 1.75;
+    }
+
+    .sari-hero-actions {
+        margin-top: 28px;
+    }
+
+    .sari-scroll-indicator {
+        bottom: 23px;
+    }
+}
+
+@media (max-width: 520px) {
+    .sari-hero {
+        padding-inline: 17px;
+    }
+
+    .sari-hero-brand-mark {
+        gap: 12px;
+    }
+
+    .sari-hero-brand-line {
+        width: 30px;
+    }
+
+    .sari-hero-eyebrow {
+        font-size: 8.5px;
+        letter-spacing: .08em;
+    }
+
+    .sari-hero-title {
+        font-size: clamp(40px, 13vw, 54px);
+    }
+
+    .sari-hero-description {
+        max-width: 390px;
+    }
+
+    .sari-hero-actions {
+        width: min(100%, 360px);
+        margin-inline: auto;
+    }
+
     .sari-hero .sari-button {
-        min-height: 50px;
-        padding: 0 18px;
-        gap: 11px;
+        width: 100%;
+        min-height: 49px;
     }
 
-    .sari-hero.sari-hero-motion-ready .sari-hero-reveal {
-        transform: translate3d(0, 14px, 0);
+    .sari-scroll-line {
+        width: 24px;
+    }
+
+    .sari-scroll-label {
+        font-size: 7px;
+        letter-spacing: .13em;
     }
 }
 
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     .sari-hero.sari-hero-motion-ready .sari-hero-reveal,
     .sari-hero-logo,
-    .sari-hero-brand-line,
     .sari-hero .sari-button,
-    .sari-hero .sari-button::before,
-    .sari-hero .sari-button::after,
-    .sari-hero .sari-button-arrow,
-    .sari-scroll-indicator,
-    .sari-scroll-line::after,
-    .sari-hero-title span {
+    .sari-button-icon,
+    .sari-scroll-line::after {
         opacity: 1 !important;
-        transform: none !important;
         animation: none !important;
         transition: none !important;
+    }
+
+    .sari-hero.sari-hero-motion-ready .sari-hero-reveal:not(.sari-scroll-indicator) {
+        transform: none !important;
+    }
+
+    .sari-hero.sari-hero-motion-ready .sari-scroll-indicator,
+    .sari-hero.sari-hero-motion-ready .sari-scroll-indicator.is-visible {
+        transform: translateX(-50%) !important;
     }
 }
 </style>
@@ -369,14 +448,21 @@
 <script>
 (function () {
     const hero = document.querySelector('.sari-hero');
-    if (!hero) return;
+
+    if (!hero) {
+        return;
+    }
 
     hero.classList.add('sari-hero-motion-ready');
 
     const items = hero.querySelectorAll('.sari-hero-reveal');
 
-    requestAnimationFrame(() => {
-        items.forEach(item => item.classList.add('is-visible'));
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            items.forEach(function (item) {
+                item.classList.add('is-visible');
+            });
+        });
     });
 })();
 </script>

@@ -1,3 +1,23 @@
+@php
+    /*
+    |--------------------------------------------------------------------------
+    | REAL ADMIN MESSAGE UNREAD COUNT
+    |--------------------------------------------------------------------------
+    |
+    | Counts only Seller -> Admin messages that have not been read yet.
+    |
+    */
+
+    $adminSidebarUnreadMessages = 0;
+
+    if (session('is_admin')) {
+        $adminSidebarUnreadMessages = \App\Models\ChatMessage::query()
+            ->where('sender_role', 'seller')
+            ->whereNull('read_by_admin_at')
+            ->count();
+    }
+@endphp
+
 <aside
     id="adminSidebar"
     class="
@@ -353,9 +373,13 @@
             </span>
 
             <span
+                id="adminSidebarMessageBadge"
+                data-admin-unread-badge
+                data-has-unread="{{ $adminSidebarUnreadMessages > 0 ? 'true' : 'false' }}"
                 class="
                     sidebar-extra
-                    grid h-5 min-w-[20px]
+                    {{ $adminSidebarUnreadMessages > 0 ? 'grid' : 'hidden' }}
+                    h-5 min-w-[20px]
                     place-items-center
                     rounded-full
                     px-1.5
@@ -366,7 +390,9 @@
                         : 'bg-[#d9930a] text-white' }}
                 "
             >
-                3
+                {{ $adminSidebarUnreadMessages > 99
+                    ? '99+'
+                    : $adminSidebarUnreadMessages }}
             </span>
         </a>
 
@@ -523,3 +549,65 @@
     </div>
 
 </aside>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const sidebarMessageBadge =
+        document.getElementById('adminSidebarMessageBadge');
+
+    if (!sidebarMessageBadge) {
+        return;
+    }
+
+    function setSidebarUnreadCount(count) {
+
+        const unread =
+            Math.max(0, Number(count) || 0);
+
+        sidebarMessageBadge.textContent =
+            unread > 99
+                ? '99+'
+                : String(unread);
+
+        sidebarMessageBadge.dataset.hasUnread =
+            unread > 0
+                ? 'true'
+                : 'false';
+
+        if (unread > 0) {
+            sidebarMessageBadge.classList.remove('hidden');
+            sidebarMessageBadge.classList.add('grid');
+        } else {
+            sidebarMessageBadge.classList.remove('grid');
+            sidebarMessageBadge.classList.add('hidden');
+        }
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sync with Admin navbar notification system
+    |--------------------------------------------------------------------------
+    */
+
+    window.addEventListener(
+        'sari:admin-unread-count-changed',
+        function (event) {
+            setSidebarUnreadCount(
+                event.detail?.count || 0
+            );
+        }
+    );
+
+    window.addEventListener(
+        'sari:admin-all-messages-read',
+        function () {
+            setSidebarUnreadCount(0);
+        }
+    );
+
+});
+</script>
+@endpush

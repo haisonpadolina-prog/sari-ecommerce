@@ -1,3 +1,49 @@
+@php
+    /*
+    |--------------------------------------------------------------------------
+    | ADMIN REAL-TIME MESSAGE NOTIFICATION DATA
+    |--------------------------------------------------------------------------
+    |
+    | Seller -> Admin unread messages use read_by_admin_at.
+    | This keeps the navbar bell synchronized with the real chat table.
+    |
+    */
+
+    $adminUnreadMessages = 0;
+    $adminRecentSellerMessages = collect();
+    $adminNotificationSellers = collect();
+
+    if (session('is_admin')) {
+        $adminUnreadMessages = \App\Models\ChatMessage::query()
+            ->where('sender_role', 'seller')
+            ->whereNull('read_by_admin_at')
+            ->count();
+
+        $adminRecentSellerMessages = \App\Models\ChatMessage::query()
+            ->where('sender_role', 'seller')
+            ->latest('created_at')
+            ->limit(6)
+            ->get();
+
+        $adminNotificationSellers = \App\Models\SellerAccount::query()
+            ->whereIn(
+                'id',
+                $adminRecentSellerMessages
+                    ->pluck('seller_account_id')
+                    ->filter()
+                    ->unique()
+                    ->values()
+            )
+            ->get()
+            ->keyBy('id');
+    }
+
+    $adminRealtimeMessageChannel = config(
+        'sari_chat.admin_channel',
+        'sari.admin.chat'
+    );
+@endphp
+
 <header
     class="
         sticky top-0 z-40
@@ -654,7 +700,7 @@
 
 
             {{-- ==================================================
-                NOTIFICATION
+                REAL-TIME MESSAGE NOTIFICATIONS
             =================================================== --}}
             <div class="relative">
 
@@ -676,10 +722,9 @@
                         hover:bg-[#fff9ef]
                         hover:text-[#b97805]
                     "
-                    aria-label="Notifications"
+                    aria-label="Message notifications"
                     aria-expanded="false"
                 >
-
                     <svg
                         viewBox="0 0 24 24"
                         class="h-[20px] w-[20px]"
@@ -691,13 +736,14 @@
                         <path d="M10 21h4"></path>
                     </svg>
 
-
-                    {{-- Notification Count --}}
                     <span
                         id="adminNotificationBadge"
+                        data-admin-unread-badge
+                        data-has-unread="{{ $adminUnreadMessages > 0 ? 'true' : 'false' }}"
                         class="
                             absolute -right-1.5 -top-1.5
-                            grid h-[21px] min-w-[21px]
+                            {{ $adminUnreadMessages > 0 ? 'grid' : 'hidden' }}
+                            h-[21px] min-w-[21px]
                             place-items-center
                             rounded-full
                             border-2 border-[#fffdf9]
@@ -708,13 +754,10 @@
                             text-white
                         "
                     >
-                        3
+                        {{ $adminUnreadMessages > 99 ? '99+' : $adminUnreadMessages }}
                     </span>
-
                 </button>
 
-
-                {{-- Notification Dropdown --}}
                 <div
                     id="adminNotificationPanel"
                     class="
@@ -725,25 +768,22 @@
                         border border-[#e9e0d3]
                         bg-white
                         shadow-[0_18px_50px_rgba(71,55,32,0.14)]
-
                         sm:w-[380px]
                     "
                 >
-
-                    <div
-                        class="
-                            flex items-center justify-between
-                            border-b border-[#eee7dc]
-                            px-4 py-4
-                        "
-                    >
+                    <div class="flex items-center justify-between border-b border-[#eee7dc] px-4 py-4">
                         <div>
                             <p class="text-[12px] font-bold text-[#302a22]">
-                                Notifications
+                                Message Notifications
                             </p>
 
-                            <p class="mt-0.5 text-[9px] text-[#948a7c]">
-                                You have 3 unread updates
+                            <p
+                                id="adminNotificationUnreadText"
+                                class="mt-0.5 text-[9px] text-[#948a7c]"
+                            >
+                                {{ $adminUnreadMessages > 0
+                                    ? $adminUnreadMessages . ' unread seller message' . ($adminUnreadMessages === 1 ? '' : 's')
+                                    : 'No unread seller messages' }}
                             </p>
                         </div>
 
@@ -755,195 +795,115 @@
                                 text-[#a8731f]
                                 transition
                                 hover:text-[#805513]
+                                disabled:cursor-default
+                                disabled:text-[#aaa197]
                             "
+                            {{ $adminUnreadMessages < 1 ? 'disabled' : '' }}
                         >
-                            Mark all as read
+                            {{ $adminUnreadMessages > 0 ? 'Mark all as read' : 'All read' }}
                         </button>
                     </div>
 
+                    <div
+                        id="adminNotificationList"
+                        class="max-h-[390px] overflow-y-auto"
+                    >
+                        @forelse ($adminRecentSellerMessages as $notification)
+                            @php
+                                $notificationSeller =
+                                    $adminNotificationSellers->get(
+                                        $notification->seller_account_id
+                                    );
 
-                    <div class="max-h-[390px] overflow-y-auto">
+                                $notificationSellerName =
+                                    $notificationSeller?->store_name
+                                    ?: $notificationSeller?->email
+                                    ?: 'Seller';
+                            @endphp
 
-                        <a
-                            href="{{ route('admin.registrations') }}"
-                            data-admin-notification
-                            class="
-                                relative
-                                flex gap-3
-                                border-b border-[#f0ebe4]
-                                bg-[#fdfaf5]
-                                px-4 py-4
-                                transition
-
-                                hover:bg-[#fbf6ed]
-                            "
-                        >
-                            <span
+                            <a
+                                href="{{ route('admin.messages', ['seller' => $notification->seller_account_id]) }}"
+                                data-admin-notification
+                                data-notification-message-id="{{ $notification->id }}"
+                                data-notification-seller-id="{{ $notification->seller_account_id }}"
                                 class="
-                                    absolute right-4 top-4
-                                    h-2 w-2
-                                    rounded-full
-                                    bg-[#d9930a]
-                                "
-                                data-unread-dot
-                            ></span>
-
-                            <span
-                                class="
-                                    grid h-10 w-10 shrink-0
-                                    place-items-center
-                                    rounded-xl
-                                    bg-[#fbf3e4]
-                                    text-[#ae791f]
+                                    relative flex gap-3
+                                    border-b border-[#f0ebe4]
+                                    px-4 py-4
+                                    transition
+                                    hover:bg-[#fbf6ed]
+                                    {{ $notification->read_by_admin_at
+                                        ? 'bg-white'
+                                        : 'bg-[#fdfaf5]' }}
                                 "
                             >
-                                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <circle cx="10" cy="8" r="3"></circle>
-                                    <path d="M4 20c.5-4 2.7-6 6-6s5.5 2 6 6"></path>
-                                    <path d="M17 8h4"></path>
-                                    <path d="M19 6v4"></path>
-                                </svg>
-                            </span>
+                                @if (!$notification->read_by_admin_at)
+                                    <span
+                                        data-unread-dot
+                                        class="
+                                            absolute right-4 top-4
+                                            h-2 w-2 rounded-full
+                                            bg-[#d9930a]
+                                        "
+                                    ></span>
+                                @endif
 
-                            <span class="min-w-0 pr-4">
-                                <span class="block text-[10px] font-semibold text-[#37312a]">
-                                    New seller application
+                                <span
+                                    class="
+                                        grid h-10 w-10 shrink-0
+                                        place-items-center
+                                        rounded-xl
+                                        bg-[#f1f7f3]
+                                        text-[9px] font-bold
+                                        text-[#56816a]
+                                    "
+                                >
+                                    {{ strtoupper(substr($notificationSellerName, 0, 2)) }}
                                 </span>
 
-                                <span class="mt-1 block text-[9px] leading-4 text-[#81786d]">
-                                    Maria Santos submitted documents for seller verification.
+                                <span class="min-w-0 flex-1 pr-4">
+                                    <span class="block truncate text-[10px] font-semibold text-[#37312a]">
+                                        {{ $notificationSellerName }}
+                                    </span>
+
+                                    <span class="mt-1 block line-clamp-2 text-[9px] leading-4 text-[#81786d]">
+                                        {{ $notification->body
+                                            ?: ($notification->attachment_name
+                                                ?: 'Sent an attachment') }}
+                                    </span>
+
+                                    <span class="mt-2 block text-[8px] font-medium text-[#aa7721]">
+                                        {{ $notification->created_at?->format('M d · h:i A') }}
+                                    </span>
                                 </span>
-
-                                <span class="mt-2 block text-[8px] font-medium text-[#aa7721]">
-                                    5 minutes ago
-                                </span>
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="{{ route('admin.complaints') }}"
-                            data-admin-notification
-                            class="
-                                relative
-                                flex gap-3
-                                border-b border-[#f0ebe4]
-                                bg-[#fdfaf5]
-                                px-4 py-4
-                                transition
-
-                                hover:bg-[#fbf6ed]
-                            "
-                        >
-                            <span
-                                class="
-                                    absolute right-4 top-4
-                                    h-2 w-2
-                                    rounded-full
-                                    bg-[#d9930a]
-                                "
-                                data-unread-dot
-                            ></span>
-
-                            <span
-                                class="
-                                    grid h-10 w-10 shrink-0
-                                    place-items-center
-                                    rounded-xl
-                                    bg-[#faf0f0]
-                                    text-[#a96565]
-                                "
+                            </a>
+                        @empty
+                            <div
+                                id="adminNotificationEmpty"
+                                class="px-5 py-9 text-center"
                             >
-                                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M12 3 3 20h18L12 3Z"></path>
-                                    <path d="M12 9v5"></path>
-                                    <path d="M12 17h.01"></path>
-                                </svg>
-                            </span>
+                                <div class="mx-auto grid h-11 w-11 place-items-center rounded-2xl bg-[#f1f7f3] text-[#56816a]">
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path>
+                                    </svg>
+                                </div>
 
-                            <span class="min-w-0 pr-4">
-                                <span class="block text-[10px] font-semibold text-[#37312a]">
-                                    Urgent dispute requires review
-                                </span>
+                                <p class="mt-3 text-[9px] font-semibold text-[#50483e]">
+                                    No message notifications
+                                </p>
 
-                                <span class="mt-1 block text-[9px] leading-4 text-[#81786d]">
-                                    Case #CMP-1032 received additional buyer evidence.
-                                </span>
-
-                                <span class="mt-2 block text-[8px] font-medium text-[#aa7721]">
-                                    18 minutes ago
-                                </span>
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="{{ route('admin.messages') }}"
-                            data-admin-notification
-                            class="
-                                relative
-                                flex gap-3
-                                bg-[#fdfaf5]
-                                px-4 py-4
-                                transition
-
-                                hover:bg-[#fbf6ed]
-                            "
-                        >
-                            <span
-                                class="
-                                    absolute right-4 top-4
-                                    h-2 w-2
-                                    rounded-full
-                                    bg-[#d9930a]
-                                "
-                                data-unread-dot
-                            ></span>
-
-                            <span
-                                class="
-                                    grid h-10 w-10 shrink-0
-                                    place-items-center
-                                    rounded-xl
-                                    bg-[#f1f7f3]
-                                    text-[#56816a]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path>
-                                </svg>
-                            </span>
-
-                            <span class="min-w-0 pr-4">
-                                <span class="block text-[10px] font-semibold text-[#37312a]">
-                                    New admin message
-                                </span>
-
-                                <span class="mt-1 block text-[9px] leading-4 text-[#81786d]">
-                                    Pedro Reyes sent proof of delivery for an open case.
-                                </span>
-
-                                <span class="mt-2 block text-[8px] font-medium text-[#aa7721]">
-                                    1 hour ago
-                                </span>
-                            </span>
-                        </a>
-
+                                <p class="mt-1 text-[8px] text-[#978e82]">
+                                    New seller messages will appear here.
+                                </p>
+                            </div>
+                        @endforelse
                     </div>
 
-
-                    <div
-                        class="
-                            border-t border-[#eee7dc]
-                            bg-[#fcfaf7]
-                            p-3
-                        "
-                    >
+                    <div class="border-t border-[#eee7dc] bg-[#fcfaf7] p-3">
                         <a
                             href="{{ route('admin.messages') }}"
                             class="
-                                flex h-9
-                                items-center justify-center
+                                flex h-9 items-center justify-center
                                 rounded-xl
                                 border border-[#e4dacb]
                                 bg-white
@@ -958,9 +918,7 @@
                             Open Message Center
                         </a>
                     </div>
-
                 </div>
-
             </div>
 
 
@@ -1618,6 +1576,37 @@
         );
 
 
+        const notificationList = document.getElementById(
+            'adminNotificationList'
+        );
+
+        const notificationUnreadText = document.getElementById(
+            'adminNotificationUnreadText'
+        );
+
+        const notificationEmpty = document.getElementById(
+            'adminNotificationEmpty'
+        );
+
+        const adminRealtimeMessageChannel = @json(
+            $adminRealtimeMessageChannel
+        );
+
+        let adminUnreadMessageCount = {{ (int) $adminUnreadMessages }};
+
+        window.__SARI_ADMIN_PROCESSED_MESSAGE_IDS__ =
+            window.__SARI_ADMIN_PROCESSED_MESSAGE_IDS__ || new Set();
+
+        const adminProcessedMessageIds =
+            window.__SARI_ADMIN_PROCESSED_MESSAGE_IDS__;
+
+        @foreach ($adminRecentSellerMessages as $notification)
+            adminProcessedMessageIds.add(
+                @json((string) $notification->id)
+            );
+        @endforeach
+
+
         const dateButton = document.getElementById('adminDateButton');
         const datePanel = document.getElementById('adminDatePanel');
 
@@ -1894,81 +1883,473 @@
 
         /*
         |--------------------------------------------------------------------------
-        | NOTIFICATIONS
+        | REAL-TIME MESSAGE NOTIFICATIONS
         |--------------------------------------------------------------------------
         */
+
+        function adminDisplayUnreadCount(count) {
+            return count > 99 ? '99+' : String(count);
+        }
+
+
+        function adminUpdateUnreadText() {
+            if (!notificationUnreadText) {
+                return;
+            }
+
+            notificationUnreadText.textContent =
+                adminUnreadMessageCount > 0
+                    ? `${adminUnreadMessageCount} unread seller message${adminUnreadMessageCount === 1 ? '' : 's'}`
+                    : 'No unread seller messages';
+        }
+
+
+        function adminUpdateUnreadBadges(count) {
+            adminUnreadMessageCount =
+                Math.max(0, Number(count) || 0);
+
+            document
+                .querySelectorAll('[data-admin-unread-badge]')
+                .forEach(function (badge) {
+                    badge.textContent =
+                        adminDisplayUnreadCount(
+                            adminUnreadMessageCount
+                        );
+
+                    badge.dataset.hasUnread =
+                        adminUnreadMessageCount > 0
+                            ? 'true'
+                            : 'false';
+
+                    if (adminUnreadMessageCount > 0) {
+                        badge.classList.remove('hidden');
+                        badge.classList.add('grid');
+                    } else {
+                        badge.classList.remove('grid');
+                        badge.classList.add('hidden');
+                    }
+                });
+
+            adminUpdateUnreadText();
+
+            if (markAllReadButton) {
+                markAllReadButton.disabled =
+                    adminUnreadMessageCount < 1;
+
+                markAllReadButton.textContent =
+                    adminUnreadMessageCount > 0
+                        ? 'Mark all as read'
+                        : 'All read';
+            }
+
+            /*
+            | Keep any sidebar/message badge synchronized with
+            | the navbar unread count.
+            */
+            window.dispatchEvent(
+                new CustomEvent(
+                    'sari:admin-unread-count-changed',
+                    {
+                        detail: {
+                            count: adminUnreadMessageCount
+                        }
+                    }
+                )
+            );
+        }
+
+
+        function adminEscapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+
+        function adminMessageText(data) {
+            return data?.body ||
+                data?.attachment_name ||
+                'Sent an attachment';
+        }
+
+
+        function adminSellerName(data) {
+            return data?.seller_name ||
+                data?.store_name ||
+                data?.seller_email ||
+                'Seller';
+        }
+
+
+        function adminMessageUrl(data) {
+            const sellerId =
+                Number(data?.seller_id || 0);
+
+            const base =
+                @json(route('admin.messages'));
+
+            return sellerId > 0
+                ? `${base}?seller=${sellerId}`
+                : base;
+        }
+
+
+        function adminPrependNotification(data) {
+            if (!notificationList || !data?.id) {
+                return;
+            }
+
+            if (
+                notificationList.querySelector(
+                    `[data-notification-message-id="${data.id}"]`
+                )
+            ) {
+                return;
+            }
+
+            notificationEmpty?.remove();
+
+            const sellerId =
+                Number(data.seller_id || 0);
+
+            const sellerName =
+                adminSellerName(data);
+
+            const item =
+                document.createElement('a');
+
+            item.href = adminMessageUrl(data);
+
+            item.dataset.adminNotification = '';
+            item.dataset.notificationMessageId =
+                String(data.id);
+
+            item.dataset.notificationSellerId =
+                String(sellerId);
+
+            item.className =
+                'relative flex gap-3 border-b border-[#f0ebe4] bg-[#fdfaf5] px-4 py-4 transition hover:bg-[#fbf6ed]';
+
+            const initials =
+                sellerName
+                    .trim()
+                    .slice(0, 2)
+                    .toUpperCase();
+
+            item.innerHTML = `
+                <span
+                    data-unread-dot
+                    class="absolute right-4 top-4 h-2 w-2 rounded-full bg-[#d9930a]"
+                ></span>
+
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#f1f7f3] text-[9px] font-bold text-[#56816a]">
+                    ${adminEscapeHtml(initials || 'SE')}
+                </span>
+
+                <span class="min-w-0 flex-1 pr-4">
+                    <span class="block truncate text-[10px] font-semibold text-[#37312a]">
+                        ${adminEscapeHtml(sellerName)}
+                    </span>
+
+                    <span class="mt-1 block line-clamp-2 text-[9px] leading-4 text-[#81786d]">
+                        ${adminEscapeHtml(adminMessageText(data))}
+                    </span>
+
+                    <span class="mt-2 block text-[8px] font-medium text-[#aa7721]">
+                        ${adminEscapeHtml(data.time || 'Just now')}
+                    </span>
+                </span>
+            `;
+
+            notificationList.prepend(item);
+
+            const items =
+                notificationList.querySelectorAll(
+                    '[data-notification-message-id]'
+                );
+
+            if (items.length > 6) {
+                items[items.length - 1].remove();
+            }
+        }
+
+
+        function adminRingBell() {
+            if (
+                !notificationButton ||
+                typeof notificationButton.animate !== 'function'
+            ) {
+                return;
+            }
+
+            notificationButton.animate(
+                [
+                    { transform: 'rotate(0deg)' },
+                    { transform: 'rotate(-10deg)' },
+                    { transform: 'rotate(10deg)' },
+                    { transform: 'rotate(-6deg)' },
+                    { transform: 'rotate(6deg)' },
+                    { transform: 'rotate(0deg)' }
+                ],
+                {
+                    duration: 520,
+                    easing: 'ease-out'
+                }
+            );
+        }
+
+
+        function adminMarkSellerNotificationsRead(sellerId) {
+            if (!notificationList || !sellerId) {
+                return;
+            }
+
+            notificationList
+                .querySelectorAll(
+                    `[data-notification-seller-id="${sellerId}"]`
+                )
+                .forEach(function (item) {
+                    item.classList.remove('bg-[#fdfaf5]');
+                    item.classList.add('bg-white');
+                    item.querySelector('[data-unread-dot]')?.remove();
+                });
+        }
+
+
+        function adminHandleIncomingMessage(data) {
+            if (
+                !data ||
+                data.id === undefined ||
+                data.id === null ||
+                data.sender_role !== 'seller'
+            ) {
+                return;
+            }
+
+            const messageId =
+                String(data.id);
+
+            if (
+                adminProcessedMessageIds.has(messageId)
+            ) {
+                return;
+            }
+
+            adminProcessedMessageIds.add(messageId);
+
+            const activeSellerId =
+                Number(
+                    window.__SARI_ADMIN_ACTIVE_SELLER_ID__ ||
+                    0
+                );
+
+            const incomingSellerId =
+                Number(data.seller_id || 0);
+
+            const isOpenThread =
+                activeSellerId > 0 &&
+                activeSellerId === incomingSellerId &&
+                window.location.pathname.includes('/admin/messages');
+
+            /*
+            | If admin is already reading this exact thread,
+            | the chat page immediately marks the message read.
+            | Do not increase the global unread counters.
+            */
+            if (isOpenThread) {
+                return;
+            }
+
+            adminPrependNotification(data);
+
+            adminUpdateUnreadBadges(
+                adminUnreadMessageCount + 1
+            );
+
+            adminRingBell();
+        }
+
+
+        function adminSubscribeToMessageChannel(attempt = 0) {
+            if (!adminRealtimeMessageChannel) {
+                return;
+            }
+
+            if (!window.Echo) {
+                if (attempt < 24) {
+                    window.setTimeout(function () {
+                        adminSubscribeToMessageChannel(
+                            attempt + 1
+                        );
+                    }, 250);
+                }
+
+                return;
+            }
+
+            window.__SARI_ADMIN_NOTIFICATION_CHANNELS__ =
+                window.__SARI_ADMIN_NOTIFICATION_CHANNELS__ || {};
+
+            if (
+                window.__SARI_ADMIN_NOTIFICATION_CHANNELS__[
+                    adminRealtimeMessageChannel
+                ]
+            ) {
+                return;
+            }
+
+            window.__SARI_ADMIN_NOTIFICATION_CHANNELS__[
+                adminRealtimeMessageChannel
+            ] = true;
+
+            window.Echo
+                .channel(adminRealtimeMessageChannel)
+                .listen(
+                    '.chat.message',
+                    adminHandleIncomingMessage
+                );
+        }
+
 
         notificationButton?.addEventListener(
             'click',
             function (event) {
-
                 event.stopPropagation();
 
                 const willOpen =
-                    notificationPanel?.classList.contains('hidden');
-
+                    notificationPanel?.classList.contains(
+                        'hidden'
+                    );
 
                 closeAllExcept('notification');
 
-
                 if (willOpen) {
-
-                    notificationPanel?.classList.remove('hidden');
+                    notificationPanel?.classList.remove(
+                        'hidden'
+                    );
 
                     notificationButton.setAttribute(
                         'aria-expanded',
                         'true'
                     );
-
                 } else {
                     closeNotifications();
                 }
-
             }
         );
 
 
         markAllReadButton?.addEventListener(
             'click',
-            function (event) {
-
+            async function (event) {
                 event.stopPropagation();
 
-
-                document
-                    .querySelectorAll('[data-unread-dot]')
-                    .forEach(function (dot) {
-                        dot.classList.add('hidden');
-                    });
-
-
-                document
-                    .querySelectorAll('[data-admin-notification]')
-                    .forEach(function (notification) {
-                        notification.classList.remove('bg-[#fdfaf5]');
-                    });
-
-
-                notificationBadge?.classList.add('hidden');
-
-
-                const notificationSubtitle =
-                    notificationPanel?.querySelector(
-                        '.text-\\[9px\\].text-\\[\\#948a7c\\]'
-                    );
-
-
-                if (notificationSubtitle) {
-                    notificationSubtitle.textContent =
-                        'You are all caught up';
+                if (adminUnreadMessageCount < 1) {
+                    return;
                 }
 
-
-                markAllReadButton.textContent = 'All read';
                 markAllReadButton.disabled = true;
+                markAllReadButton.textContent =
+                    'Marking...';
 
+                try {
+                    const response = await fetch(
+                        '/admin/message-notifications/read-all',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN':
+                                    @json(csrf_token()),
+                                'Accept': 'application/json'
+                            }
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            'Unable to mark notifications as read.'
+                        );
+                    }
+
+                    document
+                        .querySelectorAll(
+                            '[data-admin-notification]'
+                        )
+                        .forEach(function (notification) {
+                            notification.classList.remove(
+                                'bg-[#fdfaf5]'
+                            );
+
+                            notification.classList.add(
+                                'bg-white'
+                            );
+
+                            notification
+                                .querySelector(
+                                    '[data-unread-dot]'
+                                )
+                                ?.remove();
+                        });
+
+                    adminUpdateUnreadBadges(0);
+
+                    window.dispatchEvent(
+                        new CustomEvent(
+                            'sari:admin-all-messages-read'
+                        )
+                    );
+                } catch (error) {
+                    markAllReadButton.disabled = false;
+                    markAllReadButton.textContent =
+                        'Mark all as read';
+
+                    console.error(error);
+                }
             }
         );
+
+
+        window.addEventListener(
+            'sari:admin-thread-read',
+            function (event) {
+                const sellerId =
+                    Number(event.detail?.sellerId || 0);
+
+                const count =
+                    Math.max(
+                        0,
+                        Number(event.detail?.count || 0)
+                    );
+
+                adminMarkSellerNotificationsRead(
+                    sellerId
+                );
+
+                if (count > 0) {
+                    adminUpdateUnreadBadges(
+                        adminUnreadMessageCount - count
+                    );
+                }
+            }
+        );
+
+
+        window.addEventListener(
+            'sari:admin-all-messages-read',
+            function () {
+                adminUpdateUnreadBadges(0);
+            }
+        );
+
+
+        adminUpdateUnreadBadges(
+            adminUnreadMessageCount
+        );
+
+        adminSubscribeToMessageChannel();
 
 
         /*

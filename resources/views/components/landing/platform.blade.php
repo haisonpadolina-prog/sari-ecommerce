@@ -7,6 +7,7 @@
 
 
     .sari-platform-ui {
+        --sari-platform-section-bg: #FFFFFF;
         --sari-platform-bg: #FBF8F2;
         --sari-platform-surface: #FFFFFF;
         --sari-platform-sidebar: #F5F1E8;
@@ -23,7 +24,7 @@
         --sari-platform-shadow-soft: rgba(22, 20, 15, 0.18);
         --sari-platform-shadow-strong: rgba(22, 20, 15, 0.38);
 
-        background: var(--sari-platform-bg);
+        background: var(--sari-platform-section-bg);
         padding: 130px 0;
         font-family: 'Poppins', sans-serif;
         /* this section must never clip its children — the phone
@@ -235,6 +236,7 @@
     html.dark-mode .sari-platform-ui,
     body.dark-mode .sari-platform-ui,
     html[data-theme="dark"] .sari-platform-ui {
+        --sari-platform-section-bg: #15130E;
         --sari-platform-bg: #15130E;
         --sari-platform-surface: #201D16;
         --sari-platform-sidebar: #1B1912;
@@ -660,6 +662,7 @@
 
 /* Explicit light mode */
 html.light-mode .sari-platform-ui {
+    --sari-platform-section-bg: #FFFFFF;
     --sari-platform-bg: #FBF8F2;
     --sari-platform-surface: #FFFFFF;
     --sari-platform-sidebar: #F5F1E8;
@@ -685,6 +688,7 @@ html.dark .sari-platform-ui,
 body.dark .sari-platform-ui,
 html[data-theme="dark"] .sari-platform-ui,
 body[data-theme="dark"] .sari-platform-ui {
+    --sari-platform-section-bg: #15130E;
     --sari-platform-bg: #15130E;
     --sari-platform-surface: #201D16;
     --sari-platform-sidebar: #1B1912;
