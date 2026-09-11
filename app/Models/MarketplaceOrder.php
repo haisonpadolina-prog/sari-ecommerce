@@ -155,7 +155,7 @@ class MarketplaceOrder extends Model
         return $this->hasOne(RiderEarning::class, 'marketplace_order_id');
     }
 
-    public function logisticsParcel(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function logisticsParcel(): HasOne
     {
         return $this->hasOne(LogisticsParcel::class, 'marketplace_order_id');
     }
