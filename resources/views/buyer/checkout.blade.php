@@ -15,6 +15,10 @@
         @csrf
         @if (!empty($buyNowItemId))
             <input type="hidden" name="buy_now_item_id" value="{{ (int) $buyNowItemId }}">
+        @elseif (!empty($selectedItemIds))
+            @foreach ($selectedItemIds as $selectedItemId)
+                <input type="hidden" name="checkout_item_ids[]" value="{{ (int) $selectedItemId }}">
+            @endforeach
         @endif
         <div class="space-y-5">
             <section class="rounded-[22px] border border-[#ebe4da] bg-white p-5 sm:p-6">

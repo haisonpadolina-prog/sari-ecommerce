@@ -1,1864 +1,409 @@
 @extends('layouts.admin')
 
-@section('title', 'Complaints & Disputes — SARI Admin')
-@section('page-title', 'Complaints & Disputes')
+@section('title','Complaints — SARI Admin')
+@section('page-title','Complaints')
 
 @section('content')
+<style>
+    .complaints-page{font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#211c16}
+    .complaints-surface{background:#fff;border:1px solid #e7ddd1;border-radius:18px;box-shadow:0 3px 8px rgba(61,43,22,.045),0 18px 42px rgba(61,43,22,.095),0 38px 78px rgba(61,43,22,.045),inset 0 1px 0 rgba(255,255,255,.98)}
+    .complaints-header-main{display:flex;align-items:center;gap:14px}.complaints-header-icon{display:grid;width:44px;height:44px;flex:0 0 44px;place-items:center;border:1px solid #eadfc9;border-radius:14px;background:#fff8eb;color:#b77c18;box-shadow:0 2px 5px rgba(75,54,25,.03),0 9px 20px rgba(75,54,25,.06)}.complaints-header-icon svg{width:18px;height:18px}
+    .complaints-eyebrow{color:#9a7b43;font-size:9px;font-weight:600;line-height:1.2;letter-spacing:.14em;text-transform:uppercase}.complaints-title{margin-top:4px;font-size:clamp(1.75rem,1.55rem + .5vw,2.15rem);font-weight:700;line-height:1.08;letter-spacing:-.04em}.complaints-title-base{color:#17130f}.complaints-title-accent{color:#d99500}.complaints-subtitle{max-width:900px;margin-top:6px;color:#81786c;font-size:clamp(.73rem,.70rem + .08vw,.81rem);line-height:1.65}
+    .complaint-stat{min-height:110px;padding:18px;border:1px solid #e7ddd1;border-radius:18px;background:#fff;text-align:left;box-shadow:0 3px 7px rgba(61,43,22,.04),0 15px 34px rgba(61,43,22,.085),0 30px 58px rgba(61,43,22,.038),inset 0 1px 0 rgba(255,255,255,.98);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.complaint-stat:hover{transform:translateY(-3px);border-color:#d9c9b1;box-shadow:0 4px 9px rgba(61,43,22,.05),0 21px 46px rgba(61,43,22,.115),0 40px 76px rgba(61,43,22,.048),inset 0 1px 0 rgba(255,255,255,.98)}.complaint-stat.is-active{border-color:#dfbd78}.complaint-stat-icon{display:grid;width:48px;height:48px;flex:0 0 48px;place-items:center;border-radius:12px}.complaint-stat-label{color:#7d746a;font-size:11.5px;font-weight:500;line-height:1.35}.complaint-stat-value{margin-top:4px;color:#1c1712;font-size:26px;font-weight:700;line-height:1;letter-spacing:-.04em}.complaint-stat-helper{margin-top:8px;color:#9b9288;font-size:9px;line-height:1.35}
+    .complaints-filter{position:relative;z-index:20;padding:12px}.complaints-filter-grid{display:grid;grid-template-columns:minmax(360px,1fr) 190px 124px 82px;gap:12px;align-items:center}.complaints-search{position:relative;min-width:0}.complaints-search svg{position:absolute;top:50%;left:16px;width:16px;height:16px;color:#9d8f7e;transform:translateY(-50%);pointer-events:none}.complaints-control{width:100%;height:44px;border:1px solid #e8e0d5;border-radius:12px;background:#fff;color:#332c25;font-size:11px;box-shadow:0 2px 4px rgba(61,43,22,.025),0 7px 16px rgba(61,43,22,.045),inset 0 1px 0 rgba(255,255,255,.96);transition:border-color .16s ease,box-shadow .16s ease}.complaints-control:hover{border-color:#d8c8b1}.complaints-control:focus{outline:none;border-color:#d9a33a;box-shadow:0 0 0 4px rgba(217,149,0,.08),0 10px 24px rgba(61,43,22,.07)}.complaints-search input{padding:0 16px 0 44px}.complaints-search input::placeholder{color:#a69c91}.complaints-select-wrap{position:relative}.complaints-select-wrap select{appearance:none;padding:0 40px 0 36px;font-weight:500;cursor:pointer}.complaints-status-dot{position:absolute;top:50%;left:15px;width:8px;height:8px;border-radius:999px;background:#3f9a61;transform:translateY(-50%);pointer-events:none}.complaints-select-chevron{position:absolute;top:50%;right:14px;width:14px;height:14px;color:#8b8175;transform:translateY(-50%);pointer-events:none}
+    .complaints-apply,.complaints-reset{display:inline-flex;width:100%;height:44px;align-items:center;justify-content:center;gap:8px;border-radius:12px;font-size:11px;font-weight:600;white-space:nowrap;transition:transform .16s ease,background-color .16s ease,border-color .16s ease}.complaints-apply{border:0;background:#d99500;color:#fff;box-shadow:0 3px 7px rgba(183,124,0,.10),0 13px 28px rgba(217,149,0,.23)}.complaints-apply:hover{background:#bd8205;transform:translateY(-1px)}.complaints-reset{border:1px solid #e6ddd2;background:#fff;color:#6f665b}.complaints-reset:hover{border-color:#d8c8b1;background:#faf8f4;color:#51483f}
+    .complaints-table-head,.complaint-row{display:grid;grid-template-columns:minmax(260px,1.5fr) 210px 170px 120px 90px;gap:16px;align-items:center}.complaints-table-head{min-height:50px;padding:13px 20px;border-bottom:1px solid #eee8df;background:#fcfbf8;color:#847b70;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}.complaint-row{min-height:82px;padding:14px 20px;border-bottom:1px solid #f0ebe4;background:#fff;transition:background-color .14s ease}.complaint-row:hover{background:#fdfbf7}.complaint-row:last-child{border-bottom:0}.complaint-subject{color:#2e2924;font-size:12px;font-weight:700;line-height:1.35}.complaint-preview{max-width:540px;margin-top:5px;overflow:hidden;color:#8c8379;font-size:9px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}.complaint-meta-main{color:#514a42;font-size:10px;font-weight:500;line-height:1.4}.complaint-meta-sub{margin-top:3px;color:#958c80;font-size:9px;line-height:1.4}.complaint-status{display:inline-flex;align-items:center;gap:7px;width:fit-content;border-radius:999px;padding:6px 10px;font-size:9.5px;font-weight:600;line-height:1}.complaint-status::before{content:"";width:6px;height:6px;border-radius:999px;background:currentColor}.complaint-status-open{border:1px solid #efd9b0;background:#fff8e9;color:#a87019}.complaint-status-resolved{border:1px solid #d6e9dc;background:#eef8f1;color:#36805a}.complaint-view{display:inline-grid;width:30px;height:30px;place-items:center;border:0;background:transparent;color:#3f3b37;transition:color .15s ease,transform .15s ease}.complaint-view svg{width:16px;height:16px;stroke:currentColor}.complaint-view:hover,.complaint-view:focus-visible{color:#e09a00;transform:translateY(-1px) scale(1.08);outline:none}.complaints-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding:14px 20px;border-top:1px solid #eee8df;color:#756d63;font-size:10px}.complaints-empty{padding:54px 20px;text-align:center;color:#918677;font-size:10px}
+    #complaintModalBackdrop{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s ease,visibility .16s ease}#complaintModalBackdrop.is-open{opacity:1;visibility:visible;pointer-events:auto}#complaintModal{opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-46%) scale(.985);transition:opacity .16s ease,transform .20s cubic-bezier(.22,.61,.36,1),visibility .16s ease}#complaintModal.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.complaint-modal-shell{width:min(720px,calc(100vw - 28px));max-height:min(92vh,860px);overflow:hidden;border:1px solid #dedbd6;border-radius:22px;background:#fff;box-shadow:0 18px 44px rgba(24,22,19,.13),0 44px 100px rgba(24,22,19,.20)}.complaint-modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:22px 22px 16px}.complaint-modal-eyebrow{color:#77777c;font-size:.66rem;font-weight:500}.complaint-modal-title{margin-top:5px;color:#252525;font-size:1.3rem;font-weight:700;line-height:1.2;letter-spacing:-.035em}.complaint-modal-close{display:grid;width:36px;height:36px;flex:0 0 36px;place-items:center;border:0;border-radius:10px;background:#f7f7f8;color:#636363}.complaint-modal-close:hover{background:#eeeeef;color:#2d2d2d}.complaint-modal-body{max-height:calc(92vh - 90px);overflow-y:auto;padding:0 22px 22px}.complaint-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.complaint-field-label{margin-bottom:7px;color:#626268;font-size:.7rem;font-weight:500}.complaint-field-value{display:flex;min-height:46px;align-items:center;padding:0 13px;border:1px solid #dcdde1;border-radius:10px;background:#fff;color:#303034;font-size:.76rem;font-weight:500}.complaint-detail-block{margin-top:16px}.complaint-detail-copy{min-height:96px;padding:12px 13px;border:1px solid #dcdde1;border-radius:10px;background:#fff;color:#4d4d52;font-size:.74rem;line-height:1.6;white-space:pre-wrap}.complaint-admin-note{background:#fafafa}.complaint-action-section{margin-top:18px;padding-top:18px;border-top:1px solid #ececef}.complaint-action-title{color:#303034;font-size:.8rem;font-weight:600}.complaint-action-copy{margin-top:3px;color:#85858b;font-size:.66rem;line-height:1.5}.complaint-action-form{display:flex;gap:10px;margin-top:12px}.complaint-action-input{height:44px;flex:1;min-width:0;border:1px solid #dcdde1;border-radius:10px;padding:0 13px;background:#fff;color:#303034;font-size:.73rem}.complaint-action-input:focus{outline:none;border-color:#1683ff;box-shadow:0 0 0 3px rgba(22,131,255,.10)}.complaint-resolve,.complaint-reopen{display:inline-flex;height:44px;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:0 16px;font-size:.72rem;font-weight:600;box-shadow:none}.complaint-resolve{border:1px solid #cfe2d5;background:#f5faf6;color:#4d7b5c}.complaint-resolve:hover{border-color:#bdd8c5;background:#edf7ef;color:#2f7c48}.complaint-reopen{border:1px solid #e7d6b7;background:#fffaf1;color:#94671f}.complaint-reopen:hover{border-color:#d8bd86;background:#fff4df;color:#b77400}
+    @media(max-width:1023px){.complaints-filter-grid{grid-template-columns:minmax(0,1fr) 180px}.complaints-search{grid-column:1/-1}.complaints-table-head{display:none}.complaint-row{grid-template-columns:1fr auto;gap:14px;align-items:start}.complaint-row>div:nth-child(2),.complaint-row>div:nth-child(3),.complaint-row>div:nth-child(4){grid-column:1}.complaint-row>div:last-child{grid-column:2;grid-row:1}}
+    @media(max-width:639px){.complaints-header-main{align-items:flex-start;gap:12px}.complaints-filter-grid{grid-template-columns:1fr;gap:9px}.complaints-search{grid-column:auto}.complaint-row{padding:14px 16px}.complaints-footer{align-items:flex-start;flex-direction:column}.complaint-detail-grid{grid-template-columns:1fr}.complaint-action-form{flex-direction:column}.complaint-resolve,.complaint-reopen{width:100%}}
 
-<div class="mx-auto w-full max-w-[1800px]">
+    /* =========================================================
+       COMPLAINTS SUMMARY — USER MANAGEMENT SIZE PARITY
+       Same desktop card width, height, icon size, and typography
+       as the Approved Accounts summary cards.
+       ========================================================= */
 
-    {{-- =========================================================
-        PAGE INTRO
-    ========================================================== --}}
-    <section
-        class="
-            rounded-[22px]
-            border border-[#ebe4da]
-            bg-white
-            p-5
+    .complaints-page .complaints-summary-grid {
+        display: grid !important;
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
 
-            sm:p-6
-            lg:p-7
-        "
-    >
-        <div
-            class="
-                flex flex-col gap-5
-                lg:flex-row
-                lg:items-center
-                lg:justify-between
-            "
-        >
+    .complaints-page .complaint-stat {
+        min-height: 110px !important;
+        padding: 18px !important;
+        border-radius: 18px !important;
+    }
 
-            <div>
-                <div
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-full
-                        border border-[#e8dfd1]
-                        bg-[#fcfaf6]
-                        px-3 py-1.5
-                        text-[9px] font-semibold
-                        uppercase tracking-[0.14em]
-                        text-[#a27428]
-                    "
-                >
-                    <span class="h-2 w-2 rounded-full bg-[#c9952f]"></span>
-                    Case Management
-                </div>
+    .complaints-page .complaint-stat > div {
+        min-height: 72px;
+        align-items: center !important;
+        gap: 16px !important;
+    }
 
-                <h2
-                    class="
-                        mt-3
-                        text-[22px] font-bold
-                        tracking-[-0.03em]
-                        text-[#211c16]
+    .complaints-page .complaint-stat-icon {
+        width: 48px !important;
+        height: 48px !important;
+        flex: 0 0 48px !important;
+        border-radius: 12px !important;
+    }
 
-                        sm:text-[24px]
-                    "
-                >
-                    Complaints & Disputes
-                </h2>
+    .complaints-page .complaint-stat-icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
 
-                <p
-                    class="
-                        mt-2
-                        max-w-[760px]
-                        text-[12px] leading-6
-                        text-[#81786c]
+    .complaints-page .complaint-stat-label {
+        font-size: 11.5px !important;
+        line-height: 1.35 !important;
+        font-weight: 500 !important;
+    }
 
-                        sm:text-[13px]
-                    "
-                >
-                    Review marketplace complaints, inspect submitted evidence,
-                    coordinate with involved users, and resolve dispute cases.
-                </p>
-            </div>
+    .complaints-page .complaint-stat-value {
+        margin-top: 4px !important;
+        font-size: 26px !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: -.04em !important;
+    }
 
+    .complaints-page .complaint-stat-helper {
+        margin-top: 8px !important;
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+        font-weight: 400 !important;
+    }
 
-            <div class="flex flex-wrap items-center gap-3">
+    @media (min-width: 1536px) {
+        .complaints-page .complaint-stat-label {
+            font-size: 12px !important;
+        }
 
-                <button
-                    type="button"
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-xl
-                        border border-[#e6dfd4]
-                        bg-white
-                        px-4 py-2.5
-                        text-[11px] font-semibold
-                        text-[#62594e]
-                        transition
+        .complaints-page .complaint-stat-value {
+            font-size: 27px !important;
+        }
+    }
 
-                        hover:border-[#d4c29f]
-                        hover:bg-[#fcf9f3]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M4 4h16v16H4z"></path>
-                        <path d="M8 9h8"></path>
-                        <path d="M8 13h8"></path>
-                        <path d="M8 17h5"></path>
-                    </svg>
+    @media (max-width: 1279px) {
+        .complaints-page .complaints-summary-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+    }
 
-                    Export Cases
-                </button>
+    @media (max-width: 767px) {
+        .complaints-page .complaints-summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 479px) {
+        .complaints-page .complaints-summary-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .complaints-page .complaint-stat {
+            min-height: 110px !important;
+            padding: 16px !important;
+        }
+    }
 
 
-                <button
-                    type="button"
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-xl
-                        bg-[#c99128]
-                        px-4 py-2.5
-                        text-[11px] font-semibold
-                        text-white
-                        shadow-[0_8px_20px_rgba(201,145,40,0.16)]
-                        transition
+    /* =========================================================
+       COMPLAINTS — NEUTRAL SUMMARY + PREMIUM STATUS DROPDOWN
+       ========================================================= */
 
-                        hover:bg-[#b47e1e]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M12 5v14"></path>
-                        <path d="M5 12h14"></path>
-                    </svg>
+    .complaints-page .complaint-stat.is-active {
+        border-color: #e7ddd1 !important;
+        background: #fff !important;
+        box-shadow:
+            0 3px 7px rgba(61,43,22,.04),
+            0 15px 34px rgba(61,43,22,.085),
+            0 30px 58px rgba(61,43,22,.038),
+            inset 0 1px 0 rgba(255,255,255,.98) !important;
+    }
 
-                    Create Case
-                </button>
+    .complaints-page .complaint-stat.is-active:hover {
+        border-color: #d9c9b1 !important;
+        background: #fff !important;
+    }
 
-            </div>
+    .complaints-status-dropdown {
+        position: relative;
+        min-width: 0;
+    }
 
+    .complaints-status-trigger {
+        display: flex;
+        width: 100%;
+        height: 44px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid #e8e0d5;
+        border-radius: 12px;
+        background: #fff;
+        padding: 0 14px;
+        color: #332c25;
+        font-size: 11px;
+        font-weight: 500;
+        box-shadow:
+            0 2px 4px rgba(61,43,22,.025),
+            0 7px 16px rgba(61,43,22,.045),
+            inset 0 1px 0 rgba(255,255,255,.96);
+        transition: border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .complaints-status-trigger:hover {
+        border-color: #d8c8b1;
+        box-shadow:
+            0 2px 5px rgba(61,43,22,.03),
+            0 9px 20px rgba(61,43,22,.055),
+            inset 0 1px 0 rgba(255,255,255,.96);
+    }
+
+    .complaints-status-dropdown.is-open .complaints-status-trigger,
+    .complaints-status-trigger:focus-visible {
+        outline: none;
+        border-color: #d9a33a;
+        box-shadow:
+            0 0 0 4px rgba(217,149,0,.08),
+            0 10px 24px rgba(61,43,22,.07);
+    }
+
+    .complaints-status-trigger-main {
+        display: inline-flex;
+        min-width: 0;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .complaints-status-trigger-dot {
+        width: 8px;
+        height: 8px;
+        flex: 0 0 8px;
+        border-radius: 999px;
+        background: #858078;
+    }
+
+    .complaints-status-trigger[data-current-status="open"] .complaints-status-trigger-dot {
+        background: #d99500;
+    }
+
+    .complaints-status-trigger[data-current-status="resolved"] .complaints-status-trigger-dot {
+        background: #3f9a61;
+    }
+
+    .complaints-status-trigger-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .complaints-status-chevron {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        color: #8b8175;
+        transition: transform .16s ease;
+    }
+
+    .complaints-status-dropdown.is-open .complaints-status-chevron {
+        transform: rotate(180deg);
+    }
+
+    .complaints-status-menu {
+        position: absolute;
+        z-index: 50;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        padding: 6px;
+        border: 1px solid #e7dfd4;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow:
+            0 8px 18px rgba(47,37,25,.09),
+            0 24px 52px rgba(47,37,25,.15);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-5px) scale(.985);
+        transform-origin: top;
+        transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
+    }
+
+    .complaints-status-dropdown.is-open .complaints-status-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .complaints-status-option {
+        display: flex;
+        width: 100%;
+        min-height: 38px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        padding: 0 10px;
+        color: #5c534a;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    .complaints-status-option:hover,
+    .complaints-status-option:focus-visible,
+    .complaints-status-option.is-selected {
+        outline: none;
+        background: #fff7e8;
+        color: #a8731f;
+    }
+
+    .complaints-status-option.is-selected {
+        font-weight: 600;
+    }
+
+    .complaints-status-option-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .complaints-status-option-dot {
+        width: 7px;
+        height: 7px;
+        flex: 0 0 7px;
+        border-radius: 999px;
+        background: #8e857a;
+    }
+
+    .complaints-status-option[data-status-value="open"] .complaints-status-option-dot {
+        background: #d99500;
+    }
+
+    .complaints-status-option[data-status-value="resolved"] .complaints-status-option-dot {
+        background: #3f9a61;
+    }
+
+    .complaints-status-check {
+        width: 14px;
+        height: 14px;
+        color: #d99500;
+        opacity: 0;
+    }
+
+    .complaints-status-option.is-selected .complaints-status-check {
+        opacity: 1;
+    }
+
+</style>
+
+@php
+    $complaintCount = $complaints->count();
+    $statusTone = fn ($status) => strtolower((string) $status) === 'resolved' ? 'complaint-status-resolved' : 'complaint-status-open';
+@endphp
+
+<div class="complaints-page mx-auto w-full max-w-[1880px] pb-8">
+    @if(session('success'))
+        <div class="mb-4 rounded-[14px] border border-[#d5e6da] bg-[#f4faf6] px-4 py-3 text-[9px] text-[#426b50]">{{ session('success') }}</div>
+    @endif
+
+    <section class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="complaints-header-main">
+            <span class="complaints-header-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5h14v11H8l-3 3V5Z"></path><path d="M9 9h6"></path><path d="M9 12h4"></path></svg></span>
+            <div class="min-w-0"><p class="complaints-eyebrow">Platform Support</p><h2 class="complaints-title"><span class="complaints-title-base">Platform</span> <span class="complaints-title-accent">Complaints</span></h2><p class="complaints-subtitle">Review submitted complaints, inspect reporter details, record resolution notes, and reopen cases when additional action is required.</p></div>
         </div>
     </section>
 
-
-    {{-- =========================================================
-        SUMMARY CARDS
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            grid grid-cols-1
-            gap-4
-
-            sm:grid-cols-2
-            xl:grid-cols-4
-        "
-    >
-
-        {{-- OPEN CASES --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#eadfc9]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Open Cases
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[27px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        23
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#9a9186]">
-                        6 added today
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        place-items-center
-                        rounded-xl
-                        border border-[#eadfc8]
-                        bg-[#fbf6ec]
-                        text-[#b98020]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <rect x="5" y="3" width="14" height="18" rx="2"></rect>
-                        <path d="M9 8h6"></path>
-                        <path d="M9 12h6"></path>
-                        <path d="M9 16h3"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- URGENT --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#ead9d9]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Urgent Cases
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[27px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        8
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#a47777]">
-                        Requires immediate review
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        place-items-center
-                        rounded-xl
-                        border border-[#ead7d7]
-                        bg-[#faf1f1]
-                        text-[#ad6767]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <path d="M12 3 3 20h18L12 3Z"></path>
-                        <path d="M12 9v5"></path>
-                        <path d="M12 17h.01"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- UNDER INVESTIGATION --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#dce5ed]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Under Investigation
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[27px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        12
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#8f877d]">
-                        Evidence being reviewed
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        place-items-center
-                        rounded-xl
-                        border border-[#d9e3ec]
-                        bg-[#f3f7fa]
-                        text-[#627f99]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <circle cx="11" cy="11" r="6"></circle>
-                        <path d="m16 16 4 4"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- RESOLVED --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#d8e6dd]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Resolved This Month
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[27px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        94
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#56816a]">
-                        ▲ 14% resolution rate
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        place-items-center
-                        rounded-xl
-                        border border-[#d5e5dc]
-                        bg-[#f1f7f3]
-                        text-[#56816a]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <circle cx="12" cy="12" r="8"></circle>
-                        <path d="m8.5 12 2.2 2.2 4.8-5"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
+    <section class="complaints-summary-grid mt-4">
+        <button type="button" class="complaint-stat" data-summary-status="all"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#efdfbf] bg-[#fff7e8] text-[#b98112]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5h14v11H8l-3 3V5Z"></path><path d="M9 9h6"></path><path d="M9 12h4"></path></svg></span><div><p class="complaint-stat-label">Total Complaints</p><p class="complaint-stat-value">{{ $stats['total'] ?? $complaintCount }}</p><p class="complaint-stat-helper">All submitted complaints</p></div></div></button>
+        <button type="button" class="complaint-stat" data-summary-status="open"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#f0dfd0] bg-[#fff5ed] text-[#c26f20]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5"></path><path d="M12 16h.01"></path></svg></span><div><p class="complaint-stat-label">Open Cases</p><p class="complaint-stat-value">{{ $stats['open'] ?? 0 }}</p><p class="complaint-stat-helper">Needs admin resolution</p></div></div></button>
+        <button type="button" class="complaint-stat" data-summary-status="resolved"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#d8ebde] bg-[#eef8f1] text-[#298b53]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg></span><div><p class="complaint-stat-label">Resolved</p><p class="complaint-stat-value">{{ $stats['resolved'] ?? 0 }}</p><p class="complaint-stat-helper">Completed complaint cases</p></div></div></button>
     </section>
 
-
-    {{-- =========================================================
-        CASE DISTRIBUTION
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            grid grid-cols-1
-            gap-4
-
-            md:grid-cols-3
-        "
-    >
-
-        <div class="rounded-[18px] border border-[#e6e1da] bg-white p-5">
-            <div class="flex items-center justify-between gap-4">
-
-                <div>
-                    <p class="text-[10px] font-medium text-[#8c8479]">
-                        Delivery Issues
-                    </p>
-
-                    <p class="mt-1 text-[20px] font-bold text-[#28231d]">
-                        38%
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-10 w-10 place-items-center
-                        rounded-xl
-                        bg-[#f4f6f8]
-                        text-[#687f93]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M3 7h11v10H3z"></path>
-                        <path d="M14 10h4l3 3v4h-7z"></path>
-                        <circle cx="7" cy="18" r="2"></circle>
-                        <circle cx="18" cy="18" r="2"></circle>
-                    </svg>
-                </div>
-
-            </div>
-
-            <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#edf0f2]">
-                <div class="h-full w-[38%] rounded-full bg-[#9aabba]"></div>
-            </div>
-        </div>
-
-
-        <div class="rounded-[18px] border border-[#e6e1da] bg-white p-5">
-            <div class="flex items-center justify-between gap-4">
-
-                <div>
-                    <p class="text-[10px] font-medium text-[#8c8479]">
-                        Product Issues
-                    </p>
-
-                    <p class="mt-1 text-[20px] font-bold text-[#28231d]">
-                        34%
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-10 w-10 place-items-center
-                        rounded-xl
-                        bg-[#fbf5eb]
-                        text-[#ad7b26]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M5 7h14l-1 13H6L5 7Z"></path>
-                        <path d="M9 7a3 3 0 0 1 6 0"></path>
-                    </svg>
-                </div>
-
-            </div>
-
-            <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#f0ece5]">
-                <div class="h-full w-[34%] rounded-full bg-[#d3ac65]"></div>
-            </div>
-        </div>
-
-
-        <div class="rounded-[18px] border border-[#e6e1da] bg-white p-5">
-            <div class="flex items-center justify-between gap-4">
-
-                <div>
-                    <p class="text-[10px] font-medium text-[#8c8479]">
-                        Refund / Payment
-                    </p>
-
-                    <p class="mt-1 text-[20px] font-bold text-[#28231d]">
-                        28%
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-10 w-10 place-items-center
-                        rounded-xl
-                        bg-[#f5f1f7]
-                        text-[#7b688a]
-                    "
-                >
-                    <span class="text-[16px] font-semibold">₱</span>
-                </div>
-
-            </div>
-
-            <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#efedf1]">
-                <div class="h-full w-[28%] rounded-full bg-[#a093ad]"></div>
-            </div>
-        </div>
-
-    </section>
-
-
-    {{-- =========================================================
-        CASE MANAGEMENT TABLE
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            overflow-hidden
-            rounded-[22px]
-            border border-[#ebe4da]
-            bg-white
-        "
-    >
-
-        {{-- TABS --}}
-        <div
-            class="
-                flex overflow-x-auto
-                border-b border-[#eee8df]
-                px-4
-
-                sm:px-5
-            "
-        >
-
-            <button
-                type="button"
-                class="
-                    whitespace-nowrap
-                    border-b-2 border-[#c99128]
-                    px-4 py-4
-                    text-[11px] font-semibold
-                    text-[#a8731f]
-                "
-            >
-                All Cases
-
-                <span
-                    class="
-                        ml-1.5
-                        rounded-full
-                        bg-[#f6eddd]
-                        px-2 py-0.5
-                        text-[9px]
-                    "
-                >
-                    129
+    <section class="complaints-surface complaints-filter mt-4"><div class="complaints-filter-grid">
+        <div class="complaints-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg><input id="complaintSearch" type="search" autocomplete="off" class="complaints-control" placeholder="Search subject, reporter, description, or note..."></div>
+        <div class="complaints-status-dropdown" id="complaintStatusDropdown">
+            <input id="complaintStatusFilter" type="hidden" value="all">
+            <button id="complaintStatusTrigger" type="button" class="complaints-status-trigger" data-current-status="all" aria-haspopup="listbox" aria-expanded="false">
+                <span class="complaints-status-trigger-main">
+                    <span class="complaints-status-trigger-dot" aria-hidden="true"></span>
+                    <span id="complaintStatusLabel" class="complaints-status-trigger-label">All Status</span>
                 </span>
+                <svg viewBox="0 0 24 24" class="complaints-status-chevron" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m7 10 5 5 5-5"></path></svg>
             </button>
-
-
-            <button
-                type="button"
-                class="
-                    whitespace-nowrap
-                    border-b-2 border-transparent
-                    px-4 py-4
-                    text-[11px] font-medium
-                    text-[#8d857a]
-                    transition
-                    hover:text-[#5f574d]
-                "
-            >
-                Open
-            </button>
-
-
-            <button
-                type="button"
-                class="
-                    whitespace-nowrap
-                    border-b-2 border-transparent
-                    px-4 py-4
-                    text-[11px] font-medium
-                    text-[#8d857a]
-                    transition
-                    hover:text-[#5f574d]
-                "
-            >
-                Investigating
-            </button>
-
-
-            <button
-                type="button"
-                class="
-                    whitespace-nowrap
-                    border-b-2 border-transparent
-                    px-4 py-4
-                    text-[11px] font-medium
-                    text-[#8d857a]
-                    transition
-                    hover:text-[#5f574d]
-                "
-            >
-                Resolved
-            </button>
-
-
-            <button
-                type="button"
-                class="
-                    whitespace-nowrap
-                    border-b-2 border-transparent
-                    px-4 py-4
-                    text-[11px] font-medium
-                    text-[#8d857a]
-                    transition
-                    hover:text-[#5f574d]
-                "
-            >
-                Closed
-            </button>
-
-        </div>
-
-
-        {{-- FILTERS --}}
-        <div
-            class="
-                flex flex-col gap-3
-                border-b border-[#eee8df]
-                p-4
-
-                sm:p-5
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
-        >
-
-            <div class="relative w-full xl:max-w-[430px]">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    class="
-                        pointer-events-none
-                        absolute left-4 top-1/2
-                        h-[17px] w-[17px]
-                        -translate-y-1/2
-                        text-[#9f978d]
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                >
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <path d="m20 20-4-4"></path>
-                </svg>
-
-                <input
-                    type="search"
-                    placeholder="Search case ID, complainant, order, or subject..."
-                    class="
-                        h-11
-                        w-full
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-[#fcfbf9]
-                        pl-11 pr-4
-                        text-[11px]
-                        text-[#3d3730]
-                        outline-none
-                        transition
-
-                        placeholder:text-[#aaa197]
-
-                        focus:border-[#c99a3d]
-                        focus:ring-4
-                        focus:ring-[#c99a3d]/10
-                    "
-                >
-
+            <div id="complaintStatusMenu" class="complaints-status-menu" role="listbox" aria-label="Filter complaints by status">
+                <button type="button" class="complaints-status-option is-selected" data-status-value="all" role="option" aria-selected="true"><span class="complaints-status-option-left"><span class="complaints-status-option-dot"></span><span>All Status</span></span><svg viewBox="0 0 24 24" class="complaints-status-check" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 12 3 3 7-7"></path></svg></button>
+                <button type="button" class="complaints-status-option" data-status-value="open" role="option" aria-selected="false"><span class="complaints-status-option-left"><span class="complaints-status-option-dot"></span><span>Open</span></span><svg viewBox="0 0 24 24" class="complaints-status-check" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 12 3 3 7-7"></path></svg></button>
+                <button type="button" class="complaints-status-option" data-status-value="resolved" role="option" aria-selected="false"><span class="complaints-status-option-left"><span class="complaints-status-option-dot"></span><span>Resolved</span></span><svg viewBox="0 0 24 24" class="complaints-status-check" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 12 3 3 7-7"></path></svg></button>
             </div>
-
-
-            <div
-                class="
-                    grid grid-cols-1 gap-2
-
-                    sm:grid-cols-3
-                    xl:flex
-                "
-            >
-
-                <select
-                    class="
-                        h-11
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-white
-                        px-3
-                        text-[11px]
-                        text-[#5d554b]
-                        outline-none
-                        focus:border-[#c99a3d]
-                    "
-                >
-                    <option>All Categories</option>
-                    <option>Delivery</option>
-                    <option>Product</option>
-                    <option>Refund</option>
-                    <option>Payment</option>
-                    <option>Seller Conduct</option>
-                </select>
-
-
-                <select
-                    class="
-                        h-11
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-white
-                        px-3
-                        text-[11px]
-                        text-[#5d554b]
-                        outline-none
-                        focus:border-[#c99a3d]
-                    "
-                >
-                    <option>All Priorities</option>
-                    <option>Urgent</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                </select>
-
-
-                <button
-                    type="button"
-                    class="
-                        inline-flex h-11
-                        items-center justify-center gap-2
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-white
-                        px-4
-                        text-[11px] font-semibold
-                        text-[#62594e]
-                        transition
-
-                        hover:border-[#d5c4a5]
-                        hover:bg-[#fcf9f3]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M4 6h16"></path>
-                        <path d="M7 12h10"></path>
-                        <path d="M10 18h4"></path>
-                    </svg>
-
-                    Filters
-                </button>
-
-            </div>
-
         </div>
-
-
-        {{-- TABLE --}}
-        <div class="overflow-x-auto">
-
-            <table class="w-full min-w-[1300px] text-left">
-
-                <thead>
-                    <tr
-                        class="
-                            border-b border-[#eee8df]
-                            bg-[#fcfaf7]
-                            text-[9px] font-semibold
-                            uppercase tracking-[0.08em]
-                            text-[#9b9287]
-                        "
-                    >
-                        <th class="px-5 py-4">Case</th>
-                        <th class="px-5 py-4">Complainant</th>
-                        <th class="px-5 py-4">Against</th>
-                        <th class="px-5 py-4">Order</th>
-                        <th class="px-5 py-4">Evidence</th>
-                        <th class="px-5 py-4">Priority</th>
-                        <th class="px-5 py-4">Status</th>
-                        <th class="px-5 py-4">Updated</th>
-                        <th class="px-5 py-4 text-right">Actions</th>
-                    </tr>
-                </thead>
-
-
-                <tbody class="text-[11px]">
-
-                    {{-- CASE 1 --}}
-                    <tr
-                        class="
-                            border-b border-[#f1ece5]
-                            transition
-                            hover:bg-[#fdfbf8]
-                        "
-                    >
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#37312b]">
-                                #CMP-1032
-                            </p>
-
-                            <p class="mt-1 max-w-[160px] truncate text-[9px] text-[#8f877c]">
-                                Late delivery and damaged item
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        shrink-0 place-items-center
-                                        rounded-full
-                                        bg-[#f2f6f9]
-                                        text-[10px] font-bold
-                                        text-[#617c95]
-                                    "
-                                >
-                                    MS
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#3a342e]">
-                                        Maria Santos
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Buyer
-                                    </p>
-                                </div>
-
-                            </div>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                TechWorld Store
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Seller
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#5f574e]">
-                                #SRI-18472
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                ₱12,500
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    text-[10px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="m5 12 4 4L19 6"></path>
-                                </svg>
-
-                                4 files
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    bg-[#faeeee]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#ad5f5f]
-                                "
-                            >
-                                Urgent
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#e4dcd0]
-                                    bg-[#fbf7ef]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#9d742f]
-                                "
-                            >
-                                Investigating
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                12 min ago
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Admin review
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center justify-end gap-2">
-
-                                <button
-                                    type="button"
-                                    title="View case"
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-lg
-                                        border border-[#e6dfd5]
-                                        bg-white
-                                        text-[#6c645a]
-                                        transition
-
-                                        hover:border-[#d4c3a5]
-                                        hover:bg-[#fcf8f1]
-                                        hover:text-[#a6701b]
-                                    "
-                                >
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                                        <circle cx="12" cy="12" r="2.5"></circle>
-                                    </svg>
-                                </button>
-
-
-                                <button
-                                    type="button"
-                                    title="Open investigation"
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-lg
-                                        border border-[#dce5ed]
-                                        bg-[#f3f7fa]
-                                        text-[#617e97]
-                                        transition
-
-                                        hover:border-[#c3d3e0]
-                                        hover:bg-[#eef4f8]
-                                    "
-                                >
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="11" cy="11" r="6"></circle>
-                                        <path d="m16 16 4 4"></path>
-                                    </svg>
-                                </button>
-
-
-                                <button
-                                    type="button"
-                                    title="Resolve case"
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-lg
-                                        border border-[#d5e4db]
-                                        bg-[#f2f7f4]
-                                        text-[#56816a]
-                                        transition
-
-                                        hover:border-[#bdd5c5]
-                                        hover:bg-[#ebf4ee]
-                                    "
-                                >
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m5 12 4 4L19 6"></path>
-                                    </svg>
-                                </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- CASE 2 --}}
-                    <tr
-                        class="
-                            border-b border-[#f1ece5]
-                            transition
-                            hover:bg-[#fdfbf8]
-                        "
-                    >
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#37312b]">
-                                #CMP-1031
-                            </p>
-
-                            <p class="mt-1 max-w-[160px] truncate text-[9px] text-[#8f877c]">
-                                Item not as described
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        shrink-0 place-items-center
-                                        rounded-full
-                                        bg-[#f4f2ee]
-                                        text-[10px] font-bold
-                                        text-[#756d64]
-                                    "
-                                >
-                                    JD
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#3a342e]">
-                                        John Doe
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Buyer
-                                    </p>
-                                </div>
-
-                            </div>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Fashion Hub
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Seller
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#5f574e]">
-                                #SRI-18421
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                ₱4,250
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    text-[10px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="m5 12 4 4L19 6"></path>
-                                </svg>
-
-                                2 files
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    bg-[#fbf3e7]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#a97724]
-                                "
-                            >
-                                Medium
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#e6dfd3]
-                                    bg-[#fcfaf6]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#756b5f]
-                                "
-                            >
-                                Open
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                42 min ago
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                New response
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center justify-end gap-2">
-
-                                <button type="button" title="View case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#e6dfd5] bg-white text-[#6c645a] transition hover:border-[#d4c3a5] hover:bg-[#fcf8f1] hover:text-[#a6701b]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                                        <circle cx="12" cy="12" r="2.5"></circle>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg border border-[#dce5ed] bg-[#f3f7fa] text-[#617e97] transition hover:border-[#c3d3e0] hover:bg-[#eef4f8]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="11" cy="11" r="6"></circle>
-                                        <path d="m16 16 4 4"></path>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Resolve case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#d5e4db] bg-[#f2f7f4] text-[#56816a] transition hover:border-[#bdd5c5] hover:bg-[#ebf4ee]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m5 12 4 4L19 6"></path>
-                                    </svg>
-                                </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- CASE 3 --}}
-                    <tr
-                        class="
-                            border-b border-[#f1ece5]
-                            transition
-                            hover:bg-[#fdfbf8]
-                        "
-                    >
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#37312b]">
-                                #CMP-1030
-                            </p>
-
-                            <p class="mt-1 max-w-[160px] truncate text-[9px] text-[#8f877c]">
-                                Refund not received
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        shrink-0 place-items-center
-                                        rounded-full
-                                        bg-[#f5f2f7]
-                                        text-[10px] font-bold
-                                        text-[#796989]
-                                    "
-                                >
-                                    AG
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#3a342e]">
-                                        Ana Garcia
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Buyer
-                                    </p>
-                                </div>
-
-                            </div>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Home Essentials
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Seller
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#5f574e]">
-                                #SRI-18398
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                ₱8,800
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    text-[10px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="m5 12 4 4L19 6"></path>
-                                </svg>
-
-                                3 files
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    bg-[#faeeee]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#ad5f5f]
-                                "
-                            >
-                                High
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#e4dcd0]
-                                    bg-[#fbf7ef]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#9d742f]
-                                "
-                            >
-                                Investigating
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                1 hr ago
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Evidence added
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center justify-end gap-2">
-
-                                <button type="button" title="View case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#e6dfd5] bg-white text-[#6c645a] transition hover:border-[#d4c3a5] hover:bg-[#fcf8f1] hover:text-[#a6701b]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                                        <circle cx="12" cy="12" r="2.5"></circle>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg border border-[#dce5ed] bg-[#f3f7fa] text-[#617e97] transition hover:border-[#c3d3e0] hover:bg-[#eef4f8]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="11" cy="11" r="6"></circle>
-                                        <path d="m16 16 4 4"></path>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Resolve case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#d5e4db] bg-[#f2f7f4] text-[#56816a] transition hover:border-[#bdd5c5] hover:bg-[#ebf4ee]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m5 12 4 4L19 6"></path>
-                                    </svg>
-                                </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- CASE 4 --}}
-                    <tr
-                        class="
-                            border-b border-[#f1ece5]
-                            transition
-                            hover:bg-[#fdfbf8]
-                        "
-                    >
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#37312b]">
-                                #CMP-1029
-                            </p>
-
-                            <p class="mt-1 max-w-[160px] truncate text-[9px] text-[#8f877c]">
-                                Courier marked delivered
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        shrink-0 place-items-center
-                                        rounded-full
-                                        bg-[#f2f6f9]
-                                        text-[10px] font-bold
-                                        text-[#617c95]
-                                    "
-                                >
-                                    LM
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#3a342e]">
-                                        Luis Mendoza
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Buyer
-                                    </p>
-                                </div>
-
-                            </div>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Pedro Reyes
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Courier
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#5f574e]">
-                                #SRI-18366
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                ₱2,150
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    text-[10px] font-semibold
-                                    text-[#ae791f]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <circle cx="12" cy="12" r="8"></circle>
-                                    <path d="M12 8v4"></path>
-                                    <path d="M12 16h.01"></path>
-                                </svg>
-
-                                1 missing
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    bg-[#fbf3e7]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#a97724]
-                                "
-                            >
-                                Medium
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#e6dfd3]
-                                    bg-[#fcfaf6]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#756b5f]
-                                "
-                            >
-                                Open
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                3 hrs ago
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Waiting evidence
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center justify-end gap-2">
-
-                                <button type="button" title="View case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#e6dfd5] bg-white text-[#6c645a] transition hover:border-[#d4c3a5] hover:bg-[#fcf8f1] hover:text-[#a6701b]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                                        <circle cx="12" cy="12" r="2.5"></circle>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg border border-[#dce5ed] bg-[#f3f7fa] text-[#617e97] transition hover:border-[#c3d3e0] hover:bg-[#eef4f8]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="11" cy="11" r="6"></circle>
-                                        <path d="m16 16 4 4"></path>
-                                    </svg>
-                                </button>
-
-                                <button type="button" title="Resolve case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#d5e4db] bg-[#f2f7f4] text-[#56816a] transition hover:border-[#bdd5c5] hover:bg-[#ebf4ee]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m5 12 4 4L19 6"></path>
-                                    </svg>
-                                </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- CASE 5 --}}
-                    <tr class="transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#37312b]">
-                                #CMP-1028
-                            </p>
-
-                            <p class="mt-1 max-w-[160px] truncate text-[9px] text-[#8f877c]">
-                                Seller accepted refund
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        shrink-0 place-items-center
-                                        rounded-full
-                                        bg-[#f0f7f3]
-                                        text-[10px] font-bold
-                                        text-[#5b846a]
-                                    "
-                                >
-                                    RC
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#3a342e]">
-                                        Rosa Cruz
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Buyer
-                                    </p>
-                                </div>
-
-                            </div>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Beauty Essentials
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Seller
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-[#5f574e]">
-                                #SRI-18325
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                ₱3,600
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    text-[10px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="m5 12 4 4L19 6"></path>
-                                </svg>
-
-                                Complete
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    bg-[#f2f5f3]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#6b786f]
-                                "
-                            >
-                                Low
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    rounded-full
-                                    bg-[#eef6f1]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#6a9f7b]"></span>
-                                Resolved
-                            </span>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Yesterday
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978f84]">
-                                Case resolved
-                            </p>
-                        </td>
-
-
-                        <td class="px-5 py-4">
-                            <div class="flex items-center justify-end gap-2">
-
-                                <button type="button" title="View case" class="grid h-9 w-9 place-items-center rounded-lg border border-[#e6dfd5] bg-white text-[#6c645a] transition hover:border-[#d4c3a5] hover:bg-[#fcf8f1] hover:text-[#a6701b]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                                        <circle cx="12" cy="12" r="2.5"></circle>
-                                    </svg>
-                                </button>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+        <button id="complaintApplyFilter" type="button" class="complaints-apply"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>Apply Filter</button>
+        <button id="complaintResetFilter" type="button" class="complaints-reset">Reset</button>
+    </div></section>
+
+    <section class="complaints-surface mt-4 overflow-hidden">
+        <div class="complaints-table-head"><div>Complaint</div><div>Reporter</div><div>Submitted</div><div>Status</div><div class="text-right">Action</div></div>
+        <div id="complaintRows">
+        @forelse($complaints as $complaint)
+            @php
+                $complaintStatus = strtolower((string) $complaint->status);
+                $reporterRole = strtoupper((string) $complaint->reporter_role);
+                $reporter = $complaint->reporter_identifier ?: 'Account';
+            @endphp
+            <article class="complaint-row" data-complaint-row data-subject="{{ $complaint->subject }}" data-description="{{ $complaint->description }}" data-reporter-role="{{ $reporterRole }}" data-reporter="{{ $reporter }}" data-status="{{ $complaintStatus }}" data-submitted="{{ $complaint->created_at?->format('M d, Y h:i A') }}" data-admin-note="{{ $complaint->admin_note ?? '' }}" data-resolve-url="{{ $complaintStatus === 'open' ? route('admin.complaints.resolve',$complaint) : '' }}" data-reopen-url="{{ $complaintStatus !== 'open' ? route('admin.complaints.reopen',$complaint) : '' }}">
+                <div class="min-w-0"><p class="complaint-subject truncate">{{ $complaint->subject }}</p><p class="complaint-preview">{{ $complaint->description }}</p></div>
+                <div><p class="complaint-meta-main">{{ $reporter }}</p><p class="complaint-meta-sub">{{ $reporterRole ?: 'ACCOUNT' }}</p></div>
+                <div><p class="complaint-meta-main">{{ $complaint->created_at?->format('M d, Y') ?: '—' }}</p><p class="complaint-meta-sub">{{ $complaint->created_at?->format('h:i A') }}</p></div>
+                <div><span class="complaint-status {{ $statusTone($complaintStatus) }}">{{ ucfirst($complaintStatus) }}</span></div>
+                <div class="flex justify-end"><button type="button" class="complaint-view" data-view-complaint title="View complaint" aria-label="View complaint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6S2.5 12 2.5 12Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></button></div>
+            </article>
+        @empty
+            <div class="complaints-empty">No complaints submitted.</div>
+        @endforelse
         </div>
-
-
-        {{-- PAGINATION --}}
-        <div
-            class="
-                flex flex-col gap-3
-                border-t border-[#eee8df]
-                px-5 py-4
-
-                sm:flex-row
-                sm:items-center
-                sm:justify-between
-            "
-        >
-
-            <p class="text-[10px] text-[#91887d]">
-                Showing
-                <span class="font-semibold text-[#5d554c]">1–5</span>
-                of
-                <span class="font-semibold text-[#5d554c]">129</span>
-                cases
-            </p>
-
-
-            <div class="flex items-center gap-1.5">
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[#8c8479]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="m15 18-6-6 6-6"></path>
-                    </svg>
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        bg-[#c99128]
-                        text-[10px] font-semibold
-                        text-white
-                    "
-                >
-                    1
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[10px] font-semibold
-                        text-[#6f675d]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    2
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[10px] font-semibold
-                        text-[#6f675d]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    3
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[#8c8479]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-
-            </div>
-
-        </div>
-
+        <div class="complaints-footer"><p id="complaintResultCount">Showing {{ $complaintCount }} of {{ $complaintCount }} complaints</p><p class="text-[#9a9187]">Select a complaint to review complete details and take action.</p></div>
     </section>
-
-
-    {{-- =========================================================
-        RESOLUTION WORKFLOW PREVIEW
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            grid grid-cols-1
-            gap-5
-
-            xl:grid-cols-3
-        "
-    >
-
-        <div class="rounded-[18px] border border-[#ebe4da] bg-white p-5">
-
-            <div
-                class="
-                    grid h-10 w-10
-                    place-items-center
-                    rounded-xl
-                    bg-[#f3f7fa]
-                    text-[#617e97]
-                "
-            >
-                <span class="text-[11px] font-bold">01</span>
-            </div>
-
-            <h3 class="mt-4 text-[13px] font-bold text-[#302a24]">
-                Review Evidence
-            </h3>
-
-            <p class="mt-2 text-[10px] leading-5 text-[#8f877c]">
-                Inspect order records, screenshots, photos, messages, and supporting documents.
-            </p>
-
-        </div>
-
-
-        <div class="rounded-[18px] border border-[#ebe4da] bg-white p-5">
-
-            <div
-                class="
-                    grid h-10 w-10
-                    place-items-center
-                    rounded-xl
-                    bg-[#fbf6ec]
-                    text-[#ae7a20]
-                "
-            >
-                <span class="text-[11px] font-bold">02</span>
-            </div>
-
-            <h3 class="mt-4 text-[13px] font-bold text-[#302a24]">
-                Coordinate Parties
-            </h3>
-
-            <p class="mt-2 text-[10px] leading-5 text-[#8f877c]">
-                Contact the buyer, seller, or courier and collect additional information when needed.
-            </p>
-
-        </div>
-
-
-        <div class="rounded-[18px] border border-[#ebe4da] bg-white p-5">
-
-            <div
-                class="
-                    grid h-10 w-10
-                    place-items-center
-                    rounded-xl
-                    bg-[#f1f7f3]
-                    text-[#56816a]
-                "
-            >
-                <span class="text-[11px] font-bold">03</span>
-            </div>
-
-            <h3 class="mt-4 text-[13px] font-bold text-[#302a24]">
-                Resolve Dispute
-            </h3>
-
-            <p class="mt-2 text-[10px] leading-5 text-[#8f877c]">
-                Apply the appropriate resolution, record the decision, and close the case.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <div class="h-5"></div>
-
 </div>
 
+<div id="complaintModalBackdrop" class="fixed inset-0 z-[90] bg-[#1f1d1a]/45" aria-hidden="true"></div>
+<div id="complaintModal" class="fixed left-1/2 top-1/2 z-[100]" role="dialog" aria-modal="true" aria-labelledby="complaintModalTitle">
+    <div class="complaint-modal-shell">
+        <div class="complaint-modal-header"><div class="min-w-0"><p class="complaint-modal-eyebrow">Complaint details</p><div class="mt-1 flex flex-wrap items-center gap-2"><h3 id="complaintModalTitle" class="complaint-modal-title">Complaint</h3><span id="complaintModalStatus" class="complaint-status complaint-status-open">Open</span></div></div><button id="complaintModalClose" type="button" class="complaint-modal-close" aria-label="Close"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m7 7 10 10"></path><path d="m17 7-10 10"></path></svg></button></div>
+        <div class="complaint-modal-body">
+            <div class="complaint-detail-grid"><div><p class="complaint-field-label">Reporter</p><div id="complaintModalReporter" class="complaint-field-value">—</div></div><div><p class="complaint-field-label">Submitted</p><div id="complaintModalSubmitted" class="complaint-field-value">—</div></div></div>
+            <div class="complaint-detail-block"><p class="complaint-field-label">Description</p><div id="complaintModalDescription" class="complaint-detail-copy">—</div></div>
+            <div id="complaintModalNoteWrap" class="complaint-detail-block hidden"><p class="complaint-field-label">Admin resolution note</p><div id="complaintModalNote" class="complaint-detail-copy complaint-admin-note">—</div></div>
+            <section class="complaint-action-section"><p class="complaint-action-title">Case action</p><p id="complaintActionCopy" class="complaint-action-copy">Record a resolution note before closing this complaint.</p>
+                <form id="complaintResolveForm" method="POST" class="complaint-action-form">@csrf<input id="complaintResolutionNote" name="admin_note" required placeholder="Resolution note..." class="complaint-action-input"><button type="submit" class="complaint-resolve">Resolve Complaint</button></form>
+                <form id="complaintReopenForm" method="POST" class="mt-3 hidden">@csrf<button type="submit" class="complaint-reopen">Reopen Complaint</button></form>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    const rows=[...document.querySelectorAll('[data-complaint-row]')],search=document.getElementById('complaintSearch'),statusFilter=document.getElementById('complaintStatusFilter'),resultCount=document.getElementById('complaintResultCount'),summaryCards=[...document.querySelectorAll('[data-summary-status]')];
+    const statusDropdown=document.getElementById('complaintStatusDropdown'),statusTrigger=document.getElementById('complaintStatusTrigger'),statusLabel=document.getElementById('complaintStatusLabel'),statusOptions=[...document.querySelectorAll('[data-status-value]')];
+    const modal=document.getElementById('complaintModal'),backdrop=document.getElementById('complaintModalBackdrop'),resolveForm=document.getElementById('complaintResolveForm'),reopenForm=document.getElementById('complaintReopenForm');
+    const normalize=v=>(v||'').toString().trim().toLowerCase();
+    function applyFilters(){const q=normalize(search?.value),status=normalize(statusFilter?.value||'all');let visible=0;rows.forEach(row=>{const haystack=[row.dataset.subject,row.dataset.description,row.dataset.reporterRole,row.dataset.reporter,row.dataset.adminNote].join(' '),show=(status==='all'||normalize(row.dataset.status)===status)&&(!q||normalize(haystack).includes(q));row.hidden=!show;if(show)visible++});if(resultCount)resultCount.textContent=`Showing ${visible} of ${rows.length} complaints`;summaryCards.forEach(card=>card.classList.toggle('is-active',normalize(card.dataset.summaryStatus)===status))}
+    function syncStatusDropdown(value){const target=(value||'all').toString().toLowerCase(),active=statusOptions.find(option=>(option.dataset.statusValue||'all').toLowerCase()===target)||statusOptions[0];if(statusFilter)statusFilter.value=active?.dataset.statusValue||'all';if(statusLabel)statusLabel.textContent=active?.querySelector('.complaints-status-option-left span:last-child')?.textContent?.trim()||'All Status';if(statusTrigger)statusTrigger.dataset.currentStatus=active?.dataset.statusValue||'all';statusOptions.forEach(option=>{const selected=option===active;option.classList.toggle('is-selected',selected);option.setAttribute('aria-selected',selected?'true':'false')})}
+    function closeStatusDropdown(){statusDropdown?.classList.remove('is-open');statusTrigger?.setAttribute('aria-expanded','false')}
+    function resetFilters(){if(search)search.value='';syncStatusDropdown('all');applyFilters()}
+    statusTrigger?.addEventListener('click',event=>{event.stopPropagation();const open=!statusDropdown?.classList.contains('is-open');statusDropdown?.classList.toggle('is-open',open);statusTrigger.setAttribute('aria-expanded',open?'true':'false')});
+    statusOptions.forEach(option=>option.addEventListener('click',()=>{syncStatusDropdown(option.dataset.statusValue||'all');closeStatusDropdown();applyFilters()}));
+    document.addEventListener('click',event=>{if(!event.target.closest('#complaintStatusDropdown'))closeStatusDropdown()});
+    search?.addEventListener('input',applyFilters);document.getElementById('complaintApplyFilter')?.addEventListener('click',applyFilters);document.getElementById('complaintResetFilter')?.addEventListener('click',resetFilters);summaryCards.forEach(card=>card.addEventListener('click',()=>{syncStatusDropdown(card.dataset.summaryStatus||'all');applyFilters()}));
+    function openModal(row){if(!row)return;const status=normalize(row.dataset.status);document.getElementById('complaintModalTitle').textContent=row.dataset.subject||'Complaint';document.getElementById('complaintModalReporter').textContent=`${row.dataset.reporter||'Account'} · ${row.dataset.reporterRole||'ACCOUNT'}`;document.getElementById('complaintModalSubmitted').textContent=row.dataset.submitted||'—';document.getElementById('complaintModalDescription').textContent=row.dataset.description||'No description provided.';const noteWrap=document.getElementById('complaintModalNoteWrap'),note=document.getElementById('complaintModalNote');if(row.dataset.adminNote){note.textContent=row.dataset.adminNote;noteWrap.classList.remove('hidden')}else{noteWrap.classList.add('hidden')}const badge=document.getElementById('complaintModalStatus');badge.textContent=status==='resolved'?'Resolved':'Open';badge.className='complaint-status '+(status==='resolved'?'complaint-status-resolved':'complaint-status-open');if(status==='open'){resolveForm.action=row.dataset.resolveUrl||'';resolveForm.classList.remove('hidden');reopenForm.classList.add('hidden');document.getElementById('complaintActionCopy').textContent='Record a resolution note before closing this complaint.'}else{reopenForm.action=row.dataset.reopenUrl||'';reopenForm.classList.remove('hidden');resolveForm.classList.add('hidden');document.getElementById('complaintActionCopy').textContent='Reopen this complaint if the case requires additional review.'}modal.classList.add('is-open');backdrop.classList.add('is-open');document.body.style.overflow='hidden'}
+    function closeModal(){modal?.classList.remove('is-open');backdrop?.classList.remove('is-open');document.body.style.overflow=''}
+    document.querySelectorAll('[data-view-complaint]').forEach(btn=>btn.addEventListener('click',()=>openModal(btn.closest('[data-complaint-row]'))));document.getElementById('complaintModalClose')?.addEventListener('click',closeModal);backdrop?.addEventListener('click',closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});syncStatusDropdown(statusFilter?.value||'all');applyFilters();
+})();
+</script>
 @endsection

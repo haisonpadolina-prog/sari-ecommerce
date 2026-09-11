@@ -34,9 +34,9 @@
                 Track credited delivery fees, pending earnings, and weekly performance.
             </p>
         </div>
-        <button type="button" class="rounded-xl border border-[#e6dccb] bg-white px-4 py-2.5 text-[9px] font-semibold text-[#62594d]">
+        <a href="{{ route('courier.earnings.statement') }}" class="rounded-xl border border-[#e6dccb] bg-white px-4 py-2.5 text-[9px] font-semibold text-[#62594d]">
             Download Statement
-        </button>
+        </a>
     </section>
 
     <section class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
@@ -62,11 +62,13 @@
                     <h3 class="text-[12px] font-bold text-[#211d17]">Weekly Performance</h3>
                     <p class="mt-1 text-[8px] text-[#918677]">Delivery earnings for the current week.</p>
                 </div>
-                <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[7px] font-semibold text-emerald-700">+12.5%</span>
+                <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[7px] font-semibold text-emerald-700">
+                    {{ $weeklyChange === null ? 'No prior week' : (($weeklyChange >= 0 ? '+' : '').number_format($weeklyChange,1).'%') }}
+                </span>
             </div>
 
             @php
-                $maxAmount = max(array_column($daily, 'amount'));
+                $maxAmount = max(1, max(array_column($daily, 'amount')));
             @endphp
 
             <div class="mt-8 grid h-[220px] grid-cols-7 items-end gap-2 sm:gap-4">
@@ -91,13 +93,21 @@
                 <p class="mt-2 text-[8px] text-white/70">Next scheduled payout: Friday</p>
             </div>
 
-            <button type="button" class="mt-4 w-full rounded-xl bg-[#d9930a] px-4 py-3 text-[9px] font-semibold text-white transition hover:-translate-y-0.5">
-                Request Payout
-            </button>
+            <form method="POST" action="{{ route('courier.earnings.payout') }}" class="mt-4">
+                @csrf
+                <button class="w-full rounded-xl bg-[#d9930a] px-4 py-3 text-[9px] font-semibold text-white disabled:opacity-50" @disabled($earnings['available'] <= 0)>
+                    Request Payout
+                </button>
+            </form>
 
-            <p class="mt-3 text-center text-[7px] leading-4 text-[#9a9081]">
-                Demo action only. Payout processing can be connected to the database later.
-            </p>
+            <div class="mt-3 space-y-2">
+                @foreach($payoutRequests as $payout)
+                    <div class="flex items-center justify-between rounded-xl border border-[#eee4d3] bg-white px-3 py-2 text-[7px]">
+                        <span>₱{{ number_format((float)$payout->amount,2) }}</span>
+                        <strong>{{ strtoupper($payout->status) }}</strong>
+                    </div>
+                @endforeach
+            </div>
         </aside>
     </section>
 

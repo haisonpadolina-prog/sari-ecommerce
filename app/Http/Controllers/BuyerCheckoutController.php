@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BuyerCartItem;
 use App\Models\MarketplaceOrder;
+use App\Models\PlatformSetting;
 use App\Models\MarketplaceOrderEvent;
 use App\Models\SellerAccount;
 use App\Models\SellerProduct;
@@ -132,7 +133,7 @@ class BuyerCheckoutController extends Controller
 
             $identityColumns = $this->identity->columns($request);
             $checkoutReference = 'CHK-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
-            $feePerSeller = (float) config('sari_buyer.delivery_fee_per_seller', 80);
+            $feePerSeller = (float) PlatformSetting::valueOf('delivery_fee_per_seller', config('sari_buyer.delivery_fee_per_seller', 80));
             $created = collect();
 
             foreach ($items->groupBy(fn (BuyerCartItem $item) => (int) $item->product->seller_account_id) as $sellerId => $group) {

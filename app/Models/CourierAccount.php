@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class CourierAccount extends Authenticatable
@@ -10,6 +12,7 @@ class CourierAccount extends Authenticatable
 
     protected $fillable = [
         'registration_application_id',
+        'logistics_account_id',
         'last_name',
         'first_name',
         'middle_initial',
@@ -32,6 +35,10 @@ class CourierAccount extends Authenticatable
         'id_path',
         'account_status',
         'approved_at',
+        'rating',
+        'license_number',
+        'vehicle_model',
+        'availability_status',
     ];
 
     protected $hidden = ['password'];
@@ -40,4 +47,19 @@ class CourierAccount extends Authenticatable
         'birthday' => 'date',
         'approved_at' => 'datetime',
     ];
+
+    public function logistics(): BelongsTo
+    {
+        return $this->belongsTo(LogisticsAccount::class, 'logistics_account_id');
+    }
+
+    public function riderEarnings(): HasMany
+    {
+        return $this->hasMany(RiderEarning::class, 'courier_account_id');
+    }
+
+    public function payoutRequests(): HasMany
+    {
+        return $this->hasMany(RiderPayoutRequest::class, 'courier_account_id');
+    }
 }

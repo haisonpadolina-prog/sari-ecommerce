@@ -3,6 +3,12 @@
 @section('title', 'Registration Pending — SARI')
 
 @section('content')
+@php
+    $registrationRole = (string) session('registration_role', 'user');
+    $reviewerLabel = $registrationRole === 'rider'
+        ? (string) session('registration_logistics_name', 'SARI Logistics / Sorting Center')
+        : 'administrator';
+@endphp
 <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="min-h-screen bg-[#f8f1df] px-4 py-10 font-['Poppins',sans-serif]">
@@ -18,11 +24,11 @@
             </div>
 
             <p class="mt-5 text-[10px] font-bold uppercase tracking-[.18em] text-[#c98a08]">Application Submitted</p>
-            <h1 class="mt-2 text-[28px] font-bold tracking-[-.04em] text-[#201b15]">Waiting for administrator approval</h1>
+            <h1 class="mt-2 text-[28px] font-bold tracking-[-.04em] text-[#201b15]">Waiting for {{ $reviewerLabel }} review</h1>
 
             <p class="mx-auto mt-4 max-w-[560px] text-[12px] leading-6 text-[#756b5b]">
                 Your SARI {{ ucfirst(session('registration_role', 'user')) }} registration has been saved successfully.
-                The administrator must review your information and uploaded documents before the account can log in.
+                {{ $registrationRole === 'rider' ? 'Your selected Logistics / Sorting Center must review your Rider information and uploaded documents before the account can log in.' : 'The administrator must review your information and uploaded documents before the account can log in.' }}
             </p>
 
             @if (session('registration_email'))

@@ -34,10 +34,20 @@ use App\Http\Middleware\HandleSellerSupportChat;
 use App\Http\Controllers\CourierDashboardController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\PlatformComplaintController;
+use App\Http\Controllers\AdminComplaintsController;
+use App\Http\Controllers\AdminAccountController;
+use App\Http\Controllers\AdminPlatformSettingsController;
+use App\Http\Controllers\AdminReportsController;
+use App\Http\Controllers\AdminCommissionsController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AddressLookupController;
 
+use App\Models\AdminAccount;
 use App\Models\BuyerAccount;
 use App\Models\CourierAccount;
+use App\Models\LogisticsAccount;
 use App\Models\RegistrationApplication;
 use Illuminate\Support\Facades\Hash;
 
@@ -97,32 +107,32 @@ Route::post('/login', function (Request $request) {
 
     /*
     |--------------------------------------------------------------------------
-    | TEMPORARY ADMIN ACCOUNT
+    | ADMIN ACCOUNT — DATABASE BACKED
     |--------------------------------------------------------------------------
     */
 
-    if (
-        $request->email === 'admin@gmail.com' &&
-        $request->password === 'admin123'
-    ) {
-        $request->session()->regenerate();
+    $adminEmail = strtolower(trim($request->email));
+    $admin = AdminAccount::query()->where('email', $adminEmail)->first();
 
-        $request->session()->put('is_admin', true);
-
-        $request->session()->forget([
-            'is_seller',
-            'seller_account_id',
-            'is_courier',
-            'courier_account_id',
-            'courier_email',
-            'courier_name',
-            'is_buyer',
-            'buyer_account_id',
-        ]);
-
-        return redirect()->route('admin.dashboard');
+    if (!$admin && $adminEmail === 'admin@gmail.com') {
+        $admin = AdminAccount::query()->firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            ['name' => 'SARI Administrator', 'password' => Hash::make('admin123')]
+        );
     }
 
+    if ($admin && Hash::check($request->password, $admin->password)) {
+        $request->session()->regenerate();
+        $request->session()->put('is_admin', true);
+        $request->session()->put('admin_account_id', $admin->id);
+        $request->session()->forget([
+            'is_seller', 'seller_account_id',
+            'is_courier', 'courier_account_id', 'courier_email', 'courier_name',
+            'is_buyer', 'buyer_account_id', 'buyer_social_account_id',
+            'is_logistics', 'logistics_account_id', 'logistics_email', 'logistics_name',
+        ]);
+        return redirect()->route('admin.dashboard');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +181,10 @@ Route::post('/login', function (Request $request) {
             'courier_name',
             'is_buyer',
             'buyer_account_id',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         /*
@@ -210,6 +224,10 @@ Route::post('/login', function (Request $request) {
             'seller_account_id',
             'is_buyer',
             'buyer_account_id',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         return redirect()->route('courier.dashboard');
@@ -286,9 +304,56 @@ Route::post('/login', function (Request $request) {
             'courier_account_id',
             'courier_email',
             'courier_name',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         return redirect()->route('buyer.dashboard');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | TEMPORARY LOGISTICS ACCOUNT
+    |--------------------------------------------------------------------------
+    |
+    | Email: logistics@gmail.com
+    | Password: logistics123
+    |
+    */
+
+    if (
+        $request->email === 'logistics@gmail.com' &&
+        $request->password === 'logistics123'
+    ) {
+        $request->session()->regenerate();
+
+        $request->session()->put('is_logistics', true);
+        $request->session()->put('logistics_email', 'logistics@gmail.com');
+        $request->session()->put('logistics_name', 'SARI Logistics');
+
+        /*
+        | Prevent another role from remaining active in the same session.
+        */
+        $request->session()->forget([
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_buyer',
+            'buyer_account_id',
+            'buyer_social_account_id',
+            'buyer_email',
+            'buyer_name',
+            'buyer_avatar',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+        ]);
+
+        return redirect()->route('logistics.dashboard');
     }
 
 
@@ -328,6 +393,10 @@ Route::post('/login', function (Request $request) {
             'courier_account_id',
             'courier_email',
             'courier_name',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         return redirect()->route('buyer.dashboard');
@@ -377,6 +446,10 @@ Route::post('/login', function (Request $request) {
             'courier_account_id',
             'courier_email',
             'courier_name',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         return redirect()->route('seller.dashboard');
@@ -406,9 +479,50 @@ Route::post('/login', function (Request $request) {
             'seller_account_id',
             'is_buyer',
             'buyer_account_id',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
         ]);
 
         return redirect()->route('courier.dashboard');
+    }
+
+    $logistics = LogisticsAccount::query()->where('email', $email)->first();
+
+    if ($logistics && Hash::check($request->password, $logistics->password)) {
+        if ($logistics->account_status !== 'active') {
+            return back()->withErrors([
+                'email' => 'This logistics account is not currently active.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        $request->session()->put('is_logistics', true);
+        $request->session()->put('logistics_account_id', $logistics->id);
+        $request->session()->put('logistics_email', $logistics->email);
+        $request->session()->put(
+            'logistics_name',
+            trim($logistics->first_name . ' ' . $logistics->last_name) ?: 'SARI Logistics'
+        );
+
+        $request->session()->forget([
+            'is_admin',
+            'is_seller',
+            'seller_account_id',
+            'is_buyer',
+            'buyer_account_id',
+            'buyer_social_account_id',
+            'buyer_email',
+            'buyer_name',
+            'buyer_avatar',
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
+        ]);
+
+        return redirect()->route('logistics.dashboard');
     }
 
     $application = RegistrationApplication::query()
@@ -417,8 +531,12 @@ Route::post('/login', function (Request $request) {
         ->first();
 
     if ($application && $application->status === 'pending') {
+        $message = $application->role === 'rider'
+            ? 'Your Rider application is still waiting for SARI Logistics review.'
+            : 'Your registration is still waiting for administrator approval.';
+
         return back()->withErrors([
-            'email' => 'Your registration is still waiting for administrator approval.',
+            'email' => $message,
         ])->onlyInput('email');
     }
 
@@ -457,6 +575,9 @@ Route::get(
     '/registration/pending',
     [RegistrationController::class, 'pending']
 )->name('registration.pending');
+
+Route::post('/complaints', [PlatformComplaintController::class, 'store'])
+    ->name('platform.complaints.store');
 
 
 /*
@@ -571,15 +692,8 @@ Route::post('/buyer/logout', [BuyerPageController::class, 'logout'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('/admin/dashboard', function (Request $request) {
-
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
-
-    return view('admin.dashboard');
-
-})->name('admin.dashboard');
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+    ->name('admin.dashboard');
 
 
 Route::get(
@@ -603,15 +717,33 @@ Route::get(
 )->name('admin.registrations.document');
 
 
-Route::get('/admin/users', function (Request $request) {
+/*
+|--------------------------------------------------------------------------
+| ADMIN — USER MANAGEMENT
+|--------------------------------------------------------------------------
+*/
+Route::get('/admin/users', [AdminUsersController::class, 'index'])
+    ->name('admin.users');
 
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
+Route::patch('/admin/users/{role}/{id}', [AdminUsersController::class, 'update'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.update');
 
-    return view('admin.users');
+Route::post('/admin/users/{role}/{id}/suspend', [AdminUsersController::class, 'suspend'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.suspend');
 
-})->name('admin.users');
+Route::post('/admin/users/{role}/{id}/restore', [AdminUsersController::class, 'restore'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.restore');
+
+Route::post('/admin/users/{role}/{id}/note', [AdminUsersController::class, 'note'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.note');
 
 
 /*
@@ -693,48 +825,36 @@ Route::post(
 )->name('admin.seller-accounts.restore');
 
 
-Route::get('/admin/complaints', function (Request $request) {
+Route::get('/admin/complaints', [AdminComplaintsController::class, 'index'])
+    ->name('admin.complaints');
 
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
+Route::post('/admin/complaints/{complaint}/resolve', [AdminComplaintsController::class, 'resolve'])
+    ->name('admin.complaints.resolve');
 
-    return view('admin.complaints');
-
-})->name('admin.complaints');
-
-
-Route::get('/admin/commissions', function (Request $request) {
-
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
-
-    return view('admin.commissions');
-
-})->name('admin.commissions');
+Route::post('/admin/complaints/{complaint}/reopen', [AdminComplaintsController::class, 'reopen'])
+    ->name('admin.complaints.reopen');
 
 
-Route::get('/admin/reports', function (Request $request) {
+Route::get('/admin/commissions', [AdminCommissionsController::class, 'index'])
+    ->name('admin.commissions');
 
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
+Route::post('/admin/commissions/payouts/{payout}/approve', [AdminCommissionsController::class, 'approvePayout'])
+    ->name('admin.commissions.payouts.approve');
+Route::post('/admin/commissions/payouts/{payout}/paid', [AdminCommissionsController::class, 'markPayoutPaid'])
+    ->name('admin.commissions.payouts.paid');
+Route::post('/admin/commissions/payouts/{payout}/reject', [AdminCommissionsController::class, 'rejectPayout'])
+    ->name('admin.commissions.payouts.reject');
 
-    return view('admin.reports');
 
-})->name('admin.reports');
+Route::get('/admin/reports', [AdminReportsController::class, 'index'])
+    ->name('admin.reports');
 
 
-Route::get('/admin/platform-settings', function (Request $request) {
+Route::get('/admin/platform-settings', [AdminPlatformSettingsController::class, 'index'])
+    ->name('admin.platform-settings');
 
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
-
-    return view('admin.platform-settings');
-
-})->name('admin.platform-settings');
+Route::patch('/admin/platform-settings', [AdminPlatformSettingsController::class, 'update'])
+    ->name('admin.platform-settings.update');
 
 
 Route::get(
@@ -755,20 +875,16 @@ Route::post(
 )->name('admin.messages.read');
 
 
-Route::get('/admin/account', function (Request $request) {
+Route::get('/admin/account', [AdminAccountController::class, 'index'])
+    ->name('admin.account');
 
-    if (!$request->session()->get('is_admin')) {
-        return redirect()->route('login');
-    }
-
-    return view('admin.account');
-
-})->name('admin.account');
+Route::patch('/admin/account', [AdminAccountController::class, 'update'])
+    ->name('admin.account.update');
 
 
 Route::post('/admin/logout', function (Request $request) {
 
-    $request->session()->forget('is_admin');
+    $request->session()->forget(['is_admin', 'admin_account_id']);
 
     $request->session()->invalidate();
     $request->session()->regenerateToken();
@@ -1134,6 +1250,10 @@ Route::post('/seller/logout', function (Request $request) {
     $request->session()->forget([
         'is_seller',
         'seller_account_id',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
     ]);
 
     $request->session()->invalidate();
@@ -1232,6 +1352,10 @@ Route::post('/courier/logout', function (Request $request) {
         'courier_account_id',
         'courier_email',
         'courier_name',
+            'is_logistics',
+            'logistics_account_id',
+            'logistics_email',
+            'logistics_name',
     ]);
 
     $request->session()->invalidate();
@@ -1281,11 +1405,19 @@ Route::get(
     [\App\Http\Controllers\CourierPageController::class, 'earnings']
 )->name('courier.earnings');
 
+Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
+    ->name('courier.earnings.statement');
+Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestPayout'])
+    ->name('courier.earnings.payout');
+
 
 Route::get(
     '/courier/history',
     [\App\Http\Controllers\CourierPageController::class, 'history']
 )->name('courier.history');
+
+Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
+    ->name('courier.history.export');
 
 
 Route::get(
@@ -1293,11 +1425,20 @@ Route::get(
     [\App\Http\Controllers\CourierPageController::class, 'messages']
 )->name('courier.messages');
 
+Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
+    ->name('courier.messages.send');
+
 
 Route::get(
     '/courier/profile',
     [\App\Http\Controllers\CourierPageController::class, 'profile']
 )->name('courier.profile');
+
+Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
+    ->name('courier.profile.update');
+
+Route::patch('/courier/profile/availability', [CourierPageController::class, 'availability'])
+    ->name('courier.profile.availability');
 
 Route::post(
     '/admin/message-notifications/read-all',
@@ -1369,3 +1510,13 @@ Route::get(
     SellerLayoutStateController::class
 )->middleware(EnsureSellerAccountAccessible::class)
   ->name('seller.layout-state');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGISTICS ROUTES
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__.'/logistics.php';

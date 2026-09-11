@@ -1,1607 +1,1738 @@
 @extends('layouts.admin')
 
-@section('title', 'Commission Management — SARI Admin')
-@section('page-title', 'Commission Management')
+@section('title','Commissions — SARI Admin')
+@section('page-title','Commissions')
 
 @section('content')
+<style>
+    :root {
+        --commission-brand: #d99a00;
+        --commission-brand-strong: #bd8205;
+        --commission-brand-soft: #fff7e6;
+        --commission-ink: #101828;
+        --commission-text: #344054;
+        --commission-muted: #667085;
+        --commission-subtle: #98a2b3;
+        --commission-line: #e8edf3;
+        --commission-line-strong: #dde3ea;
+        --commission-surface: #ffffff;
+        --commission-canvas: #f8fafc;
+    }
 
-<div class="mx-auto w-full max-w-[1800px]">
+    .commissions-page {
+        font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--commission-ink);
+    }
 
-    {{-- =========================================================
-        PAGE INTRO
-    ========================================================== --}}
-    <section
-        class="
-            rounded-[22px]
-            border border-[#ebe4da]
-            bg-white
-            p-5
+    .commission-surface {
+        background: var(--commission-surface);
+        border: 1px solid var(--commission-line);
+        border-radius: 16px;
+        box-shadow: 0 1px 2px rgba(16,24,40,.02), 0 8px 24px rgba(16,24,40,.045);
+    }
 
-            sm:p-6
-            lg:p-7
-        "
-    >
-        <div
-            class="
-                flex flex-col gap-5
-                lg:flex-row
-                lg:items-center
-                lg:justify-between
-            "
-        >
+    /* Header */
+    .commission-header-main {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
 
+    .commission-header-icon {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        place-items: center;
+        border: 1px solid #f2dfb7;
+        border-radius: 14px;
+        background: #fff9ed;
+        color: #c98500;
+        box-shadow: 0 6px 18px rgba(202,133,0,.08);
+    }
+
+    .commission-header-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .commission-eyebrow {
+        color: #7d8898;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+    }
+
+    .commission-title {
+        margin-top: 4px;
+        color: var(--commission-ink);
+        font-size: clamp(1.65rem, 1.48rem + .55vw, 2.05rem);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -.04em;
+    }
+
+    .commission-subtitle {
+        max-width: 920px;
+        margin-top: 6px;
+        color: var(--commission-muted);
+        font-size: clamp(.72rem, .69rem + .08vw, .79rem);
+        line-height: 1.65;
+    }
+
+    /* Summary cards */
+    .commission-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0,1fr));
+        gap: 12px;
+    }
+
+    .commission-stat {
+        position: relative;
+        min-height: 104px;
+        overflow: hidden;
+        padding: 16px;
+        border: 1px solid var(--commission-line);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(16,24,40,.02), 0 7px 22px rgba(16,24,40,.04);
+        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .commission-stat:hover {
+        transform: translateY(-2px);
+        border-color: #dbe2ea;
+        box-shadow: 0 2px 4px rgba(16,24,40,.03), 0 12px 28px rgba(16,24,40,.065);
+    }
+
+    .commission-stat-icon {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        place-items: center;
+        border: 1px solid transparent;
+        border-radius: 13px;
+    }
+
+    .commission-stat-icon svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .commission-stat-icon.rate {
+        border-color: #f2dfb9;
+        background: #fff7e7;
+        color: #d59000;
+    }
+
+    .commission-stat-icon.orders {
+        border-color: #dce9f6;
+        background: #f0f7ff;
+        color: #3978a9;
+    }
+
+    .commission-stat-icon.sales {
+        border-color: #e5e0f5;
+        background: #f7f4fc;
+        color: #7159a8;
+    }
+
+    .commission-stat-icon.earned {
+        border-color: #d9ebe0;
+        background: #f0f8f3;
+        color: #3e8060;
+    }
+
+    .commission-stat-label {
+        color: #667085;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+
+    .commission-stat-value {
+        margin-top: 4px;
+        color: #101828;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -.035em;
+    }
+
+    .commission-stat-helper {
+        margin-top: 7px;
+        color: #98a2b3;
+        font-size: 8.5px;
+        line-height: 1.4;
+    }
+
+    /* Analytics */
+    .commission-analytics-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 14px;
+    }
+
+    .commission-panel-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .commission-panel-title {
+        color: #1d2939;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .commission-panel-copy {
+        margin-top: 4px;
+        color: #98a2b3;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    /* Modern line / area chart */
+    .commission-chart-panel {
+        min-height: 310px;
+        padding: 18px 18px 14px;
+    }
+
+    .commission-range-tabs {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px;
+        border: 1px solid var(--commission-line);
+        border-radius: 10px;
+        background: #f9fafb;
+    }
+
+    .commission-range-button {
+        height: 29px;
+        min-width: 40px;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        padding: 0 9px;
+        color: #667085;
+        font-size: 9px;
+        font-weight: 600;
+        transition: background-color .16s ease, color .16s ease, box-shadow .16s ease;
+    }
+
+    .commission-range-button:hover {
+        color: #344054;
+        background: #fff;
+    }
+
+    .commission-range-button.is-active {
+        background: #fff5dc;
+        color: #b87500;
+        box-shadow: inset 0 0 0 1px #f0d69e, 0 1px 2px rgba(16,24,40,.05);
+    }
+
+    .commission-chart-wrap {
+        position: relative;
+        min-height: 236px;
+        margin-top: 14px;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    .commission-chart-svg {
+        display: block;
+        width: 100%;
+        height: 236px;
+        overflow: visible;
+    }
+
+    .commission-chart-tooltip {
+        position: absolute;
+        z-index: 5;
+        min-width: 96px;
+        pointer-events: none;
+        transform: translate(-50%, -115%);
+        border: 1px solid #e4e7ec;
+        border-radius: 10px;
+        background: rgba(255,255,255,.97);
+        padding: 8px 10px;
+        box-shadow: 0 8px 22px rgba(16,24,40,.11);
+        opacity: 0;
+        transition: opacity .12s ease;
+    }
+
+    .commission-chart-tooltip.is-visible {
+        opacity: 1;
+    }
+
+    .commission-chart-tooltip-date {
+        color: #667085;
+        font-size: 8px;
+        font-weight: 500;
+    }
+
+    .commission-chart-tooltip-value {
+        margin-top: 2px;
+        color: #101828;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .commission-chart-legend {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #667085;
+        font-size: 8.5px;
+        font-weight: 500;
+    }
+
+    .commission-chart-legend::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #d99a00;
+        box-shadow: 0 0 0 3px rgba(217,154,0,.10);
+    }
+
+    .commission-chart-empty {
+        display: grid;
+        min-height: 224px;
+        place-items: center;
+        color: #98a2b3;
+        font-size: 9px;
+        text-align: center;
+    }
+
+    /* Donut card */
+    .commission-donut-wrap {
+        min-height: 310px;
+        padding: 18px;
+    }
+
+    .commission-donut {
+        position: relative;
+        display: grid;
+        width: 142px;
+        height: 142px;
+        place-items: center;
+        border-radius: 999px;
+        background: conic-gradient(
+            #d99a00 0deg var(--commission-deg),
+            #f0f1f3 var(--commission-deg) 360deg
+        );
+        box-shadow: inset 0 0 0 1px rgba(16,24,40,.025);
+    }
+
+    .commission-donut::before {
+        content: "";
+        position: absolute;
+        width: 104px;
+        height: 104px;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(16,24,40,.035), inset 0 0 0 1px #edf0f3;
+    }
+
+    .commission-donut-center {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    .commission-donut-value {
+        color: #101828;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -.04em;
+    }
+
+    .commission-donut-label {
+        margin-top: 6px;
+        color: #528166;
+        font-size: 8.5px;
+        font-weight: 600;
+    }
+
+    .commission-rate-meta {
+        margin-top: 20px;
+        border-top: 1px solid #eef1f4;
+    }
+
+    .commission-rate-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 42px;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    .commission-rate-row:last-child {
+        border-bottom: 0;
+    }
+
+    .commission-rate-row-label {
+        color: #344054;
+        font-size: 9px;
+        font-weight: 600;
+    }
+
+    .commission-rate-row-copy {
+        margin-top: 2px;
+        color: #98a2b3;
+        font-size: 7.5px;
+    }
+
+    .commission-rate-row-value {
+        color: #1d2939;
+        font-size: 9px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* Search/filter */
+    .commission-filter {
+        padding: 10px;
+    }
+
+    .commission-filter-grid {
+        display: grid;
+        grid-template-columns: minmax(360px,1fr) 190px 124px 82px;
+        gap: 10px;
+    }
+
+    .commission-search {
+        position: relative;
+    }
+
+    .commission-search svg {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        width: 15px;
+        height: 15px;
+        color: #98a2b3;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .commission-control {
+        width: 100%;
+        height: 42px;
+        border: 1px solid #e4e7ec;
+        border-radius: 10px;
+        background: #fff;
+        color: #344054;
+        font-size: 10px;
+        box-shadow: 0 1px 2px rgba(16,24,40,.025);
+    }
+
+    .commission-control::placeholder {
+        color: #a7afbd;
+    }
+
+    .commission-control:focus {
+        outline: none;
+        border-color: #e1b75b;
+        box-shadow: 0 0 0 3px rgba(217,154,0,.10);
+    }
+
+    .commission-search input {
+        padding: 0 15px 0 41px;
+    }
+
+    .commission-select-wrap {
+        position: relative;
+    }
+
+    .commission-select-wrap select {
+        appearance: none;
+        padding: 0 36px 0 13px;
+        cursor: pointer;
+    }
+
+    .commission-select-chevron {
+        position: absolute;
+        top: 50%;
+        right: 13px;
+        width: 14px;
+        height: 14px;
+        color: #98a2b3;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .commission-filter-apply,
+    .commission-filter-reset {
+        display: inline-flex;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: 600;
+        transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+    }
+
+    .commission-filter-apply {
+        border: 1px solid #cf9007;
+        background: #d99a00;
+        color: #fff;
+        box-shadow: 0 6px 14px rgba(217,154,0,.16);
+    }
+
+    .commission-filter-apply:hover {
+        background: #c98c00;
+        transform: translateY(-1px);
+    }
+
+    .commission-filter-reset {
+        border: 1px solid #e4e7ec;
+        background: #fff;
+        color: #475467;
+    }
+
+    .commission-filter-reset:hover {
+        background: #f9fafb;
+    }
+
+    /* Section head / table */
+    .commission-section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 16px 18px;
+        border-bottom: 1px solid #edf0f3;
+    }
+
+    .commission-table {
+        width: 100%;
+        min-width: 920px;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .commission-table thead {
+        background: #fbfcfd;
+    }
+
+    .commission-table th {
+        padding: 12px 16px;
+        border-bottom: 1px solid #edf0f3;
+        color: #7b8492;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1.35;
+        letter-spacing: .055em;
+        text-transform: uppercase;
+    }
+
+    .commission-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #f0f2f4;
+        color: #475467;
+        font-size: 9px;
+        line-height: 1.45;
+    }
+
+    .commission-table tbody tr {
+        transition: background-color .14s ease;
+    }
+
+    .commission-table tbody tr:hover {
+        background: #fcfcfd;
+    }
+
+    .commission-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .commission-order {
+        color: #1d2939;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .commission-amount {
+        color: #1d2939;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .commission-earned {
+        color: #9a6800;
+    }
+
+    .commission-delivered-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #d7eadf;
+        border-radius: 999px;
+        background: #f1f8f4;
+        padding: 4px 8px;
+        color: #3b7957;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .commission-delivered-badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: currentColor;
+    }
+
+    .commission-table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 16px;
+        border-top: 1px solid #edf0f3;
+        color: #7b8492;
+        font-size: 8.5px;
+    }
+
+    /* Payouts */
+    .payout-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+    .payout-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #e4e7ec;
+        border-radius: 999px;
+        background: #fff;
+        padding: 5px 9px;
+        color: #667085;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .payout-chip::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #98a2b3;
+    }
+
+    .payout-chip.pending::before { background: #d99a00; }
+    .payout-chip.approved::before { background: #3978a9; }
+    .payout-chip.paid::before { background: #3e8060; }
+
+    .payout-list {
+        padding: 0;
+    }
+
+    .payout-row {
+        display: grid;
+        grid-template-columns: minmax(220px,1.4fr) 150px 140px minmax(280px,1.5fr);
+        gap: 16px;
+        align-items: center;
+        min-height: 74px;
+        padding: 13px 18px;
+        border-bottom: 1px solid #f0f2f4;
+        background: #fff;
+    }
+
+    .payout-row:last-child {
+        border-bottom: 0;
+    }
+
+    .payout-row:hover {
+        background: #fcfcfd;
+    }
+
+    .payout-rider {
+        color: #1d2939;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .payout-date {
+        margin-top: 4px;
+        color: #98a2b3;
+        font-size: 8px;
+    }
+
+    .payout-amount {
+        color: #1d2939;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .payout-status {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 5px 9px;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .payout-status::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: currentColor;
+    }
+
+    .payout-status-pending {
+        border: 1px solid #edd8a9;
+        background: #fff8e8;
+        color: #a87100;
+    }
+
+    .payout-status-approved {
+        border: 1px solid #d3e2ee;
+        background: #f3f8fb;
+        color: #3978a9;
+    }
+
+    .payout-status-paid {
+        border: 1px solid #d7eadf;
+        background: #f1f8f4;
+        color: #3e8060;
+    }
+
+    .payout-status-rejected {
+        border: 1px solid #eed9d4;
+        background: #fff5f3;
+        color: #a65d4c;
+    }
+
+    .payout-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .payout-reason {
+        height: 38px;
+        min-width: 140px;
+        flex: 1;
+        border: 1px solid #e4e7ec;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 10px;
+        color: #344054;
+        font-size: 8.5px;
+    }
+
+    .payout-reason:focus {
+        outline: none;
+        border-color: #e1b75b;
+        box-shadow: 0 0 0 3px rgba(217,154,0,.09);
+    }
+
+    .payout-action-button {
+        display: inline-flex;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: 1px solid #e4e7ec;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 11px;
+        color: #344054;
+        font-size: 8.5px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: color .15s ease, border-color .15s ease, background-color .15s ease, transform .15s ease;
+    }
+
+    .payout-action-button svg {
+        width: 15px;
+        height: 15px;
+        color: currentColor;
+    }
+
+    .payout-action-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .payout-approve:hover {
+        border-color: #b9dfc7;
+        background: #f4fbf6;
+        color: #2d7d4e;
+    }
+
+    .payout-reject:hover {
+        border-color: #efc5bd;
+        background: #fff7f5;
+        color: #b4513e;
+    }
+
+    .payout-paid:hover {
+        border-color: #c7dceb;
+        background: #f5faff;
+        color: #3978a9;
+    }
+
+    .commission-empty {
+        padding: 40px 20px;
+        color: #98a2b3;
+        font-size: 8.5px;
+        text-align: center;
+    }
+
+    .commission-empty-state {
+        display: flex;
+        min-height: 140px;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 26px 18px;
+        text-align: left;
+    }
+
+    .commission-empty-icon {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        place-items: center;
+        border: 1px solid #e4e7ec;
+        border-radius: 12px;
+        background: #f9fafb;
+        color: #98a2b3;
+    }
+
+    .commission-empty-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .commission-empty-title {
+        color: #344054;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .commission-empty-copy {
+        margin-top: 3px;
+        color: #98a2b3;
+        font-size: 8px;
+    }
+
+    @media (max-width: 1199px) {
+        .commission-summary-grid {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+
+        .commission-analytics-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .commission-donut-wrap {
+            min-height: auto;
+        }
+
+        .commission-filter-grid {
+            grid-template-columns: minmax(0,1fr) 180px;
+        }
+
+        .commission-search {
+            grid-column: 1 / -1;
+        }
+
+        .payout-row {
+            grid-template-columns: 1fr 130px;
+        }
+
+        .payout-row > div:nth-child(3),
+        .payout-row > div:nth-child(4) {
+            grid-column: 1 / -1;
+        }
+
+        .payout-actions {
+            justify-content: flex-start;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .commission-header-main {
+            align-items: flex-start;
+            gap: 11px;
+        }
+
+        .commission-summary-grid,
+        .commission-filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .commission-search {
+            grid-column: auto;
+        }
+
+        .commission-stat {
+            min-height: 98px;
+            padding: 14px;
+        }
+
+        .commission-panel-head {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .commission-range-tabs {
+            width: fit-content;
+        }
+
+        .commission-chart-panel,
+        .commission-donut-wrap {
+            padding: 15px;
+        }
+
+        .commission-chart-svg {
+            height: 210px;
+        }
+
+        .commission-section-head,
+        .commission-table-footer {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .payout-row {
+            grid-template-columns: 1fr;
+        }
+
+        .payout-row > div:nth-child(3),
+        .payout-row > div:nth-child(4) {
+            grid-column: auto;
+        }
+
+        .payout-actions,
+        .payout-actions form {
+            width: 100%;
+        }
+
+        .payout-actions form {
+            display: flex;
+        }
+
+        .payout-reason {
+            min-width: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .commission-stat,
+        .commission-range-button,
+        .commission-filter-apply,
+        .payout-action-button,
+        .commission-chart-tooltip {
+            transition: none !important;
+        }
+    }
+</style>
+
+@php
+    $commissionRate = max(0, min(100, (float) ($stats['rate'] ?? 0)));
+    $commissionDegrees = $commissionRate * 3.6;
+
+    $deliveredOrderCount = (int) ($stats['delivered_orders'] ?? 0);
+    $grossSales = (float) ($stats['gross_sales'] ?? 0);
+    $totalCommission = (float) ($stats['commission'] ?? 0);
+
+    /* Keep the chart grounded in the same delivered-order rows already used by this page. */
+    $chartPayload = collect($rows ?? [])
+        ->filter(fn ($row) => isset($row['order']) && optional($row['order']->delivered_at)->timestamp)
+        ->map(fn ($row) => [
+            'date' => optional($row['order']->delivered_at)->format('Y-m-d'),
+            'commission' => round((float) ($row['commission'] ?? 0), 2),
+        ])
+        ->values();
+
+    $payoutCollection = collect($payoutRequests ?? []);
+    $pendingPayouts = $payoutCollection->where('status', 'pending')->count();
+    $approvedPayouts = $payoutCollection->where('status', 'approved')->count();
+    $paidPayouts = $payoutCollection->where('status', 'paid')->count();
+    $rejectedPayouts = $payoutCollection->where('status', 'rejected')->count();
+
+    $payoutTone = fn ($status) => match(strtolower((string) $status)) {
+        'approved' => 'payout-status-approved',
+        'paid' => 'payout-status-paid',
+        'rejected' => 'payout-status-rejected',
+        default => 'payout-status-pending',
+    };
+@endphp
+
+<div class="commissions-page mx-auto w-full max-w-[1880px] pb-8">
+    @if(session('success'))
+        <div class="mb-4 flex items-start gap-3 rounded-[12px] border border-[#d7eadf] bg-[#f3faf5] px-4 py-3 shadow-[0_5px_16px_rgba(16,24,40,.035)]">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-[#3e8060]">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="m8 12 2.5 2.5L16 9"></path>
+                </svg>
+            </span>
             <div>
-                <div
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-full
-                        border border-[#e8dfd1]
-                        bg-[#fcfaf6]
-                        px-3 py-1.5
-                        text-[9px] font-semibold
-                        uppercase tracking-[0.14em]
-                        text-[#a27428]
-                    "
-                >
-                    <span class="h-2 w-2 rounded-full bg-[#c9952f]"></span>
-                    Platform Revenue
-                </div>
-
-                <h2
-                    class="
-                        mt-3
-                        text-[22px] font-bold
-                        tracking-[-0.03em]
-                        text-[#211c16]
-
-                        sm:text-[24px]
-                    "
-                >
-                    Commission Management
-                </h2>
-
-                <p
-                    class="
-                        mt-2
-                        max-w-[720px]
-                        text-[12px] leading-6
-                        text-[#81786c]
-
-                        sm:text-[13px]
-                    "
-                >
-                    Monitor the 10% SARI platform commission, review seller
-                    transactions, and track commission performance across the marketplace.
-                </p>
+                <p class="text-[9px] font-bold text-[#356b50]">Success</p>
+                <p class="mt-0.5 text-[9px] text-[#667a6e]">{{ session('success') }}</p>
             </div>
+        </div>
+    @endif
 
+    {{-- PAGE HEADER --}}
+    <section class="commission-header-main">
+        <span class="commission-header-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <ellipse cx="10" cy="6" rx="5" ry="2.5"></ellipse>
+                <path d="M5 6v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V6"></path>
+                <path d="M5 10v4c0 1.4 2.2 2.5 5 2.5 1 0 2-.15 2.8-.42"></path>
+                <circle cx="17" cy="15" r="4"></circle>
+                <path d="M17 13.2v3.6M15.7 14.2h2.1c.7 0 1.1.35 1.1.85s-.4.85-1.1.85h-1.6"></path>
+            </svg>
+        </span>
 
-            <div class="flex flex-wrap items-center gap-3">
-
-                <button
-                    type="button"
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-xl
-                        border border-[#e6dfd4]
-                        bg-white
-                        px-4 py-2.5
-                        text-[11px] font-semibold
-                        text-[#62594e]
-                        transition
-
-                        hover:border-[#d4c29f]
-                        hover:bg-[#fcf9f3]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M4 4h16v16H4z"></path>
-                        <path d="M8 10h8"></path>
-                        <path d="M8 14h5"></path>
-                    </svg>
-
-                    Export Report
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        inline-flex items-center gap-2
-                        rounded-xl
-                        bg-[#c99128]
-                        px-4 py-2.5
-                        text-[11px] font-semibold
-                        text-white
-                        shadow-[0_8px_20px_rgba(201,145,40,0.16)]
-                        transition
-
-                        hover:bg-[#b47e1e]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M4 12h16"></path>
-                        <path d="M12 4v16"></path>
-                    </svg>
-
-                    New Adjustment
-                </button>
-
-            </div>
-
+        <div class="min-w-0">
+            <p class="commission-eyebrow">Platform Finance</p>
+            <h2 class="commission-title">Platform Commissions</h2>
+            <p class="commission-subtitle">
+                Monitor delivered-order revenue, track SARI commission earnings, and manage rider payout requests from one finance workspace.
+            </p>
         </div>
     </section>
 
-
-    {{-- =========================================================
-        SUMMARY CARDS
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            grid grid-cols-1
-            gap-4
-
-            sm:grid-cols-2
-            xl:grid-cols-4
-        "
-    >
-
-        {{-- TOTAL COMMISSION --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#eadfc9]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between gap-4">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Total Commission
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[26px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        ₱245,680
-                    </h3>
-
-                    <p class="mt-2 text-[10px] font-medium text-[#56816a]">
-                        ▲ 18.7% this month
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        shrink-0 place-items-center
-                        rounded-xl
-                        border border-[#eadfc8]
-                        bg-[#fbf6ec]
-                        text-[#b98020]
-                    "
-                >
-                    <span class="text-[18px] font-semibold">₱</span>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- GROSS SALES --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#dce5ed]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between gap-4">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Gross Marketplace Sales
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[26px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        ₱2.45M
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#8f877d]">
-                        Before commission deduction
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        shrink-0 place-items-center
-                        rounded-xl
-                        border border-[#d9e3ec]
-                        bg-[#f3f7fa]
-                        text-[#627f99]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <path d="M4 20h16"></path>
-                        <path d="M7 17v-4"></path>
-                        <path d="M12 17V9"></path>
-                        <path d="M17 17V5"></path>
+    {{-- SUMMARY --}}
+    <section class="commission-summary-grid mt-4">
+        <article class="commission-stat">
+            <div class="flex h-full items-center gap-4">
+                <span class="commission-stat-icon rate" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+                        <path d="M7 17 17 7"></path>
+                        <circle cx="8" cy="8" r="2.1"></circle>
+                        <circle cx="16" cy="16" r="2.1"></circle>
                     </svg>
+                </span>
+                <div class="min-w-0">
+                    <p class="commission-stat-label">Commission Rate</p>
+                    <p class="commission-stat-value">{{ rtrim(rtrim(number_format($commissionRate, 2), '0'), '.') }}%</p>
+                    <p class="commission-stat-helper">Applied to delivered merchandise subtotal</p>
                 </div>
-
             </div>
-        </div>
+        </article>
 
-
-        {{-- PENDING --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#e9e1d2]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between gap-4">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Pending Commission
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[26px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        ₱38,420
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#9a9186]">
-                        42 transactions
-                    </p>
-                </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        shrink-0 place-items-center
-                        rounded-xl
-                        border border-[#e8dfcf]
-                        bg-[#fbf6ed]
-                        text-[#ae7a21]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    >
-                        <circle cx="12" cy="12" r="8"></circle>
-                        <path d="M12 8v4l2 2"></path>
+        <article class="commission-stat">
+            <div class="flex h-full items-center gap-4">
+                <span class="commission-stat-icon orders" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 6h2l1.5 8.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 9H7"></path>
+                        <circle cx="10" cy="19" r="1.3"></circle>
+                        <circle cx="18" cy="19" r="1.3"></circle>
                     </svg>
+                </span>
+                <div class="min-w-0">
+                    <p class="commission-stat-label">Delivered Orders</p>
+                    <p class="commission-stat-value">{{ number_format($deliveredOrderCount) }}</p>
+                    <p class="commission-stat-helper">Orders included in commission totals</p>
                 </div>
-
             </div>
-        </div>
+        </article>
 
-
-        {{-- COMMISSION RATE --}}
-        <div
-            class="
-                rounded-[18px]
-                border border-[#d9e6df]
-                bg-white
-                p-5
-            "
-        >
-            <div class="flex items-start justify-between gap-4">
-
-                <div>
-                    <p class="text-[11px] font-medium text-[#797168]">
-                        Platform Rate
-                    </p>
-
-                    <h3
-                        class="
-                            mt-2
-                            text-[26px] font-bold
-                            tracking-[-0.04em]
-                            text-[#211d18]
-                        "
-                    >
-                        10%
-                    </h3>
-
-                    <p class="mt-2 text-[10px] text-[#8f877d]">
-                        Current commission rate
-                    </p>
+        <article class="commission-stat">
+            <div class="flex h-full items-center gap-4">
+                <span class="commission-stat-icon sales" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19h16"></path>
+                        <path d="M6 16v-4h3v4"></path>
+                        <path d="M11 16V8h3v8"></path>
+                        <path d="M16 16V5h3v11"></path>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <p class="commission-stat-label">Gross Sales</p>
+                    <p class="commission-stat-value">₱{{ number_format($grossSales, 2) }}</p>
+                    <p class="commission-stat-helper">Delivered merchandise subtotal</p>
                 </div>
-
-                <div
-                    class="
-                        grid h-11 w-11
-                        shrink-0 place-items-center
-                        rounded-xl
-                        border border-[#d6e5dc]
-                        bg-[#f1f7f3]
-                        text-[#56816a]
-                    "
-                >
-                    <span class="text-[16px] font-semibold">%</span>
-                </div>
-
             </div>
-        </div>
+        </article>
 
+        <article class="commission-stat">
+            <div class="flex h-full items-center gap-4">
+                <span class="commission-stat-icon earned" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 7h10l2 3v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7l2-3Z"></path>
+                        <path d="M9 7c0-1.7 1.3-3 3-3s3 1.3 3 3"></path>
+                        <path d="M12 10.5v5"></path>
+                        <path d="M10.5 12h2.2c.8 0 1.3.4 1.3 1s-.5 1-1.3 1h-1.9"></path>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <p class="commission-stat-label">SARI Commission</p>
+                    <p class="commission-stat-value">₱{{ number_format($totalCommission, 2) }}</p>
+                    <p class="commission-stat-helper">Platform earnings from delivered orders</p>
+                </div>
+            </div>
+        </article>
     </section>
 
-
-    {{-- =========================================================
-        ANALYTICS + RATE CARD
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            grid grid-cols-1
-            gap-5
-
-            xl:grid-cols-[1.45fr_.55fr]
-        "
-    >
-
-        {{-- COMMISSION TREND --}}
-        <div
-            class="
-                rounded-[22px]
-                border border-[#ebe4da]
-                bg-white
-                p-5
-
-                sm:p-6
-            "
-        >
-
-            <div
-                class="
-                    flex flex-col gap-3
-                    sm:flex-row
-                    sm:items-start
-                    sm:justify-between
-                "
-            >
-
+    {{-- ANALYTICS --}}
+    <section class="commission-analytics-grid mt-4">
+        <article class="commission-surface commission-chart-panel">
+            <div class="commission-panel-head">
                 <div>
-                    <h3 class="text-[16px] font-bold text-[#28221b]">
-                        Commission Trend
-                    </h3>
-
-                    <p class="mt-1 text-[10px] text-[#91887d]">
-                        Platform commission performance for the current period.
-                    </p>
+                    <h3 class="commission-panel-title">Commission Performance</h3>
+                    <p class="commission-panel-copy">Daily platform commission earnings from delivered orders.</p>
                 </div>
 
-                <select
-                    class="
-                        h-10
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-[#fcfbf9]
-                        px-3
-                        text-[10px]
-                        text-[#625a50]
-                        outline-none
-                        focus:border-[#c99a3d]
-                    "
+                <div class="commission-range-tabs" aria-label="Commission chart range">
+                    <button type="button" class="commission-range-button" data-commission-range="7">7D</button>
+                    <button type="button" class="commission-range-button is-active" data-commission-range="30">30D</button>
+                    <button type="button" class="commission-range-button" data-commission-range="90">90D</button>
+                    <button type="button" class="commission-range-button" data-commission-range="365">1Y</button>
+                </div>
+            </div>
+
+            @if($chartPayload->isNotEmpty())
+                <div class="commission-chart-wrap" id="commissionChartWrap">
+                    <svg
+                        id="commissionChartSvg"
+                        class="commission-chart-svg"
+                        viewBox="0 0 1000 236"
+                        role="img"
+                        aria-label="Commission earnings trend"
+                    ></svg>
+
+                    <div id="commissionChartTooltip" class="commission-chart-tooltip" aria-hidden="true">
+                        <p id="commissionChartTooltipDate" class="commission-chart-tooltip-date"></p>
+                        <p id="commissionChartTooltipValue" class="commission-chart-tooltip-value"></p>
+                    </div>
+                </div>
+
+                <div class="mt-2 flex items-center justify-between gap-3">
+                    <span class="commission-chart-legend">Commission (₱)</span>
+                    <span class="text-[8px] text-[#98a2b3]">Hover the chart to inspect a day</span>
+                </div>
+            @else
+                <div class="commission-chart-empty">
+                    <div>
+                        <p class="font-semibold text-[#475467]">No chart data yet</p>
+                        <p class="mt-1">Delivered orders will appear here once commission records are available.</p>
+                    </div>
+                </div>
+            @endif
+        </article>
+
+        <article class="commission-surface commission-donut-wrap">
+            <div class="commission-panel-head">
+                <div>
+                    <h3 class="commission-panel-title">Commission Rate</h3>
+                    <p class="commission-panel-copy">Current platform percentage applied to eligible delivered sales.</p>
+                </div>
+            </div>
+
+            <div class="mt-5 flex justify-center">
+                <div
+                    class="commission-donut"
+                    style="--commission-deg: {{ $commissionDegrees }}deg"
+                    role="img"
+                    aria-label="Commission rate {{ $commissionRate }} percent"
                 >
-                    <option>This Month</option>
-                    <option>Last 30 Days</option>
-                    <option>This Quarter</option>
-                    <option>This Year</option>
+                    <div class="commission-donut-center">
+                        <p class="commission-donut-value">{{ rtrim(rtrim(number_format($commissionRate, 2), '0'), '.') }}%</p>
+                        <p class="commission-donut-label">Commission</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commission-rate-meta">
+                <div class="commission-rate-row">
+                    <div>
+                        <p class="commission-rate-row-label">Applied rate</p>
+                        <p class="commission-rate-row-copy">Delivered merchandise only</p>
+                    </div>
+                    <span class="commission-rate-row-value">{{ rtrim(rtrim(number_format($commissionRate, 2), '0'), '.') }}%</span>
+                </div>
+                <div class="commission-rate-row">
+                    <div>
+                        <p class="commission-rate-row-label">Transaction basis</p>
+                        <p class="commission-rate-row-copy">Applied per delivered order</p>
+                    </div>
+                    <span class="commission-rate-row-value">Subtotal only</span>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    {{-- LEDGER FILTER --}}
+    <section class="commission-surface commission-filter mt-4">
+        <div class="commission-filter-grid">
+            <div class="commission-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m20 20-3.4-3.4"></path>
+                </svg>
+                <input id="commissionSearch" type="search" class="commission-control" placeholder="Search order number or seller...">
+            </div>
+
+            <div class="commission-select-wrap">
+                <select id="commissionSort" class="commission-control">
+                    <option value="default">Default Order</option>
+                    <option value="commission_desc">Highest Commission</option>
+                    <option value="subtotal_desc">Highest Subtotal</option>
+                    <option value="latest">Latest Delivered</option>
                 </select>
-
+                <svg viewBox="0 0 24 24" class="commission-select-chevron" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="m7 10 5 5 5-5"></path>
+                </svg>
             </div>
 
-
-            {{-- MINI STATS --}}
-            <div
-                class="
-                    mt-5
-                    grid grid-cols-1
-                    gap-3
-
-                    sm:grid-cols-3
-                "
-            >
-
-                <div
-                    class="
-                        rounded-[15px]
-                        border border-[#efebe4]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <p class="text-[9px] uppercase tracking-[0.1em] text-[#a1988d]">
-                        Processed
-                    </p>
-
-                    <p class="mt-2 text-[18px] font-bold text-[#28231d]">
-                        ₱207,260
-                    </p>
-                </div>
-
-
-                <div
-                    class="
-                        rounded-[15px]
-                        border border-[#efebe4]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <p class="text-[9px] uppercase tracking-[0.1em] text-[#a1988d]">
-                        Pending
-                    </p>
-
-                    <p class="mt-2 text-[18px] font-bold text-[#ae791f]">
-                        ₱38,420
-                    </p>
-                </div>
-
-
-                <div
-                    class="
-                        rounded-[15px]
-                        border border-[#efebe4]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <p class="text-[9px] uppercase tracking-[0.1em] text-[#a1988d]">
-                        Growth
-                    </p>
-
-                    <p class="mt-2 text-[18px] font-bold text-[#56816a]">
-                        +18.7%
-                    </p>
-                </div>
-
-            </div>
-
-
-            {{-- GRAPH --}}
-            <div class="mt-6">
-
-                <div class="mb-4 flex flex-wrap items-center gap-5 text-[10px] text-[#80786e]">
-
-                    <div class="flex items-center gap-2">
-                        <span class="h-[2px] w-5 rounded-full bg-[#c99128]"></span>
-                        Commission
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <span class="h-[2px] w-5 rounded-full bg-[#aebbc7]"></span>
-                        Sales Reference
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="
-                        overflow-hidden
-                        rounded-[18px]
-                        border border-[#efebe4]
-                        bg-[#fcfbf8]
-                        p-3
-
-                        sm:p-4
-                    "
-                >
-                    <div class="overflow-x-auto">
-
-                        <div class="min-w-[650px]">
-
-                            <svg
-                                viewBox="0 0 820 285"
-                                class="h-[265px] w-full"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-label="Commission trend chart"
-                            >
-
-                                {{-- Grid --}}
-                                <line x1="65" y1="40" x2="790" y2="40" stroke="#EAE5DE"/>
-                                <line x1="65" y1="92" x2="790" y2="92" stroke="#EAE5DE"/>
-                                <line x1="65" y1="144" x2="790" y2="144" stroke="#EAE5DE"/>
-                                <line x1="65" y1="196" x2="790" y2="196" stroke="#EAE5DE"/>
-                                <line x1="65" y1="248" x2="790" y2="248" stroke="#E4DED6"/>
-
-                                {{-- Y labels --}}
-                                <text x="12" y="44" fill="#A1988D" font-size="10">₱50K</text>
-                                <text x="12" y="96" fill="#A1988D" font-size="10">₱40K</text>
-                                <text x="12" y="148" fill="#A1988D" font-size="10">₱30K</text>
-                                <text x="12" y="200" fill="#A1988D" font-size="10">₱20K</text>
-                                <text x="12" y="252" fill="#A1988D" font-size="10">₱10K</text>
-
-                                {{-- Sales reference --}}
-                                <path
-                                    d="M70 220
-                                       C120 206, 150 198, 190 201
-                                       S255 174, 310 180
-                                       S390 150, 445 157
-                                       S525 130, 575 136
-                                       S650 106, 705 112
-                                       S760 91, 785 96"
-                                    stroke="#AEBBC7"
-                                    stroke-width="3"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-dasharray="5 7"
-                                />
-
-                                {{-- Commission line --}}
-                                <path
-                                    d="M70 232
-                                       C120 221, 150 212, 190 216
-                                       S250 191, 310 195
-                                       S390 166, 445 172
-                                       S525 145, 575 151
-                                       S650 120, 705 128
-                                       S760 102, 785 108"
-                                    stroke="#C99128"
-                                    stroke-width="4"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                                {{-- Points --}}
-                                <circle cx="70" cy="232" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="190" cy="216" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="310" cy="195" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="445" cy="172" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="575" cy="151" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="705" cy="128" r="4" fill="#FCFBF8" stroke="#C99128" stroke-width="2"/>
-                                <circle cx="785" cy="108" r="5" fill="#C99128"/>
-
-                                {{-- X labels --}}
-                                <text x="55" y="276" fill="#9B9388" font-size="10">Week 1</text>
-                                <text x="175" y="276" fill="#9B9388" font-size="10">Week 2</text>
-                                <text x="300" y="276" fill="#9B9388" font-size="10">Week 3</text>
-                                <text x="430" y="276" fill="#9B9388" font-size="10">Week 4</text>
-                                <text x="565" y="276" fill="#9B9388" font-size="10">Week 5</text>
-                                <text x="695" y="276" fill="#9B9388" font-size="10">Current</text>
-
-                            </svg>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        {{-- COMMISSION SETTINGS --}}
-        <div
-            class="
-                rounded-[22px]
-                border border-[#ebe4da]
-                bg-white
-                p-5
-
-                sm:p-6
-            "
-        >
-
-            <div>
-                <h3 class="text-[16px] font-bold text-[#28221b]">
-                    Commission Settings
-                </h3>
-
-                <p class="mt-1 text-[10px] leading-5 text-[#91887d]">
-                    Current platform commission configuration.
-                </p>
-            </div>
-
-
-            <div
-                class="
-                    mt-5
-                    rounded-[18px]
-                    border border-[#eadfc9]
-                    bg-[#fcfaf6]
-                    p-5
-                "
-            >
-
-                <p class="text-[10px] font-medium text-[#8d8272]">
-                    Standard Commission Rate
-                </p>
-
-                <div class="mt-3 flex items-end gap-2">
-
-                    <span
-                        class="
-                            text-[42px] font-bold
-                            leading-none
-                            tracking-[-0.05em]
-                            text-[#c18a25]
-                        "
-                    >
-                        10
-                    </span>
-
-                    <span class="pb-1 text-[18px] font-semibold text-[#8c7650]">
-                        %
-                    </span>
-
-                </div>
-
-                <p class="mt-3 text-[10px] leading-5 text-[#8e8579]">
-                    Applied automatically to completed marketplace transactions.
-                </p>
-
-            </div>
-
-
-            <div class="mt-4 space-y-3">
-
-                <div
-                    class="
-                        flex items-center
-                        justify-between
-                        rounded-[14px]
-                        border border-[#ece6dd]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <div>
-                        <p class="text-[10px] font-semibold text-[#3c362f]">
-                            Auto Calculation
-                        </p>
-
-                        <p class="mt-1 text-[9px] text-[#958c80]">
-                            Calculate commission automatically.
-                        </p>
-                    </div>
-
-                    <span
-                        class="
-                            rounded-full
-                            bg-[#eef6f1]
-                            px-2.5 py-1
-                            text-[9px] font-semibold
-                            text-[#56816a]
-                        "
-                    >
-                        Enabled
-                    </span>
-                </div>
-
-
-                <div
-                    class="
-                        flex items-center
-                        justify-between
-                        rounded-[14px]
-                        border border-[#ece6dd]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <div>
-                        <p class="text-[10px] font-semibold text-[#3c362f]">
-                            Settlement
-                        </p>
-
-                        <p class="mt-1 text-[9px] text-[#958c80]">
-                            Seller settlement schedule.
-                        </p>
-                    </div>
-
-                    <span class="text-[10px] font-semibold text-[#625a50]">
-                        Weekly
-                    </span>
-                </div>
-
-
-                <div
-                    class="
-                        flex items-center
-                        justify-between
-                        rounded-[14px]
-                        border border-[#ece6dd]
-                        bg-[#fcfbf8]
-                        p-4
-                    "
-                >
-                    <div>
-                        <p class="text-[10px] font-semibold text-[#3c362f]">
-                            Last Updated
-                        </p>
-
-                        <p class="mt-1 text-[9px] text-[#958c80]">
-                            Current rate configuration.
-                        </p>
-                    </div>
-
-                    <span class="text-[10px] font-semibold text-[#625a50]">
-                        Aug 18
-                    </span>
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="
-                    mt-4 w-full
-                    rounded-xl
-                    border border-[#dfd4c4]
-                    bg-white
-                    px-4 py-2.5
-                    text-[10px] font-semibold
-                    text-[#675e53]
-                    transition
-
-                    hover:border-[#cdb58c]
-                    hover:bg-[#fcf8f1]
-                "
-            >
-                Edit Commission Settings
+            <button id="commissionApplyFilter" type="button" class="commission-filter-apply">
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M4 6h16"></path>
+                    <path d="M7 12h10"></path>
+                    <path d="M10 18h4"></path>
+                </svg>
+                Apply Filter
             </button>
 
+            <button id="commissionResetFilter" type="button" class="commission-filter-reset">Reset</button>
         </div>
-
     </section>
 
-
-    {{-- =========================================================
-        COMMISSION RECORDS
-    ========================================================== --}}
-    <section
-        class="
-            mt-5
-            overflow-hidden
-            rounded-[22px]
-            border border-[#ebe4da]
-            bg-white
-        "
-    >
-
-        {{-- TABLE HEADER --}}
-        <div
-            class="
-                flex flex-col gap-4
-                border-b border-[#eee8df]
-                p-4
-
-                sm:p-5
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
-        >
-
+    {{-- COMMISSION LEDGER --}}
+    <section class="commission-surface mt-4 overflow-hidden">
+        <div class="commission-section-head">
             <div>
-                <h3 class="text-[16px] font-bold text-[#28221b]">
-                    Commission Records
-                </h3>
-
-                <p class="mt-1 text-[10px] text-[#91887d]">
-                    Review marketplace orders and generated commission.
-                </p>
+                <h3 class="commission-panel-title">Commission Ledger</h3>
+                <p class="commission-panel-copy">Delivered orders included in platform commission calculations.</p>
             </div>
-
-
-            <div
-                class="
-                    flex flex-col gap-2
-                    sm:flex-row
-                "
-            >
-
-                <div class="relative">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="
-                            pointer-events-none
-                            absolute left-3.5 top-1/2
-                            h-4 w-4
-                            -translate-y-1/2
-                            text-[#9e968b]
-                        "
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <path d="m20 20-4-4"></path>
-                    </svg>
-
-                    <input
-                        type="search"
-                        placeholder="Search order or seller..."
-                        class="
-                            h-10 w-full
-                            rounded-xl
-                            border border-[#e6dfd5]
-                            bg-[#fcfbf9]
-                            pl-10 pr-4
-                            text-[10px]
-                            outline-none
-
-                            focus:border-[#c99a3d]
-                            focus:ring-4
-                            focus:ring-[#c99a3d]/10
-
-                            sm:w-[230px]
-                        "
-                    >
-
-                </div>
-
-
-                <select
-                    class="
-                        h-10
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-white
-                        px-3
-                        text-[10px]
-                        text-[#625a50]
-                        outline-none
-                        focus:border-[#c99a3d]
-                    "
-                >
-                    <option>All Statuses</option>
-                    <option>Processed</option>
-                    <option>Pending</option>
-                    <option>Adjusted</option>
-                </select>
-
-
-                <select
-                    class="
-                        h-10
-                        rounded-xl
-                        border border-[#e6dfd5]
-                        bg-white
-                        px-3
-                        text-[10px]
-                        text-[#625a50]
-                        outline-none
-                        focus:border-[#c99a3d]
-                    "
-                >
-                    <option>This Month</option>
-                    <option>Last Month</option>
-                    <option>This Quarter</option>
-                </select>
-
-            </div>
-
+            <span class="text-[8px] text-[#98a2b3]">Showing delivered orders only</span>
         </div>
 
-
-        {{-- TABLE --}}
         <div class="overflow-x-auto">
-
-            <table class="w-full min-w-[1180px] text-left">
-
+            <table class="commission-table">
                 <thead>
-                    <tr
-                        class="
-                            border-b border-[#eee8df]
-                            bg-[#fcfaf7]
-                            text-[9px] font-semibold
-                            uppercase tracking-[0.08em]
-                            text-[#9b9287]
-                        "
-                    >
-                        <th class="px-5 py-4">Order ID</th>
-                        <th class="px-5 py-4">Seller</th>
-                        <th class="px-5 py-4">Order Amount</th>
-                        <th class="px-5 py-4">Rate</th>
-                        <th class="px-5 py-4">Commission</th>
-                        <th class="px-5 py-4">Seller Net</th>
-                        <th class="px-5 py-4">Date</th>
-                        <th class="px-5 py-4">Status</th>
-                        <th class="px-5 py-4 text-right">Action</th>
+                    <tr>
+                        <th>Order</th>
+                        <th>Seller</th>
+                        <th>Subtotal</th>
+                        <th>Commission</th>
+                        <th>Delivered At</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
-
-
-                <tbody class="text-[11px]">
-
-                    {{-- ROW 1 --}}
-                    <tr class="border-b border-[#f1ece5] transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4 font-semibold text-[#4a433b]">
-                            #SRI-18472
-                        </td>
-
-                        <td class="px-5 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#f2f7f4]
-                                        text-[10px] font-bold
-                                        text-[#5a8069]
-                                    "
-                                >
-                                    TW
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#34302a]">
-                                        TechWorld Store
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Electronics
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱12,500
-                        </td>
-
-                        <td class="px-5 py-4 text-[#81786d]">
-                            10%
-                        </td>
-
-                        <td class="px-5 py-4 font-semibold text-[#a8731f]">
-                            ₱1,250
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱11,250
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Aug 18, 2026
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                08:30 AM
-                            </p>
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    rounded-full
-                                    bg-[#eef6f1]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#6a9f7b]"></span>
-                                Processed
-                            </span>
-                        </td>
-
-                        <td class="px-5 py-4 text-right">
-                            <button
-                                type="button"
-                                class="
-                                    rounded-lg
-                                    border border-[#e4ddd3]
-                                    px-3 py-2
-                                    text-[9px] font-semibold
-                                    text-[#675f55]
-                                    transition
-
-                                    hover:border-[#d3c09f]
-                                    hover:bg-[#fcf8f1]
-                                    hover:text-[#a6701b]
-                                "
-                            >
-                                View
-                            </button>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- ROW 2 --}}
-                    <tr class="border-b border-[#f1ece5] transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4 font-semibold text-[#4a433b]">
-                            #SRI-18471
-                        </td>
-
-                        <td class="px-5 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#f6f2f8]
-                                        text-[10px] font-bold
-                                        text-[#78698a]
-                                    "
-                                >
-                                    FH
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#34302a]">
-                                        Fashion Hub
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Fashion
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱8,990
-                        </td>
-
-                        <td class="px-5 py-4 text-[#81786d]">
-                            10%
-                        </td>
-
-                        <td class="px-5 py-4 font-semibold text-[#a8731f]">
-                            ₱899
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱8,091
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Aug 18, 2026
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                07:52 AM
-                            </p>
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#eadfc9]
-                                    bg-[#fbf6ec]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#ad781c]
-                                "
-                            >
-                                Pending
-                            </span>
-                        </td>
-
-                        <td class="px-5 py-4 text-right">
-                            <button
-                                type="button"
-                                class="
-                                    rounded-lg
-                                    border border-[#e4ddd3]
-                                    px-3 py-2
-                                    text-[9px] font-semibold
-                                    text-[#675f55]
-                                    transition
-
-                                    hover:border-[#d3c09f]
-                                    hover:bg-[#fcf8f1]
-                                    hover:text-[#a6701b]
-                                "
-                            >
-                                Review
-                            </button>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- ROW 3 --}}
-                    <tr class="border-b border-[#f1ece5] transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4 font-semibold text-[#4a433b]">
-                            #SRI-18470
-                        </td>
-
-                        <td class="px-5 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#f7f3ed]
-                                        text-[10px] font-bold
-                                        text-[#967554]
-                                    "
-                                >
-                                    HE
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#34302a]">
-                                        Home Essentials
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Home & Living
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱15,750
-                        </td>
-
-                        <td class="px-5 py-4 text-[#81786d]">
-                            10%
-                        </td>
-
-                        <td class="px-5 py-4 font-semibold text-[#a8731f]">
-                            ₱1,575
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱14,175
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Aug 17, 2026
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                06:14 PM
-                            </p>
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    rounded-full
-                                    bg-[#eef6f1]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#6a9f7b]"></span>
-                                Processed
-                            </span>
-                        </td>
-
-                        <td class="px-5 py-4 text-right">
-                            <button
-                                type="button"
-                                class="
-                                    rounded-lg
-                                    border border-[#e4ddd3]
-                                    px-3 py-2
-                                    text-[9px] font-semibold
-                                    text-[#675f55]
-                                    transition
-
-                                    hover:border-[#d3c09f]
-                                    hover:bg-[#fcf8f1]
-                                    hover:text-[#a6701b]
-                                "
-                            >
-                                View
-                            </button>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- ROW 4 --}}
-                    <tr class="border-b border-[#f1ece5] transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4 font-semibold text-[#4a433b]">
-                            #SRI-18469
-                        </td>
-
-                        <td class="px-5 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#f3f6f8]
-                                        text-[10px] font-bold
-                                        text-[#667f94]
-                                    "
-                                >
-                                    BE
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#34302a]">
-                                        Beauty Essentials
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Beauty
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱6,450
-                        </td>
-
-                        <td class="px-5 py-4 text-[#81786d]">
-                            10%
-                        </td>
-
-                        <td class="px-5 py-4 font-semibold text-[#a8731f]">
-                            ₱645
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱5,805
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Aug 17, 2026
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                02:20 PM
-                            </p>
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#e2dce8]
-                                    bg-[#f6f3f8]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#79698a]
-                                "
-                            >
-                                Adjusted
-                            </span>
-                        </td>
-
-                        <td class="px-5 py-4 text-right">
-                            <button
-                                type="button"
-                                class="
-                                    rounded-lg
-                                    border border-[#e4ddd3]
-                                    px-3 py-2
-                                    text-[9px] font-semibold
-                                    text-[#675f55]
-                                    transition
-
-                                    hover:border-[#d3c09f]
-                                    hover:bg-[#fcf8f1]
-                                    hover:text-[#a6701b]
-                                "
-                            >
-                                Details
-                            </button>
-                        </td>
-
-                    </tr>
-
-
-                    {{-- ROW 5 --}}
-                    <tr class="transition hover:bg-[#fdfbf8]">
-
-                        <td class="px-5 py-4 font-semibold text-[#4a433b]">
-                            #SRI-18468
-                        </td>
-
-                        <td class="px-5 py-4">
-
-                            <div class="flex items-center gap-3">
-
-                                <div
-                                    class="
-                                        grid h-9 w-9
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#f2f7f4]
-                                        text-[10px] font-bold
-                                        text-[#5a8069]
-                                    "
-                                >
-                                    GS
-                                </div>
-
-                                <div>
-                                    <p class="font-semibold text-[#34302a]">
-                                        Gadget Station
-                                    </p>
-
-                                    <p class="mt-1 text-[9px] text-[#978e83]">
-                                        Electronics
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱21,300
-                        </td>
-
-                        <td class="px-5 py-4 text-[#81786d]">
-                            10%
-                        </td>
-
-                        <td class="px-5 py-4 font-semibold text-[#a8731f]">
-                            ₱2,130
-                        </td>
-
-                        <td class="px-5 py-4 font-medium text-[#625a50]">
-                            ₱19,170
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <p class="font-medium text-[#625a50]">
-                                Aug 17, 2026
-                            </p>
-
-                            <p class="mt-1 text-[9px] text-[#978e83]">
-                                11:06 AM
-                            </p>
-                        </td>
-
-                        <td class="px-5 py-4">
-                            <span
-                                class="
-                                    inline-flex items-center gap-1.5
-                                    rounded-full
-                                    bg-[#eef6f1]
-                                    px-2.5 py-1.5
-                                    text-[9px] font-semibold
-                                    text-[#56816a]
-                                "
-                            >
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#6a9f7b]"></span>
-                                Processed
-                            </span>
-                        </td>
-
-                        <td class="px-5 py-4 text-right">
-                            <button
-                                type="button"
-                                class="
-                                    rounded-lg
-                                    border border-[#e4ddd3]
-                                    px-3 py-2
-                                    text-[9px] font-semibold
-                                    text-[#675f55]
-                                    transition
-
-                                    hover:border-[#d3c09f]
-                                    hover:bg-[#fcf8f1]
-                                    hover:text-[#a6701b]
-                                "
-                            >
-                                View
-                            </button>
-                        </td>
-
-                    </tr>
-
+                <tbody id="commissionRows">
+                    @forelse($rows as $row)
+                        @php
+                            $order = $row['order'];
+                            $sellerName = (string) ($row['seller'] ?? 'Seller');
+                            $subtotalValue = (float) ($row['subtotal'] ?? 0);
+                            $commissionValue = (float) ($row['commission'] ?? 0);
+                            $deliveredTimestamp = optional($order->delivered_at)->timestamp ?? 0;
+                        @endphp
+                        <tr
+                            data-commission-row
+                            data-order="{{ strtolower((string) $order->order_number) }}"
+                            data-seller="{{ strtolower($sellerName) }}"
+                            data-subtotal="{{ $subtotalValue }}"
+                            data-commission="{{ $commissionValue }}"
+                            data-delivered="{{ $deliveredTimestamp }}"
+                        >
+                            <td><span class="commission-order">{{ $order->order_number }}</span></td>
+                            <td>{{ $sellerName }}</td>
+                            <td class="commission-amount">₱{{ number_format($subtotalValue, 2) }}</td>
+                            <td class="commission-amount commission-earned">₱{{ number_format($commissionValue, 2) }}</td>
+                            <td>{{ $order->delivered_at?->format('M d, Y') ?: '—' }}</td>
+                            <td><span class="commission-delivered-badge">Delivered</span></td>
+                        </tr>
+                    @empty
+                        <tr data-empty-row>
+                            <td colspan="6" class="commission-empty">No delivered orders yet.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
-
             </table>
-
         </div>
 
-
-        {{-- PAGINATION --}}
-        <div
-            class="
-                flex flex-col gap-3
-                border-t border-[#eee8df]
-                px-5 py-4
-
-                sm:flex-row
-                sm:items-center
-                sm:justify-between
-            "
-        >
-
-            <p class="text-[10px] text-[#91887d]">
-                Showing
-                <span class="font-semibold text-[#5d554c]">1–5</span>
-                of
-                <span class="font-semibold text-[#5d554c]">286</span>
-                commission records
-            </p>
-
-
-            <div class="flex items-center gap-1.5">
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[#8c8479]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="m15 18-6-6 6-6"></path>
-                    </svg>
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        bg-[#c99128]
-                        text-[10px] font-semibold
-                        text-white
-                    "
-                >
-                    1
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[10px] font-semibold
-                        text-[#6f675d]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    2
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[10px] font-semibold
-                        text-[#6f675d]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    3
-                </button>
-
-
-                <button
-                    type="button"
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-lg
-                        border border-[#e6dfd5]
-                        text-[#8c8479]
-                        transition
-                        hover:border-[#d2c2a7]
-                        hover:bg-[#fcf8f1]
-                    "
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-
-            </div>
-
+        <div class="commission-table-footer">
+            <p id="commissionResultCount">Showing {{ count($rows) }} of {{ count($rows) }} delivered orders</p>
+            <p>Commission is recognized only for paid, delivered orders and is calculated from the merchandise subtotal. Delivery fees are tracked separately as rider earnings.</p>
         </div>
-
     </section>
 
+    {{-- RIDER PAYOUTS --}}
+    <section class="commission-surface mt-4 overflow-hidden">
+        <div class="commission-section-head">
+            <div>
+                <h3 class="commission-panel-title">Rider Payout Requests</h3>
+                <p class="commission-panel-copy">Requests reserve exact available rider-earning ledger entries; rejected requests release them back to the rider balance.</p>
+            </div>
 
-    <div class="h-5"></div>
+            <div class="payout-summary">
+                <span class="payout-chip pending">Pending {{ $pendingPayouts }}</span>
+                <span class="payout-chip approved">Approved {{ $approvedPayouts }}</span>
+                <span class="payout-chip paid">Paid {{ $paidPayouts }}</span>
+                @if($rejectedPayouts > 0)
+                    <span class="payout-chip">Rejected {{ $rejectedPayouts }}</span>
+                @endif
+            </div>
+        </div>
 
+        <div class="payout-list">
+            @forelse($payoutRequests as $payout)
+                @php
+                    $riderName = trim(($payout->courier?->first_name ?? '').' '.($payout->courier?->last_name ?? '')) ?: 'Rider';
+                    $status = strtolower((string) $payout->status);
+                @endphp
+
+                <article class="payout-row">
+                    <div>
+                        <p class="payout-rider">{{ $riderName }}</p>
+                        <p class="payout-date">{{ $payout->created_at?->format('M d, Y h:i A') ?: '—' }}</p>
+                    </div>
+
+                    <div>
+                        <p class="payout-amount">₱{{ number_format((float) $payout->amount, 2) }}</p>
+                    </div>
+
+                    <div>
+                        <span class="payout-status {{ $payoutTone($status) }}">{{ ucfirst($status) }}</span>
+                    </div>
+
+                    <div class="payout-actions">
+                        @if($status === 'pending')
+                            <form method="POST" action="{{ route('admin.commissions.payouts.approve', $payout) }}">
+                                @csrf
+                                <button class="payout-action-button payout-approve">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                        <path d="m8 12 2.5 2.5L16 9"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                    </svg>
+                                    Approve
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{{ route('admin.commissions.payouts.reject', $payout) }}" class="flex min-w-0 flex-1 gap-2">
+                                @csrf
+                                <input name="admin_note" required placeholder="Reason for rejection" class="payout-reason">
+                                <button class="payout-action-button payout-reject">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <path d="m9 9 6 6"></path>
+                                        <path d="m15 9-6 6"></path>
+                                    </svg>
+                                    Reject
+                                </button>
+                            </form>
+                        @elseif($status === 'approved')
+                            <form method="POST" action="{{ route('admin.commissions.payouts.paid', $payout) }}">
+                                @csrf
+                                <button class="payout-action-button payout-paid">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                        <path d="M4 7h16v10H4z"></path>
+                                        <path d="M8 12h8"></path>
+                                    </svg>
+                                    Mark Paid
+                                </button>
+                            </form>
+                        @else
+                            <span class="text-[8.5px] text-[#98a2b3]">No action required</span>
+                        @endif
+                    </div>
+                </article>
+            @empty
+                <div class="commission-empty-state">
+                    <span class="commission-empty-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"></path>
+                            <path d="M15 3v5h5"></path>
+                            <path d="M9 14h6"></path>
+                            <path d="M9 17h4"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <p class="commission-empty-title">No payout requests yet.</p>
+                        <p class="commission-empty-copy">Rider payout requests will appear here once created.</p>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+    </section>
 </div>
 
+<script>
+(function () {
+    /* Ledger filtering */
+    const body = document.getElementById('commissionRows');
+    const rows = Array.from(document.querySelectorAll('[data-commission-row]'));
+    const search = document.getElementById('commissionSearch');
+    const sort = document.getElementById('commissionSort');
+    const apply = document.getElementById('commissionApplyFilter');
+    const reset = document.getElementById('commissionResetFilter');
+    const count = document.getElementById('commissionResultCount');
+
+    const normalize = value => (value || '').toString().trim().toLowerCase();
+
+    function applyLedgerFilter() {
+        const query = normalize(search?.value);
+        const sortMode = sort?.value || 'default';
+
+        const visibleRows = rows.filter(row => {
+            const haystack = `${row.dataset.order || ''} ${row.dataset.seller || ''}`;
+            return !query || normalize(haystack).includes(query);
+        });
+
+        const sortedRows = [...visibleRows];
+
+        if (sortMode === 'commission_desc') {
+            sortedRows.sort((a,b) => Number(b.dataset.commission || 0) - Number(a.dataset.commission || 0));
+        } else if (sortMode === 'subtotal_desc') {
+            sortedRows.sort((a,b) => Number(b.dataset.subtotal || 0) - Number(a.dataset.subtotal || 0));
+        } else if (sortMode === 'latest') {
+            sortedRows.sort((a,b) => Number(b.dataset.delivered || 0) - Number(a.dataset.delivered || 0));
+        }
+
+        rows.forEach(row => {
+            row.hidden = !visibleRows.includes(row);
+        });
+
+        if (body && sortMode !== 'default') {
+            sortedRows.forEach(row => body.appendChild(row));
+        }
+
+        if (count) {
+            count.textContent = `Showing ${visibleRows.length} of ${rows.length} delivered orders`;
+        }
+    }
+
+    search?.addEventListener('input', applyLedgerFilter);
+    sort?.addEventListener('change', applyLedgerFilter);
+    apply?.addEventListener('click', applyLedgerFilter);
+
+    search?.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            applyLedgerFilter();
+        }
+    });
+
+    reset?.addEventListener('click', () => {
+        if (search) search.value = '';
+        if (sort) sort.value = 'default';
+
+        rows.forEach(row => {
+            row.hidden = false;
+            body?.appendChild(row);
+        });
+
+        if (count) {
+            count.textContent = `Showing ${rows.length} of ${rows.length} delivered orders`;
+        }
+    });
+
+    applyLedgerFilter();
+
+    /* Commission line chart — no external chart dependency. */
+    const rawData = @json($chartPayload);
+    const chartSvg = document.getElementById('commissionChartSvg');
+    const chartWrap = document.getElementById('commissionChartWrap');
+    const tooltip = document.getElementById('commissionChartTooltip');
+    const tooltipDate = document.getElementById('commissionChartTooltipDate');
+    const tooltipValue = document.getElementById('commissionChartTooltipValue');
+    const rangeButtons = Array.from(document.querySelectorAll('[data-commission-range]'));
+
+    if (!chartSvg || !chartWrap || !Array.isArray(rawData) || rawData.length === 0) return;
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const width = 1000;
+    const height = 236;
+    const margin = { top: 18, right: 18, bottom: 34, left: 54 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const phpCurrency = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' });
+    const shortCurrency = value => `₱${Number(value || 0).toLocaleString('en-PH', { maximumFractionDigits: 0 })}`;
+
+    function toLocalDate(dateText) {
+        const [year, month, day] = String(dateText).split('-').map(Number);
+        return new Date(year, (month || 1) - 1, day || 1, 12, 0, 0);
+    }
+
+    function dateKey(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    function addDays(date, amount) {
+        const next = new Date(date);
+        next.setDate(next.getDate() + amount);
+        return next;
+    }
+
+    function niceMaximum(value) {
+        const max = Math.max(1, Number(value || 0));
+        const magnitude = 10 ** Math.floor(Math.log10(max));
+        const normalized = max / magnitude;
+        let niceNormalized;
+
+        if (normalized <= 1) niceNormalized = 1;
+        else if (normalized <= 2) niceNormalized = 2;
+        else if (normalized <= 5) niceNormalized = 5;
+        else niceNormalized = 10;
+
+        return niceNormalized * magnitude;
+    }
+
+    function buildSeries(days) {
+        const grouped = rawData.reduce((map, item) => {
+            const key = String(item.date || '');
+            if (!key) return map;
+            map.set(key, (map.get(key) || 0) + Number(item.commission || 0));
+            return map;
+        }, new Map());
+
+        const today = new Date();
+        today.setHours(12, 0, 0, 0);
+
+        const latestDataDate = rawData.reduce((latest, item) => {
+            const value = toLocalDate(item.date);
+            return !latest || value > latest ? value : latest;
+        }, null);
+
+        const endDate = latestDataDate && latestDataDate > today ? latestDataDate : today;
+        const startDate = addDays(endDate, -(days - 1));
+        const series = [];
+
+        for (let cursor = new Date(startDate); cursor <= endDate; cursor = addDays(cursor, 1)) {
+            const key = dateKey(cursor);
+            series.push({
+                date: new Date(cursor),
+                key,
+                value: Number(grouped.get(key) || 0),
+            });
+        }
+
+        return series;
+    }
+
+    function createSvgElement(tag, attributes = {}) {
+        const el = document.createElementNS(SVG_NS, tag);
+        Object.entries(attributes).forEach(([key, value]) => el.setAttribute(key, value));
+        return el;
+    }
+
+    function smoothLinePath(points) {
+        if (!points.length) return '';
+        if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
+
+        let path = `M ${points[0].x} ${points[0].y}`;
+
+        for (let i = 0; i < points.length - 1; i += 1) {
+            const p0 = points[i - 1] || points[i];
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const p3 = points[i + 2] || p2;
+
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+            path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+        }
+
+        return path;
+    }
+
+    function renderChart(days) {
+        const series = buildSeries(days);
+        const maxValue = niceMaximum(Math.max(...series.map(item => item.value), 1));
+        const xFor = index => margin.left + (series.length <= 1 ? 0 : (index / (series.length - 1)) * innerWidth);
+        const yFor = value => margin.top + innerHeight - (Number(value || 0) / maxValue) * innerHeight;
+        const points = series.map((item, index) => ({ ...item, x: xFor(index), y: yFor(item.value) }));
+        const linePath = smoothLinePath(points);
+        const areaPath = `${linePath} L ${points[points.length - 1].x} ${margin.top + innerHeight} L ${points[0].x} ${margin.top + innerHeight} Z`;
+
+        chartSvg.replaceChildren();
+
+        /* Grid + Y labels */
+        for (let i = 0; i <= 4; i += 1) {
+            const ratio = i / 4;
+            const y = margin.top + innerHeight - ratio * innerHeight;
+            const value = maxValue * ratio;
+
+            chartSvg.appendChild(createSvgElement('line', {
+                x1: margin.left,
+                y1: y,
+                x2: width - margin.right,
+                y2: y,
+                stroke: '#edf0f3',
+                'stroke-width': '1',
+                'stroke-dasharray': i === 0 ? '0' : '3 4',
+            }));
+
+            const label = createSvgElement('text', {
+                x: margin.left - 12,
+                y: y + 3,
+                fill: '#98a2b3',
+                'font-size': '9',
+                'font-family': 'Poppins, sans-serif',
+                'text-anchor': 'end',
+            });
+            label.textContent = shortCurrency(value);
+            chartSvg.appendChild(label);
+        }
+
+        /* X labels */
+        const labelCount = Math.min(6, series.length);
+        const usedIndexes = new Set();
+        for (let i = 0; i < labelCount; i += 1) {
+            const index = labelCount === 1 ? 0 : Math.round((i / (labelCount - 1)) * (series.length - 1));
+            if (usedIndexes.has(index)) continue;
+            usedIndexes.add(index);
+
+            const point = points[index];
+            const label = createSvgElement('text', {
+                x: point.x,
+                y: height - 10,
+                fill: '#98a2b3',
+                'font-size': '9',
+                'font-family': 'Poppins, sans-serif',
+                'text-anchor': index === 0 ? 'start' : index === series.length - 1 ? 'end' : 'middle',
+            });
+            label.textContent = point.date.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' });
+            chartSvg.appendChild(label);
+        }
+
+        /* Area */
+        chartSvg.appendChild(createSvgElement('path', {
+            d: areaPath,
+            fill: '#d99a00',
+            'fill-opacity': '.08',
+            stroke: 'none',
+        }));
+
+        /* Line */
+        chartSvg.appendChild(createSvgElement('path', {
+            d: linePath,
+            fill: 'none',
+            stroke: '#d99a00',
+            'stroke-width': '2.4',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round',
+        }));
+
+        /* Visible points only where there is commission data. */
+        points.filter(point => point.value > 0).forEach(point => {
+            chartSvg.appendChild(createSvgElement('circle', {
+                cx: point.x,
+                cy: point.y,
+                r: '3.8',
+                fill: '#ffffff',
+                stroke: '#d99a00',
+                'stroke-width': '2.2',
+            }));
+        });
+
+        /* Hover state */
+        const hoverLine = createSvgElement('line', {
+            x1: margin.left,
+            y1: margin.top,
+            x2: margin.left,
+            y2: margin.top + innerHeight,
+            stroke: '#d99a00',
+            'stroke-width': '1',
+            'stroke-dasharray': '3 4',
+            opacity: '0',
+        });
+        const hoverDot = createSvgElement('circle', {
+            cx: margin.left,
+            cy: margin.top + innerHeight,
+            r: '5',
+            fill: '#ffffff',
+            stroke: '#d99a00',
+            'stroke-width': '2.5',
+            opacity: '0',
+        });
+        const hoverTarget = createSvgElement('rect', {
+            x: margin.left,
+            y: margin.top,
+            width: innerWidth,
+            height: innerHeight,
+            fill: 'transparent',
+            style: 'cursor:crosshair',
+        });
+
+        chartSvg.appendChild(hoverLine);
+        chartSvg.appendChild(hoverDot);
+        chartSvg.appendChild(hoverTarget);
+
+        const showPoint = point => {
+            hoverLine.setAttribute('x1', point.x);
+            hoverLine.setAttribute('x2', point.x);
+            hoverLine.setAttribute('opacity', '1');
+            hoverDot.setAttribute('cx', point.x);
+            hoverDot.setAttribute('cy', point.y);
+            hoverDot.setAttribute('opacity', '1');
+
+            if (tooltip && tooltipDate && tooltipValue) {
+                tooltipDate.textContent = point.date.toLocaleDateString('en-PH', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                });
+                tooltipValue.textContent = phpCurrency.format(point.value);
+                tooltip.style.left = `${(point.x / width) * 100}%`;
+                tooltip.style.top = `${(point.y / height) * 100}%`;
+                tooltip.classList.add('is-visible');
+                tooltip.setAttribute('aria-hidden', 'false');
+            }
+        };
+
+        hoverTarget.addEventListener('mousemove', event => {
+            const rect = chartSvg.getBoundingClientRect();
+            const relativeX = ((event.clientX - rect.left) / rect.width) * width;
+            const normalized = Math.max(0, Math.min(1, (relativeX - margin.left) / innerWidth));
+            const index = Math.round(normalized * (points.length - 1));
+            showPoint(points[index]);
+        });
+
+        hoverTarget.addEventListener('mouseleave', () => {
+            hoverLine.setAttribute('opacity', '0');
+            hoverDot.setAttribute('opacity', '0');
+            tooltip?.classList.remove('is-visible');
+            tooltip?.setAttribute('aria-hidden', 'true');
+        });
+
+        /* On first render, highlight the latest non-zero point for a polished default state. */
+        const latestNonZero = [...points].reverse().find(point => point.value > 0);
+        if (latestNonZero) showPoint(latestNonZero);
+    }
+
+    rangeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            rangeButtons.forEach(item => item.classList.toggle('is-active', item === button));
+            renderChart(Number(button.dataset.commissionRange || 30));
+        });
+    });
+
+    renderChart(30);
+})();
+</script>
 @endsection

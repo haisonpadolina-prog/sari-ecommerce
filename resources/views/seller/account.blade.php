@@ -850,6 +850,8 @@
     </div>
 </div>
 
+
+@include('components.support.complaint-form')
 @endsection
 
 

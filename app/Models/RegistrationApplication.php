@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RegistrationApplication extends Model
 {
     protected $fillable = [
         'role',
+        'logistics_account_id',
         'last_name',
         'first_name',
         'middle_initial',
@@ -48,6 +50,11 @@ class RegistrationApplication extends Model
         'approved_at' => 'datetime',
         'rejected_at' => 'datetime',
     ];
+
+    public function logistics(): BelongsTo
+    {
+        return $this->belongsTo(LogisticsAccount::class, 'logistics_account_id');
+    }
 
     public function fullName(): string
     {

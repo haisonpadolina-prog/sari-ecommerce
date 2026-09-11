@@ -9,6 +9,11 @@ use Illuminate\Validation\ValidationException;
 
 class MarketplaceOrderWorkflowService
 {
+    public function __construct(
+        private readonly FinancialFlowService $finance
+    ) {
+    }
+
     public function transition(
         MarketplaceOrder $order,
         string $expectedStatus,
@@ -52,7 +57,20 @@ class MarketplaceOrderWorkflowService
                 'status' => $newStatus,
             ]);
 
-            return $locked->fresh(['seller']);
+            if ($newStatus === 'delivered') {
+                $this->finance->recordCompletedOrder(
+                    $locked,
+                    'order_workflow_delivery'
+                );
+            }
+
+            return $locked->fresh([
+                'seller',
+                'commission',
+                'paymentTransactions',
+                'sellerSettlement',
+                'riderEarning',
+            ]);
         });
     }
 
