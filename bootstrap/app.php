@@ -4,6 +4,7 @@ use App\Http\Middleware\EnforcePlatformOperationalRules;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,11 +14,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        /*
-         * Central policy enforcement for the small set of public commerce
-         * actions controlled by Admin Platform Settings. The middleware
-         * no-ops for every unrelated route.
-         */
+
+        $middleware->trustProxies(
+            at: '*',
+            headers: Request::HEADER_X_FORWARDED_FOR |
+                Request::HEADER_X_FORWARDED_HOST |
+                Request::HEADER_X_FORWARDED_PORT |
+                Request::HEADER_X_FORWARDED_PROTO
+        );
+
         $middleware->appendToGroup(
             'web',
             EnforcePlatformOperationalRules::class
