@@ -47,6 +47,16 @@ class SellerAccount extends Model
         return $this->hasMany(ChatMessage::class, 'seller_account_id');
     }
 
+    public function orderCommissions(): HasMany
+    {
+        return $this->hasMany(OrderCommission::class, 'seller_account_id');
+    }
+
+    public function settlements(): HasMany
+    {
+        return $this->hasMany(SellerSettlement::class, 'seller_account_id');
+    }
+
     public function ensureRealtimeToken(): string
     {
         if (!$this->realtime_token) {

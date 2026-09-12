@@ -1,838 +1,1065 @@
 @extends('layouts.admin')
 
-@section('title', 'Chat / Messaging — SARI Admin')
-@section('page-title', 'Chat / Messaging')
+@section('title', 'Messages — SARI Admin')
+@section('page-title', 'Messages')
 
 @section('content')
-
-<style>
-    /*
-    |--------------------------------------------------------------------------
-    | SARI ADMIN CHAT — RESPONSIVE TYPOGRAPHY + CLEAN DEPTH
-    |--------------------------------------------------------------------------
-    | Visual-only layer. No routes, controllers, models or chat logic changed.
-    */
-    #sariAdminChatUi {
-        --sari-type-xs: clamp(10px, 0.56vw, 12px);
-        --sari-type-sm: clamp(11px, 0.66vw, 13px);
-        --sari-type-md: clamp(12px, 0.74vw, 14px);
-        --sari-type-lg: clamp(15px, 0.90vw, 18px);
-        --sari-type-xl: clamp(17px, 1.05vw, 21px);
-        --sari-line: #e8e3dc;
-        --sari-muted: #817a71;
-        --sari-surface: #ffffff;
-        --sari-soft: #faf9f7;
-        --sari-soft-2: #f7f6f3;
-        --sari-gold: #c99128;
-        font-size: var(--sari-type-md);
-    }
-
-    #sariAdminChatUi .sari-chat-heading {
-        font-size: var(--sari-type-lg) !important;
-        line-height: 1.25;
-        letter-spacing: -0.02em;
-    }
-
-    #sariAdminChatUi .sari-chat-body {
-        font-size: var(--sari-type-md) !important;
-        line-height: 1.55;
-    }
-
-    #sariAdminChatUi .sari-chat-small {
-        font-size: var(--sari-type-sm) !important;
-        line-height: 1.45;
-    }
-
-    #sariAdminChatUi .sari-chat-meta {
-        font-size: var(--sari-type-xs) !important;
-        line-height: 1.35;
-    }
-
-    #sariAdminChatUi .sari-chat-control {
-        font-size: var(--sari-type-sm) !important;
-    }
-
-    #sariAdminChatUi .sari-message-body {
-        font-size: var(--sari-type-md) !important;
-        line-height: 1.55 !important;
-    }
-
-    #sariAdminChatUi .sari-main-workspace {
-        box-shadow: 0 18px 48px rgba(31, 27, 22, 0.075);
-    }
-
-    #sariAdminChatUi .sari-side-panel {
-        background: #fbfbfa;
-    }
-
-    #sariAdminChatUi .sari-chat-stage {
-        background: #faf9f6;
-    }
-
-    #sariAdminChatUi .sari-detail-card {
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(31, 27, 22, 0.045);
-    }
-
-    #sariAdminChatUi .sari-composer {
-        box-shadow: 0 10px 28px rgba(31, 27, 22, 0.055);
-    }
-
-    #sariAdminChatUi .sari-message-card {
-        box-shadow: 0 7px 18px rgba(31, 27, 22, 0.055);
-    }
-
-    @media (max-width: 1023px) {
-        #sariAdminChatUi {
-            --sari-type-xs: clamp(10px, 1.05vw, 11px);
-            --sari-type-sm: clamp(11px, 1.2vw, 12.5px);
-            --sari-type-md: clamp(12px, 1.35vw, 14px);
-            --sari-type-lg: clamp(15px, 1.65vw, 18px);
+<div id="sariUniversalAdminMessages" class="mx-auto w-full max-w-[1840px]">
+    <style>
+        #sariUniversalAdminMessages {
+            --sari-gold: #D29A28;
+            --sari-gold-deep: #A97012;
+            --sari-ink: #28231d;
+            --sari-muted: #81796f;
+            --sari-line: #e8e2d9;
+            --sari-soft: #faf9f6;
+            --sari-soft-2: #f5f3ef;
+            --sari-green: #6F826A;
+            --sari-teal: #5F7873;
+            --sari-plum: #806F7F;
+            --sari-red: #B86556;
+            --sari-ivory: #FFF7E7;
+            font-size: 14px;
         }
-    }
 
-    @media (max-width: 640px) {
-        #sariAdminChatUi {
-            --sari-type-xs: 10px;
-            --sari-type-sm: 11.5px;
-            --sari-type-md: 13px;
-            --sari-type-lg: 16px;
+        #sariUniversalAdminMessages * {
+            scrollbar-width: thin;
+            scrollbar-color: #d9d2c8 transparent;
         }
-    }
-</style>
 
-<div id="sariAdminChatUi" class="mx-auto w-full max-w-[1800px]">
+        #sariUniversalAdminMessages .sari-shadow {
+            box-shadow: 0 18px 48px rgba(42, 34, 24, 0.07);
+        }
 
-    @php
-        /*
-        |--------------------------------------------------------------------------
-        | CHAT REACTION DISPLAY DATA
-        |--------------------------------------------------------------------------
-        |
-        | Read-only on the Admin screen. This does NOT replace or modify the old
-        | chat controller/backend. Seller reactions saved in chat_message_reactions
-        | are grouped here so Admin can actually see them under the correct message.
-        |
-        */
-        $adminReactionMap = collect();
+        #sariUniversalAdminMessages .sari-soft-shadow {
+            box-shadow: 0 8px 24px rgba(42, 34, 24, 0.05);
+        }
 
-        if (\Illuminate\Support\Facades\Schema::hasTable('chat_message_reactions') && isset($messages) && $messages->isNotEmpty()) {
-            $adminMessageIds = $messages->pluck('id')->filter()->values();
+        #sariUniversalAdminMessages .sari-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
 
-            if ($adminMessageIds->isNotEmpty()) {
-                $adminReactionMap = \Illuminate\Support\Facades\DB::table('chat_message_reactions')
-                    ->whereIn('chat_message_id', $adminMessageIds)
-                    ->orderBy('id')
-                    ->get()
-                    ->groupBy('chat_message_id');
+        #sariUniversalAdminMessages .sari-scroll::-webkit-scrollbar-thumb {
+            background: #d9d2c8;
+            border-radius: 999px;
+        }
+
+        #sariUniversalAdminMessages .sari-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #sariUniversalAdminMessages .sari-message-body {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        #sariUniversalAdminMessages .sari-role-admin { background:#fff4dd; color:#9a6815; border-color:#ecd5a7; }
+        #sariUniversalAdminMessages .sari-role-buyer,
+        #sariUniversalAdminMessages .sari-role-social_buyer { background:#f3f7fa; color:#5f7687; border-color:#dce6ed; }
+        #sariUniversalAdminMessages .sari-role-seller { background:#fff7ea; color:#986c20; border-color:#edd9b5; }
+        #sariUniversalAdminMessages .sari-role-logistics { background:#f2f7f6; color:#55736d; border-color:#d9e6e2; }
+        #sariUniversalAdminMessages .sari-role-rider { background:#f5f4f8; color:#74657f; border-color:#e2ddea; }
+
+        @media (max-width: 1279px) {
+            #sariUniversalAdminMessages .sari-context-panel {
+                display: none;
             }
         }
 
+        @media (max-width: 1023px) {
+            #sariUniversalAdminMessages .sari-message-grid {
+                grid-template-columns: 1fr !important;
+            }
 
-        $selectedChatRestriction = null;
-        $selectedChatBlocked = false;
-        $selectedModerationActions = collect();
+            #sariUniversalAdminMessages .sari-inbox-panel {
+                display: none;
+            }
 
-        if ($selectedSeller && \Illuminate\Support\Facades\Schema::hasTable('seller_chat_restrictions')) {
-            $selectedChatRestriction = \App\Models\SellerChatRestriction::query()
-                ->where('seller_account_id', $selectedSeller->id)
-                ->first();
-            $selectedChatBlocked = (bool) ($selectedChatRestriction?->is_blocked);
+            #sariUniversalAdminMessages[data-mobile-pane="inbox"] .sari-inbox-panel {
+                display: flex;
+            }
+
+            #sariUniversalAdminMessages[data-mobile-pane="inbox"] .sari-thread-panel {
+                display: none;
+            }
         }
+    </style>
 
-        if ($selectedSeller && \Illuminate\Support\Facades\Schema::hasTable('seller_chat_moderation_actions')) {
-            $selectedModerationActions = \App\Models\SellerChatModerationAction::query()
-                ->where('seller_account_id', $selectedSeller->id)
-                ->latest('created_at')
-                ->limit(5)
-                ->get();
-        }
-    @endphp
+    <div id="adminMessagingNotice" class="mb-4 hidden rounded-[16px] border px-4 py-3 text-[12px]"></div>
 
-    @if (session('success'))
-        <div class="mb-5 rounded-[18px] border border-[#d5e5dc] bg-[#f3f8f5] px-5 py-4 text-[12px] font-medium text-[#56816a]">{{ session('success') }}</div>
-    @endif
+    <section class="sari-shadow overflow-hidden rounded-[24px] border border-[#e8e2d9] bg-white">
+        <div class="sari-message-grid grid min-h-[720px] grid-cols-[330px_minmax(0,1fr)_300px]">
+            {{-- INBOX --}}
+            <aside class="sari-inbox-panel flex min-h-0 flex-col border-r border-[#ebe6df] bg-[#fbfaf8]">
+                <div class="border-b border-[#ebe6df] p-4">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9f7a3c]">SARI Communications</p>
+                            <h2 class="mt-1 text-[20px] font-bold tracking-[-0.03em] text-[#2c2721]">Admin Inbox</h2>
+                            <p class="mt-1 text-[11px] text-[#91887d]">Direct and report-support conversations</p>
+                        </div>
 
-    @if ($errors->any())
-        <div class="mb-5 rounded-[18px] border border-[#ead7d7] bg-[#fdf5f5] px-5 py-4 text-[12px] text-[#a45f5f]">{{ $errors->first() }}</div>
-    @endif
+                        <button id="adminNewConversationButton" type="button"
+                            class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#e5ded3] bg-white text-[#a97012] transition hover:border-[#d29a28] hover:bg-[#fff9ee]"
+                            aria-label="Start conversation">
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
 
-    {{-- WORKSPACE --}}
-    <section class="sari-main-workspace overflow-hidden rounded-[22px] border border-[#e7e2da] bg-white">
-        <div class="grid min-h-[690px] grid-cols-1 lg:grid-cols-[310px_1fr] 2xl:grid-cols-[320px_1fr_300px]">
+                    <div class="relative mt-4">
+                        <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#aaa197]" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+                        </svg>
+                        <input id="adminConversationSearch" type="search" placeholder="Search conversations..."
+                            class="h-11 w-full rounded-xl border border-[#e5dfd6] bg-white pl-10 pr-4 text-[12px] text-[#3f3932] outline-none transition placeholder:text-[#aaa197] focus:border-[#d29a28] focus:ring-4 focus:ring-[#d29a28]/10">
+                    </div>
 
-            {{-- SELLERS --}}
-            <aside class="sari-side-panel border-b border-[#eee8df] lg:border-b-0 lg:border-r">
-                <div class="border-b border-[#eee8df] p-4">
-                    <h3 class="sari-chat-heading font-bold text-[#2b261f]">Seller Conversations</h3>
-                    <p class="sari-chat-meta mt-1 text-[#948b7f]">{{ $sellers->count() }} seller account{{ $sellers->count() === 1 ? '' : 's' }}</p>
-                    <div class="relative mt-4"><input id="adminSellerSearch" type="search" placeholder="Search sellers..." class="sari-chat-control h-11 w-full rounded-xl border border-[#e5e0d9] bg-white px-4 text-[#3f3932] shadow-[0_5px_15px_rgba(31,27,22,0.035)] outline-none focus:border-[#c99a3d] focus:ring-4 focus:ring-[#c99a3d]/10"></div>
+                    <div id="adminConversationFilters" class="mt-3 flex flex-wrap gap-1.5">
+                        <button type="button" data-filter="all" class="rounded-full border border-[#d8c28e] bg-[#fff6df] px-3 py-1.5 text-[10px] font-semibold text-[#9b6c19]">All</button>
+                        <button type="button" data-filter="direct" class="rounded-full border border-[#e4ded6] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#71695f]">Direct</button>
+                        <button type="button" data-filter="report_support" class="rounded-full border border-[#e4ded6] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#71695f]">Support</button>
+                        <button type="button" data-filter="unread" class="rounded-full border border-[#e4ded6] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#71695f]">Unread</button>
+                    </div>
                 </div>
 
-                <div id="adminSellerList" class="max-h-[610px] overflow-y-auto">
-                    @forelse ($sellers as $seller)
-                        @php $active = $selectedSeller && $selectedSeller->id === $seller->id; @endphp
-                        <a href="{{ route('admin.messages', ['seller' => $seller->id]) }}" data-seller-row data-seller-name="{{ strtolower(($seller->store_name ?: '') . ' ' . $seller->email) }}" data-seller-id="{{ $seller->id }}" class="block w-full border-b border-[#f0ebe4] px-4 py-4 text-left transition {{ $active ? 'border-l-2 border-l-[#d99a1b] bg-[#fbf6ea]' : 'border-l-2 border-l-transparent hover:bg-[#f8f7f4]' }}">
-                            <div class="flex gap-3">
-                                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#f3f6f8] text-[10px] font-bold text-[#657f94]">{{ strtoupper(substr($seller->store_name ?: 'SS', 0, 2)) }}</div>
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex items-start justify-between gap-2"><div class="min-w-0"><p class="sari-chat-small truncate font-semibold text-[#312b25]">{{ $seller->store_name ?: $seller->email }}</p><p class="sari-chat-meta mt-0.5 truncate text-[#948b7f]">{{ $seller->email }}</p></div><span data-unread-badge class="{{ $seller->unread_messages_count ? 'grid' : 'hidden' }} h-5 min-w-[20px] place-items-center rounded-full bg-[#c99128] px-1.5 text-[10px] font-bold text-white">{{ $seller->unread_messages_count }}</span></div>
-                                    <p class="sari-chat-meta mt-2 text-[#8d857a]">{{ $seller->message_count }} message{{ $seller->message_count === 1 ? '' : 's' }} • {{ $seller->warning_count }} warning{{ $seller->warning_count === 1 ? '' : 's' }}</p>
-                                </div>
-                            </div>
-                        </a>
-                    @empty
-                        <div class="p-8 text-center text-[10px] text-[#91887d]">No seller accounts yet.</div>
-                    @endforelse
+                <div id="adminConversationList" class="sari-scroll min-h-0 flex-1 overflow-y-auto">
+                    <div class="p-5 text-center text-[11px] text-[#9a9186]">Loading conversations…</div>
+                </div>
+
+                <div class="border-t border-[#ebe6df] px-4 py-3">
+                    <div class="flex items-center justify-between gap-3">
+                        <span id="adminMessagingRefreshStatus" class="text-[10px] text-[#989084]">Auto-refresh enabled</span>
+                        <button id="adminRefreshInbox" type="button" class="text-[10px] font-semibold text-[#9e7020] hover:text-[#7d5715]">Refresh</button>
+                    </div>
                 </div>
             </aside>
 
-            {{-- ACTIVE CHAT --}}
-            <div class="flex min-h-[690px] flex-col">
-                @if ($selectedSeller)
-                    <div class="flex items-center justify-between gap-4 border-b border-[#eee8df] px-4 py-4 sm:px-5">
-                        <div class="flex items-center gap-3">
-                            <div class="grid h-11 w-11 place-items-center rounded-full bg-[#f3f6f8] text-[10px] font-bold text-[#657f94]">{{ strtoupper(substr($selectedSeller->store_name ?: 'SS', 0, 2)) }}</div>
-                            <div><p class="sari-chat-small font-bold text-[#2f2923]">{{ $selectedSeller->store_name ?: $selectedSeller->email }}</p><div class="mt-1 flex items-center gap-2"><span class="sari-chat-meta text-[#8e8579]">Seller</span><span class="h-1 w-1 rounded-full bg-[#c8c1b8]"></span><span class="sari-chat-meta font-medium {{ $selectedSeller->isSuspended() ? 'text-[#a96565]' : 'text-[#56816a]' }}">{{ ucfirst($selectedSeller->account_status) }}</span></div></div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            @if($selectedChatBlocked)
-                                <span class="sari-chat-meta rounded-full border border-[#e9cccc] bg-[#fff5f5] px-3 py-1.5 font-semibold text-[#a65f5f]">Chat Blocked</span>
-                            @endif
+            {{-- THREAD --}}
+            <main class="sari-thread-panel flex min-h-0 min-w-0 flex-col bg-white">
+                <header class="flex min-h-[76px] items-center justify-between gap-4 border-b border-[#ebe6df] px-4 py-3 sm:px-5">
+                    <div class="flex min-w-0 items-center gap-3">
+                        <button id="adminMobileBack" type="button"
+                            class="hidden h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#e5ded5] text-[#6c645a] lg:hidden"
+                            aria-label="Back to inbox">
+                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="m15 18-6-6 6-6"/>
+                            </svg>
+                        </button>
 
-                            <div class="relative">
-                                <button id="adminSellerActionsToggle" type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-[#e6dfd5] bg-white text-[#6d655b] transition hover:bg-[#fcf8f1]" aria-label="Seller actions" aria-expanded="false">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><circle cx="5" cy="12" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle></svg>
-                                </button>
-
-                                <div id="adminSellerActionsMenu" class="absolute right-0 top-12 z-50 hidden w-[230px] overflow-hidden rounded-[15px] border border-[#e7e0d7] bg-white p-1.5 shadow-[0_18px_50px_rgba(41,31,20,.14)]">
-                                    <a href="{{ route('admin.seller-compliance') }}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 sari-chat-small font-medium text-[#514a42] hover:bg-[#faf7f2]">
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 4 7v5c0 5 3.5 7.7 8 9 4.5-1.3 8-4 8-9V7l-8-4Z"></path><path d="m9 12 2 2 4-4"></path></svg>
-                                        Open Compliance
-                                    </a>
-                                    <div class="my-1 border-t border-[#f0ebe4]"></div>
-                                    <button type="button" data-admin-action-open="warning" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left sari-chat-small font-medium text-[#8c651f] hover:bg-[#fff9ee]">
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 20h18L12 3Z"></path><path d="M12 9v5"></path><path d="M12 17h.01"></path></svg>
-                                        Issue Warning
-                                    </button>
-                                    <button type="button" data-admin-action-open="suspend" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left sari-chat-small font-medium text-[#765f87] hover:bg-[#f8f4fa]">
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 8 8 8"></path></svg>
-                                        Suspend 30 Days
-                                    </button>
-                                    <div class="my-1 border-t border-[#f0ebe4]"></div>
-                                    @if($selectedChatBlocked)
-                                        <form method="POST" action="{{ route('admin.messages.unblock', $selectedSeller) }}">
-                                            @csrf
-                                            <button class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left sari-chat-small font-medium text-[#56816a] hover:bg-[#f3f8f5]">
-                                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 7.5-2"></path></svg>
-                                                Unblock Seller Chat
-                                            </button>
-                                        </form>
-                                    @else
-                                        <button type="button" data-admin-action-open="block" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left sari-chat-small font-medium text-[#a65f5f] hover:bg-[#fff6f6]">
-                                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
-                                            Block Seller Chat
-                                        </button>
-                                    @endif
-                                </div>
+                        <div id="adminThreadAvatar" class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#f2f4f5] text-[11px] font-bold text-[#677986]">SA</div>
+                        <div class="min-w-0">
+                            <h3 id="adminThreadTitle" class="truncate text-[14px] font-bold text-[#302a24]">Select a conversation</h3>
+                            <div class="mt-1 flex flex-wrap items-center gap-2">
+                                <span id="adminThreadTypeBadge" class="hidden rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em]"></span>
+                                <span id="adminThreadSubtitle" class="truncate text-[10px] text-[#948b80]">Choose a thread from the inbox or start a new one.</span>
                             </div>
                         </div>
                     </div>
 
-                    <div id="adminChatMessages" class="sari-chat-stage flex-1 overflow-y-auto px-4 py-5 sm:px-6">
-                        @if ($messages->isEmpty())
-                            <div id="adminEmptyChat" class="flex h-full min-h-[360px] items-center justify-center text-center"><div><div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#f3f6f8] text-[#657f94]"><svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path></svg></div><p class="sari-chat-small mt-4 font-bold text-[#4f473e]">No messages yet</p><p class="sari-chat-meta mt-1 text-[#958c80]">Send the first message to this seller.</p></div></div>
-                        @endif
-
-                        @foreach ($messages as $message)
-                            @php $isBotMessage = (bool) ($message->is_bot ?? false); @endphp
-                            <div data-message-id="{{ $message->id }}" data-message-is-bot="{{ $isBotMessage ? 'true' : 'false' }}" class="mt-5 {{ $message->sender_role === 'admin' ? 'flex justify-end' : 'flex items-end gap-2.5' }}">
-                                @if ($message->sender_role === 'seller')<div class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f3f6f8] text-[8px] font-bold text-[#657f94]">{{ strtoupper(substr($selectedSeller->store_name ?: 'SS', 0, 2)) }}</div>@endif
-                                <div class="max-w-[78%] sm:max-w-[65%]">
-                                    @if ($message->body)
-                                        @if($isBotMessage)<div class="sari-chat-meta mb-1.5 text-right font-semibold uppercase tracking-[.08em] text-[#6e899c]">SARI Support Bot</div>@endif
-                                        <div class="sari-message-body sari-message-card rounded-[16px] px-4 py-3 {{ $message->sender_role === 'admin' ? ($isBotMessage ? 'rounded-br-[5px] border border-[#dce8ef] bg-[#f4f8fa] text-[#526a79]' : 'rounded-br-[5px] bg-[#c99128] text-white') : 'rounded-bl-[5px] border border-[#e9e2d9] bg-white text-[#5f574d]' }}">{{ $message->body }}</div>
-                                    @endif
-                                    @if ($message->attachment_path)
-                                        <div class="mt-2 overflow-hidden rounded-[14px] border border-[#e9e2d9] bg-white p-2">
-                                            @if ($message->attachmentIsImage())<a href="{{ route('chat.attachments.show', $message) }}" target="_blank"><img src="{{ route('chat.attachments.show', $message) }}" alt="{{ $message->attachment_name }}" class="max-h-[260px] w-full rounded-xl object-contain"></a>
-                                            @else<a href="{{ route('chat.attachments.show', $message) }}" target="_blank" class="sari-chat-small block rounded-xl bg-[#fcfaf7] p-3 font-semibold text-[#50483f]">{{ $message->attachment_name }}</a>@endif
-                                        </div>
-                                    @endif
-                                    @php
-                                        $adminMessageReactionRows = collect($adminReactionMap->get($message->id, collect()));
-                                        $adminMessageReactionGroups = $adminMessageReactionRows
-                                            ->groupBy('emoji')
-                                            ->map(fn ($items, $emoji) => [
-                                                'emoji' => $emoji,
-                                                'count' => $items->count(),
-                                            ])
-                                            ->values();
-                                    @endphp
-
-                                    <div
-                                        data-admin-reaction-summary
-                                        class="mt-2 flex flex-wrap items-center gap-1 {{ $message->sender_role === 'admin' ? 'justify-end' : 'justify-start' }}"
-                                    >
-                                        @foreach ($adminMessageReactionGroups as $reaction)
-                                            <span class="sari-chat-meta inline-flex h-6 items-center gap-1 rounded-full border border-[#e7e0d7] bg-white px-2 text-[#6f675d] shadow-sm">
-                                                <span class="text-[12px] leading-none">{{ $reaction['emoji'] }}</span>
-                                                <span class="font-semibold">{{ $reaction['count'] }}</span>
-                                            </span>
-                                        @endforeach
-                                    </div>
-
-                                    <p
-                                        data-message-time
-                                        data-sent-at="{{ $message->created_at?->toIso8601String() }}"
-                                        class="sari-chat-meta mt-1.5 {{ $message->sender_role === 'admin' ? 'text-right' : '' }} text-[#9c9388]"
-                                        title="{{ $message->created_at?->format('M d, Y h:i A') }}"
-                                    >
-                                        {{ $message->created_at?->format('h:i A') }}
-                                    </p>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="flex shrink-0 items-center gap-2">
+                        <span id="adminThreadStatus" class="hidden rounded-full border border-[#dde6df] bg-[#f4f8f5] px-2.5 py-1 text-[9px] font-semibold text-[#5f7866]">Active</span>
                     </div>
+                </header>
 
-                    @if($selectedModerationActions->isNotEmpty())
-                        <div class="border-t border-[#eee8df] bg-[#fcfbf9] px-4 py-3">
-                            <div class="flex flex-wrap items-center gap-2">
-                                <span class="sari-chat-meta font-semibold uppercase tracking-[.08em] text-[#9a9186]">Recent Admin Actions</span>
-                                @foreach($selectedModerationActions->take(3) as $action)
-                                    <span class="sari-chat-meta rounded-full border border-[#e8e1d8] bg-white px-2.5 py-1 text-[#6f675d]" title="{{ $action->reason }}">{{ str_replace('_', ' ', ucfirst($action->action_type)) }} · {{ $action->created_at?->format('M d, h:i A') }}</span>
-                                @endforeach
+                <div id="adminThreadMessages" class="sari-scroll flex-1 overflow-y-auto bg-[#faf9f6] px-4 py-5 sm:px-6">
+                    <div class="flex h-full min-h-[420px] items-center justify-center text-center">
+                        <div class="max-w-[340px]">
+                            <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl border border-[#e4ded6] bg-white text-[#8d7d68]">
+                                <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"/>
+                                </svg>
                             </div>
-                        </div>
-                    @endif
-
-                    <div class="border-t border-[#eee8df] bg-white p-4">
-                        <form id="adminChatForm" method="POST" action="{{ route('admin.messages.send', $selectedSeller) }}" enctype="multipart/form-data" class="sari-composer rounded-[16px] border border-[#e4dfd8] bg-white p-3.5 transition focus-within:border-[#c99a3d] focus-within:ring-4 focus-within:ring-[#c99a3d]/10">
-                            @csrf
-                            <textarea id="adminChatInput" name="message" rows="3" placeholder="Write a message to seller..." class="sari-chat-body w-full resize-none bg-transparent leading-6 text-[#3e3831] outline-none placeholder:text-[#aaa197]"></textarea>
-                            <div id="adminAttachmentName" class="sari-chat-small mt-2 hidden rounded-xl border border-[#e8e1d7] bg-white px-3 py-2 text-[#62594e]"></div>
-                            <div class="mt-2 flex flex-col gap-3 border-t border-[#eee8df] pt-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div class="flex items-center gap-2"><label class="grid h-9 w-9 cursor-pointer place-items-center rounded-lg text-[#756d63] hover:bg-[#f5efe5] hover:text-[#a8731f]"><input id="adminChatAttachment" name="attachment" type="file" accept="image/*,.pdf,.doc,.docx,.zip,.txt" class="hidden"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path></svg></label><span class="sari-chat-meta text-[#958c80]">Attachments up to 8 MB</span></div>
-                                <button id="adminChatSend" type="submit" class="sari-chat-control inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#c99128] px-5 font-semibold text-white shadow-[0_7px_18px_rgba(201,145,40,0.17)] hover:bg-[#b47e1e] disabled:opacity-50">Send Message<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 4 17 8-17 8 3-8-3-8Z"></path><path d="M7 12h14"></path></svg></button>
-                            </div>
-                        </form>
-                        <p id="adminChatError" class="sari-chat-small mt-2 hidden text-[#a45f5f]"></p>
-                    </div>
-                @else
-                    <div class="flex flex-1 items-center justify-center p-8 text-center"><div><p class="sari-chat-heading font-bold text-[#4f473e]">No seller selected</p><p class="sari-chat-small mt-2 text-[#958c80]">A seller conversation will appear here.</p></div></div>
-                @endif
-            </div>
-
-            {{-- DETAILS --}}
-            <aside class="sari-side-panel hidden border-l border-[#eee8df] 2xl:block">
-                <div class="border-b border-[#eee8df] p-5"><p class="sari-chat-small font-bold text-[#312b25]">Seller Details</p><p class="sari-chat-meta mt-1 text-[#948b7f]">Support and compliance context</p></div>
-                @if ($selectedSeller)
-                    <div class="p-5">
-                        <div class="flex flex-col items-center text-center"><div class="grid h-16 w-16 place-items-center rounded-full bg-[#f3f6f8] text-[16px] font-bold text-[#657f94]">{{ strtoupper(substr($selectedSeller->store_name ?: 'SS', 0, 2)) }}</div><p class="sari-chat-heading mt-3 font-bold text-[#302a24]">{{ $selectedSeller->store_name ?: $selectedSeller->email }}</p><p class="sari-chat-meta mt-1 text-[#92897e]">{{ $selectedSeller->email }}</p><span class="sari-chat-meta mt-3 rounded-full border border-[#dce5ed] bg-[#f4f7fa] px-2.5 py-1 font-semibold text-[#617d96]">Seller</span></div>
-                        <div class="mt-5 space-y-3">
-                            <div class="sari-detail-card rounded-[14px] border border-[#e8e3dc] p-4"><p class="sari-chat-meta text-[#948b7f]">Account Status</p><p class="sari-chat-small mt-2 font-semibold {{ $selectedSeller->isSuspended() ? 'text-[#a96565]' : 'text-[#56816a]' }}">{{ ucfirst($selectedSeller->account_status) }}</p></div>
-                            <div class="sari-detail-card rounded-[14px] border border-[#e8e3dc] p-4"><p class="sari-chat-meta text-[#948b7f]">Warnings</p><p class="sari-chat-heading mt-2 font-bold text-[#a8731f]">{{ $selectedSeller->warning_count }} / 3</p></div>
-                            @if ($selectedSeller->isSuspended())<div class="rounded-[14px] border border-[#ead8d8] bg-[#fcf6f6] p-4"><p class="text-[9px] text-[#a96565]">Suspended Until</p><p class="mt-2 text-[10px] font-semibold text-[#7f5151]">{{ $selectedSeller->suspended_until?->format('M d, Y') }}</p></div>@endif
+                            <p class="mt-4 text-[13px] font-bold text-[#554d44]">No conversation selected</p>
+                            <p class="mt-1.5 text-[11px] leading-5 text-[#948b80]">Admin can start a direct conversation with a user, or open a report-specific support thread.</p>
                         </div>
                     </div>
-                @endif
+                </div>
+
+                <div id="adminComposerWrap" class="hidden border-t border-[#ebe6df] bg-white p-4">
+                    <form id="adminUniversalMessageForm" class="sari-soft-shadow rounded-[16px] border border-[#e4ded6] bg-white p-3 transition focus-within:border-[#d29a28] focus-within:ring-4 focus-within:ring-[#d29a28]/10">
+                        <textarea id="adminUniversalMessageInput" rows="3" maxlength="3000"
+                            placeholder="Write a message…"
+                            class="w-full resize-none bg-transparent px-1 text-[13px] leading-6 text-[#3f3932] outline-none placeholder:text-[#aaa197]"></textarea>
+
+                        <div class="mt-2 flex items-center justify-between gap-3 border-t border-[#eee8e0] pt-3">
+                            <div>
+                                <p class="text-[10px] text-[#958c80]">Text messages only in the current universal backend.</p>
+                                <p id="adminMessageCounter" class="mt-0.5 text-[9px] text-[#aaa197]">0 / 3000</p>
+                            </div>
+
+                            <button id="adminUniversalSendButton" type="submit"
+                                class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#d29a28] px-5 text-[11px] font-semibold text-white shadow-[0_7px_18px_rgba(166,112,18,0.16)] transition hover:bg-[#b8801d] disabled:cursor-not-allowed disabled:opacity-50">
+                                Send
+                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="m4 4 17 8-17 8 3-8-3-8Z"/><path d="M7 12h14"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                    <p id="adminComposerError" class="mt-2 hidden text-[10px] text-[#b15f55]"></p>
+                </div>
+            </main>
+
+            {{-- CONTEXT --}}
+            <aside class="sari-context-panel min-h-0 border-l border-[#ebe6df] bg-[#fbfaf8]">
+                <div class="border-b border-[#ebe6df] p-5">
+                    <p class="text-[12px] font-bold text-[#332d27]">Conversation Context</p>
+                    <p class="mt-1 text-[10px] leading-4 text-[#948b80]">Role, participants, and report linkage</p>
+                </div>
+
+                <div id="adminConversationContext" class="sari-scroll max-h-[640px] overflow-y-auto p-5">
+                    <div class="rounded-[16px] border border-[#e7e1d8] bg-white p-4 text-[11px] leading-5 text-[#8e857a]">
+                        Select a conversation to view its context.
+                    </div>
+                </div>
+
+                <div class="border-t border-[#ebe6df] p-5">
+                    <div class="rounded-[16px] border border-[#e8e0d3] bg-[#fffaf0] p-4">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.1em] text-[#9c742d]">Access Rule</p>
+                        <p class="mt-2 text-[10px] leading-5 text-[#7d7060]">This inbox shows conversations where Admin is an actual participant. Private user-to-user conversations are not automatically inserted into Admin chat.</p>
+                    </div>
+                </div>
             </aside>
         </div>
     </section>
-    <div class="h-5"></div>
-</div>
 
-
-@if($selectedSeller)
-    <div id="adminChatActionModal" class="fixed inset-0 z-[140] hidden items-center justify-center bg-black/35 p-4 backdrop-blur-[2px]">
-        <div class="w-full max-w-[520px] rounded-[22px] border border-[#e8e1d8] bg-white p-5 shadow-[0_30px_90px_rgba(38,30,18,.22)] sm:p-6">
-            <div class="flex items-start justify-between gap-4">
+    {{-- NEW CONVERSATION MODAL --}}
+    <div id="adminNewConversationModal" class="fixed inset-0 z-[160] hidden items-center justify-center bg-black/35 p-4 backdrop-blur-[2px]">
+        <div class="w-full max-w-[760px] overflow-hidden rounded-[24px] border border-[#e8e1d8] bg-white shadow-[0_30px_90px_rgba(38,30,18,.22)]">
+            <div class="flex items-start justify-between gap-4 border-b border-[#ece6de] p-5 sm:p-6">
                 <div>
-                    <p class="sari-chat-meta font-bold uppercase tracking-[.12em] text-[#9b7340]">Seller Action</p>
-                    <h3 id="adminChatActionTitle" class="mt-2 text-[clamp(18px,1.1vw,22px)] font-bold tracking-[-.03em] text-[#302a24]">Confirm Action</h3>
-                    <p id="adminChatActionText" class="sari-chat-body mt-2 text-[#81786c]"></p>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#9c742d]">New Conversation</p>
+                    <h3 class="mt-1 text-[20px] font-bold tracking-[-0.03em] text-[#302a24]">Choose a user or support report</h3>
+                    <p class="mt-1 text-[11px] text-[#90877c]">All contacts and reports below come from the current database-backed messaging API.</p>
                 </div>
-                <button type="button" data-admin-action-close class="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#e7e0d7] text-[#756d63] hover:bg-[#faf7f2]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m7 7 10 10"></path><path d="m17 7-10 10"></path></svg>
+                <button id="adminNewConversationClose" type="button" class="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#e7e0d7] text-[#756d63] hover:bg-[#faf7f2]">
+                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="m7 7 10 10M17 7 7 17"/>
+                    </svg>
                 </button>
             </div>
-            <form id="adminChatActionForm" method="POST" class="mt-5">
-                @csrf
-                <label class="sari-chat-small mb-2 block font-semibold text-[#5d554c]">Reason</label>
-                <textarea id="adminChatActionReason" name="reason" rows="4" required minlength="5" maxlength="1000" class="sari-chat-body w-full resize-none rounded-[14px] border border-[#e6dfd5] bg-[#fcfbf9] px-4 py-3 leading-6 text-[#403a33] outline-none focus:border-[#c99128] focus:ring-4 focus:ring-[#c99128]/10" placeholder="Enter a clear reason for this action..."></textarea>
-                <div class="mt-5 flex justify-end gap-2">
-                    <button type="button" data-admin-action-close class="sari-chat-control h-10 rounded-xl border border-[#e6dfd5] bg-white px-4 font-semibold text-[#62594e] hover:bg-[#faf8f4]">Cancel</button>
-                    <button id="adminChatActionSubmit" type="submit" class="sari-chat-control h-10 rounded-xl bg-[#c99128] px-5 font-semibold text-white hover:bg-[#b47e1e]">Confirm</button>
+
+            <div class="border-b border-[#ece6de] px-5 pt-4 sm:px-6">
+                <div class="flex gap-2">
+                    <button type="button" data-new-tab="contacts" class="border-b-2 border-[#d29a28] px-1 pb-3 text-[11px] font-semibold text-[#9e7020]">Direct message</button>
+                    <button type="button" data-new-tab="reports" class="border-b-2 border-transparent px-1 pb-3 text-[11px] font-semibold text-[#81796f]">Report support</button>
                 </div>
-            </form>
+            </div>
+
+            <div class="p-5 sm:p-6">
+                <div id="adminNewContactsPanel">
+                    <div class="grid gap-3 sm:grid-cols-[180px_1fr]">
+                        <select id="adminNewRoleFilter" class="h-11 rounded-xl border border-[#e3ddd4] bg-white px-3 text-[11px] text-[#504940] outline-none focus:border-[#d29a28]">
+                            <option value="all">All roles</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="social_buyer">Social Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="logistics">Logistics</option>
+                            <option value="rider">Rider</option>
+                        </select>
+                        <input id="adminNewContactSearch" type="search" placeholder="Search name or email…"
+                            class="h-11 rounded-xl border border-[#e3ddd4] bg-white px-4 text-[11px] text-[#504940] outline-none placeholder:text-[#aaa197] focus:border-[#d29a28]">
+                    </div>
+
+                    <div id="adminNewContactsList" class="sari-scroll mt-4 max-h-[420px] overflow-y-auto rounded-[16px] border border-[#ece6de]">
+                        <div class="p-6 text-center text-[11px] text-[#9b9185]">Loading contacts…</div>
+                    </div>
+                </div>
+
+                <div id="adminNewReportsPanel" class="hidden">
+                    <div class="mb-3 rounded-[14px] border border-[#eadfca] bg-[#fffaf0] px-4 py-3 text-[10px] leading-5 text-[#7d7060]">
+                        Opening a report creates or reuses the report-specific Admin support conversation for that complaint.
+                    </div>
+                    <div id="adminNewReportsList" class="sari-scroll max-h-[460px] overflow-y-auto rounded-[16px] border border-[#ece6de]">
+                        <div class="p-6 text-center text-[11px] text-[#9b9185]">Loading reports…</div>
+                    </div>
+                </div>
+
+                <p id="adminNewConversationError" class="mt-3 hidden text-[10px] text-[#b15f55]"></p>
+            </div>
         </div>
     </div>
-@endif
-
+</div>
 @endsection
 
 @push('scripts')
-@php
-    $selectedSellerNameForJs = $selectedSeller
-        ? ($selectedSeller->store_name ?: $selectedSeller->email)
-        : null;
-
-    $adminActionUrlsForJs = [];
-
-    if ($selectedSeller) {
-        $adminActionUrlsForJs = [
-            'warning' => route('admin.messages.warning', $selectedSeller),
-            'suspend' => route('admin.messages.suspend', $selectedSeller),
-            'block' => route('admin.messages.block', $selectedSeller),
-        ];
-    }
-@endphp
 <script>
-(function () {
-    window.__SARI_ADMIN_MESSAGES_CLEANUP__?.();
+(() => {
+    const root = document.getElementById('sariUniversalAdminMessages');
+    if (!root) return;
 
-    window.__SARI_ADMIN_ACTIVE_SELLER_ID__ =
-        {{ $selectedSeller ? (int) $selectedSeller->id : 'null' }};
-    const selectedSellerId = {{ $selectedSeller ? (int) $selectedSeller->id : 'null' }};
-    const channelName = @json($adminChannel);
-    const messages = document.getElementById('adminChatMessages');
-    const form = document.getElementById('adminChatForm');
-    const input = document.getElementById('adminChatInput');
-    const attachment = document.getElementById('adminChatAttachment');
-    const attachmentName = document.getElementById('adminAttachmentName');
-    const sendButton = document.getElementById('adminChatSend');
-    const errorBox = document.getElementById('adminChatError');
-    const status = document.getElementById('adminRealtimeStatus');
-    const actionsToggle = document.getElementById('adminSellerActionsToggle');
-    const actionsMenu = document.getElementById('adminSellerActionsMenu');
-    const actionModal = document.getElementById('adminChatActionModal');
-    const actionForm = document.getElementById('adminChatActionForm');
-    const actionTitle = document.getElementById('adminChatActionTitle');
-    const actionText = document.getElementById('adminChatActionText');
-    const actionReason = document.getElementById('adminChatActionReason');
-    const actionSubmit = document.getElementById('adminChatActionSubmit');
-    const selectedSellerName = @json($selectedSellerNameForJs);
-    const adminActionUrls = @json($adminActionUrlsForJs);
+    window.__SARI_UNIVERSAL_ADMIN_MESSAGES_CLEANUP__?.();
 
-    const escapeHtml = (value) => String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-    const scrollBottom = () => { if (messages) messages.scrollTop = messages.scrollHeight; };
-    let reactionSyncBusy = false;
-    const adminMessageIntervals = [];
-
-    const onDocumentKeydown = function (event) {
-        if (event.key === 'Escape') {
-            closeActionModal();
-            closeSellerActionsMenu();
-        }
+    const endpoints = {
+        me: @json(route('messaging.api.me')),
+        connections: @json(route('messaging.api.connections')),
+        conversations: @json(route('messaging.api.index')),
+        direct: @json(route('messaging.api.direct')),
+        reportTemplate: @json(route('messaging.api.report-support', ['complaint' => '__COMPLAINT__'])),
+        showTemplate: @json(route('messaging.api.show', ['conversation' => '__CONVERSATION__'])),
+        sendTemplate: @json(route('messaging.api.send', ['conversation' => '__CONVERSATION__'])),
+        readTemplate: @json(route('messaging.api.read', ['conversation' => '__CONVERSATION__'])),
     };
 
-    const onVisibilityChange = function () {
-        if (!document.hidden) {
-            syncAdminReactionSummaries();
-        }
+    const csrf = @json(csrf_token());
+
+    const state = {
+        actor: null,
+        conversations: [],
+        contacts: [],
+        reports: [],
+        selectedUuid: null,
+        selectedDetail: null,
+        filter: 'all',
+        search: '',
+        newTab: 'contacts',
+        loadingThread: false,
+        destroyed: false,
     };
 
-    function formatLocalMessageTime(value) {
+    const elements = {
+        notice: document.getElementById('adminMessagingNotice'),
+        conversationList: document.getElementById('adminConversationList'),
+        conversationSearch: document.getElementById('adminConversationSearch'),
+        filters: document.getElementById('adminConversationFilters'),
+        refreshInbox: document.getElementById('adminRefreshInbox'),
+        refreshStatus: document.getElementById('adminMessagingRefreshStatus'),
+        mobileBack: document.getElementById('adminMobileBack'),
+        threadAvatar: document.getElementById('adminThreadAvatar'),
+        threadTitle: document.getElementById('adminThreadTitle'),
+        threadTypeBadge: document.getElementById('adminThreadTypeBadge'),
+        threadSubtitle: document.getElementById('adminThreadSubtitle'),
+        threadStatus: document.getElementById('adminThreadStatus'),
+        threadMessages: document.getElementById('adminThreadMessages'),
+        composerWrap: document.getElementById('adminComposerWrap'),
+        form: document.getElementById('adminUniversalMessageForm'),
+        input: document.getElementById('adminUniversalMessageInput'),
+        counter: document.getElementById('adminMessageCounter'),
+        sendButton: document.getElementById('adminUniversalSendButton'),
+        composerError: document.getElementById('adminComposerError'),
+        context: document.getElementById('adminConversationContext'),
+        newButton: document.getElementById('adminNewConversationButton'),
+        modal: document.getElementById('adminNewConversationModal'),
+        modalClose: document.getElementById('adminNewConversationClose'),
+        newTabs: document.querySelectorAll('[data-new-tab]'),
+        contactsPanel: document.getElementById('adminNewContactsPanel'),
+        reportsPanel: document.getElementById('adminNewReportsPanel'),
+        roleFilter: document.getElementById('adminNewRoleFilter'),
+        contactSearch: document.getElementById('adminNewContactSearch'),
+        contactsList: document.getElementById('adminNewContactsList'),
+        reportsList: document.getElementById('adminNewReportsList'),
+        modalError: document.getElementById('adminNewConversationError'),
+    };
+
+    const intervals = [];
+    const escapeHtml = (value) => String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+    const normalizeRole = (role) => role === 'social_buyer' ? 'Social Buyer' : role
+        ? role.replaceAll('_', ' ').replace(/\b\w/g, c => c.toUpperCase())
+        : 'User';
+
+    const initials = (value) => {
+        const parts = String(value || 'SARI').trim().split(/\s+/).filter(Boolean);
+        return ((parts[0]?.[0] || 'S') + (parts[1]?.[0] || parts[0]?.[1] || 'A')).toUpperCase();
+    };
+
+    const humanDate = (value) => {
         if (!value) return '';
-
         const date = new Date(value);
         if (Number.isNaN(date.getTime())) return '';
+        const now = new Date();
+        const sameDay = date.toDateString() === now.toDateString();
 
+        return new Intl.DateTimeFormat('en-PH', sameDay
+            ? { hour: 'numeric', minute: '2-digit', hour12: true }
+            : { month: 'short', day: 'numeric' }
+        ).format(date);
+    };
+
+    const fullDate = (value) => {
+        if (!value) return '';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
         return new Intl.DateTimeFormat('en-PH', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
             hour: 'numeric',
             minute: '2-digit',
             hour12: true,
         }).format(date);
-    }
-
-    function refreshVisibleMessageTimes(root = document) {
-        root.querySelectorAll('[data-message-time][data-sent-at]').forEach((element) => {
-            const formatted = formatLocalMessageTime(element.dataset.sentAt);
-            if (formatted) element.textContent = formatted;
-        });
-    }
-
-    scrollBottom();
-    refreshVisibleMessageTimes();
-
-    function closeSellerActionsMenu() {
-        actionsMenu?.classList.add('hidden');
-        actionsToggle?.setAttribute('aria-expanded', 'false');
-    }
-
-    actionsToggle?.addEventListener('click', function (event) {
-        event.stopPropagation();
-        const willOpen = actionsMenu?.classList.contains('hidden');
-        actionsMenu?.classList.toggle('hidden', !willOpen);
-        actionsToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-    });
-
-    actionsMenu?.addEventListener('click', function (event) { event.stopPropagation(); });
-    document.addEventListener('click', closeSellerActionsMenu);
-
-    const actionConfig = {
-        warning: {
-            title: 'Issue Seller Warning',
-            text: `Issue a compliance warning to ${selectedSellerName || 'this seller'}. Warning 3/3 automatically triggers a 30-day suspension.`,
-            button: 'Issue Warning',
-            buttonClass: 'sari-chat-control h-10 rounded-xl bg-[#b98527] px-5 font-semibold text-white hover:bg-[#a9761e]',
-        },
-        suspend: {
-            title: 'Suspend Seller for 30 Days',
-            text: `Temporarily suspend ${selectedSellerName || 'this seller'} from seller privileges for 30 days. The official support history remains available.`,
-            button: 'Suspend Seller',
-            buttonClass: 'sari-chat-control h-10 rounded-xl bg-[#765f87] px-5 font-semibold text-white hover:bg-[#665174]',
-        },
-        block: {
-            title: 'Block Seller Chat',
-            text: `Stop ${selectedSellerName || 'this seller'} from sending new messages to SARI Admin. Previous messages remain visible and Admin can unblock the chat later.`,
-            button: 'Block Chat',
-            buttonClass: 'sari-chat-control h-10 rounded-xl bg-[#a65f5f] px-5 font-semibold text-white hover:bg-[#935252]',
-        },
     };
 
-    document.querySelectorAll('[data-admin-action-open]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const action = this.dataset.adminActionOpen;
-            const config = actionConfig[action];
-            const url = adminActionUrls[action];
-            if (!config || !url || !actionModal || !actionForm) return;
-            actionForm.action = url;
-            actionTitle.textContent = config.title;
-            actionText.textContent = config.text;
-            actionSubmit.textContent = config.button;
-            actionSubmit.className = config.buttonClass;
-            actionReason.value = '';
-            closeSellerActionsMenu();
-            actionModal.classList.remove('hidden');
-            actionModal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
-            window.setTimeout(() => actionReason?.focus(), 50);
-        });
-    });
+    const urlFor = (template, token, value) => template.replace(token, encodeURIComponent(value));
 
-    function closeActionModal() {
-        actionModal?.classList.add('hidden');
-        actionModal?.classList.remove('flex');
-        document.body.classList.remove('overflow-hidden');
+    function showNotice(message, type = 'error') {
+        if (!elements.notice) return;
+        elements.notice.textContent = message;
+        elements.notice.className = 'mb-4 rounded-[16px] border px-4 py-3 text-[12px]';
+
+        if (type === 'success') {
+            elements.notice.classList.add('border-[#d7e3d9]', 'bg-[#f3f8f4]', 'text-[#617667]');
+        } else {
+            elements.notice.classList.add('border-[#ead8d4]', 'bg-[#fdf6f4]', 'text-[#a45f55]');
+        }
+
+        elements.notice.classList.remove('hidden');
+        window.setTimeout(() => elements.notice?.classList.add('hidden'), 4200);
     }
 
-    document.querySelectorAll('[data-admin-action-close]').forEach(button => button.addEventListener('click', closeActionModal));
-    actionModal?.addEventListener('click', event => { if (event.target === actionModal) closeActionModal(); });
-    document.addEventListener('keydown', onDocumentKeydown);
+    async function request(url, options = {}) {
+        const config = {
+            method: options.method || 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+                ...(options.method && options.method !== 'GET' ? { 'X-CSRF-TOKEN': csrf } : {}),
+                ...(options.headers || {}),
+            },
+            credentials: 'same-origin',
+            cache: 'no-store',
+        };
 
-    async function pingAdminPresence() {
+        if (options.body) {
+            config.body = JSON.stringify(options.body);
+        }
+
+        const response = await fetch(url, config);
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            const validation = payload.errors
+                ? Object.values(payload.errors).flat().find(Boolean)
+                : null;
+            throw new Error(validation || payload.message || 'Request failed.');
+        }
+
+        return payload;
+    }
+
+    function otherParticipants(conversation) {
+        const actor = state.actor;
+        return (conversation?.participants || []).filter(participant => {
+            if (!actor) return true;
+            return !(participant.role === actor.role && Number(participant.id) === Number(actor.id));
+        });
+    }
+
+    function conversationDisplayName(conversation) {
+        const others = otherParticipants(conversation);
+        if (conversation?.type === 'report_support') {
+            const reporter = others.find(row => row.role !== 'admin');
+            return reporter?.label || conversation?.subject || 'Report Support';
+        }
+        return others.map(row => row.label).filter(Boolean).join(', ')
+            || conversation?.subject
+            || 'Conversation';
+    }
+
+    function conversationRole(conversation) {
+        const others = otherParticipants(conversation);
+        if (conversation?.type === 'report_support') {
+            return 'report_support';
+        }
+        return others[0]?.role || 'user';
+    }
+
+    function roleBadge(role) {
+        const label = role === 'report_support' ? 'Support' : normalizeRole(role);
+        const cls = role === 'report_support'
+            ? 'border-[#ead8bb] bg-[#fff8eb] text-[#956c24]'
+            : `sari-role-${role}`;
+
+        return `<span class="inline-flex rounded-full border px-2 py-0.5 text-[9px] font-semibold ${cls}">${escapeHtml(label)}</span>`;
+    }
+
+    function renderConversationList() {
+        if (!elements.conversationList) return;
+
+        const query = state.search.trim().toLowerCase();
+        const filtered = state.conversations.filter(conversation => {
+            if (state.filter === 'direct' && conversation.type !== 'direct') return false;
+            if (state.filter === 'report_support' && conversation.type !== 'report_support') return false;
+            if (state.filter === 'unread' && Number(conversation.unread_count || 0) < 1) return false;
+
+            if (!query) return true;
+
+            const haystack = [
+                conversationDisplayName(conversation),
+                conversation.subject,
+                conversation.type,
+                ...(conversation.participants || []).map(row => `${row.label || ''} ${row.role || ''}`)
+            ].join(' ').toLowerCase();
+
+            return haystack.includes(query);
+        });
+
+        if (!filtered.length) {
+            elements.conversationList.innerHTML = `
+                <div class="p-8 text-center">
+                    <div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl border border-[#e6e0d8] bg-white text-[#93877a]">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7">
+                            <path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"/>
+                        </svg>
+                    </div>
+                    <p class="mt-3 text-[11px] font-semibold text-[#5d554c]">No matching conversations</p>
+                    <p class="mt-1 text-[10px] leading-4 text-[#968d82]">Start a direct message or open report support.</p>
+                </div>
+            `;
+            return;
+        }
+
+        elements.conversationList.innerHTML = filtered.map(conversation => {
+            const name = conversationDisplayName(conversation);
+            const role = conversationRole(conversation);
+            const selected = conversation.uuid === state.selectedUuid;
+            const unread = Number(conversation.unread_count || 0);
+            const lastMessage = conversation.last_message;
+            const preview = lastMessage?.body || (lastMessage?.attachment ? 'Attachment' : 'No messages yet');
+            const time = humanDate(conversation.last_message_at || lastMessage?.created_at || conversation.created_at);
+
+            return `
+                <button type="button" data-conversation-uuid="${escapeHtml(conversation.uuid)}"
+                    class="w-full border-b border-[#eee9e2] border-l-2 px-4 py-4 text-left transition ${
+                        selected
+                            ? 'border-l-[#d29a28] bg-[#fff8ea]'
+                            : 'border-l-transparent hover:bg-white'
+                    }">
+                    <div class="flex gap-3">
+                        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full ${
+                            role === 'report_support' ? 'bg-[#fff0d4] text-[#9b6b1c]' : 'bg-[#f0f3f4] text-[#657985]'
+                        } text-[10px] font-bold">${escapeHtml(initials(name))}</div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-start justify-between gap-2">
+                                <div class="min-w-0">
+                                    <p class="truncate text-[11px] font-bold text-[#332d27]">${escapeHtml(name)}</p>
+                                    <div class="mt-1">${roleBadge(role)}</div>
+                                </div>
+                                <div class="flex shrink-0 flex-col items-end gap-1">
+                                    <span class="text-[9px] text-[#9b9286]">${escapeHtml(time)}</span>
+                                    ${unread > 0 ? `<span class="grid min-w-[20px] place-items-center rounded-full bg-[#d29a28] px-1.5 py-0.5 text-[9px] font-bold text-white">${unread}</span>` : ''}
+                                </div>
+                            </div>
+                            <p class="mt-2 truncate text-[10px] text-[#8d857b]">${escapeHtml(preview)}</p>
+                        </div>
+                    </div>
+                </button>
+            `;
+        }).join('');
+
+        elements.conversationList.querySelectorAll('[data-conversation-uuid]').forEach(button => {
+            button.addEventListener('click', () => selectConversation(button.dataset.conversationUuid));
+        });
+    }
+
+    function renderThread(detail) {
+        const conversation = detail?.conversation;
+        if (!conversation) return;
+
+        const name = conversationDisplayName(conversation);
+        const role = conversationRole(conversation);
+        const participantRoles = otherParticipants(conversation).map(row => normalizeRole(row.role)).join(', ');
+
+        elements.threadAvatar.textContent = initials(name);
+        elements.threadTitle.textContent = name;
+        elements.threadSubtitle.textContent = conversation.type === 'report_support'
+            ? `Report support${conversation.context?.id ? ` · Complaint #${conversation.context.id}` : ''}`
+            : (participantRoles || 'Direct conversation');
+
+        elements.threadTypeBadge.textContent = conversation.type === 'report_support' ? 'Support' : 'Direct';
+        elements.threadTypeBadge.className = `rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] ${
+            conversation.type === 'report_support'
+                ? 'border-[#ead8bb] bg-[#fff8eb] text-[#956c24]'
+                : 'border-[#dfe5e7] bg-[#f4f6f7] text-[#657985]'
+        }`;
+
+        elements.threadTypeBadge.classList.remove('hidden');
+        elements.threadStatus.textContent = conversation.status ? normalizeRole(conversation.status) : 'Active';
+        elements.threadStatus.classList.remove('hidden');
+        elements.composerWrap.classList.toggle('hidden', conversation.status !== 'active');
+
+        const messages = detail.messages || [];
+
+        if (!messages.length) {
+            elements.threadMessages.innerHTML = `
+                <div class="flex h-full min-h-[420px] items-center justify-center text-center">
+                    <div>
+                        <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl border border-[#e4ded6] bg-white text-[#8d7d68]">
+                            <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"/>
+                            </svg>
+                        </div>
+                        <p class="mt-4 text-[12px] font-bold text-[#554d44]">No messages yet</p>
+                        <p class="mt-1 text-[10px] text-[#948b80]">Send the first message in this conversation.</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            elements.threadMessages.innerHTML = messages.map(message => {
+                const mine = state.actor
+                    && message.sender_role === state.actor.role
+                    && Number(message.sender_id) === Number(state.actor.id);
+
+                const sender = message.sender || normalizeRole(message.sender_role);
+                const body = message.body || '';
+                const time = fullDate(message.created_at);
+
+                return `
+                    <div class="mb-5 ${mine ? 'flex justify-end' : 'flex items-end gap-2.5'}" data-message-id="${escapeHtml(message.id)}">
+                        ${mine ? '' : `<div class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[8px] font-bold text-[#6c7d87] shadow-sm">${escapeHtml(initials(sender))}</div>`}
+                        <div class="max-w-[82%] sm:max-w-[68%]">
+                            ${mine ? '' : `<div class="mb-1.5 flex items-center gap-2"><span class="text-[9px] font-semibold text-[#746c62]">${escapeHtml(sender)}</span>${roleBadge(message.sender_role)}</div>`}
+                            ${body ? `<div class="sari-message-body rounded-[16px] px-4 py-3 text-[12px] leading-5 shadow-[0_7px_18px_rgba(31,27,22,.045)] ${
+                                mine
+                                    ? 'rounded-br-[5px] bg-[#d29a28] text-white'
+                                    : 'rounded-bl-[5px] border border-[#e7e1d8] bg-white text-[#554d44]'
+                            }">${escapeHtml(body)}</div>` : ''}
+                            ${message.attachment ? `<div class="mt-2 rounded-xl border border-[#e7e1d8] bg-white px-3 py-2 text-[10px] text-[#746b61]">Attachment metadata exists for this message.</div>` : ''}
+                            <p class="mt-1.5 text-[9px] text-[#9b9286] ${mine ? 'text-right' : ''}">${escapeHtml(time)}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        renderContext(detail);
+        requestAnimationFrame(() => {
+            elements.threadMessages.scrollTop = elements.threadMessages.scrollHeight;
+        });
+    }
+
+    function renderContext(detail) {
+        const conversation = detail?.conversation;
+        if (!conversation) return;
+
+        const participants = detail.participants || conversation.participants || [];
+        const supportBlock = conversation.type === 'report_support' && conversation.context?.id
+            ? `
+                <div class="sari-soft-shadow rounded-[16px] border border-[#eadfca] bg-[#fffaf0] p-4">
+                    <p class="text-[9px] font-bold uppercase tracking-[0.1em] text-[#9b742f]">Report Context</p>
+                    <p class="mt-2 text-[12px] font-bold text-[#4c4339]">Platform Complaint #${escapeHtml(conversation.context.id)}</p>
+                    <p class="mt-1 text-[10px] leading-4 text-[#81776a]">This support thread is tied to the report and is separate from ordinary direct chat.</p>
+                </div>
+            `
+            : '';
+
+        elements.context.innerHTML = `
+            ${supportBlock}
+            <div class="${supportBlock ? 'mt-4' : ''} rounded-[16px] border border-[#e7e1d8] bg-white p-4">
+                <p class="text-[9px] font-bold uppercase tracking-[0.1em] text-[#948777]">Conversation</p>
+                <dl class="mt-3 space-y-3">
+                    <div class="flex items-start justify-between gap-3">
+                        <dt class="text-[10px] text-[#978e83]">Type</dt>
+                        <dd class="text-right text-[10px] font-semibold text-[#4e473f]">${escapeHtml(conversation.type === 'report_support' ? 'Report Support' : 'Direct')}</dd>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <dt class="text-[10px] text-[#978e83]">Status</dt>
+                        <dd class="text-right text-[10px] font-semibold text-[#5f7866]">${escapeHtml(normalizeRole(conversation.status || 'active'))}</dd>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <dt class="text-[10px] text-[#978e83]">UUID</dt>
+                        <dd class="max-w-[170px] break-all text-right text-[9px] font-medium text-[#6f675d]">${escapeHtml(conversation.uuid)}</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="mt-4">
+                <p class="mb-2 text-[9px] font-bold uppercase tracking-[0.1em] text-[#948777]">Participants</p>
+                <div class="space-y-2">
+                    ${participants.map(participant => `
+                        <div class="rounded-[14px] border border-[#e7e1d8] bg-white p-3">
+                            <div class="flex items-center gap-3">
+                                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#f2f4f5] text-[9px] font-bold text-[#657985]">${escapeHtml(initials(participant.label || normalizeRole(participant.role)))}</div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate text-[10px] font-semibold text-[#4f473e]">${escapeHtml(participant.label || normalizeRole(participant.role))}</p>
+                                    <div class="mt-1">${roleBadge(participant.role)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    async function loadInbox({ preserveSelection = true, silent = false } = {}) {
+        if (!silent) {
+            elements.refreshStatus.textContent = 'Refreshing…';
+        }
+
         try {
-            await fetch(@json(route('admin.messages.presence')), {
+            const payload = await request(endpoints.conversations);
+            state.conversations = Array.isArray(payload.conversations) ? payload.conversations : [];
+
+            if (!preserveSelection && state.conversations.length) {
+                state.selectedUuid = state.conversations[0].uuid;
+            }
+
+            renderConversationList();
+
+            if (!silent) {
+                elements.refreshStatus.textContent = 'Updated just now';
+                window.setTimeout(() => {
+                    if (!state.destroyed) elements.refreshStatus.textContent = 'Auto-refresh enabled';
+                }, 1800);
+            }
+        } catch (error) {
+            if (!silent) showNotice(error.message);
+            elements.refreshStatus.textContent = 'Refresh failed';
+        }
+    }
+
+    async function loadConnections() {
+        const payload = await request(endpoints.connections);
+        state.actor = payload.actor || state.actor;
+        state.contacts = Array.isArray(payload.contacts) ? payload.contacts : [];
+        state.reports = Array.isArray(payload.reports) ? payload.reports : [];
+        renderNewContacts();
+        renderReports();
+    }
+
+    async function loadActor() {
+        const payload = await request(endpoints.me);
+        state.actor = payload.actor || null;
+    }
+
+    async function selectConversation(uuid, { pushState = true, silent = false } = {}) {
+        if (!uuid || state.loadingThread) return;
+
+        state.loadingThread = true;
+        state.selectedUuid = uuid;
+        renderConversationList();
+
+        if (!silent) {
+            elements.threadMessages.innerHTML = '<div class="p-8 text-center text-[11px] text-[#968d82]">Loading conversation…</div>';
+        }
+
+        try {
+            const payload = await request(urlFor(endpoints.showTemplate, '__CONVERSATION__', uuid));
+            state.selectedDetail = payload;
+            renderThread(payload);
+
+            await request(urlFor(endpoints.readTemplate, '__CONVERSATION__', uuid), {
                 method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': @json(csrf_token()),
-                    'Accept': 'application/json',
-                },
-            });
-        } catch (_) {}
-    }
+            }).catch(() => null);
 
-    pingAdminPresence();
-    adminMessageIntervals.push(window.setInterval(pingAdminPresence, 60000));
-
-    function markAdminSupportOffline() {
-        try {
-            const data = new FormData();
-            data.append('_token', @json(csrf_token()));
-            data.append('online', '0');
-            navigator.sendBeacon(@json(route('admin.messages.presence')), data);
-        } catch (_) {}
-    }
-
-    window.addEventListener('pagehide', markAdminSupportOffline);
-
-    document.getElementById('adminSellerSearch')?.addEventListener('input', function () {
-        const q = this.value.trim().toLowerCase();
-        document.querySelectorAll('[data-seller-row]').forEach(row => row.classList.toggle('hidden', q && !row.dataset.sellerName.includes(q)));
-    });
-
-    attachment?.addEventListener('change', function () {
-        const file = this.files?.[0]; attachmentName.classList.toggle('hidden', !file); attachmentName.textContent = file ? `Attached: ${file.name}` : '';
-    });
-
-    function bumpUnread(sellerId) {
-        const row = document.querySelector(`[data-seller-row][data-seller-id="${sellerId}"]`);
-        if (!row) return;
-        const badge = row.querySelector('[data-unread-badge]');
-        if (!badge) return;
-        const next = Number(badge.textContent || 0) + 1;
-        badge.textContent = next; badge.classList.remove('hidden'); badge.classList.add('grid');
-    }
-
-    async function markSellerThreadRead(sellerId, fallbackCount = 0) {
-        if (!sellerId) {
-            return;
-        }
-
-        const row = document.querySelector(
-            `[data-seller-row][data-seller-id="${sellerId}"]`
-        );
-
-        const badge = row?.querySelector(
-            '[data-unread-badge]'
-        );
-
-        const unreadBefore =
-            Number(badge?.textContent || fallbackCount || 0);
-
-        try {
-            const response = await fetch(
-                `/admin/messages/${sellerId}/read`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN':
-                            @json(csrf_token()),
-                        'Accept': 'application/json'
-                    }
-                }
+            state.conversations = state.conversations.map(row => row.uuid === uuid
+                ? { ...row, unread_count: 0 }
+                : row
             );
+            renderConversationList();
 
-            if (!response.ok) {
-                return;
+            if (pushState) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('conversation', uuid);
+                window.history.replaceState({}, '', url.toString());
             }
 
-            if (badge) {
-                badge.textContent = '0';
-                badge.classList.add('hidden');
-                badge.classList.remove('grid');
-            }
-
-            window.dispatchEvent(
-                new CustomEvent(
-                    'sari:admin-thread-read',
-                    {
-                        detail: {
-                            sellerId: Number(sellerId),
-                            count: unreadBefore
-                        }
-                    }
-                )
-            );
+            root.dataset.mobilePane = 'thread';
         } catch (error) {
-            console.error(
-                'Unable to mark admin chat as read.',
-                error
-            );
-        }
-    }
-
-
-    function appendMessage(data) {
-        if (!data) return;
-        if (Number(data.seller_id) !== Number(selectedSellerId)) {
-            if (data.sender_role === 'seller') bumpUnread(data.seller_id);
-            return;
-        }
-        if (!messages || document.querySelector(`[data-message-id="${data.id}"]`)) return;
-        document.getElementById('adminEmptyChat')?.remove();
-        const mine = data.sender_role === 'admin';
-        const isBot = Boolean(data.is_bot);
-        const wrapper = document.createElement('div'); wrapper.dataset.messageId = data.id; wrapper.dataset.messageIsBot = isBot ? 'true' : 'false'; wrapper.className = `mt-5 ${mine ? 'flex justify-end' : 'flex items-end gap-2.5'}`;
-        let attach = '';
-        if (data.attachment_url) {
-            attach = (data.attachment_mime || '').startsWith('image/')
-                ? `<div class="mt-2 overflow-hidden rounded-[14px] border border-[#e9e2d9] bg-white p-2"><a href="${escapeHtml(data.attachment_url)}" target="_blank"><img src="${escapeHtml(data.attachment_url)}" alt="${escapeHtml(data.attachment_name)}" class="max-h-[260px] w-full rounded-xl object-contain"></a></div>`
-                : `<div class="mt-2 rounded-[14px] border border-[#e9e2d9] bg-white p-2"><a href="${escapeHtml(data.attachment_url)}" target="_blank" class="sari-chat-small block rounded-xl bg-[#fcfaf7] p-3 font-semibold text-[#50483f]">${escapeHtml(data.attachment_name || 'Attachment')}</a></div>`;
-        }
-        const sentAt = data.created_at || data.created_at_iso || data.sent_at || '';
-        const initialTime = sentAt ? formatLocalMessageTime(sentAt) : escapeHtml(data.time || '');
-
-        wrapper.innerHTML = `${mine ? '' : '<div class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f3f6f8] text-[8px] font-bold text-[#657f94]">SE</div>'}<div class="max-w-[78%] sm:max-w-[65%]">${isBot ? '<div class="sari-chat-meta mb-1.5 text-right font-semibold uppercase tracking-[.08em] text-[#6e899c]">SARI Support Bot</div>' : ''}${data.body ? `<div class="sari-message-body sari-message-card rounded-[16px] px-4 py-3 ${mine ? (isBot ? 'rounded-br-[5px] border border-[#dce8ef] bg-[#f4f8fa] text-[#526a79]' : 'rounded-br-[5px] bg-[#c99128] text-white') : 'rounded-bl-[5px] border border-[#e9e2d9] bg-white text-[#5f574d]'}">${escapeHtml(data.body)}</div>` : ''}${attach}<div data-admin-reaction-summary class="mt-2 flex flex-wrap items-center gap-1 ${mine ? 'justify-end' : 'justify-start'}"></div><p data-message-time ${sentAt ? `data-sent-at="${escapeHtml(sentAt)}"` : ''} class="mt-1.5 ${mine ? 'text-right' : ''} sari-chat-meta text-[#9c9388]">${initialTime}</p></div>`;
-        messages.appendChild(wrapper);
-        refreshVisibleMessageTimes(wrapper);
-        scrollBottom();
-        if (!mine) {
-            markSellerThreadRead(
-                selectedSellerId,
-                1
-            );
-        }
-    }
-
-    async function syncAdminReactionSummaries() {
-        if (!selectedSellerId || reactionSyncBusy || document.hidden) return;
-
-        reactionSyncBusy = true;
-
-        try {
-            const syncUrl = new URL(window.location.href);
-            syncUrl.searchParams.set('_reaction_sync', Date.now().toString());
-
-            const response = await fetch(syncUrl.toString(), {
-                method: 'GET',
-                headers: {
-                    'Accept': 'text/html',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Cache-Control': 'no-cache',
-                },
-                cache: 'no-store',
-            });
-
-            if (!response.ok) return;
-
-            const html = await response.text();
-            const remoteDocument = new DOMParser().parseFromString(html, 'text/html');
-
-            remoteDocument.querySelectorAll('[data-message-id]').forEach((remoteMessage) => {
-                const messageId = remoteMessage.dataset.messageId;
-                if (!messageId) return;
-
-                const localMessage = document.querySelector(`[data-message-id="${CSS.escape(messageId)}"]`);
-                if (!localMessage) return;
-
-                const remoteSummary = remoteMessage.querySelector('[data-admin-reaction-summary]');
-                const localSummary = localMessage.querySelector('[data-admin-reaction-summary]');
-
-                if (remoteSummary && localSummary && localSummary.innerHTML !== remoteSummary.innerHTML) {
-                    localSummary.innerHTML = remoteSummary.innerHTML;
-                }
-            });
-        } catch (error) {
-            console.debug('Reaction display sync skipped.', error);
+            showNotice(error.message);
         } finally {
-            reactionSyncBusy = false;
+            state.loadingThread = false;
         }
     }
 
-    // The old chat backend does not broadcast reaction updates yet.
-    // This lightweight sync uses the already-protected Admin page itself,
-    // so Seller reactions become visible to Admin without replacing old backend code.
-    if (selectedSellerId) {
-        adminMessageIntervals.push(
-            window.setInterval(syncAdminReactionSummaries, 2000)
-        );
+    function renderNewContacts() {
+        if (!elements.contactsList) return;
 
-        document.addEventListener(
-            'visibilitychange',
-            onVisibilityChange
-        );
-    }
+        const role = elements.roleFilter?.value || 'all';
+        const query = (elements.contactSearch?.value || '').trim().toLowerCase();
 
-    form?.addEventListener('submit', async function (event) {
-        event.preventDefault(); errorBox.classList.add('hidden'); sendButton.disabled = true;
-        try {
-            const response = await fetch(form.action, {method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}});
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || Object.values(data.errors || {})?.[0]?.[0] || 'Unable to send message.');
-            appendMessage(data.message); form.reset(); attachmentName.classList.add('hidden'); attachmentName.textContent=''; input.focus();
-        } catch (error) { errorBox.textContent = error.message; errorBox.classList.remove('hidden'); }
-        finally { sendButton.disabled = false; }
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | MARK CURRENTLY OPEN THREAD AS READ
-    |--------------------------------------------------------------------------
-    |
-    | If this page was opened from the bell/sidebar notification,
-    | clear that seller's unread count immediately.
-    |
-    */
-
-    if (selectedSellerId) {
-        const selectedRow = document.querySelector(
-            `[data-seller-row][data-seller-id="${selectedSellerId}"]`
-        );
-
-        const selectedBadge =
-            selectedRow?.querySelector(
-                '[data-unread-badge]'
-            );
-
-        const initialUnread =
-            Number(selectedBadge?.textContent || 0);
-
-        if (initialUnread > 0) {
-            markSellerThreadRead(
-                selectedSellerId,
-                initialUnread
-            );
-        }
-    }
-
-
-    let adminEchoChannel = null;
-
-    if (window.Echo) {
-        if (status) {
-            status.textContent = 'Live';
-        }
-
-        adminEchoChannel = window.Echo.channel(channelName);
-        adminEchoChannel.listen('.chat.message', appendMessage);
-    } else if (status) {
-        status.textContent = 'Saved mode';
-    }
-
-    let cleanedUp = false;
-
-    function cleanupAdminMessagesPage() {
-        if (cleanedUp) return;
-        cleanedUp = true;
-
-        adminMessageIntervals.forEach(function (intervalId) {
-            window.clearInterval(intervalId);
+        const filtered = state.contacts.filter(contact => {
+            if (role !== 'all' && contact.role !== role) return false;
+            if (!query) return true;
+            return `${contact.name || ''} ${contact.email || ''} ${contact.role || ''}`.toLowerCase().includes(query);
         });
 
-        document.removeEventListener(
-            'click',
-            closeSellerActionsMenu
-        );
-
-        document.removeEventListener(
-            'keydown',
-            onDocumentKeydown
-        );
-
-        document.removeEventListener(
-            'visibilitychange',
-            onVisibilityChange
-        );
-
-        window.removeEventListener(
-            'pagehide',
-            markAdminSupportOffline
-        );
-
-        if (adminEchoChannel?.stopListening) {
-            adminEchoChannel.stopListening(
-                '.chat.message',
-                appendMessage
-            );
+        if (!filtered.length) {
+            elements.contactsList.innerHTML = '<div class="p-8 text-center text-[11px] text-[#958c80]">No matching contacts.</div>';
+            return;
         }
 
-        document.body.classList.remove('overflow-hidden');
+        elements.contactsList.innerHTML = filtered.map(contact => `
+            <button type="button" data-contact-role="${escapeHtml(contact.role)}" data-contact-id="${escapeHtml(contact.id)}"
+                class="flex w-full items-center gap-3 border-b border-[#eee8e1] px-4 py-3.5 text-left last:border-b-0 hover:bg-[#fbfaf8]">
+                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f1f4f5] text-[10px] font-bold text-[#667a86]">${escapeHtml(initials(contact.name))}</div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-2">
+                        <p class="truncate text-[11px] font-semibold text-[#403930]">${escapeHtml(contact.name || normalizeRole(contact.role))}</p>
+                        ${roleBadge(contact.role)}
+                    </div>
+                    <p class="mt-1 truncate text-[10px] text-[#938a7f]">${escapeHtml(contact.email || `Account #${contact.id}`)}</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0 text-[#aaa197]" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+            </button>
+        `).join('');
 
-        if (
-            Number(window.__SARI_ADMIN_ACTIVE_SELLER_ID__) ===
-            Number(selectedSellerId)
-        ) {
-            window.__SARI_ADMIN_ACTIVE_SELLER_ID__ = null;
+        elements.contactsList.querySelectorAll('[data-contact-role]').forEach(button => {
+            button.addEventListener('click', () => openDirect(button.dataset.contactRole, Number(button.dataset.contactId)));
+        });
+    }
+
+    function renderReports() {
+        if (!elements.reportsList) return;
+
+        if (!state.reports.length) {
+            elements.reportsList.innerHTML = '<div class="p-8 text-center text-[11px] text-[#958c80]">No reports available.</div>';
+            return;
         }
 
-        if (
-            window.__SARI_ADMIN_MESSAGES_CLEANUP__ ===
-            cleanupAdminMessagesPage
-        ) {
-            window.__SARI_ADMIN_MESSAGES_CLEANUP__ = null;
+        elements.reportsList.innerHTML = state.reports.map(report => `
+            <button type="button" data-report-id="${escapeHtml(report.id)}"
+                class="flex w-full items-start gap-3 border-b border-[#eee8e1] px-4 py-4 text-left last:border-b-0 hover:bg-[#fbfaf8]">
+                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#fff3dc] text-[10px] font-bold text-[#9b6b1c]">#${escapeHtml(report.id)}</div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <p class="truncate text-[11px] font-semibold text-[#403930]">${escapeHtml(report.subject || `Report #${report.id}`)}</p>
+                        <span class="rounded-full border border-[#e7dfd4] bg-white px-2 py-0.5 text-[9px] font-semibold text-[#72695f]">${escapeHtml(normalizeRole(report.status || 'open'))}</span>
+                    </div>
+                    <p class="mt-1 text-[10px] text-[#938a7f]">Reporter: ${escapeHtml(normalizeRole(report.reporter_role || 'user'))}</p>
+                    <p class="mt-1 text-[9px] text-[#aaa197]">${report.support_conversation_uuid ? 'Support conversation already exists' : 'Open support conversation'}</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-[#aaa197]" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+            </button>
+        `).join('');
+
+        elements.reportsList.querySelectorAll('[data-report-id]').forEach(button => {
+            button.addEventListener('click', () => openReport(Number(button.dataset.reportId)));
+        });
+    }
+
+    async function openDirect(role, id) {
+        elements.modalError.classList.add('hidden');
+
+        try {
+            const payload = await request(endpoints.direct, {
+                method: 'POST',
+                body: {
+                    target_role: role,
+                    target_id: id,
+                },
+            });
+
+            const uuid = payload.conversation?.uuid;
+            if (!uuid) throw new Error('Conversation was created but no UUID was returned.');
+
+            closeModal();
+            await loadInbox({ preserveSelection: true, silent: true });
+            await selectConversation(uuid);
+        } catch (error) {
+            elements.modalError.textContent = error.message;
+            elements.modalError.classList.remove('hidden');
         }
     }
 
-    window.__SARI_ADMIN_MESSAGES_CLEANUP__ =
-        cleanupAdminMessagesPage;
+    async function openReport(reportId) {
+        elements.modalError.classList.add('hidden');
 
-    document.addEventListener(
-        'livewire:navigating',
-        cleanupAdminMessagesPage,
-        { once: true }
-    );
+        try {
+            const url = urlFor(endpoints.reportTemplate, '__COMPLAINT__', reportId);
+            const payload = await request(url, { method: 'POST' });
+            const uuid = payload.conversation?.uuid;
+            if (!uuid) throw new Error('Support conversation was opened but no UUID was returned.');
+
+            closeModal();
+            await loadInbox({ preserveSelection: true, silent: true });
+            await selectConversation(uuid);
+        } catch (error) {
+            elements.modalError.textContent = error.message;
+            elements.modalError.classList.remove('hidden');
+        }
+    }
+
+    function openModal() {
+        elements.modal.classList.remove('hidden');
+        elements.modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+        elements.modalError.classList.add('hidden');
+
+        loadConnections().catch(error => {
+            elements.modalError.textContent = error.message;
+            elements.modalError.classList.remove('hidden');
+        });
+    }
+
+    function closeModal() {
+        elements.modal.classList.add('hidden');
+        elements.modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    function switchNewTab(tab) {
+        state.newTab = tab;
+        elements.contactsPanel.classList.toggle('hidden', tab !== 'contacts');
+        elements.reportsPanel.classList.toggle('hidden', tab !== 'reports');
+
+        elements.newTabs.forEach(button => {
+            const active = button.dataset.newTab === tab;
+            button.classList.toggle('border-[#d29a28]', active);
+            button.classList.toggle('text-[#9e7020]', active);
+            button.classList.toggle('border-transparent', !active);
+            button.classList.toggle('text-[#81796f]', !active);
+        });
+    }
+
+    async function sendMessage(event) {
+        event.preventDefault();
+
+        if (!state.selectedUuid) return;
+
+        const body = elements.input.value.trim();
+        if (!body) return;
+
+        elements.sendButton.disabled = true;
+        elements.composerError.classList.add('hidden');
+
+        try {
+            await request(urlFor(endpoints.sendTemplate, '__CONVERSATION__', state.selectedUuid), {
+                method: 'POST',
+                body: { body },
+            });
+
+            elements.input.value = '';
+            elements.counter.textContent = '0 / 3000';
+
+            await selectConversation(state.selectedUuid, { pushState: false, silent: true });
+            await loadInbox({ preserveSelection: true, silent: true });
+        } catch (error) {
+            elements.composerError.textContent = error.message;
+            elements.composerError.classList.remove('hidden');
+        } finally {
+            elements.sendButton.disabled = false;
+            elements.input.focus();
+        }
+    }
+
+    async function initialLoad() {
+        try {
+            await loadActor();
+            await Promise.all([
+                loadConnections(),
+                loadInbox({ preserveSelection: true }),
+            ]);
+
+            const url = new URL(window.location.href);
+            const requestedUuid = url.searchParams.get('conversation');
+
+            if (requestedUuid) {
+                await selectConversation(requestedUuid, { pushState: false });
+            } else if (state.conversations.length) {
+                await selectConversation(state.conversations[0].uuid, { pushState: false });
+            }
+        } catch (error) {
+            showNotice(error.message);
+        }
+    }
+
+    elements.conversationSearch?.addEventListener('input', event => {
+        state.search = event.target.value || '';
+        renderConversationList();
+    });
+
+    elements.filters?.querySelectorAll('[data-filter]').forEach(button => {
+        button.addEventListener('click', () => {
+            state.filter = button.dataset.filter;
+            elements.filters.querySelectorAll('[data-filter]').forEach(item => {
+                const active = item === button;
+                item.className = `rounded-full border px-3 py-1.5 text-[10px] font-semibold ${
+                    active
+                        ? 'border-[#d8c28e] bg-[#fff6df] text-[#9b6c19]'
+                        : 'border-[#e4ded6] bg-white text-[#71695f]'
+                }`;
+            });
+            renderConversationList();
+        });
+    });
+
+    elements.refreshInbox?.addEventListener('click', () => loadInbox({ preserveSelection: true }));
+
+    elements.mobileBack?.addEventListener('click', () => {
+        root.dataset.mobilePane = 'inbox';
+    });
+
+    elements.newButton?.addEventListener('click', openModal);
+    elements.modalClose?.addEventListener('click', closeModal);
+    elements.modal?.addEventListener('click', event => {
+        if (event.target === elements.modal) closeModal();
+    });
+
+    elements.newTabs.forEach(button => {
+        button.addEventListener('click', () => switchNewTab(button.dataset.newTab));
+    });
+
+    elements.roleFilter?.addEventListener('change', renderNewContacts);
+    elements.contactSearch?.addEventListener('input', renderNewContacts);
+
+    elements.input?.addEventListener('input', () => {
+        elements.counter.textContent = `${elements.input.value.length} / 3000`;
+    });
+
+    elements.form?.addEventListener('submit', sendMessage);
+
+    const onKeydown = event => {
+        if (event.key === 'Escape') closeModal();
+
+        if (
+            event.key === 'Enter'
+            && !event.shiftKey
+            && document.activeElement === elements.input
+        ) {
+            event.preventDefault();
+            elements.form?.requestSubmit();
+        }
+    };
+
+    document.addEventListener('keydown', onKeydown);
+
+    intervals.push(window.setInterval(async () => {
+        if (document.hidden || state.destroyed) return;
+
+        await loadInbox({ preserveSelection: true, silent: true });
+
+        if (state.selectedUuid && !state.loadingThread) {
+            await selectConversation(state.selectedUuid, {
+                pushState: false,
+                silent: true,
+            });
+        }
+    }, 5000));
+
+    initialLoad();
+
+    let cleaned = false;
+    function cleanup() {
+        if (cleaned) return;
+        cleaned = true;
+        state.destroyed = true;
+
+        intervals.forEach(id => window.clearInterval(id));
+        document.removeEventListener('keydown', onKeydown);
+        document.body.classList.remove('overflow-hidden');
+
+        if (window.__SARI_UNIVERSAL_ADMIN_MESSAGES_CLEANUP__ === cleanup) {
+            window.__SARI_UNIVERSAL_ADMIN_MESSAGES_CLEANUP__ = null;
+        }
+    }
+
+    window.__SARI_UNIVERSAL_ADMIN_MESSAGES_CLEANUP__ = cleanup;
+    document.addEventListener('livewire:navigating', cleanup, { once: true });
 })();
 </script>
 @endpush

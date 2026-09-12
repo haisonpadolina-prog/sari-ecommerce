@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendRegistrationDecisionEmail;
 use App\Models\BuyerAccount;
 use App\Models\CourierAccount;
+use App\Models\LogisticsAccount;
 use App\Models\RegistrationApplication;
 use App\Models\SellerAccount;
 use Illuminate\Http\JsonResponse;
@@ -29,16 +30,25 @@ class AdminRegistrationController extends Controller
     {
         $this->guard($request);
 
-        $role = $request->query('role');
-        $status = $request->query('status', 'pending');
+        $allowedRoles = ['buyer', 'seller', 'courier', 'logistics', 'rider'];
+        $allowedStatuses = ['all', 'pending', 'approved', 'rejected'];
 
+        $role = strtolower(trim((string) $request->query('role', '')));
+        $role = in_array($role, $allowedRoles, true) ? $role : null;
+
+        $status = strtolower(trim((string) $request->query('status', 'pending')));
+        $status = in_array($status, $allowedStatuses, true) ? $status : 'pending';
+
+        /*
+         * RegistrationApplication remains the permanent review history.
+         * Approving a registration creates/updates the actual role account but
+         * does not remove this row, so approved/rejected records can always be
+         * reopened from this page.
+         */
         $applications = RegistrationApplication::query()
+            ->when($role, fn ($query) => $query->where('role', $role))
             ->when(
-                in_array($role, ['buyer', 'seller', 'courier'], true),
-                fn ($query) => $query->where('role', $role)
-            )
-            ->when(
-                in_array($status, ['pending', 'approved', 'rejected'], true),
+                $status !== 'all',
                 fn ($query) => $query->where('status', $status)
             )
             ->latest('created_at')
@@ -60,6 +70,13 @@ class AdminRegistrationController extends Controller
             ->selectRaw("SUM(CASE WHEN role = 'buyer' AND status = 'pending' THEN 1 ELSE 0 END) AS buyers")
             ->selectRaw("SUM(CASE WHEN role = 'seller' AND status = 'pending' THEN 1 ELSE 0 END) AS sellers")
             ->selectRaw("SUM(CASE WHEN role = 'courier' AND status = 'pending' THEN 1 ELSE 0 END) AS couriers")
+            ->selectRaw("SUM(CASE WHEN role = 'logistics' AND status = 'pending' THEN 1 ELSE 0 END) AS logistics")
+            ->selectRaw("SUM(CASE WHEN role = 'rider' AND status = 'pending' THEN 1 ELSE 0 END) AS riders")
+            ->selectRaw("SUM(CASE WHEN role = 'buyer' THEN 1 ELSE 0 END) AS mix_buyers")
+            ->selectRaw("SUM(CASE WHEN role = 'seller' THEN 1 ELSE 0 END) AS mix_sellers")
+            ->selectRaw("SUM(CASE WHEN role = 'courier' THEN 1 ELSE 0 END) AS mix_couriers")
+            ->selectRaw("SUM(CASE WHEN role = 'logistics' THEN 1 ELSE 0 END) AS mix_logistics")
+            ->selectRaw("SUM(CASE WHEN role = 'rider' THEN 1 ELSE 0 END) AS mix_riders")
             ->first();
 
         $stats = [
@@ -70,11 +87,49 @@ class AdminRegistrationController extends Controller
             'buyers' => (int) ($summary->buyers ?? 0),
             'sellers' => (int) ($summary->sellers ?? 0),
             'couriers' => (int) ($summary->couriers ?? 0),
+            'logistics' => (int) ($summary->logistics ?? 0),
+            'riders' => (int) ($summary->riders ?? 0),
+        ];
+
+        // Role counters should describe the status currently being viewed,
+        // not always the pending queue. This makes Approved/Rejected history
+        // easier to understand in the UI.
+        $roleSummary = RegistrationApplication::query()
+            ->when(
+                $status !== 'all',
+                fn ($query) => $query->where('status', $status)
+            )
+            ->selectRaw("SUM(CASE WHEN role = 'buyer' THEN 1 ELSE 0 END) AS buyers")
+            ->selectRaw("SUM(CASE WHEN role = 'seller' THEN 1 ELSE 0 END) AS sellers")
+            ->selectRaw("SUM(CASE WHEN role = 'courier' THEN 1 ELSE 0 END) AS couriers")
+            ->selectRaw("SUM(CASE WHEN role = 'logistics' THEN 1 ELSE 0 END) AS logistics")
+            ->selectRaw("SUM(CASE WHEN role = 'rider' THEN 1 ELSE 0 END) AS riders")
+            ->first();
+
+        $roleStats = [
+            'buyers' => (int) ($roleSummary->buyers ?? 0),
+            'sellers' => (int) ($roleSummary->sellers ?? 0),
+            'couriers' => (int) ($roleSummary->couriers ?? 0),
+            'logistics' => (int) ($roleSummary->logistics ?? 0),
+            'riders' => (int) ($roleSummary->riders ?? 0),
+        ];
+
+        // All-time role distribution for the light-mode Registration Mix card.
+        // It intentionally ignores the current table filter so the Admin sees
+        // the real composition of every registration record in the system.
+        $registrationMix = [
+            'buyer' => (int) ($summary->mix_buyers ?? 0),
+            'seller' => (int) ($summary->mix_sellers ?? 0),
+            'courier' => (int) ($summary->mix_couriers ?? 0),
+            'logistics' => (int) ($summary->mix_logistics ?? 0),
+            'rider' => (int) ($summary->mix_riders ?? 0),
         ];
 
         return view('admin.registrations', compact(
             'applications',
             'stats',
+            'roleStats',
+            'registrationMix',
             'role',
             'status'
         ));
@@ -102,6 +157,12 @@ class AdminRegistrationController extends Controller
                 ]);
             }
 
+            if ($locked->role === 'rider') {
+                throw ValidationException::withMessages([
+                    'application' => 'Rider registrations are reviewed by SARI Logistics.',
+                ]);
+            }
+
             $common = [
                 'registration_application_id' => $locked->id,
                 'last_name' => $locked->last_name,
@@ -122,17 +183,19 @@ class AdminRegistrationController extends Controller
                 'street_address' => $locked->street_address,
 
                 'password' => $locked->password,
+                'profile_image_path' => $locked->profile_image_path,
                 'id_path' => $locked->id_path,
                 'approved_at' => now(),
             ];
 
             if ($locked->role === 'buyer') {
-                BuyerAccount::query()->updateOrCreate(
-                    ['email' => $locked->email],
-                    array_merge($common, [
-                        'account_status' => 'active',
-                    ])
-                );
+                $buyer = BuyerAccount::query()->firstOrNew([
+                    'email' => $locked->email,
+                ]);
+
+                $buyer->forceFill(array_merge($common, [
+                    'account_status' => 'active',
+                ]))->save();
             } elseif ($locked->role === 'seller') {
                 $seller = SellerAccount::query()->firstOrNew([
                     'email' => $locked->email,
@@ -154,15 +217,26 @@ class AdminRegistrationController extends Controller
                  */
                 $seller->save();
             } elseif ($locked->role === 'courier') {
-                CourierAccount::query()->updateOrCreate(
-                    ['email' => $locked->email],
-                    array_merge($common, [
-                        'vehicle_type' => $locked->vehicle_type,
-                        'plate_number' => $locked->plate_number,
-                        'orcr_path' => $locked->orcr_path,
-                        'account_status' => 'active',
-                    ])
-                );
+                $courier = CourierAccount::query()->firstOrNew([
+                    'email' => $locked->email,
+                ]);
+
+                $courier->forceFill(array_merge($common, [
+                    'vehicle_type' => $locked->vehicle_type,
+                    'plate_number' => $locked->plate_number,
+                    'orcr_path' => $locked->orcr_path,
+                    'account_status' => 'active',
+                ]))->save();
+            } elseif ($locked->role === 'logistics') {
+                $logistics = LogisticsAccount::query()->firstOrNew([
+                    'email' => $locked->email,
+                ]);
+
+                $logistics->forceFill(array_merge($common, [
+                    'business_name' => $locked->business_name,
+                    'business_permit_path' => $locked->business_permit_path,
+                    'account_status' => 'active',
+                ]))->save();
             } else {
                 throw ValidationException::withMessages([
                     'application' => 'Unsupported registration role.',
@@ -191,7 +265,9 @@ class AdminRegistrationController extends Controller
         return $this->success(
             $request,
             ucfirst($application->role) .
-            ' registration approved successfully.'
+            ' registration approved successfully.',
+            'approved',
+            (int) $application->id
         );
     }
 
@@ -217,6 +293,12 @@ class AdminRegistrationController extends Controller
                 ]);
             }
 
+            if ($locked->role === 'rider') {
+                throw ValidationException::withMessages([
+                    'application' => 'Rider registrations are reviewed by SARI Logistics.',
+                ]);
+            }
+
             $locked->forceFill([
                 'status' => 'rejected',
                 'admin_note' => $validated['admin_note'],
@@ -239,7 +321,9 @@ class AdminRegistrationController extends Controller
 
         return $this->success(
             $request,
-            'Registration rejected and decision recorded.'
+            'Registration rejected and decision recorded.',
+            'rejected',
+            (int) $application->id
         );
     }
 
@@ -299,13 +383,33 @@ class AdminRegistrationController extends Controller
 
     private function success(
         Request $request,
-        string $message
+        string $message,
+        ?string $status = null,
+        ?int $selectedApplicationId = null
     ) {
         if ($request->expectsJson()) {
             return response()->json([
                 'ok' => true,
                 'message' => $message,
+                'status' => $status,
+                'application_id' => $selectedApplicationId,
             ]);
+        }
+
+        if ($status && $selectedApplicationId) {
+            $params = [
+                'status' => $status,
+                'selected' => $selectedApplicationId,
+            ];
+
+            $returnRole = strtolower(trim((string) $request->input('return_role', '')));
+            if (in_array($returnRole, ['buyer', 'seller', 'courier', 'logistics', 'rider'], true)) {
+                $params['role'] = $returnRole;
+            }
+
+            return redirect()
+                ->route('admin.registrations', $params)
+                ->with('success', $message);
         }
 
         return back()->with('success', $message);

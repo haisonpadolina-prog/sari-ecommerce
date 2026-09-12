@@ -144,6 +144,20 @@
                     </p>
                 </div>
 
+                {{-- STATUS / PASSWORD RESET SUCCESS --}}
+                @if (session('status'))
+                    <div
+                        class="mb-5 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-[12px] leading-5 text-emerald-700 sm:text-[13px]"
+                        role="status"
+                    >
+                        <svg viewBox="0 0 24 24" class="mt-0.5 h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="m8 12 2.5 2.5L16 9"></path>
+                        </svg>
+                        <p>{{ session('status') }}</p>
+                    </div>
+                @endif
+
                 {{-- LOGIN ERROR --}}
                 @if ($errors->any())
                     <div
@@ -318,7 +332,7 @@
                         </label>
 
                         <a
-                            href="#"
+                            href="{{ route('password.request') }}"
                             class="text-[12px] font-semibold text-[#a56c08] transition hover:text-[#7f5104] sm:text-[13px]"
                         >
                             Forgot password?
@@ -350,7 +364,7 @@
                 </div>
 
                 {{-- SOCIAL --}}
-                <div class="grid grid-cols-1 gap-2.5 min-[360px]:grid-cols-2 sm:gap-3">
+                <div class="grid grid-cols-1 gap-2.5 sm:gap-3">
 
                     {{-- GOOGLE --}}
                     <a
@@ -369,29 +383,9 @@
                             <path fill="#EA4335" d="M12 5.94c1.47 0 2.79.51 3.83 1.5l2.87-2.87A9.66 9.66 0 0 0 12 2a10 10 0 0 0-8.94 5.48l3.33 2.59C7.18 7.7 9.39 5.94 12 5.94Z"/>
                         </svg>
 
-                        Google
+                        Continue with Google
                     </a>
 
-
-                    {{-- FACEBOOK --}}
-                    <a
-                        href="{{ route('oauth.redirect', ['provider' => 'facebook']) }}"
-                        class="sari-login-social flex h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[#e4ddd3] bg-white text-[14px] font-semibold text-[#28241e] hover:border-[#d8bd89] hover:bg-[#fffaf1] sm:h-[54px] sm:text-[15px]"
-                        aria-label="Continue with Facebook"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            class="h-[20px] w-[20px] shrink-0 sm:h-[22px] sm:w-[22px]"
-                            aria-hidden="true"
-                        >
-                            <path
-                                fill="#1877F2"
-                                d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.414c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.973h-1.513c-1.49 0-1.956.931-1.956 1.887v2.261h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"
-                            />
-                        </svg>
-
-                        Facebook
-                    </a>
 
                 </div>
 

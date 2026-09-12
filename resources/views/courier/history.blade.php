@@ -41,16 +41,16 @@
                 <option value="today">Today</option>
                 <option value="previous">Previous days</option>
             </select>
-            <button type="button" class="rounded-xl border border-[#e6dccb] bg-white px-4 py-2.5 text-[9px] font-semibold text-[#62594d]">Export</button>
+            <a href="{{ route('courier.history.export') }}" class="rounded-xl border border-[#e6dccb] bg-white px-4 py-2.5 text-[9px] font-semibold text-[#62594d]">Export</a>
         </div>
     </section>
 
     <section class="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         @foreach([
-            ['Completed Today','8','Successful trips'],
-            ['Total Completed','184','Since joining'],
-            ['Success Rate','98.4%','Completion rate'],
-            ['Average Fee','₱102','Per delivery'],
+            ['Completed Today',$historyStats['today'],'Successful trips'],
+            ['Total Completed',$historyStats['total'],'Since joining'],
+            ['Success Rate',number_format($historyStats['success_rate'],1).'%','Completion rate'],
+            ['Average Fee','₱'.number_format($historyStats['average_fee'],2),'Per completed delivery'],
         ] as [$label,$value,$sub])
             <article class="reveal page-card page-card-hover rounded-2xl p-4">
                 <p class="text-[8px] text-[#887e70]">{{ $label }}</p>
@@ -94,7 +94,7 @@
                         <tr
                             class="history-row hover:bg-[#fffaf1]"
                             data-search="{{ strtolower($row['order'].' '.$row['customer'].' '.$row['route']) }}"
-                            data-day="{{ $row['date']==='Aug 18, 2026' ? 'today' : 'previous' }}"
+                            data-day="{{ $row['is_today'] ? 'today' : 'previous' }}"
                         >
                             <td class="px-5 py-3.5 text-[9px] font-semibold text-[#302a23]">{{ $row['order'] }}</td>
                             <td class="px-5 py-3.5 text-[8px] text-[#746a5e]">{{ $row['customer'] }}</td>

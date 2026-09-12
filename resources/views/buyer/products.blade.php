@@ -1498,8 +1498,7 @@
     | Controller-ready:
     |   $activeCampaigns or $campaigns
     |
-    | In local development only, a demo campaign is shown so the design can
-    | be previewed without publishing a fake promotion in production.
+    | Campaigns render only when real campaign data is supplied by the controller.
     */
     $buyerCampaigns = collect($activeCampaigns ?? $campaigns ?? [])
         ->filter(fn ($campaign) => is_array($campaign) || is_object($campaign))
@@ -1527,26 +1526,6 @@
             ];
         })
         ->values();
-
-    if ($buyerCampaigns->isEmpty() && app()->environment('local')) {
-        $buyerCampaigns = collect([[
-            'id' => 'demo-12-12',
-            'badge' => 'SARI Event',
-            'title' => '12.12',
-            'subtitle' => 'Mega Sale',
-            'discount_text' => 'Up to 50% OFF',
-            'description' => 'Biggest SARI deals with selected discounts, shipping perks, and exclusive vouchers.',
-            'free_shipping' => true,
-            'voucher_text' => 'Exclusive Vouchers',
-            'extra_perk' => 'Limited Time Only',
-            'starts_at' => now()->subHour()->toIso8601String(),
-            'ends_at' => now()->addDays(2)->addHours(14)->addMinutes(35)->toIso8601String(),
-            'cta_text' => 'Shop Sale',
-            'cta_url' => route('buyer.products', ['discounted' => 1]),
-            'theme' => 'red',
-            'tagline' => 'Shop Local. Shop Better.',
-        ]]);
-    }
 
     $buyerCampaigns = $buyerCampaigns
         ->filter(function ($campaign) {

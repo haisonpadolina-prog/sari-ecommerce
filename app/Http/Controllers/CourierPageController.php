@@ -2,331 +2,342 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourierAccount;
+use App\Models\LogisticsMessage;
+use App\Models\MarketplaceOrder;
+use App\Models\RiderEarning;
+use App\Models\RiderPayoutRequest;
+use App\Models\RiderPayoutRequestItem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CourierPageController extends Controller
 {
-    private function courier(Request $request): array
+    private const ACTIVE = ['courier_accepted','heading_pickup','arrived_pickup','in_transit','arrived_buyer'];
+
+    private function guard(Request $request): void
     {
-        return [
-            'name' => $request->session()->get('courier_name', 'SARI Courier'),
-            'vehicle' => 'Motorcycle',
-            'plate_number' => 'NCR 4821',
-            'status' => 'Online',
-        ];
+        abort_unless($request->session()->get('is_courier'), 403, 'Rider session required.');
     }
 
-    private function stats(): array
+    private function courierAccount(Request $request): CourierAccount
     {
-        return [
-            'available_requests' => 12,
-            'active_deliveries' => 1,
-            'completed_today' => 8,
-            'earnings_today' => 1240,
-        ];
-    }
-
-    private function guard(Request $request)
-    {
-        if (!$request->session()->get('is_courier')) {
-            return redirect()->route('login');
+        $this->guard($request);
+        $id = (int) $request->session()->get('courier_account_id');
+        if ($id > 0 && ($account = CourierAccount::find($id))) {
+            return $account;
         }
 
-        return null;
-    }
-
-    public function requests(Request $request)
-    {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
+        $email = strtolower((string) $request->session()->get('courier_email', 'courier@gmail.com'));
+        $account = CourierAccount::query()->whereRaw('LOWER(email) = ?', [$email])->first();
+        if ($account) {
+            $request->session()->put('courier_account_id', $account->id);
+            return $account;
         }
 
-        $courier = $this->courier($request);
-        $stats = $this->stats();
-
-        $deliveryRequests = [
-            [
-                'order_number' => 'SARI-1059',
-                'seller' => 'Urban Finds PH',
-                'pickup' => 'Makati City',
-                'buyer' => 'Mika Santos',
-                'destination' => 'Pasay City',
-                'distance' => '4.8 km',
-                'fee' => 85,
-                'items' => 2,
-                'priority' => 'New',
-                'payment' => 'Paid Online',
-            ],
-            [
-                'order_number' => 'SARI-1060',
-                'seller' => 'Daily Essentials',
-                'pickup' => 'BGC, Taguig',
-                'buyer' => 'Paolo Reyes',
-                'destination' => 'Mandaluyong City',
-                'distance' => '6.2 km',
-                'fee' => 110,
-                'items' => 1,
-                'priority' => 'Nearby',
-                'payment' => 'COD',
-            ],
-            [
-                'order_number' => 'SARI-1061',
-                'seller' => 'Metro Home Store',
-                'pickup' => 'Manila City',
-                'buyer' => 'Nicole Tan',
-                'destination' => 'Quezon City',
-                'distance' => '8.7 km',
-                'fee' => 130,
-                'items' => 3,
-                'priority' => 'New',
-                'payment' => 'Paid Online',
-            ],
-            [
-                'order_number' => 'SARI-1062',
-                'seller' => 'Tech Corner',
-                'pickup' => 'Makati City',
-                'buyer' => 'James Cruz',
-                'destination' => 'Taguig City',
-                'distance' => '5.1 km',
-                'fee' => 95,
-                'items' => 1,
-                'priority' => 'Nearby',
-                'payment' => 'Paid Online',
-            ],
-        ];
-
-        return view('courier.requests', compact(
-            'courier',
-            'stats',
-            'deliveryRequests'
-        ));
+        $account = CourierAccount::create([
+            'registration_application_id' => null,
+            'last_name' => 'Rider', 'first_name' => 'SARI', 'middle_initial' => null,
+            'sex' => 'Male', 'email' => $email, 'contact_no' => '09123456789',
+            'birthday' => '2000-01-01', 'age' => 26,
+            'province_code' => 'TEST', 'province_name' => 'Metro Manila',
+            'municipality_code' => 'TEST', 'municipality_name' => 'Manila',
+            'barangay_code' => 'TEST', 'barangay_name' => 'Test Barangay',
+            'street_address' => 'SARI Rider Test Address',
+            'password' => Hash::make('courier123'),
+            'vehicle_type' => 'Motorcycle', 'plate_number' => 'TEST-001',
+            'account_status' => 'active', 'approved_at' => now(),
+            'availability_status' => 'online', 'rating' => 5.00,
+        ]);
+        $request->session()->put('courier_account_id', $account->id);
+        return $account;
     }
 
-    public function pickups(Request $request)
+    private function ordersFor(CourierAccount $account)
     {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
-
-        $courier = $this->courier($request);
-        $stats = $this->stats();
-
-        $pickups = [
-            [
-                'order_number' => 'SARI-1058',
-                'seller' => 'SARI Seller Store',
-                'address' => 'Makati City',
-                'contact' => '0917 ••• ••42',
-                'buyer' => 'Angela Ramos',
-                'destination' => 'Pasay City',
-                'scheduled' => 'Today, 8:15 PM',
-                'status' => 'Ready for Pickup',
-                'items' => 2,
-            ],
-            [
-                'order_number' => 'SARI-1064',
-                'seller' => 'Casa Manila Finds',
-                'address' => 'Mandaluyong City',
-                'contact' => '0995 ••• ••18',
-                'buyer' => 'Carla V.',
-                'destination' => 'San Juan City',
-                'scheduled' => 'Today, 9:00 PM',
-                'status' => 'Accepted',
-                'items' => 1,
-            ],
-        ];
-
-        return view('courier.pickups', compact(
-            'courier',
-            'stats',
-            'pickups'
-        ));
+        return MarketplaceOrder::query()->whereRaw('LOWER(courier_email) = ?', [strtolower($account->email)]);
     }
 
-    public function deliveries(Request $request)
+    public function earnings(Request $request): View
     {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
+        $account = $this->courierAccount($request);
 
-        $courier = $this->courier($request);
-        $stats = $this->stats();
+        $ledger = RiderEarning::query()
+            ->with('order')
+            ->where('courier_account_id', $account->id)
+            ->orderByDesc('earned_at')
+            ->get();
 
-        $activeDelivery = [
-            'order_number' => 'SARI-1058',
-            'seller' => 'SARI Seller Store',
-            'pickup' => 'Makati City',
-            'buyer' => 'Angela Ramos',
-            'destination' => 'Pasay City',
-            'distance_left' => '2.4 km',
-            'fee' => 120,
-            'status' => 'In Transit',
-            'progress' => 68,
-        ];
-
-        $queue = [
-            [
-                'order_number' => 'SARI-1064',
-                'seller' => 'Casa Manila Finds',
-                'destination' => 'San Juan City',
-                'status' => 'Waiting for Pickup',
-                'fee' => 90,
-            ],
-        ];
-
-        return view('courier.deliveries', compact(
-            'courier',
-            'stats',
-            'activeDelivery',
-            'queue'
-        ));
-    }
-
-    public function earnings(Request $request)
-    {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
-
-        $courier = $this->courier($request);
-        $stats = $this->stats();
+        $active = $this->ordersFor($account)->whereIn('status', self::ACTIVE)->get();
+        $today = now()->startOfDay();
+        $week = now()->startOfWeek();
+        $month = now()->startOfMonth();
 
         $earnings = [
-            'today' => 1240,
-            'week' => 6480,
-            'month' => 21850,
-            'pending' => 320,
-            'available' => 21530,
+            'today' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($today))->sum('delivery_fee_amount'),
+            'week' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($week))->sum('delivery_fee_amount'),
+            'month' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($month))->sum('delivery_fee_amount'),
+            'pending' => (float) $active->sum('delivery_fee'),
+            'available' => (float) $ledger->where('status', 'available')->sum('delivery_fee_amount'),
         ];
 
-        $daily = [
-            ['day' => 'Mon', 'amount' => 890],
-            ['day' => 'Tue', 'amount' => 1120],
-            ['day' => 'Wed', 'amount' => 960],
-            ['day' => 'Thu', 'amount' => 1350],
-            ['day' => 'Fri', 'amount' => 920],
-            ['day' => 'Sat', 'amount' => 1480],
-            ['day' => 'Sun', 'amount' => 1240],
-        ];
+        $daily = collect(range(6, 0))->map(function (int $daysAgo) use ($ledger): array {
+            $date = now()->subDays($daysAgo);
 
-        $transactions = [
-            ['order' => 'SARI-1057', 'date' => 'Today · 6:42 PM', 'type' => 'Delivery Fee', 'amount' => 95, 'status' => 'Credited'],
-            ['order' => 'SARI-1056', 'date' => 'Today · 5:16 PM', 'type' => 'Delivery Fee', 'amount' => 120, 'status' => 'Credited'],
-            ['order' => 'SARI-1055', 'date' => 'Today · 3:48 PM', 'type' => 'Delivery Fee', 'amount' => 80, 'status' => 'Credited'],
-            ['order' => 'SARI-1054', 'date' => 'Today · 1:20 PM', 'type' => 'Delivery Fee', 'amount' => 105, 'status' => 'Credited'],
-        ];
+            return [
+                'day' => $date->format('D'),
+                'amount' => (float) $ledger
+                    ->filter(fn ($earning) => $earning->earned_at?->isSameDay($date))
+                    ->sum('delivery_fee_amount'),
+            ];
+        })->all();
+
+        $transactions = $ledger->take(20)->map(fn ($earning): array => [
+            'order' => $earning->order?->order_number ?: '—',
+            'date' => $earning->earned_at?->format('M d, Y · h:i A') ?? '—',
+            'type' => 'Delivery Fee',
+            'amount' => (float) $earning->delivery_fee_amount,
+            'status' => match ($earning->status) {
+                'available' => 'Available',
+                'reserved' => 'Reserved for payout',
+                'paid' => 'Paid',
+                default => ucfirst((string) $earning->status),
+            },
+        ])->values()->all();
+
+        $previousWeekStart = now()->copy()->subWeek()->startOfWeek();
+        $previousWeekEnd = now()->copy()->subWeek()->endOfWeek();
+        $previousWeek = (float) $ledger
+            ->filter(fn ($earning) => $earning->earned_at?->between($previousWeekStart, $previousWeekEnd))
+            ->sum('delivery_fee_amount');
+
+        $weeklyChange = $previousWeek > 0
+            ? (($earnings['week'] - $previousWeek) / $previousWeek) * 100
+            : null;
+
+        $payoutRequests = RiderPayoutRequest::query()
+            ->where('courier_account_id', $account->id)
+            ->latest()
+            ->limit(5)
+            ->get();
 
         return view('courier.earnings', compact(
-            'courier',
-            'stats',
             'earnings',
             'daily',
-            'transactions'
+            'transactions',
+            'weeklyChange',
+            'payoutRequests'
         ));
     }
 
-    public function history(Request $request)
+    public function history(Request $request): View
     {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
+        $account = $this->courierAccount($request);
+        $history = $this->ordersFor($account)->whereIn('status',['delivered','cancelled'])->latest('updated_at')->limit(100)->get()->map(fn ($order): array => [
+            'order' => $order->order_number,
+            'customer' => $order->buyer_name,
+            'route' => ($order->pickup_name ?: 'Seller') . ' → ' . ($order->buyer_name ?: 'Buyer'),
+            'date' => ($order->delivered_at ?: $order->updated_at)?->format('M d, Y') ?? '—',
+            'time' => ($order->delivered_at ?: $order->updated_at)?->format('h:i A') ?? '—',
+            'fee' => (float) $order->delivery_fee,
+            'status' => $order->status === 'delivered' ? 'Completed' : 'Cancelled',
+            'is_today' => ($order->delivered_at ?: $order->updated_at)?->isToday() ?? false,
+        ])->all();
 
-        $courier = $this->courier($request);
-        $stats = $this->stats();
-
-        $history = [
-            ['order' => 'SARI-1057', 'customer' => 'Angela R.', 'route' => 'Makati → Pasay', 'date' => 'Aug 18, 2026', 'time' => '6:42 PM', 'fee' => 95, 'status' => 'Completed'],
-            ['order' => 'SARI-1056', 'customer' => 'Mark D.', 'route' => 'BGC → Mandaluyong', 'date' => 'Aug 18, 2026', 'time' => '5:16 PM', 'fee' => 120, 'status' => 'Completed'],
-            ['order' => 'SARI-1055', 'customer' => 'Nicole S.', 'route' => 'Manila → Quezon City', 'date' => 'Aug 18, 2026', 'time' => '3:48 PM', 'fee' => 80, 'status' => 'Completed'],
-            ['order' => 'SARI-1054', 'customer' => 'Carla V.', 'route' => 'Makati → Taguig', 'date' => 'Aug 18, 2026', 'time' => '1:20 PM', 'fee' => 105, 'status' => 'Completed'],
-            ['order' => 'SARI-1053', 'customer' => 'John P.', 'route' => 'Pasig → San Juan', 'date' => 'Aug 17, 2026', 'time' => '8:05 PM', 'fee' => 90, 'status' => 'Completed'],
-            ['order' => 'SARI-1052', 'customer' => 'Mia G.', 'route' => 'Taguig → Pasay', 'date' => 'Aug 17, 2026', 'time' => '6:34 PM', 'fee' => 115, 'status' => 'Completed'],
+        $completed = collect($history)->where('status','Completed');
+        $historyStats = [
+            'today' => $completed->where('is_today', true)->count(),
+            'total' => $completed->count(),
+            'success_rate' => count($history) > 0 ? round(($completed->count() / count($history)) * 100, 1) : 0,
+            'average_fee' => $completed->count() > 0 ? (float) $completed->avg('fee') : 0,
         ];
 
-        return view('courier.history', compact(
-            'courier',
-            'stats',
-            'history'
-        ));
+        return view('courier.history', compact('history','historyStats'));
     }
 
-    public function messages(Request $request)
+    public function requestPayout(Request $request): RedirectResponse
     {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
+        $account = $this->courierAccount($request);
 
-        $courier = $this->courier($request);
-        $stats = $this->stats();
+        return DB::transaction(function () use ($account): RedirectResponse {
+            if (RiderPayoutRequest::query()
+                ->where('courier_account_id', $account->id)
+                ->where('status', 'pending')
+                ->lockForUpdate()
+                ->exists()) {
+                return back()->withErrors([
+                    'payout' => 'You already have a pending payout request.',
+                ]);
+            }
 
-        $conversations = [
-            [
-                'name' => 'Angela Ramos',
-                'role' => 'Buyer · SARI-1058',
-                'initials' => 'AR',
-                'preview' => 'I am near the lobby entrance.',
-                'time' => '8:31 PM',
-                'unread' => 2,
-            ],
-            [
-                'name' => 'SARI Seller Store',
-                'role' => 'Seller · SARI-1058',
-                'initials' => 'SS',
-                'preview' => 'Package is ready for pickup.',
-                'time' => '8:09 PM',
-                'unread' => 0,
-            ],
-            [
-                'name' => 'Courier Support',
-                'role' => 'SARI Support',
-                'initials' => 'CS',
-                'preview' => 'Let us know if you need assistance.',
-                'time' => '7:40 PM',
-                'unread' => 1,
-            ],
-        ];
+            $available = RiderEarning::query()
+                ->where('courier_account_id', $account->id)
+                ->where('status', 'available')
+                ->orderBy('earned_at')
+                ->orderBy('id')
+                ->lockForUpdate()
+                ->get();
 
-        $messages = [
-            ['from' => 'them', 'text' => 'Hi! Please message me when you are close to the building.', 'time' => '8:21 PM'],
-            ['from' => 'me', 'text' => 'Sure. I am currently on the way to your location.', 'time' => '8:24 PM'],
-            ['from' => 'them', 'text' => 'I am near the lobby entrance.', 'time' => '8:31 PM'],
-        ];
+            $amount = round((float) $available->sum('delivery_fee_amount'), 2);
 
-        return view('courier.messages', compact(
-            'courier',
-            'stats',
-            'conversations',
-            'messages'
-        ));
+            if ($amount <= 0 || $available->isEmpty()) {
+                return back()->withErrors([
+                    'payout' => 'No available rider earnings to request.',
+                ]);
+            }
+
+            $payout = RiderPayoutRequest::query()->create([
+                'courier_account_id' => $account->id,
+                'amount' => $amount,
+                'status' => 'pending',
+            ]);
+
+            foreach ($available as $earning) {
+                RiderPayoutRequestItem::query()->create([
+                    'rider_payout_request_id' => $payout->id,
+                    'rider_earning_id' => $earning->id,
+                    'amount' => (float) $earning->delivery_fee_amount,
+                ]);
+
+                $earning->forceFill([
+                    'status' => 'reserved',
+                ])->save();
+            }
+
+            return back()->with('success', 'Payout request submitted to Admin.');
+        });
     }
 
-    public function profile(Request $request)
+    public function earningsStatement(Request $request): StreamedResponse
     {
-        if ($redirect = $this->guard($request)) {
-            return $redirect;
-        }
+        $account = $this->courierAccount($request);
+        $earnings = RiderEarning::query()
+            ->with('order')
+            ->where('courier_account_id', $account->id)
+            ->latest('earned_at')
+            ->get();
 
-        $courier = $this->courier($request);
-        $stats = $this->stats();
+        return response()->streamDownload(function () use ($earnings): void {
+            $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF");
+            fputcsv($out, ['Order', 'Earned At', 'Buyer', 'Delivery Fee', 'Ledger Status']);
 
+            foreach ($earnings as $earning) {
+                fputcsv($out, [
+                    $earning->order?->order_number,
+                    $earning->earned_at?->toDateTimeString(),
+                    $earning->order?->buyer_name,
+                    $earning->delivery_fee_amount,
+                    $earning->status,
+                ]);
+            }
+
+            fclose($out);
+        }, 'rider-earnings-statement.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
+    public function historyExport(Request $request): StreamedResponse
+    {
+        $account = $this->courierAccount($request);
+        $orders = $this->ordersFor($account)->whereIn('status',['delivered','cancelled'])->latest('updated_at')->get();
+        return response()->streamDownload(function () use ($orders): void {
+            $out = fopen('php://output','w');
+            fputcsv($out,['Order','Buyer','Status','Delivery Fee','Updated At']);
+            foreach ($orders as $order) {
+                fputcsv($out,[$order->order_number,$order->buyer_name,$order->status,$order->delivery_fee,$order->updated_at?->toDateTimeString()]);
+            }
+            fclose($out);
+        }, 'rider-delivery-history.csv', ['Content-Type'=>'text/csv']);
+    }
+
+    public function messages(Request $request): View
+    {
+        $account = $this->courierAccount($request);
+        LogisticsMessage::query()->where('courier_account_id',$account->id)->where('sender_role','logistics')->whereNull('read_at')->update(['read_at'=>now()]);
+        $messages = LogisticsMessage::query()->where('courier_account_id',$account->id)->oldest('id')->get();
+        return view('courier.messages', compact('account','messages'));
+    }
+
+    public function sendMessage(Request $request): RedirectResponse
+    {
+        $account = $this->courierAccount($request);
+        $validated = $request->validate(['body'=>['required','string','max:3000']]);
+        LogisticsMessage::create([
+            'courier_account_id'=>$account->id,
+            'sender_role'=>'rider',
+            'body'=>$validated['body'],
+        ]);
+        return back()->with('success','Message sent to Logistics.');
+    }
+
+    public function profile(Request $request): View
+    {
+        $account = $this->courierAccount($request);
+        $completed = $this->ordersFor($account)->where('status','delivered')->count();
         $profile = [
-            'full_name' => 'SARI Courier',
-            'email' => $request->session()->get('courier_email', 'courier@gmail.com'),
-            'phone' => '0917 555 4821',
-            'address' => 'Makati City, Metro Manila',
-            'vehicle_type' => 'Motorcycle',
-            'vehicle_model' => 'Honda Click 125i',
-            'plate_number' => 'NCR 4821',
-            'license_number' => 'N01-26-458721',
-            'rating' => '4.94',
-            'completed_deliveries' => 184,
-            'joined' => 'August 2026',
+            'full_name' => trim($account->first_name.' '.$account->last_name),
+            'email' => $account->email,
+            'phone' => $account->contact_no,
+            'address' => trim($account->street_address.', '.$account->barangay_name.', '.$account->municipality_name.', '.$account->province_name, ', '),
+            'vehicle_type' => $account->vehicle_type,
+            'vehicle_model' => $account->vehicle_model ?: '—',
+            'plate_number' => $account->plate_number,
+            'license_number' => $account->license_number ?: '—',
+            'rating' => number_format((float) ($account->rating ?? 5), 2),
+            'completed_deliveries' => $completed,
+            'joined' => $account->created_at?->format('F Y') ?? '—',
+            'availability_status' => $account->availability_status ?: 'online',
         ];
+        return view('courier.profile', compact('account','profile'));
+    }
 
-        return view('courier.profile', compact(
-            'courier',
-            'stats',
-            'profile'
-        ));
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        $account = $this->courierAccount($request);
+        $validated = $request->validate([
+            'first_name'=>['required','string','max:120'],
+            'last_name'=>['required','string','max:120'],
+            'contact_no'=>['required','string','max:30'],
+            'email'=>['required','email','max:255',Rule::unique('courier_accounts','email')->ignore($account->id)],
+            'street_address'=>['required','string','max:1000'],
+            'vehicle_type'=>['required','string','max:120'],
+            'vehicle_model'=>['nullable','string','max:120'],
+            'plate_number'=>['required','string','max:120'],
+            'license_number'=>['nullable','string','max:120'],
+            'current_password'=>['nullable','string'],
+            'password'=>['nullable','string','min:8','confirmed'],
+        ]);
+
+        if (!empty($validated['password'])) {
+            if (!Hash::check((string) ($validated['current_password'] ?? ''), $account->password)) {
+                return back()->withErrors(['current_password'=>'Current password is incorrect.']);
+            }
+            $account->password = Hash::make($validated['password']);
+        }
+
+        $account->fill([
+            'first_name'=>$validated['first_name'], 'last_name'=>$validated['last_name'],
+            'contact_no'=>$validated['contact_no'], 'email'=>strtolower($validated['email']),
+            'street_address'=>$validated['street_address'], 'vehicle_type'=>$validated['vehicle_type'],
+            'vehicle_model'=>$validated['vehicle_model'] ?? null, 'plate_number'=>$validated['plate_number'],
+            'license_number'=>$validated['license_number'] ?? null,
+        ])->save();
+        $request->session()->put('courier_email',$account->email);
+        $request->session()->put('courier_name',trim($account->first_name.' '.$account->last_name));
+        return back()->with('success','Rider profile updated.');
+    }
+
+    public function availability(Request $request): RedirectResponse
+    {
+        $account = $this->courierAccount($request);
+        $validated = $request->validate(['availability_status'=>['required',Rule::in(['online','offline'])]]);
+        $account->update(['availability_status'=>$validated['availability_status']]);
+        return back()->with('success','Availability updated.');
     }
 }

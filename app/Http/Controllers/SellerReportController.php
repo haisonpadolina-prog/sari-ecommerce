@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MarketplaceOrder;
 use App\Models\SellerAccount;
+use App\Models\SellerSettlement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -22,32 +23,37 @@ class SellerReportController extends Controller
         $rangeEnd = $to->copy()->endOfDay();
 
         /*
-        |--------------------------------------------------------------------------
-        | FAST REPORT AGGREGATES
-        |--------------------------------------------------------------------------
-        | Counts are calculated by MySQL instead of loading every order model
-        | into PHP. Only the rows actually needed for the chart/products/table
-        | are fetched below.
+        | Operational counts use order creation date.
+        | Financial values use settlement eligibility (delivered + paid) date.
+        | Keeping the two concepts separate prevents revenue being recognized
+        | just because an order was placed.
         */
-        $aggregate = MarketplaceOrder::query()
+        $orderAggregate = MarketplaceOrder::query()
             ->where('seller_account_id', $seller->id)
             ->whereBetween('created_at', [$rangeStart, $rangeEnd])
             ->selectRaw('COUNT(*) AS total_orders')
             ->selectRaw("SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) AS completed_orders")
             ->selectRaw("SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) AS cancelled_orders")
             ->selectRaw("SUM(CASE WHEN status NOT IN ('delivered','cancelled') THEN 1 ELSE 0 END) AS active_orders")
-            ->selectRaw("COALESCE(SUM(CASE WHEN status = 'delivered' THEN subtotal ELSE 0 END), 0) AS gross_sales")
             ->first();
 
-        $grossSales = round((float) ($aggregate->gross_sales ?? 0), 2);
-        $totalOrders = (int) ($aggregate->total_orders ?? 0);
-        $completedOrders = (int) ($aggregate->completed_orders ?? 0);
-        $cancelledOrders = (int) ($aggregate->cancelled_orders ?? 0);
-        $activeOrders = (int) ($aggregate->active_orders ?? 0);
+        $totalOrders = (int) ($orderAggregate->total_orders ?? 0);
+        $completedOrders = (int) ($orderAggregate->completed_orders ?? 0);
+        $cancelledOrders = (int) ($orderAggregate->cancelled_orders ?? 0);
+        $activeOrders = (int) ($orderAggregate->active_orders ?? 0);
 
-        $commissionRate = 10.0;
-        $platformCommission = round($grossSales * ($commissionRate / 100), 2);
-        $netRevenue = round($grossSales - $platformCommission, 2);
+        $financialQuery = SellerSettlement::query()
+            ->where('seller_account_id', $seller->id)
+            ->whereBetween('eligible_at', [$rangeStart, $rangeEnd]);
+
+        $grossSales = round((float) (clone $financialQuery)->sum('merchandise_amount'), 2);
+        $platformCommission = round((float) (clone $financialQuery)->sum('platform_commission_amount'), 2);
+        $withholdingTax = round((float) (clone $financialQuery)->sum('withholding_tax_amount'), 2);
+        $netRevenue = round((float) (clone $financialQuery)->sum('seller_net_amount'), 2);
+
+        $effectiveCommissionRate = $grossSales > 0
+            ? round(($platformCommission / $grossSales) * 100, 4)
+            : 0.0;
 
         $completionRate = $totalOrders > 0
             ? round(($completedOrders / $totalOrders) * 100, 1)
@@ -57,38 +63,43 @@ class SellerReportController extends Controller
             ? round(($cancelledOrders / $totalOrders) * 100, 1)
             : 0.0;
 
-        $averageOrderValue = $completedOrders > 0
-            ? round($grossSales / $completedOrders, 2)
+        $financialCompletedCount = (clone $financialQuery)->count();
+        $averageOrderValue = $financialCompletedCount > 0
+            ? round($grossSales / $financialCompletedCount, 2)
             : 0.0;
 
         [$previousFrom, $previousTo] = $this->previousPeriod($from, $to);
 
-        $previousGrossSales = (float) MarketplaceOrder::query()
+        $previousGrossSales = (float) SellerSettlement::query()
             ->where('seller_account_id', $seller->id)
-            ->where('status', 'delivered')
-            ->whereBetween('created_at', [
+            ->whereBetween('eligible_at', [
                 $previousFrom->copy()->startOfDay(),
                 $previousTo->copy()->endOfDay(),
             ])
-            ->sum('subtotal');
+            ->sum('merchandise_amount');
 
         $salesChange = $previousGrossSales > 0
             ? round((($grossSales - $previousGrossSales) / $previousGrossSales) * 100, 1)
-            : ($grossSales > 0 ? 100.0 : 0.0);
+            : ($grossSales > 0 ? null : 0.0);
 
-        /*
-        | Delivered rows are the only rows needed for chart/product sales.
-        | Select only four columns to keep report rendering lightweight.
-        */
         $deliveredOrders = MarketplaceOrder::query()
+            ->with(['sellerSettlement', 'commission'])
             ->where('seller_account_id', $seller->id)
             ->where('status', 'delivered')
-            ->whereBetween('created_at', [$rangeStart, $rangeEnd])
-            ->orderBy('created_at')
+            ->where('payment_status', 'paid')
+            ->whereBetween('delivered_at', [$rangeStart, $rangeEnd])
+            ->orderBy('delivered_at')
             ->get([
                 'id',
+                'order_number',
+                'seller_account_id',
+                'buyer_name',
+                'status',
+                'payment_method',
+                'payment_status',
                 'subtotal',
                 'items',
+                'delivered_at',
                 'created_at',
             ]);
 
@@ -98,8 +109,9 @@ class SellerReportController extends Controller
 
         $summary = [
             'gross_sales' => $grossSales,
-            'commission_rate' => $commissionRate,
+            'commission_rate' => $effectiveCommissionRate,
             'platform_commission' => $platformCommission,
+            'withholding_tax' => $withholdingTax,
             'net_revenue' => $netRevenue,
             'total_orders' => $totalOrders,
             'completed_orders' => $completedOrders,
@@ -112,49 +124,25 @@ class SellerReportController extends Controller
             'customer_rating' => $customerRating,
         ];
 
-        /*
-        | The visible transaction table only needs the newest 25 rows.
-        | Do not hydrate the entire report period just to display this table.
-        */
-        $transactions = MarketplaceOrder::query()
-            ->where('seller_account_id', $seller->id)
-            ->whereBetween('created_at', [$rangeStart, $rangeEnd])
-            ->latest('created_at')
-            ->limit(25)
-            ->get([
-                'id',
-                'order_number',
-                'buyer_name',
-                'status',
-                'subtotal',
-                'payment_status',
-                'created_at',
-            ])
-            ->map(function ($order) use ($commissionRate) {
-                $eligibleForRevenue = $order->status === 'delivered';
-                $gross = $eligibleForRevenue
-                    ? (float) ($order->subtotal ?? 0)
-                    : 0.0;
-
-                $commission = round($gross * ($commissionRate / 100), 2);
-                $net = round($gross - $commission, 2);
+        $transactions = $deliveredOrders
+            ->sortByDesc('delivered_at')
+            ->take(25)
+            ->map(function (MarketplaceOrder $order): array {
+                $settlement = $order->sellerSettlement;
+                $commission = $order->commission;
 
                 return [
                     'id' => $order->id,
                     'order_number' => $order->order_number,
-                    'date' => $order->created_at,
+                    'date' => $order->delivered_at,
                     'status' => (string) $order->status,
-                    'status_label' => method_exists($order, 'statusLabel')
-                        ? $order->statusLabel()
-                        : ucwords(str_replace('_', ' ', (string) $order->status)),
+                    'status_label' => $order->statusLabel(),
                     'buyer_name' => (string) ($order->buyer_name ?? 'Buyer'),
-                    'gross' => $gross,
-                    'commission' => $commission,
-                    'net' => $net,
-                    'payment' => 'COD',
-                    'payment_status' => strtoupper((string) ($order->payment_status ?? (
-                        $order->status === 'delivered' ? 'PAID' : 'PENDING'
-                    ))),
+                    'gross' => (float) ($settlement?->merchandise_amount ?? $order->subtotal ?? 0),
+                    'commission' => (float) ($settlement?->platform_commission_amount ?? $commission?->net_commission ?? 0),
+                    'net' => (float) ($settlement?->seller_net_amount ?? 0),
+                    'payment' => strtoupper((string) ($order->payment_method ?: 'COD')),
+                    'payment_status' => strtoupper((string) $order->payment_status),
                 ];
             })
             ->values();
@@ -179,23 +167,30 @@ class SellerReportController extends Controller
         [$from, $to, $type] = $this->validatedFilters($request);
 
         $orders = MarketplaceOrder::query()
+            ->with(['sellerSettlement', 'commission'])
             ->where('seller_account_id', $seller->id)
-            ->whereBetween('created_at', [
+            ->where('status', 'delivered')
+            ->where('payment_status', 'paid')
+            ->whereBetween('delivered_at', [
                 $from->copy()->startOfDay(),
                 $to->copy()->endOfDay(),
             ])
-            ->latest('created_at')
+            ->latest('delivered_at')
             ->get();
 
-        $deliveredOrders = $orders->where('status', 'delivered')->values();
-        $commissionRate = 10.0;
-
-        $grossSales = round(
-            $deliveredOrders->sum(fn ($order) => (float) ($order->subtotal ?? 0)),
-            2
-        );
-        $commission = round($grossSales * ($commissionRate / 100), 2);
-        $net = round($grossSales - $commission, 2);
+        $grossSales = round((float) $orders->sum(
+            fn ($order) => (float) ($order->sellerSettlement?->merchandise_amount ?? $order->subtotal ?? 0)
+        ), 2);
+        $commission = round((float) $orders->sum(
+            fn ($order) => (float) ($order->sellerSettlement?->platform_commission_amount ?? $order->commission?->net_commission ?? 0)
+        ), 2);
+        $withholding = round((float) $orders->sum(
+            fn ($order) => (float) ($order->sellerSettlement?->withholding_tax_amount ?? 0)
+        ), 2);
+        $net = round((float) $orders->sum(
+            fn ($order) => (float) ($order->sellerSettlement?->seller_net_amount ?? 0)
+        ), 2);
+        $effectiveRate = $grossSales > 0 ? round(($commission / $grossSales) * 100, 4) : 0.0;
 
         $filename = sprintf(
             'sari-seller-%s-%s-to-%s.csv',
@@ -206,32 +201,33 @@ class SellerReportController extends Controller
 
         return response()->streamDownload(function () use (
             $orders,
-            $deliveredOrders,
             $type,
             $from,
             $to,
             $grossSales,
             $commission,
+            $withholding,
             $net,
-            $commissionRate
+            $effectiveRate
         ) {
             $handle = fopen('php://output', 'w');
-
-            // UTF-8 BOM for Excel compatibility.
             fwrite($handle, "\xEF\xBB\xBF");
 
-            fputcsv($handle, ['SARI Seller Report']);
+            fputcsv($handle, ['SARI Seller Financial Report']);
             fputcsv($handle, ['Report Type', ucwords(str_replace('_', ' ', $type))]);
-            fputcsv($handle, ['Period', $from->format('M d, Y') . ' - ' . $to->format('M d, Y')]);
-            fputcsv($handle, ['Gross Sales', number_format($grossSales, 2, '.', '')]);
-            fputcsv($handle, ['Platform Commission (' . $commissionRate . '%)', number_format($commission, 2, '.', '')]);
-            fputcsv($handle, ['Net Revenue', number_format($net, 2, '.', '')]);
+            fputcsv($handle, ['Financial Recognition Period', $from->format('M d, Y') . ' - ' . $to->format('M d, Y')]);
+            fputcsv($handle, ['Basis', 'Delivered + paid orders, recognized by delivered_at']);
+            fputcsv($handle, ['Gross Merchandise Sales', number_format($grossSales, 2, '.', '')]);
+            fputcsv($handle, ['Effective Platform Commission Rate', number_format($effectiveRate, 4, '.', '') . '%']);
+            fputcsv($handle, ['Platform Commission', number_format($commission, 2, '.', '')]);
+            fputcsv($handle, ['Withholding Tax Recorded', number_format($withholding, 2, '.', '')]);
+            fputcsv($handle, ['Seller Net Payable', number_format($net, 2, '.', '')]);
             fputcsv($handle, []);
 
             if ($type === 'products') {
                 fputcsv($handle, ['Product', 'Quantity Sold', 'Sales']);
 
-                foreach ($this->topProducts($deliveredOrders, 100) as $product) {
+                foreach ($this->topProducts($orders, 100) as $product) {
                     fputcsv($handle, [
                         $product['name'],
                         $product['quantity'],
@@ -241,29 +237,36 @@ class SellerReportController extends Controller
             } else {
                 fputcsv($handle, [
                     'Order Number',
-                    'Date',
+                    'Delivered At',
                     'Buyer',
-                    'Status',
-                    'Gross Sales',
-                    'Commission',
-                    'Net Revenue',
-                    'Payment',
+                    'Gross Merchandise',
+                    'Applied Rate',
+                    'Platform Commission',
+                    'Withholding Tax',
+                    'Seller Net Payable',
+                    'Payment Method',
+                    'Payment Status',
+                    'Settlement Status',
                 ]);
 
                 foreach ($orders as $order) {
-                    $isDelivered = $order->status === 'delivered';
-                    $gross = $isDelivered ? (float) ($order->subtotal ?? 0) : 0.0;
-                    $rowCommission = round($gross * ($commissionRate / 100), 2);
+                    $settlement = $order->sellerSettlement;
+                    $rowCommission = (float) ($settlement?->platform_commission_amount ?? $order->commission?->net_commission ?? 0);
+                    $rowGross = (float) ($settlement?->merchandise_amount ?? $order->subtotal ?? 0);
+                    $rowRate = (float) ($order->commission?->rate_percent ?? ($rowGross > 0 ? ($rowCommission / $rowGross) * 100 : 0));
 
                     fputcsv($handle, [
                         $order->order_number,
-                        $order->created_at?->format('Y-m-d H:i:s'),
+                        $order->delivered_at?->format('Y-m-d H:i:s'),
                         $order->buyer_name,
-                        ucwords(str_replace('_', ' ', (string) $order->status)),
-                        number_format($gross, 2, '.', ''),
+                        number_format($rowGross, 2, '.', ''),
+                        number_format($rowRate, 4, '.', '') . '%',
                         number_format($rowCommission, 2, '.', ''),
-                        number_format($gross - $rowCommission, 2, '.', ''),
-                        'COD',
+                        number_format((float) ($settlement?->withholding_tax_amount ?? 0), 2, '.', ''),
+                        number_format((float) ($settlement?->seller_net_amount ?? 0), 2, '.', ''),
+                        strtoupper((string) $order->payment_method),
+                        strtoupper((string) $order->payment_status),
+                        $settlement?->status ?? 'not_recorded',
                     ]);
                 }
             }
@@ -311,7 +314,6 @@ class SellerReportController extends Controller
             [$from, $to] = [$to, $from];
         }
 
-        // Keep the report bounded for fast, predictable queries.
         if ($from->diffInDays($to) > 730) {
             $from = $to->copy()->subDays(730);
         }
@@ -326,7 +328,6 @@ class SellerReportController extends Controller
     private function previousPeriod(Carbon $from, Carbon $to): array
     {
         $days = $from->diffInDays($to) + 1;
-
         $previousTo = $from->copy()->subDay();
         $previousFrom = $previousTo->copy()->subDays($days - 1);
 
@@ -374,7 +375,6 @@ class SellerReportController extends Controller
 
         if (is_string($items)) {
             $decoded = json_decode($items, true);
-
             return is_array($decoded) ? $decoded : [];
         }
 
@@ -405,13 +405,8 @@ class SellerReportController extends Controller
             }
 
             foreach ($deliveredOrders as $order) {
-                $key = $order->created_at?->format('Y-m-d');
-
-                if ($key && isset($periods[$key])) {
-                    $sales = (float) ($order->subtotal ?? 0);
-                    $periods[$key]['sales'] += $sales;
-                    $periods[$key]['net'] += $sales * .90;
-                }
+                $key = $order->delivered_at?->format('Y-m-d');
+                $this->addOrderToChartPeriod($periods, $key, $order);
             }
         } elseif ($days <= 120) {
             $mode = 'week';
@@ -429,13 +424,8 @@ class SellerReportController extends Controller
             }
 
             foreach ($deliveredOrders as $order) {
-                $key = $order->created_at?->copy()->startOfWeek()->format('o-W');
-
-                if ($key && isset($periods[$key])) {
-                    $sales = (float) ($order->subtotal ?? 0);
-                    $periods[$key]['sales'] += $sales;
-                    $periods[$key]['net'] += $sales * .90;
-                }
+                $key = $order->delivered_at?->copy()->startOfWeek()->format('o-W');
+                $this->addOrderToChartPeriod($periods, $key, $order);
             }
         } else {
             $mode = 'month';
@@ -453,13 +443,8 @@ class SellerReportController extends Controller
             }
 
             foreach ($deliveredOrders as $order) {
-                $key = $order->created_at?->format('Y-m');
-
-                if ($key && isset($periods[$key])) {
-                    $sales = (float) ($order->subtotal ?? 0);
-                    $periods[$key]['sales'] += $sales;
-                    $periods[$key]['net'] += $sales * .90;
-                }
+                $key = $order->delivered_at?->format('Y-m');
+                $this->addOrderToChartPeriod($periods, $key, $order);
             }
         }
 
@@ -477,12 +462,20 @@ class SellerReportController extends Controller
         ];
     }
 
+    private function addOrderToChartPeriod(array &$periods, ?string $key, MarketplaceOrder $order): void
+    {
+        if (!$key || !isset($periods[$key])) {
+            return;
+        }
+
+        $settlement = $order->sellerSettlement;
+        $periods[$key]['sales'] += (float) ($settlement?->merchandise_amount ?? $order->subtotal ?? 0);
+        $periods[$key]['net'] += (float) ($settlement?->seller_net_amount ?? 0);
+    }
+
     private function sellerRating(int $sellerId): ?float
     {
-        if (
-            !Schema::hasTable('product_reviews')
-            || !Schema::hasTable('seller_products')
-        ) {
+        if (!Schema::hasTable('product_reviews') || !Schema::hasTable('seller_products')) {
             return null;
         }
 
@@ -496,8 +489,6 @@ class SellerReportController extends Controller
             ->where('seller_products.seller_account_id', $sellerId)
             ->avg('product_reviews.rating');
 
-        return $rating !== null
-            ? round((float) $rating, 1)
-            : null;
+        return $rating !== null ? round((float) $rating, 1) : null;
     }
 }

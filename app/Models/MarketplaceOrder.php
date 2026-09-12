@@ -6,6 +6,7 @@ use App\Events\SellerOrderUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MarketplaceOrder extends Model
 {
@@ -132,6 +133,31 @@ class MarketplaceOrder extends Model
     public function events(): HasMany
     {
         return $this->hasMany(MarketplaceOrderEvent::class, 'marketplace_order_id');
+    }
+
+    public function commission(): HasOne
+    {
+        return $this->hasOne(OrderCommission::class, 'marketplace_order_id');
+    }
+
+    public function paymentTransactions(): HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class, 'marketplace_order_id');
+    }
+
+    public function sellerSettlement(): HasOne
+    {
+        return $this->hasOne(SellerSettlement::class, 'marketplace_order_id');
+    }
+
+    public function riderEarning(): HasOne
+    {
+        return $this->hasOne(RiderEarning::class, 'marketplace_order_id');
+    }
+
+    public function logisticsParcel(): HasOne
+    {
+        return $this->hasOne(LogisticsParcel::class, 'marketplace_order_id');
     }
 
     public function reviews(): HasMany

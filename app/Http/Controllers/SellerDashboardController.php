@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\MarketplaceOrder;
+use App\Models\PlatformSetting;
 use App\Models\ProductReview;
 use App\Models\SellerAccount;
+use App\Models\SellerSettlement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -95,17 +97,15 @@ class SellerDashboardController extends Controller
         $previousMonthStart = $previousMonthReference->copy()->startOfMonth();
         $previousMonthEnd = $previousMonthReference->copy()->endOfMonth();
 
-        $monthlySales = (float) MarketplaceOrder::query()
+        $monthlySales = (float) SellerSettlement::query()
             ->where('seller_account_id', $sellerAccount->id)
-            ->where('status', 'delivered')
-            ->whereBetween('delivered_at', [$currentMonthStart, $currentMonthEnd])
-            ->sum('subtotal');
+            ->whereBetween('eligible_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('merchandise_amount');
 
-        $previousMonthSales = (float) MarketplaceOrder::query()
+        $previousMonthSales = (float) SellerSettlement::query()
             ->where('seller_account_id', $sellerAccount->id)
-            ->where('status', 'delivered')
-            ->whereBetween('delivered_at', [$previousMonthStart, $previousMonthEnd])
-            ->sum('subtotal');
+            ->whereBetween('eligible_at', [$previousMonthStart, $previousMonthEnd])
+            ->sum('merchandise_amount');
 
         $monthlySalesChange = 0.0;
         $monthlySalesTrendLabel = 'No previous-month sales';
@@ -124,12 +124,23 @@ class SellerDashboardController extends Controller
         }
 
         /*
-        | SARI commission shown elsewhere in the current UI is 10%.
-        | Keep the dashboard calculation centralized here.
+        | Financial values come from the immutable settlement ledger. The
+        | current configured rate is used only as a display fallback when the
+        | selected period has no completed financial transactions.
         */
-        $platformCommissionRate = 10.0;
-        $platformCommission = round($monthlySales * ($platformCommissionRate / 100), 2);
-        $estimatedRevenue = max(0, round($monthlySales - $platformCommission, 2));
+        $platformCommission = round((float) SellerSettlement::query()
+            ->where('seller_account_id', $sellerAccount->id)
+            ->whereBetween('eligible_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('platform_commission_amount'), 2);
+
+        $estimatedRevenue = round((float) SellerSettlement::query()
+            ->where('seller_account_id', $sellerAccount->id)
+            ->whereBetween('eligible_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('seller_net_amount'), 2);
+
+        $platformCommissionRate = $monthlySales > 0
+            ? round(($platformCommission / $monthlySales) * 100, 4)
+            : (float) PlatformSetting::valueOf('commission_rate', 10);
 
         $feedbackCount = 0;
 
@@ -192,42 +203,40 @@ class SellerDashboardController extends Controller
             ? $lastMonth->copy()
             : $yearStart->copy();
 
-        $orders = MarketplaceOrder::query()
+        $settlements = SellerSettlement::query()
             ->where('seller_account_id', $sellerId)
-            ->where('status', 'delivered')
-            ->whereNotNull('delivered_at')
-            ->whereBetween('delivered_at', [
+            ->whereBetween('eligible_at', [
                 $queryStart->copy()->startOfDay(),
                 $now->copy()->endOfDay(),
             ])
-            ->orderBy('delivered_at')
+            ->orderBy('eligible_at')
             ->get([
-                'subtotal',
-                'delivered_at',
+                'merchandise_amount',
+                'eligible_at',
             ]);
 
         return [
             'month' => $this->buildMonthlySalesDataset(
-                $orders,
+                $settlements,
                 $currentMonth,
                 $now->copy(),
                 $currentMonth->format('F Y')
             ),
             'last_month' => $this->buildMonthlySalesDataset(
-                $orders,
+                $settlements,
                 $lastMonth,
                 $lastMonth->copy()->endOfMonth(),
                 $lastMonth->format('F Y')
             ),
             'year' => $this->buildYearSalesDataset(
-                $orders,
+                $settlements,
                 (int) $now->year
             ),
         ];
     }
 
     private function buildMonthlySalesDataset(
-        Collection $orders,
+        Collection $settlements,
         Carbon $monthStart,
         Carbon $periodEnd,
         string $periodLabel
@@ -243,20 +252,20 @@ class SellerDashboardController extends Controller
         $values = array_fill(0, 5, 0.0);
         $orderCount = 0;
 
-        foreach ($orders as $order) {
-            if (!$order->delivered_at) {
+        foreach ($settlements as $settlement) {
+            if (!$settlement->eligible_at) {
                 continue;
             }
 
-            $deliveredAt = Carbon::parse($order->delivered_at);
+            $eligibleAt = Carbon::parse($settlement->eligible_at);
 
-            if ($deliveredAt->lt($start) || $deliveredAt->gt($end)) {
+            if ($eligibleAt->lt($start) || $eligibleAt->gt($end)) {
                 continue;
             }
 
-            $bucket = min(4, intdiv(max(1, (int) $deliveredAt->day) - 1, 7));
+            $bucket = min(4, intdiv(max(1, (int) $eligibleAt->day) - 1, 7));
 
-            $values[$bucket] += (float) ($order->subtotal ?? 0);
+            $values[$bucket] += (float) ($settlement->merchandise_amount ?? 0);
             $orderCount++;
         }
 
@@ -268,7 +277,7 @@ class SellerDashboardController extends Controller
         );
     }
 
-    private function buildYearSalesDataset(Collection $orders, int $year): array
+    private function buildYearSalesDataset(Collection $settlements, int $year): array
     {
         $labels = [
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -278,20 +287,20 @@ class SellerDashboardController extends Controller
         $values = array_fill(0, 12, 0.0);
         $orderCount = 0;
 
-        foreach ($orders as $order) {
-            if (!$order->delivered_at) {
+        foreach ($settlements as $settlement) {
+            if (!$settlement->eligible_at) {
                 continue;
             }
 
-            $deliveredAt = Carbon::parse($order->delivered_at);
+            $eligibleAt = Carbon::parse($settlement->eligible_at);
 
-            if ((int) $deliveredAt->year !== $year) {
+            if ((int) $eligibleAt->year !== $year) {
                 continue;
             }
 
-            $bucket = max(0, min(11, (int) $deliveredAt->month - 1));
+            $bucket = max(0, min(11, (int) $eligibleAt->month - 1));
 
-            $values[$bucket] += (float) ($order->subtotal ?? 0);
+            $values[$bucket] += (float) ($settlement->merchandise_amount ?? 0);
             $orderCount++;
         }
 

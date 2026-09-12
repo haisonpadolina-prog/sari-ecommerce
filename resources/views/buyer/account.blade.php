@@ -40,6 +40,8 @@
         @endif
     </section>
 </div>
+
+@include('components.support.complaint-form')
 @endsection
 
 @push('scripts')

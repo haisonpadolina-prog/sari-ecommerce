@@ -43,7 +43,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env(
             'GOOGLE_REDIRECT_URI',
-            'http://localhost:8000/auth/google/callback'
+            '/auth/google/callback'
         ),
     ],
 
@@ -58,7 +58,7 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env(
             'FACEBOOK_REDIRECT_URI',
-            'http://localhost:8000/auth/facebook/callback'
+            '/auth/facebook/callback'
         ),
     ],
 
