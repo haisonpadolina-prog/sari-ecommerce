@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\PlatformSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -26,6 +27,30 @@ class SendRegistrationDecisionEmail implements ShouldQueue
 
     public function handle(): void
     {
+        $enabled = PlatformSetting::valueOf(
+            'registration_decision_email_enabled',
+            true
+        );
+
+        $enabled = is_bool($enabled)
+            ? $enabled
+            : (
+                filter_var(
+                    $enabled,
+                    FILTER_VALIDATE_BOOLEAN,
+                    FILTER_NULL_ON_FAILURE
+                ) ?? false
+            );
+
+        if (!$enabled) {
+            Log::info(
+                'SARI registration decision email skipped by platform policy.',
+                ['email' => $this->email]
+            );
+
+            return;
+        }
+
         try {
             Mail::raw($this->message, function ($mail) {
                 $mail->to($this->email)

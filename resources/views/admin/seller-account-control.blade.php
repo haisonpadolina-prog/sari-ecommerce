@@ -2198,14 +2198,14 @@
 
     <section class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         @foreach($summaryCards as $card)
-            <article class="account-control-summary-card rounded-[17px] border border-[#ebe4da] bg-white p-3.5 sm:p-4">
+            <article class="account-control-summary-card relative rounded-[17px] border border-[#ebe4da] bg-white p-3.5 pr-20 sm:p-4 sm:pr-20">
                 <div class="flex items-start justify-between gap-3">
                     <div>
                         <p class="sac-summary-label text-[var(--sac-sm)]">{{ $card['label'] }}</p>
                         <p class="sac-summary-value mt-2 text-[clamp(1.40rem,1.27rem+.30vw,1.72rem)]">{{ $card['value'] }}</p>
                     </div>
 
-                    <div class="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[11px] border {{ $card['tone'] }}">
+                    <div class="absolute right-4 top-4 grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[11px] border {{ $card['tone'] }} sm:right-[18px] sm:top-[18px]">
                         @if($card['icon'] === 'users')
                             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>

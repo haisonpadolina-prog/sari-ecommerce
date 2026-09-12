@@ -26,6 +26,8 @@ use App\Services\SellerAccountStatusService;
 use App\Http\Controllers\ChatMessageReactionController;
 use App\Http\Controllers\AdminSellerChatActionController;
 use App\Http\Middleware\HandleSellerSupportChat;
+use App\Http\Controllers\PasswordResetOtpController;
+
 /*
 |--------------------------------------------------------------------------
 | NEW — COURIER CONTROLLER
@@ -576,6 +578,11 @@ Route::get(
     [RegistrationController::class, 'pending']
 )->name('registration.pending');
 
+Route::get(
+    '/registration/status',
+    [RegistrationController::class, 'status']
+)->name('registration.status');
+
 Route::post('/complaints', [PlatformComplaintController::class, 'store'])
     ->name('platform.complaints.store');
 
@@ -848,6 +855,9 @@ Route::post('/admin/commissions/payouts/{payout}/reject', [AdminCommissionsContr
 
 Route::get('/admin/reports', [AdminReportsController::class, 'index'])
     ->name('admin.reports');
+
+Route::get('/admin/reports/export', [AdminReportsController::class, 'export'])
+    ->name('admin.reports.export');
 
 
 Route::get('/admin/platform-settings', [AdminPlatformSettingsController::class, 'index'])
@@ -1512,7 +1522,38 @@ Route::get(
   ->name('seller.layout-state');
 
 
+/*
+|--------------------------------------------------------------------------
+| SARI Password Recovery — Email OTP
+|--------------------------------------------------------------------------
+|
+| Email -> 6-digit OTP -> new password -> success.
+| The page uses JSON requests so every step happens without leaving the page.
+|
+*/
 
+Route::get('/forgot-password', [PasswordResetOtpController::class, 'show'])
+    ->name('password.request');
+
+Route::post('/forgot-password/send-code', [PasswordResetOtpController::class, 'sendCode'])
+    ->middleware('throttle:8,1')
+    ->name('password.otp.send');
+
+// Compatibility route for older SARI forgot-password forms.
+Route::post('/forgot-password', [PasswordResetOtpController::class, 'sendCode'])
+    ->middleware('throttle:8,1')
+    ->name('password.email');
+
+Route::post('/forgot-password/verify-code', [PasswordResetOtpController::class, 'verifyCode'])
+    ->middleware('throttle:12,1')
+    ->name('password.otp.verify');
+
+Route::post('/forgot-password/reset', [PasswordResetOtpController::class, 'reset'])
+    ->middleware('throttle:8,1')
+    ->name('password.update');
+Route::post('/forgot-password/restart', [PasswordResetOtpController::class, 'restart'])
+    ->middleware('throttle:12,1')
+    ->name('password.otp.restart');
 /*
 |--------------------------------------------------------------------------
 | LOGISTICS ROUTES
@@ -1520,3 +1561,9 @@ Route::get(
 */
 
 require __DIR__.'/logistics.php';
+
+
+
+
+
+require __DIR__.'/messaging.php';

@@ -2764,6 +2764,104 @@
         margin-top: 22px !important;
     }
 
+    .sari-otp-success-animation-wrap {
+        position: relative;
+        display: grid;
+        width: 118px;
+        height: 118px;
+        margin: 0 auto;
+        place-items: center;
+        overflow: visible;
+        isolation: isolate;
+    }
+
+    .sari-otp-success-animation {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        width: 92px;
+        height: 92px;
+        place-items: center;
+        border-radius: 999px;
+        background: #fffaf0;
+        box-shadow:
+            0 0 0 1px rgba(212,143,8,.14),
+            0 13px 34px rgba(130,86,5,.12);
+        transform-origin: center;
+        will-change: transform, opacity;
+    }
+
+    .sari-otp-success-animation::before {
+        content: '';
+        position: absolute;
+        inset: 7px;
+        border-radius: inherit;
+        border: 1px solid rgba(212,143,8,.16);
+        pointer-events: none;
+    }
+
+    .sari-otp-success-svg {
+        display: block;
+        width: 70px;
+        height: 70px;
+        overflow: visible;
+    }
+
+    .sari-otp-success-ring {
+        fill: #d48f08;
+        stroke: #d48f08;
+        stroke-width: 1;
+    }
+
+    .sari-otp-success-check {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 3.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 30;
+        stroke-dashoffset: 30;
+    }
+
+    .sari-otp-success-glow {
+        position: absolute;
+        z-index: 0;
+        width: 92px;
+        height: 92px;
+        border-radius: 999px;
+        background: rgba(212,143,8,.16);
+        opacity: 0;
+        transform: scale(.68);
+        pointer-events: none;
+        will-change: transform, opacity;
+    }
+
+    .sari-otp-success-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .sari-otp-success-particle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        will-change: transform, opacity;
+    }
+
+    .sari-otp-success h2,
+    .sari-otp-success .sari-otp-copy {
+        opacity: 0;
+        transform: translateY(8px);
+        will-change: transform, opacity;
+    }
+
     .sari-button-busy {
         pointer-events: none !important;
     }
@@ -4654,6 +4752,29 @@
         }
     }
 
+
+    @media (max-width: 639px) {
+        .sari-otp-success-animation-wrap {
+            width: 108px;
+            height: 108px;
+        }
+
+        .sari-otp-success-animation {
+            width: 84px;
+            height: 84px;
+        }
+
+        .sari-otp-success-svg {
+            width: 64px;
+            height: 64px;
+        }
+
+        .sari-otp-success-glow {
+            width: 84px;
+            height: 84px;
+        }
+    }
+
 </style>
 
 <div class="relative min-h-screen min-h-[100dvh] overflow-x-hidden bg-[#f7f4ee] font-['Poppins',sans-serif] text-[#17140e]">
@@ -5599,13 +5720,32 @@
                     </div>
 
                     <div id="otpSuccessPanel" class="sari-otp-panel sari-otp-success" hidden aria-live="polite">
-                        <div class="sari-otp-success-icon" aria-hidden="true">
-                            <span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m5 12 4 4L19 6"></path>
+                        <div class="sari-otp-success-animation-wrap" aria-hidden="true">
+                            <div id="otpSuccessGlow" class="sari-otp-success-glow"></div>
+                            <div id="otpSuccessParticles" class="sari-otp-success-particles"></div>
+
+                            <div id="otpSuccessAnimation" class="sari-otp-success-animation">
+                                <svg
+                                    class="sari-otp-success-svg"
+                                    viewBox="0 0 72 72"
+                                    fill="none"
+                                >
+                                    <circle
+                                        class="sari-otp-success-ring"
+                                        cx="36"
+                                        cy="36"
+                                        r="29"
+                                    ></circle>
+
+                                    <path
+                                        id="otpSuccessCheck"
+                                        class="sari-otp-success-check"
+                                        d="M23.5 36.5 31.5 44.5 49.5 26.5"
+                                    ></path>
                                 </svg>
-                            </span>
+                            </div>
                         </div>
+
                         <h2>Verification successful</h2>
                         <p class="sari-otp-copy">Your email is verified. Submitting your registration now.</p>
                     </div>
@@ -7350,6 +7490,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const otpEntryPanel = document.getElementById('otpEntryPanel');
     const otpVerifyingPanel = document.getElementById('otpVerifyingPanel');
     const otpSuccessPanel = document.getElementById('otpSuccessPanel');
+    const otpSuccessAnimation = document.getElementById('otpSuccessAnimation');
+    const otpSuccessGlow = document.getElementById('otpSuccessGlow');
+    const otpSuccessParticles = document.getElementById('otpSuccessParticles');
+    const otpSuccessCheck = document.getElementById('otpSuccessCheck');
     const finalRegistrationSubmit = document.getElementById('finalRegistrationSubmit');
     const emailField = form.querySelector('input[name="email"]');
     const csrfToken = form.querySelector('input[name="_token"]')?.value || '';
@@ -7611,6 +7755,200 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function playOtpSuccessAnimation() {
+        if (!otpSuccessPanel || !otpSuccessAnimation) {
+            return Promise.resolve();
+        }
+
+        const reducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches;
+
+        const heading = otpSuccessPanel.querySelector('h2');
+        const copyText = otpSuccessPanel.querySelector('.sari-otp-copy');
+
+        [
+            otpSuccessAnimation,
+            otpSuccessGlow,
+            otpSuccessCheck,
+            heading,
+            copyText
+        ].forEach(function (element) {
+            element?.getAnimations().forEach(function (animation) {
+                animation.cancel();
+            });
+        });
+
+        if (otpSuccessParticles) {
+            otpSuccessParticles.innerHTML = '';
+        }
+
+        if (reducedMotion) {
+            if (otpSuccessCheck) {
+                otpSuccessCheck.style.strokeDashoffset = '0';
+            }
+
+            if (heading) {
+                heading.style.opacity = '1';
+                heading.style.transform = 'none';
+            }
+
+            if (copyText) {
+                copyText.style.opacity = '1';
+                copyText.style.transform = 'none';
+            }
+
+            return new Promise(function (resolve) {
+                window.setTimeout(resolve, 650);
+            });
+        }
+
+        otpSuccessAnimation.animate(
+            [
+                { opacity: 0, transform: 'scale(.55) rotate(-7deg)' },
+                { opacity: 1, transform: 'scale(1.08) rotate(2deg)', offset: .58 },
+                { opacity: 1, transform: 'scale(1) rotate(0deg)' }
+            ],
+            {
+                duration: 620,
+                easing: 'cubic-bezier(.18,.89,.32,1.28)',
+                fill: 'both'
+            }
+        );
+
+        if (otpSuccessGlow) {
+            otpSuccessGlow.animate(
+                [
+                    { opacity: 0, transform: 'scale(.62)' },
+                    { opacity: .85, transform: 'scale(1.18)', offset: .45 },
+                    { opacity: 0, transform: 'scale(1.48)' }
+                ],
+                {
+                    duration: 860,
+                    easing: 'cubic-bezier(.22,1,.36,1)',
+                    fill: 'both'
+                }
+            );
+        }
+
+        if (otpSuccessCheck) {
+            otpSuccessCheck.style.strokeDashoffset = '30';
+
+            otpSuccessCheck.animate(
+                [
+                    { strokeDashoffset: 30 },
+                    { strokeDashoffset: 0 }
+                ],
+                {
+                    duration: 430,
+                    delay: 310,
+                    easing: 'cubic-bezier(.65,0,.35,1)',
+                    fill: 'forwards'
+                }
+            );
+        }
+
+        const colors = [
+            '#d48f08',
+            '#efb93f',
+            '#f6d987',
+            '#5d4a28'
+        ];
+
+        if (otpSuccessParticles) {
+            const particleCount = 14;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'sari-otp-success-particle';
+
+                const angle = (Math.PI * 2 * i / particleCount)
+                    + ((Math.random() - .5) * .22);
+
+                const distance = 45 + Math.random() * 20;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                const size = 3 + Math.random() * 3;
+
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = colors[i % colors.length];
+
+                otpSuccessParticles.appendChild(particle);
+
+                const particleAnimation = particle.animate(
+                    [
+                        {
+                            opacity: 0,
+                            transform:
+                                'translate(-50%, -50%) translate(0, 0) scale(.3)'
+                        },
+                        {
+                            opacity: 1,
+                            transform:
+                                'translate(-50%, -50%) translate('
+                                + (x * .38) + 'px, '
+                                + (y * .38) + 'px) scale(1)',
+                            offset: .32
+                        },
+                        {
+                            opacity: 0,
+                            transform:
+                                'translate(-50%, -50%) translate('
+                                + x + 'px, '
+                                + y + 'px) scale(.25)'
+                        }
+                    ],
+                    {
+                        duration: 760 + Math.random() * 180,
+                        delay: 330 + Math.random() * 90,
+                        easing: 'cubic-bezier(.17,.67,.37,1)',
+                        fill: 'forwards'
+                    }
+                );
+
+                particleAnimation.addEventListener(
+                    'finish',
+                    function () {
+                        particle.remove();
+                    },
+                    { once: true }
+                );
+            }
+        }
+
+        heading?.animate(
+            [
+                { opacity: 0, transform: 'translateY(9px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+            ],
+            {
+                duration: 420,
+                delay: 690,
+                easing: 'cubic-bezier(.22,1,.36,1)',
+                fill: 'forwards'
+            }
+        );
+
+        copyText?.animate(
+            [
+                { opacity: 0, transform: 'translateY(7px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+            ],
+            {
+                duration: 420,
+                delay: 800,
+                easing: 'cubic-bezier(.22,1,.36,1)',
+                fill: 'forwards'
+            }
+        );
+
+        return new Promise(function (resolve) {
+            // Keep the completed success state visible long enough to be noticed.
+            window.setTimeout(resolve, 1850);
+        });
+    }
+
     async function verifyOtpCode() {
         if (otpRequestBusy || otpVerified) return;
 
@@ -7650,9 +7988,24 @@ document.addEventListener('DOMContentLoaded', function () {
             if (otpVerifyingPanel) otpVerifyingPanel.hidden = true;
             if (otpSuccessPanel) otpSuccessPanel.hidden = false;
 
-            window.setTimeout(function () {
-                form.requestSubmit(finalRegistrationSubmit);
-            }, 360);
+            // Let the browser paint the success panel first, then run the
+            // crisp JS check animation before the final form submission.
+            await new Promise(function (resolve) {
+                window.requestAnimationFrame(function () {
+                    window.requestAnimationFrame(resolve);
+                });
+            });
+
+            try {
+                await playOtpSuccessAnimation();
+            } catch (animationError) {
+                // Decorative animation must never block registration.
+                await new Promise(function (resolve) {
+                    window.setTimeout(resolve, 650);
+                });
+            }
+
+            form.requestSubmit(finalRegistrationSubmit);
         } catch (error) {
             setOtpProgress('sent');
             showOtpError(error.message);

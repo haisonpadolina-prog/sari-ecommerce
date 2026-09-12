@@ -3620,14 +3620,14 @@
 
     <section class="compliance-summary-grid mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         @foreach($summaryCards as $card)
-            <article class="compliance-summary-card rounded-[17px] border border-[#ebe4da] bg-white p-3.5 sm:p-4">
+            <article class="compliance-summary-card relative rounded-[17px] border border-[#ebe4da] bg-white p-3.5 pr-20 sm:p-4 sm:pr-20">
                 <div class="flex items-start justify-between gap-3">
                     <div>
                         <p class="text-[8px] font-medium text-[#91887d]">{{ $card['label'] }}</p>
                         <p class="mt-2 text-[22px] font-bold tracking-[-.03em] text-[#28221b]">{{ $card['value'] }}</p>
                     </div>
 
-                    <div class="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[11px] border {{ $card['tone'] }}">
+                    <div class="absolute right-4 top-4 grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[11px] border {{ $card['tone'] }} sm:right-[18px] sm:top-[18px]">
                         @if($card['icon'] === 'users')
                             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>

@@ -1188,9 +1188,9 @@
     {{-- SUMMARY --}}
     <section class="grid grid-cols-2 gap-3 lg:grid-cols-5">
         @foreach($metricCards as [$label, $value, $helper, $role, $tone, $icon])
-            <button type="button" data-summary-role="{{ $role }}" class="metric-card group min-h-[108px] p-4 text-left sm:p-[18px]">
+            <button type="button" data-summary-role="{{ $role }}" class="metric-card group relative min-h-[108px] p-4 pr-20 text-left sm:p-[18px] sm:pr-20">
                 <div class="flex h-full items-center gap-4">
-                    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-[12px] border {{ $tone }}">
+                    <span class="absolute right-4 top-4 grid h-12 w-12 shrink-0 place-items-center rounded-[12px] border {{ $tone }} sm:right-[18px] sm:top-[18px]">
                         @if($icon === 'users')
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><path d="M17 6a3 3 0 0 1 0 6"></path><path d="M18 15a5 5 0 0 1 3 5"></path></svg>
                         @elseif($icon === 'user')

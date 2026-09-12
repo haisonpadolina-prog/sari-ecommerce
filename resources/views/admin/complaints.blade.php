@@ -74,6 +74,21 @@
         font-weight: 400 !important;
     }
 
+    /* Summary icons: upper-right, same 48x48 size. */
+    .complaints-page .complaint-stat {
+        position: relative !important;
+        padding-right: 82px !important;
+    }
+
+    .complaints-page .complaint-stat-icon {
+        position: absolute !important;
+        top: 18px !important;
+        right: 18px !important;
+        width: 48px !important;
+        height: 48px !important;
+        flex: 0 0 48px !important;
+    }
+
     @media (min-width: 1536px) {
         .complaints-page .complaint-stat-label {
             font-size: 12px !important;
@@ -301,6 +316,101 @@
         opacity: 1;
     }
 
+
+    /* =========================================================
+       COMPLAINTS TABLE — SELLER COMPLIANCE STYLE
+       One floating outer card; header stays integrated inside.
+       ========================================================= */
+    .complaints-page .complaints-table-surface {
+        overflow: hidden !important;
+        border: 1px solid #e7ddd1 !important;
+        border-radius: 20px !important;
+        background: #fff !important;
+        box-shadow:
+            0 3px 8px rgba(61,43,22,.045),
+            0 18px 42px rgba(61,43,22,.095),
+            0 38px 78px rgba(61,43,22,.045),
+            inset 0 1px 0 rgba(255,255,255,.98) !important;
+    }
+
+    .complaints-page .complaints-table-head {
+        position: relative !important;
+        z-index: 2 !important;
+        margin: 0 !important;
+        min-height: 50px !important;
+        padding: 13px 20px !important;
+        border: 0 !important;
+        border-bottom: 1px solid #eee8df !important;
+        border-radius: 0 !important;
+        background: #fcfbf8 !important;
+        color: #847b70 !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        line-height: 1.35 !important;
+        letter-spacing: .07em !important;
+        text-transform: uppercase !important;
+        box-shadow: none !important;
+    }
+
+    .complaints-page .complaints-table-head > div {
+        display: flex;
+        min-height: 24px;
+        align-items: center;
+    }
+
+    .complaints-page .complaints-table-head > div:last-child {
+        justify-content: flex-end;
+    }
+
+    .complaints-page #complaintRows {
+        background: #fff !important;
+        border-top: 0 !important;
+    }
+
+    .complaints-page .complaint-row {
+        min-height: 72px !important;
+        padding: 14px 20px !important;
+        border-bottom: 1px solid #f0ebe4 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .complaints-page .complaint-row:hover {
+        background: #fdfbf7 !important;
+    }
+
+    .complaints-page .complaint-row:last-child {
+        border-bottom: 0 !important;
+    }
+
+    .complaints-page .complaints-footer {
+        min-height: 68px !important;
+        padding: 14px 20px !important;
+        border-top: 1px solid #eee8df !important;
+        background: #fff !important;
+    }
+
+    /* Keep summary icons upper-right, same card/icon dimensions. */
+    .complaints-page .complaint-stat {
+        position: relative !important;
+        padding-right: 82px !important;
+    }
+
+    .complaints-page .complaint-stat-icon {
+        position: absolute !important;
+        top: 18px !important;
+        right: 18px !important;
+        width: 48px !important;
+        height: 48px !important;
+        flex: 0 0 48px !important;
+    }
+
+    @media (max-width: 1023px) {
+        .complaints-page .complaints-table-head {
+            display: none !important;
+        }
+    }
+
 </style>
 
 @php
@@ -321,9 +431,9 @@
     </section>
 
     <section class="complaints-summary-grid mt-4">
-        <button type="button" class="complaint-stat" data-summary-status="all"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#efdfbf] bg-[#fff7e8] text-[#b98112]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5h14v11H8l-3 3V5Z"></path><path d="M9 9h6"></path><path d="M9 12h4"></path></svg></span><div><p class="complaint-stat-label">Total Complaints</p><p class="complaint-stat-value">{{ $stats['total'] ?? $complaintCount }}</p><p class="complaint-stat-helper">All submitted complaints</p></div></div></button>
-        <button type="button" class="complaint-stat" data-summary-status="open"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#f0dfd0] bg-[#fff5ed] text-[#c26f20]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5"></path><path d="M12 16h.01"></path></svg></span><div><p class="complaint-stat-label">Open Cases</p><p class="complaint-stat-value">{{ $stats['open'] ?? 0 }}</p><p class="complaint-stat-helper">Needs admin resolution</p></div></div></button>
-        <button type="button" class="complaint-stat" data-summary-status="resolved"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon border border-[#d8ebde] bg-[#eef8f1] text-[#298b53]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg></span><div><p class="complaint-stat-label">Resolved</p><p class="complaint-stat-value">{{ $stats['resolved'] ?? 0 }}</p><p class="complaint-stat-helper">Completed complaint cases</p></div></div></button>
+        <button type="button" class="complaint-stat relative pr-20" data-summary-status="all"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon absolute right-[18px] top-[18px] border border-[#efdfbf] bg-[#fff7e8] text-[#b98112]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5h14v11H8l-3 3V5Z"></path><path d="M9 9h6"></path><path d="M9 12h4"></path></svg></span><div><p class="complaint-stat-label">Total Complaints</p><p class="complaint-stat-value">{{ $stats['total'] ?? $complaintCount }}</p><p class="complaint-stat-helper">All submitted complaints</p></div></div></button>
+        <button type="button" class="complaint-stat relative pr-20" data-summary-status="open"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon absolute right-[18px] top-[18px] border border-[#f0dfd0] bg-[#fff5ed] text-[#c26f20]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5"></path><path d="M12 16h.01"></path></svg></span><div><p class="complaint-stat-label">Open Cases</p><p class="complaint-stat-value">{{ $stats['open'] ?? 0 }}</p><p class="complaint-stat-helper">Needs admin resolution</p></div></div></button>
+        <button type="button" class="complaint-stat relative pr-20" data-summary-status="resolved"><div class="flex h-full items-center gap-4"><span class="complaint-stat-icon absolute right-[18px] top-[18px] border border-[#d8ebde] bg-[#eef8f1] text-[#298b53]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg></span><div><p class="complaint-stat-label">Resolved</p><p class="complaint-stat-value">{{ $stats['resolved'] ?? 0 }}</p><p class="complaint-stat-helper">Completed complaint cases</p></div></div></button>
     </section>
 
     <section class="complaints-surface complaints-filter mt-4"><div class="complaints-filter-grid">
@@ -347,7 +457,7 @@
         <button id="complaintResetFilter" type="button" class="complaints-reset">Reset</button>
     </div></section>
 
-    <section class="complaints-surface mt-4 overflow-hidden">
+    <section class="complaints-surface complaints-table-surface mt-4 overflow-hidden">
         <div class="complaints-table-head"><div>Complaint</div><div>Reporter</div><div>Submitted</div><div>Status</div><div class="text-right">Action</div></div>
         <div id="complaintRows">
         @forelse($complaints as $complaint)

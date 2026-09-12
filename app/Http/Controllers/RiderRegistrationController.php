@@ -8,6 +8,7 @@ use App\Models\CourierAccount;
 use App\Models\LogisticsAccount;
 use App\Models\RegistrationApplication;
 use App\Models\SellerAccount;
+use App\Services\RegistrationEmailVerificationService;
 use App\Support\CurrentLogisticsAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +20,10 @@ use Illuminate\View\View;
 
 class RiderRegistrationController extends Controller
 {
+    public function __construct(
+        private readonly RegistrationEmailVerificationService $emailVerification
+    ) {}
+
     public function index(Request $request): View
     {
         CurrentLogisticsAccount::ensureDevelopmentProvider();
@@ -148,6 +153,14 @@ class RiderRegistrationController extends Controller
 
         $email = strtolower(trim($validated['email']));
 
+        if (!$this->emailVerification->isVerified($request, $email)) {
+            return back()
+                ->withErrors([
+                    'email' => 'Verify this email address with the 6-digit code before submitting your Rider application.',
+                ])
+                ->withInput();
+        }
+
         if (
             BuyerAccount::query()->where('email', $email)->exists()
             || CourierAccount::query()->where('email', $email)->exists()
@@ -255,13 +268,18 @@ class RiderRegistrationController extends Controller
         $application->forceFill($payload);
         $application->save();
 
-        return redirect()
-            ->route('registration.pending')
-            ->with([
-                'registration_email' => $application->email,
-                'registration_role' => 'rider',
-                'registration_logistics_name' => $logistics->displayName(),
-            ]);
+        $this->emailVerification->clear($request);
+
+        // Persist this Rider application in the current browser session so the
+        // shared status page can detect Logistics approval without a reload.
+        $request->session()->put([
+            'registration_tracking_id' => (int) $application->id,
+            'registration_email' => $application->email,
+            'registration_role' => 'rider',
+            'registration_logistics_name' => $logistics->displayName(),
+        ]);
+
+        return redirect()->route('registration.pending');
     }
 
     private function cleanSpacing(string $value): string

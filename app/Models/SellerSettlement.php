@@ -36,18 +36,65 @@ class SellerSettlement extends Model
         'policy_snapshot' => 'array',
     ];
 
+    protected static function booted(): void
+    {
+        static::creating(function (SellerSettlement $settlement): void {
+            $holdDays = max(
+                0,
+                (int) PlatformSetting::valueOf(
+                    'seller_settlement_hold_days',
+                    0
+                )
+            );
+
+            if ($holdDays <= 0) {
+                return;
+            }
+
+            $order = MarketplaceOrder::query()
+                ->find($settlement->marketplace_order_id);
+
+            $base = $order?->delivered_at
+                ? $order->delivered_at->copy()
+                : now();
+
+            $settlement->eligible_at = $base->addDays(
+                $holdDays
+            );
+
+            $snapshot = is_array($settlement->policy_snapshot)
+                ? $settlement->policy_snapshot
+                : [];
+
+            $snapshot['seller_settlement_hold_days'] = $holdDays;
+            $snapshot['external_payout_note'] =
+                'Internal eligibility date only; no external payout provider is implied.';
+
+            $settlement->policy_snapshot = $snapshot;
+        });
+    }
+
     public function order(): BelongsTo
     {
-        return $this->belongsTo(MarketplaceOrder::class, 'marketplace_order_id');
+        return $this->belongsTo(
+            MarketplaceOrder::class,
+            'marketplace_order_id'
+        );
     }
 
     public function seller(): BelongsTo
     {
-        return $this->belongsTo(SellerAccount::class, 'seller_account_id');
+        return $this->belongsTo(
+            SellerAccount::class,
+            'seller_account_id'
+        );
     }
 
     public function commission(): BelongsTo
     {
-        return $this->belongsTo(OrderCommission::class, 'order_commission_id');
+        return $this->belongsTo(
+            OrderCommission::class,
+            'order_commission_id'
+        );
     }
 }

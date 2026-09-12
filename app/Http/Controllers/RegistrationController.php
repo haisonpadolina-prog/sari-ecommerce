@@ -8,23 +8,19 @@ use App\Models\CourierAccount;
 use App\Models\LogisticsAccount;
 use App\Models\RegistrationApplication;
 use App\Models\SellerAccount;
+use App\Services\RegistrationEmailVerificationService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Throwable;
 
 class RegistrationController extends Controller
 {
-    private const OTP_SESSION_KEY = 'registration_email_otp';
-    private const OTP_EXPIRES_MINUTES = 10;
-    private const OTP_RESEND_SECONDS = 45;
-    private const OTP_MAX_ATTEMPTS = 5;
-    private const OTP_VERIFIED_MINUTES = 20;
+    public function __construct(
+        private readonly RegistrationEmailVerificationService $emailVerification
+    ) {}
 
     public function create()
     {
@@ -149,7 +145,7 @@ class RegistrationController extends Controller
 
         $email = strtolower(trim($validated['email']));
 
-        if (!$this->emailOtpIsVerified($request, $email)) {
+        if (!$this->emailVerification->isVerified($request, $email)) {
             return back()
                 ->withErrors([
                     'email' => 'Verify this email address with the 6-digit code before submitting your registration.',
@@ -271,19 +267,69 @@ class RegistrationController extends Controller
         $application->forceFill($payload);
         $application->save();
 
-        $request->session()->forget(self::OTP_SESSION_KEY);
+        $this->emailVerification->clear($request);
 
-        return redirect()
-            ->route('registration.pending')
-            ->with([
+        // Keep the submitted application in the current browser session so the
+        // pending page can safely poll only this registration's review status.
+        $request->session()->put([
+            'registration_tracking_id' => (int) $application->id,
+            'registration_email' => $application->email,
+            'registration_role' => $application->role,
+        ]);
+        $request->session()->forget('registration_logistics_name');
+
+        return redirect()->route('registration.pending');
+    }
+
+    public function pending(Request $request)
+    {
+        $application = $this->trackedApplication($request);
+
+        if ($application) {
+            $request->session()->put([
+                'registration_tracking_id' => (int) $application->id,
                 'registration_email' => $application->email,
                 'registration_role' => $application->role,
             ]);
+
+            if ($application->role === 'rider' && $application->logistics) {
+                $request->session()->put(
+                    'registration_logistics_name',
+                    $application->logistics->displayName()
+                );
+            }
+        }
+
+        return view('pages.registration-pending', compact('application'));
     }
 
-    public function pending()
+    public function status(Request $request): JsonResponse
     {
-        return view('pages.registration-pending');
+        $application = $this->trackedApplication($request);
+
+        if (!$application) {
+            return response()->json([
+                'message' => 'No registration is being tracked in this browser session.',
+            ], 404);
+        }
+
+        $reviewer = $application->role === 'rider'
+            ? ($application->logistics?->displayName() ?? 'SARI Logistics / Sorting Center')
+            : 'administrator';
+
+        return response()->json([
+            'id' => (int) $application->id,
+            'status' => (string) $application->status,
+            'role' => (string) $application->role,
+            'email' => (string) $application->email,
+            'reviewer' => $reviewer,
+            'admin_note' => $application->status === 'rejected'
+                ? (string) ($application->admin_note ?? '')
+                : null,
+            'reviewed_at' => $application->reviewed_at?->toIso8601String(),
+            'approved_at' => $application->approved_at?->toIso8601String(),
+            'rejected_at' => $application->rejected_at?->toIso8601String(),
+        ]);
     }
 
     private function sendOtp(Request $request): JsonResponse
@@ -325,72 +371,11 @@ class RegistrationController extends Controller
             ], 422);
         }
 
-        $mailer = (string) config('mail.default', '');
+        $result = $this->emailVerification->sendCode($request, $email);
+        $status = (int) ($result['status'] ?? 200);
+        unset($result['ok'], $result['status']);
 
-        if ($mailer === '' || in_array($mailer, ['log', 'array'], true)) {
-            return response()->json([
-                'message' => 'Email OTP is not configured yet. Configure a real Laravel mailer before enabling registration verification.',
-            ], 503);
-        }
-
-        $current = $request->session()->get(self::OTP_SESSION_KEY, []);
-        $lastSentAt = isset($current['last_sent_at'])
-            ? (int) $current['last_sent_at']
-            : 0;
-
-        if (
-            ($current['email'] ?? null) === $email
-            && $lastSentAt > 0
-        ) {
-            $secondsSinceLastSend = now()->timestamp - $lastSentAt;
-            $remaining = self::OTP_RESEND_SECONDS - $secondsSinceLastSend;
-
-            if ($remaining > 0) {
-                return response()->json([
-                    'message' => 'Please wait before requesting another verification code.',
-                    'retry_after' => $remaining,
-                ], 429);
-            }
-        }
-
-        $code = (string) random_int(100000, 999999);
-        $hash = $this->hashOtp($code);
-        $expiresAt = now()->addMinutes(self::OTP_EXPIRES_MINUTES);
-
-        try {
-            Mail::raw(
-                "Your SARI email verification code is {$code}.\n\n"
-                . 'This code expires in ' . self::OTP_EXPIRES_MINUTES . " minutes.\n"
-                . "If you did not request this code, you can ignore this email.",
-                function ($message) use ($email): void {
-                    $message
-                        ->to($email)
-                        ->subject('SARI registration verification code');
-                }
-            );
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'message' => 'We could not send the verification code right now. Please check the mail configuration and try again.',
-            ], 503);
-        }
-
-        $request->session()->put(self::OTP_SESSION_KEY, [
-            'email' => $email,
-            'hash' => $hash,
-            'expires_at' => $expiresAt->timestamp,
-            'last_sent_at' => now()->timestamp,
-            'attempts' => 0,
-            'verified_at' => null,
-        ]);
-
-        return response()->json([
-            'message' => 'Verification code sent.',
-            'masked_email' => $this->maskEmail($email),
-            'expires_in' => self::OTP_EXPIRES_MINUTES * 60,
-            'retry_after' => self::OTP_RESEND_SECONDS,
-        ]);
+        return response()->json($result, $status);
     }
 
     private function verifyOtp(Request $request): JsonResponse
@@ -400,105 +385,47 @@ class RegistrationController extends Controller
             'otp' => ['required', 'digits:6'],
         ]);
 
-        $email = strtolower(trim($validated['email']));
-        $otp = (string) $validated['otp'];
-        $state = $request->session()->get(self::OTP_SESSION_KEY);
+        $result = $this->emailVerification->verifyCode(
+            $request,
+            strtolower(trim($validated['email'])),
+            (string) $validated['otp']
+        );
 
-        if (!is_array($state) || ($state['email'] ?? null) !== $email) {
-            return response()->json([
-                'message' => 'Request a new verification code for this email address.',
-                'errors' => [
-                    'otp' => ['Request a new verification code for this email address.'],
-                ],
-            ], 422);
-        }
+        $status = (int) ($result['status'] ?? 200);
+        unset($result['ok'], $result['status']);
 
-        if (!empty($state['verified_at'])) {
-            return response()->json([
-                'message' => 'Email already verified.',
-                'verified' => true,
-            ]);
-        }
-
-        $expiresAt = (int) ($state['expires_at'] ?? 0);
-
-        if ($expiresAt <= now()->timestamp) {
-            $request->session()->forget(self::OTP_SESSION_KEY);
-
-            return response()->json([
-                'message' => 'The verification code has expired. Request a new code.',
-                'errors' => [
-                    'otp' => ['The verification code has expired. Request a new code.'],
-                ],
-            ], 422);
-        }
-
-        $attempts = (int) ($state['attempts'] ?? 0);
-
-        if ($attempts >= self::OTP_MAX_ATTEMPTS) {
-            $request->session()->forget(self::OTP_SESSION_KEY);
-
-            return response()->json([
-                'message' => 'Too many incorrect attempts. Request a new verification code.',
-                'errors' => [
-                    'otp' => ['Too many incorrect attempts. Request a new verification code.'],
-                ],
-            ], 429);
-        }
-
-        $expectedHash = (string) ($state['hash'] ?? '');
-        $actualHash = $this->hashOtp($otp);
-
-        if ($expectedHash === '' || !hash_equals($expectedHash, $actualHash)) {
-            $state['attempts'] = $attempts + 1;
-            $request->session()->put(self::OTP_SESSION_KEY, $state);
-
-            $remainingAttempts = max(
-                0,
-                self::OTP_MAX_ATTEMPTS - (int) $state['attempts']
-            );
-
-            return response()->json([
-                'message' => 'The verification code is incorrect.',
-                'errors' => [
-                    'otp' => [
-                        $remainingAttempts > 0
-                            ? "Incorrect code. {$remainingAttempts} attempt(s) remaining."
-                            : 'Incorrect code. Request a new verification code.',
-                    ],
-                ],
-            ], 422);
-        }
-
-        $state['verified_at'] = now()->timestamp;
-        $state['attempts'] = 0;
-        $request->session()->put(self::OTP_SESSION_KEY, $state);
-
-        return response()->json([
-            'message' => 'Email verified successfully.',
-            'verified' => true,
-        ]);
+        return response()->json($result, $status);
     }
 
-    private function emailOtpIsVerified(Request $request, string $email): bool
+    private function trackedApplication(Request $request): ?RegistrationApplication
     {
-        $state = $request->session()->get(self::OTP_SESSION_KEY);
+        $trackingId = (int) $request->session()->get('registration_tracking_id', 0);
+        $email = strtolower(trim((string) $request->session()->get('registration_email', '')));
 
-        if (!is_array($state)) {
-            return false;
+        if ($trackingId > 0) {
+            $query = RegistrationApplication::query()->with('logistics')->whereKey($trackingId);
+
+            if ($email !== '') {
+                $query->where('email', $email);
+            }
+
+            $application = $query->first();
+            if ($application) {
+                return $application;
+            }
         }
 
-        if (($state['email'] ?? null) !== $email) {
-            return false;
+        // Backward-compatible fallback for a registration submitted before this
+        // tracking update was installed, as long as its email is still in session.
+        if ($email !== '') {
+            return RegistrationApplication::query()
+                ->with('logistics')
+                ->where('email', $email)
+                ->latest('id')
+                ->first();
         }
 
-        $verifiedAt = (int) ($state['verified_at'] ?? 0);
-
-        if ($verifiedAt <= 0) {
-            return false;
-        }
-
-        return $verifiedAt >= now()->subMinutes(self::OTP_VERIFIED_MINUTES)->timestamp;
+        return null;
     }
 
     private function approvedAccountUsesEmail(string $email): bool
@@ -508,25 +435,6 @@ class RegistrationController extends Controller
             || LogisticsAccount::query()->where('email', $email)->exists()
             || AdminAccount::query()->where('email', $email)->exists()
             || SellerAccount::query()->where('email', $email)->exists();
-    }
-
-    private function hashOtp(string $otp): string
-    {
-        return hash_hmac('sha256', $otp, (string) config('app.key'));
-    }
-
-    private function maskEmail(string $email): string
-    {
-        [$local, $domain] = array_pad(explode('@', $email, 2), 2, '');
-
-        if ($domain === '') {
-            return $email;
-        }
-
-        $visible = mb_substr($local, 0, min(2, mb_strlen($local)));
-        $maskedCount = max(3, mb_strlen($local) - mb_strlen($visible));
-
-        return $visible . str_repeat('•', $maskedCount) . '@' . $domain;
     }
 
     private function cleanSpacing(string $value): string

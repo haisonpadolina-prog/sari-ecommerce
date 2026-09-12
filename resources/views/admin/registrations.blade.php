@@ -1689,6 +1689,510 @@
         }
     }
 
+
+    /* =========================================================
+       ENTERPRISE REGISTRATION REVIEW MODAL — FINAL OVERRIDE
+       Centered, neutral, formal. Existing routes and JS hooks remain.
+       ========================================================= */
+
+    .reg-backdrop {
+        background: rgba(15, 23, 42, .52) !important;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    #reviewDrawer {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        width: min(960px, calc(100vw - 48px)) !important;
+        max-width: 960px !important;
+        height: min(820px, calc(100vh - 48px)) !important;
+        max-height: calc(100vh - 48px) !important;
+
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 20px !important;
+        background: #ffffff !important;
+        box-shadow:
+            0 30px 90px rgba(15, 23, 42, .24),
+            0 10px 30px rgba(15, 23, 42, .10) !important;
+
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translate(-50%, -47%) scale(.975) !important;
+        transform-origin: center !important;
+
+        transition:
+            opacity .20s ease,
+            transform .24s cubic-bezier(.22, 1, .36, 1),
+            visibility 0s linear .24s !important;
+    }
+
+    #reviewDrawer.is-open {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translate(-50%, -50%) scale(1) !important;
+
+        transition:
+            opacity .20s ease,
+            transform .24s cubic-bezier(.22, 1, .36, 1) !important;
+    }
+
+    #reviewDrawer [data-application-detail] {
+        background: #ffffff;
+    }
+
+    #reviewDrawer .reg-scroll {
+        background: #f8fafc;
+    }
+
+    #reviewDrawer .enterprise-review-header {
+        min-height: 76px;
+        border-bottom: 1px solid #e5e7eb !important;
+        background: #ffffff !important;
+        padding: 16px 20px !important;
+    }
+
+    .enterprise-review-header-icon {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        place-items: center;
+        border: 1px solid #dbe2ea;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #334155;
+    }
+
+    .enterprise-review-header-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .enterprise-review-eyebrow {
+        margin: 0;
+        color: #64748b;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .enterprise-review-title {
+        margin: 4px 0 0;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -.02em;
+    }
+
+    .enterprise-close-btn {
+        display: inline-flex;
+        min-height: 36px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border: 1px solid #dbe2ea;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 11px;
+        color: #475569;
+        font-size: 9px;
+        font-weight: 650;
+        transition:
+            background-color .15s ease,
+            border-color .15s ease,
+            color .15s ease;
+    }
+
+    .enterprise-close-btn:hover {
+        border-color: #cbd5e1;
+        background: #f8fafc;
+        color: #0f172a;
+    }
+
+    .enterprise-close-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    #reviewDrawer .review-card {
+        border-color: #e2e8f0 !important;
+        background: #fff !important;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
+    }
+
+    #reviewDrawer .detail-tab {
+        color: #64748b !important;
+        border-color: transparent !important;
+    }
+
+    #reviewDrawer .detail-tab.is-active {
+        color: #0f172a !important;
+        border-color: #2563eb !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] > section {
+        border-color: #e2e8f0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .enterprise-role-badge {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #dbe2ea;
+        border-radius: 999px;
+        background: #f8fafc;
+        padding: 5px 9px;
+        color: #475569;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+    }
+
+    .enterprise-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid;
+        border-radius: 999px;
+        background: #fff;
+        padding: 5px 9px;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .enterprise-status::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: currentColor;
+        opacity: .8;
+    }
+
+    .enterprise-status--pending {
+        border-color: #dbe2ea;
+        color: #475569;
+    }
+
+    .enterprise-status--approved {
+        border-color: #bbd7c5;
+        color: #166534;
+    }
+
+    .enterprise-status--rejected {
+        border-color: #e4bcbc;
+        color: #991b1b;
+    }
+
+    .enterprise-decision-shell {
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        background: #fff;
+        padding: 18px;
+    }
+
+    .enterprise-decision-heading {
+        margin: 0;
+        color: #0f172a;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -.015em;
+    }
+
+    .enterprise-decision-copy {
+        margin: 5px 0 0;
+        color: #64748b;
+        font-size: 9px;
+        line-height: 1.6;
+    }
+
+    .enterprise-decision-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+    }
+
+    .enterprise-decision-card {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        background: #fff;
+        padding: 16px;
+        box-shadow: 0 1px 2px rgba(15,23,42,.025);
+    }
+
+    .enterprise-decision-card:hover {
+        border-color: #cbd5e1;
+    }
+
+    .enterprise-decision-icon {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        place-items: center;
+        border: 1px solid;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    .enterprise-decision-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .enterprise-decision-icon--approve {
+        border-color: #bbd7c5;
+        color: #166534;
+    }
+
+    .enterprise-decision-icon--reject {
+        border-color: #e4bcbc;
+        color: #991b1b;
+    }
+
+    .enterprise-decision-card-title {
+        margin: 0;
+        color: #0f172a;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .enterprise-decision-card-copy {
+        margin: 3px 0 0;
+        color: #64748b;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    .enterprise-field-label {
+        display: block;
+        margin-top: 16px;
+        color: #334155;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .enterprise-field-hint {
+        margin-top: 4px;
+        color: #94a3b8;
+        font-size: 7.5px;
+        line-height: 1.45;
+    }
+
+    .enterprise-decision-textarea {
+        width: 100%;
+        min-height: 96px;
+        margin-top: 8px;
+        resize: vertical;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        background: #fff !important;
+        padding: 10px 11px !important;
+        color: #0f172a !important;
+        font-size: 9px !important;
+        line-height: 1.55;
+        box-shadow: none !important;
+    }
+
+    .enterprise-decision-textarea::placeholder {
+        color: #94a3b8 !important;
+    }
+
+    .enterprise-decision-textarea:focus {
+        outline: none !important;
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .10) !important;
+    }
+
+    .enterprise-decision-meta {
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 7.5px;
+        line-height: 1.5;
+    }
+
+    .enterprise-decision-meta svg {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 13px;
+        margin-top: 1px;
+    }
+
+    .enterprise-action-btn {
+        display: inline-flex;
+        width: 100%;
+        min-height: 40px;
+        margin-top: 14px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        padding: 0 14px;
+        font-size: 9px;
+        font-weight: 700;
+        transition:
+            transform .15s ease,
+            background-color .15s ease,
+            border-color .15s ease,
+            box-shadow .15s ease;
+    }
+
+    .enterprise-action-btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .enterprise-action-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .enterprise-action-btn--approve {
+        border-color: #166534;
+        background: #166534;
+        color: #fff;
+        box-shadow: 0 5px 14px rgba(22, 101, 52, .14);
+    }
+
+    .enterprise-action-btn--approve:hover {
+        background: #14532d;
+        border-color: #14532d;
+    }
+
+    .enterprise-action-btn--reject {
+        border-color: #b91c1c;
+        background: #fff;
+        color: #b91c1c;
+        box-shadow: none;
+    }
+
+    .enterprise-action-btn--reject:hover {
+        background: #fef2f2;
+        border-color: #991b1b;
+        color: #991b1b;
+    }
+
+    .enterprise-warning {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        margin-bottom: 14px;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        background: #fff;
+        padding: 11px 12px;
+        color: #7f1d1d;
+        font-size: 8.5px;
+        line-height: 1.55;
+    }
+
+    .enterprise-warning svg {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        margin-top: 1px;
+    }
+
+    .enterprise-reviewed-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        background: #fff;
+        padding: 18px;
+    }
+
+    .enterprise-reviewed-icon {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        place-items: center;
+        border: 1px solid;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    .enterprise-reviewed-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .enterprise-reviewed-icon--approved {
+        border-color: #bbd7c5;
+        color: #166534;
+    }
+
+    .enterprise-reviewed-icon--rejected {
+        border-color: #e4bcbc;
+        color: #991b1b;
+    }
+
+    @media (max-width: 767px) {
+        #reviewDrawer {
+            width: calc(100vw - 20px) !important;
+            height: calc(100vh - 20px) !important;
+            max-height: calc(100vh - 20px) !important;
+            border-radius: 16px !important;
+        }
+
+        #reviewDrawer .enterprise-review-header {
+            min-height: 68px;
+            padding: 13px 14px !important;
+        }
+
+        .enterprise-review-header-icon {
+            width: 36px;
+            height: 36px;
+            flex-basis: 36px;
+        }
+
+        .enterprise-review-title {
+            font-size: 14px;
+        }
+
+        .enterprise-decision-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .enterprise-close-btn span {
+            display: none;
+        }
+
+        .enterprise-close-btn {
+            width: 36px;
+            padding: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #reviewDrawer,
+        .enterprise-action-btn {
+            transition-duration: .01ms !important;
+        }
+    }
+
 </style>
 
 <div class="reg-page registration-page-shell mx-auto w-full max-w-[1880px] pb-6">
@@ -1816,7 +2320,7 @@
                         </div>
             
                         <span
-                            class="grid h-10 w-10 shrink-0 place-items-center rounded-[12px] border shadow-[0_6px_14px_rgba(69,49,25,.04)]"
+                            class="absolute right-4 top-4 grid h-10 w-10 shrink-0 place-items-center rounded-[12px] border shadow-[0_6px_14px_rgba(69,49,25,.04)] sm:right-5 sm:top-4"
                             style="color: {{ $iconColor }}; background: {{ $iconBg }}; border-color: {{ $iconBorder }};"
                         >
                             @if($icon === 'users')
@@ -2238,7 +2742,14 @@
 <div id="reviewBackdrop" class="reg-backdrop fixed inset-0 z-[80]" aria-hidden="true"></div>
 
 {{-- REVIEW DRAWER --}}
-<aside id="reviewDrawer" class="reg-drawer fixed bottom-0 right-0 top-0 z-[90] overflow-hidden border-l border-[#e9e1d7] bg-[#fbfaf7]" aria-hidden="true">
+<aside
+    id="reviewDrawer"
+    class="reg-drawer z-[90] overflow-hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Registration application review"
+    aria-hidden="true"
+>
     @foreach($applications as $application)
         @php
             $detailKey = (string) $application->getKey();
@@ -2281,18 +2792,44 @@
         @endphp
 
         <div data-application-detail="{{ $detailKey }}" hidden class="flex h-full flex-col">
-            {{-- DRAWER HEADER --}}
-            <div class="border-b border-[#e9e1d7] bg-white px-5 py-4 sm:px-6">
-                <div class="flex items-center justify-between gap-3">
-                    <button type="button" data-close-review class="inline-flex h-9 items-center gap-2 rounded-xl border border-[#e5ddd2] px-3 text-[9px] font-semibold text-[#5f574e] transition hover:bg-[#faf8f4]">
-                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m15 18-6-6 6-6"></path></svg>
-                        Back to applications
-                    </button>
+            {{-- CENTERED ENTERPRISE MODAL HEADER --}}
+            <div class="enterprise-review-header">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex min-w-0 items-center gap-3">
+                        <span class="enterprise-review-header-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <circle cx="9" cy="8" r="3"></circle>
+                                <path d="M3.5 20a5.5 5.5 0 0 1 11 0"></path>
+                                <path d="M16 7h5"></path>
+                                <path d="M16 11h5"></path>
+                                <path d="M16 15h3"></path>
+                            </svg>
+                        </span>
 
-                    <div class="flex items-center gap-2">
-                        <span class="hidden rounded-full border px-2.5 py-1 text-[8px] font-bold sm:inline-flex {{ $statusTone }}">{{ ucfirst($application->status) }}</span>
-                        <button type="button" data-close-review aria-label="Close review panel" class="grid h-9 w-9 place-items-center rounded-xl border border-[#e5ddd2] bg-white text-[#71685e] transition hover:bg-[#faf8f4]">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m7 7 10 10"></path><path d="m17 7-10 10"></path></svg>
+                        <div class="min-w-0">
+                            <p class="enterprise-review-eyebrow">Registration Review</p>
+                            <h2 class="enterprise-review-title">
+                                Application #{{ $application->getKey() }} · {{ $application->fullName() }}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="flex shrink-0 items-center gap-2">
+                        <span class="enterprise-status {{ $application->status === 'approved' ? 'enterprise-status--approved' : ($application->status === 'rejected' ? 'enterprise-status--rejected' : 'enterprise-status--pending') }}">
+                            {{ ucfirst($application->status) }}
+                        </span>
+
+                        <button
+                            type="button"
+                            data-close-review
+                            class="enterprise-close-btn"
+                            aria-label="Close application review"
+                        >
+                            <span>Close</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                <path d="m7 7 10 10"></path>
+                                <path d="m17 7-10 10"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -2301,14 +2838,14 @@
             <div class="reg-scroll flex-1 overflow-y-auto">
                 {{-- PROFILE HERO --}}
                 <div class="bg-white px-5 py-5 sm:px-6">
-                    <div class="review-card rounded-[18px] border border-[#ece5dc] bg-[#fcfbf8] p-4 sm:p-5">
+                    <div class="review-card rounded-[16px] border border-[#e2e8f0] bg-white p-4 sm:p-5">
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                             <div class="flex items-start gap-4">
                                 <span class="grid h-[72px] w-[72px] shrink-0 place-items-center rounded-full border border-[#e7dfd5] bg-white text-[18px] font-bold tracking-[-.04em] text-[#6b6258] shadow-sm">{{ $initials ?: 'SA' }}</span>
                                 <div class="min-w-0 pt-1">
                                     <div class="flex flex-wrap items-center gap-2">
                                         <h3 class="text-[19px] font-bold tracking-[-.03em] text-[#211c17]">{{ $application->fullName() }}</h3>
-                                        <span class="rounded-full border px-2.5 py-1 text-[7px] font-bold {{ $roleTone }}">{{ strtoupper($application->role) }}</span>
+                                        <span class="enterprise-role-badge">{{ strtoupper($application->role) }}</span>
                                     </div>
                                     <p class="mt-1 text-[9px] text-[#91887d]">Registration #{{ $application->getKey() }}</p>
 
@@ -2320,7 +2857,7 @@
                             </div>
 
                             <div class="flex gap-2 sm:flex-col sm:items-end">
-                                <span class="rounded-full border px-2.5 py-1 text-[8px] font-bold {{ $statusTone }}">{{ strtoupper($application->status) }}</span>
+                                <span class="enterprise-status {{ $application->status === 'approved' ? 'enterprise-status--approved' : ($application->status === 'rejected' ? 'enterprise-status--rejected' : 'enterprise-status--pending') }}">{{ strtoupper($application->status) }}</span>
                                 <span class="text-[7px] text-[#9b9389]">Submitted {{ $application->created_at?->format('M d, Y') }}</span>
                             </div>
                         </div>
@@ -2471,68 +3008,219 @@
                 <div data-detail-tab-panel="decision" data-detail-owner="{{ $detailKey }}" hidden class="px-5 py-5 sm:px-6">
                     @if($application->status === 'pending')
                         @if(!$allDocumentsAvailable)
-                            <div class="mb-3 rounded-[14px] border border-[#ead2d2] bg-[#fff7f7] px-4 py-3 text-[8px] leading-4 text-[#8d6262]">
-                                Some required documents are missing. Review carefully before making a decision.
+                            <div class="enterprise-warning">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <path d="M12 7.5v6"></path>
+                                    <path d="M12 17h.01"></path>
+                                </svg>
+                                <span>
+                                    Some required verification files are missing. Confirm the applicant's documents before making a final decision.
+                                </span>
                             </div>
                         @endif
 
                         @if($application->role === 'rider')
-                            <div class="rounded-[16px] border border-[#d9e7e3] bg-[#f4f9f7] p-5">
-                                <p class="text-[10px] font-bold text-[#527b6f]">Rider review is handled by Logistics</p>
-                                <p class="mt-1.5 text-[8px] leading-4 text-[#6e837d]">Admin can inspect the registration and protected documents here. Approval or rejection is completed from Logistics → Rider Applications.</p>
+                            <div class="enterprise-decision-shell">
+                                <div class="flex items-start gap-3">
+                                    <span class="enterprise-review-header-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <circle cx="8" cy="8" r="3"></circle>
+                                            <circle cx="17" cy="9" r="2"></circle>
+                                            <path d="M3 20c.7-4 2.5-6 5-6s4.3 2 5 6"></path>
+                                            <path d="M14 14c2.8.2 4.6 1.8 5.4 5"></path>
+                                        </svg>
+                                    </span>
+                                    <div>
+                                        <h4 class="enterprise-decision-heading">Decision managed by Logistics</h4>
+                                        <p class="enterprise-decision-copy">
+                                            Admin access is read-only for rider approval. Review the profile and protected documents here; the final approve or reject action is completed from Logistics → Rider Applications.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         @else
-                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                <form method="POST" action="{{ route('admin.registrations.approve', $application) }}" class="rounded-[16px] border border-[#dce7df] bg-[#f8fbf9] p-4">
-                                    @csrf
-                                    <input type="hidden" name="return_role" value="{{ $role ?? '' }}">
-                                    <div class="flex items-start gap-3">
-                                        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#d8e6dc] bg-white text-[#56816a]">
-                                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>
-                                        </span>
-                                        <div><p class="text-[10px] font-bold text-[#52715d]">Approve account</p><p class="mt-0.5 text-[8px] text-[#7f9285]">Activate this registration.</p></div>
-                                    </div>
-                                    <textarea name="admin_note" maxlength="1500" rows="4" placeholder="Optional approval note..." class="reg-control mt-4 w-full resize-none rounded-xl border border-[#dce4de] px-3 py-2.5 text-[8px]"></textarea>
-                                    <button class="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#56816a] text-[8px] font-bold text-white transition hover:bg-[#496f5b]">Approve Registration</button>
-                                </form>
+                            <div class="enterprise-decision-shell">
+                                <div>
+                                    <h4 class="enterprise-decision-heading">Final registration decision</h4>
+                                    <p class="enterprise-decision-copy">
+                                        Confirm the applicant information and verification files before completing this review. The selected decision is recorded against the registration.
+                                    </p>
+                                </div>
 
-                                <form method="POST" action="{{ route('admin.registrations.reject', $application) }}" class="rounded-[16px] border border-[#eadada] bg-[#fffafa] p-4">
-                                    @csrf
-                                    <input type="hidden" name="return_role" value="{{ $role ?? '' }}">
-                                    <div class="flex items-start gap-3">
-                                        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-[#eadada] bg-white text-[#a85c54]">
-                                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m8 8 8 8"></path><path d="m16 8-8 8"></path></svg>
-                                        </span>
-                                        <div><p class="text-[10px] font-bold text-[#8e5d5d]">Reject application</p><p class="mt-0.5 text-[8px] text-[#9c7a7a]">A reason is required.</p></div>
-                                    </div>
-                                    <textarea name="admin_note" required minlength="5" maxlength="1500" rows="4" placeholder="Reason for rejection..." class="reg-control mt-4 w-full resize-none rounded-xl border border-[#ead9d9] px-3 py-2.5 text-[8px]"></textarea>
-                                    <button class="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#a85c54] text-[8px] font-bold text-white transition hover:bg-[#934f48]">Reject Registration</button>
-                                </form>
+                                <div class="enterprise-decision-grid">
+                                    {{-- APPROVE --}}
+                                    <form
+                                        method="POST"
+                                        action="{{ route('admin.registrations.approve', $application) }}"
+                                        class="enterprise-decision-card"
+                                    >
+                                        @csrf
+                                        <input type="hidden" name="return_role" value="{{ $role ?? '' }}">
+
+                                        <div class="flex items-start gap-3">
+                                            <span class="enterprise-decision-icon enterprise-decision-icon--approve" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                                    <circle cx="12" cy="12" r="9"></circle>
+                                                    <path d="m8 12 2.5 2.5L16 9"></path>
+                                                </svg>
+                                            </span>
+
+                                            <div>
+                                                <p class="enterprise-decision-card-title">Approve registration</p>
+                                                <p class="enterprise-decision-card-copy">
+                                                    Approve the submitted information and activate the applicant's SARI account.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <label class="enterprise-field-label" for="approve-note-{{ $detailKey }}">
+                                            Reviewer note <span class="normal-case tracking-normal text-[#94a3b8]">(optional)</span>
+                                        </label>
+                                        <p class="enterprise-field-hint">
+                                            Add internal context or a short approval message when needed.
+                                        </p>
+
+                                        <textarea
+                                            id="approve-note-{{ $detailKey }}"
+                                            name="admin_note"
+                                            maxlength="1500"
+                                            rows="4"
+                                            placeholder="Add an optional approval note..."
+                                            class="enterprise-decision-textarea"
+                                        ></textarea>
+
+                                        <div class="enterprise-decision-meta">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <path d="M12 11v5"></path>
+                                                <path d="M12 8h.01"></path>
+                                            </svg>
+                                            <span>Approval will create or activate the eligible account and complete this review.</span>
+                                        </div>
+
+                                        <button type="submit" class="enterprise-action-btn enterprise-action-btn--approve">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <path d="m7 12 3 3 7-7"></path>
+                                            </svg>
+                                            Approve registration
+                                        </button>
+                                    </form>
+
+                                    {{-- REJECT --}}
+                                    <form
+                                        method="POST"
+                                        action="{{ route('admin.registrations.reject', $application) }}"
+                                        class="enterprise-decision-card"
+                                    >
+                                        @csrf
+                                        <input type="hidden" name="return_role" value="{{ $role ?? '' }}">
+
+                                        <div class="flex items-start gap-3">
+                                            <span class="enterprise-decision-icon enterprise-decision-icon--reject" aria-hidden="true">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                                    <circle cx="12" cy="12" r="9"></circle>
+                                                    <path d="m8.5 8.5 7 7"></path>
+                                                    <path d="m15.5 8.5-7 7"></path>
+                                                </svg>
+                                            </span>
+
+                                            <div>
+                                                <p class="enterprise-decision-card-title">Reject registration</p>
+                                                <p class="enterprise-decision-card-copy">
+                                                    Decline the application and provide a clear reason the applicant can act on.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <label class="enterprise-field-label" for="reject-note-{{ $detailKey }}">
+                                            Rejection reason <span class="normal-case tracking-normal text-[#991b1b]">(required)</span>
+                                        </label>
+                                        <p class="enterprise-field-hint">
+                                            Keep the reason specific, professional, and related to the submitted registration.
+                                        </p>
+
+                                        <textarea
+                                            id="reject-note-{{ $detailKey }}"
+                                            name="admin_note"
+                                            required
+                                            minlength="5"
+                                            maxlength="1500"
+                                            rows="4"
+                                            placeholder="Explain why this registration cannot be approved..."
+                                            class="enterprise-decision-textarea"
+                                        ></textarea>
+
+                                        <div class="enterprise-decision-meta">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <path d="M12 7.5v6"></path>
+                                                <path d="M12 17h.01"></path>
+                                            </svg>
+                                            <span>The rejection reason is retained with the application review record.</span>
+                                        </div>
+
+                                        <button type="submit" class="enterprise-action-btn enterprise-action-btn--reject">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <path d="m8 8 8 8"></path>
+                                                <path d="m16 8-8 8"></path>
+                                            </svg>
+                                            Reject registration
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         @endif
                     @else
-                        <div class="rounded-[16px] border {{ $application->status === 'approved' ? 'border-[#dce7df] bg-[#f8fbf9]' : 'border-[#eadada] bg-[#fffafa]' }} p-5">
+                        <div class="enterprise-reviewed-card">
                             <div class="flex items-start gap-3">
-                                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border bg-white {{ $application->status === 'approved' ? 'border-[#d8e6dc] text-[#56816a]' : 'border-[#eadada] text-[#a85c54]' }}">
+                                <span class="enterprise-reviewed-icon {{ $application->status === 'approved' ? 'enterprise-reviewed-icon--approved' : 'enterprise-reviewed-icon--rejected' }}" aria-hidden="true">
                                     @if($application->status === 'approved')
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <path d="m8 12 2.5 2.5L16 9"></path>
+                                        </svg>
                                     @else
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m9 9 6 6"></path><path d="m15 9-6 6"></path></svg>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <path d="m9 9 6 6"></path>
+                                            <path d="m15 9-6 6"></path>
+                                        </svg>
                                     @endif
                                 </span>
-                                <div>
-                                    <p class="text-[10px] font-bold {{ $application->status === 'approved' ? 'text-[#52715d]' : 'text-[#8e5d5d]' }}">Application {{ $application->status }}</p>
-                                    <p class="mt-1 text-[8px] leading-4 text-[#81786c]">This registration has already been reviewed. Its application history, information, and verification files remain available here permanently.</p>
+
+                                <div class="min-w-0">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <h4 class="enterprise-decision-heading">
+                                            Review completed
+                                        </h4>
+                                        <span class="enterprise-status {{ $application->status === 'approved' ? 'enterprise-status--approved' : 'enterprise-status--rejected' }}">
+                                            {{ ucfirst($application->status) }}
+                                        </span>
+                                    </div>
+
+                                    <p class="enterprise-decision-copy">
+                                        This registration has already been reviewed. Applicant information, verification files, and the recorded decision remain available for reference.
+                                    </p>
+
                                     @if($application->status === 'approved')
-                                        <div class="mt-3 inline-flex items-center gap-2 rounded-lg border border-[#d9e8dd] bg-white px-3 py-2 text-[8px] font-semibold text-[#56816a]">
-                                            <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
-                                            Approved account created and active
+                                        <div class="enterprise-decision-meta">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path d="M5 12.5 9.2 17 19 7"></path>
+                                            </svg>
+                                            <span>The approved account has been created and is active.</span>
+                                        </div>
+                                    @elseif($application->admin_note)
+                                        <div class="mt-4 border-t border-[#e2e8f0] pt-4">
+                                            <p class="enterprise-field-label !mt-0">Recorded rejection reason</p>
+                                            <p class="mt-2 text-[9px] leading-5 text-[#475569]">{{ $application->admin_note }}</p>
                                         </div>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     @endif
+                </div>
                 </div>
             </div>
         </div>
@@ -2682,6 +3370,33 @@
     backdrop?.addEventListener('click', closeReview);
 
     document.addEventListener('keydown', function (event) {
+        if (
+            event.key === 'Tab'
+            && drawer?.classList.contains('is-open')
+        ) {
+            const focusable = Array.from(
+                drawer.querySelectorAll(
+                    'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(function (element) {
+                return !element.closest('[hidden]')
+                    && element.offsetParent !== null;
+            });
+
+            if (focusable.length > 0) {
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+
         if (event.key !== 'Escape') return;
         closePremiumSelects();
         if (drawer?.classList.contains('is-open')) closeReview();
