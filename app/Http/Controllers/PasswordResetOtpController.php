@@ -97,7 +97,7 @@ class PasswordResetOtpController extends Controller
         if ($account) {
             try {
                 Mail::send(
-                    'emails.password-reset-otp',
+                    'emails.password-reset',
                     [
                         'otp' => $otp,
                         'expiresInMinutes' => (int) (self::OTP_TTL_SECONDS / 60),
