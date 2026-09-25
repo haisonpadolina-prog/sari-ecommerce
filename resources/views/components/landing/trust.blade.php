@@ -212,29 +212,6 @@
     stroke-linejoin: round;
 }
 
-/* dark mode */
-html.dark .sari-trust-final,
-body.dark .sari-trust-final,
-html.dark-mode .sari-trust-final,
-body.dark-mode .sari-trust-final,
-html[data-theme="dark"] .sari-trust-final {
-    --tf-bg: #15130e;
-    --tf-card: #201d16;
-    --tf-ink: #f5f1e8;
-    --tf-muted: #c2bbad;
-    --tf-gold: #d8a857;
-    --tf-border: #3a3429;
-    --tf-soft: #2a261e;
-}
-
-html.dark .sari-trust-final__card:hover,
-body.dark .sari-trust-final__card:hover,
-html.dark-mode .sari-trust-final__card:hover,
-body.dark-mode .sari-trust-final__card:hover,
-html[data-theme="dark"] .sari-trust-final__card:hover {
-    background: #252119;
-    box-shadow: 0 20px 50px rgba(0,0,0,.25);
-}
 
 /* responsive */
 @media (max-width: 1050px) {
@@ -325,6 +302,90 @@ html[data-theme="dark"] .sari-trust-final__card:hover {
         transition: none;
     }
 }
+
+
+/* =========================================================
+   TRUST CARD SPACING FIX
+   Keep the bottom icon in normal document flow so it can
+   never overlap the description, even on compact laptops.
+   ========================================================= */
+
+.sari-trust-final .sari-trust-final__card {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.sari-trust-final .sari-trust-final__card-text {
+    padding-bottom: 22px !important;
+}
+
+.sari-trust-final .sari-trust-final__icon {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+
+    margin-top: auto !important;
+
+    width: 58px !important;
+    height: 58px !important;
+
+    flex: 0 0 auto !important;
+}
+
+.sari-trust-final .sari-trust-final__icon svg {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+/* Common laptop */
+@media (max-width: 1600px) and (max-height: 950px) {
+    .sari-trust-final .sari-trust-final__card {
+        min-height: 330px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__badge {
+        margin-bottom: 42px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-text {
+        padding-bottom: 18px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__icon {
+        width: 54px !important;
+        height: 54px !important;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+    .sari-trust-final .sari-trust-final__card {
+        min-height: 350px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 620px) {
+    .sari-trust-final .sari-trust-final__card {
+        min-height: 330px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__badge {
+        margin-bottom: 38px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-text {
+        padding-bottom: 18px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__icon {
+        width: 52px !important;
+        height: 52px !important;
+    }
+}
+
 </style>
 
 <section class="sari-trust-final" id="sari-trust-final-section" aria-labelledby="sari-trust-final-headline">

@@ -34,9 +34,20 @@ return new class extends Migration
                 $table->unsignedInteger('quantity')->default(1);
                 $table->timestamps();
 
-                $table->index(['buyer_account_id', 'updated_at']);
-                $table->index(['buyer_social_account_id', 'updated_at']);
-                $table->index(['seller_product_id', 'seller_product_variant_id']);
+                $table->index(
+                    ['buyer_account_id', 'updated_at'],
+                    'repair_cart_buyer_updated_idx'
+                );
+
+                $table->index(
+                    ['buyer_social_account_id', 'updated_at'],
+                    'repair_cart_social_updated_idx'
+                );
+
+                $table->index(
+                    ['seller_product_id', 'seller_product_variant_id'],
+                    'repair_cart_product_variant_idx'
+                );
             });
         }
 
@@ -68,9 +79,20 @@ return new class extends Migration
                 $table->timestamp('read_at')->nullable();
                 $table->timestamps();
 
-                $table->index(['seller_account_id', 'created_at']);
-                $table->index(['buyer_account_id', 'created_at']);
-                $table->index(['buyer_social_account_id', 'created_at']);
+                $table->index(
+                    ['seller_account_id', 'created_at'],
+                    'repair_msg_seller_created_idx'
+                );
+
+                $table->index(
+                    ['buyer_account_id', 'created_at'],
+                    'repair_msg_buyer_created_idx'
+                );
+
+                $table->index(
+                    ['buyer_social_account_id', 'created_at'],
+                    'repair_msg_social_created_idx'
+                );
             });
         }
 
@@ -109,7 +131,10 @@ return new class extends Migration
                     'product_reviews_order_product_unique'
                 );
 
-                $table->index(['seller_account_id', 'created_at']);
+                $table->index(
+                    ['seller_account_id', 'created_at'],
+                    'repair_reviews_seller_created_idx'
+                );
             });
         }
     }

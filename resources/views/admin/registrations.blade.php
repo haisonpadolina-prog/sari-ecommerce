@@ -2193,6 +2193,1359 @@
         }
     }
 
+
+    /* ============================================================
+       ACCOUNT REGISTRATIONS — FINAL COMPACT SIZING LAYER
+       Visual sizing only. No PHP data, routes, forms, filtering,
+       review actions, protected-document routes, or JS are changed.
+       ============================================================ */
+
+    .reg-page.registration-page-shell {
+        max-width: 1640px !important;
+        padding-bottom: 18px !important;
+    }
+
+    /* ---------------- PAGE HEADER ---------------- */
+    .registration-page-header {
+        margin-bottom: 12px !important;
+    }
+
+    .registration-page-header .registration-page-header-inner {
+        gap: 10px !important;
+    }
+
+    .registration-page-header .registration-page-header-icon {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+        border-radius: 10px !important;
+    }
+
+    .registration-page-header .registration-page-header-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .registration-page-header .registration-page-eyebrow {
+        font-size: 7px !important;
+        letter-spacing: .13em !important;
+    }
+
+    .registration-page-header h2 {
+        margin-top: 3px !important;
+        font-size: clamp(22px, 1.55vw, 27px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .registration-page-header .registration-page-subtitle {
+        max-width: 760px !important;
+        margin-top: 5px !important;
+        font-size: 9.5px !important;
+        line-height: 1.55 !important;
+    }
+
+    /* ---------------- SUMMARY CARDS ---------------- */
+    .summary-grid {
+        gap: 9px !important;
+    }
+
+    .summary-card {
+        min-height: 78px !important;
+        border-radius: 13px !important;
+        padding: 11px 13px !important;
+    }
+
+    .summary-card p:first-child {
+        font-size: 8.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    .summary-card p:nth-child(2) {
+        margin-top: 3px !important;
+        font-size: 20px !important;
+        line-height: 1 !important;
+    }
+
+    .summary-card > div > div:last-child {
+        margin-top: 6px !important;
+        gap: 5px !important;
+    }
+
+    .summary-card > div > div:last-child span:last-child {
+        font-size: 7.5px !important;
+    }
+
+    .summary-card > span.absolute {
+        right: 12px !important;
+        top: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+    }
+
+    .summary-card > span.absolute svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* ---------------- WORKSPACE / RIGHT MIX ---------------- */
+    .registration-workspace-layout {
+        gap: 12px !important;
+    }
+
+    @media (min-width: 1180px) {
+        .registration-workspace-layout {
+            grid-template-columns: minmax(0, 1fr) 248px !important;
+            gap: 12px !important;
+        }
+
+        .registration-side-column {
+            top: 12px !important;
+        }
+    }
+
+    .registration-mix-card {
+        border-radius: 14px !important;
+        padding: 14px !important;
+    }
+
+    .registration-mix-card > div:first-child {
+        gap: 8px !important;
+    }
+
+    .registration-mix-card > div:first-child p:first-child {
+        font-size: 10.5px !important;
+    }
+
+    .registration-mix-card > div:first-child p:nth-child(2) {
+        margin-top: 3px !important;
+        font-size: 7.8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .registration-mix-card > div:first-child > span {
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 8px !important;
+    }
+
+    .registration-mix-card > div:first-child > span svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .registration-mix-card > .mx-auto.mt-5 {
+        width: 118px !important;
+        height: 118px !important;
+        margin-top: 12px !important;
+    }
+
+    .registration-mix-card > .mx-auto.mt-5 p:first-child {
+        font-size: 20px !important;
+    }
+
+    .registration-mix-card > .mx-auto.mt-5 p:last-child {
+        margin-top: 4px !important;
+        font-size: 6.5px !important;
+    }
+
+    .registration-mix-card > .mt-4.rounded-\[13px\] {
+        margin-top: 10px !important;
+        border-radius: 10px !important;
+        padding: 8px 10px !important;
+    }
+
+    .registration-mix-card > .mt-4.rounded-\[13px\] p:first-child {
+        font-size: 6.5px !important;
+    }
+
+    .registration-mix-card > .mt-4.rounded-\[13px\] p:nth-child(2) {
+        margin-top: 3px !important;
+        font-size: 9.5px !important;
+    }
+
+    .registration-mix-card > .mt-4.rounded-\[13px\] span {
+        font-size: 15px !important;
+    }
+
+    .registration-mix-card > .mt-4.space-y-2\.5 {
+        margin-top: 10px !important;
+    }
+
+    .mix-role-row {
+        gap: 7px !important;
+        border-radius: 8px !important;
+        padding: 5px 6px !important;
+    }
+
+    .mix-role-row > span:first-child {
+        width: 7px !important;
+        height: 7px !important;
+    }
+
+    .mix-role-row span {
+        font-size: 8px !important;
+    }
+
+    .registration-mix-card > a:last-child {
+        height: 32px !important;
+        margin-top: 12px !important;
+        border-radius: 9px !important;
+        font-size: 8px !important;
+    }
+
+    /* ---------------- FILTER TOOLBAR ---------------- */
+    .reg-page .registration-filter-surface {
+        margin-top: 11px !important;
+        padding: 9px !important;
+        border-radius: 14px !important;
+    }
+
+    .reg-page .registration-filter-bar {
+        grid-template-columns: minmax(300px, 1fr) 150px 145px auto auto !important;
+        gap: 8px !important;
+    }
+
+    .reg-page .registration-filter-search > svg {
+        left: 12px !important;
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .reg-page .registration-filter-search .reg-control {
+        height: 38px !important;
+        border-radius: 9px !important;
+        padding: 0 11px 0 36px !important;
+        font-size: 9.5px !important;
+    }
+
+    .reg-page .registration-filter-search .reg-control::placeholder {
+        font-size: 9.5px !important;
+    }
+
+    .reg-page .registration-filter-select .premium-select-trigger {
+        height: 38px !important;
+        border-radius: 9px !important;
+        padding: 0 10px !important;
+        font-size: 9.5px !important;
+    }
+
+    .reg-page .registration-filter-select .premium-select-chevron {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .reg-page .registration-filter-status-dot {
+        width: 6px !important;
+        height: 6px !important;
+        flex-basis: 6px !important;
+    }
+
+    .reg-page .registration-filter-select .premium-select-menu {
+        top: calc(100% + 6px) !important;
+        padding: 4px !important;
+        border-radius: 10px !important;
+    }
+
+    .reg-page .registration-filter-select .premium-select-option {
+        min-height: 30px !important;
+        padding: 0 8px !important;
+        border-radius: 7px !important;
+        font-size: 8.5px !important;
+    }
+
+    .reg-page .registration-filter-select .premium-select-check {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .reg-page .registration-filter-apply,
+    .reg-page .registration-filter-reset {
+        height: 38px !important;
+        border-radius: 9px !important;
+        padding-inline: 12px !important;
+        font-size: 9px !important;
+    }
+
+    .reg-page .registration-filter-apply {
+        min-width: 104px !important;
+    }
+
+    .reg-page .registration-filter-reset {
+        min-width: 64px !important;
+    }
+
+    .reg-page .registration-filter-apply svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    /* ---------------- APPLICATION QUEUE ---------------- */
+    .reg-page .registration-queue-card {
+        margin-top: 11px !important;
+        border-radius: 14px !important;
+    }
+
+    .reg-page .registration-queue-card .queue-header {
+        padding: 11px 14px !important;
+    }
+
+    .reg-page .registration-queue-card .queue-header h3 {
+        font-size: 12px !important;
+    }
+
+    .reg-page .registration-queue-card .queue-header p {
+        margin-top: 3px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .reg-page .registration-queue-card #visibleCount {
+        padding: 3px 7px !important;
+        font-size: 7.5px !important;
+    }
+
+    .role-stat-chips {
+        gap: 5px !important;
+    }
+
+    .role-stat-chips > span {
+        padding: 4px 7px !important;
+        font-size: 7px !important;
+    }
+
+    .application-table {
+        min-width: 760px !important;
+    }
+
+    .application-table th {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        font-size: 7.5px !important;
+        letter-spacing: .065em !important;
+    }
+
+    .application-table th:first-child,
+    .application-table td:first-child {
+        padding-left: 14px !important;
+    }
+
+    .application-table th:last-child,
+    .application-table td:last-child {
+        padding-right: 14px !important;
+    }
+
+    .application-table tbody td {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    .application-table tbody td > div.flex.items-center.gap-3 {
+        gap: 8px !important;
+    }
+
+    .application-table tbody td > div.flex.items-center.gap-3 > span:first-child {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 8px !important;
+    }
+
+    .application-table td p,
+    .application-table td span {
+        font-size: 8px !important;
+    }
+
+    .application-table td .text-\[8px\] {
+        font-size: 7px !important;
+    }
+
+    .application-table td .text-\[9px\] {
+        font-size: 8px !important;
+    }
+
+    .application-table td .text-\[10px\] {
+        font-size: 8.5px !important;
+    }
+
+    .application-table td .inline-flex.rounded-full {
+        padding: 3px 7px !important;
+    }
+
+    .application-table td .grid.h-7.w-7 {
+        width: 24px !important;
+        height: 24px !important;
+        border-radius: 7px !important;
+    }
+
+    .application-table td .grid.h-7.w-7 svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .reg-review-btn {
+        height: 29px !important;
+        border-radius: 8px !important;
+        padding-inline: 9px !important;
+        font-size: 8px !important;
+    }
+
+    .reg-review-btn svg {
+        width: 10px !important;
+        height: 10px !important;
+    }
+
+    /* ---------------- REVIEW MODAL ---------------- */
+    #reviewDrawer {
+        width: min(840px, calc(100vw - 42px)) !important;
+        max-width: 840px !important;
+        height: min(700px, calc(100vh - 36px)) !important;
+        max-height: calc(100vh - 36px) !important;
+        border-radius: 16px !important;
+    }
+
+    #reviewDrawer .enterprise-review-header {
+        min-height: 60px !important;
+        padding: 11px 14px !important;
+    }
+
+    .enterprise-review-header-icon {
+        width: 32px !important;
+        height: 32px !important;
+        flex-basis: 32px !important;
+        border-radius: 8px !important;
+    }
+
+    .enterprise-review-header-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .enterprise-review-eyebrow {
+        font-size: 7px !important;
+    }
+
+    .enterprise-review-title {
+        margin-top: 3px !important;
+        font-size: 12.5px !important;
+    }
+
+    .enterprise-status {
+        gap: 5px !important;
+        padding: 4px 7px !important;
+        font-size: 7px !important;
+    }
+
+    .enterprise-status::before {
+        width: 5px !important;
+        height: 5px !important;
+    }
+
+    .enterprise-close-btn {
+        min-height: 31px !important;
+        gap: 5px !important;
+        border-radius: 8px !important;
+        padding-inline: 9px !important;
+        font-size: 8px !important;
+    }
+
+    .enterprise-close-btn svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    #reviewDrawer .reg-scroll > .bg-white {
+        padding: 13px 15px !important;
+    }
+
+    #reviewDrawer .review-card {
+        border-radius: 13px !important;
+        padding: 13px !important;
+    }
+
+    #reviewDrawer .review-card .grid.h-\[72px\].w-\[72px\] {
+        width: 54px !important;
+        height: 54px !important;
+        font-size: 14px !important;
+    }
+
+    #reviewDrawer .review-card h3 {
+        font-size: 15px !important;
+    }
+
+    #reviewDrawer .review-card p,
+    #reviewDrawer .review-card span {
+        font-size: 8px !important;
+    }
+
+    #reviewDrawer .review-card .mt-4.grid {
+        margin-top: 11px !important;
+        padding-top: 11px !important;
+    }
+
+    #reviewDrawer .detail-tab {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 8px !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] {
+        padding: 13px 15px !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] > section {
+        border-radius: 13px !important;
+        padding: 13px !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] h4 {
+        font-size: 9.5px !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] p,
+    #reviewDrawer [data-detail-tab-panel] span {
+        font-size: 8px !important;
+    }
+
+    #reviewDrawer [data-detail-tab-panel] .mt-4 {
+        margin-top: 10px !important;
+    }
+
+    .enterprise-decision-shell,
+    .enterprise-reviewed-card {
+        border-radius: 13px !important;
+        padding: 13px !important;
+    }
+
+    .enterprise-decision-heading {
+        font-size: 10.5px !important;
+    }
+
+    .enterprise-decision-copy {
+        margin-top: 4px !important;
+        font-size: 8px !important;
+        line-height: 1.5 !important;
+    }
+
+    .enterprise-decision-grid {
+        gap: 10px !important;
+        margin-top: 11px !important;
+    }
+
+    .enterprise-decision-card {
+        border-radius: 11px !important;
+        padding: 12px !important;
+    }
+
+    .enterprise-decision-icon {
+        width: 31px !important;
+        height: 31px !important;
+        flex-basis: 31px !important;
+        border-radius: 8px !important;
+    }
+
+    .enterprise-decision-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .enterprise-decision-card-title {
+        font-size: 9px !important;
+    }
+
+    .enterprise-decision-card-copy {
+        font-size: 7.5px !important;
+    }
+
+    .enterprise-field-label {
+        margin-top: 11px !important;
+        font-size: 7px !important;
+    }
+
+    .enterprise-field-hint {
+        margin-top: 3px !important;
+        font-size: 7px !important;
+    }
+
+    .enterprise-decision-textarea {
+        min-height: 76px !important;
+        margin-top: 6px !important;
+        border-radius: 8px !important;
+        padding: 8px 9px !important;
+        font-size: 8px !important;
+    }
+
+    .enterprise-decision-textarea::placeholder {
+        font-size: 8px !important;
+    }
+
+    .enterprise-decision-meta {
+        gap: 5px !important;
+        margin-top: 8px !important;
+        font-size: 7px !important;
+    }
+
+    .enterprise-decision-meta svg {
+        width: 11px !important;
+        height: 11px !important;
+        flex-basis: 11px !important;
+    }
+
+    .enterprise-action-btn {
+        min-height: 34px !important;
+        margin-top: 10px !important;
+        border-radius: 8px !important;
+        padding-inline: 10px !important;
+        font-size: 8px !important;
+    }
+
+    .enterprise-action-btn svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .enterprise-warning {
+        gap: 7px !important;
+        margin-bottom: 10px !important;
+        border-radius: 9px !important;
+        padding: 8px 9px !important;
+        font-size: 7.5px !important;
+    }
+
+    /* ---------------- LAPTOP 100% ZOOM ---------------- */
+    @media (max-height: 850px) and (min-width: 900px) {
+        .registration-page-header {
+            margin-bottom: 10px !important;
+        }
+
+        .registration-page-header h2 {
+            font-size: 22px !important;
+        }
+
+        .registration-page-header .registration-page-subtitle {
+            font-size: 9px !important;
+        }
+
+        .summary-card {
+            min-height: 72px !important;
+            padding-top: 9px !important;
+            padding-bottom: 9px !important;
+        }
+
+        .summary-card p:nth-child(2) {
+            font-size: 18px !important;
+        }
+
+        .reg-page .registration-filter-surface {
+            margin-top: 9px !important;
+        }
+
+        .reg-page .registration-queue-card {
+            margin-top: 9px !important;
+        }
+
+        .registration-mix-card > .mx-auto.mt-5 {
+            width: 106px !important;
+            height: 106px !important;
+        }
+
+        #reviewDrawer {
+            height: min(650px, calc(100vh - 28px)) !important;
+            max-height: calc(100vh - 28px) !important;
+        }
+    }
+
+    /* ---------------- TABLET / MOBILE ---------------- */
+    @media (max-width: 1023px) {
+        .reg-page .registration-filter-bar {
+            grid-template-columns: minmax(0, 1fr) minmax(140px, .42fr) !important;
+            gap: 8px !important;
+        }
+
+        .reg-page .registration-filter-search {
+            grid-column: 1 / -1 !important;
+        }
+
+        .reg-page .registration-filter-apply,
+        .reg-page .registration-filter-reset {
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .registration-page-header .registration-page-header-icon {
+            width: 34px !important;
+            height: 34px !important;
+            flex-basis: 34px !important;
+        }
+
+        .registration-page-header h2 {
+            font-size: 22px !important;
+        }
+
+        .registration-page-header .registration-page-subtitle {
+            font-size: 9.5px !important;
+        }
+
+        .summary-card {
+            min-height: 76px !important;
+        }
+
+        .reg-page .registration-filter-bar {
+            grid-template-columns: 1fr !important;
+        }
+
+        .reg-page .registration-filter-search {
+            grid-column: auto !important;
+        }
+
+        .reg-page .registration-filter-search .reg-control,
+        .reg-page .registration-filter-select .premium-select-trigger,
+        .reg-page .registration-filter-apply,
+        .reg-page .registration-filter-reset {
+            height: 42px !important;
+            font-size: 10px !important;
+        }
+
+        #reviewDrawer {
+            width: calc(100vw - 16px) !important;
+            height: calc(100vh - 16px) !important;
+            max-height: calc(100vh - 16px) !important;
+            border-radius: 13px !important;
+        }
+
+        .enterprise-decision-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+
+    /* ============================================================
+       ACCOUNT REGISTRATIONS — BALANCED ENTERPRISE DESIGN
+       Subtle outer elevation + flat inner content.
+       ============================================================ */
+
+    .reg-page{
+        --reg-surface-shadow:0 6px 18px rgba(54,42,28,.050);
+        --reg-kpi-shadow:0 5px 14px rgba(54,42,28,.055);
+        --reg-kpi-hover:0 8px 18px rgba(54,42,28,.070);
+        --reg-line:#e9e2d9;
+        --reg-line-soft:#f0ebe4;
+    }
+
+    /* Main containers: one restrained depth level. */
+    .reg-page .reg-surface,
+    .reg-page .registration-filter-surface,
+    .reg-page .registration-mix-card{
+        border-color:var(--reg-line) !important;
+        background:#fff !important;
+        box-shadow:var(--reg-surface-shadow) !important;
+        transform:none !important;
+    }
+
+    /* KPI cards: slightly more depth because they are primary numeric data. */
+    .reg-page .summary-card,
+    .reg-page .summary-card.is-current{
+        border-color:var(--reg-line) !important;
+        background:#fff !important;
+        box-shadow:var(--reg-kpi-shadow) !important;
+        transform:none !important;
+        transition:border-color .14s ease,box-shadow .14s ease,transform .14s ease !important;
+    }
+
+    .reg-page .summary-card:hover{
+        border-color:#ddd1c1 !important;
+        box-shadow:var(--reg-kpi-hover) !important;
+        transform:translateY(-1px) !important;
+    }
+
+    /* Controls: mostly flat. */
+    .reg-page .registration-filter-search .reg-control,
+    .reg-page .registration-filter-select .premium-select-trigger,
+    .reg-page .registration-filter-reset,
+    .reg-page .reg-review-btn,
+    .reg-page .reg-secondary-btn{
+        box-shadow:none !important;
+    }
+
+    .reg-page .registration-filter-apply{
+        box-shadow:0 4px 10px rgba(217,149,0,.11) !important;
+    }
+
+    .reg-page .registration-filter-apply:hover{
+        box-shadow:0 5px 12px rgba(217,149,0,.14) !important;
+    }
+
+    .reg-page .premium-select-menu{
+        box-shadow:0 14px 32px rgba(47,37,25,.12) !important;
+    }
+
+    /* Remove expensive backdrop blur from centered review modal. */
+    .reg-page + .reg-backdrop,
+    .reg-backdrop{
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        background:rgba(28,24,20,.44) !important;
+    }
+
+    #reviewDrawer{
+        box-shadow:
+            0 24px 64px rgba(31,24,17,.18),
+            0 8px 22px rgba(31,24,17,.06) !important;
+    }
+
+    #reviewDrawer .review-card,
+    #reviewDrawer section{
+        box-shadow:none !important;
+    }
+
+    /* ---------------- REGISTRATION MIX ---------------- */
+    @media (min-width:1180px){
+        .registration-workspace-layout{
+            grid-template-columns:minmax(0,1fr) 278px !important;
+            gap:14px !important;
+        }
+    }
+
+    .registration-mix-enterprise{
+        position:relative;
+        overflow:hidden;
+        border-radius:14px !important;
+        padding:14px !important;
+    }
+
+    .registration-mix-head{
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:10px;
+    }
+
+    .registration-mix-title{
+        color:#2d2721;
+        font-size:10.5px;
+        font-weight:700;
+        line-height:1.3;
+        letter-spacing:-.02em;
+    }
+
+    .registration-mix-copy{
+        max-width:190px;
+        margin-top:3px;
+        color:#91877c;
+        font-size:7.5px;
+        line-height:1.45;
+    }
+
+    .registration-mix-head-icon{
+        display:grid;
+        width:28px;
+        height:28px;
+        flex:0 0 28px;
+        place-items:center;
+        border:1px solid #eadfc9;
+        border-radius:8px;
+        background:#fff8eb;
+        color:#b77c18;
+    }
+
+    .registration-mix-head-icon svg{
+        width:13px;
+        height:13px;
+    }
+
+    .registration-mix-overview{
+        display:grid;
+        grid-template-columns:108px minmax(0,1fr);
+        gap:13px;
+        align-items:center;
+        margin-top:13px;
+    }
+
+    .registration-mix-chart{
+        position:relative;
+        width:106px;
+        height:106px;
+    }
+
+    .registration-mix-ring{
+        display:block;
+        width:100%;
+        height:100%;
+        filter:none !important;
+    }
+
+    .registration-mix-chart-center{
+        position:absolute;
+        inset:0;
+        display:grid;
+        place-content:center;
+        text-align:center;
+        pointer-events:none;
+    }
+
+    .registration-mix-chart-center strong{
+        color:#241e18;
+        font-size:20px;
+        font-weight:700;
+        line-height:1;
+        letter-spacing:-.045em;
+    }
+
+    .registration-mix-chart-center span{
+        margin-top:4px;
+        color:#9a9187;
+        font-size:5.8px;
+        font-weight:700;
+        line-height:1.2;
+        letter-spacing:.10em;
+        text-transform:uppercase;
+    }
+
+    .registration-mix-overview-copy{
+        min-width:0;
+    }
+
+    .registration-mix-overview-label{
+        display:block;
+        color:#9e8a65;
+        font-size:6px;
+        font-weight:700;
+        line-height:1.3;
+        letter-spacing:.09em;
+        text-transform:uppercase;
+    }
+
+    .registration-mix-dominant-role{
+        display:block;
+        overflow:hidden;
+        margin-top:4px;
+        color:#3d352d;
+        font-size:12px;
+        font-weight:700;
+        line-height:1.2;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .registration-mix-dominant-value{
+        display:flex;
+        align-items:baseline;
+        gap:5px;
+        margin-top:6px;
+    }
+
+    .registration-mix-dominant-value strong{
+        color:#a76f08;
+        font-size:17px;
+        font-weight:700;
+        line-height:1;
+        letter-spacing:-.035em;
+    }
+
+    .registration-mix-dominant-value span{
+        color:#9b9288;
+        font-size:6px;
+        line-height:1.25;
+    }
+
+    .registration-mix-divider{
+        height:1px;
+        margin:12px 0 9px;
+        background:var(--reg-line-soft);
+    }
+
+    .registration-mix-list{
+        display:grid;
+        gap:2px;
+    }
+
+    .registration-mix-role{
+        display:block !important;
+        border:0 !important;
+        border-radius:8px !important;
+        background:transparent !important;
+        padding:6px 5px !important;
+        box-shadow:none !important;
+        transform:none !important;
+        text-decoration:none;
+    }
+
+    .registration-mix-role:hover{
+        border-color:transparent !important;
+        background:#faf8f4 !important;
+        transform:none !important;
+    }
+
+    .registration-mix-role-main{
+        display:grid;
+        grid-template-columns:7px minmax(0,1fr) 22px 30px;
+        gap:6px;
+        align-items:center;
+    }
+
+    .registration-mix-role-dot{
+        width:6px;
+        height:6px;
+        border-radius:50%;
+    }
+
+    .registration-mix-role-name{
+        overflow:hidden;
+        color:#62594f;
+        font-size:7.5px;
+        font-weight:600;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .registration-mix-role-count{
+        color:#2f2923;
+        font-size:7.5px;
+        font-weight:700;
+        text-align:right;
+    }
+
+    .registration-mix-role-percent{
+        color:#9a9187;
+        font-size:6.8px;
+        font-weight:500;
+        text-align:right;
+    }
+
+    .registration-mix-role-track{
+        display:block;
+        height:3px;
+        margin:5px 0 0 13px;
+        overflow:hidden;
+        border-radius:999px;
+        background:#f1ede7;
+    }
+
+    .registration-mix-role-fill{
+        display:block;
+        height:100%;
+        min-width:0;
+        border-radius:inherit;
+    }
+
+    .registration-mix-all-link{
+        display:flex;
+        width:100%;
+        min-height:31px;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin-top:10px;
+        border-top:1px solid var(--reg-line-soft);
+        padding:10px 3px 0;
+        color:#756b60;
+        font-size:7.5px;
+        font-weight:600;
+        text-decoration:none;
+    }
+
+    .registration-mix-all-link:hover{
+        color:#a56d00;
+    }
+
+    .registration-mix-all-link svg{
+        width:12px;
+        height:12px;
+    }
+
+    /* Queue row paint stays simple. */
+    .application-table tbody tr{
+        box-shadow:none !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .registration-mix-enterprise{
+            padding:12px !important;
+        }
+
+        .registration-mix-overview{
+            grid-template-columns:96px minmax(0,1fr);
+            gap:10px;
+            margin-top:10px;
+        }
+
+        .registration-mix-chart{
+            width:94px;
+            height:94px;
+        }
+
+        .registration-mix-chart-center strong{
+            font-size:18px;
+        }
+
+        .registration-mix-divider{
+            margin:10px 0 7px;
+        }
+
+        .registration-mix-role{
+            padding:5px 4px !important;
+        }
+    }
+
+    @media(max-width:1179px){
+        .registration-mix-overview{
+            grid-template-columns:108px minmax(0,1fr);
+        }
+    }
+
+    @media(max-width:639px){
+        .registration-mix-enterprise{
+            padding:13px !important;
+        }
+
+        .registration-mix-overview{
+            grid-template-columns:96px minmax(0,1fr);
+        }
+
+        .registration-mix-chart{
+            width:92px;
+            height:92px;
+        }
+    }
+
+
+    /* ============================================================
+       REGISTRATION MIX — TEXT HIERARCHY REFINEMENT
+       Separates total volume from the dominant account type.
+       ============================================================ */
+
+    .registration-mix-chart-center{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+        gap:5px !important;
+    }
+
+    .registration-mix-chart-center strong{
+        display:block !important;
+        margin:0 !important;
+        font-size:21px !important;
+        line-height:.95 !important;
+    }
+
+    .registration-mix-chart-center span{
+        display:block !important;
+        margin:0 !important;
+        font-size:5.7px !important;
+        line-height:1.15 !important;
+        letter-spacing:.09em !important;
+    }
+
+    .registration-mix-overview-copy{
+        display:flex !important;
+        min-width:0 !important;
+        flex-direction:column !important;
+        justify-content:center !important;
+    }
+
+    .registration-mix-overview-label{
+        margin:0 !important;
+        color:#9a8e80 !important;
+        font-size:6px !important;
+        font-weight:700 !important;
+        line-height:1.2 !important;
+        letter-spacing:.09em !important;
+        text-transform:uppercase !important;
+    }
+
+    .registration-mix-dominant-row{
+        display:flex;
+        min-width:0;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin-top:6px;
+    }
+
+    .registration-mix-dominant-role{
+        display:block !important;
+        min-width:0 !important;
+        overflow:hidden !important;
+        margin:0 !important;
+        color:#332c25 !important;
+        font-size:13px !important;
+        font-weight:700 !important;
+        line-height:1.2 !important;
+        text-overflow:ellipsis !important;
+        white-space:nowrap !important;
+    }
+
+    .registration-mix-dominant-percent{
+        display:inline-flex;
+        min-height:24px;
+        flex:0 0 auto;
+        align-items:center;
+        justify-content:center;
+        border:1px solid #eadfc9;
+        border-radius:999px;
+        background:#fff8ea;
+        padding:0 8px;
+        color:#a66f0d;
+        font-size:8px;
+        font-weight:700;
+        line-height:1;
+    }
+
+    .registration-mix-dominant-meta{
+        margin:5px 0 0 !important;
+        color:#9b9288 !important;
+        font-size:6.5px !important;
+        font-weight:500 !important;
+        line-height:1.35 !important;
+    }
+
+    /* Remove obsolete stacked percentage styling from v1. */
+    .registration-mix-dominant-value{
+        display:none !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .registration-mix-chart-center{
+            gap:4px !important;
+        }
+
+        .registration-mix-chart-center strong{
+            font-size:19px !important;
+        }
+
+        .registration-mix-dominant-role{
+            font-size:12px !important;
+        }
+
+        .registration-mix-dominant-percent{
+            min-height:22px;
+            padding-inline:7px;
+        }
+    }
+
+
+    /* ============================================================
+       ACCOUNT REGISTRATIONS — HEADER SCALE MATCH
+       Matches Seller Compliance / Seller Account Control /
+       Platform Settings / Commissions / Complaints.
+       Visual-only; registration logic remains untouched.
+       ============================================================ */
+
+    .reg-page .registration-page-header{
+        margin-bottom:16px !important;
+        padding:0 !important;
+    }
+
+    .reg-page .registration-page-header-inner{
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:13px !important;
+    }
+
+    .reg-page .registration-page-header-icon{
+        display:grid !important;
+        width:44px !important;
+        height:44px !important;
+        flex:0 0 44px !important;
+        place-items:center !important;
+        border:1px solid #eadfc9 !important;
+        border-radius:12px !important;
+        background:#fff8eb !important;
+        color:#b77c18 !important;
+        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
+    }
+
+    .reg-page .registration-page-header-icon svg{
+        width:17px !important;
+        height:17px !important;
+    }
+
+    .reg-page .registration-page-eyebrow{
+        margin:0 !important;
+        color:#9a6f23 !important;
+        -webkit-text-fill-color:#9a6f23 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        line-height:1.15 !important;
+        letter-spacing:.13em !important;
+        text-transform:uppercase !important;
+    }
+
+    .reg-page .registration-page-header h2{
+        margin:5px 0 0 !important;
+        font-size:29px !important;
+        font-weight:700 !important;
+        line-height:1.02 !important;
+        letter-spacing:-.045em !important;
+    }
+
+    .reg-page .registration-title-base{
+        color:#17130f !important;
+        -webkit-text-fill-color:#17130f !important;
+    }
+
+    .reg-page .registration-title-accent{
+        color:#d99500 !important;
+        -webkit-text-fill-color:#d99500 !important;
+    }
+
+    .reg-page .registration-page-subtitle{
+        max-width:850px !important;
+        margin:7px 0 0 !important;
+        color:#7f756a !important;
+        -webkit-text-fill-color:#7f756a !important;
+        font-size:11px !important;
+        font-weight:400 !important;
+        line-height:1.5 !important;
+        letter-spacing:0 !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .reg-page .registration-page-header{
+            margin-bottom:14px !important;
+        }
+
+        .reg-page .registration-page-header-icon{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+        }
+
+        .reg-page .registration-page-header h2{
+            font-size:27px !important;
+        }
+
+        .reg-page .registration-page-subtitle{
+            font-size:10.5px !important;
+        }
+    }
+
+    @media(max-width:767px){
+        .reg-page .registration-page-header-inner{
+            align-items:flex-start !important;
+            gap:11px !important;
+        }
+
+        .reg-page .registration-page-header-icon{
+            width:40px !important;
+            height:40px !important;
+            flex-basis:40px !important;
+            border-radius:11px !important;
+        }
+
+        .reg-page .registration-page-header h2{
+            font-size:24px !important;
+        }
+
+        .reg-page .registration-page-subtitle{
+            font-size:10px !important;
+        }
+    }
+
 </style>
 
 <div class="reg-page registration-page-shell mx-auto w-full max-w-[1880px] pb-6">
@@ -2656,82 +4009,163 @@
 
         {{-- RIGHT SIDEBAR — POSITIONED LIKE THE REFERENCE DASHBOARD --}}
         <aside class="registration-side-column">
-            <section class="registration-mix-card px-5 py-5">
-                <div class="flex items-start justify-between gap-3">
-                    <div>
-                        <p class="text-[12px] font-bold tracking-[-.02em] text-[#2d2721]">Registration mix</p>
-                        <p class="mt-1 text-[9px] leading-4 text-[#91877c]">All-time applicant distribution by account type.</p>
+            <section class="registration-mix-card registration-mix-enterprise">
+                <div class="registration-mix-head">
+                    <div class="min-w-0">
+                        <p class="registration-mix-title">Registration mix</p>
+                        <p class="registration-mix-copy">All-time applicant distribution by account type.</p>
                     </div>
-                    <span class="grid h-8 w-8 shrink-0 place-items-center rounded-[10px] border border-[#eadfc9] bg-[#fff8eb] text-[#b77c18]">
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M4 19V9"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19V3"></path>
+
+                    <span class="registration-mix-head-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M4 19V9"></path>
+                            <path d="M10 19V5"></path>
+                            <path d="M16 19v-7"></path>
+                            <path d="M22 19V3"></path>
                         </svg>
                     </span>
                 </div>
 
-                <div class="mx-auto mt-5 h-[148px] w-[148px]">
-                    <div class="relative h-full w-full">
-                        <svg viewBox="0 0 100 100" class="registration-mix-ring h-full w-full" aria-label="Registration role distribution">
-                            <circle cx="50" cy="50" r="36" fill="none" stroke="#f1ece5" stroke-width="12"></circle>
+                <div class="registration-mix-overview">
+                    <div class="registration-mix-chart">
+                        <svg
+                            viewBox="0 0 100 100"
+                            class="registration-mix-ring"
+                            aria-label="Registration role distribution"
+                        >
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="36"
+                                fill="none"
+                                stroke="#f1ece5"
+                                stroke-width="10"
+                            ></circle>
+
                             @php $sidebarMixOffset = 0.0; @endphp
+
                             @if($mixTotal > 0)
                                 @foreach($mixCounts as $mixRole => $mixCount)
                                     @php
-                                        $mixPercent = $mixTotal > 0 ? (((int) $mixCount / $mixTotal) * 100) : 0;
+                                        $mixPercent = $mixTotal > 0
+                                            ? (((int) $mixCount / $mixTotal) * 100)
+                                            : 0;
+
                                         $dash = number_format($mixPercent, 4, '.', '');
                                         $gap = number_format(max(0, 100 - $mixPercent), 4, '.', '');
                                         $dashOffset = number_format(-$sidebarMixOffset, 4, '.', '');
+
                                         $sidebarMixOffset += $mixPercent;
                                     @endphp
+
                                     @if($mixPercent > 0)
                                         <circle
-                                            cx="50" cy="50" r="36" fill="none"
-                                            stroke="{{ $mixMeta[$mixRole][1] }}" stroke-width="12" stroke-linecap="butt"
-                                            pathLength="100" stroke-dasharray="{{ $dash }} {{ $gap }}"
-                                            stroke-dashoffset="{{ $dashOffset }}" transform="rotate(-90 50 50)"
+                                            cx="50"
+                                            cy="50"
+                                            r="36"
+                                            fill="none"
+                                            stroke="{{ $mixMeta[$mixRole][1] }}"
+                                            stroke-width="10"
+                                            stroke-linecap="butt"
+                                            pathLength="100"
+                                            stroke-dasharray="{{ $dash }} {{ $gap }}"
+                                            stroke-dashoffset="{{ $dashOffset }}"
+                                            transform="rotate(-90 50 50)"
                                         ></circle>
                                     @endif
                                 @endforeach
                             @endif
                         </svg>
-                        <div class="absolute inset-0 grid place-items-center text-center">
-                            <div>
-                                <p class="text-[24px] font-bold leading-none tracking-[-.05em] text-[#241e18]">{{ $mixTotal }}</p>
-                                <p class="mt-1.5 text-[7px] font-semibold uppercase tracking-[.12em] text-[#9a9187]">Registrations</p>
-                            </div>
+
+                        <div class="registration-mix-chart-center">
+                            <strong>{{ $mixTotal }}</strong>
+                            <span>Registrations</span>
                         </div>
+                    </div>
+
+                    <div class="registration-mix-overview-copy">
+                        <span class="registration-mix-overview-label">Top account type</span>
+
+                        @if($mixTotal > 0 && $dominantRole)
+                            <div class="registration-mix-dominant-row">
+                                <strong class="registration-mix-dominant-role">
+                                    {{ $mixMeta[$dominantRole][0] }}
+                                </strong>
+
+                                <span class="registration-mix-dominant-percent">
+                                    {{ $dominantPercent }}%
+                                </span>
+                            </div>
+
+                            <p class="registration-mix-dominant-meta">
+                                {{ $dominantCount }} of {{ $mixTotal }} registrations
+                            </p>
+                        @else
+                            <div class="registration-mix-dominant-row">
+                                <strong class="registration-mix-dominant-role">No data yet</strong>
+                                <span class="registration-mix-dominant-percent">0%</span>
+                            </div>
+
+                            <p class="registration-mix-dominant-meta">
+                                No registration data yet
+                            </p>
+                        @endif
                     </div>
                 </div>
 
-                @if($mixTotal > 0 && $dominantRole)
-                    <div class="mt-4 rounded-[13px] border border-[#eadfc9] bg-[#fffaf0] px-3.5 py-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="min-w-0">
-                                <p class="text-[7px] font-semibold uppercase tracking-[.11em] text-[#9e8a65]">Most registrations</p>
-                                <p class="mt-1 truncate text-[11px] font-bold text-[#40372e]">{{ $mixMeta[$dominantRole][0] }}</p>
-                            </div>
-                            <span class="text-[18px] font-bold tracking-[-.04em] text-[#a76f08]">{{ $dominantPercent }}%</span>
-                        </div>
-                    </div>
-                @endif
+                <div class="registration-mix-divider"></div>
 
-                <div class="mt-4 space-y-2.5">
+                <div class="registration-mix-list">
                     @foreach($mixCounts as $mixRole => $mixCount)
                         @php
-                            $rolePercent = $mixTotal > 0 ? round((((int) $mixCount / $mixTotal) * 100)) : 0;
+                            $rolePercent = $mixTotal > 0
+                                ? round((((int) $mixCount / $mixTotal) * 100))
+                                : 0;
                         @endphp
-                        <a href="{{ route('admin.registrations', ['status' => 'all', 'role' => $mixRole]) }}" class="mix-role-row group flex items-center gap-2.5 rounded-[10px] px-2 py-1.5">
-                            <span class="h-2.5 w-2.5 shrink-0 rounded-full" style="background: {{ $mixMeta[$mixRole][1] }};"></span>
-                            <span class="min-w-0 flex-1 truncate text-[9px] font-medium text-[#62594f]">{{ $mixMeta[$mixRole][0] }}</span>
-                            <span class="text-[9px] font-semibold text-[#2f2923]">{{ (int) $mixCount }}</span>
-                            <span class="w-8 text-right text-[8px] text-[#9a9187]">{{ $rolePercent }}%</span>
+
+                        <a
+                            href="{{ route('admin.registrations', ['status' => 'all', 'role' => $mixRole]) }}"
+                            class="mix-role-row registration-mix-role"
+                        >
+                            <div class="registration-mix-role-main">
+                                <span
+                                    class="registration-mix-role-dot"
+                                    style="background: {{ $mixMeta[$mixRole][1] }};"
+                                    aria-hidden="true"
+                                ></span>
+
+                                <span class="registration-mix-role-name">
+                                    {{ $mixMeta[$mixRole][0] }}
+                                </span>
+
+                                <span class="registration-mix-role-count">
+                                    {{ (int) $mixCount }}
+                                </span>
+
+                                <span class="registration-mix-role-percent">
+                                    {{ $rolePercent }}%
+                                </span>
+                            </div>
+
+                            <span class="registration-mix-role-track" aria-hidden="true">
+                                <span
+                                    class="registration-mix-role-fill"
+                                    style="width: {{ $rolePercent }}%; background: {{ $mixMeta[$mixRole][1] }};"
+                                ></span>
+                            </span>
                         </a>
                     @endforeach
                 </div>
 
-                <a href="{{ route('admin.registrations', ['status' => 'all']) }}" class="mt-5 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[11px] border border-[#e2d7c8] bg-white text-[9px] font-semibold text-[#665d53] shadow-[0_5px_14px_rgba(68,49,25,.035)] transition hover:border-[#d8c29a] hover:bg-[#fffaf1] hover:text-[#9d6908]">
-                    View all registrations
-                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 18 6-6-6-6"></path></svg>
+                <a
+                    href="{{ route('admin.registrations', ['status' => 'all']) }}"
+                    class="registration-mix-all-link"
+                >
+                    <span>View all registrations</span>
+
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
                 </a>
             </section>
         </aside>
@@ -3327,20 +4761,53 @@
         selectedKey = null;
     }
 
+    const rowIndex = rows.map(function (row) {
+        return {
+            row,
+            searchText: (row.dataset.search || '').toLowerCase(),
+        };
+    });
+
+    function debounce(callback, wait) {
+        let timer = 0;
+
+        return function () {
+            const args = arguments;
+            const context = this;
+
+            window.clearTimeout(timer);
+            timer = window.setTimeout(function () {
+                callback.apply(context, args);
+            }, wait);
+        };
+    }
+
+    let filterFrame = 0;
+
     function filterRows() {
         const query = (search?.value || '').trim().toLowerCase();
-        let visible = 0;
 
-        rows.forEach(function (row) {
-            const haystack = (row.dataset.search || '').toLowerCase();
-            const match = !query || haystack.includes(query);
-            row.hidden = !match;
-            if (match) visible++;
+        window.cancelAnimationFrame(filterFrame);
+
+        filterFrame = window.requestAnimationFrame(function () {
+            let visible = 0;
+
+            rowIndex.forEach(function (item) {
+                const match = !query || item.searchText.includes(query);
+
+                if (item.row.hidden === match) {
+                    item.row.hidden = !match;
+                }
+
+                if (match) visible++;
+            });
+
+            if (empty) empty.hidden = visible !== 0 || rowIndex.length === 0;
+            if (count) count.textContent = 'Showing ' + visible;
         });
-
-        if (empty) empty.hidden = visible !== 0 || rows.length === 0;
-        if (count) count.textContent = 'Showing ' + visible;
     }
+
+    const debouncedFilterRows = debounce(filterRows, 120);
 
     rows.forEach(function (row) {
         row.addEventListener('click', function (event) {
@@ -3417,7 +4884,7 @@
         });
     });
 
-    search?.addEventListener('input', filterRows);
+    search?.addEventListener('input', debouncedFilterRows, { passive: true });
     filterRows();
 
     // The review panel intentionally opens only after an explicit Admin click.

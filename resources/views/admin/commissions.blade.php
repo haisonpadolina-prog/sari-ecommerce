@@ -5,952 +5,1806 @@
 
 @section('content')
 <style>
-    :root {
-        --fc-brand: #d99a00;
-        --fc-brand-strong: #bf8400;
-        --fc-brand-soft: #fff6df;
-        --fc-ink: #101828;
-        --fc-text: #344054;
-        --fc-muted: #667085;
-        --fc-subtle: #98a2b3;
-        --fc-line: #e7ebf0;
-        --fc-surface: #ffffff;
-        --fc-canvas: #f7f9fb;
-        --fc-green: #2faa66;
-        --fc-blue: #3b82f6;
-        --fc-red: #e85d56;
-    }
+    /* ============================================================
+       SARI PLATFORM COMMISSIONS — ENTERPRISE / PERFORMANCE EDITION
+       Compact finance UI • Poppins • reduced paint/composite cost
+       ============================================================ */
 
     .finance-commissions {
+        --fc-brand: #d99500;
+        --fc-brand-strong: #bd8205;
+        --fc-brand-soft: #fff7e8;
+        --fc-ink: #26211c;
+        --fc-text: #514a42;
+        --fc-muted: #8d8479;
+        --fc-line: #e8e1d8;
+        --fc-soft: #faf9f6;
+        --fc-green: #4f8060;
+        --fc-blue: #4f7fa8;
+        --fc-red: #a65d5d;
+
         width: 100%;
-        max-width: 1880px;
+        max-width: 1640px !important;
         margin: 0 auto;
-        padding-bottom: 34px;
+        padding-bottom: 20px;
         color: var(--fc-ink);
         font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
-    .fc-card {
-        border: 1px solid var(--fc-line);
-        border-radius: 16px;
-        background: #fff;
-        box-shadow: 0 1px 2px rgba(16,24,40,.02), 0 9px 26px rgba(16,24,40,.045);
+    .finance-commissions *,
+    .finance-commissions *::before,
+    .finance-commissions *::after {
+        box-sizing: border-box;
     }
 
+    .finance-commissions button,
+    .finance-commissions a,
+    .finance-commissions input,
+    .finance-commissions .fc-custom-select-menu {
+        transition:
+            color .15s ease,
+            background-color .15s ease,
+            border-color .15s ease,
+            opacity .15s ease,
+            transform .15s ease;
+    }
+
+    .fc-card {
+        border: 1px solid var(--fc-line);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 6px 20px rgba(61,43,22,.045);
+    }
+
+    /* ---------------- PAGE HEADER ---------------- */
     .fc-page-head {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
-        gap: 18px;
+        gap: 14px;
     }
 
     .fc-title-side {
         display: flex;
         min-width: 0;
         align-items: center;
-        gap: 13px;
+        gap: 10px;
     }
 
     .fc-title-icon {
         display: grid;
-        width: 46px;
-        height: 46px;
-        flex: 0 0 46px;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
         place-items: center;
-        border: 1px solid #f0dfb8;
-        border-radius: 13px;
-        background: #fff9ed;
-        color: #c98400;
-        box-shadow: 0 5px 18px rgba(201,132,0,.08);
+        border: 1px solid #eadfc9;
+        border-radius: 10px;
+        background: #fff8eb;
+        color: #b77c18;
+        box-shadow: 0 4px 12px rgba(75,54,25,.045);
     }
 
-    .fc-title-icon svg { width: 21px; height: 21px; }
-    .fc-eyebrow { color: #7c8796; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-    .fc-title { margin: 3px 0 0; color: #0f172a; font-size: clamp(1.45rem, 1.25rem + .55vw, 1.95rem); font-weight: 700; line-height: 1.12; letter-spacing: -.035em; }
-    .fc-subtitle { margin-top: 5px; color: #667085; font-size: 9px; line-height: 1.55; }
+    .fc-title-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .fc-eyebrow {
+        color: #9a7b43;
+        font-size: 7px;
+        font-weight: 700;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .fc-title {
+        margin: 3px 0 0;
+        font-size: clamp(22px, 1.55vw, 27px);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -.035em;
+    }
+
+    .fc-title-platform {
+        color: #17130f;
+    }
+
+    .fc-title-gold {
+        color: var(--fc-brand);
+    }
+
+    .fc-subtitle {
+        max-width: 760px;
+        margin-top: 5px;
+        color: #81786c;
+        font-size: 9.5px;
+        line-height: 1.55;
+    }
 
     .fc-head-actions {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: flex-end;
-        gap: 10px;
+        gap: 8px;
     }
 
     .fc-date-control {
         display: flex;
-        height: 42px;
+        min-height: 38px;
         align-items: center;
-        gap: 7px;
-        border: 1px solid #e3e7ed;
-        border-radius: 10px;
+        gap: 6px;
+        border: 1px solid #e5ddd2;
+        border-radius: 9px;
         background: #fff;
-        padding: 0 9px 0 11px;
-        box-shadow: 0 1px 2px rgba(16,24,40,.03);
+        padding: 0 7px 0 9px;
+        box-shadow: none;
     }
 
-    .fc-date-control svg { width: 15px; height: 15px; color: #667085; }
-    .fc-date-control input { width: 116px; border: 0; outline: 0; background: transparent; color: #344054; font: inherit; font-size: 8.5px; }
-    .fc-date-arrow { color: #98a2b3; font-size: 9px; }
-    .fc-date-submit { display: grid; width: 26px; height: 26px; place-items: center; border: 0; border-radius: 7px; background: #f8fafc; color: #667085; cursor: pointer; }
-    .fc-date-submit:hover { background: #fff4d5; color: #aa7300; }
+    .fc-date-control svg {
+        width: 13px;
+        height: 13px;
+        color: #8d8479;
+    }
+
+    .fc-date-control input {
+        width: 104px;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: #514a42;
+        font: inherit;
+        font-size: 7.8px;
+    }
+
+    .fc-date-arrow {
+        color: #aaa196;
+        font-size: 8px;
+    }
+
+    .fc-date-submit {
+        display: grid;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border: 0;
+        border-radius: 7px;
+        background: #faf8f4;
+        color: #756d63;
+        cursor: pointer;
+    }
+
+    .fc-date-submit:hover {
+        background: #fff4db;
+        color: #a56d00;
+    }
 
     .fc-primary-button,
     .fc-secondary-button,
     .fc-link-button {
         display: inline-flex;
-        height: 42px;
+        min-height: 38px;
         align-items: center;
         justify-content: center;
-        gap: 7px;
-        border-radius: 10px;
-        padding: 0 14px;
-        font-size: 8.5px;
-        font-weight: 650;
+        gap: 6px;
+        border-radius: 9px;
+        padding: 0 11px;
+        font-size: 8px;
+        font-weight: 600;
         text-decoration: none;
-        transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
     }
 
-    .fc-primary-button { border: 1px solid #ce9008; background: linear-gradient(180deg,#e2a80d,#d79800); color: #fff; box-shadow: 0 7px 16px rgba(217,154,0,.18); }
-    .fc-primary-button:hover { transform: translateY(-1px); background: #c98c00; }
-    .fc-secondary-button, .fc-link-button { border: 1px solid #e4e7ec; background: #fff; color: #475467; }
-    .fc-secondary-button:hover, .fc-link-button:hover { background: #f9fafb; }
-    .fc-primary-button svg, .fc-secondary-button svg, .fc-link-button svg { width: 14px; height: 14px; }
+    .fc-primary-button {
+        border: 1px solid var(--fc-brand);
+        background: var(--fc-brand);
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(217,149,0,.11);
+    }
 
+    .fc-primary-button:hover {
+        background: var(--fc-brand-strong);
+        border-color: var(--fc-brand-strong);
+        transform: translateY(-1px);
+    }
+
+    .fc-secondary-button,
+    .fc-link-button {
+        border: 1px solid #e5ddd2;
+        background: #fff;
+        color: #6f665b;
+    }
+
+    .fc-secondary-button:hover,
+    .fc-link-button:hover {
+        border-color: #d4c5b4;
+        background: #faf8f4;
+    }
+
+    .fc-primary-button svg,
+    .fc-secondary-button svg,
+    .fc-link-button svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* ---------------- KPI CARDS ---------------- */
     .fc-summary-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0,1fr));
-        gap: 12px;
-        margin-top: 15px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+        margin-top: 11px;
     }
 
     .fc-stat-card {
-        min-height: 105px;
-        padding: 16px;
+        position: relative;
+        min-height: 76px;
+        padding: 11px 50px 11px 13px;
         border: 1px solid var(--fc-line);
-        border-radius: 15px;
+        border-radius: 13px;
         background: #fff;
-        box-shadow: 0 1px 2px rgba(16,24,40,.02), 0 7px 22px rgba(16,24,40,.035);
+        box-shadow: 0 6px 18px rgba(61,43,22,.045);
+        contain: paint;
     }
 
-    .fc-stat-inner { display: flex; height: 100%; align-items: center; gap: 14px; }
-    .fc-stat-icon { display: grid; width: 50px; height: 50px; flex: 0 0 50px; place-items: center; border-radius: 13px; }
-    .fc-stat-icon svg { width: 23px; height: 23px; }
-    .fc-stat-icon.rate { background: #fff7e7; color: #d59000; }
-    .fc-stat-icon.orders { background: #eef7ff; color: #2585e6; }
-    .fc-stat-icon.sales { background: #f5f2ff; color: #6954d9; }
-    .fc-stat-icon.earned { background: #eef9f2; color: #24975b; }
-    .fc-stat-label { color: #667085; font-size: 9px; font-weight: 500; }
-    .fc-stat-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 3px; }
-    .fc-stat-value { color: #101828; font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -.035em; }
-    .fc-stat-help { margin-top: 6px; color: #98a2b3; font-size: 8px; }
+    .fc-stat-card:hover {
+        border-color: #ddcfbb;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 22px rgba(61,43,22,.06);
+    }
 
-    .fc-delta { display: inline-flex; align-items: center; gap: 3px; border-radius: 999px; padding: 4px 6px; font-size: 7px; font-weight: 700; }
-    .fc-delta.positive { background: #e9f8ef; color: #27985b; }
-    .fc-delta.negative { background: #fff0ed; color: #c95849; }
-    .fc-delta.neutral { background: #f2f4f7; color: #667085; }
+    .fc-stat-inner {
+        display: block;
+        min-height: 52px;
+    }
 
+    .fc-stat-icon {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 9px;
+    }
+
+    .fc-stat-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .fc-stat-icon.rate { background: #fff7e7; color: #c48612; }
+    .fc-stat-icon.orders { background: #eef6fb; color: #4f7fa8; }
+    .fc-stat-icon.sales { background: #f5f2fb; color: #7566a8; }
+    .fc-stat-icon.earned { background: #eef7f1; color: #4f8060; }
+
+    .fc-stat-label {
+        color: #8e857a;
+        font-size: 8px;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .fc-stat-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+    }
+
+    .fc-stat-value {
+        color: #28221b;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -.035em;
+    }
+
+    .fc-stat-help {
+        margin-top: 6px;
+        color: #9b9288;
+        font-size: 7.2px;
+        line-height: 1.35;
+    }
+
+    .fc-delta {
+        display: inline-flex;
+        min-height: 19px;
+        align-items: center;
+        gap: 3px;
+        border-radius: 999px;
+        padding: 0 6px;
+        font-size: 6.5px;
+        font-weight: 700;
+    }
+
+    .fc-delta.positive { background: #eef8f1; color: #4f8060; }
+    .fc-delta.negative { background: #fff2ef; color: #a65d5d; }
+    .fc-delta.neutral { background: #f4f2ef; color: #81786d; }
+
+    /* ---------------- ANALYTICS ---------------- */
     .fc-analytics-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.65fr) minmax(330px, .85fr);
-        gap: 12px;
-        margin-top: 12px;
+        grid-template-columns: minmax(0, 1.6fr) minmax(310px, .8fr);
+        gap: 10px;
+        margin-top: 10px;
     }
 
-    .fc-chart-panel, .fc-policy-panel { min-height: 310px; padding: 16px; }
-    .fc-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .fc-panel-title { color: #101828; font-size: 13px; font-weight: 700; line-height: 1.35; }
-    .fc-panel-copy { margin-top: 4px; color: #7c8796; font-size: 9.5px; line-height: 1.55; }
-
-    .fc-range-tabs { display: inline-flex; align-items: center; gap: 4px; }
-    .fc-range-tab { display: inline-flex; min-width: 39px; height: 28px; align-items: center; justify-content: center; border: 1px solid #e8ebef; border-radius: 8px; background: #fff; padding: 0 9px; color: #667085; font-size: 8px; font-weight: 600; text-decoration: none; }
-    .fc-range-tab:hover { background: #f9fafb; }
-    .fc-range-tab.active { border-color: #d89b13; background: #dda20b; color: #fff; box-shadow: 0 4px 10px rgba(217,154,0,.15); }
-
-    .fc-chart-wrap { position: relative; height: 260px; margin-top: 14px; overflow: visible; border-radius: 10px; }
-    .fc-chart-svg { display: block; width: 100%; height: 260px; }
-    .fc-chart-tooltip { position: absolute; z-index: 20; min-width: 118px; pointer-events: none; transform: translate(-50%,-118%); border: 1px solid #dfe4ea; border-radius: 10px; background: rgba(255,255,255,.99); padding: 9px 11px; box-shadow: 0 10px 24px rgba(16,24,40,.14); opacity: 0; }
-    .fc-chart-tooltip.show { opacity: 1; }
-    .fc-chart-tooltip.below { transform: translate(-50%, 14px); }
-    .fc-chart-tooltip small { display: block; color: #667085; font-size: 9px; font-weight: 500; }
-    .fc-chart-tooltip strong { display: block; margin-top: 3px; color: #101828; font-size: 12px; font-weight: 750; }
-    .fc-chart-empty { display: grid; height: 235px; place-items: center; color: #98a2b3; font-size: 8.5px; text-align: center; }
-
-    .fc-policy-head-actions { display: flex; align-items: center; gap: 6px; }
-    .fc-mini-button { display: inline-flex; height: 30px; align-items: center; gap: 5px; border: 1px solid #eadbbd; border-radius: 8px; background: #fff; padding: 0 9px; color: #a56d00; font-size: 7.5px; font-weight: 650; text-decoration: none; }
-    .fc-mini-button svg { width: 13px; height: 13px; }
-
-    .fc-policy-body { display: grid; grid-template-columns: 145px 1fr; gap: 15px; align-items: center; margin-top: 18px; }
-    .fc-rate-donut { position: relative; display: grid; width: 140px; height: 140px; place-items: center; border-radius: 50%; background: conic-gradient(#e0a300 0deg var(--rate-deg), #f0f1f2 var(--rate-deg) 360deg); }
-    .fc-rate-donut::before { content: ''; position: absolute; width: 103px; height: 103px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px #edf0f3; }
-    .fc-rate-center { position: relative; text-align: center; }
-    .fc-rate-value { color: #101828; font-size: 23px; font-weight: 700; line-height: 1; }
-    .fc-rate-label { margin-top: 5px; color: #667085; font-size: 8px; }
-    .fc-policy-list { display: grid; gap: 10px; }
-    .fc-policy-item { display: grid; grid-template-columns: 22px 1fr; gap: 7px; align-items: start; }
-    .fc-policy-item-icon { display: grid; width: 22px; height: 22px; place-items: center; color: #667085; }
-    .fc-policy-item-icon svg { width: 14px; height: 14px; }
-    .fc-policy-label { color: #7c8796; font-size: 7px; }
-    .fc-policy-value { margin-top: 2px; color: #1f2937; font-size: 8px; line-height: 1.45; }
-    .fc-history-button { display: flex; width: 100%; height: 34px; align-items: center; justify-content: space-between; margin-top: 13px; border: 1px solid #e5e8ed; border-radius: 9px; background: #fff; padding: 0 10px; color: #475467; font-size: 7.5px; cursor: pointer; }
-    .fc-history-button:hover { background: #f9fafb; }
-
-    .fc-filter-card { margin-top: 14px; padding: 10px; }
-    .fc-filter-grid { display: grid; grid-template-columns: minmax(280px,1.3fr) 175px 190px minmax(230px,.9fr) 92px 126px; gap: 9px; }
-    .fc-search { position: relative; }
-    .fc-search svg { position: absolute; top: 50%; left: 13px; width: 16px; height: 16px; color: #7c8796; transform: translateY(-50%); pointer-events: none; }
-    .fc-control { width: 100%; height: 44px; border: 1px solid #dfe4ea; border-radius: 10px; background: #fff; color: #344054; padding: 0 12px; font: inherit; font-size: 10.5px; font-weight: 500; box-shadow: 0 1px 2px rgba(16,24,40,.025); }
-    .fc-search .fc-control { padding-left: 40px; }
-    .fc-control:focus { outline: none; border-color: #e1b455; box-shadow: 0 0 0 3px rgba(217,154,0,.09); }
-    .fc-filter-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-    .fc-filter-reset, .fc-filter-apply { display: inline-flex; height: 44px; align-items: center; justify-content: center; gap: 7px; border-radius: 10px; font-size: 10px; font-weight: 650; text-decoration: none; cursor: pointer; }
-    .fc-filter-reset { border: 1px solid #e4e7ec; background: #fff; color: #667085; }
-    .fc-filter-apply { border: 1px solid #cf9007; background: #d99a00; color: #fff; }
-    .fc-filter-apply:hover { background: #c98c00; }
-
-    .fc-ledger { margin-top: 12px; overflow: hidden; }
-    .fc-section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 17px; border-bottom: 1px solid #edf0f3; }
-    .fc-table-wrap { overflow-x: auto; }
-    .fc-table { width: 100%; min-width: 1040px; border-collapse: collapse; text-align: left; }
-    .fc-table thead { background: #fbfcfd; }
-    .fc-table th { padding: 12px 14px; border-bottom: 1px solid #e8ecf1; color: #667085; font-size: 9px; font-weight: 700; letter-spacing: .025em; text-transform: uppercase; }
-    .fc-table td { padding: 13px 14px; border-bottom: 1px solid #eef1f4; color: #475467; font-size: 10.5px; vertical-align: middle; }
-    .fc-table tbody tr:hover { background: #fcfcfd; }
-    .fc-order { color: #101828; font-size: 10.5px; font-weight: 700; }
-    .fc-money { color: #101828; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
-    .fc-status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 5px 9px; font-size: 9px; font-weight: 650; }
-    .fc-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-    .fc-status.earned { background: #ebf8ef; color: #26985a; }
-    .fc-status.adjusted { background: #fff7e8; color: #aa7300; }
-    .fc-status.reversed { background: #fff0ed; color: #c95849; }
-    .fc-view-button { display: inline-flex; height: 32px; align-items: center; justify-content: center; border: 1px solid #dfe4ea; border-radius: 8px; background: #fff; padding: 0 12px; color: #344054; font-size: 9px; font-weight: 650; cursor: pointer; }
-    .fc-view-button:hover { background: #f9fafb; }
-    .fc-table-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 10px 14px; border-top: 1px solid #edf0f3; color: #667085; font-size: 9px; }
-    .fc-pagination { display: flex; align-items: center; gap: 5px; }
-    .fc-page-link { display: grid; min-width: 30px; height: 30px; place-items: center; border: 1px solid #e4e7ec; border-radius: 8px; background: #fff; color: #667085; font-size: 9px; text-decoration: none; }
-    .fc-page-link.active { border-color: #d89b13; background: #d99a00; color: #fff; }
-    .fc-page-link.disabled { opacity: .45; pointer-events: none; }
-
-    .fc-bottom-grid { display: grid; grid-template-columns: 1.05fr 1fr 1.12fr; gap: 12px; margin-top: 12px; }
-    .fc-bottom-card { min-height: 260px; padding: 17px; }
-    .fc-bottom-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-    .fc-top-sellers { margin-top: 15px; }
-    .fc-seller-row { display: grid; grid-template-columns: 28px minmax(110px,.75fr) minmax(110px,1fr) 100px; gap: 9px; align-items: center; min-height: 40px; }
-    .fc-rank { display: grid; width: 26px; height: 26px; place-items: center; border-radius: 50%; background: #fff6df; color: #b97b00; font-size: 9px; font-weight: 700; }
-    .fc-seller-name { overflow: hidden; color: #344054; font-size: 9.5px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
-    .fc-progress { height: 8px; overflow: hidden; border-radius: 999px; background: #eef1f4; }
-    .fc-progress > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#e6aa0d,#d99a00); }
-    .fc-seller-amount { color: #344054; font-size: 9.5px; font-weight: 700; text-align: right; white-space: nowrap; }
-    .fc-seller-share { color: #98a2b3; font-size: 8px; font-weight: 500; }
-
-    .fc-status-layout { display: grid; grid-template-columns: 145px 1fr; gap: 16px; align-items: center; margin-top: 15px; }
-    .fc-status-donut { position: relative; display: grid; width: 140px; height: 140px; place-items: center; border-radius: 50%; background: var(--status-gradient); }
-    .fc-status-donut::before { content: ''; position: absolute; width: 94px; height: 94px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px #edf0f3; }
-    .fc-status-center { position: relative; text-align: center; }
-    .fc-status-total { color: #101828; font-size: 20px; font-weight: 700; }
-    .fc-status-caption { margin-top: 4px; color: #7c8796; font-size: 9px; }
-    .fc-status-legend { display: grid; gap: 9px; }
-    .fc-status-legend-row { display: grid; grid-template-columns: 10px 1fr 42px 50px; gap: 7px; align-items: center; color: #667085; font-size: 9px; }
-    .fc-status-dot { width: 8px; height: 8px; border-radius: 3px; }
-    .fc-status-count { color: #344054; font-weight: 650; text-align: right; }
-    .fc-status-percent { color: #98a2b3; text-align: right; }
-
-    .fc-recent-list { margin-top: 13px; }
-    .fc-recent-row { display: grid; grid-template-columns: 20px minmax(110px,1fr) minmax(90px,.85fr) 82px 78px; gap: 8px; align-items: center; min-height: 40px; border-bottom: 1px solid #f0f2f4; }
-    .fc-recent-row:last-child { border-bottom: 0; }
-    .fc-recent-icon { color: #667085; }
-    .fc-recent-icon svg { width: 15px; height: 15px; }
-    .fc-recent-order { overflow: hidden; color: #344054; font-size: 9px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
-    .fc-recent-seller { overflow: hidden; color: #667085; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
-    .fc-recent-amount { color: #101828; font-size: 9.5px; font-weight: 700; text-align: right; }
-    .fc-recent-date { color: #7c8796; font-size: 8.5px; text-align: right; white-space: nowrap; }
-
-    .fc-empty { display: grid; min-height: 120px; place-items: center; color: #7c8796; font-size: 10px; text-align: center; }
-
-    .fc-payout-panel { margin-top: 10px; overflow: hidden; }
-    .fc-payout-summary { display: flex; flex-wrap: wrap; gap: 6px; }
-    .fc-chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #e4e7ec; border-radius: 999px; padding: 4px 7px; color: #667085; font-size: 7px; font-weight: 650; }
-    .fc-chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #98a2b3; }
-    .fc-chip.pending::before { background: #d99a00; }
-    .fc-chip.approved::before { background: #3b82f6; }
-    .fc-chip.paid::before { background: #2faa66; }
-    .fc-payout-row { display: grid; grid-template-columns: minmax(160px,1fr) 90px 100px minmax(260px,1.2fr); gap: 10px; align-items: center; min-height: 62px; padding: 10px 14px; border-bottom: 1px solid #f0f2f4; }
-    .fc-payout-row:last-child { border-bottom: 0; }
-    .fc-payout-name { color: #344054; font-size: 8px; font-weight: 650; }
-    .fc-payout-meta { margin-top: 2px; color: #98a2b3; font-size: 7px; }
-    .fc-payout-amount { color: #101828; font-size: 8px; font-weight: 700; }
-    .fc-payout-actions { display: flex; justify-content: flex-end; gap: 6px; }
-    .fc-payout-actions form { display: flex; gap: 6px; }
-    .fc-payout-input { height: 32px; min-width: 130px; border: 1px solid #e4e7ec; border-radius: 7px; padding: 0 8px; font: inherit; font-size: 7px; }
-    .fc-action { height: 32px; border: 1px solid #e4e7ec; border-radius: 7px; background: #fff; padding: 0 9px; color: #475467; font: inherit; font-size: 7px; font-weight: 650; cursor: pointer; }
-    .fc-action:hover { background: #f9fafb; }
-
-    .fc-modal-backdrop { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(15,23,42,.36); padding: 20px; backdrop-filter: blur(2px); }
-    .fc-modal-backdrop.open { display: flex; }
-    .fc-modal { width: min(620px,100%); max-height: min(760px,88vh); overflow: auto; border: 1px solid #e4e7ec; border-radius: 16px; background: #fff; box-shadow: 0 24px 70px rgba(15,23,42,.22); }
-    .fc-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 16px; border-bottom: 1px solid #edf0f3; }
-    .fc-modal-title { color: #101828; font-size: 11px; font-weight: 700; }
-    .fc-modal-close { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #e4e7ec; border-radius: 8px; background: #fff; color: #667085; cursor: pointer; }
-    .fc-modal-body { padding: 15px 16px; }
-    .fc-detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
-    .fc-detail-box { border: 1px solid #edf0f3; border-radius: 10px; background: #fbfcfd; padding: 10px; }
-    .fc-detail-label { color: #98a2b3; font-size: 7px; }
-    .fc-detail-value { margin-top: 3px; color: #344054; font-size: 8px; font-weight: 650; word-break: break-word; }
-    .fc-history-list { display: grid; gap: 8px; }
-    .fc-history-row { display: grid; grid-template-columns: 80px 1fr 110px; gap: 10px; align-items: center; border: 1px solid #edf0f3; border-radius: 10px; padding: 10px; }
-    .fc-history-rate { color: #101828; font-size: 10px; font-weight: 700; }
-    .fc-history-copy { color: #667085; font-size: 7px; line-height: 1.45; }
-    .fc-history-date { color: #98a2b3; font-size: 7px; text-align: right; }
-
-    /* Readability pass: keep key finance controls and data legible on wide desktop layouts. */
-    .fc-filter-reset svg, .fc-filter-apply svg { flex: 0 0 auto; }
-    .fc-table tbody tr { transition: background-color .15s ease, box-shadow .15s ease; }
-    .fc-table tbody tr:hover { background: #fffdf8; }
-    .fc-bottom-card { transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
-    .fc-bottom-card:hover { transform: translateY(-1px); border-color: #dde3ea; box-shadow: 0 10px 28px rgba(16,24,40,.06); }
-
-    @media (max-width: 1250px) {
-        .fc-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-        .fc-analytics-grid { grid-template-columns: 1fr; }
-        .fc-filter-grid { grid-template-columns: minmax(230px,1fr) 150px 170px; }
-        .fc-filter-dates { grid-column: span 2; }
-        .fc-bottom-grid { grid-template-columns: 1fr 1fr; }
-        .fc-bottom-card:last-child { grid-column: 1 / -1; }
-        .fc-payout-row { grid-template-columns: 1fr 100px 100px; }
-        .fc-payout-actions { grid-column: 1 / -1; justify-content: flex-start; }
+    .fc-chart-panel,
+    .fc-policy-panel {
+        min-height: 280px;
+        padding: 14px;
     }
 
-    @media (max-width: 760px) {
-        .fc-page-head { align-items: stretch; flex-direction: column; }
-        .fc-head-actions { justify-content: flex-start; }
-        .fc-date-control { width: 100%; height: auto; min-height: 42px; flex-wrap: wrap; padding-block: 7px; }
-        .fc-date-control input { flex: 1; min-width: 112px; }
-        .fc-summary-grid, .fc-bottom-grid { grid-template-columns: 1fr; }
-        .fc-bottom-card:last-child { grid-column: auto; }
-        .fc-policy-body { grid-template-columns: 1fr; justify-items: center; }
-        .fc-policy-list { width: 100%; }
-        .fc-filter-grid { grid-template-columns: 1fr; }
-        .fc-filter-dates { grid-column: auto; }
-        .fc-panel-head { flex-direction: column; }
-        .fc-range-tabs { flex-wrap: wrap; }
-        .fc-status-layout { grid-template-columns: 1fr; justify-items: center; }
-        .fc-status-legend { width: 100%; }
-        .fc-recent-row { grid-template-columns: 18px 1fr 70px; }
-        .fc-recent-seller, .fc-recent-date { display: none; }
-        .fc-payout-row { grid-template-columns: 1fr; }
-        .fc-payout-actions { grid-column: auto; }
-        .fc-payout-actions, .fc-payout-actions form { width: 100%; flex-wrap: wrap; justify-content: flex-start; }
-        .fc-payout-input { flex: 1; }
-        .fc-table-footer { align-items: flex-start; flex-direction: column; }
-        .fc-detail-grid { grid-template-columns: 1fr; }
-        .fc-history-row { grid-template-columns: 70px 1fr; }
-        .fc-history-date { grid-column: 1 / -1; text-align: left; }
+    .fc-panel-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
     }
 
-    /* =========================================================
-       PLATFORM COMMISSIONS — SUMMARY CARDS ONLY
-       Keep the original page typography everywhere else.
-       ========================================================= */
-
-    /* Slightly more horizontal / landscape feel without changing the grid count. */
-    .finance-commissions .fc-summary-grid {
-        gap: 10px !important;
+    .fc-panel-title {
+        color: #302a24;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.35;
     }
 
-    .finance-commissions .fc-stat-card {
-        position: relative !important;
-        min-height: 98px !important;
-        padding: 16px 78px 16px 18px !important;
-        border-radius: 16px !important;
+    .fc-panel-copy {
+        margin-top: 3px;
+        color: #91887d;
+        font-size: 7.5px;
+        line-height: 1.5;
     }
 
-    .finance-commissions .fc-stat-inner {
-        display: block !important;
-        height: 100% !important;
+    .fc-range-tabs {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
     }
 
-    /* Move icon to the upper-right; keep original 50x50 icon size. */
-    .finance-commissions .fc-stat-icon {
-        position: absolute !important;
-        top: 16px !important;
-        right: 16px !important;
-        width: 50px !important;
-        height: 50px !important;
-        flex: 0 0 50px !important;
+    .fc-range-tab {
+        display: inline-flex;
+        min-width: 34px;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e7e1d9;
+        border-radius: 7px;
+        background: #fff;
+        padding: 0 7px;
+        color: #81786d;
+        font-size: 7px;
+        font-weight: 600;
+        text-decoration: none;
     }
 
-    /* Only summary-card typography is increased. */
-    .finance-commissions .fc-stat-label {
-        font-size: 11.5px !important;
-        font-weight: 500 !important;
-        line-height: 1.35 !important;
+    .fc-range-tab:hover {
+        background: #faf8f4;
     }
 
-    .finance-commissions .fc-stat-value {
-        font-size: 26px !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        letter-spacing: -.035em !important;
+    .fc-range-tab.active {
+        border-color: var(--fc-brand);
+        background: var(--fc-brand);
+        color: #fff;
+        box-shadow: none;
     }
 
-    .finance-commissions .fc-stat-help {
-        margin-top: 7px !important;
-        font-size: 9.5px !important;
-        line-height: 1.4 !important;
-    }
-
-    .finance-commissions .fc-delta {
-        font-size: 8px !important;
-        padding: 4px 6px !important;
-    }
-
-    @media (min-width: 1536px) {
-        .finance-commissions .fc-stat-label {
-            font-size: 12px !important;
-        }
-
-        .finance-commissions .fc-stat-value {
-            font-size: 27px !important;
-        }
-
-        .finance-commissions .fc-stat-help {
-            font-size: 10px !important;
-        }
-    }
-
-    @media (max-width: 760px) {
-        .finance-commissions .fc-stat-card {
-            min-height: 104px !important;
-            padding-right: 72px !important;
-        }
-
-        .finance-commissions .fc-stat-icon {
-            top: 14px !important;
-            right: 14px !important;
-            width: 46px !important;
-            height: 46px !important;
-            flex-basis: 46px !important;
-        }
-    }
-
-
-    /* =========================================================
-       COMMISSION FILTER DROPDOWNS — CLEAN SARI BUTTON STYLE
-       Status + Seller only. Other page typography remains untouched.
-       ========================================================= */
-    .finance-commissions .fc-select-wrap {
+    .fc-chart-wrap {
         position: relative;
-        min-width: 0;
+        height: 220px;
+        margin-top: 10px;
+        overflow: visible;
+        border-radius: 9px;
     }
 
-    .finance-commissions .fc-select-control {
-        appearance: none !important;
-        -webkit-appearance: none !important;
-        padding-left: 38px !important;
-        padding-right: 38px !important;
-        cursor: pointer;
-        border-color: #e4e0d9 !important;
-        border-radius: 12px !important;
-        background:
-            linear-gradient(180deg, #ffffff 0%, #fffdfa 100%) !important;
-        color: #3f3933 !important;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 8px 18px rgba(61,43,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-        transition:
-            border-color .16s ease,
-            box-shadow .16s ease,
-            background-color .16s ease,
-            transform .16s ease !important;
+    .fc-chart-svg {
+        display: block;
+        width: 100%;
+        height: 220px;
     }
 
-    .finance-commissions .fc-select-control:hover {
-        border-color: #d9c9ae !important;
-        background: #fffdf8 !important;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.03),
-            0 10px 22px rgba(61,43,22,.06),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .finance-commissions .fc-select-control:focus {
-        outline: none !important;
-        border-color: #d9a33a !important;
-        box-shadow:
-            0 0 0 4px rgba(217,154,0,.08),
-            0 10px 24px rgba(61,43,22,.07),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .finance-commissions .fc-select-leading {
+    .fc-chart-tooltip {
         position: absolute;
-        z-index: 2;
-        top: 50%;
-        left: 13px;
+        z-index: 20;
+        min-width: 112px;
+        pointer-events: none;
+        transform: translate(-50%, -118%);
+        border: 1px solid #e1dad1;
+        border-radius: 9px;
+        background: rgba(255,255,255,.99);
+        padding: 7px 9px;
+        box-shadow: 0 8px 20px rgba(31,24,17,.11);
+        opacity: 0;
+    }
+
+    .fc-chart-tooltip.show { opacity: 1; }
+    .fc-chart-tooltip.below { transform: translate(-50%, 12px); }
+
+    .fc-chart-tooltip small {
+        display: block;
+        color: #81786d;
+        font-size: 7.5px;
+        font-weight: 500;
+    }
+
+    .fc-chart-tooltip strong {
+        display: block;
+        margin-top: 3px;
+        color: #302a24;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .fc-chart-empty {
         display: grid;
-        width: 16px;
-        height: 16px;
+        height: 205px;
         place-items: center;
-        pointer-events: none;
-        color: #9a7a40;
-        transform: translateY(-50%);
+        color: #91887d;
+        font-size: 8px;
+        text-align: center;
     }
 
-    .finance-commissions .fc-select-leading svg {
-        width: 15px;
-        height: 15px;
+    .fc-policy-head-actions {
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
 
-    .finance-commissions .fc-select-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: #d99a00;
-        box-shadow: 0 0 0 4px rgba(217,154,0,.09);
+    .fc-mini-button {
+        display: inline-flex;
+        height: 28px;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #eadbbd;
+        border-radius: 8px;
+        background: #fff;
+        padding: 0 8px;
+        color: #9a6810;
+        font-size: 7px;
+        font-weight: 600;
+        text-decoration: none;
     }
 
-    .finance-commissions .fc-select-chevron {
+    .fc-mini-button svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .fc-policy-body {
+        display: grid;
+        grid-template-columns: 124px 1fr;
+        gap: 12px;
+        align-items: center;
+        margin-top: 14px;
+    }
+
+    .fc-rate-donut {
+        position: relative;
+        display: grid;
+        width: 118px;
+        height: 118px;
+        place-items: center;
+        border-radius: 50%;
+        background: conic-gradient(var(--fc-brand) 0deg var(--rate-deg), #efede9 var(--rate-deg) 360deg);
+    }
+
+    .fc-rate-donut::before {
+        content: '';
         position: absolute;
-        z-index: 2;
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px #eee8df;
+    }
+
+    .fc-rate-center {
+        position: relative;
+        text-align: center;
+    }
+
+    .fc-rate-value {
+        color: #302a24;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .fc-rate-label {
+        margin-top: 4px;
+        color: #91887d;
+        font-size: 7px;
+    }
+
+    .fc-policy-list {
+        display: grid;
+        gap: 8px;
+    }
+
+    .fc-policy-item {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 6px;
+        align-items: start;
+    }
+
+    .fc-policy-item-icon {
+        display: grid;
+        width: 20px;
+        height: 20px;
+        place-items: center;
+        color: #8d8479;
+    }
+
+    .fc-policy-item-icon svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .fc-policy-label {
+        color: #978e83;
+        font-size: 6.3px;
+    }
+
+    .fc-policy-value {
+        margin-top: 2px;
+        color: #514a42;
+        font-size: 7.2px;
+        line-height: 1.45;
+    }
+
+    .fc-history-button {
+        display: flex;
+        width: 100%;
+        height: 31px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+        border: 1px solid #e5ddd2;
+        border-radius: 8px;
+        background: #fff;
+        padding: 0 9px;
+        color: #6f665b;
+        font-size: 7px;
+        cursor: pointer;
+    }
+
+    .fc-history-button:hover {
+        background: #faf8f4;
+    }
+
+    /* ---------------- FILTERS ---------------- */
+    .fc-filter-card {
+        position: relative;
+        z-index: 25;
+        margin-top: 10px;
+        padding: 9px;
+        overflow: visible;
+    }
+
+    .fc-filter-grid {
+        display: grid;
+        grid-template-columns: minmax(240px,1.25fr) 155px 175px minmax(210px,.9fr) 78px 108px;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .fc-search {
+        position: relative;
+    }
+
+    .fc-search svg {
+        position: absolute;
         top: 50%;
-        right: 13px;
-        width: 15px;
-        height: 15px;
+        left: 12px;
+        width: 14px;
+        height: 14px;
+        color: #9b9287;
         pointer-events: none;
-        color: #857b70;
         transform: translateY(-50%);
     }
 
-    .finance-commissions .fc-select-wrap:hover .fc-select-chevron {
-        color: #b77c18;
+    .fc-control,
+    .fc-custom-select-trigger {
+        width: 100%;
+        height: 38px;
+        border: 1px solid #e5ddd2;
+        border-radius: 9px;
+        background: #fff;
+        color: #3d3730;
+        font: inherit;
+        font-size: 8.5px;
+        font-weight: 500;
+        box-shadow: none;
     }
 
-
-    /* =========================================================
-       PLATFORM COMMISSIONS — FLOATING DEPTH SYSTEM
-       Visual elevation only. No dimensions, typography, data,
-       routes, calculations, or interaction logic are changed.
-       ========================================================= */
-
-    .finance-commissions .fc-card,
-    .finance-commissions .fc-stat-card {
-        border-color: #e5ddd2 !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.040),
-            0 15px 34px rgba(61,43,22,.085),
-            0 30px 58px rgba(61,43,22,.038),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
+    .fc-control {
+        padding: 0 9px;
     }
 
-    .finance-commissions .fc-stat-card,
-    .finance-commissions .fc-chart-panel,
-    .finance-commissions .fc-policy-panel,
-    .finance-commissions .fc-filter-card,
-    .finance-commissions .fc-ledger,
-    .finance-commissions .fc-bottom-card,
-    .finance-commissions .fc-payout-panel {
-        transition:
-            transform .18s ease,
-            border-color .18s ease,
-            box-shadow .18s ease !important;
+    .fc-search .fc-control {
+        padding-left: 36px;
     }
 
-    .finance-commissions .fc-stat-card:hover,
-    .finance-commissions .fc-chart-panel:hover,
-    .finance-commissions .fc-policy-panel:hover,
-    .finance-commissions .fc-filter-card:hover,
-    .finance-commissions .fc-ledger:hover,
-    .finance-commissions .fc-bottom-card:hover,
-    .finance-commissions .fc-payout-panel:hover {
-        transform: translateY(-2px) !important;
-        border-color: #d8c9b5 !important;
-        box-shadow:
-            0 4px 9px rgba(61,43,22,.050),
-            0 21px 46px rgba(61,43,22,.115),
-            0 40px 76px rgba(61,43,22,.048),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
+    .fc-control:focus,
+    .fc-custom-select-trigger:focus-visible,
+    .fc-custom-select.is-open .fc-custom-select-trigger {
+        outline: none;
+        border-color: #d49a2b;
+        box-shadow: 0 0 0 3px rgba(217,149,0,.075);
     }
 
-    /* Keep the filter controls feeling layered inside the floating filter card. */
-    .finance-commissions .fc-control,
-    .finance-commissions .fc-date-control,
-    .finance-commissions .fc-filter-reset,
-    .finance-commissions .fc-filter-apply,
-    .finance-commissions .fc-primary-button,
-    .finance-commissions .fc-secondary-button,
-    .finance-commissions .fc-link-button {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.024),
-            0 8px 18px rgba(61,43,22,.050),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
+    .fc-filter-dates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
     }
 
-    /* Status / seller dropdowns get the strongest control-level depth. */
-    .finance-commissions .fc-select-control {
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.030),
-            0 10px 22px rgba(61,43,22,.070),
-            0 18px 34px rgba(61,43,22,.025),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
+    .fc-filter-reset,
+    .fc-filter-apply {
+        display: inline-flex;
+        width: 100%;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border-radius: 9px;
+        padding: 0 9px;
+        font-size: 8px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
     }
 
-    .finance-commissions .fc-select-control:hover {
+    .fc-filter-reset {
+        border: 1px solid #e5ddd2;
+        background: #fff;
+        color: #6f665b;
+    }
+
+    .fc-filter-reset:hover {
+        border-color: #d4c5b4;
+        background: #faf8f4;
+    }
+
+    .fc-filter-apply {
+        border: 1px solid var(--fc-brand);
+        background: var(--fc-brand);
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(217,149,0,.10);
+    }
+
+    .fc-filter-apply:hover {
+        background: var(--fc-brand-strong);
+        border-color: var(--fc-brand-strong);
         transform: translateY(-1px);
-        box-shadow:
-            0 3px 6px rgba(61,43,22,.036),
-            0 13px 27px rgba(61,43,22,.085),
-            0 22px 40px rgba(61,43,22,.028),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
     }
 
-    .finance-commissions .fc-select-control:focus {
-        transform: translateY(-1px);
-        box-shadow:
-            0 0 0 4px rgba(217,154,0,.08),
-            0 13px 28px rgba(61,43,22,.090),
-            0 24px 44px rgba(61,43,22,.032),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    /* Ledger rows remain flat; only the parent sheet floats. */
-    .finance-commissions .fc-table tbody tr {
-        box-shadow: none !important;
-    }
-
-    .finance-commissions .fc-modal {
-        border-color: #e3d8cb !important;
-        box-shadow:
-            0 10px 24px rgba(31,24,17,.10),
-            0 34px 82px rgba(31,24,17,.22),
-            0 68px 125px rgba(31,24,17,.12) !important;
-    }
-
-    @media (max-width: 760px) {
-        .finance-commissions .fc-card,
-        .finance-commissions .fc-stat-card {
-            box-shadow:
-                0 3px 7px rgba(61,43,22,.035),
-                0 14px 32px rgba(61,43,22,.075),
-                0 24px 46px rgba(61,43,22,.025),
-                inset 0 1px 0 rgba(255,255,255,.98) !important;
-        }
-
-        .finance-commissions .fc-stat-card:hover,
-        .finance-commissions .fc-chart-panel:hover,
-        .finance-commissions .fc-policy-panel:hover,
-        .finance-commissions .fc-filter-card:hover,
-        .finance-commissions .fc-ledger:hover,
-        .finance-commissions .fc-bottom-card:hover,
-        .finance-commissions .fc-payout-panel:hover {
-            transform: translateY(-1px) !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .finance-commissions .fc-stat-card,
-        .finance-commissions .fc-chart-panel,
-        .finance-commissions .fc-policy-panel,
-        .finance-commissions .fc-filter-card,
-        .finance-commissions .fc-ledger,
-        .finance-commissions .fc-bottom-card,
-        .finance-commissions .fc-payout-panel,
-        .finance-commissions .fc-select-control {
-            transition: none !important;
-            transform: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       PLATFORM COMMISSIONS — HOVER BEHAVIOR
-       Only summary cards lift on hover.
-       All other dashboard surfaces stay visually static.
-       ========================================================= */
-
-    /* Summary cards keep the floating hover effect. */
-    .finance-commissions .fc-stat-card:hover {
-        transform: translateY(-2px) !important;
-        border-color: #d8c9b5 !important;
-        box-shadow:
-            0 4px 9px rgba(61,43,22,.050),
-            0 21px 46px rgba(61,43,22,.115),
-            0 40px 76px rgba(61,43,22,.048),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    /* All other main surfaces stay static on hover. */
-    .finance-commissions .fc-chart-panel:hover,
-    .finance-commissions .fc-policy-panel:hover,
-    .finance-commissions .fc-filter-card:hover,
-    .finance-commissions .fc-ledger:hover,
-    .finance-commissions .fc-bottom-card:hover,
-    .finance-commissions .fc-payout-panel:hover {
-        transform: none !important;
-        border-color: #e5ddd2 !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.040),
-            0 15px 34px rgba(61,43,22,.085),
-            0 30px 58px rgba(61,43,22,.038),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    /* Dropdown controls stay static when hovered; focus still remains visible. */
-    .finance-commissions .fc-select-control:hover {
-        transform: none !important;
-        border-color: #e4e0d9 !important;
-        background:
-            linear-gradient(180deg, #ffffff 0%, #fffdfa 100%) !important;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.030),
-            0 10px 22px rgba(61,43,22,.070),
-            0 18px 34px rgba(61,43,22,.025),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .finance-commissions .fc-select-wrap:hover .fc-select-chevron {
-        color: #857b70 !important;
-    }
-
-    /* Bottom cards had an earlier hover rule; neutralize it completely. */
-    .finance-commissions .fc-bottom-card:hover {
-        transform: none !important;
-        border-color: #e5ddd2 !important;
-    }
-
-    @media (max-width: 760px) {
-        .finance-commissions .fc-stat-card:hover {
-            transform: translateY(-1px) !important;
-        }
-
-        .finance-commissions .fc-chart-panel:hover,
-        .finance-commissions .fc-policy-panel:hover,
-        .finance-commissions .fc-filter-card:hover,
-        .finance-commissions .fc-ledger:hover,
-        .finance-commissions .fc-bottom-card:hover,
-        .finance-commissions .fc-payout-panel:hover,
-        .finance-commissions .fc-select-control:hover {
-            transform: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       COMMISSION CUSTOM DROPDOWNS
-       Replaces browser-native blue option popup with SARI styling.
-       ========================================================= */
-    .finance-commissions .fc-custom-select {
+    /* Custom dropdowns */
+    .fc-custom-select {
         position: relative;
         min-width: 0;
         z-index: 36;
     }
 
-    .finance-commissions .fc-custom-select.is-open {
-        z-index: 60;
+    .fc-custom-select.is-open {
+        z-index: 70;
     }
 
-    .finance-commissions .fc-custom-select-trigger {
+    .fc-custom-select-trigger {
         display: flex;
-        width: 100%;
-        height: 44px;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
-        border: 1px solid #e4e0d9;
-        border-radius: 12px;
-        background: linear-gradient(180deg,#fff 0%,#fffdfa 100%);
-        padding: 0 13px;
-        color: #3f3933;
-        font: inherit;
-        font-size: 10.5px;
-        font-weight: 500;
+        gap: 8px;
+        padding: 0 10px;
         text-align: left;
         cursor: pointer;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.030),
-            0 10px 22px rgba(61,43,22,.070),
-            0 18px 34px rgba(61,43,22,.025),
-            inset 0 1px 0 rgba(255,255,255,.98);
-        transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
     }
 
-    .finance-commissions .fc-custom-select-trigger:focus-visible,
-    .finance-commissions .fc-custom-select.is-open .fc-custom-select-trigger {
-        outline: none;
-        border-color: #d9a33a;
-        box-shadow:
-            0 0 0 4px rgba(217,154,0,.08),
-            0 12px 26px rgba(61,43,22,.08),
-            inset 0 1px 0 rgba(255,255,255,.98);
-    }
-
-    .finance-commissions .fc-custom-select-main,
-    .finance-commissions .fc-custom-select-option-main {
+    .fc-custom-select-main,
+    .fc-custom-select-option-main {
         display: inline-flex;
         min-width: 0;
         align-items: center;
-        gap: 9px;
+        gap: 7px;
     }
 
-    .finance-commissions .fc-custom-select-main > span:last-child,
-    .finance-commissions .fc-custom-select-option-main > span:last-child {
+    .fc-custom-select-main > span:last-child,
+    .fc-custom-select-option-main > span:last-child {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
-    .finance-commissions .fc-custom-select-status-dot {
-        width: 8px;
-        height: 8px;
-        flex: 0 0 8px;
+    .fc-custom-select-status-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
         border-radius: 999px;
-        background: #d99a00;
-        box-shadow: 0 0 0 4px rgba(217,154,0,.08);
+        background: var(--fc-brand);
     }
 
-    .finance-commissions .fc-custom-select-user-icon,
-    .finance-commissions .fc-option-user-icon {
+    .fc-custom-select-user-icon,
+    .fc-option-user-icon {
         display: grid;
-        width: 18px;
-        height: 18px;
-        flex: 0 0 18px;
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
         place-items: center;
         color: #9a6c18;
     }
 
-    .finance-commissions .fc-custom-select-user-icon svg,
-    .finance-commissions .fc-option-user-icon svg {
-        width: 15px;
-        height: 15px;
+    .fc-custom-select-user-icon svg,
+    .fc-option-user-icon svg {
+        width: 13px;
+        height: 13px;
     }
 
-    .finance-commissions .fc-custom-select-chevron {
-        width: 15px;
-        height: 15px;
-        flex: 0 0 15px;
+    .fc-custom-select-chevron {
+        width: 12px;
+        height: 12px;
+        flex: 0 0 12px;
         color: #857b70;
-        transition: transform .16s ease;
     }
 
-    .finance-commissions .fc-custom-select.is-open .fc-custom-select-chevron {
+    .fc-custom-select.is-open .fc-custom-select-chevron {
         transform: rotate(180deg);
     }
 
-    .finance-commissions .fc-custom-select-menu {
+    .fc-custom-select-menu {
         position: absolute;
         z-index: 80;
-        top: calc(100% + 8px);
-        left: 0;
+        top: calc(100% + 5px);
         right: 0;
-        max-height: 240px;
+        left: 0;
+        max-height: 210px;
         overflow-y: auto;
-        padding: 6px;
-        border: 1px solid #e3dacd;
-        border-radius: 14px;
+        padding: 4px;
+        border: 1px solid #e4dcd1;
+        border-radius: 10px;
         background: #fff;
-        box-shadow:
-            0 8px 18px rgba(47,37,25,.09),
-            0 24px 52px rgba(47,37,25,.15),
-            0 40px 82px rgba(47,37,25,.07);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transform: translateY(-5px) scale(.985);
-        transform-origin: top;
-        transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
+        transform: translateY(-3px);
+        box-shadow: 0 14px 32px rgba(47,37,25,.12);
+        scrollbar-width: thin;
+        scrollbar-color: #ddd3c7 transparent;
     }
 
-    .finance-commissions .fc-custom-select.is-open .fc-custom-select-menu {
+    .fc-custom-select.is-open .fc-custom-select-menu {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
 
-    .finance-commissions .fc-custom-select-option {
+    .fc-custom-select-option {
         display: flex;
         width: 100%;
-        min-height: 40px;
+        min-height: 31px;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 8px;
         border: 0;
-        border-radius: 10px;
+        border-radius: 7px;
         background: transparent;
-        padding: 0 10px;
-        color: #554d45;
+        padding: 0 8px;
+        color: #5b534a;
         font: inherit;
-        font-size: 10px;
+        font-size: 8px;
         font-weight: 500;
         text-align: left;
         cursor: pointer;
     }
 
-    .finance-commissions .fc-custom-select-option:hover,
-    .finance-commissions .fc-custom-select-option:focus-visible {
+    .fc-custom-select-option:hover,
+    .fc-custom-select-option:focus-visible,
+    .fc-custom-select-option.is-selected {
         outline: none;
-        background: #fffaf0;
-        color: #8f6218;
+        background: #fff7e8;
+        color: #9a6810;
     }
 
-    .finance-commissions .fc-custom-select-option.is-selected {
-        background: #fff6df;
-        color: #9f6b08;
-        font-weight: 600;
-    }
-
-    .finance-commissions .fc-custom-select-check {
-        width: 14px;
-        height: 14px;
-        flex: 0 0 14px;
-        color: #d99a00;
+    .fc-custom-select-check {
+        width: 12px;
+        height: 12px;
+        flex: 0 0 12px;
+        color: var(--fc-brand);
         opacity: 0;
     }
 
-    .finance-commissions .fc-custom-select-option.is-selected .fc-custom-select-check {
+    .fc-custom-select-option.is-selected .fc-custom-select-check {
         opacity: 1;
     }
 
-    .finance-commissions .fc-option-dot {
-        width: 7px;
-        height: 7px;
-        flex: 0 0 7px;
+    .fc-option-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
         border-radius: 999px;
-        background: #d99a00;
+        background: var(--fc-brand);
     }
 
-    .finance-commissions .fc-option-dot.neutral {
+    .fc-option-dot.neutral {
         background: #8e857a;
     }
 
-    .finance-commissions .fc-custom-select-menu::-webkit-scrollbar {
-        width: 8px;
+    /* ---------------- LEDGER ---------------- */
+    .fc-ledger {
+        margin-top: 10px;
+        overflow: hidden;
     }
 
-    .finance-commissions .fc-custom-select-menu::-webkit-scrollbar-thumb {
-        border: 2px solid #fff;
+    .fc-section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 14px;
+        border-bottom: 1px solid #eee8df;
+    }
+
+    .fc-table-wrap {
+        overflow-x: auto;
+    }
+
+    .fc-table {
+        width: 100%;
+        min-width: 980px;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .fc-table thead {
+        background: #faf9f6;
+    }
+
+    .fc-table th {
+        padding: 9px 11px;
+        border-bottom: 1px solid #eee8df;
+        color: #81786d;
+        font-size: 7.5px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+    }
+
+    .fc-table td {
+        padding: 9px 11px;
+        border-bottom: 1px solid #f0ebe4;
+        color: #5b534a;
+        font-size: 8px;
+        vertical-align: middle;
+    }
+
+    .fc-table tbody tr {
+        content-visibility: auto;
+        contain-intrinsic-size: 46px;
+    }
+
+    .fc-table tbody tr:hover {
+        background: #fdfbf8;
+    }
+
+    .fc-order,
+    .fc-money {
+        color: #302a24;
+        font-size: 8.3px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .fc-status {
+        display: inline-flex;
+        min-height: 22px;
+        align-items: center;
+        gap: 5px;
         border-radius: 999px;
-        background: #ddd3c7;
+        padding: 0 7px;
+        font-size: 7px;
+        font-weight: 600;
     }
 
-    @media (max-width: 760px) {
-        .finance-commissions .fc-custom-select-menu {
-            max-height: 220px;
+    .fc-status::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .fc-status.earned { background: #eef8f1; color: #4f8060; }
+    .fc-status.adjusted { background: #fff7e8; color: #9a6810; }
+    .fc-status.reversed { background: #fff2ef; color: #a65d5d; }
+
+    .fc-view-button {
+        display: inline-flex;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e3dcd3;
+        border-radius: 7px;
+        background: #fff;
+        padding: 0 9px;
+        color: #514a42;
+        font-size: 7.3px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .fc-view-button:hover {
+        border-color: #d6c7b4;
+        background: #fffaf1;
+        color: #9a6810;
+    }
+
+    .fc-table-footer {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 11px;
+        border-top: 1px solid #eee8df;
+        color: #81786d;
+        font-size: 7.5px;
+    }
+
+    .fc-pagination {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .fc-page-link {
+        display: grid;
+        min-width: 27px;
+        height: 27px;
+        place-items: center;
+        border: 1px solid #e5ddd2;
+        border-radius: 7px;
+        background: #fff;
+        color: #81786d;
+        font-size: 8px;
+        text-decoration: none;
+    }
+
+    .fc-page-link.active {
+        border-color: var(--fc-brand);
+        background: var(--fc-brand);
+        color: #fff;
+    }
+
+    .fc-page-link.disabled {
+        opacity: .4;
+        pointer-events: none;
+    }
+
+    /* ---------------- BOTTOM CARDS ---------------- */
+    .fc-bottom-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr 1.12fr;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .fc-bottom-card {
+        min-height: 220px;
+        padding: 14px;
+    }
+
+    .fc-bottom-title-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 9px;
+    }
+
+    .fc-top-sellers {
+        margin-top: 11px;
+    }
+
+    .fc-seller-row {
+        display: grid;
+        grid-template-columns: 24px minmax(100px,.75fr) minmax(100px,1fr) 88px;
+        gap: 7px;
+        align-items: center;
+        min-height: 34px;
+    }
+
+    .fc-rank {
+        display: grid;
+        width: 23px;
+        height: 23px;
+        place-items: center;
+        border-radius: 50%;
+        background: #fff7e8;
+        color: #9a6810;
+        font-size: 7.5px;
+        font-weight: 700;
+    }
+
+    .fc-seller-name {
+        overflow: hidden;
+        color: #514a42;
+        font-size: 8px;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fc-progress {
+        height: 6px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #eeeae4;
+    }
+
+    .fc-progress > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--fc-brand);
+    }
+
+    .fc-seller-amount {
+        color: #302a24;
+        font-size: 8px;
+        font-weight: 700;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .fc-seller-share {
+        color: #9b9288;
+        font-size: 6.8px;
+        font-weight: 500;
+    }
+
+    .fc-status-layout {
+        display: grid;
+        grid-template-columns: 118px 1fr;
+        gap: 12px;
+        align-items: center;
+        margin-top: 11px;
+    }
+
+    .fc-status-donut {
+        position: relative;
+        display: grid;
+        width: 112px;
+        height: 112px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--status-gradient);
+    }
+
+    .fc-status-donut::before {
+        content: '';
+        position: absolute;
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px #eee8df;
+    }
+
+    .fc-status-center {
+        position: relative;
+        text-align: center;
+    }
+
+    .fc-status-total {
+        color: #302a24;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .fc-status-caption {
+        margin-top: 3px;
+        color: #91887d;
+        font-size: 7px;
+    }
+
+    .fc-status-legend {
+        display: grid;
+        gap: 7px;
+    }
+
+    .fc-status-legend-row {
+        display: grid;
+        grid-template-columns: 8px 1fr 36px 44px;
+        gap: 6px;
+        align-items: center;
+        color: #81786d;
+        font-size: 7.5px;
+    }
+
+    .fc-status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 3px;
+    }
+
+    .fc-status-count {
+        color: #514a42;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .fc-status-percent {
+        color: #9b9288;
+        text-align: right;
+    }
+
+    .fc-recent-list {
+        margin-top: 10px;
+    }
+
+    .fc-recent-row {
+        display: grid;
+        grid-template-columns: 18px minmax(100px,1fr) minmax(80px,.85fr) 72px 68px;
+        gap: 6px;
+        align-items: center;
+        min-height: 34px;
+        border-bottom: 1px solid #f0ebe4;
+        content-visibility: auto;
+        contain-intrinsic-size: 34px;
+    }
+
+    .fc-recent-row:last-child {
+        border-bottom: 0;
+    }
+
+    .fc-recent-icon {
+        color: #81786d;
+    }
+
+    .fc-recent-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .fc-recent-order,
+    .fc-recent-seller {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fc-recent-order {
+        color: #514a42;
+        font-size: 7.5px;
+        font-weight: 600;
+    }
+
+    .fc-recent-seller {
+        color: #81786d;
+        font-size: 7.3px;
+    }
+
+    .fc-recent-amount {
+        color: #302a24;
+        font-size: 7.8px;
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .fc-recent-date {
+        color: #91887d;
+        font-size: 7px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .fc-empty {
+        display: grid;
+        min-height: 100px;
+        place-items: center;
+        color: #91887d;
+        font-size: 8px;
+        text-align: center;
+    }
+
+    /* ---------------- RIDER PAYOUTS ---------------- */
+    .fc-payout-panel {
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
+    .fc-payout-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .fc-chip {
+        display: inline-flex;
+        min-height: 20px;
+        align-items: center;
+        gap: 4px;
+        border: 1px solid #e5ddd2;
+        border-radius: 999px;
+        padding: 0 6px;
+        color: #81786d;
+        font-size: 6.5px;
+        font-weight: 600;
+    }
+
+    .fc-chip::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #9b9288;
+    }
+
+    .fc-chip.pending::before { background: var(--fc-brand); }
+    .fc-chip.approved::before { background: #4f7fa8; }
+    .fc-chip.paid::before { background: #4f8060; }
+
+    .fc-payout-row {
+        display: grid;
+        grid-template-columns: minmax(150px,1fr) 86px 96px minmax(240px,1.2fr);
+        gap: 8px;
+        align-items: center;
+        min-height: 54px;
+        padding: 8px 11px;
+        border-bottom: 1px solid #f0ebe4;
+        content-visibility: auto;
+        contain-intrinsic-size: 54px;
+    }
+
+    .fc-payout-row:last-child {
+        border-bottom: 0;
+    }
+
+    .fc-payout-name {
+        color: #514a42;
+        font-size: 7.5px;
+        font-weight: 600;
+    }
+
+    .fc-payout-meta {
+        margin-top: 2px;
+        color: #9b9288;
+        font-size: 6.5px;
+    }
+
+    .fc-payout-amount {
+        color: #302a24;
+        font-size: 7.5px;
+        font-weight: 700;
+    }
+
+    .fc-payout-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+    }
+
+    .fc-payout-actions form {
+        display: flex;
+        gap: 5px;
+    }
+
+    .fc-payout-input {
+        height: 30px;
+        min-width: 120px;
+        border: 1px solid #e5ddd2;
+        border-radius: 7px;
+        padding: 0 8px;
+        font: inherit;
+        font-size: 6.8px;
+    }
+
+    .fc-action {
+        height: 30px;
+        border: 1px solid #e5ddd2;
+        border-radius: 7px;
+        background: #fff;
+        padding: 0 8px;
+        color: #6f665b;
+        font: inherit;
+        font-size: 6.8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .fc-action:hover {
+        background: #faf8f4;
+    }
+
+    /* ============================================================
+       CENTERED FINANCE MODALS
+       ============================================================ */
+    .fc-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(28,24,20,.42);
+        padding: 14px;
+    }
+
+    .fc-modal-backdrop.open {
+        display: flex;
+    }
+
+    .fc-modal {
+        width: min(620px, calc(100vw - 28px));
+        max-height: calc(100vh - 28px);
+        overflow: hidden;
+        border: 1px solid #dfd8cf;
+        border-radius: 16px;
+        background: #f8f7f4;
+        box-shadow:
+            0 24px 64px rgba(31,24,17,.18),
+            0 8px 22px rgba(31,24,17,.07);
+        animation: fcModalIn .18s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes fcModalIn {
+        from { opacity: 0; transform: translateY(8px) scale(.99); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .fc-modal-head {
+        display: flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 13px;
+        border-bottom: 1px solid #ebe5dd;
+        background: #fff;
+    }
+
+    .fc-modal-title {
+        color: #302a24;
+        font-size: 10.5px;
+        font-weight: 700;
+    }
+
+    .fc-modal-close {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 1px solid #e4ddd4;
+        border-radius: 8px;
+        background: #fff;
+        color: #71685f;
+        cursor: pointer;
+    }
+
+    .fc-modal-close:hover {
+        background: #f7f5f2;
+        color: #332d27;
+    }
+
+    .fc-modal-body {
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        padding: 12px 13px 14px;
+        background: #f8f7f4;
+        scrollbar-width: thin;
+        scrollbar-color: #d0c8be transparent;
+    }
+
+    .fc-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 8px;
+    }
+
+    .fc-detail-box {
+        border: 1px solid #e7e1d9;
+        border-radius: 9px;
+        background: #fff;
+        padding: 9px;
+    }
+
+    .fc-detail-label {
+        color: #9b9288;
+        font-size: 6.5px;
+    }
+
+    .fc-detail-value {
+        margin-top: 3px;
+        color: #514a42;
+        font-size: 7.5px;
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    .fc-history-list {
+        display: grid;
+        gap: 7px;
+    }
+
+    .fc-history-row {
+        display: grid;
+        grid-template-columns: 72px 1fr 100px;
+        gap: 8px;
+        align-items: center;
+        border: 1px solid #e7e1d9;
+        border-radius: 9px;
+        background: #fff;
+        padding: 9px;
+        content-visibility: auto;
+        contain-intrinsic-size: 58px;
+    }
+
+    .fc-history-rate {
+        color: #302a24;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .fc-history-copy,
+    .fc-history-date {
+        color: #81786d;
+        font-size: 6.5px;
+        line-height: 1.45;
+    }
+
+    .fc-history-date {
+        color: #9b9288;
+        text-align: right;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+    @media (max-height: 850px) and (min-width: 900px) {
+        .fc-title {
+            font-size: 22px;
+        }
+
+        .fc-stat-card {
+            min-height: 70px;
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+
+        .fc-stat-value {
+            font-size: 18px;
+        }
+
+        .fc-chart-wrap,
+        .fc-chart-svg {
+            height: 200px;
+        }
+
+        .fc-chart-panel,
+        .fc-policy-panel {
+            min-height: 260px;
         }
     }
 
+    @media (max-width: 1250px) {
+        .fc-summary-grid {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
 
-    /* =========================================================
-       PLATFORM COMMISSIONS — SPLIT TITLE COLOR
-       Platform = black, Commissions = SARI gold.
-       Visual-only change.
-       ========================================================= */
-    .finance-commissions .fc-title-platform {
-        color: #17130e !important;
+        .fc-analytics-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .fc-filter-grid {
+            grid-template-columns: minmax(230px,1fr) 150px 170px;
+        }
+
+        .fc-filter-dates {
+            grid-column: span 2;
+        }
+
+        .fc-bottom-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .fc-bottom-card:last-child {
+            grid-column: 1 / -1;
+        }
+
+        .fc-payout-row {
+            grid-template-columns: 1fr 90px 90px;
+        }
+
+        .fc-payout-actions {
+            grid-column: 1 / -1;
+            justify-content: flex-start;
+        }
     }
 
-    .finance-commissions .fc-title-gold {
-        color: #c58d20 !important;
+    @media (max-width: 760px) {
+        .fc-page-head {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .fc-head-actions {
+            justify-content: flex-start;
+        }
+
+        .fc-date-control {
+            width: 100%;
+            min-height: 42px;
+            flex-wrap: wrap;
+            padding-block: 6px;
+        }
+
+        .fc-date-control input {
+            flex: 1;
+            min-width: 104px;
+        }
+
+        .fc-summary-grid,
+        .fc-bottom-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .fc-bottom-card:last-child {
+            grid-column: auto;
+        }
+
+        .fc-policy-body,
+        .fc-status-layout {
+            grid-template-columns: 1fr;
+            justify-items: center;
+        }
+
+        .fc-policy-list,
+        .fc-status-legend {
+            width: 100%;
+        }
+
+        .fc-filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .fc-filter-dates {
+            grid-column: auto;
+        }
+
+        .fc-control,
+        .fc-custom-select-trigger,
+        .fc-filter-reset,
+        .fc-filter-apply {
+            height: 42px;
+            font-size: 9px;
+        }
+
+        .fc-panel-head {
+            flex-direction: column;
+        }
+
+        .fc-range-tabs {
+            flex-wrap: wrap;
+        }
+
+        .fc-recent-row {
+            grid-template-columns: 18px 1fr 70px;
+        }
+
+        .fc-recent-seller,
+        .fc-recent-date {
+            display: none;
+        }
+
+        .fc-payout-row {
+            grid-template-columns: 1fr;
+        }
+
+        .fc-payout-actions {
+            grid-column: auto;
+        }
+
+        .fc-payout-actions,
+        .fc-payout-actions form {
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .fc-payout-input {
+            flex: 1;
+        }
+
+        .fc-table-footer {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .fc-detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .fc-history-row {
+            grid-template-columns: 64px 1fr;
+        }
+
+        .fc-history-date {
+            grid-column: 1 / -1;
+            text-align: left;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .finance-commissions *,
+        .fc-modal {
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    /* ============================================================
+       PLATFORM COMMISSIONS — HEADER SCALE MATCH WITH SETTINGS
+       Visual-only. Finance calculations and actions remain intact.
+       ============================================================ */
+
+    .finance-commissions .fc-page-head{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        gap:20px !important;
+        margin-bottom:2px !important;
+    }
+
+    .finance-commissions .fc-title-side{
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:13px !important;
+    }
+
+    .finance-commissions .fc-title-icon{
+        width:44px !important;
+        height:44px !important;
+        flex:0 0 44px !important;
+        border-radius:12px !important;
+        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
+    }
+
+    .finance-commissions .fc-title-icon svg{
+        width:17px !important;
+        height:17px !important;
+    }
+
+    .finance-commissions .fc-eyebrow{
+        color:#9a6f23 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        line-height:1.15 !important;
+        letter-spacing:.13em !important;
+    }
+
+    .finance-commissions .fc-title{
+        margin:5px 0 0 !important;
+        font-size:29px !important;
+        font-weight:700 !important;
+        line-height:1.02 !important;
+        letter-spacing:-.045em !important;
+    }
+
+    .finance-commissions .fc-title-platform{
+        color:#17130f !important;
+    }
+
+    .finance-commissions .fc-title-gold{
+        color:#d99500 !important;
+    }
+
+    .finance-commissions .fc-subtitle{
+        max-width:760px !important;
+        margin-top:7px !important;
+        color:#7f756a !important;
+        font-size:11px !important;
+        font-weight:400 !important;
+        line-height:1.5 !important;
+    }
+
+    .finance-commissions .fc-head-actions{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:flex-end !important;
+        gap:8px !important;
+        flex:0 0 auto !important;
+    }
+
+    .finance-commissions .fc-date-control{
+        min-height:42px !important;
+        border-radius:10px !important;
+        padding:0 8px 0 10px !important;
+    }
+
+    .finance-commissions .fc-date-control svg{
+        width:14px !important;
+        height:14px !important;
+    }
+
+    .finance-commissions .fc-date-control input{
+        width:112px !important;
+        font-size:8.5px !important;
+    }
+
+    .finance-commissions .fc-date-submit{
+        width:27px !important;
+        height:27px !important;
+        border-radius:7px !important;
+    }
+
+    .finance-commissions .fc-primary-button{
+        min-height:42px !important;
+        border-radius:10px !important;
+        padding:0 13px !important;
+        font-size:8.5px !important;
+    }
+
+    .finance-commissions .fc-primary-button svg{
+        width:13px !important;
+        height:13px !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .finance-commissions .fc-title-icon{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+        }
+
+        .finance-commissions .fc-title{
+            font-size:27px !important;
+        }
+
+        .finance-commissions .fc-subtitle{
+            font-size:10.5px !important;
+        }
+
+        .finance-commissions .fc-date-control,
+        .finance-commissions .fc-primary-button{
+            min-height:40px !important;
+        }
+    }
+
+    @media(max-width:760px){
+        .finance-commissions .fc-page-head{
+            align-items:flex-start !important;
+            gap:12px !important;
+        }
+
+        .finance-commissions .fc-title-side{
+            align-items:flex-start !important;
+            gap:11px !important;
+        }
+
+        .finance-commissions .fc-title-icon{
+            width:40px !important;
+            height:40px !important;
+            flex-basis:40px !important;
+            border-radius:11px !important;
+        }
+
+        .finance-commissions .fc-title{
+            font-size:24px !important;
+        }
+
+        .finance-commissions .fc-subtitle{
+            font-size:10px !important;
+        }
+
+        .finance-commissions .fc-head-actions{
+            width:100% !important;
+            justify-content:flex-start !important;
+        }
     }
 
 </style>
@@ -1490,43 +2344,49 @@
         });
     }
 
-    dropdowns.forEach(dropdown => {
-        const trigger = dropdown.querySelector('[data-fc-dropdown-trigger]');
-        const input = dropdown.querySelector('[data-fc-dropdown-input]');
-        const label = dropdown.querySelector('[data-fc-dropdown-label]');
-        const options = Array.from(dropdown.querySelectorAll('[data-fc-dropdown-option]'));
-
-        trigger?.addEventListener('click', event => {
-            event.stopPropagation();
-            const willOpen = !dropdown.classList.contains('is-open');
-            closeFinanceDropdowns(dropdown);
-            dropdown.classList.toggle('is-open', willOpen);
-            trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-        });
-
-        options.forEach(option => {
-            option.addEventListener('click', () => {
-                const value = option.dataset.value ?? '';
-                const optionLabel = option.dataset.label ?? option.textContent.trim();
-
-                if (input) input.value = value;
-                if (label) label.textContent = optionLabel;
-
-                options.forEach(item => {
-                    const selected = item === option;
-                    item.classList.toggle('is-selected', selected);
-                    item.setAttribute('aria-selected', selected ? 'true' : 'false');
-                });
-
-                dropdown.classList.remove('is-open');
-                trigger?.setAttribute('aria-expanded', 'false');
-                trigger?.focus();
-            });
-        });
-    });
-
     document.addEventListener('click', event => {
-        if (!event.target.closest('[data-fc-dropdown]')) closeFinanceDropdowns();
+        const trigger = event.target.closest('[data-fc-dropdown-trigger]');
+        if (trigger) {
+            event.stopPropagation();
+
+            const dropdown = trigger.closest('[data-fc-dropdown]');
+            const willOpen = !dropdown?.classList.contains('is-open');
+
+            closeFinanceDropdowns(dropdown);
+            dropdown?.classList.toggle('is-open', willOpen);
+            trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+            return;
+        }
+
+        const option = event.target.closest('[data-fc-dropdown-option]');
+        if (option) {
+            const dropdown = option.closest('[data-fc-dropdown]');
+            const input = dropdown?.querySelector('[data-fc-dropdown-input]');
+            const label = dropdown?.querySelector('[data-fc-dropdown-label]');
+            const dropdownTrigger = dropdown?.querySelector('[data-fc-dropdown-trigger]');
+            const options = Array.from(dropdown?.querySelectorAll('[data-fc-dropdown-option]') || []);
+
+            const value = option.dataset.value ?? '';
+            const optionLabel = option.dataset.label ?? option.textContent.trim();
+
+            if (input) input.value = value;
+            if (label) label.textContent = optionLabel;
+
+            options.forEach(item => {
+                const selected = item === option;
+                item.classList.toggle('is-selected', selected);
+                item.setAttribute('aria-selected', selected ? 'true' : 'false');
+            });
+
+            dropdown?.classList.remove('is-open');
+            dropdownTrigger?.setAttribute('aria-expanded', 'false');
+            dropdownTrigger?.focus();
+            return;
+        }
+
+        if (!event.target.closest('[data-fc-dropdown]')) {
+            closeFinanceDropdowns();
+        }
     });
 
     document.addEventListener('keydown', event => {
@@ -1655,20 +2515,54 @@
             }
         };
 
+        let hoverFrame = 0;
+        let chartRect = null;
+        let latestPointerX = 0;
+
+        target.addEventListener('mouseenter', () => {
+            chartRect = svg.getBoundingClientRect();
+        }, { passive: true });
+
         target.addEventListener('mousemove', event => {
-            const rect = svg.getBoundingClientRect();
-            const relativeX = ((event.clientX-rect.left)/rect.width)*width;
-            const normalized = Math.max(0,Math.min(1,(relativeX-margin.left)/iw));
-            const index = Math.round(normalized*(points.length-1));
-            show(points[index]);
-        });
-        target.addEventListener('mouseleave',()=>{ hoverLine.setAttribute('opacity','0'); hoverDot.setAttribute('opacity','0'); tooltip?.classList.remove('show','below'); });
+            latestPointerX = event.clientX;
+
+            if (hoverFrame) return;
+
+            hoverFrame = window.requestAnimationFrame(() => {
+                hoverFrame = 0;
+
+                const rect = chartRect || svg.getBoundingClientRect();
+                const relativeX = ((latestPointerX - rect.left) / rect.width) * width;
+                const normalized = Math.max(0, Math.min(1, (relativeX - margin.left) / iw));
+                const index = Math.round(normalized * (points.length - 1));
+
+                show(points[index]);
+            });
+        }, { passive: true });
+
+        target.addEventListener('mouseleave',()=>{
+            chartRect = null;
+
+            if (hoverFrame) {
+                window.cancelAnimationFrame(hoverFrame);
+                hoverFrame = 0;
+            }
+
+            hoverLine.setAttribute('opacity','0');
+            hoverDot.setAttribute('opacity','0');
+            tooltip?.classList.remove('show','below');
+        }, { passive: true });
 
         const latest = [...points].reverse().find(point => point.value > 0);
         if (latest) show(latest);
     }
 
-    renderChart();
+    // Performance: let the first paint complete before building the SVG chart.
+    const scheduleChartRender = window.requestIdleCallback
+        ? callback => window.requestIdleCallback(callback, { timeout: 350 })
+        : callback => window.setTimeout(callback, 0);
+
+    scheduleChartRender(renderChart);
 
     const detailModal = document.getElementById('commissionDetailModal');
     const detailGrid = document.getElementById('commissionDetailGrid');
@@ -1680,6 +2574,10 @@
         modal.classList.add('open');
         modal.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
+
+        window.requestAnimationFrame(() => {
+            modal.querySelector('[data-close-modal]')?.focus({ preventScroll: true });
+        });
     }
 
     function closeModal(modal) {
@@ -1689,25 +2587,59 @@
         if (!document.querySelector('.fc-modal-backdrop.open')) document.body.style.overflow = '';
     }
 
-    document.querySelectorAll('[data-view-commission]').forEach(button => {
-        button.addEventListener('click', () => {
+    document.addEventListener('click', event => {
+        const commissionButton = event.target.closest('[data-view-commission]');
+        if (commissionButton) {
             try {
-                const data = JSON.parse(button.getAttribute('data-view-commission') || '{}');
-                if (detailSubtitle) detailSubtitle.textContent = `${data.order || ''} · ${data.seller || ''}`;
-                const fields = [
-                    ['Eligible amount',data.eligible],['Applied rate',data.rate],['Gross commission',data.gross],['Adjustment total',data.adjustment],
-                    ['Net commission',data.net],['Commission status',data.status],['Payment status',data.payment],['Delivery fee',data.delivery_fee],
-                    ['Seller net payable',data.seller_net],['Delivered at',data.delivered]
-                ];
-                if (detailGrid) detailGrid.innerHTML = fields.map(([label,value]) => `<div class="fc-detail-box"><div class="fc-detail-label">${label}</div><div class="fc-detail-value">${String(value ?? '—').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}</div></div>`).join('');
-                openModal(detailModal);
-            } catch (error) { console.error(error); }
-        });
-    });
+                const data = JSON.parse(commissionButton.getAttribute('data-view-commission') || '{}');
 
-    document.querySelector('[data-open-rate-history]')?.addEventListener('click', () => openModal(rateHistoryModal));
-    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', () => closeModal(button.closest('.fc-modal-backdrop'))));
-    document.querySelectorAll('.fc-modal-backdrop').forEach(backdrop => backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModal(backdrop); }));
+                if (detailSubtitle) {
+                    detailSubtitle.textContent = `${data.order || ''} · ${data.seller || ''}`;
+                }
+
+                const fields = [
+                    ['Eligible amount',data.eligible],
+                    ['Applied rate',data.rate],
+                    ['Gross commission',data.gross],
+                    ['Adjustment total',data.adjustment],
+                    ['Net commission',data.net],
+                    ['Commission status',data.status],
+                    ['Payment status',data.payment],
+                    ['Delivery fee',data.delivery_fee],
+                    ['Seller net payable',data.seller_net],
+                    ['Delivered at',data.delivered]
+                ];
+
+                if (detailGrid) {
+                    detailGrid.innerHTML = fields.map(([label,value]) =>
+                        `<div class="fc-detail-box"><div class="fc-detail-label">${label}</div><div class="fc-detail-value">${String(value ?? '—').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}</div></div>`
+                    ).join('');
+                }
+
+                openModal(detailModal);
+            } catch (error) {
+                console.error(error);
+            }
+
+            return;
+        }
+
+        if (event.target.closest('[data-open-rate-history]')) {
+            openModal(rateHistoryModal);
+            return;
+        }
+
+        const closeButton = event.target.closest('[data-close-modal]');
+        if (closeButton) {
+            closeModal(closeButton.closest('.fc-modal-backdrop'));
+            return;
+        }
+
+        const backdrop = event.target.closest('.fc-modal-backdrop');
+        if (backdrop && event.target === backdrop) {
+            closeModal(backdrop);
+        }
+    });
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.fc-modal-backdrop.open').forEach(closeModal); });
 })();
 </script>

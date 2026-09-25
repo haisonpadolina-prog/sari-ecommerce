@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -29,7 +30,42 @@ class SellerProductController extends Controller
     {
         $seller = $this->resolveSeller($request);
 
+        /*
+         * Professional first-paint path:
+         * - render the first 12 products with the HTML response
+         * - do not make the browser wait for the Product Library AJAX call
+         * - load the complete library in the background after first paint
+         */
+        $initialProducts = $this->productLibraryPayload($seller, 12);
+        $catalogSummary = $this->catalogInventorySummary($seller);
+
         return view('seller.products', [
+            'sellerAccount' => $seller,
+            'initialProductLibrary' => [
+                'success' => true,
+                'server_now' => now()->toIso8601String(),
+                'count' => $catalogSummary['total'],
+                'initial_count' => $initialProducts->count(),
+                'summary' => $catalogSummary,
+                'products' => $initialProducts->values()->all(),
+            ],
+        ]);
+    }
+
+
+    /**
+     * Dedicated Add Product page.
+     *
+     * Product creation is intentionally separated from the catalog page so
+     * the seller can work in a full Seller Center workspace rather than a
+     * constrained modal.
+     */
+    public function create(Request $request)
+    {
+        $seller = $this->resolveSeller($request);
+        $this->ensureCanSell($seller);
+
+        return view('seller.products.create', [
             'sellerAccount' => $seller,
         ]);
     }
@@ -180,6 +216,10 @@ class SellerProductController extends Controller
         $this->ensureCanSell($seller);
 
         $validated = $this->validateProduct($request);
+        $flashSaleEndsAt = $this->normalizeFlashSaleEndsAt(
+            $validated['flash_sale_ends_at'] ?? null,
+            (float) ($validated['discount'] ?? 0)
+        );
         $draft = $this->submittedDraft($request, $seller);
 
         $category = $validated['category'] === 'Others' && trim((string) ($validated['custom_category'] ?? '')) !== ''
@@ -230,6 +270,7 @@ class SellerProductController extends Controller
             $variants,
             $parentPrice,
             $parentStock,
+            $flashSaleEndsAt,
             $uploadedImage,
             $draftCoverPath,
             $draftGalleryPaths,
@@ -253,6 +294,7 @@ class SellerProductController extends Controller
                 'stock' => $parentStock,
                 'low_stock_threshold' => (int) ($validated['low_stock_threshold'] ?? 5),
                 'discount' => $validated['discount'] ?? 0,
+                'flash_sale_ends_at' => $flashSaleEndsAt,
                 'free_shipping' => (bool) ($validated['free_shipping'] ?? false),
                 'package_weight' => $validated['package_weight'] ?? null,
                 'package_length' => $validated['package_length'] ?? null,
@@ -343,6 +385,17 @@ class SellerProductController extends Controller
             ? trim((string) $validated['custom_category'])
             : $validated['category'];
 
+        $flashSaleEndsAt = $request->exists('flash_sale_ends_at')
+            ? $this->normalizeFlashSaleEndsAt(
+                $validated['flash_sale_ends_at'] ?? null,
+                (float) ($validated['discount'] ?? 0)
+            )
+            : $product->flash_sale_ends_at;
+
+        if ((float) ($validated['discount'] ?? 0) <= 0) {
+            $flashSaleEndsAt = null;
+        }
+
         $currentSpecs = $this->decodeJsonArray($product->specifications);
         $currentVariants = $this->currentVariantRows($product);
 
@@ -384,6 +437,7 @@ class SellerProductController extends Controller
             'stock' => $parentStock,
             'low_stock_threshold' => (int) ($validated['low_stock_threshold'] ?? $product->low_stock_threshold ?? 5),
             'discount' => $validated['discount'] ?? 0,
+            'flash_sale_ends_at' => $flashSaleEndsAt,
             'free_shipping' => $request->boolean('free_shipping'),
             'package_weight' => $request->exists('package_weight') ? ($validated['package_weight'] ?? null) : $product->package_weight,
             'package_length' => $request->exists('package_length') ? ($validated['package_length'] ?? null) : $product->package_length,
@@ -579,6 +633,131 @@ class SellerProductController extends Controller
         $seller = $this->resolveSeller($request);
         $this->ensureOwnership($seller, $product);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Permanent delete from Archived Products
+        |--------------------------------------------------------------------------
+        |
+        | Preserve the existing Product Management delete behavior by default:
+        | without `permanent=1`, this method still performs a recoverable delete
+        | and simply moves the product into Archived Products.
+        |
+        | A true hard delete is accepted only when:
+        | - the request explicitly sends permanent=1, and
+        | - the product is already archived.
+        |
+        */
+        if ($request->boolean('permanent')) {
+            $this->ensureCanSell($seller);
+
+            if (!$product->isArchived()) {
+                return $this->actionError(
+                    $request,
+                    'product',
+                    'Only products already inside Archived Products can be permanently deleted.'
+                );
+            }
+
+            /*
+            | Gather file paths BEFORE the transaction. We only delete physical
+            | files after the database hard delete succeeds, so a blocked delete
+            | cannot leave the database pointing at missing media.
+            */
+            $coverPath = $product->image_path;
+
+            $galleryPaths = SellerProductImage::query()
+                ->where('seller_product_id', $product->id)
+                ->pluck('path')
+                ->filter()
+                ->values();
+
+            $variantPaths = SellerProductVariant::query()
+                ->where('seller_product_id', $product->id)
+                ->pluck('image_path')
+                ->filter()
+                ->values();
+
+            $versionPaths = SellerProductVersion::query()
+                ->where('seller_product_id', $product->id)
+                ->pluck('image_path')
+                ->filter()
+                ->values();
+
+            try {
+                DB::transaction(function () use ($product) {
+                    /*
+                    | Catalog-owned children are removed first. If another table
+                    | protects this product through a foreign key (orders,
+                    | compliance history, etc.), the final hard delete will fail
+                    | and the whole transaction will roll back.
+                    */
+                    SellerProductImage::query()
+                        ->where('seller_product_id', $product->id)
+                        ->delete();
+
+                    SellerProductVariant::query()
+                        ->where('seller_product_id', $product->id)
+                        ->delete();
+
+                    SellerProductVersion::query()
+                        ->where('seller_product_id', $product->id)
+                        ->delete();
+
+                    /*
+                    | Direct table delete guarantees a real hard delete even if
+                    | SoftDeletes is introduced on SellerProduct later.
+                    */
+                    $deleted = DB::table($product->getTable())
+                        ->where($product->getKeyName(), $product->getKey())
+                        ->delete();
+
+                    if ($deleted !== 1) {
+                        throw new \RuntimeException('Product record was not deleted.');
+                    }
+                });
+            } catch (\Illuminate\Database\QueryException $exception) {
+                report($exception);
+
+                return $this->actionError(
+                    $request,
+                    'product',
+                    'This product is linked to protected order, transaction, or compliance history, so it cannot be permanently deleted.',
+                    409
+                );
+            } catch (\Throwable $exception) {
+                report($exception);
+
+                return $this->actionError(
+                    $request,
+                    'product',
+                    'Unable to permanently delete this product right now.',
+                    500
+                );
+            }
+
+            /*
+            | Database deletion succeeded. Physical media can now be removed.
+            | Paths are unique, so deleting them here will not affect another
+            | seller product.
+            */
+            collect([$coverPath])
+                ->merge($galleryPaths)
+                ->merge($variantPaths)
+                ->merge($versionPaths)
+                ->filter(fn ($path) => is_string($path) && trim($path) !== '')
+                ->unique()
+                ->each(fn ($path) => $this->deletePublicFile($path));
+
+            return $this->actionSuccess(
+                $request,
+                'Product permanently deleted.',
+                'success'
+            );
+        }
+
+        /*
+        | Existing recoverable delete behavior — preserved exactly.
+        */
         $product->update([
             'archived_at' => now(),
             'archive_reason' => 'deleted',
@@ -595,109 +774,222 @@ class SellerProductController extends Controller
     public function library(Request $request)
     {
         $seller = $this->resolveSeller($request);
+        $payload = $this->productLibraryPayload($seller);
 
-        $products = $seller->products()
-            ->whereNull('archived_at')
-            ->with([
-                'activeVariants',
-                'galleryImages',
-                'reviews:id,seller_product_id,rating',
+        return response()
+            ->json([
+                'success' => true,
+                'server_now' => now()->toIso8601String(),
+                'count' => $payload->count(),
+                'products' => $payload->values(),
             ])
-            ->latest()
-            ->get();
+            ->header('Cache-Control', 'private, max-age=5, stale-while-revalidate=20');
+    }
 
-        $payload = $products->map(function (SellerProduct $product) {
-            $specifications = $this->decodeJsonArray($product->specifications ?? []);
+    /**
+     * Return the exact Inventory Overview / Catalog Health counters with one
+     * lightweight aggregate query. Keeping these values in the initial HTML
+     * removes the client-side placeholder flash without loading full products.
+     */
+    private function catalogInventorySummary(SellerAccount $seller): array
+    {
+        $row = $seller->products()
+            ->whereNull('archived_at')
+            ->selectRaw(
+                "COUNT(*) AS total,
+                SUM(CASE WHEN moderation_status = 'approved' THEN 1 ELSE 0 END) AS approved,
+                SUM(CASE WHEN moderation_status = 'pending' THEN 1 ELSE 0 END) AS pending,
+                SUM(CASE WHEN stock > 0 AND stock <= COALESCE(low_stock_threshold, 5) THEN 1 ELSE 0 END) AS low,
+                SUM(CASE WHEN stock <= 0 THEN 1 ELSE 0 END) AS out_count,
+                SUM(CASE WHEN moderation_status = 'approved' AND stock > 0 THEN 1 ELSE 0 END) AS ready,
+                SUM(CASE WHEN moderation_status <> 'approved' OR (stock > 0 AND stock <= COALESCE(low_stock_threshold, 5)) THEN 1 ELSE 0 END) AS attention"
+            )
+            ->first();
 
-            $variants = $product->activeVariants
-                ->map(function (SellerProductVariant $variant) {
-                    return [
-                        'id' => (int) $variant->id,
-                        'sku' => $variant->sku,
-                        'options' => is_array($variant->option_values)
-                            ? $variant->option_values
-                            : $this->decodeJsonArray($variant->option_values),
-                        'price' => (float) $variant->price,
-                        'stock' => (int) $variant->stock,
-                        'image_url' => $variant->image_path
-                            ? route('seller.products.variant-image', $variant)
-                            : null,
-                    ];
-                })
-                ->values();
+        return [
+            'total' => (int) ($row?->total ?? 0),
+            'approved' => (int) ($row?->approved ?? 0),
+            'pending' => (int) ($row?->pending ?? 0),
+            'low' => (int) ($row?->low ?? 0),
+            'out' => (int) ($row?->out_count ?? 0),
+            'ready' => (int) ($row?->ready ?? 0),
+            'attention' => (int) ($row?->attention ?? 0),
+        ];
+    }
 
-            $statusLabel = match ($product->moderation_status) {
-                'approved' => 'Approved',
-                'pending' => 'Pending',
-                'flagged' => 'Flagged',
-                'rejected' => 'Rejected',
-                'removed' => 'Removed',
-                default => ucfirst((string) $product->moderation_status),
-            };
 
-            $stock = (int) $product->stock;
-            $threshold = max(0, (int) ($product->low_stock_threshold ?? 5));
+    /**
+     * Build the Product Management payload without loading every review row.
+     *
+     * Reviews are reduced to SQL COUNT/AVG aggregates and only the columns
+     * needed by Product Management are selected. The optional limit is used
+     * by index() for an immediate first-screen render.
+     */
+    private function productLibraryPayload(
+        SellerAccount $seller,
+        ?int $limit = null
+    ) {
+        $query = $seller->products()
+            ->whereNull('archived_at')
+            ->select([
+                'id',
+                'seller_account_id',
+                'name',
+                'category',
+                'brand',
+                'condition',
+                'sku',
+                'price',
+                'stock',
+                'low_stock_threshold',
+                'discount',
+                'flash_sale_ends_at',
+                'free_shipping',
+                'package_weight',
+                'package_length',
+                'package_width',
+                'package_height',
+                'preparation_days',
+                'voucher_code',
+                'description',
+                'image_path',
+                'moderation_status',
+                'specifications',
+                'has_variants',
+                'created_at',
+                'updated_at',
+            ])
+            ->with([
+                'activeVariants:id,seller_product_id,sku,option_values,price,stock,image_path,is_active',
+                'galleryImages:id,seller_product_id,path,sort_order,alt_text',
+            ])
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
+            ->latest('id');
 
-            return [
-                'id' => (int) $product->id,
-                'name' => (string) $product->name,
-                'category' => (string) $product->category,
-                'brand' => $product->brand,
-                'condition' => $product->condition,
-                'sku' => $product->sku,
-                'price' => (float) $product->price,
-                'stock' => $stock,
-                'low_stock_threshold' => $threshold,
-                'discount' => (float) ($product->discount ?? 0),
-                'sale_price' => round(
-                    (float) ($product->discount ?? 0) > 0
-                        ? (float) $product->price * (1 - min(100, max(0, (float) $product->discount)) / 100)
-                        : (float) $product->price,
-                    2
-                ),
-                'free_shipping' => (bool) ($product->free_shipping ?? false),
-                'package_weight' => $product->package_weight !== null ? (float) $product->package_weight : null,
-                'package_length' => $product->package_length !== null ? (float) $product->package_length : null,
-                'package_width' => $product->package_width !== null ? (float) $product->package_width : null,
-                'package_height' => $product->package_height !== null ? (float) $product->package_height : null,
-                'preparation_days' => $product->preparation_days !== null ? (int) $product->preparation_days : null,
-                'rating' => $product->reviews->count()
-                    ? round((float) $product->reviews->avg('rating'), 1)
-                    : 0.0,
-                'rating_count' => (int) $product->reviews->count(),
-                'on_trend' => $product->moderation_status === 'approved'
-                    && $product->reviews->count() >= 3
-                    && (float) $product->reviews->avg('rating') >= 4.5,
-                'mall_badge' => $product->moderation_status === 'approved',
-                'voucher_code' => $product->voucher_code,
-                'description' => $product->description,
-                'moderation_status' => (string) $product->moderation_status,
-                'status_label' => $statusLabel,
-                'stock_state' => $stock <= 0
-                    ? 'out-of-stock'
-                    : ($stock <= $threshold ? 'low-stock' : 'in-stock'),
-                'has_variants' => (bool) $product->has_variants,
-                'specifications' => array_values($specifications),
-                'variants' => $variants,
-                'image_url' => $product->image_path
-                    ? route('seller.products.image', $product)
-                    : ($product->galleryImages->first()
-                        ? route('seller.products.gallery-image', $product->galleryImages->first())
-                        : null),
-                'gallery' => $product->galleryImages->map(fn (SellerProductImage $image) => [
-                    'id' => (int) $image->id,
-                    'url' => route('seller.products.gallery-image', $image),
-                    'sort_order' => (int) $image->sort_order,
-                ])->values(),
-                'created_at_human' => $product->created_at?->diffForHumans(),
-            ];
-        })->values();
+        if ($limit !== null && $limit > 0) {
+            $query->limit($limit);
+        }
 
-        return response()->json([
-            'success' => true,
-            'count' => $payload->count(),
-            'products' => $payload,
-        ]);
+        return $query
+            ->get()
+            ->map(function (SellerProduct $product) {
+                $specifications = $this->decodeJsonArray(
+                    $product->specifications ?? []
+                );
+
+                $variants = $product->activeVariants
+                    ->map(function (SellerProductVariant $variant) {
+                        return [
+                            'id' => (int) $variant->id,
+                            'sku' => $variant->sku,
+                            'options' => is_array($variant->option_values)
+                                ? $variant->option_values
+                                : $this->decodeJsonArray($variant->option_values),
+                            'price' => (float) $variant->price,
+                            'stock' => (int) $variant->stock,
+                            'image_url' => $variant->image_path
+                                ? route('seller.products.variant-image', $variant)
+                                : null,
+                        ];
+                    })
+                    ->values();
+
+                $statusLabel = match ($product->moderation_status) {
+                    'approved' => 'Approved',
+                    'pending' => 'Pending',
+                    'flagged' => 'Flagged',
+                    'rejected' => 'Rejected',
+                    'removed' => 'Removed',
+                    default => ucfirst((string) $product->moderation_status),
+                };
+
+                $stock = (int) $product->stock;
+                $threshold = max(
+                    0,
+                    (int) ($product->low_stock_threshold ?? 5)
+                );
+
+                $effectiveDiscount = $this->effectiveDiscountPercent($product);
+                $ratingCount = (int) ($product->reviews_count ?? 0);
+                $ratingAverage = $ratingCount > 0
+                    ? round((float) ($product->reviews_avg_rating ?? 0), 1)
+                    : 0.0;
+
+                return [
+                    'id' => (int) $product->id,
+                    'name' => (string) $product->name,
+                    'category' => (string) $product->category,
+                    'brand' => $product->brand,
+                    'condition' => $product->condition,
+                    'sku' => $product->sku,
+                    'price' => (float) $product->price,
+                    'stock' => $stock,
+                    'low_stock_threshold' => $threshold,
+                    'discount' => (float) ($product->discount ?? 0),
+                    'effective_discount' => $effectiveDiscount,
+                    'sale_price' => round(
+                        $effectiveDiscount > 0
+                            ? (float) $product->price * (1 - $effectiveDiscount / 100)
+                            : (float) $product->price,
+                        2
+                    ),
+                    'flash_sale_active' => $this->isFlashSaleActive($product),
+                    'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
+                    'free_shipping' => (bool) ($product->free_shipping ?? false),
+                    'package_weight' => $product->package_weight !== null
+                        ? (float) $product->package_weight
+                        : null,
+                    'package_length' => $product->package_length !== null
+                        ? (float) $product->package_length
+                        : null,
+                    'package_width' => $product->package_width !== null
+                        ? (float) $product->package_width
+                        : null,
+                    'package_height' => $product->package_height !== null
+                        ? (float) $product->package_height
+                        : null,
+                    'preparation_days' => $product->preparation_days !== null
+                        ? (int) $product->preparation_days
+                        : null,
+                    'rating' => $ratingAverage,
+                    'rating_count' => $ratingCount,
+                    'on_trend' => $product->moderation_status === 'approved'
+                        && $ratingCount >= 3
+                        && $ratingAverage >= 4.5,
+                    'mall_badge' => $product->moderation_status === 'approved',
+                    'voucher_code' => $product->voucher_code,
+                    'description' => $product->description,
+                    'moderation_status' => (string) $product->moderation_status,
+                    'status_label' => $statusLabel,
+                    'stock_state' => $stock <= 0
+                        ? 'out-of-stock'
+                        : ($stock <= $threshold ? 'low-stock' : 'in-stock'),
+                    'has_variants' => (bool) $product->has_variants,
+                    'specifications' => array_values($specifications),
+                    'variants' => $variants,
+                    'image_url' => $product->image_path
+                        ? route('seller.products.image', $product)
+                        : ($product->galleryImages->first()
+                            ? route(
+                                'seller.products.gallery-image',
+                                $product->galleryImages->first()
+                            )
+                            : null),
+                    'gallery' => $product->galleryImages
+                        ->map(fn (SellerProductImage $image) => [
+                            'id' => (int) $image->id,
+                            'url' => route(
+                                'seller.products.gallery-image',
+                                $image
+                            ),
+                            'sort_order' => (int) $image->sort_order,
+                        ])
+                        ->values(),
+                    'created_at_human' => $product->created_at?->diffForHumans(),
+                    'updated_at' => $product->updated_at?->toIso8601String(),
+                ];
+            });
     }
 
     public function archived(Request $request)
@@ -708,7 +1000,20 @@ class SellerProductController extends Controller
             ->whereNotNull('archived_at')
             ->with('latestVersion')
             ->latest('archived_at')
-            ->get();
+            ->get([
+                'id',
+                'seller_account_id',
+                'name',
+                'category',
+                'brand',
+                'sku',
+                'price',
+                'stock',
+                'image_path',
+                'moderation_status',
+                'archived_at',
+                'archive_reason',
+            ]);
 
         return view('seller.archived-products', compact('seller', 'products'));
     }
@@ -742,10 +1047,7 @@ class SellerProductController extends Controller
         }
 
         abort_unless($allowed, 403);
-        abort_unless($version->image_path, 404);
-        abort_unless(Storage::disk('public')->exists($version->image_path), 404);
-
-        return Storage::disk('public')->response($version->image_path);
+        return $this->cachedPublicImageResponse($version->image_path);
     }
 
     public function image(Request $request, SellerProduct $product)
@@ -758,10 +1060,7 @@ class SellerProductController extends Controller
         }
 
         abort_unless($allowed, 403);
-        abort_unless($product->image_path, 404);
-        abort_unless(Storage::disk('public')->exists($product->image_path), 404);
-
-        return Storage::disk('public')->response($product->image_path);
+        return $this->cachedPublicImageResponse($product->image_path);
     }
 
     public function galleryImage(Request $request, SellerProductImage $image)
@@ -775,9 +1074,7 @@ class SellerProductController extends Controller
         }
 
         abort_unless($allowed, 403);
-        abort_unless($image->path && Storage::disk('public')->exists($image->path), 404);
-
-        return Storage::disk('public')->response($image->path);
+        return $this->cachedPublicImageResponse($image->path);
     }
 
     public function variantImage(Request $request, SellerProductVariant $variant)
@@ -791,9 +1088,28 @@ class SellerProductController extends Controller
         }
 
         abort_unless($allowed, 403);
-        abort_unless($variant->image_path && Storage::disk('public')->exists($variant->image_path), 404);
+        return $this->cachedPublicImageResponse($variant->image_path);
+    }
 
-        return Storage::disk('public')->response($variant->image_path);
+    /**
+     * Product image bytes are immutable because uploads receive unique paths.
+     * Let the browser reuse them instead of re-requesting PHP on every visit.
+     */
+    private function cachedPublicImageResponse(?string $path)
+    {
+        abort_unless(
+            $path && Storage::disk('public')->exists($path),
+            404
+        );
+
+        return Storage::disk('public')->response(
+            $path,
+            null,
+            [
+                'Cache-Control' => 'private, max-age=86400, immutable',
+                'X-Content-Type-Options' => 'nosniff',
+            ]
+        );
     }
 
     private function validateProduct(Request $request): array
@@ -810,6 +1126,7 @@ class SellerProductController extends Controller
             'stock' => ['nullable', 'integer', 'min:0'],
             'low_stock_threshold' => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
             'package_weight' => ['nullable', 'numeric', 'min:0', 'max:999999.999'],
             'package_length' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
@@ -852,6 +1169,7 @@ class SellerProductController extends Controller
             'stock' => ['nullable', 'integer', 'min:0'],
             'low_stock_threshold' => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
             'package_weight' => ['nullable', 'numeric', 'min:0', 'max:999999.999'],
             'package_length' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
@@ -1145,6 +1463,10 @@ class SellerProductController extends Controller
 
             if (in_array($field, ['price', 'discount', 'package_weight', 'package_length', 'package_width', 'package_height'], true)) {
                 $isDifferent = (float) $oldValue !== (float) $newValue;
+            } elseif ($field === 'flash_sale_ends_at') {
+                $oldTimestamp = $oldValue ? Carbon::parse($oldValue)->getTimestamp() : null;
+                $newTimestamp = $newValue ? Carbon::parse($newValue)->getTimestamp() : null;
+                $isDifferent = $oldTimestamp !== $newTimestamp;
             } elseif (in_array($field, ['stock', 'low_stock_threshold', 'preparation_days'], true)) {
                 $isDifferent = (int) $oldValue !== (int) $newValue;
             } elseif (in_array($field, ['has_variants', 'free_shipping'], true)) {
@@ -1190,6 +1512,7 @@ class SellerProductController extends Controller
             'stock' => $product->stock,
             'low_stock_threshold' => (int) ($product->low_stock_threshold ?? 5),
             'discount' => $product->discount,
+            'flash_sale_ends_at' => $product->flash_sale_ends_at,
             'free_shipping' => (bool) ($product->free_shipping ?? false),
             'package_weight' => $product->package_weight,
             'package_length' => $product->package_length,
@@ -1414,6 +1737,48 @@ class SellerProductController extends Controller
     private function ensureOwnership(SellerAccount $seller, SellerProduct $product): void
     {
         abort_unless((int) $product->seller_account_id === (int) $seller->id, 403);
+    }
+
+    private function normalizeFlashSaleEndsAt(mixed $value, float $discountPercent): ?Carbon
+    {
+        $raw = trim((string) ($value ?? ''));
+
+        if ($raw === '') {
+            return null;
+        }
+
+        if ($discountPercent <= 0) {
+            return null;
+        }
+
+        return Carbon::parse($raw)->utc();
+    }
+
+    private function isFlashSaleActive(SellerProduct $product): bool
+    {
+        return $product->moderation_status === 'approved'
+            && (float) ($product->discount ?? 0) > 0
+            && $product->flash_sale_ends_at !== null
+            && now()->lt($product->flash_sale_ends_at);
+    }
+
+    private function effectiveDiscountPercent(SellerProduct $product): float
+    {
+        $discount = min(100, max(0, (float) ($product->discount ?? 0)));
+
+        if ($discount <= 0) {
+            return 0.0;
+        }
+
+        if (
+            $product->moderation_status === 'approved'
+            && $product->flash_sale_ends_at !== null
+            && now()->gte($product->flash_sale_ends_at)
+        ) {
+            return 0.0;
+        }
+
+        return $discount;
     }
 
     private function ensureCanSell(SellerAccount $seller): void

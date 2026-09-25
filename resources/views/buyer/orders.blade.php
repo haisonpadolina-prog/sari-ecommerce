@@ -828,6 +828,33 @@
                                     Track Order
                                 </button>
                             </div>
+
+                            @if($order->status === 'delivered')
+                                <div class="border-t border-[#eee8dc] bg-[#fffefa] px-4 pb-4 sm:px-5 sm:pb-5">
+                                    @if($order->returnRequest)
+                                        <div class="rounded-xl border border-[#eadfc9] bg-[#fffaf2] px-4 py-3">
+                                            <p class="text-[9px] font-bold text-[#9a680b]">Return request: {{ ucwords(str_replace('_',' ',$order->returnRequest->status)) }}</p>
+                                            <p class="mt-1 text-[8px] leading-4 text-[#7d7468]">{{ $order->returnRequest->seller_response ?: 'Waiting for Seller review.' }}</p>
+                                        </div>
+                                    @else
+                                        <details class="group rounded-xl border border-[#e8dfd0] bg-white">
+                                            <summary class="cursor-pointer list-none px-4 py-3 text-[9px] font-bold text-[#a96f06]">Request Return / Refund</summary>
+                                            <form method="POST" action="{{ route('buyer.orders.return-request',$order) }}" class="grid gap-2 border-t border-[#eee8dc] p-4 sm:grid-cols-[180px_1fr_auto]">
+                                                @csrf
+                                                <select name="reason" required class="h-10 rounded-xl border border-[#e4ddd3] px-3 text-[8px]">
+                                                    <option value="Damaged item">Damaged item</option>
+                                                    <option value="Wrong item">Wrong item</option>
+                                                    <option value="Missing item">Missing item</option>
+                                                    <option value="Item not as described">Item not as described</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <input name="details" maxlength="1200" placeholder="Describe the issue..." class="h-10 rounded-xl border border-[#e4ddd3] px-3 text-[8px]">
+                                                <button class="h-10 rounded-xl bg-[#202124] px-4 text-[8px] font-semibold text-white">Submit Request</button>
+                                            </form>
+                                        </details>
+                                    @endif
+                                </div>
+                            @endif
                         </article>
                     @empty
                         <div class="sari-card rounded-[20px] p-12 text-center">

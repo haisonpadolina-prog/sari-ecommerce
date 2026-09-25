@@ -7,16 +7,25 @@ use App\Models\BuyerAccount;
 use App\Models\CourierAccount;
 use App\Models\LogisticsAccount;
 use App\Models\SellerAccount;
+use App\Models\SocialAccount;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use App\Services\SellerAccountStatusService;
+use Illuminate\Validation\ValidationException;
 
 class AdminUsersController extends Controller
 {
+    public function __construct(
+        private readonly SellerAccountStatusService $sellerStatusService
+    ) {
+    }
+
     public function index(Request $request): View|RedirectResponse
     {
         if (!$request->session()->get('is_admin')) {
@@ -99,7 +108,7 @@ class AdminUsersController extends Controller
         return back()->with('success', 'Account information updated successfully.');
     }
 
-    public function suspend(Request $request, string $role, int $id): RedirectResponse
+    public function suspend(Request $request, string $role, int $id): RedirectResponse|JsonResponse
     {
         $this->guard($request);
 
@@ -109,16 +118,24 @@ class AdminUsersController extends Controller
 
         $account = $this->resolveAccount($role, $id);
         $normalizedRole = $this->normalizeRole($role);
+        $currentStatus = strtolower((string) ($account->account_status ?? 'active'));
 
-        if (Schema::hasColumn($account->getTable(), 'account_status')) {
-            $account->forceFill(['account_status' => 'deactivated']);
+        if ($currentStatus === 'banned') {
+            throw ValidationException::withMessages([
+                'account' => 'Unban the account before suspending access.',
+            ]);
         }
 
-        if ($normalizedRole === 'seller' && Schema::hasColumn($account->getTable(), 'suspended_until')) {
-            $account->forceFill(['suspended_until' => null]);
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->deactivate(
+                $account,
+                $validated['reason']
+            );
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'deactivated'])->save();
+            $account->refresh();
         }
-
-        $account->save();
 
         $this->recordActivity(
             $request,
@@ -129,25 +146,28 @@ class AdminUsersController extends Controller
             ['status' => 'deactivated']
         );
 
-        return back()->with('success', 'User access suspended successfully.');
+        return $this->respond(
+            $request,
+            'User access suspended successfully.',
+            $account,
+            $normalizedRole
+        );
     }
 
-    public function restore(Request $request, string $role, int $id): RedirectResponse
+    public function restore(Request $request, string $role, int $id): RedirectResponse|JsonResponse
     {
         $this->guard($request);
 
         $account = $this->resolveAccount($role, $id);
         $normalizedRole = $this->normalizeRole($role);
 
-        if (Schema::hasColumn($account->getTable(), 'account_status')) {
-            $account->forceFill(['account_status' => 'active']);
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->restore($account);
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'active'])->save();
+            $account->refresh();
         }
-
-        if ($normalizedRole === 'seller' && Schema::hasColumn($account->getTable(), 'suspended_until')) {
-            $account->forceFill(['suspended_until' => null]);
-        }
-
-        $account->save();
 
         $this->recordActivity(
             $request,
@@ -158,10 +178,98 @@ class AdminUsersController extends Controller
             ['status' => 'active']
         );
 
-        return back()->with('success', 'User access restored successfully.');
+        return $this->respond(
+            $request,
+            'User access restored successfully.',
+            $account,
+            $normalizedRole
+        );
     }
 
-    public function note(Request $request, string $role, int $id): RedirectResponse
+    public function ban(Request $request, string $role, int $id): RedirectResponse|JsonResponse
+    {
+        $this->guard($request);
+
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'min:5', 'max:500'],
+        ]);
+
+        $account = $this->resolveAccount($role, $id);
+        $normalizedRole = $this->normalizeRole($role);
+
+        if (strtolower((string) ($account->account_status ?? 'active')) === 'banned') {
+            throw ValidationException::withMessages([
+                'account' => 'This account is already banned.',
+            ]);
+        }
+
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->ban(
+                $account,
+                $validated['reason']
+            );
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'banned'])->save();
+            $account->refresh();
+        }
+
+        $this->recordActivity(
+            $request,
+            $normalizedRole,
+            $account->id,
+            'banned',
+            $validated['reason'],
+            ['status' => 'banned']
+        );
+
+        return $this->respond(
+            $request,
+            'Account banned successfully.',
+            $account,
+            $normalizedRole
+        );
+    }
+
+    public function unban(Request $request, string $role, int $id): RedirectResponse|JsonResponse
+    {
+        $this->guard($request);
+
+        $account = $this->resolveAccount($role, $id);
+        $normalizedRole = $this->normalizeRole($role);
+
+        if (strtolower((string) ($account->account_status ?? 'active')) !== 'banned') {
+            throw ValidationException::withMessages([
+                'account' => 'Only banned accounts can be unbanned.',
+            ]);
+        }
+
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->unban($account);
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'active'])->save();
+            $account->refresh();
+        }
+
+        $this->recordActivity(
+            $request,
+            $normalizedRole,
+            $account->id,
+            'unbanned',
+            'Admin restored a banned account.',
+            ['status' => 'active']
+        );
+
+        return $this->respond(
+            $request,
+            'Account unbanned successfully.',
+            $account,
+            $normalizedRole
+        );
+    }
+
+    public function note(Request $request, string $role, int $id): RedirectResponse|JsonResponse
     {
         $this->guard($request);
 
@@ -180,7 +288,12 @@ class AdminUsersController extends Controller
             $validated['note']
         );
 
-        return back()->with('success', 'Admin note added to the account timeline.');
+        return $this->respond(
+            $request,
+            'Admin note added to the account timeline.',
+            $account,
+            $normalizedRole
+        );
     }
 
     private function guard(Request $request): void
@@ -199,6 +312,7 @@ class AdminUsersController extends Controller
             'seller' => SellerAccount::query()->findOrFail($id),
             'rider' => CourierAccount::query()->findOrFail($id),
             'logistics' => LogisticsAccount::query()->findOrFail($id),
+            'social_buyer' => SocialAccount::query()->findOrFail($id),
             default => abort(404),
         };
     }
@@ -210,6 +324,7 @@ class AdminUsersController extends Controller
             'seller' => 'seller',
             'rider', 'courier' => 'rider',
             'logistics' => 'logistics',
+            'social_buyer', 'social-buyer' => 'social_buyer',
             default => abort(404),
         };
     }
@@ -275,6 +390,29 @@ class AdminUsersController extends Controller
         }
 
         return $snapshot;
+    }
+
+    private function respond(
+        Request $request,
+        string $message,
+        Model $account,
+        string $role
+    ): RedirectResponse|JsonResponse {
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'account' => [
+                    'id' => (int) $account->getKey(),
+                    'role' => $role,
+                    'status' => strtolower(
+                        (string) ($account->account_status ?? 'active')
+                    ),
+                ],
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     private function recordActivity(

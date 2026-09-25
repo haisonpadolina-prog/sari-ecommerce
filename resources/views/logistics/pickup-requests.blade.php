@@ -5,6 +5,17 @@
 
 @section('content')
 <section class="space-y-4">
+    @if(session('success'))
+        <div class="rounded-xl border border-[#d8eee1] bg-[#f3faf6] px-4 py-3 text-[9px] font-semibold text-[#477b59]">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="rounded-xl border border-[#f0dcdc] bg-[#fff6f6] px-4 py-3 text-[9px] font-semibold text-[#a6555b]">
+            {{ $errors->first() }}
+        </div>
+    @endif
     <div class="rounded-[20px] border border-[#eee4d3] bg-white p-5">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -24,7 +35,10 @@
                         <p class="text-[12px] font-bold text-[#302a22]">{{ $order->order_number }}</p>
                         <p class="mt-1 text-[8px] text-[#8c8275]">{{ $order->seller?->store_name ?: 'SARI Seller' }}</p>
                     </div>
-                    <span class="rounded-full bg-[#fff6e5] px-2.5 py-1 text-[7px] font-bold text-[#a96e05]">READY</span>
+                    @php($pickupVerified = ($order->logisticsParcel?->status === 'pickup_verified'))
+                    <span class="rounded-full px-2.5 py-1 text-[7px] font-bold {{ $pickupVerified ? 'bg-[#ecf8f1] text-[#287a50]' : 'bg-[#fff6e5] text-[#a96e05]' }}">
+                        {{ $pickupVerified ? 'VERIFIED' : 'AWAITING VERIFICATION' }}
+                    </span>
                 </div>
 
                 <div class="mt-4 grid gap-3 sm:grid-cols-2">
@@ -45,7 +59,18 @@
                         <p class="text-[7px] text-[#9b9184]">Ready since</p>
                         <p class="mt-1 text-[8px] font-semibold text-[#5f574e]">{{ $order->ready_at?->format('M d, Y h:i A') ?: 'Just now' }}</p>
                     </div>
-                    <a href="{{ route('logistics.delivery-assignment') }}" class="rounded-xl bg-[#d9930a] px-4 py-2.5 text-[8px] font-bold text-white">Assign Rider →</a>
+                    @if($pickupVerified)
+                        <a href="{{ route('logistics.delivery-assignment') }}" class="rounded-xl bg-[#d9930a] px-4 py-2.5 text-[8px] font-bold text-white">
+                            Assign Rider →
+                        </a>
+                    @else
+                        <form method="POST" action="{{ route('logistics.pickup-requests.verify', $order) }}">
+                            @csrf
+                            <button type="submit" class="rounded-xl bg-[#222222] px-4 py-2.5 text-[8px] font-bold text-white transition hover:-translate-y-px hover:shadow-lg">
+                                Verify Pickup Request
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </article>
         @empty

@@ -405,4 +405,790 @@
         grid-template-columns:1fr;
     }
 }
+
+
+/* ==========================================================
+   MOBILE-ONLY LAYOUT FIX
+   Desktop/tablet design above 768px remains unchanged.
+   Only the CTA text color and mobile composition are adjusted.
+   ========================================================== */
+
+/* Requested CTA text/arrow color only */
+.sari-about-v2 .sari-about-v2__button,
+.sari-about-v2 .sari-about-v2__button > span {
+    color: #ffffff !important;
+}
+
+/* Keep visited state white as well */
+.sari-about-v2 .sari-about-v2__button:visited,
+.sari-about-v2 .sari-about-v2__button:visited > span {
+    color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+
+    /* HERO: clean stacked composition */
+    .sari-about-v2 .sari-about-v2__hero {
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: auto !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        order: 1;
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box;
+        padding: 64px 20px 34px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-media {
+        order: 2;
+        position: relative;
+        width: calc(100% - 24px) !important;
+        min-height: 0 !important;
+        margin: 0 12px 18px !important;
+        overflow: hidden;
+        border-radius: 18px;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-image {
+        display: block;
+        width: 100% !important;
+        height: clamp(280px, 72vw, 430px) !important;
+        min-height: 0 !important;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    /* The desktop editorial curve is not useful on a narrow portrait layout. */
+    .sari-about-v2 .sari-about-v2__wave {
+        display: none !important;
+    }
+
+    /* Copy hierarchy */
+    .sari-about-v2 .sari-about-v2__hero-title {
+        margin-top: 14px !important;
+        font-size: clamp(38px, 10.5vw, 50px) !important;
+        line-height: 1.02 !important;
+        letter-spacing: -.045em !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__lead {
+        max-width: 560px !important;
+        margin-top: 18px !important;
+        font-size: 13px !important;
+        line-height: 1.68 !important;
+    }
+
+    /* Pillars: same components, cleaner vertical mobile flow */
+    .sari-about-v2 .sari-about-v2__pillars {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+        width: 100% !important;
+        margin-top: 26px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar {
+        width: 100% !important;
+        box-sizing: border-box;
+        padding: 14px 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar:first-child {
+        padding-top: 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar + .sari-about-v2__pillar {
+        border-left: 0 !important;
+        border-top: 1px solid rgba(40, 32, 20, .10);
+    }
+
+    /* CTA: thumb-friendly while keeping the same button design */
+    .sari-about-v2 .sari-about-v2__button {
+        width: 100% !important;
+        min-height: 50px !important;
+        box-sizing: border-box;
+        justify-content: center !important;
+        margin-top: 24px !important;
+    }
+
+    /* STATS: compact 2x2 grid, note below */
+    .sari-about-v2 .sari-about-v2__stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        width: calc(100% - 24px) !important;
+        margin-inline: auto !important;
+        box-sizing: border-box;
+    }
+
+    .sari-about-v2 .sari-about-v2__stat {
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .sari-about-v2 .sari-about-v2__stat-note {
+        grid-column: 1 / -1 !important;
+        box-sizing: border-box;
+    }
+
+    /* STORY: image then copy */
+    .sari-about-v2 .sari-about-v2__story {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 38px !important;
+        width: calc(100% - 36px) !important;
+        margin: 72px auto !important;
+        box-sizing: border-box;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-art {
+        order: 1;
+        width: 100% !important;
+        min-width: 0;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-copy {
+        order: 2;
+        width: 100% !important;
+        min-width: 0;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-art img {
+        display: block;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-copy h2 {
+        font-size: clamp(36px, 9.5vw, 48px) !important;
+        line-height: 1.04 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-copy > p {
+        font-size: 13px !important;
+        line-height: 1.68 !important;
+    }
+
+    /* Feature boxes: retain design, improve available width */
+    .sari-about-v2 .sari-about-v2__features {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features > div {
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* VALUES: keep existing card design, simply reflow */
+    .sari-about-v2 .sari-about-v2__values {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+        margin-top: 38px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article {
+        min-width: 0;
+        box-sizing: border-box;
+    }
+}
+
+/* Small phones: one-column cards for better readability */
+@media (max-width: 520px) {
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        padding: 58px 17px 30px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-media {
+        width: calc(100% - 20px) !important;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+        border-radius: 16px;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title {
+        font-size: clamp(36px, 10.8vw, 46px) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__stats {
+        width: calc(100% - 20px) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features {
+        grid-template-columns: 1fr !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title {
+        font-size: 35px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__lead {
+        font-size: 12.5px !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE HERO — CONTENT STAYS INSIDE THE IMAGE
+   Desktop design remains unchanged.
+   ========================================================== */
+@media (max-width: 768px) {
+    .sari-about-v2 .sari-about-v2__hero {
+        position: relative !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+
+        width: calc(100% - 20px) !important;
+        min-height: 760px !important;
+        margin: 12px auto 24px !important;
+
+        overflow: hidden !important;
+        border-radius: 22px !important;
+        background: #17140e !important;
+    }
+
+    /* Image becomes the full hero canvas */
+    .sari-about-v2 .sari-about-v2__hero-media {
+        position: relative !important;
+        z-index: 1 !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 760px !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        border-radius: inherit !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-image {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 760px !important;
+
+        object-fit: cover !important;
+        object-position: 64% center !important;
+
+        /* Slight zoom so the image still fills the tall mobile canvas */
+        transform: scale(1.08);
+        transform-origin: center;
+    }
+
+    .sari-about-v2 .sari-about-v2__wave {
+        display: none !important;
+    }
+
+    /* Content is layered INSIDE the image */
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        position: relative !important;
+        z-index: 3 !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+
+        padding: 92px 20px 24px !important;
+        margin: 0 !important;
+        background: transparent !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__eyebrow {
+        margin: 0 0 12px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title {
+        max-width: 620px !important;
+        margin: 0 !important;
+
+        font-size: clamp(38px, 10.5vw, 50px) !important;
+        line-height: 1.01 !important;
+        letter-spacing: -.047em !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__lead {
+        max-width: 560px !important;
+        margin-top: 15px !important;
+
+        font-size: 12.8px !important;
+        line-height: 1.62 !important;
+    }
+
+    /* Pillars remain within the same image area */
+    .sari-about-v2 .sari-about-v2__pillars {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+        margin-top: 20px !important;
+        padding: 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar {
+        display: grid !important;
+        grid-template-columns: 42px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        align-items: center !important;
+
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 11px 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar:first-child {
+        padding-top: 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar + .sari-about-v2__pillar {
+        border-left: 0 !important;
+        border-top: 1px solid rgba(57, 45, 28, .10) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__icon {
+        width: 40px !important;
+        height: 40px !important;
+        flex: 0 0 40px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar strong {
+        font-size: 12px !important;
+        line-height: 1.25 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar small {
+        margin-top: 3px !important;
+        font-size: 10px !important;
+        line-height: 1.42 !important;
+    }
+
+    /* CTA stays inside the image too */
+    .sari-about-v2 .sari-about-v2__button {
+        width: 100% !important;
+        min-height: 50px !important;
+        box-sizing: border-box !important;
+
+        justify-content: center !important;
+        margin-top: 18px !important;
+
+        color: #ffffff !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__button > span {
+        color: #ffffff !important;
+    }
+}
+
+/* Slightly tighter layout for normal small phones */
+@media (max-width: 540px) {
+    .sari-about-v2 .sari-about-v2__hero,
+    .sari-about-v2 .sari-about-v2__hero-media,
+    .sari-about-v2 .sari-about-v2__hero-image {
+        min-height: 720px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero {
+        width: calc(100% - 16px) !important;
+        border-radius: 19px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        padding: 78px 17px 20px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-image {
+        object-position: 66% center !important;
+        transform: scale(1.12);
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title {
+        font-size: clamp(36px, 10.8vw, 46px) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__lead {
+        font-size: 12.3px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar {
+        padding: 9px 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__button {
+        min-height: 48px !important;
+    }
+}
+
+/* Very narrow phones */
+@media (max-width: 380px) {
+    .sari-about-v2 .sari-about-v2__hero,
+    .sari-about-v2 .sari-about-v2__hero-media,
+    .sari-about-v2 .sari-about-v2__hero-image {
+        min-height: 690px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        padding: 68px 15px 18px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title {
+        font-size: 34px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__lead {
+        font-size: 12px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__icon {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE READABILITY — NO WHITE FADE / NO IMAGE OVERLAY
+   ========================================================== */
+@media (max-width: 768px) {
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        background: transparent !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__eyebrow,
+    .sari-about-v2 .sari-about-v2__hero-title,
+    .sari-about-v2 .sari-about-v2__lead,
+    .sari-about-v2 .sari-about-v2__pillar strong,
+    .sari-about-v2 .sari-about-v2__pillar small {
+        text-shadow: 0 1px 10px rgba(255, 255, 255, .18);
+    }
+
+    /* Keep the existing image completely visible and untouched. */
+    .sari-about-v2 .sari-about-v2__hero::before,
+    .sari-about-v2 .sari-about-v2__hero::after,
+    .sari-about-v2 .sari-about-v2__hero-media::before,
+    .sari-about-v2 .sari-about-v2__hero-media::after,
+    .sari-about-v2 .sari-about-v2__hero-copy::before,
+    .sari-about-v2 .sari-about-v2__hero-copy::after {
+        background: transparent !important;
+        background-image: none !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE TEXT CONTRAST — NO PHOTO OVERLAY
+   Keeps the background image fully untouched.
+   ========================================================== */
+@media (max-width: 768px) {
+    /* No overlay/fade of any kind */
+    .sari-about-v2 .sari-about-v2__hero-copy {
+        background: transparent !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero::before,
+    .sari-about-v2 .sari-about-v2__hero::after,
+    .sari-about-v2 .sari-about-v2__hero-media::before,
+    .sari-about-v2 .sari-about-v2__hero-media::after,
+    .sari-about-v2 .sari-about-v2__hero-copy::before,
+    .sari-about-v2 .sari-about-v2__hero-copy::after {
+        background: transparent !important;
+        background-image: none !important;
+    }
+
+    /* Main headline */
+    .sari-about-v2 .sari-about-v2__hero-title {
+        color: #ffffff !important;
+        text-shadow:
+            0 2px 4px rgba(0, 0, 0, .58),
+            0 8px 24px rgba(0, 0, 0, .34) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__hero-title em {
+        color: #e3a10d !important;
+        text-shadow:
+            0 2px 4px rgba(0, 0, 0, .55),
+            0 7px 20px rgba(0, 0, 0, .30) !important;
+    }
+
+    /* Eyebrow */
+    .sari-about-v2 .sari-about-v2__eyebrow {
+        color: #e2a21c !important;
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, .70),
+            0 4px 12px rgba(0, 0, 0, .32) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__eyebrow > span {
+        background: #e2a21c !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+    }
+
+    /* Description */
+    .sari-about-v2 .sari-about-v2__lead {
+        color: rgba(255, 255, 255, .92) !important;
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, .78),
+            0 4px 14px rgba(0, 0, 0, .34) !important;
+    }
+
+    /* Pillars */
+    .sari-about-v2 .sari-about-v2__pillar strong {
+        color: #ffffff !important;
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, .76),
+            0 4px 12px rgba(0, 0, 0, .28) !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__pillar small {
+        color: rgba(255, 255, 255, .84) !important;
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, .82),
+            0 4px 12px rgba(0, 0, 0, .30) !important;
+    }
+
+    /* Make separators visible without using a panel */
+    .sari-about-v2 .sari-about-v2__pillar + .sari-about-v2__pillar {
+        border-top-color: rgba(255, 255, 255, .22) !important;
+    }
+
+    /* Icons stay gold but gain a clearer outline on the photo */
+    .sari-about-v2 .sari-about-v2__icon {
+        color: #e2a21c !important;
+        border-color: rgba(226, 162, 28, .72) !important;
+        background: rgba(15, 13, 10, .18) !important;
+        box-shadow:
+            0 4px 14px rgba(0, 0, 0, .16),
+            inset 0 0 0 1px rgba(255, 255, 255, .04);
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+    }
+
+    /* CTA remains unchanged visually, only ensure text stays white */
+    .sari-about-v2 .sari-about-v2__button,
+    .sari-about-v2 .sari-about-v2__button > span,
+    .sari-about-v2 .sari-about-v2__button:visited,
+    .sari-about-v2 .sari-about-v2__button:visited > span {
+        color: #ffffff !important;
+        text-shadow: none !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE STORY EYEBROW — CLEAN / NO SHADOW
+   Keeps "About SARI" hero contrast untouched.
+   ========================================================== */
+@media (max-width: 768px) {
+    .sari-about-v2 .sari-about-v2__story-copy .sari-about-v2__eyebrow {
+        text-shadow: none !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__story-copy .sari-about-v2__eyebrow > span {
+        box-shadow: none !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE OUR VALUES — 2 COLUMNS + CLEAN EYEBROW
+   Desktop remains unchanged.
+   ========================================================== */
+@media (max-width: 768px) {
+
+    /* Remove shadow from "Our Values" only */
+    .sari-about-v2 .sari-about-v2__values .sari-about-v2__eyebrow {
+        text-shadow: none !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__values .sari-about-v2__eyebrow > span {
+        box-shadow: none !important;
+    }
+
+    /* Keep cards compact: two side-by-side on mobile */
+    .sari-about-v2 .sari-about-v2__value-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        margin-top: 34px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article {
+        display: block !important;
+        min-width: 0 !important;
+        min-height: 170px !important;
+        padding: 20px 16px !important;
+        border-radius: 18px !important;
+        box-sizing: border-box !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article .value-icon {
+        width: 44px !important;
+        height: 44px !important;
+        margin: 0 0 15px !important;
+        border-radius: 13px !important;
+        font-size: 18px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article h3 {
+        margin: 0 !important;
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article p {
+        margin-top: 7px !important;
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+}
+
+/* Very small phones: still keep 2 columns, just tighten spacing */
+@media (max-width: 390px) {
+    .sari-about-v2 .sari-about-v2__value-grid {
+        gap: 9px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article {
+        min-height: 158px !important;
+        padding: 17px 13px !important;
+        border-radius: 16px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article .value-icon {
+        width: 40px !important;
+        height: 40px !important;
+        margin-bottom: 13px !important;
+        font-size: 17px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article h3 {
+        font-size: 13px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__value-grid article p {
+        font-size: 9.5px !important;
+        line-height: 1.45 !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE STORY FEATURES — 2 COLUMNS
+   Curated / Trust / Seamless / Everyone
+   Desktop remains unchanged.
+   ========================================================== */
+@media (max-width: 768px) {
+    .sari-about-v2 .sari-about-v2__features {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        margin-top: 28px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features > div {
+        display: grid !important;
+        grid-template-columns: 36px minmax(0, 1fr) !important;
+        gap: 10px !important;
+        align-items: start !important;
+
+        min-width: 0 !important;
+        min-height: 126px !important;
+        box-sizing: border-box !important;
+
+        padding: 16px 14px !important;
+        border-radius: 16px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__feature-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 10px !important;
+        font-size: 15px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features p {
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features strong {
+        display: block !important;
+        font-size: 11px !important;
+        line-height: 1.28 !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features small {
+        display: block !important;
+        margin-top: 5px !important;
+        font-size: 9.5px !important;
+        line-height: 1.45 !important;
+    }
+}
+
+/* Keep 2 columns even on small phones, just tighten them */
+@media (max-width: 390px) {
+    .sari-about-v2 .sari-about-v2__features {
+        gap: 9px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features > div {
+        grid-template-columns: 32px minmax(0, 1fr) !important;
+        gap: 8px !important;
+        min-height: 118px !important;
+        padding: 14px 11px !important;
+        border-radius: 14px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__feature-icon {
+        width: 31px !important;
+        height: 31px !important;
+        font-size: 14px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features strong {
+        font-size: 10px !important;
+    }
+
+    .sari-about-v2 .sari-about-v2__features small {
+        font-size: 8.8px !important;
+        line-height: 1.4 !important;
+    }
+}
+
 </style>

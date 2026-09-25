@@ -186,11 +186,39 @@ class AdminSellerComplianceController extends Controller
                 ->lockForUpdate()
                 ->firstOrFail();
 
+            $approvedAt = now();
+            $flashSaleEndsAt = $freshProduct->flash_sale_ends_at;
+
+            /*
+             * A seller configures the Flash Sale while the listing is still
+             * awaiting moderation. The stored end timestamp represents the
+             * intended duration from the seller's last submit/edit, not a
+             * countdown that should run while approval is pending.
+             *
+             * On approval, preserve that full duration and move the deadline
+             * forward so the live countdown starts now.
+             */
+            if ((float) ($freshProduct->discount ?? 0) > 0 && $flashSaleEndsAt !== null) {
+                $scheduleBase = $freshProduct->updated_at
+                    ?? $freshProduct->created_at
+                    ?? $approvedAt;
+
+                $durationSeconds = max(
+                    0,
+                    $flashSaleEndsAt->getTimestamp() - $scheduleBase->getTimestamp()
+                );
+
+                $flashSaleEndsAt = $durationSeconds > 0
+                    ? $approvedAt->copy()->addSeconds($durationSeconds)
+                    : null;
+            }
+
             $freshProduct->forceFill([
                 'moderation_status' => 'approved',
                 'admin_review_note' => 'Approved by SARI Administrator.',
-                'reviewed_at' => now(),
+                'reviewed_at' => $approvedAt,
                 'requires_re_review' => false,
+                'flash_sale_ends_at' => $flashSaleEndsAt,
             ])->save();
 
             $this->createComplianceMessage(

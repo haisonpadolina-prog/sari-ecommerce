@@ -13,8 +13,10 @@ use App\Models\RegistrationApplication;
 use App\Models\SellerAccount;
 use App\Models\SellerProduct;
 use App\Models\SellerSettlement;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -22,10 +24,29 @@ use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    public function index(Request $request): View|RedirectResponse
+    public function index(Request $request): View|RedirectResponse|JsonResponse
     {
         if (!$request->session()->get('is_admin')) {
+            if ($request->expectsJson() || $request->boolean('sales_fragment')) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+
             return redirect()->route('login');
+        }
+
+        // Lightweight async endpoint for the Sales Overview period switcher.
+        // This intentionally returns only the Sales Overview panel so the rest
+        // of the admin dashboard never reloads when the period changes.
+        if ($request->boolean('sales_fragment')) {
+            $salesAnalytics = $this->buildSalesAnalytics($request, now());
+
+            return response()->json([
+                'period' => $salesAnalytics['period'],
+                'period_label' => $salesAnalytics['period_label'],
+                'html' => view('admin.partials.sales-overview', [
+                    'liveSales' => $salesAnalytics,
+                ])->render(),
+            ]);
         }
 
         $summary = RegistrationApplication::query()
@@ -97,55 +118,11 @@ class AdminDashboardController extends Controller
             ->limit(6)
             ->get();
 
-        $commissionRate = Schema::hasTable('platform_settings')
-            ? (float) PlatformSetting::valueOf('commission_rate', 10)
-            : 10.0;
-
-        $now = now();
-        $currentStart = $now->copy()->startOfMonth();
-        $currentEnd = $now->copy()->endOfMonth();
-        $previousReference = $now->copy()->subMonthNoOverflow();
-        $previousStart = $previousReference->copy()->startOfMonth();
-        $previousEnd = $previousReference->copy()->endOfMonth();
-
-        $currentMonthOrders = MarketplaceOrder::query()
-            ->whereBetween('created_at', [$currentStart, $currentEnd])
-            ->count();
-
-        $previousMonthOrders = MarketplaceOrder::query()
-            ->whereBetween('created_at', [$previousStart, $previousEnd])
-            ->count();
-
-        $currentMonthSales = (float) SellerSettlement::query()
-            ->whereBetween('eligible_at', [$currentStart, $currentEnd])
-            ->sum('merchandise_amount');
-
-        $previousMonthSales = (float) SellerSettlement::query()
-            ->whereBetween('eligible_at', [$previousStart, $previousEnd])
-            ->sum('merchandise_amount');
-
-        $salesGrowth = $this->percentageChange($currentMonthSales, $previousMonthSales);
-        $ordersGrowth = $this->percentageChange((float) $currentMonthOrders, (float) $previousMonthOrders);
-
-        $currentMonthCommission = round((float) OrderCommission::query()
-            ->whereBetween('earned_at', [$currentStart, $currentEnd])
-            ->sum('net_commission'), 2);
+        $salesAnalytics = $this->buildSalesAnalytics($request, now());
+        $commissionRate = (float) ($salesAnalytics['commission_rate'] ?? 0);
 
         $platformCommissionAll = round((float) OrderCommission::query()
             ->sum('net_commission'), 2);
-
-        $weeklySalesRows = SellerSettlement::query()
-            ->whereBetween('eligible_at', [$currentStart, $currentEnd])
-            ->get(['merchandise_amount', 'eligible_at']);
-
-        $weeklyCommissionRows = OrderCommission::query()
-            ->whereBetween('earned_at', [$currentStart, $currentEnd])
-            ->get(['net_commission', 'earned_at']);
-
-        [$weeklySales, $weeklyCommission] = $this->weeklySeries(
-            $weeklySalesRows,
-            $weeklyCommissionRows
-        );
 
         $activeDeliveryStatuses = [
             'courier_accepted',
@@ -326,17 +303,7 @@ class AdminDashboardController extends Controller
                 'open_issues' => $openComplaints,
             ],
             'journey' => $journey,
-            'sales' => [
-                'month_orders' => $currentMonthOrders,
-                'orders_growth' => $ordersGrowth,
-                'current_sales' => $currentMonthSales,
-                'previous_sales' => $previousMonthSales,
-                'growth' => $salesGrowth,
-                'commission' => $currentMonthCommission,
-                'commission_rate' => $commissionRate,
-                'weekly_sales' => $weeklySales,
-                'weekly_commission' => $weeklyCommission,
-            ],
+            'sales' => $salesAnalytics,
             'health' => [
                 'score' => $healthScore,
                 'risk' => $riskLabel,
@@ -379,6 +346,98 @@ class AdminDashboardController extends Controller
         ));
     }
 
+    private function buildSalesAnalytics(Request $request, Carbon $now): array
+    {
+        $commissionRate = Schema::hasTable('platform_settings')
+            ? (float) PlatformSetting::valueOf('commission_rate', 10)
+            : 10.0;
+
+        $salesPeriod = strtolower((string) $request->query('sales_period', 'this_month'));
+        $allowedSalesPeriods = ['this_month', 'last_month', 'last_3_months', 'this_year'];
+
+        if (!in_array($salesPeriod, $allowedSalesPeriods, true)) {
+            $salesPeriod = 'this_month';
+        }
+
+        $salesPeriodConfig = $this->salesPeriodConfig($salesPeriod, $now);
+        $currentStart = $salesPeriodConfig['start'];
+        $currentEnd = $salesPeriodConfig['end'];
+        $previousStart = $salesPeriodConfig['comparison_start'];
+        $previousEnd = $salesPeriodConfig['comparison_end'];
+
+        $currentPeriodOrders = MarketplaceOrder::query()
+            ->whereBetween('created_at', [$currentStart, $currentEnd])
+            ->count();
+
+        $previousPeriodOrders = MarketplaceOrder::query()
+            ->whereBetween('created_at', [$previousStart, $previousEnd])
+            ->count();
+
+        $currentPeriodSales = (float) SellerSettlement::query()
+            ->whereBetween('eligible_at', [$currentStart, $currentEnd])
+            ->sum('merchandise_amount');
+
+        $previousPeriodSales = (float) SellerSettlement::query()
+            ->whereBetween('eligible_at', [$previousStart, $previousEnd])
+            ->sum('merchandise_amount');
+
+        $salesGrowth = $this->percentageChange($currentPeriodSales, $previousPeriodSales);
+        $ordersGrowth = $this->percentageChange((float) $currentPeriodOrders, (float) $previousPeriodOrders);
+
+        $currentPeriodCommission = round((float) OrderCommission::query()
+            ->whereBetween('earned_at', [$currentStart, $currentEnd])
+            ->sum('net_commission'), 2);
+
+        $salesRows = SellerSettlement::query()
+            ->whereBetween('eligible_at', [$currentStart, $currentEnd])
+            ->get(['merchandise_amount', 'eligible_at']);
+
+        $commissionRows = OrderCommission::query()
+            ->whereBetween('earned_at', [$currentStart, $currentEnd])
+            ->get(['net_commission', 'earned_at']);
+
+        $salesBuckets = $this->salesSeriesBuckets(
+            $salesPeriodConfig['series_mode'],
+            $currentStart,
+            $currentEnd
+        );
+
+        [$salesSeries, $commissionSeries] = $this->salesSeries(
+            $salesRows,
+            $commissionRows,
+            $salesBuckets
+        );
+
+        return [
+            'period' => $salesPeriod,
+            'period_label' => $salesPeriodConfig['label'],
+            'subtitle' => $salesPeriodConfig['subtitle'],
+            'comparison_label' => $salesPeriodConfig['comparison_label'],
+            'chart_copy' => $salesPeriodConfig['chart_copy'],
+            'orders' => $currentPeriodOrders,
+            // Keep legacy keys for compatibility with older dashboard snapshots.
+            'month_orders' => $currentPeriodOrders,
+            'orders_growth' => $ordersGrowth,
+            'current_sales' => $currentPeriodSales,
+            'previous_sales' => $previousPeriodSales,
+            'growth' => $salesGrowth,
+            'commission' => $currentPeriodCommission,
+            'commission_rate' => $commissionRate,
+            'series_sales' => $salesSeries,
+            'series_commission' => $commissionSeries,
+            'series_labels' => array_map(
+                static fn (array $bucket): string => $bucket['label'],
+                $salesBuckets
+            ),
+            'series_tooltip_labels' => array_map(
+                static fn (array $bucket): string => $bucket['tooltip'],
+                $salesBuckets
+            ),
+            'weekly_sales' => $salesSeries,
+            'weekly_commission' => $commissionSeries,
+        ];
+    }
+
     private function percentageChange(float $current, float $previous): float
     {
         if ($previous > 0) {
@@ -388,19 +447,140 @@ class AdminDashboardController extends Controller
         return $current > 0 ? 100.0 : 0.0;
     }
 
-    private function weeklySeries(Collection $salesRows, Collection $commissionRows): array
+    private function salesPeriodConfig(string $period, Carbon $now): array
     {
-        $sales = array_fill(0, 5, 0.0);
-        $commission = array_fill(0, 5, 0.0);
+        return match ($period) {
+            'last_month' => (function () use ($now): array {
+                $reference = $now->copy()->subMonthNoOverflow();
+                $comparison = $reference->copy()->subMonthNoOverflow();
+
+                return [
+                    'label' => 'Last Month',
+                    'subtitle' => 'Last month marketplace activity',
+                    'comparison_label' => 'vs previous month',
+                    'chart_copy' => 'Weekly snapshot — each point represents one week',
+                    'series_mode' => 'weekly',
+                    'start' => $reference->copy()->startOfMonth(),
+                    'end' => $reference->copy()->endOfMonth(),
+                    'comparison_start' => $comparison->copy()->startOfMonth(),
+                    'comparison_end' => $comparison->copy()->endOfMonth(),
+                ];
+            })(),
+            'last_3_months' => (function () use ($now): array {
+                $start = $now->copy()->subMonthsNoOverflow(2)->startOfMonth();
+                $comparisonEnd = $start->copy()->subSecond();
+                $comparisonStart = $start->copy()->subMonthsNoOverflow(3)->startOfMonth();
+
+                return [
+                    'label' => 'Last 3 Months',
+                    'subtitle' => 'Marketplace activity across the last 3 months',
+                    'comparison_label' => 'vs previous 3 months',
+                    'chart_copy' => 'Monthly snapshot — each point represents one month',
+                    'series_mode' => 'monthly',
+                    'start' => $start,
+                    'end' => $now->copy(),
+                    'comparison_start' => $comparisonStart,
+                    'comparison_end' => $comparisonEnd,
+                ];
+            })(),
+            'this_year' => (function () use ($now): array {
+                $previousYearReference = $now->copy()->subYearNoOverflow();
+
+                return [
+                    'label' => 'This Year',
+                    'subtitle' => 'Year-to-date marketplace activity',
+                    'comparison_label' => 'vs same period last year',
+                    'chart_copy' => 'Monthly snapshot — each point represents one month',
+                    'series_mode' => 'monthly',
+                    'start' => $now->copy()->startOfYear(),
+                    'end' => $now->copy(),
+                    'comparison_start' => $previousYearReference->copy()->startOfYear(),
+                    'comparison_end' => $previousYearReference->copy(),
+                ];
+            })(),
+            default => (function () use ($now): array {
+                $previousReference = $now->copy()->subMonthNoOverflow();
+
+                return [
+                    'label' => 'This Month',
+                    'subtitle' => 'Monthly marketplace activity',
+                    'comparison_label' => 'vs last month',
+                    'chart_copy' => 'Weekly snapshot — each point represents one week',
+                    'series_mode' => 'weekly',
+                    'start' => $now->copy()->startOfMonth(),
+                    'end' => $now->copy(),
+                    'comparison_start' => $previousReference->copy()->startOfMonth(),
+                    'comparison_end' => $previousReference->copy()->endOfMonth(),
+                ];
+            })(),
+        };
+    }
+
+    private function salesSeriesBuckets(string $mode, Carbon $start, Carbon $end): array
+    {
+        if ($mode === 'monthly') {
+            $buckets = [];
+            $cursor = $start->copy()->startOfMonth();
+            $lastMonth = $end->copy()->startOfMonth();
+
+            while ($cursor->lte($lastMonth)) {
+                $bucketStart = $cursor->copy()->startOfMonth();
+                $bucketEnd = $cursor->isSameMonth($end)
+                    ? $end->copy()
+                    : $cursor->copy()->endOfMonth();
+
+                $buckets[] = [
+                    'label' => $cursor->format('M'),
+                    'tooltip' => $cursor->format('M Y'),
+                    'start' => $bucketStart,
+                    'end' => $bucketEnd,
+                ];
+
+                $cursor->addMonthNoOverflow()->startOfMonth();
+            }
+
+            return $buckets;
+        }
+
+        $buckets = [];
+        $monthStart = $start->copy()->startOfMonth();
+        $monthEnd = $start->copy()->endOfMonth();
+
+        for ($index = 0; $index < 5; $index++) {
+            $bucketStart = $monthStart->copy()->addDays($index * 7);
+            $bucketEnd = $bucketStart->copy()->addDays(6)->endOfDay();
+
+            if ($bucketEnd->gt($monthEnd)) {
+                $bucketEnd = $monthEnd->copy();
+            }
+
+            $buckets[] = [
+                'label' => 'Week ' . ($index + 1),
+                'tooltip' => 'Week ' . ($index + 1),
+                'start' => $bucketStart,
+                'end' => $bucketEnd,
+            ];
+        }
+
+        return $buckets;
+    }
+
+    private function salesSeries(Collection $salesRows, Collection $commissionRows, array $buckets): array
+    {
+        $sales = array_fill(0, count($buckets), 0.0);
+        $commission = array_fill(0, count($buckets), 0.0);
 
         foreach ($salesRows as $row) {
             if (!$row->eligible_at) {
                 continue;
             }
 
-            $day = max(1, (int) $row->eligible_at->day);
-            $bucket = min(4, intdiv($day - 1, 7));
-            $sales[$bucket] += (float) ($row->merchandise_amount ?? 0);
+            foreach ($buckets as $index => $bucket) {
+                if ($row->eligible_at->betweenIncluded($bucket['start'], $bucket['end'])) {
+                    $sales[$index] += (float) ($row->merchandise_amount ?? 0);
+                    break;
+                }
+            }
         }
 
         foreach ($commissionRows as $row) {
@@ -408,9 +588,12 @@ class AdminDashboardController extends Controller
                 continue;
             }
 
-            $day = max(1, (int) $row->earned_at->day);
-            $bucket = min(4, intdiv($day - 1, 7));
-            $commission[$bucket] += (float) ($row->net_commission ?? 0);
+            foreach ($buckets as $index => $bucket) {
+                if ($row->earned_at->betweenIncluded($bucket['start'], $bucket['end'])) {
+                    $commission[$index] += (float) ($row->net_commission ?? 0);
+                    break;
+                }
+            }
         }
 
         return [

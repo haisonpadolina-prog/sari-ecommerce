@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-mode">
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,89 +15,93 @@
 
     <meta
         name="theme-color"
-        content="#0A0A0A"
+        content="#ffffff"
     >
 
     <title>
         @yield('title', 'SARI — Elevated Everyday')
     </title>
 
+    {{-- Force the public site to stay in light mode before first paint --}}
+    <script>
+        (function () {
+            const root = document.documentElement;
 
-    {{-- =====================================================
-         GOOGLE FONT
-    ====================================================== --}}
+            root.classList.remove('dark', 'dark-mode');
+            root.classList.add('light-mode');
+            root.setAttribute('data-theme', 'light');
+            root.style.colorScheme = 'light';
+
+            try {
+                localStorage.setItem('sari-theme', 'light');
+            } catch (error) {
+                // Storage can be unavailable; the site still stays light.
+            }
+        })();
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link
         rel="preconnect"
         href="https://fonts.gstatic.com"
         crossorigin
     >
-
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-
-    {{-- =====================================================
-         ORIGINAL SARI CSS
-         DO NOT REPLACE THESE WITH TAILWIND
-    ====================================================== --}}
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/app.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/about.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/how-it-works.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/categories.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/ecosystem.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/footer.css') }}"
-    >
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/how-it-works.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categories.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ecosystem.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    @stack('styles')
 
+    {{-- Landing overrides: load ONCE and cache-bust automatically when edited --}}
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/landing-compact.css') }}?v={{ file_exists(public_path('css/landing-compact.css')) ? filemtime(public_path('css/landing-compact.css')) : time() }}"
+    >
+
+    @stack('styles')
 </head>
 
-
 <body>
-
     @yield('content')
 
+    {{-- Browser-ready; no ES-module imports required --}}
+    <script src="{{ asset('js/landing.js') }}"></script>
 
-    {{-- =====================================================
-         ORIGINAL SARI JAVASCRIPT
-    ====================================================== --}}
+    {{-- Final light-mode safety after landing.js executes --}}
+    <script>
+        (function () {
+            const root = document.documentElement;
 
-    <script
-        src="{{ asset('js/app.js') }}"
-    ></script>
+            function keepSariLight() {
+                root.classList.remove('dark', 'dark-mode');
+                root.classList.add('light-mode');
+                root.setAttribute('data-theme', 'light');
+                root.style.colorScheme = 'light';
 
+                if (document.body) {
+                    document.body.classList.remove('dark', 'dark-mode');
+                    document.body.classList.add('light-mode');
+                }
+
+                try {
+                    localStorage.setItem('sari-theme', 'light');
+                } catch (error) {
+                    // Ignore storage failures.
+                }
+            }
+
+            keepSariLight();
+            document.addEventListener('DOMContentLoaded', keepSariLight);
+        })();
+    </script>
 
     @stack('scripts')
-
 </body>
-
 </html>

@@ -79,6 +79,13 @@
 
         <aside class="h-fit rounded-[22px] border border-[#ebe4da] bg-white p-5 xl:sticky xl:top-24">
             <h2 class="text-[15px] font-bold text-[#302a24]">Checkout Summary</h2>
+
+            <div class="mt-5 rounded-2xl border border-[#eee7dc] bg-[#fcfbf8] p-4">
+                <label for="checkoutVoucherCode" class="block text-[8px] font-semibold uppercase tracking-[.1em] text-[#8d8479]">Seller Voucher</label>
+                <input id="checkoutVoucherCode" name="voucher_code" value="{{ old('voucher_code') }}" placeholder="Enter voucher code" class="mt-2 h-10 w-full rounded-xl border border-[#e4ddd3] bg-white px-3 text-[9px] uppercase outline-none focus:border-[#c99128]">
+                <p class="mt-2 text-[7px] leading-4 text-[#9b9287]">A valid code is applied server-side to matching Seller items when you place the order.</p>
+            </div>
+
             <div class="mt-5 space-y-3 text-[9px]">
                 <div class="flex justify-between"><span class="text-[#8d8479]">Products</span><span class="font-semibold">₱{{ number_format($subtotal, 2) }}</span></div>
                 <div class="flex justify-between"><span class="text-[#8d8479]">Delivery</span><span class="font-semibold">₱{{ number_format($deliveryFee, 2) }}</span></div>

@@ -11,6 +11,8 @@ use App\Models\SellerProduct;
 use App\Services\BuyerCartService;
 use App\Services\BuyerIdentityService;
 use App\Services\ProductVariantInventoryService;
+use App\Services\SellerVoucherService;
+use App\Models\SellerVoucherRedemption;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +26,7 @@ class BuyerCheckoutController extends Controller
         private readonly BuyerCartService $cart,
         private readonly BuyerIdentityService $identity,
         private readonly ProductVariantInventoryService $inventory,
+        private readonly SellerVoucherService $vouchers,
     ) {
     }
 
@@ -101,6 +104,7 @@ class BuyerCheckoutController extends Controller
             'buy_now_item_id' => ['nullable', 'integer', 'exists:buyer_cart_items,id'],
             'checkout_item_ids' => ['nullable', 'array'],
             'checkout_item_ids.*' => ['integer', 'exists:buyer_cart_items,id'],
+            'voucher_code' => ['nullable', 'string', 'max:64'],
         ]);
 
         $createdOrders = DB::transaction(function () use ($request, $validated) {
@@ -135,9 +139,18 @@ class BuyerCheckoutController extends Controller
             $checkoutReference = 'CHK-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
             $feePerSeller = (float) PlatformSetting::valueOf('delivery_fee_per_seller', config('sari_buyer.delivery_fee_per_seller', 80));
             $created = collect();
+            $voucherCode = strtoupper(trim((string) ($validated['voucher_code'] ?? '')));
+            $voucherApplied = false;
 
             foreach ($items->groupBy(fn (BuyerCartItem $item) => (int) $item->product->seller_account_id) as $sellerId => $group) {
                 $seller = SellerAccount::query()->findOrFail((int) $sellerId);
+
+                if (($seller->store_status ?? 'open') !== 'open') {
+                    throw ValidationException::withMessages([
+                        'cart' => ($seller->store_name ?: 'This Seller') . ' is temporarily not accepting orders.',
+                    ]);
+                }
+
                 $orderItems = [];
                 $subtotal = 0.0;
 
@@ -190,6 +203,19 @@ class BuyerCheckoutController extends Controller
                     $subtotal += $lineTotal;
                 }
 
+                $voucherResult = $this->vouchers->resolveForSeller(
+                    (int) $seller->id,
+                    $voucherCode,
+                    round($subtotal, 2)
+                );
+                $discountAmount = (float) ($voucherResult['discount'] ?? 0);
+                $voucher = $voucherResult['voucher'] ?? null;
+                $discountedSubtotal = round(max(0, $subtotal - $discountAmount), 2);
+
+                if ($voucher) {
+                    $voucherApplied = true;
+                }
+
                 foreach ($group as $cartItem) {
                     $this->inventory->deductForOrder(
                         $cartItem->product,
@@ -217,13 +243,28 @@ class BuyerCheckoutController extends Controller
                     'payment_method' => 'COD',
                     'payment_status' => 'pending',
                     'items' => $orderItems,
-                    'subtotal' => round($subtotal, 2),
+                    'original_subtotal' => round($subtotal, 2),
+                    'discount_amount' => $discountAmount,
+                    'voucher_code' => $voucher?->code,
+                    'seller_voucher_id' => $voucher?->id,
+                    'subtotal' => $discountedSubtotal,
                     'delivery_fee' => $sellerDeliveryFee,
-                    'total' => round($subtotal + $sellerDeliveryFee, 2),
+                    'total' => round($discountedSubtotal + $sellerDeliveryFee, 2),
                     'pickup_name' => $seller->store_name ?: 'SARI Seller Store',
                     'pickup_address' => $pickupAddress !== '' ? $pickupAddress : 'Seller pickup address to be confirmed',
                     'status' => 'new',
                 ]));
+
+                if ($voucher) {
+                    SellerVoucherRedemption::create([
+                        'seller_voucher_id' => $voucher->id,
+                        'marketplace_order_id' => $order->id,
+                        'buyer_account_id' => $order->buyer_account_id,
+                        'buyer_social_account_id' => $order->buyer_social_account_id,
+                        'discount_amount' => $discountAmount,
+                    ]);
+                    $voucher->increment('used_count');
+                }
 
                 MarketplaceOrderEvent::create([
                     'marketplace_order_id' => $order->id,
@@ -236,6 +277,12 @@ class BuyerCheckoutController extends Controller
                 ]);
 
                 $created->push($order);
+            }
+
+            if ($voucherCode !== '' && !$voucherApplied) {
+                throw ValidationException::withMessages([
+                    'voucher_code' => 'That voucher code does not apply to any Seller in this checkout.',
+                ]);
             }
 
             $cartQuery->delete();

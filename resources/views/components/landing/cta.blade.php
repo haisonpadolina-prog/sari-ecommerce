@@ -361,49 +361,6 @@
     transform: translateY(0);
 }
 
-/* dark mode */
-html.dark .sari-cta-v2,
-body.dark .sari-cta-v2,
-html.dark-mode .sari-cta-v2,
-body.dark-mode .sari-cta-v2,
-html[data-theme="dark"] .sari-cta-v2 {
-    --cta-ink: #f7f3eb;
-    --cta-muted: #c8c1b5;
-    --cta-soft: #aaa295;
-}
-
-html.dark .sari-cta-v2__overlay,
-body.dark .sari-cta-v2__overlay,
-html.dark-mode .sari-cta-v2__overlay,
-body.dark-mode .sari-cta-v2__overlay,
-html[data-theme="dark"] .sari-cta-v2__overlay {
-    background: linear-gradient(
-        90deg,
-        rgba(16,14,11,.985) 0%,
-        rgba(16,14,11,.95) 31%,
-        rgba(16,14,11,.83) 47%,
-        rgba(16,14,11,.40) 67%,
-        rgba(16,14,11,.08) 100%
-    );
-}
-
-html.dark .sari-cta-v2__logo,
-body.dark .sari-cta-v2__logo,
-html.dark-mode .sari-cta-v2__logo,
-body.dark-mode .sari-cta-v2__logo,
-html[data-theme="dark"] .sari-cta-v2__logo {
-    filter: brightness(0) invert(1);
-}
-
-html.dark .sari-cta-v2__floating,
-body.dark .sari-cta-v2__floating,
-html.dark-mode .sari-cta-v2__floating,
-body.dark-mode .sari-cta-v2__floating,
-html[data-theme="dark"] .sari-cta-v2__floating {
-    background: rgba(28,25,20,.80);
-    border-color: rgba(255,255,255,.10);
-    box-shadow: 0 18px 45px rgba(0,0,0,.24);
-}
 
 @media (max-width: 900px) {
     .sari-cta-v2 {

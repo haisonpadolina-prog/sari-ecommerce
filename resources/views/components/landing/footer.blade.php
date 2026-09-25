@@ -1,4 +1,4 @@
-<footer class="sari-footer" id="footer">
+<footer class="sari-footer" id="footer" style="background:#000000 !important; background-image:none !important; color:#ffffff !important;">
 
     <div class="sari-footer-shell">
 
@@ -18,6 +18,7 @@
                         src="{{ asset('images/sari-logo.png') }}"
                         alt="SARI"
                         class="sari-footer-logo"
+                        style="filter:brightness(0) invert(1) !important; opacity:1 !important;"
                     >
                 </a>
 
@@ -157,15 +158,9 @@
 .sari-footer {
     position: relative;
     overflow: hidden;
-    background:
-        radial-gradient(
-            circle at 12% 0%,
-            rgba(190, 135, 33, .08),
-            transparent 28%
-        ),
-        #0c0b09;
-    color: #f6f0e6;
-    border-top: 1px solid rgba(255,255,255,.07);
+    background: #000000;
+    color: #ffffff;
+    border-top: 1px solid rgba(255,255,255,.10);
 }
 
 .sari-footer::before {
@@ -175,10 +170,9 @@
     pointer-events: none;
     background:
         linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.018) 50%,
-            transparent
+            180deg,
+            rgba(255,255,255,.018),
+            transparent 30%
         );
 }
 
@@ -225,7 +219,7 @@
     height: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
-    opacity: .93;
+    opacity: 1;
     transition:
         opacity .25s ease,
         transform .35s cubic-bezier(.22,1,.36,1);
@@ -239,7 +233,7 @@
 .sari-footer-brand-copy {
     max-width: 390px;
     margin: 24px 0 0;
-    color: #aaa197;
+    color: rgba(255,255,255,.72);
     font-size: 11px;
     line-height: 1.85;
 }
@@ -249,7 +243,7 @@
     align-items: center;
     gap: 9px;
     margin-top: 20px;
-    color: #81786f;
+    color: rgba(255,255,255,.58);
     font-size: 8px;
     font-weight: 600;
     letter-spacing: .025em;
@@ -272,7 +266,7 @@
 .sari-footer-column-title {
     position: relative;
     margin: 2px 0 22px;
-    color: #eee6da;
+    color: #ffffff;
     font-size: 9px;
     font-weight: 700;
     letter-spacing: .14em;
@@ -299,7 +293,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    color: #918981;
+    color: rgba(255,255,255,.72);
     font-size: 9.5px;
     font-weight: 500;
     line-height: 1.5;
@@ -323,7 +317,7 @@
 }
 
 .sari-footer-link:hover {
-    color: #f1e6d3;
+    color: #ffffff;
     transform: translateX(2px);
 }
 
@@ -352,7 +346,7 @@
 }
 
 .sari-footer-signature-text {
-    color: #796f63;
+    color: rgba(255,255,255,.48);
     font-size: 7.5px;
     font-weight: 700;
     letter-spacing: .24em;
@@ -377,7 +371,7 @@
 
 .sari-footer-copy {
     margin: 0;
-    color: #6f6861;
+    color: rgba(255,255,255,.50);
     font-size: 8px;
     line-height: 1.5;
 }
@@ -389,7 +383,7 @@
 }
 
 .sari-footer-bottom-links a {
-    color: #777069;
+    color: rgba(255,255,255,.56);
     font-size: 8px;
     font-weight: 600;
     text-decoration: none;
@@ -404,7 +398,7 @@
     width: 3px;
     height: 3px;
     border-radius: 999px;
-    background: #4a4641;
+    background: rgba(255,255,255,.28);
 }
 
 
@@ -513,6 +507,331 @@
         transform: none !important;
     }
 }
+
+
+
+/* =========================================================
+   FOOTER COLOR LOCK
+   Footer intentionally stays black in the light-only site.
+   ========================================================= */
+#footer.sari-footer {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+#footer.sari-footer::before {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,.018),
+        transparent 32%
+    ) !important;
+}
+
+#footer.sari-footer .sari-footer-logo {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
+}
+
+#footer.sari-footer .sari-footer-column-title {
+    color: #ffffff !important;
+}
+
+#footer.sari-footer .sari-footer-brand-copy,
+#footer.sari-footer .sari-footer-link {
+    color: rgba(255,255,255,.74) !important;
+}
+
+#footer.sari-footer .sari-footer-brand-meta,
+#footer.sari-footer .sari-footer-signature-text,
+#footer.sari-footer .sari-footer-copy,
+#footer.sari-footer .sari-footer-bottom-links a {
+    color: rgba(255,255,255,.56) !important;
+}
+
+#footer.sari-footer .sari-footer-link:hover,
+#footer.sari-footer .sari-footer-bottom-links a:hover {
+    color: #ffffff !important;
+}
+
+#footer.sari-footer .sari-footer-column-title::after,
+#footer.sari-footer .sari-footer-link::before {
+    background: #c99128 !important;
+}
+
+#footer.sari-footer .sari-footer-signature-line {
+    background: rgba(255,255,255,.10) !important;
+}
+
+#footer.sari-footer .sari-footer-bottom {
+    border-top-color: rgba(255,255,255,.10) !important;
+}
+
+
+
+/* =========================================================
+   FOOTER — COMPACT FINAL OVERRIDE
+   Same black premium design, substantially less vertical space.
+   ========================================================= */
+
+#footer.sari-footer .sari-footer-shell {
+    width: min(calc(100% - 48px), 1160px) !important;
+    padding: 30px 0 13px !important;
+}
+
+#footer.sari-footer .sari-footer-main {
+    grid-template-columns:
+        minmax(260px, 1.45fr)
+        repeat(3, minmax(125px, .68fr)) !important;
+    gap: clamp(24px, 3.5vw, 46px) !important;
+}
+
+#footer.sari-footer .sari-footer-brand {
+    max-width: 360px !important;
+}
+
+#footer.sari-footer .sari-footer-logo {
+    width: clamp(96px, 8vw, 126px) !important;
+}
+
+#footer.sari-footer .sari-footer-brand-copy {
+    max-width: 340px !important;
+    margin-top: 13px !important;
+    font-size: 10.5px !important;
+    line-height: 1.6 !important;
+}
+
+#footer.sari-footer .sari-footer-brand-meta {
+    margin-top: 11px !important;
+    font-size: 7.5px !important;
+}
+
+#footer.sari-footer .sari-footer-column-title {
+    margin: 1px 0 12px !important;
+    font-size: 8.5px !important;
+}
+
+#footer.sari-footer .sari-footer-column-title::after {
+    margin-top: 7px !important;
+}
+
+#footer.sari-footer .sari-footer-links {
+    gap: 8px !important;
+}
+
+#footer.sari-footer .sari-footer-link {
+    font-size: 9.5px !important;
+    line-height: 1.35 !important;
+}
+
+#footer.sari-footer .sari-footer-signature {
+    margin-top: 22px !important;
+    gap: 12px !important;
+}
+
+#footer.sari-footer .sari-footer-signature-line {
+    width: min(88px, 8vw) !important;
+}
+
+#footer.sari-footer .sari-footer-signature-text {
+    font-size: 6.5px !important;
+}
+
+#footer.sari-footer .sari-footer-bottom {
+    gap: 16px !important;
+    margin-top: 12px !important;
+    padding-top: 11px !important;
+}
+
+#footer.sari-footer .sari-footer-copy,
+#footer.sari-footer .sari-footer-bottom-links a {
+    font-size: 7.5px !important;
+}
+
+@media (max-width: 820px) {
+    #footer.sari-footer .sari-footer-shell {
+        width: min(calc(100% - 36px), 1160px) !important;
+        padding: 28px 0 13px !important;
+    }
+
+    #footer.sari-footer .sari-footer-main {
+        gap: 26px 22px !important;
+    }
+
+    #footer.sari-footer .sari-footer-signature {
+        margin-top: 20px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    #footer.sari-footer .sari-footer-shell {
+        width: min(calc(100% - 28px), 1160px) !important;
+        padding: 25px 0 12px !important;
+    }
+
+    #footer.sari-footer .sari-footer-main {
+        gap: 22px 16px !important;
+    }
+
+    #footer.sari-footer .sari-footer-logo {
+        width: 104px !important;
+    }
+
+    #footer.sari-footer .sari-footer-signature {
+        margin-top: 18px !important;
+    }
+
+    #footer.sari-footer .sari-footer-bottom {
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+    }
+}
+
+
+
+/* =========================================================
+   FOOTER — EXTRA COMPACT FINAL OVERRIDE
+   Preserve the same design, reduce vertical footprint only.
+   ========================================================= */
+
+#footer.sari-footer .sari-footer-shell {
+    width: min(calc(100% - 48px), 1120px) !important;
+    padding: 20px 0 8px !important;
+}
+
+#footer.sari-footer .sari-footer-main {
+    grid-template-columns:
+        minmax(240px, 1.35fr)
+        repeat(3, minmax(110px, .65fr)) !important;
+    gap: clamp(20px, 2.8vw, 36px) !important;
+    align-items: start !important;
+}
+
+#footer.sari-footer .sari-footer-brand {
+    max-width: 320px !important;
+}
+
+#footer.sari-footer .sari-footer-logo {
+    width: clamp(88px, 7vw, 112px) !important;
+}
+
+#footer.sari-footer .sari-footer-brand-copy {
+    max-width: 310px !important;
+    margin-top: 10px !important;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+}
+
+#footer.sari-footer .sari-footer-brand-meta {
+    margin-top: 8px !important;
+    gap: 7px !important;
+    font-size: 7px !important;
+}
+
+#footer.sari-footer .sari-footer-status-dot {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+#footer.sari-footer .sari-footer-column-title {
+    margin: 0 0 9px !important;
+    font-size: 8px !important;
+    letter-spacing: .11em !important;
+}
+
+#footer.sari-footer .sari-footer-column-title::after {
+    width: 18px !important;
+    margin-top: 5px !important;
+}
+
+#footer.sari-footer .sari-footer-links {
+    gap: 6px !important;
+}
+
+#footer.sari-footer .sari-footer-link {
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+}
+
+#footer.sari-footer .sari-footer-signature {
+    margin-top: 14px !important;
+    gap: 9px !important;
+}
+
+#footer.sari-footer .sari-footer-signature-line {
+    width: min(70px, 6vw) !important;
+}
+
+#footer.sari-footer .sari-footer-signature-text {
+    font-size: 6px !important;
+    letter-spacing: .18em !important;
+}
+
+#footer.sari-footer .sari-footer-bottom {
+    gap: 12px !important;
+    margin-top: 8px !important;
+    padding-top: 8px !important;
+}
+
+#footer.sari-footer .sari-footer-copy,
+#footer.sari-footer .sari-footer-bottom-links a {
+    font-size: 7px !important;
+}
+
+#footer.sari-footer .sari-footer-bottom-links {
+    gap: 8px !important;
+}
+
+@media (max-width: 820px) {
+    #footer.sari-footer .sari-footer-shell {
+        width: min(calc(100% - 32px), 1120px) !important;
+        padding: 18px 0 8px !important;
+    }
+
+    #footer.sari-footer .sari-footer-main {
+        gap: 20px 18px !important;
+    }
+
+    #footer.sari-footer .sari-footer-signature {
+        margin-top: 12px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    #footer.sari-footer .sari-footer-shell {
+        width: min(calc(100% - 24px), 1120px) !important;
+        padding: 18px 0 8px !important;
+    }
+
+    #footer.sari-footer .sari-footer-main {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 18px 14px !important;
+    }
+
+    #footer.sari-footer .sari-footer-brand {
+        grid-column: 1 / -1 !important;
+    }
+
+    #footer.sari-footer .sari-footer-logo {
+        width: 96px !important;
+    }
+
+    #footer.sari-footer .sari-footer-brand-copy {
+        font-size: 9.5px !important;
+    }
+
+    #footer.sari-footer .sari-footer-signature {
+        margin-top: 12px !important;
+    }
+
+    #footer.sari-footer .sari-footer-bottom {
+        margin-top: 7px !important;
+        padding-top: 7px !important;
+    }
+}
+
 </style>
 
 

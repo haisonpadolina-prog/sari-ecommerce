@@ -42,14 +42,22 @@ class SellerReportController extends Controller
         $cancelledOrders = (int) ($orderAggregate->cancelled_orders ?? 0);
         $activeOrders = (int) ($orderAggregate->active_orders ?? 0);
 
-        $financialQuery = SellerSettlement::query()
+        // One aggregate query instead of five separate SUM/COUNT queries.
+        $financialAggregate = SellerSettlement::query()
             ->where('seller_account_id', $seller->id)
-            ->whereBetween('eligible_at', [$rangeStart, $rangeEnd]);
+            ->whereBetween('eligible_at', [$rangeStart, $rangeEnd])
+            ->selectRaw('COUNT(*) AS completed_count')
+            ->selectRaw('COALESCE(SUM(merchandise_amount), 0) AS gross_sales')
+            ->selectRaw('COALESCE(SUM(platform_commission_amount), 0) AS platform_commission')
+            ->selectRaw('COALESCE(SUM(withholding_tax_amount), 0) AS withholding_tax')
+            ->selectRaw('COALESCE(SUM(seller_net_amount), 0) AS net_revenue')
+            ->first();
 
-        $grossSales = round((float) (clone $financialQuery)->sum('merchandise_amount'), 2);
-        $platformCommission = round((float) (clone $financialQuery)->sum('platform_commission_amount'), 2);
-        $withholdingTax = round((float) (clone $financialQuery)->sum('withholding_tax_amount'), 2);
-        $netRevenue = round((float) (clone $financialQuery)->sum('seller_net_amount'), 2);
+        $grossSales = round((float) ($financialAggregate->gross_sales ?? 0), 2);
+        $platformCommission = round((float) ($financialAggregate->platform_commission ?? 0), 2);
+        $withholdingTax = round((float) ($financialAggregate->withholding_tax ?? 0), 2);
+        $netRevenue = round((float) ($financialAggregate->net_revenue ?? 0), 2);
+        $financialCompletedCount = (int) ($financialAggregate->completed_count ?? 0);
 
         $effectiveCommissionRate = $grossSales > 0
             ? round(($platformCommission / $grossSales) * 100, 4)
@@ -63,7 +71,6 @@ class SellerReportController extends Controller
             ? round(($cancelledOrders / $totalOrders) * 100, 1)
             : 0.0;
 
-        $financialCompletedCount = (clone $financialQuery)->count();
         $averageOrderValue = $financialCompletedCount > 0
             ? round($grossSales / $financialCompletedCount, 2)
             : 0.0;

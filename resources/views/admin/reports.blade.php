@@ -53,105 +53,650 @@
 @endphp
 
 <style>
-    :root {
-        --rp-brand:#d29a28;
-        --rp-brand-strong:#a97012;
-        --rp-brand-soft:#fff7e7;
-        --rp-gold-deep:#8e651f;
-        --rp-bronze:#a6762d;
-        --rp-sage:#6f826a;
-        --rp-teal:#5f7873;
-        --rp-plum:#806f7f;
-        --rp-terracotta:#b86556;
-        --rp-ink:#251f17;
-        --rp-text:#4f493f;
-        --rp-muted:#756d61;
-        --rp-subtle:#9b9388;
-        --rp-line:#e9e1d6;
-        --rp-soft:#fbf9f5;
-        --rp-shadow:0 2px 5px rgba(78,57,24,.035),0 14px 34px rgba(78,57,24,.055);
-    }
+    /* ============================================================
+       SARI ADMIN — PLATFORM REPORTS
+       Enterprise compact UI + performance-focused rendering
+       ============================================================ */
 
     .reports-page {
+        --rp-brand:#d99500;
+        --rp-brand-strong:#bd8205;
+        --rp-brand-soft:#fff7e8;
+        --rp-ink:#26211c;
+        --rp-text:#514a42;
+        --rp-muted:#8d8479;
+        --rp-subtle:#9b9288;
+        --rp-line:#e8e1d8;
+        --rp-soft:#faf9f6;
+        --rp-green:#5c7d63;
+        --rp-red:#ad6255;
+        --rp-plum:#806f7f;
+        --rp-teal:#607a72;
+
         width:100%;
-        max-width:1880px;
+        max-width:1640px;
         margin:0 auto;
-        padding-bottom:32px;
+        padding-bottom:20px;
         color:var(--rp-ink);
         font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
 
+    .reports-page *,
+    .reports-page *::before,
+    .reports-page *::after {
+        box-sizing:border-box;
+    }
+
+    .reports-page button,
+    .reports-page a,
+    .reports-page input,
+    .reports-page .rp-calendar-popover,
+    .reports-page .rp-cal-select-menu {
+        transition:
+            color .15s ease,
+            background-color .15s ease,
+            border-color .15s ease,
+            opacity .15s ease,
+            transform .15s ease;
+    }
+
     .rp-card {
         border:1px solid var(--rp-line);
-        border-radius:17px;
+        border-radius:14px;
         background:#fff;
-        box-shadow:var(--rp-shadow);
+        box-shadow:0 6px 20px rgba(61,43,22,.045);
     }
 
+    /* ---------------- HEADER ---------------- */
     .rp-header {
         display:flex;
-        align-items:flex-end;
+        align-items:center;
         justify-content:space-between;
-        gap:18px;
+        gap:14px;
     }
 
-    .rp-title-wrap { display:flex;min-width:0;align-items:center;gap:14px; }
+    .rp-title-wrap {
+        display:flex;
+        min-width:0;
+        align-items:center;
+        gap:10px;
+    }
+
     .rp-title-icon {
-        display:grid;width:48px;height:48px;flex:0 0 48px;place-items:center;
-        border:1px solid #ead8ad;border-radius:14px;background:#fff8e9;color:#b77b16;
-        box-shadow:0 6px 18px rgba(154,108,32,.10);
+        display:grid;
+        width:36px;
+        height:36px;
+        flex:0 0 36px;
+        place-items:center;
+        border:1px solid #eadfc9;
+        border-radius:10px;
+        background:#fff8eb;
+        color:#b77c18;
+        box-shadow:0 4px 12px rgba(75,54,25,.045);
     }
-    .rp-title-icon svg { width:22px;height:22px; }
-    .rp-eyebrow { color:#8a7c68;font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase; }
-    .rp-title { margin:3px 0 0;color:#251f17;font-size:clamp(1.6rem,1.4rem + .55vw,2rem);font-weight:700;line-height:1.1;letter-spacing:-.04em; }
-    .rp-subtitle { margin-top:5px;color:#756d61;font-size:11px;line-height:1.55; }
 
-    .rp-actions { display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px; }
-    .rp-filter-form { display:flex;flex-wrap:wrap;align-items:center;gap:8px; }
-    .rp-date-field {
-        display:flex;height:42px;align-items:center;gap:8px;border:1px solid #e6ddd0;border-radius:11px;
-        background:#fffdf9;padding:0 10px;color:#4f493f;box-shadow:0 1px 2px rgba(16,24,40,.025);
+    .rp-title-icon svg {
+        width:15px;
+        height:15px;
     }
-    .rp-date-field svg { width:15px;height:15px;color:#756d61; }
-    .rp-date-field input {
-        width:118px;border:0;outline:0;background:transparent;color:#4f493f;
-        font:inherit;font-size:9.5px;font-weight:500;
+
+    .rp-eyebrow {
+        color:#9a7b43;
+        font-size:7px;
+        font-weight:700;
+        letter-spacing:.13em;
+        text-transform:uppercase;
+    }
+
+    .rp-title {
+        margin:3px 0 0;
+        font-size:clamp(22px,1.55vw,27px);
+        font-weight:700;
+        line-height:1.08;
+        letter-spacing:-.035em;
+    }
+
+    .rp-title-platform { color:#17130f; }
+    .rp-title-gold { color:var(--rp-brand); }
+
+    .rp-subtitle {
+        max-width:760px;
+        margin-top:5px;
+        color:#81786c;
+        font-size:9.5px;
+        line-height:1.55;
+    }
+
+    .rp-actions {
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:flex-end;
+        gap:8px;
+    }
+
+    .rp-filter-form {
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        gap:7px;
     }
 
     .rp-btn {
-        display:inline-flex;height:42px;align-items:center;justify-content:center;gap:7px;border-radius:11px;
-        padding:0 13px;font-size:9.5px;font-weight:650;text-decoration:none;cursor:pointer;
+        display:inline-flex;
+        height:38px;
+        align-items:center;
+        justify-content:center;
+        gap:6px;
+        border-radius:9px;
+        padding:0 11px;
+        font-size:8px;
+        font-weight:600;
+        text-decoration:none;
+        cursor:pointer;
     }
-    .rp-btn svg { width:14px;height:14px; }
-    .rp-btn-secondary { border:1px solid #e2e8f0;background:#fff;color:#475467; }
-    .rp-btn-secondary:hover { background:#f8fafc; }
-    .rp-btn-primary { border:1px solid #b87b16;background:#c99022;color:#fff;box-shadow:0 8px 16px rgba(163,112,27,.18); }
-    .rp-btn-primary:hover { background:#aa7418; }
-    .rp-btn-link { border:1px solid #e2e8f0;background:#fff;color:#756d61; }
+
+    .rp-btn svg {
+        width:12px;
+        height:12px;
+    }
+
+    .rp-btn-secondary,
+    .rp-btn-link {
+        border:1px solid #e5ddd2;
+        background:#fff;
+        color:#6f665b;
+        box-shadow:none;
+    }
+
+    .rp-btn-secondary:hover,
+    .rp-btn-link:hover {
+        border-color:#d4c5b4;
+        background:#faf8f4;
+        color:#514940;
+    }
+
+    .rp-btn-primary {
+        border:1px solid var(--rp-brand);
+        background:var(--rp-brand);
+        color:#fff;
+        box-shadow:0 4px 10px rgba(217,149,0,.11);
+    }
+
+    .rp-btn-primary:hover {
+        border-color:var(--rp-brand-strong);
+        background:var(--rp-brand-strong);
+        transform:translateY(-1px);
+    }
 
     .rp-error {
-        margin-top:12px;border:1px solid #f4c7c3;border-radius:12px;background:#fff5f4;
-        padding:10px 12px;color:#b5473e;font-size:10px;
+        margin-top:10px;
+        border:1px solid #efcbc6;
+        border-radius:10px;
+        background:#fff6f4;
+        padding:8px 10px;
+        color:#a84f46;
+        font-size:8px;
     }
 
+    /* ---------------- DATE RANGE PICKER ---------------- */
+    .rp-range-picker {
+        position:relative;
+        z-index:70;
+    }
+
+    .rp-date-range-trigger {
+        display:flex;
+        min-width:226px;
+        height:38px;
+        align-items:center;
+        gap:8px;
+        border:1px solid #e5ddd2;
+        border-radius:9px;
+        background:#fff;
+        padding:0 10px;
+        color:#4f493f;
+        font:inherit;
+        text-align:left;
+        cursor:pointer;
+        box-shadow:none;
+    }
+
+    .rp-date-range-trigger:hover,
+    .rp-range-picker.is-open .rp-date-range-trigger {
+        border-color:#d4b878;
+        box-shadow:0 0 0 3px rgba(197,141,32,.065);
+    }
+
+    .rp-date-range-icon {
+        width:14px;
+        height:14px;
+        flex:0 0 14px;
+        color:#b77b16;
+    }
+
+    .rp-date-range-copy {
+        display:grid;
+        min-width:0;
+        flex:1;
+        line-height:1.18;
+    }
+
+    .rp-date-range-copy small {
+        color:#9b9388;
+        font-size:6.5px;
+        font-weight:650;
+        letter-spacing:.04em;
+        text-transform:uppercase;
+    }
+
+    .rp-date-range-copy strong {
+        overflow:hidden;
+        margin-top:2px;
+        color:#4a4239;
+        font-size:8px;
+        font-weight:650;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .rp-date-range-chevron {
+        width:12px;
+        height:12px;
+        flex:0 0 12px;
+        color:#8d8376;
+    }
+
+    .rp-range-picker.is-open .rp-date-range-chevron {
+        transform:rotate(180deg);
+    }
+
+    .rp-calendar-popover {
+        position:absolute;
+        z-index:120;
+        top:calc(100% + 7px);
+        right:0;
+        width:min(650px,calc(100vw - 48px));
+        padding:11px;
+        border:1px solid #e3d7c8;
+        border-radius:14px;
+        background:#fffefb;
+        box-shadow:0 18px 46px rgba(55,39,19,.14);
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+        transform:translateY(-4px) scale(.99);
+        transform-origin:top right;
+    }
+
+    .rp-range-picker.is-open .rp-calendar-popover {
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+        transform:translateY(0) scale(1);
+    }
+
+    .rp-calendar-dual {
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+    }
+
+    .rp-calendar-panel {
+        min-width:0;
+        border:1px solid #ece3d7;
+        border-radius:11px;
+        background:#fff;
+        padding:9px;
+        box-shadow:none;
+    }
+
+    .rp-calendar-panel-label {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        margin-bottom:7px;
+    }
+
+    .rp-calendar-panel-label span {
+        color:#9b9388;
+        font-size:6.5px;
+        font-weight:700;
+        letter-spacing:.04em;
+        text-transform:uppercase;
+    }
+
+    .rp-calendar-panel-label strong {
+        color:#6d5d45;
+        font-size:7.5px;
+        font-weight:650;
+    }
+
+    .rp-calendar-head {
+        display:grid;
+        grid-template-columns:30px minmax(0,1fr) 30px;
+        gap:6px;
+        align-items:center;
+    }
+
+    .rp-calendar-nav {
+        display:grid;
+        width:30px;
+        height:30px;
+        place-items:center;
+        border:1px solid #e8dfd3;
+        border-radius:8px;
+        background:#fff;
+        color:#756d61;
+        cursor:pointer;
+    }
+
+    .rp-calendar-nav:hover:not(:disabled) {
+        border-color:#d8bd85;
+        background:#fff8e9;
+        color:#a97012;
+    }
+
+    .rp-calendar-nav:disabled {
+        opacity:.35;
+        cursor:not-allowed;
+    }
+
+    .rp-calendar-nav svg {
+        width:13px;
+        height:13px;
+    }
+
+    .rp-calendar-controls {
+        display:grid;
+        grid-template-columns:minmax(0,1fr) 72px;
+        gap:5px;
+    }
+
+    .rp-cal-select {
+        position:relative;
+        min-width:0;
+        z-index:12;
+    }
+
+    .rp-cal-select.is-open {
+        z-index:40;
+    }
+
+    .rp-cal-select-trigger {
+        display:flex;
+        width:100%;
+        height:30px;
+        align-items:center;
+        justify-content:space-between;
+        gap:6px;
+        border:1px solid #e6ddd0;
+        border-radius:8px;
+        background:#fff;
+        padding:0 8px;
+        color:#4b4238;
+        font:inherit;
+        font-size:7.5px;
+        font-weight:650;
+        cursor:pointer;
+    }
+
+    .rp-cal-select-trigger:hover,
+    .rp-cal-select.is-open .rp-cal-select-trigger {
+        border-color:#d7b978;
+        background:#fff8ea;
+    }
+
+    .rp-cal-select-trigger svg {
+        width:11px;
+        height:11px;
+        flex:0 0 11px;
+        color:#8d8376;
+    }
+
+    .rp-cal-select.is-open .rp-cal-select-trigger svg {
+        transform:rotate(180deg);
+    }
+
+    .rp-cal-select-menu {
+        position:absolute;
+        z-index:50;
+        top:calc(100% + 4px);
+        right:0;
+        left:0;
+        max-height:192px;
+        overflow-y:auto;
+        padding:4px;
+        border:1px solid #e4d9ca;
+        border-radius:9px;
+        background:#fff;
+        box-shadow:0 12px 28px rgba(55,39,19,.12);
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+        transform:translateY(-3px);
+        scrollbar-width:thin;
+        scrollbar-color:#d9cfc2 transparent;
+    }
+
+    .rp-cal-select.is-open .rp-cal-select-menu {
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+        transform:translateY(0);
+    }
+
+    .rp-cal-select-option {
+        display:flex;
+        width:100%;
+        min-height:29px;
+        align-items:center;
+        justify-content:space-between;
+        gap:6px;
+        border:0;
+        border-radius:7px;
+        background:transparent;
+        padding:0 7px;
+        color:#5b5145;
+        font:inherit;
+        font-size:7.5px;
+        font-weight:550;
+        text-align:left;
+        cursor:pointer;
+    }
+
+    .rp-cal-select-option:hover,
+    .rp-cal-select-option:focus-visible,
+    .rp-cal-select-option.is-selected {
+        outline:none;
+        background:#fff8e9;
+        color:#9b6812;
+    }
+
+    .rp-cal-select-option.is-selected {
+        font-weight:700;
+    }
+
+    .rp-cal-select-option.is-selected::after {
+        content:'✓';
+        color:#c58d20;
+        font-size:8px;
+        font-weight:800;
+    }
+
+    .rp-calendar-weekdays,
+    .rp-calendar-grid {
+        display:grid;
+        grid-template-columns:repeat(7,1fr);
+        gap:3px;
+    }
+
+    .rp-calendar-weekdays {
+        margin-top:8px;
+        color:#9b9388;
+        font-size:6.5px;
+        font-weight:700;
+        text-align:center;
+    }
+
+    .rp-calendar-weekdays span {
+        padding:3px 0;
+    }
+
+    .rp-calendar-grid {
+        margin-top:2px;
+    }
+
+    .rp-calendar-day {
+        position:relative;
+        display:grid;
+        height:29px;
+        place-items:center;
+        border:0;
+        border-radius:7px;
+        background:transparent;
+        color:#4f493f;
+        font:inherit;
+        font-size:7.5px;
+        font-weight:550;
+        cursor:pointer;
+    }
+
+    .rp-calendar-day:hover:not(:disabled) {
+        background:#fff6df;
+        color:#9e6d13;
+    }
+
+    .rp-calendar-day.is-outside { color:#c8c0b6; }
+
+    .rp-calendar-day.is-today::after {
+        content:'';
+        position:absolute;
+        bottom:3px;
+        width:3px;
+        height:3px;
+        border-radius:50%;
+        background:#c58d20;
+    }
+
+    .rp-calendar-day.is-in-range {
+        background:#fff8e9;
+        color:#7b5b22;
+    }
+
+    .rp-calendar-day.is-selected {
+        background:#c99022;
+        color:#fff;
+        box-shadow:0 4px 9px rgba(166,112,18,.14);
+    }
+
+    .rp-calendar-day.is-selected.is-today::after { background:#fff; }
+
+    .rp-calendar-day:disabled {
+        color:#d7d1c9;
+        cursor:not-allowed;
+    }
+
+    .rp-calendar-selection {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        margin-top:9px;
+        border:1px solid #eee5d9;
+        border-radius:9px;
+        background:#fcfaf6;
+        padding:8px 9px;
+    }
+
+    .rp-calendar-selection span {
+        color:#9b9388;
+        font-size:6.5px;
+    }
+
+    .rp-calendar-selection strong {
+        color:#554a3d;
+        font-size:7.5px;
+        font-weight:650;
+        text-align:right;
+    }
+
+    .rp-calendar-footer {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:7px;
+        margin-top:8px;
+    }
+
+    .rp-calendar-ghost,
+    .rp-calendar-apply {
+        height:32px;
+        border-radius:8px;
+        padding:0 10px;
+        font:inherit;
+        font-size:7.5px;
+        font-weight:650;
+        cursor:pointer;
+    }
+
+    .rp-calendar-ghost {
+        border:1px solid #e7dfd4;
+        background:#fff;
+        color:#756d61;
+    }
+
+    .rp-calendar-apply {
+        border:1px solid #b87b16;
+        background:#c99022;
+        color:#fff;
+        box-shadow:none;
+    }
+
+    .rp-calendar-apply:hover {
+        background:#aa7418;
+    }
+
+    /* ---------------- KPI SUMMARY ---------------- */
     .rp-summary-grid {
         display:grid;
-        grid-template-columns:repeat(8,minmax(0,1fr));
-        gap:10px;
-        margin-top:16px;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:9px;
+        margin-top:11px;
     }
 
     .rp-stat {
         position:relative;
-        min-height:118px;
-        padding:15px 64px 15px 15px;
+        min-height:76px;
+        padding:11px 50px 11px 13px;
         overflow:hidden;
+        contain:paint;
     }
+
+    .rp-stat:hover {
+        border-color:#ddcfbb;
+        transform:translateY(-1px);
+        box-shadow:0 8px 22px rgba(61,43,22,.06);
+    }
+
     .rp-stat-icon {
-        position:absolute;top:14px;right:14px;display:grid;width:40px;height:40px;place-items:center;
-        border-radius:12px;border:1px solid transparent;
+        position:absolute;
+        top:12px;
+        right:12px;
+        display:grid;
+        width:32px;
+        height:32px;
+        place-items:center;
+        border-radius:9px;
+        border:1px solid transparent;
     }
-    .rp-stat-icon svg { width:18px;height:18px; }
+
+    .rp-stat-icon svg {
+        width:14px;
+        height:14px;
+    }
+
     .rp-stat.blue .rp-stat-icon { background:#fff7e6;color:#b17a1f;border-color:#ecd7aa; }
     .rp-stat.green .rp-stat-icon { background:#f1f6ef;color:#6c7f63;border-color:#dce8d8; }
     .rp-stat.violet .rp-stat-icon { background:#f8f1e5;color:#8f6929;border-color:#eadcc3; }
@@ -161,895 +706,1024 @@
     .rp-stat.purple .rp-stat-icon { background:#f7f3f6;color:#806f7f;border-color:#e7dee5; }
     .rp-stat.amber .rp-stat-icon { background:#fff7e7;color:#c18a20;border-color:#eeddb4; }
 
-    .rp-stat-label { color:#756d61;font-size:10px;font-weight:500;line-height:1.35; }
-    .rp-stat-value { margin-top:6px;color:#101828;font-size:21px;font-weight:700;line-height:1;letter-spacing:-.04em;white-space:nowrap; }
-    .rp-stat-footer { display:flex;align-items:center;gap:6px;margin-top:9px;min-width:0; }
-    .rp-delta {
-        display:inline-flex;align-items:center;gap:3px;border-radius:999px;padding:4px 6px;
-        font-size:7.5px;font-weight:700;white-space:nowrap;
+    .rp-stat-label {
+        color:#8e857a;
+        font-size:8px;
+        font-weight:500;
+        line-height:1.3;
     }
-    .rp-delta.good { background:#eaf8ef;color:#24975b; }
-    .rp-delta.bad { background:#fff0ed;color:#c95849; }
-    .rp-delta.neutral { background:#f2f4f7;color:#756d61; }
-    .rp-stat-help { overflow:hidden;color:#98a2b3;font-size:8px;text-overflow:ellipsis;white-space:nowrap; }
 
+    .rp-stat-value {
+        margin-top:4px;
+        color:#28221b;
+        font-size:19px;
+        font-weight:700;
+        line-height:1;
+        letter-spacing:-.035em;
+        white-space:nowrap;
+    }
+
+    .rp-stat-footer {
+        display:flex;
+        min-width:0;
+        align-items:center;
+        gap:5px;
+        margin-top:6px;
+    }
+
+    .rp-delta {
+        display:inline-flex;
+        min-height:19px;
+        align-items:center;
+        gap:3px;
+        border-radius:999px;
+        padding:0 6px;
+        font-size:6.5px;
+        font-weight:700;
+        white-space:nowrap;
+    }
+
+    .rp-delta.good { background:#eef8f1;color:#4f8060; }
+    .rp-delta.bad { background:#fff2ef;color:#a65d5d; }
+    .rp-delta.neutral { background:#f4f2ef;color:#81786d; }
+
+    .rp-stat-help {
+        overflow:hidden;
+        color:#9b9288;
+        font-size:7px;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    /* ---------------- ANALYTICS ---------------- */
     .rp-main-grid {
         display:grid;
-        grid-template-columns:minmax(0,1.65fr) minmax(340px,.85fr);
-        gap:12px;
-        margin-top:12px;
+        grid-template-columns:minmax(0,1.65fr) minmax(300px,.75fr);
+        gap:10px;
+        margin-top:10px;
     }
-    .rp-panel { min-height:325px;padding:17px; }
-    .rp-panel-head { display:flex;align-items:flex-start;justify-content:space-between;gap:12px; }
-    .rp-panel-title { color:#101828;font-size:14px;font-weight:700;line-height:1.35; }
-    .rp-panel-copy { margin-top:4px;color:#8a7c68;font-size:9.5px;line-height:1.55; }
+
+    .rp-panel {
+        min-height:272px;
+        padding:14px;
+    }
+
+    .rp-panel-head {
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:10px;
+    }
+
+    .rp-panel-title {
+        color:#302a24;
+        font-size:11px;
+        font-weight:700;
+        line-height:1.35;
+    }
+
+    .rp-panel-copy {
+        margin-top:3px;
+        color:#91887d;
+        font-size:7.5px;
+        line-height:1.5;
+    }
+
     .rp-period-chip {
-        display:inline-flex;height:30px;align-items:center;border:1px solid #e7dfd4;border-radius:9px;
-        background:#fff;padding:0 10px;color:#756d61;font-size:8px;font-weight:600;white-space:nowrap;
+        display:inline-flex;
+        min-height:24px;
+        align-items:center;
+        border:1px solid #e7dfd4;
+        border-radius:7px;
+        background:#fff;
+        padding:0 7px;
+        color:#81786d;
+        font-size:6.5px;
+        font-weight:600;
+        white-space:nowrap;
     }
 
-    .rp-chart-wrap { position:relative;height:255px;margin-top:14px;overflow:visible; }
-    .rp-chart-svg { display:block;width:100%;height:255px; }
+    .rp-chart-wrap {
+        position:relative;
+        height:205px;
+        margin-top:9px;
+        overflow:visible;
+    }
+
+    .rp-chart-svg {
+        display:block;
+        width:100%;
+        height:205px;
+    }
+
     .rp-chart-tooltip {
-        position:absolute;z-index:20;min-width:145px;pointer-events:none;transform:translate(-50%,-118%);
-        border:1px solid #dfe4ea;border-radius:10px;background:rgba(255,255,255,.99);padding:9px 11px;
-        box-shadow:0 10px 24px rgba(16,24,40,.14);opacity:0;
+        position:absolute;
+        z-index:20;
+        min-width:120px;
+        pointer-events:none;
+        transform:translate(-50%,-118%);
+        border:1px solid #e1dad1;
+        border-radius:9px;
+        background:rgba(255,255,255,.99);
+        padding:7px 9px;
+        box-shadow:0 8px 20px rgba(31,24,17,.11);
+        opacity:0;
     }
-    .rp-chart-tooltip.show { opacity:1; }
-    .rp-chart-tooltip.below { transform:translate(-50%,14px); }
-    .rp-chart-tooltip small { display:block;color:#756d61;font-size:8px;font-weight:500; }
-    .rp-chart-tooltip strong { display:block;margin-top:3px;color:#101828;font-size:11px;font-weight:750; }
-    .rp-chart-tooltip span { display:block;margin-top:3px;color:#756d61;font-size:8px; }
 
-    .rp-donut-layout { display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;margin-top:22px; }
+    .rp-chart-tooltip.show { opacity:1; }
+    .rp-chart-tooltip.below { transform:translate(-50%,12px); }
+
+    .rp-chart-tooltip small {
+        display:block;
+        color:#81786d;
+        font-size:7px;
+        font-weight:500;
+    }
+
+    .rp-chart-tooltip strong {
+        display:block;
+        margin-top:3px;
+        color:#302a24;
+        font-size:9px;
+        font-weight:700;
+    }
+
+    .rp-chart-tooltip span {
+        display:block;
+        margin-top:2px;
+        color:#81786d;
+        font-size:7px;
+    }
+
+    .rp-donut-layout {
+        display:grid;
+        grid-template-columns:118px 1fr;
+        gap:12px;
+        align-items:center;
+        margin-top:13px;
+    }
+
     .rp-donut {
-        position:relative;display:grid;width:145px;height:145px;place-items:center;border-radius:50%;
+        position:relative;
+        display:grid;
+        width:112px;
+        height:112px;
+        place-items:center;
+        border-radius:50%;
         background:var(--status-gradient);
     }
-    .rp-donut::before {
-        content:"";position:absolute;width:102px;height:102px;border-radius:50%;
-        background:#fff;box-shadow:inset 0 0 0 1px #eee7de;
-    }
-    .rp-donut-center { position:relative;text-align:center; }
-    .rp-donut-total { color:#101828;font-size:20px;font-weight:700;line-height:1; }
-    .rp-donut-caption { margin-top:5px;color:#7c8796;font-size:8.5px; }
-    .rp-legend { display:grid;gap:9px; }
-    .rp-legend-row { display:grid;grid-template-columns:10px minmax(0,1fr) 40px 50px;gap:7px;align-items:center;color:#756d61;font-size:9px; }
-    .rp-legend-dot { width:8px;height:8px;border-radius:3px; }
-    .rp-legend-count { color:#4f493f;font-weight:650;text-align:right; }
-    .rp-legend-percent { color:#98a2b3;text-align:right; }
 
+    .rp-donut::before {
+        content:"";
+        position:absolute;
+        width:78px;
+        height:78px;
+        border-radius:50%;
+        background:#fff;
+        box-shadow:inset 0 0 0 1px #eee7de;
+    }
+
+    .rp-donut-center {
+        position:relative;
+        text-align:center;
+    }
+
+    .rp-donut-total {
+        color:#302a24;
+        font-size:17px;
+        font-weight:700;
+        line-height:1;
+    }
+
+    .rp-donut-caption {
+        margin-top:3px;
+        color:#91887d;
+        font-size:6.5px;
+    }
+
+    .rp-legend {
+        display:grid;
+        gap:6px;
+    }
+
+    .rp-legend-row {
+        display:grid;
+        grid-template-columns:8px minmax(0,1fr) 34px 42px;
+        gap:6px;
+        align-items:center;
+        color:#81786d;
+        font-size:7px;
+    }
+
+    .rp-legend-dot {
+        width:7px;
+        height:7px;
+        border-radius:3px;
+    }
+
+    .rp-legend-count {
+        color:#514a42;
+        font-weight:650;
+        text-align:right;
+    }
+
+    .rp-legend-percent {
+        color:#9b9288;
+        text-align:right;
+    }
+
+    /* ---------------- SECONDARY CHARTS ---------------- */
     .rp-secondary-grid {
         display:grid;
         grid-template-columns:1fr 1fr;
-        gap:12px;
-        margin-top:12px;
+        gap:10px;
+        margin-top:10px;
     }
-    .rp-mini-panel { min-height:250px;padding:17px; }
-    .rp-bars { display:flex;height:165px;align-items:flex-end;gap:4px;margin-top:17px;padding:8px 2px 0;border-bottom:1px solid #eee7de; }
-    .rp-bar-item { position:relative;display:flex;flex:1;height:100%;align-items:flex-end;justify-content:center;min-width:2px; }
+
+    .rp-mini-panel {
+        min-height:218px;
+        padding:14px;
+    }
+
+    .rp-bars {
+        display:flex;
+        height:132px;
+        align-items:flex-end;
+        gap:3px;
+        margin-top:11px;
+        padding:6px 2px 0;
+        border-bottom:1px solid #eee7de;
+    }
+
+    .rp-bar-item,
+    .rp-reg-group {
+        position:relative;
+        display:flex;
+        flex:1;
+        height:100%;
+        min-width:2px;
+        align-items:flex-end;
+        justify-content:center;
+        outline:none;
+    }
+
     .rp-bar {
-        width:min(12px,70%);min-height:2px;border-radius:5px 5px 2px 2px;
-        background:linear-gradient(180deg,#e5b85d,#c88e25);
+        width:min(10px,70%);
+        min-height:2px;
+        border-radius:4px 4px 2px 2px;
+        background:#c99022;
     }
-    .rp-bar.reg { background:linear-gradient(180deg,#a68e9f,#806f7f); }
-    .rp-bar-item:hover .rp-bar { filter:brightness(.96); }
+
+    .rp-bar.reg { background:#806f7f; }
+
     .rp-bar-tip {
-        position:absolute;bottom:calc(var(--bar-height) + 8px);left:50%;z-index:10;display:none;
-        transform:translateX(-50%);border:1px solid #e0e5eb;border-radius:8px;background:#fff;
-        padding:6px 8px;color:#4f493f;font-size:8px;white-space:nowrap;box-shadow:0 8px 18px rgba(16,24,40,.10);
+        position:absolute;
+        bottom:calc(var(--bar-height) + 6px);
+        left:50%;
+        z-index:10;
+        display:none;
+        transform:translateX(-50%);
+        border:1px solid #e0e5eb;
+        border-radius:7px;
+        background:#fff;
+        padding:5px 7px;
+        color:#4f493f;
+        font-size:6.5px;
+        white-space:nowrap;
+        box-shadow:0 7px 16px rgba(16,24,40,.09);
     }
-    .rp-bar-item:hover .rp-bar-tip { display:block; }
-    .rp-axis { display:flex;justify-content:space-between;margin-top:8px;color:#98a2b3;font-size:8px; }
 
-    .rp-ledger { margin-top:12px;overflow:hidden; }
-    .rp-section-head { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 17px;border-bottom:1px solid #edf0f3; }
-    .rp-table-wrap { overflow-x:auto; }
-    .rp-table { width:100%;min-width:980px;border-collapse:collapse;text-align:left; }
-    .rp-table thead { background:#fbfcfd; }
+    .rp-bar-item:hover .rp-bar-tip,
+    .rp-bar-item:focus .rp-bar-tip,
+    .rp-reg-group:hover .rp-bar-tip,
+    .rp-reg-group:focus .rp-bar-tip {
+        display:block;
+    }
+
+    .rp-axis {
+        display:flex;
+        justify-content:space-between;
+        margin-top:6px;
+        color:#9b9288;
+        font-size:6.5px;
+    }
+
+    .rp-registration-legend {
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        gap:10px;
+        margin-top:8px;
+        color:#81786d;
+        font-size:6.8px;
+        font-weight:600;
+    }
+
+    .rp-registration-legend span {
+        display:inline-flex;
+        align-items:center;
+        gap:5px;
+    }
+
+    .rp-registration-legend i {
+        display:inline-block;
+        width:7px;
+        height:7px;
+        border-radius:2px;
+    }
+
+    .rp-registration-legend i.submitted { background:#c99022; }
+    .rp-registration-legend i.pending { background:#b86556; }
+
+    .rp-registration-bars {
+        margin-top:6px;
+    }
+
+    .rp-reg-group {
+        gap:2px;
+    }
+
+    .rp-reg-bar {
+        width:min(7px,40%);
+        min-width:2px;
+        min-height:2px;
+        border-radius:4px 4px 2px 2px;
+    }
+
+    .rp-reg-bar.submitted { background:#c99022; }
+    .rp-reg-bar.pending { background:#b86556; }
+
+    /* ---------------- LEDGER ---------------- */
+    .rp-ledger {
+        margin-top:10px;
+        overflow:hidden;
+    }
+
+    .rp-section-head {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:11px 14px;
+        border-bottom:1px solid #eee8df;
+    }
+
+    .rp-table-wrap {
+        overflow-x:auto;
+    }
+
+    .rp-table {
+        width:100%;
+        min-width:940px;
+        border-collapse:collapse;
+        text-align:left;
+    }
+
+    .rp-table thead {
+        background:#faf9f6;
+    }
+
     .rp-table th {
-        padding:12px 14px;border-bottom:1px solid #e8ecf1;color:#756d61;font-size:9px;font-weight:700;
-        letter-spacing:.035em;text-transform:uppercase;
+        padding:9px 11px;
+        border-bottom:1px solid #eee8df;
+        color:#81786d;
+        font-size:7.5px;
+        font-weight:700;
+        letter-spacing:.04em;
+        text-transform:uppercase;
     }
-    .rp-table td { padding:13px 14px;border-bottom:1px solid #eef1f4;color:#475467;font-size:10.5px;vertical-align:middle; }
-    .rp-table tbody tr:hover { background:#fdfbf7; }
-    .rp-order { color:#101828;font-weight:700; }
-    .rp-money { color:#101828;font-weight:700;white-space:nowrap; }
+
+    .rp-table td {
+        padding:9px 11px;
+        border-bottom:1px solid #f0ebe4;
+        color:#5b534a;
+        font-size:8px;
+        vertical-align:middle;
+    }
+
+    .rp-table tbody tr {
+        content-visibility:auto;
+        contain-intrinsic-size:44px;
+    }
+
+    .rp-table tbody tr:hover {
+        background:#fdfbf8;
+    }
+
+    .rp-order,
+    .rp-money {
+        color:#302a24;
+        font-weight:700;
+        white-space:nowrap;
+    }
+
     .rp-status {
-        display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;
-        background:#f2f4f7;color:#756d61;font-size:9px;font-weight:650;white-space:nowrap;
+        display:inline-flex;
+        min-height:22px;
+        align-items:center;
+        gap:5px;
+        border-radius:999px;
+        padding:0 7px;
+        background:#f4f2ef;
+        color:#81786d;
+        font-size:7px;
+        font-weight:650;
+        white-space:nowrap;
     }
-    .rp-status::before { content:"";width:5px;height:5px;border-radius:50%;background:currentColor; }
-    .rp-status.delivered { background:#eff5ed;color:#657b61; }
-    .rp-status.cancelled { background:#fff1ee;color:#ad6255; }
-    .rp-status.in_transit,.rp-status.heading_pickup,.rp-status.courier_accepted { background:#f0f4f2;color:#607a72; }
-    .rp-status.preparing,.rp-status.ready_for_pickup { background:#f6f2f5;color:#806f7f; }
 
-    .rp-empty { display:grid;min-height:120px;place-items:center;color:#98a2b3;font-size:10px;text-align:center; }
-
-    @media (max-width:1680px) {
-        .rp-summary-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .rp-status::before {
+        content:"";
+        width:5px;
+        height:5px;
+        border-radius:50%;
+        background:currentColor;
     }
+
+    .rp-status.delivered { background:#eef8f1;color:#4f8060; }
+    .rp-status.cancelled { background:#fff2ef;color:#a65d5d; }
+    .rp-status.in_transit,
+    .rp-status.heading_pickup,
+    .rp-status.courier_accepted { background:#f0f4f2;color:#607a72; }
+    .rp-status.preparing,
+    .rp-status.ready_for_pickup { background:#f6f2f5;color:#806f7f; }
+
+    .rp-empty {
+        display:grid;
+        min-height:96px;
+        place-items:center;
+        color:#91887d;
+        font-size:8px;
+        text-align:center;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+    @media (max-height:850px) and (min-width:900px) {
+        .rp-title { font-size:22px; }
+
+        .rp-stat {
+            min-height:70px;
+            padding-top:9px;
+            padding-bottom:9px;
+        }
+
+        .rp-stat-value { font-size:18px; }
+
+        .rp-panel {
+            min-height:250px;
+            padding:12px;
+        }
+
+        .rp-chart-wrap,
+        .rp-chart-svg {
+            height:188px;
+        }
+
+        .rp-mini-panel {
+            min-height:205px;
+            padding:12px;
+        }
+
+        .rp-bars {
+            height:122px;
+        }
+    }
+
     @media (max-width:1250px) {
-        .rp-main-grid,.rp-secondary-grid { grid-template-columns:1fr; }
+        .rp-main-grid,
+        .rp-secondary-grid {
+            grid-template-columns:1fr;
+        }
     }
+
     @media (max-width:850px) {
-        .rp-header { align-items:stretch;flex-direction:column; }
-        .rp-actions { justify-content:flex-start; }
-        .rp-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-        .rp-donut-layout { grid-template-columns:1fr;justify-items:center; }
-        .rp-legend { width:100%; }
+        .rp-header {
+            align-items:stretch;
+            flex-direction:column;
+        }
+
+        .rp-actions {
+            justify-content:flex-start;
+        }
+
+        .rp-filter-form {
+            width:100%;
+        }
+
+        .rp-range-picker {
+            flex:1 1 100%;
+            width:100%;
+        }
+
+        .rp-date-range-trigger {
+            width:100%;
+            min-width:0;
+        }
+
+        .rp-calendar-popover {
+            right:auto;
+            left:0;
+            width:min(650px,calc(100vw - 42px));
+            transform-origin:top left;
+        }
+
+        .rp-summary-grid {
+            grid-template-columns:repeat(2,minmax(0,1fr));
+        }
+
+        .rp-donut-layout {
+            grid-template-columns:1fr;
+            justify-items:center;
+        }
+
+        .rp-legend {
+            width:100%;
+        }
     }
+
     @media (max-width:560px) {
-        .rp-summary-grid { grid-template-columns:1fr; }
-        .rp-filter-form { width:100%; }
-        .rp-date-field { flex:1; }
-        .rp-date-field input { width:100%; }
+        .rp-summary-grid {
+            grid-template-columns:1fr;
+        }
+
+        .rp-calendar-popover {
+            width:min(340px,calc(100vw - 28px));
+        }
+
+        .rp-calendar-dual {
+            grid-template-columns:1fr;
+        }
+
+        .rp-btn {
+            min-height:40px;
+            height:40px;
+            font-size:9px;
+        }
     }
 
-    /* =========================================================
-       REPORTS — TITLE / TYPOGRAPHY / FLOATING SURFACE PASS
-       Summary-card text sizes are intentionally NOT changed.
-       ========================================================= */
-
-    /* Split title: Platform = black, Reports = SARI gold. */
-    .reports-page .rp-title-platform {
-        color: #17130e !important;
+    @media (prefers-reduced-motion:reduce) {
+        .reports-page *,
+        .rp-calendar-popover,
+        .rp-cal-select-menu {
+            animation:none !important;
+            transition:none !important;
+            transform:none !important;
+            scroll-behavior:auto !important;
+        }
     }
 
-    .reports-page .rp-title-gold {
-        color: #c58d20 !important;
-    }
+    /* ============================================================
+       PLATFORM REPORTS — DESKTOP LAYOUT MATCH
+       Mirrors the approved reference composition:
+       8 KPI cards → 2/3 + 1/3 analytics → 50/50 activity row.
+       Performance JS and backend/report contracts remain unchanged.
+       ============================================================ */
 
-    /* Increase page/header typography only. */
-    .reports-page .rp-eyebrow {
-        font-size: 10.5px !important;
-    }
+    @media (min-width: 1501px) {
+        .reports-page {
+            max-width: 1640px !important;
+        }
 
-    .reports-page .rp-title {
-        font-size: clamp(1.65rem, 1.45rem + .55vw, 2rem) !important;
-        line-height: 1.08 !important;
-    }
+        .rp-header {
+            align-items: center !important;
+            gap: 20px !important;
+        }
 
-    .reports-page .rp-subtitle {
-        font-size: 12px !important;
-        line-height: 1.6 !important;
-    }
+        .rp-title-wrap {
+            gap: 10px !important;
+        }
 
-    .reports-page .rp-date-field input,
-    .reports-page .rp-btn {
-        font-size: 10.5px !important;
-    }
+        .rp-title-icon {
+            width: 38px !important;
+            height: 38px !important;
+            flex-basis: 38px !important;
+            border-radius: 10px !important;
+        }
 
-    /* Main section headings and explanatory copy. */
-    .reports-page .rp-panel-title {
-        font-size: 15.5px !important;
-        line-height: 1.4 !important;
-    }
+        .rp-title-icon svg {
+            width: 16px !important;
+            height: 16px !important;
+        }
 
-    .reports-page .rp-panel-copy {
-        font-size: 10.75px !important;
-        line-height: 1.6 !important;
-    }
+        .rp-eyebrow {
+            font-size: 8px !important;
+        }
 
-    .reports-page .rp-period-chip {
-        font-size: 9px !important;
-    }
+        .rp-title {
+            font-size: 28px !important;
+            line-height: 1.05 !important;
+        }
 
-    /* Chart / donut labels. */
-    .reports-page .rp-chart-tooltip small {
-        font-size: 9px !important;
-    }
+        .rp-subtitle {
+            margin-top: 6px !important;
+            font-size: 9.5px !important;
+        }
 
-    .reports-page .rp-chart-tooltip strong {
-        font-size: 12px !important;
-    }
+        .rp-actions {
+            gap: 12px !important;
+        }
 
-    .reports-page .rp-chart-tooltip span {
-        font-size: 9px !important;
-    }
+        .rp-date-range-trigger {
+            min-width: 270px !important;
+            height: 46px !important;
+            border-radius: 10px !important;
+            padding-inline: 13px !important;
+        }
 
-    .reports-page .rp-donut-total {
-        font-size: 22px !important;
-    }
+        .rp-date-range-icon {
+            width: 16px !important;
+            height: 16px !important;
+            flex-basis: 16px !important;
+        }
 
-    .reports-page .rp-donut-caption {
-        font-size: 9.5px !important;
-    }
+        .rp-date-range-copy small {
+            font-size: 7px !important;
+        }
 
-    .reports-page .rp-legend-row {
-        font-size: 10px !important;
-    }
+        .rp-date-range-copy strong {
+            font-size: 8.5px !important;
+        }
 
-    /* Activity charts. */
-    .reports-page .rp-axis,
-    .reports-page .rp-bar-tip {
-        font-size: 9px !important;
-    }
+        .rp-btn {
+            height: 46px !important;
+            border-radius: 10px !important;
+            padding-inline: 13px !important;
+            font-size: 8.5px !important;
+        }
 
-    /* Recent Orders table. */
-    .reports-page .rp-table th {
-        font-size: 10px !important;
-    }
+        .rp-btn svg {
+            width: 13px !important;
+            height: 13px !important;
+        }
 
-    .reports-page .rp-table td {
-        font-size: 11.5px !important;
-        line-height: 1.45 !important;
-    }
+        /* Approved screenshot: all 8 KPIs stay on one row. */
+        .rp-summary-grid {
+            grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+            gap: 16px !important;
+            margin-top: 20px !important;
+        }
 
-    .reports-page .rp-status {
-        font-size: 9.5px !important;
-    }
+        .rp-stat {
+            min-height: 116px !important;
+            padding: 15px 50px 15px 16px !important;
+            border-radius: 15px !important;
+        }
 
-    .reports-page .rp-empty {
-        font-size: 11px !important;
-    }
+        .rp-stat-icon {
+            top: 14px !important;
+            right: 14px !important;
+            width: 34px !important;
+            height: 34px !important;
+            border-radius: 10px !important;
+        }
 
-    /* Keep SUMMARY CARD typography exactly as currently designed. */
-    .reports-page .rp-stat-label,
-    .reports-page .rp-stat-value,
-    .reports-page .rp-stat-help,
-    .reports-page .rp-delta {
-        /* intentionally inherits the existing summary-card sizes */
-    }
+        .rp-stat-icon svg {
+            width: 14px !important;
+            height: 14px !important;
+        }
 
-    /* =========================================================
-       FLOATING DEPTH — same warm layered elevation language
-       used across the other SARI admin pages.
-       ========================================================= */
-    .reports-page .rp-card {
-        border-color: #e7ddd0 !important;
-        box-shadow:
-            0 3px 7px rgba(72,51,22,.035),
-            0 16px 36px rgba(72,51,22,.085),
-            0 32px 62px rgba(72,51,22,.038),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
+        .rp-stat-label {
+            font-size: 8.5px !important;
+        }
 
-    /* Header controls also get a light floating feel. */
-    .reports-page .rp-date-field,
-    .reports-page .rp-btn-secondary,
-    .reports-page .rp-btn-link {
-        border-color: #e6ddd0 !important;
-        background: #fffdfa !important;
-        box-shadow:
-            0 2px 4px rgba(72,51,22,.025),
-            0 8px 18px rgba(72,51,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
+        .rp-stat-value {
+            margin-top: 7px !important;
+            font-size: 20px !important;
+        }
 
-    .reports-page .rp-btn-primary {
-        box-shadow:
-            0 3px 6px rgba(147,97,18,.08),
-            0 12px 24px rgba(147,97,18,.20) !important;
-    }
+        .rp-stat-footer {
+            margin-top: 8px !important;
+            gap: 6px !important;
+        }
 
-    /* Only summary cards receive hover lift; other report panels stay static. */
-    .reports-page .rp-stat {
-        transition:
-            transform .18s ease,
-            border-color .18s ease,
-            box-shadow .18s ease !important;
-    }
+        .rp-delta {
+            min-height: 21px !important;
+            padding-inline: 7px !important;
+            font-size: 7px !important;
+        }
 
-    .reports-page .rp-stat:hover {
-        transform: translateY(-2px);
-        border-color: #dbc9ac !important;
-        box-shadow:
-            0 4px 9px rgba(72,51,22,.045),
-            0 22px 46px rgba(72,51,22,.115),
-            0 40px 76px rgba(72,51,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
+        .rp-stat-help {
+            font-size: 7px !important;
+        }
 
-    .reports-page .rp-panel,
-    .reports-page .rp-mini-panel,
-    .reports-page .rp-ledger {
-        transform: none !important;
-    }
+        /* Reference screenshot: wide revenue panel + narrower status panel. */
+        .rp-main-grid {
+            grid-template-columns: minmax(0, 1.95fr) minmax(390px, 1fr) !important;
+            gap: 16px !important;
+            margin-top: 14px !important;
+        }
 
-    @media (min-width: 1440px) {
-        .reports-page .rp-panel-title {
+        .rp-panel {
+            min-height: 372px !important;
+            padding: 22px !important;
+            border-radius: 16px !important;
+        }
+
+        .rp-panel-title {
             font-size: 16px !important;
         }
 
-        .reports-page .rp-panel-copy {
-            font-size: 11px !important;
+        .rp-panel-copy {
+            margin-top: 5px !important;
+            font-size: 9.5px !important;
         }
 
-        .reports-page .rp-table td {
-            font-size: 12px !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .reports-page .rp-stat {
-            transition: none !important;
+        .rp-period-chip {
+            min-height: 34px !important;
+            border-radius: 9px !important;
+            padding-inline: 10px !important;
+            font-size: 8px !important;
         }
 
-        .reports-page .rp-stat:hover {
-            transform: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       REPORTS — DUAL CLEAN DATE RANGE CALENDAR
-       ========================================================= */
-    .reports-page .rp-range-picker {
-        position: relative;
-        z-index: 70;
-    }
-
-    .reports-page .rp-date-range-trigger {
-        display: flex;
-        min-width: 248px;
-        height: 44px;
-        align-items: center;
-        gap: 10px;
-        border: 1px solid #e3d6c3;
-        border-radius: 12px;
-        background: linear-gradient(180deg,#fff 0%,#fffaf2 100%);
-        padding: 0 12px;
-        color: #4f493f;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-        box-shadow:
-            0 2px 4px rgba(72,51,22,.025),
-            0 9px 20px rgba(72,51,22,.055),
-            inset 0 1px 0 rgba(255,255,255,.98);
-        transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
-    }
-
-    .reports-page .rp-date-range-trigger:hover,
-    .reports-page .rp-range-picker.is-open .rp-date-range-trigger {
-        border-color: #d4b878;
-        box-shadow:
-            0 0 0 3px rgba(197,141,32,.07),
-            0 12px 26px rgba(72,51,22,.07),
-            inset 0 1px 0 rgba(255,255,255,.98);
-    }
-
-    .reports-page .rp-date-range-icon {
-        width: 17px;
-        height: 17px;
-        flex: 0 0 17px;
-        color: #b77b16;
-    }
-
-    .reports-page .rp-date-range-copy {
-        display: grid;
-        min-width: 0;
-        flex: 1;
-        line-height: 1.2;
-    }
-
-    .reports-page .rp-date-range-copy small {
-        color: #9b9388;
-        font-size: 8px;
-        font-weight: 650;
-        letter-spacing: .035em;
-        text-transform: uppercase;
-    }
-
-    .reports-page .rp-date-range-copy strong {
-        overflow: hidden;
-        margin-top: 3px;
-        color: #3d362d;
-        font-size: 10px;
-        font-weight: 650;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .reports-page .rp-date-range-chevron {
-        width: 15px;
-        height: 15px;
-        flex: 0 0 15px;
-        color: #8d8376;
-        transition: transform .16s ease;
-    }
-
-    .reports-page .rp-range-picker.is-open .rp-date-range-chevron {
-        transform: rotate(180deg);
-    }
-
-    .reports-page .rp-calendar-popover {
-        position: absolute;
-        z-index: 120;
-        top: calc(100% + 10px);
-        right: 0;
-        width: min(720px, calc(100vw - 48px));
-        padding: 14px;
-        border: 1px solid #e3d7c8;
-        border-radius: 18px;
-        background: #fffefb;
-        box-shadow:
-            0 12px 28px rgba(55,39,19,.12),
-            0 34px 74px rgba(55,39,19,.17),
-            inset 0 1px 0 rgba(255,255,255,.98);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-5px) scale(.988);
-        transform-origin: top right;
-        transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
-    }
-
-    .reports-page .rp-range-picker.is-open .rp-calendar-popover {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0) scale(1);
-    }
-
-    .reports-page .rp-calendar-dual {
-        display: grid;
-        grid-template-columns: repeat(2,minmax(0,1fr));
-        gap: 12px;
-    }
-
-    .reports-page .rp-calendar-panel {
-        position: relative;
-        min-width: 0;
-        border: 1px solid #ece3d7;
-        border-radius: 15px;
-        background:
-            linear-gradient(180deg,rgba(255,252,247,.98),#fff 44%);
-        padding: 12px;
-        box-shadow:
-            0 3px 8px rgba(72,51,22,.025),
-            inset 0 1px 0 rgba(255,255,255,.98);
-    }
-
-    .reports-page .rp-calendar-panel-label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 10px;
-        padding: 0 2px;
-    }
-
-    .reports-page .rp-calendar-panel-label span {
-        color: #9b9388;
-        font-size: 8px;
-        font-weight: 700;
-        letter-spacing: .04em;
-        text-transform: uppercase;
-    }
-
-    .reports-page .rp-calendar-panel-label strong {
-        color: #6d5d45;
-        font-size: 9px;
-        font-weight: 650;
-    }
-
-    .reports-page .rp-calendar-head {
-        display: grid;
-        grid-template-columns: 34px minmax(0,1fr) 34px;
-        gap: 7px;
-        align-items: center;
-    }
-
-    .reports-page .rp-calendar-nav {
-        display: grid;
-        width: 34px;
-        height: 34px;
-        place-items: center;
-        border: 1px solid #e8dfd3;
-        border-radius: 10px;
-        background: #fff;
-        color: #756d61;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(72,51,22,.025);
-    }
-
-    .reports-page .rp-calendar-nav:hover:not(:disabled) {
-        border-color: #d8bd85;
-        background: #fff8e9;
-        color: #a97012;
-    }
-
-    .reports-page .rp-calendar-nav:disabled {
-        opacity: .38;
-        cursor: not-allowed;
-    }
-
-    .reports-page .rp-calendar-nav svg {
-        width: 15px;
-        height: 15px;
-    }
-
-    .reports-page .rp-calendar-controls {
-        display: grid;
-        grid-template-columns: minmax(0,1fr) 82px;
-        gap: 6px;
-    }
-
-    .reports-page .rp-cal-select {
-        position: relative;
-        min-width: 0;
-        z-index: 12;
-    }
-
-    .reports-page .rp-cal-select.is-open {
-        z-index: 40;
-    }
-
-    .reports-page .rp-cal-select-trigger {
-        display: flex;
-        width: 100%;
-        height: 34px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        border: 1px solid #e6ddd0;
-        border-radius: 10px;
-        background: linear-gradient(180deg,#fff 0%,#fffaf3 100%);
-        padding: 0 9px;
-        color: #4b4238;
-        font: inherit;
-        font-size: 9.5px;
-        font-weight: 650;
-        text-align: left;
-        cursor: pointer;
-        box-shadow:
-            0 2px 5px rgba(72,51,22,.025),
-            inset 0 1px 0 rgba(255,255,255,.98);
-        transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
-    }
-
-    .reports-page .rp-cal-select-trigger:hover,
-    .reports-page .rp-cal-select.is-open .rp-cal-select-trigger {
-        border-color: #d7b978;
-        background: #fff8ea;
-        box-shadow:
-            0 0 0 3px rgba(197,141,32,.065),
-            0 6px 14px rgba(72,51,22,.045);
-    }
-
-    .reports-page .rp-cal-select-trigger svg {
-        width: 13px;
-        height: 13px;
-        flex: 0 0 13px;
-        color: #8d8376;
-        transition: transform .14s ease;
-    }
-
-    .reports-page .rp-cal-select.is-open .rp-cal-select-trigger svg {
-        transform: rotate(180deg);
-    }
-
-    .reports-page .rp-cal-select-menu {
-        position: absolute;
-        z-index: 50;
-        top: calc(100% + 6px);
-        left: 0;
-        right: 0;
-        max-height: 228px;
-        overflow-y: auto;
-        padding: 5px;
-        border: 1px solid #e4d9ca;
-        border-radius: 12px;
-        background: #fff;
-        box-shadow:
-            0 8px 18px rgba(55,39,19,.10),
-            0 22px 46px rgba(55,39,19,.14);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-4px) scale(.985);
-        transform-origin: top;
-        transition: opacity .12s ease, transform .12s ease, visibility .12s ease;
-    }
-
-    .reports-page .rp-cal-select.is-open .rp-cal-select-menu {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0) scale(1);
-    }
-
-    .reports-page .rp-cal-select-option {
-        display: flex;
-        width: 100%;
-        min-height: 34px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        border: 0;
-        border-radius: 8px;
-        background: transparent;
-        padding: 0 9px;
-        color: #5b5145;
-        font: inherit;
-        font-size: 9px;
-        font-weight: 550;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    .reports-page .rp-cal-select-option:hover,
-    .reports-page .rp-cal-select-option:focus-visible {
-        outline: none;
-        background: #fff8e9;
-        color: #9b6812;
-    }
-
-    .reports-page .rp-cal-select-option.is-selected {
-        background: #fff3d8;
-        color: #9b6812;
-        font-weight: 700;
-    }
-
-    .reports-page .rp-cal-select-option.is-selected::after {
-        content: '✓';
-        color: #c58d20;
-        font-size: 10px;
-        font-weight: 800;
-    }
-
-    .reports-page .rp-cal-select-menu::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    .reports-page .rp-cal-select-menu::-webkit-scrollbar-thumb {
-        border: 2px solid #fff;
-        border-radius: 999px;
-        background: #d9cfc2;
-    }
-
-    .reports-page .rp-calendar-weekdays,
-    .reports-page .rp-calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7,1fr);
-        gap: 4px;
-    }
-
-    .reports-page .rp-calendar-weekdays {
-        margin-top: 12px;
-        color: #9b9388;
-        font-size: 8px;
-        font-weight: 700;
-        text-align: center;
-    }
-
-    .reports-page .rp-calendar-weekdays span {
-        padding: 4px 0;
-    }
-
-    .reports-page .rp-calendar-grid {
-        margin-top: 3px;
-    }
-
-    .reports-page .rp-calendar-day {
-        position: relative;
-        display: grid;
-        height: 34px;
-        place-items: center;
-        border: 0;
-        border-radius: 9px;
-        background: transparent;
-        color: #4f493f;
-        font: inherit;
-        font-size: 9.5px;
-        font-weight: 550;
-        cursor: pointer;
-        transition: background-color .12s ease, color .12s ease, box-shadow .12s ease;
-    }
-
-    .reports-page .rp-calendar-day:hover:not(:disabled) {
-        background: #fff6df;
-        color: #9e6d13;
-    }
-
-    .reports-page .rp-calendar-day.is-outside {
-        color: #c8c0b6;
-    }
-
-    .reports-page .rp-calendar-day.is-today::after {
-        content: '';
-        position: absolute;
-        bottom: 4px;
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: #c58d20;
-    }
-
-    .reports-page .rp-calendar-day.is-in-range {
-        background: #fff8e9;
-        color: #7b5b22;
-    }
-
-    .reports-page .rp-calendar-day.is-selected {
-        background: #c99022;
-        color: #fff;
-        box-shadow: 0 6px 12px rgba(166,112,18,.18);
-    }
-
-    .reports-page .rp-calendar-day.is-selected.is-today::after {
-        background: #fff;
-    }
-
-    .reports-page .rp-calendar-day:disabled {
-        color: #d7d1c9;
-        cursor: not-allowed;
-        background: transparent;
-    }
-
-    .reports-page .rp-calendar-selection {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-top: 12px;
-        border: 1px solid #eee5d9;
-        border-radius: 11px;
-        background: #fcfaf6;
-        padding: 10px 11px;
-    }
-
-    .reports-page .rp-calendar-selection span {
-        color: #9b9388;
-        font-size: 8px;
-    }
-
-    .reports-page .rp-calendar-selection strong {
-        color: #554a3d;
-        font-size: 9px;
-        font-weight: 650;
-        text-align: right;
-    }
-
-    .reports-page .rp-calendar-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .reports-page .rp-calendar-ghost,
-    .reports-page .rp-calendar-apply {
-        height: 35px;
-        border-radius: 10px;
-        padding: 0 13px;
-        font: inherit;
-        font-size: 9px;
-        font-weight: 650;
-        cursor: pointer;
-    }
-
-    .reports-page .rp-calendar-ghost {
-        border: 1px solid #e7dfd4;
-        background: #fff;
-        color: #756d61;
-    }
-
-    .reports-page .rp-calendar-apply {
-        border: 1px solid #b87b16;
-        background: #c99022;
-        color: #fff;
-        box-shadow: 0 7px 14px rgba(163,112,27,.16);
-    }
-
-    .reports-page .rp-calendar-apply:hover {
-        background: #aa7418;
-    }
-
-    @media (max-width: 850px) {
-        .reports-page .rp-date-range-trigger {
-            width: 100%;
-            min-width: 0;
+        .rp-chart-wrap {
+            height: 278px !important;
+            margin-top: 18px !important;
         }
 
-        .reports-page .rp-range-picker {
-            flex: 1 1 100%;
-            width: 100%;
+        .rp-chart-svg {
+            height: 278px !important;
         }
 
-        .reports-page .rp-calendar-popover {
-            left: 0;
-            right: auto;
-            width: min(720px, calc(100vw - 42px));
-            transform-origin: top left;
+        .rp-chart-tooltip {
+            min-width: 140px !important;
         }
 
-        .reports-page .rp-calendar-dual {
-            grid-template-columns: 1fr;
+        .rp-chart-tooltip small,
+        .rp-chart-tooltip span {
+            font-size: 8px !important;
+        }
+
+        .rp-chart-tooltip strong {
+            font-size: 9.5px !important;
+        }
+
+        .rp-donut-layout {
+            grid-template-columns: 160px minmax(0, 1fr) !important;
+            gap: 20px !important;
+            margin-top: 24px !important;
+        }
+
+        .rp-donut {
+            width: 152px !important;
+            height: 152px !important;
+        }
+
+        .rp-donut::before {
+            width: 106px !important;
+            height: 106px !important;
+        }
+
+        .rp-donut-total {
+            font-size: 22px !important;
+        }
+
+        .rp-donut-caption {
+            margin-top: 5px !important;
+            font-size: 8px !important;
+        }
+
+        .rp-legend {
+            gap: 10px !important;
+        }
+
+        .rp-legend-row {
+            grid-template-columns: 9px minmax(0, 1fr) 32px 46px !important;
+            gap: 8px !important;
+            font-size: 8.5px !important;
+        }
+
+        .rp-legend-dot {
+            width: 8px !important;
+            height: 8px !important;
+        }
+
+        /* Second row keeps two equal cards, like the reference image. */
+        .rp-secondary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 16px !important;
+            margin-top: 14px !important;
+        }
+
+        .rp-mini-panel {
+            min-height: 270px !important;
+            padding: 22px !important;
+            border-radius: 16px !important;
+        }
+
+        .rp-bars {
+            height: 166px !important;
+            margin-top: 20px !important;
+        }
+
+        .rp-axis {
+            margin-top: 8px !important;
+            font-size: 8px !important;
+        }
+
+        .rp-registration-legend {
+            margin-top: 11px !important;
+            font-size: 8px !important;
+        }
+
+        .rp-ledger {
+            margin-top: 14px !important;
+            border-radius: 16px !important;
+        }
+
+        .rp-section-head {
+            padding: 14px 18px !important;
+        }
+
+        .rp-table th {
+            padding: 10px 12px !important;
+            font-size: 8px !important;
+        }
+
+        .rp-table td {
+            padding: 11px 12px !important;
+            font-size: 8.5px !important;
+        }
+
+        .rp-status {
+            min-height: 24px !important;
+            font-size: 7.5px !important;
         }
     }
 
-    /* =========================================================
-       REGISTRATION ACTIVITY — ACTUAL SUBMITTED + PENDING SERIES
-       ========================================================= */
-    .reports-page .rp-registration-legend {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 14px;
-        margin-top: 12px;
-        color: #756d61;
-        font-size: 9px;
-        font-weight: 600;
-    }
-
-    .reports-page .rp-registration-legend span {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .reports-page .rp-registration-legend i {
-        display: inline-block;
-        width: 9px;
-        height: 9px;
-        border-radius: 3px;
-    }
-
-    .reports-page .rp-registration-legend i.submitted {
-        background: #c99022;
-    }
-
-    .reports-page .rp-registration-legend i.pending {
-        background: #b86556;
-    }
-
-    .reports-page .rp-registration-bars {
-        margin-top: 9px;
-    }
-
-    .reports-page .rp-reg-group {
-        position: relative;
-        display: flex;
-        flex: 1;
-        height: 100%;
-        min-width: 3px;
-        align-items: flex-end;
-        justify-content: center;
-        gap: 2px;
-        outline: none;
-    }
-
-    .reports-page .rp-reg-bar {
-        width: min(8px, 40%);
-        min-width: 2px;
-        min-height: 2px;
-        border-radius: 5px 5px 2px 2px;
-    }
-
-    .reports-page .rp-reg-bar.submitted {
-        background: linear-gradient(180deg,#e2b75d,#c99022);
-    }
-
-    .reports-page .rp-reg-bar.pending {
-        background: linear-gradient(180deg,#d78b7e,#b86556);
-    }
-
-    .reports-page .rp-reg-group:hover .rp-bar-tip,
-    .reports-page .rp-reg-group:focus .rp-bar-tip {
-        display: block;
-    }
-
-    @media (max-width: 850px) {
-        .reports-page .rp-date-range-trigger {
-            width: 100%;
-            min-width: 0;
+    /* Medium desktop/laptop: preserve hierarchy without squeezing 8 cards. */
+    @media (min-width: 1101px) and (max-width: 1500px) {
+        .rp-summary-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
         }
 
-        .reports-page .rp-range-picker {
-            flex: 1 1 100%;
-            width: 100%;
+        .rp-main-grid {
+            grid-template-columns: minmax(0, 1.7fr) minmax(320px, .85fr) !important;
         }
 
-        .reports-page .rp-calendar-popover {
-            left: 0;
-            right: auto;
-            width: min(340px, calc(100vw - 42px));
-            transform-origin: top left;
+        .rp-panel {
+            min-height: 320px !important;
+        }
+
+        .rp-chart-wrap,
+        .rp-chart-svg {
+            height: 235px !important;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .rp-main-grid,
+        .rp-secondary-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+
+    @media (min-width: 1501px) {
+        .rp-header {
+            margin-bottom: 2px !important;
+        }
+
+        .rp-actions,
+        .rp-filter-form {
+            align-items: center !important;
+        }
+
+        .rp-summary-grid .rp-card {
+            overflow: hidden !important;
+        }
+
+        .rp-stat-label {
+            margin-right: 18px !important;
+            line-height: 1.35 !important;
+        }
+
+        .rp-stat-help {
+            max-width: 85% !important;
+        }
+
+        .rp-panel-head {
+            gap: 14px !important;
+        }
+    }
+
+
+    /* ============================================================
+       KPI SUMMARY — UNIFORM CARD LAYOUT
+       Matches the approved compact reference row:
+       equal heights, equal icon sizing, balanced spacing.
+       ============================================================ */
+
+    .rp-summary-grid > *{
+        min-width:0 !important;
+    }
+
+    .rp-stat{
+        display:flex !important;
+        flex-direction:column !important;
+        justify-content:flex-start !important;
+        min-height:108px !important;
+        padding:13px 50px 13px 14px !important;
+        border-radius:14px !important;
+        overflow:hidden !important;
+    }
+
+    .rp-stat-icon{
+        top:12px !important;
+        right:12px !important;
+        width:34px !important;
+        height:34px !important;
+        border-radius:10px !important;
+    }
+
+    .rp-stat-icon svg{
+        width:14px !important;
+        height:14px !important;
+    }
+
+    .rp-stat-label{
+        margin-right:18px !important;
+        min-height:22px !important;
+        color:#8f8578 !important;
+        font-size:8px !important;
+        font-weight:600 !important;
+        line-height:1.35 !important;
+    }
+
+    .rp-stat-value{
+        margin-top:4px !important;
+        color:#241f1a !important;
+        font-size:20px !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        letter-spacing:-.03em !important;
+        white-space:nowrap !important;
+    }
+
+    .rp-stat-footer{
+        display:flex !important;
+        align-items:center !important;
+        gap:7px !important;
+        margin-top:auto !important;
+        padding-top:10px !important;
+        min-height:28px !important;
+    }
+
+    .rp-delta{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        min-height:19px !important;
+        padding:0 7px !important;
+        border-radius:999px !important;
+        font-size:6.8px !important;
+        font-weight:700 !important;
+        white-space:nowrap !important;
+        flex:0 0 auto !important;
+    }
+
+    .rp-stat-help{
+        min-width:0 !important;
+        flex:1 1 auto !important;
+        color:#a0978b !important;
+        font-size:7px !important;
+        line-height:1.35 !important;
+        white-space:nowrap !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important;
+    }
+
+    @media (min-width: 1450px){
+        .rp-summary-grid{
+            grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+            gap:12px !important;
+            margin-top:16px !important;
+        }
+    }
+
+    @media (min-width: 1101px) and (max-width: 1449px){
+        .rp-summary-grid{
+            grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+            gap:12px !important;
+        }
+
+        .rp-stat{
+            min-height:104px !important;
+        }
+    }
+
+    @media (max-width: 1100px){
+        .rp-summary-grid{
+            grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+            gap:10px !important;
+        }
+
+        .rp-stat{
+            min-height:100px !important;
+        }
+    }
+
+    @media (max-width: 640px){
+        .rp-summary-grid{
+            grid-template-columns:1fr !important;
         }
     }
 
@@ -1492,7 +2166,6 @@
     const endNext = document.getElementById('rpEndNext');
     const todayButton = document.getElementById('rpCalendarToday');
     const applyDatesButton = document.getElementById('rpCalendarApply');
-    const exportButtons = Array.from(document.querySelectorAll('[data-report-pdf-export]'));
 
     const maxDate = parseDate(reportMaxDate);
     let committedStart = fromInput?.value ? parseDate(fromInput.value) : new Date(maxDate);
@@ -1657,28 +2330,59 @@
                 button.disabled = true;
             }
 
-            button.addEventListener('click',()=>{
-                if (isStart) {
-                    draftStart = new Date(date);
-
-                    if (isBefore(draftEnd,draftStart)) {
-                        draftEnd = new Date(draftStart);
-                        endView = new Date(draftEnd.getFullYear(),draftEnd.getMonth(),1,12,0,0);
-                    }
-
-                    startView = new Date(date.getFullYear(),date.getMonth(),1,12,0,0);
-                } else {
-                    if (isBefore(date,draftStart)) return;
-                    draftEnd = new Date(date);
-                    endView = new Date(date.getFullYear(),date.getMonth(),1,12,0,0);
-                }
-
-                renderCalendars();
-            });
-
             grid.appendChild(button);
         }
     }
+
+
+    function handleCalendarGridClick(type,event) {
+        const button = event.target.closest('.rp-calendar-day[data-date]');
+        if (!button || button.disabled) return;
+
+        const date = parseDate(button.dataset.date);
+        const isStart = type === 'start';
+
+        if (isStart) {
+            draftStart = new Date(date);
+
+            if (isBefore(draftEnd,draftStart)) {
+                draftEnd = new Date(draftStart);
+                endView = new Date(
+                    draftEnd.getFullYear(),
+                    draftEnd.getMonth(),
+                    1,
+                    12,0,0
+                );
+            }
+
+            startView = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                1,
+                12,0,0
+            );
+        } else {
+            if (isBefore(date,draftStart)) return;
+
+            draftEnd = new Date(date);
+            endView = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                1,
+                12,0,0
+            );
+        }
+
+        renderCalendars();
+    }
+
+    startGrid?.addEventListener('click',event=>{
+        handleCalendarGridClick('start',event);
+    });
+
+    endGrid?.addEventListener('click',event=>{
+        handleCalendarGridClick('end',event);
+    });
 
     function updateNavigationState() {
         const latestMonth = new Date(maxDate.getFullYear(),maxDate.getMonth(),1,12,0,0);
@@ -1746,6 +2450,7 @@
         endView = new Date(draftEnd.getFullYear(),draftEnd.getMonth(),1,12,0,0);
 
         renderCalendars();
+        calendarInitialized = true;
 
         picker.classList.add('is-open');
         popover.setAttribute('aria-hidden','false');
@@ -1761,7 +2466,7 @@
         closeCalendarSelects();
     }
 
-    renderCalendars();
+    let calendarInitialized = false;
 
     trigger?.addEventListener('click',event=>{
         event.stopPropagation();
@@ -1822,20 +2527,20 @@
         filterForm?.requestSubmit();
     });
 
-    exportButtons.forEach(button=>{
-        button.addEventListener('click',()=>{
-            const exportUrl = currentPdfExportUrl(button);
+    document.addEventListener('click',event=>{
+        const exportButton = event.target.closest('[data-report-pdf-export]');
+
+        if (exportButton) {
+            const exportUrl = currentPdfExportUrl(exportButton);
 
             /*
-             * Open the report in a normal browser tab instead of letting
-             * Livewire Navigate intercept the request. The print view will
-             * automatically open Chrome's Save as PDF / Print dialog.
+             * Keep export in a normal browser tab so the print view can
+             * open the browser's Save as PDF / Print workflow.
              */
             window.open(exportUrl,'_blank','noopener,noreferrer');
-        });
-    });
+            return;
+        }
 
-    document.addEventListener('click',event=>{
         closeCalendarSelects();
 
         if (picker && !picker.contains(event.target)) {
@@ -1916,19 +2621,43 @@
             }
         };
 
+        let hoverFrame = 0;
+        let chartRect = null;
+        let latestPointerX = 0;
+
+        target.addEventListener('mouseenter',()=>{
+            chartRect = svg.getBoundingClientRect();
+        },{passive:true});
+
         target.addEventListener('mousemove',event=>{
-            const rect=svg.getBoundingClientRect();
-            const relativeX=((event.clientX-rect.left)/rect.width)*width;
-            const normalized=Math.max(0,Math.min(1,(relativeX-margin.left)/iw));
-            const index=Math.round(normalized*(points.length-1));
-            show(points[index]);
-        });
+            latestPointerX = event.clientX;
+
+            if (hoverFrame) return;
+
+            hoverFrame = window.requestAnimationFrame(()=>{
+                hoverFrame = 0;
+
+                const rect = chartRect || svg.getBoundingClientRect();
+                const relativeX=((latestPointerX-rect.left)/rect.width)*width;
+                const normalized=Math.max(0,Math.min(1,(relativeX-margin.left)/iw));
+                const index=Math.round(normalized*(points.length-1));
+
+                show(points[index]);
+            });
+        },{passive:true});
 
         target.addEventListener('mouseleave',()=>{
+            chartRect = null;
+
+            if (hoverFrame) {
+                window.cancelAnimationFrame(hoverFrame);
+                hoverFrame = 0;
+            }
+
             hoverLine.setAttribute('opacity','0');
             hoverDot.setAttribute('opacity','0');
             tooltip?.classList.remove('show','below');
-        });
+        },{passive:true});
     }
 
     function bucketSeries(data,keys,maxBars=60) {
@@ -1972,6 +2701,8 @@
         const max=Math.max(...points.map(item=>Number(item[key] || 0)),1);
         container.innerHTML='';
 
+        const fragment=document.createDocumentFragment();
+
         points.forEach(item=>{
             const value=Number(item[key] || 0);
             const height=Math.max(2,(value/max)*100);
@@ -1984,8 +2715,10 @@
                 `<span class="rp-bar ${className}" style="height:${height}%"></span>`+
                 `<span class="rp-bar-tip">${dateRangeLabel(item)} · ${value.toLocaleString('en-PH')}</span>`;
 
-            container.appendChild(wrapper);
+            fragment.appendChild(wrapper);
         });
+
+        container.appendChild(fragment);
     }
 
     function renderRegistrationBars() {
@@ -1996,6 +2729,8 @@
         const max=Math.max(...points.map(item=>Number(item.registrations || 0)),1);
 
         container.innerHTML='';
+
+        const fragment=document.createDocumentFragment();
 
         points.forEach(item=>{
             const submitted=Number(item.registrations || 0);
@@ -2013,13 +2748,34 @@
                 `<span class="rp-reg-bar pending" style="height:${pendingHeight}%"></span>`+
                 `<span class="rp-bar-tip">${dateRangeLabel(item)}<br>Submitted: ${submitted.toLocaleString('en-PH')}<br>Pending: ${pending.toLocaleString('en-PH')}</span>`;
 
-            container.appendChild(wrapper);
+            fragment.appendChild(wrapper);
         });
+
+        container.appendChild(fragment);
     }
 
-    renderRevenue();
-    renderBars('rpOrderBars',series,'orders','');
-    renderRegistrationBars();
+    const scheduleAfterPaint = callback => {
+        window.requestAnimationFrame(()=>{
+            window.requestAnimationFrame(callback);
+        });
+    };
+
+    const scheduleIdle = callback => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(callback,{timeout:450});
+        } else {
+            window.setTimeout(callback,0);
+        }
+    };
+
+    // Revenue is the primary visualization, so render it just after first paint.
+    scheduleAfterPaint(renderRevenue);
+
+    // Lower-page charts can wait for an idle main-thread opportunity.
+    scheduleIdle(()=>{
+        renderBars('rpOrderBars',series,'orders','');
+        renderRegistrationBars();
+    });
 })();
 </script>
 @endsection

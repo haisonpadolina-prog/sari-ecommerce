@@ -4,595 +4,907 @@
 @section('page-title', 'Archived Products')
 
 @section('content')
-
-<style>
-    #sellerArchiveStage {
-        position: relative;
-        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-    }
-
-    #sellerArchiveSkeleton {
-        display: block;
-    }
-
-    #sellerArchiveContent {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(3px);
-    }
-
-    #sellerArchiveStage.seller-archive-ready #sellerArchiveSkeleton {
-        display: none;
-    }
-
-    #sellerArchiveStage.seller-archive-ready #sellerArchiveContent {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition:
-            opacity .28s cubic-bezier(.22,1,.36,1),
-            transform .28s cubic-bezier(.22,1,.36,1);
-    }
-
-    /* Simple skeleton only — no shimmer / glossy sweep */
-    .seller-archive-skeleton-block {
-        display: block;
-        background: #e9e5df;
-        animation: sellerArchiveSoftPulse 1.1s ease-in-out infinite;
-    }
-
-    @keyframes sellerArchiveSoftPulse {
-        0%, 100% { opacity: .56; }
-        50% { opacity: .94; }
-    }
-
-    .archive-row {
-        transition:
-            border-color .18s ease,
-            box-shadow .18s ease,
-            transform .18s ease,
-            background-color .18s ease;
-    }
-
-    .archive-row:hover {
-        transform: translateY(-1px);
-        border-color: #dfd3c2;
-        background: #fffefa;
-        box-shadow: 0 10px 22px rgba(36,32,26,.04);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-archive-skeleton-block {
-            animation: none !important;
-        }
-
-        #sellerArchiveContent,
-        .archive-row {
-            transition: none !important;
-        }
-    }
-</style>
-
 @php
     $totalHistoryCount = $products->count();
     $archivedCount = $products->where('archive_reason', '!=', 'deleted')->count();
     $deletedCount = $products->where('archive_reason', 'deleted')->count();
     $approvedHistoryCount = $products->where('moderation_status', 'approved')->count();
 @endphp
-<div id="sellerArchiveStage" class="mx-auto w-full max-w-[1800px]">
 
-    <div id="sellerArchiveSkeleton" aria-hidden="true" class="w-full">
-        <section class="mb-4 flex flex-col gap-3 px-1 pt-1 lg:flex-row lg:items-end lg:justify-between">
-            <div class="flex items-center gap-3">
-                <div class="seller-archive-skeleton-block h-10 w-10 shrink-0 rounded-[12px]"></div>
-                <div class="min-w-0 flex-1">
-                    <div class="seller-archive-skeleton-block h-6 w-[195px] rounded-full"></div>
-                    <div class="seller-archive-skeleton-block mt-2.5 h-2.5 w-[min(470px,72vw)] rounded-full"></div>
-                </div>
-            </div>
-            <div class="seller-archive-skeleton-block h-10 w-[132px] rounded-[10px]"></div>
-        </section>
+<style>
+    .archive-shell {
+        --archive-gold: #D89B10;
+        --archive-gold-dark: #B67A08;
+        --archive-gold-soft: #FFF7E6;
+        --archive-border: #E7E9EE;
+        --archive-border-soft: #EEF1F4;
+        --archive-text: #202124;
+        --archive-muted: #8A919B;
+        --archive-page: #F4F5F7;
+        --archive-green: #4F7D63;
+        --archive-green-soft: #EDF7F1;
+        --archive-blue: #5A7B98;
+        --archive-blue-soft: #EEF5FB;
+        --archive-red: #B95D5D;
+        --archive-red-soft: #FFF0F0;
+        width: 100%;
+        max-width: 1700px;
+        margin: 0 auto;
+        padding-bottom: 20px;
+        color: var(--archive-text);
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    }
 
-        <section class="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            @for ($i = 0; $i < 4; $i++)
-                <article class="rounded-[16px] border border-[#ebe5dc] bg-white p-4 shadow-[0_8px_22px_rgba(35,29,22,0.025)]">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="min-w-0 flex-1">
-                            <div class="seller-archive-skeleton-block h-3 w-[105px] rounded-full"></div>
-                            <div class="seller-archive-skeleton-block mt-3 h-8 w-[52px] rounded-lg"></div>
-                            <div class="seller-archive-skeleton-block mt-3 h-2.5 w-[145px] rounded-full"></div>
-                        </div>
-                        <div class="seller-archive-skeleton-block h-10 w-10 rounded-[12px]"></div>
-                    </div>
-                </article>
-            @endfor
-        </section>
+    .archive-shell * { box-sizing: border-box; }
 
-        <section class="overflow-hidden rounded-[20px] border border-[#ebe5dc] bg-white shadow-[0_10px_24px_rgba(35,29,22,0.025)]">
-            <div class="border-b border-[#f1ece4] px-5 py-5 sm:px-6 lg:px-7">
-                <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                    <div>
-                        <div class="seller-archive-skeleton-block h-4 w-[145px] rounded-full"></div>
-                        <div class="seller-archive-skeleton-block mt-2 h-2.5 w-[250px] rounded-full"></div>
-                    </div>
-                    <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-[minmax(260px,1fr)_180px] xl:w-[520px]">
-                        <div class="seller-archive-skeleton-block h-10 rounded-[10px]"></div>
-                        <div class="seller-archive-skeleton-block h-10 rounded-[10px]"></div>
-                    </div>
-                </div>
-                <div class="mt-4 flex items-center justify-between">
-                    <div class="seller-archive-skeleton-block h-2.5 w-[130px] rounded-full"></div>
-                    <div class="seller-archive-skeleton-block h-8 w-[90px] rounded-lg"></div>
-                </div>
-            </div>
+    .archive-header { margin-bottom: 16px; }
 
-            <div class="space-y-3 p-4 sm:p-5 lg:p-6">
-                @for ($i = 0; $i < 4; $i++)
-                    <div class="grid overflow-hidden rounded-[16px] border border-[#ebe5dc] bg-white xl:grid-cols-[minmax(330px,1.8fr)_minmax(180px,1fr)_minmax(120px,.7fr)_minmax(120px,.7fr)_minmax(160px,.9fr)_100px] xl:gap-4">
-                        <div class="flex min-w-0 items-center gap-3 border-b border-[#f3efe8] p-3.5 xl:border-b-0">
-                            <div class="seller-archive-skeleton-block h-[68px] w-[68px] shrink-0 rounded-[12px]"></div>
-                            <div class="min-w-0 flex-1">
-                                <div class="seller-archive-skeleton-block h-4 w-[58%] rounded-full"></div>
-                                <div class="seller-archive-skeleton-block mt-2.5 h-2.5 w-[42%] rounded-full"></div>
-                                <div class="mt-3 flex gap-3">
-                                    <div class="seller-archive-skeleton-block h-2.5 w-[75px] rounded-full"></div>
-                                    <div class="seller-archive-skeleton-block h-2.5 w-[60px] rounded-full"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center px-4 py-3 xl:px-0"><div class="seller-archive-skeleton-block h-3 w-[72%] rounded-full"></div></div>
-                        <div class="flex items-center px-4 py-3 xl:px-0"><div class="seller-archive-skeleton-block h-7 w-[72px] rounded-full"></div></div>
-                        <div class="flex items-center px-4 py-3 xl:px-0"><div class="seller-archive-skeleton-block h-4 w-[88px] rounded-full"></div></div>
-                        <div class="flex items-center px-4 py-3 xl:px-0"><div class="seller-archive-skeleton-block h-3 w-[82px] rounded-full"></div></div>
-                        <div class="flex items-center justify-end px-4 py-4 xl:px-0 xl:pr-4"><div class="seller-archive-skeleton-block h-10 w-10 rounded-[10px]"></div></div>
-                    </div>
-                @endfor
-            </div>
-        </section>
-    </div>
+    .archive-eyebrow {
+        margin: 0;
+        color: #A86F0B;
+        font-size: 9.5px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: .17em;
+        text-transform: uppercase;
+    }
 
-    <div id="sellerArchiveContent">
-        <div class="w-full text-[#27221d]" data-archive-page-ready>
+    .archive-title {
+        margin: 7px 0 0;
+        color: #1D1915;
+        font-size: clamp(28px, 2.1vw, 35px);
+        font-weight: 650;
+        line-height: 1;
+        letter-spacing: -.035em;
+    }
 
+    .archive-title span:last-child { color: var(--archive-gold); }
+
+    .archive-subtitle {
+        max-width: 760px;
+        margin: 10px 0 0;
+        color: #7D746B;
+        font-size: 10.5px;
+        line-height: 1.6;
+    }
+
+    .archive-filter-panel {
+        display: grid;
+        grid-template-columns: minmax(320px, 1fr) 170px auto;
+        gap: 9px;
+        margin-top: 16px;
+        padding: 10px;
+        border: 1px solid var(--archive-border);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 5px 16px rgba(15, 23, 42, .03);
+    }
+
+    .archive-search-field,
+    .archive-history-dropdown { position: relative; }
+
+    .archive-search-field > svg {
+        position: absolute;
+        top: 50%;
+        left: 13px;
+        width: 15px;
+        height: 15px;
+        transform: translateY(-50%);
+        color: #8B95A1;
+        pointer-events: none;
+    }
+
+    #archiveProductSearch,
+    #archiveClearFilters {
+        height: 40px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 9px;
+    }
+
+    #archiveProductSearch {
+        width: 100%;
+        border: 1px solid #DDE3EA;
+        background: #fff;
+        color: #354052;
+        outline: none;
+        padding: 0 12px 0 38px;
+    }
+
+    #archiveProductSearch:focus {
+        border-color: rgba(216, 155, 16, .65);
+        box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
+    }
+
+    .archive-native-select {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        clip-path: inset(50%) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+        padding: 0 !important;
+        margin: -1px !important;
+    }
+
+    .archive-history-button {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid #DDE3EA;
+        border-radius: 10px;
+        background: #fff;
+        padding: 0 11px;
+        color: #354052;
+        font-family: inherit;
+        font-size: 9px;
+        font-weight: 650;
+        cursor: pointer;
+        outline: none;
+        transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
+    }
+
+    .archive-history-button:hover {
+        background: #FAFBFC;
+        border-color: #D3D9E1;
+    }
+
+    .archive-history-button[aria-expanded="true"] {
+        border-color: rgba(216, 155, 16, .55);
+        box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
+    }
+
+    .archive-history-button-left {
+        display: inline-flex;
+        min-width: 0;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .archive-history-button-left > svg {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 auto;
+        color: #9A7A3A;
+    }
+
+    .archive-history-chevron {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 auto;
+        color: #8B95A1;
+        transition: transform .16s ease;
+    }
+
+    .archive-history-button[aria-expanded="true"] .archive-history-chevron {
+        transform: rotate(180deg);
+    }
+
+    .archive-history-menu {
+        position: absolute;
+        top: calc(100% + 7px);
+        right: 0;
+        z-index: 90;
+        width: min(310px, 92vw);
+        overflow: hidden;
+        border: 1px solid #E2E7ED;
+        border-radius: 14px;
+        background: #fff;
+        padding: 6px;
+        box-shadow: 0 18px 42px rgba(15, 23, 42, .13);
+    }
+
+    .archive-history-menu[hidden] {
+        display: none !important;
+    }
+
+    .archive-history-option {
+        display: flex;
+        width: 100%;
+        min-height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        padding: 9px 10px;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color .13s ease;
+    }
+
+    .archive-history-option:hover {
+        background: #F8FAFC;
+    }
+
+    .archive-history-option.is-selected {
+        background: #FFF8E9;
+    }
+
+    .archive-history-option span {
+        display: block;
+        min-width: 0;
+    }
+
+    .archive-history-option strong {
+        display: block;
+        color: #293240;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .archive-history-option small {
+        display: block;
+        margin-top: 3px;
+        color: #8A919B;
+        font-size: 7.5px;
+        line-height: 1.4;
+    }
+
+    .archive-history-check {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 auto;
+        opacity: 0;
+        color: #C08312;
+    }
+
+    .archive-history-option.is-selected .archive-history-check {
+        opacity: 1;
+    }
+
+    #archiveClearFilters {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        padding: 0 14px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    #archiveClearFilters {
+        border: 1px solid #E0E5EB;
+        background: #fff;
+        color: #697586;
+    }
+
+    #archiveClearFilters:hover { background: #F8FAFC; }
+
+    .archive-card-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+    }
+
+    .archive-product-card {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #E4E8ED;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, .04);
+        transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+    }
+
+    .archive-product-card:hover {
+        border-color: #D7DDE5;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, .07);
+        transform: translateY(-1px);
+    }
+
+    .archive-card-media {
+        position: relative;
+        margin: 10px 10px 0;
+        height: 166px;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #F5F7F9;
+    }
+
+    .archive-card-media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .archive-image-placeholder {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        place-items: center;
+        color: #B5BDC7;
+    }
+
+    .archive-image-placeholder svg { width: 34px; height: 34px; }
+
+    .archive-card-badge-row {
+        position: absolute;
+        top: 9px;
+        left: 9px;
+        right: 9px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 7px;
+        pointer-events: none;
+    }
+
+    .archive-badge {
+        display: inline-flex;
+        min-height: 28px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 10px;
+        font-size: 7.5px;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, .05);
+        backdrop-filter: blur(8px);
+    }
+
+    .archive-badge.pending { background: #EEF5FB; color: #557A9A; }
+    .archive-badge.approved { background: #EDF7F1; color: #4F7D63; }
+    .archive-badge.flagged,
+    .archive-badge.rejected { background: #FFF0F0; color: #B95D5D; }
+    .archive-badge.default { background: rgba(255,255,255,.94); color: #687386; }
+
+    .archive-type-badge {
+        display: inline-flex;
+        min-height: 27px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 9px;
+        font-size: 7px;
+        font-weight: 700;
+        background: rgba(32, 33, 36, .88);
+        color: #fff;
+    }
+
+    .archive-type-badge.deleted { background: rgba(173, 74, 74, .92); }
+
+    .archive-card-body { padding: 11px 13px 12px; }
+
+    .archive-card-mainline {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .archive-card-name {
+        min-width: 0;
+        overflow: hidden;
+        margin: 0;
+        color: #242424;
+        font-size: 11.5px;
+        font-weight: 700;
+        line-height: 1.35;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .archive-card-price {
+        flex: 0 0 auto;
+        color: #B97805;
+        font-size: 11.5px;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+    .archive-card-meta {
+        overflow: hidden;
+        margin-top: 4px;
+        color: #8A8178;
+        font-size: 7.8px;
+        line-height: 1.45;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .archive-card-divider {
+        height: 1px;
+        margin: 10px 0 9px;
+        background: #E8E3DD;
+    }
+
+    .archive-card-footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .archive-card-stock {
+        color: #403A34;
+        font-size: 8.5px;
+        font-weight: 700;
+    }
+
+    .archive-card-date {
+        margin-top: 2px;
+        color: #9A9188;
+        font-size: 7px;
+    }
+
+    .archive-card-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .archive-icon-button {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        cursor: pointer;
+        transition: background-color .14s ease, color .14s ease, transform .14s ease;
+    }
+
+    .archive-icon-button svg { width: 15px; height: 15px; }
+
+    .archive-icon-button.restore { color: #B77808; }
+    .archive-icon-button.restore:hover { background: #FFF7E6; color: #986305; transform: translateY(-1px); }
+
+    .archive-icon-button.delete {
+        color: #FF2D2D;
+    }
+
+    .archive-icon-button.delete svg {
+        stroke: #FF2D2D !important;
+        stroke-width: 2.05 !important;
+    }
+
+    .archive-icon-button.delete:hover {
+        background: #FFF0F0;
+        color: #E60000;
+        transform: translateY(-1px);
+    }
+
+    .archive-icon-button.delete:hover svg {
+        stroke: #E60000 !important;
+    }
+
+    .archive-icon-button:disabled {
+        cursor: not-allowed;
+        opacity: .42;
+        transform: none;
+    }
+
+    .archive-empty-state {
+        grid-column: 1 / -1;
+        display: grid;
+        min-height: 170px;
+        place-items: center;
+        border: 1px solid var(--archive-border);
+        border-radius: 16px;
+        background: #fff;
+        padding: 26px 18px;
+        text-align: center;
+    }
+
+    .archive-empty-icon {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        margin: 0 auto;
+        place-items: center;
+        border: 1px solid #E4E8ED;
+        border-radius: 12px;
+        background: #F8FAFC;
+        color: #A7B0BA;
+    }
+
+    .archive-empty-icon svg { width: 19px; height: 19px; }
+
+    .archive-empty-title {
+        margin-top: 10px;
+        color: #202124;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .archive-empty-copy {
+        max-width: 460px;
+        margin: 5px auto 0;
+        color: #8A919B;
+        font-size: 8px;
+        line-height: 1.55;
+    }
+
+    .archive-result-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        margin: 9px 2px 0;
+        color: #8A919B;
+        font-size: 8px;
+        font-weight: 500;
+    }
+
+    /* Permanent delete modal */
+    .archive-delete-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 240;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(17, 24, 39, .34);
+        backdrop-filter: blur(5px);
+    }
+
+    .archive-delete-modal.is-open { display: flex; }
+
+    .archive-delete-dialog {
+        width: min(100%, 440px);
+        border: 1px solid #E7E9EE;
+        border-radius: 22px;
+        background: #fff;
+        padding: 22px;
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .18);
+    }
+
+    .archive-delete-warning-icon {
+        display: inline-flex;
+        width: auto;
+        height: auto;
+        align-items: center;
+        justify-content: flex-start;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #E5484D;
+    }
+
+    .archive-delete-warning-icon svg {
+        width: 27px;
+        height: 27px;
+        stroke: #E5484D !important;
+        stroke-width: 2.15 !important;
+    }
+
+    .archive-delete-kicker {
+        margin-top: 15px;
+        color: #D24A4F;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .archive-delete-title {
+        margin-top: 5px;
+        color: #202124;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -.025em;
+    }
+
+    .archive-delete-copy {
+        margin-top: 9px;
+        color: #737D89;
+        font-size: 10px;
+        line-height: 1.7;
+    }
+
+    .archive-delete-product {
+        margin-top: 12px;
+        border: 1px solid #ECEFF3;
+        border-radius: 12px;
+        background: #F8FAFC;
+        padding: 10px 12px;
+        color: #394250;
+        font-size: 10px;
+        font-weight: 650;
+    }
+
+    .archive-delete-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 9px;
+        margin-top: 20px;
+    }
+
+    .archive-delete-actions button {
+        height: 40px;
+        border-radius: 11px;
+        padding: 0 15px;
+        font-family: inherit;
+        font-size: 9px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    #archiveDeleteCancel {
+        border: 1px solid #DFE4EA;
+        background: #fff;
+        color: #677384;
+    }
+
+    #archiveDeleteConfirm {
+        border: 1px solid #E5484D;
+        background: #E5484D;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(229, 72, 77, .18);
+    }
+
+    #archiveDeleteConfirm:hover {
+        border-color: #D93F44;
+        background: #D93F44;
+        box-shadow: 0 9px 20px rgba(217, 63, 68, .22);
+    }
+    #archiveDeleteConfirm:disabled { opacity: .55; cursor: not-allowed; }
+
+    @media (max-width: 1380px) {
+        .archive-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 1050px) {
+        .archive-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 900px) {
+        .archive-filter-panel { grid-template-columns: 1fr 150px auto; }
+    }
+
+    @media (max-width: 680px) {
+        .archive-title { font-size: clamp(26px, 7.4vw, 32px); }
+        .archive-filter-panel { grid-template-columns: 1fr; }
+        .archive-card-grid { grid-template-columns: 1fr; }
+        .archive-card-media { height: 190px; }
+        .archive-delete-actions { flex-direction: column-reverse; }
+        .archive-delete-actions button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .archive-product-card,
+        .archive-icon-button { transition: none !important; }
+    }
+</style>
+
+<div class="archive-shell">
     @if (session('success'))
-        <div class="mb-5 flex items-start gap-3 rounded-[18px] border border-[#d6e6dc] bg-[#f7fbf8] px-4 py-4 shadow-[0_8px_20px_rgba(36,32,26,0.035)] sm:px-5">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#ddebe2] bg-white text-[#5f836a]">
-                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9">
-                    <path d="m7 12 3 3 7-7"></path>
-                    <circle cx="12" cy="12" r="9"></circle>
-                </svg>
-            </span>
-
-            <div class="min-w-0">
-                <p class="text-[clamp(.84rem,.80rem+.12vw,.92rem)] font-bold text-[#426952]">
-                    Success
-                </p>
-                <p class="mt-1 text-[clamp(.78rem,.74rem+.10vw,.86rem)] leading-6 text-[#5f7867]">
-                    {{ session('success') }}
-                </p>
-            </div>
+        <div class="mb-4 rounded-[14px] border border-[#d6e6dc] bg-[#f7fbf8] px-4 py-3 text-[9px] font-medium text-[#4f7d63]">
+            {{ session('success') }}
         </div>
     @endif
 
     @if ($errors->any())
-        <div class="mb-5 flex items-start gap-3 rounded-[18px] border border-[#ecd5d5] bg-[#fff8f8] px-4 py-4 shadow-[0_8px_20px_rgba(36,32,26,0.035)] sm:px-5">
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#f0dfdf] bg-white text-[#b16666]">
-                <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.9">
-                    <path d="M12 8v5"></path>
-                    <path d="M12 16.5h.01"></path>
-                    <circle cx="12" cy="12" r="9"></circle>
-                </svg>
-            </span>
-
-            <div class="min-w-0">
-                <p class="text-[clamp(.84rem,.80rem+.12vw,.92rem)] font-bold text-[#9f5f5f]">
-                    Action required
-                </p>
-                <p class="mt-1 text-[clamp(.78rem,.74rem+.10vw,.86rem)] leading-6 text-[#876767]">
-                    {{ $errors->first() }}
-                </p>
-            </div>
+        <div class="mb-4 rounded-[14px] border border-[#ecd5d5] bg-[#fff8f8] px-4 py-3 text-[9px] font-medium text-[#9f5f5f]">
+            {{ $errors->first() }}
         </div>
     @endif
 
-    <section class="mb-4 flex flex-col gap-3 px-1 pt-1 lg:flex-row lg:items-end lg:justify-between">
-        <div class="flex items-center gap-3">
-            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] border border-[#eadfcf] bg-[#fffaf2] text-[#bb8120]">
-                <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M4 7h16"></path>
-                    <path d="M6 7v12h12V7"></path>
-                    <path d="M9 11h6"></path>
-                </svg>
-            </div>
+    <header class="archive-header">
+        <p class="archive-eyebrow">Archived Products</p>
+        <h1 class="archive-title"><span>Archived</span><span>Products</span></h1>
+        <p class="archive-subtitle">Search, review, restore, or permanently remove inactive product records from your catalog.</p>
+    </header>
+    <section class="archive-filter-panel" aria-label="Archive filters">
+        <label class="archive-search-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input id="archiveProductSearch" type="search" placeholder="Search archived products..." autocomplete="off">
+        </label>
 
-            <div class="min-w-0">
-                <h2 class="text-[clamp(1.72rem,1.58rem+.34vw,2.05rem)] font-semibold leading-none tracking-[-0.04em]">
-                    <span class="text-[#201b16]">Archive</span>
-                    <span class="text-[#d39116]">Products</span>
-                </h2>
-                <p class="mt-2 max-w-[720px] text-[10.5px] font-normal leading-5 text-[#887f75]">
-                    Search, review, and restore inactive product records from your catalog.
-                </p>
-            </div>
-        </div>
+        <div class="archive-history-dropdown" data-history-dropdown>
+            <select id="archiveProductFilter" class="archive-native-select" aria-hidden="true" tabindex="-1">
+                <option value="">All History</option>
+                <option value="archived">Archived</option>
+                <option value="deleted">Deleted</option>
+            </select>
 
-        <a
-            href="{{ route('seller.dashboard') }}"
-            wire:navigate
-            class="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-[10px] border border-[#e3dacd] bg-white px-3.5 text-[9.5px] font-medium text-[#5f564b] transition duration-200 hover:border-[#d4be8e] hover:bg-[#fffaf1] hover:text-[#9a6b1d]"
-        >
-            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                <path d="m15 18-6-6 6-6"></path>
-            </svg>
-            Back to Dashboard
-        </a>
-    </section>
-
-    {{-- =========================================================
-        SUMMARY CARDS — DASHBOARD-STYLE ENTERPRISE KPI CARDS
-    ========================================================== --}}
-    <section class="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-
-        <article class="rounded-[16px] border border-[#dbe5f0] bg-white px-4 py-5 shadow-[0_8px_22px_rgba(35,29,22,0.035)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_26px_rgba(35,29,22,0.05)]">
-            <div class="flex items-start justify-between gap-4">
-                <div class="min-w-0">
-                    <p class="text-[11px] font-medium text-[#5f574f]">
-                        Total History
-                    </p>
-
-                    <p class="mt-2 text-[31px] font-semibold leading-none tracking-[-0.04em] text-[#211d18]">
-                        {{ $totalHistoryCount }}
-                    </p>
-
-                    <p class="mt-2 text-[9.5px] font-normal text-[#8f867c]">
-                        All inactive product records
-                    </p>
-                </div>
-
-                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-[#f1f6fc] text-[#4b78ad]">
-                    <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="8"></circle>
-                        <path d="M12 7v5l3 2"></path>
-                    </svg>
-                </span>
-            </div>
-        </article>
-
-        <article class="rounded-[16px] border border-[#eee0c8] bg-white px-4 py-5 shadow-[0_8px_22px_rgba(35,29,22,0.035)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_26px_rgba(35,29,22,0.05)]">
-            <div class="flex items-start justify-between gap-4">
-                <div class="min-w-0">
-                    <p class="text-[11px] font-medium text-[#5f574f]">
-                        Archived
-                    </p>
-
-                    <p class="mt-2 text-[31px] font-semibold leading-none tracking-[-0.04em] text-[#211d18]">
-                        {{ $archivedCount }}
-                    </p>
-
-                    <p class="mt-2 text-[9.5px] font-normal text-[#8f867c]">
-                        Available to restore
-                    </p>
-                </div>
-
-                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-[#fff8ea] text-[#bc8120]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+            <button
+                id="archiveHistoryButton"
+                type="button"
+                class="archive-history-button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+            >
+                <span class="archive-history-button-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M4 7h16"></path>
                         <path d="M6 7v12h12V7"></path>
                         <path d="M9 11h6"></path>
                     </svg>
+                    <span id="archiveHistoryLabel">All History</span>
                 </span>
-            </div>
-        </article>
+                <svg class="archive-history-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m7 10 5 5 5-5"></path>
+                </svg>
+            </button>
 
-        <article class="rounded-[16px] border border-[#efdada] bg-white px-4 py-5 shadow-[0_8px_22px_rgba(35,29,22,0.035)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_26px_rgba(35,29,22,0.05)]">
-            <div class="flex items-start justify-between gap-4">
-                <div class="min-w-0">
-                    <p class="text-[11px] font-medium text-[#5f574f]">
-                        Deleted
-                    </p>
-
-                    <p class="mt-2 text-[31px] font-semibold leading-none tracking-[-0.04em] text-[#211d18]">
-                        {{ $deletedCount }}
-                    </p>
-
-                    <p class="mt-2 text-[9.5px] font-normal text-[#9a7474]">
-                        Retained for product history
-                    </p>
-                </div>
-
-                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-[#fff3f3] text-[#bc6666]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 7h16"></path>
-                        <path d="M9 7V4h6v3"></path>
-                        <path d="M7 7l1 13h8l1-13"></path>
+            <div id="archiveHistoryMenu" class="archive-history-menu" role="listbox" hidden>
+                <button type="button" class="archive-history-option is-selected" data-history-value="">
+                    <span>
+                        <strong>All History</strong>
+                        <small>Show every inactive product</small>
+                    </span>
+                    <svg class="archive-history-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m6 12 4 4 8-8"></path>
                     </svg>
-                </span>
-            </div>
-        </article>
+                </button>
 
-        <article class="rounded-[16px] border border-[#d9e8df] bg-white px-4 py-5 shadow-[0_8px_22px_rgba(35,29,22,0.035)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_26px_rgba(35,29,22,0.05)]">
-            <div class="flex items-start justify-between gap-4">
-                <div class="min-w-0">
-                    <p class="text-[11px] font-medium text-[#5f574f]">
-                        Approved History
-                    </p>
-
-                    <p class="mt-2 text-[31px] font-semibold leading-none tracking-[-0.04em] text-[#211d18]">
-                        {{ $approvedHistoryCount }}
-                    </p>
-
-                    <p class="mt-2 text-[9.5px] font-normal text-[#698172]">
-                        Previously approved listings
-                    </p>
-                </div>
-
-                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-[#f2f8f4] text-[#59856a]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="8"></circle>
-                        <path d="m8.5 12 2.2 2.2 4.8-5"></path>
+                <button type="button" class="archive-history-option" data-history-value="archived">
+                    <span>
+                        <strong>Archived</strong>
+                        <small>Products available to restore</small>
+                    </span>
+                    <svg class="archive-history-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m6 12 4 4 8-8"></path>
                     </svg>
-                </span>
-            </div>
-        </article>
+                </button>
 
-    </section>
-
-    <section class="overflow-hidden rounded-[20px] border border-[#ebe5dc] bg-white shadow-[0_10px_24px_rgba(35,29,22,0.03)]">
-        <div class="border-b border-[#f1ece4] px-4 py-4 sm:px-5 lg:px-6">
-            <div class="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                <div class="min-w-0">
-                    <h3 class="text-[20px] font-semibold tracking-[-0.025em] text-[#24201b]">
-                        Product History
-                    </h3>
-                    <p class="mt-1 text-[10.5px] font-normal leading-5 text-[#887f75]">
-                        Manage product history using quick filters and a smoother restore flow.
-                    </p>
-                </div>
-
-                <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-[minmax(260px,1fr)_180px] xl:w-[520px]">
-                    <div class="relative">
-                        <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9c9488]" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <circle cx="11" cy="11" r="7"></circle>
-                            <path d="m20 20-4-4"></path>
-                        </svg>
-
-                        <input
-                            id="archiveProductSearch"
-                            type="search"
-                            placeholder="Search product name, category, SKU, or brand..."
-                            class="h-12 w-full rounded-[11px] border border-[#e4ddd3] bg-white pl-11 pr-4 text-[10.5px] font-normal text-[#3d3730] outline-none transition duration-200 placeholder:text-[#a09689] focus:border-[#cf9530] focus:ring-4 focus:ring-[#cf9530]/10"
-                        >
-                    </div>
-
-                    <div class="relative">
-                        <select
-                            id="archiveProductFilter"
-                            class="h-12 w-full appearance-none rounded-[11px] border border-[#e4ddd3] bg-white pl-4 pr-10 text-[10.5px] font-medium text-[#4f473f] outline-none transition duration-200 focus:border-[#cf9530] focus:ring-4 focus:ring-[#cf9530]/10"
-                        >
-                            <option value="">All history</option>
-                            <option value="archived">Archived</option>
-                            <option value="deleted">Deleted</option>
-                        </select>
-
-                        <svg viewBox="0 0 24 24" class="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#968b7f]" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m7 10 5 5 5-5"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
-                <p id="archiveResultCount" class="text-[9.5px] font-medium text-[#9b6c1c]">
-                    Showing {{ $products->count() }} of {{ $products->count() }} products
-                </p>
-
-                <button
-                    id="archiveClearFilters"
-                    type="button"
-                    class="hidden rounded-lg px-3 py-2 text-[9.5px] font-medium text-[#9b6c1f] transition duration-200 hover:bg-[#fff7e9]"
-                >
-                    Clear filters
+                <button type="button" class="archive-history-option" data-history-value="deleted">
+                    <span>
+                        <strong>Deleted</strong>
+                        <small>Recoverable deleted records</small>
+                    </span>
+                    <svg class="archive-history-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m6 12 4 4 8-8"></path>
+                    </svg>
                 </button>
             </div>
         </div>
+        <button id="archiveClearFilters" type="button">Clear</button>
+    </section>
 
-        <div class="hidden border-b border-[#f2ede6] bg-[#fcfbf9] px-6 py-3.5 xl:grid xl:grid-cols-[minmax(330px,1.8fr)_minmax(180px,1fr)_minmax(120px,.7fr)_minmax(120px,.7fr)_minmax(160px,.9fr)_100px] xl:gap-4">
-            <div class="text-[9.5px] font-medium text-[#786f65]">Product</div>
-            <div class="text-[9.5px] font-medium text-[#786f65]">Category / Brand</div>
-            <div class="text-[9.5px] font-medium text-[#786f65]">Status</div>
-            <div class="text-[9.5px] font-medium text-[#786f65]">Price</div>
-            <div class="text-[9.5px] font-medium text-[#786f65]">Archived Date</div>
-            <div class="text-right text-[9.5px] font-medium text-[#786f65]">Action</div>
-        </div>
+    <div class="archive-result-row">
+        <span id="archiveResultCount">{{ $products->count() }} archived product{{ $products->count() === 1 ? '' : 's' }}</span>
+    </div>
 
-        <div class="p-3.5 sm:p-4 lg:p-5">
-            <div id="archiveProductGrid" class="space-y-2.5">
-                @forelse ($products as $product)
-                    @php
-                        $archiveType = $product->archive_reason === 'deleted' ? 'deleted' : 'archived';
-                        $isDeleted = $archiveType === 'deleted';
+    <section>
+        <div id="archiveProductGrid" class="archive-card-grid">
+            @forelse ($products as $product)
+                @php
+                    $archiveType = $product->archive_reason === 'deleted' ? 'deleted' : 'archived';
+                    $moderationState = in_array($product->moderation_status, ['pending', 'approved', 'flagged', 'rejected'], true)
+                        ? $product->moderation_status
+                        : 'default';
+                    $moderationLabel = match ($product->moderation_status) {
+                        'pending' => 'Pending Review',
+                        'approved' => 'Approved',
+                        'flagged' => 'Flagged',
+                        'rejected' => 'Rejected',
+                        default => ucfirst((string) ($product->moderation_status ?: 'Inactive')),
+                    };
+                @endphp
 
-                        $statusClass = match ($product->moderation_status) {
-                            'approved' => 'border-[#d7e7dd] bg-[#f4f9f5] text-[#5a8268]',
-                            'pending' => 'border-[#d8e4ef] bg-[#f4f8fc] text-[#5a7b98]',
-                            'flagged' => 'border-[#edd7d7] bg-[#fff7f7] text-[#af6666]',
-                            'rejected' => 'border-[#edd7d7] bg-[#fff7f7] text-[#af6666]',
-                            default => 'border-[#e3ddd6] bg-[#f7f5f2] text-[#766d63]',
-                        };
-                    @endphp
-
-                    <article
-                        data-archive-product
-                        data-archive-type="{{ $archiveType }}"
-                        data-archive-search="{{ strtolower(trim(($product->name ?? '') . ' ' . ($product->category ?? '') . ' ' . ($product->sku ?? '') . ' ' . ($product->brand ?? ''))) }}"
-                        class="archive-row grid overflow-hidden rounded-[16px] border border-[#ebe5dc] bg-white shadow-[0_8px_20px_rgba(36,32,26,0.03)] transition duration-200 hover:border-[#ddd4c6] hover:shadow-[0_12px_24px_rgba(36,32,26,0.045)] xl:grid-cols-[minmax(330px,1.8fr)_minmax(180px,1fr)_minmax(120px,.7fr)_minmax(120px,.7fr)_minmax(160px,.9fr)_100px] xl:gap-4"
-                    >
-                        <div class="flex min-w-0 items-center gap-4 border-b border-[#f3efe8] px-4 py-4.5 xl:border-b-0">
-                            <div class="h-[74px] w-[74px] shrink-0 overflow-hidden rounded-[12px] border border-[#ebe5dc] bg-[#f8f6f2] sm:h-[76px] sm:w-[76px] xl:h-[74px] xl:w-[74px]">
-                                @if ($product->image_path)
-                                    <img
-                                        src="{{ route('seller.products.image', $product) }}"
-                                        alt="{{ $product->name }}"
-                                        class="h-full w-full object-cover"
-                                        loading="lazy"
-                                        decoding="async"
-                                    >
-                                @else
-                                    <div class="grid h-full w-full place-items-center text-[#b0a79a]">
-                                        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
-                                            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
-                                            <path d="m6.5 16 3.5-3.5 2.5 2.5 2-2 3 3"></path>
-                                        </svg>
-                                    </div>
-                                @endif
+                <article
+                    class="archive-product-card"
+                    data-archive-product
+                    data-archive-type="{{ $archiveType }}"
+                    data-moderation-status="{{ strtolower((string) $product->moderation_status) }}"
+                    data-archive-search="{{ strtolower(trim(($product->name ?? '') . ' ' . ($product->category ?? '') . ' ' . ($product->sku ?? '') . ' ' . ($product->brand ?? ''))) }}"
+                >
+                    <div class="archive-card-media">
+                        @if ($product->image_path)
+                            <img src="{{ route('seller.products.image', $product) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
+                        @else
+                            <div class="archive-image-placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="m6.5 16 3.5-3.5 2.5 2.5 2-2 3 3"></path></svg>
                             </div>
+                        @endif
 
-                            <div class="min-w-0 flex-1">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <p class="truncate text-[12px] font-semibold text-[#2c2721]">
-                                        {{ $product->name }}
-                                    </p>
+                        <div class="archive-card-badge-row">
+                            <span class="archive-badge {{ $moderationState }}">{{ $moderationLabel }}</span>
+                            <span class="archive-type-badge {{ $archiveType === 'deleted' ? 'deleted' : '' }}">{{ ucfirst($archiveType) }}</span>
+                        </div>
+                    </div>
 
-                                    <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[9px] font-medium {{ $isDeleted ? 'border-[#f1d8d8] bg-[#fff6f6] text-[#af6666]' : 'border-[#ece0c9] bg-[#fffaf1] text-[#a77621]' }}">
-                                        {{ $isDeleted ? 'Deleted' : 'Archived' }}
-                                    </span>
-                                </div>
+                    <div class="archive-card-body">
+                        <div class="archive-card-mainline">
+                            <h2 class="archive-card-name">{{ $product->name }}</h2>
+                            <span class="archive-card-price">₱{{ number_format((float) $product->price, 2) }}</span>
+                        </div>
 
-                                <p class="mt-1 text-[10px] font-normal text-[#5a524a]">
-                                    {{ $product->category ?: 'Uncategorized' }}
-                                    @if($product->brand)
-                                        <span class="px-1.5 text-[#c8bfaf]">•</span>
-                                        {{ $product->brand }}
+                        <p class="archive-card-meta">
+                            {{ $product->category ?: 'Uncategorized' }}
+                            @if($product->brand)
+                                · {{ $product->brand }}
+                            @endif
+                        </p>
+
+                        <div class="archive-card-divider"></div>
+
+                        <div class="archive-card-footer">
+                            <div>
+                                <div class="archive-card-stock">{{ number_format((int) ($product->stock ?? 0)) }} in stock</div>
+                                <div class="archive-card-date">
+                                    {{ $product->archived_at?->diffForHumans() ?: 'Archived recently' }}
+                                    @if($product->sku)
+                                        · {{ $product->sku }}
                                     @endif
-                                </p>
-
-                                <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[9px] font-normal text-[#91887e]">
-                                    <span>SKU: <strong class="font-semibold text-[#6a6157]">{{ $product->sku ?: 'No SKU' }}</strong></span>
-                                    <span>Stock: <strong class="font-semibold text-[#6a6157]">{{ $product->stock ?? 0 }}</strong></span>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="flex items-center justify-between gap-4 border-b border-[#f3efe8] px-4 py-3 xl:border-b-0 xl:px-0">
-                            <span class="xl:hidden text-[8.8px] font-medium text-[#91887e]">Category / Brand</span>
-                            <div class="min-w-0 text-right xl:text-left">
-                                <p class="truncate text-[10.5px] font-medium text-[#454038]">
-                                    {{ $product->category ?: 'Uncategorized' }}
-                                </p>
-                                <p class="mt-1 truncate text-[9px] font-normal text-[#91887e]">
-                                    {{ $product->brand ?: 'No brand' }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between gap-4 border-b border-[#f3efe8] px-4 py-3 xl:border-b-0 xl:px-0">
-                            <span class="xl:hidden text-[8.8px] font-medium text-[#91887e]">Status</span>
-                            <span class="inline-flex rounded-full border px-3 py-1.5 text-[9px] font-medium {{ $statusClass }}">
-                                {{ ucfirst($product->moderation_status) }}
-                            </span>
-                        </div>
-
-                        <div class="flex items-center justify-between gap-4 border-b border-[#f3efe8] px-4 py-3 xl:border-b-0 xl:px-0">
-                            <span class="xl:hidden text-[8.8px] font-medium text-[#91887e]">Price</span>
-                            <span class="text-[11px] font-semibold text-[#302a24]">
-                                ₱{{ number_format((float) $product->price, 2) }}
-                            </span>
-                        </div>
-
-                        <div class="flex items-center justify-between gap-4 border-b border-[#f3efe8] px-4 py-3 xl:border-b-0 xl:px-0">
-                            <span class="xl:hidden text-[8.8px] font-medium text-[#91887e]">Archived Date</span>
-                            <div class="text-right xl:text-left">
-                                <p class="text-[10px] font-medium text-[#4a443d]">
-                                    {{ $product->archived_at?->format('M d, Y') ?: '—' }}
-                                </p>
-                                @if($product->archived_at)
-                                    <p class="mt-1 text-[8.8px] font-normal text-[#91887e]">
-                                        {{ $product->archived_at->diffForHumans() }}
-                                    </p>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between px-4 py-4 xl:justify-end xl:px-0 xl:pr-4">
-                            <span class="xl:hidden text-[8.8px] font-medium text-[#91887e]">Action</span>
-
-                            <form
-                                method="POST"
-                                action="{{ route('seller.products.restore', $product) }}"
-                                class="archive-restore-form"
-                                data-product-row
-                            >
-                                @csrf
+                            <div class="archive-card-actions">
+                                <form
+                                    method="POST"
+                                    action="{{ route('seller.products.restore', $product) }}"
+                                    class="archive-restore-form"
+                                >
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="archive-icon-button restore"
+                                        title="Restore product"
+                                        aria-label="Restore product"
+                                        @if ($seller->isSuspended()) disabled @endif
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>
+                                    </button>
+                                </form>
 
                                 <button
-                                    type="submit"
-                                    title="Restore product"
-                                    aria-label="Restore product"
+                                    type="button"
+                                    class="archive-icon-button delete"
+                                    title="Delete permanently"
+                                    aria-label="Delete permanently"
+                                    data-archive-delete-open
+                                    data-product-name="{{ $product->name }}"
+                                    data-delete-url="{{ route('seller.products.delete', $product) }}"
                                     @if ($seller->isSuspended()) disabled @endif
-                                    class="group inline-flex h-11 w-11 items-center justify-center rounded-[11px] border border-[#e5dccd] bg-white text-[#bf8525] shadow-[0_6px_16px_rgba(36,32,26,0.03)] transition duration-200 hover:border-[#d5be8e] hover:bg-[#fff9f0] hover:text-[#a87216] disabled:cursor-not-allowed disabled:border-[#e6e0d7] disabled:bg-[#f7f4ef] disabled:text-[#c5bcaf]"
                                 >
-                                    <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M3 12a9 9 0 1 0 3-6.7"></path>
-                                        <path d="M3 3v6h6"></path>
-                                    </svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
                                 </button>
-                            </form>
+                            </div>
                         </div>
-                    </article>
-                @empty
-                    <div class="rounded-[22px] border border-dashed border-[#ddd5ca] bg-[#fcfbf9] px-6 py-16 text-center shadow-[0_10px_24px_rgba(36,32,26,0.025)]">
-                        <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl border border-[#ebe5dc] bg-white text-[#a69d90]">
-                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="M4 7h16"></path>
-                                <path d="M6 7v12h12V7"></path>
-                                <path d="M9 11h6"></path>
-                            </svg>
-                        </div>
-
-                        <p class="mt-4 text-[clamp(1rem,.94rem+.18vw,1.12rem)] font-bold text-[#50483f]">
-                            No archived products
-                        </p>
-
-                        <p class="mx-auto mt-2 max-w-[520px] text-[clamp(.78rem,.74rem+.10vw,.86rem)] leading-6 text-[#92887b]">
-                            Products you archive or remove from your active catalog will appear here.
-                        </p>
                     </div>
-                @endforelse
-            </div>
-
-            <div
-                id="archiveFilterEmpty"
-                class="hidden rounded-[22px] border border-dashed border-[#ddd5ca] bg-[#fcfbf9] px-6 py-16 text-center shadow-[0_10px_24px_rgba(36,32,26,0.025)]"
-            >
-                <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl border border-[#ebe5dc] bg-white text-[#a69d90]">
-                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="11" cy="11" r="6"></circle>
-                        <path d="m16 16 4 4"></path>
-                    </svg>
+                </article>
+            @empty
+                <div class="archive-empty-state" data-archive-base-empty>
+                    <div>
+                        <span class="archive-empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"></path><path d="M6 7v12h12V7"></path><path d="M9 11h6"></path></svg>
+                        </span>
+                        <div class="archive-empty-title">No archived products</div>
+                        <div class="archive-empty-copy">Products you archive or remove from your active catalog will appear here.</div>
+                    </div>
                 </div>
-
-                <p class="mt-4 text-[clamp(1rem,.94rem+.18vw,1.12rem)] font-bold text-[#50483f]">
-                    No matching products
-                </p>
-
-                <p class="mt-2 text-[clamp(.78rem,.74rem+.10vw,.86rem)] text-[#92887b]">
-                    Try another keyword or change the archive filter.
-                </p>
-
-                <button
-                    id="archiveEmptyClear"
-                    type="button"
-                    class="mt-5 inline-flex h-10 items-center justify-center rounded-xl border border-[#e2d8c8] bg-white px-4 text-[clamp(.80rem,.76rem+.10vw,.90rem)] font-semibold text-[#956718] transition hover:bg-[#fffaf2]"
-                >
-                    Clear Filters
-                </button>
-            </div>
+            @endforelse
         </div>
+
+
     </section>
 
-    <div id="archiveToastContainer" class="pointer-events-none fixed bottom-5 right-5 z-[80] flex w-[min(92vw,360px)] flex-col gap-3"></div>
+    <div id="archiveDeleteModal" class="archive-delete-modal" aria-hidden="true">
+        <div class="archive-delete-dialog" role="dialog" aria-modal="true" aria-labelledby="archiveDeleteTitle">
+            <span class="archive-delete-warning-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path></svg>
+            </span>
+            <div class="archive-delete-kicker">Permanent action</div>
+            <h2 id="archiveDeleteTitle" class="archive-delete-title">Are you sure you want to delete this?</h2>
+            <p class="archive-delete-copy">This permanently removes the product catalog record. This action cannot be undone. Products linked to protected transaction history may be blocked by the system.</p>
+            <div id="archiveDeleteProductName" class="archive-delete-product">Product</div>
+
+            <form id="archivePermanentDeleteForm" method="POST" action="">
+                @csrf
+                <input type="hidden" name="permanent" value="1">
+                <div class="archive-delete-actions">
+                    <button id="archiveDeleteCancel" type="button">Cancel</button>
+                    <button id="archiveDeleteConfirm" type="submit">Delete permanently</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <div id="archiveToastContainer" class="pointer-events-none fixed bottom-5 right-5 z-[260] flex w-[min(92vw,360px)] flex-col gap-3"></div>
 </div>
 @endsection
 
@@ -600,60 +912,68 @@
 <script>
 (function () {
     const initArchivePage = () => {
-        const stage = document.getElementById('sellerArchiveStage');
-        const shell = document.querySelector('[data-archive-page-ready]');
-
-        if (stage) {
-            stage.classList.remove('seller-archive-ready');
-            window.clearTimeout(window.__SARI_ARCHIVE_SKELETON_TIMER__);
-            window.__SARI_ARCHIVE_SKELETON_TIMER__ = window.setTimeout(() => {
-                stage.classList.add('seller-archive-ready');
-            }, 1250);
-        }
         const searchInput = document.getElementById('archiveProductSearch');
         const typeFilter = document.getElementById('archiveProductFilter');
+        const historyButton = document.getElementById('archiveHistoryButton');
+        const historyLabel = document.getElementById('archiveHistoryLabel');
+        const historyMenu = document.getElementById('archiveHistoryMenu');
+        const historyOptions = Array.from(document.querySelectorAll('[data-history-value]'));
         const clearButton = document.getElementById('archiveClearFilters');
-        const emptyClearButton = document.getElementById('archiveEmptyClear');
         const resultCount = document.getElementById('archiveResultCount');
         const grid = document.getElementById('archiveProductGrid');
-        const filterEmpty = document.getElementById('archiveFilterEmpty');
         const toastContainer = document.getElementById('archiveToastContainer');
 
+        const deleteModal = document.getElementById('archiveDeleteModal');
+        const deleteForm = document.getElementById('archivePermanentDeleteForm');
+        const deleteCancel = document.getElementById('archiveDeleteCancel');
+        const deleteConfirm = document.getElementById('archiveDeleteConfirm');
+        const deleteProductName = document.getElementById('archiveDeleteProductName');
+
+        const totalCountNode = document.querySelector('[data-archive-total-count]');
+        const archivedCountNode = document.querySelector('[data-archive-archived-count]');
+        const deletedCountNode = document.querySelector('[data-archive-deleted-count]');
+        const approvedCountNode = document.querySelector('[data-archive-approved-count]');
+
         const cards = Array.from(document.querySelectorAll('[data-archive-product]'));
-        const restoreForms = Array.from(document.querySelectorAll('.archive-restore-form'));
+        let pendingDeleteCard = null;
+
+        function numberFrom(node) {
+            return Number(String(node?.textContent || '0').replace(/,/g, '')) || 0;
+        }
+
+        function setNumber(node, value) {
+            if (!node) return;
+            node.textContent = Math.max(0, Number(value || 0)).toLocaleString('en-PH');
+        }
+
+        function decrementSummary(card) {
+            if (!card) return;
+            setNumber(totalCountNode, numberFrom(totalCountNode) - 1);
+
+            if ((card.dataset.archiveType || '') === 'deleted') {
+                setNumber(deletedCountNode, numberFrom(deletedCountNode) - 1);
+            } else {
+                setNumber(archivedCountNode, numberFrom(archivedCountNode) - 1);
+            }
+
+            if ((card.dataset.moderationStatus || '') === 'approved') {
+                setNumber(approvedCountNode, numberFrom(approvedCountNode) - 1);
+            }
+        }
 
         function showToast(type, message) {
             if (!toastContainer) return;
-
-            const tone = type === 'error'
-                ? {
-                    border: '#ecd5d5',
-                    bg: '#fff9f9',
-                    title: '#9f5f5f',
-                    text: '#866767'
-                }
-                : {
-                    border: '#d8e6dd',
-                    bg: '#f8fbf9',
-                    title: '#507560',
-                    text: '#5d7566'
-                };
-
+            const error = type === 'error';
             const toast = document.createElement('div');
-            toast.className = 'pointer-events-auto translate-y-2 opacity-0 rounded-2xl border px-4 py-3 shadow-[0_14px_30px_rgba(35,29,22,0.08)] transition duration-300';
-            toast.style.borderColor = tone.border;
-            toast.style.backgroundColor = tone.bg;
+            toast.className = 'pointer-events-auto translate-y-2 opacity-0 rounded-[14px] border px-4 py-3 shadow-[0_14px_30px_rgba(15,23,42,.10)] transition duration-300';
+            toast.style.borderColor = error ? '#ECD5D5' : '#D8E6DD';
+            toast.style.backgroundColor = error ? '#FFF9F9' : '#F8FBF9';
             toast.innerHTML = `
-                <p style="color:${tone.title}" class="text-[0.88rem] font-bold">${type === 'error' ? 'Action required' : 'Success'}</p>
-                <p style="color:${tone.text}" class="mt-1 text-[0.80rem] leading-5">${message}</p>
+                <p class="text-[10px] font-bold" style="color:${error ? '#9F5F5F' : '#507560'}">${error ? 'Action required' : 'Success'}</p>
+                <p class="mt-1 text-[9px] leading-5" style="color:${error ? '#866767' : '#5D7566'}">${String(message || '')}</p>
             `;
-
             toastContainer.appendChild(toast);
-
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            });
-
+            requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
             setTimeout(() => {
                 toast.classList.add('translate-y-2', 'opacity-0');
                 setTimeout(() => toast.remove(), 260);
@@ -661,16 +981,24 @@
         }
 
         function visibleCards() {
-            return cards.filter((card) => !card.classList.contains('hidden'));
+            return cards.filter(card => !card.classList.contains('hidden'));
         }
 
         function updateResultCount() {
             if (!resultCount) return;
             const visible = visibleCards().length;
-            resultCount.textContent =
-                'Showing ' + visible +
-                ' of ' + cards.length +
-                ' product' + (cards.length === 1 ? '' : 's');
+
+            if (cards.length === 0) {
+                resultCount.textContent = '0 archived products';
+                return;
+            }
+
+            if (visible === cards.length) {
+                resultCount.textContent = `${cards.length} archived product${cards.length === 1 ? '' : 's'}`;
+                return;
+            }
+
+            resultCount.textContent = `${visible} product${visible === 1 ? '' : 's'} found`;
         }
 
         function filterArchive() {
@@ -678,109 +1006,114 @@
             const type = (typeFilter?.value || '').trim().toLowerCase();
             let visible = 0;
 
-            cards.forEach((card) => {
+            cards.forEach(card => {
                 const searchable = (card.dataset.archiveSearch || '').toLowerCase();
                 const archiveType = (card.dataset.archiveType || '').toLowerCase();
-                const matchesQuery = query === '' || searchable.includes(query);
-                const matchesType = type === '' || archiveType === type;
-                const matches = matchesQuery && matchesType;
-
+                const matches = (!query || searchable.includes(query)) && (!type || archiveType === type);
                 card.classList.toggle('hidden', !matches);
-                if (matches) visible++;
+                if (matches) visible += 1;
             });
 
-            const hasFilters = query !== '' || type !== '';
-            clearButton?.classList.toggle('hidden', !hasFilters);
-
-            if (cards.length > 0) {
-                filterEmpty?.classList.toggle('hidden', visible !== 0);
-                grid?.classList.toggle('hidden', visible === 0);
+            if (grid) {
+                grid.classList.remove('hidden');
             }
 
             updateResultCount();
         }
 
+        function historyLabelFor(value) {
+            if (value === 'archived') return 'Archived';
+            if (value === 'deleted') return 'Deleted';
+            return 'All History';
+        }
+
+        function syncHistoryDropdown(value = '') {
+            if (typeFilter) typeFilter.value = value;
+            if (historyLabel) historyLabel.textContent = historyLabelFor(value);
+
+            historyOptions.forEach(option => {
+                option.classList.toggle('is-selected', (option.dataset.historyValue || '') === value);
+            });
+        }
+
+        function closeHistoryMenu() {
+            if (!historyMenu || !historyButton) return;
+            historyMenu.hidden = true;
+            historyButton.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleHistoryMenu() {
+            if (!historyMenu || !historyButton) return;
+            const opening = historyMenu.hidden;
+            historyMenu.hidden = !opening;
+            historyButton.setAttribute('aria-expanded', opening ? 'true' : 'false');
+        }
+
         function clearFilters() {
             if (searchInput) searchInput.value = '';
-            if (typeFilter) typeFilter.value = '';
+            syncHistoryDropdown('');
             filterArchive();
             searchInput?.focus();
         }
 
+        function renderBaseEmptyIfNeeded() {
+            if (!grid || cards.length !== 0) return;
+            grid.innerHTML = `
+                <div class="archive-empty-state" data-archive-base-empty>
+                    <div>
+                        <span class="archive-empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"></path><path d="M6 7v12h12V7"></path><path d="M9 11h6"></path></svg>
+                        </span>
+                        <div class="archive-empty-title">No archived products</div>
+                        <div class="archive-empty-copy">Products you archive or remove from your active catalog will appear here.</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function removeCard(card) {
+            if (!card) return;
+            decrementSummary(card);
+            card.style.transition = 'opacity .20s ease, transform .20s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-4px) scale(.99)';
+
+            setTimeout(() => {
+                card.remove();
+                const index = cards.indexOf(card);
+                if (index >= 0) cards.splice(index, 1);
+                renderBaseEmptyIfNeeded();
+                filterArchive();
+            }, 210);
+        }
+
         async function handleRestoreSubmit(event) {
             event.preventDefault();
-
             const form = event.currentTarget;
             const button = form.querySelector('button[type="submit"]');
-            const row = form.closest('[data-archive-product]');
-
-            if (!form || !button || !row || button.disabled) return;
+            const card = form.closest('[data-archive-product]');
+            if (!form || !button || !card || button.disabled) return;
 
             const original = button.innerHTML;
             button.disabled = true;
-            button.innerHTML = `
-                <svg viewBox="0 0 24 24" class="h-[18px] w-[18px] animate-spin" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
-                </svg>
-            `;
+            button.innerHTML = '<svg viewBox="0 0 24 24" class="animate-spin" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path></svg>';
 
             try {
-                const formData = new FormData(form);
-
                 const response = await fetch(form.action, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'text/html,application/xhtml+xml'
+                        'Accept': 'application/json',
                     },
-                    body: formData,
-                    credentials: 'same-origin'
+                    body: new FormData(form),
+                    credentials: 'same-origin',
                 });
 
-                if (!response.ok) {
-                    throw new Error('Unable to restore product right now.');
-                }
+                const payload = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(payload?.message || 'Unable to restore product right now.');
 
-                row.style.transition = 'opacity .25s ease, transform .25s ease, max-height .25s ease, margin .25s ease, padding .25s ease';
-                row.style.opacity = '0';
-                row.style.transform = 'translateY(-4px)';
-                row.style.maxHeight = row.offsetHeight + 'px';
-
-                requestAnimationFrame(() => {
-                    row.style.maxHeight = '0px';
-                    row.style.marginTop = '0px';
-                    row.style.marginBottom = '0px';
-                    row.style.paddingTop = '0px';
-                    row.style.paddingBottom = '0px';
-                });
-
-                setTimeout(() => {
-                    row.remove();
-                    const index = cards.indexOf(row);
-                    if (index >= 0) cards.splice(index, 1);
-
-                    filterArchive();
-
-                    if (cards.length === 0 && grid) {
-                        grid.innerHTML = `
-                            <div class="rounded-[22px] border border-dashed border-[#ddd5ca] bg-[#fcfbf9] px-6 py-16 text-center shadow-[0_10px_24px_rgba(36,32,26,0.025)]">
-                                <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl border border-[#ebe5dc] bg-white text-[#a69d90]">
-                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M4 7h16"></path>
-                                        <path d="M6 7v12h12V7"></path>
-                                        <path d="M9 11h6"></path>
-                                    </svg>
-                                </div>
-                                <p class="mt-4 text-[1.05rem] font-bold text-[#50483f]">No archived products</p>
-                                <p class="mx-auto mt-2 max-w-[520px] text-[0.84rem] leading-6 text-[#92887b]">
-                                    Products you archive or remove from your active catalog will appear here.
-                                </p>
-                            </div>
-                        `;
-                    }
-
-                    showToast('success', 'Product restored successfully.');
-                }, 260);
+                removeCard(card);
+                showToast('success', payload?.message || 'Product restored successfully.');
             } catch (error) {
                 button.disabled = false;
                 button.innerHTML = original;
@@ -788,27 +1121,119 @@
             }
         }
 
-        searchInput?.addEventListener('input', filterArchive);
-        typeFilter?.addEventListener('change', filterArchive);
-        clearButton?.addEventListener('click', clearFilters);
-        emptyClearButton?.addEventListener('click', clearFilters);
+        function openDeleteModal(button) {
+            if (!deleteModal || !deleteForm || button.disabled) return;
+            pendingDeleteCard = button.closest('[data-archive-product]');
+            deleteForm.action = button.dataset.deleteUrl || '';
+            if (deleteProductName) deleteProductName.textContent = button.dataset.productName || 'Product';
+            deleteModal.classList.add('is-open');
+            deleteModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('overflow-hidden');
+            deleteCancel?.focus();
+        }
 
-        restoreForms.forEach((form) => {
-            if (form.dataset.bound === 'yes') return;
-            form.dataset.bound = 'yes';
+        function closeDeleteModal() {
+            deleteModal?.classList.remove('is-open');
+            deleteModal?.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('overflow-hidden');
+            pendingDeleteCard = null;
+            if (deleteForm) deleteForm.action = '';
+        }
+
+        async function handlePermanentDelete(event) {
+            event.preventDefault();
+            if (!deleteForm || !deleteConfirm || !pendingDeleteCard || !deleteForm.action) return;
+
+            const card = pendingDeleteCard;
+            const original = deleteConfirm.textContent;
+            deleteConfirm.disabled = true;
+            deleteConfirm.textContent = 'Deleting...';
+
+            try {
+                const response = await fetch(deleteForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: new FormData(deleteForm),
+                    credentials: 'same-origin',
+                });
+
+                const payload = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    const firstError = payload?.errors ? Object.values(payload.errors)?.[0]?.[0] : null;
+                    throw new Error(firstError || payload?.message || 'Unable to permanently delete this product.');
+                }
+
+                closeDeleteModal();
+                removeCard(card);
+                showToast('success', payload?.message || 'Product permanently deleted.');
+            } catch (error) {
+                showToast('error', error?.message || 'Unable to permanently delete product.');
+            } finally {
+                deleteConfirm.disabled = false;
+                deleteConfirm.textContent = original;
+            }
+        }
+
+        searchInput?.addEventListener('input', filterArchive);
+
+        historyButton?.addEventListener('click', event => {
+            event.stopPropagation();
+            toggleHistoryMenu();
+        });
+
+        historyOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.dataset.historyValue || '';
+                syncHistoryDropdown(value);
+                closeHistoryMenu();
+                filterArchive();
+            });
+        });
+
+        clearButton?.addEventListener('click', clearFilters);
+
+        document.addEventListener('click', event => {
+            if (!event.target.closest('[data-history-dropdown]')) {
+                closeHistoryMenu();
+            }
+        });
+
+        document.querySelectorAll('.archive-restore-form').forEach(form => {
             form.addEventListener('submit', handleRestoreSubmit);
         });
 
+        document.querySelectorAll('[data-archive-delete-open]').forEach(button => {
+            button.addEventListener('click', () => openDeleteModal(button));
+        });
+
+        deleteCancel?.addEventListener('click', closeDeleteModal);
+        deleteForm?.addEventListener('submit', handlePermanentDelete);
+
+        deleteModal?.addEventListener('click', event => {
+            if (event.target === deleteModal) closeDeleteModal();
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                if (deleteModal?.classList.contains('is-open')) closeDeleteModal();
+                closeHistoryMenu();
+            }
+        });
+
+        syncHistoryDropdown(typeFilter?.value || '');
         filterArchive();
     };
 
-    document.addEventListener('DOMContentLoaded', initArchivePage);
-    document.addEventListener('livewire:navigated', initArchivePage);
-
-    document.addEventListener('livewire:navigating', function () {
-        window.clearTimeout(window.__SARI_ARCHIVE_SKELETON_TIMER__);
-        window.__SARI_ARCHIVE_SKELETON_TIMER__ = null;
-    });
+    if (window.__SARI_SELLER_AFTER_PAINT__) {
+        window.__SARI_SELLER_AFTER_PAINT__(initArchivePage);
+    } else if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initArchivePage, { once: true });
+    } else {
+        initArchivePage();
+    }
 })();
 </script>
 @endpush

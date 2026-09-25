@@ -8,12 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('buyer_cart_items')) {
+        if (Schema::hasTable('buyer_seller_messages')) {
             return;
         }
 
-        Schema::create('buyer_cart_items', function (Blueprint $table) {
+        Schema::create('buyer_seller_messages', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('seller_account_id')
+                ->constrained('seller_accounts')
+                ->cascadeOnDelete();
 
             $table->foreignId('buyer_account_id')
                 ->nullable()
@@ -25,26 +29,42 @@ return new class extends Migration
                 ->constrained('social_accounts')
                 ->cascadeOnDelete();
 
-            $table->foreignId('seller_product_id')
-                ->constrained('seller_products')
-                ->cascadeOnDelete();
-
-            $table->foreignId('seller_product_variant_id')
+            $table->foreignId('marketplace_order_id')
                 ->nullable()
-                ->constrained('seller_product_variants')
-                ->cascadeOnDelete();
+                ->constrained('marketplace_orders')
+                ->nullOnDelete();
 
-            $table->unsignedInteger('quantity')->default(1);
+            $table->string('sender_role', 20);
+            $table->text('body');
+            $table->timestamp('read_at')->nullable();
+
             $table->timestamps();
 
-            $table->index(['buyer_account_id', 'updated_at']);
-            $table->index(['buyer_social_account_id', 'updated_at']);
-            $table->index(['seller_product_id', 'seller_product_variant_id']);
+            // Short explicit index names for MySQL's 64-character limit.
+            $table->index(
+                ['seller_account_id', 'created_at'],
+                'bsm_seller_created_idx'
+            );
+
+            $table->index(
+                ['buyer_account_id', 'created_at'],
+                'bsm_buyer_created_idx'
+            );
+
+            $table->index(
+                ['buyer_social_account_id', 'created_at'],
+                'bsm_social_created_idx'
+            );
+
+            $table->index(
+                ['marketplace_order_id', 'created_at'],
+                'bsm_order_created_idx'
+            );
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('buyer_cart_items');
+        Schema::dropIfExists('buyer_seller_messages');
     }
 };

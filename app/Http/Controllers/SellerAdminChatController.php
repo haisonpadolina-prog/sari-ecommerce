@@ -14,23 +14,23 @@ class SellerAdminChatController extends Controller
     {
         $seller = $this->resolveSeller($request);
 
-        ChatMessage::where('seller_account_id', $seller->id)
-            ->where('sender_role', 'admin')
-            ->whereNull('read_by_seller_at')
-            ->update(['read_by_seller_at' => now()]);
+        /*
+         * The current Seller messaging screen is powered by the universal
+         * platform-messaging endpoints in JavaScript. The legacy $messages
+         * collection and its derived $stats are not rendered by this view, so
+         * loading the entire legacy thread here only delays page navigation.
+         */
+        $sellerChatRestriction = \App\Models\SellerChatRestriction::query()
+            ->where('seller_account_id', $seller->id)
+            ->first();
 
-        $messages = ChatMessage::where('seller_account_id', $seller->id)
-            ->oldest('created_at')
-            ->get();
+        $sellerChatBlocked = (bool) ($sellerChatRestriction?->is_blocked);
 
-        $stats = [
-            'total_messages' => $messages->count(),
-            'unread' => 0,
-            'sent_by_seller' => $messages->where('sender_role', 'seller')->count(),
-            'admin_replies' => $messages->where('sender_role', 'admin')->count(),
-        ];
-
-        return view('seller.messages', compact('seller', 'messages', 'stats'));
+        return view('seller.messages', compact(
+            'seller',
+            'sellerChatRestriction',
+            'sellerChatBlocked'
+        ));
     }
 
     public function sellerSend(Request $request)
@@ -247,12 +247,19 @@ class SellerAdminChatController extends Controller
     {
         abort_unless($request->session()->get('is_seller'), 403, 'Seller session required.');
 
+        $resolved = $request->attributes->get('sellerAccount');
+
+        if ($resolved instanceof SellerAccount) {
+            return $resolved;
+        }
+
         $seller = SellerAccount::findOrFail(
             $request->session()->get('seller_account_id')
         );
 
         $seller->refreshSuspensionStatus();
         $seller->ensureRealtimeToken();
+        $request->attributes->set('sellerAccount', $seller);
 
         return $seller;
     }

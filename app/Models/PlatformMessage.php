@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PlatformMessage extends Model
 {
@@ -35,6 +36,14 @@ class PlatformMessage extends Model
         return $this->belongsTo(
             PlatformConversation::class,
             'platform_conversation_id'
+        );
+    }
+
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(
+            PlatformMessageReaction::class,
+            'platform_message_id'
         );
     }
 }

@@ -93,7 +93,7 @@ final class CurrentMessagingActor
                     $account,
                     $account->name ?: 'Social Buyer',
                     $account->email,
-                    'active'
+                    strtolower((string) ($account->account_status ?: 'active'))
                 );
             }
         }
@@ -227,12 +227,26 @@ final class CurrentMessagingActor
         ?string $email,
         string $status
     ): array {
+        $normalizedStatus = strtolower(trim($status ?: 'active'));
+
+        if (
+            $role !== 'admin'
+            && in_array($normalizedStatus, ['banned', 'deactivated'], true)
+        ) {
+            abort(
+                403,
+                $normalizedStatus === 'banned'
+                    ? 'This SARI account has been banned by an administrator.'
+                    : 'This SARI account is currently suspended by an administrator.'
+            );
+        }
+
         return [
             'role' => $role,
             'id' => (int) $model->getKey(),
             'name' => trim($name),
             'email' => $email,
-            'status' => $status,
+            'status' => $normalizedStatus,
             'model' => $model,
         ];
     }

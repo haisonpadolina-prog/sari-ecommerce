@@ -18,9 +18,21 @@ class SellerOrderController extends Controller
     {
         abort_unless($request->session()->get('is_seller'), 403);
 
-        return SellerAccount::findOrFail(
+        // Seller middleware already resolves this model for page requests.
+        // Reuse it so navigation does not execute a duplicate account query.
+        $resolved = $request->attributes->get('sellerAccount');
+
+        if ($resolved instanceof SellerAccount) {
+            return $resolved;
+        }
+
+        $seller = SellerAccount::findOrFail(
             $request->session()->get('seller_account_id')
         );
+
+        $request->attributes->set('sellerAccount', $seller);
+
+        return $seller;
     }
 
     private function ownedOrder(Request $request, MarketplaceOrder $order): MarketplaceOrder
@@ -42,7 +54,26 @@ class SellerOrderController extends Controller
         $orders = MarketplaceOrder::query()
             ->where('seller_account_id', $seller->id)
             ->latest('updated_at')
-            ->get();
+            ->get([
+                'id',
+                'order_number',
+                'buyer_account_id',
+                'buyer_social_account_id',
+                'buyer_name',
+                'buyer_email',
+                'buyer_address',
+                'payment_method',
+                'items',
+                'subtotal',
+                'delivery_fee',
+                'total',
+                'status',
+                'courier_name',
+                'courier_email',
+                'created_at',
+                'updated_at',
+                'delivered_at',
+            ]);
 
         $stats = [
             'new' => $orders->where('status', 'new')->count(),

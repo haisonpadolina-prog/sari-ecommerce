@@ -4,7 +4,7 @@
 
         {{-- BRAND --}}
         <div class="sari-hero-brand sari-hero-reveal sari-hero-delay-1">
-            <div class="sari-hero-brand-mark" aria-hidden="true">
+            <div class="sari-hero-brand-mark">
                 <span class="sari-hero-brand-line"></span>
 
                 <img
@@ -83,13 +83,13 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 88px 24px 110px;
+    padding: 88px 20px 58px;
 }
 
 .sari-hero-content {
     position: relative;
     z-index: 2;
-    width: min(100%, 980px);
+    width: min(100%, 940px);
     margin-inline: auto;
     text-align: center;
 }
@@ -109,7 +109,7 @@
 
 .sari-hero-logo {
     display: block;
-    width: clamp(92px, 8vw, 126px);
+    width: clamp(300px, 24vw, 420px);
     height: auto;
     object-fit: contain;
     transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .3s ease;
@@ -120,28 +120,28 @@
 }
 
 .sari-hero-brand-line {
-    width: clamp(36px, 5vw, 64px);
+    width: clamp(28px, 3vw, 42px);
     height: 1px;
-    background: rgba(47, 42, 36, .24);
+    background: rgba(255,255,255,.22);
 }
 
 .sari-hero-tagline {
-    margin: 11px 0 0;
-    color: #968b7d;
-    font-size: 10px;
+    margin: 8px 0 0;
+    color: rgba(255,255,255,.68);
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: .22em;
     text-transform: uppercase;
 }
 
 .sari-hero-copy {
-    margin-top: 33px;
+    margin-top: 16px;
 }
 
 .sari-hero-eyebrow {
     margin: 0 0 14px;
     color: #a8731f;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: .09em;
     text-transform: uppercase;
@@ -149,10 +149,10 @@
 
 .sari-hero-title {
     margin: 0;
-    color: #1e1a15;
-    font-size: clamp(44px, 6.4vw, 82px);
+    color: #ffffff;
+    font-size: clamp(48px, 6vw, 78px);
     font-weight: 700;
-    line-height: .98;
+    line-height: 1.03;
     letter-spacing: -.055em;
 }
 
@@ -163,10 +163,10 @@
 }
 
 .sari-hero-description {
-    max-width: 650px;
-    margin: 24px auto 0;
-    color: #746c62;
-    font-size: clamp(13px, 1.15vw, 15px);
+    max-width: 640px;
+    margin: 18px auto 0;
+    color: rgba(255,255,255,.78);
+    font-size: clamp(13.5px, 1.12vw, 16px);
     font-weight: 400;
     line-height: 1.8;
 }
@@ -177,21 +177,21 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-top: 34px;
+    margin-top: 28px;
 }
 
 .sari-hero .sari-button {
     position: relative;
     display: inline-flex;
-    min-width: 174px;
-    min-height: 50px;
+    min-width: 168px;
+    min-height: 47px;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 0 19px;
-    border-radius: 12px;
+    border-radius: 7px;
     border: 1px solid transparent;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: -.01em;
     text-decoration: none;
@@ -224,19 +224,19 @@
 }
 
 .sari-hero .sari-button-secondary {
-    color: #3f3932;
-    border-color: #dcd4ca;
-    background: rgba(255,255,255,.72);
-    box-shadow: 0 5px 14px rgba(32, 27, 21, .035);
+    color: #f4f1eb;
+    border-color: rgba(255,255,255,.20);
+    background: rgba(255,255,255,.10);
+    box-shadow: 0 5px 14px rgba(0,0,0,.08);
     backdrop-filter: blur(8px);
 }
 
 .sari-hero .sari-button-secondary:hover {
     transform: translateY(-2px);
-    color: #9a6817;
-    border-color: #d8bb85;
-    background: #fffaf1;
-    box-shadow: 0 10px 24px rgba(36, 28, 19, .07);
+    color: #ffffff;
+    border-color: rgba(255,255,255,.30);
+    background: rgba(255,255,255,.16);
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
 }
 
 .sari-hero .sari-button-secondary:hover .sari-button-icon {
@@ -251,14 +251,14 @@
     position: absolute;
     z-index: 3;
     left: 50%;
-    bottom: 34px;
+    bottom: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 13px;
     width: max-content;
     max-width: calc(100% - 32px);
-    color: #91877a;
+    color: rgba(255,255,255,.62);
     text-decoration: none;
     transform: translateX(-50%);
     transition: color .25s ease, opacity .3s ease;
@@ -281,7 +281,7 @@
     width: 38px;
     height: 1px;
     overflow: hidden;
-    background: rgba(145, 135, 122, .28);
+    background: rgba(255,255,255,.22);
 }
 
 .sari-scroll-line::after {
@@ -344,42 +344,50 @@
 .sari-hero-delay-5 { transition-delay: .33s !important; }
 .sari-hero-delay-6 { transition-delay: .48s !important; }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .sari-hero-logo {
+        width: min(320px, 68vw);
+    }
+
     .sari-hero {
         min-height: 100vh;
         min-height: 100svh;
         min-height: 100dvh;
-        padding: 72px 20px 100px;
+        padding: 84px 20px 54px;
     }
 
     .sari-hero-copy {
-        margin-top: 28px;
+        margin-top: 22px;
     }
 
     .sari-hero-title {
-        font-size: clamp(42px, 12.5vw, 62px);
+        font-size: clamp(40px, 8.2vw, 56px);
         line-height: 1.01;
     }
 
     .sari-hero-description {
-        max-width: 520px;
-        margin-top: 20px;
-        font-size: 12px;
+        max-width: 540px;
+        margin-top: 16px;
+        font-size: 13px;
         line-height: 1.75;
     }
 
     .sari-hero-actions {
-        margin-top: 28px;
+        margin-top: 22px;
     }
 
     .sari-scroll-indicator {
-        bottom: 23px;
+        bottom: 18px;
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
+    .sari-hero-logo {
+        width: min(260px, 72vw);
+    }
+
     .sari-hero {
-        padding-inline: 17px;
+        padding-inline: 16px;
     }
 
     .sari-hero-brand-mark {
@@ -387,7 +395,7 @@
     }
 
     .sari-hero-brand-line {
-        width: 30px;
+        width: 22px;
     }
 
     .sari-hero-eyebrow {
@@ -396,7 +404,7 @@
     }
 
     .sari-hero-title {
-        font-size: clamp(40px, 13vw, 54px);
+        font-size: clamp(36px, 10.6vw, 48px);
     }
 
     .sari-hero-description {
@@ -404,13 +412,13 @@
     }
 
     .sari-hero-actions {
-        width: min(100%, 360px);
+        width: min(100%, 350px);
         margin-inline: auto;
     }
 
     .sari-hero .sari-button {
         width: 100%;
-        min-height: 49px;
+        min-height: 46px;
     }
 
     .sari-scroll-line {
@@ -443,6 +451,131 @@
         transform: translateX(-50%) !important;
     }
 }
+
+
+/* =========================================================
+   FINAL HERO LOGO SCALE OVERRIDE
+   Higher specificity so landing-compact.css cannot shrink it.
+   ========================================================= */
+.sari-hero .sari-hero-brand .sari-hero-logo {
+    width: clamp(250px, 22vw, 340px) !important;
+    max-width: min(72vw, 340px) !important;
+    height: auto !important;
+}
+
+.sari-hero .sari-hero-brand-mark {
+    gap: 18px !important;
+}
+
+.sari-hero .sari-hero-brand-line {
+    width: clamp(28px, 3vw, 42px) !important;
+}
+
+.sari-hero .sari-hero-tagline {
+    margin-top: 8px !important;
+}
+
+/* Keep the bigger logo from pushing the headline too far down. */
+.sari-hero .sari-hero-copy {
+    margin-top: 14px !important;
+}
+
+@media (max-width: 900px) {
+    .sari-hero .sari-hero-brand .sari-hero-logo {
+        width: min(280px, 64vw) !important;
+        max-width: 64vw !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .sari-hero .sari-hero-brand .sari-hero-logo {
+        width: min(230px, 68vw) !important;
+        max-width: 68vw !important;
+    }
+
+    .sari-hero .sari-hero-brand-line {
+        width: 20px !important;
+    }
+}
+
+
+
+/* =========================================================
+   HERO COPY + BUTTON SCALE — FINAL OVERRIDE
+   Bigger hero message, smaller button labels.
+   High specificity so landing-compact.css cannot override it.
+   ========================================================= */
+
+.sari-page .sari-hero .sari-hero-eyebrow {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+    letter-spacing: .085em !important;
+    margin-bottom: 12px !important;
+}
+
+.sari-page .sari-hero .sari-hero-title {
+    font-size: clamp(44px, 5vw, 68px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.052em !important;
+}
+
+.sari-page .sari-hero .sari-hero-description {
+    max-width: 640px !important;
+    margin-top: 16px !important;
+    font-size: clamp(14px, 1.05vw, 15.5px) !important;
+    line-height: 1.72 !important;
+}
+
+.sari-page .sari-hero .sari-button {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+}
+
+.sari-page .sari-hero .sari-button-icon {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+@media (max-width: 900px) {
+    .sari-page .sari-hero .sari-hero-eyebrow {
+        font-size: 10.5px !important;
+    }
+
+    .sari-page .sari-hero .sari-hero-title {
+        font-size: clamp(40px, 7.2vw, 56px) !important;
+    }
+
+    .sari-page .sari-hero .sari-hero-description {
+        max-width: 560px !important;
+        font-size: 14px !important;
+    }
+
+    .sari-page .sari-hero .sari-button {
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .sari-page .sari-hero .sari-hero-eyebrow {
+        font-size: 9.5px !important;
+    }
+
+    .sari-page .sari-hero .sari-hero-title {
+        font-size: clamp(38px, 10.8vw, 50px) !important;
+    }
+
+    .sari-page .sari-hero .sari-hero-description {
+        max-width: 410px !important;
+        font-size: 13px !important;
+        line-height: 1.68 !important;
+    }
+
+    .sari-page .sari-hero .sari-button {
+        font-size: 9.5px !important;
+    }
+}
+
 </style>
 
 <script>

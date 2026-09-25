@@ -44,6 +44,427 @@
     );
 @endphp
 
+
+<style>
+    /* ============================================================
+       SARI ADMIN NAVBAR — COMPACT SIZING ONLY
+       No routes, queries, notification logic, search logic or JS
+       behavior are modified.
+       ============================================================ */
+
+    #adminMenuButton,
+    #adminSidebarToggle,
+    #adminMobileSearchButton,
+    #adminNotificationButton {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 10px !important;
+    }
+
+    #adminMenuButton svg,
+    #adminSidebarToggle svg,
+    #adminMobileSearchButton svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    #adminNotificationButton > svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    header > div:first-child {
+        min-height: 72px !important;
+        gap: 10px !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    header > div:first-child > div:first-child {
+        gap: 10px !important;
+    }
+
+    header h1 {
+        font-size: 17px !important;
+        line-height: 1.15 !important;
+    }
+
+    header h1 + div {
+        margin-top: 3px !important;
+        gap: 5px !important;
+        font-size: 9px !important;
+    }
+
+    header h1 + div svg {
+        width: 10px !important;
+        height: 10px !important;
+    }
+
+    header > div:first-child > div:last-child {
+        gap: 8px !important;
+    }
+
+    /* Desktop search */
+    #adminGlobalSearch {
+        height: 38px !important;
+        width: 220px !important;
+        border-radius: 11px !important;
+        padding-left: 38px !important;
+        padding-right: 34px !important;
+        font-size: 10px !important;
+    }
+
+    #adminSearchWrapper > svg {
+        left: 13px !important;
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    #adminSearchClear {
+        right: 9px !important;
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    #adminSearchResults {
+        top: calc(100% + 8px) !important;
+        width: 320px !important;
+        border-radius: 14px !important;
+    }
+
+    #adminSearchResults > div:first-child {
+        padding: 10px 12px !important;
+    }
+
+    #adminSearchResults > div:first-child p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    #adminSearchHint {
+        font-size: 8px !important;
+    }
+
+    #adminSearchResults [data-admin-search-item] {
+        gap: 9px !important;
+        border-radius: 9px !important;
+        padding: 8px 10px !important;
+    }
+
+    #adminSearchResults [data-admin-search-item] > span:first-child {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 9px !important;
+    }
+
+    #adminSearchResults [data-admin-search-item] > span:first-child svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    #adminSearchResults [data-admin-search-item] > span:last-child > span:first-child {
+        font-size: 9px !important;
+    }
+
+    #adminSearchResults [data-admin-search-item] > span:last-child > span:last-child {
+        font-size: 7.5px !important;
+    }
+
+    #adminSearchItems {
+        max-height: 330px !important;
+    }
+
+    #adminSearchEmpty {
+        padding-top: 22px !important;
+        padding-bottom: 22px !important;
+    }
+
+    /* Notification panel */
+    #adminNotificationBadge {
+        right: -5px !important;
+        top: -5px !important;
+        min-width: 18px !important;
+        height: 18px !important;
+        padding-inline: 4px !important;
+        font-size: 8px !important;
+    }
+
+    #adminNotificationPanel {
+        top: calc(100% + 8px) !important;
+        width: 320px !important;
+        border-radius: 14px !important;
+    }
+
+    #adminNotificationPanel > div:first-child {
+        padding: 11px 12px !important;
+    }
+
+    #adminNotificationPanel > div:first-child p:first-child {
+        font-size: 10px !important;
+    }
+
+    #adminNotificationUnreadText,
+    #adminMarkAllRead {
+        font-size: 8px !important;
+    }
+
+    #adminNotificationList {
+        max-height: 330px !important;
+    }
+
+    #adminNotificationList [data-admin-notification] {
+        gap: 9px !important;
+        padding: 10px 12px !important;
+    }
+
+    #adminNotificationList [data-admin-notification] > span:nth-of-type(2),
+    #adminNotificationList [data-admin-notification] > span:first-of-type:not([data-unread-dot]) {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+        font-size: 8px !important;
+    }
+
+    #adminNotificationList [data-admin-notification] span.block.truncate {
+        font-size: 9px !important;
+    }
+
+    #adminNotificationList [data-admin-notification] .line-clamp-2 {
+        margin-top: 3px !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    #adminNotificationList [data-admin-notification] .text-\[8px\] {
+        margin-top: 5px !important;
+        font-size: 7px !important;
+    }
+
+    #adminNotificationPanel > div:last-child {
+        padding: 9px !important;
+    }
+
+    #adminNotificationPanel > div:last-child a {
+        height: 32px !important;
+        border-radius: 9px !important;
+        font-size: 8px !important;
+    }
+
+    /* Date area */
+    #adminDateButton {
+        gap: 8px !important;
+        border-radius: 10px !important;
+        padding: 4px 6px !important;
+    }
+
+    #adminDateButton > div:first-child {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 10px !important;
+    }
+
+    #adminDateButton > div:first-child svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    #adminDateButton > div:nth-child(2) {
+        min-width: 92px !important;
+    }
+
+    #adminDateButton > div:nth-child(2) p:first-child {
+        font-size: 10.5px !important;
+    }
+
+    #adminDateButton > div:nth-child(2) p:last-child {
+        font-size: 8.5px !important;
+    }
+
+    #adminDatePanel {
+        top: calc(100% + 8px) !important;
+        width: 240px !important;
+        border-radius: 14px !important;
+        padding: 12px !important;
+    }
+
+    #adminDatePanel > div:first-child {
+        gap: 9px !important;
+    }
+
+    #adminDatePanel > div:first-child > div:first-child {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 11px !important;
+    }
+
+    #adminDatePanel > div:first-child > div:first-child span {
+        font-size: 14px !important;
+    }
+
+    #adminDatePanel > div:first-child > div:last-child p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    #adminDatePanel > div:first-child > div:last-child p:last-child {
+        font-size: 8px !important;
+    }
+
+    #adminDatePanel > div:last-child {
+        margin-top: 10px !important;
+        border-radius: 9px !important;
+        padding: 9px !important;
+    }
+
+    #adminDatePanel > div:last-child p:first-child {
+        font-size: 8px !important;
+    }
+
+    #adminDatePanel > div:last-child p:last-child {
+        font-size: 7.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Mini admin profile */
+    #adminProfileButton {
+        gap: 8px !important;
+        border-radius: 10px !important;
+        padding: 4px 6px !important;
+    }
+
+    #adminProfileButton > div:first-child {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 10px !important;
+    }
+
+    #adminProfileButton > div:nth-child(2) p:first-child {
+        font-size: 10.5px !important;
+    }
+
+    #adminProfileButton > div:nth-child(2) p:last-child {
+        font-size: 8px !important;
+    }
+
+    #adminProfileButton > svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    #adminProfilePanel {
+        top: calc(100% + 8px) !important;
+        width: 230px !important;
+        border-radius: 14px !important;
+    }
+
+    #adminProfilePanel > div:first-child {
+        padding: 11px !important;
+    }
+
+    #adminProfilePanel > div:first-child > div {
+        gap: 9px !important;
+    }
+
+    #adminProfilePanel > div:first-child > div > div:first-child {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 10px !important;
+    }
+
+    #adminProfilePanel > div:first-child p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    #adminProfilePanel > div:first-child p:last-child {
+        font-size: 7.5px !important;
+    }
+
+    #adminProfilePanel > div:nth-child(2),
+    #adminProfilePanel > div:last-child {
+        padding: 6px !important;
+    }
+
+    #adminProfilePanel a,
+    #adminProfilePanel button[type="submit"] {
+        gap: 8px !important;
+        border-radius: 9px !important;
+        padding: 8px 9px !important;
+        font-size: 9px !important;
+    }
+
+    #adminProfilePanel a svg,
+    #adminProfilePanel button[type="submit"] svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* Mobile search */
+    #adminMobileSearchPanel {
+        padding: 12px !important;
+    }
+
+    #adminMobileSearchInput {
+        height: 40px !important;
+        border-radius: 11px !important;
+        padding-left: 38px !important;
+        font-size: 10.5px !important;
+    }
+
+    #adminMobileSearchPanel > div:first-child > svg {
+        left: 13px !important;
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    #adminMobileSearchResults {
+        gap: 7px !important;
+        margin-top: 9px !important;
+    }
+
+    #adminMobileSearchResults a {
+        border-radius: 9px !important;
+        padding: 9px !important;
+        font-size: 8.5px !important;
+    }
+
+    /* Laptop / desktop widths */
+    @media (min-width: 1024px) {
+        #adminGlobalSearch {
+            width: 235px !important;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        #adminGlobalSearch {
+            width: 260px !important;
+        }
+    }
+
+    @media (min-width: 1536px) {
+        #adminGlobalSearch {
+            width: 285px !important;
+        }
+    }
+
+    /* Mobile/tablet keeps touch-friendly controls */
+    @media (max-width: 767px) {
+        header > div:first-child {
+            min-height: 68px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        #adminMenuButton,
+        #adminMobileSearchButton,
+        #adminNotificationButton {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        header h1 {
+            font-size: 16px !important;
+        }
+    }
+</style>
+
 <header
     class="
         sticky top-0 z-40

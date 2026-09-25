@@ -8,12 +8,12 @@
 <style>
     :root {
         --sari-gold: #d48f08;
-        --sari-gold-dark: #b97804;
-        --sari-ink: #111827;
-        --sari-muted: #6b7280;
-        --sari-border: #e5e7eb;
-        --sari-card: rgba(255,255,255,.96);
-        --sari-soft: #f8fafc;
+        --sari-gold-dark: #bd7d05;
+        --sari-ink: #1f1b16;
+        --sari-muted: #7b7266;
+        --sari-border: #e4ddd3;
+        --sari-card: #ffffff;
+        --sari-soft: #fffaf1;
     }
 
     .sari-recovery-card { animation: sariCardIn .44s cubic-bezier(.2,.8,.2,1) both; }
@@ -72,22 +72,184 @@
     .sari-input { transition: border-color .18s ease, box-shadow .18s ease; }
     .sari-input:focus { border-color: var(--sari-gold); box-shadow:0 0 0 4px rgba(212,143,8,.10); }
     #sariConfettiCanvas { pointer-events:none; position:fixed; inset:0; z-index:80; width:100%; height:100%; }
-    .sari-shell { background: var(--sari-card); border: 1px solid rgba(255,255,255,.65); box-shadow: 0 30px 90px rgba(15,23,42,.22); }
-    .sari-header { border-bottom: 1px solid #e5e7eb; background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.92)); }
-    .sari-progress-track { background: #e5e7eb !important; }
-    .sari-progress-track.is-active { background: #d9b76f !important; }
-    .sari-progress-circle { border-color: #d1d5db !important; background: #fff !important; color: #9ca3af !important; }
-    .sari-progress-circle.is-active { border-color: #d48f08 !important; background: #fff !important; color: #a56c08 !important; box-shadow: 0 0 0 5px rgba(212,143,8,.08); }
-    .sari-label { color: #111827; }
-    .sari-subcopy { color: #6b7280; }
-    .sari-input-wrap input { background: #fff !important; border-color: #d1d5db !important; color: #111827 !important; }
-    .sari-input-wrap input::placeholder { color: #9ca3af !important; }
-    .sari-inline-note { border: 1px solid #e5e7eb; background: #fff; color: #4b5563; }
-    .sari-soft-panel { border: 1px solid #e5e7eb; background: #fff; }
-    .sari-soft-divider { border-color: #e5e7eb !important; }
-    .sari-muted-link { color: #6b7280; }
+    .sari-shell {
+        background: var(--sari-card);
+        border: 1px solid #e7e0d7;
+        box-shadow: 0 18px 48px rgba(39,31,21,.09);
+    }
+
+    .sari-header {
+        border-bottom: 1px solid #eee8df;
+        background: #ffffff;
+    }
+
+    .sari-progress-track { background: #e8e1d7 !important; }
+    .sari-progress-track.is-active { background: #d8ad57 !important; }
+
+    .sari-progress-circle {
+        border-color: #d9d1c7 !important;
+        background: #fff !important;
+        color: #9a9185 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-progress-circle.is-active {
+        border-color: #d48f08 !important;
+        background: #fffaf1 !important;
+        color: #9d6504 !important;
+        box-shadow: 0 0 0 3px rgba(212,143,8,.07) !important;
+    }
+
+    .sari-label { color: #383126; }
+    .sari-subcopy { color: #81786c; }
+
+    .sari-input-wrap input {
+        background: #fff !important;
+        border-color: #ddd5ca !important;
+        color: #1f1b16 !important;
+    }
+
+    .sari-input-wrap input::placeholder { color: #aaa196 !important; }
+
+    .sari-inline-note {
+        border: 1px solid #eee6db;
+        background: #fffaf3;
+        color: #655d52;
+    }
+
+    .sari-soft-panel { border: 1px solid #e9e2d8; background: #fff; }
+    .sari-soft-divider { border-color: #eee8df !important; }
+    .sari-muted-link { color: #756d63; }
     .sari-muted-link:hover { color: #a56c08; }
-    .sari-overlay-note { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.24); }
+
+    .sari-overlay-note {
+        background: transparent;
+        border: 0;
+        color: #8b8276 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* Clean responsive sizing */
+    .sari-recovery-wrap {
+        width: min(100%, 440px);
+    }
+
+    .sari-brand {
+        margin-bottom: clamp(10px, 1.4vh, 14px);
+    }
+
+    .sari-brand img {
+        width: clamp(116px, 7.6vw, 142px);
+        margin-inline: auto;
+    }
+
+    .sari-brand-tagline {
+        margin-top: 4px;
+        font-size: clamp(7px, .55vw, 8px);
+        color: #9a9185;
+    }
+
+    .sari-shell {
+        border-radius: 18px;
+        overflow: hidden;
+    }
+
+    .sari-header {
+        padding: clamp(17px, 2.2vh, 22px) clamp(18px, 2vw, 24px);
+    }
+
+    .sari-progress-wrap {
+        margin-bottom: clamp(14px, 1.8vh, 18px);
+    }
+
+    .sari-progress-circle {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 9px !important;
+    }
+
+    .sari-recovery-eyebrow {
+        font-size: 8px;
+        letter-spacing: .15em;
+    }
+
+    .sari-recovery-title {
+        margin-top: 6px !important;
+        font-size: clamp(22px, 1.7vw, 26px) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .sari-recovery-subtitle {
+        margin-top: 7px !important;
+        max-width: 360px !important;
+        font-size: clamp(10.5px, .78vw, 11.5px) !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-recovery-body {
+        padding: clamp(18px, 2.3vh, 23px) clamp(18px, 2vw, 24px);
+    }
+
+    .sari-recovery-body form {
+        gap: 14px;
+    }
+
+    .sari-recovery-field-label {
+        margin-bottom: 7px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+    }
+
+    .sari-recovery-control {
+        height: 46px !important;
+        font-size: 12.5px !important;
+        border-radius: 11px !important;
+    }
+
+    .sari-recovery-button {
+        height: 46px !important;
+        border-radius: 11px !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 6px 16px rgba(212,143,8,.12) !important;
+    }
+
+    .sari-recovery-button:hover {
+        box-shadow: 0 8px 20px rgba(189,125,5,.16) !important;
+    }
+
+    .sari-otp-input {
+        height: 46px !important;
+        border-radius: 10px !important;
+        font-size: 18px !important;
+    }
+
+    .sari-back-area {
+        margin-top: 18px !important;
+        padding-top: 15px !important;
+    }
+
+    @media (max-height: 820px) and (min-width: 640px) {
+        .sari-recovery-wrap { width: min(100%, 410px); }
+        .sari-brand img { width: 116px; }
+        .sari-header { padding: 15px 18px; }
+        .sari-recovery-body { padding: 16px 18px; }
+        .sari-progress-wrap { margin-bottom: 12px; }
+        .sari-recovery-title { font-size: 23px !important; }
+        .sari-recovery-control,
+        .sari-recovery-button { height: 43px !important; }
+        .sari-otp-input { height: 43px !important; }
+    }
+
+    @media (max-width: 639px) {
+        .sari-recovery-wrap { width: min(100%, 440px); }
+        .sari-brand img { width: 120px; }
+        .sari-recovery-control,
+        .sari-recovery-button { min-height: 46px; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
         .sari-recovery-card, .sari-step-enter, .sari-step-leave, .sari-check-pop,
@@ -99,23 +261,23 @@
 
 <canvas id="sariConfettiCanvas" aria-hidden="true"></canvas>
 
-<div class="relative min-h-screen min-h-[100dvh] overflow-hidden bg-[#17130f] font-['Poppins',sans-serif]">
-    {{-- Keep the original background image visible; no white wash. --}}
+<div class="relative min-h-screen min-h-[100dvh] overflow-x-hidden bg-[#f7f4ee] font-['Poppins',sans-serif]">
     <div class="absolute inset-0">
         <img src="{{ asset('images/login-bg.jpg') }}" alt="" class="h-full w-full object-cover object-center">
-        <div class="absolute inset-0 bg-black/36"></div>
+        <div class="absolute inset-0 bg-white/68"></div>
+        <div class="absolute inset-0 bg-[#fffaf1]/18"></div>
     </div>
 
-    <div class="relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full max-w-[1500px] items-center justify-center px-4 py-7 sm:px-6 md:px-8 lg:px-10">
-        <div class="w-full max-w-[570px]">
-            <a href="{{ route('home') }}" class="mb-5 flex flex-col items-center sm:mb-6" aria-label="Back to SARI home">
-                <img src="{{ asset('images/sari-logo.png') }}" alt="SARI" class="h-auto w-[158px] object-contain brightness-0 invert sm:w-[180px]">
-                <span class="mt-2 text-[9px] font-semibold uppercase tracking-[.22em] text-white/80 sm:text-[10px]">Elevated Everyday</span>
+    <div class="relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full max-w-[1500px] items-center justify-center px-4 py-5 sm:px-6 sm:py-6 md:px-8 lg:px-10">
+        <div class="sari-recovery-wrap">
+            <a href="{{ route('home') }}" class="sari-brand flex flex-col items-center" aria-label="Back to SARI home">
+                <img src="{{ asset('images/sari-logo.png') }}" alt="SARI" class="h-auto object-contain brightness-0">
+                <span class="sari-brand-tagline font-semibold uppercase tracking-[.22em]">Elevated Everyday</span>
             </a>
 
-            <div class="sari-shell sari-recovery-card overflow-hidden rounded-[24px] backdrop-blur-xl">
-                <div class="sari-header px-5 py-5 sm:px-8 sm:py-6">
-                    <div class="mb-5 flex items-center justify-center">
+            <div class="sari-shell sari-recovery-card">
+                <div class="sari-header">
+                    <div class="sari-progress-wrap flex items-center justify-center">
                         <div class="flex w-full max-w-[330px] items-center" aria-label="Password recovery progress">
                             @foreach ([1,2,3] as $index)
                                 <div class="sari-progress-dot sari-progress-circle grid h-8 w-8 shrink-0 place-items-center rounded-full border text-[10px] font-bold {{ ($step === 'email' ? 1 : ($step === 'otp' ? 2 : 3)) >= $index ? 'is-active border-[#d48f08] bg-white text-[#a56c08]' : 'border-[#d1d5db] bg-white text-[#9ca3af]' }}" data-progress-dot="{{ $index }}">{{ $index }}</div>
@@ -127,29 +289,29 @@
                     </div>
 
                     <div class="text-center">
-                        <span id="sariEyebrow" class="text-[9px] font-bold uppercase tracking-[.16em] text-[#a96f06] sm:text-[10px]">Account Recovery</span>
-                        <h1 id="sariTitle" class="mt-2 text-[27px] font-bold leading-[1.15] tracking-[-.035em] text-[#1f1b16] sm:text-[32px]">{{ $step === 'otp' ? 'Check your email' : ($step === 'password' ? 'Create a new password' : 'Forgot your password?') }}</h1>
-                        <p id="sariSubtitle" class="mx-auto mt-3 max-w-[430px] text-[12px] leading-6 sari-subcopy sm:text-[13px]">{{ $step === 'otp' ? 'Enter the 6-digit verification code we sent to your email.' : ($step === 'password' ? 'Your email is verified. Choose a secure new password for your account.' : 'Enter the email associated with your SARI account. We’ll send you a 6-digit verification code.') }}</p>
+                        <span id="sariEyebrow" class="sari-recovery-eyebrow font-bold uppercase text-[#a96f06]">Account Recovery</span>
+                        <h1 id="sariTitle" class="sari-recovery-title font-bold text-[#1f1b16]">{{ $step === 'otp' ? 'Check your email' : ($step === 'password' ? 'Create a new password' : 'Forgot your password?') }}</h1>
+                        <p id="sariSubtitle" class="sari-recovery-subtitle mx-auto sari-subcopy">{{ $step === 'otp' ? 'Enter the 6-digit verification code we sent to your email.' : ($step === 'password' ? 'Your email is verified. Choose a secure new password for your account.' : 'Enter the email associated with your SARI account. We’ll send you a 6-digit verification code.') }}</p>
                     </div>
                 </div>
 
-                <div class="px-5 py-6 sm:px-8 sm:py-7">
+                <div class="sari-recovery-body">
                     <div id="sariAlert" class="mb-5 hidden rounded-xl border px-4 py-3 text-[12px] leading-5 sm:text-[13px]" role="alert"></div>
 
                     {{-- STEP 1: EMAIL --}}
                     <section id="sariStepEmail" class="sari-step {{ $step === 'email' ? 'is-active' : '' }}" data-step="email">
                         <form id="sariEmailForm" class="space-y-5" novalidate>
                             <div>
-                                <label for="recoveryEmail" class="mb-2 block text-[13px] font-semibold sari-label sm:text-[14px]">Email Address</label>
+                                <label for="recoveryEmail" class="sari-recovery-field-label block sari-label">Email Address</label>
                                 <div class="sari-input-wrap relative">
                                     <span class="pointer-events-none absolute inset-y-0 left-0 flex w-12 items-center justify-center text-[#9ca3af]" aria-hidden="true">
                                         <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
                                     </span>
-                                    <input id="recoveryEmail" type="email" value="{{ $email }}" autocomplete="email" required placeholder="Enter your email" class="sari-input h-[54px] w-full rounded-xl border border-[#d1d5db] bg-white pl-12 pr-4 text-[14px] text-[#111827] outline-none placeholder:text-[#9ca3af] sm:h-[56px] sm:text-[15px]">
+                                    <input id="recoveryEmail" type="email" value="{{ $email }}" autocomplete="email" required placeholder="Enter your email" class="sari-input sari-recovery-control w-full border bg-white pl-12 pr-4 outline-none">
                                 </div>
                             </div>
 
-                            <button id="sariSendButton" type="submit" class="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-xl border border-[#d48f08] bg-[#d48f08] px-5 text-[13px] font-bold text-white shadow-[0_8px_20px_rgba(189,125,5,.18)] transition hover:border-[#bd7d05] hover:bg-[#bd7d05] hover:shadow-[0_10px_28px_rgba(189,125,5,.24)] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/20 sm:h-[56px] sm:text-[14px]">
+                            <button id="sariSendButton" type="submit" class="sari-recovery-button flex w-full items-center justify-center gap-2 border border-[#d48f08] bg-[#d48f08] px-4 text-white transition hover:border-[#bd7d05] hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/15">
                                 <span data-label>Send verification code</span>
                                 <svg data-arrow viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 12h14"></path><path d="m14 7 5 5-5 5"></path></svg>
                             </button>
@@ -166,11 +328,11 @@
                         <form id="sariOtpForm" class="mt-5" novalidate>
                             <div id="sariOtpInputs" class="mx-auto grid max-w-[390px] grid-cols-6 gap-1.5 min-[380px]:gap-2 sm:gap-2.5">
                                 @for ($i = 0; $i < 6; $i++)
-                                    <input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Verification code digit {{ $i + 1 }}" class="sari-otp-input h-[52px] min-w-0 rounded-xl border border-[#d1d5db] bg-white text-center text-[21px] font-bold text-[#262019] outline-none sm:h-[58px] sm:text-[23px]" data-otp-input>
+                                    <input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Verification code digit {{ $i + 1 }}" class="sari-otp-input min-w-0 border border-[#d1d5db] bg-white text-center font-bold text-[#262019] outline-none" data-otp-input>
                                 @endfor
                             </div>
 
-                            <button id="sariVerifyButton" type="submit" class="mt-5 flex h-[54px] w-full items-center justify-center gap-2.5 rounded-xl border border-[#d48f08] bg-[#d48f08] px-5 text-[13px] font-bold text-white shadow-[0_8px_20px_rgba(189,125,5,.18)] transition hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/20 sm:h-[56px] sm:text-[14px]">
+                            <button id="sariVerifyButton" type="submit" class="mt-5 sari-recovery-button flex w-full items-center justify-center gap-2 border border-[#d48f08] bg-[#d48f08] px-4 text-white transition hover:border-[#bd7d05] hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/15">
                                 <span data-label>Verify code</span>
                                 <svg data-arrow viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m8 12 2.5 2.5L16 9"></path></svg>
                             </button>
@@ -205,9 +367,9 @@
                     <section id="sariStepPassword" class="sari-step {{ $step === 'password' ? 'is-active' : '' }}" data-step="password">
                         <form id="sariPasswordForm" class="space-y-4" novalidate>
                             <div>
-                                <label for="newPassword" class="mb-2 block text-[13px] font-semibold sari-label sm:text-[14px]">New Password</label>
+                                <label for="newPassword" class="sari-recovery-field-label block sari-label">New Password</label>
                                 <div class="sari-input-wrap relative">
-                                    <input id="newPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter new password" class="sari-input h-[54px] w-full rounded-xl border border-[#d1d5db] bg-white px-4 pr-12 text-[14px] text-[#111827] outline-none placeholder:text-[#9ca3af] sm:h-[56px] sm:text-[15px]">
+                                    <input id="newPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter new password" class="sari-input sari-recovery-control w-full border bg-white px-4 pr-12 outline-none">
                                     <button type="button" class="sariPasswordToggle absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#9ca3af] hover:text-[#a96f06]" data-target="newPassword" aria-label="Show new password">
                                         <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
                                     </button>
@@ -215,9 +377,9 @@
                             </div>
 
                             <div>
-                                <label for="confirmPassword" class="mb-2 block text-[13px] font-semibold sari-label sm:text-[14px]">Confirm Password</label>
+                                <label for="confirmPassword" class="sari-recovery-field-label block sari-label">Confirm Password</label>
                                 <div class="sari-input-wrap relative">
-                                    <input id="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Confirm new password" class="sari-input h-[54px] w-full rounded-xl border border-[#d1d5db] bg-white px-4 pr-12 text-[14px] text-[#111827] outline-none placeholder:text-[#9ca3af] sm:h-[56px] sm:text-[15px]">
+                                    <input id="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Confirm new password" class="sari-input sari-recovery-control w-full border bg-white px-4 pr-12 outline-none">
                                     <button type="button" class="sariPasswordToggle absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#9ca3af] hover:text-[#a96f06]" data-target="confirmPassword" aria-label="Show confirmation password">
                                         <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
                                     </button>
@@ -229,7 +391,7 @@
                                 <span>Use at least 8 characters. Choose a password you don't use on other sites.</span>
                             </div>
 
-                            <button id="sariResetButton" type="submit" class="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-xl border border-[#d48f08] bg-[#d48f08] px-5 text-[13px] font-bold text-white shadow-[0_8px_20px_rgba(189,125,5,.18)] transition hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/20 sm:h-[56px] sm:text-[14px]">
+                            <button id="sariResetButton" type="submit" class="sari-recovery-button flex w-full items-center justify-center gap-2 border border-[#d48f08] bg-[#d48f08] px-4 text-white transition hover:border-[#bd7d05] hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/15">
                                 <span data-label>Reset password</span>
                                 <svg data-arrow viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 12h14"></path><path d="m14 7 5 5-5 5"></path></svg>
                             </button>
@@ -247,14 +409,14 @@
                             <span class="text-[9px] font-bold uppercase tracking-[.16em] text-emerald-700 sm:text-[10px]">Password Updated</span>
                             <h2 class="mt-2 text-[26px] font-bold tracking-[-.035em] text-[#1f1b16] sm:text-[30px]">You're all set</h2>
                             <p class="mx-auto mt-3 max-w-[390px] text-[12px] leading-6 sari-subcopy sm:text-[13px]">Your password has been changed successfully. You can now sign in to SARI with your new password.</p>
-                            <a href="{{ route('login') }}" class="mt-6 inline-flex h-[54px] w-full items-center justify-center gap-2 rounded-xl border border-[#d48f08] bg-[#d48f08] px-5 text-[13px] font-bold text-white shadow-[0_8px_20px_rgba(189,125,5,.18)] transition hover:bg-[#bd7d05] sm:h-[56px] sm:text-[14px]">
+                            <a href="{{ route('login') }}" class="mt-6 sari-recovery-button flex w-full items-center justify-center gap-2 border border-[#d48f08] bg-[#d48f08] px-4 text-white transition hover:border-[#bd7d05] hover:bg-[#bd7d05] focus:outline-none focus:ring-4 focus:ring-[#d48f08]/15">
                                 Back to Sign In
                                 <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 12h14"></path><path d="m14 7 5 5-5 5"></path></svg>
                             </a>
                         </div>
                     </section>
 
-                    <div id="sariBackArea" class="mt-6 border-t sari-soft-divider pt-5 text-center {{ $step === 'email' ? '' : 'hidden' }}">
+                    <div id="sariBackArea" class="sari-back-area border-t sari-soft-divider text-center {{ $step === 'email' ? '' : 'hidden' }}">
                         <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-[12px] font-semibold text-[#8d5d08] transition hover:text-[#6f4703] sm:text-[13px]">
                             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M19 12H5"></path><path d="m10 7-5 5 5 5"></path></svg>
                             Back to sign in
@@ -263,7 +425,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 sari-overlay-note rounded-lg px-3 py-2 text-center text-[10px] font-medium leading-5 text-white shadow-sm backdrop-blur-sm sm:text-[11px]">
+            <p class="mt-3 sari-overlay-note px-2 py-1 text-center text-[9.5px] font-medium leading-5 sm:text-[10px]">
                 Verification codes expire after 10 minutes and can only be used for this recovery session.
             </p>
         </div>

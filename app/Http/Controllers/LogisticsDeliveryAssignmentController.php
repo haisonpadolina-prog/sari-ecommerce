@@ -33,9 +33,12 @@ class LogisticsDeliveryAssignmentController extends Controller
     {
         $logistics = CurrentLogisticsAccount::resolve($request);
         $orders = MarketplaceOrder::query()
-            ->with('seller')
+            ->with(['seller', 'logisticsParcel'])
             ->where('status', 'ready_for_pickup')
             ->whereNull('courier_email')
+            ->whereHas('logisticsParcel', function ($query): void {
+                $query->where('status', 'pickup_verified');
+            })
             ->oldest('ready_at')
             ->oldest('id')
             ->get();
@@ -100,6 +103,18 @@ class LogisticsDeliveryAssignmentController extends Controller
             ) {
                 throw ValidationException::withMessages([
                     'order' => 'This order is no longer available for Logistics assignment.',
+                ]);
+            }
+
+            $verifiedParcel = LogisticsParcel::query()
+                ->where('marketplace_order_id', $lockedOrder->id)
+                ->where('status', 'pickup_verified')
+                ->lockForUpdate()
+                ->first();
+
+            if (!$verifiedParcel) {
+                throw ValidationException::withMessages([
+                    'order' => 'Logistics must verify the Seller pickup request before assigning a Rider.',
                 ]);
             }
 

@@ -22,9 +22,14 @@ class RegistrationController extends Controller
         private readonly RegistrationEmailVerificationService $emailVerification
     ) {}
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('pages.register');
+        $requestedRole = strtolower(trim((string) $request->query('role', '')));
+        $defaultRole = in_array($requestedRole, ['buyer', 'seller', 'logistics'], true)
+            ? $requestedRole
+            : '';
+
+        return view('pages.register', compact('defaultRole'));
     }
 
     public function store(Request $request)

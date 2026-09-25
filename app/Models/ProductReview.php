@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ProductReview extends Model
 {
@@ -44,5 +45,10 @@ class ProductReview extends Model
     public function socialBuyer(): BelongsTo
     {
         return $this->belongsTo(SocialAccount::class, 'buyer_social_account_id');
+    }
+
+    public function sellerReply(): HasOne
+    {
+        return $this->hasOne(SellerReviewReply::class, 'product_review_id');
     }
 }

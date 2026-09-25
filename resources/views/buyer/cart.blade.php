@@ -1265,6 +1265,361 @@
 </script>
 @endif
 
+
+
+<style>
+/* ============================================================
+   SARI BUYER CART — FINAL CLEAN RESPONSIVE DESIGN
+   - readable at 100% browser zoom
+   - balanced desktop/laptop scale
+   - responsive tablet/mobile
+   - preserves existing Laravel + JS functionality
+   ============================================================ */
+
+[data-sari-cart-page] {
+    max-width: 1240px !important;
+    padding: 28px 24px 48px !important;
+    background: transparent !important;
+}
+
+/* PAGE HEADER */
+[data-sari-cart-page] > section:first-of-type {
+    padding-bottom: 20px !important;
+}
+
+[data-sari-cart-page] > section:first-of-type p:first-child {
+    font-size: 10px !important;
+    letter-spacing: .14em !important;
+}
+
+[data-sari-cart-page] > section:first-of-type h1 {
+    margin-top: 4px !important;
+    font-size: clamp(30px, 3vw, 38px) !important;
+    line-height: 1.08 !important;
+}
+
+[data-sari-cart-page] > section:first-of-type h1 + p {
+    margin-top: 7px !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+}
+
+.sari-cart-count-pill,
+.sari-btn-secondary {
+    height: 42px !important;
+    padding-inline: 15px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+}
+
+/* MAIN GRID */
+[data-sari-cart-page] > .mt-5.grid {
+    margin-top: 22px !important;
+    gap: 22px !important;
+    grid-template-columns: minmax(0, 1fr) 330px !important;
+}
+
+/* SELECT ALL TOOLBAR */
+.sari-cart-toolbar {
+    padding: 14px 16px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 22px rgba(56, 43, 28, .055) !important;
+}
+
+.sari-cart-toolbar label > span > span:first-child {
+    font-size: 12px !important;
+}
+
+.sari-cart-toolbar label > span > span:last-child {
+    margin-top: 2px !important;
+    font-size: 10px !important;
+}
+
+#cartSelectedTopCount {
+    padding: 5px 10px !important;
+    font-size: 9px !important;
+}
+
+/* SELLER GROUP */
+.sari-seller-shell {
+    border-radius: 16px !important;
+    box-shadow:
+        0 10px 28px rgba(56, 43, 28, .06),
+        0 2px 7px rgba(56, 43, 28, .025) !important;
+}
+
+.sari-seller-shell > div:first-child {
+    padding: 13px 16px !important;
+}
+
+.sari-seller-shell > div:first-child h2 {
+    font-size: 13px !important;
+}
+
+.sari-seller-shell > div:first-child .rounded-full {
+    font-size: 8.5px !important;
+}
+
+.sari-seller-shell > div:first-child > span {
+    font-size: 9.5px !important;
+}
+
+/* PRODUCT ROW */
+.sari-cart-row {
+    padding: 14px !important;
+    border-radius: 14px !important;
+    box-shadow:
+        0 5px 15px rgba(56, 43, 28, .045),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+.sari-cart-row > div {
+    grid-template-columns: 28px 110px minmax(0, 1fr) !important;
+    gap: 14px !important;
+}
+
+.sari-cart-row > div > a {
+    width: 110px !important;
+    height: 110px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+}
+
+.sari-cart-row .text-\[12px\] {
+    font-size: 14px !important;
+}
+
+.sari-cart-row .text-\[7\.5px\] {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-row .text-\[7px\] {
+    font-size: 10px !important;
+}
+
+.sari-cart-row .text-\[17px\] {
+    font-size: 19px !important;
+}
+
+.sari-cart-row .text-\[6\.5px\] {
+    font-size: 9px !important;
+}
+
+.sari-cart-row .text-\[6px\] {
+    font-size: 8.5px !important;
+}
+
+/* QUANTITY + ACTIONS */
+.sari-qty-control {
+    height: 38px !important;
+    border-radius: 9px !important;
+}
+
+.sari-qty-control button {
+    width: 38px !important;
+    font-size: 14px !important;
+}
+
+.sari-qty-control input {
+    width: 48px !important;
+    font-size: 11px !important;
+}
+
+.sari-btn-update,
+.sari-btn-remove {
+    height: 38px !important;
+    padding-inline: 13px !important;
+    border-radius: 9px !important;
+    font-size: 10px !important;
+}
+
+/* ORDER SUMMARY */
+.sari-cart-summary {
+    border-radius: 16px !important;
+    box-shadow:
+        0 12px 30px rgba(56, 43, 28, .07),
+        0 3px 8px rgba(56, 43, 28, .025) !important;
+}
+
+.sari-cart-summary > div:first-child {
+    padding: 16px 18px !important;
+}
+
+.sari-cart-summary > div:first-child h2 {
+    font-size: 18px !important;
+}
+
+#cartSelectedSummaryCount {
+    font-size: 9px !important;
+    padding: 5px 9px !important;
+}
+
+.sari-cart-summary > .p-5 {
+    padding: 18px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 {
+    gap: 12px !important;
+    font-size: 12px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:first-child,
+.sari-cart-summary .space-y-3\.5 > div span:last-child {
+    font-size: 12px !important;
+}
+
+#cartSelectedTotal {
+    font-size: 25px !important;
+}
+
+.sari-btn-checkout {
+    height: 46px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+}
+
+#cartSelectionHint {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 p {
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+}
+
+.sari-cart-feedback {
+    font-size: 11px !important;
+    padding: 11px 14px !important;
+}
+
+/* COMMON LAPTOP */
+@media (max-width: 1600px) and (max-height: 950px) {
+    [data-sari-cart-page] {
+        max-width: 1160px !important;
+        padding: 20px 20px 36px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type h1 {
+        font-size: 32px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type h1 + p {
+        font-size: 12px !important;
+    }
+
+    [data-sari-cart-page] > .mt-5.grid {
+        gap: 18px !important;
+        grid-template-columns: minmax(0, 1fr) 310px !important;
+    }
+
+    .sari-cart-row {
+        padding: 12px !important;
+    }
+
+    .sari-cart-row > div {
+        grid-template-columns: 26px 98px minmax(0, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .sari-cart-row > div > a {
+        width: 98px !important;
+        height: 98px !important;
+    }
+
+    .sari-cart-row .text-\[12px\] {
+        font-size: 13px !important;
+    }
+
+    .sari-cart-row .text-\[17px\] {
+        font-size: 17px !important;
+    }
+
+    .sari-cart-summary > .p-5 {
+        padding: 16px !important;
+    }
+}
+
+/* TABLET / NARROW LAPTOP */
+@media (max-width: 1100px) {
+    [data-sari-cart-page] > .mt-5.grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .sari-cart-summary {
+        position: static !important;
+        width: 100% !important;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+    [data-sari-cart-page] {
+        padding: 16px 14px 28px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type h1 {
+        font-size: 29px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type h1 + p {
+        font-size: 11.5px !important;
+    }
+
+    .sari-cart-count-pill,
+    .sari-btn-secondary {
+        height: 40px !important;
+        font-size: 10px !important;
+    }
+
+    .sari-cart-toolbar {
+        padding: 12px 13px !important;
+    }
+
+    .sari-cart-row {
+        padding: 12px !important;
+    }
+
+    .sari-cart-row > div {
+        grid-template-columns: 24px 82px minmax(0, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .sari-cart-row > div > a {
+        width: 82px !important;
+        height: 82px !important;
+        padding: 6px !important;
+    }
+
+    .sari-cart-row .text-\[12px\] {
+        font-size: 12.5px !important;
+    }
+
+    .sari-cart-row .text-\[17px\] {
+        font-size: 16px !important;
+    }
+
+    .sari-cart-row .text-\[7\.5px\] {
+        font-size: 10px !important;
+    }
+
+    .sari-btn-update,
+    .sari-btn-remove {
+        font-size: 9.5px !important;
+    }
+
+    .sari-cart-summary > div:first-child {
+        padding: 14px 15px !important;
+    }
+
+    .sari-cart-summary > .p-5 {
+        padding: 15px !important;
+    }
+}
+</style>
+
+
 @endsection
 
 @push('scripts')

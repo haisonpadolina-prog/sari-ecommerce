@@ -23,6 +23,10 @@ class MarketplaceOrder extends Model
         'payment_method',
         'payment_status',
         'items',
+        'original_subtotal',
+        'discount_amount',
+        'voucher_code',
+        'seller_voucher_id',
         'subtotal',
         'delivery_fee',
         'total',
@@ -44,6 +48,8 @@ class MarketplaceOrder extends Model
 
     protected $casts = [
         'items' => 'array',
+        'original_subtotal' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
         'subtotal' => 'decimal:2',
         'delivery_fee' => 'decimal:2',
         'total' => 'decimal:2',
@@ -158,6 +164,11 @@ class MarketplaceOrder extends Model
     public function logisticsParcel(): HasOne
     {
         return $this->hasOne(LogisticsParcel::class, 'marketplace_order_id');
+    }
+
+    public function returnRequest(): HasOne
+    {
+        return $this->hasOne(SellerReturnRequest::class, 'marketplace_order_id');
     }
 
     public function reviews(): HasMany

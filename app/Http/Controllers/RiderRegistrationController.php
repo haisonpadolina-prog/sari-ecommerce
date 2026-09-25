@@ -58,7 +58,7 @@ class RiderRegistrationController extends Controller
         return view('pages.rider-logistics', compact('logistics', 'search'));
     }
 
-    public function create(LogisticsAccount $logistics): View
+    public function create(Request $request, LogisticsAccount $logistics): View
     {
         abort_unless($logistics->account_status === 'active', 404);
 
@@ -68,7 +68,171 @@ class RiderRegistrationController extends Controller
                 ->where('status', 'approved'),
         ]);
 
+        $verifiedEmail = strtolower(trim(
+            (string) $request->session()->get('rider_registration_verified_email', '')
+        ));
+
+        $verifiedLogisticsId = (int) $request->session()->get(
+            'rider_registration_verified_logistics_id',
+            0
+        );
+
+        if (
+            $verifiedEmail === ''
+            || $verifiedLogisticsId !== (int) $logistics->id
+            || !$this->emailVerification->isVerified($request, $verifiedEmail)
+        ) {
+            $request->session()->forget([
+                'rider_registration_verified_email',
+                'rider_registration_verified_logistics_id',
+            ]);
+
+            return view('pages.rider-email-verification', compact('logistics'));
+        }
+
+        // The existing Rider form already uses old('email'), so flash the verified
+        // address into old input for this request without replacing the big form.
+        $oldInput = (array) $request->session()->getOldInput();
+        if (empty($oldInput['email'])) {
+            $request->session()->flashInput(array_merge($oldInput, [
+                'email' => $verifiedEmail,
+            ]));
+        }
+
         return view('pages.rider-register', compact('logistics'));
+    }
+
+    public function sendEmailCode(
+        Request $request,
+        LogisticsAccount $logistics
+    ): RedirectResponse {
+        abort_unless($logistics->account_status === 'active', 404);
+
+        $validated = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:180'],
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+
+        if ($this->approvedAccountUsesEmail($email)) {
+            return back()
+                ->withErrors([
+                    'email' => 'An approved SARI account already uses this email address.',
+                ])
+                ->withInput();
+        }
+
+        $existing = RegistrationApplication::query()
+            ->where('email', $email)
+            ->first();
+
+        if ($existing && $existing->status === 'pending') {
+            $provider = $existing->logistics?->displayName() ?? 'a Logistics provider';
+
+            return back()
+                ->withErrors([
+                    'email' => 'This email already has a Rider application waiting for review by ' . $provider . '.',
+                ])
+                ->withInput();
+        }
+
+        if ($existing && $existing->status === 'approved') {
+            return back()
+                ->withErrors([
+                    'email' => 'This Rider registration was already approved. Please log in instead.',
+                ])
+                ->withInput();
+        }
+
+        $result = $this->emailVerification->sendCode($request, $email);
+
+        if (!($result['ok'] ?? false)) {
+            return back()
+                ->withErrors([
+                    'email' => (string) ($result['message'] ?? 'Unable to send verification code.'),
+                ])
+                ->withInput();
+        }
+
+        $request->session()->put([
+            'rider_registration_otp_email' => $email,
+            'rider_registration_otp_logistics_id' => (int) $logistics->id,
+        ]);
+
+        $response = back()
+            ->with('success', (string) ($result['message'] ?? 'Verification code sent.'))
+            ->withInput(['email' => $email]);
+
+        if (!empty($result['debug_code']) && app()->environment('local')) {
+            $response->with('rider_debug_otp', (string) $result['debug_code']);
+        }
+
+        return $response;
+    }
+
+    public function verifyEmailCode(
+        Request $request,
+        LogisticsAccount $logistics
+    ): RedirectResponse {
+        abort_unless($logistics->account_status === 'active', 404);
+
+        $validated = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:180'],
+            'otp' => ['required', 'digits:6'],
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+
+        $sessionEmail = strtolower(trim(
+            (string) $request->session()->get('rider_registration_otp_email', '')
+        ));
+
+        $sessionLogisticsId = (int) $request->session()->get(
+            'rider_registration_otp_logistics_id',
+            0
+        );
+
+        if (
+            $sessionEmail !== $email
+            || $sessionLogisticsId !== (int) $logistics->id
+        ) {
+            return back()
+                ->withErrors([
+                    'otp' => 'Request a new verification code for this Rider application.',
+                ])
+                ->withInput(['email' => $email]);
+        }
+
+        $result = $this->emailVerification->verifyCode(
+            $request,
+            $email,
+            (string) $validated['otp']
+        );
+
+        if (!($result['ok'] ?? false)) {
+            return back()
+                ->withErrors([
+                    'otp' => (string) ($result['message'] ?? 'The verification code is incorrect.'),
+                ])
+                ->withInput([
+                    'email' => $email,
+                ]);
+        }
+
+        $request->session()->put([
+            'rider_registration_verified_email' => $email,
+            'rider_registration_verified_logistics_id' => (int) $logistics->id,
+        ]);
+
+        $request->session()->forget([
+            'rider_registration_otp_email',
+            'rider_registration_otp_logistics_id',
+        ]);
+
+        return redirect()
+            ->route('rider.logistics.apply', $logistics)
+            ->with('success', 'Email verified. Complete your Rider application.')
+            ->withInput(['email' => $email]);
     }
 
     public function store(Request $request, LogisticsAccount $logistics): RedirectResponse
@@ -153,21 +317,29 @@ class RiderRegistrationController extends Controller
 
         $email = strtolower(trim($validated['email']));
 
-        if (!$this->emailVerification->isVerified($request, $email)) {
-            return back()
+        $verifiedEmail = strtolower(trim(
+            (string) $request->session()->get('rider_registration_verified_email', '')
+        ));
+
+        $verifiedLogisticsId = (int) $request->session()->get(
+            'rider_registration_verified_logistics_id',
+            0
+        );
+
+        if (
+            $verifiedEmail !== $email
+            || $verifiedLogisticsId !== (int) $logistics->id
+            || !$this->emailVerification->isVerified($request, $email)
+        ) {
+            return redirect()
+                ->route('rider.logistics.apply', $logistics)
                 ->withErrors([
                     'email' => 'Verify this email address with the 6-digit code before submitting your Rider application.',
                 ])
                 ->withInput();
         }
 
-        if (
-            BuyerAccount::query()->where('email', $email)->exists()
-            || CourierAccount::query()->where('email', $email)->exists()
-            || LogisticsAccount::query()->where('email', $email)->exists()
-            || AdminAccount::query()->where('email', $email)->exists()
-            || SellerAccount::query()->where('email', $email)->exists()
-        ) {
+        if ($this->approvedAccountUsesEmail($email)) {
             return back()
                 ->withErrors([
                     'email' => 'An approved SARI account already uses this email address.',
@@ -270,8 +442,13 @@ class RiderRegistrationController extends Controller
 
         $this->emailVerification->clear($request);
 
-        // Persist this Rider application in the current browser session so the
-        // shared status page can detect Logistics approval without a reload.
+        $request->session()->forget([
+            'rider_registration_verified_email',
+            'rider_registration_verified_logistics_id',
+            'rider_registration_otp_email',
+            'rider_registration_otp_logistics_id',
+        ]);
+
         $request->session()->put([
             'registration_tracking_id' => (int) $application->id,
             'registration_email' => $application->email,
@@ -280,6 +457,15 @@ class RiderRegistrationController extends Controller
         ]);
 
         return redirect()->route('registration.pending');
+    }
+
+    private function approvedAccountUsesEmail(string $email): bool
+    {
+        return BuyerAccount::query()->where('email', $email)->exists()
+            || CourierAccount::query()->where('email', $email)->exists()
+            || LogisticsAccount::query()->where('email', $email)->exists()
+            || AdminAccount::query()->where('email', $email)->exists()
+            || SellerAccount::query()->where('email', $email)->exists();
     }
 
     private function cleanSpacing(string $value): string

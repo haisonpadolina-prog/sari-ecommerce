@@ -134,6 +134,21 @@
                 transition-duration: 1ms !important;
             }
         }
+
+        /* ============================================================
+           ADMIN CANVAS — MATCH SELLER
+           Soft neutral gray background used by Seller: #F4F5F7
+           ============================================================ */
+        html,
+        body,
+        #adminContent {
+            background: #F4F5F7 !important;
+        }
+
+        #adminPageContent {
+            background: transparent !important;
+        }
+
     </style>
 
     @livewireStyles
@@ -148,7 +163,7 @@
     @vite('resources/js/app.js')
 </head>
 
-<body class="m-0 min-h-screen bg-[#faf9f6] font-poppins text-[#1f1b16] antialiased">
+<body class="m-0 min-h-screen bg-[#F4F5F7] font-poppins text-[#1f1b16] antialiased">
 
     <div class="min-h-screen">
 

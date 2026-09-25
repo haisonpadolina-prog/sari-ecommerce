@@ -18,6 +18,216 @@
     }
 @endphp
 
+
+<style>
+    /* ============================================================
+       SARI ADMIN SIDEBAR — COMPACT SIZING ONLY
+       Respects the existing expanded/collapsed width variable so the
+       275px -> 88px layout animation remains fully functional.
+       No routes, unread queries, forms or badge-sync JS are changed.
+       ============================================================ */
+
+    #adminSidebar {
+        /*
+         * IMPORTANT:
+         * The admin layout owns --admin-sidebar-width and changes it
+         * from 275px to 88px when html.admin-sidebar-collapsed is active.
+         * Use that variable here instead of pinning a fixed width.
+         */
+        width: var(--admin-sidebar-width, 275px) !important;
+        overflow-x: hidden !important;
+        transition:
+            width 220ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1)),
+            transform 300ms ease-out !important;
+    }
+
+    #adminSidebarBrand {
+        min-height: 86px !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    #adminSidebarLogo img {
+        width: 118px !important;
+    }
+
+    #adminSidebarClose {
+        right: 12px !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+    }
+
+    #adminSidebarClose svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    #adminSidebarNav {
+        gap: 0 !important;
+        padding: 14px 12px !important;
+    }
+
+    #adminSidebarNav > [data-sidebar-item],
+    #adminSidebarNav > form > [data-sidebar-item] {
+        min-height: 42px !important;
+        gap: 10px !important;
+        border-radius: 10px !important;
+        padding: 9px 12px !important;
+        font-size: 11px !important;
+    }
+
+    #adminSidebarNav > [data-sidebar-item] svg,
+    #adminSidebarNav > form > [data-sidebar-item] svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    #adminSidebarNav > [data-sidebar-item] + [data-sidebar-item] {
+        margin-top: 3px !important;
+    }
+
+    #adminSidebarNav > div.my-4 {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    #adminSidebarMessageBadge {
+        min-width: 18px !important;
+        height: 18px !important;
+        padding-inline: 5px !important;
+        font-size: 8px !important;
+    }
+
+    #adminSidebarProfile {
+        padding: 11px 12px !important;
+    }
+
+    #adminSidebarProfile > a {
+        gap: 9px !important;
+        border-radius: 12px !important;
+        padding: 10px !important;
+    }
+
+    #adminSidebarProfile > a > div:first-child {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 10.5px !important;
+    }
+
+    #adminSidebarProfile .sidebar-label p:first-child {
+        font-size: 10.5px !important;
+    }
+
+    #adminSidebarProfile .sidebar-label p:last-child {
+        font-size: 8.5px !important;
+    }
+
+    #adminSidebarProfile .sidebar-extra {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    /* Preserve the original compact-collapse behavior from layouts.admin. */
+    @media (min-width: 1024px) {
+        html.admin-sidebar-collapsed #adminSidebar {
+            width: var(--admin-sidebar-collapsed-width, 88px) !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarBrand {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarNav {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarNav > [data-sidebar-item],
+        html.admin-sidebar-collapsed #adminSidebarNav > form > [data-sidebar-item] {
+            min-height: 42px !important;
+            justify-content: center !important;
+            gap: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarNav [data-sidebar-inner] {
+            justify-content: center !important;
+            gap: 0 !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarProfile {
+            padding: 10px 12px !important;
+        }
+
+        html.admin-sidebar-collapsed #adminSidebarProfile > a {
+            justify-content: center !important;
+            gap: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /*
+         * These are already controlled by layouts.admin, but keeping
+         * them explicit here prevents later compact sizing rules from
+         * accidentally making them visible in collapsed mode.
+         */
+        html.admin-sidebar-collapsed #adminSidebarLogo,
+        html.admin-sidebar-collapsed #adminSidebar .sidebar-label,
+        html.admin-sidebar-collapsed #adminSidebar .sidebar-extra {
+            display: none !important;
+        }
+    }
+
+    /* Laptop height: fit more nav items without feeling cramped */
+    @media (max-height: 820px) and (min-width: 1024px) {
+        #adminSidebarBrand {
+            min-height: 76px !important;
+        }
+
+        #adminSidebarLogo img {
+            width: 106px !important;
+        }
+
+        #adminSidebarNav {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+
+        #adminSidebarNav > [data-sidebar-item],
+        #adminSidebarNav > form > [data-sidebar-item] {
+            min-height: 38px !important;
+            padding-top: 7px !important;
+            padding-bottom: 7px !important;
+            font-size: 10.5px !important;
+        }
+
+        #adminSidebarProfile {
+            padding-top: 9px !important;
+            padding-bottom: 9px !important;
+        }
+    }
+
+    /* Mobile drawer still uses comfortable touch sizing */
+    @media (max-width: 1023px) {
+        #adminSidebarBrand {
+            min-height: 82px !important;
+        }
+
+        #adminSidebarLogo img {
+            width: 112px !important;
+        }
+
+        #adminSidebarNav > [data-sidebar-item],
+        #adminSidebarNav > form > [data-sidebar-item] {
+            min-height: 44px !important;
+            font-size: 11.5px !important;
+        }
+    }
+</style>
+
 <aside
     id="adminSidebar"
     class="

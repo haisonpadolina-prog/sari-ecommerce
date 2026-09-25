@@ -13,6 +13,7 @@ class SocialAccount extends Model
         'name',
         'avatar_url',
         'last_login_at',
+        'account_status',
     ];
 
     protected function casts(): array

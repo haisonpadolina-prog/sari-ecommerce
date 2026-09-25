@@ -11,6 +11,7 @@ class PlatformConversationParticipant extends Model
         'platform_conversation_id',
         'participant_role',
         'participant_id',
+        'realtime_token',
         'joined_at',
         'last_read_message_id',
         'muted_at',

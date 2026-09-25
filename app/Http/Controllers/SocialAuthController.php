@@ -184,6 +184,26 @@ class SocialAuthController extends Controller
                 $account->avatar_url = $incomingAvatar;
             }
 
+            $status = strtolower(
+                (string) ($account->account_status ?: 'active')
+            );
+
+            if ($status === 'banned') {
+                return redirect()
+                    ->route('login')
+                    ->withErrors([
+                        'social' => 'This SARI buyer account has been banned by an administrator.',
+                    ]);
+            }
+
+            if ($status === 'deactivated') {
+                return redirect()
+                    ->route('login')
+                    ->withErrors([
+                        'social' => 'This SARI buyer account is currently suspended. Please contact SARI support.',
+                    ]);
+            }
+
             $account->last_login_at = now();
             $account->save();
 

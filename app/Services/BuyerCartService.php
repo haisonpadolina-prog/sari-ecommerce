@@ -148,6 +148,13 @@ class BuyerCartService
             )
         );
 
+        if (
+            $item->product?->flash_sale_ends_at !== null
+            && now()->gte($item->product->flash_sale_ends_at)
+        ) {
+            $discount = 0.0;
+        }
+
         return round(
             $discount > 0
                 ? $base * (1 - ($discount / 100))

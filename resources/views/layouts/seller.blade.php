@@ -4,29 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    {{-- SELLER FIRST-PAINT CANVAS — prevents warm/cream route flashes. --}}
+    <style id="sariSellerFirstPaintCanvas">
+        :root,
+        html,
+        body {
+            min-height: 100%;
+            background: #F4F5F7 !important;
+            background-color: #F4F5F7 !important;
+            background-image: none !important;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #sellerContent {
+            min-height: 100vh;
+            background: #F4F5F7 !important;
+            background-color: #F4F5F7 !important;
+            background-image: none !important;
+        }
+
+        #sellerContent > main {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+
+        #sariSellerInstantSnapshot {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            background: #F4F5F7 !important;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation: none !important;
+            mix-blend-mode: normal !important;
+            background: #F4F5F7 !important;
+        }
+    </style>
+
     <title>@yield('title', 'SARI Seller')</title>
 
     @php
         /*
-        |--------------------------------------------------------------------------
-        | ZERO-REQUEST SELLER LOGOS
-        |--------------------------------------------------------------------------
-        | Embed the two tiny sidebar logo assets directly into the HTML on the
-        | first authenticated response. This removes the extra image request
-        | that can make the logo visibly "arrive" after a fresh login.
-        |
-        | Falls back to the normal asset URL if the file cannot be read.
-        */
-        $sellerFullLogoPath = public_path('images/sari-logo.png');
-        $sellerCompactLogoPath = public_path('images/sari-main-logo.png');
-
-        $sellerFullLogoSrc = is_file($sellerFullLogoPath)
-            ? 'data:image/png;base64,' . base64_encode(file_get_contents($sellerFullLogoPath))
-            : asset('images/sari-logo.png');
-
-        $sellerCompactLogoSrc = is_file($sellerCompactLogoPath)
-            ? 'data:image/png;base64,' . base64_encode(file_get_contents($sellerCompactLogoPath))
-            : asset('images/sari-main-logo.png');
+         * Fast seller shell assets:
+         * Use normal cacheable asset URLs instead of reading and base64-encoding
+         * both logo files on every seller page request.
+         */
+        $sellerFullLogoSrc = asset('images/sari-logo.png');
+        $sellerCompactLogoSrc = asset('images/sari-main-logo.png');
     @endphp
 
     {{-- Restore desktop compact state before first paint. No logo JavaScript is needed. --}}
@@ -44,6 +76,9 @@
     </script>
 
     {{-- Faster first paint: compiled Tailwind CSS instead of the browser CDN compiler. --}}
+    <link rel="preload" as="image" href="{{ asset('images/sari-logo.png') }}" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ asset('images/sari-main-logo.png') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -60,8 +95,8 @@
 
     <style>
         :root {
-            --seller-sidebar-expanded: 275px;
-            --seller-sidebar-collapsed: 88px;
+            --seller-sidebar-expanded: 238px;
+            --seller-sidebar-collapsed: 76px;
             --seller-sidebar-width: var(--seller-sidebar-expanded);
             --seller-sidebar-ease: cubic-bezier(.22, 1, .36, 1);
         }
@@ -74,7 +109,7 @@
         html,
         body {
             min-height: 100%;
-            background: #faf9f6;
+            background: #F4F5F7;
         }
 
         #sellerSidebarFullLogo,
@@ -91,12 +126,12 @@
             #sellerSidebar {
                 width: var(--seller-sidebar-width);
                 overflow-x: hidden;
-                transition: width 220ms var(--seller-sidebar-ease);
+                transition: width 130ms var(--seller-sidebar-ease);
             }
 
             #sellerContent {
                 padding-left: var(--seller-sidebar-width);
-                transition: padding-left 220ms var(--seller-sidebar-ease);
+                transition: padding-left 130ms var(--seller-sidebar-ease);
             }
 
             #sellerSidebarBrand {
@@ -122,7 +157,7 @@
 
             .seller-sidebar-label {
                 display: inline-block;
-                max-width: 190px;
+                max-width: 158px;
                 overflow: hidden;
                 opacity: 1;
                 transform: translateX(0);
@@ -233,12 +268,932 @@
         }
 
         [data-seller-shell-loading="true"] #sellerContent main {
-            opacity: .72;
-            transition: opacity 120ms ease;
+            opacity: 1 !important;
+            transition: none !important;
         }
-    </style>
+    
+        /* ============================================================
+           FINAL SELLER SHELL SIZING — MATCH ADMIN UI
+           This block intentionally lives inside layouts/seller.blade.php
+           because this layout renders the Seller sidebar + header directly.
+           ============================================================ */
+
+        /* ---------- SIDEBAR ---------- */
+        #sellerSidebar {
+            width: var(--seller-sidebar-width, 275px) !important;
+        }
+
+        #sellerSidebarBrand {
+            min-height: 70px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        #sellerSidebarLogo {
+            height: 46px !important;
+        }
+
+        #sellerSidebarFullLogo {
+            width: 104px !important;
+            height: auto !important;
+        }
+
+        #sellerSidebarCompactLogo {
+            width: 38px !important;
+            height: 38px !important;
+        }
+
+        #sellerSidebarClose {
+            right: 12px !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 10px !important;
+        }
+
+        #sellerSidebarClose svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+
+        #sellerSidebarNav {
+            padding: 12px 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item],
+        #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+            min-height: 39px !important;
+            gap: 8px !important;
+            border-radius: 10px !important;
+            padding: 8px 10px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item] + a[data-seller-sidebar-item],
+        #sellerSidebarNav > a[data-seller-sidebar-item] + form,
+        #sellerSidebarNav > form + a[data-seller-sidebar-item] {
+            margin-top: 3px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] svg {
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] > span:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerSidebarNav > div.my-4 {
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+        }
+
+        #sellerSidebarMessageBadge {
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 5px !important;
+            font-size: 8px !important;
+        }
+
+        #sellerSidebarProfile {
+            padding: 9px 10px !important;
+        }
+
+        #sellerSidebarProfile > a {
+            gap: 9px !important;
+            border-radius: 10px !important;
+            padding: 9px !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 10.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:first-child {
+            font-size: 10.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:last-child {
+            font-size: 8.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-extra {
+            width: 13px !important;
+            height: 13px !important;
+        }
+
+        /* ---------- HEADER ---------- */
+        #sellerContent > header > div:first-child {
+            min-height: 72px !important;
+            gap: 10px !important;
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+        }
+
+        #sellerContent > header > div:first-child > div:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerMenuButton,
+        #sellerSidebarToggle,
+        #sellerNotificationBell {
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 10px !important;
+        }
+
+        #sellerMenuButton svg,
+        #sellerSidebarToggle svg,
+        #sellerNotificationBell > svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+
+        #sellerContent > header h1 {
+            font-size: 17px !important;
+            line-height: 1.15 !important;
+        }
+
+        #sellerContent > header h1 + div {
+            margin-top: 3px !important;
+            gap: 5px !important;
+            font-size: 9px !important;
+        }
+
+        #sellerContent > header h1 + div svg {
+            width: 10px !important;
+            height: 10px !important;
+        }
+
+        #sellerContent > header > div:first-child > div:last-child {
+            gap: 8px !important;
+        }
+
+        #sellerContent > header input[type="search"] {
+            height: 38px !important;
+            width: 220px !important;
+            border-radius: 11px !important;
+            padding-left: 38px !important;
+            padding-right: 12px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerContent > header input[type="search"] + * {
+            font-size: inherit;
+        }
+
+        #sellerContent > header .relative.hidden.md\:block > svg {
+            left: 13px !important;
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        #sellerBellMessageBadge {
+            right: -5px !important;
+            top: -5px !important;
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 4px !important;
+            font-size: 8px !important;
+        }
+
+        /* Seller account shortcut in header */
+        #sellerContent > header a[href*="/seller/account"] {
+            gap: 8px !important;
+            border-radius: 10px !important;
+            padding: 4px 6px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:first-child {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:last-child p:first-child {
+            font-size: 10.5px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:last-child p:last-child {
+            font-size: 8px !important;
+        }
+
+        @media (min-width: 1024px) {
+            html.seller-sidebar-collapsed #sellerSidebarBrand {
+                min-height: 76px !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav [data-seller-sidebar-item] {
+                min-height: 42px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile {
+                padding: 9px 10px !important;
+            }
+
+            #sellerContent > header input[type="search"] {
+                width: 235px !important;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #sellerContent > header input[type="search"] {
+                width: 260px !important;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #sellerContent > header input[type="search"] {
+                width: 285px !important;
+            }
+        }
+
+        /* Same laptop-height compaction used by Admin. */
+        @media (max-height: 820px) and (min-width: 1024px) {
+            #sellerSidebarBrand {
+                min-height: 76px !important;
+            }
+
+            #sellerSidebarFullLogo {
+                width: 98px !important;
+            }
+
+            #sellerSidebarNav {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            #sellerSidebarNav > a[data-seller-sidebar-item],
+            #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 38px !important;
+                padding-top: 7px !important;
+                padding-bottom: 7px !important;
+                font-size: 10.5px !important;
+            }
+
+            #sellerSidebarProfile {
+                padding-top: 9px !important;
+                padding-bottom: 9px !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #sellerContent > header > div:first-child {
+                min-height: 68px !important;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            #sellerMenuButton,
+            #sellerNotificationBell {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            #sellerContent > header h1 {
+                font-size: 16px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * MODERN GROUPED SELLER SIDEBAR
+         * Clean reference-inspired navigation with stronger hierarchy.
+         * ============================================================
+         */
+        #sellerSidebar {
+            background: #ffffff !important;
+            border-right-color: #ece5da !important;
+        }
+
+        #sellerSidebarBrand {
+            min-height: 74px !important;
+            border-bottom-color: #eee7dc !important;
+            background: #ffffff !important;
+        }
+
+        #sellerSidebarLogo {
+            height: 44px !important;
+        }
+
+        #sellerSidebarFullLogo {
+            width: 102px !important;
+        }
+
+        #sellerSidebarNav {
+            padding: 14px 10px 16px !important;
+            scrollbar-width: thin;
+            scrollbar-color: #ddd4c7 transparent;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background: #ddd4c7;
+        }
+
+        .seller-sidebar-section-label {
+            margin: 10px 8px 7px !important;
+            color: #9b7a43 !important;
+            font-size: 7.5px !important;
+            line-height: 1 !important;
+            font-weight: 700 !important;
+            letter-spacing: .13em !important;
+            text-transform: uppercase !important;
+            white-space: nowrap !important;
+            user-select: none !important;
+        }
+
+        .seller-sidebar-section-label:first-child {
+            margin-top: 4px !important;
+        }
+
+        .seller-sidebar-section-divider {
+            height: 1px !important;
+            margin: 11px 6px 9px !important;
+            background: #eee7dd !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item],
+        #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+            min-height: 39px !important;
+            width: 100% !important;
+            gap: 10px !important;
+            border: 1px solid transparent !important;
+            border-radius: 10px !important;
+            padding: 8px 10px !important;
+            font-size: 10.5px !important;
+            line-height: 1.15 !important;
+            box-shadow: none !important;
+            transform: none !important;
+            transition:
+                background-color .12s ease,
+                border-color .12s ease,
+                color .12s ease,
+                box-shadow .12s ease !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item] + a[data-seller-sidebar-item],
+        #sellerSidebarNav > form + a[data-seller-sidebar-item],
+        #sellerSidebarNav > a[data-seller-sidebar-item] + form {
+            margin-top: 2px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] svg {
+            width: 16px !important;
+            height: 16px !important;
+            stroke-width: 1.75 !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] > span:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item]:not(.bg-\[\#d9930a\]):hover,
+        #sellerSidebarNav > form > button[data-seller-sidebar-item]:hover {
+            border-color: #eadfcf !important;
+            background: #fff9ef !important;
+            color: #9a680b !important;
+            box-shadow: none !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] {
+            border-color: #d9950b !important;
+            background: #d9950b !important;
+            color: #ffffff !important;
+            box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] svg,
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] .seller-sidebar-label {
+            color: #ffffff !important;
+            stroke: currentColor !important;
+        }
+
+        #sellerSidebarMessageBadge {
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 5px !important;
+            font-size: 7.5px !important;
+        }
+
+        #sellerSidebarProfile {
+            border-top-color: #eee7dc !important;
+            background: #ffffff !important;
+            padding: 9px 10px !important;
+        }
+
+        #sellerSidebarProfile > a {
+            min-height: 54px !important;
+            gap: 8px !important;
+            border-color: #ebe2d4 !important;
+            border-radius: 11px !important;
+            background: #ffffff !important;
+            padding: 8px 9px !important;
+            box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
+        }
+
+        #sellerSidebarProfile > a:hover {
+            border-color: #ddccb0 !important;
+            background: #fffdf8 !important;
+            box-shadow: 0 4px 12px rgba(40, 31, 21, .03) !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 9.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:first-child {
+            font-size: 9.5px !important;
+            font-weight: 650 !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:last-child {
+            font-size: 7.5px !important;
+        }
+
+        @media (min-width: 1024px) {
+            html.seller-sidebar-collapsed .seller-sidebar-section-label,
+            html.seller-sidebar-collapsed .seller-sidebar-section-divider {
+                display: none !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav {
+                padding: 12px 9px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav > a[data-seller-sidebar-item],
+            html.seller-sidebar-collapsed #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 40px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile {
+                padding: 9px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile > a {
+                justify-content: center !important;
+                padding: 8px !important;
+            }
+        }
+
+        @media (max-height: 820px) and (min-width: 1024px) {
+            #sellerSidebarNav {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .seller-sidebar-section-label {
+                margin-top: 8px !important;
+                margin-bottom: 6px !important;
+            }
+
+            .seller-sidebar-section-divider {
+                margin-top: 8px !important;
+                margin-bottom: 7px !important;
+            }
+
+            #sellerSidebarNav > a[data-seller-sidebar-item],
+            #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 36px !important;
+                padding-top: 7px !important;
+                padding-bottom: 7px !important;
+                font-size: 10px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * SIDEBAR FINAL VISUAL PASS — SOLID GOLD, NO GRADIENTS
+         * ============================================================
+         */
+        #sellerSidebar,
+        #sellerSidebar * {
+            background-image: none !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] {
+            background-color: #d9950b !important;
+            border-color: #d9950b !important;
+            color: #ffffff !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\]:hover {
+            background-color: #cf8d08 !important;
+            border-color: #cf8d08 !important;
+            color: #ffffff !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item]:not(.bg-\[\#d9930a\]):hover,
+        #sellerSidebarNav > form > button[data-seller-sidebar-item]:hover {
+            background-color: #fff9ef !important;
+            border-color: #eadfcf !important;
+            color: #94620a !important;
+        }
+
+        .seller-sidebar-section-label {
+            color: #9a7840 !important;
+        }
+
+        .seller-sidebar-section-divider {
+            background: #eee5d7 !important;
+        }
+
+        #sellerSidebarProfile > a {
+            background-color: #ffffff !important;
+            border-color: #e9e0d3 !important;
+        }
+
+        #sellerSidebarProfile > a:hover {
+            background-color: #fffdf9 !important;
+            border-color: #dcc9a7 !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            background-color: #d9950b !important;
+        }
+
+    
+        /*
+         * ============================================================
+         * CENTERED SELLER ACTION / REVIEW NOTICE
+         * ============================================================
+         * No full-screen fade. Only a clean centered notice card.
+         */
+        .seller-action-toast {
+            position: fixed !important;
+            left: 50% !important;
+            top: 20px !important;
+            right: auto !important;
+            z-index: 10050 !important;
+            width: min(440px, calc(100vw - 32px)) !important;
+            transform: translateX(-50%) !important;
+            pointer-events: none !important;
+        }
+
+        .seller-action-toast-card {
+            display: grid !important;
+            grid-template-columns: 42px minmax(0, 1fr) 28px !important;
+            align-items: start !important;
+            gap: 12px !important;
+            border: 1px solid #e7dfd4 !important;
+            border-radius: 18px !important;
+            background: #ffffff !important;
+            padding: 16px 16px 16px 17px !important;
+            box-shadow:
+                0 22px 55px rgba(31, 26, 20, .16),
+                0 3px 12px rgba(31, 26, 20, .05) !important;
+            pointer-events: auto !important;
+        }
+
+        .seller-action-toast:not(.hidden) .seller-action-toast-card {
+            animation: sellerActionToastIn .16s ease-out both;
+        }
+
+        @keyframes sellerActionToastIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.985);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .seller-action-toast-icon {
+            display: grid !important;
+            width: 42px !important;
+            height: 42px !important;
+            place-items: center !important;
+            border-radius: 13px !important;
+            background: #f2f8f4 !important;
+            color: #4d7b62 !important;
+        }
+
+        .seller-action-toast-icon svg {
+            width: 18px !important;
+            height: 18px !important;
+        }
+
+        .seller-action-toast-copy {
+            min-width: 0 !important;
+            padding-top: 2px !important;
+        }
+
+        .seller-action-toast-title {
+            margin: 0 !important;
+            color: #2d4f3a !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
+            letter-spacing: -.015em !important;
+        }
+
+        .seller-action-toast-message {
+            margin-top: 5px !important;
+            color: #6f746f !important;
+            font-size: 9px !important;
+            font-weight: 500 !important;
+            line-height: 1.7 !important;
+        }
+
+        .seller-action-toast-close {
+            display: grid !important;
+            width: 28px !important;
+            height: 28px !important;
+            place-items: center !important;
+            border: 0 !important;
+            border-radius: 8px !important;
+            background: transparent !important;
+            color: #9a9288 !important;
+            cursor: pointer !important;
+            transition: background-color .12s ease, color .12s ease !important;
+        }
+
+        .seller-action-toast-close:hover {
+            background: #f5f2ed !important;
+            color: #514a42 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-card {
+            border-color: #ead7b5 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-icon {
+            background: #fff7e8 !important;
+            color: #ae7415 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-title {
+            color: #8a5d12 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-message {
+            color: #756958 !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-card {
+            border-color: #edd2d2 !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-icon {
+            background: #fff2f2 !important;
+            color: #b45a5a !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-title {
+            color: #9f4c4c !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-message {
+            color: #7f6666 !important;
+        }
+
+        @media (max-width: 520px) {
+            .seller-action-toast {
+                top: 12px !important;
+                width: min(400px, calc(100vw - 24px)) !important;
+            }
+
+            .seller-action-toast-card {
+                grid-template-columns: 38px minmax(0,1fr) 26px !important;
+                gap: 10px !important;
+                border-radius: 15px !important;
+                padding: 14px !important;
+            }
+
+            .seller-action-toast-icon {
+                width: 38px !important;
+                height: 38px !important;
+                border-radius: 11px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * FAST SELLER NAVIGATION
+         * Route changes should paint immediately; only sidebar collapse
+         * itself is animated.
+         * ============================================================
+         */
+        #sellerContent {
+            transition-property: padding-left !important;
+            transition-duration: 130ms !important;
+            transition-timing-function: var(--seller-sidebar-ease) !important;
+        }
+
+        #sellerSidebar {
+            transition-property: width, transform !important;
+            transition-duration: 130ms !important;
+            transition-timing-function: var(--seller-sidebar-ease) !important;
+        }
+
+        #sellerContent main {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        html[data-seller-shell-loading="true"] #sellerContent main,
+        [data-seller-shell-loading="true"] #sellerContent main {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        /* Avoid expensive broad transitions on persistent shell elements. */
+        #sellerSidebarNav [data-seller-sidebar-item] {
+            transition:
+                background-color 90ms ease,
+                border-color 90ms ease,
+                color 90ms ease !important;
+        }
+
+        #sellerContent {
+            background: #F4F5F7 !important;
+        }
+
+        #sellerContent main {
+            background: transparent !important;
+        }
+
+        #sellerContent > header {
+            transition: none !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #sellerSidebar,
+            #sellerContent {
+                transition-duration: 1ms !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * NAVIGATION PROGRESS VISUAL — DISABLED
+         * Official source-of-truth should also be:
+         * config/livewire.php -> navigate.show_progress_bar = false
+         * ============================================================
+         */
+        #nprogress,
+        #nprogress .bar,
+        #nprogress .peg,
+        #nprogress .spinner,
+        [data-livewire-navigate-progress],
+        [data-navigate-progress] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Destination content paints immediately after Livewire swaps it. */
+        #sellerContent main {
+            content-visibility: visible !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+
+        /* ============================================================
+           SARI SELLER — UNIFIED DESIGN TOKENS
+           Shared neutral canvas + white surfaces + restrained gold.
+           ============================================================ */
+        :root {
+            --sari-page-bg: #F4F5F7;
+            --sari-surface: #FFFFFF;
+            --sari-surface-soft: #FAFAFB;
+
+            --sari-gold: #D89B10;
+            --sari-gold-dark: #B67A08;
+            --sari-gold-soft: #FFF7E6;
+
+            --sari-text: #202124;
+            --sari-text-secondary: #4B5563;
+            --sari-text-muted: #8A919B;
+
+            --sari-border: #E7E9EE;
+
+            --sari-success: #63A375;
+            --sari-info: #6C8FB5;
+            --sari-warning: #D89B10;
+            --sari-danger: #D97C6C;
+
+            --sari-card-shadow:
+                0 1px 2px rgba(32, 33, 36, .025),
+                0 7px 18px rgba(32, 33, 36, .045),
+                0 16px 34px rgba(32, 33, 36, .050);
+        }
+
+        html,
+        body,
+        #sellerContent {
+            background: var(--sari-page-bg) !important;
+            color: var(--sari-text);
+        }
+
+        #sellerSidebar,
+        #sellerSidebarBrand,
+        #sellerSidebarProfile,
+        #sellerContent > header {
+            background: var(--sari-surface) !important;
+        }
+
+        #sellerSidebar,
+        #sellerSidebarBrand,
+        #sellerSidebarProfile,
+        #sellerContent > header {
+            border-color: var(--sari-border) !important;
+        }
+
+        #sellerContent main {
+            background: transparent !important;
+            color: var(--sari-text);
+        }
+
+        /* Shared form language across Seller pages. */
+        #sellerContent main input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+        #sellerContent main select,
+        #sellerContent main textarea {
+            border-color: var(--sari-border);
+            background-color: var(--sari-surface);
+            color: var(--sari-text);
+        }
+
+        #sellerContent main input::placeholder,
+        #sellerContent main textarea::placeholder {
+            color: #A1A7B0;
+        }
+
+        #sellerContent main input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):focus,
+        #sellerContent main select:focus,
+        #sellerContent main textarea:focus {
+            border-color: var(--sari-gold) !important;
+            box-shadow: 0 0 0 3px rgba(216, 155, 16, .08) !important;
+            outline: none !important;
+        }
+
+        /* Shared table language: quiet separators instead of boxed rows. */
+        #sellerContent main table {
+            color: var(--sari-text-secondary);
+        }
+
+        #sellerContent main thead {
+            background: var(--sari-surface-soft);
+        }
+
+        #sellerContent main th {
+            color: var(--sari-text-secondary);
+            border-color: var(--sari-border) !important;
+        }
+
+        #sellerContent main td {
+            border-color: var(--sari-border) !important;
+        }
+
+        /* Text hierarchy helpers for shared shell elements. */
+        #sellerContent > header h1 {
+            color: var(--sari-text) !important;
+        }
+
+        #sellerContent > header h1 + div {
+            color: var(--sari-text-muted) !important;
+        }
+
+        /* Neutral scrollbar treatment. */
+        #sellerSidebarNav,
+        [data-seller-notification-scroll] {
+            scrollbar-color: #C9CED6 transparent;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar-thumb,
+        [data-seller-notification-scroll]::-webkit-scrollbar-thumb {
+            background: #C9CED6 !important;
+        }
+
+</style>
 
     @stack('styles')
+
 </head>
 
 @php
@@ -295,7 +1250,7 @@
         && (int) ($sellerLayoutAccount->warning_count ?? 0) < 3;
 @endphp
 
-<body class="m-0 min-h-screen bg-[#faf9f6] font-poppins text-[#1f1b16] antialiased {{ $sellerCriticalLocked ? 'overflow-hidden' : '' }}">
+<body data-no-progress-bar class="m-0 min-h-screen bg-[#F4F5F7] font-poppins text-[#1f1b16] antialiased {{ $sellerCriticalLocked ? 'overflow-hidden' : '' }}">
 
 
 
@@ -404,9 +1359,9 @@
         id="sellerSidebar"
         class="
             fixed inset-y-0 left-0 z-50
-            flex w-[275px] -translate-x-full flex-col
+            flex w-[238px] -translate-x-full flex-col
             border-r border-[#eee4d3]
-            bg-[#fffdf8]
+            bg-white
             transition-all duration-300 ease-out
             lg:translate-x-0
         "
@@ -428,7 +1383,8 @@
                     width="145"
                     height="52"
                     loading="eager"
-                    decoding="sync"
+                    decoding="async"
+                    fetchpriority="high"
                     style="width:145px;height:auto;object-fit:contain;filter:brightness(0);"
                     class="h-auto w-[145px] object-contain brightness-0"
                 >
@@ -441,7 +1397,7 @@
                     width="52"
                     height="52"
                     loading="eager"
-                    decoding="sync"
+                    decoding="async"
                     style="width:52px;height:52px;object-fit:contain;"
                     class="h-[52px] w-[52px] object-contain"
                 >
@@ -468,7 +1424,9 @@
         </div>
 
         {{-- NAVIGATION --}}
-        <nav id="sellerSidebarNav" wire:navigate:scroll class="flex-1 space-y-1.5 overflow-y-auto px-4 py-6">
+        <nav id="sellerSidebarNav" wire:navigate:scroll class="flex-1 overflow-y-auto">
+
+            <p class="seller-sidebar-section-label">MAIN MENU</p>
 
             {{-- DASHBOARD --}}
             <a
@@ -495,7 +1453,10 @@
                 </span>
             </a>
 
-            {{-- PRODUCTS --}}
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">CATALOG</p>
+
+            {{-- PRODUCT MANAGEMENT --}}
             <a
                 href="{{ route('seller.products.index') }}"
                 title="Product Management"
@@ -519,15 +1480,15 @@
                 </span>
             </a>
 
-            {{-- ORDERS --}}
+            {{-- ADD PRODUCT --}}
             <a
-                href="{{ route('seller.orders') }}"
-                title="Order Management"
+                href="{{ route('seller.products.create') }}"
+                title="Add Product"
                 data-seller-sidebar-item
                 class="
                     flex items-center gap-3 rounded-xl px-4 py-3.5
                     text-[13px] font-medium transition-all duration-200
-                    {{ request()->routeIs('seller.orders')
+                    {{ request()->routeIs('seller.products.create')
                         ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
                         : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
                 "
@@ -536,11 +1497,38 @@
                 <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M5 7h14l-1 13H6L5 7Z"></path>
                     <path d="M9 7a3 3 0 0 1 6 0"></path>
-                    <path d="M8 12h8"></path>
+                    <path d="M12 11v6"></path>
+                    <path d="M9 14h6"></path>
                 </svg>
 
                 <span class="seller-sidebar-label whitespace-nowrap">
-                    Order Management
+                    Add Product
+                </span>
+            </a>
+
+            {{-- INVENTORY --}}
+            <a
+                href="{{ route('seller.inventory.index') }}"
+                title="Inventory"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.inventory.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 5h16v14H4z"></path>
+                    <path d="M8 9h8"></path>
+                    <path d="M8 13h8"></path>
+                    <path d="M8 17h5"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Inventory
                 </span>
             </a>
 
@@ -569,6 +1557,164 @@
                 </span>
             </a>
 
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">ORDERS &amp; FULFILLMENT</p>
+
+            {{-- ORDERS --}}
+            <a
+                href="{{ route('seller.orders') }}"
+                title="Order Management"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.orders*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M5 7h14l-1 13H6L5 7Z"></path>
+                    <path d="M9 7a3 3 0 0 1 6 0"></path>
+                    <path d="M8 12h8"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Order Management
+                </span>
+            </a>
+
+            {{-- SHIPPING --}}
+            <a
+                href="{{ route('seller.shipping.index') }}"
+                title="Shipping Tracking"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.shipping.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 7h11v10H3z"></path>
+                    <path d="M14 10h3l4 4v3h-7z"></path>
+                    <circle cx="7" cy="18" r="1.8"></circle>
+                    <circle cx="18" cy="18" r="1.8"></circle>
+                    <path d="M5 11h6"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Shipping
+                </span>
+            </a>
+
+            {{-- RETURNS & REFUNDS --}}
+            <a
+                href="{{ route('seller.returns.index') }}"
+                title="Returns & Refunds"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.returns.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M9 7H5v4"></path>
+                    <path d="M5 11c1.8-4.5 8-6.2 12-2.8 4.1 3.5 2.4 10.2-2.8 11.2-3.1.6-6.1-.8-7.7-3.2"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Returns &amp; Refunds
+                </span>
+            </a>
+
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">MARKETING</p>
+
+            {{-- PROMOTIONS & VOUCHERS --}}
+            <a
+                href="{{ route('seller.vouchers.index') }}"
+                title="Promotions & Vouchers"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.vouchers.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 12 12 3h7v7l-9 9-7-7Z"></path>
+                    <circle cx="16" cy="7" r="1"></circle>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Promotions &amp; Vouchers
+                </span>
+            </a>
+
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">BUSINESS</p>
+
+            {{-- FINANCE & EARNINGS --}}
+            <a
+                href="{{ route('seller.finance.index') }}"
+                title="Finance & Earnings"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.finance.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 19h16"></path>
+                    <path d="M6 16v-5"></path>
+                    <path d="M12 16V6"></path>
+                    <path d="M18 16V9"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Finance &amp; Earnings
+                </span>
+            </a>
+
+            {{-- REVIEWS & RATINGS --}}
+            <a
+                href="{{ route('seller.reviews-center.index') }}"
+                title="Reviews & Ratings"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.reviews-center.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Reviews &amp; Ratings
+                </span>
+            </a>
+
             {{-- REPORTS --}}
             <a
                 href="{{ route('seller.reports') }}"
@@ -577,7 +1723,7 @@
                 class="
                     flex items-center gap-3 rounded-xl px-4 py-3.5
                     text-[13px] font-medium transition-all duration-200
-                    {{ request()->routeIs('seller.reports')
+                    {{ request()->routeIs('seller.reports*')
                         ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
                         : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
                 "
@@ -595,6 +1741,9 @@
                 </span>
             </a>
 
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">SUPPORT</p>
+
             {{-- CHAT / MESSAGING --}}
             <a
                 href="{{ route('seller.messages') }}"
@@ -603,7 +1752,7 @@
                 class="
                     flex items-center justify-between gap-3 rounded-xl px-4 py-3.5
                     text-[13px] font-medium transition-all duration-200
-                    {{ request()->routeIs('seller.messages')
+                    {{ request()->routeIs('seller.messages*')
                         ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
                         : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
                 "
@@ -632,12 +1781,88 @@
                         h-5 min-w-[20px]
                         place-items-center rounded-full
                         px-1.5 text-[9px] font-bold
-                        {{ request()->routeIs('seller.messages')
+                        {{ request()->routeIs('seller.messages*')
                             ? 'bg-white text-[#d9930a]'
                             : 'bg-[#d9930a] text-white' }}
                     "
                 >
                     {{ $sellerUnreadMessages > 99 ? '99+' : $sellerUnreadMessages }}
+                </span>
+            </a>
+
+            {{-- NOTIFICATIONS --}}
+            <a
+                href="{{ route('seller.notifications.index') }}"
+                title="Notifications"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.notifications.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Notifications
+                </span>
+            </a>
+
+            {{-- COMPLIANCE CENTER --}}
+            <a
+                href="{{ route('seller.compliance-center.index') }}"
+                title="Compliance Center"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.compliance-center.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 10 4.2-2.2 7-5.5 7-10V6l-7-3Z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Compliance Center
+                </span>
+            </a>
+
+            <div class="seller-sidebar-section-divider"></div>
+            <p class="seller-sidebar-section-label">ACCOUNT</p>
+
+            {{-- STORE MANAGEMENT --}}
+            <a
+                href="{{ route('seller.store.index') }}"
+                title="Store Management"
+                data-seller-sidebar-item
+                class="
+                    flex items-center gap-3 rounded-xl px-4 py-3.5
+                    text-[13px] font-medium transition-all duration-200
+                    {{ request()->routeIs('seller.store.*')
+                        ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                        : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}
+                "
+                wire:navigate.hover
+            >
+                <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 9h16l-1-5H5L4 9Z"></path>
+                    <path d="M5 9v11h14V9"></path>
+                    <path d="M9 20v-6h6v6"></path>
+                </svg>
+
+                <span class="seller-sidebar-label whitespace-nowrap">
+                    Store Management
                 </span>
             </a>
 
@@ -665,8 +1890,6 @@
                 </span>
             </a>
 
-            <div class="my-4 border-t border-[#eee4d3]"></div>
-
             {{-- LOGOUT --}}
             <form method="POST" action="{{ route('seller.logout') }}">
                 @csrf
@@ -693,12 +1916,13 @@
                     </span>
                 </button>
             </form>
+
         </nav>
 
         {{-- PROFILE --}}
         <div
             id="sellerSidebarProfile"
-            class="border-t border-[#eee4d3] bg-[#fffdf8] p-4 transition-all duration-300"
+            class="border-t border-[#eee4d3] bg-white p-4 transition-all duration-300"
         >
             <a
                 href="{{ route('seller.account') }}"
@@ -748,7 +1972,7 @@
         {{-- =====================================================
             SELLER HEADER
         ====================================================== --}}
-        <header class="sticky top-0 z-40 border-b border-[#eee4d3] bg-[#fffdf9]/95 backdrop-blur-md">
+        <header class="sticky top-0 z-40 border-b border-[#eee4d3] bg-white">
             <div class="flex min-h-[86px] w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 xl:px-10">
 
                 {{-- LEFT --}}
@@ -805,7 +2029,7 @@
                             <a
                                 href="{{ route('seller.dashboard') }}"
                                 class="transition hover:text-[#b97805]"
-                wire:navigate
+                wire:navigate.hover
             >
                                 Seller
                             </a>
@@ -879,7 +2103,7 @@
                                     {{ $sellerUnreadMessages > 0 ? 'grid' : 'hidden' }}
                                     h-[21px] min-w-[21px]
                                     place-items-center rounded-full
-                                    border-2 border-[#fffdf9]
+                                    border-2 border-white
                                     bg-[#d9930a]
                                     px-1 text-[9px] font-bold text-white
                                 "
@@ -915,7 +2139,7 @@
                                 <a
                                     href="{{ route('seller.messages') }}"
                                     class="text-[8px] font-semibold text-[#a66f13] transition hover:text-[#7e5007]"
-                wire:navigate
+                wire:navigate.hover
             >
                                     Open inbox
                                 </a>
@@ -936,7 +2160,7 @@
                                             hover:bg-[#fdf9f2]
                                             {{ $notification->read_by_seller_at ? 'bg-white' : 'bg-[#fffaf1]' }}
                                         "
-                wire:navigate
+                wire:navigate.hover
             >
                                         <div class="flex gap-3">
                                             <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#fbf5e9] text-[9px] font-bold text-[#a8731f]">
@@ -996,7 +2220,7 @@
                                     text-[9px] font-semibold text-[#9a6817]
                                     transition hover:bg-[#faf4e8]
                                 "
-                wire:navigate
+                wire:navigate.hover
             >
                                 View all messages
                             </a>
@@ -1009,7 +2233,7 @@
                     <a
                         href="{{ route('seller.account') }}"
                         class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
-                wire:navigate
+                wire:navigate.hover
             >
                         <div class="grid h-10 w-10 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
                             {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
@@ -1079,7 +2303,7 @@
                 <a
                     href="{{ route('seller.messages') }}"
                     class="pointer-events-auto mt-2 inline-flex text-[8px] font-semibold text-[#9e6811] hover:text-[#734803]"
-                wire:navigate
+                wire:navigate.hover
             >
                     Open message →
                 </a>
@@ -1100,7 +2324,7 @@
                     <p id="sellerOrderToastTitle" class="text-[10px] font-bold text-[#302920]">Order Update</p>
                     <p id="sellerOrderToastMessage" class="mt-1 text-[8px] leading-4 text-[#786f64]"></p>
                     <a href="{{ route('seller.orders') }}" class="pointer-events-auto mt-2 inline-flex text-[8px] font-semibold text-[#3C6E91] hover:text-[#2e5b79]"
-                wire:navigate
+                wire:navigate.hover
             >Open Order Management →</a>
                 </div>
             </div>
@@ -1123,6 +2347,7 @@
             const sellerId = @json((int) ($sellerLayoutAccount?->id ?? 0));
             const dashboardUrl = @json(route('seller.dashboard'));
             const ordersUrl = @json(route('seller.orders'));
+            const shippingUrl = @json(route('seller.shipping.index'));
             const messagesUrl = @json(route('seller.messages'));
             const loginUrl = @json(route('login'));
             const accountStateUrl = @json(route('seller.account-state'));
@@ -1144,6 +2369,7 @@
 
             const dashboardPath = pathOf(dashboardUrl);
             const ordersPath = pathOf(ordersUrl);
+            const shippingPath = pathOf(shippingUrl);
             const messagesPath = pathOf(messagesUrl);
 
             window.__SARI_SELLER_SHELL_STATE__ =
@@ -1153,10 +2379,18 @@
                     messageSubscribed: false,
                     complianceSubscribed: false,
                     accountSubscribed: false,
+                    orderSubscribed: false,
+                    lastOrderRealtimeAt: 0,
+                    lastOrderRealtimeRevision: null,
                     toastTimer: null,
                     orderToastTimer: null,
                     statusBusy: false,
                     orderBusy: false,
+                    navigationActive: false,
+                    layoutStateLoadedAt: 0,
+                    layoutStateAbort: null,
+                    accountStateAbort: null,
+                    orderPollAbort: null,
                     uiAbort: null,
                 };
 
@@ -1220,11 +2454,11 @@
                 );
             }
 
-            function syncSidebarActiveState() {
+            function syncSidebarActiveState(pathOverride = null) {
                 const activeClasses = [
                     'bg-[#d9930a]',
                     'text-white',
-                    'shadow-[0_10px_25px_rgba(217,147,10,0.18)]'
+                    'shadow-[0_5px_12px_rgba(217,147,10,0.14)]'
                 ];
 
                 const inactiveClasses = [
@@ -1233,7 +2467,7 @@
                     'hover:text-[#a96e05]'
                 ];
 
-                const path = currentPath();
+                const path = pathOverride || currentPath();
 
                 document
                     .querySelectorAll(
@@ -1241,7 +2475,15 @@
                     )
                     .forEach(function (link) {
                         const linkPath = pathOf(link.href);
-                        const active = linkPath === path;
+                        const active =
+                            linkPath === path ||
+                            (
+                                linkPath === shippingPath &&
+                                (
+                                    path === shippingPath ||
+                                    path.startsWith(shippingPath + '/')
+                                )
+                            );
 
                         activeClasses.forEach(function (className) {
                             link.classList.toggle(className, active);
@@ -1512,7 +2754,7 @@
 
                 const item = document.createElement('a');
                 item.href = messagesUrl;
-                item.setAttribute('wire:navigate', '');
+                item.setAttribute('wire:navigate.hover', '');
                 item.dataset.notificationMessageId = data.id;
 
                 const unread = data.unread !== false;
@@ -1727,13 +2969,44 @@
                     });
             }
 
-            async function loadLayoutState() {
+            function abortSellerBackgroundRequests() {
+                [
+                    'layoutStateAbort',
+                    'accountStateAbort',
+                    'orderPollAbort',
+                ].forEach(function (key) {
+                    try {
+                        state[key]?.abort();
+                    } catch (_) {}
+                    state[key] = null;
+                });
+            }
+
+            async function loadLayoutState(force = false) {
                 if (
                     !layoutStateUrl ||
-                    currentPath() === messagesPath
+                    currentPath() === messagesPath ||
+                    state.navigationActive
                 ) {
                     return;
                 }
+
+                /*
+                 * Realtime Echo is the primary source of message updates.
+                 * Avoid hitting /seller/layout-state again on every route swap;
+                 * this prevents a background request from competing with the
+                 * next Seller navigation on local/single-worker servers.
+                 */
+                if (
+                    !force &&
+                    Date.now() - Number(state.layoutStateLoadedAt || 0) < 60000
+                ) {
+                    return;
+                }
+
+                state.layoutStateAbort?.abort();
+                const controller = new AbortController();
+                state.layoutStateAbort = controller;
 
                 try {
                     const response = await fetch(layoutStateUrl, {
@@ -1743,7 +3016,8 @@
                             'X-Requested-With': 'XMLHttpRequest'
                         },
                         credentials: 'same-origin',
-                        cache: 'no-store'
+                        cache: 'no-store',
+                        signal: controller.signal,
                     });
 
                     if (!response.ok) {
@@ -1751,6 +3025,7 @@
                     }
 
                     const data = await response.json();
+                    state.layoutStateLoadedAt = Date.now();
 
                     state.unreadCount =
                         Math.max(
@@ -1771,10 +3046,16 @@
 
                     syncUnreadUi();
                     renderRecentNotifications(messages);
-                } catch (_) {
-                    console.debug(
-                        'SARI layout notification state unavailable.'
-                    );
+                } catch (error) {
+                    if (error?.name !== 'AbortError') {
+                        console.debug(
+                            'SARI layout notification state unavailable.'
+                        );
+                    }
+                } finally {
+                    if (state.layoutStateAbort === controller) {
+                        state.layoutStateAbort = null;
+                    }
                 }
             }
 
@@ -1899,6 +3180,55 @@
                 state.complianceSubscribed = true;
             }
 
+            function handleRealtimeOrderUpdate(event) {
+                if (!event) return;
+
+                state.lastOrderRealtimeAt = Date.now();
+                state.lastOrderRealtimeRevision =
+                    event.revision || event.updated_at || null;
+
+                window.dispatchEvent(
+                    new CustomEvent(
+                        'sari:seller-order-update',
+                        { detail: event }
+                    )
+                );
+
+                showOrderToast({
+                    title: event.status === 'new'
+                        ? 'New order received'
+                        : 'Order updated',
+                    message: [
+                        event.order_number || 'Order',
+                        event.status_label || event.status || 'Updated'
+                    ].filter(Boolean).join(' · ')
+                });
+            }
+
+            function subscribeOrders(attempt = 0) {
+                if (!sellerChannel || state.orderSubscribed) {
+                    return;
+                }
+
+                if (!window.Echo) {
+                    if (attempt < 24) {
+                        window.setTimeout(function () {
+                            subscribeOrders(attempt + 1);
+                        }, 250);
+                    }
+                    return;
+                }
+
+                window.Echo
+                    .channel(sellerChannel)
+                    .listen(
+                        '.seller.order.updated',
+                        handleRealtimeOrderUpdate
+                    );
+
+                state.orderSubscribed = true;
+            }
+
             function subscribeAccountStatus(attempt = 0) {
                 if (
                     !sellerChannel ||
@@ -1972,6 +3302,7 @@
             async function checkAccountState() {
                 if (
                     state.statusBusy ||
+                    state.navigationActive ||
                     document.hidden ||
                     document.getElementById(
                         'sellerCriticalRestriction'
@@ -1981,6 +3312,9 @@
                 }
 
                 state.statusBusy = true;
+                state.accountStateAbort?.abort();
+                const controller = new AbortController();
+                state.accountStateAbort = controller;
 
                 try {
                     const response =
@@ -1993,7 +3327,8 @@
                                     'XMLHttpRequest'
                             },
                             credentials: 'same-origin',
-                            cache: 'no-store'
+                            cache: 'no-store',
+                            signal: controller.signal,
                         });
 
                     if (
@@ -2028,11 +3363,16 @@
                                 dashboardUrl;
                         }
                     }
-                } catch (_) {
-                    console.debug(
-                        'SARI seller status fallback unavailable.'
-                    );
+                } catch (error) {
+                    if (error?.name !== 'AbortError') {
+                        console.debug(
+                            'SARI seller status fallback unavailable.'
+                        );
+                    }
                 } finally {
+                    if (state.accountStateAbort === controller) {
+                        state.accountStateAbort = null;
+                    }
                     state.statusBusy = false;
                 }
             }
@@ -2107,6 +3447,7 @@
                 if (
                     !sellerId ||
                     state.orderBusy ||
+                    state.navigationActive ||
                     document.hidden ||
                     (
                         path !== dashboardPath &&
@@ -2117,6 +3458,9 @@
                 }
 
                 state.orderBusy = true;
+                state.orderPollAbort?.abort();
+                const controller = new AbortController();
+                state.orderPollAbort = controller;
 
                 try {
                     const response =
@@ -2130,7 +3474,8 @@
                                         'XMLHttpRequest'
                                 },
                                 credentials: 'same-origin',
-                                cache: 'no-store'
+                                cache: 'no-store',
+                                signal: controller.signal,
                             }
                         );
 
@@ -2140,6 +3485,15 @@
 
                     const data = await response.json();
                     const eventData = data.latest_event;
+
+                    if (
+                        state.lastOrderRealtimeRevision &&
+                        data?.revision &&
+                        String(data.revision) ===
+                            String(state.lastOrderRealtimeRevision)
+                    ) {
+                        return;
+                    }
 
                     if (!eventData?.id) {
                         return;
@@ -2171,13 +3525,25 @@
                             String(eventData.id)
                         );
 
+                        window.dispatchEvent(
+                            new CustomEvent(
+                                'sari:seller-order-update',
+                                { detail: eventData }
+                            )
+                        );
+
                         showOrderToast(eventData);
                     }
-                } catch (_) {
-                    console.debug(
-                        'SARI order polling temporarily unavailable.'
-                    );
+                } catch (error) {
+                    if (error?.name !== 'AbortError') {
+                        console.debug(
+                            'SARI order polling temporarily unavailable.'
+                        );
+                    }
                 } finally {
+                    if (state.orderPollAbort === controller) {
+                        state.orderPollAbort = null;
+                    }
                     state.orderBusy = false;
                 }
             }
@@ -2235,12 +3601,72 @@
                 }
             }
 
+
+            /*
+             * ============================================================
+             * FAST SELLER NAVIGATION — USER INTENT ONLY
+             * ============================================================
+             * Do not background-prefetch every Seller route.
+             *
+             * Every sidebar link already uses wire:navigate.hover, so Livewire
+             * prefetches the one destination the seller is actually hovering.
+             * This avoids keeping Laravel/PHP busy with synthetic requests while
+             * a real navigation is waiting.
+             */
+            function bindSellerNavigationPriority() {
+                document
+                    .querySelectorAll(
+                        '#sellerSidebarNav a[wire\\:navigate\\.hover], ' +
+                        '#sellerSidebarProfile a[wire\\:navigate\\.hover]'
+                    )
+                    .forEach(function (link) {
+                        if (link.dataset.sariPriorityBound === '1') {
+                            return;
+                        }
+
+                        link.dataset.sariPriorityBound = '1';
+
+                        /*
+                         * Stop our own polling/layout requests as soon as the
+                         * seller commits to a destination. The Livewire request
+                         * for the clicked page gets the cleanest possible lane.
+                         */
+                        link.addEventListener(
+                            'pointerdown',
+                            abortSellerBackgroundRequests,
+                            { passive: true }
+                        );
+
+                        link.addEventListener(
+                            'touchstart',
+                            abortSellerBackgroundRequests,
+                            { passive: true }
+                        );
+                    });
+            }
+
+            document.addEventListener(
+                'livewire:navigate',
+                function (event) {
+                    state.navigationActive = true;
+                    abortSellerBackgroundRequests();
+
+                    /* Optimistic sidebar feedback before the network finishes. */
+                    try {
+                        const targetPath =
+                            event.detail?.url?.pathname?.replace(/\/+$/, '') || '/';
+
+                        if (targetPath) {
+                            syncSidebarActiveState(targetPath);
+                        }
+                    } catch (_) {}
+                }
+            );
+
             document.addEventListener(
                 'livewire:navigating',
                 function () {
-                    document.documentElement.dataset
-                        .sellerShellLoading = 'true';
-
+                    abortSellerBackgroundRequests();
                     closeMobileSidebar();
 
                     document
@@ -2254,24 +3680,32 @@
             document.addEventListener(
                 'livewire:navigated',
                 function () {
-                    delete document.documentElement.dataset
-                        .sellerShellLoading;
+                    state.navigationActive = false;
 
                     bindCurrentShellUi();
+                    bindSellerNavigationPriority();
                     syncRestrictionUi();
                     syncUnreadUi();
 
                     if (currentPath() === messagesPath) {
                         markLayoutAsRead();
+                    } else if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(
+                            function () {
+                                loadLayoutState();
+                            },
+                            { timeout: 1800 }
+                        );
                     } else {
                         window.setTimeout(
                             loadLayoutState,
-                            80
+                            900
                         );
                     }
 
                     subscribeMessages();
                     subscribeCompliance();
+                    subscribeOrders();
                     subscribeAccountStatus();
                 }
             );
@@ -2282,12 +3716,12 @@
                 window.__SARI_SELLER_STATUS_INTERVAL__ =
                     window.setInterval(
                         checkAccountState,
-                        15000
+                        60000
                     );
 
                 window.setTimeout(
                     checkAccountState,
-                    1800
+                    12000
                 );
             }
 
@@ -2297,12 +3731,12 @@
                 window.__SARI_SELLER_ORDER_INTERVAL__ =
                     window.setInterval(
                         pollOrders,
-                        10000
+                        45000
                     );
 
                 window.setTimeout(
                     pollOrders,
-                    1400
+                    10000
                 );
             }
         })();
@@ -2317,35 +3751,30 @@
     @persist('seller-action-toast')
         <div
             id="sellerActionToast"
-            class="pointer-events-none fixed right-4 top-4 z-[10000] hidden w-[min(420px,calc(100vw-2rem))]"
+            class="seller-action-toast hidden"
+            data-toast-type="success"
             aria-live="polite"
             aria-atomic="true"
         >
-            <div
-                id="sellerActionToastCard"
-                class="pointer-events-auto flex items-start gap-3 rounded-[16px] border border-[#d7e7dd] bg-white px-4 py-3.5 shadow-[0_18px_50px_rgba(38,30,18,.16)]"
-            >
-                <span
-                    id="sellerActionToastIcon"
-                    class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#f1f8f4] text-[#56816a]"
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9">
+            <div id="sellerActionToastCard" class="seller-action-toast-card">
+                <span id="sellerActionToastIcon" class="seller-action-toast-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
                         <circle cx="12" cy="12" r="9"></circle>
                         <path d="m8 12 2.5 2.5L16 9"></path>
                     </svg>
                 </span>
 
-                <div class="min-w-0 flex-1">
-                    <p id="sellerActionToastTitle" class="text-[10px] font-bold text-[#3f6f52]">
+                <div class="seller-action-toast-copy">
+                    <p id="sellerActionToastTitle" class="seller-action-toast-title">
                         Action completed
                     </p>
-                    <p id="sellerActionToastMessage" class="mt-1 text-[9px] leading-5 text-[#65776c]"></p>
+                    <p id="sellerActionToastMessage" class="seller-action-toast-message"></p>
                 </div>
 
                 <button
                     id="sellerActionToastClose"
                     type="button"
-                    class="pointer-events-auto grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[#8f877c] transition hover:bg-[#f5f2ed] hover:text-[#514a42]"
+                    class="seller-action-toast-close"
                     aria-label="Close notification"
                 >
                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
@@ -2375,47 +3804,37 @@
 
             function showToast(message, type = 'success') {
                 const toast = document.getElementById('sellerActionToast');
-                const card = document.getElementById('sellerActionToastCard');
                 const icon = document.getElementById('sellerActionToastIcon');
                 const title = document.getElementById('sellerActionToastTitle');
                 const body = document.getElementById('sellerActionToastMessage');
 
-                if (!toast || !card || !icon || !title || !body) {
+                if (!toast || !icon || !title || !body) {
                     return;
                 }
 
                 const warning = type === 'warning';
                 const error = type === 'error';
 
-                card.className = 'pointer-events-auto flex items-start gap-3 rounded-[16px] border bg-white px-4 py-3.5 shadow-[0_18px_50px_rgba(38,30,18,.16)]';
-                icon.className = 'grid h-9 w-9 shrink-0 place-items-center rounded-xl';
-                title.className = 'text-[10px] font-bold';
-                body.className = 'mt-1 text-[9px] leading-5';
+                toast.dataset.toastType =
+                    error ? 'error' : (warning ? 'warning' : 'success');
 
                 if (error) {
-                    card.classList.add('border-[#ecd3d3]');
-                    icon.classList.add('bg-[#fff3f3]', 'text-[#a65f5f]');
-                    title.classList.add('text-[#9d5555]');
-                    body.classList.add('text-[#8d6666]');
                     title.textContent = 'Action not completed';
-                    icon.innerHTML = '<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.5h.01"></path></svg>';
+                    icon.innerHTML =
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.5h.01"></path></svg>';
                 } else if (warning) {
-                    card.classList.add('border-[#ead8b9]');
-                    icon.classList.add('bg-[#fff8ec]', 'text-[#a8731f]');
-                    title.classList.add('text-[#946516]');
-                    body.classList.add('text-[#806d4c]');
                     title.textContent = 'Review notice';
-                    icon.innerHTML = '<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3 3 20h18L12 3Z"></path><path d="M12 9v5"></path><path d="M12 17h.01"></path></svg>';
+                    icon.innerHTML =
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3 3 20h18L12 3Z"></path><path d="M12 9v5"></path><path d="M12 17h.01"></path></svg>';
                 } else {
-                    card.classList.add('border-[#d7e7dd]');
-                    icon.classList.add('bg-[#f1f8f4]', 'text-[#56816a]');
-                    title.classList.add('text-[#3f6f52]');
-                    body.classList.add('text-[#65776c]');
                     title.textContent = 'Action completed';
-                    icon.innerHTML = '<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>';
+                    icon.innerHTML =
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></svg>';
                 }
 
-                body.textContent = message || 'Your seller action was saved.';
+                body.textContent =
+                    message || 'Your seller action was saved.';
+
                 toast.classList.remove('hidden');
 
                 if (toastTimer) {
@@ -2424,7 +3843,7 @@
 
                 toastTimer = window.setTimeout(function () {
                     toast.classList.add('hidden');
-                }, error ? 6500 : 4500);
+                }, error ? 6500 : (warning ? 5600 : 4400));
             }
 
             function bindToastClose() {
@@ -2476,7 +3895,7 @@
             }
 
             function busyTextFor(form) {
-                if (form.id === 'sellerAddProductForm') return 'Screening & saving...';
+                if (form.id === 'sellerAddProductForm' || form.id === 'sellerCreateProductForm') return 'Submitting...';
                 if (form.id === 'sellerEditProductForm') return 'Saving changes...';
                 if (form.id === 'productActionForm') return 'Processing...';
                 return 'Saving...';
@@ -2524,6 +3943,14 @@
                 document.body.classList.remove('overflow-hidden');
             }
 
+            function reviewSubmitFeedback(form) {
+                if (!form || form.id !== 'sellerCreateProductForm') {
+                    return null;
+                }
+
+                return window.__SARI_PRODUCT_REVIEW_FEEDBACK__ || null;
+            }
+
             async function submitFast(form, submitter) {
                 if (form.dataset.sariSubmitting === '1') {
                     return;
@@ -2533,6 +3960,9 @@
 
                 const button = submitter || form.querySelector('button[type="submit"], input[type="submit"]');
                 setButtonBusy(button, form, true);
+
+                const reviewFeedback = reviewSubmitFeedback(form);
+                reviewFeedback?.start?.();
 
                 try {
                     const response = await fetch(form.action, {
@@ -2550,6 +3980,7 @@
                         const redirected = new URL(response.url, window.location.origin);
 
                         if (redirected.origin === window.location.origin && redirected.pathname.startsWith('/seller')) {
+                            reviewFeedback?.hide?.();
                             showToast('Your seller access or page state changed. Refreshing securely.', 'warning');
 
                             window.setTimeout(function () {
@@ -2575,11 +4006,20 @@
                     }
 
                     if (!response.ok) {
+                        reviewFeedback?.hide?.();
                         showToast(firstError(payload), 'error');
                         return;
                     }
 
-                    showToast(payload.message || 'Your seller action was saved.', payload.type || 'success');
+                    if (reviewFeedback?.success) {
+                        await reviewFeedback.success();
+                    }
+
+                    showToast(
+                        payload.message || 'Your seller action was saved.',
+                        payload.type || 'success'
+                    );
+
                     closeProductModals();
 
                     window.setTimeout(function () {
@@ -2588,8 +4028,9 @@
                         } else {
                             window.location.reload();
                         }
-                    }, 160);
+                    }, reviewFeedback ? 700 : 160);
                 } catch (error) {
+                    reviewFeedback?.hide?.();
                     showToast('Network request failed. Please try again.', 'error');
                 } finally {
                     form.dataset.sariSubmitting = '0';
@@ -2620,6 +4061,42 @@
         })();
     </script>
 
+
+
+
+
+    {{-- Neutral-only navigation guard: keeps the persistent Seller canvas stable. --}}
+    <script data-navigate-once>
+        (function () {
+            const SELLER_CANVAS = '#F4F5F7';
+
+            function lockSellerCanvas() {
+                document.documentElement.style.backgroundColor = SELLER_CANVAS;
+
+                if (document.body) {
+                    document.body.style.backgroundColor = SELLER_CANVAS;
+                    document.body.style.backgroundImage = 'none';
+                }
+
+                const content = document.getElementById('sellerContent');
+                if (content) {
+                    content.style.backgroundColor = SELLER_CANVAS;
+                    content.style.backgroundImage = 'none';
+                }
+
+                document.getElementById('sariSellerInstantSnapshot')?.remove();
+            }
+
+            lockSellerCanvas();
+            document.addEventListener('livewire:navigate', lockSellerCanvas);
+            document.addEventListener('livewire:navigating', lockSellerCanvas);
+            document.addEventListener('livewire:navigated', function () {
+                lockSellerCanvas();
+                window.requestAnimationFrame(lockSellerCanvas);
+            });
+            window.addEventListener('pageshow', lockSellerCanvas);
+        })();
+    </script>
 
     {{-- PAGE-SPECIFIC SCRIPTS --}}
     @stack('scripts')

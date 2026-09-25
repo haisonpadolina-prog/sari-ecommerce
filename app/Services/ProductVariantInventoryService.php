@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\SellerProduct;
 use App\Models\SellerProductVariant;
+use App\Models\SellerInventoryMovement;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -89,7 +91,20 @@ class ProductVariantInventoryService
                     ]);
                 }
 
+                $before = (int) $lockedProduct->stock;
                 $lockedProduct->decrement('stock', $quantity);
+                if (Schema::hasTable('seller_inventory_movements')) {
+                    SellerInventoryMovement::create([
+                        'seller_account_id' => $lockedProduct->seller_account_id,
+                        'seller_product_id' => $lockedProduct->id,
+                        'seller_product_variant_id' => null,
+                        'quantity_before' => $before,
+                        'quantity_after' => $before - $quantity,
+                        'quantity_delta' => -$quantity,
+                        'reason' => 'order_deduction',
+                        'note' => 'Stock reserved/deducted by Buyer checkout.',
+                    ]);
+                }
                 return;
             }
 
@@ -112,7 +127,20 @@ class ProductVariantInventoryService
                 ]);
             }
 
+            $before = (int) $variant->stock;
             $variant->decrement('stock', $quantity);
+            if (Schema::hasTable('seller_inventory_movements')) {
+                SellerInventoryMovement::create([
+                    'seller_account_id' => $lockedProduct->seller_account_id,
+                    'seller_product_id' => $lockedProduct->id,
+                    'seller_product_variant_id' => $variant->id,
+                    'quantity_before' => $before,
+                    'quantity_after' => $before - $quantity,
+                    'quantity_delta' => -$quantity,
+                    'reason' => 'order_deduction',
+                    'note' => 'Variant stock reserved/deducted by Buyer checkout.',
+                ]);
+            }
             $this->syncProductStock($lockedProduct);
         }, 3);
     }
@@ -132,7 +160,20 @@ class ProductVariantInventoryService
             }
 
             if (!(bool) $lockedProduct->has_variants || !$variantId) {
+                $before = (int) $lockedProduct->stock;
                 $lockedProduct->increment('stock', $quantity);
+                if (Schema::hasTable('seller_inventory_movements')) {
+                    SellerInventoryMovement::create([
+                        'seller_account_id' => $lockedProduct->seller_account_id,
+                        'seller_product_id' => $lockedProduct->id,
+                        'seller_product_variant_id' => null,
+                        'quantity_before' => $before,
+                        'quantity_after' => $before + $quantity,
+                        'quantity_delta' => $quantity,
+                        'reason' => 'order_cancel_restore',
+                        'note' => 'Stock restored after Buyer cancellation.',
+                    ]);
+                }
                 return;
             }
 
@@ -146,7 +187,20 @@ class ProductVariantInventoryService
                 return;
             }
 
+            $before = (int) $variant->stock;
             $variant->increment('stock', $quantity);
+            if (Schema::hasTable('seller_inventory_movements')) {
+                SellerInventoryMovement::create([
+                    'seller_account_id' => $lockedProduct->seller_account_id,
+                    'seller_product_id' => $lockedProduct->id,
+                    'seller_product_variant_id' => $variant->id,
+                    'quantity_before' => $before,
+                    'quantity_after' => $before + $quantity,
+                    'quantity_delta' => $quantity,
+                    'reason' => 'order_cancel_restore',
+                    'note' => 'Variant stock restored after Buyer cancellation.',
+                ]);
+            }
             $this->syncProductStock($lockedProduct);
         }, 3);
     }

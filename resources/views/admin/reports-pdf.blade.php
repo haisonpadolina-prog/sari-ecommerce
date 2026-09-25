@@ -5,9 +5,15 @@
     <title>SARI Platform Management Report</title>
 
     <style>
+        /* ============================================================
+           SARI PLATFORM MANAGEMENT REPORT — ENTERPRISE V2
+           A4 portrait • formal management-report hierarchy
+           Poppins-first • print-safe • low visual overhead
+           ============================================================ */
+
         @page {
             size: A4 portrait;
-            margin: 14mm 12mm 15mm 12mm;
+            margin: 13mm 11mm 15mm 11mm;
         }
 
         * {
@@ -22,15 +28,16 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            color: #222222;
-            font-size: 9px;
-            line-height: 1.38;
+            color: #2b2722;
+            font-family: 'Poppins', Arial, Helvetica, sans-serif;
+            font-size: 8.35px;
+            line-height: 1.42;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            text-rendering: optimizeLegibility;
         }
 
-        /* Screen-only controls. They are hidden in the printed/PDF document. */
+        /* ---------------- SCREEN TOOLBAR ---------------- */
         .print-toolbar {
             position: sticky;
             top: 0;
@@ -38,25 +45,29 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 14px;
             margin: 0 0 14px;
-            border: 1px solid #dedede;
-            background: #ffffff;
+            border: 1px solid #e4ddd3;
+            border-radius: 12px;
+            background: rgba(255,255,255,.98);
             padding: 10px 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,.08);
+            box-shadow: 0 9px 24px rgba(61,43,22,.07);
         }
 
         .print-toolbar strong {
             display: block;
-            font-size: 11px;
-            color: #1c1c1c;
+            color: #28231e;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
         .print-toolbar span {
             display: block;
             margin-top: 2px;
-            color: #707070;
-            font-size: 8px;
+            color: #8b8278;
+            font-size: 7px;
+            line-height: 1.4;
         }
 
         .toolbar-actions {
@@ -65,30 +76,44 @@
         }
 
         .toolbar-btn {
+            display: inline-flex;
             height: 34px;
-            border: 1px solid #d3d3d3;
-            background: #ffffff;
-            padding: 0 12px;
-            color: #333333;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dfd7cd;
+            border-radius: 8px;
+            background: #fff;
+            padding: 0 11px;
+            color: #665e55;
             font: inherit;
-            font-size: 8px;
-            font-weight: 700;
+            font-size: 7.5px;
+            font-weight: 650;
             cursor: pointer;
         }
 
-        .toolbar-btn.primary {
-            border-color: #a97012;
-            background: #c58d20;
-            color: #ffffff;
+        .toolbar-btn:hover {
+            border-color: #d1c2ae;
+            background: #faf8f4;
         }
 
+        .toolbar-btn.primary {
+            border-color: #c58d20;
+            background: #c58d20;
+            color: #fff;
+        }
+
+        .toolbar-btn.primary:hover {
+            border-color: #ad7615;
+            background: #ad7615;
+        }
 
         @media screen {
             body {
                 max-width: 210mm;
                 margin: 0 auto;
-                padding: 10mm 12mm;
-                box-shadow: 0 0 30px rgba(0,0,0,.08);
+                padding: 9mm 10mm;
+                background: #f7f5f0;
+                box-shadow: 0 0 30px rgba(40,32,23,.075);
             }
         }
 
@@ -96,13 +121,19 @@
             .print-toolbar {
                 display: none !important;
             }
+
+            html,
+            body {
+                background: #fff !important;
+            }
         }
 
-        /* Document header */
+        /* ---------------- DOCUMENT HEADER ---------------- */
         .document-header {
             width: 100%;
+            margin-bottom: 7px;
             border-collapse: collapse;
-            margin-bottom: 8px;
+            page-break-inside: avoid;
         }
 
         .document-header td {
@@ -110,10 +141,11 @@
         }
 
         .company-name {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: .8px;
             color: #17130e;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 1.15px;
         }
 
         .company-name .gold {
@@ -121,139 +153,170 @@
         }
 
         .document-type {
-            margin-top: 3px;
-            color: #4b4b4b;
-            font-size: 9px;
+            margin-top: 5px;
+            color: #8b7449;
+            font-size: 6.5px;
             font-weight: 700;
-            letter-spacing: .8px;
+            line-height: 1.2;
+            letter-spacing: 1.05px;
             text-transform: uppercase;
         }
 
         .document-title {
-            margin-top: 8px;
-            color: #17130e;
-            font-size: 17px;
+            margin-top: 9px;
+            color: #28231e;
+            font-size: 15.5px;
             font-weight: 700;
             line-height: 1.15;
+            letter-spacing: -.18px;
         }
 
         .document-subtitle {
-            margin-top: 3px;
-            color: #6f6a62;
-            font-size: 8px;
+            max-width: 500px;
+            margin-top: 4px;
+            color: #756e66;
+            font-size: 7.25px;
+            line-height: 1.5;
         }
 
         .header-meta {
-            width: 220px;
+            width: 205px;
+            padding-top: 1px;
             text-align: right;
         }
 
         .classification {
             display: inline-block;
-            border: 1px solid #d8c7a5;
+            border: 1px solid #dcccae;
+            border-radius: 4px;
+            background: #fffbf3;
             padding: 4px 7px;
-            color: #7c5a1f;
-            font-size: 7px;
+            color: #805f25;
+            font-size: 6.25px;
             font-weight: 700;
-            letter-spacing: .6px;
+            line-height: 1;
+            letter-spacing: .58px;
             text-transform: uppercase;
         }
 
         .generated-at {
             margin-top: 8px;
-            color: #77716a;
-            font-size: 7.5px;
+            color: #8b8278;
+            font-size: 6.55px;
+            line-height: 1.4;
         }
 
         .gold-rule {
             height: 2px;
-            margin: 9px 0 10px;
-            background: #b77b16;
+            margin: 8px 0 9px;
+            background: linear-gradient(90deg,#b77b16 0%,#d5b46e 42%,#eee7da 100%);
         }
 
-        /* Report metadata */
+        /* ---------------- REPORT META ---------------- */
         .report-meta {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ded8cf;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 6px;
+            overflow: hidden;
+            page-break-inside: avoid;
         }
 
         .report-meta th,
         .report-meta td {
-            border: 1px solid #d8d8d8;
-            padding: 6px 8px;
+            border: 0;
+            border-right: 1px solid #e5dfd7;
+            padding: 5px 7px;
             text-align: left;
             vertical-align: middle;
         }
 
+        .report-meta th:last-child,
+        .report-meta td:last-child {
+            border-right: 0;
+        }
+
         .report-meta th {
             width: 12%;
-            background: #f3f3f3;
-            color: #4f4f4f;
-            font-size: 7px;
+            background: #f7f5f1;
+            color: #81776b;
+            font-size: 6.05px;
             font-weight: 700;
-            letter-spacing: .4px;
+            line-height: 1.25;
+            letter-spacing: .42px;
             text-transform: uppercase;
         }
 
         .report-meta td {
             width: 21%;
-            color: #222222;
-            font-size: 8px;
+            background: #fff;
+            color: #3d3832;
+            font-size: 7.15px;
             font-weight: 600;
         }
 
+        /* ---------------- SECTIONS ---------------- */
         .section {
-            margin-top: 13px;
+            margin-top: 11px;
         }
 
         .section-heading {
-            margin: 0 0 6px;
+            margin: 0 0 5px;
             padding-bottom: 4px;
-            border-bottom: 1px solid #bdbdbd;
-            color: #202020;
-            font-size: 10px;
+            border-bottom: 1px solid #cbc3b9;
+            color: #2f2a25;
+            font-size: 8.8px;
             font-weight: 700;
-            letter-spacing: .3px;
+            line-height: 1.3;
+            letter-spacing: .4px;
             text-transform: uppercase;
         }
 
         .section-note {
-            margin: -2px 0 6px;
-            color: #777777;
-            font-size: 7px;
+            margin: -1px 0 5px;
+            color: #8c8378;
+            font-size: 6.35px;
+            line-height: 1.45;
         }
 
-        /* Flat corporate summary table — no cards */
+        /* ---------------- MANAGEMENT SUMMARY ---------------- */
         .management-summary {
             width: 100%;
+            margin-bottom: 2px;
             border-collapse: collapse;
-            margin-bottom: 3px;
+            page-break-inside: avoid;
         }
 
         .management-summary th,
         .management-summary td {
-            border: 1px solid #d9d9d9;
-            padding: 6px 8px;
+            border: 1px solid #ddd7cf;
+            padding: 5px 7px;
         }
 
         .management-summary th {
-            background: #f2f2f2;
-            color: #444444;
-            font-size: 7px;
+            background: #f5f2ed;
+            color: #6f665b;
+            font-size: 6.15px;
             font-weight: 700;
             text-align: left;
             text-transform: uppercase;
-            letter-spacing: .35px;
+            letter-spacing: .34px;
         }
 
         .management-summary td {
-            color: #222222;
-            font-size: 8px;
+            color: #403a34;
+            font-size: 7.05px;
+        }
+
+        .management-summary tbody tr:nth-child(even) td {
+            background: #fcfbf9;
         }
 
         .management-summary td.value {
-            font-size: 10px;
+            color: #28231e;
+            font-size: 8.75px;
             font-weight: 700;
             text-align: right;
             white-space: nowrap;
@@ -262,46 +325,44 @@
         .management-summary td.change {
             width: 15%;
             text-align: right;
-            font-size: 7.5px;
+            font-size: 6.75px;
+            font-weight: 600;
             white-space: nowrap;
         }
 
-        .change-positive {
-            color: #4f6e52;
-        }
+        .change-positive { color: #4f6e52; }
+        .change-negative { color: #9d5147; }
+        .change-neutral { color: #888077; }
 
-        .change-negative {
-            color: #9d5147;
-        }
-
-        .change-neutral {
-            color: #777777;
-        }
-
+        /* ---------------- TABLES ---------------- */
         .plain-table,
         .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
+        .plain-table {
+            page-break-inside: avoid;
+        }
+
         .plain-table th,
         .plain-table td {
-            border: 1px solid #dcdcdc;
-            padding: 5px 7px;
+            border: 1px solid #ddd8d1;
+            padding: 4px 6px;
             text-align: left;
         }
 
         .plain-table th {
-            background: #f2f2f2;
-            color: #4f4f4f;
-            font-size: 7px;
+            background: #f5f2ed;
+            color: #6f665b;
+            font-size: 6.05px;
             font-weight: 700;
             text-transform: uppercase;
         }
 
         .plain-table td {
-            color: #2c2c2c;
-            font-size: 8px;
+            color: #403a34;
+            font-size: 6.95px;
         }
 
         .plain-table td.right,
@@ -324,70 +385,62 @@
         }
 
         .data-table th {
-            border: 1px solid #cfcfcf;
-            background: #eeeeee;
-            padding: 5px 5px;
-            color: #3f3f3f;
-            font-size: 6.5px;
+            border: 1px solid #d4cec6;
+            background: #f3f0eb;
+            padding: 4px 5px;
+            color: #635c54;
+            font-size: 5.85px;
             font-weight: 700;
             text-align: left;
+            line-height: 1.3;
             text-transform: uppercase;
-            letter-spacing: .25px;
+            letter-spacing: .2px;
         }
 
         .data-table td {
-            border: 1px solid #dddddd;
-            padding: 5px 5px;
-            color: #333333;
-            font-size: 6.7px;
+            border: 1px solid #e0dbd4;
+            padding: 4px 5px;
+            color: #403a34;
+            font-size: 6.15px;
+            line-height: 1.4;
             vertical-align: top;
             word-wrap: break-word;
         }
 
         .data-table tbody tr:nth-child(even) td {
-            background: #fafafa;
+            background: #fbfaf8;
         }
 
-        .data-table .right {
-            text-align: right;
-        }
-
-        .data-table .center {
-            text-align: center;
-        }
+        .data-table .right { text-align: right; }
+        .data-table .center { text-align: center; }
 
         .status-text {
             font-weight: 700;
         }
 
-        .status-delivered {
-            color: #4f6e52;
-        }
-
-        .status-cancelled {
-            color: #9d5147;
-        }
-
-        .status-active {
-            color: #536d69;
-        }
+        .status-delivered { color: #4f6e52; }
+        .status-cancelled { color: #9d5147; }
+        .status-active { color: #536d69; }
 
         .page-break {
             page-break-before: always;
         }
 
         .empty {
-            border: 1px solid #d9d9d9;
-            padding: 14px;
-            color: #777777;
-            font-size: 8px;
+            border: 1px solid #ddd7cf;
+            border-radius: 4px;
+            background: #fbfaf8;
+            padding: 12px;
+            color: #8c8378;
+            font-size: 7px;
             text-align: center;
         }
 
+        /* ---------------- SIGN-OFF ---------------- */
         .signoff {
             width: 100%;
+            margin-top: 17px;
             border-collapse: collapse;
-            margin-top: 18px;
             page-break-inside: avoid;
         }
 
@@ -397,36 +450,64 @@
             vertical-align: bottom;
         }
 
-        .sign-line {
-            margin-top: 24px;
-            border-top: 1px solid #555555;
-            padding-top: 4px;
-            color: #555555;
-            font-size: 7px;
-            text-align: center;
+        .signoff td:last-child {
+            padding-right: 0;
         }
 
+        .sign-line {
+            margin-top: 22px;
+            border-top: 1px solid #756d63;
+            padding-top: 4px;
+            color: #6f665b;
+            font-size: 6.3px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        /* ---------------- FOOTER ---------------- */
         .footer {
             position: fixed;
             left: 0;
             right: 0;
             bottom: -9mm;
-            border-top: 1px solid #cfcfcf;
+            border-top: 1px solid #d5cec5;
             padding-top: 4px;
-            color: #777777;
-            font-size: 6.5px;
+            color: #8c8378;
+            font-size: 5.85px;
+            line-height: 1.2;
         }
 
-        .footer-left {
-            float: left;
-        }
-
-        .footer-right {
-            float: right;
-        }
+        .footer-left { float: left; }
+        .footer-right { float: right; }
 
         .page-number:after {
             content: counter(page);
+        }
+
+        @media print {
+            .section,
+            .management-summary,
+            .plain-table,
+            .signoff {
+                orphans: 3;
+                widows: 3;
+            }
+
+            .data-table {
+                break-inside: auto;
+            }
+
+            .data-table tr {
+                break-inside: avoid;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .toolbar-btn {
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -438,8 +519,8 @@
         <span>A4 corporate print layout. Choose “Save as PDF” in the print destination.</span>
     </div>
     <div class="toolbar-actions">
-        <button type="button" class="toolbar-btn" onclick="window.close()">Close</button>
-        <button type="button" class="toolbar-btn primary" onclick="window.print()">Save / Print PDF</button>
+        <button type="button" class="toolbar-btn" data-report-close>Close</button>
+        <button type="button" class="toolbar-btn primary" data-report-print>Save / Print PDF</button>
     </div>
 </div>
 
@@ -680,11 +761,40 @@
 </table>
 
 <script>
-    window.addEventListener('load', function () {
-        window.setTimeout(function () {
+    (function () {
+        let autoPrintStarted = false;
+
+        function printReportOnce() {
+            if (autoPrintStarted) return;
+            autoPrintStarted = true;
             window.print();
-        }, 350);
-    });
+        }
+
+        document.addEventListener('click', function (event) {
+            if (event.target.closest('[data-report-close]')) {
+                window.close();
+                return;
+            }
+
+            if (event.target.closest('[data-report-print]')) {
+                window.print();
+            }
+        });
+
+        window.addEventListener('load', function () {
+            const fontsReady = document.fonts?.ready || Promise.resolve();
+
+            fontsReady.then(function () {
+                requestAnimationFrame(function () {
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(printReportOnce, { timeout: 700 });
+                    } else {
+                        window.setTimeout(printReportOnce, 120);
+                    }
+                });
+            });
+        }, { once: true });
+    })();
 </script>
 </body>
 </html>

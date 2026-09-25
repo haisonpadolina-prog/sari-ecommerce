@@ -7,6 +7,12 @@
 {{-- Tailwind CDN for this page --}}
 <script src="https://cdn.tailwindcss.com"></script>
 
+{{-- Poppins was referenced via font-['Poppins'] but never loaded — this was silently
+     falling back to the browser's generic sans-serif, which is why type felt "off". --}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
     :root {
         --sari-yellow: #d48f08;
@@ -26,18 +32,12 @@
     }
 
     @keyframes sariLoginFade {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .sari-login-input {
-        transition:
-            border-color .18s ease,
-            box-shadow .18s ease;
+        transition: border-color .18s ease, box-shadow .18s ease;
     }
 
     .sari-login-input:focus {
@@ -45,11 +45,22 @@
         box-shadow: 0 0 0 4px rgba(212, 143, 8, .08);
     }
 
+    /* --- THE FIX for the "blue tint / black text contrast" issue ---
+       Chrome/Edge/Safari paint their own background + text color on
+       autofilled inputs, ignoring bg-white on the element. This forces
+       the field to stay on our surface color and keep our text color
+       instead of the browser's default light-blue autofill style. */
+    .sari-login-input:-webkit-autofill,
+    .sari-login-input:-webkit-autofill:hover,
+    .sari-login-input:-webkit-autofill:focus {
+        -webkit-text-fill-color: var(--sari-text);
+        caret-color: var(--sari-text);
+        transition: background-color 9999s ease-in-out 0s;
+        box-shadow: 0 0 0 1000px var(--sari-surface) inset;
+    }
+
     .sari-login-button {
-        transition:
-            background-color .18s ease,
-            border-color .18s ease,
-            box-shadow .18s ease;
+        transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
     .sari-login-button:hover {
@@ -59,16 +70,237 @@
     }
 
     .sari-login-social {
-        transition:
-            background-color .18s ease,
-            border-color .18s ease,
-            color .18s ease;
+        transition: background-color .18s ease, border-color .18s ease, color .18s ease;
     }
 
     .sari-login-social:hover {
-        background: #fffaf1;
-        border-color: #d8bd89;
+        background: rgba(255, 250, 241, .72);
         color: #8f5d06;
+    }
+
+    /*
+     * Responsive sizing strategy — SIMPLIFIED.
+     * Previously this used clamp() PLUS two separate hard @media(max-height)
+     * breakpoints that re-declared almost every value again. Every time the
+     * viewport crossed 820px or 690px height, spacing jumped abruptly instead
+     * of scaling smoothly — that abrupt jump is what read as "sabog" on
+     * common laptop resolutions. A single clamp() per property, with the
+     * floor tuned for short viewports, removes the jump entirely.
+     */
+    .sari-login-page {
+        padding-top: clamp(12px, 2.2vh, 26px);
+        padding-bottom: clamp(12px, 2.2vh, 26px);
+    }
+
+    .sari-login-main {
+        padding-top: clamp(8px, 2vh, 22px);
+        padding-bottom: clamp(8px, 2vh, 22px);
+    }
+
+    .sari-login-wrapper {
+        width: min(100%, 430px);
+    }
+
+    .sari-login-brand {
+        margin-bottom: clamp(6px, 1.5vh, 14px);
+        text-align: center;
+    }
+
+    .sari-login-brand img {
+        width: clamp(105px, 7.8vw, 145px);
+        transform: none !important;
+        margin-inline: auto;
+    }
+
+    .sari-login-tagline {
+        margin-top: clamp(3px, .5vh, 5px);
+        font-size: clamp(7px, .55vw, 8px);
+    }
+
+    .sari-login-card {
+        width: 100%;
+        max-width: 430px;
+        min-height: clamp(545px, 68vh, 625px);
+        padding:
+            clamp(24px, 5.8vh, 58px)
+            clamp(18px, 1.7vw, 24px)
+            clamp(20px, 3vh, 34px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .sari-login-header {
+        margin-bottom: clamp(11px, 2.2vh, 22px);
+    }
+
+    .sari-login-title {
+        font-size: clamp(22px, 1.6vw, 26px);
+    }
+
+    .sari-login-description {
+        margin-top: clamp(4px, .8vh, 8px);
+        font-size: clamp(10px, .78vw, 12px);
+        line-height: 1.5;
+    }
+
+    .sari-login-form {
+        display: grid;
+        gap: clamp(9px, 1.9vh, 18px);
+    }
+
+    .sari-login-control {
+        height: clamp(36px, 5.2vh, 46px);
+    }
+
+    .sari-login-divider {
+        margin-top: clamp(9px, 2vh, 20px);
+        margin-bottom: clamp(9px, 1.8vh, 18px);
+    }
+
+    .sari-login-social-control {
+        height: clamp(36px, 4.5vh, 40px);
+    }
+
+    .sari-login-signup {
+        margin-top: clamp(9px, 2.3vh, 23px);
+    }
+
+    .sari-login-footer {
+        padding-top: clamp(8px, 1.2vh, 13px);
+        font-size: clamp(10px, .72vw, 12px);
+        line-height: 1.5;
+    }
+
+    /* Refined type scale and controls */
+    .sari-field-label {
+        margin-bottom: 7px;
+        color: #383126;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+    }
+
+    .sari-login-input {
+        font-size: 12.5px;
+        font-weight: 400;
+        letter-spacing: -0.005em;
+    }
+
+    .sari-option-text {
+        color: #756d63;
+        font-size: 11.5px;
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    .sari-forgot-link {
+        color: #a96f06;
+        font-size: 11.5px;
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    .sari-forgot-link:hover {
+        color: #7f5104;
+    }
+
+    .sari-remember-box {
+        display: inline-flex;
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #cfc6b9;
+        border-radius: 4px;
+        background: #fff;
+        color: #fff;
+        transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .sari-remember-box svg {
+        width: 9px;
+        height: 9px;
+        opacity: 0;
+        transform: scale(.75);
+        transition: opacity .14s ease, transform .14s ease;
+    }
+
+    .peer:checked + .sari-remember-box {
+        border-color: var(--sari-yellow);
+        background: var(--sari-yellow);
+    }
+
+    .peer:checked + .sari-remember-box svg {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .peer:focus-visible + .sari-remember-box {
+        box-shadow: 0 0 0 3px rgba(212, 143, 8, .13);
+    }
+
+    .sari-login-button {
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: .01em;
+    }
+
+    .sari-login-button svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .sari-login-social {
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+    }
+
+    .sari-divider-label {
+        font-size: 8px;
+        font-weight: 500;
+        letter-spacing: .15em;
+        color: #aaa196;
+    }
+
+    .sari-signup-copy {
+        font-size: 11.5px;
+        line-height: 1.45;
+    }
+
+    .sari-signup-copy a {
+        font-weight: 600;
+    }
+
+    /* Lower login actions — small breathing room after Password */
+    .sari-login-lower-start {
+        margin-top: clamp(8px, 1.3vh, 13px);
+    }
+
+    /* Mobile keeps comfortable touch targets even with the compact desktop layout. */
+    @media (max-width: 639px) {
+        .sari-login-wrapper {
+            width: min(100%, 430px);
+        }
+
+        .sari-login-card {
+            padding: 28px 18px 20px;
+        }
+
+        .sari-login-brand img {
+            width: 120px;
+        }
+
+        .sari-login-control {
+            min-height: 46px;
+        }
+
+        .sari-login-social-control {
+            min-height: 44px;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -101,45 +333,45 @@
     </div>
 
     {{-- PAGE --}}
-    <div class="relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full max-w-[1500px] flex-col px-4 py-5 min-[380px]:px-5 sm:px-6 sm:py-6 md:px-8 lg:px-10 lg:py-7 xl:px-12">
+    <div class="sari-login-page relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full max-w-[1500px] flex-col px-4 min-[380px]:px-5 sm:px-6 md:px-8 lg:px-10 xl:px-12">
 
         {{-- MAIN CONTENT --}}
-        <div class="flex flex-1 items-start justify-center py-4 sm:items-center sm:py-6 lg:py-8">
+        <div class="sari-login-main flex flex-1 items-start justify-center sm:items-center">
 
-            <div class="flex w-full max-w-[590px] flex-col items-center">
+            <div class="sari-login-wrapper flex flex-col items-center">
 
                 {{-- BRAND — shares the exact same center as the card --}}
                 <a
                     href="{{ route('home') }}"
-                    class="sari-login-brand mb-5 inline-flex flex-col items-center sm:mb-6 lg:mb-7"
+                    class="sari-login-brand inline-flex flex-col items-center"
                     aria-label="Back to SARI home"
                 >
                     <img
                         src="{{ asset('images/sari-logo.png') }}"
                         alt="SARI"
-                        class="h-auto w-[145px] object-contain brightness-0 min-[380px]:w-[155px] sm:w-[175px] lg:w-[195px] xl:w-[205px]"
+                        class="h-auto object-contain brightness-0"
                     >
 
-                    <span class="mt-2 text-center text-[8px] font-semibold uppercase tracking-[0.22em] text-[#9a9185] min-[380px]:text-[9px] sm:tracking-[0.24em] lg:text-[10px]">
+                    <span class="sari-login-tagline text-center font-semibold uppercase tracking-[0.22em] text-[#9a9185] sm:tracking-[0.24em]">
                         Elevated Everyday
                     </span>
                 </a>
 
                 <div
-                    class="sari-login-card w-full max-w-[560px] rounded-[18px] border border-[#e7e0d7] bg-white p-5 shadow-[0_16px_44px_rgba(39,31,21,.08)] min-[380px]:p-6 sm:p-8 lg:p-9 xl:p-10"
+                    class="sari-login-card rounded-[18px] border border-[#e7e0d7] bg-white shadow-[0_16px_44px_rgba(39,31,21,.08)]"
                 >
 
                 {{-- HEADER --}}
-                <div class="mb-6 text-center sm:mb-7 lg:mb-8">
-                    <span class="mb-2 block text-[8px] font-bold uppercase tracking-[0.14em] text-[#a96f06] min-[380px]:text-[9px] sm:mb-2.5 lg:text-[10px]">
+                <div class="sari-login-header text-center">
+                    <span class="mb-1.5 block text-[8px] font-bold uppercase tracking-[0.14em] text-[#a96f06] min-[380px]:text-[8.5px] sm:mb-2 lg:text-[9px]">
                         Welcome back
                     </span>
 
-                    <h1 class="text-[25px] font-bold leading-[1.15] tracking-[-0.035em] text-[#1f1b16] min-[380px]:text-[28px] sm:text-[32px] lg:text-[34px]">
+                    <h1 class="sari-login-title font-bold leading-[1.15] tracking-[-0.035em] text-[#1f1b16]">
                         Sign in to SARI
                     </h1>
 
-                    <p class="mx-auto mt-2.5 max-w-[410px] text-[11px] leading-5 text-[#81786c] min-[380px]:text-[12px] sm:mt-3 sm:text-[13px] sm:leading-6">
+                    <p class="sari-login-description mx-auto max-w-[390px] text-[#81786c]">
                         Access your account to continue shopping, selling, or managing deliveries.
                     </p>
                 </div>
@@ -193,7 +425,7 @@
                 <form
                     method="POST"
                     action="{{ route('login.submit') }}"
-                    class="space-y-5 sm:space-y-6"
+                    class="sari-login-form"
                 >
                     @csrf
 
@@ -201,7 +433,7 @@
                     <div>
                         <label
                             for="email"
-                            class="mb-2 block text-[13px] font-semibold text-[#312b22] sm:mb-2.5 sm:text-[14px]"
+                            class="sari-field-label block"
                         >
                             Email Address
                         </label>
@@ -232,7 +464,7 @@
                                 autocomplete="email"
                                 autofocus
                                 required
-                                class="sari-login-input h-[52px] w-full rounded-xl border border-[#e4ddd3] bg-white pl-11 pr-4 text-[14px] text-[#17140e] outline-none placeholder:text-[#aaa196] focus:border-[#d48f08] focus:ring-4 focus:ring-[#d48f08]/10 sm:h-[56px] sm:pl-12 sm:text-[15px]"
+                                class="sari-login-input sari-login-control w-full rounded-xl border border-[#e4ddd3] bg-white pl-11 pr-4 text-[#17140e] outline-none placeholder:text-[#aaa196] focus:border-[#d48f08] focus:ring-4 focus:ring-[#d48f08]/10 sm:pl-12"
                             >
                         </div>
 
@@ -247,7 +479,7 @@
                     <div>
                         <label
                             for="password"
-                            class="mb-2 block text-[13px] font-semibold text-[#312b22] sm:mb-2.5 sm:text-[14px]"
+                            class="sari-field-label block"
                         >
                             Password
                         </label>
@@ -276,7 +508,7 @@
                                 placeholder="Enter your password"
                                 autocomplete="current-password"
                                 required
-                                class="sari-login-input h-[52px] w-full rounded-xl border border-[#e4ddd3] bg-white pl-11 pr-11 text-[14px] text-[#17140e] outline-none placeholder:text-[#aaa196] focus:border-[#d48f08] focus:ring-4 focus:ring-[#d48f08]/10 sm:h-[56px] sm:pl-12 sm:pr-12 sm:text-[15px]"
+                                class="sari-login-input sari-login-control w-full rounded-xl border border-[#e4ddd3] bg-white pl-11 pr-11 text-[#17140e] outline-none placeholder:text-[#aaa196] focus:border-[#d48f08] focus:ring-4 focus:ring-[#d48f08]/10 sm:pl-12 sm:pr-12"
                             >
 
                             <button
@@ -321,19 +553,31 @@
                     </div>
 
                     {{-- OPTIONS --}}
-                    <div class="flex flex-col gap-3 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
-                        <label class="inline-flex cursor-pointer items-center gap-2.5 text-[12px] text-[#6f6658] sm:text-[13px]">
+                    <div class="sari-login-lower-start flex flex-col gap-3 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
+                        <label class="inline-flex cursor-pointer select-none items-center gap-2">
                             <input
                                 type="checkbox"
                                 name="remember"
-                                class="h-4 w-4 shrink-0 rounded border-[#d8d1c8] accent-[#d48f08]"
+                                value="1"
+                                class="peer sr-only"
                             >
-                            <span>Remember me</span>
+                            <span class="sari-remember-box" aria-hidden="true">
+                                <svg viewBox="0 0 12 12" fill="none">
+                                    <path
+                                        d="M2.2 6.1 4.7 8.5 9.8 3.5"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span class="sari-option-text">Remember me</span>
                         </label>
 
                         <a
                             href="{{ route('password.request') }}"
-                            class="text-[12px] font-semibold text-[#a56c08] transition hover:text-[#7f5104] sm:text-[13px]"
+                            class="sari-forgot-link transition"
                         >
                             Forgot password?
                         </a>
@@ -343,11 +587,11 @@
                     <button
                         type="submit"
                         aria-label="Login to SARI"
-                        class="sari-login-button flex h-[52px] w-full items-center justify-center gap-2 rounded-xl border border-[#d48f08] bg-[#d48f08] px-5 text-[13px] font-bold text-white shadow-[0_7px_18px_rgba(212,143,8,.14)] sm:h-[56px] sm:text-[14px]"
+                        class="sari-login-button sari-login-control flex w-full items-center justify-center gap-2 rounded-xl border border-[#d48f08] bg-[#d48f08] px-4 text-white shadow-[0_7px_18px_rgba(212,143,8,.14)]"
                     >
                         <span>Sign In</span>
 
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path d="M5 12h14"></path>
                             <path d="m14 7 5 5-5 5"></path>
                         </svg>
@@ -355,12 +599,12 @@
                 </form>
 
                 {{-- DIVIDER --}}
-                <div class="my-5 flex items-center gap-3 sm:my-6 sm:gap-4 lg:my-7">
-                    <span class="h-px flex-1 bg-[#e9e3da]"></span>
-                    <span class="whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.10em] text-[#9b9287] min-[380px]:text-[10px] sm:text-[11px] sm:tracking-[0.13em]">
+                <div class="sari-login-divider flex items-center gap-3 sm:gap-4">
+                    <span class="h-px flex-1 bg-[#eee8df]"></span>
+                    <span class="sari-divider-label whitespace-nowrap uppercase text-[#9b9287]">
                         or continue with
                     </span>
-                    <span class="h-px flex-1 bg-[#e9e3da]"></span>
+                    <span class="h-px flex-1 bg-[#eee8df]"></span>
                 </div>
 
                 {{-- SOCIAL --}}
@@ -369,12 +613,12 @@
                     {{-- GOOGLE --}}
                     <a
                         href="{{ route('oauth.redirect', ['provider' => 'google']) }}"
-                        class="sari-login-social flex h-[48px] items-center justify-center gap-2.5 rounded-xl border border-[#e4ddd3] bg-white text-[14px] font-semibold text-[#28241e] hover:border-[#d8bd89] hover:bg-[#fffaf1] sm:h-[54px] sm:text-[15px]"
+                        class="sari-login-social sari-login-social-control flex items-center justify-center gap-2 rounded-lg border border-[#e4ddd3] bg-transparent text-[#28241e] hover:border-[#d8cdb9] hover:bg-[#fffaf1]/70"
                         aria-label="Continue with Google"
                     >
                         <svg
                             viewBox="0 0 24 24"
-                            class="h-[20px] w-[20px] shrink-0 sm:h-[22px] sm:w-[22px]"
+                            class="h-[17px] w-[17px] shrink-0 sm:h-[18px] sm:w-[18px]"
                             aria-hidden="true"
                         >
                             <path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.07H12v3.92h5.38a4.6 4.6 0 0 1-2 3.02v2.51h3.23c1.89-1.74 2.99-4.31 2.99-7.38Z"/>
@@ -386,16 +630,15 @@
                         Continue with Google
                     </a>
 
-
                 </div>
 
                 {{-- SIGNUP --}}
-                <div class="mt-6 text-center text-[12px] leading-6 text-[#6f6658] sm:mt-7 sm:text-[13px] lg:mt-8">
+                <div class="sari-login-signup sari-signup-copy text-center text-[#6f6658]">
                     <span>Don't have an account?</span>
 
                     <a
                         href="{{ route('register') }}"
-                        class="ml-1 font-bold text-[#a96f06] transition hover:text-[#7f5104]"
+                        class="ml-1 text-[#a96f06] transition hover:text-[#7f5104]"
                     >
                         Create one
                     </a>
@@ -406,15 +649,26 @@
         </div>
 
         {{-- FOOTER --}}
-        <footer class="flex flex-col items-center justify-between gap-3 border-t border-[#e4ddd3] pt-5 text-center text-[13px] leading-6 text-[#756b5b] sm:flex-row sm:pt-6 sm:text-left sm:text-[14px] lg:text-[15px]">
-            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 sm:justify-start sm:gap-x-5">
-                <a href="#" class="font-medium transition hover:text-[#a96f06]">Privacy Policy</a>
-                <a href="#" class="font-medium transition hover:text-[#a96f06]">Terms of Service</a>
-            </div>
+        <footer class="sari-login-footer flex justify-start border-t border-[#e4ddd3] text-left text-[#756b5b]">
+            <div class="flex flex-wrap items-center justify-start gap-x-4 gap-y-1">
+                <span>
+                    © {{ date('Y') }} SARI. All rights reserved.
+                </span>
 
-            <span>
-                © {{ date('Y') }} SARI. All rights reserved.
-            </span>
+                <a
+                    href="#"
+                    class="font-medium transition hover:text-[#a96f06]"
+                >
+                    Privacy Policy
+                </a>
+
+                <a
+                    href="#"
+                    class="font-medium transition hover:text-[#a96f06]"
+                >
+                    Terms of Service
+                </a>
+            </div>
         </footer>
 
     </div>
@@ -444,25 +698,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-
-
-<style>
-/* Exact logo/card alignment */
-.sari-login-brand {
-    text-align: center;
-}
-
-.sari-login-brand img {
-    transform: none !important;
-    margin-inline: auto;
-}
-
-/* Keep the card comfortably sized on wide screens */
-@media (min-width: 1536px) {
-    .sari-login-card {
-        max-width: 560px;
-    }
-}
-</style>
 
 @endsection

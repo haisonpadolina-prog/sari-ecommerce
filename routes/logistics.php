@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | PUBLIC RIDER → LOGISTICS APPLICATION FLOW
 |--------------------------------------------------------------------------
-| Rider registration is intentionally separate from the standard account
-| wizard. A Rider first chooses an active Logistics provider, then submits
-| an application directly to that provider.
 */
 Route::get('/register/rider', [RiderRegistrationController::class, 'index'])
     ->name('rider.logistics.index');
@@ -30,6 +27,16 @@ Route::get('/register/rider', [RiderRegistrationController::class, 'index'])
 Route::get('/register/rider/{logistics}', [RiderRegistrationController::class, 'create'])
     ->whereNumber('logistics')
     ->name('rider.logistics.apply');
+
+Route::post('/register/rider/{logistics}/email/send', [RiderRegistrationController::class, 'sendEmailCode'])
+    ->whereNumber('logistics')
+    ->middleware('throttle:8,1')
+    ->name('rider.logistics.email.send');
+
+Route::post('/register/rider/{logistics}/email/verify', [RiderRegistrationController::class, 'verifyEmailCode'])
+    ->whereNumber('logistics')
+    ->middleware('throttle:12,1')
+    ->name('rider.logistics.email.verify');
 
 Route::post('/register/rider/{logistics}', [RiderRegistrationController::class, 'store'])
     ->whereNumber('logistics')
@@ -49,6 +56,7 @@ Route::prefix('logistics')
 
         Route::get('/rider-management', [LogisticsRiderManagementController::class, 'index'])->name('rider-management');
         Route::get('/pickup-requests', [LogisticsPickupRequestController::class, 'index'])->name('pickup-requests');
+        Route::post('/pickup-requests/{order}/verify', [LogisticsPickupRequestController::class, 'verify'])->name('pickup-requests.verify');
 
         Route::get('/incoming-parcels', [LogisticsIncomingParcelController::class, 'index'])->name('incoming-parcels');
         Route::post('/incoming-parcels/{order}/receive', [LogisticsIncomingParcelController::class, 'receive'])->name('incoming-parcels.receive');

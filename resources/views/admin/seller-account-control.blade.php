@@ -6,2099 +6,392 @@
 @section('content')
 
 <style>
-    .seller-account-control-page {
-        --sac-xs: clamp(0.74rem, 0.70rem + 0.08vw, 0.82rem);
-        --sac-sm: clamp(0.80rem, 0.75rem + 0.10vw, 0.90rem);
-        --sac-md: clamp(0.88rem, 0.82rem + 0.14vw, 0.98rem);
-        --sac-lg: clamp(1rem, 0.93rem + 0.18vw, 1.14rem);
-        --sac-title: clamp(1.45rem, 1.28rem + 0.38vw, 1.85rem);
+/* SARI Seller Account Control — consolidated enterprise UI */
+.seller-account-control-page{
+    --sac-xs:8px;--sac-sm:9px;--sac-md:10px;--sac-lg:12px;
+    --sac-gold:#d99500;--sac-gold-dark:#bd8205;--sac-ink:#26211c;
+    --sac-text:#514a42;--sac-muted:#8d8479;--sac-line:#e8e1d8;--sac-soft:#faf9f6;
+    width:100%;max-width:1640px!important;margin-inline:auto;padding-bottom:20px;
+    color:var(--sac-ink);font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+.seller-account-control-page *,.seller-account-control-page *::before,.seller-account-control-page *::after{box-sizing:border-box}
+.seller-account-control-page button,.seller-account-control-page a,.seller-account-control-page input,
+.seller-account-control-page select,.seller-account-control-page textarea{
+    transition:color .15s ease,background-color .15s ease,border-color .15s ease,opacity .15s ease,transform .15s ease;
+}
+
+/* Header */
+.sac-page-header{margin-bottom:12px!important;gap:12px!important;padding:0!important}
+.sac-page-header-main{display:flex;min-width:0;align-items:center;gap:10px!important}
+.sac-page-header-icon{display:grid;width:36px!important;height:36px!important;flex:0 0 36px!important;place-items:center;
+    border:1px solid #eadfc9!important;border-radius:10px!important;background:#fff8eb!important;color:#b77c18!important;
+    box-shadow:0 4px 12px rgba(75,54,25,.045)!important}
+.sac-page-header-icon svg{width:15px!important;height:15px!important}
+.sac-page-eyebrow{margin:0!important;color:#9a7b43!important;font-size:7px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:.13em!important;text-transform:uppercase!important}
+.sac-page-heading{margin:3px 0 0!important;font-size:clamp(22px,1.55vw,27px)!important;font-weight:700!important;line-height:1.08!important;letter-spacing:-.035em!important}
+.sac-page-heading-base{color:#17130f!important}.sac-page-heading-accent{color:var(--sac-gold)!important}
+.sac-page-header-copy{max-width:800px!important;margin:5px 0 0!important;color:#81786c!important;font-size:9.5px!important;font-weight:400!important;line-height:1.55!important}
+.sac-header-back{min-height:34px!important;border:0!important;border-radius:9px!important;padding-inline:12px!important;background:var(--sac-gold)!important;color:#fff!important;font-size:8.5px!important;font-weight:600!important;box-shadow:0 5px 14px rgba(217,149,0,.13)!important}
+.sac-header-back:hover{background:var(--sac-gold-dark)!important;transform:translateY(-1px)}
+
+/* Flash */
+.seller-account-control-page>.mb-5{margin-bottom:10px!important;border-radius:12px!important;padding:9px 11px!important;box-shadow:none!important}
+.seller-account-control-page>.mb-5>span{width:30px!important;height:30px!important;border-radius:8px!important}
+.seller-account-control-page>.mb-5 p:first-child{font-size:9px!important}
+.seller-account-control-page>.mb-5 p:last-child{margin-top:2px!important;font-size:8px!important;line-height:1.45!important}
+
+/* KPI */
+.seller-account-control-page>section.grid{gap:9px!important}
+.account-control-summary-card{min-height:76px!important;border:1px solid var(--sac-line)!important;border-radius:13px!important;background:#fff!important;padding:11px 50px 11px 13px!important;box-shadow:0 6px 18px rgba(61,43,22,.045)!important;contain:paint}
+.account-control-summary-card:hover{border-color:#ddcfbb!important;transform:translateY(-1px);box-shadow:0 8px 22px rgba(61,43,22,.06)!important}
+.account-control-summary-card>div{min-height:52px!important;align-items:center!important}
+.sac-summary-label{color:#8e857a!important;font-size:8px!important;font-weight:500!important;line-height:1.3!important}
+.sac-summary-value{margin-top:4px!important;color:#28221b!important;font-size:19px!important;font-weight:700!important;line-height:1!important;letter-spacing:-.035em!important}
+.account-control-summary-card>div>div:last-child{right:12px!important;top:12px!important;width:32px!important;height:32px!important;border-radius:9px!important;box-shadow:none!important}
+.account-control-summary-card>div>div:last-child svg{width:14px!important;height:14px!important}
+
+/* Filters */
+.sac-filter-surface{position:relative;z-index:20;margin-top:11px!important;padding:9px!important;overflow:visible;border:1px solid var(--sac-line)!important;border-radius:14px!important;background:#fff!important;box-shadow:0 6px 20px rgba(61,43,22,.045)!important}
+.sac-filter-grid{display:grid;grid-template-columns:minmax(320px,1fr) 180px 110px 72px;gap:8px!important;align-items:center}
+.sac-filter-search,.sac-filter-select-wrap{position:relative;min-width:0}
+.sac-filter-search>svg{position:absolute;z-index:2;top:50%;left:12px;width:14px!important;height:14px!important;pointer-events:none;color:#9b9287;transform:translateY(-50%)}
+.sac-filter-input,.sac-filter-select{width:100%!important;min-height:38px!important;height:38px!important;border:1px solid #e5ddd2!important;border-radius:9px!important;background:#fff!important;color:#3d3730!important;font-family:'Poppins',sans-serif!important;font-size:9px!important;line-height:1!important;box-shadow:none!important}
+.sac-filter-input{padding:0 10px 0 36px!important;font-weight:400!important}
+.sac-filter-select{appearance:none;padding:0 34px 0 31px!important;cursor:pointer;font-weight:500!important}
+.sac-filter-input::placeholder{color:#a59c91!important;opacity:1}
+.sac-filter-input:hover,.sac-filter-select:hover{border-color:#d4c5b4!important}
+.sac-filter-input:focus,.sac-filter-select:focus{outline:none!important;border-color:#d49a2b!important;box-shadow:0 0 0 3px rgba(217,149,0,.075)!important}
+.sac-filter-status-dot{position:absolute;z-index:2;top:50%;left:12px;width:6px;height:6px;pointer-events:none;border-radius:999px;background:var(--sac-gold);transform:translateY(-50%)}
+.sac-filter-select-chevron{position:absolute;z-index:2;top:50%;right:11px;width:12px!important;height:12px!important;pointer-events:none;color:#8b8175;transform:translateY(-50%)}
+.sac-filter-apply,.sac-filter-reset{
+    display:inline-flex!important;
+    width:100%;
+    min-height:38px!important;
+    height:38px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    border-radius:9px!important;
+    padding:0 10px!important;
+    font-family:'Poppins',sans-serif!important;
+    font-size:8.2px!important;
+    font-weight:600!important;
+    line-height:1!important;
+    white-space:nowrap;
+}
+.sac-filter-apply{
+    border:1px solid #d99500!important;
+    background:#d99500!important;
+    color:#fff!important;
+    box-shadow:0 4px 10px rgba(217,149,0,.11)!important;
+}
+.sac-filter-apply:hover,
+.sac-filter-apply:focus-visible{
+    outline:none!important;
+    border-color:#bd8205!important;
+    background:#bd8205!important;
+    color:#fff!important;
+    transform:translateY(-1px);
+    box-shadow:0 5px 12px rgba(217,149,0,.14)!important;
+}
+.sac-filter-apply svg{
+    width:12px!important;
+    height:12px!important;
+    flex:0 0 12px!important;
+    stroke:currentColor!important;
+}
+.sac-filter-reset{
+    border:1px solid #e5ddd2!important;
+    background:#fff!important;
+    color:#6f665b!important;
+    box-shadow:none!important;
+}
+.sac-filter-reset:hover,
+.sac-filter-reset:focus-visible{
+    outline:none!important;
+    border-color:#d4c5b4!important;
+    background:#faf8f4!important;
+    color:#514940!important;
+}
+
+/* Workspace */
+.account-control-workspace{margin-top:10px!important;overflow:hidden!important;border:1px solid var(--sac-line)!important;border-radius:14px!important;background:#fff!important;box-shadow:0 6px 20px rgba(61,43,22,.045)!important}
+.sac-workspace-topbar{display:flex;min-height:52px;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px!important;border-bottom:1px solid #eee8df!important;background:#fff!important}
+.sac-workspace-title{color:#302a24!important;font-size:10.5px!important;font-weight:700!important;line-height:1.3!important}
+.sac-workspace-copy,.sac-result-copy{margin-top:2px!important;color:#91887d!important;font-size:7.5px!important;font-weight:400!important;line-height:1.45!important}
+.account-control-workspace>.hidden.border-b{min-height:40px;align-items:center;padding:9px 14px!important;background:#faf9f6!important}
+.sac-column-label{color:#81786d!important;font-size:8px!important;font-weight:700!important;line-height:1.3!important;letter-spacing:.055em!important;text-transform:uppercase!important}
+#sellerAccountList{padding:0!important;background:#fff!important}
+.account-control-row{margin:0!important;border:0!important;border-bottom:1px solid #f0ebe4!important;border-radius:0!important;background:#fff!important;box-shadow:none!important;transform:none!important;content-visibility:auto;contain-intrinsic-size:62px}
+.account-control-row:last-of-type{border-bottom:0!important}
+.account-control-row:hover{background:#fdfbf8!important;box-shadow:none!important;transform:none!important}
+@media(min-width:1280px){
+ .account-control-row-grid{display:grid!important;grid-template-columns:minmax(285px,1.85fr) 130px 110px 125px 145px 60px!important;align-items:center!important;column-gap:12px!important}
+ .account-control-workspace>.hidden.border-b{grid-template-columns:minmax(285px,1.85fr) 130px 110px 125px 145px 60px!important;gap:12px!important}
+ .account-control-row-grid>div{min-height:60px!important}
+}
+.account-control-row-grid>div{padding-top:9px!important;padding-bottom:9px!important}
+.account-control-row-grid>div:first-child{padding-left:14px!important}.account-control-row-grid>div:last-child{padding-right:14px!important}
+.account-control-row .sac-modern-avatar{width:32px!important;height:32px!important;flex:0 0 32px!important;border:0!important;border-radius:50%!important;background:#f3f1ed!important;color:#655d55!important;font-size:8px!important;font-weight:700!important;box-shadow:none!important}
+.sac-seller-name{color:#2e2924!important;font-size:9px!important;font-weight:700!important;line-height:1.3!important}
+.sac-muted{color:#978e83!important;font-size:7.2px!important;font-weight:400!important;line-height:1.4!important}
+.sac-badge{padding:4px 7px!important;border-radius:999px!important;font-size:7.5px!important;font-weight:600!important;line-height:1!important}
+.sac-data-value{color:#514a42!important;font-size:8px!important;font-weight:500!important;line-height:1.4!important}
+[data-seller-control-open]{display:inline-grid!important;width:28px!important;min-width:28px!important;height:28px!important;min-height:28px!important;place-items:center!important;padding:0!important;border:0!important;border-radius:7px!important;background:transparent!important;color:#4d4842!important;box-shadow:none!important}
+[data-seller-control-open] svg{width:14px!important;height:14px!important}
+[data-seller-control-open]:hover,[data-seller-control-open]:focus-visible{outline:none!important;background:#fff7e8!important;color:var(--sac-gold)!important;transform:translateY(-1px)}
+#sellerAccountFilterEmpty{border-top:1px solid #eee8df;padding:14px!important}
+#sellerAccountFilterEmpty>div{border-radius:11px!important;padding:28px 16px!important}
+#sellerAccountEmptyClear{margin-top:10px!important;border-radius:8px!important;padding:8px 11px!important;font-size:8px!important;font-weight:600!important}
+
+/* Seller modal: only one live DOM instance at a time */
+[data-seller-control-modal][hidden]{display:none!important}
+[data-seller-control-modal]{background:rgba(28,24,20,.44)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:12px!important}
+@keyframes sacModalIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+[data-seller-control-modal]:not([hidden]) .sac-modern-modal{animation:sacModalIn .18s cubic-bezier(.22,1,.36,1) both}
+.sac-modern-modal{width:min(720px,calc(100vw - 24px))!important;max-width:720px!important;max-height:min(88vh,760px)!important;overflow:hidden!important;border:1px solid #dfd8cf!important;border-radius:16px!important;background:#fff!important;box-shadow:0 24px 64px rgba(31,24,17,.18),0 8px 22px rgba(31,24,17,.07)!important}
+.sac-modern-modal::before{display:none!important;content:none!important}
+.sac-modern-modal-header{min-height:58px;align-items:center!important;gap:12px!important;padding:10px 14px!important;border-bottom:1px solid #ebe5dd!important;background:#fff!important;box-shadow:none!important}
+.sac-modern-modal-header>div:first-child>div:first-child{display:none!important}
+.sac-modern-modal-header>div:first-child{gap:0!important}
+.sac-modern-modal-header>div:first-child>div:last-child>p:first-child{margin:0 0 3px!important;color:#9a7b43!important;font-size:6.5px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:.11em!important;text-transform:uppercase}
+.sac-modern-modal-title{color:#25221e!important;font-size:14px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:-.025em!important}
+.sac-modern-modal-header .sac-muted{margin-top:4px!important;font-size:7.5px!important}
+.sac-modern-modal-header .sac-badge{padding:4px 7px!important;font-size:6.5px!important}
+.sac-modern-modal-close{width:30px!important;height:30px!important;min-height:30px!important;border:1px solid #e4ddd4!important;border-radius:8px!important;background:#fff!important;color:#71685f!important;box-shadow:none!important}
+.sac-modern-modal-close:hover{background:#f7f5f2!important;color:#332d27!important;transform:none!important}
+.sac-modern-modal-body{min-height:0;padding:12px 14px 14px!important;background:#f8f7f4!important;scrollbar-width:thin;scrollbar-color:#d0c8be transparent}
+.sac-modern-modal-body>.mb-3{margin-bottom:7px!important}.sac-modern-modal-body>.mb-3 h4{color:#39332d!important;font-size:10.5px!important;font-weight:700!important}
+.sac-modern-modal-body>.mb-3 p{margin-top:3px!important;color:#91887d!important;font-size:7.5px!important;line-height:1.45!important}
+.sac-modern-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;padding:0!important;border:0!important}
+.sac-modern-kpi{min-height:54px!important;padding:8px 9px!important;border:1px solid #e5ded5!important;border-radius:9px!important;background:#fff!important;box-shadow:none!important}
+.sac-modern-kpi::before,.sac-modern-kpi::after{display:none!important;content:none!important}
+.sac-modern-kpi:last-child{grid-column:auto!important}
+.sac-modern-kpi-label{display:block;margin:0!important;color:#91887d!important;font-size:6.5px!important;font-weight:500!important;line-height:1.3!important}
+.sac-modern-kpi-value{display:block!important;min-height:0!important;margin-top:4px!important;padding:0!important;border:0!important;background:transparent!important;color:#35302b!important;font-size:9px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:0!important;box-shadow:none!important}
+.sac-modern-kpi-value.is-warning{color:#a27635!important}.sac-modern-kpi-value.is-danger{color:#a65d5d!important}
+
+/* Violations */
+.sac-violations{margin-top:9px!important;overflow:hidden;border:1px solid #e4ddd4!important;border-radius:10px!important;background:#fff!important;box-shadow:none!important}
+.sac-violations[open]{box-shadow:none!important}
+.sac-violations>summary{display:flex;min-height:44px!important;cursor:pointer;list-style:none;align-items:center;justify-content:space-between;gap:10px!important;padding:8px 10px!important;background:#fff!important;outline:none}
+.sac-violations>summary::-webkit-details-marker{display:none}
+.sac-violations>summary:hover,.sac-violations[open]>summary{background:#faf9f7!important}
+.sac-violation-icon{display:grid;width:28px!important;height:28px!important;flex:0 0 28px!important;place-items:center;border:0!important;border-radius:8px!important;background:#fff8e9!important;color:#ad741b!important;box-shadow:none!important}
+.sac-violation-icon svg{width:13px!important;height:13px!important}
+.sac-violation-summary-title{color:#39393d!important;font-size:7.5px!important;font-weight:700!important}
+.sac-violation-summary-copy{margin-top:2px!important;color:#8c8380!important;font-size:6.5px!important;line-height:1.4!important}
+.sac-violation-count{display:inline-flex;min-height:22px!important;align-items:center;justify-content:center;border:1px solid #e2e2e5!important;border-radius:999px;background:#f7f7f8!important;padding:0 7px!important;color:#69696f!important;font-size:6.3px!important;font-weight:600!important;box-shadow:none!important;white-space:nowrap}
+.sac-violation-chevron{width:13px!important;height:13px!important;color:#958b80;transition:transform .15s ease}
+.sac-violations[open] .sac-violation-chevron{transform:rotate(180deg)}
+.sac-violation-list{border-top:1px solid #eee7de!important;background:#fff}
+.sac-violation-row{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:9px!important;align-items:start;padding:9px 10px!important;content-visibility:auto;contain-intrinsic-size:48px}
+.sac-violation-row+.sac-violation-row{border-top:1px solid #f0ebe4}
+.sac-violation-number{display:inline-flex;min-height:24px!important;align-items:center;justify-content:center;border:1px solid #ecd9bd;border-radius:7px!important;background:#fff8eb;color:#9d6c21;font-size:6.3px!important;font-weight:700}
+.sac-violation-reason{color:#494139;font-size:7px!important;font-weight:600;line-height:1.4}
+.sac-violation-product,.sac-violation-date{color:#998f84;font-size:6.3px!important;line-height:1.4}.sac-violation-product{margin-top:2px}
+.sac-violation-date{padding-top:1px;text-align:right;white-space:nowrap}
+.sac-violation-empty{padding:12px 10px!important;color:#91877c;font-size:7px!important;line-height:1.5;text-align:center}
+
+/* Status + actions */
+.sac-modern-status-reason{margin-top:9px!important;padding:9px 10px!important;border-radius:9px!important;box-shadow:none!important}
+.sac-modern-status-reason p:first-child{font-size:7px!important}.sac-modern-status-reason p:last-child{margin-top:3px!important;font-size:7px!important;line-height:1.45!important}
+.sac-modern-actions{margin-top:10px!important;padding:10px 0 0!important;border:0!important;border-top:1px solid #e6e0d9!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.sac-modern-actions-head{margin-bottom:7px!important}.sac-modern-actions-title{color:#39332d!important;font-size:8px!important;font-weight:700!important}
+.sac-modern-actions-copy{margin-top:2px!important;color:#91887d!important;font-size:6.5px!important;line-height:1.4!important}
+.sac-modern-actions-grid{display:grid!important;gap:7px!important;margin-top:0!important;align-items:stretch}
+.sac-modern-actions-grid.is-three{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sac-modern-actions-grid.is-two{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sac-modern-actions-grid.is-one{grid-template-columns:minmax(0,1fr)!important}
+.sac-modern-actions-grid>form,.sac-modern-actions-grid>button{display:flex;width:100%;min-width:0;margin:0!important}
+.sac-modern-action{display:inline-flex!important;width:100%!important;min-width:0!important;height:35px!important;min-height:35px!important;align-items:center!important;justify-content:center!important;gap:6px!important;padding:0 9px!important;border-radius:8px!important;background:#fff!important;color:#3f3933!important;font-size:7.2px!important;font-weight:600!important;line-height:1.2!important;white-space:nowrap;box-shadow:none!important}
+.sac-modern-action svg{width:13px!important;height:13px!important;flex:0 0 13px}
+.sac-modern-action:hover,.sac-modern-action:focus-visible{outline:none;transform:translateY(-1px);box-shadow:none!important}
+.sac-modern-action.is-suspend{border-color:#ead8b6!important;background:#fffaf0!important;color:#96691f!important}.sac-modern-action.is-suspend:hover{border-color:#dfc38e!important;background:#fff4e0!important}
+.sac-modern-action.is-ban{border-color:#ebcccc!important;background:#fff7f7!important;color:#a45d5d!important}.sac-modern-action.is-ban:hover{border-color:#dfb7b7!important;background:#fff0f0!important}
+.sac-modern-action.is-deactivate{border-color:#e2dbd2!important;background:#f8f6f3!important;color:#655d54!important}.sac-modern-action.is-deactivate:hover{border-color:#d4c8bc!important;background:#f2efea!important}
+.sac-modern-action.is-positive{border-color:#cfe1d5!important;background:#f2f8f4!important;color:#5f836b!important}.sac-modern-action.is-positive:hover{background:#eaf5ed!important}
+.sac-modern-note{margin-top:9px!important;padding:8px 0 0!important;border:0!important;border-top:1px solid #e6e0d9!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.sac-modern-note svg{width:13px!important;height:13px!important;color:#8d857c!important}.sac-modern-note p{color:#7d756d!important;font-size:6.5px!important;line-height:1.45!important}
+
+/* Confirmation modal */
+#sellerAccountActionModal{background:rgba(28,24,20,.44)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#sellerAccountActionModal>div{width:min(460px,calc(100vw - 24px))!important;max-width:460px!important;border:1px solid #e4d9d5!important;border-radius:14px!important;padding:16px!important;background:#fff!important;box-shadow:0 22px 56px rgba(31,24,17,.17),0 7px 20px rgba(31,24,17,.06)!important}
+#sellerAccountActionModal h3{font-size:14px!important}#sellerAccountActionModal label{font-size:8px!important}
+.account-control-input{color:#332e28!important;-webkit-text-fill-color:#332e28!important;background:#fff!important;font-family:'Poppins',sans-serif!important;font-size:9px!important;box-shadow:none!important}
+.account-control-input::placeholder{color:#aaa196!important;-webkit-text-fill-color:#aaa196!important}
+.account-control-input:focus{outline:none;border-color:#c99128!important;box-shadow:0 0 0 3px rgba(201,145,40,.075)!important}
+#sellerAccountActionModal textarea.account-control-input{min-height:82px!important;border-radius:9px!important;padding:10px!important}
+#sellerDeleteConfirmInput{height:38px!important;min-height:38px!important;border-radius:9px!important}
+#sellerAccountActionCancel,#sellerAccountActionSubmit,#sellerAccountActionClose{min-height:35px!important;border-radius:8px!important;font-size:8px!important;box-shadow:none!important}
+
+/* Responsive */
+@media(max-height:850px) and (min-width:900px){
+ .sac-page-heading{font-size:22px!important}.account-control-summary-card{min-height:70px!important;padding-top:9px!important;padding-bottom:9px!important}
+ .sac-summary-value{font-size:18px!important}.sac-modern-modal{max-height:calc(100vh - 24px)!important}.sac-modern-modal-body{padding-top:10px!important}
+}
+@media(max-width:1023px){
+ .sac-filter-grid{grid-template-columns:minmax(0,1fr) 170px}.sac-filter-search{grid-column:1/-1}.sac-filter-apply,.sac-filter-reset{width:100%}
+}
+@media(max-width:1279px){
+ #sellerAccountList{padding:10px!important}.account-control-row{margin-bottom:9px!important;overflow:hidden;border:1px solid var(--sac-line)!important;border-radius:11px!important}
+ .account-control-row:last-of-type{margin-bottom:0!important}.account-control-row-grid>div:first-child{padding-left:12px!important}.account-control-row-grid>div:last-child{padding-right:12px!important}
+}
+@media(max-width:639px){
+ .seller-account-control-page{padding-bottom:14px}.sac-page-header-main{align-items:flex-start}.sac-page-header-icon{width:34px!important;height:34px!important;flex-basis:34px!important}
+ .sac-page-heading{font-size:22px!important}.sac-page-header-copy{font-size:9px!important}.sac-header-back{width:100%;min-height:40px!important;font-size:9px!important}
+ .seller-account-control-page>section.grid{grid-template-columns:1fr 1fr!important}.account-control-summary-card{min-height:74px!important}
+ .sac-filter-grid{grid-template-columns:1fr;gap:7px!important}.sac-filter-search{grid-column:auto}
+ .sac-filter-input,.sac-filter-select,.sac-filter-apply,.sac-filter-reset{min-height:42px!important;height:42px!important;font-size:9.5px!important}
+.sac-filter-apply,.sac-filter-reset{justify-content:center!important}
+ .sac-workspace-topbar{align-items:flex-start;flex-direction:column}
+ [data-seller-control-modal]{padding:7px!important}.sac-modern-modal{width:calc(100vw - 14px)!important;max-height:calc(100vh - 14px)!important;border-radius:13px!important}
+ .sac-modern-modal-header{padding:10px 11px!important}.sac-modern-modal-body{padding:9px!important}
+ .sac-modern-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sac-modern-kpi:last-child{grid-column:1/-1!important}
+ .sac-violation-row{grid-template-columns:34px minmax(0,1fr)}.sac-violation-date{grid-column:2;text-align:left;white-space:normal}
+ .sac-modern-actions-grid.is-three,.sac-modern-actions-grid.is-two,.sac-modern-actions-grid.is-one{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .seller-account-control-page *,[data-seller-control-modal],.sac-modern-modal{scroll-behavior:auto!important;animation:none!important;transition:none!important;transform:none!important}
+}
+
+    /* ============================================================
+       SELLER ACCOUNT CONTROL — HEADER SCALE MATCH
+       Matches Seller Compliance / Platform Settings / Commissions.
+       Visual-only; seller account logic remains untouched.
+       ============================================================ */
+
+    .seller-account-control-page .sac-page-header{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        gap:20px !important;
+        margin-bottom:16px !important;
+        padding:0 !important;
     }
 
-    .seller-account-control-page .account-control-surface {
-        box-shadow: 0 10px 28px rgba(45, 37, 28, .035);
+    .seller-account-control-page .sac-page-header-main{
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:13px !important;
     }
 
-    .seller-account-control-page .account-control-summary-card {
-        min-height: 104px;
-        box-shadow: 0 7px 18px rgba(45, 37, 28, .028);
-        transition:
-            transform .18s ease,
-            box-shadow .18s ease,
-            border-color .18s ease;
+    .seller-account-control-page .sac-page-header-icon{
+        width:44px !important;
+        height:44px !important;
+        flex:0 0 44px !important;
+        border-radius:12px !important;
+        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
     }
 
-    .seller-account-control-page .account-control-summary-card:hover {
-        transform: translateY(-1px);
-        border-color: #ddd3c7;
-        box-shadow: 0 12px 28px rgba(45, 37, 28, .045);
+    .seller-account-control-page .sac-page-header-icon svg{
+        width:17px !important;
+        height:17px !important;
     }
 
-    .seller-account-control-page .account-control-workspace {
-        box-shadow: 0 12px 30px rgba(45, 37, 28, .035);
+    .seller-account-control-page .sac-page-eyebrow{
+        color:#9a6f23 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        line-height:1.15 !important;
+        letter-spacing:.13em !important;
     }
 
-    .seller-account-control-page .account-control-row {
-        box-shadow: 0 7px 18px rgba(45, 37, 28, .028);
-        transition:
-            border-color .18s ease,
-            box-shadow .18s ease,
-            background-color .18s ease;
+    .seller-account-control-page .sac-page-heading{
+        margin:5px 0 0 !important;
+        font-size:29px !important;
+        font-weight:700 !important;
+        line-height:1.02 !important;
+        letter-spacing:-.045em !important;
     }
 
-    .seller-account-control-page .account-control-row:hover {
-        border-color: #ddd4c7;
-        background: #fffdfa;
-        box-shadow: 0 11px 24px rgba(45, 37, 28, .042);
+    .seller-account-control-page .sac-page-heading-base{
+        color:#17130f !important;
     }
 
-    .seller-account-control-page .account-control-input {
-        color: #332e28 !important;
-        -webkit-text-fill-color: #332e28 !important;
-        background: #fff !important;
-        font-size: var(--sac-sm) !important;
-        transition: border-color .2s ease, box-shadow .2s ease;
+    .seller-account-control-page .sac-page-heading-accent{
+        color:#d99500 !important;
     }
 
-    .seller-account-control-page .account-control-input::placeholder {
-        color: #aaa196 !important;
-        -webkit-text-fill-color: #aaa196 !important;
+    .seller-account-control-page .sac-page-header-copy{
+        max-width:860px !important;
+        margin-top:7px !important;
+        color:#7f756a !important;
+        font-size:11px !important;
+        font-weight:400 !important;
+        line-height:1.5 !important;
     }
 
-    .seller-account-control-page .account-control-input:focus {
-        outline: none;
-        border-color: #c99128 !important;
-        box-shadow: 0 0 0 4px rgba(201, 145, 40, .08);
+    .seller-account-control-page .sac-header-back{
+        min-height:42px !important;
+        height:42px !important;
+        gap:7px !important;
+        border-radius:10px !important;
+        padding:0 13px !important;
+        font-size:8.5px !important;
+        box-shadow:0 4px 10px rgba(217,149,0,.11) !important;
     }
 
-    .seller-account-control-page .account-control-action {
-        min-height: 40px;
-        font-size: var(--sac-sm) !important;
+    .seller-account-control-page .sac-header-back svg{
+        width:13px !important;
+        height:13px !important;
     }
 
-    [data-seller-control-modal][hidden] {
-        display: none !important;
-    }
+    @media(max-height:850px) and (min-width:900px){
+        .seller-account-control-page .sac-page-header{
+            margin-bottom:14px !important;
+        }
 
-    @media (min-width: 1280px) {
-        .seller-account-control-page .account-control-row-grid {
-            display: grid;
-            grid-template-columns:
-                minmax(260px, 1.6fr)
-                130px
-                120px
-                140px
-                165px
-                92px;
-            align-items: center;
-            column-gap: 1rem;
+        .seller-account-control-page .sac-page-header-icon{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+        }
+
+        .seller-account-control-page .sac-page-heading{
+            font-size:27px !important;
+        }
+
+        .seller-account-control-page .sac-page-header-copy{
+            font-size:10.5px !important;
+        }
+
+        .seller-account-control-page .sac-header-back{
+            min-height:40px !important;
+            height:40px !important;
         }
     }
 
-    @media (max-width: 639px) {
-        .seller-account-control-page {
-            --sac-xs: .76rem;
-            --sac-sm: .82rem;
-            --sac-md: .90rem;
-            --sac-lg: 1rem;
+    @media(max-width:639px){
+        .seller-account-control-page .sac-page-header{
+            align-items:flex-start !important;
+            gap:12px !important;
         }
 
-        .seller-account-control-page .account-control-summary-card {
-            min-height: 100px;
-        }
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | LIGHTER SELLER-COMPLIANCE TYPOGRAPHY
-    |--------------------------------------------------------------------------
-    | Match the visual weight from the Seller Compliance reference:
-    | less black, less bold, softer brown/gray hierarchy.
-    */
-    .seller-account-control-page {
-        color: #4b433b;
-    }
-
-    .seller-account-control-page .sac-page-title {
-        color: #2f2923 !important;
-        font-weight: 650 !important;
-        letter-spacing: -0.025em !important;
-    }
-
-    .seller-account-control-page .sac-page-subtitle {
-        color: #8a8075 !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-account-control-page .sac-summary-label {
-        color: #8b7568 !important;
-        font-weight: 500 !important;
-    }
-
-    .seller-account-control-page .sac-summary-value {
-        color: #332c25 !important;
-        font-weight: 650 !important;
-        letter-spacing: -0.025em !important;
-    }
-
-    .seller-account-control-page .sac-workspace-title {
-        color: #3a332c !important;
-        font-weight: 650 !important;
-    }
-
-    .seller-account-control-page .sac-workspace-copy,
-    .seller-account-control-page .sac-result-copy {
-        color: #948a7f !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-account-control-page .sac-column-label {
-        color: #8f7d6d !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-seller-name {
-        color: #3a332d !important;
-        font-weight: 650 !important;
-    }
-
-    .seller-account-control-page .sac-muted {
-        color: #9a9085 !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-account-control-page .sac-badge {
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-data-value {
-        color: #514940 !important;
-        font-weight: 500 !important;
-    }
-
-    .seller-account-control-page .sac-action-button {
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-modal-title {
-        color: #3a332c !important;
-        font-weight: 650 !important;
-    }
-
-    .seller-account-control-page .sac-modal-section-title {
-        color: #514940 !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-modal-value {
-        color: #514940 !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .account-control-surface {
-        box-shadow: 0 8px 22px rgba(45, 37, 28, .025);
-    }
-
-    .seller-account-control-page .account-control-summary-card {
-        box-shadow: 0 6px 16px rgba(45, 37, 28, .022);
-    }
-
-    .seller-account-control-page .account-control-summary-card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 9px 20px rgba(45, 37, 28, .032);
-    }
-
-    .seller-account-control-page .account-control-workspace {
-        box-shadow: 0 9px 24px rgba(45, 37, 28, .025);
-    }
-
-    .seller-account-control-page .account-control-row {
-        box-shadow: none;
-    }
-
-    .seller-account-control-page .account-control-row:hover {
-        background: #fffdfa;
-        box-shadow: 0 7px 18px rgba(45, 37, 28, .028);
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | COMPACT SELLER ACCOUNT WORKSPACE
-    |--------------------------------------------------------------------------
-    | Keep the summary cards readable, but make the actual Seller Accounts
-    | workspace closer to the lighter/compact Seller Compliance reference.
-    */
-    .seller-account-control-page .account-control-workspace {
-        --sac-list-xs: clamp(.67rem, .64rem + .05vw, .72rem);
-        --sac-list-sm: clamp(.72rem, .68rem + .07vw, .78rem);
-        --sac-list-md: clamp(.78rem, .73rem + .08vw, .84rem);
-        --sac-list-title: clamp(.84rem, .79rem + .10vw, .92rem);
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-workspace-title {
-        font-size: var(--sac-list-title) !important;
-        font-weight: 600 !important;
-        color: #453d35 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-workspace-copy,
-    .seller-account-control-page .account-control-workspace .sac-result-copy {
-        font-size: var(--sac-list-xs) !important;
-        line-height: 1.45 !important;
-        color: #988e83 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .account-control-input {
-        min-height: 40px !important;
-        height: 40px !important;
-        font-size: var(--sac-list-sm) !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace select.account-control-input {
-        font-weight: 500 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-column-label {
-        font-size: var(--sac-list-xs) !important;
-        font-weight: 600 !important;
-        color: #917f70 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-seller-name {
-        font-size: var(--sac-list-md) !important;
-        font-weight: 600 !important;
-        color: #443b33 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-muted {
-        font-size: var(--sac-list-xs) !important;
-        color: #9e9489 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-badge {
-        font-size: var(--sac-list-xs) !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-data-value {
-        font-size: var(--sac-list-sm) !important;
-        font-weight: 500 !important;
-        color: #595047 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace [class*="xl:hidden"] {
-        font-size: var(--sac-list-xs) !important;
-    }
-
-    .seller-account-control-page .account-control-workspace #sellerAccountClearFilters,
-    .seller-account-control-page .account-control-workspace #sellerAccountEmptyClear {
-        font-size: var(--sac-list-xs) !important;
-        font-weight: 600 !important;
-    }
-
-    @media (min-width: 1280px) {
-        .seller-account-control-page .account-control-workspace .account-control-row-grid {
-            grid-template-columns:
-                minmax(260px, 1.65fr)
-                120px
-                115px
-                130px
-                150px
-                90px;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-account-control-page .account-control-summary-card,
-        .seller-account-control-page .account-control-row,
-        .seller-account-control-page .account-control-input {
-            transition: none !important;
-            transform: none !important;
-        }
-    }
-
-    /* =========================================================
-       SARI MASTER ADMIN HEADER — SELLER ACCOUNT CONTROL
-       Matches Seller Compliance / Approved Accounts hierarchy.
-       Header-only final override; existing workspace logic is untouched.
-       ========================================================= */
-
-    .seller-account-control-page .sac-page-header {
-        margin-bottom: 16px !important;
-        padding: 0 !important;
-    }
-
-    .seller-account-control-page .sac-page-header-main {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .seller-account-control-page .sac-page-header-icon {
-        display: grid;
-        width: 44px !important;
-        height: 44px !important;
-        flex: 0 0 44px !important;
-        place-items: center;
-        border: 1px solid #eadfc9 !important;
-        border-radius: 14px !important;
-        background: #fff8eb !important;
-        color: #b77c18 !important;
-        box-shadow:
-            0 2px 5px rgba(75,54,25,.03),
-            0 9px 20px rgba(75,54,25,.06) !important;
-    }
-
-    .seller-account-control-page .sac-page-header-icon svg {
-        width: 18px !important;
-        height: 18px !important;
-    }
-
-    .seller-account-control-page .sac-page-eyebrow {
-        margin: 0 !important;
-        color: #9a7b43 !important;
-        -webkit-text-fill-color: #9a7b43 !important;
-        font-size: 9px !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-        letter-spacing: .14em !important;
-        text-transform: uppercase !important;
-    }
-
-    .seller-account-control-page .sac-page-heading {
-        margin: 4px 0 0 !important;
-        font-size: clamp(1.75rem, 1.55rem + .5vw, 2.15rem) !important;
-        font-weight: 700 !important;
-        line-height: 1.08 !important;
-        letter-spacing: -.04em !important;
-    }
-
-    .seller-account-control-page .sac-page-heading-base {
-        color: #17130f !important;
-        -webkit-text-fill-color: #17130f !important;
-    }
-
-    .seller-account-control-page .sac-page-heading-accent {
-        color: #d99500 !important;
-        -webkit-text-fill-color: #d99500 !important;
-    }
-
-    .seller-account-control-page .sac-page-header-copy {
-        max-width: 840px !important;
-        margin: 6px 0 0 !important;
-        color: #81786c !important;
-        -webkit-text-fill-color: #81786c !important;
-        font-size: clamp(.73rem, .70rem + .08vw, .81rem) !important;
-        font-weight: 400 !important;
-        line-height: 1.65 !important;
-        letter-spacing: 0 !important;
-    }
-
-    .seller-account-control-page .sac-header-back {
-        min-height: 39px !important;
-        border-radius: 10px !important;
-        padding-inline: 16px !important;
-        font-size: clamp(.72rem, .69rem + .06vw, .78rem) !important;
-        font-weight: 600 !important;
-        border-color: #e0bd76 !important;
-        background: #d99500 !important;
-        color: #fff !important;
-        box-shadow:
-            0 3px 7px rgba(183,124,0,.09),
-            0 12px 26px rgba(217,149,0,.20) !important;
-    }
-
-    .seller-account-control-page .sac-header-back:hover {
-        transform: translateY(-1px);
-        border-color: #bd8205 !important;
-        background: #bd8205 !important;
-        box-shadow:
-            0 4px 8px rgba(183,124,0,.11),
-            0 15px 32px rgba(217,149,0,.23) !important;
-    }
-
-    @media (max-width: 767px) {
-        .seller-account-control-page .sac-page-header-main {
-            align-items: flex-start;
-            gap: 12px;
+        .seller-account-control-page .sac-page-header-main{
+            align-items:flex-start !important;
+            gap:11px !important;
         }
 
-        .seller-account-control-page .sac-page-header-icon {
-            width: 42px !important;
-            height: 42px !important;
-            flex-basis: 42px !important;
-            border-radius: 13px !important;
+        .seller-account-control-page .sac-page-header-icon{
+            width:40px !important;
+            height:40px !important;
+            flex-basis:40px !important;
+            border-radius:11px !important;
         }
 
-        .seller-account-control-page .sac-page-eyebrow {
-            font-size: 8.5px !important;
+        .seller-account-control-page .sac-page-heading{
+            font-size:24px !important;
         }
 
-        .seller-account-control-page .sac-page-heading {
-            font-size: 1.65rem !important;
+        .seller-account-control-page .sac-page-header-copy{
+            font-size:10px !important;
         }
 
-        .seller-account-control-page .sac-page-header-copy {
-            font-size: .72rem !important;
-        }
-
-        .seller-account-control-page .sac-header-back {
-            width: 100%;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER ACCOUNT MODAL — MODERN / CLEAN / VIOLATION-AWARE
-       Visual + disclosure layer only.
-       Existing moderation forms, routes, status logic, and JS are retained.
-       ========================================================= */
-
-    .seller-account-control-page [data-seller-control-modal] {
-        background: rgba(28, 24, 20, .48) !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
-
-    .seller-account-control-page .sac-modern-modal {
-        position: relative;
-        width: min(860px, calc(100vw - 32px)) !important;
-        max-width: 860px !important;
-        max-height: min(92vh, 900px) !important;
-        border: 1px solid #e5ddd2 !important;
-        border-radius: 24px !important;
-        background: #fff !important;
-        box-shadow:
-            0 12px 28px rgba(32, 25, 18, .10),
-            0 36px 86px rgba(32, 25, 18, .20),
-            0 72px 140px rgba(32, 25, 18, .10) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal::before {
-        content: "";
-        position: absolute;
-        z-index: 5;
-        top: 0;
-        left: 24px;
-        width: 64px;
-        height: 3px;
-        border-radius: 0 0 999px 999px;
-        background: #d99500;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header {
-        position: relative;
-        z-index: 2;
-        padding: 20px 22px !important;
-        border-bottom-color: #eee7de !important;
-        background: #fff !important;
-    }
-
-    .seller-account-control-page .sac-modern-avatar {
-        width: 46px !important;
-        height: 46px !important;
-        border-radius: 13px !important;
-        background: #373129 !important;
-        box-shadow:
-            0 3px 7px rgba(37,29,19,.08),
-            0 11px 24px rgba(37,29,19,.14) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-title {
-        color: #302a24 !important;
-        font-size: 1rem !important;
-        font-weight: 700 !important;
-        letter-spacing: -.025em !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-close {
-        border-radius: 11px !important;
-        background: #fff !important;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 8px 18px rgba(61,43,22,.045) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-body {
-        padding: 22px !important;
-        background: #fcfbf8 !important;
-    }
-
-    /* KPI strip — deliberately unboxed */
-    .seller-account-control-page .sac-modern-kpis {
-        display: grid !important;
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-        gap: 0 !important;
-        padding: 2px 0 18px;
-        border-bottom: 1px solid #e9e1d7;
-    }
-
-    .seller-account-control-page .sac-modern-kpi {
-        position: relative;
-        min-width: 0;
-        padding: 5px 20px !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi:first-child {
-        padding-left: 2px !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi:last-child {
-        padding-right: 2px !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi + .sac-modern-kpi::before {
-        content: "";
-        position: absolute;
-        top: 3px;
-        bottom: 3px;
-        left: 0;
-        width: 1px;
-        background: #eae2d8;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-label {
-        color: #978d82 !important;
-        font-size: .7rem !important;
-        font-weight: 500 !important;
-        line-height: 1.3 !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-value {
-        margin-top: 8px !important;
-        color: #302a24 !important;
-        font-size: 1.48rem !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        letter-spacing: -.045em !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-value.is-warning {
-        color: #9c691e !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-value.is-danger {
-        color: #a65d5d !important;
-    }
-
-    /* Violation disclosure */
-    .seller-account-control-page .sac-violations {
-        margin-top: 16px;
-        overflow: hidden;
-        border: 1px solid #e7dfd4;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.02),
-            0 10px 24px rgba(61,43,22,.035);
-    }
-
-    .seller-account-control-page .sac-violations > summary {
-        display: flex;
-        min-height: 58px;
-        cursor: pointer;
-        list-style: none;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 13px 15px;
-        outline: none;
-        transition: background-color .16s ease;
-    }
-
-    .seller-account-control-page .sac-violations > summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .seller-account-control-page .sac-violations > summary:hover,
-    .seller-account-control-page .sac-violations[open] > summary {
-        background: #fffdf9;
-    }
-
-    .seller-account-control-page .sac-violation-icon {
-        display: grid;
-        width: 34px;
-        height: 34px;
-        flex: 0 0 34px;
-        place-items: center;
-        border: 1px solid #eedfbe;
-        border-radius: 10px;
-        background: #fff8e9;
-        color: #aa741e;
-    }
-
-    .seller-account-control-page .sac-violation-summary-title {
-        color: #3d362f;
-        font-size: .82rem;
-        font-weight: 650;
-        letter-spacing: -.015em;
-    }
-
-    .seller-account-control-page .sac-violation-summary-copy {
-        margin-top: 2px;
-        color: #958b80;
-        font-size: .68rem;
-        line-height: 1.45;
-    }
-
-    .seller-account-control-page .sac-violation-count {
-        display: inline-flex;
-        min-height: 26px;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #eadfce;
-        border-radius: 999px;
-        background: #faf8f4;
-        padding: 0 9px;
-        color: #756a5f;
-        font-size: .65rem;
-        font-weight: 600;
-        white-space: nowrap;
-    }
-
-    .seller-account-control-page .sac-violation-chevron {
-        width: 16px;
-        height: 16px;
-        color: #958b80;
-        transition: transform .18s ease;
-    }
-
-    .seller-account-control-page .sac-violations[open] .sac-violation-chevron {
-        transform: rotate(180deg);
-    }
-
-    .seller-account-control-page .sac-violation-list {
-        border-top: 1px solid #eee7de;
-        background: #fff;
-    }
-
-    .seller-account-control-page .sac-violation-row {
-        display: grid;
-        grid-template-columns: 42px minmax(0, 1fr) auto;
-        gap: 12px;
-        align-items: start;
-        padding: 13px 15px;
-    }
-
-    .seller-account-control-page .sac-violation-row + .sac-violation-row {
-        border-top: 1px solid #f0ebe4;
-    }
-
-    .seller-account-control-page .sac-violation-number {
-        display: inline-flex;
-        min-height: 28px;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #ecd9bd;
-        border-radius: 9px;
-        background: #fff8eb;
-        color: #9d6c21;
-        font-size: .65rem;
-        font-weight: 700;
-    }
-
-    .seller-account-control-page .sac-violation-reason {
-        color: #494139;
-        font-size: .75rem;
-        font-weight: 600;
-        line-height: 1.45;
-    }
-
-    .seller-account-control-page .sac-violation-product,
-    .seller-account-control-page .sac-violation-date {
-        color: #998f84;
-        font-size: .65rem;
-        line-height: 1.45;
-    }
-
-    .seller-account-control-page .sac-violation-product {
-        margin-top: 3px;
-    }
-
-    .seller-account-control-page .sac-violation-date {
-        padding-top: 2px;
-        text-align: right;
-        white-space: nowrap;
-    }
-
-    .seller-account-control-page .sac-violation-empty {
-        padding: 18px 15px;
-        color: #91877c;
-        font-size: .7rem;
-        line-height: 1.55;
-        text-align: center;
-    }
-
-    /* Status reason — not a competing card */
-    .seller-account-control-page .sac-modern-status-reason {
-        margin-top: 14px !important;
-        padding: 12px 14px !important;
-        border-radius: 12px !important;
-        box-shadow: none !important;
-    }
-
-    /* Actions — clean section, equal buttons */
-    .seller-account-control-page .sac-modern-actions {
-        margin-top: 16px !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-head {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 11px;
-    }
-
-    .seller-account-control-page .sac-modern-actions-title {
-        color: #3c352e !important;
-        font-size: .82rem !important;
-        font-weight: 650 !important;
-        letter-spacing: -.015em;
-    }
-
-    .seller-account-control-page .sac-modern-actions-copy {
-        margin-top: 3px !important;
-        color: #958b80 !important;
-        font-size: .67rem !important;
-        line-height: 1.45 !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid {
-        display: grid !important;
-        gap: 10px !important;
-        margin-top: 0 !important;
-        align-items: stretch;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid.is-three {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid.is-two {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid.is-one {
-        grid-template-columns: minmax(0, 1fr) !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid > form,
-    .seller-account-control-page .sac-modern-actions-grid > button {
-        display: flex;
-        width: 100%;
-        min-width: 0;
-        margin: 0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action {
-        display: inline-flex !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        height: 50px !important;
-        min-height: 50px !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        padding: 0 12px !important;
-        border-radius: 12px !important;
-        font-size: .77rem !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-        white-space: nowrap;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.018),
-            0 8px 18px rgba(61,43,22,.035),
-            inset 0 1px 0 rgba(255,255,255,.92) !important;
-        transition:
-            transform .16s ease,
-            border-color .16s ease,
-            background-color .16s ease,
-            box-shadow .16s ease !important;
-    }
-
-    .seller-account-control-page .sac-modern-action svg {
-        width: 14px !important;
-        height: 14px !important;
-        flex: 0 0 14px;
-    }
-
-    .seller-account-control-page .sac-modern-action:hover {
-        transform: translateY(-1px);
-        box-shadow:
-            0 3px 6px rgba(61,43,22,.025),
-            0 11px 24px rgba(61,43,22,.055) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-suspend {
-        border-color: #ead8b6 !important;
-        background: #fff9ee !important;
-        color: #96691f !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-suspend:hover {
-        border-color: #dfc38e !important;
-        background: #fff4e0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-ban {
-        border-color: #ebcccc !important;
-        background: #fff6f6 !important;
-        color: #a45d5d !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-ban:hover {
-        border-color: #dfb7b7 !important;
-        background: #fff0f0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-deactivate {
-        border-color: #e2dbd2 !important;
-        background: #f8f6f3 !important;
-        color: #655d54 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-deactivate:hover {
-        border-color: #d4c8bc !important;
-        background: #f2efea !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-positive {
-        border-color: #cfe1d5 !important;
-        background: #f2f8f4 !important;
-        color: #5f836b !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-positive:hover {
-        background: #eaf5ed !important;
-    }
-
-    /* Quiet policy note */
-    .seller-account-control-page .sac-modern-note {
-        margin-top: 15px !important;
-        padding: 11px 13px !important;
-        border: 1px solid #eadcc4 !important;
-        border-radius: 12px !important;
-        background: #fffaf2 !important;
-        box-shadow: inset 3px 0 0 #d99500 !important;
-    }
-
-    .seller-account-control-page .sac-modern-note p {
-        color: #776957 !important;
-        font-size: .69rem !important;
-        line-height: 1.55 !important;
-    }
-
-    @media (max-width: 639px) {
-        .seller-account-control-page .sac-modern-modal {
-            width: calc(100vw - 16px) !important;
-            max-height: 95vh !important;
-            border-radius: 19px !important;
-        }
-
-        .seller-account-control-page .sac-modern-modal-header,
-        .seller-account-control-page .sac-modern-modal-body {
-            padding-left: 15px !important;
-            padding-right: 15px !important;
-        }
-
-        .seller-account-control-page .sac-modern-kpis {
-            grid-template-columns: 1fr !important;
-            padding-bottom: 4px;
-        }
-
-        .seller-account-control-page .sac-modern-kpi {
-            padding: 11px 2px !important;
-        }
-
-        .seller-account-control-page .sac-modern-kpi + .sac-modern-kpi::before {
-            top: 0;
-            right: 0;
-            bottom: auto;
-            left: 0;
-            width: auto;
-            height: 1px;
-        }
-
-        .seller-account-control-page .sac-modern-kpi-value {
-            font-size: 1.3rem !important;
-        }
-
-        .seller-account-control-page .sac-violation-row {
-            grid-template-columns: 38px minmax(0, 1fr);
-        }
-
-        .seller-account-control-page .sac-violation-date {
-            grid-column: 2;
-            text-align: left;
-            white-space: normal;
-        }
-
-        .seller-account-control-page .sac-modern-actions-grid.is-three,
-        .seller-account-control-page .sac-modern-actions-grid.is-two,
-        .seller-account-control-page .sac-modern-actions-grid.is-one {
-            grid-template-columns: 1fr !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-account-control-page .sac-violation-chevron,
-        .seller-account-control-page .sac-modern-action {
-            transition: none !important;
-        }
-
-        .seller-account-control-page .sac-modern-action:hover {
-            transform: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       SARI FLOATING DEPTH SYSTEM — SELLER ACCOUNT CONTROL
-       Same warm layered elevation used across the admin previews.
-       Visual override only; no routes, forms, state logic, or JS changed.
-       ========================================================= */
-
-    /* Top-level page containers */
-    .seller-account-control-page .account-control-summary-card {
-        border-color: #e7ddd1 !important;
-        box-shadow:
-            0 3px 7px rgba(61, 43, 22, .040),
-            0 15px 34px rgba(61, 43, 22, .085),
-            0 30px 58px rgba(61, 43, 22, .038),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card:hover {
-        transform: translateY(-3px) !important;
-        border-color: #d9c9b1 !important;
-        box-shadow:
-            0 4px 9px rgba(61, 43, 22, .050),
-            0 21px 46px rgba(61, 43, 22, .115),
-            0 40px 76px rgba(61, 43, 22, .048),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-account-control-page .account-control-workspace {
-        border-color: #e6ddd1 !important;
-        box-shadow:
-            0 3px 8px rgba(61, 43, 22, .045),
-            0 18px 42px rgba(61, 43, 22, .095),
-            0 38px 78px rgba(61, 43, 22, .045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    /* Seller records — lighter than the main workspace so hierarchy stays clean */
-    .seller-account-control-page .account-control-row {
-        border-color: #e9e1d7 !important;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .050),
-            0 20px 38px rgba(61, 43, 22, .020) !important;
-    }
-
-    .seller-account-control-page .account-control-row:hover {
-        transform: translateY(-2px);
-        border-color: #dacbbb !important;
-        background: #fffdfa !important;
-        box-shadow:
-            0 3px 7px rgba(61, 43, 22, .035),
-            0 15px 32px rgba(61, 43, 22, .075),
-            0 27px 48px rgba(61, 43, 22, .026) !important;
-    }
-
-    /* Search + native filter */
-    .seller-account-control-page .account-control-input {
-        box-shadow:
-            0 2px 4px rgba(61, 43, 22, .020),
-            0 7px 16px rgba(61, 43, 22, .040),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-account-control-page .account-control-input:hover {
-        border-color: #d8c9b7 !important;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .026),
-            0 9px 20px rgba(61, 43, 22, .050),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-account-control-page .account-control-input:focus {
-        border-color: #c99128 !important;
-        box-shadow:
-            0 0 0 4px rgba(201,145,40,.08),
-            0 10px 24px rgba(61,43,22,.065),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    /* View/manage icon */
-    .seller-account-control-page [data-seller-control-open] {
-        box-shadow:
-            0 2px 4px rgba(52, 41, 27, .030),
-            0 8px 18px rgba(52, 41, 27, .055),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-account-control-page [data-seller-control-open]:hover {
-        transform: translateY(-2px);
-        box-shadow:
-            0 3px 6px rgba(52, 41, 27, .040),
-            0 12px 26px rgba(88, 64, 31, .100) !important;
-    }
-
-    /* Main seller-management modal */
-    .seller-account-control-page .sac-modern-modal {
-        box-shadow:
-            0 10px 24px rgba(31, 24, 17, .090),
-            0 34px 82px rgba(31, 24, 17, .220),
-            0 70px 135px rgba(31, 24, 17, .130) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header {
-        box-shadow:
-            0 1px 0 rgba(61,43,22,.025),
-            0 9px 24px rgba(61,43,22,.035) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-close {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.028),
-            0 9px 20px rgba(61,43,22,.055) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-close:hover {
-        transform: translateY(-1px);
-        box-shadow:
-            0 3px 6px rgba(61,43,22,.035),
-            0 12px 24px rgba(61,43,22,.075) !important;
-    }
-
-    /* Violation disclosure as a floating surface */
-    .seller-account-control-page .sac-violations {
-        border-color: #e6ddd1 !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.032),
-            0 14px 32px rgba(61,43,22,.072),
-            0 26px 48px rgba(61,43,22,.026) !important;
-    }
-
-    .seller-account-control-page .sac-violations[open] {
-        box-shadow:
-            0 4px 9px rgba(61,43,22,.038),
-            0 18px 38px rgba(61,43,22,.090),
-            0 32px 58px rgba(61,43,22,.030) !important;
-    }
-
-    .seller-account-control-page .sac-violation-icon,
-    .seller-account-control-page .sac-violation-count {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.020),
-            0 7px 15px rgba(61,43,22,.035) !important;
-    }
-
-    /* Moderation action buttons */
-    .seller-account-control-page .sac-modern-action {
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.025),
-            0 9px 20px rgba(61,43,22,.055),
-            inset 0 1px 0 rgba(255,255,255,.94) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action:hover {
-        transform: translateY(-2px);
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.035),
-            0 14px 28px rgba(61,43,22,.080),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-suspend {
-        box-shadow:
-            0 2px 5px rgba(163,109,23,.035),
-            0 10px 22px rgba(217,149,0,.100),
-            inset 0 1px 0 rgba(255,255,255,.95) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-ban {
-        box-shadow:
-            0 2px 5px rgba(154,79,79,.030),
-            0 10px 22px rgba(166,93,93,.090),
-            inset 0 1px 0 rgba(255,255,255,.95) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-deactivate {
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.022),
-            0 10px 22px rgba(61,43,22,.050),
-            inset 0 1px 0 rgba(255,255,255,.95) !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-positive {
-        box-shadow:
-            0 2px 5px rgba(61,107,76,.025),
-            0 10px 22px rgba(95,131,107,.080),
-            inset 0 1px 0 rgba(255,255,255,.95) !important;
-    }
-
-    /* Preservation/status messages */
-    .seller-account-control-page .sac-modern-note,
-    .seller-account-control-page .sac-modern-status-reason {
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.022),
-            0 9px 22px rgba(61,43,22,.045) !important;
-    }
-
-    /* Header CTA retains the same stronger depth system */
-    .seller-account-control-page .sac-header-back {
-        box-shadow:
-            0 3px 7px rgba(183,124,0,.100),
-            0 13px 28px rgba(217,149,0,.230) !important;
-    }
-
-    .seller-account-control-page .sac-header-back:hover {
-        box-shadow:
-            0 4px 8px rgba(183,124,0,.120),
-            0 17px 36px rgba(217,149,0,.270) !important;
-    }
-
-    /* Confirmation modal also floats at a higher elevation */
-    #sellerAccountActionModal > div {
-        border-color: #e6d8ce !important;
-        box-shadow:
-            0 10px 24px rgba(31,24,17,.100),
-            0 34px 82px rgba(31,24,17,.220),
-            0 68px 125px rgba(31,24,17,.120) !important;
-    }
-
-    #sellerAccountActionClose,
-    #sellerAccountActionCancel {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.024),
-            0 8px 18px rgba(61,43,22,.050) !important;
-    }
-
-    #sellerAccountActionSubmit {
-        box-shadow:
-            0 3px 7px rgba(146,67,67,.090),
-            0 13px 28px rgba(169,86,86,.200) !important;
-    }
-
-    @media (max-width: 767px) {
-        .seller-account-control-page .account-control-summary-card,
-        .seller-account-control-page .account-control-workspace {
-            box-shadow:
-                0 3px 7px rgba(61,43,22,.035),
-                0 14px 32px rgba(61,43,22,.075),
-                0 24px 46px rgba(61,43,22,.025) !important;
-        }
-
-        .seller-account-control-page .account-control-row {
-            box-shadow:
-                0 2px 5px rgba(61,43,22,.025),
-                0 9px 20px rgba(61,43,22,.050) !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card:hover,
-        .seller-account-control-page .account-control-row:hover {
-            transform: translateY(-1px) !important;
-        }
-
-        .seller-account-control-page .sac-violations {
-            box-shadow:
-                0 2px 5px rgba(61,43,22,.028),
-                0 10px 24px rgba(61,43,22,.060) !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-account-control-page .account-control-summary-card:hover,
-        .seller-account-control-page .account-control-row:hover,
-        .seller-account-control-page [data-seller-control-open]:hover,
-        .seller-account-control-page .sac-modern-modal-close:hover,
-        .seller-account-control-page .sac-modern-action:hover {
-            transform: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER ACCOUNT CONTROL SUMMARY — USER MANAGEMENT SIZE PARITY
-       Matches User Management metric-card size and typography.
-       Summary visuals only; all stats, routes, modals, and JS stay intact.
-       ========================================================= */
-
-    .seller-account-control-page .account-control-summary-card {
-        min-height: 110px !important;
-        padding: 18px !important;
-        border-radius: 18px !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card > div {
-        min-height: 72px;
-        align-items: center !important;
-        gap: 16px !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card > div > div:first-child {
-        min-width: 0;
-    }
-
-    .seller-account-control-page .account-control-summary-card .sac-summary-label {
-        font-size: 11.5px !important;
-        line-height: 1.35 !important;
-        font-weight: 500 !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card .sac-summary-value {
-        margin-top: 4px !important;
-        font-size: 26px !important;
-        line-height: 1 !important;
-        font-weight: 700 !important;
-        letter-spacing: -.04em !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card > div > div:last-child {
-        width: 48px !important;
-        height: 48px !important;
-        flex: 0 0 48px !important;
-        border-radius: 12px !important;
-    }
-
-    .seller-account-control-page .account-control-summary-card > div > div:last-child svg {
-        width: 20px !important;
-        height: 20px !important;
-    }
-
-    @media (max-width: 639px) {
-        .seller-account-control-page .account-control-summary-card {
-            min-height: 110px !important;
-            padding: 16px !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card > div {
-            min-height: 76px;
-            gap: 14px !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card .sac-summary-label {
-            font-size: 11px !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card .sac-summary-value {
-            font-size: 25px !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card > div > div:last-child {
-            width: 44px !important;
-            height: 44px !important;
-            flex-basis: 44px !important;
-        }
-
-        .seller-account-control-page .account-control-summary-card > div > div:last-child svg {
-            width: 19px !important;
-            height: 19px !important;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER ACCOUNT CONTROL — USER MANAGEMENT STYLE FILTER BAR
-       Search + Status + Apply Filter + Reset in one floating toolbar.
-       Existing client-side filtering logic is retained.
-       ========================================================= */
-
-    .seller-account-control-page .sac-filter-surface {
-        position: relative;
-        z-index: 30;
-        margin-top: 16px;
-        padding: 12px;
-        overflow: visible;
-        border: 1px solid #e7ddd1;
-        border-radius: 18px;
-        background: #fff;
-        box-shadow:
-            0 3px 8px rgba(61,43,22,.045),
-            0 18px 42px rgba(61,43,22,.095),
-            0 38px 78px rgba(61,43,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.98);
-    }
-
-    .seller-account-control-page .sac-filter-grid {
-        display: grid;
-        grid-template-columns: minmax(360px, 1fr) 220px 124px 82px;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .seller-account-control-page .sac-filter-search {
-        position: relative;
-        min-width: 0;
-    }
-
-    .seller-account-control-page .sac-filter-search > svg {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        left: 16px;
-        width: 16px;
-        height: 16px;
-        pointer-events: none;
-        color: #9d8f7e;
-        transform: translateY(-50%);
-    }
-
-    .seller-account-control-page .sac-filter-input,
-    .seller-account-control-page .sac-filter-select {
-        width: 100% !important;
-        height: 44px !important;
-        min-height: 44px !important;
-        border: 1px solid #e8e0d5 !important;
-        border-radius: 12px !important;
-        background: #fff !important;
-        color: #332c25 !important;
-        -webkit-text-fill-color: #332c25 !important;
-        font-size: 11px !important;
-        font-weight: 500 !important;
-        line-height: 1 !important;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 7px 16px rgba(61,43,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-        transition:
-            border-color .16s ease,
-            box-shadow .16s ease,
-            background-color .16s ease;
-    }
-
-    .seller-account-control-page .sac-filter-input {
-        padding: 0 16px 0 44px !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-account-control-page .sac-filter-input::placeholder {
-        color: #a69c91 !important;
-        -webkit-text-fill-color: #a69c91 !important;
-    }
-
-    .seller-account-control-page .sac-filter-input:hover,
-    .seller-account-control-page .sac-filter-select:hover {
-        border-color: #d8c8b1 !important;
-    }
-
-    .seller-account-control-page .sac-filter-input:focus,
-    .seller-account-control-page .sac-filter-select:focus {
-        outline: none !important;
-        border-color: #d9a33a !important;
-        box-shadow:
-            0 0 0 4px rgba(217,149,0,.08),
-            0 10px 24px rgba(61,43,22,.07),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-account-control-page .sac-filter-select-wrap {
-        position: relative;
-        min-width: 0;
-    }
-
-    .seller-account-control-page .sac-filter-select {
-        appearance: none;
-        padding: 0 42px 0 36px !important;
-        cursor: pointer;
-    }
-
-    .seller-account-control-page .sac-filter-status-dot {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        left: 15px;
-        width: 8px;
-        height: 8px;
-        pointer-events: none;
-        border-radius: 999px;
-        background: #3f9a61;
-        transform: translateY(-50%);
-    }
-
-    .seller-account-control-page .sac-filter-select-chevron {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        right: 14px;
-        width: 14px;
-        height: 14px;
-        pointer-events: none;
-        color: #8b8175;
-        transform: translateY(-50%);
-    }
-
-    .seller-account-control-page .sac-filter-apply {
-        display: inline-flex;
-        width: 100%;
-        height: 44px;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        border: 0;
-        border-radius: 12px;
-        padding: 0 16px;
-        background: #d99500;
-        color: #fff;
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 1;
-        white-space: nowrap;
-        box-shadow:
-            0 3px 7px rgba(183,124,0,.10),
-            0 13px 28px rgba(217,149,0,.23);
-        transition:
-            transform .16s ease,
-            background-color .16s ease,
-            box-shadow .16s ease;
-    }
-
-    .seller-account-control-page .sac-filter-apply:hover {
-        background: #bd8205;
-        transform: translateY(-1px);
-        box-shadow:
-            0 4px 8px rgba(183,124,0,.12),
-            0 16px 34px rgba(217,149,0,.26);
-    }
-
-    .seller-account-control-page .sac-filter-reset {
-        display: inline-flex;
-        width: 100%;
-        height: 44px;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #e6ddd2;
-        border-radius: 12px;
-        padding: 0 14px;
-        background: #fff;
-        color: #6f665b;
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 1;
-        white-space: nowrap;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 7px 16px rgba(61,43,22,.045);
-        transition:
-            border-color .16s ease,
-            color .16s ease,
-            background-color .16s ease;
-    }
-
-    .seller-account-control-page .sac-filter-reset:hover {
-        border-color: #d8c8b1;
-        background: #faf8f4;
-        color: #51483f;
-    }
-
-    .seller-account-control-page .sac-filter-apply svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    /* Table/workspace starts as a separate card under the filter bar. */
-    .seller-account-control-page .account-control-workspace.sac-workspace-separated {
-        margin-top: 16px !important;
-    }
-
-    .seller-account-control-page .sac-workspace-topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        padding: 15px 20px;
-        border-bottom: 1px solid #eee8df;
-        background: #fff;
-    }
-
-    .seller-account-control-page .sac-workspace-topbar .sac-workspace-title {
-        font-size: .92rem !important;
-        font-weight: 650 !important;
-    }
-
-    .seller-account-control-page .sac-workspace-topbar .sac-workspace-copy,
-    .seller-account-control-page .sac-workspace-topbar .sac-result-copy {
-        font-size: .68rem !important;
-        line-height: 1.45 !important;
-    }
-
-    @media (max-width: 1023px) {
-        .seller-account-control-page .sac-filter-grid {
-            grid-template-columns: minmax(0, 1fr) 190px;
-        }
-
-        .seller-account-control-page .sac-filter-search {
-            grid-column: 1 / -1;
-        }
-
-        .seller-account-control-page .sac-filter-apply,
-        .seller-account-control-page .sac-filter-reset {
-            width: 100%;
-        }
-    }
-
-    @media (max-width: 639px) {
-        .seller-account-control-page .sac-filter-surface {
-            padding: 10px;
-            border-radius: 16px;
-        }
-
-        .seller-account-control-page .sac-filter-grid {
-            grid-template-columns: 1fr;
-            gap: 9px;
-        }
-
-        .seller-account-control-page .sac-filter-search {
-            grid-column: auto;
-        }
-
-        .seller-account-control-page .sac-workspace-topbar {
-            align-items: flex-start;
-            flex-direction: column;
-            padding: 14px 16px;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER ACCOUNT CONTROL — CLEAN TABLE + EDIT-TASK INSPIRED VIEW MODAL
-       Visual refinement only. Existing backend routes, seller status logic,
-       violation data, action forms, and modal JS hooks remain intact.
-       ========================================================= */
-
-    /* ---------------------------------------------------------
-       Seller list: clean sheet / row density
-       --------------------------------------------------------- */
-    .seller-account-control-page .account-control-workspace {
-        overflow: hidden !important;
-        border-color: #e7ddd1 !important;
-        border-radius: 18px !important;
-        background: #fff !important;
-        box-shadow:
-            0 3px 8px rgba(61,43,22,.045),
-            0 18px 42px rgba(61,43,22,.095),
-            0 38px 78px rgba(61,43,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-account-control-page #sellerAccountList {
-        padding: 0 !important;
-        background: #fff;
-    }
-
-    .seller-account-control-page .account-control-row {
-        margin: 0 !important;
-        border: 0 !important;
-        border-bottom: 1px solid #f0ebe4 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        transform: none !important;
-        transition: background-color .14s ease !important;
-    }
-
-    .seller-account-control-page .account-control-row:last-of-type {
-        border-bottom: 0 !important;
-    }
-
-    .seller-account-control-page .account-control-row:hover {
-        border-color: #f0ebe4 !important;
-        background: #fdfbf7 !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    @media (min-width: 1280px) {
-        .seller-account-control-page .account-control-row-grid {
-            grid-template-columns:
-                minmax(290px, 1.65fr)
-                128px
-                118px
-                135px
-                165px
-                82px !important;
-            column-gap: 16px !important;
-        }
-
-        .seller-account-control-page .account-control-row-grid > div {
-            min-height: 72px;
-        }
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-column-label {
-        font-size: 10px !important;
-        line-height: 1.35 !important;
-        font-weight: 700 !important;
-        letter-spacing: .07em !important;
-        text-transform: uppercase;
-        color: #847b70 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-seller-name {
-        font-size: 12px !important;
-        line-height: 1.35 !important;
-        font-weight: 700 !important;
-        color: #2e2924 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-muted {
-        font-size: 9px !important;
-        line-height: 1.4 !important;
-        color: #958c80 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-badge {
-        font-size: 9.5px !important;
-        line-height: 1 !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .account-control-workspace .sac-data-value {
-        font-size: 10px !important;
-        line-height: 1.4 !important;
-        font-weight: 500 !important;
-        color: #514a42 !important;
-    }
-
-    /* Seller avatar in rows — same visual rhythm as Users table. */
-    .seller-account-control-page .account-control-row .sac-modern-avatar {
-        width: 40px !important;
-        height: 40px !important;
-        flex: 0 0 40px !important;
-        border: 0 !important;
-        border-radius: 999px !important;
-        background: #f3f1ed !important;
-        color: #655d55 !important;
-        font-size: 10px !important;
-        box-shadow: none !important;
-    }
-
-    /* ---------------------------------------------------------
-       View icon: icon-only, no container/shadow
-       --------------------------------------------------------- */
-    .seller-account-control-page [data-seller-control-open] {
-        display: inline-grid !important;
-        width: 30px !important;
-        min-width: 30px !important;
-        height: 30px !important;
-        min-height: 30px !important;
-        place-items: center !important;
-        padding: 0 !important;
-
-        border: 0 !important;
-        border-color: transparent !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
-
-        color: #3f3b37 !important;
-        outline: none !important;
-
-        transition:
-            color .15s ease,
-            transform .15s ease !important;
-    }
-
-    .seller-account-control-page [data-seller-control-open] svg {
-        width: 15px !important;
-        height: 15px !important;
-        color: currentColor !important;
-        stroke: currentColor !important;
-        filter: none !important;
-    }
-
-    .seller-account-control-page [data-seller-control-open]:hover,
-    .seller-account-control-page [data-seller-control-open]:focus-visible {
-        border: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        color: #e09a00 !important;
-        transform: translateY(-1px) scale(1.08) !important;
-    }
-
-    /* ---------------------------------------------------------
-       Main seller modal — clean form-like layout inspired by reference
-       --------------------------------------------------------- */
-    .seller-account-control-page [data-seller-control-modal] {
-        background: rgba(31,29,26,.46) !important;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        padding: 18px !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal {
-        width: min(760px, calc(100vw - 28px)) !important;
-        max-width: 760px !important;
-        max-height: min(92vh, 860px) !important;
-        overflow: hidden !important;
-        border: 1px solid #dedbd6 !important;
-        border-radius: 22px !important;
-        background: #fff !important;
-        box-shadow:
-            0 18px 44px rgba(24,22,19,.13),
-            0 44px 100px rgba(24,22,19,.20) !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal::before {
-        display: none !important;
-        content: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header {
-        align-items: center !important;
-        padding: 22px 22px 18px !important;
-        border-bottom: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    /* Hide the chunky avatar in the modal header for a cleaner form-like top. */
-    .seller-account-control-page .sac-modern-modal-header > div:first-child > div:first-child {
-        display: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header > div:first-child {
-        gap: 0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-title {
-        font-size: 1.32rem !important;
-        line-height: 1.2 !important;
-        font-weight: 700 !important;
-        letter-spacing: -.035em !important;
-        color: #252525 !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header .sac-muted {
-        margin-top: 7px !important;
-        font-size: .75rem !important;
-        color: #7d7d82 !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-header .sac-badge {
-        padding: 5px 9px !important;
-        font-size: .63rem !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-close {
-        width: 36px !important;
-        height: 36px !important;
-        border: 0 !important;
-        border-radius: 10px !important;
-        background: #f7f7f8 !important;
-        color: #636363 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-close:hover {
-        background: #eeeeef !important;
-        color: #2d2d2d !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-modal-body {
-        padding: 0 22px 22px !important;
-        background: #fff !important;
-    }
-
-    /* Snapshot becomes clean read-only form fields. */
-    .seller-account-control-page .sac-modern-kpis {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 14px !important;
-        padding: 0 !important;
-        border: 0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi {
-        min-height: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi + .sac-modern-kpi::before,
-    .seller-account-control-page .sac-modern-kpi::after {
-        display: none !important;
-        content: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi:last-child {
-        grid-column: 1 / -1;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-label {
-        display: block;
-        margin-bottom: 7px !important;
-        color: #626268 !important;
-        font-size: .72rem !important;
-        font-weight: 500 !important;
-        line-height: 1.3 !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-value {
-        display: flex;
-        min-height: 48px;
-        align-items: center;
-        margin: 0 !important;
-        padding: 0 14px !important;
-        border: 1px solid #dcdde1;
-        border-radius: 10px;
-        background: #fff;
-        color: #303034 !important;
-        font-size: .88rem !important;
-        font-weight: 500 !important;
-        line-height: 1.2 !important;
-        letter-spacing: 0 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-kpi-value.is-warning,
-    .seller-account-control-page .sac-modern-kpi-value.is-danger {
-        color: #303034 !important;
-    }
-
-    /* Violations become a clean details field/section. */
-    .seller-account-control-page .sac-violations {
-        margin-top: 16px !important;
-        border: 1px solid #dcdde1 !important;
-        border-radius: 12px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-violations[open] {
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-violations > summary {
-        min-height: 52px !important;
-        padding: 12px 14px !important;
-        background: #fff !important;
-    }
-
-    .seller-account-control-page .sac-violations > summary:hover,
-    .seller-account-control-page .sac-violations[open] > summary {
-        background: #fafafa !important;
-    }
-
-    .seller-account-control-page .sac-violation-icon {
-        width: 30px !important;
-        height: 30px !important;
-        flex: 0 0 30px !important;
-        border: 0 !important;
-        border-radius: 8px !important;
-        background: #fff8e9 !important;
-        color: #ad741b !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-violation-summary-title {
-        color: #39393d !important;
-        font-size: .78rem !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-violation-summary-copy {
-        color: #87878c !important;
-        font-size: .66rem !important;
-    }
-
-    .seller-account-control-page .sac-violation-count {
-        border-color: #e2e2e5 !important;
-        background: #f7f7f8 !important;
-        color: #69696f !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-violation-list {
-        border-top-color: #e8e8ea !important;
-    }
-
-    .seller-account-control-page .sac-violation-row {
-        padding: 13px 14px !important;
-    }
-
-    /* Status reason styled like a Details textarea/read-only field. */
-    .seller-account-control-page .sac-modern-status-reason {
-        margin-top: 16px !important;
-        padding: 14px !important;
-        border: 1px solid #dcdde1 !important;
-        border-radius: 10px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    /* Actions: quiet lower section similar to modal footer form controls. */
-    .seller-account-control-page .sac-modern-actions {
-        margin-top: 18px !important;
-        padding-top: 16px !important;
-        border-top: 1px solid #ececef !important;
-        background: transparent !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-head {
-        margin-bottom: 10px !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-title {
-        color: #303034 !important;
-        font-size: .78rem !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-copy {
-        color: #85858b !important;
-        font-size: .66rem !important;
-    }
-
-    .seller-account-control-page .sac-modern-actions-grid {
-        gap: 10px !important;
-    }
-
-    .seller-account-control-page .sac-modern-action {
-        height: 44px !important;
-        min-height: 44px !important;
-        border-radius: 10px !important;
-        font-size: .73rem !important;
-        font-weight: 600 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-action:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-suspend {
-        border-color: #e7cfa1 !important;
-        background: #fffaf0 !important;
-        color: #95671e !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-suspend:hover {
-        border-color: #d8b875 !important;
-        background: #fff4df !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-ban {
-        border-color: #efcaca !important;
-        background: #fff7f7 !important;
-        color: #a45151 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-ban:hover {
-        border-color: #e3aaaa !important;
-        background: #fff0f0 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-deactivate {
-        border-color: #dcdde1 !important;
-        background: #f8f8f8 !important;
-        color: #55555a !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-deactivate:hover {
-        border-color: #cfcfd3 !important;
-        background: #f1f1f2 !important;
-    }
-
-    .seller-account-control-page .sac-modern-action.is-positive {
-        border-color: #cfe2d5 !important;
-        background: #f5faf6 !important;
-        color: #4d7b5c !important;
-    }
-
-    /* Quiet helper copy at the bottom, no card/shadow. */
-    .seller-account-control-page .sac-modern-note {
-        margin-top: 14px !important;
-        padding: 10px 0 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        border-top: 1px solid #ececef !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-account-control-page .sac-modern-note svg {
-        color: #8d8d92 !important;
-    }
-
-    .seller-account-control-page .sac-modern-note p {
-        color: #7d7d82 !important;
-        font-size: .66rem !important;
-        line-height: 1.5 !important;
-    }
-
-    @media (max-width: 1279px) {
-        .seller-account-control-page #sellerAccountList {
-            padding: 12px !important;
-        }
-
-        .seller-account-control-page .account-control-row {
-            margin-bottom: 12px !important;
-            border: 1px solid #e9e1d7 !important;
-            border-radius: 16px !important;
-        }
-
-        .seller-account-control-page .account-control-row:last-of-type {
-            margin-bottom: 0 !important;
-        }
-    }
-
-    @media (max-width: 639px) {
-        .seller-account-control-page .sac-modern-modal {
-            width: calc(100vw - 16px) !important;
-            border-radius: 18px !important;
-        }
-
-        .seller-account-control-page .sac-modern-modal-header {
-            padding: 18px 16px 14px !important;
-        }
-
-        .seller-account-control-page .sac-modern-modal-body {
-            padding: 0 16px 18px !important;
-        }
-
-        .seller-account-control-page .sac-modern-kpis {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
-        }
-
-        .seller-account-control-page .sac-modern-kpi:last-child {
-            grid-column: auto;
-        }
-
-        .seller-account-control-page .sac-modern-actions-grid.is-three,
-        .seller-account-control-page .sac-modern-actions-grid.is-two,
-        .seller-account-control-page .sac-modern-actions-grid.is-one {
-            grid-template-columns: 1fr !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-account-control-page [data-seller-control-open],
-        .seller-account-control-page [data-seller-control-open]:hover,
-        .seller-account-control-page [data-seller-control-open]:focus-visible {
-            transform: none !important;
-            transition: none !important;
+        .seller-account-control-page .sac-header-back{
+            width:100% !important;
+            min-height:40px !important;
+            height:40px !important;
+            font-size:9px !important;
         }
     }
 
@@ -2187,6 +480,19 @@
         SUMMARY CARDS
     ========================================================== --}}
     @php
+        $sellerControlNow = now();
+
+        $sellerWarningHistoryBySeller = isset($recentWarnings)
+            ? collect($recentWarnings)->groupBy(function ($warning) {
+                return (string) (
+                    $warning->seller?->id
+                    ?? $warning->seller_account_id
+                    ?? $warning->seller_id
+                    ?? ''
+                );
+            })
+            : collect();
+
         $summaryCards = [
             ['label' => 'Total Sellers', 'value' => $stats['total'], 'tone' => 'border-[#dfe7ec] bg-[#f4f7f9] text-[#657f94]', 'icon' => 'users'],
             ['label' => 'Active', 'value' => $stats['active'], 'tone' => 'border-[#d7e7dd] bg-[#f3f8f5] text-[#56816a]', 'icon' => 'active'],
@@ -2348,7 +654,7 @@
                         $status === 'active'
                         && (
                             ((int) ($seller->warning_count ?? 0)) >= 3
-                            || ($until && now()->lt($until))
+                            || ($until && $sellerControlNow->lt($until))
                         );
 
                     $displayStatus = match (true) {
@@ -2382,37 +688,28 @@
                     $modalId = 'sellerControlModal-' . $seller->id;
 
                     /*
-                     * Violation/warning detail source.
-                     * The Seller Compliance page already uses $recentWarnings.
-                     * If this view also receives that collection, filter it here.
-                     * Otherwise try common seller warning relations without
-                     * requiring a controller change.
+                     * Warning details are indexed once above. Relationship fallback
+                     * is only used when already eager-loaded, preventing N+1 queries.
                      */
-                    $sellerViolationHistory = collect();
-
-                    if (isset($recentWarnings)) {
-                        $sellerViolationHistory = collect($recentWarnings)
-                            ->filter(function ($warning) use ($seller) {
-                                $warningSellerId = $warning->seller?->id
-                                    ?? $warning->seller_account_id
-                                    ?? $warning->seller_id
-                                    ?? null;
-
-                                return (string) $warningSellerId === (string) $seller->id;
-                            })
-                            ->values();
-                    }
+                    $sellerViolationHistory = $sellerWarningHistoryBySeller
+                        ->get((string) $seller->id, collect())
+                        ->values();
 
                     if ($sellerViolationHistory->isEmpty()) {
                         foreach (['warnings', 'complianceWarnings', 'sellerWarnings'] as $warningRelation) {
-                            if (method_exists($seller, $warningRelation)) {
-                                $sellerViolationHistory = collect($seller->{$warningRelation})
+                            if (
+                                method_exists($seller, $warningRelation)
+                                && method_exists($seller, 'relationLoaded')
+                                && $seller->relationLoaded($warningRelation)
+                            ) {
+                                $sellerViolationHistory = collect($seller->getRelation($warningRelation))
                                     ->sortByDesc(function ($warning) {
                                         return $warning->issued_at
                                             ?? $warning->created_at
                                             ?? null;
                                     })
                                     ->values();
+
                                 break;
                             }
                         }
@@ -2502,11 +799,12 @@
                 {{-- =====================================================
                     SELLER MANAGEMENT MODAL
                 ====================================================== --}}
+                <template data-seller-control-template="{{ $modalId }}">
                 <div
                     id="{{ $modalId }}"
                     data-seller-control-modal
                     hidden
-                    class="fixed inset-0 z-[190] items-center justify-center bg-black/40 p-4 backdrop-blur-[3px]"
+                    class="fixed inset-0 z-[190] items-center justify-center bg-black/40 p-4"
                 >
                     <div class="sac-modern-modal flex max-h-[90vh] w-full max-w-[760px] flex-col overflow-hidden rounded-[24px] border border-[#e8dfd3] bg-white shadow-[0_30px_90px_rgba(37,29,19,.22)]">
 
@@ -2801,6 +1099,7 @@
                         </div>
                     </div>
                 </div>
+                </template>
 
             @empty
                 <div class="rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center">
@@ -2842,7 +1141,7 @@
 ============================================================== --}}
 <div
     id="sellerAccountActionModal"
-    class="fixed inset-0 z-[220] hidden items-center justify-center bg-black/45 p-4 backdrop-blur-[3px]"
+    class="fixed inset-0 z-[220] hidden items-center justify-center bg-black/45 p-4"
 >
     <div class="w-full max-w-[520px] rounded-[24px] border border-[#ead8d1] bg-white p-5 shadow-[0_35px_100px_rgba(38,30,18,.24)] sm:p-6">
         <div class="flex items-start justify-between gap-4">
@@ -2932,39 +1231,61 @@
     const clearFiltersButton = document.getElementById('sellerAccountClearFilters');
     const emptyClearButton = document.getElementById('sellerAccountEmptyClear');
 
+    const sellerSearchIndex = sellerRows.map(function (row) {
+        return {
+            row,
+            searchable: (row.dataset.sellerAccountSearch || '').toLowerCase(),
+            status: (row.dataset.sellerAccountStatus || '').toLowerCase(),
+        };
+    });
+
+    function debounce(callback, wait = 130) {
+        let timer = 0;
+        return function (...args) {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(() => callback.apply(this, args), wait);
+        };
+    }
+
+    let sellerFilterFrame = 0;
+
     function applySellerFilters() {
         const query = (searchInput?.value || '').trim().toLowerCase();
         const status = (statusFilter?.value || '').trim().toLowerCase();
 
-        let visible = 0;
+        window.cancelAnimationFrame(sellerFilterFrame);
 
-        sellerRows.forEach(function (row) {
-            const searchable = (row.dataset.sellerAccountSearch || '').toLowerCase();
-            const rowStatus = (row.dataset.sellerAccountStatus || '').toLowerCase();
+        sellerFilterFrame = window.requestAnimationFrame(function () {
+            let visible = 0;
 
-            const matchesQuery = query === '' || searchable.includes(query);
-            const matchesStatus = status === '' || rowStatus === status;
-            const matches = matchesQuery && matchesStatus;
+            sellerSearchIndex.forEach(function (item) {
+                const matchesQuery = query === '' || item.searchable.includes(query);
+                const matchesStatus = status === '' || item.status === status;
+                const matches = matchesQuery && matchesStatus;
+                const shouldHide = !matches;
 
-            row.classList.toggle('hidden', !matches);
+                if (item.row.classList.contains('hidden') !== shouldHide) {
+                    item.row.classList.toggle('hidden', shouldHide);
+                }
 
-            if (matches) {
-                visible++;
+                if (matches) visible++;
+            });
+
+            if (resultCount) {
+                resultCount.textContent =
+                    'Showing ' + visible +
+                    ' of ' + sellerSearchIndex.length +
+                    ' seller' + (visible === 1 ? '' : 's');
+            }
+
+            if (sellerSearchIndex.length > 0) {
+                sellerList?.classList.toggle('hidden', visible === 0);
+                filterEmpty?.classList.toggle('hidden', visible !== 0);
             }
         });
-
-        if (resultCount) {
-            resultCount.textContent =
-                'Showing ' + visible +
-                ' of ' + sellerRows.length +
-                ' seller' + (visible === 1 ? '' : 's');
-        }
-
-        if (sellerRows.length > 0) {
-            sellerList?.classList.toggle('hidden', visible === 0);
-            filterEmpty?.classList.toggle('hidden', visible !== 0);
-        }
     }
+
+    const debouncedSellerFilters = debounce(applySellerFilters, 130);
 
     function clearSellerFilters() {
         if (searchInput) searchInput.value = '';
@@ -2973,7 +1294,7 @@
         searchInput?.focus();
     }
 
-    searchInput?.addEventListener('input', applySellerFilters);
+    searchInput?.addEventListener('input', debouncedSellerFilters, { passive: true });
     statusFilter?.addEventListener('change', applySellerFilters);
     applyFiltersButton?.addEventListener('click', applySellerFilters);
     clearFiltersButton?.addEventListener('click', clearSellerFilters);
@@ -2994,44 +1315,50 @@
     | SELLER MANAGEMENT MODALS
     |--------------------------------------------------------------------------
     */
-    const sellerControlModals = Array.from(
-        document.querySelectorAll('[data-seller-control-modal]')
+    const sellerControlTemplates = new Map(
+        Array.from(document.querySelectorAll('[data-seller-control-template]')).map(function (template) {
+            return [template.dataset.sellerControlTemplate, template];
+        })
     );
 
+    let activeSellerControlModal = null;
+
     function closeSellerControlModals() {
-        sellerControlModals.forEach(function (modal) {
-            modal.hidden = true;
-            modal.classList.remove('flex');
+        if (activeSellerControlModal) {
+            activeSellerControlModal.remove();
+            activeSellerControlModal = null;
+        }
+
+        document.querySelectorAll('body > [data-seller-control-modal]').forEach(function (modal) {
+            modal.remove();
         });
 
         document.body.classList.remove('overflow-hidden');
     }
 
-    document.querySelectorAll('[data-seller-control-open]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const modal = document.getElementById(this.dataset.sellerControlOpen);
+    function openSellerControlModal(modalId) {
+        const template = sellerControlTemplates.get(String(modalId || ''));
+        if (!template) return;
 
-            if (!modal) return;
+        closeSellerControlModals();
 
-            closeSellerControlModals();
+        const fragment = template.content.cloneNode(true);
+        const modal = fragment.querySelector('[data-seller-control-modal]');
+        if (!modal) return;
 
-            modal.hidden = false;
-            modal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
+        modal.hidden = false;
+        modal.classList.add('flex');
+        document.body.appendChild(fragment);
+
+        activeSellerControlModal = document.getElementById(modalId);
+        document.body.classList.add('overflow-hidden');
+
+        window.requestAnimationFrame(function () {
+            activeSellerControlModal
+                ?.querySelector('[data-seller-control-close]')
+                ?.focus({ preventScroll: true });
         });
-    });
-
-    document.querySelectorAll('[data-seller-control-close]').forEach(function (button) {
-        button.addEventListener('click', closeSellerControlModals);
-    });
-
-    sellerControlModals.forEach(function (modal) {
-        modal.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                closeSellerControlModals();
-            }
-        });
-    });
+    }
 
 
     /*
@@ -3059,44 +1386,76 @@
         document.body.classList.remove('overflow-hidden');
     }
 
-    document.querySelectorAll('[data-account-action]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const action = this.dataset.accountAction;
-            const seller = this.dataset.seller;
+    function openAccountActionModal(button) {
+        if (!button || !actionModal || !actionForm || !actionTitle || !actionDescription || !confirmWrap) {
+            return;
+        }
 
-            actionForm.action = this.dataset.url;
+        const action = button.dataset.accountAction;
+        const seller = button.dataset.seller;
 
-            const deactivating = action === 'deactivate';
+        actionForm.action = button.dataset.url;
+        const deactivating = action === 'deactivate';
 
-            actionTitle.textContent =
-                deactivating
-                    ? 'Deactivate Seller Account?'
-                    : 'Ban Seller Account?';
+        actionTitle.textContent =
+            deactivating
+                ? 'Deactivate Seller Account?'
+                : 'Ban Seller Account?';
 
-            actionDescription.textContent =
-                deactivating
-                    ? `${seller} will be blocked from seller access while compliance and moderation history remain preserved.`
-                    : `${seller} will be blocked from seller login until an administrator removes the ban.`;
+        actionDescription.textContent =
+            deactivating
+                ? `${seller} will be blocked from seller access while compliance and moderation history remain preserved.`
+                : `${seller} will be blocked from seller login until an administrator removes the ban.`;
 
-            confirmWrap.classList.toggle('hidden', !deactivating);
+        confirmWrap.classList.toggle('hidden', !deactivating);
 
-            if (confirmInput) {
-                confirmInput.required = deactivating;
-            }
+        if (confirmInput) {
+            confirmInput.required = deactivating;
+        }
 
-            closeSellerControlModals();
+        closeSellerControlModals();
+        actionModal.classList.remove('hidden');
+        actionModal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
 
-            actionModal.classList.remove('hidden');
-            actionModal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
+        window.requestAnimationFrame(function () {
+            actionModal.querySelector('textarea[name="reason"]')?.focus({ preventScroll: true });
         });
-    });
+    }
 
-    document.getElementById('sellerAccountActionCancel')?.addEventListener('click', closeActionModal);
-    document.getElementById('sellerAccountActionClose')?.addEventListener('click', closeActionModal);
+    document.addEventListener('click', function (event) {
+        const openButton = event.target.closest('[data-seller-control-open]');
+        if (openButton) {
+            openSellerControlModal(openButton.dataset.sellerControlOpen);
+            return;
+        }
 
-    actionModal?.addEventListener('click', function (event) {
-        if (event.target === actionModal) {
+        if (event.target.closest('[data-seller-control-close]')) {
+            closeSellerControlModals();
+            return;
+        }
+
+        const sellerModal = event.target.closest('[data-seller-control-modal]');
+        if (sellerModal && event.target === sellerModal) {
+            closeSellerControlModals();
+            return;
+        }
+
+        const actionButton = event.target.closest('[data-account-action]');
+        if (actionButton) {
+            openAccountActionModal(actionButton);
+            return;
+        }
+
+        if (
+            event.target.closest('#sellerAccountActionCancel')
+            || event.target.closest('#sellerAccountActionClose')
+        ) {
+            closeActionModal();
+            return;
+        }
+
+        if (actionModal && event.target === actionModal) {
             closeActionModal();
         }
     });

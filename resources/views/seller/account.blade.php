@@ -858,6 +858,7 @@
 @push('scripts')
 <script>
 document.addEventListener('livewire:navigated', function () {
+    const run = function () {
     const navButtons = Array.from(
         document.querySelectorAll('[data-account-nav]')
     );
@@ -992,6 +993,13 @@ document.addEventListener('livewire:navigated', function () {
             }
         }
     );
+    };
+
+    if (window.__SARI_SELLER_AFTER_PAINT__) {
+        window.__SARI_SELLER_AFTER_PAINT__(run);
+    } else {
+        window.requestAnimationFrame(() => window.requestAnimationFrame(run));
+    }
 }, { once: true });
 </script>
 @endpush

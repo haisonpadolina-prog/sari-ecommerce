@@ -226,34 +226,6 @@
         }
     }
 
-    /* ---------- dark mode, driven by your existing navbar toggle ----------
-       Light mode is always the default. These variables only change when
-       your site-wide toggle sets one of the patterns below higher up the
-       DOM (on <html> or <body>) — this section has no switch of its own. */
-
-    html.dark .sari-platform-ui,
-    body.dark .sari-platform-ui,
-    html.dark-mode .sari-platform-ui,
-    body.dark-mode .sari-platform-ui,
-    html[data-theme="dark"] .sari-platform-ui {
-        --sari-platform-section-bg: #15130E;
-        --sari-platform-bg: #15130E;
-        --sari-platform-surface: #201D16;
-        --sari-platform-sidebar: #1B1912;
-        --sari-platform-border: #322D22;
-        --sari-platform-ink: #F5F1E8;
-        --sari-platform-muted: #7C7669;
-        --sari-platform-muted-2: #C9C3B4;
-        --sari-platform-gold: #D8A857;
-        --sari-platform-skeleton: #3A3627;
-        --sari-platform-skeleton-soft: #2A2719;
-        --sari-platform-skeleton-mid: #322D1F;
-        --sari-platform-phone-body: #000000;
-        --sari-platform-phone-screen: #201D16;
-        --sari-platform-shadow-soft: rgba(0, 0, 0, 0.45);
-        --sari-platform-shadow-strong: rgba(0, 0, 0, 0.6);
-        --sari-platform-cta-text: #15130E;
-    }
 
     /* ---------- floating cart card (top-left, balances the phone) ---------- */
 
@@ -655,78 +627,7 @@
             opacity: 1;
         }
     }
-/* =========================================================
-   SARI PLATFORM — THEME SYSTEM
-   The navbar controls <html class="light-mode"> / <html class="dark-mode">
-========================================================= */
 
-/* Explicit light mode */
-html.light-mode .sari-platform-ui {
-    --sari-platform-section-bg: #FFFFFF;
-    --sari-platform-bg: #FBF8F2;
-    --sari-platform-surface: #FFFFFF;
-    --sari-platform-sidebar: #F5F1E8;
-    --sari-platform-border: #EBE3D2;
-    --sari-platform-ink: #16140F;
-    --sari-platform-muted: #9A9488;
-    --sari-platform-muted-2: #4A453D;
-    --sari-platform-gold: #B8863B;
-    --sari-platform-skeleton: #E2DAC3;
-    --sari-platform-skeleton-soft: #EEE8D9;
-    --sari-platform-skeleton-mid: #E7E0CC;
-    --sari-platform-phone-body: #16140F;
-    --sari-platform-phone-screen: #FFFFFF;
-    --sari-platform-shadow-soft: rgba(22, 20, 15, 0.18);
-    --sari-platform-shadow-strong: rgba(22, 20, 15, 0.38);
-    --sari-platform-cta-text: #FFFFFF;
-}
-
-/* Explicit dark mode */
-html.dark-mode .sari-platform-ui,
-body.dark-mode .sari-platform-ui,
-html.dark .sari-platform-ui,
-body.dark .sari-platform-ui,
-html[data-theme="dark"] .sari-platform-ui,
-body[data-theme="dark"] .sari-platform-ui {
-    --sari-platform-section-bg: #15130E;
-    --sari-platform-bg: #15130E;
-    --sari-platform-surface: #201D16;
-    --sari-platform-sidebar: #1B1912;
-    --sari-platform-border: #322D22;
-    --sari-platform-ink: #F5F1E8;
-    --sari-platform-muted: #7C7669;
-    --sari-platform-muted-2: #C9C3B4;
-    --sari-platform-gold: #D8A857;
-    --sari-platform-skeleton: #3A3627;
-    --sari-platform-skeleton-soft: #2A2719;
-    --sari-platform-skeleton-mid: #322D1F;
-    --sari-platform-phone-body: #000000;
-    --sari-platform-phone-screen: #201D16;
-    --sari-platform-shadow-soft: rgba(0, 0, 0, 0.45);
-    --sari-platform-shadow-strong: rgba(0, 0, 0, 0.60);
-    --sari-platform-cta-text: #15130E;
-}
-
-html.dark-mode .sari-platform-ui,
-body.dark-mode .sari-platform-ui {
-    color-scheme: dark;
-}
-
-/* Smooth theme transition */
-.sari-platform-ui,
-.sari-platform-browser,
-.sari-platform-mock-sidebar,
-.sari-platform-mock-product,
-.sari-platform-cart-card,
-.sari-platform-phone,
-.sari-platform-phone-screen,
-.sari-platform-phone-notif {
-    transition:
-        background-color .35s ease,
-        color .35s ease,
-        border-color .35s ease,
-        box-shadow .35s ease;
-}
 
     /* ---- responsive ---- */
     @media (max-width: 820px) {
@@ -942,87 +843,6 @@ body.dark-mode .sari-platform-ui {
     </div>
 
 </section>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const html = document.documentElement;
-    const themeToggle = document.getElementById('themeToggle');
-    const mobileTheme = document.getElementById('mobileTheme');
-
-    function applyTheme(theme) {
-
-        const isDark = theme === 'dark';
-
-        /* Never allow both theme classes at once. */
-        html.classList.remove('light-mode', 'dark-mode');
-        html.classList.add(isDark ? 'dark-mode' : 'light-mode');
-
-        /* Also support sites that use data-theme. */
-        html.setAttribute('data-theme', isDark ? 'dark' : 'light');
-
-        localStorage.setItem(
-            'sari-theme',
-            isDark ? 'dark' : 'light'
-        );
-
-        if (themeToggle) {
-            themeToggle.setAttribute(
-                'aria-label',
-                isDark
-                    ? 'Switch to light mode'
-                    : 'Switch to dark mode'
-            );
-
-            themeToggle.setAttribute(
-                'title',
-                isDark
-                    ? 'Switch to Light Mode'
-                    : 'Switch to Dark Mode'
-            );
-        }
-
-        if (mobileTheme) {
-            mobileTheme.textContent =
-                isDark
-                    ? '☀ Switch to Light Mode'
-                    : '☾ Switch to Dark Mode';
-        }
-    }
-
-    function toggleTheme() {
-
-        const isDark =
-            html.classList.contains('dark-mode') ||
-            html.getAttribute('data-theme') === 'dark';
-
-        applyTheme(
-            isDark ? 'light' : 'dark'
-        );
-    }
-
-    /* Restore the user's last choice. */
-    const savedTheme =
-        localStorage.getItem('sari-theme');
-
-    applyTheme(
-        savedTheme === 'dark'
-            ? 'dark'
-            : 'light'
-    );
-
-    /* This file may be used inside a page where the navbar lives elsewhere. */
-    themeToggle?.addEventListener(
-        'click',
-        toggleTheme
-    );
-
-    mobileTheme?.addEventListener(
-        'click',
-        toggleTheme
-    );
-
-});
-</script>
 
 
 

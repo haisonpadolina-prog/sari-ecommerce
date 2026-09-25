@@ -4,21 +4,69 @@ namespace App\Services;
 
 use App\Models\SellerAccount;
 use App\Models\SellerProduct;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class BuyerCatalogService
 {
+    private const MARKETPLACE_CATEGORIES = [
+        'fashion' => [
+            'name' => 'Fashion',
+            'subtitle' => 'Everyday style',
+            'image' => 'images/cat-fashion.jpg',
+            'keywords' => ['fashion', 'apparel', 'shoe'],
+        ],
+        'electronics' => [
+            'name' => 'Electronics',
+            'subtitle' => 'Smart essentials',
+            'image' => 'images/cat-electronics.jpg',
+            'keywords' => ['electronic', 'appliance'],
+        ],
+        'home-living' => [
+            'name' => 'Home & Living',
+            'subtitle' => 'Make it yours',
+            'image' => 'images/cat-home.jpg',
+            'keywords' => ['home', 'living', 'furniture'],
+        ],
+        'beauty' => [
+            'name' => 'Beauty',
+            'subtitle' => 'Care & confidence',
+            'image' => 'images/cat-beauty.jpg',
+            'keywords' => ['beauty', 'personal care'],
+        ],
+        'accessories' => [
+            'name' => 'Accessories',
+            'subtitle' => 'The finishing touch',
+            'image' => 'images/cat-accessories.jpg',
+            'keywords' => ['accessor', 'jewel', 'watch', 'fashion', 'apparel'],
+        ],
+        'food-essentials' => [
+            'name' => 'Food & Essentials',
+            'subtitle' => 'Everyday needs',
+            'image' => 'images/cat-food.jpg',
+            'keywords' => ['food', 'beverage', 'grocery', 'essential'],
+        ],
+        'sports' => [
+            'name' => 'Sports',
+            'subtitle' => 'Move your way',
+            'image' => 'images/cat-sports.jpg',
+            'keywords' => ['sport', 'outdoor'],
+        ],
+        'lifestyle' => [
+            'name' => 'Lifestyle',
+            'subtitle' => 'Live it your way',
+            'image' => 'images/cat-lifestyle.jpg',
+            'keywords' => [
+                'lifestyle', 'book', 'stationery', 'automotive', 'baby', 'kids',
+                'pet', 'health', 'wellness', 'toy', 'collectible', 'other',
+            ],
+        ],
+    ];
+
     public function approvedProducts(): Collection
     {
-        return SellerProduct::query()
-            ->with([
-                'seller:id,store_name,email,created_at',
-                'activeVariants',
-                'galleryImages',
-                'reviews:id,seller_product_id,rating',
-            ])
-            ->where('moderation_status', 'approved')
-            ->whereNull('archived_at')
+        return $this->approvedProductsQuery()
             ->orderByDesc('reviewed_at')
             ->orderByDesc('id')
             ->get();
@@ -42,7 +90,7 @@ class BuyerCatalogService
     {
         $product = SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,created_at',
+                'seller:id,store_name,email,store_status,created_at',
                 'activeVariants',
                 'galleryImages',
                 'reviews:id,seller_product_id,rating,comment,created_at',
@@ -50,6 +98,9 @@ class BuyerCatalogService
             ->whereKey($productId)
             ->where('moderation_status', 'approved')
             ->whereNull('archived_at')
+            ->whereHas('seller', fn ($query) => $query->where(function ($q) {
+                $q->whereNull('store_status')->orWhere('store_status', 'open');
+            }))
             ->first();
 
         return $product ? $this->toBuyerProduct($product) : null;
@@ -148,6 +199,93 @@ class BuyerCatalogService
         return array_slice($this->categories(), 0, 8);
     }
 
+    public function marketplaceCategories(): array
+    {
+        return collect(self::MARKETPLACE_CATEGORIES)
+            ->map(function (array $definition, string $slug) {
+                return [
+                    'slug' => $slug,
+                    'name' => $definition['name'],
+                    'subtitle' => $definition['subtitle'],
+                    'image' => $definition['image'],
+                ];
+            })
+            ->values()
+            ->all();
+    }
+
+    public function categoryDefinition(string $slug): ?array
+    {
+        $slug = strtolower(trim($slug));
+        $definition = self::MARKETPLACE_CATEGORIES[$slug] ?? null;
+
+        if (!$definition) {
+            return null;
+        }
+
+        return [
+            'slug' => $slug,
+            'name' => $definition['name'],
+            'subtitle' => $definition['subtitle'],
+            'image' => $definition['image'],
+        ];
+    }
+
+    public function categoryProducts(
+        string $slug,
+        string $search = '',
+        string $sort = 'featured',
+        int $perPage = 20,
+    ): LengthAwarePaginator {
+        $slug = strtolower(trim($slug));
+        $definition = self::MARKETPLACE_CATEGORIES[$slug] ?? null;
+
+        abort_unless($definition, 404);
+
+        $query = $this->approvedProductsQuery();
+        $keywords = $definition['keywords'];
+
+        $query->where(function (Builder $categoryQuery) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $categoryQuery->orWhere('category', 'like', '%' . $keyword . '%');
+            }
+        });
+
+        $search = trim($search);
+
+        if ($search !== '') {
+            $query->where(function (Builder $searchQuery) use ($search) {
+                $like = '%' . $search . '%';
+
+                $searchQuery
+                    ->where('name', 'like', $like)
+                    ->orWhere('brand', 'like', $like)
+                    ->orWhere('category', 'like', $like)
+                    ->orWhereHas('seller', fn (Builder $sellerQuery) =>
+                        $sellerQuery->where('store_name', 'like', $like)
+                    );
+            });
+        }
+
+        match ($sort) {
+            'newest' => $query->orderByDesc('id'),
+            'price_low' => $query->orderBy('price')->orderByDesc('id'),
+            'price_high' => $query->orderByDesc('price')->orderByDesc('id'),
+            default => $query->orderByDesc('reviewed_at')->orderByDesc('id'),
+        };
+
+        $paginator = $query
+            ->paginate(max(8, min(48, $perPage)))
+            ->withQueryString();
+
+        $paginator->setCollection(
+            $paginator->getCollection()
+                ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
+        );
+
+        return $paginator;
+    }
+
     private function toBuyerProduct(SellerProduct $product): array
     {
         $variants = $product->activeVariants ?? collect();
@@ -175,7 +313,7 @@ class BuyerCatalogService
         }
 
         $basePrice = max(0, (float) ($product->price ?? 0));
-        $discountPercent = min(100, max(0, (float) ($product->discount ?? 0)));
+        $discountPercent = $this->effectiveDiscountPercent($product);
         $sellingPrice = $this->discounted($basePrice, $discountPercent);
         $stock = $variants->isNotEmpty()
             ? (int) $variants->sum('stock')
@@ -274,6 +412,8 @@ class BuyerCatalogService
             'price' => $sellingPrice,
             'old_price' => $discountPercent > 0 ? $basePrice : null,
             'discount_percent' => $discountPercent,
+            'flash_sale_active' => $this->isFlashSaleActive($product),
+            'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
             'voucher' => null,
             'free_shipping' => (bool) ($product->free_shipping ?? false),
             'rating' => $rating,
@@ -360,6 +500,28 @@ class BuyerCatalogService
         ];
     }
 
+    private function isFlashSaleActive(SellerProduct $product): bool
+    {
+        return (float) ($product->discount ?? 0) > 0
+            && $product->flash_sale_ends_at !== null
+            && now()->lt($product->flash_sale_ends_at);
+    }
+
+    private function effectiveDiscountPercent(SellerProduct $product): float
+    {
+        $discount = min(100, max(0, (float) ($product->discount ?? 0)));
+
+        if ($discount <= 0) {
+            return 0.0;
+        }
+
+        if ($product->flash_sale_ends_at !== null && now()->gte($product->flash_sale_ends_at)) {
+            return 0.0;
+        }
+
+        return $discount;
+    }
+
     private function discounted(float $base, float $discountPercent): float
     {
         return round($discountPercent > 0 ? $base * (1 - ($discountPercent / 100)) : $base, 2);
@@ -389,6 +551,22 @@ class BuyerCatalogService
         }
 
         return [];
+    }
+
+    private function approvedProductsQuery(): Builder
+    {
+        return SellerProduct::query()
+            ->with([
+                'seller:id,store_name,email,store_status,created_at',
+                'activeVariants',
+                'galleryImages',
+                'reviews:id,seller_product_id,rating,comment,created_at',
+            ])
+            ->where('moderation_status', 'approved')
+            ->whereNull('archived_at')
+            ->whereHas('seller', fn (Builder $query) => $query->where(function (Builder $sellerQuery) {
+                $sellerQuery->whereNull('store_status')->orWhere('store_status', 'open');
+            }));
     }
 
     private function categoryImage(string $category): string

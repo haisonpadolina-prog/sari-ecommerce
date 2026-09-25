@@ -659,6 +659,408 @@
             transition: none !important;
         }
     }
+
+    /* ============================================================
+       REGISTRATION STATUS V2 — COMPACT / CLEAN / POPPINS
+       Visual-only sizing layer. Status polling and Laravel logic
+       remain untouched.
+       ============================================================ */
+
+    .sari-status-page {
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+        padding: 18px 14px 22px !important;
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    .sari-status-shell {
+        width: min(100%, 720px) !important;
+    }
+
+    .sari-status-card {
+        border-radius: 18px !important;
+        padding: 24px 26px 22px !important;
+        box-shadow: 0 14px 42px rgba(40, 32, 20, .07) !important;
+    }
+
+    /* Brand */
+    .sari-status-logo {
+        width: 120px !important;
+        filter: brightness(0) !important;
+    }
+
+    /* Status animation / state icon */
+    .sari-status-animation-wrap {
+        width: 78px !important;
+        height: 78px !important;
+        margin-top: 14px !important;
+    }
+
+    .sari-waiting-animation {
+        width: 72px !important;
+        height: 72px !important;
+    }
+
+    .sari-approved-icon,
+    .sari-rejected-icon {
+        width: 58px !important;
+        height: 58px !important;
+    }
+
+    .sari-approved-icon svg,
+    .sari-rejected-icon svg {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    /* Hero typography */
+    .sari-status-eyebrow {
+        margin-top: 10px !important;
+        font-size: 7.5px !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: .15em !important;
+    }
+
+    .sari-status-title {
+        max-width: 560px !important;
+        margin: 7px auto 0 !important;
+        font-size: clamp(21px, 2vw, 25px) !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+        letter-spacing: -.032em !important;
+    }
+
+    .sari-status-copy {
+        width: min(100%, 540px) !important;
+        margin-top: 8px !important;
+        font-size: 10px !important;
+        line-height: 1.65 !important;
+        color: #777067 !important;
+    }
+
+    /* Email notification card */
+    .sari-email-card {
+        width: min(100%, 500px) !important;
+        margin-top: 15px !important;
+        gap: 10px !important;
+        border-radius: 11px !important;
+        padding: 10px 12px !important;
+        background: #fffdf9 !important;
+    }
+
+    .sari-email-icon {
+        width: 32px !important;
+        height: 32px !important;
+        flex-basis: 32px !important;
+        border-radius: 9px !important;
+    }
+
+    .sari-email-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .sari-email-label {
+        font-size: 8px !important;
+        line-height: 1.35 !important;
+    }
+
+    .sari-email-value {
+        margin-top: 2px !important;
+        font-size: 10.5px !important;
+        line-height: 1.4 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Rejection message */
+    .sari-rejection-note {
+        width: min(100%, 540px) !important;
+        margin-top: 13px !important;
+        border-radius: 10px !important;
+        padding: 10px 12px !important;
+    }
+
+    .sari-rejection-note strong {
+        font-size: 9px !important;
+    }
+
+    .sari-rejection-note p {
+        margin-top: 3px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Details accordion */
+    .sari-details {
+        margin-top: 17px !important;
+        padding-top: 14px !important;
+    }
+
+    .sari-details-toggle {
+        gap: 10px !important;
+    }
+
+    .sari-details-toggle-copy {
+        gap: 9px !important;
+    }
+
+    .sari-details-toggle-icon {
+        width: 31px !important;
+        height: 31px !important;
+        flex-basis: 31px !important;
+        border-radius: 8px !important;
+    }
+
+    .sari-details-toggle-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .sari-details-toggle-title {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-details-toggle-subtitle {
+        margin-top: 1px !important;
+        font-size: 8.5px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-details-chevron {
+        width: 15px !important;
+        height: 15px !important;
+        flex-basis: 15px !important;
+    }
+
+    /* Role tabs */
+    .sari-role-tabs {
+        gap: 6px !important;
+        margin-top: 13px !important;
+    }
+
+    .sari-role-tab {
+        min-height: 31px !important;
+        gap: 6px !important;
+        border-radius: 8px !important;
+        padding: 6px 9px !important;
+        font-size: 9px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-role-tab svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    /* Per-role process panel */
+    .sari-role-panel {
+        margin-top: 10px !important;
+        border-radius: 11px !important;
+        padding: 12px !important;
+    }
+
+    .sari-role-panel-head {
+        gap: 9px !important;
+    }
+
+    .sari-role-panel-title {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-role-panel-copy {
+        margin-top: 2px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .sari-current-role-badge {
+        padding: 4px 6px !important;
+        font-size: 6.8px !important;
+        letter-spacing: .04em !important;
+    }
+
+    .sari-process {
+        grid-template-columns: repeat(var(--step-count), minmax(70px, 1fr)) !important;
+        gap: 7px !important;
+        margin-top: 12px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .sari-process-step {
+        min-width: 70px !important;
+    }
+
+    .sari-process-step:not(:last-child)::after {
+        top: 16px !important;
+        left: calc(50% + 20px) !important;
+        width: calc(100% - 40px + 7px) !important;
+    }
+
+    .sari-process-icon {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .sari-process-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .sari-process-label {
+        margin-top: 5px !important;
+        font-size: 7.8px !important;
+        line-height: 1.3 !important;
+        font-weight: 500 !important;
+    }
+
+    /* Bottom actions */
+    .sari-status-actions {
+        gap: 8px !important;
+        margin-top: 18px !important;
+        padding-top: 15px !important;
+    }
+
+    .sari-status-button {
+        min-height: 40px !important;
+        border-radius: 9px !important;
+        padding: 0 16px !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 9.8px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Common laptop screens, e.g. 1366 × 768 at 100% */
+    @media (max-height: 820px) and (min-width: 641px) {
+        .sari-status-page {
+            padding-top: 10px !important;
+            padding-bottom: 12px !important;
+        }
+
+        .sari-status-shell {
+            width: min(100%, 680px) !important;
+        }
+
+        .sari-status-card {
+            padding: 18px 22px 17px !important;
+        }
+
+        .sari-status-logo {
+            width: 105px !important;
+        }
+
+        .sari-status-animation-wrap {
+            width: 66px !important;
+            height: 66px !important;
+            margin-top: 10px !important;
+        }
+
+        .sari-waiting-animation {
+            width: 61px !important;
+            height: 61px !important;
+        }
+
+        .sari-status-eyebrow {
+            margin-top: 7px !important;
+        }
+
+        .sari-status-title {
+            margin-top: 5px !important;
+            font-size: 21px !important;
+        }
+
+        .sari-status-copy {
+            margin-top: 6px !important;
+            font-size: 9.3px !important;
+            line-height: 1.55 !important;
+        }
+
+        .sari-email-card {
+            margin-top: 11px !important;
+            padding: 8px 10px !important;
+        }
+
+        .sari-details {
+            margin-top: 13px !important;
+            padding-top: 11px !important;
+        }
+
+        .sari-status-actions {
+            margin-top: 14px !important;
+            padding-top: 12px !important;
+        }
+
+        .sari-status-button {
+            min-height: 36px !important;
+            font-size: 9.2px !important;
+        }
+    }
+
+    /* Mobile remains compact but readable/tappable */
+    @media (max-width: 640px) {
+        .sari-status-page {
+            padding: 12px 9px 18px !important;
+        }
+
+        .sari-status-shell {
+            width: 100% !important;
+        }
+
+        .sari-status-card {
+            border-radius: 15px !important;
+            padding: 20px 15px 18px !important;
+        }
+
+        .sari-status-logo {
+            width: 108px !important;
+        }
+
+        .sari-status-animation-wrap {
+            width: 70px !important;
+            height: 70px !important;
+            margin-top: 12px !important;
+        }
+
+        .sari-waiting-animation {
+            width: 65px !important;
+            height: 65px !important;
+        }
+
+        .sari-status-title {
+            font-size: 21px !important;
+        }
+
+        .sari-status-copy {
+            font-size: 10px !important;
+            line-height: 1.6 !important;
+        }
+
+        .sari-email-card {
+            width: 100% !important;
+        }
+
+        .sari-role-tab {
+            min-height: 36px !important;
+            font-size: 9.5px !important;
+        }
+
+        .sari-process {
+            grid-template-columns: repeat(var(--step-count), minmax(68px, 1fr)) !important;
+        }
+
+        .sari-status-actions {
+            flex-direction: column !important;
+        }
+
+        .sari-status-button {
+            width: 100% !important;
+            min-height: 44px !important;
+            font-size: 10.5px !important;
+        }
+    }
+
 </style>
 
 <div class="sari-status-page">

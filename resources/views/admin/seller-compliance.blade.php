@@ -37,1260 +37,209 @@
         });
 
     $flaggedSellerCount = $flaggedSellerGroups->count();
+
+    // Performance: index warning history once by seller instead of
+    // re-filtering the complete warning collection inside every modal.
+    $complianceWarningsBySeller = $recentWarnings
+        ->groupBy(function ($warning) {
+            return (string) (
+                $warning->seller?->id
+                ?? $warning->seller_account_id
+                ?? $warning->seller_id
+                ?? ''
+            );
+        });
 @endphp
 
 <style>
-    .compliance-card {
-        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-
-    .compliance-card:hover {
-        transform: translateY(-2px);
-        border-color: #ddd5ca;
-        box-shadow: 0 16px 36px rgba(66, 55, 42, .06);
-    }
-
-    .compliance-control {
-        color: #332e28 !important;
-        -webkit-text-fill-color: #332e28 !important;
-        background: #fff !important;
-        transition: border-color .2s ease, box-shadow .2s ease;
-    }
-
-    .compliance-control::placeholder {
-        color: #aaa196 !important;
-        -webkit-text-fill-color: #aaa196 !important;
-    }
-
-    .compliance-control:focus {
-        outline: none;
-        border-color: #c99128 !important;
-        box-shadow: 0 0 0 4px rgba(201, 145, 40, .08);
-    }
-
-    .compliance-tab {
-        white-space: nowrap;
-        transition: background-color .2s ease, color .2s ease, border-color .2s ease;
-    }
-
-    .compliance-tab[data-active="true"] {
-        border-color: #eadfc9;
-        background: #fff8ec;
-        color: #8f6418;
-    }
-
-    [data-compliance-panel][hidden] {
-        display: none !important;
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | ENTERPRISE COMPLIANCE UI — READABLE RESPONSIVE TYPOGRAPHY
-    |--------------------------------------------------------------------------
-    | Keeps all existing Blade/backend actions intact while making the Admin
-    | compliance workspace easier to scan on laptops, desktops, zoomed-out
-    | screens, and smaller displays.
-    */
-    .seller-compliance-page {
-        --cp-xs: clamp(0.74rem, 0.70rem + 0.08vw, 0.82rem);
-        --cp-sm: clamp(0.80rem, 0.75rem + 0.10vw, 0.90rem);
-        --cp-md: clamp(0.88rem, 0.82rem + 0.14vw, 0.98rem);
-        --cp-lg: clamp(1rem, 0.93rem + 0.18vw, 1.14rem);
-        --cp-xl: clamp(1.22rem, 1.10rem + 0.30vw, 1.45rem);
-        --cp-title: clamp(1.65rem, 1.42rem + 0.55vw, 2.05rem);
-    }
-
-    /* Replace the old 6–11px visual scale without touching markup logic. */
-    .seller-compliance-page [class*="text-[6px]"],
-    .seller-compliance-page [class*="text-[6.5px]"],
-    .seller-compliance-page [class*="text-[7px]"],
-    .seller-compliance-page [class*="text-[7.5px]"] {
-        font-size: var(--cp-xs) !important;
-        line-height: 1.45 !important;
-    }
-
-    .seller-compliance-page [class*="text-[8px]"],
-    .seller-compliance-page [class*="text-[8.5px]"] {
-        font-size: var(--cp-sm) !important;
-        line-height: 1.5 !important;
-    }
-
-    .seller-compliance-page [class*="text-[9px]"],
-    .seller-compliance-page [class*="text-[9.5px]"],
-    .seller-compliance-page [class*="text-[10px]"] {
-        font-size: var(--cp-md) !important;
-        line-height: 1.5 !important;
-    }
-
-    .seller-compliance-page [class*="text-[11px]"] {
-        font-size: var(--cp-lg) !important;
-        line-height: 1.4 !important;
-    }
-
-    .seller-compliance-page [class*="text-[13px]"] {
-        font-size: clamp(.98rem, .92rem + .14vw, 1.08rem) !important;
-        line-height: 1.35 !important;
-    }
-
-    .seller-compliance-page [class*="text-[23px]"],
-    .seller-compliance-page [class*="text-[27px]"] {
-        font-size: var(--cp-title) !important;
-        line-height: 1.15 !important;
-    }
-
-    .seller-compliance-page .compliance-control {
-        min-height: 44px;
-        font-size: var(--cp-sm) !important;
-        line-height: 1.45 !important;
-    }
-
-    .seller-compliance-page textarea.compliance-control {
-        min-height: 116px;
-    }
-
-    .seller-compliance-page .compliance-tab {
-        min-height: 44px;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        font-size: var(--cp-sm) !important;
-    }
-
-    .seller-compliance-page .compliance-surface {
-        box-shadow: 0 10px 28px rgba(45, 37, 28, .035);
-    }
-
-    .seller-compliance-page .compliance-summary-card {
-        min-height: 104px;
-        box-shadow: 0 7px 18px rgba(45, 37, 28, .028);
-        transition:
-            transform .18s ease,
-            box-shadow .18s ease,
-            border-color .18s ease;
-    }
-
-    .seller-compliance-page .compliance-summary-card:hover {
-        transform: translateY(-1px);
-        border-color: #ddd3c7;
-        box-shadow: 0 12px 28px rgba(45, 37, 28, .045);
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:first-child > p:first-child {
-        font-size: var(--cp-sm) !important;
-        line-height: 1.35 !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:first-child > p:nth-child(2) {
-        font-size: clamp(1.45rem, 1.30rem + .34vw, 1.80rem) !important;
-        line-height: 1 !important;
-    }
-
-    .seller-compliance-page .compliance-card {
-        border-radius: 20px;
-        box-shadow: 0 8px 22px rgba(45, 37, 28, .032);
-    }
-
-    .seller-compliance-page .compliance-card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 28px rgba(45, 37, 28, .045);
-    }
-
-    .seller-compliance-page .compliance-card button,
-    .seller-compliance-page form button {
-        min-height: 40px;
-        font-size: var(--cp-sm) !important;
-    }
-
-    .seller-compliance-page table th {
-        font-size: var(--cp-xs) !important;
-        line-height: 1.4 !important;
-    }
-
-    .seller-compliance-page table td,
-    .seller-compliance-page table tbody {
-        font-size: var(--cp-sm) !important;
-        line-height: 1.5 !important;
-    }
-
-    .seller-compliance-page .compliance-workspace {
-        box-shadow: 0 12px 30px rgba(45, 37, 28, .035);
-    }
-
-    .seller-compliance-page .compliance-workspace-tabs {
-        background:
-            linear-gradient(180deg, #ffffff 0%, #fdfbf8 100%);
-    }
-
-    .seller-compliance-page .flagged-review-grid {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .seller-compliance-page .flagged-product-image {
-        min-height: 116px;
-    }
-
-    @media (min-width: 640px) {
-        .seller-compliance-page .flagged-product-image {
-            width: 116px !important;
-            height: 116px !important;
-        }
-    }
-
-    @media (min-width: 1536px) {
-        .seller-compliance-page .flagged-review-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    @media (min-width: 1280px) {
-        .seller-compliance-page .compliance-summary-grid {
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-        }
-    }
-
-    @media (max-width: 639px) {
-        .seller-compliance-page {
-            --cp-xs: .76rem;
-            --cp-sm: .82rem;
-            --cp-md: .90rem;
-            --cp-lg: 1rem;
-        }
-
-        .seller-compliance-page .compliance-summary-card {
-            min-height: 108px;
-        }
-    }
-
-
-    .seller-compliance-page .compliance-card > section,
-    .seller-compliance-page .compliance-card > div.rounded-\[14px\],
-    .seller-compliance-page .compliance-card > div.rounded-\[15px\] {
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .compliance-card .grid.grid-cols-2.gap-2 > div {
-        min-height: auto !important;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .compliance-card,
-        .compliance-control,
-        .compliance-tab {
-            transition: none !important;
-            transform: none !important;
-        }
-    }
-
-    /* =========================================================
-       SARI SELLER COMPLIANCE — CLEAN ENTERPRISE REFINEMENT
-       Visual layer only. Existing backend and JS behavior retained.
-       ========================================================= */
+    /* ============================================================
+       SARI SELLER COMPLIANCE — ENTERPRISE / PERFORMANCE EDITION
+       Poppins • compact admin density • reduced paint cost
+       ============================================================ */
 
     .seller-compliance-page {
+        --sc-gold: #d99500;
+        --sc-gold-dark: #b97d05;
+        --sc-ink: #26211c;
+        --sc-text: #514a42;
+        --sc-muted: #8c8378;
+        --sc-line: #e9e2d9;
+        --sc-soft: #faf9f6;
+        --sc-danger: #b45c54;
+        --sc-success: #4f8060;
+        width: 100%;
+        max-width: 1640px !important;
+        margin-inline: auto;
+        padding-bottom: 20px;
         font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        padding-bottom: 1.5rem;
+        color: var(--sc-ink);
     }
 
-    /* Page heading */
+    .seller-compliance-page *,
+    .seller-compliance-page *::before,
+    .seller-compliance-page *::after {
+        box-sizing: border-box;
+    }
+
+    /* ---------- Shared motion: keep it cheap ---------- */
+    .seller-compliance-page button,
+    .seller-compliance-page a,
+    .seller-compliance-page .compliance-control,
+    .seller-compliance-page .filter-dropdown-menu {
+        transition:
+            color .15s ease,
+            background-color .15s ease,
+            border-color .15s ease,
+            opacity .15s ease,
+            transform .15s ease;
+    }
+
+    /* ---------- Page header ---------- */
     .compliance-page-header {
-        margin-bottom: 16px;
+        margin-bottom: 12px !important;
+        gap: 12px !important;
+    }
+
+    .compliance-page-header-main {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 10px !important;
     }
 
     .compliance-page-icon {
-        box-shadow:
-            0 2px 5px rgba(75, 54, 25, .03),
-            0 9px 20px rgba(75, 54, 25, .06);
+        display: grid;
+        width: 36px !important;
+        height: 36px !important;
+        flex: 0 0 36px !important;
+        place-items: center;
+        border: 1px solid #eadfc9 !important;
+        border-radius: 10px !important;
+        background: #fff8eb !important;
+        color: #b77c18 !important;
+        box-shadow: 0 4px 12px rgba(75,54,25,.045) !important;
+    }
+
+    .compliance-page-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .compliance-eyebrow {
+        margin: 0 !important;
+        color: #9a7b43 !important;
+        font-size: 7px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .13em !important;
+        text-transform: uppercase;
     }
 
     .compliance-page-title {
-        font-size: clamp(1.75rem, 1.55rem + .5vw, 2.15rem);
-        line-height: 1.08;
+        margin: 3px 0 0 !important;
+        font-size: clamp(22px, 1.55vw, 27px) !important;
+        font-weight: 700 !important;
+        line-height: 1.08 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .compliance-title-base {
+        color: #17130f !important;
+    }
+
+    .compliance-title-accent {
+        color: var(--sc-gold) !important;
     }
 
     .compliance-page-subtitle {
-        font-size: clamp(.73rem, .70rem + .08vw, .81rem);
-        line-height: 1.65;
+        max-width: 760px !important;
+        margin: 5px 0 0 !important;
+        color: #81786c !important;
+        font-size: 9.5px !important;
+        font-weight: 400 !important;
+        line-height: 1.55 !important;
     }
 
     .compliance-account-control {
-        min-height: 39px;
-        font-size: clamp(.72rem, .69rem + .06vw, .78rem);
-        box-shadow:
-            0 2px 4px rgba(148, 98, 8, .04),
-            0 8px 18px rgba(148, 98, 8, .16);
-    }
-
-    /* Summary cards — light floating depth, no selected-state noise */
-    .seller-compliance-page .compliance-summary-grid {
-        gap: 12px;
-    }
-
-    .seller-compliance-page .compliance-summary-card {
-        min-height: 100px;
-        border-radius: 16px !important;
-        border-color: #e9e1d7 !important;
-        background: #fff !important;
-        box-shadow:
-            0 2px 4px rgba(61, 43, 22, .03),
-            0 10px 24px rgba(61, 43, 22, .06),
-            0 20px 38px rgba(61, 43, 22, .025) !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card:hover {
-        transform: translateY(-1px);
-        border-color: #ddcfb8 !important;
-        box-shadow:
-            0 3px 6px rgba(61, 43, 22, .035),
-            0 14px 30px rgba(61, 43, 22, .075),
-            0 24px 44px rgba(61, 43, 22, .03) !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:last-child {
-        border-radius: 10px !important;
-        box-shadow: 0 4px 12px rgba(61, 43, 22, .035);
-    }
-
-    /* Main moderation workspace */
-    .seller-compliance-page .compliance-workspace {
-        border-radius: 18px !important;
-        border-color: #e9e1d7 !important;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .035),
-            0 13px 30px rgba(61, 43, 22, .07),
-            0 26px 52px rgba(61, 43, 22, .03) !important;
-    }
-
-    .seller-compliance-page .compliance-workspace-tabs {
-        padding: 10px 12px !important;
-        background: #faf9f6 !important;
-    }
-
-    .seller-compliance-page .compliance-workspace-tabs > div {
-        gap: 5px !important;
-    }
-
-    .seller-compliance-page .compliance-tab {
-        min-height: 38px;
+        min-height: 34px !important;
         border-radius: 9px !important;
-        border-color: transparent !important;
-        background: transparent !important;
         padding-inline: 12px !important;
-        color: #756d63;
-        font-weight: 600;
+        font-size: 8.5px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 5px 14px rgba(217,149,0,.13) !important;
     }
 
-    .seller-compliance-page .compliance-tab:hover {
-        background: #fff !important;
-        color: #51483f;
-    }
-
-    .seller-compliance-page .compliance-tab[data-active="true"] {
-        border-color: #e7d4aa !important;
-        background: #fff9ee !important;
-        color: #9a6706 !important;
-        box-shadow:
-            0 1px 2px rgba(61, 43, 22, .025),
-            0 5px 12px rgba(100, 72, 28, .05);
-    }
-
-    .seller-compliance-page .compliance-tab span {
-        box-shadow: none !important;
-        border: 1px solid #eee7dd;
-    }
-
-    /* Search and filter controls */
-    .seller-compliance-page .compliance-control {
-        min-height: 39px !important;
-        border-radius: 10px !important;
-        border-color: #e5ddd2 !important;
-        box-shadow: none !important;
-        font-size: clamp(.74rem, .71rem + .06vw, .80rem) !important;
-    }
-
-    .seller-compliance-page .compliance-control:hover {
-        border-color: #d9cbbb !important;
-    }
-
-    .seller-compliance-page .compliance-control:focus {
-        border-color: #d49a2b !important;
-        box-shadow: 0 0 0 3px rgba(217,149,0,.075) !important;
-    }
-
-    /* Flagged seller list */
-    .compliance-seller-row {
-        border-color: #ebe4da !important;
-        box-shadow:
-            0 1px 2px rgba(61, 43, 22, .018),
-            0 7px 18px rgba(61, 43, 22, .04);
-    }
-
-    .compliance-seller-row:hover {
-        transform: none !important;
-        border-color: #ddcfb8 !important;
-        background: #fffdfa !important;
-        box-shadow:
-            0 2px 4px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .055);
-    }
-
-    .compliance-seller-row [data-flagged-seller-open] {
-        width: 38px;
-        padding-inline: 0 !important;
-        border-radius: 10px !important;
-        background: #fff !important;
-        box-shadow: 0 4px 10px rgba(61,43,22,.03);
-    }
-
-    .compliance-seller-row [data-flagged-seller-open]:hover {
-        background: #fff9ee !important;
-    }
-
-    /* Other compliance cards */
-    .seller-compliance-page .compliance-card {
-        border-radius: 16px !important;
-        border-color: #e9e1d7 !important;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 9px 22px rgba(61,43,22,.045) !important;
-    }
-
-    .seller-compliance-page .compliance-card:hover {
-        transform: none !important;
-        border-color: #ddcfb8 !important;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.03),
-            0 12px 26px rgba(61,43,22,.06) !important;
-    }
-
-    /* =========================================================
-       SELLER REVIEW MODAL
-       ========================================================= */
-    .seller-review-modal {
-        background: rgba(27, 22, 17, .34) !important;
-        backdrop-filter: blur(2px);
-    }
-
-    .seller-review-dialog {
-        max-width: 1120px !important;
-        max-height: 90vh !important;
-        border-radius: 20px !important;
-        border-color: #e7dfd5 !important;
-        box-shadow:
-            0 18px 45px rgba(31, 24, 17, .14),
-            0 38px 90px rgba(31, 24, 17, .16) !important;
-    }
-
-    .seller-review-header {
-        padding-top: 16px !important;
-        padding-bottom: 16px !important;
-        background: #fff !important;
-    }
-
-    .seller-review-header > div:first-child > div:first-child {
-        border-radius: 11px !important;
-        box-shadow: 0 5px 13px rgba(38, 31, 24, .08);
-    }
-
-    .seller-review-header h3 {
-        font-size: clamp(1rem, .95rem + .18vw, 1.16rem) !important;
-        letter-spacing: -.02em;
-    }
-
-    .seller-review-header form button,
-    .seller-review-header [data-flagged-seller-close] {
-        min-height: 37px !important;
-        border-radius: 9px !important;
-    }
-
-    .seller-review-body {
-        background: #f8f7f4 !important;
-        padding: 16px !important;
-        scrollbar-width: thin;
-        scrollbar-color: #cfc7bd transparent;
-    }
-
-    .seller-review-body::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .seller-review-body::-webkit-scrollbar-thumb {
-        background: #cfc7bd;
-        border-radius: 999px;
-    }
-
-    .seller-review-stat {
-        border-radius: 12px !important;
-        border-color: #e7dfd5 !important;
-        background: #fff !important;
-        box-shadow:
-            0 1px 2px rgba(61,43,22,.02),
-            0 5px 14px rgba(61,43,22,.035);
-    }
-
-    .seller-review-product {
-        border-radius: 16px !important;
-        border-color: #e5ddd2 !important;
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 10px 24px rgba(61,43,22,.05) !important;
-    }
-
-    .seller-review-product > div:first-child {
-        padding: 16px !important;
-    }
-
-    .seller-review-product > div:first-child > div:first-child {
-        border-radius: 12px !important;
-        background: #f7f5f1 !important;
-    }
-
-    .seller-review-product .grid.grid-cols-2.gap-2.sm\:grid-cols-4 > div {
-        border: 1px solid #eee8df;
-        background: #faf9f6 !important;
-        border-radius: 10px !important;
-    }
-
-    /* Screening results are structured and calm rather than large tinted boxes */
-    .seller-screening-grid {
-        gap: 10px !important;
-        background: #faf9f6 !important;
-    }
-
-    .screening-panel {
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .screening-panel::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 12px;
-        bottom: 12px;
-        width: 3px;
-        border-radius: 0 999px 999px 0;
-    }
-
-    .screening-panel-local {
-        border-color: #ead9d7 !important;
-    }
-
-    .screening-panel-local::before {
-        background: #bd6b62;
-    }
-
-    .screening-panel-ai {
-        border-color: #e7ddc8 !important;
-        background: #fffdfa !important;
-    }
-
-    .screening-panel-ai::before {
-        background: #d99500;
-    }
-
-    .screening-panel-ai > div:first-child > p:first-child {
-        color: #8f6418 !important;
-    }
-
-    .screening-panel-ai .rounded-xl.border {
-        border-color: #ebe3d8 !important;
-        background: #fff !important;
-    }
-
-    .seller-review-product details > summary {
-        min-height: 50px;
-        background: #fff;
-    }
-
-    .seller-review-product details[open] > summary {
-        background: #faf9f6;
-    }
-
-    .seller-review-actions {
-        gap: 7px !important;
-        background: #fff !important;
-    }
-
-    .seller-review-actions button {
-        min-height: 38px !important;
-        border-radius: 9px !important;
-    }
-
-    .seller-review-actions form:first-child button {
-        background: #f4f9f5 !important;
-        border-color: #d5e5da !important;
-    }
-
-    .seller-review-actions form:nth-child(2) button {
-        background: #fff !important;
-        border-color: #e4ddd3 !important;
-    }
-
-    .seller-review-actions > button {
-        background: #b8685f !important;
-        box-shadow: 0 5px 12px rgba(168, 92, 84, .13);
-    }
-
-    /* Warning dialog */
-    .warning-modal-backdrop {
-        background: rgba(27,22,17,.32) !important;
-        backdrop-filter: blur(2px);
-    }
-
-    .warning-modal-dialog {
-        max-width: 590px !important;
-        border-radius: 18px !important;
-        border-color: #e7dfd5 !important;
-        box-shadow:
-            0 16px 40px rgba(31,24,17,.13),
-            0 34px 76px rgba(31,24,17,.14) !important;
-    }
-
-    /* Table/panel polish */
-    .seller-compliance-page table thead {
-        background: #faf9f6;
-    }
-
-    .seller-compliance-page table tbody tr {
-        transition: background-color .14s ease;
-    }
-
-    .seller-compliance-page table tbody tr:hover {
-        background: #fffdfa;
-    }
-
-    @media (max-width: 767px) {
-        .compliance-page-header {
-            align-items: stretch;
-        }
-
-        .compliance-page-title {
-            font-size: 1.65rem;
-        }
-
-        .compliance-account-control {
-            width: 100%;
-        }
-
-        .seller-compliance-page .compliance-summary-card,
-        .seller-compliance-page .compliance-workspace,
-        .seller-compliance-page .compliance-card {
-            box-shadow:
-                0 2px 5px rgba(61,43,22,.03),
-                0 10px 24px rgba(61,43,22,.055) !important;
-        }
-
-        .seller-review-dialog {
-            max-height: 94vh !important;
-            border-radius: 16px !important;
-        }
-
-        .seller-review-body {
-            padding: 12px !important;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER MODAL — LAYOUT REWORK
-       ========================================================= */
-
-    .seller-review-dialog {
-        width: min(1160px, calc(100vw - 32px)) !important;
-        max-width: 1160px !important;
-    }
-
-    .seller-review-header {
-        position: relative;
-        z-index: 2;
-        box-shadow: 0 1px 0 rgba(61,43,22,.045);
-    }
-
-    .seller-review-identity {
-        align-items: center;
-    }
-
-    .seller-review-identity > div:first-child {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px !important;
-        box-shadow:
-            0 2px 4px rgba(37,29,19,.04),
-            0 8px 18px rgba(37,29,19,.08);
-    }
-
-    .seller-review-header form button {
-        box-shadow:
-            0 2px 4px rgba(70,55,87,.03),
-            0 8px 18px rgba(70,55,87,.08);
-    }
-
-    .seller-review-header [data-flagged-seller-close] {
-        box-shadow:
-            0 1px 2px rgba(61,43,22,.025),
-            0 5px 12px rgba(61,43,22,.04);
-    }
-
-    .seller-review-stats-grid {
-        margin-bottom: 2px;
-    }
-
-    .seller-review-stat {
-        min-height: 84px;
-        padding: 14px !important;
-    }
-
-    .seller-review-stat p:first-child {
-        font-size: .76rem !important;
-        color: #8c8377 !important;
-    }
-
-    .seller-review-stat p:last-child {
-        margin-top: .3rem !important;
-        font-size: 1.08rem !important;
-        letter-spacing: -.02em;
-    }
-
-    .seller-review-listings {
-        gap: 16px !important;
-    }
-
-    .seller-review-product {
-        border-radius: 18px !important;
-        overflow: hidden;
-    }
-
-    .seller-review-product-intro {
-        background:
-            linear-gradient(180deg, #fffdfa 0%, #fcfbf8 100%) !important;
-    }
-
-    .seller-review-product-summary {
-        display: grid !important;
-        grid-template-columns: 118px minmax(0, 1fr);
-        align-items: start;
-    }
-
-    .seller-review-product-image {
-        width: 118px !important;
-        height: 118px !important;
-        box-shadow:
-            0 2px 5px rgba(61,43,22,.03),
-            0 8px 18px rgba(61,43,22,.04);
-    }
-
-    .seller-review-product-main {
-        min-width: 0;
-    }
-
-    .seller-review-product-main h4 {
-        font-size: 1.02rem !important;
-        line-height: 1.2 !important;
-        letter-spacing: -.02em;
-    }
-
-    .seller-review-product-main > div:first-child > div:first-child > p {
-        font-size: .86rem !important;
-    }
-
-    .seller-review-product-stats {
-        gap: 10px !important;
-    }
-
-    .seller-review-product-metric {
-        border: 1px solid #eee7de;
-        border-radius: 12px !important;
-        background: #faf9f6 !important;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
-    }
-
-    .seller-review-product-metric p:first-child {
-        color: #91887d !important;
-    }
-
-    .seller-review-subsection {
-        background: #fff !important;
-    }
-
-    .seller-screening-grid {
-        gap: 12px !important;
-        border-top: none !important;
-        padding-top: 12px !important;
-        align-items: stretch;
-    }
-
-    .screening-panel {
-        display: flex;
-        flex-direction: column;
-        min-height: 235px;
-        border-radius: 14px !important;
-        padding: 16px !important;
-        box-shadow:
-            0 1px 2px rgba(61,43,22,.02),
-            0 6px 16px rgba(61,43,22,.035) !important;
-    }
-
-    .screening-panel::before {
-        top: 14px;
-        bottom: auto;
-        width: 4px;
-        height: 28px;
-        border-radius: 0 999px 999px 0;
-    }
-
-    .screening-panel-local {
-        background: #fffefe !important;
-    }
-
-    .screening-panel-ai {
-        background: #fffdf9 !important;
-    }
-
-    .screening-panel > div:first-child {
-        margin-bottom: 8px;
-    }
-
-    .screening-panel > div:first-child p {
-        font-size: .86rem !important;
-        letter-spacing: -.01em;
-    }
-
-    .screening-panel > p {
-        flex: 1 1 auto;
-    }
-
-    .screening-panel .rounded-xl.border {
-        border-radius: 11px !important;
-        min-height: 70px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .seller-review-product details {
-        border-top: 1px solid #eee8df !important;
-    }
-
-    .seller-review-product details > summary {
-        min-height: 56px;
-        padding-top: 13px !important;
-        padding-bottom: 13px !important;
-    }
-
-    .seller-review-product details > div {
-        background: #fff !important;
-    }
-
-    .seller-review-product details .rounded-xl.border {
-        border-radius: 12px !important;
-    }
-
-    .seller-review-actions {
-        gap: 10px !important;
-        padding-top: 12px !important;
-    }
-
-    .seller-action-btn {
-        min-height: 42px !important;
-        border-radius: 11px !important;
-        box-shadow:
-            0 1px 2px rgba(61,43,22,.02),
-            0 5px 12px rgba(61,43,22,.04);
-    }
-
-    .seller-action-approve:hover,
-    .seller-action-reject:hover,
-    .seller-action-warn:hover {
+    .compliance-account-control:hover {
         transform: translateY(-1px);
     }
 
-    .seller-action-warn {
-        box-shadow:
-            0 2px 4px rgba(168,92,84,.05),
-            0 8px 18px rgba(168,92,84,.16) !important;
+    /* ---------- Flash messages ---------- */
+    .seller-compliance-page > .mb-4 {
+        margin-bottom: 10px !important;
+        border-radius: 12px !important;
+        padding: 9px 11px !important;
     }
 
-    @media (max-width: 767px) {
-        .seller-review-dialog {
-            width: min(100vw - 16px, 1160px) !important;
-        }
-
-        .seller-review-product-summary {
-            grid-template-columns: 1fr !important;
-        }
-
-        .seller-review-product-image {
-            width: 100% !important;
-            height: 190px !important;
-        }
-
-        .screening-panel {
-            min-height: 0;
-        }
+    /* ---------- KPI summary ---------- */
+    .compliance-summary-grid {
+        gap: 9px !important;
+        margin-top: 11px !important;
     }
 
-    /* =========================================================
-       FLAGGED SELLERS — APPROVED ACCOUNTS INSPIRED
-       Clean table rhythm, low-noise filters, minimal tab rail.
-       Backend data attributes and moderation actions are unchanged.
-       ========================================================= */
-
-    .seller-compliance-page .compliance-workspace-tabs {
-        padding: 0 20px !important;
+    .compliance-summary-card {
+        min-height: 76px !important;
+        border: 1px solid var(--sc-line) !important;
+        border-radius: 13px !important;
         background: #fff !important;
+        padding: 11px 50px 11px 13px !important;
+        box-shadow: 0 6px 18px rgba(61,43,22,.045) !important;
+        contain: paint;
     }
 
-    .seller-compliance-page .compliance-workspace-tabs > div {
-        gap: 4px !important;
+    .compliance-summary-card:hover {
+        border-color: #ddcfbb !important;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 22px rgba(61,43,22,.06) !important;
     }
 
-    .seller-compliance-page .compliance-tab {
-        position: relative;
+    .compliance-summary-card > div {
         min-height: 52px !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        padding-inline: 12px !important;
-        color: #7a7268 !important;
+        align-items: center !important;
+    }
+
+    .compliance-summary-card > div > div:first-child > p:first-child {
+        color: #8e857a !important;
+        font-size: 8px !important;
+        font-weight: 500 !important;
+        line-height: 1.3 !important;
+    }
+
+    .compliance-summary-card > div > div:first-child > p:nth-child(2) {
+        margin-top: 4px !important;
+        color: #28221b !important;
+        font-size: 19px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .compliance-summary-card > div > div:last-child {
+        right: 12px !important;
+        top: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
         box-shadow: none !important;
     }
 
-    .seller-compliance-page .compliance-tab:hover {
-        background: transparent !important;
-        color: #39332d !important;
+    .compliance-summary-card > div > div:last-child svg {
+        width: 14px !important;
+        height: 14px !important;
     }
 
-    .seller-compliance-page .compliance-tab[data-active="true"] {
-        border: 0 !important;
-        background: transparent !important;
-        color: #a66f08 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .compliance-tab[data-active="true"]::after {
-        content: "";
-        position: absolute;
-        right: 12px;
-        bottom: 0;
-        left: 12px;
-        height: 2px;
-        border-radius: 999px 999px 0 0;
-        background: #d99500;
-    }
-
-    .seller-compliance-page .compliance-tab span {
-        border: 0 !important;
-        background: #f4f1ec !important;
-        color: #81786d !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .compliance-tab[data-active="true"] span {
-        background: #fff4dc !important;
-        color: #a66f08 !important;
-    }
-
-    .seller-compliance-page .compliance-workspace-tabs {
-        background: #faf9f6 !important;
-    }
-
-    .compliance-view-filter-shell {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #e9e1d7;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .045);
-    }
-
-    .compliance-view-select {
-        min-width: 0;
-        transition: border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .compliance-view-select:hover {
-        border-color: #d8cbbb !important;
-    }
-
-    .compliance-view-select:focus {
-        border-color: #d49a2b !important;
-        box-shadow: 0 0 0 3px rgba(217, 149, 0, .075);
-    }
-
-    .compliance-view-apply,
-    .compliance-view-reset {
-        flex: 0 0 auto;
-        white-space: nowrap;
-    }
-
-    @media (max-width: 639px) {
-        .compliance-view-filter-shell {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .compliance-view-filter-shell > div:first-child {
-            grid-column: 1 / -1;
-        }
-
-        .compliance-view-apply,
-        .compliance-view-reset {
-            width: 100%;
-        }
-    }
-
-    .flagged-panel-header {
-        background: #fff;
-    }
-
-    .flagged-toolbar-shell {
-        padding: 14px;
-        border: 1px solid #e9e1d7;
-        border-radius: 18px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .045);
-    }
-
-    .flagged-filter-field {
-        min-height: 48px !important;
-        border-radius: 12px !important;
-        border-color: #e5ddd2 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .flagged-list-shell {
-        overflow: hidden;
-        border: 1px solid #e8e1d8;
-        border-radius: 18px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .04);
-    }
-
-    .flagged-filter-field:hover {
-        border-color: #d8cbbb !important;
-    }
-
-    .flagged-filter-field:focus {
-        border-color: #d49a2b !important;
-        box-shadow: 0 0 0 3px rgba(217, 149, 0, .075) !important;
-    }
-
-    #clearFlaggedSellerFilters:not(.hidden) {
-        display: flex;
-    }
-
-    .flagged-table-head {
-        color: #7f776d;
-        letter-spacing: .025em;
-    }
-
-    #flaggedSellerList {
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .04);
-    }
-
-    .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row {
-        border: 0 !important;
-        border-bottom: 1px solid #eee9e2 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row:hover {
-        border-color: #eee9e2 !important;
-        background: #fffdfa !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    #flaggedSellerList > article:last-of-type {
-        border-bottom: 0 !important;
-    }
-
-    .flagged-seller-avatar {
-        border: 1px solid #ebe7e1;
-        background: #f4f2ee;
-        color: #5e574f;
-    }
-
-    .flagged-count-box {
-        border: 1px solid #f0dddd;
-        background: #fff7f7;
-        color: #a65d5d;
-    }
-
-    .flagged-review-button {
-        width: 38px !important;
-        min-width: 38px !important;
-        height: 38px !important;
-        min-height: 38px !important;
-        padding: 0 !important;
-        border-radius: 10px !important;
-        border: 1px solid #e6ded3 !important;
-        background: #fff !important;
-        color: #6c6258 !important;
-        box-shadow:
-            0 1px 2px rgba(61, 43, 22, .02),
-            0 4px 10px rgba(61, 43, 22, .035);
-    }
-
-    .flagged-review-button:hover {
-        border-color: #d9c9af !important;
-        background: #fff9ee !important;
-        color: #9b6915 !important;
-    }
-
-    @media (max-width: 1279px) {
-        #flaggedSellerList {
-            border: 0 !important;
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row {
-            margin-bottom: 12px;
-            border: 1px solid #e9e1d7 !important;
-            border-radius: 16px !important;
-            box-shadow: 0 5px 16px rgba(61, 43, 22, .035) !important;
-        }
-
-        .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row:last-of-type {
-            margin-bottom: 0;
-        }
-    }
-
-
-    /* =========================================================
-       FINAL FILTER + TABLE LAYOUT
-       Matches Approved Accounts hierarchy: one filter bar, list below.
-       ========================================================= */
-    .compliance-master-filter {
-        display: grid;
-        grid-template-columns: minmax(360px, 1fr) 210px 190px auto auto;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #e9e1d7;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .045);
-    }
-
-    .compliance-master-filter .master-filter-control {
-        min-height: 44px !important;
-        border-radius: 11px !important;
-        border: 1px solid #e5ddd2 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        color: #4f473f !important;
-        transition: border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
-    }
-
-    .compliance-master-filter .master-filter-control:hover:not(:disabled) {
-        border-color: #d8cbbb !important;
-    }
-
-    .compliance-master-filter .master-filter-control:focus {
-        outline: none;
-        border-color: #d49a2b !important;
-        box-shadow: 0 0 0 3px rgba(217,149,0,.075) !important;
-    }
-
-    .compliance-master-filter .master-filter-control:disabled {
-        cursor: not-allowed;
-        opacity: .52;
-        background: #faf9f6 !important;
-    }
-
-    .compliance-master-filter .master-filter-apply,
-    .compliance-master-filter .master-filter-reset {
-        min-height: 44px !important;
-        white-space: nowrap;
-    }
-
-    .flagged-list-meta {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 13px 4px 12px;
-        color: #91887d;
-    }
-
-    .flagged-list-shell {
-        overflow: hidden;
-        border: 1px solid #e8e1d8;
-        border-radius: 18px;
-        background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .025),
-            0 10px 24px rgba(61, 43, 22, .04);
-    }
-
-    @media (max-width: 1280px) {
-        .compliance-master-filter {
-            grid-template-columns: minmax(280px, 1fr) 190px 180px auto auto;
-        }
-    }
-
-    @media (max-width: 1023px) {
-        .compliance-master-filter {
-            grid-template-columns: minmax(0, 1fr) 1fr;
-        }
-
-        .compliance-master-filter .master-search {
-            grid-column: 1 / -1;
-        }
-    }
-
-    @media (max-width: 639px) {
-        .compliance-master-filter {
-            grid-template-columns: 1fr;
-            padding: 8px;
-        }
-
-        .compliance-master-filter .master-search {
-            grid-column: auto;
-        }
-
-        .compliance-master-filter .master-filter-apply,
-        .compliance-master-filter .master-filter-reset {
-            width: 100%;
-        }
-
-        .flagged-list-meta {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-    }
-
-
-
-    /* =========================================================
-       USER MANAGEMENT LAYOUT PARITY — FINAL OVERRIDES
-       Mirrors Approved Accounts: separate filter surface + separate data surface.
-       ========================================================= */
-    .seller-compliance-page .compliance-workspace {
+    /* ---------- Workspace ---------- */
+    .compliance-workspace {
+        margin-top: 11px !important;
         overflow: visible !important;
         border: 0 !important;
         border-radius: 0 !important;
@@ -1298,850 +247,1156 @@
         box-shadow: none !important;
     }
 
-    .seller-compliance-page .compliance-workspace-tabs {
-        padding: 12px !important;
-        border: 1px solid #e9e1d7 !important;
-        border-radius: 18px !important;
+    .compliance-workspace-tabs {
+        overflow: visible;
+        border: 1px solid var(--sc-line) !important;
+        border-radius: 14px !important;
         background: #fff !important;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .035),
-            0 12px 28px rgba(61, 43, 22, .07),
-            0 24px 50px rgba(61, 43, 22, .032) !important;
+        padding: 9px !important;
+        box-shadow: 0 6px 20px rgba(61,43,22,.045) !important;
     }
 
-    .seller-compliance-page .compliance-master-filter {
+    .compliance-master-filter {
         display: grid;
-        grid-template-columns: minmax(360px, 1fr) 205px 185px auto auto;
-        gap: 10px;
+        grid-template-columns: minmax(300px, 1fr) 170px 155px auto auto;
         align-items: center;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .master-filter-control,
+    .filter-dropdown-toggle {
+        width: 100%;
+        min-height: 38px !important;
+        height: 38px !important;
+        border: 1px solid #e5ddd2 !important;
+        border-radius: 9px !important;
+        background: #fff !important;
+        color: #3d3730 !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 9px !important;
+        font-weight: 400 !important;
         box-shadow: none !important;
     }
 
-    .seller-compliance-page .master-filter-control {
-        min-height: 44px !important;
-        border: 1px solid #e8e0d5 !important;
-        border-radius: 12px !important;
-        background: #fff !important;
-        color: #332c25 !important;
-        font-size: .64rem !important;
-        box-shadow:
-            0 1px 2px rgba(61, 43, 22, .018),
-            0 4px 10px rgba(61, 43, 22, .025) !important;
+    .master-filter-control {
+        padding-right: 10px !important;
     }
 
-    .seller-compliance-page .master-filter-control:focus {
-        outline: none;
-        border-color: #d9a33a !important;
-        box-shadow:
-            0 0 0 4px rgba(217,149,0,.08),
-            0 6px 16px rgba(61, 43, 22, .045) !important;
+    .master-filter-control::placeholder {
+        color: #a59c91 !important;
+        font-size: 9px !important;
+        opacity: 1;
     }
 
-    .seller-compliance-page .master-filter-apply,
-    .seller-compliance-page .master-filter-reset {
-        min-height: 44px !important;
-        border-radius: 12px !important;
-        font-size: .62rem !important;
-        font-weight: 600 !important;
+    .master-filter-control:hover:not(:disabled),
+    .filter-dropdown-toggle:hover:not(:disabled) {
+        border-color: #d4c5b4 !important;
     }
 
-    .seller-compliance-page .master-filter-apply {
-        box-shadow: 0 10px 22px rgba(217,149,0,.18) !important;
+    .master-filter-control:focus,
+    .filter-dropdown-toggle:focus-visible,
+    .filter-dropdown.is-open .filter-dropdown-toggle {
+        outline: none !important;
+        border-color: #d49a2b !important;
+        box-shadow: 0 0 0 3px rgba(217,149,0,.075) !important;
     }
 
-    /* Each queue becomes its own card, like the Users table surface. */
-    .seller-compliance-page [data-compliance-panel] {
-        margin-top: 16px;
-        overflow: hidden;
-        border: 1px solid #e9e1d7;
-        border-radius: 18px;
+    .master-filter-control:disabled,
+    .filter-dropdown-toggle:disabled {
+        cursor: not-allowed;
+        opacity: .48;
+        background: #f8f7f4 !important;
+    }
+
+    .filter-dropdown {
+        position: relative;
+        min-width: 0;
+    }
+
+    .filter-dropdown-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 10px;
+        text-align: left;
+    }
+
+    .filter-dropdown-chevron {
+        width: 12px !important;
+        height: 12px !important;
+        flex: 0 0 12px;
+        color: #8b8175;
+        transition: transform .15s ease;
+    }
+
+    .filter-dropdown.is-open .filter-dropdown-chevron {
+        transform: rotate(180deg);
+    }
+
+    .filter-risk-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
+        border-radius: 999px;
+        background: var(--sc-gold);
+    }
+
+    .filter-dropdown-menu {
+        position: absolute;
+        z-index: 90;
+        top: calc(100% + 5px);
+        right: 0;
+        left: 0;
+        padding: 4px;
+        border: 1px solid #e4dcd1;
+        border-radius: 10px;
         background: #fff;
-        box-shadow:
-            0 2px 5px rgba(61, 43, 22, .035),
-            0 12px 28px rgba(61, 43, 22, .07),
-            0 24px 50px rgba(61, 43, 22, .032);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-3px);
+        box-shadow: 0 14px 32px rgba(47,37,25,.12);
     }
 
-    .seller-compliance-page [data-compliance-panel][hidden] {
+    .filter-dropdown.is-open .filter-dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .filter-dropdown-option {
+        display: flex;
+        width: 100%;
+        min-height: 31px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        border-radius: 7px;
+        padding: 0 8px;
+        color: #5b534a;
+        font-size: 8.3px;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    .filter-dropdown-option:hover,
+    .filter-dropdown-option.is-selected {
+        background: #fff7e8;
+        color: #9a6810;
+    }
+
+    .filter-dropdown-check {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
+        border-radius: 999px;
+        background: var(--sc-gold);
+        opacity: 0;
+    }
+
+    .filter-dropdown-option.is-selected .filter-dropdown-check {
+        opacity: 1;
+    }
+
+    .master-filter-apply,
+    .master-filter-reset {
+        min-height: 38px !important;
+        height: 38px !important;
+        border-radius: 9px !important;
+        padding-inline: 11px !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 8.5px !important;
+        font-weight: 600 !important;
+        white-space: nowrap;
+    }
+
+    .master-filter-apply {
+        box-shadow: 0 5px 14px rgba(217,149,0,.13) !important;
+    }
+
+    .master-filter-apply:hover {
+        transform: translateY(-1px);
+    }
+
+    .master-filter-reset {
+        box-shadow: none !important;
+    }
+
+    /* ---------- Queue surfaces ---------- */
+    [data-compliance-panel] {
+        margin-top: 10px !important;
+        overflow: hidden;
+        border: 1px solid var(--sc-line);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 6px 20px rgba(61,43,22,.045);
+    }
+
+    [data-compliance-panel][hidden] {
         display: none !important;
     }
 
-    /* Flagged Sellers table: no nested floating card. */
-    #compliancePanel-flagged .flagged-table-wrap {
-        margin: 0 !important;
-    }
-
-    #compliancePanel-flagged .flagged-list-shell {
-        overflow-x: auto;
+    #compliancePanel-flagged .flagged-list-shell,
+    #compliancePanel-flagged #flaggedSellerList {
         border: 0 !important;
         border-radius: 0 !important;
         background: #fff !important;
         box-shadow: none !important;
     }
 
-    #compliancePanel-flagged #flaggedSellerList {
-        min-width: 1050px;
-        border: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
+    .flagged-list-shell {
+        overflow-x: auto;
     }
 
-    #compliancePanel-flagged .flagged-table-head {
-        min-width: 1050px;
+    .flagged-table-head {
+        min-width: 980px;
+        min-height: 40px;
+        align-items: center;
         border-bottom: 1px solid #eee8df !important;
-        background: #fcfbf8 !important;
-        padding: 14px 20px !important;
-        color: #847b70 !important;
-        font-size: .56rem !important;
+        background: #faf9f6 !important;
+        padding: 10px 14px !important;
+        color: #81786d !important;
+        font-size: 8px !important;
         font-weight: 700 !important;
-        letter-spacing: .08em !important;
+        line-height: 1.3 !important;
+        letter-spacing: .055em !important;
         text-transform: uppercase;
     }
 
-    @media (min-width: 1280px) {
-        #compliancePanel-flagged .flagged-table-head,
-        #compliancePanel-flagged .flagged-seller-row-modern > div {
-            grid-template-columns: minmax(320px, 1.85fr) 150px 125px 140px 175px 78px !important;
-            gap: 16px !important;
-        }
+    #flaggedSellerList {
+        min-width: 980px;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row {
-        margin: 0 !important;
+    .flagged-seller-row-modern {
         border: 0 !important;
         border-bottom: 1px solid #f0ebe4 !important;
         border-radius: 0 !important;
         background: #fff !important;
         box-shadow: none !important;
+        transform: none !important;
+        content-visibility: auto;
+        contain-intrinsic-size: 62px;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row:hover {
-        background: #fdfbf7 !important;
+    .flagged-seller-row-modern:hover {
+        background: #fdfbf8 !important;
+        transform: none !important;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern > div > div {
-        min-height: 72px;
+    #flaggedSellerList > article:last-of-type {
+        border-bottom: 0 !important;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern .flagged-seller-avatar {
-        width: 40px !important;
-        height: 40px !important;
+    @media (min-width: 1280px) {
+        .flagged-table-head,
+        .flagged-seller-row-modern > div {
+            grid-template-columns:
+                minmax(285px, 1.85fr)
+                130px
+                105px
+                120px
+                145px
+                58px !important;
+            gap: 12px !important;
+        }
+
+        .flagged-seller-row-modern > div > div {
+            min-height: 60px !important;
+        }
+    }
+
+    .flagged-seller-row-modern > div > div {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    .flagged-seller-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        flex: 0 0 32px !important;
         border: 0 !important;
-        border-radius: 999px !important;
+        border-radius: 50% !important;
         background: #f3f1ed !important;
         color: #655d55 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern p.truncate.text-sm {
-        font-size: .64rem !important;
+    .flagged-seller-name {
         color: #2e2924 !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
     }
 
-    .seller-compliance-page .flagged-seller-row-modern p.text-xs,
-    .seller-compliance-page .flagged-seller-row-modern span.text-xs {
-        font-size: .54rem !important;
+    .flagged-seller-email {
+        margin-top: 2px !important;
+        color: #978e83 !important;
+        font-size: 7.2px !important;
+        line-height: 1.3 !important;
     }
 
-    .seller-compliance-page .flagged-review-button {
-        width: 36px !important;
-        min-width: 36px !important;
-        height: 36px !important;
-        min-height: 36px !important;
-        border: 1px solid #e6dfd6 !important;
-        border-radius: 10px !important;
-        background: #fff !important;
-        color: #6f675e !important;
-        box-shadow:
-            0 2px 4px rgba(52, 41, 27, .025),
-            0 6px 14px rgba(52, 41, 27, .04) !important;
+    .flagged-count-box {
+        min-width: 27px !important;
+        height: 25px !important;
+        border: 1px solid #efdada !important;
+        border-radius: 8px !important;
+        background: #fff7f7 !important;
+        color: #a65d5d !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
     }
 
-    .seller-compliance-page .flagged-review-button:hover {
+    .flagged-count-copy,
+    .flagged-last-relative,
+    .flagged-mobile-label {
+        font-size: 7.2px !important;
+    }
+
+    .flagged-warning-badge,
+    .flagged-risk-badge {
+        padding: 4px 7px !important;
+        border-radius: 999px !important;
+        font-size: 7.5px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+    }
+
+    .flagged-last-date {
+        font-size: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    .flagged-review-button {
+        display: inline-grid !important;
+        width: 28px !important;
+        min-width: 28px !important;
+        height: 28px !important;
+        min-height: 28px !important;
+        place-items: center;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 7px !important;
+        background: transparent !important;
+        color: #4d4842 !important;
+        box-shadow: none !important;
+    }
+
+    .flagged-review-button svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .flagged-review-button:hover,
+    .flagged-review-button:focus-visible {
+        outline: none;
+        background: #fff7e8 !important;
+        color: #d99500 !important;
         transform: translateY(-1px);
-        border-color: #d8c8b1 !important;
-        background: #fffaf2 !important;
-        color: #9c6c1f !important;
     }
 
     .flagged-table-footer {
-        background: #fff;
+        min-height: 50px !important;
+        padding: 9px 14px !important;
+        background: #fff !important;
+    }
+
+    #flaggedSellerResultCount {
+        color: #756d63 !important;
+        font-size: 8px !important;
     }
 
     #flaggedSellerFilterEmpty {
         border-top: 1px solid #eee8df;
     }
 
-    /* Other queues use the same surface rhythm as the Users table. */
+    /* ---------- Other queue cards/tables ---------- */
+    .compliance-card {
+        border-radius: 11px !important;
+        border-color: var(--sc-line) !important;
+        background: #fff !important;
+        box-shadow: 0 3px 10px rgba(61,43,22,.035) !important;
+        contain: content;
+    }
+
+    .compliance-card:hover {
+        border-color: #ddcfbb !important;
+        box-shadow: 0 5px 15px rgba(61,43,22,.045) !important;
+        transform: none !important;
+    }
+
     #compliancePanel-pending > div:first-child,
     #compliancePanel-warnings > div:first-child,
     #compliancePanel-suspended > div:first-child,
     #compliancePanel-messages > div:first-child {
-        background: #fcfbf8;
-    }
-
-    @media (max-width: 1279px) {
-        .seller-compliance-page .compliance-master-filter {
-            grid-template-columns: minmax(0, 1fr) 190px 175px auto auto;
-        }
-
-        #compliancePanel-flagged #flaggedSellerList {
-            min-width: 0;
-        }
-
-        .seller-compliance-page .flagged-seller-row-modern.compliance-seller-row {
-            margin: 12px !important;
-            border: 1px solid #e9e1d7 !important;
-            border-radius: 16px !important;
-            box-shadow: 0 5px 16px rgba(61, 43, 22, .035) !important;
-        }
-    }
-
-    @media (max-width: 1023px) {
-        .seller-compliance-page .compliance-master-filter {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .seller-compliance-page .compliance-master-filter .master-search {
-            grid-column: 1 / -1;
-        }
-
-        .seller-compliance-page .master-filter-apply,
-        .seller-compliance-page .master-filter-reset {
-            width: 100%;
-        }
-    }
-
-    @media (max-width: 639px) {
-        .seller-compliance-page .compliance-master-filter {
-            grid-template-columns: 1fr;
-        }
-
-        .seller-compliance-page .compliance-master-filter .master-search {
-            grid-column: auto;
-        }
-    }
-
-
-    /* =========================================================
-       USER-STYLE FILTER DROPDOWNS
-       Mirrors the Approved Accounts dropdown treatment.
-       ========================================================= */
-    .seller-compliance-page .filter-dropdown {
-        position: relative;
-        min-width: 0;
-    }
-
-    .seller-compliance-page .filter-dropdown-toggle {
-        display: flex;
-        width: 100%;
-        min-height: 44px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        border: 1px solid #e8e0d5;
-        border-radius: 12px;
-        background: #fff;
-        padding: 0 14px;
-        color: #332c25;
-        font-size: .68rem;
-        font-weight: 500;
-        line-height: 1;
-        box-shadow:
-            0 1px 2px rgba(61, 43, 22, .018),
-            0 4px 10px rgba(61, 43, 22, .025);
-        transition:
-            border-color .16s ease,
-            box-shadow .16s ease,
-            background-color .16s ease,
-            color .16s ease;
-    }
-
-    .seller-compliance-page .filter-dropdown-toggle:hover:not(:disabled) {
-        border-color: #d8c8b1;
-        background: #fffdfa;
-    }
-
-    .seller-compliance-page .filter-dropdown-toggle:focus-visible,
-    .seller-compliance-page .filter-dropdown.is-open .filter-dropdown-toggle {
-        outline: none;
-        border-color: #d9a33a;
-        box-shadow:
-            0 0 0 4px rgba(217,149,0,.08),
-            0 6px 16px rgba(61,43,22,.045);
-    }
-
-    .seller-compliance-page .filter-dropdown-toggle:disabled {
-        cursor: not-allowed;
-        opacity: .48;
+        padding: 11px 14px !important;
         background: #faf9f6;
     }
 
-    .seller-compliance-page .filter-dropdown-menu {
-        position: absolute;
-        top: calc(100% + 6px);
-        right: 0;
-        left: 0;
-        z-index: 80;
-        padding: 6px;
-        border: 1px solid #e7dfd4;
-        border-radius: 14px;
-        background: #fff;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-5px) scale(.985);
-        transform-origin: top;
-        box-shadow:
-            0 8px 18px rgba(47,37,25,.08),
-            0 20px 42px rgba(47,37,25,.12);
-        transition:
-            opacity .14s ease,
-            transform .14s ease,
-            visibility .14s ease;
+    #compliancePanel-pending > div:first-child p:first-child,
+    #compliancePanel-warnings > div:first-child p:first-child,
+    #compliancePanel-suspended > div:first-child p:first-child,
+    #compliancePanel-messages > div:first-child p:first-child {
+        font-size: 10px !important;
     }
 
-    .seller-compliance-page .filter-dropdown.is-open .filter-dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0) scale(1);
+    #compliancePanel-pending > div:first-child p:last-child,
+    #compliancePanel-warnings > div:first-child p:last-child,
+    #compliancePanel-suspended > div:first-child p:last-child,
+    #compliancePanel-messages > div:first-child p:last-child {
+        font-size: 7.5px !important;
     }
 
-    .seller-compliance-page .filter-dropdown-option {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        border-radius: 10px;
-        padding: 10px 11px;
-        color: #5c534a;
-        font-size: .66rem;
-        font-weight: 500;
-        text-align: left;
-        transition: background-color .14s ease, color .14s ease;
+    #compliancePanel-pending > .grid,
+    #compliancePanel-suspended > .grid,
+    #compliancePanel-messages > .space-y-3 {
+        gap: 9px !important;
+        padding: 12px !important;
     }
 
-    .seller-compliance-page .filter-dropdown-option:hover,
-    .seller-compliance-page .filter-dropdown-option.is-selected {
-        background: #fff7e8;
-        color: #a8731f;
+    #compliancePanel-pending article,
+    #compliancePanel-suspended article,
+    #compliancePanel-messages article {
+        content-visibility: auto;
+        contain-intrinsic-size: 120px;
     }
 
-    .seller-compliance-page .filter-dropdown-check {
-        width: 6px;
-        height: 6px;
-        flex: 0 0 auto;
-        border-radius: 999px;
-        background: #d99500;
-        opacity: 0;
+    .seller-compliance-page table th {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 7.5px !important;
+        line-height: 1.3 !important;
     }
 
-    .seller-compliance-page .filter-dropdown-option.is-selected .filter-dropdown-check {
+    .seller-compliance-page table td {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .compliance-control {
+        min-height: 38px !important;
+        border: 1px solid #e5ddd2 !important;
+        border-radius: 9px !important;
+        background: #fff !important;
+        color: #332e28 !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 8.5px !important;
+        box-shadow: none !important;
+    }
+
+    .compliance-control::placeholder {
+        color: #aaa196 !important;
         opacity: 1;
     }
 
-    .seller-compliance-page .filter-risk-dot {
-        width: 7px;
-        height: 7px;
-        flex: 0 0 auto;
-        border-radius: 999px;
-        background: #d99500;
+    .compliance-control:focus {
+        outline: none;
+        border-color: #d49a2b !important;
+        box-shadow: 0 0 0 3px rgba(217,149,0,.075) !important;
     }
 
-    .seller-compliance-page .filter-dropdown-chevron {
-        width: 14px;
-        height: 14px;
-        flex: 0 0 auto;
-        color: #8b8175;
-        transition: transform .14s ease;
+    textarea.compliance-control {
+        min-height: 84px !important;
     }
 
-    .seller-compliance-page .filter-dropdown.is-open .filter-dropdown-chevron {
-        transform: rotate(180deg);
-    }
-
-    /* Only the result summary is slightly smaller. */
-    #flaggedSellerResultCount {
-        font-size: .66rem !important;
-        line-height: 1.4 !important;
-        font-weight: 400 !important;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-compliance-page .filter-dropdown-menu,
-        .seller-compliance-page .filter-dropdown-chevron {
-            transition: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       STRONG FLOATING DEPTH + PREMIUM SELLER REVIEW MODAL
-       Final visual layer only. Backend routes/forms remain intact.
-       ========================================================= */
-
-    /* Main page surfaces */
-    .seller-compliance-page .compliance-summary-card {
-        border-color: #e7ddd1 !important;
-        box-shadow:
-            0 3px 7px rgba(61, 43, 22, .04),
-            0 15px 34px rgba(61, 43, 22, .085),
-            0 30px 58px rgba(61, 43, 22, .038),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card:hover {
-        transform: translateY(-3px) !important;
-        border-color: #d9c9b1 !important;
-        box-shadow:
-            0 4px 9px rgba(61, 43, 22, .05),
-            0 21px 46px rgba(61, 43, 22, .115),
-            0 40px 76px rgba(61, 43, 22, .048),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-compliance-page .compliance-workspace-tabs {
-        border-color: #e7ddd1 !important;
-        box-shadow:
-            0 3px 8px rgba(61, 43, 22, .045),
-            0 18px 42px rgba(61, 43, 22, .095),
-            0 38px 78px rgba(61, 43, 22, .045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-compliance-page [data-compliance-panel] {
-        border-color: #e7ddd1 !important;
-        box-shadow:
-            0 3px 8px rgba(61, 43, 22, .045),
-            0 18px 42px rgba(61, 43, 22, .095),
-            0 38px 78px rgba(61, 43, 22, .045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-compliance-page .compliance-card {
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.035),
-            0 14px 32px rgba(61,43,22,.075),
-            0 26px 50px rgba(61,43,22,.03) !important;
-    }
-
-    .seller-compliance-page .compliance-card:hover {
-        transform: translateY(-2px) !important;
-        box-shadow:
-            0 4px 8px rgba(61,43,22,.04),
-            0 18px 38px rgba(61,43,22,.095),
-            0 32px 58px rgba(61,43,22,.035) !important;
-    }
-
-    .seller-compliance-page .filter-dropdown-toggle,
-    .seller-compliance-page .master-filter-control {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 7px 16px rgba(61,43,22,.045),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-compliance-page .filter-dropdown-menu {
-        box-shadow:
-            0 8px 18px rgba(47,37,25,.09),
-            0 24px 52px rgba(47,37,25,.15) !important;
-    }
-
-    .seller-compliance-page .master-filter-apply {
-        box-shadow:
-            0 3px 7px rgba(183,124,0,.10),
-            0 13px 28px rgba(217,149,0,.23) !important;
-    }
-
-    .seller-compliance-page .master-filter-apply:hover {
-        transform: translateY(-1px);
-        box-shadow:
-            0 4px 8px rgba(183,124,0,.12),
-            0 16px 34px rgba(183,124,0,.26) !important;
-    }
-
-    .seller-compliance-page .master-filter-reset {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 7px 16px rgba(61,43,22,.045) !important;
-    }
-
-    .seller-compliance-page .flagged-review-button {
-        box-shadow:
-            0 2px 4px rgba(52,41,27,.03),
-            0 8px 18px rgba(52,41,27,.055),
-            inset 0 1px 0 rgba(255,255,255,.96) !important;
-    }
-
-    .seller-compliance-page .flagged-review-button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow:
-            0 3px 6px rgba(52,41,27,.04),
-            0 12px 26px rgba(88,64,31,.10) !important;
-    }
-
-    /* =========================================================
-       VIEW SELLER — PREMIUM MODAL
-       ========================================================= */
-
-    @keyframes sellerReviewBackdropIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    /* ============================================================
+       SELLER REVIEW MODAL — CONTENT-ADAPTIVE ENTERPRISE LAYOUT
+       ============================================================ */
+    .seller-review-modal {
+        background: rgba(28, 24, 20, .44) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 14px !important;
     }
 
     @keyframes sellerReviewDialogIn {
-        from {
-            opacity: 0;
-            transform: translate3d(0, 14px, 0) scale(.985);
-        }
-        to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-        }
-    }
-
-    .seller-review-modal {
-        background: rgba(28, 23, 18, .48) !important;
-        backdrop-filter: blur(7px);
-        -webkit-backdrop-filter: blur(7px);
-    }
-
-    .seller-review-modal:not(.hidden) {
-        animation: sellerReviewBackdropIn .18s ease both;
+        from { opacity: 0; transform: translateY(8px) scale(.99); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .seller-review-modal:not(.hidden) .seller-review-dialog {
-        animation: sellerReviewDialogIn .24s cubic-bezier(.22,.72,.24,1) both;
+        animation: sellerReviewDialogIn .18s cubic-bezier(.22,1,.36,1) both;
     }
 
     .seller-review-dialog {
-        position: relative;
-        width: min(1180px, calc(100vw - 34px)) !important;
-        max-width: 1180px !important;
-        max-height: min(92vh, 920px) !important;
-        overflow: hidden;
-        border: 1px solid #dfd5c8 !important;
-        border-radius: 24px !important;
+        width: min(900px, calc(100vw - 28px)) !important;
+        max-width: 900px !important;
+        max-height: min(88vh, 760px) !important;
+        overflow: hidden !important;
+        border: 1px solid #dfd8cf !important;
+        border-radius: 16px !important;
         background: #fff !important;
         box-shadow:
-            0 8px 22px rgba(31,24,17,.10),
-            0 32px 76px rgba(31,24,17,.22),
-            0 64px 130px rgba(31,24,17,.14) !important;
-    }
-
-    .seller-review-dialog::before {
-        content: "";
-        position: absolute;
-        z-index: 6;
-        top: 0;
-        left: 28px;
-        width: 74px;
-        height: 3px;
-        border-radius: 0 0 999px 999px;
-        background: #d99500;
+            0 24px 64px rgba(31,24,17,.18),
+            0 8px 22px rgba(31,24,17,.07) !important;
     }
 
     .seller-review-header {
-        position: relative;
-        z-index: 5;
-        padding: 18px 22px !important;
-        border-bottom-color: #eae2d8 !important;
+        min-height: 58px;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 10px 14px !important;
+        border-bottom: 1px solid #ebe5dd !important;
         background: #fff !important;
-        box-shadow:
-            0 1px 0 rgba(61,43,22,.025),
-            0 8px 22px rgba(61,43,22,.035) !important;
+        box-shadow: none !important;
     }
 
-    .seller-review-eyebrow {
-        margin-bottom: 4px;
-        color: #a47a33;
-        font-size: .66rem;
-        font-weight: 700;
-        letter-spacing: .11em;
-        line-height: 1;
-        text-transform: uppercase;
+    .seller-review-identity {
+        align-items: center !important;
+        gap: 0 !important;
     }
 
     .seller-review-identity > div:first-child {
-        width: 48px !important;
-        height: 48px !important;
-        border: 1px solid #3c352e;
-        border-radius: 14px !important;
-        background: #2e2923 !important;
-        font-size: .72rem !important;
-        letter-spacing: .04em;
-        box-shadow:
-            0 3px 7px rgba(37,29,19,.08),
-            0 11px 24px rgba(37,29,19,.16) !important;
+        display: none !important;
+    }
+
+    .seller-review-eyebrow {
+        margin: 0 0 3px !important;
+        color: #9a7b43 !important;
+        font-size: 6.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .11em !important;
+        text-transform: uppercase !important;
     }
 
     .seller-review-header h3 {
-        font-size: 1.08rem !important;
-        line-height: 1.25 !important;
-        letter-spacing: -.025em;
+        color: #25221e !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    .seller-review-header .seller-review-identity p:last-child {
+        margin-top: 4px !important;
+        color: #8a8177 !important;
+        font-size: 7.5px !important;
+    }
+
+    .seller-review-header .rounded-full.border {
+        padding: 4px 7px !important;
+        font-size: 6.5px !important;
     }
 
     .seller-review-toolbar {
-        padding: 4px;
-        border: 1px solid #eee6dc;
-        border-radius: 13px;
-        background: #faf9f6;
+        gap: 6px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
     }
 
-    .seller-review-suspend-btn,
-    .seller-review-close-btn {
-        box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 7px 16px rgba(61,43,22,.045) !important;
+    .seller-review-suspend-btn {
+        min-height: 32px !important;
+        height: 32px !important;
+        gap: 6px !important;
+        border: 1px solid #e2d8cc !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        padding-inline: 9px !important;
+        color: #625950 !important;
+        font-size: 7.5px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
     }
 
     .seller-review-suspend-btn:hover,
+    .seller-review-suspend-btn:focus-visible {
+        outline: none !important;
+        border-color: #efc466 !important;
+        background: #fffaf0 !important;
+        color: #c8880b !important;
+        transform: none !important;
+    }
+
+    .seller-review-close-btn {
+        width: 30px !important;
+        height: 30px !important;
+        min-height: 30px !important;
+        border: 1px solid #e4ddd4 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        color: #71685f !important;
+        box-shadow: none !important;
+    }
+
     .seller-review-close-btn:hover {
-        transform: translateY(-1px);
+        background: #f7f5f2 !important;
+        color: #332d27 !important;
+        transform: none !important;
     }
 
     .seller-review-body {
-        padding: 20px !important;
-        background: #f7f5f1 !important;
-        scrollbar-color: #c8beb1 transparent;
+        min-height: 0;
+        padding: 12px 14px 14px !important;
+        background: #f8f7f4 !important;
+        scrollbar-width: thin;
+        scrollbar-color: #d0c8be transparent;
+    }
+
+    .seller-review-body > .mb-3 h4 {
+        font-size: 10.5px !important;
+    }
+
+    .seller-review-body > .mb-3 p {
+        margin-top: 3px !important;
+        font-size: 7.5px !important;
     }
 
     .seller-review-stats-grid {
-        gap: 12px !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 7px !important;
     }
 
     .seller-review-stat {
-        position: relative;
-        min-height: 92px !important;
-        overflow: hidden;
-        padding: 15px 16px !important;
-        border-color: #e6ddd2 !important;
-        border-radius: 15px !important;
+        min-height: 54px !important;
+        padding: 8px 9px !important;
+        border: 1px solid #e5ded5 !important;
+        border-radius: 9px !important;
         background: #fff !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.035),
-            0 13px 28px rgba(61,43,22,.07),
-            0 24px 44px rgba(61,43,22,.026) !important;
+        box-shadow: none !important;
     }
 
     .seller-review-stat::after {
-        content: "";
-        position: absolute;
-        right: 14px;
-        bottom: 12px;
-        width: 22px;
-        height: 2px;
-        border-radius: 999px;
-        background: #e9dcc4;
+        display: none !important;
+        content: none !important;
     }
 
     .seller-review-stat p:first-child {
-        color: #8c8378 !important;
-        font-size: .72rem !important;
-        font-weight: 500;
+        margin: 0 !important;
+        color: #91887d !important;
+        font-size: 6.5px !important;
     }
 
     .seller-review-stat p:last-child {
-        margin-top: 8px !important;
-        font-size: 1.08rem !important;
-        line-height: 1 !important;
-        letter-spacing: -.025em;
+        margin-top: 4px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        color: #35302b !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
     }
 
     .seller-review-section-heading {
-        margin-top: 20px;
-        margin-bottom: 10px;
-        padding: 0 2px;
+        margin: 12px 0 7px !important;
+        padding: 0 1px !important;
     }
 
     .seller-review-section-heading h4 {
-        color: #302a24;
-        font-size: .86rem;
-        font-weight: 700;
-        letter-spacing: -.015em;
+        color: #39332d !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
     }
 
     .seller-review-section-heading p {
-        margin-top: 3px;
-        color: #91887d;
-        font-size: .68rem;
-        line-height: 1.45;
+        margin-top: 2px !important;
+        color: #91887d !important;
+        font-size: 7px !important;
+        line-height: 1.45 !important;
     }
 
     .seller-review-section-count {
-        display: inline-flex;
-        min-height: 28px;
-        align-items: center;
-        border: 1px solid #e8dfd3;
-        border-radius: 999px;
-        background: #fff;
-        padding: 0 10px;
-        color: #756b60;
-        font-size: .64rem;
-        font-weight: 600;
-        box-shadow: 0 4px 10px rgba(61,43,22,.03);
+        min-height: 22px !important;
+        border: 1px solid #e3ddd4 !important;
+        border-radius: 999px !important;
+        background: #fff !important;
+        padding: 0 7px !important;
+        color: #756d63 !important;
+        font-size: 6.5px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
     }
 
     .seller-review-listings {
-        margin-top: 0 !important;
-        gap: 18px !important;
+        gap: 9px !important;
     }
 
     .seller-review-product {
-        border-color: #dfd6ca !important;
-        border-radius: 18px !important;
+        overflow: hidden !important;
+        border: 1px solid #e3d8d5 !important;
+        border-left: 3px solid #d86b68 !important;
+        border-radius: 11px !important;
         background: #fff !important;
-        box-shadow:
-            0 3px 8px rgba(61,43,22,.04),
-            0 16px 36px rgba(61,43,22,.085),
-            0 28px 52px rgba(61,43,22,.032) !important;
+        box-shadow: none !important;
+        content-visibility: auto;
+        contain-intrinsic-size: 540px;
     }
 
     .seller-review-product-intro {
-        padding: 14px 16px !important;
-        border-bottom-color: #eee6dc !important;
-        background: #fffdfa !important;
+        padding: 8px 10px !important;
+        border-bottom: 1px solid #eee4e2 !important;
+        background: #fffafa !important;
+    }
+
+    .seller-review-product-intro::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    .seller-review-product-intro p:first-child {
+        color: #a45a57 !important;
+        font-size: 6.5px !important;
+        font-weight: 700 !important;
+        letter-spacing: .06em !important;
+    }
+
+    .seller-review-product-intro p:last-child {
+        margin-top: 2px !important;
+        color: #94807e !important;
+        font-size: 6.5px !important;
+    }
+
+    .seller-review-product-intro .rounded-full {
+        padding: 4px 7px !important;
+        font-size: 6.3px !important;
     }
 
     .seller-review-product-summary {
-        padding: 18px !important;
-        background: #fff;
+        display: grid !important;
+        grid-template-columns: 82px minmax(0, 1fr) !important;
+        gap: 11px !important;
+        padding: 11px !important;
+        background: #fff !important;
     }
 
     .seller-review-product-image {
-        border-color: #e5ddd2 !important;
-        background: #f7f5f1 !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.035),
-            0 12px 26px rgba(61,43,22,.07) !important;
+        width: 82px !important;
+        height: 82px !important;
+        min-height: 82px !important;
+        border: 1px solid #e4ddd4 !important;
+        border-radius: 9px !important;
+        background: #f7f5f2 !important;
+        box-shadow: none !important;
     }
 
     .seller-review-product-main h4 {
-        font-size: .98rem !important;
-        line-height: 1.28 !important;
+        color: #302b26 !important;
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+    }
+
+    .seller-review-product-main > div:first-child > div:first-child > p {
+        margin-top: 3px !important;
+        color: #81786c !important;
+        font-size: 7.2px !important;
+    }
+
+    .seller-review-product-main > div:first-child > span {
+        padding: 4px 7px !important;
+        font-size: 6.5px !important;
+    }
+
+    .seller-review-product-stats {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        margin-top: 9px !important;
+        padding-top: 8px !important;
+        border-top: 1px solid #eee9e3 !important;
     }
 
     .seller-review-product-metric {
-        border-color: #e9e1d7 !important;
-        background: #faf9f6 !important;
-        box-shadow:
-            0 1px 2px rgba(61,43,22,.018),
-            inset 0 1px 0 rgba(255,255,255,.9) !important;
+        position: relative;
+        min-height: 38px !important;
+        padding: 1px 9px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .seller-review-product-metric:first-child {
+        padding-left: 0 !important;
+    }
+
+    .seller-review-product-metric + .seller-review-product-metric::before {
+        content: "";
+        position: absolute;
+        top: 1px;
+        bottom: 1px;
+        left: 0;
+        width: 1px;
+        background: #eee9e3;
+    }
+
+    .seller-review-product-metric p:first-child {
+        color: #979087 !important;
+        font-size: 6.3px !important;
+        font-weight: 400 !important;
+    }
+
+    .seller-review-product-metric p:last-child {
+        margin-top: 4px !important;
+        color: #35302b !important;
+        font-size: 7.5px !important;
+        font-weight: 700 !important;
     }
 
     .seller-review-subsection {
-        padding: 13px 18px !important;
-        background: #faf9f6 !important;
+        padding: 8px 11px !important;
+        border-top: 1px solid #eee9e3 !important;
+        background: #faf9f7 !important;
+    }
+
+    .seller-review-subsection p:first-child {
+        color: #4e4740 !important;
+        font-size: 7.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .seller-review-subsection p:last-child {
+        margin-top: 2px !important;
+        color: #91887d !important;
+        font-size: 6.5px !important;
     }
 
     .seller-screening-grid {
-        gap: 14px !important;
-        padding: 18px !important;
-        background: #f9f7f4 !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 10px !important;
+        border-top: 1px solid #eee9e3 !important;
+        background: #fff !important;
     }
 
     .screening-panel {
-        min-height: 220px;
-        border-radius: 15px !important;
-        padding: 17px !important;
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.03),
-            0 12px 28px rgba(61,43,22,.06) !important;
+        min-height: 0 !important;
+        padding: 10px !important;
+        border: 1px solid #e5dfd7 !important;
+        border-radius: 9px !important;
+        background: #fff !important;
+        box-shadow: none !important;
     }
 
-    .screening-panel-local {
-        background: #fffdfd !important;
+    .screening-panel::before {
+        display: none !important;
+        content: none !important;
     }
 
-    .screening-panel-ai {
-        background: #fffdf9 !important;
+    .screening-panel > div:first-child p {
+        font-size: 7.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .screening-panel > p {
+        margin-top: 6px !important;
+        color: #6f675e !important;
+        font-size: 7px !important;
+        line-height: 1.5 !important;
+    }
+
+    .screening-panel span {
+        font-size: 6.3px !important;
+    }
+
+    .seller-ai-meta {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        margin-top: 8px !important;
+        padding-top: 7px !important;
+        border-top: 1px solid #eee9e3 !important;
+    }
+
+    .seller-ai-meta-item {
+        position: relative;
+        min-height: 36px !important;
+        padding: 0 8px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+    }
+
+    .seller-ai-meta-item:first-child {
+        padding-left: 0 !important;
+    }
+
+    .seller-ai-meta-item + .seller-ai-meta-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        background: #eee9e3;
+    }
+
+    .seller-ai-meta-label {
+        color: #979087 !important;
+        font-size: 6.2px !important;
+    }
+
+    .seller-ai-meta-value {
+        margin-top: 4px !important;
+        color: #39342f !important;
+        font-size: 7.2px !important;
+        font-weight: 700 !important;
+    }
+
+    .seller-review-product details {
+        border-top: 1px solid #eee9e3 !important;
     }
 
     .seller-review-product details > summary {
-        min-height: 58px;
-        padding-inline: 18px !important;
+        min-height: 40px !important;
+        padding: 8px 11px !important;
         background: #fff !important;
     }
 
-    .seller-review-product details > summary:hover {
-        background: #faf8f4 !important;
+    .seller-review-product details > summary:hover,
+    .seller-review-product details[open] > summary {
+        background: #faf9f7 !important;
     }
 
-    .seller-review-product details[open] > summary {
-        background: #faf8f4 !important;
+    .seller-review-product details > summary p:first-child {
+        font-size: 7.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .seller-review-product details > summary p:last-child {
+        font-size: 6.5px !important;
     }
 
     .seller-review-product details > div {
-        padding: 18px !important;
+        padding: 10px !important;
         background: #fff !important;
     }
 
+    .seller-review-product details .rounded-xl.border,
+    .seller-review-product details .rounded-\[14px\].border {
+        border-radius: 8px !important;
+        box-shadow: none !important;
+    }
+
     .seller-review-actions {
-        gap: 10px !important;
-        padding: 16px 18px 18px !important;
+        gap: 7px !important;
+        padding: 9px 10px 10px !important;
+        border-top: 1px solid #eee9e3 !important;
         background: #fff !important;
     }
 
     .seller-action-btn {
-        min-height: 42px !important;
-        border-radius: 11px !important;
+        min-height: 35px !important;
+        height: 35px !important;
+        gap: 6px !important;
+        border: 1px solid #ddd7cf !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        color: #3f3933 !important;
+        font-size: 7.5px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    .seller-action-btn svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .seller-action-btn:hover,
+    .seller-action-btn:focus-visible {
+        outline: none;
+        transform: translateY(-1px);
+        box-shadow: none !important;
+    }
+
+    .seller-action-approve:hover,
+    .seller-action-approve:focus-visible {
+        border-color: #8bd4a5 !important;
+        background: #f5fff8 !important;
+        color: #218b49 !important;
+    }
+
+    .seller-action-reject:hover,
+    .seller-action-reject:focus-visible {
+        border-color: #edaaaa !important;
+        background: #fff8f8 !important;
+        color: #d94c4c !important;
+    }
+
+    .seller-action-warn:hover,
+    .seller-action-warn:focus-visible {
+        border-color: #edc56f !important;
+        background: #fffaf0 !important;
+        color: #d88f00 !important;
+    }
+
+    .seller-review-body > section {
+        border: 1px solid #e4ddd4 !important;
+        border-radius: 10px !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    /* ---------- Warning modal ---------- */
+    .warning-modal-backdrop {
+        background: rgba(28,24,20,.44) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .warning-modal-dialog {
+        width: min(500px, calc(100vw - 24px)) !important;
+        max-width: 500px !important;
+        border: 1px solid #e4d9d5 !important;
+        border-radius: 14px !important;
+        padding: 16px !important;
+        background: #fff !important;
         box-shadow:
-            0 2px 4px rgba(61,43,22,.025),
-            0 8px 18px rgba(61,43,22,.05) !important;
+            0 22px 56px rgba(31,24,17,.17),
+            0 7px 20px rgba(31,24,17,.06) !important;
     }
 
-    .seller-action-btn:hover {
-        transform: translateY(-2px) !important;
+    .warning-modal-dialog h3 {
+        font-size: 14px !important;
     }
 
-    .seller-action-warn {
-        box-shadow:
-            0 3px 7px rgba(168,92,84,.08),
-            0 13px 28px rgba(168,92,84,.18) !important;
+    .warning-modal-dialog label {
+        font-size: 7.5px !important;
     }
 
-    .seller-review-body > section,
-    .seller-review-body .seller-review-listings + section {
-        box-shadow:
-            0 3px 7px rgba(61,43,22,.03),
-            0 13px 30px rgba(61,43,22,.065) !important;
+    .warning-modal-dialog button {
+        min-height: 36px !important;
+        border-radius: 8px !important;
+        font-size: 7.8px !important;
     }
 
-    @media (max-width: 767px) {
-        .seller-compliance-page .compliance-summary-card,
-        .seller-compliance-page .compliance-workspace-tabs,
-        .seller-compliance-page [data-compliance-panel],
-        .seller-compliance-page .compliance-card {
-            box-shadow:
-                0 3px 7px rgba(61,43,22,.035),
-                0 14px 32px rgba(61,43,22,.075),
-                0 24px 46px rgba(61,43,22,.025) !important;
+    /* ---------- Performance containment ---------- */
+    #compliancePanel-warnings tbody tr {
+        content-visibility: auto;
+        contain-intrinsic-size: 44px;
+    }
+
+    /* ---------- Laptop 100% zoom ---------- */
+    @media (max-height: 850px) and (min-width: 900px) {
+        .compliance-page-title {
+            font-size: 22px !important;
         }
 
-        .seller-review-modal {
-            padding: 8px !important;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+        .compliance-summary-card {
+            min-height: 70px !important;
+            padding-top: 9px !important;
+            padding-bottom: 9px !important;
+        }
+
+        .compliance-summary-card > div > div:first-child > p:nth-child(2) {
+            font-size: 18px !important;
         }
 
         .seller-review-dialog {
-            width: calc(100vw - 16px) !important;
-            max-height: 95vh !important;
-            border-radius: 18px !important;
+            max-height: calc(100vh - 26px) !important;
         }
 
-        .seller-review-dialog::before {
-            left: 20px;
-            width: 58px;
+        .seller-review-body {
+            padding-top: 10px !important;
+        }
+    }
+
+    /* ---------- Tablet ---------- */
+    @media (max-width: 1023px) {
+        .compliance-master-filter {
+            grid-template-columns: minmax(0, 1fr) minmax(140px, .45fr);
+        }
+
+        .compliance-master-filter .master-search {
+            grid-column: 1 / -1;
+        }
+
+        .master-filter-apply,
+        .master-filter-reset {
+            width: 100%;
+        }
+
+        #flaggedSellerList {
+            min-width: 0;
+        }
+
+        .flagged-table-head {
+            display: none !important;
+        }
+
+        .flagged-seller-row-modern {
+            margin: 10px !important;
+            border: 1px solid var(--sc-line) !important;
+            border-radius: 11px !important;
+        }
+    }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 639px) {
+        .seller-compliance-page {
+            padding-bottom: 14px;
+        }
+
+        .compliance-page-header-main {
+            align-items: flex-start;
+        }
+
+        .compliance-page-icon {
+            width: 34px !important;
+            height: 34px !important;
+            flex-basis: 34px !important;
+        }
+
+        .compliance-page-title {
+            font-size: 22px !important;
+        }
+
+        .compliance-page-subtitle {
+            font-size: 9px !important;
+        }
+
+        .compliance-account-control {
+            width: 100%;
+            min-height: 40px !important;
+            font-size: 9px !important;
+        }
+
+        .compliance-summary-grid {
+            grid-template-columns: 1fr 1fr !important;
+        }
+
+        .compliance-summary-card {
+            min-height: 74px !important;
+        }
+
+        .compliance-master-filter {
+            grid-template-columns: 1fr;
+        }
+
+        .compliance-master-filter .master-search {
+            grid-column: auto;
+        }
+
+        .master-filter-control,
+        .filter-dropdown-toggle,
+        .master-filter-apply,
+        .master-filter-reset {
+            min-height: 42px !important;
+            height: 42px !important;
+            font-size: 9.5px !important;
+        }
+
+        .seller-review-modal {
+            padding: 7px !important;
+        }
+
+        .seller-review-dialog {
+            width: calc(100vw - 14px) !important;
+            max-height: calc(100vh - 14px) !important;
+            border-radius: 13px !important;
         }
 
         .seller-review-header {
-            padding: 16px !important;
+            align-items: flex-start !important;
+            padding: 10px 11px !important;
         }
 
         .seller-review-toolbar {
@@ -2150,1337 +1405,45 @@
         }
 
         .seller-review-body {
-            padding: 12px !important;
+            padding: 9px !important;
         }
 
-        .seller-review-stat {
-            min-height: 82px !important;
-            padding: 13px !important;
-        }
-
-        .seller-review-product-summary,
-        .seller-screening-grid,
-        .seller-review-product details > div,
-        .seller-review-actions {
-            padding: 14px !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-review-modal:not(.hidden),
-        .seller-review-modal:not(.hidden) .seller-review-dialog {
-            animation: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       SARI MASTER ADMIN HEADER — SELLER COMPLIANCE
-       This page is the reference header style for the admin system.
-       Header-only final override; all backend/UI behavior stays intact.
-       ========================================================= */
-
-    .seller-compliance-page .compliance-page-header {
-        margin-bottom: 16px !important;
-        padding: 0 !important;
-    }
-
-    .seller-compliance-page .compliance-page-header-main {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .seller-compliance-page .compliance-page-icon {
-        display: grid;
-        width: 44px !important;
-        height: 44px !important;
-        flex: 0 0 44px !important;
-        place-items: center;
-        border: 1px solid #eadfc9 !important;
-        border-radius: 14px !important;
-        background: #fff8eb !important;
-        color: #b77c18 !important;
-        box-shadow:
-            0 2px 5px rgba(75,54,25,.03),
-            0 9px 20px rgba(75,54,25,.06) !important;
-    }
-
-    .seller-compliance-page .compliance-page-icon svg {
-        width: 18px !important;
-        height: 18px !important;
-    }
-
-    .seller-compliance-page .compliance-eyebrow {
-        margin: 0 !important;
-        color: #9a7b43 !important;
-        -webkit-text-fill-color: #9a7b43 !important;
-        font-size: 9px !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-        letter-spacing: .14em !important;
-        text-transform: uppercase !important;
-    }
-
-    .seller-compliance-page .compliance-page-title {
-        margin: 4px 0 0 !important;
-        font-size: clamp(1.75rem, 1.55rem + .5vw, 2.15rem) !important;
-        font-weight: 700 !important;
-        line-height: 1.08 !important;
-        letter-spacing: -.04em !important;
-    }
-
-    .seller-compliance-page .compliance-title-base {
-        color: #17130f !important;
-        -webkit-text-fill-color: #17130f !important;
-    }
-
-    .seller-compliance-page .compliance-title-accent {
-        color: #d99500 !important;
-        -webkit-text-fill-color: #d99500 !important;
-    }
-
-    .seller-compliance-page .compliance-page-subtitle {
-        max-width: 820px !important;
-        margin: 6px 0 0 !important;
-        color: #81786c !important;
-        -webkit-text-fill-color: #81786c !important;
-        font-size: clamp(.73rem, .70rem + .08vw, .81rem) !important;
-        font-weight: 400 !important;
-        line-height: 1.65 !important;
-        letter-spacing: 0 !important;
-        text-transform: none !important;
-    }
-
-    .seller-compliance-page .compliance-account-control {
-        min-height: 39px !important;
-        border-radius: 10px !important;
-        padding-inline: 16px !important;
-        font-size: clamp(.72rem, .69rem + .06vw, .78rem) !important;
-        font-weight: 600 !important;
-        box-shadow:
-            0 3px 7px rgba(183,124,0,.09),
-            0 12px 26px rgba(217,149,0,.20) !important;
-    }
-
-    .seller-compliance-page .compliance-account-control:hover {
-        transform: translateY(-1px);
-        box-shadow:
-            0 4px 8px rgba(183,124,0,.11),
-            0 15px 32px rgba(217,149,0,.23) !important;
-    }
-
-    @media (max-width: 767px) {
-        .seller-compliance-page .compliance-page-header-main {
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .seller-compliance-page .compliance-page-icon {
-            width: 42px !important;
-            height: 42px !important;
-            flex-basis: 42px !important;
-            border-radius: 13px !important;
-        }
-
-        .seller-compliance-page .compliance-eyebrow {
-            font-size: 8.5px !important;
-        }
-
-        .seller-compliance-page .compliance-page-title {
-            font-size: 1.65rem !important;
-        }
-
-        .seller-compliance-page .compliance-page-subtitle {
-            font-size: .72rem !important;
-        }
-
-        .seller-compliance-page .compliance-account-control {
-            width: 100%;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER COMPLIANCE SUMMARY — USER MANAGEMENT SIZE PARITY
-       Size/proportion only. Seller Compliance content and logic unchanged.
-       ========================================================= */
-
-    .seller-compliance-page .compliance-summary-card {
-        min-height: 110px !important;
-        padding: 18px !important;
-        border-radius: 18px !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div {
-        min-height: 72px;
-        align-items: center !important;
-        gap: 16px !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:first-child {
-        min-width: 0;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:first-child > p:first-child {
-        font-size: 11.5px !important;
-        line-height: 1.35 !important;
-        font-weight: 500 !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:first-child > p:nth-child(2) {
-        margin-top: 4px !important;
-        font-size: 26px !important;
-        line-height: 1 !important;
-        font-weight: 700 !important;
-        letter-spacing: -.04em !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:last-child {
-        width: 48px !important;
-        height: 48px !important;
-        flex: 0 0 48px !important;
-        border-radius: 12px !important;
-    }
-
-    .seller-compliance-page .compliance-summary-card > div > div:last-child svg {
-        width: 20px !important;
-        height: 20px !important;
-    }
-
-    @media (max-width: 639px) {
-        .seller-compliance-page .compliance-summary-card {
-            min-height: 110px !important;
-            padding: 16px !important;
-        }
-
-        .seller-compliance-page .compliance-summary-card > div {
-            gap: 14px !important;
-        }
-
-        .seller-compliance-page .compliance-summary-card > div > div:last-child {
-            width: 44px !important;
-            height: 44px !important;
-            flex-basis: 44px !important;
-        }
-    }
-
-
-    /* =========================================================
-       FLAGGED SELLERS — USER MANAGEMENT TABLE SIZE + ICON PARITY
-       Matches the Users table's readable density and clean action treatment.
-       Backend data attributes, filtering, modal hooks, and moderation logic stay intact.
-       ========================================================= */
-
-    /* Main flagged queue surface: same clean floating "sheet" feel as Users. */
-    .seller-compliance-page #compliancePanel-flagged {
-        border-color: #e7ddd1 !important;
-        border-radius: 18px !important;
-        background: #fff !important;
-        box-shadow:
-            0 3px 8px rgba(61, 43, 22, .045),
-            0 18px 42px rgba(61, 43, 22, .095),
-            0 38px 78px rgba(61, 43, 22, .045),
-            inset 0 1px 0 rgba(255,255,255,.98) !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-list-shell,
-    .seller-compliance-page #compliancePanel-flagged #flaggedSellerList {
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    /* Header — same visual scale as Approved Accounts table. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-table-head {
-        min-height: 50px;
-        padding: 14px 20px !important;
-        border-bottom: 1px solid #eee8df !important;
-        background: #fcfbf8 !important;
-        color: #847b70 !important;
-        font-size: 10px !important;
-        font-weight: 700 !important;
-        line-height: 1.35 !important;
-        letter-spacing: .07em !important;
-        text-transform: uppercase !important;
-    }
-
-    /* Desktop row rhythm — same comfortable height as the Users table. */
-    @media (min-width: 1280px) {
-        .seller-compliance-page #compliancePanel-flagged .flagged-table-head,
-        .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern > div {
-            grid-template-columns:
-                minmax(320px, 1.85fr)
-                150px
-                125px
-                140px
-                175px
-                78px !important;
-            gap: 16px !important;
-        }
-
-        .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern > div > div {
-            min-height: 72px !important;
-        }
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern.compliance-seller-row {
-        margin: 0 !important;
-        border: 0 !important;
-        border-bottom: 1px solid #f0ebe4 !important;
-        border-radius: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-        transform: none !important;
-        transition: background-color .14s ease !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern.compliance-seller-row:hover {
-        border-color: #f0ebe4 !important;
-        background: #fdfbf7 !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged #flaggedSellerList > article:last-of-type {
-        border-bottom: 0 !important;
-    }
-
-    /* Seller identity — User table sizing. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-seller-avatar {
-        width: 40px !important;
-        height: 40px !important;
-        flex: 0 0 40px !important;
-        border: 0 !important;
-        border-radius: 999px !important;
-        background: #f3f1ed !important;
-        color: #655d55 !important;
-        font-size: 10px !important;
-        font-weight: 700 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-seller-name {
-        color: #2e2924 !important;
-        font-size: 12px !important;
-        font-weight: 700 !important;
-        line-height: 1.35 !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-seller-email {
-        color: #988f84 !important;
-        font-size: 9.5px !important;
-        font-weight: 400 !important;
-        line-height: 1.35 !important;
-    }
-
-    /* Flagged count — compact like the Users table pills. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-count-box {
-        min-width: 30px !important;
-        height: 28px !important;
-        border-radius: 9px !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-count-copy {
-        color: #8f867b !important;
-        font-size: 9px !important;
-        line-height: 1.4 !important;
-    }
-
-    /* Warnings / risk badges — same readable badge scale as Users. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-warning-badge,
-    .seller-compliance-page #compliancePanel-flagged .flagged-risk-badge {
-        padding: 6px 10px !important;
-        border-radius: 999px !important;
-        font-size: 9.5px !important;
-        font-weight: 600 !important;
-        line-height: 1 !important;
-    }
-
-    /* Date and relative time — mirrors Joined + helper text. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-last-date {
-        color: #514a42 !important;
-        font-size: 10px !important;
-        font-weight: 500 !important;
-        line-height: 1.4 !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-last-relative {
-        color: #958c80 !important;
-        font-size: 9px !important;
-        font-weight: 400 !important;
-        line-height: 1.4 !important;
-    }
-
-    /* Mobile field labels stay compact and readable. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-mobile-label {
-        color: #958c80 !important;
-        font-size: 9px !important;
-        font-weight: 500 !important;
-        line-height: 1.35 !important;
-    }
-
-    /* =========================================================
-       ACTION — ICON ONLY
-       Same behavior as the final Users Action column:
-       dark by default, bright SARI gold on hover/focus.
-       ========================================================= */
-    .seller-compliance-page #compliancePanel-flagged .flagged-review-button {
-        display: inline-grid !important;
-        width: 30px !important;
-        min-width: 30px !important;
-        height: 30px !important;
-        min-height: 30px !important;
-        place-items: center !important;
-        padding: 0 !important;
-
-        border: 0 !important;
-        border-color: transparent !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        background-color: transparent !important;
-        box-shadow: none !important;
-
-        color: #3f3b37 !important;
-        outline: none !important;
-
-        transition:
-            color .15s ease,
-            transform .15s ease !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-review-button svg {
-        width: 15px !important;
-        height: 15px !important;
-        color: currentColor !important;
-        stroke: currentColor !important;
-        filter: none !important;
-        transition: none !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-review-button:hover,
-    .seller-compliance-page #compliancePanel-flagged .flagged-review-button:focus-visible {
-        border: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        color: #e09a00 !important;
-        transform: translateY(-1px) scale(1.08) !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged .flagged-review-button:active {
-        border: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        color: #c98500 !important;
-        transform: scale(1.02) !important;
-    }
-
-    /* Footer text size aligned with the Users table footer. */
-    .seller-compliance-page #compliancePanel-flagged .flagged-table-footer {
-        min-height: 68px;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page #compliancePanel-flagged #flaggedSellerResultCount {
-        color: #756d63 !important;
-        font-size: 10px !important;
-        font-weight: 400 !important;
-        line-height: 1.4 !important;
-    }
-
-    @media (max-width: 1279px) {
-        .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern.compliance-seller-row {
-            margin: 12px !important;
-            border: 1px solid #e9e1d7 !important;
-            border-radius: 16px !important;
-            box-shadow:
-                0 2px 5px rgba(61,43,22,.025),
-                0 9px 20px rgba(61,43,22,.05) !important;
-        }
-
-        .seller-compliance-page #compliancePanel-flagged .flagged-seller-row-modern.compliance-seller-row:hover {
-            border-color: #ddcfb8 !important;
-            background: #fffdfa !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-compliance-page #compliancePanel-flagged .flagged-review-button,
-        .seller-compliance-page #compliancePanel-flagged .flagged-review-button:hover,
-        .seller-compliance-page #compliancePanel-flagged .flagged-review-button:focus-visible {
-            transform: none !important;
-            transition: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER COMPLIANCE — CLEAN REVIEW MODAL
-       Matches the newer clean Seller Account Control modal language:
-       white form-like surface, restrained borders, low visual noise.
-       Existing review data, routes, forms, details accordions, and JS stay intact.
-       ========================================================= */
-
-    /* Backdrop */
-    .seller-compliance-page .seller-review-modal {
-        background: rgba(31, 29, 26, .46) !important;
-        backdrop-filter: blur(4px) !important;
-        -webkit-backdrop-filter: blur(4px) !important;
-        padding: 18px !important;
-    }
-
-    /* Main dialog */
-    .seller-compliance-page .seller-review-dialog {
-        position: relative;
-        width: min(960px, calc(100vw - 28px)) !important;
-        max-width: 960px !important;
-        max-height: min(92vh, 900px) !important;
-        overflow: hidden !important;
-        border: 1px solid #dedbd6 !important;
-        border-radius: 22px !important;
-        background: #fff !important;
-        box-shadow:
-            0 18px 44px rgba(24,22,19,.13),
-            0 44px 100px rgba(24,22,19,.20) !important;
-    }
-
-    .seller-compliance-page .seller-review-dialog::before {
-        display: none !important;
-        content: none !important;
-    }
-
-    /* Header */
-    .seller-compliance-page .seller-review-header {
-        align-items: center !important;
-        padding: 22px 22px 18px !important;
-        border-bottom: 0 !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-identity {
-        align-items: center !important;
-        gap: 0 !important;
-    }
-
-    /* Hide chunky avatar to match the cleaner form-like modal */
-    .seller-compliance-page .seller-review-identity > div:first-child {
-        display: none !important;
-    }
-
-    .seller-compliance-page .seller-review-eyebrow {
-        margin: 0 0 5px !important;
-        color: #77777c !important;
-        font-size: .66rem !important;
-        font-weight: 500 !important;
-        letter-spacing: 0 !important;
-        line-height: 1.3 !important;
-        text-transform: none !important;
-    }
-
-    .seller-compliance-page .seller-review-header h3 {
-        color: #252525 !important;
-        font-size: 1.34rem !important;
-        font-weight: 700 !important;
-        line-height: 1.18 !important;
-        letter-spacing: -.035em !important;
-    }
-
-    .seller-compliance-page .seller-review-header .seller-review-identity p:last-child {
-        margin-top: 7px !important;
-        color: #7d7d82 !important;
-        font-size: .73rem !important;
-        line-height: 1.45 !important;
-    }
-
-    .seller-compliance-page .seller-review-header .rounded-full.border {
-        padding: 5px 9px !important;
-        font-size: .61rem !important;
-        font-weight: 600 !important;
-    }
-
-    /* Header action group: remove toolbar container */
-    .seller-compliance-page .seller-review-toolbar {
-        gap: 8px !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-    }
-
-    .seller-compliance-page .seller-review-suspend-btn {
-        min-height: 38px !important;
-        height: 38px !important;
-        border: 1px solid #e6d5b3 !important;
-        border-radius: 10px !important;
-        background: #fffaf0 !important;
-        padding-inline: 13px !important;
-        color: #94671f !important;
-        font-size: .68rem !important;
-        font-weight: 600 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-suspend-btn:hover {
-        border-color: #d7bb7e !important;
-        background: #fff4df !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-close-btn {
-        width: 36px !important;
-        height: 36px !important;
-        min-height: 36px !important;
-        border: 0 !important;
-        border-radius: 10px !important;
-        background: #f7f7f8 !important;
-        color: #636363 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-close-btn:hover {
-        background: #eeeeef !important;
-        color: #2d2d2d !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-    /* Body */
-    .seller-compliance-page .seller-review-body {
-        padding: 0 22px 22px !important;
-        background: #fff !important;
-        scrollbar-color: #d1d1d4 transparent !important;
-    }
-
-    /* Seller snapshot -> clean read-only form fields */
-    .seller-compliance-page .seller-review-stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 14px !important;
-        margin: 0 !important;
-    }
-
-    .seller-compliance-page .seller-review-stat {
-        min-height: 0 !important;
-        overflow: visible !important;
-        padding: 0 !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-stat::after {
-        display: none !important;
-        content: none !important;
-    }
-
-    .seller-compliance-page .seller-review-stat p:first-child {
-        margin-bottom: 7px !important;
-        color: #626268 !important;
-        font-size: .70rem !important;
-        font-weight: 500 !important;
-        line-height: 1.3 !important;
-    }
-
-    .seller-compliance-page .seller-review-stat p:last-child {
-        display: flex;
-        min-height: 48px;
-        align-items: center;
-        margin: 0 !important;
-        padding: 0 14px !important;
-        border: 1px solid #dcdde1;
-        border-radius: 10px;
-        background: #fff;
-        color: #303034 !important;
-        font-size: .86rem !important;
-        font-weight: 500 !important;
-        line-height: 1.2 !important;
-        letter-spacing: 0 !important;
-        box-shadow: none !important;
-    }
-
-    /* Section heading */
-    .seller-compliance-page .seller-review-section-heading {
-        margin: 20px 0 10px !important;
-        padding: 0 !important;
-    }
-
-    .seller-compliance-page .seller-review-section-heading h4 {
-        color: #303034 !important;
-        font-size: .80rem !important;
-        font-weight: 600 !important;
-        letter-spacing: -.01em !important;
-    }
-
-    .seller-compliance-page .seller-review-section-heading p {
-        margin-top: 3px !important;
-        color: #85858b !important;
-        font-size: .66rem !important;
-        line-height: 1.5 !important;
-    }
-
-    .seller-compliance-page .seller-review-section-count {
-        min-height: 26px !important;
-        border-color: #e2e2e5 !important;
-        background: #f7f7f8 !important;
-        color: #69696f !important;
-        font-size: .62rem !important;
-        box-shadow: none !important;
-    }
-
-    /* Flagged listings */
-    .seller-compliance-page .seller-review-listings {
-        gap: 14px !important;
-    }
-
-    .seller-compliance-page .seller-review-product {
-        overflow: hidden !important;
-        border: 1px solid #dcdde1 !important;
-        border-radius: 14px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro {
-        padding: 12px 14px !important;
-        border-bottom: 1px solid #ececef !important;
-        background: #fafafa !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro p:first-child {
-        color: #6f6f74 !important;
-        font-size: .65rem !important;
-        font-weight: 600 !important;
-        letter-spacing: .06em !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro p:last-child {
-        color: #8a8a8f !important;
-        font-size: .64rem !important;
-    }
-
-    .seller-compliance-page .seller-review-product-summary {
-        grid-template-columns: 108px minmax(0, 1fr) !important;
-        gap: 16px !important;
-        padding: 16px !important;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .seller-review-product-image {
-        width: 108px !important;
-        height: 108px !important;
-        border: 1px solid #e1e1e4 !important;
-        border-radius: 10px !important;
-        background: #f7f7f8 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-product-main h4 {
-        color: #303034 !important;
-        font-size: .86rem !important;
-        font-weight: 600 !important;
-        line-height: 1.3 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-main > div:first-child > div:first-child > p {
-        color: #7d7d82 !important;
-        font-size: .69rem !important;
-    }
-
-    /* Metrics inside each listing -> input-like read only fields */
-    .seller-compliance-page .seller-review-product-stats {
-        gap: 10px !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric {
-        min-height: 58px !important;
-        padding: 10px 11px !important;
-        border: 1px solid #e2e2e5 !important;
-        border-radius: 9px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric p:first-child {
-        color: #88888d !important;
-        font-size: .62rem !important;
-        font-weight: 400 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric p:last-child {
-        color: #37373b !important;
-        font-size: .71rem !important;
-        font-weight: 600 !important;
-    }
-
-    /* Section bars */
-    .seller-compliance-page .seller-review-subsection {
-        padding: 12px 16px !important;
-        border-top-color: #ececef !important;
-        background: #fafafa !important;
-    }
-
-    .seller-compliance-page .seller-review-subsection p:first-child {
-        color: #4b4b50 !important;
-        font-size: .69rem !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-compliance-page .seller-review-subsection p:last-child {
-        color: #8b8b90 !important;
-        font-size: .63rem !important;
-    }
-
-    /* Screening panels: clean, no floating cards */
-    .seller-compliance-page .seller-screening-grid {
-        gap: 12px !important;
-        padding: 16px !important;
-        border-top-color: #ececef !important;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .screening-panel {
-        min-height: 0 !important;
-        padding: 14px !important;
-        border: 1px solid #e0e0e3 !important;
-        border-radius: 11px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .screening-panel::before {
-        display: none !important;
-        content: none !important;
-    }
-
-    .seller-compliance-page .screening-panel-local,
-    .seller-compliance-page .screening-panel-ai {
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .screening-panel > div:first-child p {
-        font-size: .72rem !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-compliance-page .screening-panel > p {
-        color: #69696f !important;
-        font-size: .67rem !important;
-        line-height: 1.55 !important;
-    }
-
-    .seller-compliance-page .screening-panel .rounded-xl.border {
-        min-height: 58px !important;
-        border-color: #e4e4e7 !important;
-        border-radius: 9px !important;
-        background: #fafafa !important;
-    }
-
-    /* Full Listing Details accordion */
-    .seller-compliance-page .seller-review-product details {
-        border-top: 1px solid #ececef !important;
-    }
-
-    .seller-compliance-page .seller-review-product details > summary {
-        min-height: 52px !important;
-        padding: 12px 16px !important;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .seller-review-product details > summary:hover,
-    .seller-compliance-page .seller-review-product details[open] > summary {
-        background: #fafafa !important;
-    }
-
-    .seller-compliance-page .seller-review-product details > summary p:first-child {
-        color: #45454a !important;
-        font-size: .70rem !important;
-        font-weight: 600 !important;
-    }
-
-    .seller-compliance-page .seller-review-product details > summary p:last-child {
-        color: #89898e !important;
-        font-size: .63rem !important;
-    }
-
-    .seller-compliance-page .seller-review-product details > div {
-        padding: 16px !important;
-        border-top-color: #ececef !important;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .seller-review-product details .rounded-xl.border,
-    .seller-compliance-page .seller-review-product details .rounded-\[14px\].border {
-        border-color: #e3e3e6 !important;
-        border-radius: 9px !important;
-        background: #fafafa !important;
-        box-shadow: none !important;
-    }
-
-    /* Moderation buttons */
-    .seller-compliance-page .seller-review-actions {
-        gap: 10px !important;
-        padding: 14px 16px 16px !important;
-        border-top: 1px solid #ececef !important;
-        background: #fff !important;
-    }
-
-    .seller-compliance-page .seller-action-btn {
-        min-height: 42px !important;
-        height: 42px !important;
-        border-radius: 10px !important;
-        font-size: .68rem !important;
-        font-weight: 600 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-action-btn:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-action-approve {
-        border-color: #cfe2d5 !important;
-        background: #f5faf6 !important;
-        color: #4d7b5c !important;
-    }
-
-    .seller-compliance-page .seller-action-approve:hover {
-        background: #edf7ef !important;
-        border-color: #bdd8c5 !important;
-    }
-
-    .seller-compliance-page .seller-action-reject {
-        border-color: #dcdde1 !important;
-        background: #f8f8f8 !important;
-        color: #55555a !important;
-    }
-
-    .seller-compliance-page .seller-action-reject:hover {
-        background: #f1f1f2 !important;
-        border-color: #cfcfd3 !important;
-    }
-
-    .seller-compliance-page .seller-action-warn {
-        border: 1px solid #efcaca !important;
-        background: #fff7f7 !important;
-        color: #a45151 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-action-warn:hover {
-        border-color: #e3aaaa !important;
-        background: #fff0f0 !important;
-        box-shadow: none !important;
-    }
-
-    /* Warning history becomes a clean section rather than a floating card */
-    .seller-compliance-page .seller-review-body > section {
-        border-color: #dcdde1 !important;
-        border-radius: 12px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-body > section > div:first-child {
-        border-bottom-color: #ececef !important;
-        background: #fafafa !important;
-    }
-
-    /* Warning modal receives the same clean language */
-    .seller-compliance-page + .warning-modal-backdrop,
-    .warning-modal-backdrop {
-        background: rgba(31,29,26,.46) !important;
-        backdrop-filter: blur(4px) !important;
-        -webkit-backdrop-filter: blur(4px) !important;
-    }
-
-    .warning-modal-dialog {
-        max-width: 560px !important;
-        border: 1px solid #dedbd6 !important;
-        border-radius: 20px !important;
-        background: #fff !important;
-        box-shadow:
-            0 18px 44px rgba(24,22,19,.13),
-            0 44px 100px rgba(24,22,19,.20) !important;
-    }
-
-    @media (max-width: 767px) {
-        .seller-compliance-page .seller-review-modal {
-            padding: 8px !important;
-        }
-
-        .seller-compliance-page .seller-review-dialog {
-            width: calc(100vw - 16px) !important;
-            max-height: 95vh !important;
-            border-radius: 18px !important;
-        }
-
-        .seller-compliance-page .seller-review-header {
-            align-items: flex-start !important;
-            padding: 18px 16px 14px !important;
-        }
-
-        .seller-compliance-page .seller-review-toolbar {
-            width: 100%;
-            justify-content: flex-end;
-        }
-
-        .seller-compliance-page .seller-review-body {
-            padding: 0 16px 18px !important;
-        }
-
-        .seller-compliance-page .seller-review-stats-grid {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
-        }
-
-        .seller-compliance-page .seller-review-product-summary {
-            grid-template-columns: 1fr !important;
-            padding: 14px !important;
-        }
-
-        .seller-compliance-page .seller-review-product-image {
-            width: 100% !important;
-            height: 180px !important;
-        }
-
-        .seller-compliance-page .seller-screening-grid {
-            grid-template-columns: 1fr !important;
-            padding: 14px !important;
-        }
-
-        .seller-compliance-page .seller-review-actions {
-            grid-template-columns: 1fr !important;
-            padding: 14px !important;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .seller-compliance-page .seller-review-modal:not(.hidden),
-        .seller-compliance-page .seller-review-modal:not(.hidden) .seller-review-dialog {
-            animation: none !important;
-        }
-    }
-
-
-    /* =========================================================
-       SELLER COMPLIANCE REVIEW MODAL — V2 CLEAN REFINEMENT
-       - Flat product metrics (no mini-card containers)
-       - Flat AI Decision / Policy values
-       - Soft red warning outline for flagged listing
-       - Neutral action buttons with bright hover-only colors
-       ========================================================= */
-
-    /* ---------------------------------------------------------
-       Flagged listing warning treatment
-       --------------------------------------------------------- */
-    .seller-compliance-page .seller-review-product {
-        border: 1px solid #efcaca !important;
-        border-radius: 14px !important;
-        background: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro {
-        position: relative;
-        padding: 13px 15px 13px 18px !important;
-        border-bottom: 1px solid #f0dddd !important;
-        background: #fffafa !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro::before {
-        content: "";
-        position: absolute;
-        top: 11px;
-        bottom: 11px;
-        left: 0;
-        width: 3px;
-        border-radius: 0 999px 999px 0;
-        background: #e05252;
-    }
-
-    .seller-compliance-page .seller-review-product-intro p:first-child {
-        color: #a84f4f !important;
-        font-size: .66rem !important;
-        font-weight: 700 !important;
-        letter-spacing: .07em !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro p:last-child {
-        color: #8b7777 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-intro .rounded-full {
-        border-color: #efcaca !important;
-        background: #fff !important;
-        color: #a45151 !important;
-        box-shadow: none !important;
-    }
-
-    /* ---------------------------------------------------------
-       Price / Stock / Variants / Uploaded — no containers
-       --------------------------------------------------------- */
-    .seller-compliance-page .seller-review-product-stats {
-        display: grid !important;
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-        gap: 0 !important;
-        margin-top: 16px !important;
-        padding: 13px 0 0 !important;
-        border-top: 1px solid #ececef !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric {
-        position: relative;
-        min-height: 48px !important;
-        padding: 2px 14px !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric:first-child {
-        padding-left: 0 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric:last-child {
-        padding-right: 0 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric + .seller-review-product-metric::before {
-        content: "";
-        position: absolute;
-        top: 2px;
-        bottom: 2px;
-        left: 0;
-        width: 1px;
-        background: #ececef;
-    }
-
-    .seller-compliance-page .seller-review-product-metric p:first-child {
-        margin: 0 !important;
-        color: #919196 !important;
-        font-size: .63rem !important;
-        font-weight: 400 !important;
-        line-height: 1.35 !important;
-    }
-
-    .seller-compliance-page .seller-review-product-metric p:last-child {
-        margin-top: 6px !important;
-        color: #28282c !important;
-        font-size: .75rem !important;
-        font-weight: 650 !important;
-        line-height: 1.25 !important;
-    }
-
-    /* ---------------------------------------------------------
-       AI Decision / Policy — flat values, no boxes
-       --------------------------------------------------------- */
-    .seller-compliance-page .seller-ai-meta {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 0 !important;
-        margin-top: 14px !important;
-        padding: 12px 0 2px !important;
-        border-top: 1px solid #ececef !important;
-    }
-
-    .seller-compliance-page .seller-ai-meta-item {
-        position: relative;
-        min-height: 48px;
-        padding: 0 14px !important;
-        border: 0 !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-ai-meta-item:first-child {
-        padding-left: 0 !important;
-    }
-
-    .seller-compliance-page .seller-ai-meta-item:last-child {
-        padding-right: 0 !important;
-    }
-
-    .seller-compliance-page .seller-ai-meta-item + .seller-ai-meta-item::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 1px;
-        background: #ececef;
-    }
-
-    .seller-compliance-page .seller-ai-meta-label {
-        color: #919196 !important;
-        font-size: .63rem !important;
-        font-weight: 400 !important;
-        line-height: 1.35 !important;
-    }
-
-    .seller-compliance-page .seller-ai-meta-value {
-        margin-top: 6px !important;
-        color: #2d2d31 !important;
-        font-size: .77rem !important;
-        font-weight: 650 !important;
-        line-height: 1.3 !important;
-    }
-
-    /* ---------------------------------------------------------
-       Moderation actions — neutral default, bright hover only
-       --------------------------------------------------------- */
-    .seller-compliance-page .seller-review-actions {
-        gap: 12px !important;
-    }
-
-    .seller-compliance-page .seller-action-btn {
-        min-height: 48px !important;
-        height: 48px !important;
-        gap: 10px !important;
-        border: 1px solid #dcdde1 !important;
-        border-radius: 11px !important;
-        background: #fff !important;
-        color: #303034 !important;
-        font-size: .72rem !important;
-        font-weight: 600 !important;
-        box-shadow: none !important;
-        transition:
-            color .16s ease,
-            border-color .16s ease,
-            background-color .16s ease,
-            transform .16s ease !important;
-    }
-
-    .seller-compliance-page .seller-action-btn svg {
-        width: 19px !important;
-        height: 19px !important;
-        flex: 0 0 19px !important;
-        color: currentColor !important;
-        stroke: currentColor !important;
-    }
-
-    .seller-compliance-page .seller-action-btn:hover,
-    .seller-compliance-page .seller-action-btn:focus-visible {
-        box-shadow: none !important;
-        transform: translateY(-1px) !important;
-        outline: none !important;
-    }
-
-    /* Approve: black -> bright green */
-    .seller-compliance-page .seller-action-approve {
-        border-color: #dcdde1 !important;
-        background: #fff !important;
-        color: #303034 !important;
-    }
-
-    .seller-compliance-page .seller-action-approve:hover,
-    .seller-compliance-page .seller-action-approve:focus-visible {
-        border-color: #78d89a !important;
-        background: #f6fff9 !important;
-        color: #16a34a !important;
-    }
-
-    /* Reject: black -> bright red */
-    .seller-compliance-page .seller-action-reject {
-        border-color: #dcdde1 !important;
-        background: #fff !important;
-        color: #303034 !important;
-    }
-
-    .seller-compliance-page .seller-action-reject:hover,
-    .seller-compliance-page .seller-action-reject:focus-visible {
-        border-color: #f29b9b !important;
-        background: #fff8f8 !important;
-        color: #ef3f3f !important;
-    }
-
-    /* Issue warning: black -> bright amber */
-    .seller-compliance-page .seller-action-warn {
-        border: 1px solid #dcdde1 !important;
-        background: #fff !important;
-        color: #303034 !important;
-        box-shadow: none !important;
-    }
-
-    .seller-compliance-page .seller-action-warn:hover,
-    .seller-compliance-page .seller-action-warn:focus-visible {
-        border-color: #f0c466 !important;
-        background: #fffaf0 !important;
-        color: #e69a00 !important;
-        box-shadow: none !important;
-    }
-
-    /* Header suspension action — same interaction language */
-    .seller-compliance-page .seller-review-suspend-btn {
-        min-height: 42px !important;
-        height: 42px !important;
-        gap: 9px !important;
-        border: 1px solid #dcdde1 !important;
-        border-radius: 10px !important;
-        background: #fff !important;
-        color: #303034 !important;
-        box-shadow: none !important;
-        transition:
-            color .16s ease,
-            border-color .16s ease,
-            background-color .16s ease,
-            transform .16s ease !important;
-    }
-
-    .seller-compliance-page .seller-review-suspend-btn svg {
-        width: 18px !important;
-        height: 18px !important;
-        color: currentColor !important;
-        stroke: currentColor !important;
-    }
-
-    .seller-compliance-page .seller-review-suspend-btn:hover,
-    .seller-compliance-page .seller-review-suspend-btn:focus-visible {
-        border-color: #f0c466 !important;
-        background: #fffaf0 !important;
-        color: #e69a00 !important;
-        transform: translateY(-1px) !important;
-        box-shadow: none !important;
-        outline: none !important;
-    }
-
-    @media (max-width: 767px) {
-        .seller-compliance-page .seller-review-product-stats {
+        .seller-review-stats-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            row-gap: 14px !important;
         }
 
-        .seller-compliance-page .seller-review-product-metric:nth-child(3)::before {
-            display: none !important;
-        }
-
-        .seller-compliance-page .seller-review-product-metric:nth-child(3),
-        .seller-compliance-page .seller-review-product-metric:nth-child(4) {
-            padding-top: 10px !important;
-            border-top: 1px solid #ececef !important;
-        }
-
-        .seller-compliance-page .seller-review-product-metric:nth-child(3) {
-            padding-left: 0 !important;
-        }
-
-        .seller-compliance-page .seller-ai-meta {
+        .seller-review-product-summary {
             grid-template-columns: 1fr !important;
         }
 
-        .seller-compliance-page .seller-ai-meta-item {
-            padding: 10px 0 !important;
+        .seller-review-product-image {
+            width: 100% !important;
+            height: 150px !important;
         }
 
-        .seller-compliance-page .seller-ai-meta-item + .seller-ai-meta-item::before {
+        .seller-screening-grid,
+        .seller-review-actions {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-review-product-stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            row-gap: 8px !important;
+        }
+
+        .seller-review-product-metric:nth-child(3)::before {
+            display: none;
+        }
+
+        .seller-ai-meta {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-ai-meta-item {
+            padding: 7px 0 !important;
+        }
+
+        .seller-ai-meta-item + .seller-ai-meta-item::before {
             top: 0;
             right: 0;
             bottom: auto;
@@ -3491,46 +1454,155 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .seller-compliance-page .seller-action-btn,
-        .seller-compliance-page .seller-action-btn:hover,
-        .seller-compliance-page .seller-action-btn:focus-visible,
-        .seller-compliance-page .seller-review-suspend-btn,
-        .seller-compliance-page .seller-review-suspend-btn:hover,
-        .seller-compliance-page .seller-review-suspend-btn:focus-visible {
-            transform: none !important;
+        .seller-compliance-page *,
+        .seller-review-modal,
+        .seller-review-dialog {
+            scroll-behavior: auto !important;
+            animation: none !important;
             transition: none !important;
+            transform: none !important;
         }
     }
 
+    /* ============================================================
+       SELLER COMPLIANCE — HEADER SCALE MATCH
+       Matches Platform Settings / Commissions / Complaints.
+       Visual-only; compliance logic and backend remain untouched.
+       ============================================================ */
 
-    /* =========================================================
-       FLAGGED LISTING REVIEW — STRONGER RED OUTLINE
-       Warning is communicated by the container line only.
-       Interior remains clean white.
-       ========================================================= */
-
-    .seller-compliance-page .seller-review-product {
-        border: 2px solid #e77979 !important;
-        background: #fff !important;
-        box-shadow: none !important;
+    .seller-compliance-page .compliance-page-header{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        gap:20px !important;
+        margin-bottom:16px !important;
     }
 
-    .seller-compliance-page .seller-review-product-intro {
-        background: #fff !important;
-        border-bottom: 1px solid #eadede !important;
+    .seller-compliance-page .compliance-page-header-main{
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:13px !important;
     }
 
-    .seller-compliance-page .seller-review-product-intro::before {
-        width: 4px !important;
-        background: #df4f4f !important;
+    .seller-compliance-page .compliance-page-icon{
+        width:44px !important;
+        height:44px !important;
+        flex:0 0 44px !important;
+        border-radius:12px !important;
+        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
     }
 
+    .seller-compliance-page .compliance-page-icon svg{
+        width:17px !important;
+        height:17px !important;
+    }
 
-    /* Remove the extra left red warning bar.
-       Keep only the clean red outline around the flagged listing container. */
-    .seller-compliance-page .seller-review-product-intro::before {
-        display: none !important;
-        content: none !important;
+    .seller-compliance-page .compliance-eyebrow{
+        color:#9a6f23 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        line-height:1.15 !important;
+        letter-spacing:.13em !important;
+    }
+
+    .seller-compliance-page .compliance-page-title{
+        margin:5px 0 0 !important;
+        font-size:29px !important;
+        font-weight:700 !important;
+        line-height:1.02 !important;
+        letter-spacing:-.045em !important;
+    }
+
+    .seller-compliance-page .compliance-title-base{
+        color:#17130f !important;
+    }
+
+    .seller-compliance-page .compliance-title-accent{
+        color:#d99500 !important;
+    }
+
+    .seller-compliance-page .compliance-page-subtitle{
+        max-width:820px !important;
+        margin-top:7px !important;
+        color:#7f756a !important;
+        font-size:11px !important;
+        font-weight:400 !important;
+        line-height:1.5 !important;
+    }
+
+    .seller-compliance-page .compliance-account-control{
+        min-height:42px !important;
+        height:42px !important;
+        gap:7px !important;
+        border-radius:10px !important;
+        padding:0 13px !important;
+        font-size:8.5px !important;
+        box-shadow:0 4px 10px rgba(217,149,0,.11) !important;
+    }
+
+    .seller-compliance-page .compliance-account-control svg{
+        width:13px !important;
+        height:13px !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .seller-compliance-page .compliance-page-header{
+            margin-bottom:14px !important;
+        }
+
+        .seller-compliance-page .compliance-page-icon{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+        }
+
+        .seller-compliance-page .compliance-page-title{
+            font-size:27px !important;
+        }
+
+        .seller-compliance-page .compliance-page-subtitle{
+            font-size:10.5px !important;
+        }
+
+        .seller-compliance-page .compliance-account-control{
+            min-height:40px !important;
+            height:40px !important;
+        }
+    }
+
+    @media(max-width:639px){
+        .seller-compliance-page .compliance-page-header{
+            align-items:flex-start !important;
+            gap:12px !important;
+        }
+
+        .seller-compliance-page .compliance-page-header-main{
+            align-items:flex-start !important;
+            gap:11px !important;
+        }
+
+        .seller-compliance-page .compliance-page-icon{
+            width:40px !important;
+            height:40px !important;
+            flex-basis:40px !important;
+            border-radius:11px !important;
+        }
+
+        .seller-compliance-page .compliance-page-title{
+            font-size:24px !important;
+        }
+
+        .seller-compliance-page .compliance-page-subtitle{
+            font-size:10px !important;
+        }
+
+        .seller-compliance-page .compliance-account-control{
+            width:100% !important;
+            min-height:40px !important;
+            height:40px !important;
+            font-size:9px !important;
+        }
     }
 
 </style>
@@ -4141,6 +2213,11 @@
                                                         <img
                                                             src="{{ route('seller.products.image', $product) }}"
                                                             alt="{{ $product->name }}"
+                                                            width="108"
+                                                            height="108"
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                            fetchpriority="low"
                                                             class="h-full w-full object-cover"
                                                         >
                                                     @else
@@ -4480,15 +2557,8 @@
 
                                 {{-- WARNING HISTORY FOR THIS SELLER --}}
                                 @php
-                                    $sellerWarningHistory = $recentWarnings
-                                        ->filter(function ($warning) use ($seller) {
-                                            $warningSellerId = $warning->seller?->id
-                                                ?? $warning->seller_account_id
-                                                ?? $warning->seller_id
-                                                ?? null;
-
-                                            return (string) $warningSellerId === (string) ($seller?->id ?? '');
-                                        })
+                                    $sellerWarningHistory = $complianceWarningsBySeller
+                                        ->get((string) ($seller?->id ?? ''), collect())
                                         ->values();
                                 @endphp
 
@@ -4590,7 +2660,16 @@
                         <div class="flex gap-3">
                             <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[#e9e2d8] bg-[#faf8f4]">
                                 @if($product->image_path)
-                                    <img src="{{ route('seller.products.image', $product) }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
+                                    <img
+                                        src="{{ route('seller.products.image', $product) }}"
+                                        alt="{{ $product->name }}"
+                                        width="64"
+                                        height="64"
+                                        loading="lazy"
+                                        decoding="async"
+                                        fetchpriority="low"
+                                        class="h-full w-full object-cover"
+                                    >
                                 @else
                                     <div class="grid h-full w-full place-items-center text-[#a79d91]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="m4 17 5-5 4 4 2-2 5 4"></path></svg></div>
                                 @endif
@@ -5026,43 +3105,65 @@
     syncRiskDropdown();
     syncFlaggedFilterAvailability('flagged');
 
+    const flaggedSellerIndex = flaggedSellerRows.map(function (row) {
+        return {
+            row,
+            searchable: (row.dataset.flaggedSellerSearch || '').toLowerCase(),
+            risk: (row.dataset.flaggedSellerRisk || '').toLowerCase(),
+        };
+    });
+
+    function debounce(callback, wait = 130) {
+        let timer = 0;
+
+        return function (...args) {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(() => callback.apply(this, args), wait);
+        };
+    }
+
+    let flaggedFilterFrame = 0;
+
     function filterFlaggedSellers() {
         const query = (flaggedSellerSearch?.value || '').trim().toLowerCase();
         const risk = (flaggedSellerRiskFilter?.value || '').trim().toLowerCase();
 
-        let visible = 0;
+        window.cancelAnimationFrame(flaggedFilterFrame);
 
-        flaggedSellerRows.forEach(function (row) {
-            const searchable = (row.dataset.flaggedSellerSearch || '').toLowerCase();
-            const rowRisk = (row.dataset.flaggedSellerRisk || '').toLowerCase();
+        flaggedFilterFrame = window.requestAnimationFrame(function () {
+            let visible = 0;
 
-            const matchesQuery = query === '' || searchable.includes(query);
-            const matchesRisk = risk === '' || rowRisk === risk;
-            const matches = matchesQuery && matchesRisk;
+            flaggedSellerIndex.forEach(function (item) {
+                const matchesQuery = query === '' || item.searchable.includes(query);
+                const matchesRisk = risk === '' || item.risk === risk;
+                const matches = matchesQuery && matchesRisk;
+                const shouldHide = !matches;
 
-            row.classList.toggle('hidden', !matches);
+                if (item.row.classList.contains('hidden') !== shouldHide) {
+                    item.row.classList.toggle('hidden', shouldHide);
+                }
 
-            if (matches) {
-                visible++;
+                if (matches) visible++;
+            });
+
+            if (flaggedSellerResultCount) {
+                flaggedSellerResultCount.textContent =
+                    'Showing ' + visible +
+                    ' of ' + flaggedSellerIndex.length +
+                    ' flagged seller' + (visible === 1 ? '' : 's');
+            }
+
+            const hasFilters = query !== '' || risk !== '';
+            clearFlaggedSellerFilters?.classList.toggle('hidden', !hasFilters);
+
+            if (flaggedSellerIndex.length > 0) {
+                flaggedSellerList?.classList.toggle('hidden', visible === 0);
+                flaggedSellerFilterEmpty?.classList.toggle('hidden', visible !== 0);
             }
         });
-
-        if (flaggedSellerResultCount) {
-            flaggedSellerResultCount.textContent =
-                'Showing ' + visible +
-                ' of ' + flaggedSellerRows.length +
-                ' flagged seller' + (visible === 1 ? '' : 's');
-        }
-
-        const hasFilters = query !== '' || risk !== '';
-
-        clearFlaggedSellerFilters?.classList.toggle('hidden', !hasFilters);
-
-        if (flaggedSellerRows.length > 0) {
-            flaggedSellerList?.classList.toggle('hidden', visible === 0);
-            flaggedSellerFilterEmpty?.classList.toggle('hidden', visible !== 0);
-        }
     }
+
+    const debouncedFlaggedSellerFilter = debounce(filterFlaggedSellers, 130);
 
     function resetFlaggedSellerFilters() {
         if (flaggedSellerSearch) {
@@ -5078,7 +3179,7 @@
         flaggedSellerSearch?.focus();
     }
 
-    flaggedSellerSearch?.addEventListener('input', filterFlaggedSellers);
+    flaggedSellerSearch?.addEventListener('input', debouncedFlaggedSellerFilter, { passive: true });
     flaggedSellerRiskFilter?.addEventListener('change', function () {
         syncRiskDropdown();
         filterFlaggedSellers();
@@ -5119,40 +3220,22 @@
         document.body.classList.remove('overflow-hidden');
     }
 
-    document.querySelectorAll('[data-flagged-seller-open]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const modal = document.getElementById(this.dataset.flaggedSellerOpen);
+    function openSellerDetails(modalId) {
+        const modal = document.getElementById(modalId);
 
-            if (!modal) {
-                return;
-            }
+        if (!modal) return;
 
-            closeAllSellerDetails();
+        closeAllSellerDetails();
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('overflow-hidden');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
 
-            requestAnimationFrame(function () {
-                modal.querySelector('[data-flagged-seller-close]')?.focus({ preventScroll: true });
-            });
+        window.requestAnimationFrame(function () {
+            modal.querySelector('[data-flagged-seller-close]')?.focus({ preventScroll: true });
         });
-    });
-
-    document.querySelectorAll('[data-flagged-seller-close]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            closeAllSellerDetails();
-        });
-    });
-
-    flaggedSellerModals.forEach(function (modal) {
-        modal.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                closeAllSellerDetails();
-            }
-        });
-    });
+    }
 
 
     /*
@@ -5165,31 +3248,31 @@
     const warningMeta = document.getElementById('warningModalMeta');
     const thirdNotice = document.getElementById('thirdWarningNotice');
 
-    document.querySelectorAll('[data-warning-open]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const productId = this.dataset.productId;
-            const productName = this.dataset.productName;
-            const sellerName = this.dataset.sellerName;
-            const warningCount = Number(this.dataset.warningCount || 0);
+    function openWarningModal(button) {
+        if (!button || !warningModal || !warningForm || !warningMeta || !thirdNotice) return;
 
-            closeAllSellerDetails();
+        const productId = button.dataset.productId;
+        const productName = button.dataset.productName;
+        const sellerName = button.dataset.sellerName;
+        const warningCount = Number(button.dataset.warningCount || 0);
 
-            warningForm.action = '{{ url('/admin/seller-compliance/products') }}/' + productId + '/warn';
-            warningMeta.textContent =
-                sellerName +
-                ' · ' +
-                productName +
-                ' · Current warnings: ' +
-                warningCount +
-                '/3';
+        closeAllSellerDetails();
 
-            thirdNotice.classList.toggle('hidden', warningCount < 2);
+        warningForm.action = '{{ url('/admin/seller-compliance/products') }}/' + productId + '/warn';
+        warningMeta.textContent =
+            sellerName +
+            ' · ' +
+            productName +
+            ' · Current warnings: ' +
+            warningCount +
+            '/3';
 
-            warningModal.classList.remove('hidden');
-            warningModal.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
-        });
-    });
+        thirdNotice.classList.toggle('hidden', warningCount < 2);
+
+        warningModal.classList.remove('hidden');
+        warningModal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+    }
 
     function closeWarningModal() {
         warningModal?.classList.add('hidden');
@@ -5200,8 +3283,31 @@
     document.getElementById('warningModalClose')?.addEventListener('click', closeWarningModal);
     document.getElementById('warningCancel')?.addEventListener('click', closeWarningModal);
 
-    warningModal?.addEventListener('click', function (event) {
-        if (event.target === warningModal) {
+    document.addEventListener('click', function (event) {
+        const openSellerButton = event.target.closest('[data-flagged-seller-open]');
+        if (openSellerButton) {
+            openSellerDetails(openSellerButton.dataset.flaggedSellerOpen);
+            return;
+        }
+
+        if (event.target.closest('[data-flagged-seller-close]')) {
+            closeAllSellerDetails();
+            return;
+        }
+
+        const sellerBackdrop = event.target.closest('[data-flagged-seller-modal]');
+        if (sellerBackdrop && event.target === sellerBackdrop) {
+            closeAllSellerDetails();
+            return;
+        }
+
+        const warningButton = event.target.closest('[data-warning-open]');
+        if (warningButton) {
+            openWarningModal(warningButton);
+            return;
+        }
+
+        if (warningModal && event.target === warningModal) {
             closeWarningModal();
         }
     });

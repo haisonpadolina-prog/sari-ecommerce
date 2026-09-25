@@ -5,9 +5,7 @@
 
 @section('content')
 <style>
-    @import url('https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
-
-    .fi {
+.fi {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1109,6 +1107,1813 @@
             0 30px 58px rgba(61,43,22,.038) !important;
     }
 
+
+    /* ============================================================
+       USER MANAGEMENT — FINAL COMPACT + PAINT PERFORMANCE LAYER
+       Visual sizing only; backend/routes/forms stay untouched.
+       ============================================================ */
+
+    .user-page {
+        max-width: 1640px !important;
+        padding-bottom: 18px !important;
+    }
+
+    /* Reduce repaint cost from the previous multi-layer shadow stack. */
+    .user-page .user-surface,
+    .user-page .metric-card {
+        box-shadow: 0 8px 24px rgba(61, 43, 22, .055) !important;
+    }
+
+    .user-page .metric-card:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 10px 28px rgba(61, 43, 22, .075) !important;
+    }
+
+    .user-page .metric-card,
+    .user-page .user-surface {
+        contain: paint;
+    }
+
+    /* Header */
+    .user-page .user-page-header {
+        margin-bottom: 12px !important;
+        gap: 10px !important;
+    }
+
+    .user-page .user-page-header-main {
+        gap: 10px !important;
+    }
+
+    .user-page .user-page-header-icon {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+        border-radius: 10px !important;
+    }
+
+    .user-page .user-page-header-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .user-page .user-page-eyebrow {
+        font-size: 7px !important;
+        letter-spacing: .13em !important;
+    }
+
+    .user-page .user-page-title {
+        margin-top: 3px !important;
+        font-size: clamp(22px, 1.55vw, 27px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .user-page .user-page-subtitle {
+        max-width: 760px !important;
+        margin-top: 5px !important;
+        font-size: 9.5px !important;
+        line-height: 1.55 !important;
+    }
+
+    .user-page .user-page-export {
+        min-height: 34px !important;
+        border-radius: 9px !important;
+        padding-inline: 12px !important;
+        font-size: 9px !important;
+        box-shadow: none !important;
+    }
+
+    .user-page .user-page-export svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    /* Metric cards */
+    .user-page > section.grid {
+        gap: 9px !important;
+    }
+
+    .user-page .metric-card {
+        min-height: 78px !important;
+        border-radius: 13px !important;
+        padding: 11px 13px !important;
+        padding-right: 52px !important;
+    }
+
+    .user-page .metric-card > div {
+        gap: 9px !important;
+    }
+
+    .user-page .metric-card > div > span:first-child {
+        right: 12px !important;
+        top: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+    }
+
+    .user-page .metric-card > div > span:first-child svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .user-page .metric-card > div > div > p:nth-child(1) {
+        font-size: 8.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    .user-page .metric-card > div > div > p:nth-child(2) {
+        margin-top: 3px !important;
+        font-size: 20px !important;
+    }
+
+    .user-page .metric-card > div > div > p:nth-child(3) {
+        margin-top: 6px !important;
+        font-size: 7.5px !important;
+    }
+
+    /* Filter bar */
+    .user-page > section.user-surface.mt-4.p-3 {
+        margin-top: 11px !important;
+        border-radius: 14px !important;
+        padding: 9px !important;
+    }
+
+    .user-page > section.user-surface.mt-4.p-3 > div {
+        gap: 8px !important;
+    }
+
+    .user-page #userSearch,
+    .user-page [data-role-toggle],
+    .user-page [data-status-toggle],
+    .user-page #applyFilter,
+    .user-page #resetFilter {
+        height: 38px !important;
+        border-radius: 9px !important;
+        font-size: 9.5px !important;
+    }
+
+    .user-page #userSearch {
+        padding-left: 36px !important;
+        padding-right: 10px !important;
+    }
+
+    .user-page #userSearch::placeholder {
+        font-size: 9.5px !important;
+    }
+
+    .user-page #userSearch + * {
+        font-size: inherit;
+    }
+
+    .user-page > section.user-surface.mt-4.p-3 .relative > svg.pointer-events-none {
+        left: 12px !important;
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .user-page [data-role-dropdown] {
+        width: 150px !important;
+    }
+
+    .user-page [data-status-dropdown] {
+        width: 145px !important;
+    }
+
+    .user-page [data-role-toggle],
+    .user-page [data-status-toggle] {
+        padding-inline: 10px !important;
+    }
+
+    .user-page [data-role-toggle] svg,
+    .user-page [data-status-toggle] svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .user-page .custom-menu {
+        border-radius: 10px !important;
+        padding: 4px !important;
+        box-shadow: 0 12px 28px rgba(47, 37, 25, .11) !important;
+    }
+
+    .user-page [data-role-option],
+    .user-page [data-status-option] {
+        min-height: 30px !important;
+        border-radius: 7px !important;
+        padding: 0 8px !important;
+        font-size: 8.5px !important;
+    }
+
+    .user-page #applyFilter {
+        padding-inline: 12px !important;
+        box-shadow: 0 5px 14px rgba(217, 149, 0, .15) !important;
+    }
+
+    .user-page #resetFilter {
+        padding-inline: 11px !important;
+        box-shadow: none !important;
+    }
+
+    /* Users table */
+    .user-page > section.user-surface.mt-4.overflow-hidden {
+        margin-top: 11px !important;
+        border-radius: 14px !important;
+    }
+
+    .user-page table {
+        min-width: 1080px !important;
+    }
+
+    .user-page table thead th {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        font-size: 7.5px !important;
+        letter-spacing: .065em !important;
+    }
+
+    .user-page [data-user-row] > td {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    .user-page [data-user-row] > td:first-child {
+        font-size: 8px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(2) > div {
+        gap: 8px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(2) > div > span {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 8px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(2) p:first-child {
+        font-size: 9px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(2) p:last-child,
+    .user-page [data-user-row] > td:nth-child(4) p:last-child,
+    .user-page [data-user-row] > td:nth-child(6) p:last-child,
+    .user-page [data-user-row] > td:nth-child(7) p:last-child {
+        font-size: 7px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(3) > span,
+    .user-page [data-user-row] > td:nth-child(5) > span {
+        padding: 3px 7px !important;
+        font-size: 7px !important;
+    }
+
+    .user-page [data-user-row] > td:nth-child(4) p:first-child,
+    .user-page [data-user-row] > td:nth-child(6) p:first-child,
+    .user-page [data-user-row] > td:nth-child(7) p:first-child {
+        font-size: 8px !important;
+    }
+
+    .user-page #userRows .account-action {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+    }
+
+    .user-page #userRows .account-action-svg {
+        width: 14px !important;
+        height: 14px !important;
+        display: block;
+        color: currentColor;
+    }
+
+    .user-page #userRows [data-user-row] td:last-child > div {
+        gap: 5px !important;
+    }
+
+    /* Footer / pagination */
+    .user-page > section.user-surface.mt-4.overflow-hidden > div:last-child {
+        padding: 10px 14px !important;
+    }
+
+    .user-page #resultCount,
+    .user-page #resultCount + div > span {
+        font-size: 8px !important;
+    }
+
+    .user-page #resultCount + div > button,
+    .user-page #resultCount + div > span {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 30px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Drawer */
+    #profileDrawer {
+        max-width: 560px !important;
+        box-shadow: -12px 0 34px rgba(31, 24, 17, .11) !important;
+    }
+
+    #profileDrawer > div > div:first-child {
+        padding: 11px 14px !important;
+    }
+
+    #profileDrawer #drawerName {
+        margin-top: 3px !important;
+        font-size: 15px !important;
+    }
+
+    #profileDrawer #closeProfile {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+    }
+
+    #profileDrawer .drawer-tab {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 8px !important;
+    }
+
+    #profileDrawer [data-drawer-panel] {
+        padding: 14px !important;
+    }
+
+    #profileDrawer .user-surface,
+    #profileDrawer section.rounded-\[16px\] {
+        border-radius: 13px !important;
+        padding: 13px !important;
+        box-shadow: 0 5px 16px rgba(61, 43, 22, .045) !important;
+    }
+
+    #profileDrawer #drawerInitials {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 13px !important;
+    }
+
+    #profileDrawer input.clean-control,
+    #profileDrawer textarea.clean-control {
+        font-size: 8.5px !important;
+    }
+
+    #profileDrawer input.clean-control {
+        height: 36px !important;
+    }
+
+    #profileDrawer button,
+    #profileDrawer a {
+        font-size: 8px !important;
+    }
+
+    /* Laptop tuning */
+    @media (max-height: 850px) and (min-width: 900px) {
+        .user-page .user-page-title {
+            font-size: 22px !important;
+        }
+
+        .user-page .metric-card {
+            min-height: 72px !important;
+            padding-top: 9px !important;
+            padding-bottom: 9px !important;
+        }
+
+        .user-page .metric-card > div > div > p:nth-child(2) {
+            font-size: 18px !important;
+        }
+    }
+
+    /* Tablet/mobile remains readable and tappable. */
+    @media (max-width: 767px) {
+        .user-page .user-page-header-icon {
+            width: 34px !important;
+            height: 34px !important;
+            flex-basis: 34px !important;
+        }
+
+        .user-page .user-page-title {
+            font-size: 22px !important;
+        }
+
+        .user-page .user-page-subtitle {
+            font-size: 9.5px !important;
+        }
+
+        .user-page .user-page-export {
+            min-height: 40px !important;
+            font-size: 10px !important;
+        }
+
+        .user-page .metric-card {
+            min-height: 76px !important;
+        }
+
+        .user-page [data-role-dropdown],
+        .user-page [data-status-dropdown] {
+            width: 100% !important;
+        }
+
+        .user-page #userSearch,
+        .user-page [data-role-toggle],
+        .user-page [data-status-toggle],
+        .user-page #applyFilter,
+        .user-page #resetFilter {
+            height: 42px !important;
+            font-size: 10px !important;
+        }
+
+        #profileDrawer {
+            max-width: 100% !important;
+        }
+    }
+
+
+    /* ============================================================
+       USER MANAGEMENT — CENTERED ENTERPRISE MODAL
+       UI/UX only. Existing IDs, forms, routes and JS hooks remain.
+       ============================================================ */
+
+    #profileBackdrop {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        background: rgba(24, 20, 15, .42) !important;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: opacity .18s ease, visibility 0s linear .18s;
+    }
+
+    #profileBackdrop.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity .18s ease;
+    }
+
+    #profileDrawer {
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: min(920px, calc(100vw - 44px)) !important;
+        max-width: 920px !important;
+        height: min(720px, calc(100vh - 44px)) !important;
+        max-height: calc(100vh - 44px) !important;
+        border: 1px solid #e7e0d7 !important;
+        border-radius: 18px !important;
+        background: #fff !important;
+        box-shadow:
+            0 30px 90px rgba(31, 24, 17, .20),
+            0 10px 28px rgba(31, 24, 17, .08) !important;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate(-50%, -47%) scale(.985) !important;
+        transform-origin: center !important;
+        transition:
+            opacity .18s ease,
+            transform .22s cubic-bezier(.22, 1, .36, 1),
+            visibility 0s linear .22s !important;
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    #profileDrawer.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1) !important;
+        transition:
+            opacity .18s ease,
+            transform .22s cubic-bezier(.22, 1, .36, 1) !important;
+    }
+
+    .enterprise-user-modal {
+        min-height: 0;
+        background: #f8f7f4;
+    }
+
+    .enterprise-user-modal-header {
+        display: flex;
+        min-height: 66px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid #ece6de;
+        background: #fff;
+        padding: 12px 16px;
+    }
+
+    .enterprise-user-modal-header-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 9px;
+        background: #fff8eb;
+        color: #b77c18;
+    }
+
+    .enterprise-user-modal-header-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .enterprise-user-modal-eyebrow,
+    .enterprise-section-eyebrow {
+        margin: 0;
+        color: #9a7b43;
+        font-size: 7px !important;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .enterprise-user-modal-title {
+        margin: 0;
+        color: #1e1a16;
+        font-size: 15px !important;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -.025em;
+    }
+
+    .enterprise-user-modal-context {
+        display: inline-flex;
+        align-items: center;
+        min-height: 20px;
+        border: 1px solid #e9e2d9;
+        border-radius: 999px;
+        background: #faf9f7;
+        padding: 0 7px;
+        color: #8a8177;
+        font-size: 7px;
+        font-weight: 600;
+    }
+
+    .enterprise-modal-close {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        place-items: center;
+        border: 1px solid #e5ddd2;
+        border-radius: 9px;
+        background: #fff;
+        color: #71685e;
+        transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+    }
+
+    .enterprise-modal-close:hover,
+    .enterprise-modal-close:focus-visible {
+        outline: none;
+        border-color: #d5c7b5;
+        background: #faf8f4;
+        color: #2f2923;
+    }
+
+    .enterprise-modal-close svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .enterprise-user-modal-tabs {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        border-bottom: 1px solid #ece6de;
+        background: #fff;
+        padding: 7px 16px 0;
+        scrollbar-width: none;
+    }
+
+    .enterprise-user-modal-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    #profileDrawer .drawer-tab {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        gap: 7px;
+        border-bottom: 2px solid transparent;
+        padding: 0 10px;
+        color: #756d64;
+        font-size: 8.5px !important;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+    }
+
+    #profileDrawer .drawer-tab svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    #profileDrawer .drawer-tab:hover {
+        color: #9a6a12;
+    }
+
+    #profileDrawer .drawer-tab.is-active {
+        border-bottom-color: #d99500;
+        color: #9a6a12;
+    }
+
+    .enterprise-user-modal-scroll {
+        min-height: 0;
+        scrollbar-width: thin;
+        scrollbar-color: #d7cfc5 transparent;
+    }
+
+    .enterprise-user-panel {
+        padding: 14px;
+    }
+
+    .enterprise-overview-grid,
+    .enterprise-manage-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+        gap: 12px;
+        align-items: start;
+    }
+
+    .enterprise-manage-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .enterprise-card {
+        border: 1px solid #e9e2d9;
+        border-radius: 13px;
+        background: #fff;
+        padding: 14px;
+        box-shadow: 0 4px 14px rgba(61, 43, 22, .035);
+    }
+
+    .enterprise-section-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .enterprise-section-heading h4,
+    .enterprise-access-card h4 {
+        margin: 4px 0 0;
+        color: #28231e;
+        font-size: 11px !important;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -.015em;
+    }
+
+    .enterprise-section-heading--with-icon {
+        align-items: center;
+    }
+
+    .enterprise-section-copy {
+        margin: 5px 0 0;
+        color: #8b8278;
+        font-size: 8px !important;
+        line-height: 1.55;
+    }
+
+    .enterprise-section-icon {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 9px;
+        background: #fff8eb;
+        color: #b77c18;
+    }
+
+    .enterprise-section-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .enterprise-profile-hero {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        margin-top: 14px;
+    }
+
+    .enterprise-profile-avatar {
+        display: grid;
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        place-items: center;
+        border: 1px solid #e7dfd5;
+        border-radius: 14px;
+        background: #faf8f4;
+        color: #655d55;
+        font-size: 14px !important;
+        font-weight: 700;
+        letter-spacing: -.03em;
+    }
+
+    .enterprise-role-badge,
+    .enterprise-status-badge {
+        display: inline-flex;
+        min-height: 23px;
+        align-items: center;
+        border: 1px solid #e6e0d8;
+        border-radius: 999px;
+        background: #f7f5f2;
+        padding: 0 8px;
+        color: #6f665b;
+        font-size: 7px !important;
+        font-weight: 700;
+    }
+
+    .enterprise-contact-list {
+        display: grid;
+        gap: 6px;
+        margin-top: 11px;
+    }
+
+    .enterprise-contact-row {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 7px;
+        color: #5d554d;
+        font-size: 8.5px !important;
+        line-height: 1.4;
+    }
+
+    .enterprise-contact-row--muted {
+        color: #91887d;
+        font-size: 8px !important;
+    }
+
+    .enterprise-contact-icon {
+        display: grid;
+        width: 22px;
+        height: 22px;
+        flex: 0 0 22px;
+        place-items: center;
+        border-radius: 7px;
+        background: #faf8f5;
+        color: #8a8177;
+    }
+
+    .enterprise-contact-icon svg {
+        width: 11px;
+        height: 11px;
+    }
+
+    .enterprise-account-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px;
+        border-top: 1px solid #eee8df;
+        padding-top: 12px;
+    }
+
+    .enterprise-meta-tile {
+        border: 1px solid #eee8df;
+        border-radius: 10px;
+        background: #faf9f7;
+        padding: 9px 10px;
+    }
+
+    .enterprise-meta-tile p {
+        margin: 0;
+        color: #9b9288;
+        font-size: 6.8px !important;
+        font-weight: 600;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .enterprise-meta-tile strong {
+        display: block;
+        margin-top: 4px;
+        color: #4a433c;
+        font-size: 8.5px !important;
+        font-weight: 700;
+    }
+
+    .enterprise-quick-actions {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    .enterprise-quick-action {
+        display: grid;
+        grid-template-columns: 30px minmax(0, 1fr) 14px;
+        align-items: center;
+        gap: 9px;
+        min-height: 58px;
+        border: 1px solid #e8e1d8;
+        border-radius: 11px;
+        background: #fff;
+        padding: 8px 10px;
+        text-align: left;
+        transition: border-color .15s ease, background-color .15s ease, transform .15s ease;
+    }
+
+    .enterprise-quick-action:hover,
+    .enterprise-quick-action:focus-visible {
+        outline: none;
+        transform: translateY(-1px);
+        border-color: #dcc89e;
+        background: #fffaf1;
+    }
+
+    .enterprise-quick-action--primary {
+        border-color: #eadbbd;
+        background: #fffcf5;
+    }
+
+    .enterprise-quick-action-icon {
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 8px;
+        background: #fff8eb;
+        color: #b77c18;
+    }
+
+    .enterprise-quick-action-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .enterprise-quick-action strong,
+    .enterprise-message-card strong {
+        display: block;
+        color: #3f3831;
+        font-size: 8.5px !important;
+        font-weight: 700;
+    }
+
+    .enterprise-quick-action small,
+    .enterprise-message-card small {
+        display: block;
+        margin-top: 2px;
+        color: #948b81;
+        font-size: 7px !important;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+
+    .enterprise-quick-action-arrow,
+    .enterprise-message-arrow {
+        width: 13px;
+        height: 13px;
+        color: #9b9288;
+    }
+
+    .enterprise-activity-timeline {
+        margin-top: 14px;
+    }
+
+    .enterprise-form-card {
+        padding: 14px;
+    }
+
+    .enterprise-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .enterprise-field-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #6c6359;
+        font-size: 7.5px !important;
+        font-weight: 600;
+    }
+
+    .enterprise-field-control {
+        width: 100%;
+        height: 38px !important;
+        border-radius: 9px !important;
+        padding: 0 10px !important;
+        font-size: 8.5px !important;
+    }
+
+    .enterprise-field-textarea {
+        width: 100%;
+        min-height: 82px;
+        margin-top: 0;
+        resize: vertical;
+        border-radius: 9px !important;
+        padding: 9px 10px !important;
+        font-size: 8.5px !important;
+        line-height: 1.5;
+    }
+
+    .enterprise-field-textarea::placeholder,
+    .enterprise-field-control::placeholder {
+        font-size: 8.5px !important;
+    }
+
+    .enterprise-field-textarea--danger {
+        border-color: #ead8d2 !important;
+    }
+
+    .enterprise-button {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        padding: 0 12px;
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+        font-size: 8.5px !important;
+        font-weight: 700;
+        transition: transform .15s ease, background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .enterprise-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .enterprise-button:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(217,149,0,.10);
+    }
+
+    .enterprise-button svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .enterprise-button--primary {
+        border-color: #d99500;
+        background: #d99500;
+        color: #fff;
+        box-shadow: 0 6px 16px rgba(217,149,0,.16);
+    }
+
+    .enterprise-button--primary:hover {
+        border-color: #bd8205;
+        background: #bd8205;
+    }
+
+    .enterprise-button--secondary {
+        border-color: #ddd5ca;
+        background: #fff;
+        color: #62594e;
+    }
+
+    .enterprise-button--secondary:hover {
+        border-color: #d0c1ad;
+        background: #faf8f4;
+        color: #403931;
+    }
+
+    .enterprise-button--danger {
+        border-color: #b96545;
+        background: #b96545;
+        color: #fff;
+        box-shadow: 0 5px 14px rgba(185,101,69,.13);
+    }
+
+    .enterprise-button--danger:hover {
+        border-color: #a4573c;
+        background: #a4573c;
+    }
+
+    .enterprise-button--success {
+        border-color: #4f8362;
+        background: #4f8362;
+        color: #fff;
+        box-shadow: 0 5px 14px rgba(79,131,98,.13);
+    }
+
+    .enterprise-button--success:hover {
+        border-color: #447355;
+        background: #447355;
+    }
+
+    .enterprise-message-card {
+        min-height: 66px;
+        gap: 10px;
+        padding: 12px 14px;
+        color: #514a42;
+        text-decoration: none;
+        transition: border-color .15s ease, background-color .15s ease, transform .15s ease;
+    }
+
+    .enterprise-message-card:hover {
+        transform: translateY(-1px);
+        border-color: #d9c59d;
+        background: #fffaf1;
+    }
+
+    .enterprise-message-icon {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 8px;
+        background: #fff8eb;
+        color: #b77c18;
+    }
+
+    .enterprise-message-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .enterprise-access-card {
+        border-color: #eadfd9;
+    }
+
+    .enterprise-access-icon {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        place-items: center;
+        border: 1px solid #ead8d2;
+        border-radius: 8px;
+        background: #fff6f2;
+        color: #b66445;
+    }
+
+    .enterprise-access-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .enterprise-section-eyebrow--danger {
+        color: #9e654f;
+    }
+
+    @media (max-height: 820px) and (min-width: 768px) {
+        #profileDrawer {
+            width: min(880px, calc(100vw - 36px)) !important;
+            height: min(650px, calc(100vh - 30px)) !important;
+            max-height: calc(100vh - 30px) !important;
+        }
+
+        .enterprise-user-modal-header {
+            min-height: 60px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .enterprise-user-panel {
+            padding: 12px;
+        }
+
+        .enterprise-card {
+            padding: 12px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #profileDrawer {
+            width: calc(100vw - 16px) !important;
+            height: calc(100vh - 16px) !important;
+            max-height: calc(100vh - 16px) !important;
+            border-radius: 14px !important;
+        }
+
+        .enterprise-user-modal-header {
+            padding: 10px 12px;
+        }
+
+        .enterprise-user-modal-context {
+            display: none;
+        }
+
+        .enterprise-user-modal-tabs {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .enterprise-overview-grid,
+        .enterprise-manage-grid,
+        .enterprise-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .enterprise-user-panel {
+            padding: 10px;
+        }
+
+        .enterprise-card {
+            padding: 12px;
+        }
+
+        .enterprise-profile-avatar {
+            width: 48px;
+            height: 48px;
+            flex-basis: 48px;
+        }
+
+        .enterprise-button {
+            min-height: 42px;
+            font-size: 9px !important;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #profileBackdrop,
+        #profileDrawer,
+        .enterprise-button,
+        .enterprise-quick-action,
+        .enterprise-message-card {
+            transition: none !important;
+        }
+    }
+
+
+    /* ============================================================
+       USER MANAGEMENT — ENTERPRISE MODAL V2
+       Content-adaptive, denser, calmer, large-company admin style.
+       Functionality, forms, routes, IDs and JS hooks are unchanged.
+       ============================================================ */
+
+    #profileDrawer {
+        width: min(840px, calc(100vw - 40px)) !important;
+        max-width: 840px !important;
+        height: auto !important;
+        max-height: calc(100vh - 40px) !important;
+        border-radius: 16px !important;
+        box-shadow:
+            0 26px 74px rgba(31, 24, 17, .18),
+            0 8px 24px rgba(31, 24, 17, .07) !important;
+    }
+
+    .enterprise-user-modal {
+        height: auto !important;
+        max-height: calc(100vh - 40px) !important;
+        background: #f8f7f4 !important;
+    }
+
+    /* Header — tighter and more executive */
+    .enterprise-user-modal-header {
+        min-height: 58px !important;
+        padding: 10px 14px !important;
+    }
+
+    .enterprise-user-modal-header-icon {
+        width: 31px !important;
+        height: 31px !important;
+        flex-basis: 31px !important;
+        border-radius: 8px !important;
+    }
+
+    .enterprise-user-modal-header-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .enterprise-user-modal-eyebrow {
+        font-size: 6.5px !important;
+        letter-spacing: .12em !important;
+    }
+
+    .enterprise-user-modal-title {
+        font-size: 14px !important;
+        letter-spacing: -.02em !important;
+    }
+
+    .enterprise-user-modal-context {
+        min-height: 18px !important;
+        padding-inline: 6px !important;
+        font-size: 6.5px !important;
+    }
+
+    .enterprise-modal-close {
+        width: 30px !important;
+        height: 30px !important;
+        flex-basis: 30px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Tabs — compact segmented navigation */
+    .enterprise-user-modal-tabs {
+        gap: 2px !important;
+        padding: 5px 14px 0 !important;
+    }
+
+    #profileDrawer .drawer-tab {
+        min-height: 34px !important;
+        gap: 6px !important;
+        padding-inline: 9px !important;
+        font-size: 7.8px !important;
+    }
+
+    #profileDrawer .drawer-tab svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    /* Content now grows only as much as needed */
+    .enterprise-user-modal-scroll {
+        flex: 0 1 auto !important;
+        max-height: calc(100vh - 132px) !important;
+        overflow-y: auto !important;
+    }
+
+    .enterprise-user-panel {
+        padding: 12px !important;
+    }
+
+    .enterprise-overview-grid {
+        grid-template-columns: minmax(0, 1.45fr) minmax(245px, .75fr) !important;
+        gap: 10px !important;
+    }
+
+    .enterprise-manage-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    /* Cards — flatter enterprise surfaces */
+    .enterprise-card {
+        border-color: #e7e1d9 !important;
+        border-radius: 11px !important;
+        padding: 12px !important;
+        box-shadow: 0 2px 8px rgba(61, 43, 22, .028) !important;
+    }
+
+    .enterprise-section-heading h4,
+    .enterprise-access-card h4 {
+        margin-top: 3px !important;
+        font-size: 10.5px !important;
+    }
+
+    .enterprise-section-copy {
+        margin-top: 4px !important;
+        font-size: 7.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .enterprise-section-eyebrow {
+        font-size: 6.4px !important;
+        letter-spacing: .11em !important;
+    }
+
+    .enterprise-section-icon {
+        width: 28px !important;
+        height: 28px !important;
+        flex-basis: 28px !important;
+        border-radius: 8px !important;
+    }
+
+    .enterprise-section-icon svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    /* Profile summary */
+    .enterprise-profile-hero {
+        gap: 11px !important;
+        margin-top: 11px !important;
+    }
+
+    .enterprise-profile-avatar {
+        width: 48px !important;
+        height: 48px !important;
+        flex-basis: 48px !important;
+        border-radius: 12px !important;
+        font-size: 12.5px !important;
+    }
+
+    .enterprise-role-badge,
+    .enterprise-status-badge {
+        min-height: 21px !important;
+        padding-inline: 7px !important;
+        font-size: 6.5px !important;
+    }
+
+    .enterprise-contact-list {
+        gap: 5px !important;
+        margin-top: 9px !important;
+    }
+
+    .enterprise-contact-row {
+        gap: 6px !important;
+        font-size: 7.8px !important;
+    }
+
+    .enterprise-contact-row--muted {
+        font-size: 7.3px !important;
+    }
+
+    .enterprise-contact-icon {
+        width: 20px !important;
+        height: 20px !important;
+        flex-basis: 20px !important;
+        border-radius: 6px !important;
+    }
+
+    .enterprise-contact-icon svg {
+        width: 10px !important;
+        height: 10px !important;
+    }
+
+    .enterprise-account-meta-grid {
+        gap: 7px !important;
+        margin-top: 11px !important;
+        padding-top: 10px !important;
+    }
+
+    .enterprise-meta-tile {
+        border-radius: 9px !important;
+        padding: 8px 9px !important;
+    }
+
+    .enterprise-meta-tile p {
+        font-size: 6px !important;
+    }
+
+    .enterprise-meta-tile strong {
+        margin-top: 3px !important;
+        font-size: 8px !important;
+    }
+
+    /* Quick actions — less card-like, more enterprise command rows */
+    .enterprise-quick-actions {
+        gap: 7px !important;
+        margin-top: 11px !important;
+    }
+
+    .enterprise-quick-action {
+        grid-template-columns: 27px minmax(0, 1fr) 12px !important;
+        min-height: 50px !important;
+        gap: 8px !important;
+        border-radius: 9px !important;
+        padding: 7px 9px !important;
+    }
+
+    .enterprise-quick-action-icon {
+        width: 27px !important;
+        height: 27px !important;
+        border-radius: 7px !important;
+    }
+
+    .enterprise-quick-action-icon svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .enterprise-quick-action strong,
+    .enterprise-message-card strong {
+        font-size: 7.8px !important;
+    }
+
+    .enterprise-quick-action small,
+    .enterprise-message-card small {
+        font-size: 6.5px !important;
+    }
+
+    /* Activity panel — centered reading width; no giant empty canvas */
+    [data-drawer-panel="activity"] .enterprise-card {
+        max-width: 720px !important;
+        margin-inline: auto !important;
+    }
+
+    .enterprise-activity-timeline {
+        margin-top: 11px !important;
+    }
+
+    #activityTimeline > div {
+        gap: 8px !important;
+    }
+
+    #activityTimeline > div > div:last-child {
+        border-radius: 9px !important;
+        padding: 9px 10px !important;
+    }
+
+    /* Manage forms */
+    .enterprise-form-card {
+        padding: 12px !important;
+    }
+
+    .enterprise-form-grid {
+        gap: 8px !important;
+        margin-top: 11px !important;
+    }
+
+    .enterprise-field-label {
+        margin-bottom: 4px !important;
+        font-size: 7px !important;
+    }
+
+    .enterprise-field-control {
+        height: 36px !important;
+        border-radius: 8px !important;
+        padding-inline: 9px !important;
+        font-size: 8px !important;
+    }
+
+    .enterprise-field-textarea {
+        min-height: 76px !important;
+        border-radius: 8px !important;
+        padding: 8px 9px !important;
+        font-size: 8px !important;
+    }
+
+    .enterprise-field-textarea::placeholder,
+    .enterprise-field-control::placeholder {
+        font-size: 8px !important;
+    }
+
+    /* Buttons — professional, less bulky */
+    .enterprise-button {
+        min-height: 34px !important;
+        border-radius: 8px !important;
+        padding-inline: 11px !important;
+        font-size: 7.8px !important;
+        box-shadow: none !important;
+    }
+
+    .enterprise-button svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .enterprise-button--primary {
+        box-shadow: 0 4px 10px rgba(217,149,0,.11) !important;
+    }
+
+    .enterprise-button--danger {
+        border-color: #d8b6aa !important;
+        background: #fff !important;
+        color: #aa573d !important;
+        box-shadow: none !important;
+    }
+
+    .enterprise-button--danger:hover {
+        border-color: #c9907d !important;
+        background: #fff6f2 !important;
+        color: #96452f !important;
+    }
+
+    .enterprise-button--success {
+        box-shadow: none !important;
+    }
+
+    .enterprise-message-card {
+        min-height: 58px !important;
+        border-radius: 10px !important;
+        padding: 10px 12px !important;
+    }
+
+    .enterprise-message-icon,
+    .enterprise-access-icon {
+        width: 28px !important;
+        height: 28px !important;
+        flex-basis: 28px !important;
+        border-radius: 7px !important;
+    }
+
+    .enterprise-message-icon svg,
+    .enterprise-access-icon svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    /* Access control looks like a controlled risk zone, not a giant red CTA card */
+    .enterprise-access-card {
+        border-color: #eadfd9 !important;
+        background: #fffdfc !important;
+    }
+
+    .enterprise-section-eyebrow--danger {
+        color: #9c624c !important;
+    }
+
+    /* Reduce visual height in Manage tab */
+    [data-drawer-panel="manage"] .space-y-3 {
+        row-gap: 10px !important;
+    }
+
+    @media (max-height: 820px) and (min-width: 768px) {
+        #profileDrawer {
+            width: min(820px, calc(100vw - 32px)) !important;
+            max-height: calc(100vh - 28px) !important;
+        }
+
+        .enterprise-user-modal {
+            max-height: calc(100vh - 28px) !important;
+        }
+
+        .enterprise-user-modal-scroll {
+            max-height: calc(100vh - 118px) !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #profileDrawer {
+            width: calc(100vw - 14px) !important;
+            max-height: calc(100vh - 14px) !important;
+            border-radius: 13px !important;
+        }
+
+        .enterprise-user-modal {
+            max-height: calc(100vh - 14px) !important;
+        }
+
+        .enterprise-user-modal-scroll {
+            max-height: calc(100vh - 108px) !important;
+        }
+
+        .enterprise-overview-grid,
+        .enterprise-manage-grid,
+        .enterprise-form-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .enterprise-user-panel {
+            padding: 9px !important;
+        }
+
+        .enterprise-button {
+            min-height: 40px !important;
+            font-size: 8.8px !important;
+        }
+    }
+
+
+    /* ============================================================
+       USER MANAGEMENT — FILTER DROPDOWN VISIBILITY FIX
+       The filter surface must not use paint containment because
+       dropdown menus extend outside its visual bounds.
+       ============================================================ */
+
+    .user-page > section.user-surface.mt-4.p-3{
+        position:relative !important;
+        z-index:30 !important;
+        overflow:visible !important;
+        contain:none !important;
+        isolation:auto !important;
+    }
+
+    .user-page [data-role-dropdown],
+    .user-page [data-status-dropdown]{
+        position:relative !important;
+        z-index:35 !important;
+        overflow:visible !important;
+        contain:none !important;
+        flex:0 0 auto !important;
+    }
+
+    .user-page [data-role-toggle],
+    .user-page [data-status-toggle]{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        gap:10px !important;
+        overflow:visible !important;
+        padding-left:11px !important;
+        padding-right:9px !important;
+        cursor:pointer !important;
+    }
+
+    .user-page [data-role-label],
+    .user-page [data-status-label]{
+        min-width:0 !important;
+        overflow:hidden !important;
+        text-overflow:ellipsis !important;
+        white-space:nowrap !important;
+    }
+
+    /* Keep the dropdown chevron clearly visible. */
+    .user-page [data-role-toggle] > svg,
+    .user-page [data-status-toggle] > svg{
+        display:block !important;
+        width:14px !important;
+        height:14px !important;
+        min-width:14px !important;
+        flex:0 0 14px !important;
+        color:#6f665b !important;
+        opacity:1 !important;
+        visibility:visible !important;
+        pointer-events:none !important;
+        transition:transform .14s ease,color .14s ease !important;
+    }
+
+    .user-page [data-role-toggle]:hover > svg,
+    .user-page [data-status-toggle]:hover > svg,
+    .user-page [data-role-toggle]:focus-visible > svg,
+    .user-page [data-status-toggle]:focus-visible > svg{
+        color:#a8731f !important;
+    }
+
+    /* Menu must render above the table and neighboring controls. */
+    .user-page [data-role-menu],
+    .user-page [data-status-menu]{
+        position:absolute !important;
+        top:calc(100% + 6px) !important;
+        left:0 !important;
+        right:0 !important;
+        z-index:100 !important;
+        min-width:100% !important;
+        overflow:visible !important;
+    }
+
+    .user-page [data-role-menu].is-open,
+    .user-page [data-status-menu].is-open{
+        opacity:1 !important;
+        visibility:visible !important;
+        pointer-events:auto !important;
+        transform:translateY(0) scale(1) !important;
+    }
+
+    /* Rotate arrow while open for clearer affordance. */
+    .user-page [data-role-dropdown]:has([data-role-menu].is-open) [data-role-toggle] > svg,
+    .user-page [data-status-dropdown]:has([data-status-menu].is-open) [data-status-toggle] > svg{
+        transform:rotate(180deg) !important;
+        color:#a8731f !important;
+    }
+
+    /* Table stays below the open filters. */
+    .user-page > section.user-surface.mt-4.overflow-hidden{
+        position:relative !important;
+        z-index:1 !important;
+    }
+
+    @media(max-width:1279px){
+        .user-page [data-role-dropdown],
+        .user-page [data-status-dropdown]{
+            width:100% !important;
+        }
+    }
+
+
+    /* ============================================================
+       USER MANAGEMENT — HEADER SCALE MATCH
+       Matches Account Registrations / Seller Compliance /
+       Platform Settings / Commissions / Complaints.
+       Visual-only; user management behavior remains untouched.
+       ============================================================ */
+
+    .user-page .user-page-header{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        gap:20px !important;
+        margin-bottom:16px !important;
+    }
+
+    .user-page .user-page-header-main{
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:13px !important;
+    }
+
+    .user-page .user-page-header-icon{
+        display:grid !important;
+        width:44px !important;
+        height:44px !important;
+        flex:0 0 44px !important;
+        place-items:center !important;
+        border:1px solid #eadfc9 !important;
+        border-radius:12px !important;
+        background:#fff8eb !important;
+        color:#b77c18 !important;
+        box-shadow:0 4px 12px rgba(75,54,25,.045) !important;
+    }
+
+    .user-page .user-page-header-icon svg{
+        width:17px !important;
+        height:17px !important;
+    }
+
+    .user-page .user-page-eyebrow{
+        margin:0 !important;
+        color:#9a6f23 !important;
+        -webkit-text-fill-color:#9a6f23 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        line-height:1.15 !important;
+        letter-spacing:.13em !important;
+        text-transform:uppercase !important;
+    }
+
+    .user-page .user-page-title{
+        margin:5px 0 0 !important;
+        font-size:29px !important;
+        font-weight:700 !important;
+        line-height:1.02 !important;
+        letter-spacing:-.045em !important;
+    }
+
+    .user-page .user-page-title-base{
+        color:#17130f !important;
+        -webkit-text-fill-color:#17130f !important;
+    }
+
+    .user-page .user-page-title-accent{
+        color:#d99500 !important;
+        -webkit-text-fill-color:#d99500 !important;
+    }
+
+    .user-page .user-page-subtitle{
+        max-width:900px !important;
+        margin:7px 0 0 !important;
+        color:#7f756a !important;
+        -webkit-text-fill-color:#7f756a !important;
+        font-size:11px !important;
+        font-weight:400 !important;
+        line-height:1.5 !important;
+        letter-spacing:0 !important;
+    }
+
+    .user-page .user-page-export{
+        min-height:42px !important;
+        height:42px !important;
+        gap:7px !important;
+        border-radius:10px !important;
+        padding:0 13px !important;
+        font-size:8.5px !important;
+        box-shadow:0 4px 10px rgba(217,149,0,.08) !important;
+    }
+
+    .user-page .user-page-export svg{
+        width:13px !important;
+        height:13px !important;
+    }
+
+    @media(max-height:850px) and (min-width:900px){
+        .user-page .user-page-header{
+            margin-bottom:14px !important;
+        }
+
+        .user-page .user-page-header-icon{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+        }
+
+        .user-page .user-page-title{
+            font-size:27px !important;
+        }
+
+        .user-page .user-page-subtitle{
+            font-size:10.5px !important;
+        }
+
+        .user-page .user-page-export{
+            min-height:40px !important;
+            height:40px !important;
+        }
+    }
+
+    @media(max-width:767px){
+        .user-page .user-page-header{
+            align-items:flex-start !important;
+            gap:12px !important;
+        }
+
+        .user-page .user-page-header-main{
+            align-items:flex-start !important;
+            gap:11px !important;
+        }
+
+        .user-page .user-page-header-icon{
+            width:40px !important;
+            height:40px !important;
+            flex-basis:40px !important;
+            border-radius:11px !important;
+        }
+
+        .user-page .user-page-title{
+            font-size:24px !important;
+        }
+
+        .user-page .user-page-subtitle{
+            font-size:10px !important;
+        }
+
+        .user-page .user-page-export{
+            width:100% !important;
+            min-height:40px !important;
+            height:40px !important;
+            font-size:9px !important;
+        }
+    }
+
 </style>
 
 @php
@@ -1324,39 +3129,71 @@
                             <div class="flex items-center justify-end gap-1.5">
                                 {{-- View profile --}}
                                 <button type="button" data-view-user class="account-action" title="View profile" aria-label="View profile">
-                                    <i class="fi fi-rr-eye" aria-hidden="true"></i>
+                                    
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                            <circle cx="12" cy="12" r="2.5"></circle>
+                                        </svg>
                                 </button>
 
                                 {{-- Message: current backend supports Admin ↔ Seller messaging --}}
                                 @if($roleKey === 'seller')
                                     <a href="{{ route('admin.messages', ['seller' => $id]) }}" class="account-action account-action--message" title="Message seller" aria-label="Message seller">
-                                        <i class="fi fi-rr-comment-alt" aria-hidden="true"></i>
+                                        
+                                            <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                                <path d="M20 15a4 4 0 0 1-4 4H8l-4 2V7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8Z"></path>
+                                                <path d="M8 9h8"></path>
+                                                <path d="M8 13h5"></path>
+                                            </svg>
                                     </a>
                                 @endif
 
                                 {{-- Edit safe account details --}}
                                 <button type="button" data-edit-user class="account-action account-action--edit" title="Edit account" aria-label="Edit account">
-                                    <i class="fi fi-rr-pencil" aria-hidden="true"></i>
+                                    
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M4 20h4L19 9l-4-4L4 16v4Z"></path>
+                                            <path d="m13.5 6.5 4 4"></path>
+                                        </svg>
                                 </button>
 
                                 {{-- Recent activity --}}
                                 <button type="button" data-activity-user class="account-action account-action--activity" title="Recent activity" aria-label="Recent activity">
-                                    <i class="fi fi-rr-time-past" aria-hidden="true"></i>
+                                    
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <circle cx="12" cy="12" r="8"></circle>
+                                            <path d="M12 7v5l3 2"></path>
+                                            <path d="M5 5 3 8h4"></path>
+                                        </svg>
                                 </button>
 
                                 {{-- Internal admin note --}}
                                 <button type="button" data-note-user class="account-action account-action--note" title="Add admin note" aria-label="Add admin note">
-                                    <i class="fi fi-rr-note" aria-hidden="true"></i>
+                                    
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M6 3h12v18H6z"></path>
+                                            <path d="M9 8h6"></path>
+                                            <path d="M9 12h6"></path>
+                                            <path d="M9 16h4"></path>
+                                        </svg>
                                 </button>
 
                                 {{-- Suspend / Restore --}}
                                 @if($status === 'active')
                                     <button type="button" data-access-user data-access-mode="suspend" class="account-action account-action--suspend" title="Suspend account" aria-label="Suspend account">
-                                        <i class="fi fi-rr-ban" aria-hidden="true"></i>
+                                        
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <circle cx="12" cy="12" r="8"></circle>
+                                            <path d="m6.5 6.5 11 11"></path>
+                                        </svg>
                                     </button>
                                 @else
                                     <button type="button" data-access-user data-access-mode="restore" class="account-action account-action--restore" title="Restore account" aria-label="Restore account">
-                                        <i class="fi fi-rr-refresh" aria-hidden="true"></i>
+                                        
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M20 7v5h-5"></path>
+                                            <path d="M18 16a7 7 0 1 1 1-8l1 4"></path>
+                                        </svg>
                                     </button>
                                 @endif
                             </div>
@@ -1372,42 +3209,377 @@
     </section>
 </div>
 
-{{-- MANAGE DRAWER --}}
-<div id="profileBackdrop" class="fixed inset-0 z-[80] bg-[#17120d]/20"></div>
-<aside id="profileDrawer" class="fixed bottom-0 right-0 top-0 z-[90] w-full max-w-[650px] border-l border-[#e9e1d7] bg-[#fbfaf7]">
-    <div class="flex h-full flex-col">
-        <div class="border-b border-[#e9e1d7] bg-white px-5 py-4 sm:px-6">
-            <div class="flex items-center justify-between gap-3"><div><p class="text-[8px] font-semibold uppercase tracking-[.13em] text-[#a58348]">Account Management</p><h3 id="drawerName" class="mt-1 text-[19px] font-bold text-[#211c17]">User</h3></div><button id="closeProfile" type="button" class="grid h-9 w-9 place-items-center rounded-xl border border-[#e5ddd2] bg-white text-[#71685e] transition hover:bg-[#faf8f4]"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m7 7 10 10"></path><path d="m17 7-10 10"></path></svg></button></div>
-        </div>
+{{-- CENTERED ENTERPRISE ACCOUNT MODAL --}}
+<div
+    id="profileBackdrop"
+    class="fixed inset-0 z-[80] bg-[#17120d]/20"
+    aria-hidden="true"
+></div>
 
-        <div class="border-b border-[#eee8df] bg-white px-5 sm:px-6"><div class="flex gap-6 overflow-x-auto"><button type="button" class="drawer-tab is-active whitespace-nowrap py-3 text-[9px] font-semibold" data-drawer-tab="overview">Overview</button><button type="button" class="drawer-tab whitespace-nowrap py-3 text-[9px] font-semibold" data-drawer-tab="activity">Recent Activity</button><button type="button" class="drawer-tab whitespace-nowrap py-3 text-[9px] font-semibold" data-drawer-tab="manage">Manage Account</button></div></div>
+<aside
+    id="profileDrawer"
+    class="fixed z-[90] overflow-hidden bg-white"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="drawerName"
+    aria-hidden="true"
+>
+    <div class="enterprise-user-modal flex h-full min-h-0 flex-col">
+        {{-- MODAL HEADER --}}
+        <header class="enterprise-user-modal-header">
+            <div class="flex min-w-0 items-center gap-3">
+                <span class="enterprise-user-modal-header-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="9" cy="8" r="3"></circle>
+                        <path d="M3 20a6 6 0 0 1 12 0"></path>
+                        <path d="M17 11h4"></path>
+                        <path d="M19 9v4"></path>
+                    </svg>
+                </span>
 
-        <div class="flex-1 overflow-y-auto">
-            <div data-drawer-panel="overview" class="space-y-4 p-5 sm:p-6">
-                <section class="user-surface p-5"><div class="flex items-start gap-4"><span id="drawerInitials" class="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-[#f3f1ed] text-[16px] font-bold text-[#655d55]">U</span><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-2"><span id="drawerRole" class="inline-flex rounded-full border border-[#e6e0d8] bg-[#f7f5f2] px-2.5 py-1 text-[8px] font-semibold text-[#6f665b]">User</span><span id="drawerStatusBadge" class="inline-flex rounded-full border px-2.5 py-1 text-[8px] font-semibold">Active</span></div><p id="drawerEmail" class="mt-3 break-all text-[10px] font-medium text-[#514a42]">—</p><p id="drawerContact" class="mt-1 text-[9px] text-[#81786c]">—</p><p id="drawerJoined" class="mt-1 text-[8px] text-[#958c80]">Joined —</p></div></div><div class="mt-5 grid grid-cols-2 gap-3 border-t border-[#eee8df] pt-4"><div class="rounded-xl bg-[#faf9f6] p-3.5"><p class="text-[7px] uppercase tracking-[.08em] text-[#9b9288]">Account ID</p><p id="drawerId" class="mt-1.5 text-[9px] font-semibold text-[#4a433c]">—</p></div><div class="rounded-xl bg-[#faf9f6] p-3.5"><p class="text-[7px] uppercase tracking-[.08em] text-[#9b9288]">Access</p><p id="drawerAccess" class="mt-1.5 text-[9px] font-semibold">—</p></div></div></section>
-
-                <section class="rounded-[16px] border border-[#eee8df] bg-white p-4"><h4 class="text-[10px] font-bold text-[#312b25]">Admin controls</h4><div class="mt-3 grid grid-cols-2 gap-2"><button type="button" data-jump-manage class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e5ddd2] bg-white text-[8px] font-semibold text-[#62594e] transition hover:bg-[#fffaf2] hover:text-[#a8731f]"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L19 9l-4-4L4 16v4Z"></path></svg>Edit profile</button><button type="button" data-jump-activity class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e5ddd2] bg-white text-[8px] font-semibold text-[#62594e] transition hover:bg-[#fffaf2] hover:text-[#a8731f]"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>View activity</button></div></section>
+                <div class="min-w-0">
+                    <p class="enterprise-user-modal-eyebrow">Account Management</p>
+                    <div class="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                        <h3 id="drawerName" class="enterprise-user-modal-title truncate">User</h3>
+                        <span class="enterprise-user-modal-context">SARI Admin Console</span>
+                    </div>
+                </div>
             </div>
 
-            <div data-drawer-panel="activity" hidden class="p-5 sm:p-6"><section class="user-surface p-5"><div class="flex items-center justify-between"><div><h4 class="text-[11px] font-bold text-[#312b25]">Recent activity</h4><p class="mt-1 text-[8px] text-[#91887d]">Account creation and administrator actions are recorded here.</p></div><span class="grid h-9 w-9 place-items-center rounded-xl border border-[#eee6dc] bg-[#fffaf2] text-[#a8731f]"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h4l2-5 4 10 2-5h4"></path></svg></span></div><div id="activityTimeline" class="mt-5 space-y-3"></div></section></div>
+            <button
+                id="closeProfile"
+                type="button"
+                class="enterprise-modal-close"
+                aria-label="Close account management modal"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                    <path d="m7 7 10 10"></path>
+                    <path d="m17 7-10 10"></path>
+                </svg>
+            </button>
+        </header>
 
-            <div data-drawer-panel="manage" hidden class="space-y-4 p-5 sm:p-6">
-                <form id="editUserForm" method="POST" class="user-surface p-5">@csrf @method('PATCH')
-                    <div><h4 class="text-[11px] font-bold text-[#312b25]">Edit account information</h4><p class="mt-1 text-[8px] leading-4 text-[#91887d]">For safety, email and role are read-only here. Update names, contact number, and seller store name only.</p></div>
-                    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2"><div><label class="mb-1.5 block text-[8px] font-semibold text-[#6c6359]">First name</label><input id="editFirstName" name="first_name" class="clean-control h-10 w-full rounded-xl px-3 text-[9px]"></div><div><label class="mb-1.5 block text-[8px] font-semibold text-[#6c6359]">Last name</label><input id="editLastName" name="last_name" class="clean-control h-10 w-full rounded-xl px-3 text-[9px]"></div><div class="sm:col-span-2"><label class="mb-1.5 block text-[8px] font-semibold text-[#6c6359]">Contact number</label><input id="editContact" name="contact_no" class="clean-control h-10 w-full rounded-xl px-3 text-[9px]"></div><div id="storeNameWrap" class="hidden sm:col-span-2"><label class="mb-1.5 block text-[8px] font-semibold text-[#6c6359]">Store name</label><input id="editStoreName" name="store_name" class="clean-control h-10 w-full rounded-xl px-3 text-[9px]"></div></div>
-                    <button class="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#d99500] text-[9px] font-bold text-white shadow-[0_8px_20px_rgba(217,149,0,.16)] transition hover:bg-[#bd8205]">Save changes</button>
-                </form>
+        {{-- MODAL NAVIGATION --}}
+        <nav class="enterprise-user-modal-tabs" aria-label="Account management sections">
+            <button type="button" class="drawer-tab is-active" data-drawer-tab="overview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <circle cx="12" cy="8" r="3.5"></circle>
+                    <path d="M5 20a7 7 0 0 1 14 0"></path>
+                </svg>
+                <span>Overview</span>
+            </button>
 
-                <form id="noteForm" method="POST" class="user-surface p-5">@csrf
-                    <h4 class="text-[11px] font-bold text-[#312b25]">Admin note</h4><p class="mt-1 text-[8px] leading-4 text-[#91887d]">Add an internal note to the account timeline. This is not shown to the user.</p><textarea id="adminNoteInput" name="note" required minlength="2" maxlength="1000" rows="3" placeholder="Write an internal note..." class="clean-control mt-3 w-full resize-none rounded-xl px-3 py-2.5 text-[9px]"></textarea><button class="mt-3 inline-flex h-10 w-full items-center justify-center rounded-xl border border-[#ddd5ca] bg-white text-[9px] font-semibold text-[#62594e] transition hover:bg-[#faf8f4]">Add note to timeline</button>
-                </form>
+            <button type="button" class="drawer-tab" data-drawer-tab="activity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8"></circle>
+                    <path d="M12 7v5l3 2"></path>
+                </svg>
+                <span>Recent Activity</span>
+            </button>
 
-                <a id="sellerMessageLink" href="#" class="hidden user-surface items-center justify-between p-4 text-[9px] font-semibold text-[#514a42] transition hover:border-[#ddc69f] hover:bg-[#fffaf2]"><span class="inline-flex items-center gap-2"><svg viewBox="0 0 24 24" class="h-4 w-4 text-[#a8731f]" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v12H8l-4 3V5Z"></path></svg>Open seller messaging</span><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 18 6-6-6-6"></path></svg></a>
+            <button type="button" class="drawer-tab" data-drawer-tab="manage">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M4 20h4L19 9l-4-4L4 16v4Z"></path>
+                    <path d="m13.5 6.5 4 4"></path>
+                </svg>
+                <span>Manage Account</span>
+            </button>
+        </nav>
 
-                <section class="user-surface p-5"><div class="flex items-start gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#ead9d2] bg-[#fff6f2] text-[#b66445]"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v10"></path><path d="M8 9l4 4 4-4"></path><path d="M5 21h14"></path></svg></span><div><h4 class="text-[10px] font-bold text-[#7d4c3b]">Account access</h4><p class="mt-1 text-[8px] leading-4 text-[#967267]">Suspending changes the account status so the user can no longer sign in until an administrator restores access.</p></div></div>
-                    <form id="suspendForm" method="POST" class="mt-4">@csrf<textarea id="suspendReasonInput" name="reason" required minlength="5" maxlength="500" rows="3" placeholder="Reason for suspension..." class="clean-control w-full resize-none rounded-xl border-[#ead9d2] px-3 py-2.5 text-[9px]"></textarea><button class="mt-3 inline-flex h-10 w-full items-center justify-center rounded-xl bg-[#b96545] text-[9px] font-bold text-white transition hover:bg-[#a4573c]">Suspend user access</button></form>
-                    <form id="restoreForm" method="POST" class="mt-3 hidden">@csrf<button id="restoreAccessButton" class="inline-flex h-10 w-full items-center justify-center rounded-xl bg-[#4f8362] text-[9px] font-bold text-white transition hover:bg-[#447355]">Restore user access</button></form>
+        {{-- MODAL CONTENT --}}
+        <div class="enterprise-user-modal-scroll flex-1 overflow-y-auto">
+            {{-- OVERVIEW --}}
+            <div data-drawer-panel="overview" class="enterprise-user-panel">
+                <div class="enterprise-overview-grid">
+                    <section class="enterprise-card enterprise-profile-card">
+                        <div class="enterprise-section-heading">
+                            <div>
+                                <p class="enterprise-section-eyebrow">Account Profile</p>
+                                <h4>Identity and access summary</h4>
+                            </div>
+                        </div>
+
+                        <div class="enterprise-profile-hero">
+                            <span id="drawerInitials" class="enterprise-profile-avatar">U</span>
+
+                            <div class="min-w-0 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span id="drawerRole" class="enterprise-role-badge">User</span>
+                                    <span id="drawerStatusBadge" class="enterprise-status-badge">Active</span>
+                                </div>
+
+                                <div class="enterprise-contact-list">
+                                    <div class="enterprise-contact-row">
+                                        <span class="enterprise-contact-icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                                <path d="m3 7 9 6 9-6"></path>
+                                            </svg>
+                                        </span>
+                                        <span id="drawerEmail" class="break-all">—</span>
+                                    </div>
+
+                                    <div class="enterprise-contact-row">
+                                        <span class="enterprise-contact-icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <path d="M5 4h4l2 5-2.5 1.5a15 15 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2C9.7 21 3 14.3 3 6a2 2 0 0 1 2-2Z"></path>
+                                            </svg>
+                                        </span>
+                                        <span id="drawerContact">—</span>
+                                    </div>
+
+                                    <div class="enterprise-contact-row enterprise-contact-row--muted">
+                                        <span class="enterprise-contact-icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+                                                <path d="M8 3v4"></path>
+                                                <path d="M16 3v4"></path>
+                                                <path d="M4 10h16"></path>
+                                            </svg>
+                                        </span>
+                                        <span id="drawerJoined">Joined —</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="enterprise-account-meta-grid">
+                            <div class="enterprise-meta-tile">
+                                <p>Account ID</p>
+                                <strong id="drawerId">—</strong>
+                            </div>
+
+                            <div class="enterprise-meta-tile">
+                                <p>Access Status</p>
+                                <strong id="drawerAccess">—</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="enterprise-card enterprise-control-card">
+                        <div class="enterprise-section-heading">
+                            <div>
+                                <p class="enterprise-section-eyebrow">Administrator Tools</p>
+                                <h4>Quick account controls</h4>
+                            </div>
+                        </div>
+
+                        <p class="enterprise-section-copy">
+                            Open the account editor or inspect the latest administrative activity without leaving this review.
+                        </p>
+
+                        <div class="enterprise-quick-actions">
+                            <button type="button" data-jump-manage class="enterprise-quick-action enterprise-quick-action--primary">
+                                <span class="enterprise-quick-action-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M4 20h4L19 9l-4-4L4 16v4Z"></path>
+                                        <path d="m13.5 6.5 4 4"></path>
+                                    </svg>
+                                </span>
+                                <span>
+                                    <strong>Edit account</strong>
+                                    <small>Update permitted profile details</small>
+                                </span>
+                                <svg viewBox="0 0 24 24" class="enterprise-quick-action-arrow" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m9 18 6-6-6-6"></path>
+                                </svg>
+                            </button>
+
+                            <button type="button" data-jump-activity class="enterprise-quick-action">
+                                <span class="enterprise-quick-action-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <circle cx="12" cy="12" r="8"></circle>
+                                        <path d="M12 7v5l3 2"></path>
+                                    </svg>
+                                </span>
+                                <span>
+                                    <strong>Review activity</strong>
+                                    <small>Inspect recent administrative events</small>
+                                </span>
+                                <svg viewBox="0 0 24 24" class="enterprise-quick-action-arrow" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m9 18 6-6-6-6"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            {{-- ACTIVITY --}}
+            <div data-drawer-panel="activity" hidden class="enterprise-user-panel">
+                <section class="enterprise-card">
+                    <div class="enterprise-section-heading enterprise-section-heading--with-icon">
+                        <div>
+                            <p class="enterprise-section-eyebrow">Audit Trail</p>
+                            <h4>Recent account activity</h4>
+                            <p class="enterprise-section-copy">Account creation and administrator actions are recorded here.</p>
+                        </div>
+
+                        <span class="enterprise-section-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M4 12h4l2-5 4 10 2-5h4"></path>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <div id="activityTimeline" class="enterprise-activity-timeline"></div>
                 </section>
+            </div>
+
+            {{-- MANAGE ACCOUNT --}}
+            <div data-drawer-panel="manage" hidden class="enterprise-user-panel">
+                <div class="enterprise-manage-grid">
+                    <div class="space-y-3">
+                        <form id="editUserForm" method="POST" class="enterprise-card enterprise-form-card">
+                            @csrf
+                            @method('PATCH')
+
+                            <div class="enterprise-section-heading">
+                                <div>
+                                    <p class="enterprise-section-eyebrow">Profile Details</p>
+                                    <h4>Edit account information</h4>
+                                    <p class="enterprise-section-copy">Email and role remain read-only. Only approved account fields can be updated here.</p>
+                                </div>
+                            </div>
+
+                            <div class="enterprise-form-grid">
+                                <div>
+                                    <label for="editFirstName" class="enterprise-field-label">First name</label>
+                                    <input id="editFirstName" name="first_name" class="clean-control enterprise-field-control">
+                                </div>
+
+                                <div>
+                                    <label for="editLastName" class="enterprise-field-label">Last name</label>
+                                    <input id="editLastName" name="last_name" class="clean-control enterprise-field-control">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="editContact" class="enterprise-field-label">Contact number</label>
+                                    <input id="editContact" name="contact_no" class="clean-control enterprise-field-control">
+                                </div>
+
+                                <div id="storeNameWrap" class="hidden sm:col-span-2">
+                                    <label for="editStoreName" class="enterprise-field-label">Store name</label>
+                                    <input id="editStoreName" name="store_name" class="clean-control enterprise-field-control">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="enterprise-button enterprise-button--primary mt-4 w-full">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                    <path d="m7 12 3 3 7-7"></path>
+                                </svg>
+                                Save changes
+                            </button>
+                        </form>
+
+                        <a id="sellerMessageLink" href="#" class="hidden enterprise-card enterprise-message-card items-center justify-between">
+                            <span class="flex min-w-0 items-center gap-3">
+                                <span class="enterprise-message-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M4 5h16v12H8l-4 3V5Z"></path>
+                                        <path d="M8 9h8"></path>
+                                        <path d="M8 13h5"></path>
+                                    </svg>
+                                </span>
+                                <span class="min-w-0">
+                                    <strong>Seller messaging</strong>
+                                    <small>Open the existing admin-to-seller conversation</small>
+                                </span>
+                            </span>
+
+                            <svg viewBox="0 0 24 24" class="enterprise-message-arrow" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3">
+                        <form id="noteForm" method="POST" class="enterprise-card enterprise-form-card">
+                            @csrf
+
+                            <div class="enterprise-section-heading">
+                                <div>
+                                    <p class="enterprise-section-eyebrow">Internal Record</p>
+                                    <h4>Admin note</h4>
+                                    <p class="enterprise-section-copy">Add context to the account timeline. This note is not shown to the user.</p>
+                                </div>
+                            </div>
+
+                            <label for="adminNoteInput" class="enterprise-field-label mt-4">Note</label>
+                            <textarea
+                                id="adminNoteInput"
+                                name="note"
+                                required
+                                minlength="2"
+                                maxlength="1000"
+                                rows="4"
+                                placeholder="Write an internal note..."
+                                class="clean-control enterprise-field-textarea"
+                            ></textarea>
+
+                            <button type="submit" class="enterprise-button enterprise-button--secondary mt-3 w-full">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                    <path d="M6 3h12v18H6z"></path>
+                                    <path d="M9 8h6"></path>
+                                    <path d="M9 12h6"></path>
+                                </svg>
+                                Add note to timeline
+                            </button>
+                        </form>
+
+                        <section class="enterprise-card enterprise-access-card">
+                            <div class="flex items-start gap-3">
+                                <span class="enterprise-access-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M12 3v10"></path>
+                                        <path d="M8 9l4 4 4-4"></path>
+                                        <path d="M5 21h14"></path>
+                                    </svg>
+                                </span>
+
+                                <div>
+                                    <p class="enterprise-section-eyebrow enterprise-section-eyebrow--danger">Access Control</p>
+                                    <h4>Account access</h4>
+                                    <p class="enterprise-section-copy">Suspend access when necessary. An administrator can restore the account later.</p>
+                                </div>
+                            </div>
+
+                            <form id="suspendForm" method="POST" class="mt-4">
+                                @csrf
+                                <label for="suspendReasonInput" class="enterprise-field-label">Suspension reason</label>
+                                <textarea
+                                    id="suspendReasonInput"
+                                    name="reason"
+                                    required
+                                    minlength="5"
+                                    maxlength="500"
+                                    rows="3"
+                                    placeholder="Reason for suspension..."
+                                    class="clean-control enterprise-field-textarea enterprise-field-textarea--danger"
+                                ></textarea>
+
+                                <button type="submit" class="enterprise-button enterprise-button--danger mt-3 w-full">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="8"></circle>
+                                        <path d="m6.5 6.5 11 11"></path>
+                                    </svg>
+                                    Suspend user access
+                                </button>
+                            </form>
+
+                            <form id="restoreForm" method="POST" class="mt-3 hidden">
+                                @csrf
+                                <button id="restoreAccessButton" type="submit" class="enterprise-button enterprise-button--success w-full">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                        <path d="M20 7v5h-5"></path>
+                                        <path d="M18 16a7 7 0 1 1 1-8l1 4"></path>
+                                    </svg>
+                                    Restore user access
+                                </button>
+                            </form>
+                        </section>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1424,24 +3596,89 @@
 
     const normalize = value => (value || '').toString().trim().toLowerCase();
 
-    function applyFilters() {
-        const query = normalize(search?.value);
-        let visible = 0;
-        rows.forEach(row => {
-            const roleMatch = selectedRole === 'all' || normalize(row.dataset.role) === normalize(selectedRole);
-            const statusMatch = selectedStatus === 'all' || normalize(row.dataset.status) === normalize(selectedStatus);
-            const haystack = [row.dataset.name, row.dataset.emailDisplay, row.dataset.contact, row.dataset.role].join(' ');
-            const searchMatch = !query || normalize(haystack).includes(query);
-            const show = roleMatch && statusMatch && searchMatch;
-            row.hidden = !show;
-            if (show) visible++;
-        });
-        if (resultCount) resultCount.textContent = `Showing ${visible} of ${rows.length} results`;
-        summaryCards.forEach(card => card.classList.toggle('is-active', normalize(card.dataset.summaryRole) === normalize(selectedRole)));
+    /*
+     * PERFORMANCE:
+     * Build the searchable text once instead of reconstructing and
+     * lower-casing it again for every row on every keystroke.
+     */
+    const rowIndex = rows.map(row => ({
+        row,
+        role: normalize(row.dataset.role),
+        status: normalize(row.dataset.status),
+        searchText: normalize([
+            row.dataset.name,
+            row.dataset.emailDisplay,
+            row.dataset.contact,
+            row.dataset.role
+        ].join(' '))
+    }));
+
+    function debounce(callback, wait = 130) {
+        let timer = null;
+
+        return function (...args) {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(() => callback.apply(this, args), wait);
+        };
     }
 
-    search?.addEventListener('input', applyFilters);
-    summaryCards.forEach(card => card.addEventListener('click', () => { selectedRole = card.dataset.summaryRole || 'all'; syncRoleDropdown(); applyFilters(); }));
+    let filterFrame = 0;
+
+    function applyFilters() {
+        const query = normalize(search?.value);
+        const normalizedRole = normalize(selectedRole);
+        const normalizedStatus = normalize(selectedStatus);
+
+        window.cancelAnimationFrame(filterFrame);
+
+        filterFrame = window.requestAnimationFrame(() => {
+            let visible = 0;
+
+            rowIndex.forEach(item => {
+                const roleMatch =
+                    normalizedRole === 'all' ||
+                    item.role === normalizedRole;
+
+                const statusMatch =
+                    normalizedStatus === 'all' ||
+                    item.status === normalizedStatus;
+
+                const searchMatch =
+                    query === '' ||
+                    item.searchText.includes(query);
+
+                const show = roleMatch && statusMatch && searchMatch;
+
+                if (item.row.hidden === show) {
+                    item.row.hidden = !show;
+                }
+
+                if (show) visible++;
+            });
+
+            if (resultCount) {
+                resultCount.textContent =
+                    `Showing ${visible} of ${rows.length} results`;
+            }
+
+            summaryCards.forEach(card => {
+                card.classList.toggle(
+                    'is-active',
+                    normalize(card.dataset.summaryRole) === normalizedRole
+                );
+            });
+        });
+    }
+
+    const debouncedApplyFilters = debounce(applyFilters, 130);
+
+    search?.addEventListener('input', debouncedApplyFilters, { passive: true });
+
+    summaryCards.forEach(card => card.addEventListener('click', () => {
+        selectedRole = card.dataset.summaryRole || 'all';
+        syncRoleDropdown();
+        applyFilters();
+    }));
 
     function setupDropdown(rootSelector, toggleSelector, menuSelector, optionSelector, labelSelector, onSelect) {
         const root = document.querySelector(rootSelector);
@@ -1570,7 +3807,13 @@
         switchTab(targetTab);
         drawer?.classList.add('is-open');
         backdrop?.classList.add('is-open');
+        drawer?.setAttribute('aria-hidden', 'false');
+        backdrop?.setAttribute('aria-hidden', 'false');
         document.body.classList.add('user-drawer-open');
+
+        window.setTimeout(() => {
+            if (!focusTarget) closeProfile?.focus({ preventScroll: true });
+        }, 60);
 
         if (focusTarget) {
             window.setTimeout(() => {
@@ -1583,6 +3826,8 @@
     function closeDrawer() {
         drawer?.classList.remove('is-open');
         backdrop?.classList.remove('is-open');
+        drawer?.setAttribute('aria-hidden', 'true');
+        backdrop?.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('user-drawer-open');
     }
 
@@ -1638,5 +3883,5 @@
     syncRoleDropdown(); applyFilters();
 })();
 </script>
-<!-- Interface icons: Flaticon UIcons Regular Rounded -->
+<!-- Action icons are inline SVGs to avoid an extra render-blocking icon-font stylesheet. -->
 @endsection

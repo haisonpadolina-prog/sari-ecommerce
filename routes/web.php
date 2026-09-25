@@ -17,6 +17,7 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerLayoutStateController;
 use App\Http\Controllers\SellerAdminChatController;
 use App\Http\Controllers\SellerProductController;
+use App\Http\Controllers\SellerProductDraftController;
 use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\CourierDeliveryController;
 use App\Http\Middleware\EnsureSellerNotRestricted;
@@ -45,6 +46,8 @@ use App\Http\Controllers\AdminReportsController;
 use App\Http\Controllers\AdminCommissionsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AddressLookupController;
+use App\Http\Controllers\MarketplaceCatalogController;
+use App\Http\Controllers\MarketplaceAuthController;
 
 use App\Models\AdminAccount;
 use App\Models\BuyerAccount;
@@ -589,6 +592,27 @@ Route::post('/complaints', [PlatformComplaintController::class, 'store'])
 
 /*
 |--------------------------------------------------------------------------
+| PUBLIC MARKETPLACE CATALOG
+|--------------------------------------------------------------------------
+|
+| Guests can browse category products. Authentication is required only when
+| they choose a buying action, which uses a Buyer-only login endpoint.
+|
+*/
+
+Route::get('/marketplace/categories/{category}', [MarketplaceCatalogController::class, 'category'])
+    ->name('marketplace.category');
+
+Route::get('/marketplace/products/{product}/image', [MarketplaceCatalogController::class, 'image'])
+    ->whereNumber('product')
+    ->name('marketplace.product.image');
+
+Route::post('/marketplace/login', [MarketplaceAuthController::class, 'login'])
+    ->name('marketplace.login');
+
+
+/*
+|--------------------------------------------------------------------------
 | ADDRESS LOOKUP
 |--------------------------------------------------------------------------
 */
@@ -738,17 +762,27 @@ Route::patch('/admin/users/{role}/{id}', [AdminUsersController::class, 'update']
     ->name('admin.users.update');
 
 Route::post('/admin/users/{role}/{id}/suspend', [AdminUsersController::class, 'suspend'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.suspend');
 
 Route::post('/admin/users/{role}/{id}/restore', [AdminUsersController::class, 'restore'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.restore');
 
+Route::post('/admin/users/{role}/{id}/ban', [AdminUsersController::class, 'ban'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereNumber('id')
+    ->name('admin.users.ban');
+
+Route::post('/admin/users/{role}/{id}/unban', [AdminUsersController::class, 'unban'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereNumber('id')
+    ->name('admin.users.unban');
+
 Route::post('/admin/users/{role}/{id}/note', [AdminUsersController::class, 'note'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.note');
 
@@ -891,6 +925,12 @@ Route::get('/admin/account', [AdminAccountController::class, 'index'])
 Route::patch('/admin/account', [AdminAccountController::class, 'update'])
     ->name('admin.account.update');
 
+Route::patch('/admin/account/profile', [AdminAccountController::class, 'updateProfile'])
+    ->name('admin.account.profile.update');
+
+Route::patch('/admin/account/password', [AdminAccountController::class, 'updatePassword'])
+    ->name('admin.account.password.update');
+
 
 Route::post('/admin/logout', function (Request $request) {
 
@@ -996,6 +1036,16 @@ Route::get(
 
 
 /*
+| Dedicated Add Product Page
+*/
+Route::get(
+    '/seller/products/create',
+    [SellerProductController::class, 'create']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.products.create');
+
+
+/*
 | Add Product
 */
 Route::post(
@@ -1006,29 +1056,29 @@ Route::post(
 
 
 /*
-| Persistent Add Product Draft
+| Multiple Persistent Add Product Drafts
 */
 Route::get(
-    '/seller/product-draft',
-    [SellerProductController::class, 'draft']
+    '/seller/product-drafts',
+    [SellerProductDraftController::class, 'index']
 )->middleware(EnsureSellerNotRestricted::class)
   ->name('seller.products.draft');
 
 Route::post(
-    '/seller/product-draft',
-    [SellerProductController::class, 'saveDraft']
+    '/seller/product-drafts',
+    [SellerProductDraftController::class, 'store']
 )->middleware(EnsureSellerNotRestricted::class)
   ->name('seller.products.draft.save');
 
 Route::delete(
-    '/seller/product-draft',
-    [SellerProductController::class, 'deleteDraft']
+    '/seller/product-drafts',
+    [SellerProductDraftController::class, 'destroy']
 )->middleware(EnsureSellerNotRestricted::class)
   ->name('seller.products.draft.delete');
 
 Route::get(
-    '/seller/product-draft/media/{kind}/{key?}',
-    [SellerProductController::class, 'draftMedia']
+    '/seller/product-drafts/media/{kind}/{key?}',
+    [SellerProductDraftController::class, 'media']
 )->middleware(EnsureSellerNotRestricted::class)
   ->whereIn('kind', ['cover', 'gallery', 'variant'])
   ->name('seller.products.draft-media');
@@ -1554,6 +1604,7 @@ Route::post('/forgot-password/reset', [PasswordResetOtpController::class, 'reset
 Route::post('/forgot-password/restart', [PasswordResetOtpController::class, 'restart'])
     ->middleware('throttle:12,1')
     ->name('password.otp.restart');
+
 /*
 |--------------------------------------------------------------------------
 | LOGISTICS ROUTES

@@ -295,125 +295,187 @@
 
 
 /* ==========================================================
-   ANIMATION
+   MODERN SCROLL ANIMATION
+   Triggers only when this section enters the viewport
    ========================================================== */
 
-
-.sari-idea-animate {
-
-    opacity:0;
-
-    transform:translateY(30px);
-
-    animation:sariIdeaShow .8s ease forwards;
-
+/* No-JS fallback: everything remains visible by default */
+.sari-idea-header,
+.sari-idea-eyebrow,
+.sari-idea-title,
+.sari-idea-description,
+.sari-idea-node,
+.sari-idea-connector {
+    opacity: 1;
+    transform: none;
 }
 
-
-
-.sari-idea-header {
-
-    animation-delay:.1s;
-
+/* Motion is enabled only after JS adds .sari-motion-ready */
+.sari-idea-section.sari-motion-ready .sari-idea-eyebrow,
+.sari-idea-section.sari-motion-ready .sari-idea-title,
+.sari-idea-section.sari-motion-ready .sari-idea-description {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+        opacity .7s cubic-bezier(.22,1,.36,1),
+        transform .85s cubic-bezier(.22,1,.36,1);
 }
 
-
-
-.sari-idea-network {
-
-    animation-delay:.25s;
-
+.sari-idea-section.sari-motion-ready .sari-idea-title {
+    transform: translate3d(0, 28px, 0) scale(.985);
 }
 
+.sari-idea-section.sari-motion-ready .sari-idea-description {
+    transform: translate3d(0, 18px, 0);
+}
 
+.sari-idea-section.sari-motion-ready .sari-idea-line {
+    transform: scaleX(0);
+    opacity: .25;
+    transition:
+        transform .8s cubic-bezier(.22,1,.36,1),
+        opacity .6s ease;
+}
 
-@keyframes sariIdeaShow {
+.sari-idea-section.sari-motion-ready .sari-idea-line:first-child {
+    transform-origin: right center;
+}
 
+.sari-idea-section.sari-motion-ready .sari-idea-line:last-child {
+    transform-origin: left center;
+}
 
-    from {
+/* Network nodes */
+.sari-idea-section.sari-motion-ready .sari-idea-node {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(.94);
+    transition:
+        opacity .65s cubic-bezier(.22,1,.36,1),
+        transform .8s cubic-bezier(.22,1,.36,1);
+    transition-delay: var(--sari-delay, 0ms);
+}
 
-        opacity:0;
+/* Connector draw animation */
+.sari-idea-section.sari-motion-ready .sari-idea-connector {
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition:
+        transform .75s cubic-bezier(.22,1,.36,1),
+        opacity .45s ease;
+    transition-delay: var(--sari-delay, 0ms);
+}
 
-        transform:translateY(30px);
+/* Visible state */
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-eyebrow,
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-title,
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-description,
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-node {
+    opacity: 1;
+    transform: none;
+}
 
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-eyebrow {
+    transition-delay: 80ms;
+}
+
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-title {
+    transition-delay: 150ms;
+}
+
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-description {
+    transition-delay: 230ms;
+}
+
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-line {
+    transform: scaleX(1);
+    opacity: 1;
+    transition-delay: 120ms;
+}
+
+.sari-idea-section.sari-motion-ready.is-visible .sari-idea-connector {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* Center SARI logo — subtle premium halo after reveal */
+.sari-idea-logo {
+    position: relative;
+    isolation: isolate;
+    transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        box-shadow .45s ease,
+        border-color .45s ease;
+}
+
+.sari-idea-logo::before {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(201,145,40,.16) 0%,
+        rgba(201,145,40,.07) 42%,
+        transparent 72%
+    );
+    opacity: 0;
+    transform: scale(.78);
+    transition:
+        opacity .7s ease,
+        transform .9s cubic-bezier(.22,1,.36,1);
+}
+
+.sari-idea-section.is-visible .sari-idea-logo::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.sari-idea-center:hover .sari-idea-logo {
+    transform: translateY(-5px) scale(1.035);
+    border-color: rgba(201,145,40,.55);
+    box-shadow: 0 24px 60px rgba(49,38,20,.16);
+}
+
+/* Icon micro-interactions */
+.sari-idea-icon {
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        border-color .3s ease,
+        color .3s ease,
+        box-shadow .35s ease,
+        background-color .3s ease;
+}
+
+.sari-idea-node:hover .sari-idea-icon {
+    transform: translateY(-3px);
+    color: #b77d18;
+    border-color: rgba(201,145,40,.36);
+    box-shadow: 0 12px 28px rgba(52,43,31,.08);
+}
+
+/* Disable the old per-node hover translation so the icon is the focus */
+.sari-idea-node:hover {
+    transform: none;
+}
+
+/* Respect accessibility preference */
+@media (prefers-reduced-motion: reduce) {
+    .sari-idea-section.sari-motion-ready .sari-idea-eyebrow,
+    .sari-idea-section.sari-motion-ready .sari-idea-title,
+    .sari-idea-section.sari-motion-ready .sari-idea-description,
+    .sari-idea-section.sari-motion-ready .sari-idea-node,
+    .sari-idea-section.sari-motion-ready .sari-idea-connector,
+    .sari-idea-line,
+    .sari-idea-icon,
+    .sari-idea-logo,
+    .sari-idea-logo::before {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
     }
-
-
-    to {
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-
-}
-
-
-
-
-/* ==========================================================
-   DARK MODE READY
-   ========================================================== */
-
-
-html.dark .sari-idea-section,
-body.dark .sari-idea-section {
-
-    background:#151310;
-
-    color:#f5efe5;
-
-}
-
-
-
-html.dark .sari-idea-title,
-body.dark .sari-idea-title {
-
-    color:#f5efe5;
-
-}
-
-
-
-html.dark .sari-idea-description,
-body.dark .sari-idea-description {
-
-    color:#bdb5a9;
-
-}
-
-
-
-html.dark .sari-idea-icon,
-body.dark .sari-idea-icon {
-
-    background:rgba(255,255,255,.05);
-
-    border-color:rgba(255,255,255,.15);
-
-    color:#ddd;
-
-}
-
-
-
-html.dark .sari-idea-label,
-body.dark .sari-idea-label {
-
-    color:#aaa;
-
-}
-
-
-
-html.dark .sari-idea-connector,
-body.dark .sari-idea-connector {
-
-    background:rgba(255,255,255,.18);
-
 }
 
 
@@ -837,3 +899,50 @@ body.dark .sari-idea-connector {
 
 
 </section>
+
+<script>
+(function () {
+    const section = document.querySelector('.sari-idea-section');
+
+    if (!section) {
+        return;
+    }
+
+    section.classList.add('sari-motion-ready');
+
+    const networkItems = section.querySelectorAll(
+        '.sari-idea-network > .sari-idea-node, .sari-idea-network > .sari-idea-connector'
+    );
+
+    networkItems.forEach(function (item, index) {
+        item.style.setProperty(
+            '--sari-delay',
+            (320 + (index * 85)) + 'ms'
+        );
+    });
+
+    if (!('IntersectionObserver' in window)) {
+        section.classList.add('is-visible');
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        function (entries, currentObserver) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                section.classList.add('is-visible');
+                currentObserver.unobserve(section);
+            });
+        },
+        {
+            threshold: 0.22,
+            rootMargin: '0px 0px -8% 0px'
+        }
+    );
+
+    observer.observe(section);
+})();
+</script>

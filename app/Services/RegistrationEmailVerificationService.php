@@ -20,7 +20,16 @@ class RegistrationEmailVerificationService
 
         $mailer = (string) config('mail.default', '');
 
-        if ($mailer === '' || in_array($mailer, ['log', 'array'], true)) {
+        $localDebugMailer = app()->environment('local')
+            && in_array($mailer, ['log', 'array'], true);
+
+        if (
+            $mailer === ''
+            || (
+                in_array($mailer, ['log', 'array'], true)
+                && !$localDebugMailer
+            )
+        ) {
             return [
                 'ok' => false,
                 'status' => 503,
@@ -54,25 +63,27 @@ class RegistrationEmailVerificationService
         $hash = $this->hashOtp($code);
         $expiresAt = now()->addMinutes(self::EXPIRES_MINUTES);
 
-        try {
-            Mail::raw(
-                "Your SARI email verification code is {$code}.\n\n"
-                . 'This code expires in ' . self::EXPIRES_MINUTES . " minutes.\n"
-                . "If you did not request this code, you can ignore this email.",
-                function ($message) use ($email): void {
-                    $message
-                        ->to($email)
-                        ->subject('SARI registration verification code');
-                }
-            );
-        } catch (Throwable $exception) {
-            report($exception);
+        if (!$localDebugMailer) {
+            try {
+                Mail::raw(
+                    "Your SARI email verification code is {$code}.\n\n"
+                    . 'This code expires in ' . self::EXPIRES_MINUTES . " minutes.\n"
+                    . "If you did not request this code, you can ignore this email.",
+                    function ($message) use ($email): void {
+                        $message
+                            ->to($email)
+                            ->subject('SARI registration verification code');
+                    }
+                );
+            } catch (Throwable $exception) {
+                report($exception);
 
-            return [
-                'ok' => false,
-                'status' => 503,
-                'message' => 'We could not send the verification code right now. Please check the mail configuration and try again.',
-            ];
+                return [
+                    'ok' => false,
+                    'status' => 503,
+                    'message' => 'We could not send the verification code right now. Please check the mail configuration and try again.',
+                ];
+            }
         }
 
         $request->session()->put(self::SESSION_KEY, [
@@ -87,10 +98,13 @@ class RegistrationEmailVerificationService
         return [
             'ok' => true,
             'status' => 200,
-            'message' => 'Verification code sent.',
+            'message' => $localDebugMailer
+                ? 'Local test verification code generated.'
+                : 'Verification code sent.',
             'masked_email' => $this->maskEmail($email),
             'expires_in' => self::EXPIRES_MINUTES * 60,
             'retry_after' => self::RESEND_SECONDS,
+            'debug_code' => $localDebugMailer ? $code : null,
         ];
     }
 

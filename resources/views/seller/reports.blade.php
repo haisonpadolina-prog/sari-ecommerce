@@ -25,47 +25,394 @@
     };
 @endphp
 
+@push('styles')
 <style>
+    :root {
+        --report-gold: #d99500;
+        --report-gold-hover: #bf8304;
+        --report-gold-soft: #fff8eb;
+        --report-border: #e7ddd1;
+        --report-border-soft: #eee8df;
+        --report-text: #211c17;
+        --report-muted: #83796f;
+        --report-canvas: #fbfaf7;
+    }
+
     .seller-report-page {
+        width: 100%;
+        max-width: none !important;
+        margin: 0;
+        padding: 0 0 18px;
+        color: var(--report-text);
         font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
         font-weight: 400;
     }
 
-    #sellerReportSkeleton { display: none; }
-    #sellerReportContent { display: block; }
+    #sellerReportContent {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
 
-    /*
-    | No artificial first-paint delay.
-    | A skeleton is shown only if a Livewire report navigation is genuinely
-    | taking longer than a very short threshold.
-    */
-    #sellerReportStage.is-slow-loading #sellerReportSkeleton { display: block; }
-    #sellerReportStage.is-slow-loading #sellerReportContent { display: none; }
+    /* Header — matched to the recent Order Management / Archive pages */
+    .seller-report-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 14px;
+    }
 
-    .seller-report-skeleton-block {
+    .seller-report-heading {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .seller-report-heading-icon {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        place-items: center;
+        border: 1px solid #eadfc9;
+        border-radius: 12px;
+        background: var(--report-gold-soft);
+        color: #b77c18;
+        box-shadow: 0 4px 12px rgba(75, 54, 25, .045);
+    }
+
+    .seller-report-heading-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .seller-report-eyebrow {
+        margin: 0;
+        color: #9a6f23;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+    }
+
+    .seller-report-title {
+        margin: 5px 0 0;
+        color: #17130f;
+        font-size: 29px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -.045em;
+    }
+
+    .seller-report-title-accent {
+        margin-left: 4px;
+        color: var(--report-gold);
+    }
+
+    .seller-report-subtitle {
+        max-width: 820px;
+        margin: 7px 0 0;
+        color: #7f756a;
+        font-size: 10.5px;
+        line-height: 1.5;
+    }
+
+    .seller-report-header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .seller-report-header-button {
+        display: inline-flex;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border-radius: 10px;
+        padding: 0 13px;
+        font-size: 8.5px;
+        font-weight: 600;
+        transition: border-color .14s ease, background-color .14s ease, color .14s ease;
+    }
+
+    .seller-report-header-button svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-header-button--secondary {
+        border: 1px solid #e6ddd2;
+        background: #fff;
+        color: #5f574e;
+        box-shadow: 0 4px 10px rgba(63, 49, 32, .04);
+    }
+
+    .seller-report-header-button--secondary:hover {
+        border-color: #d8c4a3;
+        background: #fffaf2;
+        color: #a8731f;
+    }
+
+    .seller-report-header-button--primary {
+        border: 1px solid var(--report-gold);
+        background: var(--report-gold);
+        color: #fff;
+        box-shadow: 0 5px 14px rgba(217,149,0,.14);
+    }
+
+    .seller-report-header-button--primary:hover {
+        border-color: var(--report-gold-hover);
+        background: var(--report-gold-hover);
+    }
+
+    /* Compact report controls — no oversized filter card */
+    .seller-report-filter-panel {
+        margin-bottom: 11px;
+        border: 1px solid var(--report-border);
+        border-radius: 14px;
+        background: #fff;
+        padding: 9px;
+        box-shadow: 0 8px 24px rgba(61, 43, 22, .05);
+    }
+
+    .seller-report-filter-grid {
+        display: grid;
+        grid-template-columns: minmax(150px, .8fr) minmax(150px, .8fr) minmax(170px, .9fr) 110px;
+        gap: 8px;
+        align-items: end;
+    }
+
+    .seller-report-filter-field label {
         display: block;
-        background: #e9e5df;
-        animation: sellerReportPulse 1.1s ease-in-out infinite;
+        margin: 0 0 5px 2px;
+        color: #70675d;
+        font-size: 8px;
+        font-weight: 600;
     }
 
-    @keyframes sellerReportPulse {
-        0%, 100% { opacity: .56; }
-        50% { opacity: .94; }
+    .seller-report-filter-field input,
+    .seller-report-filter-field select,
+    .seller-report-generate {
+        width: 100%;
+        height: 38px;
+        min-height: 38px;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 9px;
     }
 
-    .seller-report-card {
-        transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    .seller-report-filter-field input,
+    .seller-report-filter-field select {
+        border: 1px solid #e8e0d5;
+        background: #fff;
+        padding: 0 10px;
+        color: #403930;
+        outline: none;
+        box-shadow: 0 1px 2px rgba(61,43,22,.018), 0 4px 10px rgba(61,43,22,.025);
+        transition: border-color .14s ease, box-shadow .14s ease;
     }
 
-    .seller-report-card:hover {
-        transform: translateY(-1px);
-        border-color: #dfd3c2;
-        box-shadow: 0 12px 26px rgba(48,37,24,.045);
+    .seller-report-filter-field input:focus,
+    .seller-report-filter-field select:focus {
+        border-color: #d4af67;
+        box-shadow: 0 0 0 3px rgba(217, 148, 0, .07);
+    }
+
+    .seller-report-generate {
+        border: 1px solid var(--report-gold);
+        background: var(--report-gold);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: 0 5px 14px rgba(217,149,0,.13);
+    }
+
+    .seller-report-generate:hover {
+        border-color: var(--report-gold-hover);
+        background: var(--report-gold-hover);
+    }
+
+    .seller-report-ranges {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #f0ebe4;
+    }
+
+    .seller-report-ranges > span {
+        margin-right: 2px;
+        color: #92887d;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .seller-report-ranges button {
+        min-height: 27px;
+        border: 1px solid #e8e0d5;
+        border-radius: 999px;
+        background: #fff;
+        padding: 4px 9px;
+        color: #766d63;
+        font-size: 7.5px;
+        font-weight: 600;
+        transition: border-color .12s ease, background-color .12s ease, color .12s ease;
+    }
+
+    .seller-report-ranges button:hover {
+        border-color: #dcc79e;
+        background: #fff8ea;
+        color: #9b6c1c;
+    }
+
+    /* Sales KPI cards are still useful, but much denser */
+    .seller-report-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 9px;
+        margin-bottom: 11px;
+    }
+
+    .seller-report-kpi-grid .seller-report-card {
+        min-height: 84px;
+        border-radius: 13px !important;
+        padding: 11px 13px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+        transform: none !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card:hover {
+        transform: none !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(2) {
+        margin-top: 5px !important;
+        font-size: 21px !important;
+        line-height: 1 !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card p:nth-child(3) {
+        margin-top: 6px !important;
+        font-size: 8px !important;
+        line-height: 1.35 !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card span.grid {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-report-kpi-grid .seller-report-card span.grid svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* Orders are shown as a slim status strip instead of four large cards */
+    .seller-report-order-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        overflow: hidden;
+        margin-bottom: 11px;
+        border: 1px solid var(--report-border);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05);
+    }
+
+    .seller-report-order-stat {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 13px;
+        border-right: 1px solid #eee8df;
+    }
+
+    .seller-report-order-stat:last-child {
+        border-right: 0;
+    }
+
+    .seller-report-order-stat-icon {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        place-items: center;
+        border-radius: 9px;
+    }
+
+    .seller-report-order-stat-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .seller-report-order-stat-copy {
+        min-width: 0;
+    }
+
+    .seller-report-order-stat-label {
+        margin: 0;
+        color: #746b61;
+        font-size: 8px;
+        font-weight: 600;
+    }
+
+    .seller-report-order-stat-value {
+        display: inline-block;
+        margin-top: 2px;
+        color: #211c17;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .seller-report-order-stat-desc {
+        margin-left: 5px;
+        color: #9a9187;
+        font-size: 7.5px;
+        white-space: nowrap;
+    }
+
+    /* Main report panels */
+    .seller-report-panel {
+        overflow: hidden;
+        border: 1px solid var(--report-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-panel-heading {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    .seller-report-panel-subtitle {
+        margin-top: 3px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
     }
 
     .seller-report-chart-shell {
         position: relative;
-        min-height: 300px;
+        min-height: 238px;
+    }
+
+    #sellerReportChart {
+        height: 238px !important;
     }
 
     .seller-report-chart-empty {
@@ -85,11 +432,135 @@
     }
 
     .seller-report-table-row {
-        transition: background-color .16s ease;
+        transition: background-color .14s ease;
     }
 
     .seller-report-table-row:hover {
         background: #fffdfa;
+    }
+
+    /* Compact common report sections using their existing markup */
+    .seller-report-analysis-grid {
+        gap: 10px !important;
+        margin-top: 0 !important;
+        margin-bottom: 11px;
+    }
+
+    .seller-report-analysis-grid > div {
+        border-radius: 14px !important;
+        padding: 14px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-products-section,
+    .seller-report-financial-section {
+        margin-top: 0 !important;
+        margin-bottom: 11px;
+        border-radius: 14px !important;
+        box-shadow: 0 8px 24px rgba(61,43,22,.05) !important;
+    }
+
+    .seller-report-products-section > div:first-child,
+    .seller-report-financial-section > div:first-child {
+        padding: 12px 14px !important;
+    }
+
+    .seller-report-products-section > div:first-child h2,
+    .seller-report-financial-section > div:first-child h2 {
+        font-size: 15px !important;
+    }
+
+    .seller-report-products-section > div:first-child p,
+    .seller-report-financial-section > div:first-child p {
+        margin-top: 3px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-report-products-section > div:nth-child(2) {
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+
+    .seller-report-products-section article {
+        border-radius: 11px !important;
+        padding: 10px !important;
+    }
+
+    .seller-report-financial-section table th {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+        font-size: 8px !important;
+    }
+
+    .seller-report-financial-section table td {
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    @media (max-width: 1279px) {
+        .seller-report-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .seller-report-kpi-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-report-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .seller-report-header-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .seller-report-order-strip {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .seller-report-order-stat:nth-child(2) {
+            border-right: 0;
+        }
+
+        .seller-report-order-stat:nth-child(-n+2) {
+            border-bottom: 1px solid #eee8df;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-report-title {
+            font-size: 24px;
+        }
+
+        .seller-report-header-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .seller-report-filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .seller-report-kpi-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .seller-report-order-strip {
+            grid-template-columns: 1fr;
+        }
+
+        .seller-report-order-stat {
+            border-right: 0;
+            border-bottom: 1px solid #eee8df;
+        }
+
+        .seller-report-order-stat:last-child {
+            border-bottom: 0;
+        }
     }
 
     @media print {
@@ -113,87 +584,34 @@
         }
 
         .seller-report-card,
-        .seller-report-print-section {
+        .seller-report-print-section,
+        .seller-report-panel,
+        .seller-report-order-strip {
             box-shadow: none !important;
             break-inside: avoid;
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .seller-report-skeleton-block {
-            animation: none !important;
-        }
-
-        .seller-report-card {
+        .seller-report-card,
+        .seller-report-table-row,
+        .seller-report-header-button,
+        .seller-report-generate {
             transition: none !important;
         }
     }
 </style>
+@endpush
 
-<div id="sellerReportStage" class="seller-report-page mx-auto w-full max-w-[1800px]">
-
-    {{-- SIMPLE SKELETON — NO SHIMMER --}}
-    <div id="sellerReportSkeleton" aria-hidden="true">
-        <section class="flex items-end justify-between gap-4 px-1">
-            <div class="flex items-center gap-3">
-                <span class="seller-report-skeleton-block h-12 w-12 rounded-[14px]"></span>
-                <div>
-                    <span class="seller-report-skeleton-block h-8 w-[280px] rounded-[10px]"></span>
-                    <span class="seller-report-skeleton-block mt-2.5 h-3 w-[430px] max-w-[70vw] rounded-full"></span>
-                </div>
-            </div>
-            <div class="hidden gap-2 sm:flex">
-                <span class="seller-report-skeleton-block h-11 w-[125px] rounded-[10px]"></span>
-                <span class="seller-report-skeleton-block h-11 w-[110px] rounded-[10px]"></span>
-            </div>
-        </section>
-
-        <section class="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
-            @for ($i = 0; $i < 4; $i++)
-                <div class="rounded-[17px] border border-[#ebe5dc] bg-white px-4 py-5">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="seller-report-skeleton-block h-3 w-[100px] rounded-full"></span>
-                            <span class="seller-report-skeleton-block mt-3 h-8 w-[115px] rounded-[8px]"></span>
-                            <span class="seller-report-skeleton-block mt-4 h-2.5 w-[135px] rounded-full"></span>
-                        </div>
-                        <span class="seller-report-skeleton-block h-11 w-11 rounded-[12px]"></span>
-                    </div>
-                </div>
-            @endfor
-        </section>
-
-        <section class="mt-4 rounded-[20px] border border-[#ebe5dc] bg-white p-5">
-            <div class="grid grid-cols-1 gap-3 xl:grid-cols-[1fr_1fr_180px_130px]">
-                @for ($i = 0; $i < 4; $i++)
-                    <span class="seller-report-skeleton-block h-12 rounded-[11px]"></span>
-                @endfor
-            </div>
-        </section>
-
-        <section class="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.3fr_.7fr]">
-            <div class="rounded-[20px] border border-[#ebe5dc] bg-white p-5">
-                <span class="seller-report-skeleton-block h-5 w-[180px] rounded-full"></span>
-                <span class="seller-report-skeleton-block mt-4 h-[260px] w-full rounded-[14px]"></span>
-            </div>
-            <div class="rounded-[20px] border border-[#ebe5dc] bg-white p-5">
-                <span class="seller-report-skeleton-block h-5 w-[180px] rounded-full"></span>
-                <div class="mt-4 space-y-3">
-                    @for ($i = 0; $i < 4; $i++)
-                        <span class="seller-report-skeleton-block h-16 w-full rounded-[12px]"></span>
-                    @endfor
-                </div>
-            </div>
-        </section>
-    </div>
+<div id="sellerReportStage" class="seller-report-page">
 
     <div id="sellerReportContent">
 
-        {{-- HEADER — ORDER PAGE STYLE --}}
-        <section class="seller-report-no-print flex flex-col gap-4 px-1 pt-1 lg:flex-row lg:items-end lg:justify-between">
-            <div class="flex items-center gap-3">
-                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] border border-[#eadfc9] bg-[#fffaf2] text-[#bd8011]">
-                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+        {{-- HEADER — MATCHED TO ORDER MANAGEMENT --}}
+        <section class="seller-report-no-print seller-report-header">
+            <div class="seller-report-heading">
+                <span class="seller-report-heading-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M4 20h16"></path>
                         <path d="M7 17v-5"></path>
                         <path d="M12 17V8"></path>
@@ -201,24 +619,20 @@
                     </svg>
                 </span>
 
-                <div>
-                    <h1 class="text-[32px] font-semibold leading-none tracking-[-.045em] sm:text-[36px]">
-                        <span class="text-[#1f1b17]">Seller</span>
-                        <span class="text-[#d39116]">Reports</span>
+                <div class="min-w-0">
+                    <p class="seller-report-eyebrow">REPORTING & ANALYTICS</p>
+                    <h1 class="seller-report-title">
+                        <span>Seller</span><span class="seller-report-title-accent">Reports</span>
                     </h1>
-
-                    <p class="mt-2 text-[10.5px] font-normal text-[#887f75]">
-                        Real sales, commission, orders, and product performance from your marketplace records.
+                    <p class="seller-report-subtitle">
+                        Review sales, commission, orders, and product performance from real marketplace records.
                     </p>
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-2">
-                <a
-                    href="{{ $downloadUrl }}"
-                    class="inline-flex h-11 items-center gap-2 rounded-[11px] border border-[#e4ddd3] bg-white px-4 text-[9.5px] font-medium text-[#62594f] transition hover:border-[#d4c1a3] hover:bg-[#fffdf8] hover:text-[#996815]"
-                >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+            <div class="seller-report-header-actions">
+                <a href="{{ $downloadUrl }}" class="seller-report-header-button seller-report-header-button--secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M12 3v12"></path>
                         <path d="m7 10 5 5 5-5"></path>
                         <path d="M5 21h14"></path>
@@ -229,9 +643,9 @@
                 <button
                     id="printSellerReport"
                     type="button"
-                    class="inline-flex h-11 items-center gap-2 rounded-[11px] bg-[#d89412] px-4 text-[9.5px] font-medium text-white transition hover:bg-[#c9870f]"
+                    class="seller-report-header-button seller-report-header-button--primary"
                 >
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M6 9V3h12v6"></path>
                         <path d="M6 18H4V9h16v9h-2"></path>
                         <path d="M7 14h10v7H7z"></path>
@@ -241,63 +655,50 @@
             </div>
         </section>
 
-        {{-- FILTERS --}}
-        <section class="seller-report-no-print mt-5 rounded-[20px] border border-[#e9e2d9] bg-white px-5 py-5 shadow-[0_8px_25px_rgba(47,37,25,.025)]">
-            <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-                <div>
-                    <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Report Period</h2>
-                    <p class="mt-1 text-[10.5px] font-normal text-[#887f75]">
-                        Generate the report using real order records from your selected date range.
-                    </p>
+        {{-- FILTERS — COMPACT CONTROL BAR --}}
+        <section class="seller-report-no-print seller-report-filter-panel">
+            <form
+                id="sellerReportFilterForm"
+                method="GET"
+                action="{{ route('seller.reports') }}"
+                class="seller-report-filter-grid"
+            >
+                <div class="seller-report-filter-field">
+                    <label for="reportFromDate">From Date</label>
+                    <input
+                        id="reportFromDate"
+                        name="from"
+                        type="date"
+                        value="{{ $from->format('Y-m-d') }}"
+                    >
                 </div>
 
-                <form id="sellerReportFilterForm" method="GET" action="{{ route('seller.reports') }}" class="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 xl:w-auto xl:grid-cols-[180px_180px_180px_130px]">
-                    <div>
-                        <label class="mb-1.5 block text-[9px] font-medium text-[#6b6259]">From Date</label>
-                        <input
-                            id="reportFromDate"
-                            name="from"
-                            type="date"
-                            value="{{ $from->format('Y-m-d') }}"
-                            class="h-12 w-full rounded-[11px] border border-[#e3dbd0] bg-white px-3 text-[10.5px] text-[#3d3730] outline-none focus:border-[#d4b069] focus:ring-4 focus:ring-[#d89a19]/[.07]"
-                        >
-                    </div>
+                <div class="seller-report-filter-field">
+                    <label for="reportToDate">To Date</label>
+                    <input
+                        id="reportToDate"
+                        name="to"
+                        type="date"
+                        value="{{ $to->format('Y-m-d') }}"
+                    >
+                </div>
 
-                    <div>
-                        <label class="mb-1.5 block text-[9px] font-medium text-[#6b6259]">To Date</label>
-                        <input
-                            id="reportToDate"
-                            name="to"
-                            type="date"
-                            value="{{ $to->format('Y-m-d') }}"
-                            class="h-12 w-full rounded-[11px] border border-[#e3dbd0] bg-white px-3 text-[10.5px] text-[#3d3730] outline-none focus:border-[#d4b069] focus:ring-4 focus:ring-[#d89a19]/[.07]"
-                        >
-                    </div>
+                <div class="seller-report-filter-field">
+                    <label for="reportType">Report Type</label>
+                    <select name="type" id="reportType">
+                        <option value="all" @selected($reportType === 'all')>All Reports</option>
+                        <option value="sales" @selected($reportType === 'sales')>Sales Report</option>
+                        <option value="financial" @selected($reportType === 'financial')>Financial Report</option>
+                        <option value="orders" @selected($reportType === 'orders')>Order Performance</option>
+                        <option value="products" @selected($reportType === 'products')>Product Performance</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label class="mb-1.5 block text-[9px] font-medium text-[#6b6259]">Report Type</label>
-                        <select
-                            name="type"
-                            id="reportType"
-                            class="h-12 w-full rounded-[11px] border border-[#e3dbd0] bg-white px-3 text-[10.5px] font-medium text-[#4f473f] outline-none focus:border-[#d4b069] focus:ring-4 focus:ring-[#d89a19]/[.07]"
-                        >
-                            <option value="all" @selected($reportType === 'all')>All Reports</option>
-                            <option value="sales" @selected($reportType === 'sales')>Sales Report</option>
-                            <option value="financial" @selected($reportType === 'financial')>Financial Report</option>
-                            <option value="orders" @selected($reportType === 'orders')>Order Performance</option>
-                            <option value="products" @selected($reportType === 'products')>Product Performance</option>
-                        </select>
-                    </div>
+                <button type="submit" class="seller-report-generate">Generate</button>
+            </form>
 
-                    <div class="flex items-end">
-                        <button class="h-12 w-full rounded-[11px] bg-[#d89412] px-4 text-[10px] font-medium text-white transition hover:bg-[#c9870f]">
-                            Generate
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mt-4 flex flex-wrap gap-2 border-t border-[#eee8df] pt-4">
+            <div class="seller-report-ranges">
+                <span>Quick range</span>
                 @foreach ([
                     'today' => 'Today',
                     '7days' => 'Last 7 Days',
@@ -305,20 +706,16 @@
                     'month' => 'This Month',
                     'year' => 'This Year',
                 ] as $range => $label)
-                    <button
-                        type="button"
-                        data-report-range="{{ $range }}"
-                        class="rounded-full border border-[#e4ddd3] bg-white px-3.5 py-2 text-[9px] font-medium text-[#756d62] transition hover:border-[#d9c395] hover:bg-[#fffaf2]"
-                    >
+                    <button type="button" data-report-range="{{ $range }}">
                         {{ $label }}
                     </button>
                 @endforeach
             </div>
         </section>
 
-        {{-- KPI CARDS --}}
-        <section class="seller-report-print-section mt-4 grid grid-cols-2 gap-3 xl:grid-cols-4">
-            @if ($showSales)
+        {{-- SALES / FINANCIAL KPI METRICS --}}
+        @if ($showSales)
+            <section class="seller-report-print-section seller-report-kpi-grid">
                 <article class="seller-report-card rounded-[17px] border border-[#d4e6db] bg-white px-4 py-5 sm:px-5">
                     <div class="flex items-start justify-between gap-3">
                         <div>
@@ -398,42 +795,18 @@
                         </span>
                     </div>
                 </article>
-            @endif
-
-            @if ($showOrders && !$showSales)
-                @foreach ([
-                    ['Total Orders', $summary['total_orders'], 'All orders in selected period', '#d8e4f0', '#f0f6fb', '#4e80aa'],
-                    ['Delivered', $summary['completed_orders'], 'Completed marketplace orders', '#d4e6db', '#f1f8f4', '#4f7d63'],
-                    ['Active Orders', $summary['active_orders'], 'Still in fulfillment flow', '#eadbbd', '#fff7e9', '#b77c16'],
-                    ['Cancelled', $summary['cancelled_orders'], 'Cancelled during selected period', '#efd2d2', '#fff6f6', '#aa5a5a'],
-                ] as [$label, $value, $desc, $border, $bg, $icon])
-                    <article class="seller-report-card rounded-[17px] border bg-white px-4 py-5 sm:px-5" style="border-color:{{ $border }}">
-                        <div class="flex items-start justify-between gap-3">
-                            <div>
-                                <p class="text-[11px] font-medium text-[#5f574f]">{{ $label }}</p>
-                                <p class="mt-2.5 text-[31px] font-semibold tracking-[-.04em] text-[#211d18]">{{ $value }}</p>
-                                <p class="mt-3 text-[9.5px] text-[#8f867c]">{{ $desc }}</p>
-                            </div>
-                            <span class="grid h-11 w-11 place-items-center rounded-[12px]" style="background:{{ $bg }};color:{{ $icon }}">
-                                <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <circle cx="12" cy="12" r="8"></circle>
-                                    <path d="m8 12 2.5 2.5L16 9"></path>
-                                </svg>
-                            </span>
-                        </div>
-                    </article>
-                @endforeach
-            @endif
-        </section>
+            
+            </section>
+        @endif
 
         @if ($showSales)
             {{-- CHART + PERFORMANCE --}}
-            <section class="seller-report-print-section mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.3fr_.7fr]">
-                <div class="rounded-[20px] border border-[#e9e2d9] bg-white p-5 shadow-[0_8px_25px_rgba(47,37,25,.025)]">
+            <section class="seller-report-print-section seller-report-analysis-grid grid grid-cols-1 xl:grid-cols-[1.3fr_.7fr]">
+                <div class="seller-report-panel rounded-[14px] border bg-white p-4">
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div>
-                            <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Sales & Revenue Trend</h2>
-                            <p class="mt-1 text-[10.5px] text-[#887f75]">
+                            <h2 class="seller-report-panel-heading text-[#24201b]">Sales & Revenue Trend</h2>
+                            <p class="seller-report-panel-subtitle text-[#887f75]">
                                 Delivered merchandise sales from {{ $from->format('M d, Y') }} to {{ $to->format('M d, Y') }}.
                             </p>
                         </div>
@@ -447,7 +820,7 @@
                         <svg
                             id="sellerReportChart"
                             viewBox="0 0 860 310"
-                            class="block h-[300px] min-w-[700px] w-full"
+                            class="block h-[238px] min-w-[700px] w-full"
                             preserveAspectRatio="xMidYMid meet"
                             aria-label="Seller report sales chart"
                         >
@@ -475,9 +848,9 @@
                     </div>
                 </div>
 
-                <div class="rounded-[20px] border border-[#e9e2d9] bg-white p-5 shadow-[0_8px_25px_rgba(47,37,25,.025)]">
-                    <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Performance Summary</h2>
-                    <p class="mt-1 text-[10.5px] text-[#887f75]">Calculated from real seller order records.</p>
+                <div class="seller-report-panel rounded-[14px] border bg-white p-4">
+                    <h2 class="seller-report-panel-heading text-[#24201b]">Performance Summary</h2>
+                    <p class="seller-report-panel-subtitle text-[#887f75]">Calculated from real seller order records.</p>
 
                     <div class="mt-4 space-y-3">
                         @foreach ([
@@ -518,7 +891,7 @@
 
         @if ($showProducts)
             {{-- TOP PRODUCTS --}}
-            <section class="seller-report-print-section mt-4 overflow-hidden rounded-[20px] border border-[#e9e2d9] bg-white shadow-[0_8px_25px_rgba(47,37,25,.025)]">
+            <section class="seller-report-print-section seller-report-products-section overflow-hidden border border-[#e9e2d9] bg-white">
                 <div class="border-b border-[#eee8df] px-5 py-5">
                     <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Top Selling Products</h2>
                     <p class="mt-1 text-[10.5px] text-[#887f75]">Ranked using real quantities and line totals from delivered order snapshots.</p>
@@ -551,26 +924,79 @@
         @endif
 
         @if ($showOrders)
-            {{-- ORDER BREAKDOWN --}}
-            <section class="seller-report-print-section mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-                @foreach ([
-                    ['Total Orders', $summary['total_orders'], 'All orders', '#d8e4f0', '#4e80aa'],
-                    ['Delivered', $summary['completed_orders'], 'Completed', '#d4e6db', '#4f7d63'],
-                    ['Active', $summary['active_orders'], 'In fulfillment', '#eadbbd', '#b77c16'],
-                    ['Cancelled', $summary['cancelled_orders'], 'Cancelled', '#efd2d2', '#aa5a5a'],
-                ] as [$label, $value, $desc, $border, $color])
-                    <article class="rounded-[15px] border bg-white p-4" style="border-color:{{ $border }}">
-                        <p class="text-[10px] font-medium text-[#5f574f]">{{ $label }}</p>
-                        <p class="mt-2 text-[24px] font-semibold tracking-[-.04em]" style="color:{{ $color }}">{{ $value }}</p>
-                        <p class="mt-2 text-[9px] text-[#91887d]">{{ $desc }}</p>
-                    </article>
-                @endforeach
+            {{-- ORDER STATUS OVERVIEW — compact strip, not summary cards --}}
+            <section class="seller-report-print-section seller-report-order-strip" aria-label="Order status overview">
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#f0f6fb] text-[#4e80aa]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="M12 8v5l3 2"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Total Orders</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['total_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">All orders</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#f1f8f4] text-[#4f7d63]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="m8 12 2.5 2.5L16 9"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Delivered</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['completed_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#fff7e9] text-[#b77c16]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M4 6h16v13H4z"></path>
+                            <path d="M8 6V4h8v2"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Active</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['active_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">In fulfillment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller-report-order-stat">
+                    <span class="seller-report-order-stat-icon bg-[#fff6f6] text-[#aa5a5a]">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="8"></circle>
+                            <path d="m9 9 6 6"></path>
+                            <path d="m15 9-6 6"></path>
+                        </svg>
+                    </span>
+                    <div class="seller-report-order-stat-copy">
+                        <p class="seller-report-order-stat-label">Cancelled</p>
+                        <div>
+                            <strong class="seller-report-order-stat-value">{{ $summary['cancelled_orders'] }}</strong>
+                            <span class="seller-report-order-stat-desc">Cancelled</span>
+                        </div>
+                    </div>
+                </div>
             </section>
         @endif
 
         {{-- FINANCIAL / ORDER TRANSACTIONS --}}
         @if ($reportType !== 'products')
-            <section class="seller-report-print-section mt-4 overflow-hidden rounded-[20px] border border-[#e9e2d9] bg-white shadow-[0_8px_25px_rgba(47,37,25,.025)]">
+            <section class="seller-report-print-section seller-report-financial-section overflow-hidden border border-[#e9e2d9] bg-white">
                 <div class="flex flex-col gap-3 border-b border-[#eee8df] px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Financial Breakdown</h2>
@@ -620,7 +1046,6 @@
             </section>
         @endif
 
-        <div class="h-5"></div>
     </div>
 </div>
 @endsection
@@ -639,7 +1064,6 @@
     window.SariSellerReportPage = {
         chartData: @json($chart),
         abortController: null,
-        slowLoadingTimer: null,
 
         reset() {
             if (this.abortController) {
@@ -648,11 +1072,6 @@
 
             this.abortController = new AbortController();
 
-            window.clearTimeout(this.slowLoadingTimer);
-            this.slowLoadingTimer = null;
-
-            document.getElementById('sellerReportStage')
-                ?.classList.remove('is-slow-loading');
         },
 
         init() {
@@ -677,17 +1096,6 @@
 
                 const params = new URLSearchParams(new FormData(form));
                 const url = `${form.action}?${params.toString()}`;
-
-                /*
-                | Keep the current report visible while the next one is being
-                | prepared. Only show the skeleton if the request is actually
-                | slower than 140ms — fast navigations never flash a loader.
-                */
-                window.clearTimeout(this.slowLoadingTimer);
-                this.slowLoadingTimer = window.setTimeout(() => {
-                    document.getElementById('sellerReportStage')
-                        ?.classList.add('is-slow-loading');
-                }, 140);
 
                 if (generateButton) {
                     generateButton.disabled = true;
@@ -995,12 +1403,10 @@
     | evaluated again after navigation.
     */
     if (!window.__SARI_REPORT_LIFECYCLE_BOUND__) {
+        /* The page script itself runs on arrival. Keep only the persistent
+           cleanup hook; otherwise Reports initializes twice per visit. */
         document.addEventListener('livewire:navigating', () => {
             window.SariSellerReportPage?.reset();
-        });
-
-        document.addEventListener('livewire:navigated', () => {
-            window.SariSellerReportPage?.init();
         });
 
         window.__SARI_REPORT_LIFECYCLE_BOUND__ = true;

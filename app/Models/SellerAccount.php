@@ -11,6 +11,11 @@ class SellerAccount extends Model
     protected $fillable = [
         'email',
         'store_name',
+        'store_description',
+        'store_phone',
+        'store_public_email',
+        'store_status',
+        'pickup_instructions',
         'warning_count',
         'account_status',
         'suspended_at',
@@ -55,6 +60,21 @@ class SellerAccount extends Model
     public function settlements(): HasMany
     {
         return $this->hasMany(SellerSettlement::class, 'seller_account_id');
+    }
+
+    public function vouchers(): HasMany
+    {
+        return $this->hasMany(SellerVoucher::class, 'seller_account_id');
+    }
+
+    public function returnRequests(): HasMany
+    {
+        return $this->hasMany(SellerReturnRequest::class, 'seller_account_id');
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(SellerNotification::class, 'seller_account_id');
     }
 
     public function ensureRealtimeToken(): string

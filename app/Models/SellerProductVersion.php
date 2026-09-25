@@ -19,6 +19,7 @@ class SellerProductVersion extends Model
         'stock',
         'low_stock_threshold',
         'discount',
+        'flash_sale_ends_at',
         'free_shipping',
         'package_weight',
         'package_length',
@@ -45,6 +46,7 @@ class SellerProductVersion extends Model
         return [
             'price' => 'decimal:2',
             'discount' => 'decimal:2',
+            'flash_sale_ends_at' => 'datetime',
             'free_shipping' => 'boolean',
             'package_weight' => 'decimal:3',
             'package_length' => 'decimal:2',

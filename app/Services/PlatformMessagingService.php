@@ -2,21 +2,30 @@
 
 namespace App\Services;
 
+use App\Events\PlatformMessageReactionUpdated;
+use App\Events\PlatformMessageSent;
+use App\Jobs\SendSariAdminAssistantReply;
 use App\Models\AdminAccount;
 use App\Models\BuyerAccount;
+use App\Models\ChatMessage;
 use App\Models\CourierAccount;
 use App\Models\LogisticsAccount;
 use App\Models\PlatformComplaint;
 use App\Models\PlatformConversation;
 use App\Models\PlatformConversationParticipant;
 use App\Models\PlatformMessage;
+use App\Models\PlatformMessageReaction;
 use App\Models\SellerAccount;
+use App\Models\SellerChatRestriction;
 use App\Models\SocialAccount;
 use App\Support\CurrentMessagingActor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -29,6 +38,15 @@ class PlatformMessagingService
         'seller',
         'rider',
         'logistics',
+    ];
+
+    public const REACTION_EMOJIS = [
+        '👍',
+        '❤️',
+        '😂',
+        '😮',
+        '😢',
+        '🙏',
     ];
 
     /**
@@ -218,6 +236,98 @@ class PlatformMessagingService
     }
 
     /**
+     * Opens the dedicated SARI Admin support thread for the current non-admin
+     * account. This is different from a normal direct conversation: it is the
+     * official support channel used by each role's Messages page.
+     */
+    public function openAdminSupportConversation(
+        Request $request
+    ): PlatformConversation {
+        $actor = CurrentMessagingActor::resolve($request);
+
+        abort_if(
+            $actor['role'] === 'admin',
+            422,
+            'Admin accounts do not need to open an Admin support conversation.'
+        );
+
+        $admins = AdminAccount::query()
+            ->orderBy('id')
+            ->get();
+
+        abort_if(
+            $admins->isEmpty(),
+            422,
+            'No SARI Administrator account is currently available for support.'
+        );
+
+        return DB::transaction(function () use (
+            $actor,
+            $admins
+        ): PlatformConversation {
+            $conversation = PlatformConversation::query()
+                ->firstOrCreate(
+                    [
+                        'dedupe_key' => sprintf(
+                            'admin-support:%s:%d',
+                            $actor['role'],
+                            $actor['id']
+                        ),
+                    ],
+                    [
+                        'uuid' => (string) Str::uuid(),
+                        'conversation_type' => 'admin_support',
+                        'context_type' => 'account_support',
+                        'context_id' => $actor['id'],
+                        'subject' => 'SARI Support · ' . $actor['name'],
+                        'status' => 'active',
+                        'created_by_role' => $actor['role'],
+                        'created_by_id' => $actor['id'],
+                    ]
+                );
+
+            $this->ensureParticipant(
+                $conversation,
+                $actor['role'],
+                $actor['id']
+            );
+
+            foreach ($admins as $admin) {
+                $this->ensureParticipant(
+                    $conversation,
+                    'admin',
+                    (int) $admin->id
+                );
+            }
+
+            // Seller is the first role being migrated to the universal inbox.
+            // Import the old Seller <-> Admin history once so the Seller does
+            // not suddenly lose prior support messages after the switch.
+            if ($actor['role'] === 'seller') {
+                $hasImportedLegacyHistory = PlatformMessage::query()
+                    ->where('platform_conversation_id', $conversation->id)
+                    ->where('legacy_source', 'seller_admin_chat')
+                    ->exists();
+
+                // Legacy history is a one-time migration bridge. Do not replay
+                // the old table scan every time the Seller opens Messages.
+                if (!$hasImportedLegacyHistory) {
+                    $this->importLegacySellerAdminMessages(
+                        $conversation,
+                        (int) $actor['id'],
+                        (int) $admins->first()->id
+                    );
+                }
+            }
+
+            return $conversation->fresh([
+                'participants',
+                'latestMessage',
+            ]);
+        });
+    }
+
+    /**
      * Creates/opens a report-gated Admin support thread.
      *
      * Non-admin users may only open a support conversation for a report that
@@ -312,6 +422,7 @@ class PlatformMessagingService
         );
 
         $messages = PlatformMessage::query()
+            ->with('reactions')
             ->where(
                 'platform_conversation_id',
                 $conversation->id
@@ -343,7 +454,7 @@ class PlatformMessagingService
                 ->values(),
             'messages' => $messages->map(
                 fn (PlatformMessage $message): array =>
-                    $this->messagePayload($message)
+                    $this->messagePayload($message, $actor)
             ),
             'read_state' => [
                 'last_read_message_id' =>
@@ -355,7 +466,8 @@ class PlatformMessagingService
     public function send(
         Request $request,
         PlatformConversation $conversation,
-        string $body
+        ?string $body,
+        ?UploadedFile $attachment = null
     ): PlatformMessage {
         $actor = CurrentMessagingActor::resolve($request);
 
@@ -372,46 +484,134 @@ class PlatformMessagingService
 
         $this->assertActorCanSend($actor);
 
-        $body = trim($body);
+        $body = trim((string) $body);
 
-        if ($body === '') {
+        if ($body === '' && !$attachment) {
             throw ValidationException::withMessages([
-                'body' => 'A message is required.',
+                'body' => 'Write a message or attach a file.',
             ]);
         }
 
-        return DB::transaction(function () use (
-            $conversation,
-            $actor,
-            $body
-        ): PlatformMessage {
-            $message = PlatformMessage::query()->create([
-                'platform_conversation_id' => $conversation->id,
-                'sender_role' => $actor['role'],
-                'sender_id' => $actor['id'],
-                'message_type' => 'text',
-                'body' => $body,
-            ]);
+        $attachmentData = null;
 
-            $conversation->forceFill([
-                'last_message_at' => $message->created_at,
-            ])->save();
+        if ($attachment) {
+            $originalName = trim((string) $attachment->getClientOriginalName())
+                ?: 'attachment';
+            $extension = strtolower((string) $attachment->getClientOriginalExtension());
+            $storedName = (string) Str::uuid()
+                . ($extension !== '' ? '.' . $extension : '');
+            $directory = 'platform-messaging/' . $conversation->uuid;
+            $path = $attachment->storeAs(
+                $directory,
+                $storedName,
+                'local'
+            );
 
-            PlatformConversationParticipant::query()
-                ->where(
-                    'platform_conversation_id',
-                    $conversation->id
-                )
-                ->where('participant_role', $actor['role'])
-                ->where('participant_id', $actor['id'])
-                ->whereNull('left_at')
-                ->update([
-                    'last_read_message_id' => $message->id,
-                    'updated_at' => now(),
+            if (!$path) {
+                throw ValidationException::withMessages([
+                    'attachment' => 'The attachment could not be stored.',
+                ]);
+            }
+
+            $attachmentData = [
+                'path' => $path,
+                'name' => Str::limit($originalName, 190, ''),
+                'mime' => $attachment->getMimeType() ?: 'application/octet-stream',
+                'size' => (int) $attachment->getSize(),
+            ];
+        }
+
+        try {
+            $message = DB::transaction(function () use (
+                $conversation,
+                $actor,
+                $body,
+                $attachmentData
+            ): PlatformMessage {
+                $mime = (string) ($attachmentData['mime'] ?? '');
+                $messageType = $attachmentData
+                    ? (str_starts_with($mime, 'image/') ? 'image' : 'attachment')
+                    : 'text';
+
+                $message = PlatformMessage::query()->create([
+                    'platform_conversation_id' => $conversation->id,
+                    'sender_role' => $actor['role'],
+                    'sender_id' => $actor['id'],
+                    'message_type' => $messageType,
+                    'body' => $body !== '' ? $body : null,
+                    'attachment_path' => $attachmentData['path'] ?? null,
+                    'attachment_name' => $attachmentData['name'] ?? null,
+                    'attachment_mime' => $attachmentData['mime'] ?? null,
+                    'attachment_size' => $attachmentData['size'] ?? null,
                 ]);
 
-            return $message->fresh();
-        });
+                $conversation->forceFill([
+                    'last_message_at' => $message->created_at,
+                ])->save();
+
+                PlatformConversationParticipant::query()
+                    ->where(
+                        'platform_conversation_id',
+                        $conversation->id
+                    )
+                    ->where('participant_role', $actor['role'])
+                    ->where('participant_id', $actor['id'])
+                    ->whereNull('left_at')
+                    ->update([
+                        'last_read_message_id' => $message->id,
+                        'updated_at' => now(),
+                    ]);
+
+                return $message->fresh();
+            });
+        } catch (\Throwable $e) {
+            if ($attachmentData && isset($attachmentData['path'])) {
+                Storage::disk('local')->delete($attachmentData['path']);
+            }
+
+            throw $e;
+        }
+
+        $message->load(['conversation.participants', 'reactions']);
+
+        // Push the new message immediately to every active participant.
+        event(new PlatformMessageSent($message));
+
+        // AI cover is text-only. Attachment-only messages wait for a human
+        // Admin instead of asking the model to guess what a file contains.
+        if ($actor['role'] !== 'admin' && $body !== '') {
+            $hasAdminParticipant = $message->conversation
+                ?->participants
+                ->contains(
+                    fn (PlatformConversationParticipant $participant): bool =>
+                        $participant->participant_role === 'admin'
+                        && !$participant->left_at
+                ) ?? false;
+
+            if (
+                $hasAdminParticipant
+                && (bool) config('sari_assistant.enabled', true)
+            ) {
+                $assistantDelay = max(
+                    0,
+                    (int) config('sari_assistant.delay_seconds', 0)
+                );
+
+                $pendingAssistantReply = SendSariAdminAssistantReply::dispatch(
+                    $message->id
+                );
+
+                // Zero means immediate async processing by the queue worker.
+                // An optional delay can still be configured explicitly.
+                if ($assistantDelay > 0) {
+                    $pendingAssistantReply->delay(
+                        now()->addSeconds($assistantDelay)
+                    );
+                }
+            }
+        }
+
+        return $message;
     }
 
     public function markRead(
@@ -446,8 +646,35 @@ class PlatformMessagingService
      * @return array<string,mixed>
      */
     public function messagePayload(
-        PlatformMessage $message
+        PlatformMessage $message,
+        ?array $actor = null
     ): array {
+        $reactionRows = $message->relationLoaded('reactions')
+            ? $message->reactions
+            : collect();
+
+        $reactions = $reactionRows
+            ->groupBy('emoji')
+            ->map(function ($rows, string $emoji) use ($actor): array {
+                $mine = false;
+
+                if ($actor) {
+                    $mine = $rows->contains(
+                        fn (PlatformMessageReaction $reaction): bool =>
+                            $reaction->reactor_role === $actor['role']
+                            && (int) $reaction->reactor_id === (int) $actor['id']
+                    );
+                }
+
+                return [
+                    'emoji' => $emoji,
+                    'count' => $rows->count(),
+                    'mine' => $mine,
+                ];
+            })
+            ->values()
+            ->all();
+
         return [
             'id' => $message->id,
             'conversation_id' =>
@@ -462,17 +689,127 @@ class PlatformMessagingService
             'body' => $message->body,
             'attachment' => $message->attachment_path
                 ? [
-                    'path' => $message->attachment_path,
+                    'url' => route(
+                        'messaging.api.attachment',
+                        ['message' => $message->id]
+                    ),
+                    'download_url' => route(
+                        'messaging.api.attachment',
+                        ['message' => $message->id, 'download' => 1]
+                    ),
                     'name' => $message->attachment_name,
                     'mime' => $message->attachment_mime,
                     'size' => $message->attachment_size,
+                    'is_image' => str_starts_with(
+                        (string) $message->attachment_mime,
+                        'image/'
+                    ),
                 ]
                 : null,
+            'reactions' => $reactions,
             'metadata' => $message->metadata,
             'edited_at' =>
                 $message->edited_at?->toIso8601String(),
             'created_at' =>
                 $message->created_at?->toIso8601String(),
+        ];
+    }
+
+    public function messagePayloadForRequest(
+        Request $request,
+        PlatformMessage $message
+    ): array {
+        $actor = CurrentMessagingActor::resolve($request);
+        $message->loadMissing('reactions');
+
+        return $this->messagePayload($message, $actor);
+    }
+
+    public function assertCanAccessMessage(
+        Request $request,
+        PlatformMessage $message
+    ): PlatformConversationParticipant {
+        $actor = CurrentMessagingActor::resolve($request);
+        $conversation = $message->conversation()->firstOrFail();
+
+        abort_if(
+            $message->deleted_at !== null,
+            404,
+            'Message not found.'
+        );
+
+        return $this->assertParticipant(
+            $conversation,
+            $actor
+        );
+    }
+
+    /**
+     * Toggle one reaction per participant per message.
+     * Selecting the same emoji again removes the reaction.
+     *
+     * @return array<string,mixed>
+     */
+    public function toggleReaction(
+        Request $request,
+        PlatformMessage $message,
+        string $emoji
+    ): array {
+        $actor = CurrentMessagingActor::resolve($request);
+        $conversation = $message->conversation()->firstOrFail();
+
+        $this->assertParticipant(
+            $conversation,
+            $actor
+        );
+
+        abort_if(
+            $message->deleted_at !== null,
+            404,
+            'Message not found.'
+        );
+
+        abort_unless(
+            in_array($emoji, self::REACTION_EMOJIS, true),
+            422,
+            'Unsupported reaction.'
+        );
+
+        DB::transaction(function () use ($message, $actor, $emoji): void {
+            $existing = PlatformMessageReaction::query()
+                ->where('platform_message_id', $message->id)
+                ->where('reactor_role', $actor['role'])
+                ->where('reactor_id', $actor['id'])
+                ->first();
+
+            if ($existing && $existing->emoji === $emoji) {
+                $existing->delete();
+                return;
+            }
+
+            PlatformMessageReaction::query()->updateOrCreate(
+                [
+                    'platform_message_id' => $message->id,
+                    'reactor_role' => $actor['role'],
+                    'reactor_id' => $actor['id'],
+                ],
+                [
+                    'emoji' => $emoji,
+                ]
+            );
+        });
+
+        $message->load(['reactions', 'conversation.participants']);
+        $payload = $this->messagePayload($message, $actor);
+
+        event(new PlatformMessageReactionUpdated(
+            $message,
+            $payload['reactions']
+        ));
+
+        return [
+            'message_id' => $message->id,
+            'reactions' => $payload['reactions'],
         ];
     }
 
@@ -543,6 +880,77 @@ class PlatformMessagingService
         }
     }
 
+    private function importLegacySellerAdminMessages(
+        PlatformConversation $conversation,
+        int $sellerId,
+        int $adminId
+    ): void {
+        if (!Schema::hasTable('chat_messages')) {
+            return;
+        }
+
+        $legacyMessages = ChatMessage::query()
+            ->where('seller_account_id', $sellerId)
+            ->oldest('id')
+            ->get();
+
+        if ($legacyMessages->isEmpty()) {
+            return;
+        }
+
+        foreach ($legacyMessages->chunk(250) as $chunk) {
+            $rows = $chunk->map(function (ChatMessage $legacy) use (
+                $conversation,
+                $sellerId,
+                $adminId
+            ): array {
+                $mime = (string) ($legacy->attachment_mime ?? '');
+                $messageType = $legacy->attachment_path
+                    ? (str_starts_with($mime, 'image/') ? 'image' : 'attachment')
+                    : 'text';
+
+                return [
+                    'platform_conversation_id' => $conversation->id,
+                    'sender_role' => $legacy->sender_role === 'admin'
+                        ? 'admin'
+                        : 'seller',
+                    'sender_id' => $legacy->sender_role === 'admin'
+                        ? $adminId
+                        : $sellerId,
+                    'message_type' => $messageType,
+                    'body' => $legacy->body,
+                    'attachment_path' => $legacy->attachment_path,
+                    'attachment_name' => $legacy->attachment_name,
+                    'attachment_mime' => $legacy->attachment_mime,
+                    'attachment_size' => $legacy->attachment_size,
+                    'metadata' => json_encode([
+                        'migrated_from_legacy_seller_chat' => true,
+                    ]),
+                    'legacy_source' => 'seller_admin_chat',
+                    'legacy_id' => $legacy->id,
+                    'edited_at' => null,
+                    'deleted_at' => null,
+                    'created_at' => $legacy->created_at ?? now(),
+                    'updated_at' => $legacy->updated_at ?? $legacy->created_at ?? now(),
+                ];
+            })->all();
+
+            if ($rows !== []) {
+                DB::table('platform_messages')->insertOrIgnore($rows);
+            }
+        }
+
+        $lastMessageAt = PlatformMessage::query()
+            ->where('platform_conversation_id', $conversation->id)
+            ->max('created_at');
+
+        if ($lastMessageAt) {
+            $conversation->forceFill([
+                'last_message_at' => $lastMessageAt,
+            ])->save();
+        }
+    }
+
     /**
      * @param array<string,mixed> $target
      */
@@ -580,6 +988,22 @@ class PlatformMessagingService
     private function assertActorCanSend(
         array $actor
     ): void {
+        if (
+            $actor['role'] === 'seller'
+            && Schema::hasTable('seller_chat_restrictions')
+        ) {
+            $restriction = SellerChatRestriction::query()
+                ->where('seller_account_id', $actor['id'])
+                ->first();
+
+            abort_if(
+                (bool) ($restriction?->is_blocked),
+                423,
+                $restriction?->block_reason
+                    ?: 'SARI Admin has temporarily restricted this support conversation.'
+            );
+        }
+
         if (
             in_array(
                 $actor['role'],
@@ -628,7 +1052,7 @@ class PlatformMessagingService
             'You are not a participant in this conversation.'
         );
 
-        return $participant;
+        return $this->ensureRealtimeToken($participant);
     }
 
     private function ensureParticipant(
@@ -645,6 +1069,7 @@ class PlatformMessagingService
                     'participant_id' => $id,
                 ],
                 [
+                    'realtime_token' => Str::random(48),
                     'joined_at' => now(),
                 ]
             );
@@ -656,7 +1081,37 @@ class PlatformMessagingService
             ])->save();
         }
 
-        return $participant;
+        return $this->ensureRealtimeToken($participant);
+    }
+
+    private function ensureRealtimeToken(
+        PlatformConversationParticipant $participant
+    ): PlatformConversationParticipant {
+        if (filled($participant->realtime_token)) {
+            return $participant;
+        }
+
+        do {
+            $token = Str::random(48);
+        } while (
+            PlatformConversationParticipant::query()
+                ->where('realtime_token', $token)
+                ->exists()
+        );
+
+        $participant->forceFill([
+            'realtime_token' => $token,
+        ])->save();
+
+        return $participant->refresh();
+    }
+
+    private function realtimeChannel(
+        PlatformConversationParticipant $participant
+    ): string {
+        $participant = $this->ensureRealtimeToken($participant);
+
+        return 'sari.platform.participant.' . $participant->realtime_token;
     }
 
     /**
@@ -742,7 +1197,8 @@ class PlatformMessagingService
                                     ' ' .
                                     $account->last_name
                                 ),
-                                $account->email
+                                $account->email,
+                                strtolower((string) ($account->account_status ?: 'active'))
                             )
                     )
             )
@@ -756,7 +1212,8 @@ class PlatformMessagingService
                                 'social_buyer',
                                 $account->id,
                                 $account->name ?: 'Social Buyer',
-                                $account->email
+                                $account->email,
+                                strtolower((string) ($account->account_status ?: 'active'))
                             )
                     )
             )
@@ -771,7 +1228,8 @@ class PlatformMessagingService
                                 $account->id,
                                 $account->store_name
                                     ?: $account->email,
-                                $account->email
+                                $account->email,
+                                strtolower((string) ($account->account_status ?: 'active'))
                             )
                     )
             )
@@ -789,7 +1247,8 @@ class PlatformMessagingService
                                     ' ' .
                                     $account->last_name
                                 ),
-                                $account->email
+                                $account->email,
+                                strtolower((string) ($account->account_status ?: 'active'))
                             )
                     )
             )
@@ -803,7 +1262,8 @@ class PlatformMessagingService
                                 'logistics',
                                 $account->id,
                                 $this->logisticsName($account),
-                                $account->email
+                                $account->email,
+                                strtolower((string) ($account->account_status ?: 'active'))
                             )
                     )
             )
@@ -836,6 +1296,7 @@ class PlatformMessagingService
             );
 
         $socialBuyers = SocialAccount::query()
+            ->where('account_status', 'active')
             ->orderBy('name')
             ->get()
             ->map(
@@ -1219,7 +1680,7 @@ class PlatformMessagingService
         };
 
         $status = match ($role) {
-            'admin', 'social_buyer' => 'active',
+            'admin' => 'active',
             default => strtolower(
                 (string) (
                     $model->account_status
@@ -1296,13 +1757,15 @@ class PlatformMessagingService
         string $role,
         int $id,
         string $name,
-        ?string $email
+        ?string $email,
+        string $status = 'active'
     ): array {
         return [
             'role' => $role,
             'id' => $id,
             'name' => $name ?: ucfirst($role) . ' #' . $id,
             'email' => $email,
+            'status' => strtolower($status ?: 'active'),
         ];
     }
 
@@ -1377,6 +1840,9 @@ class PlatformMessagingService
                 $conversation->last_message_at?->toIso8601String(),
             'created_at' =>
                 $conversation->created_at?->toIso8601String(),
+            'realtime_channel' => $ownParticipant
+                ? $this->realtimeChannel($ownParticipant)
+                : null,
         ];
     }
 

@@ -4775,6 +4775,1335 @@
         }
     }
 
+
+    /* ============================================================
+       REGISTRATION V13 — FINAL 100% ZOOM SCALE
+       Authoritative visual sizing layer only.
+       Keeps all routes, fields, validation, OTP and JS untouched.
+       ============================================================ */
+
+    .sari-register-shell {
+        width: 100% !important;
+        max-width: 1040px !important;
+        padding-top: 14px !important;
+        padding-bottom: 18px !important;
+    }
+
+    .sari-register-shell > a[aria-label="Back to SARI home"] {
+        margin-bottom: 9px !important;
+    }
+
+    .sari-register-shell > a[aria-label="Back to SARI home"] img {
+        width: 118px !important;
+        filter: brightness(0) !important;
+    }
+
+    .sari-register-shell > a[aria-label="Back to SARI home"] span {
+        margin-top: 3px !important;
+        font-size: 7.5px !important;
+        letter-spacing: .18em !important;
+    }
+
+    .sari-register-card {
+        width: 100% !important;
+        max-width: 860px !important;
+        border-radius: 17px !important;
+        box-shadow: 0 14px 38px rgba(31, 27, 22, .075) !important;
+    }
+
+    /* Main card heading */
+    .sari-register-card > div:first-child {
+        padding: 16px 22px 14px !important;
+    }
+
+    .sari-register-card > div:first-child > p:first-child {
+        font-size: 7.5px !important;
+        letter-spacing: .14em !important;
+    }
+
+    .sari-register-card > div:first-child h1 {
+        margin-top: 5px !important;
+        font-size: clamp(24px, 2vw, 29px) !important;
+        line-height: 1.08 !important;
+    }
+
+    .sari-register-card > div:first-child > p:last-child {
+        max-width: 520px !important;
+        margin-top: 5px !important;
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Progress strip */
+    .sari-progress-wrap {
+        padding: 8px 22px 10px !important;
+    }
+
+    .sari-progress-title {
+        font-size: 9.5px !important;
+    }
+
+    .sari-progress-counter {
+        font-size: 8.5px !important;
+    }
+
+    .sari-progress-segments {
+        gap: 5px !important;
+        margin-top: 6px !important;
+    }
+
+    .sari-progress-segment {
+        height: 2.5px !important;
+    }
+
+    /* Main form area */
+    .sari-register-card > .px-5,
+    .sari-register-card > div.px-5 {
+        padding: 16px 22px 18px !important;
+    }
+
+    .sari-register-card [data-step] h2,
+    .sari-details-heading-clean h2,
+    .sari-document-step > h2 {
+        font-size: clamp(20px, 1.7vw, 23px) !important;
+        line-height: 1.18 !important;
+    }
+
+    .sari-register-card [data-step] > p,
+    .sari-register-card [data-step] .sari-step-copy,
+    .sari-role-stage > .text-center p {
+        margin-top: 4px !important;
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Role selection */
+    .sari-role-stage {
+        max-width: 680px !important;
+    }
+
+    .sari-role-stage > .mt-7 {
+        margin-top: 13px !important;
+    }
+
+    .sari-role-grid {
+        gap: 6px !important;
+    }
+
+    .sari-role-option {
+        min-height: 56px !important;
+        gap: 10px !important;
+        border-radius: 10px !important;
+        padding: 8px 11px !important;
+    }
+
+    .sari-role-check {
+        width: 19px !important;
+        height: 19px !important;
+        flex-basis: 19px !important;
+    }
+
+    .sari-role-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .sari-role-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .sari-role-name {
+        font-size: 12.5px !important;
+    }
+
+    .sari-role-description {
+        margin-top: 1px !important;
+        font-size: 9.5px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-role-arrow {
+        width: 23px !important;
+        height: 23px !important;
+    }
+
+    .sari-role-preview-wrap {
+        margin-top: 9px !important;
+        border-radius: 10px !important;
+    }
+
+    .sari-role-preview-wrap .sari-role-preview {
+        gap: 8px !important;
+        padding: 9px 11px !important;
+    }
+
+    .sari-role-preview-wrap .sari-role-preview-icon {
+        width: 32px !important;
+        height: 32px !important;
+        flex-basis: 32px !important;
+    }
+
+    .sari-role-preview-wrap .sari-role-preview-title {
+        font-size: 11.5px !important;
+    }
+
+    .sari-role-process-toggle {
+        min-height: 30px !important;
+        padding: 6px 7px !important;
+        font-size: 9.5px !important;
+    }
+
+    .sari-role-actions {
+        margin-top: 10px !important;
+    }
+
+    /* Form sections */
+    .sari-wizard-step[data-step="details"] > .mt-6 {
+        margin-top: 8px !important;
+    }
+
+    .sari-form-section {
+        padding: 13px 0 15px !important;
+    }
+
+    .sari-form-section-head {
+        min-height: 30px !important;
+        gap: 8px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .sari-form-section-icon {
+        width: 29px !important;
+        height: 29px !important;
+        border-radius: 8px !important;
+    }
+
+    .sari-form-section-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .sari-form-section-head h3 {
+        font-size: 13.5px !important;
+    }
+
+    .sari-form-section-head p {
+        font-size: 9.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .sari-role-specific-label {
+        font-size: 7px !important;
+    }
+
+    .sari-field-grid,
+    .sari-address-grid {
+        gap: 10px 12px !important;
+    }
+
+    .sari-field-grid.mt-5,
+    .sari-address-grid.mt-5 {
+        margin-top: 10px !important;
+    }
+
+    .sari-field-label,
+    .sari-register-card label {
+        margin-bottom: 5px !important;
+        font-size: 10.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    .sari-control {
+        min-height: 42px !important;
+        border-radius: 9px !important;
+        padding-inline: 11px !important;
+        font-size: 11.5px !important;
+    }
+
+    .sari-input-with-icon .sari-control {
+        padding-left: 36px !important;
+    }
+
+    .sari-input-with-icon > span {
+        left: 11px !important;
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .sari-input-with-icon > span svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .sari-register-card textarea.sari-control {
+        min-height: 64px !important;
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    .sari-field-hint,
+    .sari-address-status {
+        font-size: 8.8px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-inline-error {
+        margin-top: 4px !important;
+        font-size: 9.5px !important;
+    }
+
+    /* Profile / document uploads */
+    .sari-profile-row {
+        margin-top: 12px !important;
+        padding-top: 11px !important;
+    }
+
+    .sari-profile-title strong {
+        font-size: 11px !important;
+    }
+
+    .sari-profile-requirement {
+        font-size: 8.5px !important;
+    }
+
+    .sari-profile-preview {
+        min-height: 115px !important;
+        margin-top: 8px !important;
+        border-radius: 11px !important;
+    }
+
+    .sari-profile-preview.has-image {
+        min-height: 140px !important;
+    }
+
+    .sari-profile-preview-fallback {
+        padding: 14px 13px !important;
+    }
+
+    .sari-profile-camera {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 10px !important;
+    }
+
+    .sari-profile-camera svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .sari-profile-drop-title {
+        margin-top: 7px !important;
+        font-size: 10.5px !important;
+    }
+
+    .sari-profile-drop-browse {
+        min-height: 27px !important;
+        margin-top: 6px !important;
+        padding: 5px 9px !important;
+        font-size: 8.8px !important;
+    }
+
+    .sari-document-step > .mt-7 {
+        margin-top: 13px !important;
+    }
+
+    .sari-document-step > .mt-7.space-y-6 {
+        row-gap: 12px !important;
+    }
+
+    .sari-document-step .sari-document-label {
+        margin-bottom: 5px !important;
+        font-size: 10.5px !important;
+    }
+
+    .sari-upload-zone {
+        min-height: 110px !important;
+        border-radius: 10px !important;
+        padding: 14px 12px !important;
+    }
+
+    .sari-upload-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .sari-upload-icon svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    .sari-upload-title {
+        margin-top: 6px !important;
+        font-size: 11.5px !important;
+    }
+
+    .sari-upload-browse {
+        min-height: 28px !important;
+        margin-top: 6px !important;
+        padding: 6px 10px !important;
+        font-size: 9.5px !important;
+    }
+
+    .sari-upload-meta,
+    .sari-upload-file,
+    .sari-upload-error {
+        margin-top: 5px !important;
+        font-size: 8.8px !important;
+    }
+
+    /* Credentials / terms */
+    [data-step="credentials"] > .mt-6 {
+        margin-top: 12px !important;
+    }
+
+    [data-step="credentials"] > .mt-6.space-y-4 {
+        row-gap: 10px !important;
+    }
+
+    .sari-terms-row {
+        margin-top: 10px !important;
+        gap: 8px !important;
+    }
+
+    .sari-terms-box {
+        width: 18px !important;
+        height: 18px !important;
+        flex-basis: 18px !important;
+        border-radius: 5px !important;
+    }
+
+    .sari-terms-copy {
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-review-note {
+        margin-top: 8px !important;
+    }
+
+    .sari-review-note p {
+        font-size: 9px !important;
+    }
+
+    /* Buttons */
+    .sari-register-action,
+    .sari-role-continue,
+    .sari-document-actions .sari-register-action {
+        min-height: 40px !important;
+        border-radius: 9px !important;
+        padding-inline: 15px !important;
+        font-size: 10.5px !important;
+        gap: 7px !important;
+    }
+
+    .sari-button-icon {
+        width: 13px !important;
+        height: 13px !important;
+        flex-basis: 13px !important;
+    }
+
+    /* OTP */
+    .sari-otp-stage {
+        width: min(100%, 500px) !important;
+    }
+
+    .sari-otp-icon {
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 14px !important;
+    }
+
+    .sari-otp-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .sari-otp-eyebrow {
+        margin-top: 11px !important;
+        font-size: 8px !important;
+    }
+
+    .sari-otp-stage h2 {
+        margin-top: 5px !important;
+        font-size: clamp(21px, 1.8vw, 24px) !important;
+    }
+
+    .sari-otp-copy {
+        margin-top: 5px !important;
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-otp-code {
+        gap: 6px !important;
+        margin-top: 14px !important;
+    }
+
+    .sari-otp-digit {
+        width: 43px !important;
+        height: 46px !important;
+        border-radius: 9px !important;
+        font-size: 17px !important;
+    }
+
+    .sari-otp-resend {
+        margin-top: 10px !important;
+        font-size: 9.8px !important;
+    }
+
+    .sari-otp-main-action {
+        width: min(100%, 350px) !important;
+        margin-top: 12px !important;
+    }
+
+    .sari-otp-status {
+        width: min(100%, 390px) !important;
+        margin-top: 15px !important;
+    }
+
+    .sari-otp-status-dot {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 9px !important;
+    }
+
+    .sari-otp-status-label {
+        font-size: 8px !important;
+    }
+
+    .sari-otp-status-line {
+        width: 34px !important;
+    }
+
+    /* Bottom helper text */
+    .sari-signin-shortcut {
+        margin-top: 9px !important;
+        font-size: 11px !important;
+    }
+
+    .sari-register-footer {
+        margin-top: 6px !important;
+        font-size: 8px !important;
+    }
+
+    /* Common laptop height: keep the registration page visually compact at 100% zoom. */
+    @media (max-height: 820px) and (min-width: 640px) {
+        .sari-register-shell {
+            max-width: 980px !important;
+            padding-top: 8px !important;
+            padding-bottom: 10px !important;
+        }
+
+        .sari-register-shell > a[aria-label="Back to SARI home"] {
+            margin-bottom: 6px !important;
+        }
+
+        .sari-register-shell > a[aria-label="Back to SARI home"] img {
+            width: 102px !important;
+        }
+
+        .sari-register-card {
+            max-width: 820px !important;
+        }
+
+        .sari-register-card > div:first-child {
+            padding: 13px 19px 11px !important;
+        }
+
+        .sari-register-card > div:first-child h1 {
+            font-size: 24px !important;
+        }
+
+        .sari-progress-wrap {
+            padding: 7px 19px 8px !important;
+        }
+
+        .sari-register-card > .px-5,
+        .sari-register-card > div.px-5 {
+            padding: 13px 19px 15px !important;
+        }
+
+        .sari-role-option {
+            min-height: 52px !important;
+        }
+
+        .sari-control {
+            min-height: 39px !important;
+        }
+
+        .sari-register-action,
+        .sari-role-continue,
+        .sari-document-actions .sari-register-action {
+            min-height: 38px !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-register-shell {
+            padding: 10px 9px 18px !important;
+        }
+
+        .sari-register-shell > a[aria-label="Back to SARI home"] img {
+            width: 108px !important;
+        }
+
+        .sari-register-card {
+            border-radius: 14px !important;
+        }
+
+        .sari-register-card > div:first-child {
+            padding: 16px 14px 14px !important;
+        }
+
+        .sari-register-card > div:first-child h1 {
+            font-size: 24px !important;
+        }
+
+        .sari-register-card > .px-5,
+        .sari-register-card > div.px-5 {
+            padding: 16px 14px 18px !important;
+        }
+
+        .sari-field-grid,
+        .sari-address-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .sari-control {
+            min-height: 44px !important;
+            font-size: 12px !important;
+        }
+
+        .sari-register-action,
+        .sari-role-continue,
+        .sari-document-actions .sari-register-action {
+            min-height: 44px !important;
+            width: 100% !important;
+            font-size: 11.5px !important;
+        }
+
+        .sari-role-option {
+            min-height: 58px !important;
+        }
+
+        .sari-otp-digit {
+            width: min(13vw, 42px) !important;
+            height: 46px !important;
+        }
+    }
+
+
+    /* ============================================================
+       REGISTRATION V14 — FINAL TYPOGRAPHY SCALE
+       Keeps the compact layout but brings labels, placeholders,
+       buttons and helper text into proportion with the UI.
+       ============================================================ */
+
+    .sari-register-card,
+    .sari-register-card input,
+    .sari-register-card select,
+    .sari-register-card textarea,
+    .sari-register-card button {
+        font-family: 'Poppins', sans-serif !important;
+    }
+
+    /* Main header */
+    .sari-register-card > div:first-child > p:first-child {
+        font-size: 7px !important;
+        font-weight: 700 !important;
+        letter-spacing: .13em !important;
+    }
+
+    .sari-register-card > div:first-child h1 {
+        font-size: clamp(22px, 1.8vw, 27px) !important;
+        font-weight: 700 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .sari-register-card > div:first-child > p:last-child {
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Step titles / helper copy */
+    .sari-register-card [data-step] h2,
+    .sari-details-heading-clean h2,
+    .sari-document-step > h2,
+    .sari-role-stage > .text-center h2 {
+        font-size: clamp(18px, 1.5vw, 21px) !important;
+        line-height: 1.2 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    .sari-register-card [data-step] > p,
+    .sari-register-card [data-step] .sari-step-copy,
+    .sari-role-stage > .text-center p {
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Progress */
+    .sari-progress-title {
+        font-size: 8.8px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-progress-counter {
+        font-size: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Field labels */
+    .sari-field-label,
+    .sari-register-card label,
+    .sari-document-step .sari-document-label {
+        font-size: 9.8px !important;
+        line-height: 1.3 !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-role-specific-label {
+        font-size: 6.8px !important;
+    }
+
+    /* Input/select/textarea text */
+    .sari-control,
+    .sari-register-card input.sari-control,
+    .sari-register-card select.sari-control,
+    .sari-register-card textarea.sari-control {
+        font-size: 10.5px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .sari-control::placeholder,
+    .sari-register-card input::placeholder,
+    .sari-register-card textarea::placeholder {
+        font-size: 10.2px !important;
+        font-weight: 400 !important;
+        color: #a39b91 !important;
+        -webkit-text-fill-color: #a39b91 !important;
+        opacity: 1 !important;
+    }
+
+    .sari-register-card select.sari-control {
+        font-size: 10.5px !important;
+    }
+
+    /* Field hints, notes, errors */
+    .sari-field-hint,
+    .sari-address-status,
+    .sari-manual-address,
+    .sari-review-note p,
+    .sari-inline-error,
+    .sari-profile-requirement,
+    .sari-profile-help,
+    .sari-upload-meta,
+    .sari-upload-file,
+    .sari-upload-error {
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Section headings */
+    .sari-form-section-head h3 {
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-form-section-head p {
+        font-size: 8.8px !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Role selector */
+    .sari-role-name {
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-role-description {
+        font-size: 8.8px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-role-preview-wrap .sari-role-preview-label {
+        font-size: 7px !important;
+    }
+
+    .sari-role-preview-wrap .sari-role-preview-title {
+        font-size: 10.5px !important;
+    }
+
+    .sari-role-process-toggle {
+        font-size: 8.8px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-role-process-eyebrow {
+        font-size: 7px !important;
+    }
+
+    .sari-role-process-heading h3 {
+        font-size: 11px !important;
+    }
+
+    .sari-role-process-summary {
+        font-size: 8.5px !important;
+    }
+
+    .sari-role-process-number {
+        font-size: 8.5px !important;
+    }
+
+    .sari-role-process-step-title {
+        font-size: 8.8px !important;
+    }
+
+    .sari-role-process-step-copy {
+        font-size: 7.7px !important;
+    }
+
+    /* Profile / upload */
+    .sari-profile-title strong {
+        font-size: 10.2px !important;
+    }
+
+    .sari-profile-drop-title {
+        font-size: 9.8px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-profile-drop-browse {
+        font-size: 8.3px !important;
+    }
+
+    .sari-upload-title {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-upload-browse {
+        font-size: 8.8px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Terms */
+    .sari-terms-copy {
+        font-size: 9.2px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-terms-copy a {
+        font-size: inherit !important;
+    }
+
+    /* Buttons */
+    .sari-register-action,
+    .sari-role-continue,
+    .sari-document-actions .sari-register-action,
+    .sari-register-card [data-next],
+    .sari-register-card [data-back],
+    .sari-register-card button[type="submit"] {
+        font-size: 9.8px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .sari-button-icon {
+        width: 12px !important;
+        height: 12px !important;
+        flex-basis: 12px !important;
+    }
+
+    /* OTP */
+    .sari-otp-eyebrow {
+        font-size: 7px !important;
+    }
+
+    .sari-otp-stage h2 {
+        font-size: clamp(19px, 1.6vw, 22px) !important;
+    }
+
+    .sari-otp-copy {
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-otp-digit {
+        font-size: 16px !important;
+    }
+
+    .sari-otp-error,
+    .sari-otp-resend {
+        font-size: 8.8px !important;
+    }
+
+    .sari-otp-status-label {
+        font-size: 7.5px !important;
+    }
+
+    /* Bottom helper */
+    .sari-signin-shortcut {
+        font-size: 10px !important;
+    }
+
+    .sari-register-footer {
+        font-size: 7.5px !important;
+    }
+
+    /* Laptop 100% zoom */
+    @media (max-height: 820px) and (min-width: 640px) {
+        .sari-register-card > div:first-child h1 {
+            font-size: 22px !important;
+        }
+
+        .sari-register-card [data-step] h2,
+        .sari-details-heading-clean h2,
+        .sari-document-step > h2,
+        .sari-role-stage > .text-center h2 {
+            font-size: 18px !important;
+        }
+
+        .sari-control,
+        .sari-register-card input.sari-control,
+        .sari-register-card select.sari-control,
+        .sari-register-card textarea.sari-control {
+            font-size: 10px !important;
+        }
+
+        .sari-control::placeholder,
+        .sari-register-card input::placeholder,
+        .sari-register-card textarea::placeholder {
+            font-size: 9.8px !important;
+        }
+
+        .sari-register-action,
+        .sari-role-continue,
+        .sari-document-actions .sari-register-action,
+        .sari-register-card [data-next],
+        .sari-register-card [data-back],
+        .sari-register-card button[type="submit"] {
+            font-size: 9.3px !important;
+        }
+    }
+
+    /* Mobile stays readable while still proportional */
+    @media (max-width: 639px) {
+        .sari-register-card > div:first-child h1 {
+            font-size: 22px !important;
+        }
+
+        .sari-register-card [data-step] h2,
+        .sari-details-heading-clean h2,
+        .sari-document-step > h2,
+        .sari-role-stage > .text-center h2 {
+            font-size: 19px !important;
+        }
+
+        .sari-field-label,
+        .sari-register-card label,
+        .sari-document-step .sari-document-label {
+            font-size: 10.5px !important;
+        }
+
+        .sari-control,
+        .sari-register-card input.sari-control,
+        .sari-register-card select.sari-control,
+        .sari-register-card textarea.sari-control {
+            font-size: 11.5px !important;
+        }
+
+        .sari-control::placeholder,
+        .sari-register-card input::placeholder,
+        .sari-register-card textarea::placeholder {
+            font-size: 11px !important;
+        }
+
+        .sari-register-action,
+        .sari-role-continue,
+        .sari-document-actions .sari-register-action,
+        .sari-register-card [data-next],
+        .sari-register-card [data-back],
+        .sari-register-card button[type="submit"] {
+            font-size: 11px !important;
+        }
+
+        .sari-role-name {
+            font-size: 11.5px !important;
+        }
+
+        .sari-role-description {
+            font-size: 9px !important;
+        }
+
+        .sari-terms-copy {
+            font-size: 9.8px !important;
+        }
+    }
+
+
+    /* ============================================================
+       REGISTRATION V15 — SEX / LINE OF BUSINESS SELECTS
+       Compact native selects that visually match the smaller UI.
+       ============================================================ */
+
+    .sari-register-card select[name="sex"],
+    .sari-register-card select[name="line_of_business"] {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        width: 100% !important;
+        min-height: 42px !important;
+        height: 42px !important;
+        border: 1px solid #ddd6cc !important;
+        border-radius: 9px !important;
+        background-color: #ffffff !important;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23877f75' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 11px center !important;
+        background-size: 14px 14px !important;
+        padding: 0 34px 0 11px !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 10.2px !important;
+        line-height: 1.2 !important;
+        font-weight: 400 !important;
+        color: #312c26 !important;
+        -webkit-text-fill-color: #312c26 !important;
+        cursor: pointer !important;
+        box-shadow: 0 1px 2px rgba(31, 27, 22, .018) !important;
+        transition:
+            border-color .16s ease,
+            box-shadow .16s ease,
+            background-color .16s ease !important;
+    }
+
+    .sari-register-card select[name="sex"]:hover:not(:disabled),
+    .sari-register-card select[name="line_of_business"]:hover:not(:disabled) {
+        border-color: #cfc2ad !important;
+    }
+
+    .sari-register-card select[name="sex"]:focus,
+    .sari-register-card select[name="line_of_business"]:focus {
+        border-color: #c98a1c !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(201, 138, 28, .08) !important;
+    }
+
+    /* Placeholder state */
+    .sari-register-card select[name="sex"]:required:invalid,
+    .sari-register-card select[name="line_of_business"]:required:invalid {
+        color: #9d958b !important;
+        -webkit-text-fill-color: #9d958b !important;
+    }
+
+    /* Disabled Line of Business before Seller is active */
+    .sari-register-card select[name="line_of_business"]:disabled {
+        cursor: not-allowed !important;
+        border-color: #e4dfd8 !important;
+        background-color: #f7f5f2 !important;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23aaa39a' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") !important;
+        color: #aaa39a !important;
+        -webkit-text-fill-color: #aaa39a !important;
+        box-shadow: none !important;
+    }
+
+    /* Native dropdown option typography where the browser allows it */
+    .sari-register-card select[name="sex"] option,
+    .sari-register-card select[name="line_of_business"] option {
+        background: #ffffff !important;
+        color: #312c26 !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 10.5px !important;
+        font-weight: 400 !important;
+    }
+
+    .sari-register-card select[name="sex"] option[value=""],
+    .sari-register-card select[name="line_of_business"] option[value=""] {
+        color: #9d958b !important;
+    }
+
+    @media (max-height: 820px) and (min-width: 640px) {
+        .sari-register-card select[name="sex"],
+        .sari-register-card select[name="line_of_business"] {
+            min-height: 39px !important;
+            height: 39px !important;
+            padding-left: 10px !important;
+            padding-right: 31px !important;
+            background-position: right 10px center !important;
+            background-size: 13px 13px !important;
+            font-size: 9.8px !important;
+        }
+
+        .sari-register-card select[name="sex"] option,
+        .sari-register-card select[name="line_of_business"] option {
+            font-size: 10px !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-register-card select[name="sex"],
+        .sari-register-card select[name="line_of_business"] {
+            min-height: 44px !important;
+            height: 44px !important;
+            padding-left: 11px !important;
+            padding-right: 35px !important;
+            background-position: right 11px center !important;
+            font-size: 11px !important;
+        }
+
+        .sari-register-card select[name="sex"] option,
+        .sari-register-card select[name="line_of_business"] option {
+            font-size: 11px !important;
+        }
+    }
+
+
+    /* ============================================================
+       REGISTRATION V16 — CUSTOM SEX / BUSINESS DROPDOWNS
+       Styles the opened dropdown itself, not only the native select.
+       ============================================================ */
+
+    .sari-custom-select {
+        position: relative;
+        width: 100%;
+    }
+
+    .sari-custom-select-native {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        min-height: 1px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        clip-path: inset(50%) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .sari-custom-select-trigger {
+        display: flex;
+        width: 100%;
+        height: 42px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid #ddd6cc;
+        border-radius: 9px;
+        background: #fff;
+        padding: 0 10px 0 11px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 10.2px;
+        line-height: 1.2;
+        font-weight: 400;
+        color: #312c26;
+        text-align: left;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(31,27,22,.018);
+        transition:
+            border-color .16s ease,
+            box-shadow .16s ease,
+            background-color .16s ease;
+    }
+
+    .sari-custom-select-trigger:hover:not(:disabled) {
+        border-color: #cdbfaa;
+        background: #fffefa;
+    }
+
+    .sari-custom-select-trigger:focus-visible,
+    .sari-custom-select.is-open .sari-custom-select-trigger {
+        outline: none;
+        border-color: #c98a1c;
+        box-shadow: 0 0 0 3px rgba(201,138,28,.08);
+    }
+
+    .sari-custom-select-value {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #9d958b;
+    }
+
+    .sari-custom-select.has-value .sari-custom-select-value {
+        color: #312c26;
+    }
+
+    .sari-custom-select-chevron {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        color: #877f75;
+        transition: transform .18s cubic-bezier(.22,1,.36,1), color .16s ease;
+    }
+
+    .sari-custom-select.is-open .sari-custom-select-chevron {
+        transform: rotate(180deg);
+        color: #a96f06;
+    }
+
+    .sari-custom-select-trigger:disabled {
+        cursor: not-allowed;
+        border-color: #e4dfd8;
+        background: #f7f5f2;
+        color: #aaa39a;
+        box-shadow: none;
+    }
+
+    .sari-custom-select-trigger:disabled .sari-custom-select-value,
+    .sari-custom-select-trigger:disabled .sari-custom-select-chevron {
+        color: #aaa39a;
+    }
+
+    .sari-custom-select-menu {
+        position: absolute;
+        z-index: 80;
+        top: auto;
+        bottom: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        max-height: 218px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border: 1px solid #e1dbd2;
+        border-radius: 11px;
+        background: #fff;
+        padding: 5px;
+        box-shadow:
+            0 -18px 42px rgba(36,30,23,.09),
+            0 -3px 10px rgba(36,30,23,.035);
+        scrollbar-width: thin;
+        scrollbar-color: #d9d1c7 transparent;
+        transform-origin: bottom center;
+        animation: sariCustomSelectIn .14s ease-out both;
+    }
+
+    @keyframes sariCustomSelectIn {
+        from {
+            opacity: 0;
+            transform: translateY(3px) scale(.99);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .sari-custom-select-option {
+        display: flex;
+        width: 100%;
+        min-height: 34px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        padding: 8px 9px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 10px;
+        line-height: 1.35;
+        font-weight: 400;
+        color: #403a34;
+        text-align: left;
+        cursor: pointer;
+        transition:
+            background-color .14s ease,
+            color .14s ease;
+    }
+
+    .sari-custom-select-option:hover,
+    .sari-custom-select-option:focus-visible {
+        outline: none;
+        background: #fff8ec;
+        color: #855707;
+    }
+
+    .sari-custom-select-option.is-selected {
+        background: #fffaf1;
+        color: #966207;
+        font-weight: 600;
+    }
+
+    .sari-custom-select-option svg {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 13px;
+        color: #c78308;
+        opacity: 0;
+        transform: scale(.8);
+        transition: opacity .14s ease, transform .14s ease;
+    }
+
+    .sari-custom-select-option.is-selected svg {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Validation is applied to the original select and reflected on the custom trigger. */
+    .sari-custom-select-native.is-invalid ~ .sari-custom-select-trigger {
+        border-color: #e11d2e !important;
+        box-shadow: 0 0 0 3px rgba(225,29,46,.09) !important;
+    }
+
+    @media (max-height: 820px) and (min-width: 640px) {
+        .sari-custom-select-trigger {
+            height: 39px;
+            padding-inline: 10px 9px;
+            font-size: 9.8px;
+        }
+
+        .sari-custom-select-menu {
+            max-height: 190px;
+        }
+
+        .sari-custom-select-option {
+            min-height: 31px;
+            padding: 7px 8px;
+            font-size: 9.5px;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-custom-select-trigger {
+            height: 44px;
+            padding-inline: 11px 10px;
+            font-size: 11px;
+        }
+
+        .sari-custom-select-option {
+            min-height: 38px;
+            padding: 9px 10px;
+            font-size: 10.8px;
+        }
+
+        .sari-custom-select-menu {
+            max-height: 235px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sari-custom-select-menu {
+            animation: none !important;
+        }
+
+        .sari-custom-select-chevron,
+        .sari-custom-select-option {
+            transition: none !important;
+        }
+    }
+
 </style>
 
 <div class="relative min-h-screen min-h-[100dvh] overflow-x-hidden bg-[#f7f4ee] font-['Poppins',sans-serif] text-[#17140e]">
@@ -4894,10 +6223,10 @@
                     <div class="mt-7">
                         <select id="roleSelect" name="role" required class="sr-only" aria-label="Register as">
                             <option value="">Select account type</option>
-                            <option value="buyer" {{ old('role') === 'buyer' ? 'selected' : '' }}>Buyer</option>
-                            <option value="seller" {{ old('role') === 'seller' ? 'selected' : '' }}>Seller</option>
-                            <option value="logistics" {{ old('role') === 'logistics' ? 'selected' : '' }}>Logistics</option>
-                            <option value="rider" {{ old('role') === 'rider' ? 'selected' : '' }}>Rider</option>
+                            <option value="buyer" {{ old('role', $defaultRole ?? '') === 'buyer' ? 'selected' : '' }}>Buyer</option>
+                            <option value="seller" {{ old('role', $defaultRole ?? '') === 'seller' ? 'selected' : '' }}>Seller</option>
+                            <option value="logistics" {{ old('role', $defaultRole ?? '') === 'logistics' ? 'selected' : '' }}>Logistics</option>
+                            <option value="rider" {{ old('role', $defaultRole ?? '') === 'rider' ? 'selected' : '' }}>Rider</option>
                         </select>
 
                         <div class="sari-role-grid" role="radiogroup" aria-label="Choose an account type">
@@ -5107,16 +6436,62 @@
                             </div>
 
                             <div>
-                                <label class="sari-field-label">Sex *</label>
-                                <select
-                                    name="sex"
-                                    required
-                                    class="sari-control w-full border border-[#e3ddd4]"
-                                >
-                                    <option value="">Select sex</option>
-                                    <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
-                                    <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
-                                </select>
+                                <label id="sexFieldLabel" class="sari-field-label">Sex *</label>
+
+                                <div class="sari-custom-select" data-sari-select>
+                                    <select
+                                        name="sex"
+                                        required
+                                        tabindex="-1"
+                                        class="sari-custom-select-native"
+                                        data-sari-select-native
+                                        data-placeholder="Select sex"
+                                        aria-labelledby="sexFieldLabel"
+                                    >
+                                        <option value="">Select sex</option>
+                                        <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
+                                        <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
+                                    </select>
+
+                                    <button
+                                        type="button"
+                                        class="sari-custom-select-trigger"
+                                        data-sari-select-trigger
+                                        aria-haspopup="listbox"
+                                        aria-expanded="false"
+                                        aria-labelledby="sexFieldLabel sexSelectedValue"
+                                    >
+                                        <span id="sexSelectedValue" class="sari-custom-select-value" data-sari-select-value>
+                                            Select sex
+                                        </span>
+
+                                        <svg class="sari-custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="m7 10 5 5 5-5"></path>
+                                        </svg>
+                                    </button>
+
+                                    <div
+                                        class="sari-custom-select-menu"
+                                        data-sari-select-menu
+                                        role="listbox"
+                                        aria-labelledby="sexFieldLabel"
+                                        hidden
+                                    >
+                                        <button type="button" class="sari-custom-select-option" data-sari-select-option data-value="Male" role="option">
+                                            <span>Male</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <path d="m6 12 4 4 8-8"></path>
+                                            </svg>
+                                        </button>
+
+                                        <button type="button" class="sari-custom-select-option" data-sari-select-option data-value="Female" role="option">
+                                            <span>Female</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <path d="m6 12 4 4 8-8"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div>
@@ -5395,24 +6770,76 @@
                             </div>
 
                             <div id="sellerLineOfBusinessGroup" hidden>
-                                <label class="sari-field-label">Line of Business *</label>
-                                <select
-                                    name="line_of_business"
-                                    data-seller-only-required
-                                    disabled
-                                    class="sari-control w-full border border-[#e3ddd4]"
-                                >
-                                    <option value="">Select business category</option>
-                                    @foreach([
-                                        'Electronics','Fashion','Home & Living','Beauty',
-                                        'Books','Food & Beverage','Jewelry & Watches',
-                                        'Furniture & Office','Others'
-                                    ] as $category)
-                                        <option value="{{ $category }}" {{ old('line_of_business') === $category ? 'selected' : '' }}>
-                                            {{ $category }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label id="lineOfBusinessFieldLabel" class="sari-field-label">Line of Business *</label>
+
+                                <div class="sari-custom-select" data-sari-select>
+                                    <select
+                                        name="line_of_business"
+                                        data-seller-only-required
+                                        data-sari-select-native
+                                        data-placeholder="Select business category"
+                                        tabindex="-1"
+                                        disabled
+                                        class="sari-custom-select-native"
+                                        aria-labelledby="lineOfBusinessFieldLabel"
+                                    >
+                                        <option value="">Select business category</option>
+                                        @foreach([
+                                            'Electronics','Fashion','Home & Living','Beauty',
+                                            'Books','Food & Beverage','Jewelry & Watches',
+                                            'Furniture & Office','Others'
+                                        ] as $category)
+                                            <option value="{{ $category }}" {{ old('line_of_business') === $category ? 'selected' : '' }}>
+                                                {{ $category }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    <button
+                                        type="button"
+                                        class="sari-custom-select-trigger"
+                                        data-sari-select-trigger
+                                        aria-haspopup="listbox"
+                                        aria-expanded="false"
+                                        aria-labelledby="lineOfBusinessFieldLabel lineOfBusinessSelectedValue"
+                                        disabled
+                                    >
+                                        <span id="lineOfBusinessSelectedValue" class="sari-custom-select-value" data-sari-select-value>
+                                            Select business category
+                                        </span>
+
+                                        <svg class="sari-custom-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="m7 10 5 5 5-5"></path>
+                                        </svg>
+                                    </button>
+
+                                    <div
+                                        class="sari-custom-select-menu"
+                                        data-sari-select-menu
+                                        role="listbox"
+                                        aria-labelledby="lineOfBusinessFieldLabel"
+                                        hidden
+                                    >
+                                        @foreach([
+                                            'Electronics','Fashion','Home & Living','Beauty',
+                                            'Books','Food & Beverage','Jewelry & Watches',
+                                            'Furniture & Office','Others'
+                                        ] as $category)
+                                            <button
+                                                type="button"
+                                                class="sari-custom-select-option"
+                                                data-sari-select-option
+                                                data-value="{{ $category }}"
+                                                role="option"
+                                            >
+                                                <span>{{ $category }}</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <path d="m6 12 4 4 8-8"></path>
+                                                </svg>
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -5776,6 +7203,155 @@ document.addEventListener('DOMContentLoaded', function () {
     const allSteps = Array.from(document.querySelectorAll('[data-step]'));
     const roleSelect = document.getElementById('roleSelect');
 
+    /* CUSTOM SEX / LINE OF BUSINESS DROPDOWNS */
+    const customSelects = Array.from(document.querySelectorAll('[data-sari-select]'));
+
+    function customSelectParts(root) {
+        return {
+            select: root?.querySelector('[data-sari-select-native]'),
+            trigger: root?.querySelector('[data-sari-select-trigger]'),
+            value: root?.querySelector('[data-sari-select-value]'),
+            menu: root?.querySelector('[data-sari-select-menu]'),
+            options: Array.from(root?.querySelectorAll('[data-sari-select-option]') || [])
+        };
+    }
+
+    function syncCustomSelect(root) {
+        if (!root) return;
+        const { select, trigger, value, options } = customSelectParts(root);
+        if (!select || !trigger || !value) return;
+
+        const selectedOption = select.options[select.selectedIndex];
+        const placeholder = select.dataset.placeholder || select.options[0]?.textContent?.trim() || 'Select an option';
+        const hasValue = Boolean(select.value);
+
+        value.textContent = hasValue
+            ? (selectedOption?.textContent?.trim() || select.value)
+            : placeholder;
+
+        root.classList.toggle('has-value', hasValue);
+        root.classList.toggle('is-disabled', select.disabled);
+        trigger.disabled = select.disabled;
+
+        options.forEach(function (option) {
+            const selected = option.dataset.value === select.value;
+            option.classList.toggle('is-selected', selected);
+            option.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+
+        if (select.disabled) {
+            closeCustomSelect(root);
+        }
+    }
+
+    function closeCustomSelect(root, restoreFocus = false) {
+        if (!root) return;
+        const { trigger, menu } = customSelectParts(root);
+        if (!trigger || !menu) return;
+
+        root.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+
+        if (restoreFocus) {
+            trigger.focus();
+        }
+    }
+
+    function closeAllCustomSelects(except = null) {
+        customSelects.forEach(function (root) {
+            if (root !== except) closeCustomSelect(root);
+        });
+    }
+
+    function openCustomSelect(root) {
+        const { select, trigger, menu, options } = customSelectParts(root);
+        if (!select || !trigger || !menu || select.disabled) return;
+
+        closeAllCustomSelects(root);
+        root.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        menu.hidden = false;
+
+        const selected = options.find(option => option.classList.contains('is-selected'));
+        const first = selected || options[0];
+
+        window.requestAnimationFrame(function () {
+            first?.focus({ preventScroll: true });
+        });
+    }
+
+    customSelects.forEach(function (root) {
+        const { select, trigger, menu, options } = customSelectParts(root);
+        if (!select || !trigger || !menu) return;
+
+        syncCustomSelect(root);
+
+        trigger.addEventListener('click', function () {
+            if (select.disabled) return;
+
+            if (root.classList.contains('is-open')) {
+                closeCustomSelect(root);
+            } else {
+                openCustomSelect(root);
+            }
+        });
+
+        trigger.addEventListener('keydown', function (event) {
+            if (select.disabled) return;
+
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                openCustomSelect(root);
+            }
+
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeCustomSelect(root);
+            }
+        });
+
+        options.forEach(function (option, index) {
+            option.addEventListener('click', function () {
+                select.value = option.dataset.value || '';
+                select.dataset.sariTouched = 'true';
+                select.dispatchEvent(new Event('input', { bubbles: true }));
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                syncCustomSelect(root);
+                closeCustomSelect(root, true);
+            });
+
+            option.addEventListener('keydown', function (event) {
+                if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    options[(index + 1) % options.length]?.focus();
+                } else if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    options[(index - 1 + options.length) % options.length]?.focus();
+                } else if (event.key === 'Home') {
+                    event.preventDefault();
+                    options[0]?.focus();
+                } else if (event.key === 'End') {
+                    event.preventDefault();
+                    options[options.length - 1]?.focus();
+                } else if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeCustomSelect(root, true);
+                }
+            });
+        });
+
+        select.addEventListener('change', function () {
+            syncCustomSelect(root);
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('[data-sari-select]')) {
+            closeAllCustomSelects();
+        }
+    });
+
     const progressSegments = document.getElementById('wizardProgressSegments');
     const stepTitle = document.getElementById('wizardStepTitle');
     const counter = document.getElementById('wizardCounter');
@@ -5929,6 +7505,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return field.closest('label') || field;
         }
 
+        const customSelect = field.closest('[data-sari-select]');
+        if (customSelect) {
+            return customSelect;
+        }
+
         return field.closest('.sari-input-with-icon') || field;
     }
 
@@ -6013,11 +7594,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function focusInvalidField(field) {
+        const customSelectTrigger = field.closest('[data-sari-select]')
+            ?.querySelector('[data-sari-select-trigger]');
+
         const target = field.matches('[data-upload-input]')
             ? document.querySelector('[data-upload-zone="' + field.id + '"]')
             : field.matches('[data-profile-input]')
                 ? profileImageBrowse
-                : field;
+                : customSelectTrigger || field;
 
         window.setTimeout(function () {
             target?.focus({ preventScroll: true });
@@ -6191,6 +7775,8 @@ document.addEventListener('DOMContentLoaded', function () {
         businessDetailsSection.hidden = !needsBusiness;
         sellerLineOfBusinessGroup.hidden = !isSeller;
         businessPermitGroup.hidden = !needsBusiness;
+
+        customSelects.forEach(syncCustomSelect);
 
         const requiresProfileImage = isLogistics;
         profileImageInput.required = requiresProfileImage;
