@@ -655,6 +655,250 @@
 }
 </style>
 
+
+
+<style>
+/* =========================================================
+   SARI TRUST — FINAL MOBILE 4-CARD VIEW
+   Actual landing component:
+   resources/views/components/landing/trust.blade.php
+
+   DESKTOP:
+   - existing design remains unchanged
+
+   MOBILE <= 767px:
+   - all 4 cards stay in ONE horizontal row
+   - no stacking / no 2x2
+   - bottom SVG icons have NO circular background
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .sari-trust-final {
+        padding: 42px 8px 38px !important;
+    }
+
+    .sari-trust-final__wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .sari-trust-final__header {
+        width: min(100%, 560px) !important;
+        margin: 0 auto 24px !important;
+        padding-inline: 8px !important;
+    }
+
+    .sari-trust-final__eyebrow {
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+        font-size: 8px !important;
+        letter-spacing: .19em !important;
+    }
+
+    .sari-trust-final__eyebrow::before,
+    .sari-trust-final__eyebrow::after {
+        width: 18px !important;
+    }
+
+    .sari-trust-final__headline {
+        font-size: clamp(29px, 7.2vw, 39px) !important;
+        line-height: .98 !important;
+        letter-spacing: -.05em !important;
+    }
+
+    .sari-trust-final__intro {
+        width: min(100%, 520px) !important;
+        margin: 14px auto 0 !important;
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Force all four cards into one row, overriding old tablet/mobile rules. */
+    .sari-trust-final .sari-trust-final__cards {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        grid-template-rows: 1fr !important;
+        gap: 0 !important;
+
+        width: 100% !important;
+        min-width: 0 !important;
+
+        border: 1px solid var(--tf-border) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+
+        background: var(--tf-card) !important;
+        box-shadow: 0 14px 34px rgba(40, 30, 15, .04) !important;
+    }
+
+    .sari-trust-final .sari-trust-final__cards > .sari-trust-final__card {
+        width: auto !important;
+        min-width: 0 !important;
+        min-height: 192px !important;
+
+        padding: 11px 8px 10px !important;
+
+        border-right: 1px solid var(--tf-border) !important;
+        border-bottom: 0 !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        background: var(--tf-card) !important;
+    }
+
+    .sari-trust-final .sari-trust-final__cards > .sari-trust-final__card:last-child {
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    /* Number badges stay circular. */
+    .sari-trust-final .sari-trust-final__badge {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        flex: 0 0 26px !important;
+
+        margin: 0 0 13px !important;
+
+        font-size: 6px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-title {
+        max-width: 100% !important;
+        margin: 0 !important;
+
+        font-size: 9.5px !important;
+        line-height: 1.08 !important;
+        letter-spacing: -.02em !important;
+
+        overflow-wrap: anywhere !important;
+    }
+
+    .sari-trust-final .sari-trust-final__rule {
+        width: 24px !important;
+        height: 1.5px !important;
+        margin: 8px 0 !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-text {
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        padding-bottom: 8px !important;
+
+        font-size: 6.2px !important;
+        line-height: 1.35 !important;
+
+        display: -webkit-box !important;
+        overflow: hidden !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 5 !important;
+    }
+
+    /* Bottom icons only — remove circle and background. */
+    .sari-trust-final .sari-trust-final__icon {
+        position: static !important;
+
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+
+        flex: 0 0 auto !important;
+
+        margin-top: auto !important;
+        padding: 0 !important;
+
+        border: 0 !important;
+        border-radius: 0 !important;
+
+        background: transparent !important;
+        box-shadow: none !important;
+
+        color: var(--tf-gold) !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+    }
+
+    .sari-trust-final .sari-trust-final__icon svg {
+        width: 20px !important;
+        height: 20px !important;
+        background: transparent !important;
+    }
+
+    /* Prevent hover transforms sticking on touch/mobile. */
+    .sari-trust-final__card:hover,
+    .sari-trust-final__card:hover .sari-trust-final__badge,
+    .sari-trust-final__card:hover .sari-trust-final__icon,
+    .sari-trust-final__header:hover .sari-trust-final__headline-accent {
+        transform: none !important;
+    }
+
+    .sari-trust-final__card:hover .sari-trust-final__rule {
+        width: 24px !important;
+    }
+
+    .sari-trust-final__rings {
+        width: 150px !important;
+        height: 150px !important;
+        top: -50px !important;
+        right: -105px !important;
+        opacity: .42 !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .sari-trust-final {
+        padding-inline: 6px !important;
+    }
+
+    .sari-trust-final__header {
+        margin-bottom: 20px !important;
+    }
+
+    .sari-trust-final__headline {
+        font-size: 27px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__cards > .sari-trust-final__card {
+        min-height: 178px !important;
+        padding: 9px 6px 8px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__badge {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        flex-basis: 22px !important;
+        margin-bottom: 11px !important;
+        font-size: 5.5px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-title {
+        font-size: 8.5px !important;
+    }
+
+    .sari-trust-final .sari-trust-final__card-text {
+        font-size: 5.6px !important;
+        line-height: 1.32 !important;
+    }
+
+    .sari-trust-final .sari-trust-final__icon svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+</style>
+
+
 <script>
 (function () {
     const section = document.querySelector('.sari-trust-final');
@@ -690,3 +934,71 @@
     items.forEach(el => observer.observe(el));
 })();
 </script>
+
+
+<style>
+/* =========================================================
+   SARI TRUST — ICON ONLY ON ALL SCREEN SIZES
+   Removes the circular/icon background on desktop, tablet,
+   and mobile while preserving the existing card design.
+   ========================================================= */
+
+.sari-trust-final .sari-trust-final__icon {
+    position: static !important;
+
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    flex: 0 0 auto !important;
+
+    margin-top: auto !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+
+    color: var(--tf-gold) !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+/* Keep the icon itself readable on desktop/tablet. */
+.sari-trust-final .sari-trust-final__icon svg {
+    width: 28px !important;
+    height: 28px !important;
+    background: transparent !important;
+}
+
+/* Keep mobile icons compact. */
+@media (max-width: 767px) {
+    .sari-trust-final .sari-trust-final__icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .sari-trust-final .sari-trust-final__icon svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* Prevent hover from re-introducing a floating/shadowed container. */
+.sari-trust-final__card:hover .sari-trust-final__icon {
+    box-shadow: none !important;
+}
+</style>
+

@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Models\AdminAccount;
-use App\Models\BuyerAccount;
-use App\Models\CourierAccount;
-use App\Models\LogisticsAccount;
-use App\Models\PlatformComplaint;
-use App\Models\PlatformConversation;
-use App\Models\SellerAccount;
+use App\Models\Accounts\AdminAccount;
+use App\Models\Accounts\BuyerAccount;
+use App\Models\Accounts\CourierAccount;
+use App\Models\Accounts\LogisticsAccount;
+use App\Models\Platform\PlatformComplaint;
+use App\Models\Messaging\PlatformConversation;
+use App\Models\Accounts\SellerAccount;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;

@@ -696,6 +696,7 @@
             </p>
         </div>
 
+        <div class="sari-platform-stage-fit">
         <div class="sari-platform-ui-stage sari-platform-reveal" aria-label="SARI marketplace interface preview">
 
             <!-- FLOATING CART CARD -->
@@ -838,6 +839,7 @@
                 </div>
             </div>
 
+        </div>
         </div>
 
     </div>
@@ -1095,6 +1097,266 @@
 }
 </style>
 
+
+<style>
+/* =========================================================
+   SARI PLATFORM — ORIGINAL DESIGN / SCREEN-FIT ONLY
+   IMPORTANT:
+   - No browser mockup resizing
+   - No phone resizing
+   - No cart-card resizing
+   - No typography resizing
+   - No product-card resizing
+   - No color/design changes
+   Only outer vertical whitespace is reduced on short screens.
+   ========================================================= */
+
+/* Keep the original design untouched on normal/tall desktop screens. */
+@media (min-width: 821px) and (max-height: 840px) {
+
+    /*
+     * Original:
+     * .sari-platform-ui { padding: 130px 0; }
+     *
+     * Only the large blank space around the composition is reduced.
+     */
+    .sari-platform-ui {
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+
+    /*
+     * Original header spacing:
+     * margin: 0 auto 72px;
+     *
+     * Header typography itself remains EXACTLY the same.
+     */
+    .sari-platform-ui-header {
+        margin-bottom: 20px;
+    }
+
+    /*
+     * Original stage:
+     * padding-top: 40px;
+     * padding-bottom: 90px;
+     *
+     * Keep enough room for the floating cart/phone,
+     * but remove unused vertical whitespace.
+     */
+    .sari-platform-ui-stage {
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+}
+
+/* Slightly tighter only for very short laptop browser windows. */
+@media (min-width: 821px) and (max-height: 700px) {
+    .sari-platform-ui {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .sari-platform-ui-header {
+        margin-bottom: 14px;
+    }
+
+    .sari-platform-ui-stage {
+        padding-top: 28px;
+        padding-bottom: 46px;
+    }
+}
+
+/*
+ * Mobile keeps the ORIGINAL responsive rules already in this file.
+ * Nothing is overridden here.
+ */
+</style>
+
+
+
+<style>
+/* =========================================================
+   SARI PLATFORM — SAME DESKTOP COMPOSITION ON MOBILE
+   Desktop/tablet design is NOT changed.
+
+   Mobile behavior:
+   - browser remains desktop-shaped
+   - cart remains floating top-left
+   - phone remains floating bottom-right
+   - all internal dimensions remain original
+   - the complete stage is scaled as ONE composition
+   ========================================================= */
+
+.sari-platform-stage-fit {
+    display: contents;
+}
+
+@media (max-width: 820px) {
+
+    /*
+     * Outer mobile section only.
+     * The actual UI mockup inside is restored to its original desktop
+     * geometry and then proportionally scaled by JavaScript.
+     */
+    .sari-platform-ui {
+        padding: 54px 0 46px;
+        overflow-x: clip;
+    }
+
+    .sari-platform-ui > .sari-platform-container {
+        width: 100%;
+        max-width: none;
+        padding-inline: 0;
+    }
+
+    .sari-platform-ui-header {
+        width: calc(100% - 32px);
+        max-width: 620px;
+        margin: 0 auto 34px;
+    }
+
+    /*
+     * Wrapper receives the scaled visual height via JS.
+     * Stage is removed from normal flow so its original 960px width
+     * cannot create horizontal page scrolling.
+     */
+    .sari-platform-stage-fit {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        overflow: visible;
+    }
+
+    .sari-platform-ui-stage {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 960px;
+        max-width: 960px;
+        margin: 0;
+
+        /* ORIGINAL desktop stage spacing */
+        padding-top: 40px;
+        padding-bottom: 90px;
+
+        overflow: visible;
+
+        /*
+         * JS calculates the exact scaled width and centers this stage
+         * inside the available mobile container.
+         */
+        transform-origin: top left;
+        will-change: transform;
+    }
+
+    /* ---------------------------------------------------------
+       RESTORE ORIGINAL DESKTOP BROWSER GEOMETRY
+       --------------------------------------------------------- */
+
+    .sari-platform-browser-content {
+        display: grid;
+        grid-template-columns: 190px 1fr;
+        min-height: 380px;
+    }
+
+    .sari-platform-mock-sidebar {
+        background: var(--sari-platform-sidebar);
+        border-right: 1px solid var(--sari-platform-border);
+        border-bottom: 0;
+
+        padding: 24px 18px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .sari-platform-mock-brand {
+        margin-bottom: 10px;
+    }
+
+    .sari-platform-mock-nav-line {
+        display: block;
+    }
+
+    .sari-platform-mock-products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    /* ---------------------------------------------------------
+       RESTORE ORIGINAL FLOATING CART
+       --------------------------------------------------------- */
+
+    .sari-platform-cart-card {
+        position: absolute;
+        top: -30px;
+        left: 40px;
+
+        width: 196px;
+        margin: 0;
+
+        /* keep mobile motion quiet; visual design is unchanged */
+        animation: none;
+    }
+
+    /* ---------------------------------------------------------
+       RESTORE ORIGINAL FLOATING PHONE
+       --------------------------------------------------------- */
+
+    .sari-platform-phone {
+        position: absolute;
+        right: 32px;
+        bottom: -46px;
+
+        width: 172px;
+        margin: 0;
+
+        animation: none;
+    }
+
+    /*
+     * Override the later mobile interaction rule only where it would
+     * interfere with the original composition. Internal design values
+     * continue to come from the original desktop CSS.
+     */
+    .sari-platform-ui-stage:hover .sari-platform-browser,
+    .sari-platform-cart-card:hover,
+    .sari-platform-phone:hover,
+    .sari-platform-mock-product:hover {
+        transform: none;
+    }
+}
+
+/* Compact outer whitespace only. The composition itself is still identical. */
+@media (max-width: 480px) {
+    .sari-platform-ui {
+        padding: 44px 0 38px;
+    }
+
+    .sari-platform-ui-header {
+        width: calc(100% - 28px);
+        margin-bottom: 28px;
+    }
+}
+
+@media (max-width: 360px) {
+    .sari-platform-ui {
+        padding-top: 38px;
+        padding-bottom: 34px;
+    }
+
+    .sari-platform-ui-header {
+        margin-bottom: 24px;
+    }
+}
+</style>
+
+
 <script>
 (function () {
     const section = document.querySelector('.sari-platform-ui');
@@ -1123,6 +1385,327 @@
     revealItems.forEach(el => observer.observe(el));
 })();
 </script>
+
+
+<script>
+(function () {
+    const section = document.querySelector('.sari-platform-ui');
+    const fit = section?.querySelector('.sari-platform-stage-fit');
+    const stage = fit?.querySelector('.sari-platform-ui-stage');
+
+    if (!section || !fit || !stage) {
+        return;
+    }
+
+    const MOBILE_BREAKPOINT = 820;
+    const ORIGINAL_STAGE_WIDTH = 960;
+
+    function resetDesktopStage() {
+        stage.style.removeProperty('transform');
+        fit.style.removeProperty('height');
+    }
+
+    function fitOriginalStageToMobile() {
+        if (window.innerWidth > MOBILE_BREAKPOINT) {
+            stage.style.removeProperty('left');
+            stage.style.removeProperty('transform');
+            fit.style.removeProperty('height');
+            return;
+        }
+
+        /*
+         * Use the real layout viewport width.
+         */
+        const viewportWidth =
+            document.documentElement.clientWidth || window.innerWidth;
+
+        /*
+         * Equal breathing space on both sides.
+         */
+        const sideGap = viewportWidth <= 390 ? 12 : 16;
+        const availableWidth = Math.max(
+            240,
+            viewportWidth - (sideGap * 2)
+        );
+
+        /*
+         * Scale the ORIGINAL 960px composition only.
+         */
+        const scale = Math.min(
+            1,
+            availableWidth / ORIGINAL_STAGE_WIDTH
+        );
+
+        /*
+         * Temporarily remove transform so height measurement uses
+         * the original desktop geometry.
+         */
+        stage.style.transform = 'none';
+
+        const stageRect = stage.getBoundingClientRect();
+        let visualBottom = stage.offsetHeight;
+
+        Array.from(stage.children).forEach(function (child) {
+            const rect = child.getBoundingClientRect();
+
+            visualBottom = Math.max(
+                visualBottom,
+                rect.bottom - stageRect.top
+            );
+        });
+
+        /*
+         * Safety room for the phone/shadow hanging below browser frame.
+         */
+        visualBottom += 14;
+
+        /*
+         * HORIZONTAL CENTERING IS PURE CSS:
+         *   left:50%
+         *   translateX(-50%)
+         *
+         * JS only adds proportional scale.
+         */
+        stage.style.transformOrigin = 'top center';
+        stage.style.transform =
+            'translateX(-50%) scale(' + scale + ')';
+
+        /*
+         * Reserve the exact scaled visual height in normal document flow.
+         */
+        fit.style.height = Math.ceil(
+            visualBottom * scale
+        ) + 'px';
+    }
+    let resizeFrame = null;
+
+    function scheduleFit() {
+        if (resizeFrame) {
+            cancelAnimationFrame(resizeFrame);
+        }
+
+        resizeFrame = requestAnimationFrame(function () {
+            fitOriginalStageToMobile();
+            resizeFrame = null;
+        });
+    }
+
+    scheduleFit();
+
+    window.addEventListener('resize', scheduleFit, { passive: true });
+    window.addEventListener('orientationchange', scheduleFit, { passive: true });
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(scheduleFit);
+    }
+})();
+</script>
+
+
+
+<style>
+/* Final mobile centering safety */
+@media (max-width: 820px) {
+    .sari-platform-ui,
+    .sari-platform-ui > .sari-platform-container,
+    .sari-platform-stage-fit {
+        max-width: 100%;
+    }
+
+    .sari-platform-ui {
+        overflow-x: hidden;
+    }
+
+    .sari-platform-stage-fit {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+</style>
+
+
+<style>
+/* =========================================================
+   FINAL MOBILE VIEWPORT CENTER FIX
+   The mockup is centered against the PHONE SCREEN itself,
+   not against an inherited landing-page/container width.
+   Desktop remains untouched.
+   ========================================================= */
+
+@media (max-width: 820px) {
+
+    /*
+     * Global landing-page container styles can make this section
+     * narrower than the phone viewport. Break this section's inner
+     * container out to the full viewport width.
+     */
+    .sari-platform-ui > .sari-platform-container {
+        position: relative !important;
+
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-width: 100vw !important;
+
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /*
+     * Header remains comfortably inset and visually centered.
+     */
+    .sari-platform-ui-header {
+        width: min(calc(100vw - 28px), 620px) !important;
+        max-width: min(calc(100vw - 28px), 620px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /*
+     * The scaling canvas itself is exactly viewport-wide.
+     */
+    .sari-platform-stage-fit {
+        position: relative !important;
+
+        width: 100vw !important;
+        max-width: 100vw !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        overflow: visible !important;
+    }
+
+    /*
+     * Stage remains original 960px desktop geometry.
+     * JavaScript supplies only:
+     *   - scale(...)
+     *   - exact viewport-centered left position
+     */
+    .sari-platform-ui-stage {
+        width: 960px !important;
+        max-width: 960px !important;
+
+        margin: 0 !important;
+        transform-origin: top left !important;
+    }
+}
+</style>
+
+
+
+<style>
+/* =========================================================
+   SARI PLATFORM — TRUE MOBILE CENTER V3
+
+   IMPORTANT:
+   - Desktop design is untouched.
+   - Original 960px composition remains intact.
+   - On mobile, the stage breaks out of ANY inherited container.
+   - CSS owns horizontal centering.
+   - JS owns scale and resulting wrapper height only.
+   ========================================================= */
+
+@media (max-width: 820px) {
+
+    /*
+     * Do NOT force the parent container itself to 100vw.
+     * Instead, break ONLY the visual stage out to the viewport.
+     */
+    .sari-platform-ui > .sari-platform-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /*
+     * Header stays normally centered inside the page.
+     */
+    .sari-platform-ui-header {
+        width: min(calc(100% - 28px), 620px) !important;
+        max-width: 620px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /*
+     * Classic full-bleed breakout:
+     * regardless of the parent/container width, this wrapper becomes
+     * exactly the viewport width and begins at the viewport's left edge.
+     */
+    .sari-platform-stage-fit {
+        display: block !important;
+        position: relative !important;
+
+        width: 100vw !important;
+        max-width: none !important;
+
+        left: 50% !important;
+        margin-left: -50vw !important;
+        margin-right: 0 !important;
+
+        overflow: visible !important;
+    }
+
+    /*
+     * The ORIGINAL desktop stage.
+     *
+     * It is anchored at the exact horizontal middle of the
+     * full-viewport wrapper. translateX(-50%) centers the original
+     * 960px box first, then scale() shrinks the whole composition
+     * around its top-center point.
+     */
+    .sari-platform-ui-stage {
+        position: absolute !important;
+        top: 0 !important;
+        left: 50% !important;
+
+        width: 960px !important;
+        max-width: 960px !important;
+
+        margin: 0 !important;
+
+        padding-top: 40px !important;
+        padding-bottom: 90px !important;
+
+        overflow: visible !important;
+
+        transform-origin: top center !important;
+        will-change: transform;
+    }
+}
+
+/* Prevent a 100vw scrollbar edge from producing page drift. */
+@media (max-width: 820px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .sari-platform-ui {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
+</style>
+
+
+
+<style>
+@media (max-width: 820px) {
+    .sari-platform-ui-stage {
+        left: 50% !important;
+    }
+}
+</style>
+
 
 </body>
 </html>

@@ -8,7 +8,7 @@
 @include('components.buyer.header')
 
 @php
-    $feePerSeller = (float) config('sari_buyer.delivery_fee_per_seller', 80);
+    $feePerSeller = (float) config('sari.buyer.delivery_fee_per_seller', 80);
     $itemGroups = $items->groupBy(fn ($item) => (int) ($item->product?->seller_account_id ?? 0));
 @endphp
 

@@ -1,14 +1,14 @@
 <?php
 
 use App\Events\SellerOrderUpdated;
-use App\Models\CommissionAuditLog;
-use App\Models\MarketplaceOrder;
-use App\Models\OrderCommission;
-use App\Models\PlatformSetting;
-use App\Models\SellerAccount;
-use App\Models\SellerSettlement;
-use App\Services\CommissionService;
-use App\Services\MarketplaceOrderWorkflowService;
+use App\Models\Finance\CommissionAuditLog;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Finance\OrderCommission;
+use App\Models\Platform\PlatformSetting;
+use App\Models\Accounts\SellerAccount;
+use App\Models\Finance\SellerSettlement;
+use App\Services\Finance\CommissionService;
+use App\Services\Orders\MarketplaceOrderWorkflowService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 
@@ -121,7 +121,7 @@ test('signed commission adjustments also reconcile the seller payable', function
     $courier = sariFinanceCourier();
     $order = sariFinanceOrder($seller, subtotal: 1000.00, deliveredAt: now()->addSecond(), courier: $courier);
 
-    app(\App\Services\FinancialFlowService::class)->recordCompletedOrder($order);
+    app(\App\Services\Finance\FinancialFlowService::class)->recordCompletedOrder($order);
 
     $service = app(CommissionService::class);
     $commission = $order->fresh()->commission;

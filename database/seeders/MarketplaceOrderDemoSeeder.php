@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\MarketplaceOrder;
-use App\Models\MarketplaceOrderEvent;
-use App\Models\SellerAccount;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Orders\MarketplaceOrderEvent;
+use App\Models\Accounts\SellerAccount;
 use Illuminate\Database\Seeder;
 
 class MarketplaceOrderDemoSeeder extends Seeder

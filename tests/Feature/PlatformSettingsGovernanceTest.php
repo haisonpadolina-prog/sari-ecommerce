@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\AdminAccount;
-use App\Models\PlatformSetting;
-use App\Models\PlatformSettingAudit;
-use App\Models\PlatformSettingVersion;
-use App\Services\PlatformSettingsService;
+use App\Models\Accounts\AdminAccount;
+use App\Models\Platform\PlatformSetting;
+use App\Models\Platform\PlatformSettingAudit;
+use App\Models\Platform\PlatformSettingVersion;
+use App\Services\Platform\PlatformSettingsService;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;

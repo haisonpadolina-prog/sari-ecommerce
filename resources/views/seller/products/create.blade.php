@@ -1956,6 +1956,599 @@
         }
     }
 </style>
+
+<style id="sariAddProductCompactReadableFinal">
+    /* ============================================================
+       ADD PRODUCT — COMPACT + READABLE FINAL LAYER
+       Preserve all form/draft/gallery/variant behavior; reduce
+       whitespace and component size without making text microscopic.
+       ============================================================ */
+
+    .seller-create-page {
+        max-width: 1440px !important;
+        padding-bottom: 24px;
+    }
+
+    .seller-create-topbar {
+        min-height: 66px !important;
+        margin-bottom: 12px !important;
+        padding: 2px 2px 13px !important;
+        gap: 12px !important;
+    }
+
+    .seller-create-heading-eyebrow {
+        font-size: 8px !important;
+        letter-spacing: .16em !important;
+    }
+
+    .seller-create-heading-title {
+        margin-top: 5px !important;
+        font-size: clamp(29px, 2.2vw, 36px) !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .seller-create-heading-back {
+        min-height: 24px !important;
+        margin-top: 5px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-create-button {
+        height: 38px !important;
+        border-radius: 10px !important;
+        padding-inline: 12px !important;
+        font-size: 10px !important;
+        gap: 6px !important;
+    }
+
+    .seller-draft-count {
+        min-width: 18px !important;
+        height: 18px !important;
+        font-size: 7.5px !important;
+    }
+
+    .seller-create-grid {
+        grid-template-columns: 168px minmax(0,1fr) minmax(220px,250px) !important;
+        gap: 12px !important;
+    }
+
+    .seller-create-side,
+    .seller-create-preview {
+        top: 138px !important;
+    }
+
+    .seller-create-side-card,
+    .seller-create-preview-card,
+    .seller-create-section {
+        border-radius: 14px !important;
+        box-shadow: 0 6px 18px rgba(15,23,42,.035) !important;
+    }
+
+    .seller-create-side-card {
+        padding: 9px !important;
+    }
+
+    .seller-create-side-title {
+        gap: 7px !important;
+        padding: 6px 7px 9px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-side-card > p {
+        padding-top: 6px !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-nav {
+        gap: 4px !important;
+        margin-top: 7px !important;
+    }
+
+    .seller-create-nav button {
+        border-radius: 9px !important;
+        padding: 8px 9px !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-create-workspace {
+        gap: 11px !important;
+    }
+
+    .seller-create-section {
+        scroll-margin-top: 145px !important;
+        padding: 15px !important;
+    }
+
+    .seller-create-section-head {
+        gap: 9px !important;
+        margin-bottom: 13px !important;
+    }
+
+    .seller-create-section-copy h2 {
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+    }
+
+    .seller-create-section-copy p {
+        margin-top: 3px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-create-rule {
+        margin-top: 16px !important;
+    }
+
+    .seller-create-field-grid {
+        gap: 10px !important;
+    }
+
+    .seller-create-label,
+    .seller-create-label-with-icon {
+        margin-bottom: 6px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-label-with-icon {
+        gap: 6px !important;
+    }
+
+    .seller-create-input,
+    .seller-create-select,
+    .seller-create-money-field,
+    .seller-category-trigger {
+        height: 40px !important;
+        border-radius: 10px !important;
+    }
+
+    .seller-create-input,
+    .seller-create-select {
+        padding-inline: 11px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-money-prefix {
+        width: 38px !important;
+        flex-basis: 38px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-money-input {
+        padding-inline: 11px !important;
+        font-size: 10.5px !important;
+    }
+
+    .seller-category-trigger {
+        gap: 8px !important;
+        padding-inline: 10px !important;
+        font-size: 10px !important;
+    }
+
+    .seller-category-trigger-icon {
+        width: 17px !important;
+        height: 17px !important;
+        flex-basis: 17px !important;
+    }
+
+    .seller-category-trigger-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    .seller-category-menu {
+        max-height: 220px !important;
+        margin-top: 5px !important;
+        border-radius: 11px !important;
+        padding: 5px !important;
+    }
+
+    .seller-category-option {
+        min-height: 34px !important;
+        gap: 7px !important;
+        border-radius: 8px !important;
+        padding: 6px 8px !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-create-textarea {
+        min-height: 118px !important;
+        border-radius: 10px !important;
+        padding: 10px 11px !important;
+        font-size: 10.5px !important;
+        line-height: 1.55 !important;
+    }
+
+    .seller-create-help {
+        margin-top: 4px !important;
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-upload {
+        min-height: 132px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-upload img {
+        min-height: 132px !important;
+    }
+
+    .seller-create-gallery {
+        gap: 7px !important;
+        margin-top: 9px !important;
+    }
+
+    .seller-create-gallery-thumb {
+        border-radius: 9px !important;
+    }
+
+    .seller-gallery-remove {
+        top: 4px !important;
+        right: 4px !important;
+        width: 21px !important;
+        height: 21px !important;
+    }
+
+    .seller-gallery-saved-badge {
+        left: 4px !important;
+        bottom: 4px !important;
+        min-height: 18px !important;
+        font-size: 6.8px !important;
+    }
+
+    details.mt-4 {
+        margin-top: 11px !important;
+        border-radius: 10px !important;
+    }
+
+    details.mt-4 > summary {
+        padding: 9px 10px !important;
+        font-size: 9px !important;
+    }
+
+    .seller-create-toggle-row {
+        gap: 12px !important;
+        margin-top: 10px !important;
+        padding: 10px 12px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-toggle-row strong {
+        font-size: 10px !important;
+    }
+
+    .seller-create-toggle-row span {
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-toggle {
+        width: 44px !important;
+        height: 24px !important;
+        flex-basis: 44px !important;
+    }
+
+    .seller-create-toggle::after {
+        top: 3px !important;
+        left: 3px !important;
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .peer:checked + .seller-create-toggle::after {
+        transform: translateX(20px) !important;
+    }
+
+    .seller-create-setting-grid {
+        gap: 9px !important;
+        margin-top: 10px !important;
+    }
+
+    .seller-create-setting-card {
+        min-height: 74px !important;
+        gap: 10px !important;
+        padding: 11px 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .seller-create-setting-copy {
+        gap: 8px !important;
+    }
+
+    .seller-create-setting-copy strong {
+        font-size: 10.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    .seller-create-setting-copy span {
+        margin-top: 3px !important;
+        max-width: 310px !important;
+        font-size: 8.8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-create-plain-icon {
+        width: 19px !important;
+        height: 19px !important;
+        flex-basis: 19px !important;
+    }
+
+    .seller-create-plain-icon svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    .seller-variant-table-wrap {
+        margin-top: 9px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-variant-table th {
+        padding: 7px 6px !important;
+        font-size: 8px !important;
+    }
+
+    .seller-variant-table td {
+        padding: 7px 6px !important;
+    }
+
+    .seller-variant-table input[type="text"],
+    .seller-variant-table input[type="number"] {
+        height: 32px !important;
+        border-radius: 8px !important;
+        padding-inline: 7px !important;
+        font-size: 8.8px !important;
+    }
+
+    .seller-variant-image-label {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-create-mobile-preview {
+        margin-top: 10px !important;
+        padding: 9px 11px !important;
+        border-radius: 11px !important;
+    }
+
+    .seller-create-mobile-preview-copy strong {
+        font-size: 10.5px !important;
+    }
+
+    .seller-create-mobile-preview-copy > span:last-child {
+        font-size: 8.5px !important;
+    }
+
+    .seller-promo-preview {
+        margin-top: 10px !important;
+        border-radius: 12px !important;
+        padding: 10px 11px !important;
+    }
+
+    .seller-promo-preview-head {
+        padding-bottom: 8px !important;
+    }
+
+    .seller-promo-preview-head strong {
+        font-size: 10.5px !important;
+    }
+
+    .seller-promo-preview-head span {
+        min-height: 22px !important;
+        padding-inline: 8px !important;
+        font-size: 8.5px !important;
+    }
+
+    .seller-promo-preview-price {
+        margin-top: 9px !important;
+    }
+
+    .seller-promo-preview-price strong {
+        font-size: 18px !important;
+    }
+
+    .seller-promo-preview-price span {
+        font-size: 9.5px !important;
+    }
+
+    .seller-promo-preview-note {
+        margin-top: 6px !important;
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-spec-row {
+        grid-template-columns: 1fr 1.4fr 90px 38px !important;
+        gap: 8px !important;
+        margin-top: 8px !important;
+    }
+
+    .seller-spec-row [data-remove-spec] {
+        height: 38px !important;
+    }
+
+    .seller-preview-head {
+        padding: 11px 12px !important;
+    }
+
+    .seller-preview-head h3 {
+        font-size: 11px !important;
+    }
+
+    .seller-preview-body {
+        padding: 10px !important;
+    }
+
+    .seller-preview-image {
+        max-height: 150px !important;
+        border-radius: 10px !important;
+    }
+
+    .seller-preview-title {
+        margin-top: 9px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+    }
+
+    .seller-preview-price {
+        margin-top: 6px !important;
+        font-size: 17px !important;
+    }
+
+    .seller-preview-old-price {
+        margin-left: 6px !important;
+        font-size: 9px !important;
+    }
+
+    .seller-preview-badges {
+        gap: 4px !important;
+        margin-top: 7px !important;
+    }
+
+    .seller-preview-badge {
+        min-height: 20px !important;
+        padding-inline: 7px !important;
+        font-size: 7.5px !important;
+    }
+
+    .seller-preview-note {
+        margin-top: 10px !important;
+        padding-top: 9px !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .seller-inline-alert {
+        margin-bottom: 10px !important;
+        border-radius: 11px !important;
+        padding: 9px 11px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-draft-menu {
+        width: min(340px, 88vw) !important;
+        border-radius: 13px !important;
+    }
+
+    .seller-draft-menu-head {
+        padding: 10px 11px !important;
+    }
+
+    .seller-draft-menu-head strong {
+        font-size: 10px !important;
+    }
+
+    .seller-draft-menu-head span {
+        font-size: 7.8px !important;
+    }
+
+    .seller-draft-list {
+        max-height: 320px !important;
+    }
+
+    .seller-draft-item {
+        padding: 7px !important;
+        border-radius: 9px !important;
+    }
+
+    .seller-draft-open {
+        grid-template-columns: 40px minmax(0,1fr) !important;
+        gap: 8px !important;
+    }
+
+    .seller-draft-thumb {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+    }
+
+    .seller-draft-open strong {
+        font-size: 8.8px !important;
+    }
+
+    .seller-draft-open span {
+        font-size: 7.5px !important;
+    }
+
+    .seller-draft-delete {
+        width: 27px !important;
+        height: 27px !important;
+    }
+
+    @media (max-width: 1500px) {
+        .seller-create-grid {
+            grid-template-columns: 158px minmax(0,1fr) !important;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .seller-create-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .seller-create-section {
+            padding: 14px !important;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .seller-create-topbar {
+            gap: 10px !important;
+        }
+
+        .seller-create-heading-title {
+            font-size: clamp(28px, 8vw, 34px) !important;
+        }
+
+        .seller-create-topbar > .flex.items-center.gap-2 {
+            gap: 7px !important;
+        }
+
+        .seller-create-button {
+            height: 40px !important;
+            font-size: 9.5px !important;
+        }
+
+        .seller-create-input,
+        .seller-create-select,
+        .seller-create-money-field,
+        .seller-category-trigger {
+            height: 42px !important;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .seller-create-section {
+            padding: 12px !important;
+        }
+
+        .seller-create-field-grid,
+        .seller-create-field-grid--3,
+        .seller-create-field-grid--4,
+        .seller-create-setting-grid {
+            gap: 9px !important;
+        }
+
+        .seller-create-label,
+        .seller-create-label-with-icon {
+            font-size: 10px !important;
+        }
+
+        .seller-create-textarea {
+            min-height: 110px !important;
+        }
+
+        .seller-create-upload {
+            min-height: 120px !important;
+        }
+    }
+</style>
+
 @endpush
 
 @section('content')

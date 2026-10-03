@@ -2,12 +2,12 @@
 
 namespace App\Support;
 
-use App\Models\AdminAccount;
-use App\Models\BuyerAccount;
-use App\Models\CourierAccount;
-use App\Models\LogisticsAccount;
-use App\Models\SellerAccount;
-use App\Models\SocialAccount;
+use App\Models\Accounts\AdminAccount;
+use App\Models\Accounts\BuyerAccount;
+use App\Models\Accounts\CourierAccount;
+use App\Models\Accounts\LogisticsAccount;
+use App\Models\Accounts\SellerAccount;
+use App\Models\Accounts\SocialAccount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

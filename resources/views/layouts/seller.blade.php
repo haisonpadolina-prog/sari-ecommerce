@@ -1221,10 +1221,15 @@
         | Safe fallback for any Seller view that is intentionally rendered
         | without the normal Seller middleware.
         */
-        $sellerLayoutAccount = \App\Models\SellerAccount::find(
+        $sellerLayoutAccount = \App\Models\Accounts\SellerAccount::find(
             session('seller_account_id')
         );
     }
+
+    $sellerLayoutProfilePhotoUrl = $sellerLayoutAccount
+        && filled($sellerLayoutAccount->profile_image_path)
+            ? route('seller.account.profile-photo')
+            : null;
 
     $sellerUnreadMessages = 0;
     $sellerRecentAdminMessages = collect();
@@ -1935,8 +1940,18 @@
                 "
                 wire:navigate.hover
             >
-                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[12px] font-semibold text-white">
-                    {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
+                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#d9930a] text-[12px] font-semibold text-white">
+                    @if($sellerLayoutProfilePhotoUrl)
+                        <img
+                            src="{{ $sellerLayoutProfilePhotoUrl }}"
+                            alt="Seller profile photo"
+                            class="h-full w-full object-cover"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+                        >
+                        <span style="display:none" class="h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
+                    @else
+                        <span class="grid h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
+                    @endif
                 </div>
 
                 <div class="seller-sidebar-label min-w-0 flex-1">
@@ -2235,8 +2250,18 @@
                         class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
                 wire:navigate.hover
             >
-                        <div class="grid h-10 w-10 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
-                            {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
+                        <div class="relative h-10 w-10 overflow-hidden rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
+                            @if($sellerLayoutProfilePhotoUrl)
+                                <img
+                                    src="{{ $sellerLayoutProfilePhotoUrl }}"
+                                    alt="Seller profile photo"
+                                    class="h-full w-full object-cover"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+                                >
+                                <span style="display:none" class="h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
+                            @else
+                                <span class="grid h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
+                            @endif
                         </div>
 
                         <div>

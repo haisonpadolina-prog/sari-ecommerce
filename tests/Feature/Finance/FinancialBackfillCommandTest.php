@@ -1,9 +1,9 @@
 <?php
 
 use App\Events\SellerOrderUpdated;
-use App\Models\PaymentTransaction;
-use App\Models\RiderEarning;
-use App\Models\SellerSettlement;
+use App\Models\Finance\PaymentTransaction;
+use App\Models\Finance\RiderEarning;
+use App\Models\Finance\SellerSettlement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 

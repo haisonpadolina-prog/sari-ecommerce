@@ -460,6 +460,752 @@
 }
 </style>
 
+
+<style>
+/* =========================================================
+   SARI CTA — HYBRID MOBILE FINAL
+   Desktop/web design stays untouched.
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .sari-cta-v2 {
+        min-height: 520px !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        background-size: cover !important;
+        background-position: 64% center !important;
+        overflow: hidden !important;
+    }
+
+    .sari-cta-v2__overlay {
+        background: linear-gradient(
+            90deg,
+            rgba(255,253,249,.995) 0%,
+            rgba(255,253,249,.98) 34%,
+            rgba(255,253,249,.89) 49%,
+            rgba(255,253,249,.58) 64%,
+            rgba(255,253,249,.18) 81%,
+            rgba(255,253,249,0) 100%
+        ) !important;
+    }
+
+    .sari-cta-v2__container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 48px 18px 58px !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 61% !important;
+        max-width: 330px !important;
+    }
+
+    .sari-cta-v2__brand {
+        gap: 8px !important;
+        margin-bottom: 23px !important;
+    }
+
+    .sari-cta-v2__logo {
+        width: 112px !important;
+    }
+
+    .sari-cta-v2__eyebrow {
+        padding-left: 26px !important;
+        font-size: 6.8px !important;
+        letter-spacing: .22em !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__eyebrow::before {
+        width: 18px !important;
+    }
+
+    .sari-cta-v2__title {
+        max-width: 330px !important;
+        font-size: clamp(34px, 9.5vw, 44px) !important;
+        line-height: .97 !important;
+        letter-spacing: -.055em !important;
+    }
+
+    .sari-cta-v2__description {
+        width: 100% !important;
+        max-width: 290px !important;
+        margin-top: 18px !important;
+        font-size: 11.5px !important;
+        line-height: 1.58 !important;
+    }
+
+    .sari-cta-v2__actions {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 11px 14px !important;
+        margin-top: 23px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 132px !important;
+        height: 42px !important;
+        padding: 0 16px !important;
+        gap: 9px !important;
+        border-radius: 6px !important;
+        font-size: 8.4px !important;
+        letter-spacing: .08em !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__primary span {
+        font-size: 13px !important;
+    }
+
+    .sari-cta-v2__secondary {
+        gap: 5px !important;
+        font-size: 8.6px !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__trust {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 7px 12px !important;
+        margin-top: 22px !important;
+        padding-right: 6px !important;
+    }
+
+    .sari-cta-v2__trust span {
+        gap: 5px !important;
+        font-size: 7.1px !important;
+        line-height: 1.3 !important;
+    }
+
+    .sari-cta-v2__trust i {
+        width: 3.5px !important;
+        height: 3.5px !important;
+    }
+
+    .sari-cta-v2__floating {
+        display: flex !important;
+        right: 12px !important;
+        bottom: 14px !important;
+        width: 156px !important;
+        min-height: 54px !important;
+        padding: 10px 11px !important;
+        gap: 8px !important;
+        border-radius: 10px !important;
+        background: rgba(255,255,255,.84) !important;
+        box-shadow: 0 12px 30px rgba(66,47,18,.10) !important;
+        backdrop-filter: blur(9px) !important;
+        -webkit-backdrop-filter: blur(9px) !important;
+        animation: none !important;
+    }
+
+    .sari-cta-v2__floating-icon {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 8px !important;
+    }
+
+    .sari-cta-v2__floating-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .sari-cta-v2__floating small {
+        margin-bottom: 2px !important;
+        font-size: 5.8px !important;
+        letter-spacing: .12em !important;
+    }
+
+    .sari-cta-v2__floating strong {
+        font-size: 8px !important;
+        line-height: 1.3 !important;
+    }
+
+    .sari-cta-v2__primary:hover,
+    .sari-cta-v2__secondary:hover,
+    .sari-cta-v2__primary:hover span {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .sari-cta-v2 {
+        min-height: 500px !important;
+        background-position: 66% center !important;
+    }
+
+    .sari-cta-v2__overlay {
+        background: linear-gradient(
+            90deg,
+            rgba(255,253,249,.997) 0%,
+            rgba(255,253,249,.985) 38%,
+            rgba(255,253,249,.90) 54%,
+            rgba(255,253,249,.56) 70%,
+            rgba(255,253,249,.12) 100%
+        ) !important;
+    }
+
+    .sari-cta-v2__container {
+        padding: 42px 14px 58px !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 64% !important;
+        max-width: 255px !important;
+    }
+
+    .sari-cta-v2__brand {
+        margin-bottom: 20px !important;
+    }
+
+    .sari-cta-v2__logo {
+        width: 98px !important;
+    }
+
+    .sari-cta-v2__eyebrow {
+        padding-left: 22px !important;
+        font-size: 6px !important;
+    }
+
+    .sari-cta-v2__eyebrow::before {
+        width: 15px !important;
+    }
+
+    .sari-cta-v2__title {
+        max-width: 255px !important;
+        font-size: clamp(32px, 10.5vw, 39px) !important;
+    }
+
+    .sari-cta-v2__description {
+        max-width: 235px !important;
+        margin-top: 16px !important;
+        font-size: 10px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-cta-v2__actions {
+        gap: 10px 12px !important;
+        margin-top: 20px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 118px !important;
+        height: 39px !important;
+        padding-inline: 14px !important;
+        font-size: 7.5px !important;
+    }
+
+    .sari-cta-v2__secondary {
+        font-size: 7.7px !important;
+    }
+
+    .sari-cta-v2__trust {
+        gap: 6px 10px !important;
+        margin-top: 19px !important;
+    }
+
+    .sari-cta-v2__trust span {
+        font-size: 6.3px !important;
+    }
+
+    .sari-cta-v2__floating {
+        right: 8px !important;
+        bottom: 10px !important;
+        width: 138px !important;
+        min-height: 48px !important;
+        padding: 8px 9px !important;
+    }
+
+    .sari-cta-v2__floating-icon {
+        width: 27px !important;
+        height: 27px !important;
+    }
+
+    .sari-cta-v2__floating strong {
+        font-size: 7.2px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .sari-cta-v2 {
+        background-position: 67% center !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 67% !important;
+        max-width: 225px !important;
+    }
+
+    .sari-cta-v2__title {
+        font-size: 30px !important;
+    }
+
+    .sari-cta-v2__description {
+        max-width: 210px !important;
+        font-size: 9.3px !important;
+    }
+
+    .sari-cta-v2__actions {
+        gap: 8px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 110px !important;
+        height: 37px !important;
+        font-size: 7px !important;
+    }
+
+    .sari-cta-v2__secondary {
+        font-size: 7px !important;
+    }
+
+    .sari-cta-v2__trust span {
+        font-size: 5.8px !important;
+    }
+
+    .sari-cta-v2__floating {
+        width: 126px !important;
+    }
+}
+</style>
+
+
+
+<style>
+/* =========================================================
+   SARI CTA — MOBILE BACKGROUND SEAM FIX
+   Keeps desktop untouched.
+   Fixes the visible horizontal "split" on mobile.
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .sari-cta-v2 {
+        background-color: #fffdf9 !important;
+
+        /*
+         * Keep the full image height intact instead of allowing
+         * cover-cropping to create an awkward mobile composition.
+         */
+        background-size: auto 100% !important;
+        background-position: right center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    /*
+     * Two-layer veil:
+     * 1) desktop-like left-to-right readability fade
+     * 2) subtle top/bottom feather that visually removes any
+     *    hard horizontal transition in the source image/crop
+     */
+    .sari-cta-v2__overlay {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,253,249,.18) 0%,
+                rgba(255,253,249,.05) 23%,
+                rgba(255,253,249,0) 45%,
+                rgba(255,253,249,0) 78%,
+                rgba(255,253,249,.08) 100%
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255,253,249,.998) 0%,
+                rgba(255,253,249,.985) 34%,
+                rgba(255,253,249,.91) 49%,
+                rgba(255,253,249,.62) 64%,
+                rgba(255,253,249,.24) 80%,
+                rgba(255,253,249,.04) 100%
+            ) !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .sari-cta-v2 {
+        background-size: auto 100% !important;
+        background-position: right center !important;
+    }
+
+    .sari-cta-v2__overlay {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255,253,249,.16) 0%,
+                rgba(255,253,249,.04) 25%,
+                rgba(255,253,249,0) 47%,
+                rgba(255,253,249,0) 80%,
+                rgba(255,253,249,.08) 100%
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255,253,249,.998) 0%,
+                rgba(255,253,249,.99) 39%,
+                rgba(255,253,249,.92) 54%,
+                rgba(255,253,249,.64) 70%,
+                rgba(255,253,249,.18) 100%
+            ) !important;
+    }
+}
+</style>
+
+
+
+<style>
+/* =========================================================
+   SARI CTA — MOBILE RIGHT-PANEL FIX V2
+   Desktop/web untouched.
+
+   Mobile:
+   - removes full-section background crop
+   - renders the product scene as a full-height right panel
+   - eliminates the horizontal seam
+   - removes excessive top blank space
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .sari-cta-v2 {
+        position: relative !important;
+
+        min-height: 520px !important;
+        height: auto !important;
+
+        display: flex !important;
+        align-items: flex-start !important;
+
+        /*
+         * Mobile no longer uses the full wide hero as the section background.
+         * Left side becomes a clean cream canvas.
+         */
+        background-image: none !important;
+        background-color: #fffdf9 !important;
+
+        overflow: hidden !important;
+    }
+
+    /*
+     * Dedicated right-side image layer.
+     * Because we show only the right part of the source image,
+     * the shopping bag / vase scene stays visible from TOP to BOTTOM.
+     */
+    .sari-cta-v2::before {
+        content: "" !important;
+
+        position: absolute !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+
+        width: 54% !important;
+
+        z-index: 0 !important;
+        pointer-events: none !important;
+
+        background-image: url("{{ asset('images/sari-hero-bg.png') }}") !important;
+        background-repeat: no-repeat !important;
+        background-size: auto 100% !important;
+        background-position: right center !important;
+    }
+
+    /*
+     * Blend the right image panel into the cream content area.
+     */
+    .sari-cta-v2__overlay {
+        z-index: 1 !important;
+
+        background:
+            linear-gradient(
+                90deg,
+                #fffdf9 0%,
+                #fffdf9 41%,
+                rgba(255,253,249,.96) 48%,
+                rgba(255,253,249,.78) 57%,
+                rgba(255,253,249,.38) 69%,
+                rgba(255,253,249,.08) 84%,
+                rgba(255,253,249,0) 100%
+            ) !important;
+    }
+
+    /*
+     * Start content near the top instead of vertically centering it.
+     * This removes the large empty mobile gap seen in the screenshot.
+     */
+    .sari-cta-v2__container {
+        position: relative !important;
+        z-index: 3 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 42px 18px 68px !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 62% !important;
+        max-width: 330px !important;
+    }
+
+    .sari-cta-v2__brand {
+        margin-bottom: 21px !important;
+    }
+
+    .sari-cta-v2__logo {
+        width: 108px !important;
+    }
+
+    .sari-cta-v2__eyebrow {
+        padding-left: 25px !important;
+        font-size: 6.5px !important;
+        letter-spacing: .21em !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__eyebrow::before {
+        width: 17px !important;
+    }
+
+    .sari-cta-v2__title {
+        max-width: 320px !important;
+
+        font-size: clamp(34px, 9.4vw, 43px) !important;
+        line-height: .97 !important;
+        letter-spacing: -.055em !important;
+    }
+
+    .sari-cta-v2__description {
+        width: 100% !important;
+        max-width: 285px !important;
+
+        margin-top: 17px !important;
+
+        font-size: 11px !important;
+        line-height: 1.56 !important;
+    }
+
+    .sari-cta-v2__actions {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+
+        gap: 11px 13px !important;
+        margin-top: 22px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 128px !important;
+        height: 41px !important;
+
+        padding: 0 15px !important;
+
+        border-radius: 6px !important;
+
+        font-size: 8.2px !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__secondary {
+        font-size: 8.4px !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-cta-v2__trust {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+
+        gap: 7px 11px !important;
+
+        margin-top: 21px !important;
+    }
+
+    .sari-cta-v2__trust span {
+        gap: 5px !important;
+        font-size: 6.9px !important;
+    }
+
+    .sari-cta-v2__trust i {
+        width: 3.5px !important;
+        height: 3.5px !important;
+    }
+
+    /*
+     * Keep the floating marketplace card over the image panel.
+     */
+    .sari-cta-v2__floating {
+        display: flex !important;
+
+        right: 10px !important;
+        bottom: 12px !important;
+
+        width: 150px !important;
+        min-height: 52px !important;
+
+        padding: 9px 10px !important;
+        gap: 8px !important;
+
+        border-radius: 10px !important;
+
+        z-index: 4 !important;
+
+        background: rgba(255,255,255,.86) !important;
+        box-shadow: 0 12px 30px rgba(66,47,18,.10) !important;
+
+        backdrop-filter: blur(9px) !important;
+        -webkit-backdrop-filter: blur(9px) !important;
+
+        animation: none !important;
+    }
+
+    .sari-cta-v2__floating-icon {
+        width: 29px !important;
+        height: 29px !important;
+
+        border-radius: 7px !important;
+    }
+
+    .sari-cta-v2__floating-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .sari-cta-v2__floating small {
+        margin-bottom: 2px !important;
+        font-size: 5.5px !important;
+        letter-spacing: .12em !important;
+    }
+
+    .sari-cta-v2__floating strong {
+        font-size: 7.7px !important;
+        line-height: 1.28 !important;
+    }
+
+    /* No sticky touch hover movement. */
+    .sari-cta-v2__primary:hover,
+    .sari-cta-v2__secondary:hover,
+    .sari-cta-v2__primary:hover span {
+        transform: none !important;
+    }
+}
+
+/* Standard narrow phones */
+@media (max-width: 430px) {
+
+    .sari-cta-v2 {
+        min-height: 500px !important;
+    }
+
+    .sari-cta-v2::before {
+        width: 55% !important;
+        background-size: auto 100% !important;
+        background-position: right center !important;
+    }
+
+    .sari-cta-v2__overlay {
+        background:
+            linear-gradient(
+                90deg,
+                #fffdf9 0%,
+                #fffdf9 43%,
+                rgba(255,253,249,.97) 50%,
+                rgba(255,253,249,.80) 59%,
+                rgba(255,253,249,.40) 71%,
+                rgba(255,253,249,.08) 88%,
+                rgba(255,253,249,0) 100%
+            ) !important;
+    }
+
+    .sari-cta-v2__container {
+        padding: 38px 14px 64px !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 64% !important;
+        max-width: 255px !important;
+    }
+
+    .sari-cta-v2__logo {
+        width: 98px !important;
+    }
+
+    .sari-cta-v2__title {
+        font-size: clamp(32px, 10.4vw, 39px) !important;
+    }
+
+    .sari-cta-v2__description {
+        max-width: 235px !important;
+        font-size: 10px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 118px !important;
+        height: 39px !important;
+        font-size: 7.5px !important;
+    }
+
+    .sari-cta-v2__secondary {
+        font-size: 7.6px !important;
+    }
+
+    .sari-cta-v2__trust span {
+        font-size: 6.2px !important;
+    }
+
+    .sari-cta-v2__floating {
+        right: 8px !important;
+        bottom: 9px !important;
+
+        width: 136px !important;
+        min-height: 47px !important;
+    }
+
+    .sari-cta-v2__floating strong {
+        font-size: 7px !important;
+    }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+
+    .sari-cta-v2::before {
+        width: 56% !important;
+    }
+
+    .sari-cta-v2__content {
+        width: 67% !important;
+        max-width: 225px !important;
+    }
+
+    .sari-cta-v2__title {
+        font-size: 30px !important;
+    }
+
+    .sari-cta-v2__description {
+        max-width: 205px !important;
+        font-size: 9.2px !important;
+    }
+
+    .sari-cta-v2__primary {
+        min-width: 108px !important;
+        height: 37px !important;
+        font-size: 7px !important;
+    }
+
+    .sari-cta-v2__secondary {
+        font-size: 7px !important;
+    }
+
+    .sari-cta-v2__floating {
+        width: 124px !important;
+    }
+}
+</style>
+
+
 <script>
 (function () {
     const section = document.querySelector('.sari-cta-v2');

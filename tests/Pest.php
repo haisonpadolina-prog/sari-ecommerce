@@ -48,17 +48,17 @@ function something()
     // ..
 }
 
-function sariFinanceSeller(): \App\Models\SellerAccount
+function sariFinanceSeller(): \App\Models\Accounts\SellerAccount
 {
-    return \App\Models\SellerAccount::query()->create([
+    return \App\Models\Accounts\SellerAccount::query()->create([
         'email' => fake()->unique()->safeEmail(),
         'store_name' => 'Finance Test Store',
     ]);
 }
 
-function sariFinanceCourier(): \App\Models\CourierAccount
+function sariFinanceCourier(): \App\Models\Accounts\CourierAccount
 {
-    return \App\Models\CourierAccount::query()->create([
+    return \App\Models\Accounts\CourierAccount::query()->create([
         'registration_application_id' => null,
         'last_name' => 'Rider',
         'first_name' => 'Finance',
@@ -86,14 +86,14 @@ function sariFinanceCourier(): \App\Models\CourierAccount
 }
 
 function sariFinanceOrder(
-    \App\Models\SellerAccount $seller,
+    \App\Models\Accounts\SellerAccount $seller,
     string $status = 'delivered',
     float $subtotal = 990.00,
     mixed $deliveredAt = null,
-    ?\App\Models\CourierAccount $courier = null,
+    ?\App\Models\Accounts\CourierAccount $courier = null,
     ?string $paymentStatus = null
-): \App\Models\MarketplaceOrder {
-    return \App\Models\MarketplaceOrder::query()->create([
+): \App\Models\Orders\MarketplaceOrder {
+    return \App\Models\Orders\MarketplaceOrder::query()->create([
         'order_number' => 'SARI-TEST-' . fake()->unique()->numerify('########'),
         'seller_account_id' => $seller->id,
         'buyer_name' => 'Test Buyer',

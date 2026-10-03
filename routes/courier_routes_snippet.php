@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CourierDashboardController;
+use App\Http\Controllers\Courier\CourierDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('courier')->name('courier.')->group(function () {

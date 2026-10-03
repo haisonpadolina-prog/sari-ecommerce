@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Models\LogisticsAccount;
+use App\Models\Accounts\LogisticsAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 

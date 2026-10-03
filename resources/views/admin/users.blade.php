@@ -3038,7 +3038,7 @@
             <div class="relative xl:w-[175px]" data-status-dropdown>
                 <button type="button" data-status-toggle class="clean-control flex h-11 w-full items-center justify-between rounded-[12px] px-4 text-[9px] font-medium"><span class="inline-flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[#3f9a61]"></span><span data-status-label>All Status</span></span><svg viewBox="0 0 24 24" class="h-3.5 w-3.5 text-[#8b8175]" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m7 10 5 5 5-5"></path></svg></button>
                 <div class="custom-menu absolute left-0 right-0 top-full z-40 rounded-[14px] border border-[#e7dfd4] bg-white p-1.5 shadow-[0_18px_40px_rgba(47,37,25,.13)]" data-status-menu>
-                    @foreach(['all' => 'All Status', 'active' => 'Active', 'deactivated' => 'Suspended'] as $value => $label)
+                    @foreach(['all' => 'All Status', 'active' => 'Active', 'deactivated' => 'Suspended', 'banned' => 'Banned'] as $value => $label)
                         <button type="button" data-status-option="{{ $value }}" class="flex w-full items-center justify-between rounded-[10px] px-3 py-2.5 text-left text-[9px] font-medium text-[#5c534a] transition hover:bg-[#fff7e8] hover:text-[#a8731f]">{{ $label }}<span class="h-1.5 w-1.5 rounded-full bg-[#d99500] opacity-0" data-check></span></button>
                     @endforeach
                 </div>
@@ -3101,6 +3101,9 @@
                         data-update-url="{{ route('admin.users.update', [$roleKey, $id]) }}"
                         data-suspend-url="{{ route('admin.users.suspend', [$roleKey, $id]) }}"
                         data-restore-url="{{ route('admin.users.restore', [$roleKey, $id]) }}"
+                        data-ban-url="{{ route('admin.users.ban', [$roleKey, $id]) }}"
+                        data-unban-url="{{ route('admin.users.unban', [$roleKey, $id]) }}"
+                        data-delete-url="{{ route('admin.users.destroy', [$roleKey, $id]) }}"
                         data-note-url="{{ route('admin.users.note', [$roleKey, $id]) }}"
                         data-message-url="{{ $roleKey === 'seller' ? route('admin.messages', ['seller' => $id]) : '' }}"
                         data-activity='@json($activityPayload)'
@@ -3112,6 +3115,8 @@
                         <td class="px-4 py-4">
                             @if($status === 'active')
                                 <span class="inline-flex items-center gap-2 rounded-full border border-[#d6e9dc] bg-[#eef8f1] px-3 py-1.5 text-[8px] font-semibold text-[#36805a]"><span class="h-1.5 w-1.5 rounded-full bg-[#2f9b5c]"></span>Active</span>
+                            @elseif($status === 'banned')
+                                <span class="inline-flex items-center gap-2 rounded-full border border-[#efc8c3] bg-[#fff1ef] px-3 py-1.5 text-[8px] font-semibold text-[#bd4438]"><span class="h-1.5 w-1.5 rounded-full bg-[#d94f42]"></span>Banned</span>
                             @else
                                 <span class="inline-flex items-center gap-2 rounded-full border border-[#ead5d0] bg-[#fff4f1] px-3 py-1.5 text-[8px] font-semibold text-[#a95d45]"><span class="h-1.5 w-1.5 rounded-full bg-[#bd6a4e]"></span>Suspended</span>
                             @endif
@@ -3196,6 +3201,20 @@
                                         </svg>
                                     </button>
                                 @endif
+
+                                @if($status === 'banned')
+                                    <button type="button" data-ban-user data-ban-mode="unban" class="account-action account-action--restore" title="Cancel ban" aria-label="Cancel ban">
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 7v5h-5"></path><path d="M18 16a7 7 0 1 1 1-8l1 4"></path></svg>
+                                    </button>
+                                @else
+                                    <button type="button" data-ban-user data-ban-mode="ban" class="account-action account-action--suspend" title="Ban email and account" aria-label="Ban email and account">
+                                        <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5l14 14"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                                    </button>
+                                @endif
+
+                                <button type="button" data-delete-user class="account-action" style="color:#d95745" title="Delete account" aria-label="Delete account">
+                                    <svg viewBox="0 0 24 24" class="account-action-svg" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="M7 7l1 13h8l1-13"></path><path d="M10 11v5M14 11v5"></path></svg>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -3540,7 +3559,7 @@
                                 <div>
                                     <p class="enterprise-section-eyebrow enterprise-section-eyebrow--danger">Access Control</p>
                                     <h4>Account access</h4>
-                                    <p class="enterprise-section-copy">Suspend access when necessary. An administrator can restore the account later.</p>
+                                    <p class="enterprise-section-copy">Suspend temporarily, ban an email from login/registration, or delete the account while releasing its email for a fresh registration.</p>
                                 </div>
                             </div>
 
@@ -3576,6 +3595,25 @@
                                     </svg>
                                     Restore user access
                                 </button>
+                            </form>
+
+                            <form id="banForm" method="POST" class="mt-4 border-t border-[#eee8df] pt-4">
+                                @csrf
+                                <label for="banReasonInput" class="enterprise-field-label">Ban reason</label>
+                                <textarea id="banReasonInput" name="reason" required minlength="5" maxlength="500" rows="3" placeholder="Reason for banning this email..." class="clean-control enterprise-field-textarea enterprise-field-textarea--danger"></textarea>
+                                <button id="banAccessButton" type="submit" class="enterprise-button enterprise-button--danger mt-3 w-full">Ban account and email</button>
+                            </form>
+
+                            <form id="unbanForm" method="POST" class="mt-4 hidden border-t border-[#eee8df] pt-4">
+                                @csrf
+                                <button id="unbanAccessButton" type="submit" class="enterprise-button enterprise-button--success w-full">Cancel ban & allow re-registration</button>
+                            </form>
+
+                            <form id="deleteUserForm" method="POST" class="mt-4 border-t border-[#eee8df] pt-4" onsubmit="return confirm('Delete this account? The account will be removed and its email will be allowed to register again. Historical platform records will remain intact.');">
+                                @csrf
+                                @method('DELETE')
+                                <p class="enterprise-section-copy">Deleting releases the current email so it can be used for a new registration.</p>
+                                <button id="deleteAccountButton" type="submit" class="enterprise-button enterprise-button--danger mt-3 w-full">Delete account</button>
                             </form>
                         </section>
                     </div>
@@ -3770,11 +3808,11 @@
         document.getElementById('drawerContact').textContent = row.dataset.contact || 'No contact number';
         document.getElementById('drawerJoined').textContent = 'Joined ' + (row.dataset.joined || '—');
         document.getElementById('drawerId').textContent = row.dataset.id ? '#' + row.dataset.id : '—';
-        document.getElementById('drawerAccess').textContent = status === 'active' ? 'Access enabled' : 'Access suspended';
+        document.getElementById('drawerAccess').textContent = status === 'active' ? 'Access enabled' : (status === 'banned' ? 'Email and account banned' : 'Access suspended');
         document.getElementById('drawerAccess').className = 'mt-1.5 text-[9px] font-semibold ' + (status === 'active' ? 'text-[#45805b]' : 'text-[#a95d45]');
 
         const badge = document.getElementById('drawerStatusBadge');
-        badge.textContent = status === 'active' ? 'Active' : 'Suspended';
+        badge.textContent = status === 'active' ? 'Active' : (status === 'banned' ? 'Banned' : 'Suspended');
         badge.className = 'inline-flex rounded-full border px-2.5 py-1 text-[8px] font-semibold ' + (status === 'active' ? 'border-[#d6e9dc] bg-[#eef8f1] text-[#36805a]' : 'border-[#ead5d0] bg-[#fff4f1] text-[#a95d45]');
 
         const editForm = document.getElementById('editUserForm');
@@ -3788,8 +3826,13 @@
         document.getElementById('noteForm').action = row.dataset.noteUrl;
         document.getElementById('suspendForm').action = row.dataset.suspendUrl;
         document.getElementById('restoreForm').action = row.dataset.restoreUrl;
+        document.getElementById('banForm').action = row.dataset.banUrl;
+        document.getElementById('unbanForm').action = row.dataset.unbanUrl;
+        document.getElementById('deleteUserForm').action = row.dataset.deleteUrl;
         document.getElementById('suspendForm').classList.toggle('hidden', status !== 'active');
-        document.getElementById('restoreForm').classList.toggle('hidden', status === 'active');
+        document.getElementById('restoreForm').classList.toggle('hidden', status === 'active' || status === 'banned');
+        document.getElementById('banForm').classList.toggle('hidden', status === 'banned');
+        document.getElementById('unbanForm').classList.toggle('hidden', status !== 'banned');
 
         const messageLink = document.getElementById('sellerMessageLink');
         if (row.dataset.messageUrl) {
@@ -3870,6 +3913,21 @@
                 'manage',
                 mode === 'restore' ? '#restoreAccessButton' : '#suspendReasonInput'
             );
+        });
+    });
+
+    document.querySelectorAll('[data-ban-user]').forEach(button => {
+        button.addEventListener('click', () => {
+            const row = button.closest('[data-user-row]');
+            if (!row) return;
+            openProfile(row, 'manage', button.dataset.banMode === 'unban' ? '#unbanAccessButton' : '#banReasonInput');
+        });
+    });
+
+    document.querySelectorAll('[data-delete-user]').forEach(button => {
+        button.addEventListener('click', () => {
+            const row = button.closest('[data-user-row]');
+            if (row) openProfile(row, 'manage', '#deleteAccountButton');
         });
     });
     closeProfile?.addEventListener('click', closeDrawer); backdrop?.addEventListener('click', closeDrawer); document.addEventListener('keydown', event => { if (event.key === 'Escape') closeDrawer(); });

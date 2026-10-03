@@ -3486,6 +3486,1275 @@
         border-left: 0 !important;
     }
 }
+
+/* ============================================================
+   SELLER ORDERS — ADD PRODUCT VISUAL PARITY / PROFESSIONAL FINAL
+   Header scale follows Add Product. UI only: order workflow,
+   routes, realtime refresh, filters, and modal behavior unchanged.
+   ============================================================ */
+
+.seller-orders-page {
+    width: 100% !important;
+    max-width: 1440px !important;
+    margin-inline: auto !important;
+    padding: 0 0 28px !important;
+    color: #111827 !important;
+}
+
+/* Text-only page header — same hierarchy as Seller Catalog / Add Product. */
+.seller-orders-header {
+    display: flex !important;
+    min-height: 72px !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 24px !important;
+    margin: 0 0 16px !important;
+    padding: 2px 2px 16px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #e7ebf0 !important;
+    background: transparent !important;
+}
+
+.seller-orders-heading-group {
+    display: block !important;
+    min-width: 0 !important;
+}
+
+.seller-orders-header-icon {
+    display: none !important;
+}
+
+.seller-orders-eyebrow {
+    margin: 0 !important;
+    color: #b87605 !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: .16em !important;
+    text-transform: uppercase !important;
+}
+
+.seller-orders-title {
+    margin: 6px 0 0 !important;
+    color: #111827 !important;
+    font-size: clamp(30px, 2.35vw, 38px) !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+    letter-spacing: -.035em !important;
+}
+
+.seller-orders-title-accent {
+    margin-left: .18em !important;
+    color: #C9890B !important;
+}
+
+.seller-orders-subtitle {
+    max-width: 720px !important;
+    margin: 8px 0 0 !important;
+    color: #7c8592 !important;
+    font-size: 10.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.55 !important;
+}
+
+.seller-orders-header-actions {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    padding-top: 2px !important;
+}
+
+.seller-orders-header-action {
+    display: inline-flex !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    border: 1px solid #dfe3e8 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    padding: 0 14px !important;
+    color: #4b5563 !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
+    box-shadow: 0 5px 14px rgba(15, 23, 42, .035) !important;
+    transition: border-color .14s ease, background-color .14s ease, color .14s ease !important;
+}
+
+.seller-orders-header-action:hover,
+.seller-orders-header-action:focus-visible {
+    outline: none !important;
+    border-color: #e2bd67 !important;
+    background: #fffaf2 !important;
+    color: #9b6505 !important;
+    transform: none !important;
+}
+
+.seller-orders-header-action svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Summary — restrained neutral cards; icons carry state color. */
+.seller-orders-summary {
+    margin-top: 0 !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+}
+
+.seller-orders-summary-card {
+    min-width: 0 !important;
+    min-height: 94px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    padding: 14px 15px !important;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .035) !important;
+}
+
+.seller-orders-summary-card > div {
+    height: 100% !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+
+.seller-orders-summary-card p:first-child {
+    color: #667085 !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+}
+
+.seller-orders-summary-card p:nth-child(2) {
+    margin-top: 5px !important;
+    color: #111827 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: -.035em !important;
+}
+
+.seller-orders-summary-card p:nth-child(3) {
+    margin-top: 7px !important;
+    color: #98a2b3 !important;
+    font-size: 8.5px !important;
+    line-height: 1.4 !important;
+}
+
+.seller-orders-summary-icon {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    border: 1px solid rgba(17, 24, 39, .05) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.seller-orders-summary-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+/* Filters — same control sizing/radius family as Add Product. */
+.seller-orders-filter-panel {
+    display: grid !important;
+    grid-template-columns: minmax(300px, 1fr) minmax(150px, 190px) 124px 70px !important;
+    gap: 10px !important;
+    margin-top: 14px !important;
+    padding: 11px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .03) !important;
+}
+
+.seller-orders-search-field > span {
+    left: 14px !important;
+    width: 16px !important;
+    height: 16px !important;
+    color: #98a2b3 !important;
+}
+
+.seller-orders-search-field svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+#sellerOrderSearch,
+#sellerOrderStatusFilter,
+.seller-orders-apply-filter,
+.seller-orders-reset-filter {
+    height: 44px !important;
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    font-size: 10.5px !important;
+}
+
+#sellerOrderSearch,
+#sellerOrderStatusFilter {
+    border: 1px solid #d7dde5 !important;
+    background: #fff !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+}
+
+#sellerOrderSearch {
+    padding: 0 14px 0 40px !important;
+}
+
+#sellerOrderSearch::placeholder {
+    color: #98a2b3 !important;
+    font-size: 10.5px !important;
+}
+
+#sellerOrderStatusFilter {
+    padding: 0 34px 0 13px !important;
+    font-weight: 600 !important;
+}
+
+#sellerOrderSearch:focus,
+#sellerOrderStatusFilter:focus {
+    border-color: #d59617 !important;
+    box-shadow: 0 0 0 4px rgba(213, 150, 23, .09) !important;
+}
+
+.seller-orders-apply-filter {
+    gap: 7px !important;
+    border: 1px solid #d59617 !important;
+    background: #d59617 !important;
+    padding-inline: 14px !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 7px 16px rgba(213, 150, 23, .14) !important;
+}
+
+.seller-orders-apply-filter:hover,
+.seller-orders-apply-filter:focus-visible {
+    outline: none !important;
+    border-color: #c9890f !important;
+    background: #c9890f !important;
+    transform: none !important;
+}
+
+.seller-orders-reset-filter {
+    border: 1px solid #dfe3e8 !important;
+    background: #fff !important;
+    color: #667085 !important;
+    font-weight: 650 !important;
+    box-shadow: none !important;
+}
+
+.seller-orders-reset-filter:hover,
+.seller-orders-reset-filter:focus-visible {
+    outline: none !important;
+    border-color: #d2d7de !important;
+    background: #f8fafc !important;
+    color: #344054 !important;
+}
+
+/* Order list — one calm operational surface. */
+.seller-orders-workspace {
+    margin-top: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .035) !important;
+}
+
+.seller-orders-table-head {
+    display: grid !important;
+    grid-template-columns: 36px minmax(250px, 1.4fr) minmax(150px, .8fr) 112px 96px 112px 48px !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 11px 14px !important;
+    border-bottom: 1px solid #e8ebef !important;
+    background: #fafbfc !important;
+}
+
+.seller-orders-table-head > span {
+    color: #667085 !important;
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: .055em !important;
+    text-transform: uppercase !important;
+}
+
+.seller-order-row {
+    border: 0 !important;
+    border-bottom: 1px solid #edf0f3 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: background-color .14s ease !important;
+}
+
+.seller-order-row:last-child {
+    border-bottom: 0 !important;
+}
+
+.seller-order-row:hover {
+    border-color: #edf0f3 !important;
+    background: #fffdf8 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-order-grid {
+    display: grid !important;
+    grid-template-columns: 36px minmax(250px, 1.4fr) minmax(150px, .8fr) 112px 96px 112px 48px !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 11px 14px !important;
+}
+
+.seller-order-index {
+    color: #667085 !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+}
+
+.seller-order-grid .seller-order-image-frame {
+    width: 44px !important;
+    height: 44px !important;
+    flex: 0 0 44px !important;
+    overflow: hidden !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 10px !important;
+    background: #f8fafc !important;
+}
+
+.seller-order-grid .seller-order-image-frame > img {
+    object-fit: cover !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:first-child {
+    color: #1f2937 !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:nth-child(2) {
+    margin-top: 3px !important;
+    color: #475467 !important;
+    font-size: 9.3px !important;
+    line-height: 1.4 !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:nth-child(3) {
+    margin-top: 3px !important;
+    color: #98a2b3 !important;
+    font-size: 8.2px !important;
+    line-height: 1.4 !important;
+}
+
+.seller-order-grid > div:nth-child(3) p:first-of-type:not(.lg\:hidden) {
+    color: #344054 !important;
+    font-size: 9.5px !important;
+    font-weight: 600 !important;
+}
+
+.seller-order-grid > div:nth-child(3) p:last-child {
+    color: #98a2b3 !important;
+    font-size: 8.4px !important;
+}
+
+.seller-order-grid > div:nth-child(4) span {
+    padding: 4px 8px !important;
+    font-size: 8px !important;
+    font-weight: 650 !important;
+}
+
+.seller-order-grid > div:nth-child(5) p:last-child {
+    color: #1f2937 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+}
+
+.seller-order-grid > div:nth-child(6) p:first-of-type:not(.lg\:hidden) {
+    color: #475467 !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+}
+
+.seller-order-grid > div:nth-child(6) p:last-child {
+    margin-top: 2px !important;
+    color: #98a2b3 !important;
+    font-size: 8px !important;
+}
+
+.seller-order-view-button {
+    display: inline-grid !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    place-items: center !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 9px !important;
+    background: #fff !important;
+    color: #667085 !important;
+    box-shadow: none !important;
+    transition: border-color .14s ease, background-color .14s ease, color .14s ease !important;
+}
+
+.seller-order-view-button:hover,
+.seller-order-view-button:focus-visible {
+    outline: none !important;
+    transform: none !important;
+    border-color: #efd9a7 !important;
+    background: #fffaf0 !important;
+    color: #b97805 !important;
+}
+
+.seller-order-view-button svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Cleaner empty state — no oversized dashed container. */
+.seller-orders-empty-state {
+    padding: 44px 24px 46px;
+    text-align: center;
+    background: #fff;
+}
+
+.seller-orders-empty-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    margin-inline: auto;
+    place-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fafbfc;
+    color: #98a2b3;
+}
+
+.seller-orders-empty-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.seller-orders-empty-state > p:nth-of-type(1) {
+    margin-top: 13px !important;
+    color: #344054 !important;
+    font-size: 11px !important;
+    font-weight: 650 !important;
+}
+
+.seller-orders-empty-state > p:nth-of-type(2) {
+    max-width: 460px;
+    margin: 5px auto 0 !important;
+    color: #98a2b3 !important;
+    font-size: 9px !important;
+    line-height: 1.55 !important;
+}
+
+#sellerOrderNoResults {
+    padding: 34px 20px !important;
+}
+
+.seller-orders-table-footer {
+    min-height: 52px !important;
+    border-top: 1px solid #edf0f3 !important;
+    padding: 10px 14px !important;
+    background: #fff !important;
+}
+
+#sellerOrderResultCount {
+    color: #7c8592 !important;
+    font-size: 8.5px !important;
+}
+
+.seller-orders-pagination {
+    gap: 6px !important;
+}
+
+.seller-orders-pagination button,
+.seller-orders-pagination span {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    border-radius: 9px !important;
+}
+
+.seller-orders-pagination button {
+    border: 1px solid #e5e7eb !important;
+    background: #fff !important;
+    color: #98a2b3 !important;
+}
+
+.seller-orders-pagination span {
+    background: #d59617 !important;
+    color: #fff !important;
+    font-size: 8.5px !important;
+    box-shadow: 0 6px 14px rgba(213, 150, 23, .14) !important;
+}
+
+/* Keep the current order-detail modal workflow untouched; only align its font family. */
+#sellerOrderDetailModal {
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .seller-orders-table-head,
+    .seller-order-grid {
+        grid-template-columns: 30px minmax(200px, 1.35fr) minmax(120px, .78fr) 98px 82px 96px 40px !important;
+        gap: 7px !important;
+        padding-left: 11px !important;
+        padding-right: 11px !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: minmax(250px, 1fr) 150px 116px 62px !important;
+        gap: 8px !important;
+    }
+
+    .seller-orders-summary {
+        gap: 9px !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    .seller-orders-header {
+        align-items: flex-start !important;
+    }
+
+    .seller-orders-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .seller-orders-search-field {
+        grid-column: 1 / -1 !important;
+    }
+
+    .seller-orders-table-head {
+        display: none !important;
+    }
+
+    .seller-order-grid {
+        grid-template-columns: 28px minmax(0, 1fr) !important;
+        align-items: start !important;
+        gap: 9px 11px !important;
+        padding: 13px !important;
+    }
+
+    .seller-order-index {
+        grid-row: 1 / span 6 !important;
+        padding-top: 4px !important;
+    }
+
+    .seller-order-grid > div:not(.seller-order-index) {
+        grid-column: 2 !important;
+    }
+
+    .seller-order-grid > div:last-child {
+        justify-content: flex-start !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .seller-orders-header {
+        flex-direction: column !important;
+        gap: 13px !important;
+        min-height: 0 !important;
+    }
+
+    .seller-orders-title {
+        font-size: clamp(28px, 8vw, 34px) !important;
+        font-weight: 650 !important;
+    }
+
+    .seller-orders-subtitle {
+        font-size: 10px !important;
+    }
+
+    .seller-orders-header-actions {
+        display: grid !important;
+        width: 100% !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        padding-top: 0 !important;
+    }
+
+    .seller-orders-header-action {
+        width: 100% !important;
+        font-size: 9.5px !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: 1fr !important;
+    }
+
+    .seller-orders-search-field {
+        grid-column: auto !important;
+    }
+
+    #sellerOrderSearch,
+    #sellerOrderStatusFilter,
+    .seller-orders-apply-filter,
+    .seller-orders-reset-filter {
+        height: 44px !important;
+        min-height: 44px !important;
+        font-size: 10px !important;
+    }
+
+    .seller-orders-table-footer {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .seller-orders-pagination {
+        align-self: flex-end !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .seller-orders-summary {
+        grid-template-columns: 1fr !important;
+    }
+
+    .seller-orders-summary-card {
+        min-height: 82px !important;
+    }
+}
+
+
+/* ============================================================
+   SELLER ORDERS — COMPACT + READABLE FINAL LAYER
+   Tightens layout density while keeping operational text visible.
+   No route, realtime, filter, order-state, modal-action, messaging,
+   waybill, or fulfillment behavior is changed.
+   ============================================================ */
+
+.seller-orders-page {
+    max-width: 1440px !important;
+    padding-bottom: 22px !important;
+}
+
+/* Header stays in the same Add Product visual family, with less height. */
+.seller-orders-header {
+    min-height: 66px !important;
+    gap: 18px !important;
+    margin-bottom: 12px !important;
+    padding: 2px 2px 13px !important;
+}
+
+.seller-orders-eyebrow {
+    font-size: 8px !important;
+    letter-spacing: .16em !important;
+}
+
+.seller-orders-title {
+    margin-top: 5px !important;
+    font-size: clamp(29px, 2.2vw, 36px) !important;
+    font-weight: 650 !important;
+}
+
+.seller-orders-subtitle {
+    margin-top: 7px !important;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+}
+
+.seller-orders-header-actions {
+    gap: 7px !important;
+}
+
+.seller-orders-header-action {
+    height: 38px !important;
+    min-height: 38px !important;
+    border-radius: 10px !important;
+    padding-inline: 11px !important;
+    font-size: 9.5px !important;
+}
+
+/* Summary cards: shorter, with text still easy to scan. */
+.seller-orders-summary {
+    gap: 9px !important;
+}
+
+.seller-orders-summary-card {
+    min-height: 78px !important;
+    border-radius: 13px !important;
+    padding: 10px 12px !important;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+}
+
+.seller-orders-summary-card > div {
+    gap: 8px !important;
+}
+
+.seller-orders-summary-card p:first-child {
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-orders-summary-card p:nth-child(2) {
+    margin-top: 3px !important;
+    font-size: 21px !important;
+}
+
+.seller-orders-summary-card p:nth-child(3) {
+    margin-top: 5px !important;
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+}
+
+.seller-orders-summary-icon {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+    border-radius: 9px !important;
+}
+
+.seller-orders-summary-icon svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Filter bar: compact controls but normal readable labels. */
+.seller-orders-filter-panel {
+    grid-template-columns: minmax(300px, 1fr) 160px 118px 66px !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+    padding: 9px !important;
+    border-radius: 13px !important;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, .026) !important;
+}
+
+#sellerOrderSearch,
+#sellerOrderStatusFilter,
+.seller-orders-apply-filter,
+.seller-orders-reset-filter {
+    height: 40px !important;
+    min-height: 40px !important;
+    border-radius: 9px !important;
+    font-size: 9.8px !important;
+}
+
+#sellerOrderSearch {
+    padding-left: 36px !important;
+}
+
+#sellerOrderSearch::placeholder {
+    font-size: 9.8px !important;
+}
+
+.seller-orders-search-field > span {
+    left: 12px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.seller-orders-search-field svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.seller-orders-apply-filter {
+    gap: 6px !important;
+    padding-inline: 11px !important;
+}
+
+.seller-orders-reset-filter {
+    padding-inline: 10px !important;
+}
+
+/* Main table: shorter rows, readable order/buyer/status data. */
+.seller-orders-workspace {
+    margin-top: 10px !important;
+    border-radius: 13px !important;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .03) !important;
+}
+
+.seller-orders-table-head {
+    grid-template-columns: 32px minmax(235px, 1.38fr) minmax(140px, .82fr) 108px 90px 106px 42px !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+}
+
+.seller-orders-table-head > span {
+    font-size: 8.8px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-order-grid {
+    grid-template-columns: 32px minmax(235px, 1.38fr) minmax(140px, .82fr) 108px 90px 106px 42px !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+}
+
+.seller-order-index {
+    font-size: 9px !important;
+}
+
+.seller-order-grid .seller-order-image-frame {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+    border-radius: 9px !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:first-child {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:nth-child(2) {
+    margin-top: 2px !important;
+    font-size: 9.3px !important;
+}
+
+.seller-order-grid .seller-order-image-frame + div p:nth-child(3) {
+    margin-top: 2px !important;
+    font-size: 8.5px !important;
+}
+
+.seller-order-grid > div:nth-child(3) p:first-of-type:not(.lg\:hidden) {
+    font-size: 9.8px !important;
+}
+
+.seller-order-grid > div:nth-child(3) p:last-child {
+    font-size: 8.7px !important;
+}
+
+.seller-order-grid > div:nth-child(4) span {
+    padding: 3px 7px !important;
+    font-size: 8.4px !important;
+}
+
+.seller-order-grid > div:nth-child(5) p:last-child {
+    font-size: 10px !important;
+}
+
+.seller-order-grid > div:nth-child(6) p:first-of-type:not(.lg\:hidden) {
+    font-size: 9px !important;
+}
+
+.seller-order-grid > div:nth-child(6) p:last-child {
+    font-size: 8.2px !important;
+}
+
+.seller-order-view-button {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 8px !important;
+}
+
+.seller-order-view-button svg {
+    width: 13px !important;
+    height: 13px !important;
+}
+
+.seller-orders-empty-state {
+    padding: 34px 22px 36px !important;
+}
+
+.seller-orders-empty-icon {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+}
+
+.seller-orders-empty-state > p:nth-of-type(1) {
+    margin-top: 10px !important;
+    font-size: 10.5px !important;
+}
+
+.seller-orders-empty-state > p:nth-of-type(2) {
+    margin-top: 4px !important;
+    font-size: 8.8px !important;
+}
+
+.seller-orders-table-footer {
+    min-height: 46px !important;
+    padding: 8px 12px !important;
+}
+
+#sellerOrderResultCount {
+    font-size: 8.5px !important;
+}
+
+.seller-orders-pagination button,
+.seller-orders-pagination span {
+    width: 28px !important;
+    min-width: 28px !important;
+    height: 28px !important;
+    border-radius: 8px !important;
+}
+
+/* ============================================================
+   ORDER DETAIL MODAL — COMPACT BUT LEGIBLE
+   ============================================================ */
+
+#sellerOrderDetailModal {
+    padding: 8px !important;
+}
+
+.seller-order-workflow-panel {
+    width: min(980px, calc(100vw - 16px)) !important;
+    max-width: 980px !important;
+    max-height: calc(100vh - 16px) !important;
+    border-radius: 14px !important;
+}
+
+.seller-order-workflow-header {
+    min-height: 62px !important;
+    gap: 10px !important;
+    padding: 9px 13px !important;
+}
+
+.seller-order-workflow-header-main {
+    gap: 10px !important;
+}
+
+.seller-order-workflow-header-icon {
+    width: 36px !important;
+    height: 36px !important;
+    flex-basis: 36px !important;
+    border-radius: 9px !important;
+}
+
+.seller-order-workflow-header-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.seller-order-workflow-title-row h3 {
+    font-size: 18px !important;
+    line-height: 1.1 !important;
+}
+
+.seller-order-workflow-status {
+    min-height: 23px !important;
+    padding-inline: 8px !important;
+    font-size: 8.2px !important;
+}
+
+.seller-order-workflow-meta {
+    gap: 5px !important;
+    margin-top: 4px !important;
+    font-size: 8.5px !important;
+}
+
+.seller-order-workflow-close {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+    border-radius: 9px !important;
+}
+
+.seller-order-workflow-body {
+    grid-template-columns: minmax(0, 1.58fr) minmax(285px, .76fr) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+}
+
+.seller-order-workflow-main,
+.seller-order-workflow-sidebar {
+    gap: 8px !important;
+}
+
+.seller-order-workflow-main {
+    border-radius: 11px !important;
+}
+
+.seller-order-workflow-main > .seller-order-workflow-products,
+.seller-order-workflow-main .seller-order-workflow-info-card,
+.seller-order-workflow-summary,
+.seller-order-workflow-progress-card,
+.seller-order-workflow-actions {
+    padding: 10px !important;
+}
+
+.seller-order-workflow-info-grid {
+    gap: 0 !important;
+}
+
+.seller-order-workflow-section-title {
+    gap: 7px !important;
+}
+
+.seller-order-workflow-section-icon,
+.seller-order-workflow-action-icon {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+    border-radius: 7px !important;
+}
+
+.seller-order-workflow-section-icon svg,
+.seller-order-workflow-action-icon svg {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+/* Raise previously tiny modal typography. */
+.seller-order-workflow-section-title h4,
+.seller-order-workflow-action-heading h4 {
+    font-size: 10.8px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-order-workflow-section-title p {
+    margin-top: 2px !important;
+    font-size: 8.3px !important;
+    line-height: 1.4 !important;
+}
+
+.seller-order-workflow-product-list {
+    gap: 6px !important;
+    margin-top: 8px !important;
+}
+
+.seller-order-workflow-product-row {
+    grid-template-columns: 46px minmax(0, 1fr) auto !important;
+    min-height: 56px !important;
+    gap: 9px !important;
+    border-radius: 9px !important;
+    padding: 5px 9px 5px 5px !important;
+}
+
+.seller-order-workflow-product-image {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 8px !important;
+}
+
+.seller-order-workflow-product-name {
+    font-size: 9.5px !important;
+    line-height: 1.35 !important;
+}
+
+.seller-order-workflow-product-meta {
+    margin-top: 3px !important;
+    font-size: 8.2px !important;
+}
+
+.seller-order-workflow-product-price {
+    font-size: 9.5px !important;
+}
+
+.seller-order-workflow-details {
+    gap: 8px 10px !important;
+    margin-top: 9px !important;
+}
+
+.seller-order-workflow-details dt {
+    font-size: 7.8px !important;
+    letter-spacing: .06em !important;
+}
+
+.seller-order-workflow-details dd {
+    margin-top: 3px !important;
+    font-size: 9px !important;
+    line-height: 1.45 !important;
+}
+
+.seller-order-workflow-money-lines {
+    gap: 5px !important;
+    margin-top: 8px !important;
+}
+
+.seller-order-workflow-money-lines div {
+    font-size: 8.8px !important;
+}
+
+.seller-order-workflow-money-lines strong {
+    font-size: 9px !important;
+}
+
+.seller-order-workflow-total {
+    margin-top: 8px !important;
+    padding-top: 8px !important;
+}
+
+.seller-order-workflow-total span {
+    font-size: 9.5px !important;
+}
+
+.seller-order-workflow-total strong {
+    font-size: 18px !important;
+}
+
+.seller-order-workflow-progress-percent {
+    font-size: 9px !important;
+}
+
+.seller-order-workflow-progress-bar {
+    height: 5px !important;
+    margin-top: 8px !important;
+}
+
+.seller-order-workflow-timeline {
+    margin-top: 8px !important;
+}
+
+.seller-order-workflow-timeline li {
+    grid-template-columns: 24px minmax(0, 1fr) !important;
+    min-height: 28px !important;
+    gap: 7px !important;
+    font-size: 8.8px !important;
+    line-height: 1.35 !important;
+}
+
+.seller-order-workflow-timeline-dot {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.seller-order-workflow-timeline li:not(:last-child)::after {
+    left: 10px !important;
+    top: 19px !important;
+}
+
+.seller-order-workflow-action-heading {
+    grid-template-columns: 28px minmax(0, 1fr) !important;
+    gap: 7px !important;
+}
+
+.seller-order-workflow-action-heading > div > p {
+    font-size: 7.5px !important;
+}
+
+.seller-order-workflow-action-heading h4 {
+    margin-top: 2px !important;
+    font-size: 11.5px !important;
+}
+
+.seller-order-workflow-action-heading small {
+    margin-top: 3px !important;
+    font-size: 8px !important;
+    line-height: 1.4 !important;
+}
+
+.seller-order-workflow-primary-action,
+.seller-order-workflow-primary-action--success {
+    min-height: 38px !important;
+    margin-top: 9px !important;
+    border-radius: 9px !important;
+    font-size: 9px !important;
+}
+
+.seller-order-workflow-secondary-actions {
+    gap: 6px !important;
+    margin-top: 6px !important;
+}
+
+.seller-order-workflow-secondary-actions a {
+    min-height: 34px !important;
+    border-radius: 8px !important;
+    padding-inline: 8px !important;
+    font-size: 8.3px !important;
+}
+
+.seller-order-workflow-passive-action {
+    margin-top: 9px !important;
+    padding: 9px 10px !important;
+    font-size: 8.5px !important;
+}
+
+/* Laptop / tablet refinements. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .seller-orders-table-head,
+    .seller-order-grid {
+        grid-template-columns: 28px minmax(190px, 1.32fr) minmax(118px, .78fr) 96px 78px 94px 36px !important;
+        gap: 6px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: minmax(230px, 1fr) 145px 108px 58px !important;
+        gap: 7px !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    .seller-orders-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .seller-orders-search-field {
+        grid-column: 1 / -1 !important;
+    }
+
+    .seller-order-workflow-body {
+        grid-template-columns: 1fr !important;
+    }
+
+    .seller-order-workflow-sidebar {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .seller-order-workflow-actions {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .seller-orders-header {
+        gap: 10px !important;
+    }
+
+    .seller-orders-title {
+        font-size: clamp(28px, 8vw, 34px) !important;
+    }
+
+    .seller-orders-header-action {
+        height: 40px !important;
+        min-height: 40px !important;
+    }
+
+    .seller-orders-filter-panel {
+        grid-template-columns: 1fr !important;
+    }
+
+    .seller-orders-search-field {
+        grid-column: auto !important;
+    }
+
+    #sellerOrderSearch,
+    #sellerOrderStatusFilter,
+    .seller-orders-apply-filter,
+    .seller-orders-reset-filter {
+        height: 42px !important;
+        min-height: 42px !important;
+        font-size: 10px !important;
+    }
+
+    .seller-order-workflow-info-grid,
+    .seller-order-workflow-sidebar,
+    .seller-order-workflow-secondary-actions {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .seller-orders-summary {
+        grid-template-columns: 1fr !important;
+    }
+
+    .seller-orders-summary-card {
+        min-height: 74px !important;
+    }
+}
+
 </style>
 @endpush
 
@@ -3569,15 +4838,6 @@
     ========================================================== --}}
     <section class="seller-orders-header">
         <div class="seller-orders-heading-group">
-            <span class="seller-orders-header-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M6 5h12v15H6z"></path>
-                    <path d="M9 5V3h6v2"></path>
-                    <path d="M9 10h6"></path>
-                    <path d="M9 14h6"></path>
-                </svg>
-            </span>
-
             <div class="min-w-0">
                 <p class="seller-orders-eyebrow">ORDER MANAGEMENT</p>
                 <h1 class="seller-orders-title">
@@ -4223,8 +5483,8 @@
                     </div>
                 </template>
             @empty
-                <div class="rounded-[17px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] px-6 py-12 text-center">
-                    <div class="mx-auto grid h-11 w-11 place-items-center rounded-[14px] border border-[#ebe3d8] bg-white text-[#9b9185]">
+                <div class="seller-orders-empty-state">
+                    <div class="seller-orders-empty-icon">
                         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7">
                             <path d="M5 7h14l-1 13H6L5 7Z"></path><path d="M9 7a3 3 0 0 1 6 0"></path>
                         </svg>

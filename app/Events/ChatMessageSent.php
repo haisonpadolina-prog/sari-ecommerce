@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\ChatMessage;
+use App\Models\Messaging\ChatMessage;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -23,7 +23,7 @@ class ChatMessageSent implements ShouldBroadcastNow
     {
         return [
             new Channel('sari.seller.' . $this->message->seller->realtime_token),
-            new Channel(config('sari_chat.admin_channel')),
+            new Channel(config('sari.chat.admin_channel')),
         ];
     }
 

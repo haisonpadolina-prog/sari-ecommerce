@@ -14,18 +14,18 @@
     $adminNotificationSellers = collect();
 
     if (session('is_admin')) {
-        $adminUnreadMessages = \App\Models\ChatMessage::query()
+        $adminUnreadMessages = \App\Models\Messaging\ChatMessage::query()
             ->where('sender_role', 'seller')
             ->whereNull('read_by_admin_at')
             ->count();
 
-        $adminRecentSellerMessages = \App\Models\ChatMessage::query()
+        $adminRecentSellerMessages = \App\Models\Messaging\ChatMessage::query()
             ->where('sender_role', 'seller')
             ->latest('created_at')
             ->limit(6)
             ->get();
 
-        $adminNotificationSellers = \App\Models\SellerAccount::query()
+        $adminNotificationSellers = \App\Models\Accounts\SellerAccount::query()
             ->whereIn(
                 'id',
                 $adminRecentSellerMessages
@@ -39,7 +39,7 @@
     }
 
     $adminRealtimeMessageChannel = config(
-        'sari_chat.admin_channel',
+        'sari.chat.admin_channel',
         'sari.admin.chat'
     );
 @endphp

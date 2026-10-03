@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,25 +12,15 @@ return new class extends Migration
             return;
         }
 
-        $database = DB::getDatabaseName();
+        $uniqueExists = Schema::hasIndex(
+            'seller_product_drafts',
+            'seller_product_drafts_seller_account_id_unique'
+        );
 
-        $uniqueExists = DB::table('information_schema.statistics')
-            ->where('table_schema', $database)
-            ->where('table_name', 'seller_product_drafts')
-            ->where(
-                'index_name',
-                'seller_product_drafts_seller_account_id_unique'
-            )
-            ->exists();
-
-        $lookupExists = DB::table('information_schema.statistics')
-            ->where('table_schema', $database)
-            ->where('table_name', 'seller_product_drafts')
-            ->where(
-                'index_name',
-                'seller_product_drafts_seller_account_lookup'
-            )
-            ->exists();
+        $lookupExists = Schema::hasIndex(
+            'seller_product_drafts',
+            'seller_product_drafts_seller_account_lookup'
+        );
 
         if (!$lookupExists) {
             Schema::table('seller_product_drafts', function (Blueprint $table) {
@@ -57,25 +46,15 @@ return new class extends Migration
             return;
         }
 
-        $database = DB::getDatabaseName();
+        $uniqueExists = Schema::hasIndex(
+            'seller_product_drafts',
+            'seller_product_drafts_seller_account_id_unique'
+        );
 
-        $uniqueExists = DB::table('information_schema.statistics')
-            ->where('table_schema', $database)
-            ->where('table_name', 'seller_product_drafts')
-            ->where(
-                'index_name',
-                'seller_product_drafts_seller_account_id_unique'
-            )
-            ->exists();
-
-        $lookupExists = DB::table('information_schema.statistics')
-            ->where('table_schema', $database)
-            ->where('table_name', 'seller_product_drafts')
-            ->where(
-                'index_name',
-                'seller_product_drafts_seller_account_lookup'
-            )
-            ->exists();
+        $lookupExists = Schema::hasIndex(
+            'seller_product_drafts',
+            'seller_product_drafts_seller_account_lookup'
+        );
 
         if (!$uniqueExists) {
             Schema::table('seller_product_drafts', function (Blueprint $table) {

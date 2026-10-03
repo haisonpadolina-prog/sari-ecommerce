@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PlatformMessagingController;
+use App\Http\Controllers\Shared\PlatformMessagingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('messaging/api')->group(function (): void {

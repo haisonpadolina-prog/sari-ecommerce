@@ -11,7 +11,7 @@
     $adminSidebarUnreadMessages = 0;
 
     if (session('is_admin')) {
-        $adminSidebarUnreadMessages = \App\Models\ChatMessage::query()
+        $adminSidebarUnreadMessages = \App\Models\Messaging\ChatMessage::query()
             ->where('sender_role', 'seller')
             ->whereNull('read_by_admin_at')
             ->count();

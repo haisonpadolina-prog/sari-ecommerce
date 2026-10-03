@@ -10,7 +10,7 @@
 |
 */
 
-use App\Http\Controllers\CourierPageController;
+use App\Http\Controllers\Courier\CourierPageController;
 
 Route::get(
     '/courier/requests',

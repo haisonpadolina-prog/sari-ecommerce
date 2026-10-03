@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\MarketplaceOrder;
+use App\Models\Orders\MarketplaceOrder;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;

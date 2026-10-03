@@ -15,7 +15,7 @@
 
     $complianceVariantGroups = $complianceProductIds->isEmpty()
         ? collect()
-        : \App\Models\SellerProductVariant::query()
+        : \App\Models\Catalog\SellerProductVariant::query()
             ->whereIn('seller_product_id', $complianceProductIds)
             ->where('is_active', true)
             ->orderBy('id')

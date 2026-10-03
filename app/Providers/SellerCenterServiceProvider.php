@@ -1,10 +1,10 @@
 <?php
 namespace App\Providers;
 
-use App\Models\ComplianceMessage;
-use App\Models\MarketplaceOrder;
-use App\Models\ProductReview;
-use App\Models\SellerNotification;
+use App\Models\Compliance\ComplianceMessage;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Catalog\ProductReview;
+use App\Models\Platform\SellerNotification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MarketplaceOrder;
-use App\Services\FinancialFlowService;
+use App\Models\Orders\MarketplaceOrder;
+use App\Services\Finance\FinancialFlowService;
 use Illuminate\Console\Command;
 
 class BackfillFinancialLedgers extends Command

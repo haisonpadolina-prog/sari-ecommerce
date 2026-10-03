@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MarketplaceOrder;
-use App\Services\CommissionService;
+use App\Models\Orders\MarketplaceOrder;
+use App\Services\Finance\CommissionService;
 use Illuminate\Console\Command;
 
 class BackfillOrderCommissions extends Command

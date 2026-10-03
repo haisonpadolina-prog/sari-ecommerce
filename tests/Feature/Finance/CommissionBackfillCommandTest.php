@@ -1,9 +1,9 @@
 <?php
 
 use App\Events\SellerOrderUpdated;
-use App\Models\MarketplaceOrder;
-use App\Models\OrderCommission;
-use App\Models\SellerAccount;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Finance\OrderCommission;
+use App\Models\Accounts\SellerAccount;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 

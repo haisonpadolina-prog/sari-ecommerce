@@ -1,62 +1,66 @@
 <?php
-use App\Http\Controllers\SocialAuthController;
-use App\Http\Controllers\BuyerPageController;
-use App\Http\Controllers\BuyerProductController;
-use App\Http\Controllers\BuyerCartController;
-use App\Http\Controllers\BuyerCheckoutController;
-use App\Http\Controllers\BuyerOrderController;
-use App\Http\Controllers\BuyerSellerMessageController;
-use App\Http\Controllers\SellerBuyerMessageController;
-use App\Http\Controllers\BuyerReviewController;
-use App\Http\Controllers\SellerReviewController;
-use App\Http\Controllers\BuyerAccountController;
-use App\Http\Controllers\CourierPageController;
-use App\Http\Controllers\AdminSellerComplianceController;
-use App\Http\Controllers\SellerComplianceMessageController;
-use App\Http\Controllers\SellerDashboardController;
-use App\Http\Controllers\SellerLayoutStateController;
-use App\Http\Controllers\SellerAdminChatController;
-use App\Http\Controllers\SellerProductController;
-use App\Http\Controllers\SellerProductDraftController;
-use App\Http\Controllers\SellerOrderController;
-use App\Http\Controllers\CourierDeliveryController;
-use App\Http\Middleware\EnsureSellerNotRestricted;
-use App\Http\Middleware\EnsureSellerAccountAccessible;
-use App\Http\Controllers\AdminSellerAccountStatusController;
-use App\Services\SellerAccountStatusService;
-use App\Http\Controllers\ChatMessageReactionController;
-use App\Http\Controllers\AdminSellerChatActionController;
-use App\Http\Middleware\HandleSellerSupportChat;
-use App\Http\Controllers\PasswordResetOtpController;
+use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\Buyer\BuyerPageController;
+use App\Http\Controllers\Buyer\BuyerProductController;
+use App\Http\Controllers\Buyer\BuyerCartController;
+use App\Http\Controllers\Buyer\BuyerCheckoutController;
+use App\Http\Controllers\Buyer\BuyerOrderController;
+use App\Http\Controllers\Buyer\BuyerSellerMessageController;
+use App\Http\Controllers\Seller\SellerBuyerMessageController;
+use App\Http\Controllers\Buyer\BuyerReviewController;
+use App\Http\Controllers\Seller\SellerReviewController;
+use App\Http\Controllers\Buyer\BuyerAccountController;
+use App\Http\Controllers\Courier\CourierPageController;
+use App\Http\Controllers\Admin\AdminSellerComplianceController;
+use App\Http\Controllers\Seller\SellerComplianceMessageController;
+use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\Seller\SellerLayoutStateController;
+use App\Http\Controllers\Seller\SellerAdminChatController;
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerProductDraftController;
+use App\Http\Controllers\Seller\SellerOrderController;
+use App\Http\Controllers\Courier\CourierDeliveryController;
+use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
+use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
+use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
+use App\Services\Seller\SellerAccountStatusService;
+use App\Services\Accounts\AccountEmailBanService;
+use App\Http\Controllers\Shared\ChatMessageReactionController;
+use App\Http\Controllers\Admin\AdminSellerChatActionController;
+use App\Http\Middleware\Seller\HandleSellerSupportChat;
+use App\Http\Controllers\Auth\PasswordResetOtpController;
 
 /*
 |--------------------------------------------------------------------------
 | NEW — COURIER CONTROLLER
 |--------------------------------------------------------------------------
 */
-use App\Http\Controllers\CourierDashboardController;
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\AdminRegistrationController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\PlatformComplaintController;
-use App\Http\Controllers\AdminComplaintsController;
-use App\Http\Controllers\AdminAccountController;
-use App\Http\Controllers\AdminPlatformSettingsController;
-use App\Http\Controllers\AdminReportsController;
-use App\Http\Controllers\AdminCommissionsController;
-use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\AddressLookupController;
-use App\Http\Controllers\MarketplaceCatalogController;
-use App\Http\Controllers\MarketplaceAuthController;
+use App\Http\Controllers\Courier\CourierDashboardController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Buyer\BuyerRegistrationController;
+use App\Http\Controllers\Seller\SellerRegistrationController;
+use App\Http\Controllers\Logistics\LogisticsRegistrationController;
+use App\Http\Controllers\Admin\AdminRegistrationController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Shared\PlatformComplaintController;
+use App\Http\Controllers\Admin\AdminComplaintsController;
+use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminPlatformSettingsController;
+use App\Http\Controllers\Admin\AdminReportsController;
+use App\Http\Controllers\Admin\AdminCommissionsController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Shared\AddressLookupController;
+use App\Http\Controllers\Marketplace\MarketplaceCatalogController;
+use App\Http\Controllers\Auth\MarketplaceAuthController;
 
-use App\Models\AdminAccount;
-use App\Models\BuyerAccount;
-use App\Models\CourierAccount;
-use App\Models\LogisticsAccount;
-use App\Models\RegistrationApplication;
+use App\Models\Accounts\AdminAccount;
+use App\Models\Accounts\BuyerAccount;
+use App\Models\Accounts\CourierAccount;
+use App\Models\Accounts\LogisticsAccount;
+use App\Models\Registration\RegistrationApplication;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\SellerAccount;
+use App\Models\Accounts\SellerAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -137,6 +141,14 @@ Route::post('/login', function (Request $request) {
             'is_logistics', 'logistics_account_id', 'logistics_email', 'logistics_name',
         ]);
         return redirect()->route('admin.dashboard');
+    }
+
+    // Account bans are email-level and apply across Buyer/Seller/Rider/Logistics
+    // login paths, including the development/demo identities below.
+    if (app(AccountEmailBanService::class)->isBanned($adminEmail)) {
+        return back()->withErrors([
+            'email' => 'This email address has been banned by SARI. Please contact the administrator for review.',
+        ])->onlyInput('email');
     }
 
     /*
@@ -256,7 +268,7 @@ Route::post('/login', function (Request $request) {
         $request->email === 'buyer@gmail.com' &&
         $request->password === 'buyer123'
     ) {
-        $buyer = BuyerAccount::query()->updateOrCreate(
+        $buyer = BuyerAccount::query()->firstOrCreate(
             [
                 'email' => 'buyer@gmail.com',
             ],
@@ -576,6 +588,24 @@ Route::post(
     [RegistrationController::class, 'store']
 )->name('register.submit');
 
+Route::get('/register/buyer', [BuyerRegistrationController::class, 'create'])
+    ->name('register.buyer');
+
+Route::post('/register/buyer', [BuyerRegistrationController::class, 'store'])
+    ->name('register.buyer.submit');
+
+Route::get('/register/seller', [SellerRegistrationController::class, 'create'])
+    ->name('register.seller');
+
+Route::post('/register/seller', [SellerRegistrationController::class, 'store'])
+    ->name('register.seller.submit');
+
+Route::get('/register/logistics', [LogisticsRegistrationController::class, 'create'])
+    ->name('register.logistics');
+
+Route::post('/register/logistics', [LogisticsRegistrationController::class, 'store'])
+    ->name('register.logistics.submit');
+
 Route::get(
     '/registration/pending',
     [RegistrationController::class, 'pending']
@@ -780,6 +810,11 @@ Route::post('/admin/users/{role}/{id}/unban', [AdminUsersController::class, 'unb
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.unban');
+
+Route::delete('/admin/users/{role}/{id}', [AdminUsersController::class, 'destroy'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.destroy');
 
 Route::post('/admin/users/{role}/{id}/note', [AdminUsersController::class, 'note'])
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
@@ -986,7 +1021,7 @@ Route::get('/seller/account-state', function (Request $request) {
         ], 401);
     }
 
-    $seller = app(\App\Services\SellerAccountStatusService::class)
+    $seller = app(\App\Services\Seller\SellerAccountStatusService::class)
         ->refresh($seller);
 
     $status = (string) ($seller->account_status ?: 'active');
@@ -1247,17 +1282,17 @@ Route::get(
 
 Route::get(
     '/seller/reports',
-    [\App\Http\Controllers\SellerReportController::class, 'index']
+    [\App\Http\Controllers\Seller\SellerReportController::class, 'index']
 )
-    ->middleware(\App\Http\Middleware\EnsureSellerNotRestricted::class)
+    ->middleware(\App\Http\Middleware\Seller\EnsureSellerNotRestricted::class)
     ->name('seller.reports');
 
 
 Route::get(
     '/seller/reports/download',
-    [\App\Http\Controllers\SellerReportController::class, 'downloadCsv']
+    [\App\Http\Controllers\Seller\SellerReportController::class, 'downloadCsv']
 )
-    ->middleware(\App\Http\Middleware\EnsureSellerNotRestricted::class)
+    ->middleware(\App\Http\Middleware\Seller\EnsureSellerNotRestricted::class)
     ->name('seller.reports.download');
 
 
@@ -1284,16 +1319,13 @@ Route::post(
   ->name('seller.messages.read');
 
 
-Route::get('/seller/account', function (Request $request) {
+Route::get('/seller/account', [\App\Http\Controllers\Seller\SellerAccountController::class, 'index'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.account');
 
-    if (!$request->session()->get('is_seller')) {
-        return redirect()->route('login');
-    }
-
-    return view('seller.account');
-
-})->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.account');
+Route::patch('/seller/account', [\App\Http\Controllers\Seller\SellerAccountController::class, 'update'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.account.update');
 
 
 /*
@@ -1437,7 +1469,7 @@ Route::get('/courier/pickups', function (Request $request) {
         return redirect()->route('login');
     }
 
-    $orders = \App\Models\MarketplaceOrder::query()
+    $orders = \App\Models\Orders\MarketplaceOrder::query()
         ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
         ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
         ->latest('updated_at')
@@ -1451,7 +1483,7 @@ Route::get('/courier/deliveries', function (Request $request) {
         return redirect()->route('login');
     }
 
-    $orders = \App\Models\MarketplaceOrder::query()
+    $orders = \App\Models\Orders\MarketplaceOrder::query()
         ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
         ->whereIn('status', ['in_transit', 'arrived_buyer'])
         ->latest('updated_at')
@@ -1462,7 +1494,7 @@ Route::get('/courier/deliveries', function (Request $request) {
 
 Route::get(
     '/courier/earnings',
-    [\App\Http\Controllers\CourierPageController::class, 'earnings']
+    [\App\Http\Controllers\Courier\CourierPageController::class, 'earnings']
 )->name('courier.earnings');
 
 Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
@@ -1473,7 +1505,7 @@ Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestP
 
 Route::get(
     '/courier/history',
-    [\App\Http\Controllers\CourierPageController::class, 'history']
+    [\App\Http\Controllers\Courier\CourierPageController::class, 'history']
 )->name('courier.history');
 
 Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
@@ -1482,7 +1514,7 @@ Route::get('/courier/history/export', [CourierPageController::class, 'historyExp
 
 Route::get(
     '/courier/messages',
-    [\App\Http\Controllers\CourierPageController::class, 'messages']
+    [\App\Http\Controllers\Courier\CourierPageController::class, 'messages']
 )->name('courier.messages');
 
 Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
@@ -1491,7 +1523,7 @@ Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
 
 Route::get(
     '/courier/profile',
-    [\App\Http\Controllers\CourierPageController::class, 'profile']
+    [\App\Http\Controllers\Courier\CourierPageController::class, 'profile']
 )->name('courier.profile');
 
 Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
@@ -1508,7 +1540,7 @@ Route::post(
             abort(403, 'Admin session required.');
         }
 
-        $updated = \App\Models\ChatMessage::query()
+        $updated = \App\Models\Messaging\ChatMessage::query()
             ->where('sender_role', 'seller')
             ->whereNull('read_by_admin_at')
             ->update([

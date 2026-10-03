@@ -2930,7 +2930,7 @@
                             <span data-live-label>Realtime</span>
                         </span>
 
-                        @if(config('sari_assistant.enabled', true) && filled(config('sari_assistant.api_key')))
+                        @if(config('sari.assistant.enabled', true) && filled(config('sari.assistant.api_key')))
                             <span class="sari-ai-pill" title="SARI Assistant can provide a limited first response when Admin has not replied yet">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                     <path d="M12 3l1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3Z"></path>

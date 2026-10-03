@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\PlatformSetting;
+use App\Models\Platform\PlatformSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

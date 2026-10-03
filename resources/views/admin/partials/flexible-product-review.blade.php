@@ -12,19 +12,19 @@
     $flexSpecifications = collect();
 
     if ($flexTablesReady) {
-        $flexOptions = \App\Models\SellerProductOption::query()
+        $flexOptions = \App\Models\Catalog\SellerProductOption::query()
             ->with('values')
             ->where('seller_product_id', $product->id)
             ->orderBy('position')
             ->get();
 
-        $flexVariants = \App\Models\SellerProductVariant::query()
+        $flexVariants = \App\Models\Catalog\SellerProductVariant::query()
             ->where('seller_product_id', $product->id)
             ->where('is_active', true)
             ->orderBy('id')
             ->get();
 
-        $flexSpecifications = \App\Models\SellerProductSpecification::query()
+        $flexSpecifications = \App\Models\Catalog\SellerProductSpecification::query()
             ->where('seller_product_id', $product->id)
             ->orderBy('position')
             ->get();

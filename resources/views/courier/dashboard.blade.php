@@ -45,7 +45,7 @@
             <p class="mt-1 text-[8px] text-[#918677]">The Buyer, Seller, Logistics, and Rider all use this same MarketplaceOrder record.</p>
         </div>
 
-        @if ($currentDelivery instanceof \App\Models\MarketplaceOrder)
+        @if ($currentDelivery instanceof \App\Models\Orders\MarketplaceOrder)
             @php
                 $status = $currentDelivery->status;
                 $pickupDone = in_array($status, ['in_transit', 'arrived_buyer', 'delivered'], true);

@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\SellerAccount;
+use App\Models\Accounts\SellerAccount;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;

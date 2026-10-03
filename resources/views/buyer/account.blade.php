@@ -20,8 +20,10 @@
         <p class="mt-1 text-[9px] text-[#91887d]">Your registered profile is reused as the default checkout information.</p>
 
         @if ($buyerAccount)
-            <form method="POST" action="{{ route('buyer.account.update') }}" class="mt-6 grid gap-4 sm:grid-cols-2">
+            <form method="POST" action="{{ route('buyer.account.update') }}" enctype="multipart/form-data" class="mt-6 grid gap-4 sm:grid-cols-2">
                 @csrf @method('PATCH')
+<x-account.profile-photo :account="$buyerAccount" />
+
                 <div><label class="mb-2 block text-[8px] font-semibold text-[#62594e]">First Name</label><input name="first_name" value="{{ old('first_name', $buyerAccount->first_name) }}" required class="h-11 w-full rounded-xl border border-[#e4ddd3] px-4 text-[9px]"></div>
                 <div><label class="mb-2 block text-[8px] font-semibold text-[#62594e]">Last Name</label><input name="last_name" value="{{ old('last_name', $buyerAccount->last_name) }}" required class="h-11 w-full rounded-xl border border-[#e4ddd3] px-4 text-[9px]"></div>
                 <div><label class="mb-2 block text-[8px] font-semibold text-[#62594e]">Email</label><input value="{{ $buyerAccount->email }}" disabled class="h-11 w-full rounded-xl border border-[#e4ddd3] bg-[#f7f5f2] px-4 text-[9px] text-[#91887d]"></div>

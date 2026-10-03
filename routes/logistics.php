@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\LogisticsAccountManagementController;
-use App\Http\Controllers\LogisticsDashboardController;
-use App\Http\Controllers\LogisticsDeliveryAssignmentController;
-use App\Http\Controllers\LogisticsDeliveryMonitoringController;
-use App\Http\Controllers\LogisticsIncomingParcelController;
-use App\Http\Controllers\LogisticsMessageController;
-use App\Http\Controllers\LogisticsParcelSortingController;
-use App\Http\Controllers\LogisticsPickupRequestController;
-use App\Http\Controllers\LogisticsReportsController;
-use App\Http\Controllers\LogisticsRiderApplicationController;
-use App\Http\Controllers\LogisticsRiderManagementController;
-use App\Http\Controllers\RiderRegistrationController;
-use App\Http\Middleware\EnsureLogisticsAuthenticated;
+use App\Http\Controllers\Logistics\LogisticsAccountManagementController;
+use App\Http\Controllers\Logistics\LogisticsDashboardController;
+use App\Http\Controllers\Logistics\LogisticsDeliveryAssignmentController;
+use App\Http\Controllers\Logistics\LogisticsDeliveryMonitoringController;
+use App\Http\Controllers\Logistics\LogisticsIncomingParcelController;
+use App\Http\Controllers\Logistics\LogisticsMessageController;
+use App\Http\Controllers\Logistics\LogisticsParcelSortingController;
+use App\Http\Controllers\Logistics\LogisticsPickupRequestController;
+use App\Http\Controllers\Logistics\LogisticsReportsController;
+use App\Http\Controllers\Logistics\LogisticsRiderApplicationController;
+use App\Http\Controllers\Logistics\LogisticsRiderManagementController;
+use App\Http\Controllers\Courier\RiderRegistrationController;
+use App\Http\Middleware\Logistics\EnsureLogisticsAuthenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

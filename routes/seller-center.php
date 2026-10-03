@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\BuyerReturnRequestController;
-use App\Http\Controllers\SellerComplianceCenterController;
-use App\Http\Controllers\SellerFinanceController;
-use App\Http\Controllers\SellerInventoryController;
-use App\Http\Controllers\SellerNotificationCenterController;
-use App\Http\Controllers\SellerReturnsController;
-use App\Http\Controllers\SellerReviewsCenterController;
-use App\Http\Controllers\SellerStoreController;
-use App\Http\Controllers\SellerVoucherController;
-use App\Http\Middleware\EnsureSellerAccountAccessible;
-use App\Http\Middleware\EnsureSellerNotRestricted;
+use App\Http\Controllers\Buyer\BuyerReturnRequestController;
+use App\Http\Controllers\Seller\SellerComplianceCenterController;
+use App\Http\Controllers\Seller\SellerFinanceController;
+use App\Http\Controllers\Seller\SellerInventoryController;
+use App\Http\Controllers\Seller\SellerNotificationCenterController;
+use App\Http\Controllers\Seller\SellerReturnsController;
+use App\Http\Controllers\Seller\SellerReviewsCenterController;
+use App\Http\Controllers\Seller\SellerAccountController;
+use App\Http\Controllers\Seller\SellerStoreController;
+use App\Http\Controllers\Seller\SellerVoucherController;
+use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
+use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function (): void {
@@ -42,6 +43,14 @@ Route::middleware(['web'])->group(function (): void {
 
             Route::get('/store-management', [SellerStoreController::class, 'index'])->name('store.index');
             Route::patch('/store-management', [SellerStoreController::class, 'update'])->name('store.update');
+
+            Route::patch('/account/password', [SellerAccountController::class, 'updatePassword'])
+                ->name('account.password.update');
+            Route::get('/account/profile-photo', [SellerAccountController::class, 'profilePhoto'])
+                ->name('account.profile-photo');
+            Route::get('/account/documents/{document}', [SellerAccountController::class, 'document'])
+                ->whereIn('document', ['id', 'permit'])
+                ->name('account.documents.show');
         });
 
     Route::middleware(EnsureSellerAccountAccessible::class)

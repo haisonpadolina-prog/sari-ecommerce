@@ -236,7 +236,7 @@
                     $orderTotal = (float) ($order->total ?? 0);
 
                     $rewardRate = (float) config(
-                        'sari_buyer.reward_points_per_peso',
+                        'sari.buyer.reward_points_per_peso',
                         0.10
                     );
 

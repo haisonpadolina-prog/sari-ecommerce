@@ -23,10 +23,7 @@
             <div class="sari-about-v2__pillars">
                 <div class="sari-about-v2__pillar">
                     <span class="sari-about-v2__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <circle cx="11" cy="11" r="6.5"></circle>
-                            <path d="M16 16l4 4"></path>
-                        </svg>
+                        <i class="fi fi-ss-search-location"></i>
                     </span>
                     <div>
                         <strong>Discover</strong>
@@ -36,10 +33,7 @@
 
                 <div class="sari-about-v2__pillar">
                     <span class="sari-about-v2__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
+                        <i class="fi fi-ss-shield-check"></i>
                     </span>
                     <div>
                         <strong>Trust</strong>
@@ -49,12 +43,7 @@
 
                 <div class="sari-about-v2__pillar">
                     <span class="sari-about-v2__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M3 7h11v10H3z"></path>
-                            <path d="M14 10h4l3 3v4h-7z"></path>
-                            <circle cx="7" cy="18" r="1.7"></circle>
-                            <circle cx="18" cy="18" r="1.7"></circle>
-                        </svg>
+                        <i class="fi fi-sr-truck-check"></i>
                     </span>
                     <div>
                         <strong>Delivered</strong>
@@ -87,7 +76,60 @@
                 <path d="M0 0H58C70 14 76 28 70 42C64 55 60 65 62 76C64 86 57 94 47 100H0Z"></path>
             </svg>
 
-           
+            {{-- Appears after the commercial has played once. --}}
+            <button
+                type="button"
+                class="sari-about-v2__replay"
+                aria-label="Replay SARI commercial"
+                title="Replay SARI commercial"
+            >
+                <span class="sari-about-v2__replay-ring" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M9 7.5 17 12l-8 4.5v-9Z" fill="currentColor"></path>
+                    </svg>
+                </span>
+                <span class="sari-about-v2__replay-label">Play film</span>
+            </button>
+        </div>
+
+        {{-- Full-hero commercial layer. It is activated by JS when the hero enters view. --}}
+        <div class="sari-about-v2__commercial" aria-hidden="true">
+            <video
+                class="sari-about-v2__commercial-video"
+                preload="auto"
+                playsinline
+                webkit-playsinline
+            >
+                <source src="{{ asset('videos/sari-about-commercial.mp4') }}" type="video/mp4">
+            </video>
+
+            <button
+                type="button"
+                class="sari-about-v2__commercial-sound"
+                aria-label="Unmute commercial"
+                title="Unmute commercial"
+                aria-pressed="false"
+            >
+                <svg class="sari-about-v2__sound-icon sari-about-v2__sound-icon--on" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+                    <path d="M17 9.5c.8.7 1.2 1.5 1.2 2.5s-.4 1.8-1.2 2.5"></path>
+                    <path d="M19.5 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"></path>
+                </svg>
+                <svg class="sari-about-v2__sound-icon sari-about-v2__sound-icon--off" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+                    <path d="m17 10 4 4M21 10l-4 4"></path>
+                </svg>
+                <span class="sari-about-v2__sound-label">Unmute</span>
+            </button>
+
+            <button
+                type="button"
+                class="sari-about-v2__commercial-close"
+                aria-label="Close commercial"
+                title="Close commercial"
+            >
+                <span aria-hidden="true">×</span>
+            </button>
         </div>
     </section>
 
@@ -150,19 +192,19 @@
 
             <div class="sari-about-v2__features">
                 <div>
-                    <span class="sari-about-v2__feature-icon">⌁</span>
+                    <span class="sari-about-v2__feature-icon" aria-hidden="true"><i class="fi fi-ss-sparkles"></i></span>
                     <p><strong>Curated for You</strong><small>Smart discovery and personalized recommendations just for you.</small></p>
                 </div>
                 <div>
-                    <span class="sari-about-v2__feature-icon">◇</span>
+                    <span class="sari-about-v2__feature-icon" aria-hidden="true"><i class="fi fi-sr-trust"></i></span>
                     <p><strong>Built for Trust</strong><small>Transparent policies, secure payments, and 24/7 support.</small></p>
                 </div>
                 <div>
-                    <span class="sari-about-v2__feature-icon">✓</span>
+                    <span class="sari-about-v2__feature-icon" aria-hidden="true"><i class="fi fi-sr-audit"></i></span>
                     <p><strong>Seamless Experience</strong><small>Powerful technology that makes shopping smart and simple.</small></p>
                 </div>
                 <div>
-                    <span class="sari-about-v2__feature-icon">✦</span>
+                    <span class="sari-about-v2__feature-icon" aria-hidden="true"><i class="fi fi-sr-hr-group"></i></span>
                     <p><strong>Everyone, Everywhere</strong><small>Opening doors for businesses and shoppers in every corner of the world.</small></p>
                 </div>
             </div>
@@ -181,28 +223,28 @@
 
         <div class="sari-about-v2__value-grid">
             <article>
-                <span class="value-icon value-icon--gold">◇</span>
+                <span class="value-icon value-icon--gold"><i class="fi fi-sr-master-plan-integrate" aria-hidden="true"></i></span>
                 <div>
                     <h3>Integrity</h3>
                     <p>We do the right thing, always.</p>
                 </div>
             </article>
             <article>
-                <span class="value-icon value-icon--blue">✧</span>
+                <span class="value-icon value-icon--blue"><i class="fi fi-sr-practice" aria-hidden="true"></i></span>
                 <div>
                     <h3>Innovation</h3>
                     <p>We embrace new ideas to create better experiences.</p>
                 </div>
             </article>
             <article>
-                <span class="value-icon value-icon--green">◎</span>
+                <span class="value-icon value-icon--green"><i class="fi fi-ss-hand-back-fist" aria-hidden="true"></i></span>
                 <div>
                     <h3>Empowerment</h3>
                     <p>We empower businesses and communities to grow together.</p>
                 </div>
             </article>
             <article>
-                <span class="value-icon value-icon--coral">✦</span>
+                <span class="value-icon value-icon--coral"><i class="fi fi-ss-hand-holding-water" aria-hidden="true"></i></span>
                 <div>
                     <h3>Sustainability</h3>
                     <p>We build for the future, with care for people and planet.</p>
@@ -218,6 +260,154 @@
 
     // Enable the motion layer only when JS is available, so content never gets stuck hidden.
     root.classList.add('sari-motion-ready');
+
+    /* -------------------------------------------------------
+       ABOUT HERO COMMERCIAL
+       - Autoplays once when the hero meaningfully enters view.
+       - Restores the original editorial hero after playback.
+       - Shows a manual replay control over the right-side media.
+       ------------------------------------------------------- */
+    const hero = root.querySelector('.sari-about-v2__hero');
+    const commercial = hero?.querySelector('.sari-about-v2__commercial');
+    const commercialVideo = hero?.querySelector('.sari-about-v2__commercial-video');
+    const replayButton = hero?.querySelector('.sari-about-v2__replay');
+    const closeButton = hero?.querySelector('.sari-about-v2__commercial-close');
+    const soundButton = hero?.querySelector('.sari-about-v2__commercial-sound');
+    const soundLabel = soundButton?.querySelector('.sari-about-v2__sound-label');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let hasAutoPlayed = false;
+    let isCommercialOpen = false;
+    let restoreTimer = null;
+    let pendingSoundUnlock = false;
+
+    const restoreHero = ({ instant = false } = {}) => {
+        if (!hero || !commercial || !commercialVideo) return;
+
+        window.clearTimeout(restoreTimer);
+        isCommercialOpen = false;
+        commercialVideo.pause();
+
+        hero.classList.remove('is-commercial-playing');
+        hero.classList.add('is-commercial-restoring');
+        commercial.setAttribute('aria-hidden', 'true');
+
+        const finishRestore = () => {
+            hero.classList.remove('is-commercial-restoring');
+            hero.classList.add('has-commercial-played');
+            commercialVideo.currentTime = 0;
+        };
+
+        if (instant || prefersReducedMotion) {
+            finishRestore();
+            return;
+        }
+
+        // Copy and media return together as one complete composition.
+        restoreTimer = window.setTimeout(finishRestore, 720);
+    };
+
+    const syncSoundControl = () => {
+        if (!commercialVideo || !soundButton || !soundLabel) return;
+        const muted = commercialVideo.muted;
+        soundButton.classList.toggle('is-muted', muted);
+        soundButton.setAttribute('aria-pressed', muted ? 'false' : 'true');
+        soundButton.setAttribute('aria-label', muted ? 'Unmute commercial' : 'Mute commercial');
+        soundButton.setAttribute('title', muted ? 'Unmute commercial' : 'Mute commercial');
+        soundLabel.textContent = muted ? 'Unmute' : 'Mute';
+    };
+
+    const playCommercial = async ({ manual = false } = {}) => {
+        if (!hero || !commercial || !commercialVideo || isCommercialOpen) return;
+
+        window.clearTimeout(restoreTimer);
+        isCommercialOpen = true;
+        hero.classList.remove('is-commercial-restoring', 'has-commercial-played');
+        hero.classList.add('is-commercial-playing');
+        commercial.setAttribute('aria-hidden', 'false');
+
+        try {
+            commercialVideo.currentTime = 0;
+
+            // Manual replay can always request sound. Scroll autoplay also tries
+            // sound first; browsers may reject unmuted autoplay until the user
+            // has interacted with the page.
+            commercialVideo.muted = false;
+            commercialVideo.volume = 1;
+            syncSoundControl();
+
+            try {
+                await commercialVideo.play();
+                pendingSoundUnlock = false;
+            } catch (soundAutoplayError) {
+                if (manual) throw soundAutoplayError;
+
+                // Fallback keeps the transition instant instead of failing the film.
+                // The first click/tap anywhere on the page upgrades playback to audio.
+                commercialVideo.muted = true;
+                syncSoundControl();
+                await commercialVideo.play();
+                pendingSoundUnlock = true;
+            }
+        } catch (error) {
+            // Browser autoplay policies can still block playback in edge cases.
+            // Restore the hero and leave the replay control available.
+            isCommercialOpen = false;
+            hero.classList.remove('is-commercial-playing');
+            hero.classList.add('has-commercial-played');
+            commercial.setAttribute('aria-hidden', 'true');
+            if (!manual) hasAutoPlayed = true;
+        }
+    };
+
+    if (commercialVideo) {
+        commercialVideo.addEventListener('ended', () => restoreHero());
+        commercialVideo.addEventListener('error', () => restoreHero({ instant: true }));
+    }
+
+    replayButton?.addEventListener('click', () => playCommercial({ manual: true }));
+    closeButton?.addEventListener('click', () => restoreHero());
+    soundButton?.addEventListener('click', () => {
+        if (!commercialVideo) return;
+        commercialVideo.muted = !commercialVideo.muted;
+        commercialVideo.volume = 1;
+        pendingSoundUnlock = false;
+        syncSoundControl();
+    });
+
+    // If the browser blocked sound during scroll autoplay, the first real user
+    // interaction enables audio immediately without restarting the commercial.
+    const unlockCommercialAudio = () => {
+        if (!pendingSoundUnlock || !isCommercialOpen || !commercialVideo) return;
+        commercialVideo.muted = false;
+        commercialVideo.volume = 1;
+        pendingSoundUnlock = false;
+        syncSoundControl();
+    };
+    window.addEventListener('pointerdown', unlockCommercialAudio, { passive: true });
+    window.addEventListener('keydown', unlockCommercialAudio);
+
+    if (hero && commercialVideo && 'IntersectionObserver' in window) {
+        const commercialObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting || hasAutoPlayed) return;
+
+                hasAutoPlayed = true;
+                observer.unobserve(entry.target);
+
+                // Start immediately as soon as the hero reaches the trigger point.
+                playCommercial();
+            });
+        }, {
+            threshold: 0.58,
+            rootMargin: '0px 0px -5% 0px'
+        });
+
+        commercialObserver.observe(hero);
+    } else if (hero) {
+        // No observer support: keep the normal hero visible and expose replay.
+        hero.classList.add('has-commercial-played');
+    }
 
     const groups = [
         ['.sari-about-v2__stats', 'sari-motion-item'],
@@ -293,6 +483,292 @@
 .sari-about-v2 {
     background:#faf8f3;
     overflow:hidden;
+}
+
+/* ==========================================================
+   ABOUT HERO COMMERCIAL EXPERIENCE
+   ========================================================== */
+.sari-about-v2__hero {
+    position: relative;
+    isolation: isolate;
+}
+
+.sari-about-v2__hero-copy,
+.sari-about-v2__hero-media {
+    transition:
+        opacity .28s cubic-bezier(.22,.61,.36,1),
+        transform .48s cubic-bezier(.16,1,.3,1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+.sari-about-v2__commercial {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #090806;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateZ(0) scale(1.008);
+    transition:
+        opacity .28s ease-out,
+        transform .45s cubic-bezier(.16,1,.3,1),
+        visibility 0s linear .28s;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+}
+
+.sari-about-v2__commercial::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 90px rgba(0,0,0,.22);
+}
+
+.sari-about-v2__commercial-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    background: #090806;
+}
+
+.sari-about-v2__commercial-sound {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 13px;
+    border: 1px solid rgba(255,255,255,.42);
+    border-radius: 999px;
+    background: rgba(13,11,8,.38);
+    color: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.sari-about-v2__commercial-sound:hover,
+.sari-about-v2__commercial-sound:focus-visible {
+    transform: translateY(-1px);
+    background: rgba(13,11,8,.62);
+    border-color: rgba(255,255,255,.72);
+    outline: none;
+}
+
+.sari-about-v2__sound-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sari-about-v2__sound-icon--off { display: none; }
+.sari-about-v2__commercial-sound.is-muted .sari-about-v2__sound-icon--on { display: none; }
+.sari-about-v2__commercial-sound.is-muted .sari-about-v2__sound-icon--off { display: block; }
+
+.sari-about-v2__commercial-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.42);
+    border-radius: 999px;
+    background: rgba(13,11,8,.32);
+    color: #fff;
+    font: inherit;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+    /* Avoid full-screen blur work during video playback on lower-end GPUs. */
+    transition: transform .25s ease, background .25s ease, border-color .25s ease;
+}
+
+.sari-about-v2__commercial-close:hover,
+.sari-about-v2__commercial-close:focus-visible {
+    transform: scale(1.06);
+    background: rgba(13,11,8,.55);
+    border-color: rgba(255,255,255,.75);
+    outline: none;
+}
+
+.sari-about-v2__hero.is-commercial-playing .sari-about-v2__commercial {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
+    transition-delay: 0s;
+}
+
+.sari-about-v2__hero.is-commercial-playing .sari-about-v2__hero-copy {
+    opacity: 0;
+    transform: translate3d(-56px,0,0);
+    /* transform/opacity only for GPU-friendly motion */
+}
+
+.sari-about-v2__hero.is-commercial-playing .sari-about-v2__hero-media {
+    opacity: 0;
+    transform: translate3d(56px,0,0) scale(1.025);
+    /* transform/opacity only for GPU-friendly motion */
+}
+
+/* Restore sequence: image returns from the right, white editorial copy from the left. */
+.sari-about-v2__hero.is-commercial-restoring .sari-about-v2__commercial {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateZ(0) scale(1.008);
+}
+
+.sari-about-v2__hero.is-commercial-restoring .sari-about-v2__hero-copy {
+    animation: sariAboutCopyReturn .70s cubic-bezier(.16,1,.3,1) both;
+}
+
+.sari-about-v2__hero.is-commercial-restoring .sari-about-v2__hero-media {
+    animation: sariAboutMediaReturn .70s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes sariAboutCopyReturn {
+    0% { opacity: 0; transform: translate3d(-36px,0,0); }
+    100% { opacity: 1; transform: translate3d(0,0,0); }
+}
+
+@keyframes sariAboutMediaReturn {
+    0% { opacity: 0; transform: translate3d(36px,0,0) scale(1.012); }
+    100% { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+}
+
+.sari-about-v2__replay {
+    position: absolute;
+    z-index: 8;
+    top: 50%;
+    left: 72%;
+    transform: translate(-50%,-50%) scale(.92);
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .4s ease, transform .45s cubic-bezier(.16,1,.3,1), visibility .4s;
+}
+
+.sari-about-v2__replay-ring {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.75);
+    border-radius: 999px;
+    background: rgba(12,10,7,.24);
+    box-shadow: 0 16px 45px rgba(0,0,0,.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+}
+
+.sari-about-v2__replay-ring svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 3px;
+}
+
+.sari-about-v2__replay-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 14px rgba(0,0,0,.5);
+}
+
+.sari-about-v2__hero.has-commercial-played .sari-about-v2__replay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.sari-about-v2__replay:hover .sari-about-v2__replay-ring,
+.sari-about-v2__replay:focus-visible .sari-about-v2__replay-ring {
+    transform: scale(1.08);
+    background: rgba(201,145,40,.9);
+    box-shadow: 0 18px 55px rgba(0,0,0,.3);
+}
+
+.sari-about-v2__replay:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 8px;
+    border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+    .sari-about-v2__commercial {
+        border-radius: inherit;
+    }
+
+    .sari-about-v2__commercial-video {
+        object-fit: cover;
+    }
+
+    .sari-about-v2__commercial-close {
+        top: 14px;
+        right: 14px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .sari-about-v2__replay {
+        left: 50%;
+        top: 50%;
+    }
+
+    .sari-about-v2__replay-ring {
+        width: 48px;
+        height: 48px;
+    }
+
+    .sari-about-v2__commercial-sound {
+        top: 14px;
+        left: 14px;
+        min-height: 36px;
+        padding: 0 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sari-about-v2__hero-copy,
+    .sari-about-v2__hero-media,
+    .sari-about-v2__commercial,
+    .sari-about-v2__replay,
+    .sari-about-v2__replay-ring {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
 }
 
 /* VALUES SECTION */
@@ -1191,4 +1667,73 @@
     }
 }
 
+
+/* Story CTA + Flaticon refinements */
+.sari-about-v2 .sari-about-v2__outline-button {
+    background: #b88917 !important;
+    border-color: #b88917 !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(184, 137, 23, 0.18);
+    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease !important;
+}
+.sari-about-v2 .sari-about-v2__outline-button span { color: #ffffff !important; }
+.sari-about-v2 .sari-about-v2__outline-button:hover {
+    background: #9f7410 !important;
+    border-color: #9f7410 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(159, 116, 16, 0.24);
+}
+.sari-about-v2 .sari-about-v2__outline-button:focus-visible {
+    outline: 3px solid rgba(184, 137, 23, 0.30);
+    outline-offset: 3px;
+}
+.sari-about-v2 .sari-about-v2__feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.sari-about-v2 .sari-about-v2__feature-icon i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 0.95em;
+}
+</style>
+
+<style>
+/* FINAL VALUE ICON OVERRIDE: colored glyph only, no colored background container */
+.sari-about-v2 .sari-about-v2__value-grid article .value-icon,
+.sari-about-v2 .sari-about-v2__value-grid article:hover .value-icon {
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    margin: 0 0 25px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-size: 29px !important;
+    line-height: 1 !important;
+}
+.sari-about-v2 .sari-about-v2__value-grid article .value-icon::before,
+.sari-about-v2 .sari-about-v2__value-grid article .value-icon::after { content: none !important; display: none !important; }
+.sari-about-v2 .sari-about-v2__value-grid article .value-icon i {
+    display: inline-flex !important;
+    line-height: 1 !important;
+}
+.sari-about-v2 .sari-about-v2__icon i { display:inline-flex; line-height:1; font-size:22px; }
+@media (max-width: 768px) {
+    .sari-about-v2 .sari-about-v2__value-grid article .value-icon {
+        width:auto !important; height:auto !important; border-radius:0 !important;
+        margin:0 0 15px !important; font-size:21px !important; background:transparent !important;
+    }
+}
 </style>

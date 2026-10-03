@@ -3546,6 +3546,86 @@
         }
     }
 
+
+    /* ============================================================
+       REGISTRATION REVIEW — FUNCTIONAL VISIBILITY / ACTION FIX
+       Keeps the centered modal above the persistent Admin shell and
+       exposes the pending decision actions in every opened review.
+       ============================================================ */
+    #reviewBackdrop {
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 1000 !important;
+    }
+
+    #reviewDrawer {
+        z-index: 1010 !important;
+    }
+
+
+    .registration-review-choice {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 0 12px;
+        font-size: 8px;
+        font-weight: 700;
+        transition: background-color .14s ease, border-color .14s ease, color .14s ease, transform .14s ease;
+    }
+
+    .registration-review-choice:hover,
+    .registration-review-choice:focus-visible {
+        outline: none;
+        transform: translateY(-1px);
+    }
+
+    .registration-review-choice--decline {
+        border-color: #e7caca;
+        background: #fff;
+        color: #a65353;
+    }
+
+    .registration-review-choice--decline:hover,
+    .registration-review-choice--decline:focus-visible {
+        border-color: #dbaaaa;
+        background: #fff5f5;
+        color: #933f3f;
+    }
+
+    .registration-review-choice--accept {
+        border-color: #4f8a63;
+        background: #4f8a63;
+        color: #fff;
+    }
+
+    .registration-review-choice--accept:hover,
+    .registration-review-choice--accept:focus-visible {
+        border-color: #417553;
+        background: #417553;
+    }
+
+    .registration-review-choice svg {
+        width: 12px;
+        height: 12px;
+    }
+
+
+    @media (max-width: 639px) {
+        #reviewDrawer .enterprise-review-header .registration-review-choice {
+            min-height: 34px;
+            width: 34px;
+            padding: 0;
+        }
+
+        #reviewDrawer .enterprise-review-header .registration-review-choice span {
+            display: none;
+        }
+    }
+
 </style>
 
 <div class="reg-page registration-page-shell mx-auto w-full max-w-[1880px] pb-6">
@@ -4253,6 +4333,35 @@
                             {{ ucfirst($application->status) }}
                         </span>
 
+                        @if($application->status === 'pending' && $application->role !== 'rider')
+                            <button
+                                type="button"
+                                class="registration-review-choice registration-review-choice--decline"
+                                data-review-action="decline"
+                                data-detail-owner="{{ $detailKey }}"
+                                aria-label="Decline registration for {{ $application->fullName() }}"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="m8 8 8 8"></path>
+                                    <path d="m16 8-8 8"></path>
+                                </svg>
+                                <span>Decline</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="registration-review-choice registration-review-choice--accept"
+                                data-review-action="accept"
+                                data-detail-owner="{{ $detailKey }}"
+                                aria-label="Accept registration for {{ $application->fullName() }}"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="m7 12 3 3 7-7"></path>
+                                </svg>
+                                <span>Accept</span>
+                            </button>
+                        @endif
+
                         <button
                             type="button"
                             data-close-review
@@ -4537,7 +4646,7 @@
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                                 <path d="m7 12 3 3 7-7"></path>
                                             </svg>
-                                            Approve registration
+                                            Accept registration
                                         </button>
                                     </form>
 
@@ -4599,7 +4708,7 @@
                                                 <path d="m8 8 8 8"></path>
                                                 <path d="m16 8-8 8"></path>
                                             </svg>
-                                            Reject registration
+                                            Decline registration
                                         </button>
                                     </form>
                                 </div>
@@ -4655,7 +4764,7 @@
                         </div>
                     @endif
                 </div>
-                </div>
+
             </div>
         </div>
     @endforeach
@@ -4663,231 +4772,293 @@
 
 <script>
 (function () {
-    const search = document.getElementById('applicationSearch');
-    const rows = Array.from(document.querySelectorAll('[data-application-row]'));
-    const details = Array.from(document.querySelectorAll('[data-application-detail]'));
-    const openButtons = Array.from(document.querySelectorAll('[data-open-review]'));
-    const closeButtons = Array.from(document.querySelectorAll('[data-close-review]'));
-    const drawer = document.getElementById('reviewDrawer');
-    const backdrop = document.getElementById('reviewBackdrop');
-    const empty = document.getElementById('searchEmpty');
-    const count = document.getElementById('visibleCount');
-    const premiumSelects = Array.from(document.querySelectorAll('[data-premium-select]'));
-    let selectedKey = null;
-
-    function closePremiumSelects(except) {
-        premiumSelects.forEach(function (select) {
-            if (select === except) return;
-            select.classList.remove('is-open');
-            select.querySelector('[data-select-trigger]')?.setAttribute('aria-expanded', 'false');
-        });
-    }
-
-    premiumSelects.forEach(function (select) {
-        const trigger = select.querySelector('[data-select-trigger]');
-        const input = select.querySelector('[data-select-input]');
-        const label = select.querySelector('[data-select-label]');
-        const options = Array.from(select.querySelectorAll('[data-select-option]'));
-
-        trigger?.addEventListener('click', function (event) {
-            event.stopPropagation();
-            const willOpen = !select.classList.contains('is-open');
-            closePremiumSelects(select);
-            select.classList.toggle('is-open', willOpen);
-            trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-        });
-
-        options.forEach(function (option) {
-            option.addEventListener('click', function (event) {
-                event.stopPropagation();
-                const value = option.dataset.value ?? '';
-                if (input) input.value = value;
-                if (label) label.textContent = option.querySelector('span')?.textContent?.trim() || value;
-
-                options.forEach(function (candidate) {
-                    const selected = candidate === option;
-                    candidate.classList.toggle('is-selected', selected);
-                    candidate.setAttribute('aria-selected', selected ? 'true' : 'false');
-                });
-
-                select.classList.remove('is-open');
-                trigger?.setAttribute('aria-expanded', 'false');
-                trigger?.focus({ preventScroll: true });
-            });
-        });
-    });
-
-    document.addEventListener('click', function () {
-        closePremiumSelects();
-    });
-
-    function selectDetail(key) {
-        selectedKey = key ? String(key) : null;
-
-        rows.forEach(function (row) {
-            row.classList.toggle('is-selected', row.dataset.applicationRow === selectedKey);
-        });
-
-        details.forEach(function (detail) {
-            detail.hidden = detail.dataset.applicationDetail !== selectedKey;
-        });
-    }
-
-    function openReview(key) {
-        selectDetail(key);
-        if (!selectedKey || !drawer || !backdrop) return;
-
-        drawer.classList.add('is-open');
-        backdrop.classList.add('is-open');
-        drawer.setAttribute('aria-hidden', 'false');
-        backdrop.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('reg-review-open');
-
-        requestAnimationFrame(function () {
-            const closeButton = drawer.querySelector('[data-close-review]');
-            closeButton?.focus({ preventScroll: true });
-        });
-    }
-
-    function closeReview() {
-        if (!drawer || !backdrop) return;
-
-        drawer.classList.remove('is-open');
-        backdrop.classList.remove('is-open');
-        drawer.setAttribute('aria-hidden', 'true');
-        backdrop.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('reg-review-open');
-        rows.forEach(function (row) { row.classList.remove('is-selected'); });
-        selectedKey = null;
-    }
-
-    const rowIndex = rows.map(function (row) {
-        return {
-            row,
-            searchText: (row.dataset.search || '').toLowerCase(),
-        };
-    });
-
-    function debounce(callback, wait) {
-        let timer = 0;
-
-        return function () {
-            const args = arguments;
-            const context = this;
-
-            window.clearTimeout(timer);
-            timer = window.setTimeout(function () {
-                callback.apply(context, args);
-            }, wait);
-        };
-    }
-
-    let filterFrame = 0;
-
-    function filterRows() {
-        const query = (search?.value || '').trim().toLowerCase();
-
-        window.cancelAnimationFrame(filterFrame);
-
-        filterFrame = window.requestAnimationFrame(function () {
-            let visible = 0;
-
-            rowIndex.forEach(function (item) {
-                const match = !query || item.searchText.includes(query);
-
-                if (item.row.hidden === match) {
-                    item.row.hidden = !match;
-                }
-
-                if (match) visible++;
-            });
-
-            if (empty) empty.hidden = visible !== 0 || rowIndex.length === 0;
-            if (count) count.textContent = 'Showing ' + visible;
-        });
-    }
-
-    const debouncedFilterRows = debounce(filterRows, 120);
-
-    rows.forEach(function (row) {
-        row.addEventListener('click', function (event) {
-            if (event.target.closest('a, button, input, textarea, select, form')) return;
-            openReview(row.dataset.applicationRow);
-        });
-
-        row.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openReview(row.dataset.applicationRow);
-            }
-        });
-    });
-
-    openButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation();
-            openReview(button.dataset.openReview);
-        });
-    });
-
-    closeButtons.forEach(function (button) {
-        button.addEventListener('click', closeReview);
-    });
-
-    backdrop?.addEventListener('click', closeReview);
-
-    document.addEventListener('keydown', function (event) {
-        if (
-            event.key === 'Tab'
-            && drawer?.classList.contains('is-open')
-        ) {
-            const focusable = Array.from(
-                drawer.querySelectorAll(
-                    'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-                )
-            ).filter(function (element) {
-                return !element.closest('[hidden]')
-                    && element.offsetParent !== null;
-            });
-
-            if (focusable.length > 0) {
-                const first = focusable[0];
-                const last = focusable[focusable.length - 1];
-
-                if (event.shiftKey && document.activeElement === first) {
-                    event.preventDefault();
-                    last.focus();
-                } else if (!event.shiftKey && document.activeElement === last) {
-                    event.preventDefault();
-                    first.focus();
-                }
-            }
+    function initRegistrationPage() {
+        if (window.__SARI_REGISTRATION_PAGE_ABORT__) {
+            window.__SARI_REGISTRATION_PAGE_ABORT__.abort();
+            window.__SARI_REGISTRATION_PAGE_ABORT__ = null;
         }
 
-        if (event.key !== 'Escape') return;
-        closePremiumSelects();
-        if (drawer?.classList.contains('is-open')) closeReview();
-    });
+        const page = document.querySelector('.reg-page');
+        if (!page) return;
 
-    document.querySelectorAll('[data-detail-tab]').forEach(function (tab) {
-        tab.addEventListener('click', function () {
-            const owner = tab.dataset.detailOwner;
-            const tabName = tab.dataset.detailTab;
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+        window.__SARI_REGISTRATION_PAGE_ABORT__ = abortController;
 
-            document.querySelectorAll('[data-detail-tab][data-detail-owner="' + owner + '"]').forEach(function (candidate) {
-                candidate.classList.toggle('is-active', candidate === tab);
+        const search = document.getElementById('applicationSearch');
+        const rows = Array.from(document.querySelectorAll('[data-application-row]'));
+        const details = Array.from(document.querySelectorAll('[data-application-detail]'));
+        const openButtons = Array.from(document.querySelectorAll('[data-open-review]'));
+        const closeButtons = Array.from(document.querySelectorAll('[data-close-review]'));
+        const decisionButtons = Array.from(document.querySelectorAll('[data-review-action]'));
+        const detailTabs = Array.from(document.querySelectorAll('[data-detail-tab]'));
+        const drawer = document.getElementById('reviewDrawer');
+        const backdrop = document.getElementById('reviewBackdrop');
+        const empty = document.getElementById('searchEmpty');
+        const count = document.getElementById('visibleCount');
+        const premiumSelects = Array.from(document.querySelectorAll('[data-premium-select]'));
+        let selectedKey = null;
+
+        function listen(element, eventName, handler, options) {
+            if (!element) return;
+            element.addEventListener(eventName, handler, Object.assign({}, options || {}, { signal }));
+        }
+
+        function closePremiumSelects(except) {
+            premiumSelects.forEach(function (select) {
+                if (select === except) return;
+                select.classList.remove('is-open');
+                select.querySelector('[data-select-trigger]')?.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        premiumSelects.forEach(function (select) {
+            const trigger = select.querySelector('[data-select-trigger]');
+            const input = select.querySelector('[data-select-input]');
+            const label = select.querySelector('[data-select-label]');
+            const options = Array.from(select.querySelectorAll('[data-select-option]'));
+
+            listen(trigger, 'click', function (event) {
+                event.stopPropagation();
+                const willOpen = !select.classList.contains('is-open');
+                closePremiumSelects(select);
+                select.classList.toggle('is-open', willOpen);
+                trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
             });
 
-            document.querySelectorAll('[data-detail-tab-panel][data-detail-owner="' + owner + '"]').forEach(function (panel) {
-                panel.hidden = panel.dataset.detailTabPanel !== tabName;
+            options.forEach(function (option) {
+                listen(option, 'click', function (event) {
+                    event.stopPropagation();
+                    const value = option.dataset.value ?? '';
+                    if (input) input.value = value;
+                    if (label) label.textContent = option.querySelector('span')?.textContent?.trim() || value;
+
+                    options.forEach(function (candidate) {
+                        const selected = candidate === option;
+                        candidate.classList.toggle('is-selected', selected);
+                        candidate.setAttribute('aria-selected', selected ? 'true' : 'false');
+                    });
+
+                    select.classList.remove('is-open');
+                    trigger?.setAttribute('aria-expanded', 'false');
+                    trigger?.focus({ preventScroll: true });
+                });
             });
         });
-    });
 
-    search?.addEventListener('input', debouncedFilterRows, { passive: true });
-    filterRows();
+        listen(document, 'click', function () {
+            closePremiumSelects();
+        });
 
-    // The review panel intentionally opens only after an explicit Admin click.
+        function showDetailTab(owner, tabName) {
+            const ownerKey = String(owner || '');
+            if (!ownerKey) return;
+
+            document.querySelectorAll('[data-detail-tab][data-detail-owner="' + ownerKey + '"]').forEach(function (candidate) {
+                candidate.classList.toggle('is-active', candidate.dataset.detailTab === tabName);
+            });
+
+            document.querySelectorAll('[data-detail-tab-panel][data-detail-owner="' + ownerKey + '"]').forEach(function (panel) {
+                panel.hidden = panel.dataset.detailTabPanel !== tabName;
+            });
+        }
+
+        function selectDetail(key) {
+            const nextKey = key == null ? '' : String(key);
+            const selectedDetail = details.find(function (detail) {
+                return detail.dataset.applicationDetail === nextKey;
+            });
+
+            if (!selectedDetail) {
+                selectedKey = null;
+                return false;
+            }
+
+            selectedKey = nextKey;
+
+            rows.forEach(function (row) {
+                row.classList.toggle('is-selected', row.dataset.applicationRow === selectedKey);
+            });
+
+            details.forEach(function (detail) {
+                detail.hidden = detail !== selectedDetail;
+            });
+
+            return true;
+        }
+
+        function openReview(key) {
+            if (!drawer || !backdrop || !selectDetail(key)) return;
+
+            showDetailTab(selectedKey, 'overview');
+
+            drawer.classList.add('is-open');
+            backdrop.classList.add('is-open');
+            drawer.setAttribute('aria-hidden', 'false');
+            backdrop.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('reg-review-open');
+
+            requestAnimationFrame(function () {
+                const activeDetail = details.find(function (detail) {
+                    return detail.dataset.applicationDetail === selectedKey;
+                });
+                activeDetail?.querySelector('[data-close-review]')?.focus({ preventScroll: true });
+            });
+        }
+
+        function closeReview() {
+            if (!drawer || !backdrop) return;
+
+            drawer.classList.remove('is-open');
+            backdrop.classList.remove('is-open');
+            drawer.setAttribute('aria-hidden', 'true');
+            backdrop.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('reg-review-open');
+            rows.forEach(function (row) { row.classList.remove('is-selected'); });
+            selectedKey = null;
+        }
+
+        const rowIndex = rows.map(function (row) {
+            return {
+                row,
+                searchText: (row.dataset.search || '').toLowerCase(),
+            };
+        });
+
+        function debounce(callback, wait) {
+            let timer = 0;
+
+            return function () {
+                const args = arguments;
+                const context = this;
+                window.clearTimeout(timer);
+                timer = window.setTimeout(function () {
+                    callback.apply(context, args);
+                }, wait);
+            };
+        }
+
+        let filterFrame = 0;
+
+        function filterRows() {
+            const query = (search?.value || '').trim().toLowerCase();
+            window.cancelAnimationFrame(filterFrame);
+
+            filterFrame = window.requestAnimationFrame(function () {
+                let visible = 0;
+
+                rowIndex.forEach(function (item) {
+                    const match = !query || item.searchText.includes(query);
+                    item.row.hidden = !match;
+                    if (match) visible++;
+                });
+
+                if (empty) empty.hidden = visible !== 0 || rowIndex.length === 0;
+                if (count) count.textContent = 'Showing ' + visible;
+            });
+        }
+
+        const debouncedFilterRows = debounce(filterRows, 120);
+
+        rows.forEach(function (row) {
+            listen(row, 'click', function (event) {
+                if (event.target.closest('a, button, input, textarea, select, form')) return;
+                openReview(row.dataset.applicationRow);
+            });
+
+            listen(row, 'keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openReview(row.dataset.applicationRow);
+                }
+            });
+        });
+
+        openButtons.forEach(function (button) {
+            listen(button, 'click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                openReview(button.dataset.openReview);
+            });
+        });
+
+        closeButtons.forEach(function (button) {
+            listen(button, 'click', closeReview);
+        });
+
+        decisionButtons.forEach(function (button) {
+            listen(button, 'click', function () {
+                const owner = button.dataset.detailOwner;
+                const action = button.dataset.reviewAction;
+
+                showDetailTab(owner, 'decision');
+
+                window.setTimeout(function () {
+                    const targetId = action === 'decline'
+                        ? 'reject-note-' + owner
+                        : 'approve-note-' + owner;
+                    const target = document.getElementById(targetId);
+                    target?.focus({ preventScroll: false });
+                    target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 40);
+            });
+        });
+
+        detailTabs.forEach(function (tab) {
+            listen(tab, 'click', function () {
+                showDetailTab(tab.dataset.detailOwner, tab.dataset.detailTab);
+            });
+        });
+
+        listen(backdrop, 'click', closeReview);
+
+        listen(document, 'keydown', function (event) {
+            if (event.key === 'Tab' && drawer?.classList.contains('is-open')) {
+                const focusable = Array.from(
+                    drawer.querySelectorAll(
+                        'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                    )
+                ).filter(function (element) {
+                    return !element.closest('[hidden]') && element.offsetParent !== null;
+                });
+
+                if (focusable.length > 0) {
+                    const first = focusable[0];
+                    const last = focusable[focusable.length - 1];
+
+                    if (event.shiftKey && document.activeElement === first) {
+                        event.preventDefault();
+                        last.focus();
+                    } else if (!event.shiftKey && document.activeElement === last) {
+                        event.preventDefault();
+                        first.focus();
+                    }
+                }
+            }
+
+            if (event.key !== 'Escape') return;
+            closePremiumSelects();
+            if (drawer?.classList.contains('is-open')) closeReview();
+        });
+
+        listen(search, 'input', debouncedFilterRows, { passive: true });
+        filterRows();
+    }
+
+    window.__SARI_INIT_REGISTRATION_PAGE__ = initRegistrationPage;
+
+    if (!window.__SARI_REGISTRATION_LIVEWIRE_LISTENER__) {
+        window.__SARI_REGISTRATION_LIVEWIRE_LISTENER__ = true;
+        document.addEventListener('livewire:navigated', function () {
+            window.__SARI_INIT_REGISTRATION_PAGE__?.();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initRegistrationPage, { once: true });
+    } else {
+        initRegistrationPage();
+    }
 })();
 </script>
 

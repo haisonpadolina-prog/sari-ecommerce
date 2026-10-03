@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\SellerShippingController;
-use App\Http\Middleware\EnsureSellerAccountAccessible;
+use App\Http\Controllers\Seller\SellerShippingController;
+use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([

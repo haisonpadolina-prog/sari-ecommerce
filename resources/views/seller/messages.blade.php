@@ -9,7 +9,7 @@
     $sellerChatBlocked = false;
 
     if (\Illuminate\Support\Facades\Schema::hasTable('seller_chat_restrictions')) {
-        $sellerChatRestriction = \App\Models\SellerChatRestriction::query()
+        $sellerChatRestriction = \App\Models\Messaging\SellerChatRestriction::query()
             ->where('seller_account_id', $seller->id)
             ->first();
         $sellerChatBlocked = (bool) ($sellerChatRestriction?->is_blocked);
@@ -834,8 +834,8 @@
         const csrfToken = @json(csrf_token());
         const sellerId = {{ (int) $seller->id }};
         const allowedReactionEmojis = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
-        const assistantEnabled = @json((bool) config('sari_assistant.enabled', true));
-        const assistantDelayMs = Math.max(0, Number(@json((int) config('sari_assistant.delay_seconds', 45))) * 1000);
+        const assistantEnabled = @json((bool) config('sari.assistant.enabled', true));
+        const assistantDelayMs = Math.max(0, Number(@json((int) config('sari.assistant.delay_seconds', 45))) * 1000);
         const assistantTypingStartMs = 180;
 
         const messagesEl = document.getElementById('sellerPlatformMessages');

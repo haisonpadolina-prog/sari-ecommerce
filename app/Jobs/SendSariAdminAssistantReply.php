@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\Events\PlatformMessageSent;
-use App\Models\PlatformMessage;
-use App\Services\SariAdminAssistantService;
+use App\Models\Messaging\PlatformMessage;
+use App\Services\Messaging\SariAdminAssistantService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,7 +25,7 @@ class SendSariAdminAssistantReply implements ShouldQueue
 
     public function handle(SariAdminAssistantService $assistant): void
     {
-        if (!(bool) config('sari_assistant.enabled', true)) {
+        if (!(bool) config('sari.assistant.enabled', true)) {
             return;
         }
 

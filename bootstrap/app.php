@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Middleware\EnforcePlatformOperationalRules;
-use App\Http\Middleware\EnsureSessionAccountAccessible;
+use App\Http\Middleware\Platform\EnforcePlatformOperationalRules;
+use App\Http\Middleware\Shared\EnsureSessionAccountAccessible;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

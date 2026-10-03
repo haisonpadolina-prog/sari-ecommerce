@@ -38,10 +38,10 @@
                     </div>
                     @php
                         $logisticsHeaderAlerts = [
-                            ['Pending Rider Applications', \App\Models\RegistrationApplication::query()->where('role','rider')->where('status','pending')->count(), 'logistics.rider-applications'],
-                            ['Pickup Requests', \App\Models\MarketplaceOrder::query()->where('status','ready_for_pickup')->whereNull('courier_email')->count(), 'logistics.pickup-requests'],
-                            ['Parcels to Sort', \App\Models\LogisticsParcel::query()->where('status','received')->count(), 'logistics.parcel-sorting'],
-                            ['Unread Rider Messages', \App\Models\LogisticsMessage::query()->where('sender_role','rider')->whereNull('read_at')->count(), 'logistics.messages'],
+                            ['Pending Rider Applications', \App\Models\Registration\RegistrationApplication::query()->where('role','rider')->where('status','pending')->count(), 'logistics.rider-applications'],
+                            ['Pickup Requests', \App\Models\Orders\MarketplaceOrder::query()->where('status','ready_for_pickup')->whereNull('courier_email')->count(), 'logistics.pickup-requests'],
+                            ['Parcels to Sort', \App\Models\Delivery\LogisticsParcel::query()->where('status','received')->count(), 'logistics.parcel-sorting'],
+                            ['Unread Rider Messages', \App\Models\Messaging\LogisticsMessage::query()->where('sender_role','rider')->whereNull('read_at')->count(), 'logistics.messages'],
                         ];
                     @endphp
                     <div class="divide-y divide-[#eee4d3]">
