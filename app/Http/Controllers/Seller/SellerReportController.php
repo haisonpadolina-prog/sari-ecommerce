@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Accounts\SellerAccount;
+use App\Models\Catalog\SellerProduct;
 use App\Models\Finance\SellerSettlement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -352,13 +353,16 @@ class SellerReportController extends Controller
 
             foreach ($items as $item) {
                 $name = trim((string) ($item['name'] ?? 'Product'));
-                $key = (string) ($item['product_id'] ?? strtolower($name));
+                $productId = isset($item['product_id']) ? (int) $item['product_id'] : null;
+                $key = $productId ? (string) $productId : strtolower($name);
 
                 if (!isset($products[$key])) {
                     $products[$key] = [
+                        'product_id' => $productId,
                         'name' => $name ?: 'Product',
                         'quantity' => 0,
                         'sales' => 0.0,
+                        'image_path' => null,
                     ];
                 }
 
@@ -370,6 +374,39 @@ class SellerReportController extends Controller
                 $products[$key]['sales'] += $line;
             }
         }
+
+        /*
+        | Order snapshots intentionally keep immutable commercial data, but they
+        | do not currently contain product media. Resolve current product media
+        | in one batched query so the report can show thumbnails without N+1
+        | queries. Archived products are still eligible because report history
+        | should remain visible.
+        */
+        $productIds = collect($products)
+            ->pluck('product_id')
+            ->filter(fn ($id) => (int) $id > 0)
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        $productMedia = $productIds->isEmpty()
+            ? collect()
+            : SellerProduct::query()
+                ->with(['galleryImages:id,seller_product_id,path,sort_order'])
+                ->whereIn('id', $productIds)
+                ->get(['id', 'image_path'])
+                ->keyBy('id');
+
+        foreach ($products as &$product) {
+            $model = !empty($product['product_id'])
+                ? $productMedia->get((int) $product['product_id'])
+                : null;
+
+            $product['image_path'] = $model?->image_path
+                ?: $model?->galleryImages?->first()?->path
+                ?: null;
+        }
+        unset($product);
 
         usort($products, fn ($a, $b) => $b['sales'] <=> $a['sales']);
 

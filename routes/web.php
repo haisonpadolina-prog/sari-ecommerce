@@ -14,6 +14,7 @@ use App\Http\Controllers\Courier\CourierPageController;
 use App\Http\Controllers\Admin\AdminSellerComplianceController;
 use App\Http\Controllers\Seller\SellerComplianceMessageController;
 use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\Seller\SellerAiAssistantController;
 use App\Http\Controllers\Seller\SellerLayoutStateController;
 use App\Http\Controllers\Seller\SellerAdminChatController;
 use App\Http\Controllers\Seller\SellerProductController;
@@ -24,7 +25,6 @@ use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
 use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
 use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
 use App\Services\Seller\SellerAccountStatusService;
-use App\Services\Accounts\AccountEmailBanService;
 use App\Http\Controllers\Shared\ChatMessageReactionController;
 use App\Http\Controllers\Admin\AdminSellerChatActionController;
 use App\Http\Middleware\Seller\HandleSellerSupportChat;
@@ -141,14 +141,6 @@ Route::post('/login', function (Request $request) {
             'is_logistics', 'logistics_account_id', 'logistics_email', 'logistics_name',
         ]);
         return redirect()->route('admin.dashboard');
-    }
-
-    // Account bans are email-level and apply across Buyer/Seller/Rider/Logistics
-    // login paths, including the development/demo identities below.
-    if (app(AccountEmailBanService::class)->isBanned($adminEmail)) {
-        return back()->withErrors([
-            'email' => 'This email address has been banned by SARI. Please contact the administrator for review.',
-        ])->onlyInput('email');
     }
 
     /*
@@ -811,11 +803,6 @@ Route::post('/admin/users/{role}/{id}/unban', [AdminUsersController::class, 'unb
     ->whereNumber('id')
     ->name('admin.users.unban');
 
-Route::delete('/admin/users/{role}/{id}', [AdminUsersController::class, 'destroy'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
-    ->whereNumber('id')
-    ->name('admin.users.destroy');
-
 Route::post('/admin/users/{role}/{id}/note', [AdminUsersController::class, 'note'])
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
     ->whereNumber('id')
@@ -990,6 +977,15 @@ Route::get(
     [SellerDashboardController::class, 'index']
 )->middleware(EnsureSellerAccountAccessible::class)
   ->name('seller.dashboard');
+
+
+Route::post(
+    '/seller/ai-assistant/message',
+    [SellerAiAssistantController::class, 'message']
+)->middleware([
+    EnsureSellerAccountAccessible::class,
+    'throttle:30,1',
+])->name('seller.ai-assistant.message');
 
 
 /*

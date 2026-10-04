@@ -23,80 +23,77 @@ class SariAdminAssistantService
             return null;
         }
 
-        $apiKey = trim((string) config('sari.assistant.api_key'));
-        $model = trim((string) config('sari.assistant.model'));
+        try {
+            $apiKey = trim((string) config('sari.assistant.api_key'));
+            $model = trim((string) config('sari.assistant.model'));
 
-        if ($apiKey === '' || $model === '') {
-            Log::notice('SARI Admin Assistant skipped because AI configuration is incomplete.');
-            return null;
-        }
+            if ($apiKey === '' || $model === '') {
+                Log::notice('SARI Admin Assistant is using local support fallback because AI configuration is incomplete.');
+                return $this->fallbackReplyFor($triggerMessage);
+            }
 
-        $history = PlatformMessage::query()
-            ->where('platform_conversation_id', $conversation->id)
-            ->whereNull('deleted_at')
-            ->where('id', '<=', $triggerMessage->id)
-            ->latest('id')
-            ->limit(12)
-            ->get()
-            ->reverse()
-            ->values();
+            $history = PlatformMessage::query()
+                ->where('platform_conversation_id', $conversation->id)
+                ->whereNull('deleted_at')
+                ->where('id', '<=', $triggerMessage->id)
+                ->latest('id')
+                ->limit(12)
+                ->get()
+                ->reverse()
+                ->values();
 
-        $transcript = $history
-            ->map(function (PlatformMessage $message): string {
-                $speaker = ($message->metadata['ai_assistant'] ?? false)
-                    ? 'SARI Assistant'
-                    : strtoupper($message->sender_role);
+            $transcript = $history
+                ->map(function (PlatformMessage $message): string {
+                    $speaker = ($message->metadata['ai_assistant'] ?? false)
+                        ? 'SARI Assistant'
+                        : strtoupper($message->sender_role);
 
-                return $speaker . ': ' . trim((string) $message->body);
-            })
-            ->filter(fn (string $line): bool => trim($line) !== '')
-            ->implode("\n");
+                    return $speaker . ': ' . trim((string) $message->body);
+                })
+                ->filter(fn (string $line): bool => trim($line) !== '')
+                ->implode("\n");
 
-        $payload = [
-            'systemInstruction' => [
-                'parts' => [
-                    ['text' => $this->systemPrompt()],
-                ],
-            ],
-            'contents' => [
-                [
-                    'role' => 'user',
+            $payload = [
+                'systemInstruction' => [
                     'parts' => [
-                        [
-                            'text' => "Conversation type: {$conversation->conversation_type}\n"
-                                . $this->trustedSellerContext($conversation)
-                                . "\nConversation transcript:\n{$transcript}\n\n"
-                                . "Reply only to the latest user message as SARI Assistant.",
+                        ['text' => $this->systemPrompt()],
+                    ],
+                ],
+                'contents' => [
+                    [
+                        'role' => 'user',
+                        'parts' => [
+                            [
+                                'text' => "Conversation type: {$conversation->conversation_type}\n"
+                                    . $this->trustedSellerContext($conversation)
+                                    . "\nConversation transcript:\n{$transcript}\n\n"
+                                    . 'Reply only to the latest user message as SARI Assistant.',
+                            ],
                         ],
                     ],
                 ],
-            ],
-            'generationConfig' => [
-                'temperature' => 0.2,
-                'maxOutputTokens' => (int) config(
-                    'sari.assistant.max_output_tokens',
-                    240
+                'generationConfig' => [
+                    'temperature' => 0.2,
+                    'maxOutputTokens' => (int) config('sari.assistant.max_output_tokens', 160),
+                ],
+            ];
+
+            $endpoint = rtrim(
+                (string) config(
+                    'sari.assistant.endpoint_base',
+                    'https://generativelanguage.googleapis.com/v1beta'
                 ),
-            ],
-        ];
+                '/'
+            ) . '/models/' . rawurlencode($model) . ':generateContent';
 
-        $endpoint = rtrim(
-            (string) config(
-                'sari.assistant.endpoint_base',
-                'https://generativelanguage.googleapis.com/v1beta'
-            ),
-            '/'
-        ) . '/models/' . rawurlencode($model) . ':generateContent';
-
-        try {
             $response = Http::withHeaders([
                     'x-goog-api-key' => $apiKey,
                     'Content-Type' => 'application/json',
                 ])
                 ->acceptJson()
                 ->asJson()
-                ->connectTimeout((int) config('sari.assistant.connect_timeout', 8))
-                ->timeout((int) config('sari.assistant.timeout', 25))
+                ->connectTimeout((int) config('sari.assistant.connect_timeout', 3))
+                ->timeout((int) config('sari.assistant.timeout', 8))
                 ->post($endpoint, $payload);
 
             if (!$response->successful()) {
@@ -106,7 +103,7 @@ class SariAdminAssistantService
                     'body' => Str::limit($response->body(), 1200),
                 ]);
 
-                return $this->fallbackReply();
+                return $this->fallbackReplyFor($triggerMessage);
             }
 
             $text = collect((array) data_get($response->json(), 'candidates.0.content.parts', []))
@@ -116,19 +113,15 @@ class SariAdminAssistantService
 
             $reply = trim($text);
 
-            if ($reply === '') {
-                return $this->fallbackReply();
-            }
-
-            // Keep automated replies intentionally short and support-focused.
-            return Str::limit($reply, 900, '');
+            return $reply !== ''
+                ? Str::limit($reply, 900, '')
+                : $this->fallbackReplyFor($triggerMessage);
         } catch (Throwable $e) {
-            Log::warning('SARI Admin Assistant exception.', [
-                'model' => $model,
+            Log::warning('SARI Admin Assistant exception; using local support fallback.', [
                 'message' => $e->getMessage(),
             ]);
 
-            return $this->fallbackReply();
+            return $this->fallbackReplyFor($triggerMessage);
         }
     }
 
@@ -272,6 +265,45 @@ PROMPT;
         }
 
         return implode("\n", $lines) . "\n";
+    }
+
+    private function fallbackReplyFor(PlatformMessage $triggerMessage): string
+    {
+        $message = Str::lower(trim((string) $triggerMessage->body));
+
+        if ($message === '') {
+            return $this->fallbackReply();
+        }
+
+        if (Str::contains($message, ['add product', 'new product', 'create product', 'listing', 'product management'])) {
+            return 'You can add a product from Product Management → Add New Product. Complete the product details, inventory, media, variants if needed, then save or submit the listing for SARI review.';
+        }
+
+        if (Str::contains($message, ['order', 'prepare', 'pickup', 'shipping', 'delivery', 'tracking'])) {
+            return 'For order fulfillment, open Order Management to review the order and required action, then use Shipping Tracking after the parcel enters pickup or Logistics handling. A SARI administrator can verify any order-specific issue that is not shown in your workspace.';
+        }
+
+        if (Str::contains($message, ['return', 'refund'])) {
+            return 'Open Returns & Refunds to review Buyer return requests, confirm returned items, and record eligible refund ledger entries. A SARI administrator can verify any case-specific dispute or exception.';
+        }
+
+        if (Str::contains($message, ['voucher', 'promo', 'promotion', 'discount'])) {
+            return 'Open Promotions & Vouchers to create or manage Seller voucher campaigns, including discount value, limits, minimum spend, and schedule.';
+        }
+
+        if (Str::contains($message, ['review', 'rating', 'feedback'])) {
+            return 'Open Reviews & Ratings to monitor verified Buyer feedback and publish or update your Seller response.';
+        }
+
+        if (Str::contains($message, ['earnings', 'finance', 'settlement', 'commission', 'revenue', 'sales report', 'report'])) {
+            return 'Use Finance & Earnings for settlement ledger records and Generate Report for sales, order, product, and financial reporting. A SARI administrator can verify any settlement-specific concern that is not shown there.';
+        }
+
+        if (Str::contains($message, ['account', 'store', 'profile', 'warning', 'suspend'])) {
+            return 'Open Account Management for your Seller profile and store settings. For warning, suspension, or compliance decisions, a SARI administrator must review the account-specific case.';
+        }
+
+        return $this->fallbackReply();
     }
 
     private function fallbackReply(): string

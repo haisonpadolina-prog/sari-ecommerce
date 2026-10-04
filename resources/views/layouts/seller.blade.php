@@ -229,7 +229,7 @@
             }
 
             html.seller-sidebar-collapsed #sellerSidebarProfile {
-                padding: 12px;
+                padding: 10px;
             }
         }
 
@@ -1190,7 +1190,243 @@
             background: #C9CED6 !important;
         }
 
-</style>
+
+        /* ============================================================
+           SELLER LOGOUT CONFIRMATION MODAL — PREMIUM RED PASS
+           ============================================================ */
+        #sellerLogoutConfirmModal[hidden] {
+            display: none !important;
+        }
+
+        #sellerLogoutConfirmModal {
+            position: fixed;
+            inset: 0;
+            z-index: 11000;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+        }
+
+        .seller-logout-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(24, 28, 34, .54);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 150ms ease;
+        }
+
+        .seller-logout-modal-dialog {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 390px);
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: #FFFFFF;
+            box-shadow:
+                0 30px 80px rgba(15, 23, 42, .24),
+                0 8px 24px rgba(15, 23, 42, .08);
+            opacity: 0;
+            transform: translateY(10px) scale(.985);
+            transition:
+                opacity 160ms ease,
+                transform 160ms cubic-bezier(.22, 1, .36, 1);
+        }
+
+        #sellerLogoutConfirmModal.is-open .seller-logout-modal-backdrop {
+            opacity: 1;
+        }
+
+        #sellerLogoutConfirmModal.is-open .seller-logout-modal-dialog {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .seller-logout-modal-body {
+            padding: 21px 21px 18px;
+        }
+
+        .seller-logout-modal-icon {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid #FFB7BE;
+            border-radius: 8px;
+            background: #FFF0F2;
+            color: #F04438;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.8);
+        }
+
+        .seller-logout-modal-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .seller-logout-modal-title {
+            margin: 14px 0 0;
+            color: #1F2937;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.28;
+            letter-spacing: -.035em;
+        }
+
+        .seller-logout-modal-copy {
+            margin: 6px 0 0;
+            max-width: 410px;
+            color: #667085;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .seller-logout-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #EEF0F3;
+            background: #FAFBFC;
+            padding: 10px 12px;
+        }
+
+        .seller-logout-modal-btn {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 8px;
+            padding: 0 13px;
+            font: inherit;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background-color 120ms ease,
+                border-color 120ms ease,
+                color 120ms ease,
+                box-shadow 120ms ease,
+                transform 120ms ease;
+        }
+
+        .seller-logout-modal-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .seller-logout-modal-btn-cancel {
+            min-width: 84px;
+            border: 1px solid #D8DEE6;
+            background: #FFFFFF;
+            color: #475467;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, .03);
+        }
+
+        .seller-logout-modal-btn-cancel:hover {
+            border-color: #C7CED8;
+            background: #F7F8FA;
+            color: #253142;
+        }
+
+        .seller-logout-modal-btn-danger {
+            min-width: 96px;
+            border: 1px solid #ff0b0b;
+            background: #ff0b0b;
+            color: #FFFFFF;
+            box-shadow:
+                0 6px 14px rgba(127, 29, 45, .20),
+                inset 0 1px 0 rgba(255,255,255,.12);
+        }
+
+        .seller-logout-modal-btn-danger:hover {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 8px 18px rgba(107, 23, 38, .25),
+                inset 0 1px 0 rgba(255,255,255,.10);
+            transform: translateY(-1px);
+        }
+
+        .seller-logout-modal-btn-danger:active {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 4px 10px rgba(86, 17, 31, .22),
+                inset 0 1px 0 rgba(255,255,255,.08);
+            transform: translateY(0);
+        }
+
+        .seller-logout-modal-btn-danger:disabled {
+            border-color: #9B5360;
+            background: #9B5360;
+            box-shadow: none;
+            opacity: .78;
+            cursor: wait;
+            transform: none;
+        }
+
+        .seller-logout-modal-btn:focus-visible {
+            outline: 3px solid rgba(127, 29, 45, .18);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 520px) {
+            #sellerLogoutConfirmModal {
+                align-items: end;
+                padding: 10px;
+            }
+
+            .seller-logout-modal-dialog {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .seller-logout-modal-body {
+                padding: 20px 18px 17px;
+            }
+
+            .seller-logout-modal-title {
+                font-size: 17px;
+            }
+
+            .seller-logout-modal-copy {
+                font-size: 9px;
+            }
+
+            .seller-logout-modal-footer {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding: 10px;
+            }
+
+            .seller-logout-modal-btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .seller-logout-modal-backdrop,
+            .seller-logout-modal-dialog,
+            .seller-logout-modal-btn {
+                transition: none !important;
+            }
+        }
+
+    </style>
 
     @stack('styles')
 
@@ -1225,11 +1461,6 @@
             session('seller_account_id')
         );
     }
-
-    $sellerLayoutProfilePhotoUrl = $sellerLayoutAccount
-        && filled($sellerLayoutAccount->profile_image_path)
-            ? route('seller.account.profile-photo')
-            : null;
 
     $sellerUnreadMessages = 0;
     $sellerRecentAdminMessages = collect();
@@ -1896,7 +2127,12 @@
             </a>
 
             {{-- LOGOUT --}}
-            <form method="POST" action="{{ route('seller.logout') }}">
+            <form
+                id="sellerLogoutForm"
+                method="POST"
+                action="{{ route('seller.logout') }}"
+                data-seller-logout-form
+            >
                 @csrf
 
                 <button
@@ -1940,18 +2176,8 @@
                 "
                 wire:navigate.hover
             >
-                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#d9930a] text-[12px] font-semibold text-white">
-                    @if($sellerLayoutProfilePhotoUrl)
-                        <img
-                            src="{{ $sellerLayoutProfilePhotoUrl }}"
-                            alt="Seller profile photo"
-                            class="h-full w-full object-cover"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
-                        >
-                        <span style="display:none" class="h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
-                    @else
-                        <span class="grid h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
-                    @endif
+                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[12px] font-semibold text-white">
+                    {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
                 </div>
 
                 <div class="seller-sidebar-label min-w-0 flex-1">
@@ -2250,18 +2476,8 @@
                         class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
                 wire:navigate.hover
             >
-                        <div class="relative h-10 w-10 overflow-hidden rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
-                            @if($sellerLayoutProfilePhotoUrl)
-                                <img
-                                    src="{{ $sellerLayoutProfilePhotoUrl }}"
-                                    alt="Seller profile photo"
-                                    class="h-full w-full object-cover"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
-                                >
-                                <span style="display:none" class="h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
-                            @else
-                                <span class="grid h-full w-full place-items-center">{{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}</span>
-                            @endif
+                        <div class="grid h-10 w-10 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
+                            {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
                         </div>
 
                         <div>
@@ -2285,11 +2501,96 @@
     </div>
 
 
+
+    {{-- =========================================================
+        GLOBAL SARI SELLER AI ASSISTANT
+        Persistent across Seller Livewire navigation.
+    ========================================================== --}}
+    @persist('seller-ai-assistant')
+        @include('seller.partials.ai-assistant', [
+            'sellerAiAccount' => $sellerLayoutAccount,
+        ])
+    @endpersist
+
     {{-- MOBILE SIDEBAR OVERLAY --}}
     <div
         id="sellerSidebarOverlay"
         class="fixed inset-0 z-40 hidden bg-black/30 backdrop-blur-[1px] lg:hidden"
     ></div>
+
+
+    {{-- =========================================================
+        SELLER LOGOUT CONFIRMATION
+        Global modal used by the existing seller.logout POST form.
+    ========================================================== --}}
+    <div
+        id="sellerLogoutConfirmModal"
+        hidden
+        aria-hidden="true"
+    >
+        <div
+            class="seller-logout-modal-backdrop"
+            data-seller-logout-cancel
+            aria-hidden="true"
+        ></div>
+
+        <section
+            class="seller-logout-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sellerLogoutModalTitle"
+            aria-describedby="sellerLogoutModalDescription"
+        >
+            <div class="seller-logout-modal-body">
+                <div class="seller-logout-modal-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M10 17l5-5-5-5"></path>
+                        <path d="M15 12H3"></path>
+                        <path d="M14 3h7v18h-7"></path>
+                    </svg>
+                </div>
+
+                <h2
+                    id="sellerLogoutModalTitle"
+                    class="seller-logout-modal-title"
+                >
+                    Log out of SARI?
+                </h2>
+
+                <p
+                    id="sellerLogoutModalDescription"
+                    class="seller-logout-modal-copy"
+                >
+                    Are you sure you want to end your Seller session?
+                    You will need to sign in again to access Seller Center.
+                </p>
+            </div>
+
+            <div class="seller-logout-modal-footer">
+                <button
+                    type="button"
+                    class="seller-logout-modal-btn seller-logout-modal-btn-cancel"
+                    data-seller-logout-cancel
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    id="sellerLogoutConfirmButton"
+                    class="seller-logout-modal-btn seller-logout-modal-btn-danger"
+                    data-seller-logout-confirm
+                >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 17l5-5-5-5"></path>
+                        <path d="M15 12H3"></path>
+                        <path d="M14 3h7v18h-7"></path>
+                    </svg>
+                    <span data-seller-logout-confirm-label>Logout</span>
+                </button>
+            </div>
+        </section>
+    </div>
 
 
     {{-- REAL-TIME MESSAGE TOAST --}}
@@ -4120,6 +4421,276 @@
                 window.requestAnimationFrame(lockSellerCanvas);
             });
             window.addEventListener('pageshow', lockSellerCanvas);
+        })();
+    </script>
+
+
+    {{-- =========================================================
+        SELLER LOGOUT CONFIRMATION CONTROLLER
+    ========================================================== --}}
+    <script data-navigate-once>
+        (function () {
+            if (window.__SARI_SELLER_LOGOUT_MODAL_BOUND__) {
+                return;
+            }
+
+            window.__SARI_SELLER_LOGOUT_MODAL_BOUND__ = true;
+
+            let pendingForm = null;
+            let returnFocus = null;
+            let previousBodyOverflow = '';
+
+            function modal() {
+                return document.getElementById(
+                    'sellerLogoutConfirmModal'
+                );
+            }
+
+            function cancelButton() {
+                return modal()?.querySelector(
+                    '[data-seller-logout-cancel]'
+                );
+            }
+
+            function confirmButton() {
+                return document.getElementById(
+                    'sellerLogoutConfirmButton'
+                );
+            }
+
+            function openLogoutModal(form, trigger) {
+                const element = modal();
+
+                if (!element) {
+                    HTMLFormElement.prototype.submit.call(form);
+                    return;
+                }
+
+                pendingForm = form;
+                returnFocus =
+                    trigger instanceof HTMLElement
+                        ? trigger
+                        : document.activeElement;
+
+                previousBodyOverflow =
+                    document.body.style.overflow || '';
+
+                document.body.style.overflow = 'hidden';
+
+                element.hidden = false;
+                element.setAttribute('aria-hidden', 'false');
+
+                requestAnimationFrame(function () {
+                    element.classList.add('is-open');
+
+                    window.setTimeout(function () {
+                        cancelButton()?.focus({
+                            preventScroll: true
+                        });
+                    }, 20);
+                });
+            }
+
+            function closeLogoutModal(restoreFocus = true) {
+                const element = modal();
+
+                if (!element || element.hidden) {
+                    return;
+                }
+
+                element.classList.remove('is-open');
+                element.setAttribute('aria-hidden', 'true');
+
+                document.body.style.overflow =
+                    previousBodyOverflow;
+
+                window.setTimeout(function () {
+                    element.hidden = true;
+
+                    const confirm = confirmButton();
+                    const label = confirm?.querySelector(
+                        '[data-seller-logout-confirm-label]'
+                    );
+
+                    if (confirm) {
+                        confirm.disabled = false;
+                    }
+
+                    if (label) {
+                        label.textContent = 'Logout';
+                    }
+
+                    if (
+                        restoreFocus
+                        && returnFocus instanceof HTMLElement
+                    ) {
+                        returnFocus.focus({
+                            preventScroll: true
+                        });
+                    }
+
+                    if (restoreFocus) {
+                        pendingForm = null;
+                        returnFocus = null;
+                    }
+                }, 150);
+            }
+
+            document.addEventListener(
+                'submit',
+                function (event) {
+                    const form = event.target;
+
+                    if (
+                        !(form instanceof HTMLFormElement)
+                        || !form.matches(
+                            '[data-seller-logout-form]'
+                        )
+                    ) {
+                        return;
+                    }
+
+                    if (
+                        form.dataset.sellerLogoutConfirmed === '1'
+                    ) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+
+                    openLogoutModal(
+                        form,
+                        event.submitter || document.activeElement
+                    );
+                },
+                true
+            );
+
+            document.addEventListener(
+                'click',
+                function (event) {
+                    const cancel = event.target.closest(
+                        '[data-seller-logout-cancel]'
+                    );
+
+                    if (cancel) {
+                        event.preventDefault();
+                        closeLogoutModal(true);
+                        return;
+                    }
+
+                    const confirm = event.target.closest(
+                        '[data-seller-logout-confirm]'
+                    );
+
+                    if (!confirm) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    if (
+                        !(pendingForm instanceof HTMLFormElement)
+                    ) {
+                        closeLogoutModal(true);
+                        return;
+                    }
+
+                    confirm.disabled = true;
+
+                    const label = confirm.querySelector(
+                        '[data-seller-logout-confirm-label]'
+                    );
+
+                    if (label) {
+                        label.textContent = 'Logging out…';
+                    }
+
+                    pendingForm.dataset.sellerLogoutConfirmed = '1';
+
+                    /*
+                     * Native submit bypasses this confirmation listener
+                     * while preserving the existing POST action + CSRF.
+                     */
+                    HTMLFormElement.prototype.submit.call(
+                        pendingForm
+                    );
+                }
+            );
+
+            document.addEventListener(
+                'keydown',
+                function (event) {
+                    const element = modal();
+
+                    if (!element || element.hidden) {
+                        return;
+                    }
+
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        closeLogoutModal(true);
+                        return;
+                    }
+
+                    if (event.key !== 'Tab') {
+                        return;
+                    }
+
+                    const focusable = Array.from(
+                        element.querySelectorAll(
+                            'button:not([disabled]), [href], input:not([disabled])'
+                        )
+                    ).filter(function (node) {
+                        return !node.hasAttribute('hidden');
+                    });
+
+                    if (!focusable.length) {
+                        return;
+                    }
+
+                    const first = focusable[0];
+                    const last =
+                        focusable[focusable.length - 1];
+
+                    if (
+                        event.shiftKey
+                        && document.activeElement === first
+                    ) {
+                        event.preventDefault();
+                        last.focus();
+                    } else if (
+                        !event.shiftKey
+                        && document.activeElement === last
+                    ) {
+                        event.preventDefault();
+                        first.focus();
+                    }
+                }
+            );
+
+            document.addEventListener(
+                'livewire:navigating',
+                function () {
+                    const element = modal();
+
+                    if (element && !element.hidden) {
+                        element.classList.remove('is-open');
+                        element.hidden = true;
+                        element.setAttribute(
+                            'aria-hidden',
+                            'true'
+                        );
+
+                        document.body.style.overflow =
+                            previousBodyOverflow;
+                    }
+
+                    pendingForm = null;
+                    returnFocus = null;
+                }
+            );
         })();
     </script>
 

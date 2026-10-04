@@ -5,11 +5,14 @@ namespace App\Events;
 use App\Models\Messaging\PlatformMessage;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldRescue;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\Attributes\Connection;
 use Illuminate\Queue\SerializesModels;
 
-class PlatformMessageSent implements ShouldBroadcastNow
+#[Connection('deferred')]
+class PlatformMessageSent implements ShouldBroadcast, ShouldRescue
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,10 +30,16 @@ class PlatformMessageSent implements ShouldBroadcastNow
         }
 
         return $conversation->participants
-            ->filter(fn ($participant) => !$participant->left_at && filled($participant->realtime_token))
-            ->map(fn ($participant) => new Channel(
-                'sari.platform.participant.' . $participant->realtime_token
-            ))
+            ->filter(
+                fn ($participant) =>
+                    !$participant->left_at
+                    && filled($participant->realtime_token)
+            )
+            ->map(
+                fn ($participant) => new Channel(
+                    'sari.platform.participant.' . $participant->realtime_token
+                )
+            )
             ->values()
             ->all();
     }

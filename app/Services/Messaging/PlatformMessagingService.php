@@ -577,9 +577,35 @@ class PlatformMessagingService
         // Push the new message immediately to every active participant.
         event(new PlatformMessageSent($message));
 
-        // AI cover is text-only. Attachment-only messages wait for a human
-        // Admin instead of asking the model to guess what a file contains.
-        if ($actor['role'] !== 'admin' && $body !== '') {
+        /*
+        | Seller -> SARI Admin Support:
+        | create a deterministic receipt acknowledgement immediately.
+        | This is DB-only: no Gemini request, no extra HTTP endpoint, and no
+        | queue worker is required for the acknowledgement.
+        */
+        if (
+            $actor['role'] === 'seller'
+            && $message->conversation?->conversation_type === 'admin_support'
+            && (bool) config('sari.assistant.enabled', true)
+        ) {
+            try {
+                app(SariAdminAssistantReplyService::class)
+                    ->replyToTrigger($message->id);
+            } catch (\Throwable $e) {
+                /*
+                | Never fail the Seller's successfully stored message because
+                | the acknowledgement layer encountered a problem.
+                */
+                report($e);
+            }
+        }
+
+        // Keep the legacy AI-cover queue only outside Admin Support.
+        if (
+            $actor['role'] !== 'admin'
+            && $body !== ''
+            && $message->conversation?->conversation_type !== 'admin_support'
+        ) {
             $hasAdminParticipant = $message->conversation
                 ?->participants
                 ->contains(

@@ -13,6 +13,11 @@ return [
     */
     'enabled' => env('SARI_ADMIN_ASSISTANT_ENABLED', true),
 
+    // Run support AI after the HTTP response using Laravel's built-in
+    // deferred queue by default. This requires no permanent queue worker and
+    // does not depend on the host allowing background process spawning.
+    'queue_connection' => env('SARI_ADMIN_ASSISTANT_QUEUE_CONNECTION', 'deferred'),
+
     // Reuse the project's existing Gemini credential by default.
     'api_key' => env('GEMINI_API_KEY'),
     'model' => env(
@@ -27,8 +32,8 @@ return [
     // Give the human Admin a short window to answer first.
     'delay_seconds' => (int) env('SARI_ADMIN_ASSISTANT_DELAY_SECONDS', 0),
 
-    'connect_timeout' => (int) env('SARI_ADMIN_ASSISTANT_CONNECT_TIMEOUT', 5),
-    'timeout' => (int) env('SARI_ADMIN_ASSISTANT_TIMEOUT', 15),
+    'connect_timeout' => (int) env('SARI_ADMIN_ASSISTANT_CONNECT_TIMEOUT', 3),
+    'timeout' => (int) env('SARI_ADMIN_ASSISTANT_TIMEOUT', 8),
     'max_output_tokens' => (int) env('SARI_ADMIN_ASSISTANT_MAX_OUTPUT_TOKENS', 160),
 
     'fallback_reply' => env(

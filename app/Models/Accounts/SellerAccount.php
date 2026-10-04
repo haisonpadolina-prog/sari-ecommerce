@@ -11,68 +11,36 @@ use App\Models\Messaging\ChatMessage;
 use App\Models\Orders\SellerReturnRequest;
 use App\Models\Platform\SellerNotification;
 use App\Models\Promotions\SellerVoucher;
-
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SellerAccount extends Model
 {
-    use SoftDeletes;
     protected $fillable = [
-        'registration_application_id',
-        'last_name',
-        'first_name',
-        'middle_initial',
-        'sex',
         'email',
-        'contact_no',
-        'birthday',
-        'age',
-        'province_code',
-        'province_name',
-        'municipality_code',
-        'municipality_name',
-        'barangay_code',
-        'barangay_name',
-        'street_address',
-        'password',
-        'profile_image_path',
         'store_name',
-        'line_of_business',
         'store_description',
         'store_phone',
         'store_public_email',
         'store_status',
         'pickup_address',
         'pickup_instructions',
-        'id_path',
-        'business_permit_path',
-        'registration_status',
-        'approved_at',
+        'store_logo_path',
+        'store_banner_path',
         'warning_count',
         'account_status',
         'suspended_at',
         'suspended_until',
         'suspension_reason',
-        'banned_at',
-        'ban_reason',
-        'deactivated_at',
-        'deactivation_reason',
         'realtime_token',
     ];
 
     protected function casts(): array
     {
         return [
-            'birthday' => 'date',
-            'approved_at' => 'datetime',
             'suspended_at' => 'datetime',
             'suspended_until' => 'datetime',
-            'banned_at' => 'datetime',
-            'deactivated_at' => 'datetime',
-            'deleted_at' => 'datetime',
         ];
     }
 
@@ -135,14 +103,16 @@ class SellerAccount extends Model
     public function refreshSuspensionStatus(): void
     {
         if (
-            $this->account_status === 'suspended' &&
-            $this->suspended_until &&
-            $this->suspended_until->isPast()
+            $this->account_status === 'suspended'
+            && $this->suspended_until
+            && $this->suspended_until->isPast()
         ) {
             $servedThreeWarningSuspension = $this->warning_count >= 3;
 
             $this->update([
-                'warning_count' => $servedThreeWarningSuspension ? 0 : $this->warning_count,
+                'warning_count' => $servedThreeWarningSuspension
+                    ? 0
+                    : $this->warning_count,
                 'account_status' => $servedThreeWarningSuspension
                     ? 'active'
                     : ($this->warning_count > 0 ? 'warning' : 'active'),
@@ -157,7 +127,7 @@ class SellerAccount extends Model
     {
         $this->refreshSuspensionStatus();
 
-        return $this->account_status === 'suspended' &&
-            $this->suspended_until?->isFuture();
+        return $this->account_status === 'suspended'
+            && $this->suspended_until?->isFuture();
     }
 }

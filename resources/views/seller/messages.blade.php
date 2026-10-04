@@ -5,15 +5,10 @@
 
 @section('content')
 @php
-    $sellerChatRestriction = null;
-    $sellerChatBlocked = false;
-
-    if (\Illuminate\Support\Facades\Schema::hasTable('seller_chat_restrictions')) {
-        $sellerChatRestriction = \App\Models\Messaging\SellerChatRestriction::query()
-            ->where('seller_account_id', $seller->id)
-            ->first();
-        $sellerChatBlocked = (bool) ($sellerChatRestriction?->is_blocked);
-    }
+    // SellerAdminChatController already resolves these values. Keep the view
+    // presentation-only and avoid a duplicate database/schema query per visit.
+    $sellerChatRestriction = $sellerChatRestriction ?? null;
+    $sellerChatBlocked = (bool) ($sellerChatBlocked ?? false);
 @endphp
 
 <style>
@@ -630,6 +625,649 @@
         }
     }
 
+
+
+    /* ============================================================
+       SARI SELLER MESSAGING — CLEAN MODERN PROFESSIONAL FINAL LAYER
+       ============================================================ */
+    .seller-platform-page {
+        --chat-gold: #d59617;
+        --chat-gold-hover: #c9890f;
+        --chat-gold-soft: #fffaf0;
+        --chat-ink: #111827;
+        --chat-text: #344054;
+        --chat-muted: #7c8592;
+        --chat-soft-muted: #98a2b3;
+        --chat-line: #e5e7eb;
+        --chat-canvas: #f7f8fa;
+        --chat-panel: #ffffff;
+        --chat-ai: #5f7788;
+
+        background: var(--chat-canvas) !important;
+        color: var(--chat-ink) !important;
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    #sellerPlatformChat {
+        background: var(--chat-canvas) !important;
+        border-top: 1px solid var(--chat-line) !important;
+    }
+
+    #sellerPlatformChat .chat-grid {
+        background: var(--chat-canvas) !important;
+    }
+
+    @media (min-width: 1536px) {
+        #sellerPlatformChat .chat-grid {
+            grid-template-columns: 258px minmax(0, 1fr) 244px !important;
+        }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1535px) {
+        #sellerPlatformChat .chat-grid {
+            grid-template-columns: 252px minmax(0, 1fr) !important;
+        }
+    }
+
+    /* Left conversation rail */
+    #sellerConversationPane {
+        border-color: var(--chat-line) !important;
+        background: #fff !important;
+    }
+
+    #sellerConversationPane > div:first-child {
+        padding: 14px 14px 12px !important;
+        border-color: #edf0f3 !important;
+    }
+
+    #sellerConversationPane h3 {
+        color: #1f2937 !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+    }
+
+    #sellerConversationPane h3 + p {
+        color: #98a2b3 !important;
+        font-size: 8.5px !important;
+    }
+
+    #sellerMessageSearch {
+        height: 40px !important;
+        border-color: #d8dee6 !important;
+        border-radius: 9px !important;
+        background: #f8fafc !important;
+        padding-left: 36px !important;
+        font-size: 9.5px !important;
+        color: #344054 !important;
+        box-shadow: none !important;
+    }
+
+    #sellerMessageSearch:focus {
+        border-color: var(--chat-gold) !important;
+        background: #fff !important;
+        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) {
+        border-left: 0 !important;
+        border-bottom: 1px solid #edf0f3 !important;
+        background: #fffaf0 !important;
+        padding: 12px 14px !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) > div {
+        gap: 9px !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) .h-11.w-11 {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+        background: #fff !important;
+        color: #a96f06 !important;
+        box-shadow: inset 0 0 0 1px #efd9a7 !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) p.text-\[13px\] {
+        color: #344054 !important;
+        font-size: 9.8px !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) p.text-\[10px\] {
+        color: #98a2b3 !important;
+        font-size: 7.8px !important;
+    }
+
+    #sellerLastMessagePreview {
+        margin-top: 5px !important;
+        color: #667085 !important;
+        font-size: 8.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Main thread */
+    #sellerCenterPane {
+        background: var(--chat-canvas) !important;
+    }
+
+    #sellerCenterPane > div:first-child {
+        min-height: 62px !important;
+        border-color: var(--chat-line) !important;
+        padding: 9px 14px !important;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, .01) !important;
+    }
+
+    #sellerCenterPane > div:first-child .h-11.w-11 {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+        background: #fffaf0 !important;
+        color: #a96f06 !important;
+        box-shadow: inset 0 0 0 1px #efd9a7 !important;
+    }
+
+    #sellerCenterPane > div:first-child p.text-\[14px\] {
+        color: #1f2937 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+    }
+
+    #sellerCenterPane > div:first-child p.text-\[10px\] {
+        margin-top: 2px !important;
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+    }
+
+    .seller-platform-status,
+    .seller-platform-ai {
+        height: 26px !important;
+        border-radius: 999px !important;
+        padding: 0 8px !important;
+        font-size: 7.8px !important;
+        font-weight: 700 !important;
+    }
+
+    .seller-platform-status {
+        border-color: #dce7df !important;
+        background: #f4f9f6 !important;
+        color: #4f7d63 !important;
+    }
+
+    .seller-platform-status::before {
+        width: 5px !important;
+        height: 5px !important;
+        background: currentColor !important;
+    }
+
+    .seller-platform-status[data-state="connecting"],
+    .seller-platform-status[data-state="syncing"] {
+        border-color: #eadfc9 !important;
+        background: #fff9ef !important;
+        color: #a8731f !important;
+    }
+
+    .seller-platform-status[data-state="fallback"] {
+        border-color: #d8e2eb !important;
+        background: #f5f8fb !important;
+        color: #5d768a !important;
+    }
+
+    .seller-platform-status[data-state="offline"],
+    .seller-platform-status[data-state="unavailable"] {
+        border-color: #efcece !important;
+        background: #fff5f5 !important;
+        color: #a65353 !important;
+    }
+
+    .seller-platform-ai {
+        border-color: #dde5eb !important;
+        background: #f6f9fb !important;
+        color: #617889 !important;
+    }
+
+    .seller-platform-ai[data-disabled="1"] {
+        opacity: .58;
+    }
+
+    #sellerPlatformMessages {
+        background: var(--chat-canvas) !important;
+        padding: 18px 18px 22px !important;
+        scrollbar-color: #cfd6df transparent !important;
+    }
+
+    .seller-message-row {
+        margin-top: 12px !important;
+    }
+
+    .seller-message-row:first-child {
+        margin-top: 0 !important;
+    }
+
+    .seller-message-bubble {
+        border-radius: 13px !important;
+        padding: 9px 11px !important;
+        font-size: 10px !important;
+        line-height: 1.55 !important;
+        box-shadow: 0 2px 7px rgba(15, 23, 42, .035) !important;
+    }
+
+    .seller-message-row.justify-end .seller-message-bubble {
+        background: var(--chat-gold) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 10px rgba(213, 150, 23, .12) !important;
+    }
+
+    .seller-message-row:not(.justify-end) .seller-message-bubble {
+        border-color: #e1e6eb !important;
+        background: #fff !important;
+        color: #475467 !important;
+    }
+
+    .seller-message-row .max-w-\[84\%\] {
+        max-width: min(72%, 720px) !important;
+    }
+
+    .sari-bot-avatar {
+        border-color: #dce5eb !important;
+        background: #f2f7fa !important;
+        color: #5f7788 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-assistant-typing {
+        gap: 8px !important;
+        margin-top: 12px !important;
+    }
+
+    .sari-assistant-typing__bubble {
+        min-width: 62px !important;
+        border-color: #dde6ec !important;
+        border-radius: 12px 12px 12px 4px !important;
+        background: #f4f8fa !important;
+        padding: 9px 11px !important;
+        box-shadow: none !important;
+    }
+
+    /* Composer */
+    .seller-platform-composer {
+        border-color: var(--chat-line) !important;
+        background: #fff !important;
+        padding: 9px 12px !important;
+        box-shadow: 0 -4px 14px rgba(15, 23, 42, .025) !important;
+    }
+
+    #sellerPlatformMessageForm {
+        min-height: 50px !important;
+        gap: 7px !important;
+        border-color: #d8dee6 !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        padding: 5px 6px !important;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .02) !important;
+    }
+
+    #sellerPlatformMessageForm:focus-within {
+        border-color: var(--chat-gold) !important;
+        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    }
+
+    #sellerPlatformInput {
+        min-height: 38px !important;
+        max-height: 112px !important;
+        padding: 8px 6px !important;
+        color: #344054 !important;
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    .seller-composer-attachment-label {
+        width: 38px !important;
+        height: 38px !important;
+        flex-basis: 38px !important;
+        border-color: #e1e6eb !important;
+        border-radius: 10px !important;
+        background: #f8fafc !important;
+        color: #667085 !important;
+    }
+
+    .seller-composer-attachment-label:hover,
+    .seller-composer-attachment-label:focus-within {
+        border-color: #efd9a7 !important;
+        background: #fffaf0 !important;
+        color: #9b6505 !important;
+    }
+
+    #sellerPlatformSend {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        flex-basis: 40px !important;
+        border-radius: 10px !important;
+        background: var(--chat-gold) !important;
+        color: #fff !important;
+        box-shadow: 0 5px 12px rgba(213, 150, 23, .14) !important;
+    }
+
+    #sellerPlatformSend svg {
+        color: #fff !important;
+        stroke: #fff !important;
+    }
+
+    #sellerPlatformSend:hover:not(:disabled) {
+        background: var(--chat-gold-hover) !important;
+    }
+
+    #sellerPlatformSend:focus-visible,
+    .seller-composer-attachment-label:focus-within {
+        outline: 2px solid rgba(213, 150, 23, .28) !important;
+        outline-offset: 2px !important;
+    }
+
+    #sellerAttachmentName {
+        left: 10px !important;
+        bottom: calc(100% + 6px) !important;
+        border-color: #e1e6eb !important;
+        border-radius: 9px !important;
+        color: #475467 !important;
+        font-size: 8px !important;
+        box-shadow: 0 8px 20px rgba(15,23,42,.07) !important;
+    }
+
+    #sellerPlatformError {
+        margin-top: 5px !important;
+        font-size: 8.5px !important;
+        line-height: 1.4 !important;
+    }
+
+
+    .seller-message-pending {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+        color: #98a2b3;
+        font-size: 7.8px;
+        font-weight: 600;
+    }
+
+    .seller-message-pending::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: #d59617;
+        animation: sariMessagePendingPulse .9s ease-in-out infinite;
+    }
+
+    .seller-message-uploading {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: #fff;
+        padding: 8px 9px;
+        color: #667085;
+        font-size: 8.5px;
+    }
+
+    .seller-message-uploading svg {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 auto;
+        color: #b97805;
+    }
+
+    @keyframes sariMessagePendingPulse {
+        0%, 100% { opacity: .35; }
+        50% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .seller-message-pending::before {
+            animation: none !important;
+            opacity: .8;
+        }
+    }
+
+    /* Right context */
+    #sellerDetailsPane {
+        border-color: var(--chat-line) !important;
+        background: #fff !important;
+    }
+
+    #sellerDetailsPane > div:first-child {
+        border-color: #edf0f3 !important;
+        padding: 13px !important;
+    }
+
+    #sellerDetailsPane > div:first-child p:first-child {
+        color: #344054 !important;
+        font-size: 10px !important;
+    }
+
+    #sellerDetailsPane > div:first-child p:last-child {
+        color: #98a2b3 !important;
+        font-size: 8px !important;
+    }
+
+    #sellerDetailsPane > div:last-child {
+        padding: 14px !important;
+    }
+
+    #sellerDetailsPane > div:last-child .h-16.w-16 {
+        width: 48px !important;
+        height: 48px !important;
+        background: #f3f6f8 !important;
+        color: #5f7788 !important;
+        font-size: 11px !important;
+    }
+
+    #sellerDetailsPane > div:last-child > div:first-child p.mt-3 {
+        margin-top: 8px !important;
+        color: #344054 !important;
+        font-size: 10px !important;
+    }
+
+    #sellerDetailsPane > div:last-child > div:first-child p.mt-1 {
+        color: #98a2b3 !important;
+        font-size: 7.8px !important;
+    }
+
+    #sellerDetailsPane .mt-6.space-y-3 {
+        margin-top: 12px !important;
+    }
+
+    #sellerDetailsPane .mt-6.space-y-3 > div {
+        border-color: #e5e7eb !important;
+        border-radius: 10px !important;
+        background: #fafbfc !important;
+        padding: 10px !important;
+    }
+
+    /* Search/reaction/accessory polish */
+    [data-reaction-picker] {
+        border-color: #e1e6eb !important;
+        box-shadow: 0 12px 30px rgba(15,23,42,.12) !important;
+    }
+
+    [data-reaction-toggle] {
+        border-color: #e1e6eb !important;
+        box-shadow: none !important;
+    }
+
+    /* Tablet/mobile: this page has one seller support thread, so prioritize it. */
+    @media (max-width: 1023px) {
+        #sellerPlatformChat .chat-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+        #sellerConversationPane,
+        #sellerDetailsPane {
+            display: none !important;
+        }
+
+        #sellerCenterPane {
+            display: flex !important;
+            height: 100% !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        #sellerCenterPane > div:first-child {
+            min-height: 58px !important;
+            padding: 8px 10px !important;
+        }
+
+        #sellerCenterPane > div:first-child .seller-platform-ai {
+            display: none !important;
+        }
+
+        #sellerPlatformMessages {
+            padding: 14px 10px 18px !important;
+        }
+
+        .seller-message-row .max-w-\[84\%\] {
+            max-width: 84% !important;
+        }
+
+        .seller-platform-composer {
+            padding: 7px 8px !important;
+        }
+
+        #sellerPlatformMessageForm {
+            min-height: 48px !important;
+            border-radius: 12px !important;
+        }
+
+        #sellerPlatformInput {
+            min-height: 36px !important;
+            font-size: 10px !important;
+        }
+
+        .seller-composer-attachment-label {
+            width: 36px !important;
+            height: 36px !important;
+            flex-basis: 36px !important;
+        }
+
+        #sellerPlatformSend {
+            width: 38px !important;
+            height: 38px !important;
+            min-width: 38px !important;
+            flex-basis: 38px !important;
+        }
+    }
+
+
+    /* ============================================================
+       ADMIN SUPPORT BRAND IDENTITY + INSTANT ACKNOWLEDGEMENT
+       ============================================================ */
+    .sari-support-brand-avatar,
+    .sari-admin-avatar {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        flex: 0 0 auto;
+        border: 1px solid #e1e5ea;
+        border-radius: 11px;
+        background: #202329;
+        box-shadow: none;
+    }
+
+    .sari-support-brand-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .sari-support-brand-avatar img,
+    .sari-admin-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .sari-support-online-dot {
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        width: 9px;
+        height: 9px;
+        border: 2px solid #fff;
+        border-radius: 999px;
+        background: #49a36f;
+    }
+
+    .sari-admin-avatar {
+        border-radius: 9px;
+        background: #202329;
+    }
+
+    .sari-bot-avatar {
+        overflow: hidden !important;
+        border: 0 !important;
+        border-radius: 50% !important;
+        background: transparent !important;
+        color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .sari-bot-avatar img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+    }
+
+    .seller-platform-ai {
+        gap: 5px !important;
+        border-color: #e1e5e9 !important;
+        background: #fff !important;
+        color: #667085 !important;
+    }
+
+    .seller-platform-ai img {
+        width: 16px !important;
+        height: 16px !important;
+        flex: 0 0 16px !important;
+        object-fit: contain !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) {
+        border-left-width: 0 !important;
+        background: #fbfcfd !important;
+    }
+
+    #sellerConversationPane > div:nth-child(2) .sari-support-brand-avatar,
+    #sellerCenterPane > div:first-child .sari-support-brand-avatar {
+        width: 36px !important;
+        height: 36px !important;
+        flex-basis: 36px !important;
+        box-shadow: none !important;
+    }
+
+    #sellerCenterPane > div:first-child {
+        background: #fff !important;
+    }
+
+    #sellerCenterPane > div:first-child p:first-of-type,
+    #sellerConversationPane > div:nth-child(2) p:first-of-type {
+        letter-spacing: -.015em;
+    }
+
+    .seller-message-row:not(.justify-end) .seller-message-bubble {
+        box-shadow: none !important;
+    }
+
+    .seller-message-row.justify-end .seller-message-bubble {
+        box-shadow: none !important;
+    }
+
+    .sari-assistant-typing {
+        display: none !important;
+    }
+
 </style>
 
 <div class="seller-platform-page">
@@ -682,12 +1320,14 @@
                 <div class="border-l-2 border-[#c99128] bg-[#fbf7ef] px-4 py-4 sm:px-5">
                     <div class="flex items-center gap-3">
                         <div class="relative shrink-0">
-                            <div class="grid h-11 w-11 place-items-center rounded-full bg-[#f6efe2] text-[11px] font-bold text-[#9b6b1a]">SA</div>
-                            <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-[#62a278]"></span>
+                            <div class="sari-support-brand-avatar">
+                                <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                            </div>
+                            <span class="sari-support-online-dot" aria-hidden="true"></span>
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="truncate text-[13px] font-bold text-[#2d2822]">SARI Admin Support</p>
-                            <p class="mt-0.5 truncate text-[10px] text-[#8f867b]">Administrator + SARI Assistant</p>
+                            <p class="mt-0.5 truncate text-[10px] text-[#8f867b]">Human administrator support</p>
                             <p id="sellerLastMessagePreview" class="mt-2 line-clamp-2 text-[11px] leading-5 text-[#72695f]">Loading conversation…</p>
                         </div>
                     </div>
@@ -699,20 +1339,22 @@
                 <div class="flex items-center justify-between gap-4 border-b border-[#ebe5dc] bg-white px-4 py-4 sm:px-5">
                     <div class="flex min-w-0 items-center gap-3">
                         <div class="relative shrink-0">
-                            <div class="grid h-11 w-11 place-items-center rounded-full bg-[#f6efe2] text-[11px] font-bold text-[#9b6b1a]">SA</div>
-                            <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-[#62a278]"></span>
+                            <div class="sari-support-brand-avatar">
+                                <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                            </div>
+                            <span class="sari-support-online-dot" aria-hidden="true"></span>
                         </div>
                         <div class="min-w-0">
                             <p class="truncate text-[14px] font-bold tracking-[-0.02em] text-[#29241f]">SARI Admin Support</p>
-                            <p class="mt-1 text-[10px] text-[#8f867b]">Official seller support conversation</p>
+                            <p class="mt-1 text-[10px] text-[#8f867b]">Official human support channel</p>
                         </div>
                     </div>
 
                     <div class="flex shrink-0 items-center gap-2">
-                        <span id="sellerRealtimeStatus" class="seller-platform-status">Connecting</span>
-                        <span class="seller-platform-ai" title="SARI Assistant can provide a temporary first response while Admin is unavailable.">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path><rect x="7" y="7" width="10" height="10" rx="3"></rect><path d="M10 11h.01M14 11h.01M10 14h4"></path></svg>
-                            AI support
+                        <span id="sellerRealtimeStatus" class="seller-platform-status" role="status" aria-live="polite" data-state="connecting">Connecting</span>
+                        <span id="sellerAssistantBadge" class="seller-platform-ai" title="SARI Assistant automatically confirms receipt while you wait for a human administrator.">
+                            <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
+                            Receipt confirmation
                         </span>
                     </div>
                 </div>
@@ -724,7 +1366,7 @@
                                 <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path></svg>
                             </div>
                             <p class="mt-4 text-[13px] font-bold text-[#4f473e]">Start a conversation</p>
-                            <p class="mt-1 text-[11px] text-[#958c80]">Send a message to SARI Admin. SARI Assistant may reply while Admin is unavailable.</p>
+                            <p class="mt-1 text-[11px] text-[#958c80]">Send your concern to SARI Admin Support. SARI Assistant will confirm receipt while you wait for a human administrator.</p>
                         </div>
                     </div>
                 </div>
@@ -760,7 +1402,7 @@
                             </button>
                         </div>
                     </form>
-                    <p id="sellerPlatformError" class="mt-2 hidden text-[10px] text-[#a45f5f]"></p>
+                    <p id="sellerPlatformError" class="mt-2 hidden text-[10px] text-[#a45f5f]" role="alert" aria-live="assertive"></p>
                 </div>
             </div>
 
@@ -798,18 +1440,11 @@
                         <div class="rounded-[14px] border border-[#dfe7ec] bg-[#f7fafc] p-4">
                             <div class="flex items-start gap-3">
                                 <div class="sari-bot-avatar h-9 w-9">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M12 5V3"></path><circle cx="12" cy="2.5" r=".7" fill="currentColor" stroke="none"></circle>
-                                        <rect x="5.5" y="6" width="13" height="11" rx="4"></rect>
-                                        <path d="M8 17v2M16 17v2M5.5 10H4M20 10h-1.5"></path>
-                                        <circle cx="9.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
-                                        <circle cx="14.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
-                                        <path d="M9.5 14h5"></path>
-                                    </svg>
+                                    <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <p class="text-[11px] font-bold text-[#5c7180]">SARI Assistant</p>
-                                    <p class="mt-1 text-[10px] leading-5 text-[#81909a]">Provides a temporary first response when Admin has not replied yet.</p>
+                                    <p class="mt-1 text-[10px] leading-5 text-[#81909a]">Confirms receipt of your concern while you wait for a human SARI administrator to review and respond.</p>
                                 </div>
                             </div>
                         </div>
@@ -835,8 +1470,8 @@
         const sellerId = {{ (int) $seller->id }};
         const allowedReactionEmojis = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
         const assistantEnabled = @json((bool) config('sari.assistant.enabled', true));
-        const assistantDelayMs = Math.max(0, Number(@json((int) config('sari.assistant.delay_seconds', 45))) * 1000);
-        const assistantTypingStartMs = 180;
+        const assistantDelayMs = Math.max(0, Number(@json((int) config('sari.assistant.delay_seconds', 0))) * 1000);
+        const assistantTypingStartMs = 0; // receipt acknowledgement is generated server-side without an AI-provider wait
 
         const messagesEl = document.getElementById('sellerPlatformMessages');
         const form = document.getElementById('sellerPlatformMessageForm');
@@ -852,11 +1487,14 @@
         const searchClear = document.getElementById('sellerMessageSearchClear');
         const blockedNotice = document.getElementById('sellerChatBlockedNotice');
         const blockedReason = document.getElementById('sellerChatBlockedReason');
+        const assistantBadge = document.getElementById('sellerAssistantBadge');
 
         let conversationUuid = null;
         let realtimeChannel = null;
         let pollTimer = null;
         let loadingDetail = false;
+        let detailReloadPending = false;
+        let sendingMessage = false;
         let sellerChatBlocked = @json($sellerChatBlocked);
         let currentMessages = [];
         let assistantTypingTimer = null;
@@ -864,6 +1502,7 @@
         let assistantBurstTimer = null;
         let assistantBurstAttempt = 0;
         let supportConnecting = false;
+        let assistantRequestController = null;
 
         const escapeHtml = (value) => String(value ?? '')
             .replaceAll('&', '&amp;')
@@ -895,6 +1534,19 @@
             if (!errorBox) return;
             errorBox.textContent = message;
             errorBox.classList.toggle('hidden', !message);
+        }
+
+
+        if (assistantBadge && !assistantEnabled) {
+            assistantBadge.dataset.disabled = '1';
+            assistantBadge.setAttribute('title', 'Automatic receipt acknowledgement is currently unavailable. Human SARI Admin support remains available.');
+            assistantBadge.lastChild.textContent = ' Confirmation off';
+        }
+
+        function resizeComposerInput() {
+            if (!input) return;
+            input.style.height = 'auto';
+            input.style.height = `${Math.min(112, Math.max(38, input.scrollHeight))}px`;
         }
 
         function lockComposer(reason = '') {
@@ -973,14 +1625,14 @@
         function botAvatarHtml(sizeClass = 'h-8 w-8') {
             return `
                 <div class="sari-bot-avatar ${sizeClass}" aria-label="SARI Assistant">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M12 5V3"></path><circle cx="12" cy="2.5" r=".7" fill="currentColor" stroke="none"></circle>
-                        <rect x="5.5" y="6" width="13" height="11" rx="4"></rect>
-                        <path d="M8 17v2M16 17v2M5.5 10H4M20 10h-1.5"></path>
-                        <circle cx="9.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
-                        <circle cx="14.5" cy="11" r="1" fill="currentColor" stroke="none"></circle>
-                        <path d="M9.5 14h5"></path>
-                    </svg>
+                    <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
+                </div>`;
+        }
+
+        function adminAvatarHtml(sizeClass = 'h-8 w-8') {
+            return `
+                <div class="sari-admin-avatar ${sizeClass}" aria-label="SARI Admin">
+                    <img src="{{ asset('images/sari-main-logo.png') }}" alt="" aria-hidden="true">
                 </div>`;
         }
 
@@ -1014,56 +1666,61 @@
         }
 
         function syncAssistantTyping() {
+            // Admin Support uses an immediate persisted receipt acknowledgement.
+            // Avoid a fake typing delay; the direct endpoint returns the saved
+            // acknowledgement while polling/realtime remains a fallback.
             hideAssistantTyping();
-            if (!assistantEnabled || !currentMessages.length) return;
-
-            const last = currentMessages[currentMessages.length - 1];
-            const waitingForAssistant = last?.sender_role === 'seller' && Number(last?.sender_id) === sellerId;
-            if (!waitingForAssistant) return;
-
-            const sentAt = new Date(last?.created_at || '').getTime();
-            if (!Number.isFinite(sentAt)) return;
-
-            const now = Date.now();
-            const age = now - sentAt;
-            const pendingWindowMs = assistantDelayMs + 60000;
-
-            // Do not show a stale typing indicator for old unanswered history.
-            if (age < -5000 || age > pendingWindowMs) return;
-
-            // Fast Messenger-style presence: show the Assistant almost
-            // immediately after a seller message while the async AI job works.
-            const typingStartsAt = sentAt + assistantTypingStartMs;
-            const waitMs = Math.max(0, typingStartsAt - now);
-
-            assistantTypingTimer = window.setTimeout(() => {
-                showAssistantTyping();
-                assistantTypingTimer = null;
-            }, waitMs);
-
-            const expiryMs = Math.max(4000, (sentAt + pendingWindowMs) - now);
-            assistantTypingExpiryTimer = window.setTimeout(() => {
-                document.getElementById('sellerAssistantTyping')?.remove();
-                assistantTypingExpiryTimer = null;
-            }, expiryMs);
         }
+
 
         function messageHtml(message) {
             const mine = message.sender_role === 'seller' && Number(message.sender_id) === sellerId;
             const isBot = Boolean(message?.metadata?.ai_assistant);
-            const senderLabel = isBot ? 'SARI Assistant · automated' : (message.sender_role === 'admin' ? 'SARI Admin' : escapeHtml(message.sender || 'Support'));
+            const isAcknowledgement = Boolean(
+                message?.metadata?.support_acknowledgement
+            );
+            const isPending = Boolean(message?._optimistic);
+            const senderLabel = isBot
+                ? (
+                    isAcknowledgement
+                        ? 'SARI Assistant · acknowledgement'
+                        : 'SARI Assistant · previous automated response'
+                )
+                : (
+                    message.sender_role === 'admin'
+                        ? 'SARI Admin'
+                        : escapeHtml(message.sender || 'Support')
+                );
+
             const body = message.body
                 ? `<div class="seller-message-bubble rounded-[14px] px-4 py-3 text-[12px] leading-6 shadow-[0_7px_18px_rgba(35,28,20,.055)] ${mine ? 'rounded-br-[5px] bg-[#c99128] text-white' : (isBot ? 'rounded-bl-[5px] border border-[#dce8ef] bg-[#f4f8fa] text-[#526a79]' : 'rounded-bl-[5px] border border-[#e6dfd6] bg-white text-[#514a42]')}">${escapeHtml(message.body)}</div>`
                 : '';
 
+            const pendingAttachment = isPending && message?._optimisticAttachment
+                ? `
+                    <div class="seller-message-uploading">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path>
+                        </svg>
+                        <span class="min-w-0 truncate">${escapeHtml(message._optimisticAttachment.name || 'Attachment')}</span>
+                        <span class="shrink-0 text-[#98a2b3]">Uploading…</span>
+                    </div>`
+                : '';
+
+            const meta = isPending
+                ? `<div class="seller-message-pending">Sending…</div>`
+                : reactionHtml(message, mine);
+
             return `
-                <div class="seller-message-row ${mine ? 'flex justify-end' : 'flex items-end gap-2.5'}" data-message-id="${Number(message.id)}" data-search="${escapeHtml(`${message.body || ''} ${message.attachment?.name || ''} ${senderLabel}`.toLowerCase())}">
-                    ${mine ? '' : (isBot ? botAvatarHtml('h-8 w-8') : `<div class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6efe2] text-[#9b6b1a] text-[9px] font-bold">SA</div>`)}
+                <div class="seller-message-row ${mine ? 'flex justify-end' : 'flex items-end gap-2.5'}"
+                     data-message-id="${escapeHtml(message.id)}"
+                     data-search="${escapeHtml(`${message.body || ''} ${message.attachment?.name || message?._optimisticAttachment?.name || ''} ${senderLabel}`.toLowerCase())}">
+                    ${mine ? '' : (isBot ? botAvatarHtml('h-8 w-8') : adminAvatarHtml('h-8 w-8'))}
                     <div class="max-w-[84%] sm:max-w-[70%] lg:max-w-[64%]">
                         ${mine ? '' : `<div class="mb-1.5 text-[9px] font-semibold ${isBot ? 'uppercase tracking-[.08em] text-[#6e899c]' : 'text-[#7c7369]'}">${senderLabel}</div>`}
                         ${body}
-                        ${attachmentHtml(message)}
-                        ${reactionHtml(message, mine)}
+                        ${pendingAttachment || attachmentHtml(message)}
+                        ${meta}
                     </div>
                 </div>`;
         }
@@ -1099,6 +1756,63 @@
             }
         }
 
+        function upsertMessage(message, followLatest = true) {
+            if (!message?.id) return;
+
+            const id = Number(message.id);
+            const next = [...currentMessages];
+            const index = next.findIndex(row => Number(row.id) === id);
+
+            if (index >= 0) {
+                next[index] = { ...next[index], ...message };
+            } else {
+                next.push(message);
+            }
+
+            next.sort((a, b) => Number(a.id || 0) - Number(b.id || 0));
+            renderMessages(next, followLatest);
+        }
+
+        function removeOptimisticMessage(token) {
+            if (!token) return;
+
+            renderMessages(
+                currentMessages.filter(
+                    (message) => message?._optimisticToken !== token
+                ),
+                true
+            );
+        }
+
+        function makeOptimisticMessage(body, file) {
+            const maxId = currentMessages.reduce(
+                (max, message) => Math.max(max, Number(message?.id || 0)),
+                0
+            );
+            const token = `seller-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+            return {
+                id: maxId + 0.5,
+                sender_role: 'seller',
+                sender_id: sellerId,
+                sender: 'You',
+                message_type: file ? 'attachment' : 'text',
+                body: body || null,
+                attachment: null,
+                reactions: [],
+                metadata: {},
+                created_at: new Date().toISOString(),
+                _optimistic: true,
+                _optimisticToken: token,
+                _optimisticAttachment: file
+                    ? {
+                        name: file.name || 'Attachment',
+                        size: Number(file.size || 0),
+                    }
+                    : null,
+            };
+        }
+
         function applySearch() {
             const query = (searchInput?.value || '').trim().toLowerCase();
             messagesEl?.querySelectorAll('[data-message-id]').forEach(row => {
@@ -1117,25 +1831,50 @@
             catch (_) { return {}; }
         }
 
+        function setRealtimeBadge(mode = 'connecting') {
+            if (!statusEl) return;
+
+            const labels = {
+                live: 'Live',
+                syncing: 'Syncing',
+                fallback: 'Polling',
+                offline: 'Offline',
+                unavailable: 'Unavailable',
+                connecting: 'Connecting',
+            };
+
+            statusEl.dataset.state = mode;
+            statusEl.textContent = labels[mode] || labels.connecting;
+        }
+
         function setSupportConnectionState(mode = 'connecting') {
             const connected = mode === 'connected';
             const unavailable = mode === 'unavailable';
 
-            if (statusEl) {
-                statusEl.textContent = connected
-                    ? (window.Echo ? 'Live' : 'Connected')
-                    : (unavailable ? 'Unavailable' : 'Connecting…');
+            if (unavailable) {
+                setRealtimeBadge('unavailable');
+            } else if (!connected) {
+                setRealtimeBadge('connecting');
+            } else if (!window.Echo) {
+                setRealtimeBadge('fallback');
+            } else if (statusEl?.dataset.state !== 'live') {
+                setRealtimeBadge('syncing');
+                window.setTimeout(() => {
+                    if (statusEl?.dataset.state === 'syncing') {
+                        setRealtimeBadge('fallback');
+                    }
+                }, 1800);
             }
 
             if (!sellerChatBlocked && sendButton) {
-                sendButton.disabled = !connected;
+                sendButton.disabled = !connected || sendingMessage;
             }
 
             if (!sellerChatBlocked && input) {
                 input.disabled = !connected;
                 input.placeholder = connected
-                    ? 'Write a message to SARI Admin...'
-                    : 'Connecting to SARI Admin...';
+                    ? 'Write a message to SARI Admin…'
+                    : 'Connecting to SARI Admin…';
             }
 
             if (!sellerChatBlocked && attachment) {
@@ -1180,8 +1919,6 @@
             setSupportConnectionState('connecting');
 
             try {
-                // Existing support threads should open instantly without running
-                // creation/import work on every page load.
                 if (await recoverExistingSupportConversation()) {
                     setSupportConnectionState('connected');
                     return true;
@@ -1215,8 +1952,6 @@
                 conversationUuid = String(data?.conversation?.uuid || '').trim();
                 if (!conversationUuid) throw new Error('Support conversation is unavailable.');
             } catch (error) {
-                // If the creation request completed server-side but the browser
-                // timed out, recover the deduplicated support thread from inbox.
                 if (await recoverExistingSupportConversation()) return;
                 if (error?.name === 'AbortError') {
                     throw new Error('SARI Support took too long to connect. Please try again.');
@@ -1250,23 +1985,45 @@
             realtimeChannel = channelName;
 
             if (!window.Echo) {
-                if (statusEl) statusEl.textContent = 'Saved mode';
+                setRealtimeBadge('fallback');
                 return;
             }
 
             try {
-                window.Echo.channel(channelName)
-                    .listen('.platform.message', () => loadDetail(false))
-                    .listen('.platform.reaction', () => loadDetail(false));
+                const channel = window.Echo.channel(channelName);
+                const refresh = (event = {}) => {
+                    if (event?.conversation_uuid && String(event.conversation_uuid) !== String(conversationUuid)) {
+                        return;
+                    }
+                    loadDetail(false);
+                };
 
-                if (statusEl) statusEl.textContent = 'Live';
+                channel
+                    .listen('.platform.message', refresh)
+                    .listen('.platform.reaction', refresh);
+
+                if (typeof channel.subscribed === 'function') {
+                    channel.subscribed(() => setRealtimeBadge('live'));
+                } else {
+                    setRealtimeBadge('live');
+                }
+
+                if (typeof channel.error === 'function') {
+                    channel.error(() => setRealtimeBadge('fallback'));
+                }
             } catch (_) {
-                if (statusEl) statusEl.textContent = 'Saved mode';
+                setRealtimeBadge('fallback');
             }
         }
 
         async function loadDetail(initial = false) {
-            if (!conversationUuid || loadingDetail) return;
+            if (!conversationUuid) return;
+
+            if (loadingDetail) {
+                detailReloadPending = true;
+                return;
+            }
+
             loadingDetail = true;
 
             try {
@@ -1284,12 +2041,92 @@
                 renderMessages(data.messages || [], initial);
                 subscribeRealtime(data?.conversation?.realtime_channel || null);
                 markRead();
+                setSupportConnectionState('connected');
                 setError('');
             } catch (error) {
                 setError(error.message || 'Unable to load messages.');
+                if (!navigator.onLine) setRealtimeBadge('offline');
             } finally {
                 loadingDetail = false;
                 root.dataset.ready = '1';
+
+                if (detailReloadPending) {
+                    detailReloadPending = false;
+                    queueMicrotask(() => loadDetail(false));
+                }
+            }
+        }
+
+        async function requestAssistantReply(triggerMessage) {
+            if (
+                !assistantEnabled
+                || !conversationUuid
+                || !triggerMessage?.id
+            ) {
+                hideAssistantTyping();
+                return null;
+            }
+
+            assistantRequestController?.abort();
+            assistantRequestController = new AbortController();
+            const controller = assistantRequestController;
+            const timeout = window.setTimeout(() => controller.abort(), 5000);
+
+            try {
+                const response = await fetch(
+                    `${apiBase}/conversations/${encodeURIComponent(conversationUuid)}/assistant-reply`,
+                    {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        signal: controller.signal,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify({
+                            trigger_message_id: Number(triggerMessage.id),
+                        }),
+                    }
+                );
+
+                const data = await parseResponse(response);
+
+                if (!response.ok) {
+                    const validationMessage = Object.values(data.errors || {})?.[0]?.[0];
+                    throw new Error(data.message || validationMessage || 'SARI Assistant could not respond.');
+                }
+
+                if (data?.message) {
+                    upsertMessage(data.message, true);
+                    setError('');
+                    return data.message;
+                }
+
+                await loadDetail(false);
+                return null;
+            } catch (error) {
+                if (error?.name !== 'AbortError') {
+                    console.warn('SARI Assistant reply request failed:', error);
+                }
+
+                hideAssistantTyping();
+                startAssistantBurstRefresh();
+
+                if (error?.name === 'AbortError') {
+                    setError('Your message was sent to SARI Admin Support. The automatic receipt confirmation is taking longer than expected, but a human administrator can still reply in this conversation.');
+                }
+
+                return null;
+            } finally {
+                window.clearTimeout(timeout);
+
+                if (assistantRequestController === controller) {
+                    assistantRequestController = null;
+                }
+
+                hideAssistantTyping();
             }
         }
 
@@ -1305,6 +2142,8 @@
             stopAssistantBurstRefresh();
             if (!assistantEnabled || !conversationUuid) return;
 
+            const delays = [120, 280, 450, 700, 1000, 1400, 2000, 2800, 3800, 5000];
+
             const tick = async () => {
                 assistantBurstAttempt += 1;
                 await loadDetail(false);
@@ -1312,17 +2151,18 @@
                 const latest = currentMessages[currentMessages.length - 1];
                 const receivedReply = latest && latest.sender_role === 'admin';
 
-                if (receivedReply || assistantBurstAttempt >= 8) {
+                if (receivedReply || assistantBurstAttempt >= delays.length) {
                     stopAssistantBurstRefresh();
                     return;
                 }
 
-                // Briefly poll only while an AI answer is expected. This is
-                // intentionally short-lived so normal page usage stays light.
-                assistantBurstTimer = window.setTimeout(tick, 650);
+                assistantBurstTimer = window.setTimeout(
+                    tick,
+                    delays[Math.min(assistantBurstAttempt, delays.length - 1)]
+                );
             };
 
-            assistantBurstTimer = window.setTimeout(tick, 320);
+            assistantBurstTimer = window.setTimeout(tick, delays[0]);
         }
 
         attachment?.addEventListener('change', function () {
@@ -1343,6 +2183,8 @@
             event.preventDefault();
             setError('');
 
+            if (sendingMessage) return;
+
             if (sellerChatBlocked) {
                 lockComposer(blockedReason?.textContent || 'Messaging is restricted by SARI Admin.');
                 return;
@@ -1350,10 +2192,13 @@
 
             const body = (input?.value || '').trim();
             const file = attachment?.files?.[0] || null;
+
             if (!body && !file) {
                 setError('Write a message or attach a file.');
+                input?.focus();
                 return;
             }
+
             if (!conversationUuid) {
                 try {
                     const connected = await ensureSupportConversation();
@@ -1369,11 +2214,25 @@
                 }
             }
 
-            sendButton.disabled = true;
+            sendingMessage = true;
+            if (sendButton) sendButton.disabled = true;
+
+            const submittedBody = body;
+            const optimisticMessage = makeOptimisticMessage(submittedBody, file);
+            const optimisticToken = optimisticMessage._optimisticToken;
+
+            // Show the outgoing message immediately. The API response replaces
+            // this temporary row with the authoritative saved message.
+            upsertMessage(optimisticMessage, true);
+
+            if (input && submittedBody) {
+                input.value = '';
+                resizeComposerInput();
+            }
 
             try {
                 const payload = new FormData();
-                if (body) payload.append('body', body);
+                if (submittedBody) payload.append('body', submittedBody);
                 if (file) payload.append('attachment', file);
 
                 const response = await fetch(`${apiBase}/conversations/${encodeURIComponent(conversationUuid)}/messages`, {
@@ -1396,19 +2255,37 @@
                     throw new Error(data.message || validationMessage || 'Unable to send message.');
                 }
 
-                if (input) input.value = '';
+                removeOptimisticMessage(optimisticToken);
+
+                if (data?.message) {
+                    upsertMessage(data.message, true);
+                } else {
+                    loadDetail(false);
+                }
+
                 if (attachment) attachment.value = '';
                 attachmentName?.classList.add('hidden');
                 if (attachmentName) attachmentName.textContent = '';
 
+                /*
+                | The acknowledgement is created by the same server-side send
+                | flow. Reconcile once; no second assistant endpoint is needed.
+                */
                 await loadDetail(false);
-                startAssistantBurstRefresh();
-                scrollBottom('smooth');
                 input?.focus();
             } catch (error) {
+                removeOptimisticMessage(optimisticToken);
+
+                if (submittedBody && input) {
+                    const newerDraft = input.value.trim();
+                    input.value = newerDraft ? `${submittedBody}\n${newerDraft}` : submittedBody;
+                    resizeComposerInput();
+                }
+
                 setError(error.message || 'Unable to send message.');
             } finally {
-                if (!sellerChatBlocked) sendButton.disabled = false;
+                sendingMessage = false;
+                if (!sellerChatBlocked && sendButton) sendButton.disabled = false;
             }
         });
 
@@ -1478,6 +2355,42 @@
             searchInput?.focus();
         });
 
+        input?.addEventListener('input', function () {
+            resizeComposerInput();
+            if (errorBox && !errorBox.classList.contains('hidden')) setError('');
+        });
+
+        input?.addEventListener('keydown', function (event) {
+            if (event.isComposing) return;
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                form?.requestSubmit();
+            }
+        });
+
+        window.addEventListener('sari:realtime-state', (event) => {
+            const state = String(event?.detail?.state || '');
+
+            if (state === 'live') {
+                setRealtimeBadge('live');
+                loadDetail(false);
+            } else if (state === 'connecting') {
+                if (statusEl?.dataset.state !== 'live') {
+                    setRealtimeBadge('connecting');
+                }
+            } else if (state === 'fallback') {
+                setRealtimeBadge('fallback');
+            }
+        });
+
+        window.addEventListener('offline', () => setRealtimeBadge('offline'));
+        window.addEventListener('online', () => {
+            setRealtimeBadge(window.Echo ? 'syncing' : 'fallback');
+            loadDetail(false);
+        });
+
+        resizeComposerInput();
+
         async function start() {
             setSupportConnectionState('connecting');
 
@@ -1489,7 +2402,7 @@
 
                 await loadDetail(true);
                 setSupportConnectionState('connected');
-                pollTimer = window.setInterval(() => loadDetail(false), 12000);
+                pollTimer = window.setInterval(() => loadDetail(false), 3000);
             } catch (error) {
                 root.dataset.ready = '1';
                 setSupportConnectionState('unavailable');
@@ -1502,6 +2415,12 @@
         const cleanup = function () {
             hideAssistantTyping();
             stopAssistantBurstRefresh();
+
+            if (assistantRequestController) {
+                assistantRequestController.abort();
+                assistantRequestController = null;
+            }
+
             if (pollTimer) window.clearInterval(pollTimer);
             if (realtimeChannel && window.Echo) {
                 try { window.Echo.leave(realtimeChannel); } catch (_) {}
