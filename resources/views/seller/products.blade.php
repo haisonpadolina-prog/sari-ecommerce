@@ -13119,7 +13119,130 @@
             padding-left: 16px !important;
         }
     }
-    </style>
+    
+
+/* ======================================================================
+   PRODUCT CARD — FLASH SALE IMAGE SKIN
+   Uses the supplied transparent red/charcoal lightning asset.
+   Existing countdown / scheduled sale behavior remains unchanged.
+   ====================================================================== */
+#productsGrid .seller-product-flash-sale {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: .95fr 1.05fr !important;
+    width: min(212px, 100%) !important;
+    height: 29px !important;
+    min-height: 29px !important;
+    max-width: 100% !important;
+    align-self: flex-start !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    margin-top: 10px !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background-color: #202329 !important;
+    background-image: url("{{ asset('images/seller/flash-sale-strip.png') }}") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    isolation: isolate !important;
+}
+
+/* Text sits above the image skin. */
+#productsGrid .seller-product-flash-sale-label,
+#productsGrid .seller-product-flash-sale-countdown {
+    position: relative !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 29px !important;
+    min-height: 29px !important;
+    align-items: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding-block: 0 !important;
+    color: #ffffff !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .34) !important;
+}
+
+/* Red side */
+#productsGrid .seller-product-flash-sale-label {
+    justify-content: flex-start !important;
+    padding-left: 12px !important;
+    padding-right: 16px !important;
+    font-size: 8.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: .002em !important;
+}
+
+/* Charcoal side */
+#productsGrid .seller-product-flash-sale-countdown {
+    justify-content: center !important;
+    padding-left: 16px !important;
+    padding-right: 9px !important;
+    font-variant-numeric: tabular-nums !important;
+    font-size: 8.05px !important;
+    font-weight: 750 !important;
+    letter-spacing: .015em !important;
+}
+
+/* Scheduled copy needs a little more breathing room. */
+#productsGrid .seller-product-flash-sale-countdown--scheduled {
+    min-width: 0 !important;
+    font-size: 7.7px !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+}
+
+/* The supplied image already contains the center lightning bolt. */
+#productsGrid .seller-product-flash-sale-bolt {
+    display: none !important;
+}
+
+/* Keep the card rhythm tight after the new strip. */
+#productsGrid .seller-product-card--reference:has(.seller-product-flash-sale) .seller-product-card-divider {
+    margin-top: 11px !important;
+}
+
+@media (max-width: 420px) {
+    #productsGrid .seller-product-flash-sale {
+        width: min(198px, 100%) !important;
+        height: 28px !important;
+        min-height: 28px !important;
+    }
+
+    #productsGrid .seller-product-flash-sale-label,
+    #productsGrid .seller-product-flash-sale-countdown {
+        height: 28px !important;
+        min-height: 28px !important;
+    }
+
+    #productsGrid .seller-product-flash-sale-label {
+        padding-left: 11px !important;
+        padding-right: 15px !important;
+        font-size: 8px !important;
+    }
+
+    #productsGrid .seller-product-flash-sale-countdown {
+        padding-left: 14px !important;
+        padding-right: 8px !important;
+        font-size: 7.55px !important;
+    }
+
+    #productsGrid .seller-product-flash-sale-countdown--scheduled {
+        font-size: 7.15px !important;
+    }
+}
+</style>
 
 {{-- Critical first-paint layer: prevents cream/unstyled flash before full CSS finishes. --}}
     <style>
@@ -13147,6 +13270,275 @@
             background-image: none !important;
         }
     </style>
+
+<style id="sariProductsDashboardShadowReferenceFinal">
+/* ======================================================================
+   PRODUCT MANAGEMENT — DASHBOARD SHADOW REFERENCE FINAL PASS
+   Front-end/CSS only. Product library, filters, autocomplete, view/edit/
+   archive/delete actions, modals, realtime/client-side state and backend
+   behavior remain unchanged.
+   ====================================================================== */
+
+.seller-products-page {
+    --products-dashboard-border: #E5E7EB;
+    --products-dashboard-border-strong: #D1D5DB;
+    --products-dashboard-divider: #ECEFF2;
+
+    --products-dashboard-shadow:
+        0 3px 7px rgba(15, 23, 42, .05),
+        0 14px 32px rgba(15, 23, 42, .085),
+        0 30px 68px rgba(15, 23, 42, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .94);
+
+    --products-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 8px 20px rgba(15, 23, 42, .06),
+        0 18px 38px rgba(15, 23, 42, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --products-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* Main Catalog Control rail */
+.seller-products-page .seller-catalog-rail-shell {
+    border: 1px solid var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: var(--products-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-catalog-rail-shell:hover {
+    border-color: var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+/* Inner inventory metric cards */
+.seller-products-page .seller-rail-stat,
+.seller-products-page .seller-rail-stat:nth-child(odd),
+.seller-products-page .seller-rail-stat:nth-child(even),
+.seller-products-page .seller-rail-stat:nth-child(n+3) {
+    border: 1px solid #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-stat:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-health {
+    border-top-color: var(--products-dashboard-divider) !important;
+}
+
+/* Neutral hover surfaces for non-active rail controls */
+.seller-products-page .seller-rail-secondary-action:hover,
+.seller-products-page .seller-rail-more-toggle:hover,
+.seller-products-page .seller-rail-more .seller-products-quick-filter:hover:not(.is-active):not([aria-pressed="true"]) {
+    border-color: var(--products-dashboard-border-strong) !important;
+    background: #F8FAFC !important;
+    color: #3F4650 !important;
+    transform: none !important;
+}
+
+/* Keep the approved open/containerless right workspace. */
+.seller-products-page .seller-products-workspace {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Floating filter toolbar */
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\] {
+    border: 1px solid var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: var(--products-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover {
+    border-color: var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Search/select/clear controls */
+.seller-products-page #productsSearch,
+.seller-products-page #productsClearFilters,
+.seller-products-page .seller-premium-dropdown-trigger {
+    border-color: var(--products-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 4px 10px rgba(15, 23, 42, .03) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsSearch:hover,
+.seller-products-page #productsClearFilters:hover,
+.seller-products-page .seller-premium-dropdown-trigger:hover {
+    border-color: #C9D0D9 !important;
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsSearch:focus,
+.seller-products-page .seller-premium-dropdown-trigger:focus-visible,
+.seller-products-page .seller-premium-dropdown-trigger[aria-expanded="true"] {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* Popovers */
+.seller-products-page .seller-premium-dropdown-menu,
+.seller-products-page .seller-product-search-suggestions {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+.seller-products-page .seller-product-search-suggestion:hover,
+.seller-products-page .seller-product-search-suggestion:focus-visible,
+.seller-products-page .seller-product-search-suggestion.is-keyboard-active {
+    background: #F8FAFC !important;
+    box-shadow: inset 0 0 0 1px #E5E7EB !important;
+}
+
+/* Product cards */
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsGrid .seller-products-card {
+    border: 1px solid var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference:hover,
+.seller-products-page #productsGrid .seller-products-card:hover {
+    border-color: var(--products-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card-media {
+    background: #F8FAFC !important;
+    box-shadow: var(--products-dashboard-shadow-inner) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card-divider {
+    background: var(--products-dashboard-divider) !important;
+}
+
+/* Action hover cleanup */
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action:hover {
+    background: #F8FAFC !important;
+    color: #3F4650 !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action--edit:hover {
+    background: #FFF8E8 !important;
+    color: #AA7008 !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action--archive:hover {
+    background: #F8FAFC !important;
+    color: #665A4C !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action--delete:hover {
+    background: #FFF0F0 !important;
+    color: #AD5555 !important;
+}
+
+/* Search hit keeps a restrained gold cue */
+.seller-products-page #productsGrid [data-product-item].seller-product-search-hit {
+    border-color: #DDB35F !important;
+    box-shadow:
+        0 0 0 3px rgba(217, 144, 0, .08),
+        0 8px 20px rgba(15, 23, 42, .06),
+        0 18px 38px rgba(15, 23, 42, .07) !important;
+}
+
+/* Empty state */
+.seller-products-page #productsEmpty {
+    margin-top: 12px !important;
+    border: 1px solid var(--products-dashboard-border) !important;
+    border-radius: 16px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--products-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsEmpty > span {
+    border: 1px solid var(--products-dashboard-border) !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+/* Modal shell elevation */
+#sellerViewProductModal .seller-product-view-dialog,
+#sellerEditProductModal .seller-edit-enterprise-dialog,
+#sellerAddProductModal .seller-add-modal-shell,
+#productsActionModal > :first-child {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 22px rgba(15, 23, 42, .08),
+        0 28px 68px rgba(15, 23, 42, .18),
+        0 50px 110px rgba(15, 23, 42, .10) !important;
+}
+
+/* Structural surfaces remain physically static. */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-rail-stat,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsEmpty {
+    outline: 0 !important;
+}
+
+@media (max-width: 760px) {
+    .seller-products-page .seller-catalog-rail-shell,
+    .seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+    .seller-products-page #productsEmpty {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-products-page #productsGrid .seller-product-card--reference,
+    .seller-products-page #productsGrid .seller-products-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+}
+</style>
 @endpush
 
 @section('content')
@@ -13530,6 +13922,133 @@
     .seller-products-page .seller-products-premium-subtitle {
         max-width: 560px;
         font-size: 9.5px;
+    }
+}
+
+
+/* ======================================================================
+   INVENTORY OVERVIEW — COMPACT EXECUTIVE STATUS MATRIX
+   Visual-only refinement. Existing live IDs / JS / backend values stay.
+   ====================================================================== */
+.seller-products-page .seller-inventory-overview-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid #e9e3dc !important;
+    border-radius: 13px !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(39, 31, 22, .025) !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat,
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(odd),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(even),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(n+3) {
+    display: flex !important;
+    min-width: 0 !important;
+    min-height: 50px !important;
+    align-items: center !important;
+    gap: 9px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    padding: 9px 11px !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(odd) {
+    border-right: 1px solid #eee9e3 !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(n+3) {
+    border-top: 1px solid #eee9e3 !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:hover {
+    background: #fcfbf9 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Replace oversized metric icons with small semantic status dots. */
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-icon {
+    display: block !important;
+    width: 7px !important;
+    height: 7px !important;
+    min-width: 7px !important;
+    flex: 0 0 7px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: currentColor !important;
+    padding: 0 !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 10%, transparent) !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-icon svg {
+    display: none !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-copy {
+    display: flex !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-label {
+    overflow: hidden !important;
+    margin: 0 !important;
+    color: #77716b !important;
+    font-size: 8.2px !important;
+    line-height: 1.15 !important;
+    font-weight: 550 !important;
+    letter-spacing: 0 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-value,
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat span[id] {
+    display: block !important;
+    flex: 0 0 auto !important;
+    color: #17191f !important;
+    font-size: 17px !important;
+    line-height: 1 !important;
+    font-weight: 750 !important;
+    letter-spacing: -.045em !important;
+    font-variant-numeric: tabular-nums !important;
+}
+
+/* Keep the section title close to the compact metrics. */
+.seller-products-page .seller-catalog-rail-shell > .mt-5 {
+    margin-top: 15px !important;
+}
+
+.seller-products-page .seller-catalog-rail-shell > .mt-5 > .mb-2\.5 {
+    margin-bottom: 8px !important;
+}
+
+@media (max-width: 639px) {
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat,
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(odd),
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(even),
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(n+3) {
+        min-height: 48px !important;
+        padding: 8px 9px !important;
+    }
+
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat-label {
+        font-size: 7.8px !important;
+    }
+
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat-value,
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat span[id] {
+        font-size: 16px !important;
     }
 }
 </style>
@@ -14499,27 +15018,56 @@
                 {{-- FACT STRIP --}}
                 <div class="seller-view-enterprise-facts">
                     <div class="seller-view-enterprise-fact">
-                        <span>Total Stock</span>
+                        <span class="seller-view-enterprise-fact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"></path>
+                                <path d="M12 4v16M4 8.5l8 4.5 8-4.5"></path>
+                            </svg>
+                        </span>
+                        <span class="seller-view-enterprise-fact-label">Total Stock</span>
                         <strong id="viewProductStock">0</strong>
                     </div>
 
                     <div class="seller-view-enterprise-fact">
-                        <span>SKU</span>
+                        <span class="seller-view-enterprise-fact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 5v14M8 5v14M12 5v14M15 5v14M19 5v14"></path>
+                            </svg>
+                        </span>
+                        <span class="seller-view-enterprise-fact-label">SKU</span>
                         <strong id="viewProductSku">—</strong>
                     </div>
 
                     <div class="seller-view-enterprise-fact">
-                        <span>Brand</span>
+                        <span class="seller-view-enterprise-fact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M20 13 13 20l-9-9V4h7z"></path>
+                                <circle cx="8.5" cy="8.5" r="1.4"></circle>
+                            </svg>
+                        </span>
+                        <span class="seller-view-enterprise-fact-label">Brand</span>
                         <strong id="viewProductBrand">No Brand</strong>
                     </div>
 
                     <div class="seller-view-enterprise-fact">
-                        <span>Listing Type</span>
+                        <span class="seller-view-enterprise-fact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"></path>
+                                <path d="m4 7.5 8 4.5 8-4.5M12 12v9"></path>
+                            </svg>
+                        </span>
+                        <span class="seller-view-enterprise-fact-label">Listing Type</span>
                         <strong id="viewProductType">Simple Product</strong>
                     </div>
 
                     <div class="seller-view-enterprise-fact seller-view-enterprise-fact--status">
-                        <span>Moderation Status</span>
+                        <span class="seller-view-enterprise-fact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M12 3 19 6v5c0 4.7-2.7 7.8-7 10-4.3-2.2-7-5.3-7-10V6z"></path>
+                                <path d="M9.5 12 11 13.5 14.5 10"></path>
+                            </svg>
+                        </span>
+                        <span class="seller-view-enterprise-fact-label">Moderation Status</span>
                         <div class="seller-view-enterprise-status-pill">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                                 <circle cx="12" cy="12" r="8"></circle>
@@ -15224,4 +15772,2113 @@ window.__SARI_PRODUCTS_CONFIG__ = {
 };
 </script>
 <script src="{{ asset('js/seller-products.js') }}" data-navigate-once></script>
+
+
+<style>
+/* ================================================================
+   PRODUCT MANAGEMENT — DASHBOARD REFERENCE CONTAINER SYSTEM
+   Applies the dashboard's floating-outline language to the product page.
+   Visual only: no logic / IDs / JS hooks changed.
+   ================================================================ */
+.seller-products-page {
+    --seller-ref-border: #e5ddd1;
+    --seller-ref-border-strong: #ddd0bf;
+    --seller-ref-shadow:
+        0 1px 2px rgba(26, 19, 12, 0.04),
+        0 10px 24px rgba(33, 24, 14, 0.08),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.78);
+    --seller-ref-shadow-hover:
+        0 1px 2px rgba(26, 19, 12, 0.045),
+        0 14px 30px rgba(33, 24, 14, 0.11),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.82);
+    --seller-ref-shadow-soft:
+        0 1px 2px rgba(26, 19, 12, 0.035),
+        0 8px 20px rgba(33, 24, 14, 0.065),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.76);
+}
+
+/* Left inventory rail */
+.seller-products-page .seller-catalog-rail-shell {
+    border-color: var(--seller-ref-border) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--seller-ref-shadow) !important;
+    transition:
+        box-shadow .18s ease,
+        border-color .18s ease,
+        transform .18s ease !important;
+}
+
+.seller-products-page .seller-catalog-rail-shell:hover {
+    border-color: var(--seller-ref-border-strong) !important;
+    box-shadow: var(--seller-ref-shadow-hover) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Expanded rail content and sub-panels keep the same family look */
+.seller-products-page .seller-rail-more-content,
+.seller-products-page .seller-inventory-overview-grid,
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-health-status-grid {
+    position: relative;
+    z-index: 1;
+}
+
+/* Filter bar becomes a true floating container like dashboard widgets */
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\] {
+    border: 1px solid var(--seller-ref-border) !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    box-shadow: var(--seller-ref-shadow-soft) !important;
+    transition:
+        box-shadow .18s ease,
+        border-color .18s ease,
+        transform .18s ease !important;
+}
+
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover {
+    border-color: #ded2c2 !important;
+    box-shadow: var(--seller-ref-shadow) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Search + dropdown controls inherit the crisp dashboard outline */
+.seller-products-page .seller-products-filter,
+.seller-products-page .seller-premium-dropdown-trigger,
+.seller-products-page .seller-premium-clear-filter {
+    border-color: #e1d9ce !important;
+    background: #ffffff !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.84) inset,
+        0 2px 8px rgba(33,24,14,.03) !important;
+    transition:
+        border-color .16s ease,
+        box-shadow .16s ease,
+        background-color .16s ease,
+        color .16s ease !important;
+}
+
+.seller-products-page .seller-products-filter:hover,
+.seller-products-page .seller-premium-dropdown-trigger:hover,
+.seller-products-page .seller-premium-clear-filter:hover {
+    border-color: #d8ccbb !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.86) inset,
+        0 6px 14px rgba(33,24,14,.05) !important;
+}
+
+.seller-products-page .seller-products-filter:focus,
+.seller-products-page .seller-premium-dropdown-trigger:focus-visible,
+.seller-products-page .seller-premium-clear-filter:focus-visible,
+.seller-products-page .seller-premium-dropdown.is-open .seller-premium-dropdown-trigger {
+    border-color: #d5c6b0 !important;
+    box-shadow:
+        0 0 0 3px rgba(215, 177, 84, .10),
+        0 1px 0 rgba(255,255,255,.84) inset,
+        0 8px 18px rgba(33,24,14,.06) !important;
+}
+
+.seller-products-page .seller-premium-dropdown-menu,
+.seller-products-page .seller-product-search-suggestions {
+    border: 1px solid var(--seller-ref-border) !important;
+    background: #ffffff !important;
+    box-shadow:
+        0 12px 28px rgba(33,24,14,.09),
+        0 2px 8px rgba(33,24,14,.035),
+        inset 0 0 0 1px rgba(255,255,255,.72) !important;
+}
+
+/* Primary filter CTA echoes the dashboard gold action language */
+.seller-products-page .seller-premium-apply-filter {
+    box-shadow:
+        0 8px 18px rgba(196, 126, 0, .16),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+
+.seller-products-page .seller-premium-apply-filter:hover {
+    box-shadow:
+        0 10px 22px rgba(196, 126, 0, .19),
+        inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+
+/* Product cards align to the dashboard's floating card language */
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsGrid .seller-products-card {
+    border-color: var(--seller-ref-border) !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: var(--seller-ref-shadow) !important;
+    transition:
+        box-shadow .18s ease,
+        border-color .18s ease,
+        transform .18s ease !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference:hover,
+.seller-products-page #productsGrid .seller-products-card:hover {
+    border-color: var(--seller-ref-border-strong) !important;
+    box-shadow: var(--seller-ref-shadow-hover) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Inner card divisions also need the crisp light outline */
+.seller-products-page #productsGrid .seller-product-card-media {
+    border-color: #e8e0d4 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.58),
+        0 5px 14px rgba(33,24,14,.028) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card-divider {
+    background: #ece4d8 !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action {
+    border-color: #e1d9ce !important;
+    background: #ffffff !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.9) inset,
+        0 3px 8px rgba(33,24,14,.04) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action:hover {
+    box-shadow:
+        0 6px 14px rgba(33,24,14,.06),
+        0 1px 0 rgba(255,255,255,.9) inset !important;
+}
+
+/* Keep hover subtle and premium on compact devices */
+@media (max-width: 639px) {
+    .seller-products-page .seller-catalog-rail-shell:hover,
+    .seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover,
+    .seller-products-page #productsGrid .seller-product-card--reference:hover,
+    .seller-products-page #productsGrid .seller-products-card:hover {
+        transform: none !important;
+    }
+}
+</style>
+
+
+
+<style>
+/* ================================================================
+   PRODUCT MANAGEMENT — NEUTRAL BORDER / OUTLINE FINAL FIX
+   Removes beige/gold cast from structural containers and controls.
+   Semantic statuses and gold primary actions are intentionally untouched.
+   ================================================================ */
+.seller-products-page {
+    --seller-neutral-border: #E5E7EB;
+    --seller-neutral-border-strong: #D1D5DB;
+    --seller-neutral-divider: #EAECF0;
+    --seller-neutral-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 24px rgba(15, 23, 42, .075),
+        inset 0 0 0 1px rgba(255, 255, 255, .80);
+    --seller-neutral-shadow-hover:
+        0 1px 2px rgba(15, 23, 42, .04),
+        0 14px 30px rgba(15, 23, 42, .095),
+        inset 0 0 0 1px rgba(255, 255, 255, .84);
+    --seller-neutral-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .03),
+        0 8px 20px rgba(15, 23, 42, .055),
+        inset 0 0 0 1px rgba(255, 255, 255, .78);
+}
+
+/* Major floating containers */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsGrid .seller-products-card {
+    border-color: var(--seller-neutral-border) !important;
+    outline: 0 !important;
+    box-shadow: var(--seller-neutral-shadow) !important;
+}
+
+.seller-products-page .seller-catalog-rail-shell:hover,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover,
+.seller-products-page #productsGrid .seller-product-card--reference:hover,
+.seller-products-page #productsGrid .seller-products-card:hover {
+    border-color: var(--seller-neutral-border-strong) !important;
+    box-shadow: var(--seller-neutral-shadow-hover) !important;
+}
+
+/* Inventory overview and internal structural boxes */
+.seller-products-page .seller-inventory-overview-grid,
+.seller-products-page .seller-rail-stat,
+.seller-products-page .seller-rail-stat:nth-child(odd),
+.seller-products-page .seller-rail-stat:nth-child(even),
+.seller-products-page .seller-rail-stat:nth-child(n+3),
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-health-status-grid,
+.seller-products-page .seller-rail-more,
+.seller-products-page .seller-rail-more-content {
+    border-color: var(--seller-neutral-border) !important;
+}
+
+.seller-products-page .seller-rail-stat:nth-child(odd) {
+    border-right-color: var(--seller-neutral-divider) !important;
+}
+
+.seller-products-page .seller-rail-stat:nth-child(n+3),
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-rail-more,
+.seller-products-page .seller-health-status-grid {
+    border-top-color: var(--seller-neutral-divider) !important;
+}
+
+.seller-products-page .seller-health-status-item + .seller-health-status-item {
+    border-left-color: var(--seller-neutral-divider) !important;
+}
+
+/* Filter/search controls — neutral outline, including focus/open states */
+.seller-products-page .seller-products-filter,
+.seller-products-page .seller-premium-dropdown-trigger,
+.seller-products-page .seller-premium-clear-filter {
+    border-color: var(--seller-neutral-border) !important;
+    outline: 0 !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.88) inset,
+        0 2px 8px rgba(15,23,42,.025) !important;
+}
+
+.seller-products-page .seller-products-filter:hover,
+.seller-products-page .seller-premium-dropdown-trigger:hover,
+.seller-products-page .seller-premium-clear-filter:hover {
+    border-color: var(--seller-neutral-border-strong) !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.90) inset,
+        0 5px 12px rgba(15,23,42,.045) !important;
+}
+
+.seller-products-page .seller-products-filter:focus,
+.seller-products-page .seller-premium-dropdown-trigger:focus-visible,
+.seller-products-page .seller-premium-clear-filter:focus-visible,
+.seller-products-page .seller-premium-dropdown.is-open .seller-premium-dropdown-trigger {
+    border-color: #BFC6D0 !important;
+    outline: 0 !important;
+    box-shadow:
+        0 0 0 3px rgba(100, 116, 139, .10),
+        0 1px 0 rgba(255,255,255,.90) inset,
+        0 7px 16px rgba(15,23,42,.05) !important;
+}
+
+.seller-products-page .seller-premium-dropdown-menu,
+.seller-products-page .seller-product-search-suggestions {
+    border-color: var(--seller-neutral-border) !important;
+    box-shadow:
+        0 12px 28px rgba(15,23,42,.08),
+        0 2px 8px rgba(15,23,42,.025),
+        inset 0 0 0 1px rgba(255,255,255,.76) !important;
+}
+
+/* Product card internal outline/divider */
+.seller-products-page #productsGrid .seller-product-card-media {
+    border-color: var(--seller-neutral-border) !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.62),
+        0 5px 14px rgba(15,23,42,.025) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card-divider {
+    background: var(--seller-neutral-divider) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action {
+    border-color: var(--seller-neutral-border) !important;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.92) inset,
+        0 3px 8px rgba(15,23,42,.035) !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action:hover {
+    border-color: var(--seller-neutral-border-strong) !important;
+    box-shadow:
+        0 6px 14px rgba(15,23,42,.055),
+        0 1px 0 rgba(255,255,255,.92) inset !important;
+}
+
+/* Remove any residual warm ring from generic white panels inside this page. */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page #productsGrid .seller-product-card--reference {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 639px) {
+    .seller-products-page .seller-catalog-rail-shell,
+    .seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+    .seller-products-page #productsGrid .seller-product-card--reference,
+    .seller-products-page #productsGrid .seller-products-card {
+        box-shadow:
+            0 1px 2px rgba(15,23,42,.03),
+            0 8px 18px rgba(15,23,42,.06),
+            inset 0 0 0 1px rgba(255,255,255,.80) !important;
+    }
+}
+</style>
+
+
+<style>
+/* ================================================================
+   PRODUCT MANAGEMENT — STATIC CONTAINERS / NO HOVER MOTION
+   Keeps the approved visual design but prevents panels/cards from
+   moving, lifting, or changing elevation when the cursor hovers.
+   ================================================================ */
+
+/* Major containers: completely static on hover. */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsGrid .seller-products-card {
+    transform: none !important;
+    transition: none !important;
+}
+
+.seller-products-page .seller-catalog-rail-shell:hover,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover,
+.seller-products-page #productsGrid .seller-product-card--reference:hover,
+.seller-products-page #productsGrid .seller-products-card:hover {
+    transform: none !important;
+    border-color: var(--seller-neutral-border) !important;
+    box-shadow: var(--seller-neutral-shadow) !important;
+}
+
+/* Inventory mini-sections also stay fixed. */
+.seller-products-page .seller-rail-stat,
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-inventory-overview-grid {
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-stat:hover {
+    transform: none !important;
+    border-color: var(--seller-neutral-border) !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Product media should never zoom/shift from hover. */
+.seller-products-page #productsGrid .seller-product-card-media,
+.seller-products-page #productsGrid .seller-product-image {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Keep interactive controls clickable, but remove physical movement. */
+.seller-products-page .seller-premium-apply-filter,
+.seller-products-page .seller-premium-clear-filter,
+.seller-products-page .seller-premium-dropdown-trigger,
+.seller-products-page #productsGrid .seller-product-action,
+.seller-products-page .seller-rail-primary-action,
+.seller-products-page .seller-rail-secondary-action,
+.seller-products-page .seller-rail-more-toggle {
+    transform: none !important;
+}
+
+.seller-products-page .seller-premium-apply-filter:hover,
+.seller-products-page .seller-premium-apply-filter:active,
+.seller-products-page .seller-premium-clear-filter:hover,
+.seller-products-page .seller-premium-dropdown-trigger:hover,
+.seller-products-page #productsGrid .seller-product-action:hover,
+.seller-products-page .seller-rail-primary-action:hover,
+.seller-products-page .seller-rail-secondary-action:hover,
+.seller-products-page .seller-rail-more-toggle:hover {
+    transform: none !important;
+}
+</style>
+
+<style>
+/* ======================================================================
+   LISTING DETAILS — APPROVED PREMIUM REFERENCE
+   Matches the generated Product Inspector direction.
+   Scoped to #sellerViewProductModal; existing data/JS hooks remain intact.
+   ====================================================================== */
+
+#sellerViewProductModal {
+    padding: 22px !important;
+    background: rgba(25, 31, 40, .48) !important;
+    backdrop-filter: blur(7px) !important;
+    -webkit-backdrop-filter: blur(7px) !important;
+}
+
+/* Premium wide sheet */
+#sellerViewProductModal .seller-view-enterprise-dialog {
+    width: min(1120px, calc(100vw - 44px)) !important;
+    max-width: 1120px !important;
+    max-height: calc(100dvh - 44px) !important;
+    border: 1px solid #E3E6EA !important;
+    border-radius: 22px !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 38px 96px rgba(15, 23, 42, .22),
+        0 10px 28px rgba(15, 23, 42, .08) !important;
+}
+
+/* Header: simple document identity */
+#sellerViewProductModal .seller-view-enterprise-header {
+    min-height: 104px !important;
+    align-items: flex-start !important;
+    border-bottom: 1px solid #E8EBEF !important;
+    padding: 25px 32px 21px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-eyebrow {
+    color: #B9780B !important;
+    font-size: 9px !important;
+    letter-spacing: .20em !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-header h3 {
+    margin-top: 9px !important;
+    color: #111827 !important;
+    font-size: 30px !important;
+    line-height: 1.04 !important;
+    font-weight: 760 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-subtitle {
+    margin-top: 7px !important;
+    color: #7F8998 !important;
+    font-size: 10.5px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-close {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    flex-basis: 44px !important;
+    border-color: #DDE1E6 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    color: #344054 !important;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .03) !important;
+    transform: none !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-close:hover {
+    border-color: #CDD3DA !important;
+    background: #F8FAFC !important;
+    color: #111827 !important;
+    transform: none !important;
+}
+
+/* Hero composition */
+#sellerViewProductModal .seller-view-enterprise-hero {
+    grid-template-columns: 320px minmax(0, 1fr) !important;
+    gap: 26px 34px !important;
+    padding: 28px 32px 24px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-image-wrap,
+#sellerViewProductModal #viewProductImageWrap.seller-view-enterprise-image-wrap {
+    width: 320px !important;
+    height: 320px !important;
+    border: 1px solid #E2E6EA !important;
+    border-radius: 18px !important;
+    background: #F4F5F6 !important;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .04) !important;
+}
+
+#sellerViewProductModal #viewProductStatusBadge.seller-view-enterprise-image-status {
+    top: 14px !important;
+    left: 14px !important;
+    min-width: 0 !important;
+    min-height: 32px !important;
+    border: 1px solid #DCE6F0 !important;
+    border-radius: 11px !important;
+    background: rgba(239, 246, 253, .96) !important;
+    padding: 0 13px !important;
+    color: #416D96 !important;
+    font-size: 9px !important;
+    box-shadow: 0 5px 14px rgba(15, 23, 42, .07) !important;
+    backdrop-filter: none !important;
+}
+
+#sellerViewProductModal #viewProductStatusBadge.seller-view-enterprise-image-status::before {
+    font-size: 13px !important;
+}
+
+/* Chips stay semantic and quiet */
+#sellerViewProductModal .seller-view-enterprise-chips {
+    gap: 8px !important;
+}
+
+#sellerViewProductModal #viewProductCategoryChip.seller-view-chip,
+#sellerViewProductModal #viewProductTypeChip.seller-view-chip,
+#sellerViewProductModal #viewProductShippingChip.seller-view-chip {
+    min-height: 31px !important;
+    border-radius: 10px !important;
+    padding: 0 12px !important;
+    font-size: 8.5px !important;
+}
+
+#sellerViewProductModal #viewProductCategoryChip.seller-view-chip {
+    background: #FFF5E3 !important;
+    color: #A56A05 !important;
+}
+
+#sellerViewProductModal #viewProductTypeChip.seller-view-chip {
+    background: #F2F4F7 !important;
+    color: #596273 !important;
+}
+
+#sellerViewProductModal #viewProductShippingChip.seller-view-chip {
+    background: #EAF7F0 !important;
+    color: #18794E !important;
+}
+
+/* Product identity is the strongest hierarchy */
+#sellerViewProductModal .seller-view-enterprise-summary {
+    padding-top: 8px !important;
+}
+
+#sellerViewProductModal #viewProductName {
+    margin-top: 25px !important;
+    color: #101828 !important;
+    font-size: 36px !important;
+    line-height: 1 !important;
+    font-weight: 760 !important;
+}
+
+#sellerViewProductModal #viewProductBrandLine {
+    margin-top: 8px !important;
+    color: #7D8797 !important;
+    font-size: 11px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-price {
+    margin-top: 27px !important;
+}
+
+#sellerViewProductModal #viewProductSalePrice {
+    color: #C77E00 !important;
+    font-size: 43px !important;
+    font-weight: 800 !important;
+}
+
+/* Created / Rating: compact inline metadata, no oversized card feel */
+#sellerViewProductModal .seller-view-enterprise-meta {
+    gap: 20px !important;
+    margin-top: 30px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-meta-icon {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 10px !important;
+    background: #F4F6F8 !important;
+    color: #667085 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-meta-icon--rating {
+    background: #FFF7E8 !important;
+    color: #C98A11 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-meta-item p {
+    color: #8C95A3 !important;
+    font-size: 8px !important;
+}
+
+#sellerViewProductModal #viewProductCreated,
+#sellerViewProductModal #viewProductRating {
+    color: #172033 !important;
+    font-size: 10.5px !important;
+}
+
+/* Icon-led fact rail */
+#sellerViewProductModal .seller-view-enterprise-facts {
+    grid-template-columns: .78fr 1.2fr .95fr 1.18fr 1.25fr !important;
+    border: 1px solid #E2E6EA !important;
+    border-radius: 15px !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact {
+    display: grid !important;
+    min-height: 78px !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-content: center !important;
+    column-gap: 11px !important;
+    row-gap: 5px !important;
+    padding: 13px 16px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact + .seller-view-enterprise-fact {
+    border-left: 1px solid #E7EAEE !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact-icon {
+    display: grid !important;
+    grid-row: 1 / span 2 !important;
+    width: 32px !important;
+    height: 32px !important;
+    place-items: center !important;
+    align-self: center !important;
+    border-radius: 9px !important;
+    background: #F7F8FA !important;
+    color: #344054 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact-icon svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact-label {
+    grid-column: 2 !important;
+    align-self: end !important;
+    color: #8A94A3 !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    font-weight: 500 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact > strong {
+    grid-column: 2 !important;
+    align-self: start !important;
+    margin-top: 0 !important;
+    color: #172033 !important;
+    font-size: 10.5px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact--status {
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-fact--status .seller-view-enterprise-status-pill {
+    grid-column: 2 !important;
+    min-height: 29px !important;
+    gap: 6px !important;
+    margin-top: 0 !important;
+    border-radius: 9px !important;
+    background: #FFF1D1 !important;
+    padding: 0 10px !important;
+    color: #996408 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-status-pill svg {
+    width: 13px !important;
+    height: 13px !important;
+    flex-basis: 13px !important;
+}
+
+#sellerViewProductModal #viewProductStatus {
+    font-size: 8.5px !important;
+}
+
+/* Lower information area: restrained surfaces, more whitespace */
+#sellerViewProductModal .seller-view-enterprise-details {
+    grid-template-columns: .92fr 1.08fr !important;
+    gap: 16px !important;
+    border-top: 1px solid #EAECF0 !important;
+    padding: 18px 32px 24px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-panel {
+    min-height: 208px !important;
+    border: 1px solid #E2E6EA !important;
+    border-radius: 15px !important;
+    padding: 18px !important;
+    box-shadow: none !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-panel-icon {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 8px !important;
+    background: #F6F7F9 !important;
+    color: #344054 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-panel-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-panel-head h4 {
+    color: #172033 !important;
+    font-size: 12px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-panel-head p {
+    margin-top: 3px !important;
+    color: #929BA8 !important;
+    font-size: 8px !important;
+}
+
+#sellerViewProductModal #viewProductDescription.seller-view-enterprise-description-copy {
+    min-height: 122px !important;
+    max-height: 140px !important;
+    margin-top: 14px !important;
+    border-radius: 11px !important;
+    background: #F7F7F6 !important;
+    padding: 14px 15px !important;
+    color: #667085 !important;
+    font-size: 9px !important;
+    line-height: 1.65 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-list {
+    gap: 0 18px !important;
+    margin-top: 12px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-list > div {
+    min-height: 31px !important;
+    border-top-color: #EAECF0 !important;
+    padding: 7px 0 !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-list dt {
+    color: #8A94A3 !important;
+    font-size: 8px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-list dd {
+    color: #344054 !important;
+    font-size: 8px !important;
+    font-weight: 650 !important;
+}
+
+/* Optional sections follow the same system */
+#sellerViewProductModal #viewProductSpecificationsSection.seller-view-enterprise-optional,
+#sellerViewProductModal #viewProductVariantsSection.seller-view-enterprise-optional {
+    margin: 0 32px 18px !important;
+    border-color: #E2E6EA !important;
+    border-radius: 15px !important;
+    box-shadow: none !important;
+}
+
+/* Footer is quiet; Edit Product is the only strong action */
+#sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child {
+    min-height: 68px !important;
+    border-top-color: #EAECF0 !important;
+    padding: 11px 32px !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-footer > p {
+    color: #8A94A3 !important;
+    font-size: 8px !important;
+}
+
+#sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child .seller-view-enterprise-button,
+#sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child [data-close-view] {
+    min-width: 104px !important;
+    height: 42px !important;
+    border-radius: 11px !important;
+    font-size: 9px !important;
+    transform: none !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-button--secondary {
+    border-color: #D8DDE3 !important;
+    background: #FFFFFF !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+}
+
+#sellerViewProductModal .seller-view-enterprise-button--secondary:hover {
+    border-color: #CDD3DA !important;
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+#sellerViewProductModal #viewProductEditButton.seller-view-enterprise-button--primary {
+    min-width: 142px !important;
+    border: 0 !important;
+    background: #D88F00 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 7px 16px rgba(196, 126, 0, .17) !important;
+}
+
+#sellerViewProductModal #viewProductEditButton.seller-view-enterprise-button--primary:hover {
+    background: #CB8500 !important;
+    box-shadow: 0 7px 16px rgba(196, 126, 0, .17) !important;
+    transform: none !important;
+}
+
+/* No container lift/motion. */
+#sellerViewProductModal .seller-view-enterprise-dialog,
+#sellerViewProductModal .seller-view-enterprise-panel,
+#sellerViewProductModal .seller-view-enterprise-facts,
+#sellerViewProductModal .seller-view-enterprise-image-wrap {
+    transform: none !important;
+}
+
+/* Compact laptop */
+@media (min-width: 900px) and (max-height: 820px) {
+    #sellerViewProductModal {
+        padding: 10px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-dialog {
+        width: min(1020px, calc(100vw - 20px)) !important;
+        max-width: 1020px !important;
+        max-height: calc(100dvh - 20px) !important;
+        border-radius: 18px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-header {
+        min-height: 68px !important;
+        padding: 13px 18px 11px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-header h3 {
+        margin-top: 5px !important;
+        font-size: 22px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-subtitle {
+        margin-top: 4px !important;
+        font-size: 8px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-close {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        flex-basis: 38px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-hero {
+        grid-template-columns: 226px minmax(0, 1fr) !important;
+        gap: 16px 20px !important;
+        padding: 15px 18px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-image-wrap,
+    #sellerViewProductModal #viewProductImageWrap.seller-view-enterprise-image-wrap {
+        width: 226px !important;
+        height: 226px !important;
+        border-radius: 14px !important;
+    }
+
+    #sellerViewProductModal #viewProductName {
+        margin-top: 14px !important;
+        font-size: 25px !important;
+    }
+
+    #sellerViewProductModal #viewProductSalePrice {
+        font-size: 31px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-price {
+        margin-top: 15px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-meta {
+        margin-top: 16px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact {
+        min-height: 59px !important;
+        grid-template-columns: 27px minmax(0, 1fr) !important;
+        column-gap: 8px !important;
+        padding: 8px 10px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact-icon {
+        width: 25px !important;
+        height: 25px !important;
+        border-radius: 7px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact-icon svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact-label {
+        font-size: 6.5px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact > strong {
+        font-size: 8px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-details {
+        gap: 10px !important;
+        padding: 11px 18px 12px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-panel {
+        min-height: 142px !important;
+        padding: 11px 12px !important;
+    }
+
+    #sellerViewProductModal #viewProductDescription.seller-view-enterprise-description-copy {
+        min-height: 68px !important;
+        max-height: 76px !important;
+        margin-top: 8px !important;
+        padding: 9px 10px !important;
+        font-size: 7.5px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-list {
+        margin-top: 7px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-list > div {
+        min-height: 23px !important;
+        padding: 4px 0 !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-list dt,
+    #sellerViewProductModal .seller-view-enterprise-list dd {
+        font-size: 6.5px !important;
+    }
+
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child {
+        min-height: 52px !important;
+        padding: 7px 18px !important;
+    }
+
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child .seller-view-enterprise-button,
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child [data-close-view] {
+        height: 34px !important;
+        border-radius: 9px !important;
+        font-size: 7.5px !important;
+    }
+}
+
+/* Tablet / mobile */
+@media (max-width: 899px) {
+    #sellerViewProductModal {
+        align-items: flex-start !important;
+        padding: 8px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-dialog {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: calc(100dvh - 16px) !important;
+        border-radius: 17px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-header {
+        min-height: 76px !important;
+        padding: 15px 16px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-hero {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        padding: 16px !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-image-wrap,
+    #sellerViewProductModal #viewProductImageWrap.seller-view-enterprise-image-wrap {
+        width: min(100%, 360px) !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        margin: 0 auto !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact + .seller-view-enterprise-fact {
+        border-left: 0 !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact:nth-child(even) {
+        border-left: 1px solid #E7EAEE !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact:nth-child(n+3) {
+        border-top: 1px solid #E7EAEE !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-fact--status {
+        grid-column: 1 / -1 !important;
+        border-left: 0 !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-details {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 14px 16px 16px !important;
+    }
+
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child {
+        align-items: stretch !important;
+        padding: 10px 16px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    #sellerViewProductModal .seller-view-enterprise-footer {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    #sellerViewProductModal .seller-view-enterprise-footer > div {
+        width: 100% !important;
+    }
+
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child .seller-view-enterprise-button,
+    #sellerViewProductModal .seller-product-view-dialog > .seller-view-enterprise-footer:last-child [data-close-view] {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+    }
+}
+</style>
+
+<style>
+/* ======================================================================
+   EDIT PRODUCT — COMPACT PROFESSIONAL DENSITY PASS
+   Reduces oversized controls / whitespace without shrinking readability.
+   Existing IDs, validation, form submission and JS behavior stay intact.
+   ====================================================================== */
+
+#sellerEditProductModal {
+    padding: 12px !important;
+}
+
+/* Keep the modal substantial, but no longer near full-screen. */
+#sellerEditProductModal .seller-edit-enterprise-dialog {
+    width: min(850px, calc(100vw - 24px)) !important;
+    max-width: 850px !important;
+    max-height: min(700px, calc(100dvh - 24px)) !important;
+    border: 1px solid #E2E6EA !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 28px 72px rgba(15, 23, 42, .18),
+        0 6px 18px rgba(15, 23, 42, .06) !important;
+}
+
+/* Slimmer header with readable title. */
+#sellerEditProductModal .seller-edit-enterprise-header {
+    gap: 14px !important;
+    border-bottom-color: #EAECF0 !important;
+    padding: 11px 18px 10px !important;
+}
+
+#sellerEditProductModal .seller-edit-eyebrow {
+    font-size: 7.5px !important;
+    letter-spacing: .16em !important;
+}
+
+#sellerEditProductModal .seller-edit-enterprise-header h3 {
+    margin-top: 4px !important;
+    color: #172033 !important;
+    font-size: 21px !important;
+    line-height: 1.05 !important;
+}
+
+#sellerEditProductModal .seller-edit-subtitle {
+    max-width: 650px !important;
+    margin-top: 3px !important;
+    color: #7F8998 !important;
+    font-size: 7.4px !important;
+    line-height: 1.4 !important;
+}
+
+#sellerEditProductModal .seller-edit-header-close {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    border: 1px solid #DDE1E6 !important;
+    border-radius: 9px !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerEditProductModal .seller-edit-header-close:hover {
+    border-color: #CDD3DA !important;
+    background: #F8FAFC !important;
+    color: #172033 !important;
+    transform: none !important;
+}
+
+#sellerEditProductModal .seller-edit-header-close svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+/* Main form density. */
+#sellerEditProductForm.seller-edit-enterprise-form {
+    padding: 10px 18px 0 !important;
+    background: #FFFFFF !important;
+}
+
+#sellerEditProductForm .seller-edit-grid {
+    gap: 7px 10px !important;
+}
+
+#sellerEditProductForm .seller-edit-field > label:not(.seller-edit-shipping-card) {
+    margin-bottom: 4px !important;
+    color: #344054 !important;
+    font-size: 8.2px !important;
+    line-height: 1.15 !important;
+    font-weight: 650 !important;
+}
+
+/* Shorter controls; text stays easy to read. */
+#sellerEditProductForm .seller-edit-field input:not([type="hidden"]):not([type="checkbox"]):not([type="file"]),
+#sellerEditProductForm .seller-edit-field select {
+    height: 34px !important;
+    border: 1px solid #D9DEE5 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    padding: 0 10px !important;
+    color: #344054 !important;
+    font-size: 8.4px !important;
+    line-height: 34px !important;
+    box-shadow: none !important;
+}
+
+#sellerEditProductForm .seller-edit-field select {
+    padding-right: 30px !important;
+}
+
+#sellerEditProductForm .seller-edit-select-wrap > svg {
+    right: 10px !important;
+    width: 12px !important;
+    height: 12px !important;
+}
+
+#sellerEditProductForm .seller-edit-field input:focus,
+#sellerEditProductForm .seller-edit-field select:focus,
+#sellerEditProductForm .seller-edit-description-field textarea:focus {
+    border-color: #C99735 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(201, 151, 53, .08) !important;
+}
+
+/* Helpers should support, not dominate. */
+#sellerEditProductForm .seller-edit-helper {
+    margin-top: 3px !important;
+    color: #98A2B3 !important;
+    font-size: 6.2px !important;
+    line-height: 1.3 !important;
+}
+
+#sellerEditProductForm .seller-edit-helper--multiline {
+    max-width: 96% !important;
+}
+
+/* Free Shipping: one slim settings row. */
+#sellerEditProductForm .seller-edit-shipping-card {
+    min-height: 44px !important;
+    gap: 10px !important;
+    border: 1px solid #E8D6AE !important;
+    border-radius: 9px !important;
+    background: #FFFBF3 !important;
+    padding: 6px 10px !important;
+}
+
+#sellerEditProductForm .seller-edit-gold-switch {
+    width: 42px !important;
+    height: 22px !important;
+    box-shadow: none !important;
+}
+
+#sellerEditProductForm .seller-edit-gold-switch::after {
+    top: 3px !important;
+    left: 3px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+#sellerEditProductForm #editProductFreeShipping:checked + .seller-edit-gold-switch::after {
+    transform: translateX(20px) !important;
+}
+
+#sellerEditProductForm .seller-edit-shipping-copy strong {
+    font-size: 8.5px !important;
+}
+
+#sellerEditProductForm .seller-edit-shipping-copy small {
+    margin-top: 1px !important;
+    color: #8C94A0 !important;
+    font-size: 6px !important;
+    line-height: 1.25 !important;
+}
+
+/* Media uploader: compact, horizontal and balanced. */
+#sellerEditProductForm .seller-edit-media-row {
+    grid-template-columns: 60px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    min-height: 58px !important;
+}
+
+#sellerEditProductForm .seller-edit-current-image {
+    width: 60px !important;
+    height: 58px !important;
+    border-radius: 8px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-box {
+    min-height: 58px !important;
+    gap: 8px !important;
+    border-radius: 9px !important;
+    background: #FCFCFB !important;
+    padding: 6px 9px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-icon {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+    border-radius: 8px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-icon svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-copy input[type="file"] {
+    font-size: 6.5px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-copy input[type="file"]::file-selector-button {
+    margin-right: 7px !important;
+    border-radius: 7px !important;
+    padding: 4px 7px !important;
+    font-size: 6.5px !important;
+}
+
+#sellerEditProductForm .seller-edit-upload-copy small {
+    margin-top: 2px !important;
+    font-size: 5.7px !important;
+}
+
+/* Description no longer needs a tall box for short copy. */
+#sellerEditProductForm .seller-edit-description-field textarea {
+    height: 58px !important;
+    min-height: 58px !important;
+    resize: vertical !important;
+    border: 1px solid #D9DEE5 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    padding: 8px 10px !important;
+    color: #344054 !important;
+    font-size: 8.2px !important;
+    line-height: 1.45 !important;
+    box-shadow: none !important;
+}
+
+/* Sensitive edit notice becomes a slim informational strip. */
+#sellerEditProductForm .seller-edit-sensitive-note {
+    min-height: 38px !important;
+    gap: 7px !important;
+    margin-top: 8px !important;
+    border: 1px solid #ECDAB5 !important;
+    border-radius: 9px !important;
+    background: #FFF9ED !important;
+    padding: 6px 8px !important;
+}
+
+#sellerEditProductForm .seller-edit-sensitive-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex-basis: 18px !important;
+    font-size: 8px !important;
+}
+
+#sellerEditProductForm .seller-edit-sensitive-note p {
+    color: #7B6A4B !important;
+    font-size: 6px !important;
+    line-height: 1.35 !important;
+}
+
+/* Compact footer. */
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer {
+    min-height: 52px !important;
+    margin: 8px -18px 0 !important;
+    border-top: 1px solid #EAECF0 !important;
+    background: #FFFFFF !important;
+    padding: 7px 18px 8px !important;
+}
+
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer .seller-edit-button,
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer [data-close-edit]:first-of-type,
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer button[type="submit"] {
+    min-width: 102px !important;
+    height: 36px !important;
+    border-radius: 9px !important;
+    padding: 0 14px !important;
+    font-size: 7.8px !important;
+    transform: none !important;
+}
+
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer .seller-edit-button--secondary,
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer [data-close-edit]:first-of-type {
+    border-color: #D8DDE3 !important;
+    color: #475467 !important;
+}
+
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer .seller-edit-button--primary,
+#sellerEditProductModal #sellerEditProductForm .seller-edit-footer button[type="submit"] {
+    border: 0 !important;
+    background: #D89208 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 5px 12px rgba(216, 146, 8, .14) !important;
+}
+
+/* No physical hover motion. */
+#sellerEditProductModal .seller-edit-enterprise-dialog,
+#sellerEditProductModal .seller-edit-field,
+#sellerEditProductModal .seller-edit-shipping-card,
+#sellerEditProductModal .seller-edit-upload-box,
+#sellerEditProductModal .seller-edit-button {
+    transform: none !important;
+}
+
+/* Laptop target: all important fields should fit comfortably. */
+@media (min-width: 760px) and (max-height: 820px) {
+    #sellerEditProductModal .seller-edit-enterprise-dialog {
+        width: min(820px, calc(100vw - 20px)) !important;
+        max-width: 820px !important;
+        max-height: calc(100dvh - 20px) !important;
+    }
+
+    #sellerEditProductModal .seller-edit-enterprise-header {
+        padding: 9px 16px 8px !important;
+    }
+
+    #sellerEditProductForm.seller-edit-enterprise-form {
+        padding: 8px 16px 0 !important;
+    }
+
+    #sellerEditProductForm .seller-edit-grid {
+        gap: 6px 9px !important;
+    }
+
+    #sellerEditProductForm .seller-edit-field input:not([type="hidden"]):not([type="checkbox"]):not([type="file"]),
+    #sellerEditProductForm .seller-edit-field select {
+        height: 32px !important;
+        line-height: 32px !important;
+    }
+
+    #sellerEditProductForm .seller-edit-shipping-card {
+        min-height: 40px !important;
+        padding: 5px 9px !important;
+    }
+
+    #sellerEditProductForm .seller-edit-media-row,
+    #sellerEditProductForm .seller-edit-upload-box {
+        min-height: 54px !important;
+    }
+
+    #sellerEditProductForm .seller-edit-current-image,
+    #sellerEditProductForm .seller-edit-description-field textarea {
+        height: 54px !important;
+        min-height: 54px !important;
+    }
+
+    #sellerEditProductModal #sellerEditProductForm .seller-edit-footer {
+        margin: 7px -16px 0 !important;
+        padding: 6px 16px 7px !important;
+    }
+}
+
+@media (max-width: 759px) {
+    #sellerEditProductModal .seller-edit-enterprise-dialog {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: calc(100dvh - 16px) !important;
+    }
+
+    #sellerEditProductForm .seller-edit-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    #sellerEditProductModal #sellerEditProductForm .seller-edit-footer {
+        margin-right: -14px !important;
+        margin-left: -14px !important;
+        padding-right: 14px !important;
+        padding-left: 14px !important;
+    }
+}
+</style>
+@endpush
+
+@push('styles')
+<style id="sariProductManagementAllContainersFloatingFinal">
+/* ======================================================================
+   PRODUCT MANAGEMENT — ALL VISIBLE CONTAINERS FLOATING FINAL PASS
+   Final visual layer. Every actual card/panel/popover/modal surface gets
+   a consistent elevation tier. Open layout wrappers remain transparent.
+   No routes, forms, filters, product actions, counters, JS or backend
+   behavior are changed.
+   ====================================================================== */
+
+.seller-products-page,
+#sellerViewProductModal,
+#sellerEditProductModal,
+#sellerAddProductModal,
+#sellerListingPreviewModal,
+#productsActionModal {
+    --pm-float-border: #E5E7EB;
+    --pm-float-border-strong: #D1D5DB;
+    --pm-float-divider: #ECEFF2;
+
+    --pm-float-xl:
+        0 8px 22px rgba(15, 23, 42, .075),
+        0 28px 68px rgba(15, 23, 42, .16),
+        0 48px 104px rgba(15, 23, 42, .085);
+
+    --pm-float-lg:
+        0 3px 7px rgba(15, 23, 42, .048),
+        0 14px 32px rgba(15, 23, 42, .088),
+        0 30px 68px rgba(15, 23, 42, .105),
+        inset 0 1px 0 rgba(255,255,255,.95);
+
+    --pm-float-md:
+        0 2px 5px rgba(15, 23, 42, .038),
+        0 9px 22px rgba(15, 23, 42, .065),
+        0 19px 40px rgba(15, 23, 42, .072),
+        inset 0 1px 0 rgba(255,255,255,.93);
+
+    --pm-float-sm:
+        0 1px 2px rgba(15, 23, 42, .026),
+        0 5px 13px rgba(15, 23, 42, .047),
+        inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+/* ------------------------------------------------------------------
+   PAGE-LEVEL / PRIMARY WORK SURFACES
+   ------------------------------------------------------------------ */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page .seller-products-filter-panel,
+.seller-products-page .seller-products-toolbar,
+.seller-products-page #productsEmpty {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: var(--pm-float-lg) !important;
+    transform: none !important;
+}
+
+/* Keep the approved open catalog canvas open; it is a layout wrapper,
+   not a visible card. */
+.seller-products-page .seller-products-workspace {
+    border: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* No physical lift on hover for structural surfaces. */
+.seller-products-page .seller-catalog-rail-shell:hover,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\]:hover,
+.seller-products-page .seller-products-filter-panel:hover,
+.seller-products-page .seller-products-toolbar:hover,
+.seller-products-page #productsEmpty:hover {
+    border-color: var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-lg) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   CATALOG CONTROL — every visible subsection gets depth
+   ------------------------------------------------------------------ */
+
+/* Inventory Overview group itself */
+.seller-products-page .seller-inventory-overview-grid {
+    overflow: visible !important;
+    border: 1px solid var(--pm-float-border) !important;
+    border-radius: 15px !important;
+    background: #FFFFFF !important;
+    padding: 9px !important;
+    box-shadow: var(--pm-float-md) !important;
+}
+
+/* Four metric tiles */
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat,
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(odd),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(even),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(n+3) {
+    border: 1px solid #E7EAEE !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+/* Catalog Health must float too; warning colors stay in text/progress only. */
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-rail-health--premium,
+.seller-products-page .seller-rail-health--premium:hover,
+.seller-products-page .seller-rail-health--premium:focus-within {
+    margin-top: 14px !important;
+    border: 1px solid var(--pm-float-border) !important;
+    border-radius: 15px !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    padding: 13px !important;
+    box-shadow: var(--pm-float-md) !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-health--premium::before,
+.seller-products-page .seller-rail-health--premium::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Health summary row and each statistic become real nested surfaces. */
+.seller-products-page .seller-health-status-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+    border-top: 1px solid var(--pm-float-divider) !important;
+    background: #FFFFFF !important;
+    padding-top: 10px !important;
+    box-shadow: none !important;
+}
+
+.seller-products-page .seller-health-status-item {
+    min-height: 42px !important;
+    border: 1px solid #E8EBEF !important;
+    border-radius: 9px !important;
+    background: #FFFFFF !important;
+    padding: 6px 4px !important;
+    box-shadow: var(--pm-float-sm) !important;
+}
+
+.seller-products-page .seller-health-status-item + .seller-health-status-item {
+    border-left: 1px solid #E8EBEF !important;
+}
+
+/* Quick Views container */
+.seller-products-page .seller-rail-more {
+    margin-top: 12px !important;
+    border: 1px solid var(--pm-float-border) !important;
+    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    padding: 9px !important;
+    box-shadow: var(--pm-float-md) !important;
+}
+
+.seller-products-page .seller-rail-more-toggle {
+    border: 1px solid #E7EAEE !important;
+    border-radius: 9px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-more-toggle:hover,
+.seller-products-page .seller-rail-more-toggle:focus-visible {
+    border-color: #D9DEE5 !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-more-content {
+    margin-top: 8px !important;
+    border: 1px solid #E7EAEE !important;
+    border-radius: 11px !important;
+    background: #FFFFFF !important;
+    padding: 9px !important;
+    box-shadow: var(--pm-float-sm) !important;
+}
+
+/* Every Quick View option */
+.seller-products-page .seller-rail-more .seller-products-quick-filter {
+    border: 1px solid #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-more .seller-products-quick-filter:hover:not(.is-active):not([aria-pressed="true"]) {
+    border-color: #D9DEE5 !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   FILTER / SEARCH / DROPDOWN SURFACES
+   ------------------------------------------------------------------ */
+.seller-products-page #productsSearch,
+.seller-products-page #productsClearFilters,
+.seller-products-page .seller-products-filter,
+.seller-products-page .seller-premium-dropdown-trigger,
+.seller-products-page .seller-premium-clear-filter {
+    border-color: var(--pm-float-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-premium-dropdown-menu,
+.seller-products-page .seller-product-search-suggestions {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* Suggestion rows are nested mini-surfaces instead of flat cream rows. */
+.seller-products-page .seller-product-search-suggestion {
+    border: 1px solid transparent !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.seller-products-page .seller-product-search-suggestion:hover,
+.seller-products-page .seller-product-search-suggestion:focus-visible,
+.seller-products-page .seller-product-search-suggestion.is-keyboard-active {
+    border-color: #E7EAEE !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--pm-float-sm) !important;
+}
+
+/* ------------------------------------------------------------------
+   PRODUCT CARDS / INNER PRODUCT SURFACES
+   ------------------------------------------------------------------ */
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsGrid .seller-products-card,
+.seller-products-page .seller-products-add-card {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: var(--pm-float-md) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference:hover,
+.seller-products-page #productsGrid .seller-products-card:hover,
+.seller-products-page .seller-products-add-card:hover {
+    border-color: var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-md) !important;
+    transform: none !important;
+}
+
+/* Media is also a contained surface, but at a lower elevation. */
+.seller-products-page #productsGrid .seller-product-card-media,
+.seller-products-page .seller-product-search-thumb {
+    border: 1px solid #E7EAEE !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--pm-float-sm) !important;
+}
+
+/* Product action icon shells remain tiny floated controls. */
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action {
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .04) !important;
+    transform: none !important;
+}
+
+.seller-products-page #productsGrid .seller-product-card--reference .seller-product-action:hover {
+    border-color: #D1D5DB !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .04) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   VIEW PRODUCT MODAL — every actual information container floats
+   ------------------------------------------------------------------ */
+#sellerViewProductModal .seller-product-view-dialog,
+#sellerViewProductModal .seller-view-enterprise-dialog {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-xl) !important;
+}
+
+/* Major inspector surfaces */
+#sellerViewProductModal .seller-view-enterprise-image-wrap,
+#sellerViewProductModal .seller-view-enterprise-summary,
+#sellerViewProductModal .seller-view-enterprise-facts,
+#sellerViewProductModal .seller-view-enterprise-panel,
+#sellerViewProductModal .seller-view-enterprise-optional,
+#sellerViewProductModal .seller-view-enterprise-table-wrap,
+#sellerViewProductModal .seller-view-enterprise-gallery {
+    border: 1px solid var(--pm-float-border) !important;
+    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-md) !important;
+    transform: none !important;
+}
+
+/* Compact fact/meta/spec/gallery containers */
+#sellerViewProductModal .seller-view-enterprise-meta-item,
+#sellerViewProductModal .seller-view-enterprise-fact,
+#sellerViewProductModal #viewProductSpecifications > *,
+#sellerViewProductModal #viewProductGallery > * {
+    border: 1px solid #E7EAEE !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   EDIT PRODUCT MODAL — all actual cards/boxes float
+   ------------------------------------------------------------------ */
+#sellerEditProductModal .seller-edit-enterprise-dialog {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-xl) !important;
+}
+
+#sellerEditProductModal .seller-edit-shipping-card,
+#sellerEditProductModal .seller-edit-upload-box,
+#sellerEditProductModal .seller-edit-sensitive-note,
+#sellerEditProductModal .seller-edit-current-image {
+    border-color: var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   ADD PRODUCT MODAL — override legacy flat box-shadow:none passes
+   ------------------------------------------------------------------ */
+#sellerAddProductModal .seller-add-modal-shell {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-xl) !important;
+}
+
+/* Every section/card inside Add Product receives medium depth. */
+#sellerAddProductModal .seller-add-progress,
+#sellerAddProductModal .seller-add-flow-guide,
+#sellerAddProductModal .seller-add-flow-section,
+#sellerAddProductModal .seller-add-subsection,
+#sellerAddProductModal .seller-add-optional-card,
+#sellerAddProductModal .seller-add-inline-optional,
+#sellerAddProductModal #sellerSimpleInventorySection,
+#sellerAddProductModal #sellerVariantSection {
+    border: 1px solid var(--pm-float-border) !important;
+    border-radius: 14px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-md) !important;
+    transform: none !important;
+}
+
+/* Nested Add Product cards */
+#sellerAddProductModal [data-product-type-card],
+#sellerAddProductModal .seller-selling-type-card,
+#sellerAddProductModal .seller-manual-variant-card,
+#sellerAddProductModal #sellerVariantTableWrap,
+#sellerAddProductModal #sellerCoverPreviewEmpty,
+#sellerAddProductModal #sellerGalleryEmpty,
+#sellerAddProductModal #sellerSpecificationEmpty,
+#sellerAddProductModal #sellerManualVariantEmpty,
+#sellerAddProductModal .seller-variant-image-picker {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+#sellerAddProductModal [data-product-type-card]:hover,
+#sellerAddProductModal .seller-selling-type-card:hover,
+#sellerAddProductModal .seller-manual-variant-card:hover,
+#sellerAddProductModal .seller-variant-image-picker:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-sm) !important;
+    transform: none !important;
+}
+
+/* Optional summaries remain attached to their floating card. */
+#sellerAddProductModal .seller-add-inline-summary:hover,
+#sellerAddProductModal .seller-add-optional-summary:hover {
+    background: #F8FAFC !important;
+}
+
+/* ------------------------------------------------------------------
+   LISTING PREVIEW + ACTION CONFIRMATION MODALS
+   ------------------------------------------------------------------ */
+#sellerListingPreviewModal > div:first-child,
+#productsActionModal > div:first-child {
+    border: 1px solid var(--pm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--pm-float-xl) !important;
+}
+
+/* ------------------------------------------------------------------
+   NEUTRAL STRUCTURE / STATIC HOVER GUARANTEE
+   ------------------------------------------------------------------ */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-inventory-overview-grid,
+.seller-products-page .seller-rail-stat,
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-rail-more,
+.seller-products-page .seller-rail-more-content,
+.seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+.seller-products-page #productsGrid .seller-product-card--reference,
+.seller-products-page #productsEmpty,
+#sellerViewProductModal .seller-view-enterprise-panel,
+#sellerEditProductModal .seller-edit-shipping-card,
+#sellerAddProductModal .seller-add-flow-section,
+#sellerAddProductModal .seller-add-subsection,
+#sellerAddProductModal .seller-add-optional-card {
+    outline: 0 !important;
+}
+
+/* Make non-semantic hover surfaces neutral instead of cream. */
+.seller-products-page .seller-rail-secondary-action:hover,
+.seller-products-page #productsClearFilters:hover,
+#sellerViewProductModal .seller-view-enterprise-button--secondary:hover,
+#sellerEditProductModal .seller-edit-button--secondary:hover,
+#productsActionModal #productsActionCancel:hover {
+    background: #F8FAFC !important;
+}
+
+/* Mobile: keep every surface lifted without making stacked cards too heavy. */
+@media (max-width: 760px) {
+    .seller-products-page .seller-catalog-rail-shell,
+    .seller-products-page .seller-products-workspace > .mt-4.rounded-\[14px\],
+    .seller-products-page #productsEmpty,
+    #sellerViewProductModal .seller-product-view-dialog,
+    #sellerEditProductModal .seller-edit-enterprise-dialog,
+    #sellerAddProductModal .seller-add-modal-shell,
+    #productsActionModal > div:first-child {
+        box-shadow:
+            0 3px 7px rgba(15, 23, 42, .045),
+            0 14px 32px rgba(15, 23, 42, .085),
+            0 26px 52px rgba(15, 23, 42, .085) !important;
+    }
+
+    .seller-products-page .seller-inventory-overview-grid,
+    .seller-products-page .seller-rail-health,
+    .seller-products-page .seller-rail-more,
+    .seller-products-page #productsGrid .seller-product-card--reference,
+    #sellerViewProductModal .seller-view-enterprise-panel,
+    #sellerViewProductModal .seller-view-enterprise-optional,
+    #sellerAddProductModal .seller-add-flow-section,
+    #sellerAddProductModal .seller-add-subsection,
+    #sellerAddProductModal .seller-add-optional-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+}
+</style>
+@endpush
+
+@push('styles')
+<style id="sariCatalogMainContainerOnlyFloatingFinal">
+/* ======================================================================
+   PRODUCT MANAGEMENT — CATALOG CONTROL: MAIN CONTAINER ONLY FLOATING
+   Final hierarchy correction.
+   Only the Seller Inventory / Catalog Control parent is elevated.
+   Inventory Overview, Catalog Health, health stats, Quick Views, and
+   Quick View filter rows remain flat nested content.
+   ====================================================================== */
+
+/* ONE FLOATING PARENT: SELLER INVENTORY / CATALOG CONTROL */
+.seller-products-page .seller-catalog-rail-shell,
+.seller-products-page .seller-catalog-rail-shell:hover {
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow:
+        0 3px 7px rgba(15, 23, 42, .05),
+        0 14px 32px rgba(15, 23, 42, .085),
+        0 30px 68px rgba(15, 23, 42, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .94) !important;
+    transform: none !important;
+}
+
+/* INVENTORY OVERVIEW — FLAT CONTENT INSIDE THE PARENT */
+.seller-products-page .seller-inventory-overview-grid {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Active / Approved / Low Stock / Out:
+   keep visual grouping, remove independent floating depth. */
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat,
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(odd),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(even),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:nth-child(n+3),
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat:hover {
+    border: 1px solid #E7EAEE !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Metric icons are content, not elevated mini-containers. */
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-icon,
+.seller-products-page .seller-inventory-overview-grid .seller-rail-stat-icon:hover {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* CATALOG HEALTH — FLAT SECTION */
+.seller-products-page .seller-rail-health,
+.seller-products-page .seller-rail-health--premium,
+.seller-products-page .seller-rail-health:hover,
+.seller-products-page .seller-rail-health--premium:hover,
+.seller-products-page .seller-rail-health--premium:focus-within {
+    border: 0 !important;
+    border-top: 1px solid #ECEFF2 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-health::before,
+.seller-products-page .seller-rail-health::after,
+.seller-products-page .seller-rail-health--premium::before,
+.seller-products-page .seller-rail-health--premium::after {
+    content: none !important;
+    display: none !important;
+}
+
+.seller-products-page .seller-rail-health .seller-catalog-health-progress {
+    box-shadow: none !important;
+}
+
+/* Approved / review / low / out numbers remain one flat row. */
+.seller-products-page .seller-health-status-grid {
+    border-top-color: #ECEFF2 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.seller-products-page .seller-health-status-item,
+.seller-products-page .seller-health-status-item:hover {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-health-status-item + .seller-health-status-item {
+    border-left: 1px solid #ECEFF2 !important;
+}
+
+.seller-products-page #productsCatalogHealthLabel {
+    box-shadow: none !important;
+}
+
+/* QUICK VIEWS — FLAT SECTION + FLAT FILTER ROWS */
+.seller-products-page .seller-rail-more {
+    border: 0 !important;
+    border-top: 1px solid #ECEFF2 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* View-more summary is just a row, not another raised card. */
+.seller-products-page .seller-rail-more-toggle,
+.seller-products-page .seller-rail-more-toggle:hover,
+.seller-products-page .seller-rail-more-toggle:focus-visible {
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-more-toggle:hover,
+.seller-products-page .seller-rail-more-toggle:focus-visible {
+    background: #F8FAFC !important;
+}
+
+/* Expanded Quick Views content belongs to the parent rail. */
+.seller-products-page .seller-rail-more-content {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding-inline: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Quick View filters keep affordance, but no independent elevation. */
+.seller-products-page .seller-rail-more .seller-products-quick-filter,
+.seller-products-page .seller-rail-more .seller-products-quick-filter:hover:not(.is-active):not([aria-pressed="true"]),
+.seller-products-page .seller-rail-more .seller-products-quick-filter.is-active,
+.seller-products-page .seller-rail-more .seller-products-quick-filter[aria-pressed="true"] {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-products-page .seller-rail-more .seller-products-quick-filter {
+    border: 1px solid #E7EAEE !important;
+    background: #FFFFFF !important;
+}
+
+.seller-products-page .seller-rail-more .seller-products-quick-filter:hover:not(.is-active):not([aria-pressed="true"]) {
+    border-color: #D9DEE5 !important;
+    background: #F8FAFC !important;
+}
+
+/* Selected filter keeps color state only. */
+.seller-products-page .seller-rail-more .seller-products-quick-filter.is-active,
+.seller-products-page .seller-rail-more .seller-products-quick-filter[aria-pressed="true"] {
+    border-color: #E7D3A5 !important;
+    background: #FFFBF2 !important;
+    color: #8F620D !important;
+}
+
+.seller-products-page .seller-products-quick-count,
+.seller-products-page .seller-rail-more .seller-products-quick-count {
+    box-shadow: none !important;
+}
+
+/* Mobile: only the Catalog Control parent remains elevated. */
+@media (max-width: 760px) {
+    .seller-products-page .seller-catalog-rail-shell,
+    .seller-products-page .seller-catalog-rail-shell:hover {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-products-page .seller-inventory-overview-grid,
+    .seller-products-page .seller-inventory-overview-grid .seller-rail-stat,
+    .seller-products-page .seller-rail-health,
+    .seller-products-page .seller-health-status-item,
+    .seller-products-page .seller-rail-more,
+    .seller-products-page .seller-rail-more-content,
+    .seller-products-page .seller-rail-more .seller-products-quick-filter {
+        box-shadow: none !important;
+    }
+}
+</style>
 @endpush

@@ -1218,6 +1218,10 @@ Route::get('/seller/buyer-messages', [SellerBuyerMessageController::class, 'inde
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.buyer-messages');
 
+Route::get('/seller/buyer-messages/{buyerKey}/thread', [SellerBuyerMessageController::class, 'thread'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.buyer-messages.thread');
+
 Route::post('/seller/buyer-messages/{buyerKey}', [SellerBuyerMessageController::class, 'send'])
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.buyer-messages.send');

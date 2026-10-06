@@ -999,6 +999,293 @@
         }
     }
 
+
+
+/* ======================================================================
+   ACCOUNT MANAGEMENT — MAIN CONTAINERS ONLY FLOATING
+   Visual-only hierarchy pass.
+   - Main account surfaces float.
+   - Nested content/controls remain flat.
+   - No layout, sizing, route, upload, password, document, or JS changes.
+   ====================================================================== */
+
+.seller-account-enterprise {
+    --sa-float-border: #E5E7EB;
+    --sa-float-divider: #ECEFF2;
+
+    --sa-float-main:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11);
+
+    --sa-float-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065);
+}
+
+/* ------------------------------------------------------------
+   PAGE HEADER STAYS OPEN
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-page-head,
+.seller-account-enterprise .sa-page-head:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   MAIN ACCOUNT SURFACES FLOAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-profile-strip,
+.seller-account-enterprise .sa-panel,
+.seller-account-enterprise .sa-profile-strip:hover,
+.seller-account-enterprise .sa-panel:hover {
+    border-color: var(--sa-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sa-float-main) !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+/* Feedback surfaces are lighter than primary work panels. */
+.seller-account-enterprise .sa-alert,
+.seller-account-enterprise .sa-alert:hover {
+    box-shadow: var(--sa-float-soft) !important;
+    transform: none !important;
+}
+
+/* Panel headers belong to the parent panel. */
+.seller-account-enterprise .sa-panel__head {
+    border-bottom-color: var(--sa-float-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   PROFILE STRIP CONTENT REMAINS FLAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-profile-main,
+.seller-account-enterprise .sa-avatar,
+.seller-account-enterprise .sa-statuses,
+.seller-account-enterprise .sa-status,
+.seller-account-enterprise .sa-meta-dot {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-account-enterprise .sa-avatar {
+    border-color: #E5E7EB !important;
+}
+
+.seller-account-enterprise .sa-status {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   PROFILE PHOTO EDITOR / FORM CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-photo-editor,
+.seller-account-enterprise .sa-photo,
+.seller-account-enterprise .sa-photo-actions,
+.seller-account-enterprise .sa-icon-action,
+.seller-account-enterprise .sa-form-footer,
+.seller-account-enterprise .sa-subsection,
+.seller-account-enterprise .sa-subsection__head {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-account-enterprise .sa-photo-editor,
+.seller-account-enterprise .sa-form-footer,
+.seller-account-enterprise .sa-subsection {
+    border-color: var(--sa-float-divider) !important;
+}
+
+.seller-account-enterprise .sa-photo {
+    border-color: #E5E7EB !important;
+    background: #FFFAF0 !important;
+}
+
+/* Icon actions are controls, not floating mini-cards. */
+.seller-account-enterprise .sa-icon-action,
+.seller-account-enterprise .sa-icon-action:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   FORM CONTROLS — FLAT AT REST
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-control,
+.seller-account-enterprise .sa-sex__button,
+.seller-account-enterprise .sa-password-toggle,
+.seller-account-enterprise .sa-primary,
+.seller-account-enterprise .sa-doc-link,
+.seller-account-enterprise .sa-store-link {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-account-enterprise .sa-control,
+.seller-account-enterprise .sa-sex__button {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+}
+
+.seller-account-enterprise .sa-control:hover,
+.seller-account-enterprise .sa-sex__button:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+}
+
+/* Focus ring only; no resting elevation. */
+.seller-account-enterprise .sa-control:focus,
+.seller-account-enterprise .sa-sex.is-open .sa-sex__button,
+.seller-account-enterprise .sa-sex__button:focus-visible {
+    border-color: #C4A35B !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* Primary actions keep color emphasis, not floating depth. */
+.seller-account-enterprise .sa-primary,
+.seller-account-enterprise .sa-primary:hover,
+.seller-account-enterprise .sa-doc-link,
+.seller-account-enterprise .sa-doc-link:hover,
+.seller-account-enterprise .sa-store-link,
+.seller-account-enterprise .sa-store-link:hover,
+.seller-account-enterprise .sa-password-toggle,
+.seller-account-enterprise .sa-password-toggle:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   VERIFICATION DOCUMENTS — ROWS / ICONS / BADGES STAY FLAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-doc-list,
+.seller-account-enterprise .sa-doc-row,
+.seller-account-enterprise .sa-doc-row:hover,
+.seller-account-enterprise .sa-doc-icon,
+.seller-account-enterprise .sa-doc-state,
+.seller-account-enterprise .sa-doc-actions,
+.seller-account-enterprise .sa-doc-selected,
+.seller-account-enterprise .sa-verification-footer {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-account-enterprise .sa-doc-row,
+.seller-account-enterprise .sa-verification-footer {
+    border-color: var(--sa-float-divider) !important;
+}
+
+.seller-account-enterprise .sa-doc-row {
+    background: #FFFFFF !important;
+}
+
+.seller-account-enterprise .sa-doc-row:hover {
+    background: #F8FAFC !important;
+}
+
+.seller-account-enterprise .sa-doc-icon {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+}
+
+/* Verification rules block belongs to the parent panel. */
+.seller-account-enterprise .sa-address {
+    border-top-color: var(--sa-float-divider) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   ACCOUNT OVERVIEW — DETAIL ROWS STAY FLAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-detail-list,
+.seller-account-enterprise .sa-detail-row,
+.seller-account-enterprise .sa-info-note {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-account-enterprise .sa-detail-row,
+.seller-account-enterprise .sa-info-note {
+    border-color: var(--sa-float-divider) !important;
+}
+
+.seller-account-enterprise .sa-detail-row {
+    background: #FFFFFF !important;
+}
+
+.seller-account-enterprise .sa-info-note {
+    background: #F8FAFC !important;
+}
+
+/* ------------------------------------------------------------
+   PASSWORD & SECURITY CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-password-stack,
+.seller-account-enterprise .sa-password-wrap,
+.seller-account-enterprise .sa-password-toggle {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   STORE OPERATIONS LINK — CONTROL, NOT NESTED FLOATING CARD
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-store-link {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   CUSTOM SEX MENU MAY FLOAT AS AN OVERLAY
+   ------------------------------------------------------------ */
+.seller-account-enterprise .sa-sex__menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* No physical hover lift on persistent surfaces. */
+.seller-account-enterprise .sa-profile-strip:hover,
+.seller-account-enterprise .sa-panel:hover,
+.seller-account-enterprise .sa-alert:hover {
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY, TIGHTER SHADOW SPREAD
+   ------------------------------------------------------------ */
+@media (max-width: 680px) {
+    .seller-account-enterprise .sa-profile-strip,
+    .seller-account-enterprise .sa-panel {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-account-enterprise .sa-alert {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .seller-account-enterprise .sa-photo,
+    .seller-account-enterprise .sa-doc-row,
+    .seller-account-enterprise .sa-detail-row,
+    .seller-account-enterprise .sa-address,
+    .seller-account-enterprise .sa-info-note {
+        box-shadow: none !important;
+    }
+}
 </style>
 
 <div class="seller-account-enterprise">

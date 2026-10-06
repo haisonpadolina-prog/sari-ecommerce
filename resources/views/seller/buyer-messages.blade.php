@@ -34,7 +34,34 @@
                             <div class="grid h-full place-items-center text-center"><p class="text-[9px] text-[#91887d]">No messages yet.</p></div>
                         @endforelse
                     </div></div>
-                    <form method="POST" action="{{ route('seller.buyer-messages.send', $selected['key']) }}" class="shrink-0 border-t border-[#eee8df] p-4">@csrf<div class="flex gap-2"><textarea name="body" required maxlength="3000" rows="2" placeholder="Reply to buyer..." class="min-h-[52px] flex-1 resize-none rounded-xl border border-[#e4ddd3] px-4 py-3 text-[9px]"></textarea><button class="w-[96px] rounded-xl bg-[#3e3429] text-[9px] font-semibold text-white">Send</button></div></form>
+                    <form
+                        method="POST"
+                        action="{{ route('seller.buyer-messages.send', $selected['key']) }}"
+                        class="shrink-0 border-t border-[#eee8df] p-4"
+                        data-buyer-message-form
+                    >
+                        @csrf
+                        <div class="flex gap-2">
+                            <textarea
+                                name="body"
+                                required
+                                maxlength="3000"
+                                rows="2"
+                                autocomplete="off"
+                                placeholder="Message {{ $selected['name'] }}..."
+                                class="min-h-[52px] flex-1 resize-none rounded-xl border border-[#e4ddd3] px-4 py-3 text-[9px]"
+                                data-buyer-message-input
+                            ></textarea>
+
+                            <button
+                                type="submit"
+                                class="w-[96px] rounded-xl bg-[#3e3429] text-[9px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                                data-buyer-message-send
+                            >
+                                Send
+                            </button>
+                        </div>
+                    </form>
                 @else
                     <div class="grid h-full place-items-center p-8 text-center"><div><h2 class="text-[14px] font-bold text-[#403a33]">Choose a buyer</h2><p class="mt-2 text-[9px] text-[#91887d]">Order customers and incoming conversations appear on the left.</p></div></div>
                 @endif
@@ -42,5 +69,44 @@
         </div>
     </section>
 </div>
-<script>document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('sellerBuyerMessageList');if(el)el.scrollTop=el.scrollHeight;});</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const list = document.getElementById('sellerBuyerMessageList');
+    const form = document.querySelector('[data-buyer-message-form]');
+    const input = document.querySelector('[data-buyer-message-input]');
+    const send = document.querySelector('[data-buyer-message-send]');
+
+    if (list) {
+        list.scrollTop = list.scrollHeight;
+    }
+
+    if (input) {
+        input.focus({ preventScroll: true });
+    }
+
+    if (form) {
+        let submitting = false;
+
+        form.addEventListener('submit', (event) => {
+            if (submitting) {
+                event.preventDefault();
+                return;
+            }
+
+            if (!input?.value.trim()) {
+                event.preventDefault();
+                input?.focus();
+                return;
+            }
+
+            submitting = true;
+
+            if (send) {
+                send.disabled = true;
+                send.textContent = 'Sending...';
+            }
+        });
+    }
+});
+</script>
 @endsection

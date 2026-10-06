@@ -1,12 +1,8 @@
 @extends('layouts.seller')
 
-
-
 @section('title', 'Archived Products — SARI Seller')
 
 @section('page-title', 'Archived Products')
-
-
 
 @section('content')
 
@@ -21,8 +17,6 @@
     $approvedHistoryCount = $products->where('moderation_status', 'approved')->count();
 
 @endphp
-
-
 
 <style>
 
@@ -70,15 +64,9 @@
 
     }
 
-
-
     .archive-shell * { box-sizing: border-box; }
 
-
-
     .archive-header { margin-bottom: 16px; }
-
-
 
     .archive-eyebrow {
 
@@ -98,8 +86,6 @@
 
     }
 
-
-
     .archive-title {
 
         margin: 7px 0 0;
@@ -116,11 +102,7 @@
 
     }
 
-
-
     .archive-title span:last-child { color: var(--archive-gold); }
-
-
 
     .archive-subtitle {
 
@@ -135,8 +117,6 @@
         line-height: 1.6;
 
     }
-
-
 
     .archive-filter-panel {
 
@@ -160,13 +140,9 @@
 
     }
 
-
-
     .archive-search-field,
 
     .archive-history-dropdown { position: relative; }
-
-
 
     .archive-search-field > svg {
 
@@ -188,8 +164,6 @@
 
     }
 
-
-
     #archiveProductSearch,
 
     #archiveClearFilters {
@@ -203,8 +177,6 @@
         font-size: 9px;
 
     }
-
-
 
     #archiveProductSearch {
 
@@ -222,8 +194,6 @@
 
     }
 
-
-
     #archiveProductSearch:focus {
 
         border-color: rgba(216, 155, 16, .65);
@@ -231,8 +201,6 @@
         box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
 
     }
-
-
 
     .archive-native-select {
 
@@ -257,8 +225,6 @@
         margin: -1px !important;
 
     }
-
-
 
     .archive-history-button {
 
@@ -298,8 +264,6 @@
 
     }
 
-
-
     .archive-history-button:hover {
 
         background: #FAFBFC;
@@ -308,8 +272,6 @@
 
     }
 
-
-
     .archive-history-button[aria-expanded="true"] {
 
         border-color: rgba(216, 155, 16, .55);
@@ -317,8 +279,6 @@
         box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
 
     }
-
-
 
     .archive-history-button-left {
 
@@ -332,8 +292,6 @@
 
     }
 
-
-
     .archive-history-button-left > svg {
 
         width: 14px;
@@ -345,8 +303,6 @@
         color: #9A7A3A;
 
     }
-
-
 
     .archive-history-chevron {
 
@@ -362,15 +318,11 @@
 
     }
 
-
-
     .archive-history-button[aria-expanded="true"] .archive-history-chevron {
 
         transform: rotate(180deg);
 
     }
-
-
 
     .archive-history-menu {
 
@@ -398,15 +350,11 @@
 
     }
 
-
-
     .archive-history-menu[hidden] {
 
         display: none !important;
 
     }
-
-
 
     .archive-history-option {
 
@@ -438,23 +386,17 @@
 
     }
 
-
-
     .archive-history-option:hover {
 
         background: #F8FAFC;
 
     }
 
-
-
     .archive-history-option.is-selected {
 
         background: #FFF8E9;
 
     }
-
-
 
     .archive-history-option span {
 
@@ -463,8 +405,6 @@
         min-width: 0;
 
     }
-
-
 
     .archive-history-option strong {
 
@@ -480,8 +420,6 @@
 
     }
 
-
-
     .archive-history-option small {
 
         display: block;
@@ -495,8 +433,6 @@
         line-height: 1.4;
 
     }
-
-
 
     .archive-history-check {
 
@@ -512,15 +448,11 @@
 
     }
 
-
-
     .archive-history-option.is-selected .archive-history-check {
 
         opacity: 1;
 
     }
-
-
 
     #archiveClearFilters {
 
@@ -542,8 +474,6 @@
 
     }
 
-
-
     #archiveClearFilters {
 
         border: 1px solid #E0E5EB;
@@ -554,11 +484,7 @@
 
     }
 
-
-
     #archiveClearFilters:hover { background: #F8FAFC; }
-
-
 
     .archive-card-grid {
 
@@ -571,8 +497,6 @@
         margin-top: 14px;
 
     }
-
-
 
     .archive-product-card {
 
@@ -592,8 +516,6 @@
 
     }
 
-
-
     .archive-product-card:hover {
 
         border-color: #D7DDE5;
@@ -603,8 +525,6 @@
         transform: translateY(-1px);
 
     }
-
-
 
     .archive-card-media {
 
@@ -622,8 +542,6 @@
 
     }
 
-
-
     .archive-card-media img {
 
         width: 100%;
@@ -635,8 +553,6 @@
         object-fit: cover;
 
     }
-
-
 
     .archive-image-placeholder {
 
@@ -652,11 +568,7 @@
 
     }
 
-
-
     .archive-image-placeholder svg { width: 34px; height: 34px; }
-
-
 
     .archive-card-badge-row {
 
@@ -680,8 +592,6 @@
 
     }
 
-
-
     .archive-badge {
 
         display: inline-flex;
@@ -704,8 +614,6 @@
 
     }
 
-
-
     .archive-badge.pending { background: #EEF5FB; color: #557A9A; }
 
     .archive-badge.approved { background: #EDF7F1; color: #4F7D63; }
@@ -715,8 +623,6 @@
     .archive-badge.rejected { background: #FFF0F0; color: #B95D5D; }
 
     .archive-badge.default { background: rgba(255,255,255,.94); color: #687386; }
-
-
 
     .archive-type-badge {
 
@@ -740,15 +646,9 @@
 
     }
 
-
-
     .archive-type-badge.deleted { background: rgba(173, 74, 74, .92); }
 
-
-
     .archive-card-body { padding: 11px 13px 12px; }
-
-
 
     .archive-card-mainline {
 
@@ -761,8 +661,6 @@
         gap: 14px;
 
     }
-
-
 
     .archive-card-name {
 
@@ -786,8 +684,6 @@
 
     }
 
-
-
     .archive-card-price {
 
         flex: 0 0 auto;
@@ -801,8 +697,6 @@
         white-space: nowrap;
 
     }
-
-
 
     .archive-card-meta {
 
@@ -822,8 +716,6 @@
 
     }
 
-
-
     .archive-card-divider {
 
         height: 1px;
@@ -833,8 +725,6 @@
         background: #E8E3DD;
 
     }
-
-
 
     .archive-card-footer {
 
@@ -848,8 +738,6 @@
 
     }
 
-
-
     .archive-card-stock {
 
         color: #403A34;
@@ -859,8 +747,6 @@
         font-weight: 700;
 
     }
-
-
 
     .archive-card-date {
 
@@ -872,8 +758,6 @@
 
     }
 
-
-
     .archive-card-actions {
 
         display: flex;
@@ -883,8 +767,6 @@
         gap: 6px;
 
     }
-
-
 
     .archive-icon-button {
 
@@ -908,25 +790,17 @@
 
     }
 
-
-
     .archive-icon-button svg { width: 15px; height: 15px; }
-
-
 
     .archive-icon-button.restore { color: #B77808; }
 
     .archive-icon-button.restore:hover { background: #FFF7E6; color: #986305; transform: translateY(-1px); }
-
-
 
     .archive-icon-button.delete {
 
         color: #FF2D2D;
 
     }
-
-
 
     .archive-icon-button.delete svg {
 
@@ -935,8 +809,6 @@
         stroke-width: 2.05 !important;
 
     }
-
-
 
     .archive-icon-button.delete:hover {
 
@@ -948,15 +820,11 @@
 
     }
 
-
-
     .archive-icon-button.delete:hover svg {
 
         stroke: #E60000 !important;
 
     }
-
-
 
     .archive-icon-button:disabled {
 
@@ -967,8 +835,6 @@
         transform: none;
 
     }
-
-
 
     .archive-empty-state {
 
@@ -992,8 +858,6 @@
 
     }
 
-
-
     .archive-empty-icon {
 
         display: grid;
@@ -1016,11 +880,7 @@
 
     }
 
-
-
     .archive-empty-icon svg { width: 19px; height: 19px; }
-
-
 
     .archive-empty-title {
 
@@ -1033,8 +893,6 @@
         font-weight: 700;
 
     }
-
-
 
     .archive-empty-copy {
 
@@ -1049,8 +907,6 @@
         line-height: 1.55;
 
     }
-
-
 
     .archive-result-row {
 
@@ -1071,8 +927,6 @@
         font-weight: 500;
 
     }
-
-
 
     /* Permanent delete modal */
 
@@ -1098,11 +952,7 @@
 
     }
 
-
-
     .archive-delete-modal.is-open { display: flex; }
-
-
 
     .archive-delete-dialog {
 
@@ -1119,8 +969,6 @@
         box-shadow: 0 24px 70px rgba(15, 23, 42, .18);
 
     }
-
-
 
     .archive-delete-warning-icon {
 
@@ -1144,8 +992,6 @@
 
     }
 
-
-
     .archive-delete-warning-icon svg {
 
         width: 27px;
@@ -1157,8 +1003,6 @@
         stroke-width: 2.15 !important;
 
     }
-
-
 
     .archive-delete-kicker {
 
@@ -1176,8 +1020,6 @@
 
     }
 
-
-
     .archive-delete-title {
 
         margin-top: 5px;
@@ -1192,8 +1034,6 @@
 
     }
 
-
-
     .archive-delete-copy {
 
         margin-top: 9px;
@@ -1205,8 +1045,6 @@
         line-height: 1.7;
 
     }
-
-
 
     .archive-delete-product {
 
@@ -1228,8 +1066,6 @@
 
     }
 
-
-
     .archive-delete-actions {
 
         display: flex;
@@ -1241,8 +1077,6 @@
         margin-top: 20px;
 
     }
-
-
 
     .archive-delete-actions button {
 
@@ -1262,8 +1096,6 @@
 
     }
 
-
-
     #archiveDeleteCancel {
 
         border: 1px solid #DFE4EA;
@@ -1273,8 +1105,6 @@
         color: #677384;
 
     }
-
-
 
     #archiveDeleteConfirm {
 
@@ -1288,8 +1118,6 @@
 
     }
 
-
-
     #archiveDeleteConfirm:hover {
 
         border-color: #D93F44;
@@ -1302,15 +1130,11 @@
 
     #archiveDeleteConfirm:disabled { opacity: .55; cursor: not-allowed; }
 
-
-
     @media (max-width: 1380px) {
 
         .archive-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     }
-
-
 
     @media (max-width: 1050px) {
 
@@ -1318,15 +1142,11 @@
 
     }
 
-
-
     @media (max-width: 900px) {
 
         .archive-filter-panel { grid-template-columns: 1fr 150px auto; }
 
     }
-
-
 
     @media (max-width: 680px) {
 
@@ -1344,8 +1164,6 @@
 
     }
 
-
-
     @media (prefers-reduced-motion: reduce) {
 
         .archive-product-card,
@@ -1354,364 +1172,928 @@
 
     }
 
-
 /* ============================================================
+
    ARCHIVED PRODUCTS — COMPACT + READABLE FINAL LAYER
+
    Compact in spacing/media, not in legibility.
+
    Restore/delete/filter behavior remains untouched.
+
    ============================================================ */
 
 .archive-shell {
+
     max-width: 1440px !important;
+
     padding-bottom: 22px !important;
+
 }
 
 /* Same Seller Catalog hierarchy used by the other refreshed pages. */
+
 .archive-header {
+
     min-height: 66px;
+
     margin-bottom: 0 !important;
+
     padding: 2px 2px 14px;
+
     border-bottom: 1px solid #e7ebf0;
+
 }
 
 .archive-eyebrow {
+
     font-size: 8px !important;
+
     letter-spacing: .16em !important;
+
     color: #b87605 !important;
+
 }
 
 .archive-title {
+
     margin-top: 6px !important;
+
     font-size: clamp(29px, 2.2vw, 36px) !important;
+
     font-weight: 650 !important;
+
     line-height: 1 !important;
+
     letter-spacing: -.035em !important;
+
 }
 
 .archive-title span:last-child {
+
     margin-left: .18em;
+
     color: #C9890B !important;
+
 }
 
 .archive-subtitle {
+
     max-width: 720px !important;
+
     margin-top: 7px !important;
+
     font-size: 10px !important;
+
     line-height: 1.5 !important;
+
     color: #7c8592 !important;
+
 }
 
 /* Compact filter surface with readable 10px controls. */
+
 .archive-filter-panel {
+
     grid-template-columns: minmax(300px, 1fr) 170px 72px !important;
+
     gap: 8px !important;
+
     margin-top: 12px !important;
+
     padding: 9px !important;
+
     border-radius: 13px !important;
+
     box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
+
 }
 
 #archiveProductSearch,
+
 #archiveClearFilters,
+
 .archive-history-button {
+
     height: 38px !important;
+
     border-radius: 9px !important;
+
     font-size: 9.5px !important;
+
 }
 
 #archiveProductSearch {
+
     padding-left: 36px !important;
+
 }
 
 .archive-search-field > svg {
+
     left: 12px !important;
+
     width: 14px !important;
+
     height: 14px !important;
+
 }
 
 .archive-history-button {
+
     gap: 8px !important;
+
     padding-inline: 10px !important;
+
 }
 
 .archive-history-button-left {
+
     gap: 7px !important;
+
 }
 
 .archive-history-button-left > svg {
+
     width: 13px !important;
+
     height: 13px !important;
+
 }
 
 .archive-history-menu {
+
     top: calc(100% + 5px) !important;
+
     width: min(285px, 92vw) !important;
+
     border-radius: 11px !important;
+
     padding: 5px !important;
+
 }
 
 .archive-history-option {
+
     min-height: 42px !important;
+
     gap: 9px !important;
+
     border-radius: 8px !important;
+
     padding: 7px 8px !important;
+
 }
 
 .archive-history-option strong {
+
     font-size: 9.2px !important;
+
 }
 
 .archive-history-option small {
+
     margin-top: 2px !important;
+
     font-size: 7.8px !important;
+
 }
 
 #archiveClearFilters {
+
     padding-inline: 11px !important;
+
     font-size: 9px !important;
+
 }
 
 .archive-result-row {
+
     gap: 8px !important;
+
     margin: 7px 2px 0 !important;
+
     font-size: 8.5px !important;
+
 }
 
 /* Product grid: denser without hiding product context. */
+
 .archive-card-grid {
+
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
     gap: 9px !important;
+
     margin-top: 9px !important;
+
 }
 
 .archive-product-card {
+
     border-radius: 13px !important;
+
     box-shadow: 0 5px 15px rgba(15, 23, 42, .03) !important;
+
 }
 
 .archive-product-card:hover {
+
     box-shadow: 0 8px 20px rgba(15, 23, 42, .055) !important;
+
     transform: none !important;
+
 }
 
 .archive-card-media {
+
     height: 138px !important;
+
     margin: 8px 8px 0 !important;
+
     border-radius: 10px !important;
+
 }
 
 .archive-image-placeholder svg {
+
     width: 27px !important;
+
     height: 27px !important;
+
 }
 
 .archive-card-badge-row {
+
     top: 7px !important;
+
     left: 7px !important;
+
     right: 7px !important;
+
     gap: 5px !important;
+
 }
 
 .archive-badge,
+
 .archive-type-badge {
+
     min-height: 23px !important;
+
     padding-inline: 8px !important;
+
     font-size: 7.6px !important;
+
 }
 
 .archive-card-body {
+
     padding: 9px 10px 10px !important;
+
 }
 
 .archive-card-mainline {
+
     gap: 9px !important;
+
 }
 
 .archive-card-name {
+
     font-size: 10.5px !important;
+
     line-height: 1.35 !important;
+
 }
 
 .archive-card-price {
+
     font-size: 10.5px !important;
+
 }
 
 .archive-card-meta {
+
     margin-top: 3px !important;
+
     font-size: 8.5px !important;
+
     line-height: 1.4 !important;
+
 }
 
 .archive-card-divider {
+
     margin: 7px 0 !important;
+
 }
 
 .archive-card-footer {
+
     gap: 9px !important;
+
 }
 
 .archive-card-stock {
+
     font-size: 9px !important;
+
 }
 
 .archive-card-date {
+
     margin-top: 2px !important;
+
     font-size: 8px !important;
+
     line-height: 1.35 !important;
+
 }
 
 .archive-card-actions {
+
     gap: 4px !important;
+
 }
 
 .archive-icon-button {
+
     width: 28px !important;
+
     height: 28px !important;
+
     border-radius: 8px !important;
+
 }
 
 .archive-icon-button svg {
+
     width: 14px !important;
+
     height: 14px !important;
+
 }
 
 /* Empty state: less vertical space, text remains readable. */
+
 .archive-empty-state {
+
     min-height: 125px !important;
+
     border-radius: 13px !important;
+
     padding: 20px 16px !important;
+
 }
 
 .archive-empty-icon {
+
     width: 38px !important;
+
     height: 38px !important;
+
     border-radius: 10px !important;
+
 }
 
 .archive-empty-title {
+
     margin-top: 8px !important;
+
     font-size: 10.5px !important;
+
 }
 
 .archive-empty-copy {
+
     margin-top: 4px !important;
+
     font-size: 8.8px !important;
+
 }
 
 /* Permanent delete modal: compact but clear for a destructive action. */
+
 .archive-delete-modal {
+
     padding: 16px !important;
+
 }
 
 .archive-delete-dialog {
+
     width: min(100%, 410px) !important;
+
     border-radius: 17px !important;
+
     padding: 17px !important;
+
 }
 
 .archive-delete-warning-icon svg {
+
     width: 24px !important;
+
     height: 24px !important;
+
 }
 
 .archive-delete-kicker {
+
     margin-top: 11px !important;
+
     font-size: 7.8px !important;
+
 }
 
 .archive-delete-title {
+
     margin-top: 4px !important;
+
     font-size: 16px !important;
+
 }
 
 .archive-delete-copy {
+
     margin-top: 7px !important;
+
     font-size: 9.5px !important;
+
     line-height: 1.55 !important;
+
 }
 
 .archive-delete-product {
+
     margin-top: 9px !important;
+
     border-radius: 10px !important;
+
     padding: 8px 10px !important;
+
     font-size: 9.5px !important;
+
 }
 
 .archive-delete-actions {
+
     gap: 7px !important;
+
     margin-top: 14px !important;
+
 }
 
 .archive-delete-actions button {
+
     height: 37px !important;
+
     border-radius: 9px !important;
+
     padding-inline: 13px !important;
+
     font-size: 9px !important;
+
 }
 
 /* Keep toast feedback readable. */
+
 #archiveToastContainer {
+
     width: min(92vw, 330px) !important;
+
     gap: 8px !important;
+
 }
 
 @media (max-width: 1380px) {
+
     .archive-card-grid {
+
         grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
     }
+
 }
 
 @media (max-width: 1180px) {
+
     .archive-card-grid {
+
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+
     }
+
 }
 
 @media (max-width: 900px) {
+
     .archive-filter-panel {
+
         grid-template-columns: minmax(0,1fr) 155px 68px !important;
+
     }
 
     .archive-card-grid {
+
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    }
+
+}
+
+@media (max-width: 680px) {
+
+    .archive-header {
+
+        min-height: 0;
+
+    }
+
+    .archive-title {
+
+        font-size: clamp(28px, 8vw, 34px) !important;
+
+    }
+
+    .archive-subtitle {
+
+        font-size: 9.8px !important;
+
+    }
+
+    .archive-filter-panel {
+
+        grid-template-columns: 1fr !important;
+
+    }
+
+    #archiveProductSearch,
+
+    #archiveClearFilters,
+
+    .archive-history-button {
+
+        height: 40px !important;
+
+    }
+
+    .archive-card-grid {
+
+        grid-template-columns: 1fr !important;
+
+    }
+
+    .archive-card-media {
+
+        height: 178px !important;
+
+    }
+
+}
+
+/* ======================================================================
+   ARCHIVED PRODUCTS — STATIC FLOATING CONTAINER SYSTEM
+   Visual-only elevation. Structural borders stay neutral; semantic
+   status/action colors remain unchanged. No hover lift/movement.
+   ====================================================================== */
+
+.archive-shell {
+    --archive-float-border: #E2E7ED;
+    --archive-float-border-soft: #E9EDF2;
+    --archive-float-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 26px rgba(15, 23, 42, .075),
+        inset 0 1px 0 rgba(255, 255, 255, .86);
+    --archive-float-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 6px 16px rgba(15, 23, 42, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+.archive-shell .archive-filter-panel,
+.archive-shell .archive-product-card,
+.archive-shell .archive-empty-state {
+    border-color: var(--archive-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--archive-float-shadow) !important;
+    transform: none !important;
+}
+
+.archive-shell .archive-product-card:hover {
+    border-color: var(--archive-float-border) !important;
+    box-shadow: var(--archive-float-shadow) !important;
+    transform: none !important;
+}
+
+.archive-shell .archive-card-media {
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+.archive-shell .archive-history-menu {
+    border-color: var(--archive-float-border) !important;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, .12),
+        0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+.archive-shell .archive-delete-dialog {
+    border-color: var(--archive-float-border) !important;
+    box-shadow:
+        0 30px 80px rgba(15, 23, 42, .20),
+        0 8px 24px rgba(15, 23, 42, .08) !important;
+}
+
+.archive-shell .archive-delete-product {
+    border-color: var(--archive-float-border-soft) !important;
+    box-shadow: var(--archive-float-shadow-soft) !important;
+}
+
+.archive-shell .archive-icon-button,
+.archive-shell #archiveClearFilters,
+.archive-shell .archive-history-button,
+.archive-shell #archiveDeleteCancel,
+.archive-shell #archiveDeleteConfirm {
+    transform: none !important;
+}
+
+.archive-shell .archive-icon-button:hover,
+.archive-shell #archiveClearFilters:hover,
+.archive-shell .archive-history-button:hover,
+.archive-shell #archiveDeleteCancel:hover,
+.archive-shell #archiveDeleteConfirm:hover {
+    transform: none !important;
+}
+
+/* Filtered empty state created by JS. */
+.archive-filter-empty[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 680px) {
+    .archive-shell .archive-filter-panel,
+    .archive-shell .archive-product-card,
+    .archive-shell .archive-empty-state {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .06),
+            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+    }
+}
+
+
+/* ======================================================================
+   ARCHIVED PRODUCTS — DASHBOARD SHADOW + TALLER PRODUCT CARDS FINAL PASS
+   Front-end/CSS only. Search/filter, restore AJAX, permanent delete,
+   routes, CSRF, seller suspension checks and backend behavior unchanged.
+   ====================================================================== */
+
+.archive-shell {
+    --archive-dashboard-border: #E5E7EB;
+    --archive-dashboard-border-strong: #D1D5DB;
+    --archive-dashboard-divider: #ECEFF2;
+
+    /* Dashboard-style layered elevation:
+       contact shadow + middle separation + broad ambient float. */
+    --archive-dashboard-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --archive-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+
+    --archive-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* Header divider remains neutral. */
+.archive-shell .archive-header {
+    border-bottom-color: var(--archive-dashboard-divider) !important;
+}
+
+/* ------------------------------------------------------------------
+   FILTER PANEL — strong main-surface elevation
+   ------------------------------------------------------------------ */
+.archive-shell .archive-filter-panel {
+    border: 1px solid var(--archive-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--archive-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.archive-shell .archive-filter-panel:hover {
+    border-color: var(--archive-dashboard-border) !important;
+    box-shadow: var(--archive-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.archive-shell #archiveProductSearch,
+.archive-shell .archive-history-button,
+.archive-shell #archiveClearFilters {
+    border-color: var(--archive-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 12px rgba(15, 23, 42, .04) !important;
+    transform: none !important;
+}
+
+.archive-shell #archiveProductSearch:hover,
+.archive-shell .archive-history-button:hover,
+.archive-shell #archiveClearFilters:hover {
+    border-color: #C9D0D9 !important;
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+/* Keep focus restrained and professional. */
+.archive-shell #archiveProductSearch:focus,
+.archive-shell .archive-history-button[aria-expanded="true"] {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* Dropdown floats one level above the filter panel. */
+.archive-shell .archive-history-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* ------------------------------------------------------------------
+   PRODUCT CARDS — taller, calmer, more premium
+   ------------------------------------------------------------------ */
+.archive-shell .archive-product-card {
+    display: flex !important;
+    min-height: 300px !important;
+    flex-direction: column !important;
+    border: 1px solid var(--archive-dashboard-border) !important;
+    border-radius: 15px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--archive-dashboard-shadow-soft) !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+/* Static depth only — no hover lift. */
+.archive-shell .archive-product-card:hover {
+    border-color: var(--archive-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--archive-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Give the product image a little more vertical presence so cards such as
+   "rt" feel intentionally proportioned instead of compressed. */
+.archive-shell .archive-card-media {
+    height: 154px !important;
+    flex: 0 0 154px !important;
+    border: 1px solid #EEF0F3 !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--archive-dashboard-shadow-inner) !important;
+}
+
+/* The body fills the rest of the taller card. Footer is anchored low so
+   stock/date/actions line up consistently across products. */
+.archive-shell .archive-card-body {
+    display: flex !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    padding: 12px 13px 13px !important;
+}
+
+.archive-shell .archive-card-mainline {
+    gap: 12px !important;
+}
+
+.archive-shell .archive-card-name,
+.archive-shell .archive-card-price {
+    font-size: 11px !important;
+}
+
+.archive-shell .archive-card-meta {
+    margin-top: 5px !important;
+    font-size: 8.7px !important;
+}
+
+.archive-shell .archive-card-divider {
+    margin: 10px 0 9px !important;
+    background: var(--archive-dashboard-divider) !important;
+}
+
+.archive-shell .archive-card-footer {
+    margin-top: auto !important;
+    padding-top: 2px !important;
+    align-items: flex-end !important;
+}
+
+.archive-shell .archive-card-stock {
+    font-size: 9.2px !important;
+}
+
+.archive-shell .archive-card-date {
+    margin-top: 3px !important;
+    font-size: 8.2px !important;
+}
+
+/* Keep action controls clean and stationary. */
+.archive-shell .archive-icon-button {
+    transform: none !important;
+}
+
+.archive-shell .archive-icon-button.restore:hover {
+    background: #F8FAFC !important;
+    color: #986305 !important;
+    transform: none !important;
+}
+
+.archive-shell .archive-icon-button.delete:hover {
+    background: #FFF5F5 !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   EMPTY STATE + DELETE MODAL
+   ------------------------------------------------------------------ */
+.archive-shell .archive-empty-state {
+    border: 1px solid var(--archive-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--archive-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.archive-shell .archive-empty-icon {
+    border-color: var(--archive-dashboard-border) !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+.archive-shell .archive-delete-dialog {
+    border-color: var(--archive-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 22px rgba(15, 23, 42, .08),
+        0 28px 68px rgba(15, 23, 42, .18),
+        0 50px 110px rgba(15, 23, 42, .10) !important;
+}
+
+.archive-shell .archive-delete-product {
+    border-color: var(--archive-dashboard-border) !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--archive-dashboard-shadow-inner) !important;
+}
+
+/* Structural surfaces use neutral outlines only. */
+.archive-shell .archive-filter-panel,
+.archive-shell .archive-product-card,
+.archive-shell .archive-empty-state,
+.archive-shell .archive-delete-dialog {
+    outline: 0 !important;
+}
+
+/* Responsive: keep the longer-card proportion without making mobile huge. */
+@media (max-width: 1180px) {
+    .archive-shell .archive-product-card {
+        min-height: 294px !important;
     }
 }
 
 @media (max-width: 680px) {
-    .archive-header {
-        min-height: 0;
+    .archive-shell .archive-filter-panel,
+    .archive-shell .archive-empty-state {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
     }
 
-    .archive-title {
-        font-size: clamp(28px, 8vw, 34px) !important;
+    .archive-shell .archive-product-card {
+        min-height: 322px !important;
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
     }
 
-    .archive-subtitle {
-        font-size: 9.8px !important;
-    }
-
-    .archive-filter-panel {
-        grid-template-columns: 1fr !important;
-    }
-
-    #archiveProductSearch,
-    #archiveClearFilters,
-    .archive-history-button {
-        height: 40px !important;
-    }
-
-    .archive-card-grid {
-        grid-template-columns: 1fr !important;
-    }
-
-    .archive-card-media {
+    .archive-shell .archive-card-media {
         height: 178px !important;
+        flex-basis: 178px !important;
     }
 }
-
 </style>
-
-
 
 <div class="archive-shell">
 
@@ -1725,8 +2107,6 @@
 
     @endif
 
-
-
     @if ($errors->any())
 
         <div class="mb-4 rounded-[14px] border border-[#ecd5d5] bg-[#fff8f8] px-4 py-3 text-[9px] font-medium text-[#9f5f5f]">
@@ -1736,8 +2116,6 @@
         </div>
 
     @endif
-
-
 
     <header class="archive-header">
 
@@ -1759,8 +2137,6 @@
 
         </label>
 
-
-
         <div class="archive-history-dropdown" data-history-dropdown>
 
             <select id="archiveProductFilter" class="archive-native-select" aria-hidden="true" tabindex="-1">
@@ -1772,8 +2148,6 @@
                 <option value="deleted">Deleted</option>
 
             </select>
-
-
 
             <button
 
@@ -1813,8 +2187,6 @@
 
             </button>
 
-
-
             <div id="archiveHistoryMenu" class="archive-history-menu" role="listbox" hidden>
 
                 <button type="button" class="archive-history-option is-selected" data-history-value="">
@@ -1835,8 +2207,6 @@
 
                 </button>
 
-
-
                 <button type="button" class="archive-history-option" data-history-value="archived">
 
                     <span>
@@ -1854,8 +2224,6 @@
                     </svg>
 
                 </button>
-
-
 
                 <button type="button" class="archive-history-option" data-history-value="deleted">
 
@@ -1883,15 +2251,11 @@
 
     </section>
 
-
-
     <div class="archive-result-row">
 
         <span id="archiveResultCount">{{ $products->count() }} archived product{{ $products->count() === 1 ? '' : 's' }}</span>
 
     </div>
-
-
 
     <section>
 
@@ -1925,8 +2289,6 @@
 
                 @endphp
 
-
-
                 <article
 
                     class="archive-product-card"
@@ -1957,8 +2319,6 @@
 
                         @endif
 
-
-
                         <div class="archive-card-badge-row">
 
                             <span class="archive-badge {{ $moderationState }}">{{ $moderationLabel }}</span>
@@ -1969,8 +2329,6 @@
 
                     </div>
 
-
-
                     <div class="archive-card-body">
 
                         <div class="archive-card-mainline">
@@ -1980,8 +2338,6 @@
                             <span class="archive-card-price">₱{{ number_format((float) $product->price, 2) }}</span>
 
                         </div>
-
-
 
                         <p class="archive-card-meta">
 
@@ -1995,11 +2351,7 @@
 
                         </p>
 
-
-
                         <div class="archive-card-divider"></div>
-
-
 
                         <div class="archive-card-footer">
 
@@ -2020,8 +2372,6 @@
                                 </div>
 
                             </div>
-
-
 
                             <div class="archive-card-actions">
 
@@ -2056,8 +2406,6 @@
                                     </button>
 
                                 </form>
-
-
 
                                 <button
 
@@ -2115,13 +2463,7 @@
 
         </div>
 
-
-
-
-
     </section>
-
-
 
     <div id="archiveDeleteModal" class="archive-delete-modal" aria-hidden="true">
 
@@ -2140,8 +2482,6 @@
             <p class="archive-delete-copy">This permanently removes the product catalog record. This action cannot be undone. Products linked to protected transaction history may be blocked by the system.</p>
 
             <div id="archiveDeleteProductName" class="archive-delete-product">Product</div>
-
-
 
             <form id="archivePermanentDeleteForm" method="POST" action="">
 
@@ -2163,670 +2503,569 @@
 
     </div>
 
-
-
     <div id="archiveToastContainer" class="pointer-events-none fixed bottom-5 right-5 z-[260] flex w-[min(92vw,360px)] flex-col gap-3"></div>
 
 </div>
 
 @endsection
 
-
-
 @push('scripts')
-
 <script>
-
 (function () {
-
     const initArchivePage = () => {
+        const shell = document.querySelector('.archive-shell');
+        if (!shell || shell.dataset.archiveInitialized === '1') return;
+        shell.dataset.archiveInitialized = '1';
 
         const searchInput = document.getElementById('archiveProductSearch');
-
         const typeFilter = document.getElementById('archiveProductFilter');
-
         const historyButton = document.getElementById('archiveHistoryButton');
-
         const historyLabel = document.getElementById('archiveHistoryLabel');
-
         const historyMenu = document.getElementById('archiveHistoryMenu');
-
         const historyOptions = Array.from(document.querySelectorAll('[data-history-value]'));
-
         const clearButton = document.getElementById('archiveClearFilters');
-
         const resultCount = document.getElementById('archiveResultCount');
-
         const grid = document.getElementById('archiveProductGrid');
-
         const toastContainer = document.getElementById('archiveToastContainer');
 
-
-
         const deleteModal = document.getElementById('archiveDeleteModal');
-
+        const deleteDialog = deleteModal?.querySelector('.archive-delete-dialog');
         const deleteForm = document.getElementById('archivePermanentDeleteForm');
-
         const deleteCancel = document.getElementById('archiveDeleteCancel');
-
         const deleteConfirm = document.getElementById('archiveDeleteConfirm');
-
         const deleteProductName = document.getElementById('archiveDeleteProductName');
 
-
-
         const totalCountNode = document.querySelector('[data-archive-total-count]');
-
         const archivedCountNode = document.querySelector('[data-archive-archived-count]');
-
         const deletedCountNode = document.querySelector('[data-archive-deleted-count]');
-
         const approvedCountNode = document.querySelector('[data-archive-approved-count]');
 
-
-
-        const cards = Array.from(document.querySelectorAll('[data-archive-product]'));
-
+        let cards = Array.from(document.querySelectorAll('[data-archive-product]'));
         let pendingDeleteCard = null;
+        let deleteTrigger = null;
 
+        /* --------------------------------------------------------------
+           Feedback
+           -------------------------------------------------------------- */
+        const parseResponse = async (response) => {
+            const contentType = response.headers.get('content-type') || '';
 
+            if (contentType.includes('application/json')) {
+                return response.json().catch(() => ({}));
+            }
 
-        function numberFrom(node) {
+            return {};
+        };
 
+        const showToast = (type, message) => {
+            if (!toastContainer) return;
+
+            const isError = type === 'error';
+            const toast = document.createElement('div');
+
+            toast.className =
+                'pointer-events-auto translate-y-2 opacity-0 rounded-[14px] border px-4 py-3 shadow-[0_14px_30px_rgba(15,23,42,.10)] transition duration-300';
+
+            toast.style.borderColor = isError ? '#ECD5D5' : '#D8E6DD';
+            toast.style.backgroundColor = isError ? '#FFF9F9' : '#F8FBF9';
+
+            const title = document.createElement('p');
+            title.className = 'text-[10px] font-bold';
+            title.style.color = isError ? '#9F5F5F' : '#507560';
+            title.textContent = isError ? 'Action required' : 'Success';
+
+            const copy = document.createElement('p');
+            copy.className = 'mt-1 text-[9px] leading-5';
+            copy.style.color = isError ? '#866767' : '#5D7566';
+            copy.textContent = String(message || '');
+
+            toast.append(title, copy);
+            toastContainer.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            window.setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                window.setTimeout(() => toast.remove(), 260);
+            }, 3000);
+        };
+
+        /* --------------------------------------------------------------
+           Search + History dropdown
+           -------------------------------------------------------------- */
+        const getVisibleCards = () => cards.filter((card) => !card.hidden);
+
+        let filteredEmpty = document.querySelector('[data-archive-filter-empty]');
+
+        if (!filteredEmpty && grid) {
+            filteredEmpty = document.createElement('div');
+            filteredEmpty.className = 'archive-empty-state archive-filter-empty';
+            filteredEmpty.dataset.archiveFilterEmpty = '';
+            filteredEmpty.hidden = true;
+            filteredEmpty.innerHTML = `
+                <div>
+                    <span class="archive-empty-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="11" cy="11" r="6"></circle>
+                            <path d="m16 16 4 4"></path>
+                        </svg>
+                    </span>
+                    <div class="archive-empty-title">No matching products</div>
+                    <div class="archive-empty-copy">Try another search term or change the History filter.</div>
+                </div>
+            `;
+            grid.appendChild(filteredEmpty);
+        }
+
+        const updateResultCount = () => {
+            if (!resultCount) return;
+
+            const visible = getVisibleCards().length;
+
+            if (cards.length === 0) {
+                resultCount.textContent = '0 archived products';
+                return;
+            }
+
+            if (visible === cards.length) {
+                resultCount.textContent =
+                    `${cards.length} archived product${cards.length === 1 ? '' : 's'}`;
+                return;
+            }
+
+            resultCount.textContent =
+                `${visible} product${visible === 1 ? '' : 's'} found`;
+        };
+
+        const filterArchive = () => {
+            const query = String(searchInput?.value || '').trim().toLowerCase();
+            const type = String(typeFilter?.value || '').trim().toLowerCase();
+
+            let visible = 0;
+
+            cards.forEach((card) => {
+                const searchable = String(card.dataset.archiveSearch || '').toLowerCase();
+                const archiveType = String(card.dataset.archiveType || '').toLowerCase();
+
+                const matchesSearch = !query || searchable.includes(query);
+                const matchesType = !type || archiveType === type;
+                const matches = matchesSearch && matchesType;
+
+                card.hidden = !matches;
+                if (matches) visible += 1;
+            });
+
+            if (filteredEmpty) {
+                filteredEmpty.hidden = !(cards.length > 0 && visible === 0);
+            }
+
+            updateResultCount();
+        };
+
+        const historyLabelFor = (value) => {
+            if (value === 'archived') return 'Archived';
+            if (value === 'deleted') return 'Deleted';
+            return 'All History';
+        };
+
+        const syncHistoryDropdown = (value = '') => {
+            const normalized = ['archived', 'deleted'].includes(value) ? value : '';
+
+            if (typeFilter) typeFilter.value = normalized;
+            if (historyLabel) historyLabel.textContent = historyLabelFor(normalized);
+
+            historyOptions.forEach((option) => {
+                const selected = (option.dataset.historyValue || '') === normalized;
+                option.classList.toggle('is-selected', selected);
+                option.setAttribute('aria-selected', selected ? 'true' : 'false');
+            });
+        };
+
+        const closeHistoryMenu = () => {
+            if (!historyMenu || !historyButton) return;
+            historyMenu.hidden = true;
+            historyButton.setAttribute('aria-expanded', 'false');
+        };
+
+        const openHistoryMenu = () => {
+            if (!historyMenu || !historyButton) return;
+            historyMenu.hidden = false;
+            historyButton.setAttribute('aria-expanded', 'true');
+
+            const selected =
+                historyOptions.find((option) => option.classList.contains('is-selected')) ||
+                historyOptions[0];
+
+            selected?.focus();
+        };
+
+        const toggleHistoryMenu = () => {
+            if (!historyMenu || !historyButton) return;
+
+            if (historyMenu.hidden) {
+                openHistoryMenu();
+            } else {
+                closeHistoryMenu();
+            }
+        };
+
+        const clearFilters = () => {
+            if (searchInput) searchInput.value = '';
+            syncHistoryDropdown('');
+            closeHistoryMenu();
+            filterArchive();
+            searchInput?.focus();
+        };
+
+        searchInput?.addEventListener('input', filterArchive);
+
+        historyButton?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleHistoryMenu();
+        });
+
+        historyOptions.forEach((option, index) => {
+            option.setAttribute('role', 'option');
+
+            option.addEventListener('click', () => {
+                syncHistoryDropdown(option.dataset.historyValue || '');
+                closeHistoryMenu();
+                filterArchive();
+                historyButton?.focus();
+            });
+
+            option.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+
+                    const direction = event.key === 'ArrowDown' ? 1 : -1;
+                    const nextIndex =
+                        (index + direction + historyOptions.length) % historyOptions.length;
+
+                    historyOptions[nextIndex]?.focus();
+                    return;
+                }
+
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeHistoryMenu();
+                    historyButton?.focus();
+                }
+            });
+        });
+
+        clearButton?.addEventListener('click', clearFilters);
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('[data-history-dropdown]')) {
+                closeHistoryMenu();
+            }
+        });
+
+        /* --------------------------------------------------------------
+           Card removal after successful restore / permanent delete
+           -------------------------------------------------------------- */
+        const numberFrom = (node) => {
             return Number(String(node?.textContent || '0').replace(/,/g, '')) || 0;
+        };
 
-        }
-
-
-
-        function setNumber(node, value) {
-
+        const setNumber = (node, value) => {
             if (!node) return;
-
             node.textContent = Math.max(0, Number(value || 0)).toLocaleString('en-PH');
+        };
 
-        }
-
-
-
-        function decrementSummary(card) {
-
+        const decrementSummary = (card) => {
             if (!card) return;
 
             setNumber(totalCountNode, numberFrom(totalCountNode) - 1);
 
-
-
             if ((card.dataset.archiveType || '') === 'deleted') {
-
                 setNumber(deletedCountNode, numberFrom(deletedCountNode) - 1);
-
             } else {
-
                 setNumber(archivedCountNode, numberFrom(archivedCountNode) - 1);
-
             }
-
-
 
             if ((card.dataset.moderationStatus || '') === 'approved') {
-
                 setNumber(approvedCountNode, numberFrom(approvedCountNode) - 1);
-
             }
+        };
 
-        }
-
-
-
-        function showToast(type, message) {
-
-            if (!toastContainer) return;
-
-            const error = type === 'error';
-
-            const toast = document.createElement('div');
-
-            toast.className = 'pointer-events-auto translate-y-2 opacity-0 rounded-[14px] border px-4 py-3 shadow-[0_14px_30px_rgba(15,23,42,.10)] transition duration-300';
-
-            toast.style.borderColor = error ? '#ECD5D5' : '#D8E6DD';
-
-            toast.style.backgroundColor = error ? '#FFF9F9' : '#F8FBF9';
-
-            toast.innerHTML = \`
-
-                <p class="text-[10px] font-bold" style="color:${error ? '#9F5F5F' : '#507560'}">${error ? 'Action required' : 'Success'}</p>
-
-                <p class="mt-1 text-[9px] leading-5" style="color:${error ? '#866767' : '#5D7566'}">${String(message || '')}</p>
-
-            \`;
-
-            toastContainer.appendChild(toast);
-
-            requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
-
-            setTimeout(() => {
-
-                toast.classList.add('translate-y-2', 'opacity-0');
-
-                setTimeout(() => toast.remove(), 260);
-
-            }, 2800);
-
-        }
-
-
-
-        function visibleCards() {
-
-            return cards.filter(card => !card.classList.contains('hidden'));
-
-        }
-
-
-
-        function updateResultCount() {
-
-            if (!resultCount) return;
-
-            const visible = visibleCards().length;
-
-
-
-            if (cards.length === 0) {
-
-                resultCount.textContent = '0 archived products';
-
-                return;
-
-            }
-
-
-
-            if (visible === cards.length) {
-
-                resultCount.textContent = \`${cards.length} archived product${cards.length === 1 ? '' : 's'}\`;
-
-                return;
-
-            }
-
-
-
-            resultCount.textContent = \`${visible} product${visible === 1 ? '' : 's'} found\`;
-
-        }
-
-
-
-        function filterArchive() {
-
-            const query = (searchInput?.value || '').trim().toLowerCase();
-
-            const type = (typeFilter?.value || '').trim().toLowerCase();
-
-            let visible = 0;
-
-
-
-            cards.forEach(card => {
-
-                const searchable = (card.dataset.archiveSearch || '').toLowerCase();
-
-                const archiveType = (card.dataset.archiveType || '').toLowerCase();
-
-                const matches = (!query || searchable.includes(query)) && (!type || archiveType === type);
-
-                card.classList.toggle('hidden', !matches);
-
-                if (matches) visible += 1;
-
-            });
-
-
-
-            if (grid) {
-
-                grid.classList.remove('hidden');
-
-            }
-
-
-
-            updateResultCount();
-
-        }
-
-
-
-        function historyLabelFor(value) {
-
-            if (value === 'archived') return 'Archived';
-
-            if (value === 'deleted') return 'Deleted';
-
-            return 'All History';
-
-        }
-
-
-
-        function syncHistoryDropdown(value = '') {
-
-            if (typeFilter) typeFilter.value = value;
-
-            if (historyLabel) historyLabel.textContent = historyLabelFor(value);
-
-
-
-            historyOptions.forEach(option => {
-
-                option.classList.toggle('is-selected', (option.dataset.historyValue || '') === value);
-
-            });
-
-        }
-
-
-
-        function closeHistoryMenu() {
-
-            if (!historyMenu || !historyButton) return;
-
-            historyMenu.hidden = true;
-
-            historyButton.setAttribute('aria-expanded', 'false');
-
-        }
-
-
-
-        function toggleHistoryMenu() {
-
-            if (!historyMenu || !historyButton) return;
-
-            const opening = historyMenu.hidden;
-
-            historyMenu.hidden = !opening;
-
-            historyButton.setAttribute('aria-expanded', opening ? 'true' : 'false');
-
-        }
-
-
-
-        function clearFilters() {
-
-            if (searchInput) searchInput.value = '';
-
-            syncHistoryDropdown('');
-
-            filterArchive();
-
-            searchInput?.focus();
-
-        }
-
-
-
-        function renderBaseEmptyIfNeeded() {
-
+        const renderBaseEmptyIfNeeded = () => {
             if (!grid || cards.length !== 0) return;
 
-            grid.innerHTML = \`
+            filteredEmpty?.remove();
+            filteredEmpty = null;
 
-                <div class="archive-empty-state" data-archive-base-empty>
+            if (grid.querySelector('[data-archive-base-empty]')) return;
 
-                    <div>
-
-                        <span class="archive-empty-icon">
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16"></path><path d="M6 7v12h12V7"></path><path d="M9 11h6"></path></svg>
-
-                        </span>
-
-                        <div class="archive-empty-title">No archived products</div>
-
-                        <div class="archive-empty-copy">Products you archive or remove from your active catalog will appear here.</div>
-
+            const empty = document.createElement('div');
+            empty.className = 'archive-empty-state';
+            empty.dataset.archiveBaseEmpty = '';
+            empty.innerHTML = `
+                <div>
+                    <span class="archive-empty-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M4 7h16"></path>
+                            <path d="M6 7v12h12V7"></path>
+                            <path d="M9 11h6"></path>
+                        </svg>
+                    </span>
+                    <div class="archive-empty-title">No archived products</div>
+                    <div class="archive-empty-copy">
+                        Products you archive or remove from your active catalog will appear here.
                     </div>
-
                 </div>
+            `;
 
-            \`;
+            grid.appendChild(empty);
+        };
 
-        }
-
-
-
-        function removeCard(card) {
-
+        const removeCard = (card) => {
             if (!card) return;
 
             decrementSummary(card);
 
-            card.style.transition = 'opacity .20s ease, transform .20s ease';
-
+            card.style.transition = 'opacity .18s ease';
             card.style.opacity = '0';
 
-            card.style.transform = 'translateY(-4px) scale(.99)';
-
-
-
-            setTimeout(() => {
-
+            window.setTimeout(() => {
                 card.remove();
-
-                const index = cards.indexOf(card);
-
-                if (index >= 0) cards.splice(index, 1);
-
+                cards = cards.filter((item) => item !== card);
                 renderBaseEmptyIfNeeded();
-
                 filterArchive();
+            }, 190);
+        };
 
-            }, 210);
-
-        }
-
-
-
-        async function handleRestoreSubmit(event) {
-
+        /* --------------------------------------------------------------
+           Restore
+           -------------------------------------------------------------- */
+        const handleRestoreSubmit = async (event) => {
             event.preventDefault();
 
             const form = event.currentTarget;
-
             const button = form.querySelector('button[type="submit"]');
-
             const card = form.closest('[data-archive-product]');
 
             if (!form || !button || !card || button.disabled) return;
 
-
-
-            const original = button.innerHTML;
+            const originalHTML = button.innerHTML;
 
             button.disabled = true;
-
-            button.innerHTML = '<svg viewBox="0 0 24 24" class="animate-spin" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path></svg>';
-
-
+            button.setAttribute('aria-busy', 'true');
+            button.innerHTML = `
+                <svg viewBox="0 0 24 24" class="animate-spin" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+                </svg>
+            `;
 
             try {
-
                 const response = await fetch(form.action, {
-
-                    method: 'POST',
-
+                    method: form.method || 'POST',
                     headers: {
-
                         'X-Requested-With': 'XMLHttpRequest',
-
                         'Accept': 'application/json',
-
                     },
-
                     body: new FormData(form),
-
                     credentials: 'same-origin',
-
                 });
 
+                const payload = await parseResponse(response);
 
+                if (!response.ok) {
+                    const firstError = payload?.errors
+                        ? Object.values(payload.errors)?.[0]?.[0]
+                        : null;
 
-                const payload = await response.json().catch(() => ({}));
-
-                if (!response.ok) throw new Error(payload?.message || 'Unable to restore product right now.');
-
-
+                    throw new Error(
+                        firstError ||
+                        payload?.message ||
+                        'Unable to restore this product right now.'
+                    );
+                }
 
                 removeCard(card);
-
                 showToast('success', payload?.message || 'Product restored successfully.');
-
             } catch (error) {
-
                 button.disabled = false;
+                button.removeAttribute('aria-busy');
+                button.innerHTML = originalHTML;
 
-                button.innerHTML = original;
+                showToast(
+                    'error',
+                    error?.message || 'Unable to restore this product.'
+                );
+            }
+        };
 
-                showToast('error', error?.message || 'Unable to restore product.');
+        document.querySelectorAll('.archive-restore-form').forEach((form) => {
+            form.addEventListener('submit', handleRestoreSubmit);
+        });
 
+        /* --------------------------------------------------------------
+           Permanent delete confirmation modal
+           -------------------------------------------------------------- */
+        const openDeleteModal = (button) => {
+            if (
+                !deleteModal ||
+                !deleteForm ||
+                !deleteConfirm ||
+                !button ||
+                button.disabled
+            ) {
+                return;
             }
 
-        }
-
-
-
-        function openDeleteModal(button) {
-
-            if (!deleteModal || !deleteForm || button.disabled) return;
-
             pendingDeleteCard = button.closest('[data-archive-product]');
+            deleteTrigger = button;
 
-            deleteForm.action = button.dataset.deleteUrl || '';
+            const deleteUrl = button.dataset.deleteUrl || '';
+            const productName = button.dataset.productName || 'Product';
 
-            if (deleteProductName) deleteProductName.textContent = button.dataset.productName || 'Product';
+            if (!pendingDeleteCard || !deleteUrl) {
+                showToast('error', 'The delete action is not available for this product.');
+                return;
+            }
+
+            deleteForm.action = deleteUrl;
+
+            if (deleteProductName) {
+                deleteProductName.textContent = productName;
+            }
 
             deleteModal.classList.add('is-open');
-
             deleteModal.setAttribute('aria-hidden', 'false');
-
             document.body.classList.add('overflow-hidden');
 
-            deleteCancel?.focus();
+            window.requestAnimationFrame(() => {
+                deleteCancel?.focus();
+            });
+        };
 
-        }
-
-
-
-        function closeDeleteModal() {
-
+const closeDeleteModal = ({ restoreFocus = true } = {}) => {
             deleteModal?.classList.remove('is-open');
-
             deleteModal?.setAttribute('aria-hidden', 'true');
-
             document.body.classList.remove('overflow-hidden');
-
-            pendingDeleteCard = null;
 
             if (deleteForm) deleteForm.action = '';
 
-        }
+            pendingDeleteCard = null;
 
+            if (restoreFocus) {
+                deleteTrigger?.focus();
+            }
 
+            deleteTrigger = null;
+        };
 
-        async function handlePermanentDelete(event) {
-
+        const handlePermanentDelete = async (event) => {
             event.preventDefault();
 
-            if (!deleteForm || !deleteConfirm || !pendingDeleteCard || !deleteForm.action) return;
-
-
+            if (
+                !deleteForm ||
+                !deleteConfirm ||
+                !pendingDeleteCard ||
+                !deleteForm.action
+            ) {
+                return;
+            }
 
             const card = pendingDeleteCard;
-
-            const original = deleteConfirm.textContent;
+            const originalText = deleteConfirm.textContent;
 
             deleteConfirm.disabled = true;
-
+            deleteConfirm.setAttribute('aria-busy', 'true');
             deleteConfirm.textContent = 'Deleting...';
 
-
-
             try {
-
                 const response = await fetch(deleteForm.action, {
-
-                    method: 'POST',
-
+                    method: deleteForm.method || 'POST',
                     headers: {
-
                         'X-Requested-With': 'XMLHttpRequest',
-
                         'Accept': 'application/json',
-
                     },
-
                     body: new FormData(deleteForm),
-
                     credentials: 'same-origin',
-
                 });
 
-
-
-                const payload = await response.json().catch(() => ({}));
+                const payload = await parseResponse(response);
 
                 if (!response.ok) {
+                    const firstError = payload?.errors
+                        ? Object.values(payload.errors)?.[0]?.[0]
+                        : null;
 
-                    const firstError = payload?.errors ? Object.values(payload.errors)?.[0]?.[0] : null;
-
-                    throw new Error(firstError || payload?.message || 'Unable to permanently delete this product.');
-
+                    throw new Error(
+                        firstError ||
+                        payload?.message ||
+                        'Unable to permanently delete this product.'
+                    );
                 }
 
-
-
-                closeDeleteModal();
-
+                closeDeleteModal({ restoreFocus: false });
                 removeCard(card);
 
-                showToast('success', payload?.message || 'Product permanently deleted.');
-
+                showToast(
+                    'success',
+                    payload?.message || 'Product permanently deleted.'
+                );
             } catch (error) {
-
-                showToast('error', error?.message || 'Unable to permanently delete product.');
-
+                showToast(
+                    'error',
+                    error?.message || 'Unable to permanently delete this product.'
+                );
             } finally {
-
                 deleteConfirm.disabled = false;
-
-                deleteConfirm.textContent = original;
-
+                deleteConfirm.removeAttribute('aria-busy');
+                deleteConfirm.textContent = originalText;
             }
+        };
 
-        }
-
-
-
-        searchInput?.addEventListener('input', filterArchive);
-
-
-
-        historyButton?.addEventListener('click', event => {
-
-            event.stopPropagation();
-
-            toggleHistoryMenu();
-
-        });
-
-
-
-        historyOptions.forEach(option => {
-
-            option.addEventListener('click', () => {
-
-                const value = option.dataset.historyValue || '';
-
-                syncHistoryDropdown(value);
-
-                closeHistoryMenu();
-
-                filterArchive();
-
-            });
-
-        });
-
-
-
-        clearButton?.addEventListener('click', clearFilters);
-
-
-
-        document.addEventListener('click', event => {
-
-            if (!event.target.closest('[data-history-dropdown]')) {
-
-                closeHistoryMenu();
-
-            }
-
-        });
-
-
-
-        document.querySelectorAll('.archive-restore-form').forEach(form => {
-
-            form.addEventListener('submit', handleRestoreSubmit);
-
-        });
-
-
-
-        document.querySelectorAll('[data-archive-delete-open]').forEach(button => {
-
+        document.querySelectorAll('[data-archive-delete-open]').forEach((button) => {
             button.addEventListener('click', () => openDeleteModal(button));
-
         });
 
-
-
-        deleteCancel?.addEventListener('click', closeDeleteModal);
+        deleteCancel?.addEventListener('click', () => closeDeleteModal());
 
         deleteForm?.addEventListener('submit', handlePermanentDelete);
 
-
-
-        deleteModal?.addEventListener('click', event => {
-
-            if (event.target === deleteModal) closeDeleteModal();
-
+        deleteModal?.addEventListener('click', (event) => {
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
         });
 
+        deleteDialog?.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
 
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
 
-        document.addEventListener('keydown', event => {
-
-            if (event.key === 'Escape') {
-
-                if (deleteModal?.classList.contains('is-open')) closeDeleteModal();
-
-                closeHistoryMenu();
-
+            if (deleteModal?.classList.contains('is-open')) {
+                closeDeleteModal();
+                return;
             }
 
+            closeHistoryMenu();
         });
 
-
-
+        /* --------------------------------------------------------------
+           Initial state
+           -------------------------------------------------------------- */
         syncHistoryDropdown(typeFilter?.value || '');
-
         filterArchive();
-
     };
 
-
-
     if (window.__SARI_SELLER_AFTER_PAINT__) {
-
         window.__SARI_SELLER_AFTER_PAINT__(initArchivePage);
-
     } else if (document.readyState === 'loading') {
-
         document.addEventListener('DOMContentLoaded', initArchivePage, { once: true });
-
     } else {
-
         initArchivePage();
-
     }
-
 })();
-
 </script>
-
 @endpush

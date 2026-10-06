@@ -5,10 +5,13 @@
 
 @section('content')
 @php
-    // SellerAdminChatController already resolves these values. Keep the view
-    // presentation-only and avoid a duplicate database/schema query per visit.
+    // SellerAdminChatController resolves both Admin Support and Buyer threads.
     $sellerChatRestriction = $sellerChatRestriction ?? null;
     $sellerChatBlocked = (bool) ($sellerChatBlocked ?? false);
+    $buyerConversations = $buyerConversations ?? collect();
+    $selectedBuyer = $selectedBuyer ?? null;
+    $buyerMessages = $buyerMessages ?? collect();
+    $buyerMode = (bool) $selectedBuyer;
 @endphp
 
 <style>
@@ -1268,6 +1271,889 @@
         display: none !important;
     }
 
+
+
+/* ======================================================================
+   CHAT / MESSAGING — STRONGER FLOATING, NO SIZE/LAYOUT CHANGES
+   Visual-only pass:
+   - keep all existing width/height/grid/padding/layout values untouched
+   - make the center conversation surface read as the primary floating pane
+   - side panes get softer depth
+   - nested chat content remains flat
+   ====================================================================== */
+
+.seller-platform-page {
+    --chat-float-border: #E5E7EB;
+    --chat-float-divider: #ECEFF2;
+    --chat-float-center:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11);
+    --chat-float-side:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065);
+}
+
+/* Keep the existing workspace dimensions exactly as authored. */
+#sellerPlatformChat {
+    border-color: var(--chat-float-border) !important;
+    box-shadow:
+        0 2px 5px rgba(15, 23, 42, .035),
+        0 10px 24px rgba(15, 23, 42, .055),
+        0 22px 48px rgba(15, 23, 42, .06) !important;
+}
+
+/* ------------------------------------------------------------
+   CENTER CONVERSATION = PRIMARY FLOATING SURFACE
+   No width/height/padding/grid changes.
+   ------------------------------------------------------------ */
+#sellerCenterPane {
+    position: relative !important;
+    z-index: 3 !important;
+    border-left: 1px solid var(--chat-float-divider) !important;
+    border-right: 1px solid var(--chat-float-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--chat-float-center) !important;
+    transform: none !important;
+}
+
+/* Thread header and composer stay attached to the same floating pane. */
+#sellerCenterPane > div:first-child,
+.seller-platform-composer {
+    position: relative !important;
+    z-index: 1 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* The actual message canvas gets a soft inset separation,
+   not another independent floating card. */
+#sellerPlatformMessages {
+    background: #F8FAFC !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        inset 0 -1px 0 rgba(226,232,240,.72) !important;
+}
+
+/* ------------------------------------------------------------
+   SIDE PANES = SOFTER SUPPORTING DEPTH
+   No size/layout changes.
+   ------------------------------------------------------------ */
+#sellerConversationPane,
+#sellerDetailsPane {
+    position: relative !important;
+    z-index: 1 !important;
+    border-color: var(--chat-float-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--chat-float-side) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   NESTED CONTENT REMAINS FLAT
+   ------------------------------------------------------------ */
+#sellerConversationPane > div,
+#sellerDetailsPane > div,
+#sellerDetailsPane .mt-6.space-y-3 > div,
+.seller-message-row,
+.seller-message-bubble,
+.seller-message-uploading,
+.sari-support-brand-avatar,
+.sari-admin-avatar,
+.sari-bot-avatar,
+.sari-assistant-typing__bubble,
+#sellerPlatformMessageForm,
+.seller-composer-attachment-label,
+#sellerPlatformSend {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Message bubbles retain color/shape but no floating shadow. */
+.seller-message-row.justify-end .seller-message-bubble,
+.seller-message-row:not(.justify-end) .seller-message-bubble {
+    box-shadow: none !important;
+}
+
+/* Composer shell is part of center pane, not a second floating card. */
+#sellerPlatformMessageForm {
+    border-color: #D8DEE6 !important;
+    background: #FFFFFF !important;
+}
+
+/* Focus feedback only. */
+#sellerPlatformMessageForm:focus-within,
+#sellerMessageSearch:focus {
+    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+}
+
+/* Account detail blocks remain flat inside the right pane. */
+#sellerDetailsPane .mt-6.space-y-3 > div {
+    border-color: #E5E7EB !important;
+    background: #FAFBFC !important;
+}
+
+/* Search/control surfaces stay flat. */
+#sellerMessageSearch,
+.seller-platform-status,
+.seller-platform-ai,
+.seller-composer-attachment-label,
+#sellerPlatformSend {
+    box-shadow: none !important;
+}
+
+/* True overlays can still float. */
+#sellerAttachmentName {
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.045),
+        0 14px 30px rgba(15,23,42,.09) !important;
+}
+
+[data-reaction-picker] {
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.05),
+        0 16px 36px rgba(15,23,42,.13) !important;
+}
+
+/* No lift/movement anywhere. */
+#sellerPlatformChat:hover,
+#sellerConversationPane:hover,
+#sellerCenterPane:hover,
+#sellerDetailsPane:hover {
+    transform: none !important;
+}
+
+/* Preserve the exact existing responsive sizing rules.
+   Only reduce shadow spread slightly on small screens. */
+@media (max-width: 639px) {
+    #sellerCenterPane {
+        box-shadow:
+            0 2px 4px rgba(15,23,42,.04),
+            0 8px 18px rgba(15,23,42,.07),
+            0 16px 34px rgba(15,23,42,.08) !important;
+    }
+
+    #sellerConversationPane,
+    #sellerDetailsPane {
+        box-shadow:
+            0 1px 3px rgba(15,23,42,.03),
+            0 6px 14px rgba(15,23,42,.045) !important;
+    }
+}
+
+    /* ============================================================
+       UNIFIED CHAT INBOX — ADMIN + BUYERS
+       Keeps the existing three-pane layout and visual language.
+       ============================================================ */
+    .seller-conversation-list {
+        display: grid;
+        align-content: start;
+        background: #fff;
+    }
+
+    #sellerConversationPane .seller-conversation-item {
+        display: block;
+        border-left: 0 !important;
+        border-bottom: 1px solid #edf0f3 !important;
+        background: #fff !important;
+        padding: 12px 14px !important;
+        color: inherit;
+        text-decoration: none;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    #sellerConversationPane .seller-conversation-item:hover {
+        background: #f8fafc !important;
+    }
+
+    #sellerConversationPane .seller-conversation-item.is-active {
+        background: #fbfcfd !important;
+        box-shadow: inset 3px 0 0 var(--chat-gold) !important;
+    }
+
+    .seller-buyer-avatar {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        place-items: center;
+        border: 1px solid #e1e6eb;
+        border-radius: 50%;
+        background: #f3f6f8;
+        color: #52697a;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: -.02em;
+    }
+
+    .seller-conversation-unread {
+        display: grid;
+        min-width: 18px;
+        height: 18px;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--chat-gold);
+        padding: 0 5px;
+        color: #fff;
+        font-size: 7px;
+        font-weight: 800;
+    }
+
+    .seller-buyer-thread-meta {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #98a2b3;
+        font-size: 8px;
+    }
+
+    .seller-buyer-thread-badge {
+        display: inline-flex;
+        height: 25px;
+        align-items: center;
+        border: 1px solid #e1e6eb;
+        border-radius: 999px;
+        background: #f8fafc;
+        padding: 0 9px;
+        color: #667085;
+        font-size: 7.8px;
+        font-weight: 700;
+    }
+
+    #sellerBuyerMessageForm {
+        display: flex !important;
+        min-height: 50px !important;
+        align-items: center !important;
+        gap: 7px !important;
+        border: 1px solid #d8dee6 !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        padding: 5px 6px !important;
+        box-shadow: none !important;
+    }
+
+    #sellerBuyerMessageForm:focus-within {
+        border-color: var(--chat-gold) !important;
+        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    }
+
+    #sellerBuyerInput {
+        min-width: 0;
+        min-height: 38px;
+        max-height: 112px;
+        flex: 1 1 auto;
+        resize: none;
+        border: 0;
+        background: transparent;
+        padding: 8px 6px;
+        color: #344054;
+        font-size: 10px;
+        line-height: 1.5;
+        outline: none;
+    }
+
+    #sellerBuyerSend {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        flex: 0 0 40px;
+        place-items: center;
+        border: 0;
+        border-radius: 10px;
+        background: var(--chat-gold);
+        color: #fff;
+        box-shadow: none;
+    }
+
+    #sellerBuyerSend:hover:not(:disabled) {
+        background: var(--chat-gold-hover);
+    }
+
+    #sellerBuyerSend svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    @media (max-width: 639px) {
+        #sellerBuyerMessageForm {
+            min-height: 48px !important;
+            border-radius: 12px !important;
+        }
+
+        #sellerBuyerInput {
+            min-height: 36px;
+        }
+
+        #sellerBuyerSend {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            flex-basis: 38px;
+        }
+    }
+
+
+
+/* ============================================================
+       CHAT / MESSAGING — UNIFIED PROFESSIONAL MESSAGE BUBBLES
+       One geometry system for Seller, Buyer, Admin and SARI Assistant.
+       ============================================================ */
+
+    .seller-platform-page {
+        --message-bubble-max: 560px;
+        --message-bubble-font: 10.5px;
+        --message-bubble-line: 1.48;
+        --message-bubble-pad-y: 8px;
+        --message-bubble-pad-x: 12px;
+
+        --message-shadow:
+            0 1px 2px rgba(15, 23, 42, .035),
+            0 5px 14px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .06);
+
+        --message-shadow-out:
+            0 1px 2px rgba(15, 23, 42, .04),
+            0 6px 16px rgba(15, 23, 42, .07),
+            0 14px 30px rgba(15, 23, 42, .075);
+    }
+
+    /* One row rhythm for all chat sources. */
+    #sellerPlatformMessages .seller-message-row {
+        margin-top: 12px !important;
+        align-items: flex-end !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:first-child {
+        margin-top: 0 !important;
+    }
+
+    /*
+     * Explicit shared wrapper.
+     * Short messages shrink naturally; long messages stop at a readable width.
+     */
+    #sellerPlatformMessages .seller-message-content {
+        display: flex !important;
+        width: fit-content !important;
+        min-width: 0 !important;
+        max-width: min(68%, var(--message-bubble-max)) !important;
+        flex: 0 1 auto !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row.justify-end > .seller-message-content {
+        margin-left: auto !important;
+        align-items: flex-end !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:not(.justify-end) > .seller-message-content {
+        margin-right: auto !important;
+        align-items: flex-start !important;
+    }
+
+    /*
+     * Canonical bubble geometry.
+     * IMPORTANT: no min-width and no fixed height.
+     * "hello Seller" therefore stays compact instead of becoming a large card.
+     */
+    #sellerPlatformMessages .seller-message-content > .seller-message-bubble {
+        display: inline-block !important;
+        width: fit-content !important;
+        inline-size: fit-content !important;
+        min-width: 0 !important;
+        min-inline-size: 0 !important;
+        max-width: 100% !important;
+        max-inline-size: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        block-size: auto !important;
+        min-block-size: 0 !important;
+
+        margin: 0 !important;
+        padding:
+            var(--message-bubble-pad-y)
+            var(--message-bubble-pad-x) !important;
+
+        border-radius: 12px !important;
+
+        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+        font-size: var(--message-bubble-font) !important;
+        font-weight: 500 !important;
+        line-height: var(--message-bubble-line) !important;
+        letter-spacing: 0 !important;
+
+        white-space: pre-wrap !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+
+        box-sizing: border-box !important;
+        box-shadow: var(--message-shadow) !important;
+        transform: none !important;
+    }
+
+    /* Seller outgoing: same size rules, only visual identity changes. */
+    #sellerPlatformMessages .seller-message-row.justify-end
+    > .seller-message-content
+    > .seller-message-bubble {
+        align-self: flex-end !important;
+        border: 1px solid #CD900F !important;
+        border-radius: 12px 12px 4px 12px !important;
+        background: #D59617 !important;
+        color: #FFFFFF !important;
+        box-shadow: var(--message-shadow-out) !important;
+    }
+
+    /* Buyer/Admin incoming: identical dimensions, neutral surface. */
+    #sellerPlatformMessages .seller-message-row:not(.justify-end)
+    > .seller-message-content
+    > .seller-message-bubble {
+        align-self: flex-start !important;
+        border: 1px solid #DFE4EA !important;
+        border-radius: 12px 12px 12px 4px !important;
+        background: #FFFFFF !important;
+        color: #3F4B5A !important;
+        box-shadow: var(--message-shadow) !important;
+    }
+
+    /* Assistant keeps its subtle neutral identity without changing geometry. */
+    #sellerPlatformMessages .seller-message-row:not(.justify-end)
+    > .seller-message-content
+    > .seller-message-bubble.bg-\[\#f4f8fa\] {
+        border-color: #DCE4EA !important;
+        background: #F8FAFC !important;
+        color: #526A79 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-label {
+        margin-bottom: 5px !important;
+        color: #7C7369 !important;
+        font-size: 8.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-label--assistant {
+        color: #6E899C !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        letter-spacing: .06em !important;
+        text-transform: uppercase !important;
+    }
+
+    #sellerPlatformMessages .seller-message-time {
+        width: auto !important;
+        min-width: 0 !important;
+        margin-top: 4px !important;
+        color: #98A2B3 !important;
+        font-size: 7.5px !important;
+        font-weight: 400 !important;
+        line-height: 1.25 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row.justify-end
+    > .seller-message-content
+    > .seller-message-time {
+        align-self: flex-end !important;
+        text-align: right !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:not(.justify-end)
+    > .seller-message-content
+    > .seller-message-time {
+        align-self: flex-start !important;
+        text-align: left !important;
+    }
+
+    /* Attachments/reaction metadata can be wider, but never force text bubble width. */
+    #sellerPlatformMessages .seller-message-content > .seller-message-uploading,
+    #sellerPlatformMessages .seller-message-content > [data-reaction-wrap],
+    #sellerPlatformMessages .seller-message-content > .mt-2 {
+        max-width: 100% !important;
+    }
+
+    #sellerPlatformMessages .seller-message-uploading {
+        border: 1px solid #E2E6EB !important;
+        border-radius: 10px !important;
+        background: #FFFFFF !important;
+        box-shadow:
+            0 1px 2px rgba(15,23,42,.03),
+            0 5px 12px rgba(15,23,42,.05) !important;
+        transform: none !important;
+    }
+
+    /* Static depth only. */
+    #sellerPlatformMessages .seller-message-bubble:hover,
+    #sellerPlatformMessages .seller-message-uploading:hover {
+        transform: none !important;
+    }
+
+    @media (max-width: 1023px) {
+        #sellerPlatformMessages .seller-message-content {
+            max-width: min(76%, 520px) !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-platform-page {
+            --message-bubble-font: 10px;
+            --message-bubble-pad-y: 7px;
+            --message-bubble-pad-x: 10px;
+        }
+
+        #sellerPlatformMessages .seller-message-row {
+            margin-top: 10px !important;
+        }
+
+        #sellerPlatformMessages .seller-message-content {
+            max-width: 84% !important;
+        }
+
+        #sellerPlatformMessages .seller-message-content > .seller-message-bubble {
+            border-radius: 11px !important;
+        }
+
+        #sellerPlatformMessages .seller-message-row.justify-end
+        > .seller-message-content
+        > .seller-message-bubble {
+            border-radius: 11px 11px 4px 11px !important;
+        }
+
+        #sellerPlatformMessages .seller-message-row:not(.justify-end)
+        > .seller-message-content
+        > .seller-message-bubble {
+            border-radius: 11px 11px 11px 4px !important;
+        }
+    }
+
+
+
+/* ============================================================
+       CHAT / MESSAGING — ISOLATED FINAL BUBBLE COMPONENT
+       This component intentionally does NOT use .seller-message-bubble.
+       Old historical bubble CSS cannot affect these real messages.
+       ============================================================ */
+
+    .seller-platform-page {
+        --chat-final-max-width: 560px;
+        --chat-final-font: 10.5px;
+        --chat-final-line: 1.48;
+        --chat-final-pad-y: 8px;
+        --chat-final-pad-x: 12px;
+
+        --chat-final-shadow:
+            0 1px 2px rgba(15,23,42,.035),
+            0 5px 14px rgba(15,23,42,.055),
+            0 13px 28px rgba(15,23,42,.06);
+
+        --chat-final-shadow-out:
+            0 1px 2px rgba(15,23,42,.04),
+            0 6px 16px rgba(15,23,42,.07),
+            0 14px 30px rgba(15,23,42,.075);
+    }
+
+    /*
+     * Use a stable-width message stack and let the actual bubble shrink
+     * inside it. This avoids browser/flex shrink-to-fit inconsistencies.
+     */
+    #sellerPlatformMessages .seller-message-content {
+        display: grid !important;
+        width: 68% !important;
+        max-width: var(--chat-final-max-width) !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row.justify-end
+    > .seller-message-content {
+        margin-left: auto !important;
+        justify-items: end !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:not(.justify-end)
+    > .seller-message-content {
+        margin-right: auto !important;
+        justify-items: start !important;
+    }
+
+    /*
+     * Real message surface.
+     * width:max-content + max-width:100% =
+     * - short text hugs its content
+     * - long text wraps naturally
+     * - no minimum/fixed bubble width
+     */
+    #sellerPlatformMessages .seller-message-content
+    > [data-chat-bubble] {
+        display: block !important;
+
+        width: max-content !important;
+        inline-size: max-content !important;
+
+        min-width: 0 !important;
+        min-inline-size: 0 !important;
+
+        max-width: 100% !important;
+        max-inline-size: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        block-size: auto !important;
+        min-block-size: 0 !important;
+
+        margin: 0 !important;
+        padding:
+            var(--chat-final-pad-y)
+            var(--chat-final-pad-x) !important;
+
+        border: 1px solid #DFE4EA !important;
+        border-radius: 12px !important;
+
+        background: #FFFFFF !important;
+        color: #3F4B5A !important;
+
+        font-family:
+            "Poppins",
+            ui-sans-serif,
+            system-ui,
+            sans-serif !important;
+        font-size: var(--chat-final-font) !important;
+        font-weight: 500 !important;
+        line-height: var(--chat-final-line) !important;
+        letter-spacing: 0 !important;
+
+        /*
+         * Preserve user-entered line breaks. Keep the message text node
+         * directly against the span tags so template indentation is not
+         * rendered as real whitespace by pre-wrap.
+         */
+        white-space: pre-wrap !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+
+        box-sizing: border-box !important;
+        box-shadow: var(--chat-final-shadow) !important;
+        transform: none !important;
+    }
+
+    /* Seller outgoing */
+    #sellerPlatformMessages
+    [data-chat-bubble][data-chat-side="outgoing"] {
+        justify-self: end !important;
+
+        border-color: #CD900F !important;
+        border-radius: 12px 12px 4px 12px !important;
+
+        background: #D59617 !important;
+        color: #FFFFFF !important;
+
+        box-shadow: var(--chat-final-shadow-out) !important;
+    }
+
+    /* Buyer / Admin incoming */
+    #sellerPlatformMessages
+    [data-chat-bubble][data-chat-side="incoming"] {
+        justify-self: start !important;
+
+        border-color: #DFE4EA !important;
+        border-radius: 12px 12px 12px 4px !important;
+
+        background: #FFFFFF !important;
+        color: #3F4B5A !important;
+    }
+
+    /* SARI Assistant — same exact geometry, subtle neutral identity only. */
+    #sellerPlatformMessages
+    [data-chat-bubble][data-chat-kind="assistant"] {
+        border-color: #DCE4EA !important;
+        background: #F8FAFC !important;
+        color: #526A79 !important;
+    }
+
+    /* Keep spacing consistent across every conversation source. */
+    #sellerPlatformMessages .seller-message-row {
+        margin-top: 12px !important;
+        align-items: flex-end !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:first-child {
+        margin-top: 0 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-label {
+        margin-bottom: 5px !important;
+        font-size: 8.5px !important;
+        line-height: 1.3 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-time {
+        width: auto !important;
+        margin-top: 4px !important;
+        font-size: 7.5px !important;
+        line-height: 1.25 !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row.justify-end
+    .seller-message-time {
+        justify-self: end !important;
+        text-align: right !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:not(.justify-end)
+    .seller-message-time {
+        justify-self: start !important;
+        text-align: left !important;
+    }
+
+    /* Never animate or enlarge the bubble on hover. */
+    #sellerPlatformMessages [data-chat-bubble]:hover {
+        transform: none !important;
+    }
+
+    @media (max-width: 1023px) {
+        #sellerPlatformMessages .seller-message-content {
+            width: 76% !important;
+            max-width: 520px !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .seller-platform-page {
+            --chat-final-font: 10px;
+            --chat-final-pad-y: 7px;
+            --chat-final-pad-x: 10px;
+        }
+
+        #sellerPlatformMessages .seller-message-content {
+            width: 84% !important;
+            max-width: none !important;
+        }
+
+        #sellerPlatformMessages .seller-message-row {
+            margin-top: 10px !important;
+        }
+
+        #sellerPlatformMessages .seller-message-content
+        > [data-chat-bubble] {
+            border-radius: 11px !important;
+        }
+
+        #sellerPlatformMessages
+        [data-chat-bubble][data-chat-side="outgoing"] {
+            border-radius: 11px 11px 4px 11px !important;
+        }
+
+        #sellerPlatformMessages
+        [data-chat-bubble][data-chat-side="incoming"] {
+            border-radius: 11px 11px 11px 4px !important;
+        }
+    }
+
+    /* ============================================================
+       FINAL MESSAGE SIZE OVERRIDE
+       Keeps every conversation bubble content-sized.
+       This intentionally wins over all historical message CSS above.
+       ============================================================ */
+    #sellerPlatformMessages .seller-message-content {
+        display: flex !important;
+        width: auto !important;
+        inline-size: auto !important;
+        min-width: 0 !important;
+        max-width: min(72%, 560px) !important;
+        flex: 0 1 auto !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row.justify-end > .seller-message-content {
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        align-items: flex-end !important;
+        justify-items: unset !important;
+    }
+
+    #sellerPlatformMessages .seller-message-row:not(.justify-end) > .seller-message-content {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        align-items: flex-start !important;
+        justify-items: unset !important;
+    }
+
+    #sellerPlatformMessages [data-chat-bubble] {
+        display: inline-block !important;
+
+        width: auto !important;
+        inline-size: auto !important;
+        min-width: 0 !important;
+        min-inline-size: 0 !important;
+        max-width: 100% !important;
+        max-inline-size: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        block-size: auto !important;
+        min-block-size: 0 !important;
+
+        flex: 0 0 auto !important;
+        align-self: auto !important;
+
+        margin: 0 !important;
+        padding: 8px 12px !important;
+
+        /*
+         * IMPORTANT:
+         * "normal" prevents Blade/template indentation/newlines from turning
+         * into visible blank lines or extra bubble width.
+         */
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        text-align: left !important;
+        vertical-align: top !important;
+
+        font-size: 10.5px !important;
+        line-height: 1.48 !important;
+        box-sizing: border-box !important;
+    }
+
+    #sellerPlatformMessages [data-chat-bubble][data-chat-side="outgoing"] {
+        align-self: flex-end !important;
+    }
+
+    #sellerPlatformMessages [data-chat-bubble][data-chat-side="incoming"] {
+        align-self: flex-start !important;
+    }
+
+    #sellerPlatformMessages .seller-message-time {
+        width: auto !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin-top: 4px !important;
+        line-height: 1.25 !important;
+    }
+
+    @media (max-width: 1023px) {
+        #sellerPlatformMessages .seller-message-content {
+            max-width: min(76%, 520px) !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        #sellerPlatformMessages .seller-message-content {
+            max-width: 84% !important;
+        }
+
+        #sellerPlatformMessages [data-chat-bubble] {
+            padding: 7px 10px !important;
+            font-size: 10px !important;
+        }
+    }
+
 </style>
 
 <div class="seller-platform-page">
@@ -1300,11 +2186,11 @@
         </div>
 
         <div class="chat-grid grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)_280px]">
-            {{-- LEFT: SUPPORT CONVERSATION --}}
+            {{-- LEFT: UNIFIED CONVERSATIONS --}}
             <aside id="sellerConversationPane" class="border-b border-[#ebe5dc] bg-white lg:border-b-0 lg:border-r">
                 <div class="border-b border-[#eee8df] px-4 py-4 sm:px-5">
                     <h3 class="font-bold tracking-[-0.02em] text-[#24201b]" style="font-size:clamp(14px,.88vw,16px)">Conversations</h3>
-                    <p class="mt-1 text-[#938a7f]" style="font-size:clamp(10px,.66vw,12px)">SARI platform support</p>
+                    <p class="mt-1 text-[#938a7f]" style="font-size:clamp(10px,.66vw,12px)">Admin support and your buyers</p>
 
                     <div class="relative mt-4">
                         <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9b9287]" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -1317,139 +2203,319 @@
                     </div>
                 </div>
 
-                <div class="border-l-2 border-[#c99128] bg-[#fbf7ef] px-4 py-4 sm:px-5">
-                    <div class="flex items-center gap-3">
-                        <div class="relative shrink-0">
-                            <div class="sari-support-brand-avatar">
-                                <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                <div class="seller-conversation-list">
+                    <a
+                        href="{{ route('seller.messages') }}"
+                        class="seller-conversation-item {{ $buyerMode ? '' : 'is-active' }}"
+                        data-conversation-item
+                        data-conversation-search="sari admin support human administrator support"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div class="relative shrink-0">
+                                <div class="sari-support-brand-avatar">
+                                    <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                                </div>
+                                <span class="sari-support-online-dot" aria-hidden="true"></span>
                             </div>
-                            <span class="sari-support-online-dot" aria-hidden="true"></span>
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate text-[13px] font-bold text-[#2d2822]">SARI Admin Support</p>
+                                <p class="mt-0.5 truncate text-[10px] text-[#8f867b]">Human administrator support</p>
+                                <p id="sellerLastMessagePreview" class="mt-2 line-clamp-2 text-[11px] leading-5 text-[#72695f]">
+                                    {{ $buyerMode ? 'Official SARI support channel' : 'Loading conversation…' }}
+                                </p>
+                            </div>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="truncate text-[13px] font-bold text-[#2d2822]">SARI Admin Support</p>
-                            <p class="mt-0.5 truncate text-[10px] text-[#8f867b]">Human administrator support</p>
-                            <p id="sellerLastMessagePreview" class="mt-2 line-clamp-2 text-[11px] leading-5 text-[#72695f]">Loading conversation…</p>
-                        </div>
-                    </div>
+                    </a>
+
+                    @foreach ($buyerConversations as $conversation)
+                        <a
+                            href="{{ route('seller.messages', ['buyer' => $conversation['key']]) }}"
+                            class="seller-conversation-item {{ $selectedBuyer && $selectedBuyer['key'] === $conversation['key'] ? 'is-active' : '' }}"
+                            data-conversation-item
+                            data-conversation-search="{{ strtolower($conversation['name'] . ' ' . ($conversation['email'] ?? '') . ' ' . $conversation['preview']) }}"
+                        >
+                            <div class="flex items-center gap-3">
+                                <div class="seller-buyer-avatar" aria-hidden="true">
+                                    {{ $conversation['initials'] }}
+                                </div>
+
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <p class="truncate text-[12px] font-bold text-[#344054]">{{ $conversation['name'] }}</p>
+
+                                        @if ((int) $conversation['unread'] > 0)
+                                            <span class="seller-conversation-unread">{{ (int) $conversation['unread'] }}</span>
+                                        @endif
+                                    </div>
+
+                                    <p class="mt-0.5 truncate text-[8px] text-[#98a2b3]">
+                                        Buyer{{ $conversation['email'] ? ' · ' . $conversation['email'] : '' }}
+                                    </p>
+
+                                    <p class="mt-1.5 line-clamp-2 text-[8.5px] leading-4 text-[#667085]">
+                                        {{ $conversation['preview'] }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
             </aside>
 
-            {{-- CENTER: PLATFORM SUPPORT THREAD --}}
+            {{-- CENTER: SELECTED CONVERSATION --}}
             <div id="sellerCenterPane" class="flex min-h-0 min-w-0 flex-col bg-white">
-                <div class="flex items-center justify-between gap-4 border-b border-[#ebe5dc] bg-white px-4 py-4 sm:px-5">
-                    <div class="flex min-w-0 items-center gap-3">
-                        <div class="relative shrink-0">
-                            <div class="sari-support-brand-avatar">
-                                <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                @if ($selectedBuyer)
+                    <div class="flex items-center justify-between gap-4 border-b border-[#ebe5dc] bg-white px-4 py-4 sm:px-5">
+                        <div class="flex min-w-0 items-center gap-3">
+                            <div class="seller-buyer-avatar" aria-hidden="true">
+                                {{ $selectedBuyer['initials'] }}
                             </div>
-                            <span class="sari-support-online-dot" aria-hidden="true"></span>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="truncate text-[14px] font-bold tracking-[-0.02em] text-[#29241f]">SARI Admin Support</p>
-                            <p class="mt-1 text-[10px] text-[#8f867b]">Official human support channel</p>
-                        </div>
-                    </div>
 
-                    <div class="flex shrink-0 items-center gap-2">
-                        <span id="sellerRealtimeStatus" class="seller-platform-status" role="status" aria-live="polite" data-state="connecting">Connecting</span>
-                        <span id="sellerAssistantBadge" class="seller-platform-ai" title="SARI Assistant automatically confirms receipt while you wait for a human administrator.">
-                            <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
-                            Receipt confirmation
-                        </span>
+                            <div class="min-w-0">
+                                <p class="truncate text-[14px] font-bold tracking-[-0.02em] text-[#29241f]">{{ $selectedBuyer['name'] }}</p>
+                                <div class="seller-buyer-thread-meta mt-1">
+                                    <span>Buyer conversation</span>
+                                    @if ((int) $selectedBuyer['order_count'] > 0)
+                                        <span>•</span>
+                                        <span>{{ (int) $selectedBuyer['order_count'] }} {{ (int) $selectedBuyer['order_count'] === 1 ? 'order' : 'orders' }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="seller-buyer-thread-badge">Buyer</span>
                     </div>
-                </div>
+                @else
+                    <div class="flex items-center justify-between gap-4 border-b border-[#ebe5dc] bg-white px-4 py-4 sm:px-5">
+                        <div class="flex min-w-0 items-center gap-3">
+                            <div class="relative shrink-0">
+                                <div class="sari-support-brand-avatar">
+                                    <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI">
+                                </div>
+                                <span class="sari-support-online-dot" aria-hidden="true"></span>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="truncate text-[14px] font-bold tracking-[-0.02em] text-[#29241f]">SARI Admin Support</p>
+                                <p class="mt-1 text-[10px] text-[#8f867b]">Official human support channel</p>
+                            </div>
+                        </div>
+
+                        <div class="flex shrink-0 items-center gap-2">
+                            <span id="sellerRealtimeStatus" class="seller-platform-status" role="status" aria-live="polite" data-state="connecting">Connecting</span>
+                            <span id="sellerAssistantBadge" class="seller-platform-ai" title="SARI Assistant automatically confirms receipt while you wait for a human administrator.">
+                                <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
+                                Receipt confirmation
+                            </span>
+                        </div>
+                    </div>
+                @endif
 
                 <div id="sellerPlatformMessages" class="min-h-0 flex-1 overflow-y-auto bg-[#fbfaf7] px-4 py-6 sm:px-6 lg:px-7">
-                    <div id="sellerEmptyChat" class="flex h-full min-h-[360px] items-center justify-center text-center">
-                        <div>
-                            <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#f6efe2] text-[#9d6f22]">
-                                <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path></svg>
+                    @if ($selectedBuyer)
+                        @forelse ($buyerMessages as $message)
+                            @php
+                                $mine = $message->sender_role === 'seller';
+                            @endphp
+
+                            <div
+                                class="seller-message-row {{ $mine ? 'flex justify-end' : 'flex items-end gap-2.5' }}"
+                                data-message-id="{{ $message->id }}"
+                                data-search="{{ strtolower(($message->body ?? '') . ' ' . ($mine ? 'seller you' : $selectedBuyer['name'])) }}"
+                            >
+                                @unless ($mine)
+                                    <div class="seller-buyer-avatar" aria-hidden="true">
+                                        {{ $selectedBuyer['initials'] }}
+                                    </div>
+                                @endunless
+
+                                <div class="seller-message-content">
+                                    @unless ($mine)
+                                        <div class="seller-message-label">{{ $selectedBuyer['name'] }}</div>
+                                    @endunless
+
+                                    <span
+                                        data-chat-bubble
+                                        data-chat-side="{{ $mine ? 'outgoing' : 'incoming' }}"
+                                        data-chat-kind="{{ $mine ? 'seller' : 'buyer' }}"
+                                        class="seller-message-surface"
+                                    >{{ trim((string) ($message->body ?? '')) }}</span>
+
+                                    <p class="seller-message-time {{ $mine ? 'text-right' : '' }}">
+                                        {{ $message->created_at?->format('h:i A') }}
+                                    </p>
+                                </div>
                             </div>
-                            <p class="mt-4 text-[13px] font-bold text-[#4f473e]">Start a conversation</p>
-                            <p class="mt-1 text-[11px] text-[#958c80]">Send your concern to SARI Admin Support. SARI Assistant will confirm receipt while you wait for a human administrator.</p>
+                        @empty
+                            <div id="sellerEmptyChat" class="flex h-full min-h-[360px] items-center justify-center text-center">
+                                <div>
+                                    <div class="seller-buyer-avatar mx-auto h-14 w-14 text-[12px]">
+                                        {{ $selectedBuyer['initials'] }}
+                                    </div>
+                                    <p class="mt-4 text-[13px] font-bold text-[#4f473e]">Start a conversation with {{ $selectedBuyer['name'] }}</p>
+                                    <p class="mt-1 text-[11px] text-[#958c80]">Send a message about their order or delivery.</p>
+                                </div>
+                            </div>
+                        @endforelse
+                    @else
+                        <div id="sellerEmptyChat" class="flex h-full min-h-[360px] items-center justify-center text-center">
+                            <div>
+                                <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#f6efe2] text-[#9d6f22]">
+                                    <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path></svg>
+                                </div>
+                                <p class="mt-4 text-[13px] font-bold text-[#4f473e]">Start a conversation</p>
+                                <p class="mt-1 text-[11px] text-[#958c80]">Send your concern to SARI Admin Support. SARI Assistant will confirm receipt while you wait for a human administrator.</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
                 <div class="seller-platform-composer border-t border-[#ebe5dc] bg-white p-3 sm:p-3.5">
-                    <div id="sellerChatBlockedNotice" class="{{ $sellerChatBlocked ? 'flex' : 'hidden' }} mb-3 items-start gap-3 rounded-[14px] border border-[#e8cccc] bg-[#fff7f7] px-4 py-3">
-                        <div class="grid h-8 w-8 shrink-0 place-items-center rounded-[10px] bg-white text-[#a65f5f] shadow-sm">
-                            <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 8 8 8"></path></svg>
-                        </div>
-                        <div>
-                            <p class="text-[11px] font-bold text-[#8f5050]">Messaging temporarily unavailable</p>
-                            <p id="sellerChatBlockedReason" class="mt-1 text-[9.5px] leading-5 text-[#9a6d6d]">{{ $sellerChatRestriction?->block_reason ?: 'SARI Admin has restricted this support conversation.' }}</p>
-                        </div>
-                    </div>
+                    @if ($selectedBuyer)
+                        <form
+                            id="sellerBuyerMessageForm"
+                            action="{{ route('seller.buyer-messages.send', $selectedBuyer['key']) }}"
+                            method="POST"
+                        >
+                            @csrf
 
-                    <form id="sellerPlatformMessageForm" class="rounded-[16px] border border-[#e3ddd4] bg-[#fdfcfa] p-3 shadow-[0_6px_18px_rgba(35,28,20,.035)] transition focus-within:border-[#c99a3d] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#c99a3d]/10">
-                        @csrf
-                        <textarea id="sellerPlatformInput" rows="1" @if($sellerChatBlocked) disabled @endif placeholder="{{ $sellerChatBlocked ? 'Messaging is restricted by SARI Admin.' : 'Message...' }}" class="w-full resize-none bg-transparent px-1 py-1 text-[12px] leading-[1.45] text-[#3e3831] outline-none placeholder:text-[#aaa197]"></textarea>
+                            <textarea
+                                id="sellerBuyerInput"
+                                name="body"
+                                rows="1"
+                                maxlength="3000"
+                                required
+                                placeholder="Write a message to {{ $selectedBuyer['name'] }}..."
+                            ></textarea>
 
-                        <div id="sellerAttachmentName" class="mt-2 hidden rounded-xl border border-[#e8e1d7] bg-white px-3 py-2 text-[10px] text-[#62594e]"></div>
-
-                        <div class="seller-composer-actions">
-                            <div class="seller-composer-attachment">
-                                <label class="seller-composer-attachment-label cursor-pointer border border-transparent text-[#756d63] transition hover:border-[#e8dfd0] hover:bg-[#f8f4ed] hover:text-[#a8731f]" title="Attach file">
-                                    <input id="sellerPlatformAttachment" type="file" @if($sellerChatBlocked) disabled @endif accept="image/*,.pdf,.txt,.csv,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.mp4,.mov,.mp3,.m4a,.wav" class="hidden">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path></svg>
-                                </label>
-                                <span class="seller-composer-attachment-text">Images/files up to 15 MB</span>
-                            </div>
-
-                            <button id="sellerPlatformSend" type="submit" @if($sellerChatBlocked) disabled @endif class="disabled:cursor-not-allowed disabled:opacity-50" title="Send message" aria-label="Send message">
+                            <button
+                                id="sellerBuyerSend"
+                                type="submit"
+                                title="Send message"
+                                aria-label="Send message to {{ $selectedBuyer['name'] }}"
+                            >
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 4 17 8-17 8 3-8-3-8Z"></path><path d="M7 12h14"></path></svg>
                             </button>
+                        </form>
+
+                        <p id="sellerBuyerMessageError" class="mt-2 hidden text-[10px] text-[#a45f5f]" role="alert" aria-live="assertive"></p>
+                    @else
+                        <div id="sellerChatBlockedNotice" class="{{ $sellerChatBlocked ? 'flex' : 'hidden' }} mb-3 items-start gap-3 rounded-[14px] border border-[#e8cccc] bg-[#fff7f7] px-4 py-3">
+                            <div class="grid h-8 w-8 shrink-0 place-items-center rounded-[10px] bg-white text-[#a65f5f] shadow-sm">
+                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 8 8 8"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-bold text-[#8f5050]">Messaging temporarily unavailable</p>
+                                <p id="sellerChatBlockedReason" class="mt-1 text-[9.5px] leading-5 text-[#9a6d6d]">{{ $sellerChatRestriction?->block_reason ?: 'SARI Admin has restricted this support conversation.' }}</p>
+                            </div>
                         </div>
-                    </form>
-                    <p id="sellerPlatformError" class="mt-2 hidden text-[10px] text-[#a45f5f]" role="alert" aria-live="assertive"></p>
+
+                        <form id="sellerPlatformMessageForm" class="rounded-[16px] border border-[#e3ddd4] bg-[#fdfcfa] p-3 shadow-[0_6px_18px_rgba(35,28,20,.035)] transition focus-within:border-[#c99a3d] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#c99a3d]/10">
+                            @csrf
+                            <textarea id="sellerPlatformInput" rows="1" @if($sellerChatBlocked) disabled @endif placeholder="{{ $sellerChatBlocked ? 'Messaging is restricted by SARI Admin.' : 'Message...' }}" class="w-full resize-none bg-transparent px-1 py-1 text-[12px] leading-[1.45] text-[#3e3831] outline-none placeholder:text-[#aaa197]"></textarea>
+
+                            <div id="sellerAttachmentName" class="mt-2 hidden rounded-xl border border-[#e8e1d7] bg-white px-3 py-2 text-[10px] text-[#62594e]"></div>
+
+                            <div class="seller-composer-actions">
+                                <div class="seller-composer-attachment">
+                                    <label class="seller-composer-attachment-label cursor-pointer border border-transparent text-[#756d63] transition hover:border-[#e8dfd0] hover:bg-[#f8f4ed] hover:text-[#a8731f]" title="Attach file">
+                                        <input id="sellerPlatformAttachment" type="file" @if($sellerChatBlocked) disabled @endif accept="image/*,.pdf,.txt,.csv,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.mp4,.mov,.mp3,.m4a,.wav" class="hidden">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path></svg>
+                                    </label>
+                                    <span class="seller-composer-attachment-text">Images/files up to 15 MB</span>
+                                </div>
+
+                                <button id="sellerPlatformSend" type="submit" @if($sellerChatBlocked) disabled @endif class="disabled:cursor-not-allowed disabled:opacity-50" title="Send message" aria-label="Send message">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 4 17 8-17 8 3-8-3-8Z"></path><path d="M7 12h14"></path></svg>
+                                </button>
+                            </div>
+                        </form>
+
+                        <p id="sellerPlatformError" class="mt-2 hidden text-[10px] text-[#a45f5f]" role="alert" aria-live="assertive"></p>
+                    @endif
                 </div>
             </div>
 
-            {{-- RIGHT: SELLER CONTEXT --}}
-            <aside id="sellerDetailsPane" class="hidden border-l border-[#ebe5dc] bg-white 2xl:block">
-                <div class="border-b border-[#eee8df] px-5 py-4">
-                    <p class="text-[13px] font-bold text-[#302a24]">Account Details</p>
-                    <p class="mt-1 text-[10px] text-[#948b7f]">Your seller support context</p>
-                </div>
 
-                <div class="p-5">
-                    <div class="flex flex-col items-center text-center">
-                        <div class="grid h-16 w-16 place-items-center rounded-full bg-[#f4f6f7] text-[15px] font-bold text-[#607a8f]">{{ strtoupper(substr($seller->store_name ?: 'SS', 0, 2)) }}</div>
-                        <p class="mt-3 text-[14px] font-bold text-[#2e2923]">{{ $seller->store_name ?: 'SARI Seller Store' }}</p>
-                        <p class="mt-1 text-[11px] text-[#92897e]">{{ $seller->email }}</p>
-                        <span class="mt-3 rounded-full border border-[#dce5ed] bg-[#f4f7fa] px-2.5 py-1 text-[10px] font-semibold text-[#617d96]">Seller</span>
+            {{-- RIGHT: CONVERSATION CONTEXT --}}
+            <aside id="sellerDetailsPane" class="hidden border-l border-[#ebe5dc] bg-white 2xl:block">
+                @if ($selectedBuyer)
+                    <div class="border-b border-[#eee8df] px-5 py-4">
+                        <p class="text-[13px] font-bold text-[#302a24]">Buyer Details</p>
+                        <p class="mt-1 text-[10px] text-[#948b7f]">Order customer context</p>
                     </div>
 
-                    <div class="mt-6 space-y-3">
-                        <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
-                            <p class="text-[10px] text-[#948b7f]">Account Status</p>
-                            <p class="mt-2 text-[12px] font-semibold {{ $seller->isSuspended() ? 'text-[#a96565]' : 'text-[#56816a]' }}">{{ ucfirst($seller->account_status ?: 'active') }}</p>
+                    <div class="p-5">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="seller-buyer-avatar h-16 w-16 text-[14px]">
+                                {{ $selectedBuyer['initials'] }}
+                            </div>
+
+                            <p class="mt-3 text-[14px] font-bold text-[#2e2923]">{{ $selectedBuyer['name'] }}</p>
+                            <p class="mt-1 text-[11px] text-[#92897e]">{{ $selectedBuyer['email'] ?: 'Buyer account' }}</p>
+                            <span class="mt-3 rounded-full border border-[#dce5ed] bg-[#f4f7fa] px-2.5 py-1 text-[10px] font-semibold text-[#617d96]">Buyer</span>
                         </div>
 
-                        <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
-                            <p class="text-[10px] text-[#948b7f]">Compliance Warnings</p>
-                            <p class="mt-2 text-[16px] font-bold text-[#a8731f]">{{ (int) ($seller->warning_count ?? 0) }} / 3</p>
+                        <div class="mt-6 space-y-3">
+                            <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
+                                <p class="text-[10px] text-[#948b7f]">Orders with your store</p>
+                                <p class="mt-2 text-[12px] font-semibold text-[#50483f]">{{ (int) $selectedBuyer['order_count'] }}</p>
+                            </div>
+
+                            <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
+                                <p class="text-[10px] text-[#948b7f]">Conversation</p>
+                                <p class="mt-2 text-[12px] font-semibold text-[#50483f]"><span id="sellerBuyerTotalMessages">{{ $buyerMessages->count() }}</span> total messages</p>
+                            </div>
+
+                            <div class="rounded-[14px] border border-[#dfe7ec] bg-[#f7fafc] p-4">
+                                <p class="text-[10px] font-bold text-[#5c7180]">Buyer conversation</p>
+                                <p class="mt-1 text-[10px] leading-5 text-[#81909a]">Use this thread for order, shipping, payment, or delivery coordination with this buyer.</p>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="border-b border-[#eee8df] px-5 py-4">
+                        <p class="text-[13px] font-bold text-[#302a24]">Account Details</p>
+                        <p class="mt-1 text-[10px] text-[#948b7f]">Your seller support context</p>
+                    </div>
+
+                    <div class="p-5">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="grid h-16 w-16 place-items-center rounded-full bg-[#f4f6f7] text-[15px] font-bold text-[#607a8f]">{{ strtoupper(substr($seller->store_name ?: 'SS', 0, 2)) }}</div>
+                            <p class="mt-3 text-[14px] font-bold text-[#2e2923]">{{ $seller->store_name ?: 'SARI Seller Store' }}</p>
+                            <p class="mt-1 text-[11px] text-[#92897e]">{{ $seller->email }}</p>
+                            <span class="mt-3 rounded-full border border-[#dce5ed] bg-[#f4f7fa] px-2.5 py-1 text-[10px] font-semibold text-[#617d96]">Seller</span>
                         </div>
 
-                        <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
-                            <p class="text-[10px] text-[#948b7f]">Conversation</p>
-                            <p class="mt-2 text-[12px] font-semibold text-[#50483f]"><span id="sellerTotalMessages">0</span> total messages</p>
-                        </div>
+                        <div class="mt-6 space-y-3">
+                            <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
+                                <p class="text-[10px] text-[#948b7f]">Account Status</p>
+                                <p class="mt-2 text-[12px] font-semibold {{ $seller->isSuspended() ? 'text-[#a96565]' : 'text-[#56816a]' }}">{{ ucfirst($seller->account_status ?: 'active') }}</p>
+                            </div>
 
-                        <div class="rounded-[14px] border border-[#dfe7ec] bg-[#f7fafc] p-4">
-                            <div class="flex items-start gap-3">
-                                <div class="sari-bot-avatar h-9 w-9">
-                                    <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
-                                </div>
-                                <div>
-                                    <p class="text-[11px] font-bold text-[#5c7180]">SARI Assistant</p>
-                                    <p class="mt-1 text-[10px] leading-5 text-[#81909a]">Confirms receipt of your concern while you wait for a human SARI administrator to review and respond.</p>
+                            <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
+                                <p class="text-[10px] text-[#948b7f]">Compliance Warnings</p>
+                                <p class="mt-2 text-[16px] font-bold text-[#a8731f]">{{ (int) ($seller->warning_count ?? 0) }} / 3</p>
+                            </div>
+
+                            <div class="rounded-[14px] border border-[#e8e2d9] bg-[#fdfcf9] p-4">
+                                <p class="text-[10px] text-[#948b7f]">Conversation</p>
+                                <p class="mt-2 text-[12px] font-semibold text-[#50483f]"><span id="sellerTotalMessages">0</span> total messages</p>
+                            </div>
+
+                            <div class="rounded-[14px] border border-[#dfe7ec] bg-[#f7fafc] p-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="sari-bot-avatar h-9 w-9">
+                                        <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-bold text-[#5c7180]">SARI Assistant</p>
+                                        <p class="mt-1 text-[10px] leading-5 text-[#81909a]">Confirms receipt of your concern while you wait for a human SARI administrator to review and respond.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </aside>
         </div>
     </section>
@@ -1460,6 +2526,431 @@
 @push('scripts')
 <script>
 (function () {
+    const buyerMode = @json($buyerMode);
+    const selectedBuyerName = @json($selectedBuyer['name'] ?? '');
+    const selectedBuyerInitials = @json($selectedBuyer['initials'] ?? 'B');
+    const buyerThreadUrl = @json($selectedBuyer ? route('seller.buyer-messages.thread', $selectedBuyer['key']) : null);
+    const buyerSendUrl = @json($selectedBuyer ? route('seller.buyer-messages.send', $selectedBuyer['key']) : null);
+    const csrfTokenShared = @json(csrf_token());
+
+    function bootSellerBuyerThread() {
+        if (!buyerMode) return;
+
+        const root = document.getElementById('sellerPlatformChat');
+        if (!root || root.dataset.initialized === '1') return;
+
+        root.dataset.initialized = '1';
+
+        const messagesEl = document.getElementById('sellerPlatformMessages');
+        const form = document.getElementById('sellerBuyerMessageForm');
+        const input = document.getElementById('sellerBuyerInput');
+        const sendButton = document.getElementById('sellerBuyerSend');
+        const errorBox = document.getElementById('sellerBuyerMessageError');
+        const totalEl = document.getElementById('sellerBuyerTotalMessages');
+        const searchInput = document.getElementById('sellerMessageSearch');
+        const searchClear = document.getElementById('sellerMessageSearchClear');
+
+        let pollTimer = null;
+        let loading = false;
+        let sending = false;
+
+        const escapeHtml = (value) => String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+
+        const formatTime = (value) => {
+            if (!value) return '';
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return '';
+            }
+
+            return new Intl.DateTimeFormat('en-PH', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+            }).format(date);
+        };
+
+        function setError(message = '') {
+            if (!errorBox) return;
+
+            errorBox.textContent = message;
+            errorBox.classList.toggle(
+                'hidden',
+                !message
+            );
+        }
+
+        function scrollBottom(behavior = 'auto') {
+            if (!messagesEl) return;
+
+            messagesEl.scrollTo({
+                top: messagesEl.scrollHeight,
+                behavior,
+            });
+        }
+
+        function resizeInput() {
+            if (!input) return;
+
+            input.style.height = 'auto';
+            input.style.height =
+                `${Math.min(
+                    112,
+                    Math.max(
+                        38,
+                        input.scrollHeight
+                    )
+                )}px`;
+        }
+
+        function messageHtml(message) {
+            const mine =
+                message.sender_role === 'seller';
+
+            return `
+                <div
+                    class="seller-message-row ${mine ? 'flex justify-end' : 'flex items-end gap-2.5'}"
+                    data-message-id="${Number(message.id || 0)}"
+                    data-search="${escapeHtml(`${message.body || ''} ${mine ? 'seller you' : selectedBuyerName}`.toLowerCase())}"
+                >
+                    ${mine ? '' : `
+                        <div class="seller-buyer-avatar" aria-hidden="true">
+                            ${escapeHtml(selectedBuyerInitials)}
+                        </div>
+                    `}
+
+                    <div class="seller-message-content">
+                        ${mine ? '' : `
+                            <div class="seller-message-label">
+                                ${escapeHtml(selectedBuyerName)}
+                            </div>
+                        `}
+
+                        <span
+                            data-chat-bubble
+                            data-chat-side="${mine ? 'outgoing' : 'incoming'}"
+                            data-chat-kind="${mine ? 'seller' : 'buyer'}"
+                            class="seller-message-surface"
+                        >${escapeHtml(String(message.body || '').trim())}</span>
+
+                        <p class="seller-message-time ${mine ? 'text-right' : ''}">
+                            ${escapeHtml(formatTime(message.created_at))}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMessages(messages, followLatest = false) {
+            if (!messagesEl) return;
+
+            const rows =
+                Array.isArray(messages)
+                    ? messages
+                    : [];
+
+            if (!rows.length) {
+                messagesEl.innerHTML = `
+                    <div id="sellerEmptyChat" class="flex h-full min-h-[360px] items-center justify-center text-center">
+                        <div>
+                            <div class="seller-buyer-avatar mx-auto h-14 w-14 text-[12px]">
+                                ${escapeHtml(selectedBuyerInitials)}
+                            </div>
+
+                            <p class="mt-4 text-[13px] font-bold text-[#4f473e]">
+                                Start a conversation with ${escapeHtml(selectedBuyerName)}
+                            </p>
+
+                            <p class="mt-1 text-[11px] text-[#958c80]">
+                                Send a message about their order or delivery.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messagesEl.innerHTML =
+                    rows.map(messageHtml).join('');
+            }
+
+            if (totalEl) {
+                totalEl.textContent =
+                    String(rows.length);
+            }
+
+            applySearch();
+
+            if (followLatest) {
+                requestAnimationFrame(
+                    () => scrollBottom('auto')
+                );
+            }
+        }
+
+        async function parseResponse(response) {
+            const raw = await response.text();
+
+            try {
+                return raw
+                    ? JSON.parse(raw)
+                    : {};
+            } catch (_) {
+                return {};
+            }
+        }
+
+        async function loadThread(initial = false) {
+            if (
+                !buyerThreadUrl
+                || loading
+            ) {
+                return;
+            }
+
+            loading = true;
+
+            try {
+                const response = await fetch(
+                    buyerThreadUrl,
+                    {
+                        credentials: 'same-origin',
+                        cache: 'no-store',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    }
+                );
+
+                const data =
+                    await parseResponse(response);
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message
+                        || 'Unable to load buyer messages.'
+                    );
+                }
+
+                renderMessages(
+                    data.messages || [],
+                    initial
+                );
+
+                setError('');
+            } catch (error) {
+                setError(
+                    error.message
+                    || 'Unable to load buyer messages.'
+                );
+            } finally {
+                loading = false;
+                root.dataset.ready = '1';
+            }
+        }
+
+        function applySearch() {
+            const query =
+                (
+                    searchInput?.value
+                    || ''
+                )
+                    .trim()
+                    .toLowerCase();
+
+            messagesEl
+                ?.querySelectorAll(
+                    '[data-message-id]'
+                )
+                .forEach(row => {
+                    const haystack =
+                        String(
+                            row.dataset.search
+                            || ''
+                        ).toLowerCase();
+
+                    row.classList.toggle(
+                        'hidden',
+                        query !== ''
+                        && !haystack.includes(query)
+                    );
+                });
+
+            if (searchClear) {
+                searchClear.classList.toggle(
+                    'hidden',
+                    query === ''
+                );
+
+                searchClear.classList.toggle(
+                    'grid',
+                    query !== ''
+                );
+            }
+        }
+
+        form?.addEventListener(
+            'submit',
+            async (event) => {
+                event.preventDefault();
+
+                if (sending) return;
+
+                const body =
+                    (input?.value || '').trim();
+
+                if (!body) {
+                    input?.focus();
+                    return;
+                }
+
+                sending = true;
+                setError('');
+
+                if (sendButton) {
+                    sendButton.disabled = true;
+                }
+
+                try {
+                    const response = await fetch(
+                        buyerSendUrl,
+                        {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            headers: {
+                                'X-CSRF-TOKEN':
+                                    csrfTokenShared,
+                                'Accept':
+                                    'application/json',
+                                'Content-Type':
+                                    'application/json',
+                                'X-Requested-With':
+                                    'XMLHttpRequest',
+                            },
+                            body: JSON.stringify({
+                                body,
+                            }),
+                        }
+                    );
+
+                    const data =
+                        await parseResponse(response);
+
+                    if (!response.ok) {
+                        const validationMessage =
+                            Object.values(
+                                data.errors || {}
+                            )?.[0]?.[0];
+
+                        throw new Error(
+                            data.message
+                            || validationMessage
+                            || 'Unable to send message.'
+                        );
+                    }
+
+                    if (input) {
+                        input.value = '';
+                        resizeInput();
+                    }
+
+                    await loadThread(true);
+                    input?.focus();
+                } catch (error) {
+                    setError(
+                        error.message
+                        || 'Unable to send message.'
+                    );
+                } finally {
+                    sending = false;
+
+                    if (sendButton) {
+                        sendButton.disabled = false;
+                    }
+                }
+            }
+        );
+
+        input?.addEventListener(
+            'input',
+            () => {
+                resizeInput();
+                setError('');
+            }
+        );
+
+        input?.addEventListener(
+            'keydown',
+            (event) => {
+                if (event.isComposing) {
+                    return;
+                }
+
+                if (
+                    event.key === 'Enter'
+                    && !event.shiftKey
+                ) {
+                    event.preventDefault();
+                    form?.requestSubmit();
+                }
+            }
+        );
+
+        searchInput?.addEventListener(
+            'input',
+            applySearch
+        );
+
+        searchClear?.addEventListener(
+            'click',
+            () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                }
+
+                applySearch();
+                searchInput?.focus();
+            }
+        );
+
+        resizeInput();
+        scrollBottom('auto');
+        loadThread(false);
+
+        pollTimer = window.setInterval(
+            () => loadThread(false),
+            3000
+        );
+
+        const cleanup = () => {
+            if (pollTimer) {
+                window.clearInterval(
+                    pollTimer
+                );
+            }
+
+            root.dataset.initialized = '0';
+        };
+
+        document.addEventListener(
+            'livewire:navigating',
+            cleanup,
+            { once: true }
+        );
+
+        window.addEventListener(
+            'beforeunload',
+            cleanup,
+            { once: true }
+        );
+    }
+
     function bootSellerPlatformChat() {
         const root = document.getElementById('sellerPlatformChat');
         if (!root || root.dataset.initialized === '1') return;
@@ -1693,7 +3184,14 @@
                 );
 
             const body = message.body
-                ? `<div class="seller-message-bubble rounded-[14px] px-4 py-3 text-[12px] leading-6 shadow-[0_7px_18px_rgba(35,28,20,.055)] ${mine ? 'rounded-br-[5px] bg-[#c99128] text-white' : (isBot ? 'rounded-bl-[5px] border border-[#dce8ef] bg-[#f4f8fa] text-[#526a79]' : 'rounded-bl-[5px] border border-[#e6dfd6] bg-white text-[#514a42]')}">${escapeHtml(message.body)}</div>`
+                ? `
+                    <span
+                        data-chat-bubble
+                        data-chat-side="${mine ? 'outgoing' : 'incoming'}"
+                        data-chat-kind="${mine ? 'seller' : (isBot ? 'assistant' : (message.sender_role === 'admin' ? 'admin' : 'support'))}"
+                        class="seller-message-surface"
+                    >${escapeHtml(message.body)}</span>
+                `
                 : '';
 
             const pendingAttachment = isPending && message?._optimisticAttachment
@@ -1716,8 +3214,8 @@
                      data-message-id="${escapeHtml(message.id)}"
                      data-search="${escapeHtml(`${message.body || ''} ${message.attachment?.name || message?._optimisticAttachment?.name || ''} ${senderLabel}`.toLowerCase())}">
                     ${mine ? '' : (isBot ? botAvatarHtml('h-8 w-8') : adminAvatarHtml('h-8 w-8'))}
-                    <div class="max-w-[84%] sm:max-w-[70%] lg:max-w-[64%]">
-                        ${mine ? '' : `<div class="mb-1.5 text-[9px] font-semibold ${isBot ? 'uppercase tracking-[.08em] text-[#6e899c]' : 'text-[#7c7369]'}">${senderLabel}</div>`}
+                    <div class="seller-message-content">
+                        ${mine ? '' : `<div class="seller-message-label ${isBot ? 'seller-message-label--assistant' : ''}">${senderLabel}</div>`}
                         ${body}
                         ${pendingAttachment || attachmentHtml(message)}
                         ${meta}
@@ -2434,10 +3932,23 @@
 
     /* Livewire evaluates this body script when the page arrives. Boot once here;
        bootSellerPlatformChat registers its own one-shot navigation cleanup. */
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bootSellerPlatformChat, { once: true });
-    } else {
+    const bootSelectedSellerConversation = () => {
+        if (buyerMode) {
+            bootSellerBuyerThread();
+            return;
+        }
+
         bootSellerPlatformChat();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener(
+            'DOMContentLoaded',
+            bootSelectedSellerConversation,
+            { once: true }
+        );
+    } else {
+        bootSelectedSellerConversation();
     }
 })();
 </script>

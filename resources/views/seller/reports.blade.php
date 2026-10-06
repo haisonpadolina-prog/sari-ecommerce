@@ -1653,6 +1653,329 @@
         }
     }
 
+
+
+/* ======================================================================
+   GENERATE REPORT — MAIN CONTAINERS ONLY FLOATING
+   Final hierarchy rule:
+   - Top-level report surfaces float.
+   - Everything nested inside those surfaces stays flat.
+   - Dropdown menus may keep elevation because they are overlays.
+   Visual-only: filters, routes, chart, print/download and report data
+   remain unchanged.
+   ====================================================================== */
+
+.seller-report-page {
+    --report-main-border: #E5E7EB;
+    --report-main-divider: #ECEFF2;
+    --report-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255,255,255,.92);
+    --report-main-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255,255,255,.90);
+}
+
+/* ------------------------------------------------------------
+   OPEN PAGE HEADER — NOT A FLOATING CARD
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-header,
+.seller-report-page .seller-report-header:hover {
+    border: 0 !important;
+    border-bottom: 1px solid var(--report-main-divider) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   ONLY TOP-LEVEL REPORT SURFACES FLOAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-kpi-grid .seller-report-card,
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-order-strip,
+.seller-report-page .seller-report-financial-section {
+    border-color: var(--report-main-border) !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-order-strip,
+.seller-report-page .seller-report-financial-section {
+    box-shadow: var(--report-main-shadow) !important;
+}
+
+.seller-report-page .seller-report-kpi-grid .seller-report-card {
+    box-shadow: var(--report-main-shadow-soft) !important;
+}
+
+/* No movement/lift on structural hover. */
+.seller-report-page .seller-report-filter-panel:hover,
+.seller-report-page .seller-report-kpi-grid .seller-report-card:hover,
+.seller-report-page .seller-report-trend-panel:hover,
+.seller-report-page .seller-report-performance-panel:hover,
+.seller-report-page .seller-report-products-section:hover,
+.seller-report-page .seller-report-order-strip:hover,
+.seller-report-page .seller-report-financial-section:hover {
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   FILTER PANEL CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-filter-field select,
+.seller-report-page .seller-report-type-button,
+.seller-report-page .seller-report-generate,
+.seller-report-page .seller-report-ranges button,
+.seller-report-page .seller-report-header-button {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-filter-field select,
+.seller-report-page .seller-report-type-button {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-filter-field input:hover,
+.seller-report-page .seller-report-filter-field select:hover,
+.seller-report-page .seller-report-type-button:hover,
+.seller-report-page .seller-report-ranges button:hover {
+    background: #F8FAFC !important;
+    transform: none !important;
+}
+
+/* Focus ring only; no resting floating effect. */
+.seller-report-page .seller-report-filter-field input:focus,
+.seller-report-page .seller-report-filter-field select:focus,
+.seller-report-page .seller-report-type-button:focus-visible,
+.seller-report-page .seller-report-type-button[aria-expanded="true"] {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* Header buttons remain flat controls. */
+.seller-report-page .seller-report-header-button--secondary,
+.seller-report-page .seller-report-header-button--primary,
+.seller-report-page .seller-report-header-button--secondary:hover,
+.seller-report-page .seller-report-header-button--primary:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Report type icon is not a floating mini-card. */
+.seller-report-page .seller-report-type-icon {
+    box-shadow: none !important;
+}
+
+/* Dropdown menu remains elevated because it is a popover layer. */
+.seller-report-page .seller-report-type-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   KPI CARD CONTENT — FLAT INSIDE EACH TOP-LEVEL KPI CARD
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-kpi-grid .seller-report-card > *,
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    box-shadow: none !important;
+}
+
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    border: 0 !important;
+}
+
+/* ------------------------------------------------------------
+   SALES TREND / PERFORMANCE CONTENT — FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-chart-shell,
+.seller-report-page .seller-report-chart-shell--modern,
+.seller-report-page .seller-report-chart-empty-card,
+.seller-report-page .seller-report-legend-item,
+.seller-report-page .seller-report-performance-row,
+.seller-report-page .seller-report-revenue-note,
+.seller-report-page .seller-report-revenue-note-icon {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-chart-shell,
+.seller-report-page .seller-report-chart-shell--modern {
+    border: 0 !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-chart-empty-card {
+    border-color: #E5E7EB !important;
+    background: #FAFBFC !important;
+}
+
+.seller-report-page .seller-report-chart-empty-icon,
+.seller-report-page .seller-report-revenue-note-icon {
+    box-shadow: none !important;
+}
+
+.seller-report-page .seller-report-revenue-note {
+    border-color: var(--report-main-divider) !important;
+    background: #FAFBFC !important;
+}
+
+/* Performance rows stay document-like with dividers only. */
+.seller-report-page .seller-report-performance-row {
+    border-bottom-color: var(--report-main-divider) !important;
+}
+
+/* ------------------------------------------------------------
+   TOP SELLING PRODUCTS — MAIN SECTION FLOATS, PRODUCT ITEMS FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-product-card,
+.seller-report-page .seller-report-product-card:hover,
+.seller-report-page .seller-report-product-media,
+.seller-report-page .seller-report-product-rank,
+.seller-report-page .seller-report-product-sold,
+.seller-report-page .seller-report-product-progress {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-product-card {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+}
+
+.seller-report-page .seller-report-product-media {
+    border-bottom-color: var(--report-main-divider) !important;
+    background: #F8FAFC !important;
+}
+
+.seller-report-page .seller-report-product-rank {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.seller-report-page .seller-report-products-section .col-span-full {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ------------------------------------------------------------
+   ORDER STATUS STRIP — PARENT FLOATS, INNER CELLS FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-order-stat,
+.seller-report-page .seller-report-order-stat:hover,
+.seller-report-page .seller-report-order-stat-icon,
+.seller-report-page .seller-report-order-stat-copy {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-order-stat {
+    background: transparent !important;
+    border-right-color: var(--report-main-divider) !important;
+}
+
+.seller-report-page .seller-report-order-stat-icon {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   FINANCIAL TABLE — MAIN SECTION FLOATS, TABLE CONTENT FLAT
+   ------------------------------------------------------------ */
+.seller-report-page .seller-report-financial-section > div:first-child,
+.seller-report-page .seller-report-financial-section table,
+.seller-report-page .seller-report-financial-section thead,
+.seller-report-page .seller-report-financial-section tbody,
+.seller-report-page .seller-report-table-row,
+.seller-report-page .seller-report-table-row:hover,
+.seller-report-page .seller-report-financial-section td,
+.seller-report-page .seller-report-financial-section th,
+.seller-report-page .seller-report-financial-section td span {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-report-page .seller-report-table-row:hover {
+    background: #F8FAFC !important;
+}
+
+.seller-report-page .seller-report-financial-section > div:first-child,
+.seller-report-page .seller-report-financial-section table thead tr,
+.seller-report-page .seller-report-table-row {
+    border-color: var(--report-main-divider) !important;
+}
+
+/* Transaction/status badges stay flat semantic labels. */
+.seller-report-page .seller-report-financial-section td span {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   PRINT — NO SHADOWS
+   ------------------------------------------------------------ */
+@media print {
+    .seller-report-page .seller-report-filter-panel,
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-financial-section {
+        box-shadow: none !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY, LIGHTER MAIN DEPTH
+   ------------------------------------------------------------ */
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-filter-panel,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-financial-section {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-report-page .seller-report-kpi-grid .seller-report-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .seller-report-page .seller-report-product-card,
+    .seller-report-page .seller-report-chart-empty-card,
+    .seller-report-page .seller-report-revenue-note,
+    .seller-report-page .seller-report-order-stat {
+        box-shadow: none !important;
+    }
+}
 </style>
 @endpush
 

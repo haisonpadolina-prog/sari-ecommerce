@@ -13,6 +13,7 @@ use App\Services\Seller\SellerAccountStatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
 
 class AdminSellerComplianceController extends Controller
@@ -102,19 +103,32 @@ class AdminSellerComplianceController extends Controller
                 $this->statusService->refresh($seller);
             });
 
-        $flaggedProducts = SellerProduct::query()
+        /*
+        |--------------------------------------------------------------------------
+        | AUTHORITATIVE PRODUCT REVIEW QUEUE
+        |--------------------------------------------------------------------------
+        |
+        | Every active seller listing awaiting an Admin decision belongs here.
+        | Seller submissions are saved as either "pending" or "flagged" after
+        | screening, so querying only "pending" hides valid review submissions.
+        |
+        | Load the review set once, then derive specialized queues from the same
+        | in-memory collection so counts and UI sections stay consistent.
+        */
+        $reviewProducts = SellerProduct::query()
             ->with(['seller', 'latestVersion'])
             ->whereNull('archived_at')
-            ->where('moderation_status', 'flagged')
+            ->whereIn('moderation_status', ['pending', 'flagged'])
             ->latest('created_at')
             ->get();
 
-        $pendingProducts = SellerProduct::query()
-            ->with(['seller', 'latestVersion'])
-            ->whereNull('archived_at')
+        $flaggedProducts = $reviewProducts
+            ->where('moderation_status', 'flagged')
+            ->values();
+
+        $pendingProducts = $reviewProducts
             ->where('moderation_status', 'pending')
-            ->latest('created_at')
-            ->get();
+            ->values();
 
         $recentWarnings = SellerWarning::query()
             ->with(['seller', 'product'])
@@ -148,13 +162,14 @@ class AdminSellerComplianceController extends Controller
 
         $stats = [
             'total_sellers' => SellerAccount::query()->count(),
-            'under_review' => $flaggedProducts->count() + $pendingProducts->count(),
+            'under_review' => $reviewProducts->count(),
             'flagged_products' => $flaggedProducts->count(),
             'active_warnings' => SellerWarning::query()->count(),
             'suspended_sellers' => $suspendedSellers->count(),
         ];
 
         return view('admin.seller-compliance', compact(
+            'reviewProducts',
             'flaggedProducts',
             'pendingProducts',
             'recentWarnings',
@@ -170,73 +185,146 @@ class AdminSellerComplianceController extends Controller
 
         $product->load('seller');
 
-        $seller = $this->statusService->refresh(
-            $product->seller
-        );
+        $seller = $product->seller;
 
-        if ($this->statusService->isTerminated($seller)) {
+        if (!$seller) {
+            Log::warning('SARI product approval blocked because seller relation is missing.', [
+                'product_id' => $product->id,
+                'seller_account_id' => $product->seller_account_id,
+            ]);
+
             return $this->error(
                 $request,
                 'product',
-                'This seller account is banned or deactivated. Restore/unban the seller before approving listings.'
+                'This product is no longer linked to a valid seller account.'
             );
         }
 
-        DB::transaction(function () use ($product, $seller) {
-            $freshProduct = SellerProduct::query()
-                ->whereKey($product->id)
-                ->lockForUpdate()
-                ->firstOrFail();
+        try {
+            $seller = $this->statusService->refresh($seller);
 
-            $approvedAt = now();
-            $flashSaleEndsAt = $freshProduct->flash_sale_ends_at;
-
-            /*
-             * A seller configures the Flash Sale while the listing is still
-             * awaiting moderation. The stored end timestamp represents the
-             * intended duration from the seller's last submit/edit, not a
-             * countdown that should run while approval is pending.
-             *
-             * On approval, preserve that full duration and move the deadline
-             * forward so the live countdown starts now.
-             */
-            if ((float) ($freshProduct->discount ?? 0) > 0 && $flashSaleEndsAt !== null) {
-                $scheduleBase = $freshProduct->updated_at
-                    ?? $freshProduct->created_at
-                    ?? $approvedAt;
-
-                $durationSeconds = max(
-                    0,
-                    $flashSaleEndsAt->getTimestamp() - $scheduleBase->getTimestamp()
+            if ($this->statusService->isTerminated($seller)) {
+                return $this->error(
+                    $request,
+                    'product',
+                    'This seller account is banned or deactivated. Restore/unban the seller before approving listings.'
                 );
-
-                $flashSaleEndsAt = $durationSeconds > 0
-                    ? $approvedAt->copy()->addSeconds($durationSeconds)
-                    : null;
             }
 
-            $freshProduct->forceFill([
-                'moderation_status' => 'approved',
-                'admin_review_note' => 'Approved by SARI Administrator.',
-                'reviewed_at' => $approvedAt,
-                'requires_re_review' => false,
-                'flash_sale_ends_at' => $flashSaleEndsAt,
-            ])->save();
+            if (!in_array((string) $product->moderation_status, ['pending', 'flagged'], true)) {
+                return $this->error(
+                    $request,
+                    'product',
+                    'Only products that are pending or flagged for review can be approved.'
+                );
+            }
 
+            $approvedProduct = DB::transaction(function () use ($product) {
+                $freshProduct = SellerProduct::query()
+                    ->whereKey($product->id)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                if (!in_array((string) $freshProduct->moderation_status, ['pending', 'flagged'], true)) {
+                    throw ValidationException::withMessages([
+                        'product' => 'This product has already been reviewed. Refresh the page before taking another action.',
+                    ]);
+                }
+
+                $approvedAt = now();
+
+                /*
+                 * These three columns belong to the original moderation schema
+                 * and are required for the core Admin approval transition.
+                 */
+                $values = [
+                    'moderation_status' => 'approved',
+                    'admin_review_note' => 'Approved by SARI Administrator.',
+                    'reviewed_at' => $approvedAt,
+                ];
+
+                /*
+                 * Compatibility with installations that have not yet applied
+                 * newer Seller Center migrations. A missing optional column
+                 * must not turn the core moderation decision into HTTP 500.
+                 */
+                if (Schema::hasColumn('seller_products', 'requires_re_review')) {
+                    $values['requires_re_review'] = false;
+                }
+
+                if (Schema::hasColumn('seller_products', 'flash_sale_ends_at')) {
+                    $flashSaleEndsAt = $freshProduct->flash_sale_ends_at;
+
+                    if (
+                        (float) ($freshProduct->discount ?? 0) > 0
+                        && $flashSaleEndsAt !== null
+                    ) {
+                        $scheduleBase = $freshProduct->updated_at
+                            ?? $freshProduct->created_at
+                            ?? $approvedAt;
+
+                        $durationSeconds = max(
+                            0,
+                            $flashSaleEndsAt->getTimestamp()
+                                - $scheduleBase->getTimestamp()
+                        );
+
+                        $flashSaleEndsAt = $durationSeconds > 0
+                            ? $approvedAt->copy()->addSeconds($durationSeconds)
+                            : null;
+                    }
+
+                    $values['flash_sale_ends_at'] = $flashSaleEndsAt;
+                }
+
+                $freshProduct->forceFill($values)->save();
+
+                return $freshProduct->fresh();
+            });
+        } catch (ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            Log::error('SARI Admin product approval failed.', [
+                'product_id' => $product->id,
+                'seller_account_id' => $seller->id,
+                'moderation_status' => $product->moderation_status,
+                'error' => $e->getMessage(),
+                'exception' => get_class($e),
+            ]);
+
+            return $this->error(
+                $request,
+                'product',
+                'Product approval could not be completed. Please run the latest database migrations and try again.'
+            );
+        }
+
+        /*
+         * Approval is the authoritative moderation action. Messaging and
+         * realtime delivery are secondary side effects and must not roll back
+         * an already-valid approval if those services are temporarily down.
+         */
+        try {
             $this->createComplianceMessage(
                 $seller,
                 'Product "' .
-                $freshProduct->name .
+                $approvedProduct->name .
                 '" was approved by the administrator.'
             );
-        });
+        } catch (\Throwable $e) {
+            Log::warning('SARI approval succeeded but compliance message creation failed.', [
+                'product_id' => $approvedProduct->id,
+                'seller_id' => $seller->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         $this->queueBroadcast(
             $seller,
             'approved',
             'Product Approved',
             'Your product was approved by the SARI Administrator.',
-            $product->name
+            $approvedProduct->name
         );
 
         return $this->success(

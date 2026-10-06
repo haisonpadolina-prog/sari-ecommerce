@@ -7691,6 +7691,1315 @@
     background-color: transparent !important;
     background-image: none !important;
 }
+
+/* ==========================================================================
+   OPERATIONS OVERVIEW — APPROVED CLEAN ENTERPRISE DESIGN
+   --------------------------------------------------------------------------
+   Final visual layer for Recent Activity, Recent Orders, Inventory Alerts,
+   Financial Snapshot and Order Management.
+
+   Design goals:
+   - clean white surfaces on the existing dashboard background
+   - no decorative header icons or unnecessary inner icon tiles
+   - gold reserved for primary actions/links, not every visual element
+   - semantic status colors (green / blue / amber / red / slate)
+   - real product thumbnails in Recent Orders and Inventory Alerts
+   ========================================================================== */
+
+#sellerCommerceSideColumn,
+#sellerFinancialOrdersRow {
+    --seller-ops-border: #E6E9EE;
+    --seller-ops-border-soft: #EEF1F4;
+    --seller-ops-text: #172033;
+    --seller-ops-muted: #7A8594;
+    --seller-ops-subtle: #98A1AE;
+    --seller-ops-surface: #FFFFFF;
+    --seller-ops-soft: #FAFBFC;
+    --seller-ops-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 10px 28px rgba(15, 23, 42, .055);
+    --seller-ops-gold: #D99A0B;
+    --seller-ops-gold-hover: #C78906;
+}
+
+#sellerCommerceSideColumn {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+    align-items: stretch !important;
+    margin-top: 16px !important;
+}
+
+@media (min-width: 760px) and (max-width: 1179px) {
+    #sellerCommerceSideColumn {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #sellerCommerceSideColumn > .seller-inventory-panel {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+@media (min-width: 1180px) {
+    #sellerCommerceSideColumn {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    #sellerCommerceSideColumn > #sellerRecentActivityCard,
+    #sellerCommerceSideColumn > #sellerRecentOrdersCard,
+    #sellerCommerceSideColumn > .seller-inventory-panel {
+        width: 100% !important;
+        height: 356px !important;
+        min-height: 356px !important;
+        max-height: 356px !important;
+    }
+}
+
+#sellerFinancialOrdersRow {
+    margin-top: 16px !important;
+    gap: 16px !important;
+}
+
+@media (min-width: 1280px) {
+    #sellerFinancialOrdersRow {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* ----- Shared card surface ----- */
+#sellerCommerceSideColumn > #sellerRecentActivityCard,
+#sellerCommerceSideColumn > #sellerRecentOrdersCard,
+#sellerCommerceSideColumn > .seller-inventory-panel,
+#sellerFinancialOrdersRow > .seller-financial-panel,
+#sellerFinancialOrdersRow > .seller-order-panel {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid var(--seller-ops-border) !important;
+    border-radius: 18px !important;
+    background: var(--seller-ops-surface) !important;
+    background-image: none !important;
+    box-shadow: var(--seller-ops-shadow) !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn > #sellerRecentActivityCard:hover,
+#sellerCommerceSideColumn > #sellerRecentOrdersCard:hover,
+#sellerCommerceSideColumn > .seller-inventory-panel:hover,
+#sellerFinancialOrdersRow > .seller-financial-panel:hover,
+#sellerFinancialOrdersRow > .seller-order-panel:hover {
+    border-color: var(--seller-ops-border) !important;
+    background: var(--seller-ops-surface) !important;
+    box-shadow: var(--seller-ops-shadow) !important;
+    transform: none !important;
+}
+
+/* ----- Headings: text-first, no decorative icon containers ----- */
+#sellerCommerceSideColumn .seller-recent-head,
+#sellerCommerceSideColumn > .seller-inventory-panel > div:first-child {
+    flex: 0 0 auto !important;
+    min-height: 78px !important;
+    padding: 16px 18px 14px !important;
+    border-bottom: 1px solid var(--seller-ops-border-soft) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+}
+
+#sellerCommerceSideColumn .seller-recent-head {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+}
+
+#sellerCommerceSideColumn .seller-recent-head > div:first-child,
+#sellerCommerceSideColumn > .seller-inventory-panel > div:first-child > div:first-child {
+    min-width: 0 !important;
+}
+
+#sellerCommerceSideColumn .seller-recent-head h3,
+#sellerCommerceSideColumn > .seller-inventory-panel .seller-panel-title,
+#sellerFinancialOrdersRow .seller-panel-title {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    letter-spacing: -.025em !important;
+    color: var(--seller-ops-text) !important;
+}
+
+#sellerCommerceSideColumn .seller-recent-head p,
+#sellerCommerceSideColumn > .seller-inventory-panel > div:first-child p,
+#sellerFinancialOrdersRow > .seller-side-panel > div:first-child p {
+    margin-top: 4px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    line-height: 1.45 !important;
+    font-weight: 400 !important;
+    color: var(--seller-ops-muted) !important;
+}
+
+/* Context badges use semantic colors rather than gold everywhere. */
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge,
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live,
+#sellerCommerceSideColumn > .seller-inventory-panel > div:first-child > .seller-inventory-count {
+    display: inline-flex !important;
+    min-height: 24px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    padding: 0 9px !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge {
+    border: 1px solid #DCE8F8 !important;
+    background: #F2F7FD !important;
+    color: #4D77A5 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
+    border: 1px solid #D8EDDF !important;
+    background: #F0F8F3 !important;
+    color: #3D7D55 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live::before {
+    width: 5px !important;
+    height: 5px !important;
+    background: #55AA72 !important;
+    box-shadow: 0 0 0 3px rgba(85, 170, 114, .10) !important;
+}
+
+#sellerCommerceSideColumn > .seller-inventory-panel > div:first-child > .seller-inventory-count {
+    border: 1px solid #F3DEDE !important;
+    background: #FFF3F3 !important;
+    color: #C15151 !important;
+}
+
+/* ----- Recent Activity: simple text rows, no item icons ----- */
+#sellerCommerceSideColumn #sellerRecentActivityCard {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    padding: 2px 18px !important;
+    background: #FFFFFF !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: start !important;
+    gap: 14px !important;
+    min-height: 54px !important;
+    padding: 10px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--seller-ops-border-soft) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:last-child {
+    border-bottom: 0 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:hover {
+    background: transparent !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-icon {
+    display: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-title {
+    display: block !important;
+    font-size: 9.2px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    color: #273142 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-description {
+    display: block !important;
+    margin-top: 3px !important;
+    font-size: 7.6px !important;
+    line-height: 1.35 !important;
+    color: #687386 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-meta {
+    display: block !important;
+    margin-top: 3px !important;
+    font-size: 6.8px !important;
+    line-height: 1.3 !important;
+    color: #A0A8B3 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-time {
+    align-self: start !important;
+    margin-top: 1px !important;
+    font-size: 6.8px !important;
+    line-height: 1.3 !important;
+    color: #9AA3AF !important;
+    white-space: nowrap !important;
+}
+
+/* ----- Recent Orders: product thumbnail first ----- */
+#sellerCommerceSideColumn #sellerRecentOrdersCard {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 2px 18px !important;
+    background: #FFFFFF !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) 92px !important;
+    align-items: center !important;
+    gap: 11px !important;
+    padding: 8px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--seller-ops-border-soft) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:last-child {
+    border-bottom: 0 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
+    background: transparent !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
+    position: relative !important;
+    display: grid !important;
+    width: 44px !important;
+    height: 44px !important;
+    flex: 0 0 44px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    border: 1px solid #E2E6EB !important;
+    border-radius: 10px !important;
+    background: #F5F7F9 !important;
+    color: #8A94A2 !important;
+    box-shadow: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-image-fallback {
+    display: grid !important;
+    width: 100% !important;
+    height: 100% !important;
+    place-items: center !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    color: #7A8594 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-new-dot {
+    right: -2px !important;
+    bottom: -2px !important;
+    width: 8px !important;
+    height: 8px !important;
+    border: 2px solid #FFFFFF !important;
+    background: #3E8DD8 !important;
+    box-shadow: none !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-buyer {
+    font-size: 9.2px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    color: #273142 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product {
+    margin-top: 3px !important;
+    font-size: 7.5px !important;
+    line-height: 1.3 !important;
+    color: #687386 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
+    margin-top: 3px !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+    flex-wrap: nowrap !important;
+    font-size: 6.6px !important;
+    line-height: 1.2 !important;
+    color: #9AA3AF !important;
+    white-space: nowrap !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+    width: 92px !important;
+    min-width: 0 !important;
+    align-self: center !important;
+    text-align: right !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
+    font-size: 9.2px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    color: #202938 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status {
+    display: inline-flex !important;
+    min-height: 20px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 4px !important;
+    border: 1px solid transparent !important;
+    border-radius: 999px !important;
+    padding: 0 7px !important;
+    font-size: 6.2px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--new {
+    border-color: #D9E9FA !important;
+    background: #EEF6FE !important;
+    color: #3477B7 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--progress {
+    border-color: #F0DEB4 !important;
+    background: #FFF7E6 !important;
+    color: #A76B05 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--courier {
+    border-color: #DEE5EE !important;
+    background: #F2F5F9 !important;
+    color: #64748B !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--success {
+    border-color: #D5EBDD !important;
+    background: #EDF8F1 !important;
+    color: #347A50 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status--danger {
+    border-color: #F1D8D8 !important;
+    background: #FFF1F1 !important;
+    color: #B94B4B !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
+    margin-top: 4px !important;
+    font-size: 6.4px !important;
+    line-height: 1.15 !important;
+    color: #A0A8B3 !important;
+}
+
+/* ----- Shared lightweight footer ----- */
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer,
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer {
+    flex: 0 0 auto !important;
+    min-height: 42px !important;
+    margin-top: auto !important;
+    padding: 10px 18px !important;
+    border-top: 1px solid var(--seller-ops-border-soft) !important;
+    background: #FFFFFF !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer p,
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer p {
+    font-size: 6.8px !important;
+    color: #98A1AE !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a,
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
+    gap: 5px !important;
+    font-size: 7.4px !important;
+    font-weight: 700 !important;
+    color: #A86F08 !important;
+}
+
+#sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a:hover,
+#sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a:hover {
+    color: #845605 !important;
+}
+
+/* ----- Inventory Alerts: real product thumbnails ----- */
+#sellerCommerceSideColumn > .seller-inventory-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+}
+
+#sellerCommerceSideColumn > .seller-inventory-panel > div:nth-child(2) {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: grid !important;
+    align-content: start !important;
+    gap: 8px !important;
+    margin-top: 0 !important;
+    padding: 12px 18px !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row {
+    min-height: 58px !important;
+    padding: 8px 9px !important;
+    border: 1px solid #E6E9EE !important;
+    border-radius: 11px !important;
+    background: #FBFCFD !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row:hover {
+    border-color: #E6E9EE !important;
+    background: #FBFCFD !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row > div {
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-product {
+    display: flex !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-thumb {
+    display: grid !important;
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 42px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    border: 1px solid #E2E6EB !important;
+    border-radius: 9px !important;
+    background: #F4F6F8 !important;
+    color: #88929F !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-thumb img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-thumb-fallback {
+    display: grid !important;
+    width: 100% !important;
+    height: 100% !important;
+    place-items: center !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    color: #7A8594 !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row p:first-child {
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    color: #273142 !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row p + p {
+    margin-top: 3px !important;
+    font-size: 6.8px !important;
+    line-height: 1.25 !important;
+    color: #98A1AE !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-row .seller-inventory-count {
+    flex: 0 0 auto !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+}
+
+#sellerCommerceSideColumn > .seller-inventory-panel > .mt-auto {
+    flex: 0 0 auto !important;
+    padding: 0 18px 12px !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-button {
+    min-height: 40px !important;
+    height: 40px !important;
+    border: 1px solid var(--seller-ops-gold) !important;
+    border-radius: 9px !important;
+    background: var(--seller-ops-gold) !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+}
+
+#sellerCommerceSideColumn .seller-inventory-button:hover {
+    border-color: var(--seller-ops-gold-hover) !important;
+    background: var(--seller-ops-gold-hover) !important;
+}
+
+/* ----- Financial Snapshot: no icon tiles, no rainbow cards ----- */
+#sellerFinancialOrdersRow > .seller-financial-panel,
+#sellerFinancialOrdersRow > .seller-order-panel {
+    min-height: 292px !important;
+    padding: 16px 18px 14px !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) {
+    display: grid !important;
+    gap: 0 !important;
+    margin-top: 10px !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-metric {
+    display: block !important;
+    padding: 10px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--seller-ops-border-soft) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-metric:last-child {
+    border-bottom: 0 !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-metric-label {
+    margin: 0 !important;
+    font-size: 7.4px !important;
+    line-height: 1.25 !important;
+    font-weight: 500 !important;
+    color: #7D8794 !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-metric-value {
+    margin: 4px 0 0 !important;
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    letter-spacing: -.03em !important;
+    color: #202938 !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-panel > .mt-auto {
+    padding-top: 10px !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-panel a[href*="reports"] {
+    min-height: 40px !important;
+    height: 40px !important;
+    justify-content: center !important;
+    border: 1px solid var(--seller-ops-gold) !important;
+    border-radius: 9px !important;
+    background: var(--seller-ops-gold) !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+}
+
+#sellerFinancialOrdersRow .seller-financial-panel a[href*="reports"]:hover {
+    border-color: var(--seller-ops-gold-hover) !important;
+    background: var(--seller-ops-gold-hover) !important;
+}
+
+/* ----- Order Management: compact two-column neutral workflow ----- */
+#sellerFinancialOrdersRow .seller-order-panel > div:nth-child(2) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    margin-top: 12px !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-row {
+    min-height: 40px !important;
+    padding: 7px 9px !important;
+    border: 1px solid #E6E9EE !important;
+    border-radius: 9px !important;
+    background: #FBFCFD !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-row:hover {
+    border-color: #DDE2E8 !important;
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-row > span:first-child {
+    font-size: 8.3px !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    color: #3E4857 !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-row > span:last-child {
+    min-width: 23px !important;
+    min-height: 23px !important;
+    height: 23px !important;
+    border-radius: 7px !important;
+    padding-inline: 6px !important;
+    font-size: 7.5px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-view-all {
+    min-height: 40px !important;
+    height: 40px !important;
+    border: 1px solid #D8DEE6 !important;
+    border-radius: 9px !important;
+    background: #FFFFFF !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+}
+
+#sellerFinancialOrdersRow .seller-order-view-all:hover {
+    border-color: #C8D0DA !important;
+    background: #F9FAFB !important;
+    color: #1F2937 !important;
+}
+
+@media (max-width: 640px) {
+    #sellerCommerceSideColumn .seller-recent-head,
+    #sellerCommerceSideColumn > .seller-inventory-panel > div:first-child {
+        min-height: 0 !important;
+        padding: 15px !important;
+    }
+
+    #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list,
+    #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+        padding-inline: 15px !important;
+    }
+
+    #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
+        grid-template-columns: 42px minmax(0, 1fr) !important;
+    }
+
+    #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+        grid-column: 2 !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        margin-top: 3px !important;
+        text-align: left !important;
+    }
+
+    #sellerCommerceSideColumn > .seller-inventory-panel > div:nth-child(2),
+    #sellerCommerceSideColumn > .seller-inventory-panel > .mt-auto {
+        padding-inline: 15px !important;
+    }
+
+    #sellerFinancialOrdersRow > .seller-financial-panel,
+    #sellerFinancialOrdersRow > .seller-order-panel {
+        min-height: 0 !important;
+        padding: 15px !important;
+    }
+
+    #sellerFinancialOrdersRow .seller-order-panel > div:nth-child(2) {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #sellerCommerceSideColumn a,
+    #sellerFinancialOrdersRow a {
+        transition: none !important;
+    }
+}
+
+
+
+/* ==========================================================================
+   SALES PERFORMANCE — CLEAN ENTERPRISE ANALYTICS V4
+   --------------------------------------------------------------------------
+   Final card-specific layer. Keeps the existing Seller sales data, period
+   switching, chart SVG IDs, tooltip behavior and backend calculations intact.
+   The visual system is intentionally neutral; gold is reserved for the data
+   series rather than used as decoration throughout the card.
+   ========================================================================== */
+
+#sellerSalesPerformanceCard.seller-sales-admin-card {
+    --sales-border: #E5E9EF;
+    --sales-border-soft: #EDF0F4;
+    --sales-text: #172033;
+    --sales-muted: #6F7A89;
+    --sales-subtle: #98A1AE;
+    --sales-surface: #FFFFFF;
+    --sales-soft: #FAFBFC;
+    --sales-accent: #C88C16;
+
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid var(--sales-border) !important;
+    border-radius: 18px !important;
+    background: var(--sales-surface) !important;
+    padding: 0 !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 10px 28px rgba(15, 23, 42, .055) !important;
+    color: var(--sales-text) !important;
+}
+
+#sellerSalesPerformanceCard.seller-sales-admin-card:hover {
+    border-color: var(--sales-border) !important;
+    background: var(--sales-surface) !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 10px 28px rgba(15, 23, 42, .055) !important;
+    transform: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-head {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 18px !important;
+    padding: 19px 20px 17px !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-title {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+    font-weight: 650 !important;
+    letter-spacing: -.03em !important;
+    color: var(--sales-text) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-subtitle {
+    margin: 5px 0 0 !important;
+    max-width: 420px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 10px !important;
+    line-height: 1.55 !important;
+    font-weight: 400 !important;
+    color: var(--sales-muted) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-periods {
+    display: inline-grid !important;
+    grid-template-columns: repeat(3, max-content) !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    gap: 3px !important;
+    border: 1px solid var(--sales-border) !important;
+    border-radius: 10px !important;
+    background: #F5F7F9 !important;
+    padding: 3px !important;
+    box-shadow: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-period-button {
+    min-height: 31px !important;
+    height: 31px !important;
+    border: 1px solid transparent !important;
+    border-radius: 7px !important;
+    background: transparent !important;
+    padding: 0 10px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    line-height: 1 !important;
+    font-weight: 500 !important;
+    color: #758090 !important;
+    box-shadow: none !important;
+    white-space: nowrap !important;
+    transform: none !important;
+    transition: background-color .14s ease, color .14s ease, border-color .14s ease, box-shadow .14s ease !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-period-button:hover {
+    background: rgba(255,255,255,.62) !important;
+    color: #3C4655 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-period-button.is-active,
+#sellerSalesPerformanceCard .seller-sales-period-button[aria-pressed="true"] {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    color: #202938 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 1px 3px rgba(15,23,42,.06) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-period-button:focus-visible {
+    outline: 2px solid rgba(200,140,22,.32) !important;
+    outline-offset: 2px !important;
+}
+
+/* KPI strip: flat, readable, separated by rules instead of three mini-cards. */
+#sellerSalesPerformanceCard .seller-sales-admin-metrics {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    margin: 0 20px !important;
+    padding: 14px 0 15px !important;
+    border-top: 1px solid var(--sales-border-soft) !important;
+    border-bottom: 1px solid var(--sales-border-soft) !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric {
+    min-width: 0 !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric:first-child {
+    padding-left: 0 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric:last-child {
+    padding-right: 0 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric + .seller-sales-admin-metric {
+    border-left: 1px solid var(--sales-border-soft) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric-label {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: var(--sales-muted) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-metric-value {
+    margin: 6px 0 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 22px !important;
+    line-height: 1.05 !important;
+    font-weight: 650 !important;
+    letter-spacing: -.04em !important;
+    color: var(--sales-text) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-divider {
+    display: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-chart-head {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    padding: 16px 20px 9px !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-chart-title {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+    letter-spacing: -.015em !important;
+    color: #2D3644 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-chart-copy {
+    margin: 4px 0 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8px !important;
+    line-height: 1.45 !important;
+    font-weight: 400 !important;
+    color: var(--sales-subtle) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-legend {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding-top: 2px !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-legend-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    font-weight: 500 !important;
+    color: var(--sales-muted) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-legend-item > i {
+    display: block !important;
+    width: 7px !important;
+    height: 7px !important;
+    flex: 0 0 7px !important;
+    border-radius: 999px !important;
+    background: var(--sales-accent) !important;
+}
+
+/* Chart gets one quiet working surface; no nested shadow or glass treatment. */
+#sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
+    position: relative !important;
+    min-height: 228px !important;
+    margin: 0 20px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--sales-border-soft) !important;
+    border-radius: 12px !important;
+    background: var(--sales-soft) !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    contain: layout paint !important;
+}
+
+#sellerSalesPerformanceCard #sellerSalesChart {
+    display: block !important;
+    width: 100% !important;
+    height: 228px !important;
+    overflow: visible !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-line {
+    fill: none !important;
+    stroke: var(--sales-accent) !important;
+    stroke-width: 2.1 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-area {
+    opacity: .7 !important;
+}
+
+/* Empty state covers the chart cleanly instead of floating over grid lines. */
+#sellerSalesPerformanceCard .seller-sales-admin-empty {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 8 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 26px !important;
+    border-radius: inherit !important;
+    background: var(--sales-soft) !important;
+    text-align: center !important;
+    transform: none !important;
+    pointer-events: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-empty.hidden {
+    display: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-empty-icon {
+    display: none !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-empty p {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+    font-weight: 600 !important;
+    color: #354052 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-empty span:not(.seller-sales-admin-empty-icon) {
+    display: block !important;
+    max-width: 340px !important;
+    margin-top: 5px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    line-height: 1.55 !important;
+    font-weight: 400 !important;
+    color: var(--sales-subtle) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-tooltip {
+    min-width: 132px !important;
+    border: 1px solid #E2E7ED !important;
+    border-radius: 9px !important;
+    background: rgba(255,255,255,.985) !important;
+    padding: 8px 9px !important;
+    box-shadow: 0 10px 24px rgba(15,23,42,.10) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-tooltip-period {
+    color: #677282 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-tooltip-row {
+    color: #8A94A3 !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-tooltip-row span > i {
+    background: var(--sales-accent) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-tooltip-row strong {
+    color: var(--sales-text) !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-footer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px 18px !important;
+    margin: 0 !important;
+    padding: 12px 20px 15px !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+#sellerSalesPerformanceCard .seller-sales-admin-footer p,
+#sellerSalesPerformanceCard #sellerSalesBestPeriod {
+    margin: 0 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 7.8px !important;
+    line-height: 1.4 !important;
+    font-weight: 400 !important;
+    color: #929BA8 !important;
+}
+
+#sellerSalesPerformanceCard #sellerSalesBestPeriod {
+    color: #697586 !important;
+    font-weight: 500 !important;
+}
+
+@media (max-width: 760px) {
+    #sellerSalesPerformanceCard .seller-sales-admin-head {
+        flex-direction: column !important;
+        gap: 13px !important;
+        padding: 17px 16px 15px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-periods {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        width: 100% !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-period-button {
+        width: 100% !important;
+        padding-inline: 6px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-metrics {
+        margin-inline: 16px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
+        padding: 15px 16px 9px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
+        margin-inline: 16px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-footer {
+        padding: 12px 16px 15px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    #sellerSalesPerformanceCard .seller-sales-admin-metrics {
+        grid-template-columns: 1fr !important;
+        padding: 3px 0 !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-metric,
+    #sellerSalesPerformanceCard .seller-sales-admin-metric:first-child,
+    #sellerSalesPerformanceCard .seller-sales-admin-metric:last-child {
+        padding: 11px 0 !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-metric + .seller-sales-admin-metric {
+        border-top: 1px solid var(--sales-border-soft) !important;
+        border-left: 0 !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-chart-shell,
+    #sellerSalesPerformanceCard #sellerSalesChart {
+        min-height: 214px !important;
+        height: 214px !important;
+    }
+
+    #sellerSalesPerformanceCard .seller-sales-admin-footer {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #sellerSalesPerformanceCard .seller-sales-period-button,
+    #sellerSalesPerformanceCard .seller-sales-admin-tooltip {
+        transition: none !important;
+    }
+}
+
+
+/* ======================================================================
+   CATALOG CATEGORY — FINAL DONUT SIZE OVERRIDE
+   Size/thickness only. Existing category colors are intentionally untouched.
+   ====================================================================== */
+#sellerCategoryBreakdownCard .seller-category-executive-body {
+    grid-template-columns: 282px minmax(0, 1fr) !important;
+}
+
+#sellerCategoryBreakdownCard .seller-category-executive-donut {
+    min-height: 278px !important;
+}
+
+#sellerCategoryBreakdownCard .seller-category-donut {
+    width: 252px !important;
+    height: 252px !important;
+    flex: 0 0 252px !important;
+}
+
+/* Larger inset = smaller center hole = visibly thicker colored donut progress. */
+#sellerCategoryBreakdownCard .seller-category-donut::before {
+    inset: 62px !important;
+}
+
+#sellerCategoryBreakdownCard .seller-category-donut-center {
+    inset: 25% !important;
+}
+
+@media (min-width: 1024px) and (max-height: 820px) {
+    #sellerCategoryBreakdownCard .seller-category-executive-body {
+        grid-template-columns: 250px minmax(0, 1fr) !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-executive-donut {
+        min-height: 246px !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-donut {
+        width: 224px !important;
+        height: 224px !important;
+        flex-basis: 224px !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-donut::before {
+        inset: 54px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    #sellerCategoryBreakdownCard .seller-category-executive-body {
+        grid-template-columns: 1fr !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-executive-donut {
+        min-height: 228px !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-donut {
+        width: 210px !important;
+        height: 210px !important;
+        flex-basis: 210px !important;
+    }
+
+    #sellerCategoryBreakdownCard .seller-category-donut::before {
+        inset: 50px !important;
+    }
+}
+
+
+/* ======================================================================
+   CATALOG CATEGORY — VISUAL DONUT CENTERING
+   Alignment only. Existing donut size, colors, data, and interactions stay.
+   ====================================================================== */
+@media (min-width: 1400px) {
+    #sellerCategoryBreakdownCard .seller-category-executive-donut {
+        position: relative !important;
+        left: 34px !important;
+    }
+}
+
+@media (min-width: 1180px) and (max-width: 1399px) {
+    #sellerCategoryBreakdownCard .seller-category-executive-donut {
+        position: relative !important;
+        left: 20px !important;
+    }
+}
+
+@media (max-width: 1179px) {
+    #sellerCategoryBreakdownCard .seller-category-executive-donut {
+        left: auto !important;
+    }
+}
+
 </style>
 @endpush
 
@@ -8374,7 +9683,6 @@
         <div
             id="sellerSalesPerformanceCard"
             class="seller-sales-admin-card h-full"
-            style="background:#FFFFFF !important;background-color:#FFFFFF !important;background-image:none !important;"
         >
             <div class="seller-sales-admin-head">
                 <div class="min-w-0">
@@ -8412,7 +9720,7 @@
                 </div>
             </div>
 
-            <div class="seller-sales-admin-metrics" style="background:#FFFFFF !important;background-color:#FFFFFF !important;background-image:none !important;">
+            <div class="seller-sales-admin-metrics">
                 <div class="seller-sales-admin-metric">
                     <p class="seller-sales-admin-metric-label">Total Sales</p>
                     <p id="sellerSalesTotal" class="seller-sales-admin-metric-value">₱0.00</p>
@@ -8433,9 +9741,9 @@
 
             <div class="seller-sales-admin-chart-head">
                 <div>
-                    <h4 class="seller-sales-admin-chart-title">Seller delivered sales trend</h4>
+                    <h4 class="seller-sales-admin-chart-title">Delivered sales trend</h4>
                     <p class="seller-sales-admin-chart-copy">
-                        Each point represents one reporting period from delivered orders
+                        Merchandise sales from completed delivered orders
                     </p>
                 </div>
 
@@ -8447,7 +9755,7 @@
                 </div>
             </div>
 
-            <div id="sellerSalesChartShell" class="seller-sales-admin-chart-shell" style="background:#FFFFFF !important;background-color:#FFFFFF !important;background-image:none !important;">
+            <div id="sellerSalesChartShell" class="seller-sales-admin-chart-shell">
                 <div
                     id="sellerSalesTooltip"
                     class="seller-sales-admin-tooltip"
@@ -8462,7 +9770,7 @@
 
                 <svg
                     id="sellerSalesChart"
-                    viewBox="0 0 900 286"
+                    viewBox="0 0 900 320"
                     preserveAspectRatio="xMidYMid meet"
                     role="img"
                     aria-label="Seller delivered sales trend"
@@ -8492,11 +9800,6 @@
                     id="sellerSalesEmptyState"
                     class="seller-sales-admin-empty hidden"
                 >
-                    <span class="seller-sales-admin-empty-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M5 19V13M10 19V9M15 19v-4M20 19V6"></path>
-                        </svg>
-                    </span>
                     <div>
                         <p>No delivered sales in this period yet.</p>
                         <span>Completed Buyer → Seller → Courier orders will appear here.</span>
@@ -8536,50 +9839,11 @@
 
             <div class="seller-activity-list">
                 @forelse ($sellerActivities->take(4) as $activity)
-                    @php
-                        $activityType = (string) ($activity['type'] ?? 'activity');
-
-                        $activityIconClass = match ($activityType) {
-                            'product_created' => 'seller-activity-icon--created',
-                            'product_edited' => 'seller-activity-icon--edited',
-                            'order_ready' => 'seller-activity-icon--order',
-                            default => 'seller-activity-icon--neutral',
-                        };
-                    @endphp
-
                     <a
                         href="{{ $activity['url'] ?? '#' }}"
                         class="seller-activity-item"
                         wire:navigate.hover
                     >
-                        <span class="seller-activity-icon {{ $activityIconClass }}">
-                            @if ($activityType === 'product_created')
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M5 7h14l-1 13H6L5 7Z"></path>
-                                    <path d="M9 7a3 3 0 0 1 6 0"></path>
-                                    <path d="M12 11v5"></path>
-                                    <path d="M9.5 13.5h5"></path>
-                                </svg>
-                            @elseif ($activityType === 'product_edited')
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M12 20h9"></path>
-                                    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
-                                </svg>
-                            @elseif ($activityType === 'order_ready')
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M4 6h11v10H4z"></path>
-                                    <path d="M15 9h3l2 3v4h-5z"></path>
-                                    <circle cx="8" cy="18" r="1.5"></circle>
-                                    <circle cx="17" cy="18" r="1.5"></circle>
-                                </svg>
-                            @else
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <circle cx="12" cy="12" r="8"></circle>
-                                    <path d="M12 8v4l3 2"></path>
-                                </svg>
-                            @endif
-                        </span>
-
                         <span class="min-w-0 flex-1">
                             <span class="seller-activity-title">
                                 {{ $activity['title'] ?? 'Seller activity' }}
@@ -8657,19 +9921,22 @@
                         wire:navigate.hover
                         aria-label="Open order {{ $order['order_number'] ?? '' }}"
                     >
-                        <span class="seller-recent-avatar">
-                            @if (!empty($order['buyer_avatar_url']))
+                        <span class="seller-recent-avatar" aria-hidden="true">
+                            @if (!empty($order['product_image_url']))
                                 <img
-                                    src="{{ $order['buyer_avatar_url'] }}"
-                                    alt="{{ $order['buyer_name'] ?? 'Buyer' }}"
+                                    src="{{ $order['product_image_url'] }}"
+                                    alt=""
                                     loading="lazy"
                                     decoding="async"
-                                    referrerpolicy="no-referrer"
                                     onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
                                 >
-                                <span class="hidden">{{ $order['buyer_initials'] ?? 'SB' }}</span>
+                                <span class="seller-recent-image-fallback hidden">
+                                    {{ mb_strtoupper(mb_substr((string) ($order['item_summary'] ?? 'P'), 0, 1)) }}
+                                </span>
                             @else
-                                <span>{{ $order['buyer_initials'] ?? 'SB' }}</span>
+                                <span class="seller-recent-image-fallback">
+                                    {{ mb_strtoupper(mb_substr((string) ($order['item_summary'] ?? 'P'), 0, 1)) }}
+                                </span>
                             @endif
 
                             @if (!empty($order['is_new']))
@@ -8755,12 +10022,40 @@
             <div class="mt-3 space-y-2">
                 @forelse ($lowStockProducts as $lowStockProduct)
                     <div class="seller-inventory-row rounded-lg border border-[#eee8df]">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="min-w-0">
-                                <p class="truncate font-semibold text-[#3d3730]">{{ $lowStockProduct->name }}</p>
-                                <p class="mt-1 truncate text-[#958c80]">SKU: {{ $lowStockProduct->sku }}</p>
+                        @php
+                            $inventoryImageUrl = !empty($lowStockProduct->image_path)
+                                ? route('seller.products.image', $lowStockProduct)
+                                : null;
+                        @endphp
+
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="seller-inventory-product">
+                                <span class="seller-inventory-thumb" aria-hidden="true">
+                                    @if ($inventoryImageUrl)
+                                        <img
+                                            src="{{ $inventoryImageUrl }}"
+                                            alt=""
+                                            loading="lazy"
+                                            decoding="async"
+                                            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+                                        >
+                                        <span class="seller-inventory-thumb-fallback hidden">
+                                            {{ mb_strtoupper(mb_substr((string) $lowStockProduct->name, 0, 1)) }}
+                                        </span>
+                                    @else
+                                        <span class="seller-inventory-thumb-fallback">
+                                            {{ mb_strtoupper(mb_substr((string) $lowStockProduct->name, 0, 1)) }}
+                                        </span>
+                                    @endif
+                                </span>
+
+                                <div class="min-w-0">
+                                    <p class="truncate font-semibold text-[#3d3730]">{{ $lowStockProduct->name }}</p>
+                                    <p class="mt-1 truncate text-[#958c80]">SKU: {{ $lowStockProduct->sku }}</p>
+                                </div>
                             </div>
-                            <span class="seller-inventory-count shrink-0 font-bold {{ (int) $lowStockProduct->stock <= 2 ? 'text-[#b65353]' : 'text-[#b47d1e]' }}">
+
+                            <span class="seller-inventory-count shrink-0 font-bold {{ (int) $lowStockProduct->stock <= 2 ? 'text-[#c24d4d]' : 'text-[#b47718]' }}">
                                 {{ $lowStockProduct->stock }} left
                             </span>
                         </div>
@@ -8799,40 +10094,19 @@
             </div>
 
             <div class="mt-3 space-y-2">
-                <div class="rounded-[12px] border border-[#dfe8f1] bg-[#f7fbff] p-3">
-                    <div class="flex items-center gap-3">
-                        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-[#dbe7f4] bg-white text-[#3f78b7]">
-                            <span class="text-[15px] font-medium">₱</span>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="truncate text-[8.5px] font-medium text-[#74818e]">Gross Sales</p>
-                            <p class="mt-0.5 truncate text-[15px] font-bold tracking-[-0.03em] text-[#20272e]">₱{{ number_format($monthlySales, 2) }}</p>
-                        </div>
-                    </div>
+                <div class="seller-financial-metric">
+                    <p class="seller-financial-metric-label">Gross Sales</p>
+                    <p class="seller-financial-metric-value">₱{{ number_format($monthlySales, 2) }}</p>
                 </div>
 
-                <div class="rounded-[12px] border border-[#f0e2c9] bg-[#fffaf1] p-3">
-                    <div class="flex items-center gap-3">
-                        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-[#f1dfbd] bg-white text-[#d18a07]">
-                            <span class="text-[15px] font-medium">%</span>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="truncate text-[8.5px] font-medium text-[#917f63]">Est. Platform Commission ({{ number_format($platformCommissionRate, 0) }}%)</p>
-                            <p class="mt-0.5 truncate text-[15px] font-bold tracking-[-0.03em] text-[#8a641e]">₱{{ number_format($platformCommission, 2) }}</p>
-                        </div>
-                    </div>
+                <div class="seller-financial-metric">
+                    <p class="seller-financial-metric-label">Est. Platform Commission ({{ number_format($platformCommissionRate, 0) }}%)</p>
+                    <p class="seller-financial-metric-value">₱{{ number_format($platformCommission, 2) }}</p>
                 </div>
 
-                <div class="rounded-[12px] border border-[#dce8df] bg-[#f7fbf8] p-3">
-                    <div class="flex items-center gap-3">
-                        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-[#d7e7db] bg-white text-[#4f865f]">
-                            <span class="text-[15px] font-medium">₱</span>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="truncate text-[8.5px] font-medium text-[#768a7b]">Estimated Net Revenue</p>
-                            <p class="mt-0.5 truncate text-[15px] font-bold tracking-[-0.03em] text-[#2f6a44]">₱{{ number_format($estimatedRevenue, 2) }}</p>
-                        </div>
-                    </div>
+                <div class="seller-financial-metric">
+                    <p class="seller-financial-metric-label">Estimated Net Revenue</p>
+                    <p class="seller-financial-metric-value">₱{{ number_format($estimatedRevenue, 2) }}</p>
                 </div>
             </div>
 
@@ -8842,19 +10116,7 @@
                     class="flex h-10 w-full items-center justify-between rounded-[10px] bg-[#e9a315] px-3.5 text-[9.5px] font-semibold text-white shadow-[0_7px_16px_rgba(212,143,8,.11)] transition hover:bg-[#d8940d]"
                     wire:navigate
                 >
-                    <span class="flex min-w-0 items-center gap-2">
-                        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-[8px] bg-white/15">
-                            <svg viewBox="0 0 24 24" class="h-[14px] w-[14px]" fill="none" stroke="currentColor" stroke-width="1.9">
-                                <path d="M5 3h10l4 4v14H5z"></path>
-                                <path d="M9 13h6"></path>
-                                <path d="M9 17h6"></path>
-                            </svg>
-                        </span>
-                        <span class="truncate">Generate Full Report</span>
-                    </span>
-                    <svg viewBox="0 0 24 24" class="h-[14px] w-[14px] shrink-0" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 6l6 6-6 6"></path>
-                    </svg>
+                    <span class="truncate">Generate Full Report</span>
                 </a>
             </div>
         </div>
@@ -9342,7 +10604,7 @@ document.addEventListener('livewire:navigated', function () {
 
         let top = pointer
             ? pointer.clientY - shellRect.top - tooltipHeight - 10
-            : (point.y / 286) * sellerSalesChartShell.clientHeight - tooltipHeight - 8;
+            : (point.y / 320) * sellerSalesChartShell.clientHeight - tooltipHeight - 8;
 
         left = Math.max(6, Math.min(left, sellerSalesChartShell.clientWidth - tooltipWidth - 6));
         top = Math.max(4, Math.min(top, sellerSalesChartShell.clientHeight - tooltipHeight - 4));
@@ -9446,10 +10708,10 @@ document.addEventListener('livewire:navigated', function () {
         sellerSalesHitboxes.innerHTML = '';
 
         const chart = {
-            left: 76,
+            left: 84,
             right: 858,
-            top: 42,
-            bottom: 242,
+            top: 34,
+            bottom: 230,
         };
 
         const width = chart.right - chart.left;
@@ -9467,18 +10729,18 @@ document.addEventListener('livewire:navigated', function () {
                 y1: y,
                 x2: chart.right,
                 y2: y,
-                stroke: index === 4 ? '#DFD8CF' : '#EEE9E3',
+                stroke: index === 4 ? '#E1E6EC' : '#EEF1F4',
                 'stroke-width': 1,
                 'stroke-dasharray': index === 4 ? '0' : '4 7',
             }));
 
             sellerSalesGrid.appendChild(sellerSvgElement('text', {
-                x: 14,
+                x: 18,
                 y: y + 4,
-                fill: '#9A9288',
-                'font-size': 9,
+                fill: '#6B7686',
+                'font-size': 12,
                 'font-family': 'Poppins, sans-serif',
-                'font-weight': 400,
+                'font-weight': 500,
             }, sellerCompactPeso(axisValue)));
         }
 
@@ -9527,7 +10789,7 @@ document.addEventListener('livewire:navigated', function () {
                 y1: chart.top,
                 x2: point.x,
                 y2: chart.bottom,
-                stroke: '#F3EFEA',
+                stroke: '#F1F3F6',
                 'stroke-width': 1,
             }));
 
@@ -9536,7 +10798,7 @@ document.addEventListener('livewire:navigated', function () {
                 y1: chart.top,
                 x2: point.x,
                 y2: chart.bottom,
-                stroke: '#D8C59E',
+                stroke: '#CBD3DD',
                 'stroke-width': 1,
                 'stroke-dasharray': '4 5',
                 opacity: 0,
@@ -9548,20 +10810,20 @@ document.addEventListener('livewire:navigated', function () {
             const circle = sellerSvgElement('circle', {
                 cx: point.x,
                 cy: point.y,
-                r: 4.4,
+                r: 5.2,
                 fill: '#FFFFFF',
-                stroke: '#C79229',
-                'stroke-width': 2,
+                stroke: '#C88C16',
+                'stroke-width': 2.4,
             });
             sellerSalesPoints.appendChild(circle);
 
             sellerSalesXAxis.appendChild(sellerSvgElement('text', {
                 x: point.x,
-                y: 274,
-                fill: '#9A9288',
-                'font-size': count > 8 ? 8 : 9,
+                y: 296,
+                fill: '#6B7686',
+                'font-size': count > 8 ? 10 : 12,
                 'font-family': 'Poppins, sans-serif',
-                'font-weight': 400,
+                'font-weight': 500,
                 'text-anchor': 'middle',
             }, point.label));
 

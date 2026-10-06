@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Events\ChatMessageSent;
 use App\Models\Messaging\ChatMessage;
+use App\Models\Messaging\BuyerSellerMessage;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Accounts\BuyerAccount;
+use App\Models\Accounts\SocialAccount;
 use App\Models\Accounts\SellerAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 
 class SellerAdminChatController extends Controller
 {
@@ -16,22 +21,85 @@ class SellerAdminChatController extends Controller
     {
         $seller = $this->resolveSeller($request);
 
-        /*
-         * The current Seller messaging screen is powered by the universal
-         * platform-messaging endpoints in JavaScript. The legacy $messages
-         * collection and its derived $stats are not rendered by this view, so
-         * loading the entire legacy thread here only delays page navigation.
-         */
         $sellerChatRestriction = \App\Models\Messaging\SellerChatRestriction::query()
             ->where('seller_account_id', $seller->id)
             ->first();
 
         $sellerChatBlocked = (bool) ($sellerChatRestriction?->is_blocked);
 
+        /*
+         * Unified Seller inbox:
+         * - SARI Admin Support remains the default conversation.
+         * - Every buyer connected to this Seller by an order or a prior
+         *   BuyerSellerMessage becomes another conversation in the same page.
+         * - ?buyer=account-{id} / social-{id} selects that buyer thread.
+         */
+        $buyerConversations = $this->buyerConversationList($seller);
+
+        $selectedBuyerKey = trim(
+            (string) $request->query('buyer', '')
+        );
+
+        $selectedBuyer = null;
+        $buyerMessages = collect();
+
+        if ($selectedBuyerKey !== '') {
+            $selectedBuyer = $buyerConversations->firstWhere(
+                'key',
+                $selectedBuyerKey
+            );
+
+            abort_unless($selectedBuyer, 404);
+
+            $buyerMessagesQuery = BuyerSellerMessage::query()
+                ->where('seller_account_id', $seller->id)
+                ->orderBy('id');
+
+            $this->applyBuyerKey(
+                $buyerMessagesQuery,
+                $selectedBuyerKey
+            );
+
+            $buyerMessages = $buyerMessagesQuery->get();
+
+            $readQuery = BuyerSellerMessage::query()
+                ->where('seller_account_id', $seller->id)
+                ->where('sender_role', 'buyer')
+                ->whereNull('read_at');
+
+            $this->applyBuyerKey(
+                $readQuery,
+                $selectedBuyerKey
+            );
+
+            $readQuery->update([
+                'read_at' => now(),
+            ]);
+
+            /*
+             * The list was created before the selected thread was marked read.
+             * Keep the selected row visually in sync immediately.
+             */
+            $buyerConversations = $buyerConversations
+                ->map(function (array $row) use ($selectedBuyerKey) {
+                    if ($row['key'] === $selectedBuyerKey) {
+                        $row['unread'] = 0;
+                    }
+
+                    return $row;
+                })
+                ->values();
+
+            $selectedBuyer['unread'] = 0;
+        }
+
         return view('seller.messages', compact(
             'seller',
             'sellerChatRestriction',
-            'sellerChatBlocked'
+            'sellerChatBlocked',
+            'buyerConversations',
+            'selectedBuyer',
+            'buyerMessages'
         ));
     }
 
@@ -184,6 +252,197 @@ class SellerAdminChatController extends Controller
             $message->attachment_path,
             $message->attachment_name,
             ['Content-Disposition' => 'inline; filename="' . addslashes($message->attachment_name) . '"']
+        );
+    }
+
+    private function buyerConversationList(
+        SellerAccount $seller
+    ): Collection {
+        $keys = collect();
+
+        MarketplaceOrder::query()
+            ->where('seller_account_id', $seller->id)
+            ->get([
+                'buyer_account_id',
+                'buyer_social_account_id',
+            ])
+            ->each(function ($row) use ($keys): void {
+                if ($row->buyer_account_id) {
+                    $keys->push(
+                        'account-' . $row->buyer_account_id
+                    );
+                } elseif ($row->buyer_social_account_id) {
+                    $keys->push(
+                        'social-' . $row->buyer_social_account_id
+                    );
+                }
+            });
+
+        BuyerSellerMessage::query()
+            ->where('seller_account_id', $seller->id)
+            ->get([
+                'buyer_account_id',
+                'buyer_social_account_id',
+            ])
+            ->each(function ($row) use ($keys): void {
+                if ($row->buyer_account_id) {
+                    $keys->push(
+                        'account-' . $row->buyer_account_id
+                    );
+                } elseif ($row->buyer_social_account_id) {
+                    $keys->push(
+                        'social-' . $row->buyer_social_account_id
+                    );
+                }
+            });
+
+        return $keys
+            ->filter()
+            ->unique()
+            ->map(function (string $key) use ($seller): array {
+                [$type, $id] = $this->parseBuyerKey($key);
+
+                if ($type === 'account') {
+                    $buyer = BuyerAccount::query()->find($id);
+
+                    $name = $buyer
+                        ? trim(
+                            $buyer->first_name
+                            . ' '
+                            . $buyer->last_name
+                        )
+                        : 'Buyer #' . $id;
+
+                    $email = $buyer?->email;
+                } else {
+                    $buyer = SocialAccount::query()->find($id);
+                    $name = $buyer?->name
+                        ?: 'Social Buyer #' . $id;
+                    $email = $buyer?->email;
+                }
+
+                $messageQuery = BuyerSellerMessage::query()
+                    ->where(
+                        'seller_account_id',
+                        $seller->id
+                    );
+
+                $this->applyBuyerKey(
+                    $messageQuery,
+                    $key
+                );
+
+                $latestMessage = (clone $messageQuery)
+                    ->latest('id')
+                    ->first();
+
+                $messageCount = (clone $messageQuery)->count();
+
+                $unreadQuery = (clone $messageQuery)
+                    ->where('sender_role', 'buyer')
+                    ->whereNull('read_at');
+
+                $orderQuery = MarketplaceOrder::query()
+                    ->where(
+                        'seller_account_id',
+                        $seller->id
+                    );
+
+                $this->applyBuyerKey(
+                    $orderQuery,
+                    $key
+                );
+
+                $latestOrder = (clone $orderQuery)
+                    ->latest('id')
+                    ->first();
+
+                $orderCount = (clone $orderQuery)->count();
+
+                $preview = trim(
+                    (string) ($latestMessage?->body ?? '')
+                );
+
+                if ($preview === '' && $latestOrder) {
+                    $preview =
+                        'Order '
+                        . $latestOrder->order_number;
+                }
+
+                if ($preview === '') {
+                    $preview = 'Buyer conversation';
+                }
+
+                $lastAt =
+                    $latestMessage?->created_at
+                    ?? $latestOrder?->created_at;
+
+                $initials = collect(
+                    preg_split(
+                        '/\s+/',
+                        trim($name)
+                    ) ?: []
+                )
+                    ->filter()
+                    ->take(2)
+                    ->map(
+                        fn ($part) =>
+                            mb_strtoupper(
+                                mb_substr($part, 0, 1)
+                            )
+                    )
+                    ->implode('');
+
+                return [
+                    'key' => $key,
+                    'name' => $name,
+                    'email' => $email,
+                    'initials' => $initials ?: 'B',
+                    'preview' => $preview,
+                    'unread' => $unreadQuery->count(),
+                    'message_count' => $messageCount,
+                    'order_count' => $orderCount,
+                    'last_at' => $lastAt,
+                    'type' => $type,
+                ];
+            })
+            ->sortByDesc(
+                fn (array $row) =>
+                    $row['last_at']?->getTimestamp()
+                    ?? 0
+            )
+            ->values();
+    }
+
+    private function parseBuyerKey(string $key): array
+    {
+        abort_unless(
+            preg_match(
+                '/^(account|social)-(\d+)$/',
+                $key,
+                $matches
+            ),
+            404
+        );
+
+        return [
+            $matches[1],
+            (int) $matches[2],
+        ];
+    }
+
+    private function applyBuyerKey(
+        $query,
+        string $key
+    ): void {
+        [$type, $id] =
+            $this->parseBuyerKey($key);
+
+        $query->where(
+            $type === 'account'
+                ? 'buyer_account_id'
+                : 'buyer_social_account_id',
+            $id
         );
     }
 

@@ -7,8 +7,8 @@
 
 @php
     // Load variant rows once for all products shown in the compliance workspace.
-    $complianceProductIds = $flaggedProducts->pluck('id')
-        ->merge($pendingProducts->pluck('id'))
+    $complianceProductIds = $reviewProducts
+        ->pluck('id')
         ->filter()
         ->unique()
         ->values();
@@ -1756,7 +1756,7 @@
                 <div class="filter-dropdown" data-compliance-queue-dropdown>
                     <select id="complianceViewFilter" class="sr-only" aria-label="Compliance queue" tabindex="-1">
                         <option value="flagged">Flagged Sellers ({{ $flaggedSellerCount }})</option>
-                        <option value="pending">Pending Review ({{ $pendingProducts->count() }})</option>
+                        <option value="pending">Product Review ({{ $reviewProducts->count() }})</option>
                         <option value="warnings">Warning History ({{ $recentWarnings->count() }})</option>
                         <option value="suspended">Suspended Sellers ({{ $suspendedSellers->count() }})</option>
                         <option value="messages">Appeals / Messages ({{ $complianceMessages->count() }})</option>
@@ -1780,7 +1780,7 @@
                     <div class="filter-dropdown-menu" data-compliance-queue-menu role="listbox">
                         @foreach([
                             'flagged' => 'Flagged Sellers (' . $flaggedSellerCount . ')',
-                            'pending' => 'Pending Review (' . $pendingProducts->count() . ')',
+                            'pending' => 'Product Review (' . $reviewProducts->count() . ')',
                             'warnings' => 'Warning History (' . $recentWarnings->count() . ')',
                             'suspended' => 'Suspended Sellers (' . $suspendedSellers->count() . ')',
                             'messages' => 'Appeals / Messages (' . $complianceMessages->count() . ')',
@@ -2640,23 +2640,47 @@
             </div>
         </div>
 
-        {{-- PENDING REVIEW --}}
+        {{-- PRODUCT REVIEW — ALL PENDING + FLAGGED SUBMISSIONS --}}
         <div id="compliancePanel-pending" data-compliance-panel hidden>
             <div class="border-b border-[#eee8df] px-5 py-4">
-                <p class="text-[11px] font-bold text-[#302a24]">Pending Product Review</p>
-                <p class="mt-1 text-[8px] text-[#8d8478]">Products that passed basic screening but still require administrator approval.</p>
+                <p class="text-[11px] font-bold text-[#302a24]">Product Review Queue</p>
+                <p class="mt-1 text-[8px] text-[#8d8478]">All active seller listings awaiting an administrator decision, including pending and screening-flagged submissions.</p>
             </div>
 
             <div class="grid grid-cols-1 gap-3 p-4 sm:p-5 xl:grid-cols-2">
-                @forelse($pendingProducts as $product)
+                @forelse($reviewProducts as $product)
                     @php
                         $pendingRawSpecs = $product->specifications ?? [];
                         $pendingSpecs = is_array($pendingRawSpecs)
                             ? $pendingRawSpecs
                             : (json_decode((string) $pendingRawSpecs, true) ?: []);
                         $pendingVariants = $complianceVariantGroups->get($product->id, collect());
+
+                        $reviewStatus = strtolower((string) ($product->moderation_status ?: 'pending'));
+                        $reviewIsFlagged = $reviewStatus === 'flagged';
+
+                        $reviewStatusClass = $reviewIsFlagged
+                            ? 'border-[#ebcaca] bg-[#fff3f3] text-[#a64f4f]'
+                            : 'border-[#e8ddc4] bg-[#fff8e9] text-[#9b6a14]';
+
+                        $reviewStatusLabel = $reviewIsFlagged
+                            ? 'FLAGGED'
+                            : ($product->requires_re_review ? 'RE-REVIEW' : 'PENDING');
+
+                        $reviewRisk = strtolower((string) ($product->screening_risk ?: 'review'));
+
+                        $reviewRiskClass = match ($reviewRisk) {
+                            'high' => 'border-[#efd5d5] bg-[#fff5f5] text-[#a65d5d]',
+                            'medium' => 'border-[#eee0c5] bg-[#fff8ec] text-[#a8731f]',
+                            'low' => 'border-[#d7e7dd] bg-[#f3f8f5] text-[#56816a]',
+                            default => 'border-[#dfe4ea] bg-[#f5f7f9] text-[#65798b]',
+                        };
                     @endphp
-                    <article class="compliance-card rounded-[17px] border border-[#ebe4da] bg-white p-4">
+                    <article
+                        class="compliance-card rounded-[17px] border border-[#ebe4da] bg-white p-4"
+                        data-review-product-id="{{ $product->id }}"
+                        data-review-product-status="{{ $reviewStatus }}"
+                    >
                         <div class="flex gap-3">
                             <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[#e9e2d8] bg-[#faf8f4]">
                                 @if($product->image_path)
@@ -2682,11 +2706,15 @@
                                         <p class="mt-1 text-[8px] text-[#81786c]">{{ $product->seller->store_name ?: $product->seller->email }}{{ $product->brand ? ' · ' . $product->brand : '' }}</p>
                                     </div>
 
-                                    @if($product->requires_re_review)
-                                        <span class="rounded-full border border-[#eee0c5] bg-[#fff8ec] px-2 py-1 text-[7px] font-bold text-[#a8731f]">RE-REVIEW</span>
-                                    @else
-                                        <span class="rounded-full border border-[#d5e5da] bg-[#f3f9f5] px-2 py-1 text-[7px] font-bold text-[#56816a]">NO MATCH</span>
-                                    @endif
+                                    <div class="flex flex-wrap items-center justify-end gap-1.5">
+                                        <span class="rounded-full border px-2 py-1 text-[7px] font-bold {{ $reviewStatusClass }}">
+                                            {{ $reviewStatusLabel }}
+                                        </span>
+
+                                        <span class="rounded-full border px-2 py-1 text-[7px] font-bold {{ $reviewRiskClass }}">
+                                            {{ strtoupper($reviewRisk === 'review' ? 'REVIEW' : $reviewRisk) }} RISK
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="mt-3 flex flex-wrap items-center gap-2 text-[8px] text-[#756d63]">
@@ -2703,16 +2731,49 @@
                             </div>
                         </div>
 
-                        <form method="POST" action="{{ route('admin.compliance.products.approve', $product) }}" class="mt-4">
-                            @csrf
-                            <button class="inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#c99128] text-[8px] font-bold text-white transition hover:bg-[#b88020]">
-                                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 12 3 3 7-7"></path></svg>
-                                Approve Product
+                        <div class="mt-4 grid grid-cols-1 gap-2 border-t border-[#f0ebe4] pt-3 sm:grid-cols-3">
+                            <form method="POST" action="{{ route('admin.compliance.products.approve', $product) }}">
+                                @csrf
+                                <button type="submit" class="seller-action-btn seller-action-approve inline-flex w-full items-center justify-center">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="m7 12 3 3 7-7"></path>
+                                    </svg>
+                                    Approve
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{{ route('admin.compliance.products.reject', $product) }}">
+                                @csrf
+                                <input type="hidden" name="reason" value="Product rejected after administrator review.">
+                                <button type="submit" class="seller-action-btn seller-action-reject inline-flex w-full items-center justify-center">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="m8 8 8 8"></path>
+                                        <path d="m16 8-8 8"></path>
+                                    </svg>
+                                    Reject
+                                </button>
+                            </form>
+
+                            <button
+                                type="button"
+                                data-warning-open
+                                data-product-id="{{ $product->id }}"
+                                data-product-name="{{ $product->name }}"
+                                data-seller-name="{{ $product->seller?->store_name ?: ($product->seller?->email ?: 'Seller') }}"
+                                data-warning-count="{{ (int) ($product->seller?->warning_count ?? 0) }}"
+                                class="seller-action-btn seller-action-warn inline-flex w-full items-center justify-center"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <path d="M12 7v6"></path>
+                                    <path d="M12 17h.01"></path>
+                                </svg>
+                                Issue Warning
                             </button>
-                        </form>
+                        </div>
                     </article>
                 @empty
-                    <div class="col-span-full rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center text-[8px] text-[#91887d]">No pending products.</div>
+                    <div class="col-span-full rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center text-[8px] text-[#91887d]">No products are currently awaiting review.</div>
                 @endforelse
             </div>
         </div>
@@ -3032,19 +3093,25 @@
         }
 
         panels.forEach(function (panel) {
-            panel.hidden = panel !== selectedPanel;
+            const isActive = panel === selectedPanel;
+
+            panel.hidden = !isActive;
+            panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
         });
+
+        selectedPanel.scrollTop = 0;
     }
 
     applyComplianceViewFilter?.addEventListener('click', function () {
         const selectedView = complianceViewFilter?.value || 'flagged';
+
         activateCompliancePanel(selectedView);
+        syncQueueDropdown();
+        syncFlaggedFilterAvailability(selectedView);
 
         if (selectedView === 'flagged') {
             filterFlaggedSellers();
         }
-
-        syncFlaggedFilterAvailability(selectedView);
     });
 
     complianceViewFilter?.addEventListener('keydown', function (event) {
@@ -3193,9 +3260,21 @@
     });
 
     complianceViewFilter?.addEventListener('change', function () {
-        // Keep the search/risk controls visibly scoped to the Flagged Sellers queue.
+        const selectedView = this.value || 'flagged';
+
+        /*
+         * Switching the queue must also switch the visible workspace panel.
+         * Previously this handler updated only the dropdown label / risk-control
+         * availability, which left the Flagged Sellers panel visible even when
+         * "Product Review" was already selected.
+         */
         syncQueueDropdown();
-        syncFlaggedFilterAvailability(this.value || 'flagged');
+        activateCompliancePanel(selectedView);
+        syncFlaggedFilterAvailability(selectedView);
+
+        if (selectedView === 'flagged') {
+            filterFlaggedSellers();
+        }
     });
 
     filterFlaggedSellers();

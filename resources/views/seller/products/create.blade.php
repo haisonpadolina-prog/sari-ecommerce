@@ -2549,6 +2549,1886 @@
     }
 </style>
 
+<style id="sariAddProductFloatingContainersFinal">
+/* ======================================================================
+   ADD PRODUCT — FLOATING CONTAINER EFFECTS
+   Visual-only enhancement. No form, route, validation, draft, gallery,
+   variant, preview, or submission behavior is changed.
+   ====================================================================== */
+
+.seller-create-page {
+    --sari-float-border: #E3E7EC;
+    --sari-float-border-strong: #D8DEE6;
+    --sari-float-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 26px rgba(15, 23, 42, .075),
+        inset 0 1px 0 rgba(255, 255, 255, .86);
+    --sari-float-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 7px 18px rgba(15, 23, 42, .055),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+/* Main page containers — clear floating/elevated hierarchy. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-section {
+    border: 1px solid var(--sari-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Keep the approved compact radii while making the outline crisp. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-section {
+    border-radius: 14px !important;
+}
+
+/* No lift/motion when cursor passes over main cards. */
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-preview-card:hover,
+.seller-create-page .seller-create-section:hover {
+    border-color: var(--sari-float-border) !important;
+    box-shadow: var(--sari-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Inner functional panels receive a softer elevation so the main cards
+   remain visually dominant. */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4 {
+    border-color: #E4E8ED !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Settings cards should remain still on hover; only normal control color
+   feedback is allowed. */
+.seller-create-page .seller-create-setting-card:hover {
+    border-color: #E1E6EC !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sari-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Upload surface: subtle depth, but no physical movement. */
+.seller-create-page .seller-create-upload {
+    border-color: #D7DEE7 !important;
+    background: #FBFCFD !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 5px 14px rgba(15, 23, 42, .045) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D0D7E0 !important;
+    background: #FBFCFD !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 5px 14px rgba(15, 23, 42, .045) !important;
+    transform: none !important;
+}
+
+/* Gallery / empty states remain light and secondary. */
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #DCE2E9 !important;
+    background: #FAFBFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+/* Draft menu is a floating overlay, but neutral—not gold-tinted. */
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E6EC !important;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, .12),
+        0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+/* Preview image/media has just enough depth to separate it from the card. */
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label {
+    border-color: #E1E6EC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .04) !important;
+}
+
+/* Buttons remain static too; preserve clickability without lift animation. */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-gallery-remove {
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove:hover {
+    transform: none !important;
+}
+
+/* Keep semantic gold only where it is intentional; structural borders
+   and elevation stay neutral. */
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap {
+    outline: 0 !important;
+}
+
+/* Mobile: same design, slightly lighter shadow to avoid visual heaviness. */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-preview-card,
+    .seller-create-page .seller-create-section {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4 {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .05) !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — DASHBOARD SHADOW REFERENCE FINAL PASS
+   Front-end/CSS only. Product submission, validation, drafts, gallery,
+   variants, category picker, preview, routes and backend behavior remain
+   unchanged.
+   ====================================================================== */
+
+.seller-create-page {
+    --add-dashboard-border: #E5E7EB;
+    --add-dashboard-border-strong: #D1D5DB;
+    --add-dashboard-divider: #ECEFF2;
+
+    /* Dashboard-style layered elevation:
+       contact shadow + middle separation + broad ambient float. */
+    --add-dashboard-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --add-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+
+    --add-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* Header remains flat; only the divider stays visible. */
+.seller-create-page .seller-create-topbar {
+    border-bottom-color: var(--add-dashboard-divider) !important;
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------------
+   PRIMARY FLOATING SURFACES
+   Suggestions, form sections and buyer preview use the strongest depth.
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card {
+    border: 1px solid var(--add-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-section:hover,
+.seller-create-page .seller-create-preview-card:hover {
+    border-color: var(--add-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+/* Neutral internal dividers. */
+.seller-create-page .seller-create-side-title,
+.seller-create-page .seller-preview-head,
+.seller-create-page .seller-create-rule,
+.seller-create-page .seller-preview-note {
+    border-color: var(--add-dashboard-divider) !important;
+}
+
+/* ------------------------------------------------------------------
+   SECONDARY FUNCTIONAL SURFACES
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4 {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-setting-card:hover,
+.seller-create-page .seller-create-toggle-row:hover,
+.seller-create-page .seller-promo-preview:hover,
+.seller-create-page .seller-variant-table-wrap:hover,
+.seller-create-page details.mt-4:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Upload / media surfaces stay subordinate to their parent sections. */
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label {
+    border-color: #E1E6EC !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--add-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D6DCE4 !important;
+    background: #F8FAFC !important;
+    box-shadow: var(--add-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------------
+   FORM CONTROLS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select,
+.seller-create-page .seller-create-textarea,
+.seller-create-page .seller-create-money-field,
+.seller-create-page .seller-category-trigger,
+.seller-create-page .seller-variant-table input[type="text"],
+.seller-create-page .seller-variant-table input[type="number"] {
+    border-color: var(--add-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 4px 10px rgba(15, 23, 42, .03) !important;
+}
+
+.seller-create-page .seller-create-input:hover,
+.seller-create-page .seller-create-select:hover,
+.seller-create-page .seller-create-textarea:hover,
+.seller-create-page .seller-category-trigger:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+}
+
+/* Keep focus visible but restrained. */
+.seller-create-page .seller-create-input:focus,
+.seller-create-page .seller-create-select:focus,
+.seller-create-page .seller-create-textarea:focus,
+.seller-create-page .seller-create-money-field:focus-within,
+.seller-create-page .seller-category-trigger[aria-expanded="true"],
+.seller-create-page .seller-variant-table input[type="text"]:focus,
+.seller-create-page .seller-variant-table input[type="number"]:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* ------------------------------------------------------------------
+   DROPDOWNS / OVERLAYS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-category-menu,
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* Neutral hover; selected state may keep a restrained gold cue. */
+.seller-create-page .seller-category-option:hover {
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-category-option.is-selected {
+    background: #FFF9EC !important;
+    color: #9A6708 !important;
+}
+
+.seller-create-page .seller-draft-item:hover {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-draft-item.is-current {
+    border-color: #EAD7A9 !important;
+    background: #FFF9EC !important;
+}
+
+/* ------------------------------------------------------------------
+   LEFT NAV + BUTTONS
+   ------------------------------------------------------------------ */
+.seller-create-page .seller-create-nav button:hover {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-create-nav button.is-active {
+    border-color: #EAD7A9 !important;
+    background: #FFF9EC !important;
+    color: #9B6505 !important;
+}
+
+/* All controls remain physically static. */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-gallery-remove,
+.seller-create-page .seller-draft-delete {
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove:hover,
+.seller-create-page .seller-draft-delete:hover {
+    transform: none !important;
+}
+
+/* Secondary buttons use neutral hover surfaces rather than cream. */
+.seller-create-page .seller-create-button:not(.seller-create-button--primary):not(.seller-create-button--soft):hover {
+    border-color: var(--add-dashboard-border-strong) !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-create-button--soft:hover,
+.seller-create-page .seller-draft-new-button:hover {
+    background: #FFF9EC !important;
+}
+
+/* ------------------------------------------------------------------
+   EMPTY / INFO / FEEDBACK SURFACES
+   ------------------------------------------------------------------ */
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #DCE2E9 !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+.seller-create-page .seller-inline-alert {
+    box-shadow: var(--add-dashboard-shadow-soft) !important;
+}
+
+/* Draft feedback intentionally remains animation + text only. */
+.seller-create-page .seller-draft-feedback-card {
+    box-shadow: none !important;
+}
+
+/* Structural surfaces never receive colored outlines. */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-variant-table-wrap {
+    outline: 0 !important;
+}
+
+/* Mobile: preserve float but reduce ambient spread. */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-section,
+    .seller-create-page .seller-create-preview-card {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4 {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .045) !important;
+    }
+}
+</style>
+
+
+<style id="sariAddProductMainContainersOnlyFloatingFinal">
+/* ======================================================================
+   ADD PRODUCT — MAIN CONTAINERS ONLY FLOATING
+   Final hierarchy rule:
+   - Suggestions, major form sections, and Buyer Preview float.
+   - Everything nested inside those main surfaces stays flat.
+   - Popover/overlay menus may keep elevation because they leave the flow.
+   Visual-only: form, draft, gallery, variant, preview and submit behavior
+   remain unchanged.
+   ====================================================================== */
+
+.seller-create-page {
+    --add-main-border: #E5E7EB;
+    --add-main-divider: #ECEFF2;
+    --add-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+}
+
+/* ------------------------------------------------------------
+   ONLY THESE TOP-LEVEL SURFACES FLOAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card,
+.seller-create-page .seller-create-side-card:hover,
+.seller-create-page .seller-create-section:hover,
+.seller-create-page .seller-create-preview-card:hover {
+    border: 1px solid var(--add-main-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--add-main-shadow) !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+/* Header remains an open, non-card page header. */
+.seller-create-page .seller-create-topbar,
+.seller-create-page .seller-create-topbar:hover {
+    border-bottom-color: var(--add-main-divider) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   NESTED PANELS / GROUPS — FLAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-setting-card,
+.seller-create-page .seller-create-setting-card:hover,
+.seller-create-page .seller-create-toggle-row,
+.seller-create-page .seller-create-toggle-row:hover,
+.seller-create-page .seller-promo-preview,
+.seller-create-page .seller-promo-preview:hover,
+.seller-create-page .seller-variant-table-wrap,
+.seller-create-page .seller-variant-table-wrap:hover,
+.seller-create-page .seller-create-mobile-preview,
+.seller-create-page details.mt-4,
+.seller-create-page details.mt-4:hover {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Keep internal grouping via neutral dividers, never elevation. */
+.seller-create-page .seller-create-side-title,
+.seller-create-page .seller-preview-head,
+.seller-create-page .seller-create-rule,
+.seller-create-page .seller-preview-note,
+.seller-create-page .seller-promo-preview-head,
+.seller-create-page .seller-variant-table td,
+.seller-create-page details.mt-4 > div,
+.seller-create-page .mt-4.border-t,
+.seller-create-page .mt-5.border-t {
+    border-color: var(--add-main-divider) !important;
+}
+
+/* ------------------------------------------------------------
+   UPLOAD / MEDIA / EMPTY STATES — FLAT
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-create-upload:hover,
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label,
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-upload,
+.seller-create-page .seller-create-upload:hover {
+    border-color: #D7DEE7 !important;
+    background: #FAFBFC !important;
+}
+
+.seller-create-page .seller-preview-image,
+.seller-create-page .seller-create-gallery-thumb,
+.seller-create-page .seller-variant-image-label,
+.seller-create-page #createGalleryEmpty,
+.seller-create-page #createSpecificationsEmpty {
+    border-color: #E1E6EC !important;
+    background: #F8FAFC !important;
+}
+
+/* Remove the gallery thumbnail inset depth layer. */
+.seller-create-page .seller-create-gallery-thumb::after {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   FORM CONTROLS — CONTROLS, NOT FLOATING CARDS
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select,
+.seller-create-page .seller-create-textarea,
+.seller-create-page .seller-create-money-field,
+.seller-create-page .seller-category-trigger,
+.seller-create-page .seller-variant-table input[type="text"],
+.seller-create-page .seller-variant-table input[type="number"] {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-create-input:hover,
+.seller-create-page .seller-create-select:hover,
+.seller-create-page .seller-create-textarea:hover,
+.seller-create-page .seller-create-money-field:hover,
+.seller-create-page .seller-category-trigger:hover,
+.seller-create-page .seller-variant-table input[type="text"]:hover,
+.seller-create-page .seller-variant-table input[type="number"]:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* Focus ring is accessibility feedback, not resting elevation. */
+.seller-create-page .seller-create-input:focus,
+.seller-create-page .seller-create-select:focus,
+.seller-create-page .seller-create-textarea:focus,
+.seller-create-page .seller-create-money-field:focus-within,
+.seller-create-page .seller-category-trigger[aria-expanded="true"],
+.seller-create-page .seller-variant-table input[type="text"]:focus,
+.seller-create-page .seller-variant-table input[type="number"]:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   BUTTONS / BADGES / TOGGLES / ICONS — NO FLOATING DEPTH
+   ------------------------------------------------------------ */
+.seller-create-page .seller-create-button,
+.seller-create-page .seller-create-button:hover,
+.seller-create-page .seller-create-button:focus-visible,
+.seller-create-page .seller-draft-new-button,
+.seller-create-page .seller-draft-new-button:hover,
+.seller-create-page .seller-gallery-remove,
+.seller-create-page .seller-gallery-remove:hover,
+.seller-create-page .seller-draft-delete,
+.seller-create-page .seller-draft-delete:hover,
+.seller-create-page .seller-draft-status,
+.seller-create-page .seller-gallery-count,
+.seller-create-page .seller-preview-badge,
+.seller-create-page .seller-promo-preview-head span,
+.seller-create-page .seller-create-plain-icon,
+.seller-create-page .seller-create-section-icon,
+.seller-create-page .seller-category-trigger-icon,
+.seller-create-page .seller-draft-thumb {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Primary CTA keeps color emphasis, not shadow emphasis. */
+.seller-create-page .seller-create-button--primary,
+.seller-create-page .seller-create-button--primary:hover {
+    box-shadow: none !important;
+}
+
+/* Toggle track and knob remain flat inside their parent section. */
+.seller-create-page .seller-create-toggle {
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-create-toggle::after {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   TABLE / ROW CONTENT — FLAT WITHIN THE MAIN SALES SECTION
+   ------------------------------------------------------------ */
+.seller-create-page .seller-variant-table-wrap {
+    overflow: hidden;
+}
+
+.seller-create-page .seller-variant-table th {
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-table tr,
+.seller-create-page .seller-variant-table td {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Inline validation is informational, not a floating nested panel. */
+.seller-create-page .seller-inline-alert {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   OVERLAYS / POPOVERS
+   These may float because they are transient layers, not nested cards.
+   ------------------------------------------------------------ */
+.seller-create-page .seller-category-menu,
+.seller-create-page .seller-draft-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* Draft feedback intentionally remains animation + text only. */
+.seller-create-page .seller-draft-feedback-card,
+.seller-create-page .seller-draft-feedback-loader,
+.seller-create-page .seller-draft-feedback-fallback {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY
+   ------------------------------------------------------------ */
+@media (max-width: 760px) {
+    .seller-create-page .seller-create-side-card,
+    .seller-create-page .seller-create-section,
+    .seller-create-page .seller-create-preview-card {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .seller-create-page .seller-create-setting-card,
+    .seller-create-page .seller-create-toggle-row,
+    .seller-create-page .seller-promo-preview,
+    .seller-create-page .seller-variant-table-wrap,
+    .seller-create-page .seller-create-mobile-preview,
+    .seller-create-page details.mt-4,
+    .seller-create-page .seller-create-upload,
+    .seller-create-page .seller-preview-image,
+    .seller-create-page .seller-create-gallery-thumb,
+    .seller-create-page .seller-variant-image-label,
+    .seller-create-page #createGalleryEmpty,
+    .seller-create-page #createSpecificationsEmpty {
+        box-shadow: none !important;
+    }
+}
+</style>
+
+
+<style id="sariAddProductSmartVariantsFinal">
+/* ======================================================================
+   ADD PRODUCT — SMART VARIANT OPTIONS
+   Screenshot-inspired Sales Information workflow.
+   Nested variant configuration surfaces stay flat inside the main Sales card.
+   ====================================================================== */
+
+.seller-create-page .seller-sales-base-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(240px, .95fr);
+    gap: 10px;
+    align-items: stretch;
+}
+
+.seller-create-page .seller-sales-base-field,
+.seller-create-page .seller-variant-mode-card {
+    min-width: 0;
+}
+
+.seller-create-page .seller-variant-mode-card {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #E5E7EB;
+    border-radius: 11px;
+    background: #F8FAFC;
+    padding: 11px 12px;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-mode-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #344054;
+    font-size: 10.5px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-variant-info-dot {
+    display: inline-grid;
+    width: 15px;
+    height: 15px;
+    place-items: center;
+    border: 1px solid #C9D0D9;
+    border-radius: 999px;
+    color: #667085;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.seller-create-page .seller-variant-mode-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 9px;
+}
+
+.seller-create-page .seller-variant-mode-choice {
+    display: inline-flex;
+    min-height: 28px;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #667085;
+    font-size: 9.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-mode-choice:hover {
+    color: #344054;
+}
+
+.seller-create-page .seller-variant-mode-radio {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    border: 1px solid #C9D0D9;
+    border-radius: 999px;
+    background: #FFFFFF;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] {
+    color: #9A6708;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] .seller-variant-mode-radio {
+    border-color: #D59617;
+}
+
+.seller-create-page .seller-variant-mode-choice[aria-pressed="true"] .seller-variant-mode-radio::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 999px;
+    background: #D59617;
+}
+
+.seller-create-page .seller-smart-variants {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.seller-create-page .seller-variant-options-panel,
+.seller-create-page .seller-variants-panel {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    background: #FFFFFF;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+.seller-create-page .seller-variant-subhead,
+.seller-create-page .seller-variants-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 12px;
+    border-bottom: 1px solid #ECEFF2;
+}
+
+.seller-create-page .seller-variant-subhead h3,
+.seller-create-page .seller-variants-panel-head h3 {
+    color: #344054;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.seller-create-page .seller-variant-subhead p,
+.seller-create-page .seller-variants-panel-head p {
+    margin-top: 3px;
+    color: #8A94A3;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+.seller-create-page .seller-variants-panel-head h3 span {
+    margin-left: 5px;
+    color: #98A2B3;
+    font-size: 8px;
+    font-weight: 500;
+}
+
+.seller-create-page .seller-variant-option-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(210px, .95fr);
+    gap: 10px;
+    padding: 12px;
+}
+
+.seller-create-page .seller-variant-option-card,
+.seller-create-page .seller-variant-combination-summary {
+    min-width: 0;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 10px;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-option-name-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #667085;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.seller-create-page .seller-variant-option-name {
+    width: 100%;
+    height: 31px;
+    border: 0;
+    border-bottom: 1px solid #ECEFF2;
+    background: #FFFFFF;
+    padding: 0 1px 6px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    outline: none;
+}
+
+.seller-create-page .seller-variant-option-name:focus {
+    border-bottom-color: #D6B064;
+}
+
+.seller-create-page .seller-variant-option-values {
+    display: flex;
+    min-height: 34px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+    margin-top: 9px;
+}
+
+.seller-create-page .seller-variant-value-chip {
+    display: inline-flex;
+    min-height: 25px;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #E5D19C;
+    border-radius: 7px;
+    background: #FFF9EC;
+    padding: 0 7px;
+    color: #8E5F0A;
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.seller-create-page .seller-variant-value-chip button {
+    display: grid;
+    width: 14px;
+    height: 14px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #B98627;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-option-add {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.seller-create-page .seller-variant-option-value-input {
+    min-width: 0;
+    height: 31px;
+    border: 1px solid #D7DDE5;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 8px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 8.5px;
+    outline: none;
+}
+
+.seller-create-page .seller-variant-option-value-input:focus {
+    border-color: #C4A35B;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08);
+}
+
+.seller-create-page .seller-variant-add-value {
+    min-height: 31px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 0 9px;
+    color: #667085;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-add-value:hover {
+    border-color: #D9B96F;
+    background: #FFF9EC;
+    color: #986408;
+}
+
+.seller-create-page .seller-variant-combination-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    background: #F8FAFC;
+}
+
+.seller-create-page .seller-variant-summary-icon {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    place-items: center;
+    color: #C9890B;
+}
+
+.seller-create-page .seller-variant-summary-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.seller-create-page #createVariantSummaryEyebrow {
+    display: block;
+    color: #667085;
+    font-size: 7.5px;
+    font-weight: 600;
+}
+
+.seller-create-page #createVariantCombinationSummary {
+    display: block;
+    margin-top: 7px;
+    color: #344054;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.seller-create-page #createVariantCombinationHelp {
+    margin-top: 6px;
+    color: #98A2B3;
+    font-size: 7.5px;
+    line-height: 1.5;
+}
+
+.seller-create-page .seller-variant-bulk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.seller-create-page .seller-variant-bulk-button {
+    display: inline-flex;
+    min-height: 31px;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #E3D09F;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 9px;
+    color: #9A6708;
+    font-size: 7.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-bulk-button:hover {
+    border-color: #D6A740;
+    background: #FFF9EC;
+}
+
+.seller-create-page .seller-variant-bulk-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.seller-create-page .seller-variant-empty {
+    padding: 22px 14px;
+    color: #98A2B3;
+    font-size: 8.5px;
+    text-align: center;
+}
+
+.seller-create-page .seller-smart-variant-table select,
+.seller-create-page .seller-smart-variant-table input[type="text"],
+.seller-create-page .seller-smart-variant-table input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    border: 1px solid #D8DEE7;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 7px;
+    color: #344054;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-size: 8.5px;
+    outline: none;
+}
+
+.seller-create-page .seller-smart-variant-table select:focus,
+.seller-create-page .seller-smart-variant-table input:focus {
+    border-color: #C4A35B;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08);
+}
+
+.seller-create-page .seller-variant-money-cell {
+    position: relative;
+}
+
+.seller-create-page .seller-variant-money-cell::before {
+    content: "₱";
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    z-index: 1;
+    color: #667085;
+    font-size: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.seller-create-page .seller-variant-money-cell input {
+    padding-left: 21px !important;
+}
+
+.seller-create-page .seller-variant-remove {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border: 1px solid #F0D0D0;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #D64B4B;
+    cursor: pointer;
+}
+
+.seller-create-page .seller-variant-remove:hover {
+    background: #FFF5F5;
+}
+
+.seller-create-page .seller-variant-remove svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Existing main-container-only hierarchy stays intact. */
+.seller-create-page .seller-variant-options-panel,
+.seller-create-page .seller-variants-panel,
+.seller-create-page .seller-variant-option-card,
+.seller-create-page .seller-variant-combination-summary,
+.seller-create-page .seller-variant-mode-card,
+.seller-create-page .seller-variant-table-wrap {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+@media (max-width: 980px) {
+    .seller-create-page .seller-sales-base-grid,
+    .seller-create-page .seller-variant-option-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .seller-create-page .seller-variant-mode-card,
+    .seller-create-page .seller-variant-combination-summary {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-sales-base-grid,
+    .seller-create-page .seller-variant-option-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .seller-create-page .seller-variant-mode-card,
+    .seller-create-page .seller-variant-combination-summary {
+        grid-column: auto;
+    }
+
+    .seller-create-page .seller-variants-panel-head {
+        flex-direction: column;
+    }
+
+    .seller-create-page .seller-variant-bulk-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .seller-create-page .seller-variant-bulk-button {
+        flex: 1 1 0;
+        justify-content: center;
+    }
+
+    .seller-create-page .seller-variant-option-add {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — COLOR SWATCH + STRICT YES-ONLY VARIANT VISIBILITY
+   ====================================================================== */
+
+/* The smart variant UI must never appear until Has different options = Yes. */
+.seller-create-page #createVariantsArea[hidden],
+.seller-create-page #createVariantsArea.hidden,
+.seller-create-page .seller-smart-variants[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Color option chips in the option builder. */
+.seller-create-page .seller-variant-value-chip--color {
+    padding-left: 6px;
+}
+
+.seller-create-page .seller-variant-color-dot {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    flex: 0 0 13px;
+    border: 1px solid rgba(15, 23, 42, .14);
+    border-radius: 999px;
+    background: var(--variant-swatch, #D0D5DD);
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.26),
+        0 1px 2px rgba(15,23,42,.08);
+}
+
+/* White needs a visible neutral edge. */
+.seller-create-page .seller-variant-color-dot[data-light-swatch="true"] {
+    border-color: #CDD3DB;
+    box-shadow:
+        inset 0 0 0 1px rgba(15,23,42,.035),
+        0 1px 2px rgba(15,23,42,.06);
+}
+
+/* Variant table color selector: real swatch + text + native chevron. */
+.seller-create-page .seller-variant-color-select {
+    position: relative;
+    min-width: 0;
+}
+
+.seller-create-page .seller-variant-color-select .seller-variant-color-dot {
+    position: absolute;
+    top: 50%;
+    left: 9px;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.seller-create-page .seller-variant-color-select select {
+    padding-left: 31px !important;
+    padding-right: 26px !important;
+    appearance: auto;
+}
+
+/* Keep non-color option selects visually identical. */
+.seller-create-page .seller-variant-plain-select {
+    min-width: 0;
+}
+
+/* When variants are disabled, row controls are non-interactive and not submitted. */
+.seller-create-page #createVariantsArea[aria-hidden="true"] [name^="variants["] {
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-select .seller-variant-color-dot {
+        left: 8px;
+    }
+
+    .seller-create-page .seller-variant-color-select select {
+        padding-left: 29px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — FINAL VARIANT YES-ONLY + COLOR SWATCH FIX
+   ====================================================================== */
+
+/* No = absolutely no Variant Options / Variants UI. */
+.seller-create-page #createVariantsArea[hidden],
+.seller-create-page #createVariantsArea.hidden,
+.seller-create-page #createVariantsArea[aria-hidden="true"] {
+    display: none !important;
+}
+
+/* Yes = JS explicitly switches the area to grid. */
+.seller-create-page #createVariantsArea[aria-hidden="false"] {
+    visibility: visible !important;
+}
+
+/* Real visible color dot in each generated Color cell. */
+.seller-create-page .seller-variant-color-select {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-variant-color-dot] {
+    position: absolute !important;
+    top: 50% !important;
+    left: 11px !important;
+    z-index: 5 !important;
+    display: block !important;
+    width: 14px !important;
+    height: 14px !important;
+    border: 1px solid rgba(15,23,42,.16) !important;
+    border-radius: 999px !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.22),
+        0 1px 2px rgba(15,23,42,.08) !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+}
+
+.seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-light-swatch="true"] {
+    border-color: #C8CED7 !important;
+    box-shadow:
+        inset 0 0 0 1px rgba(15,23,42,.04),
+        0 1px 2px rgba(15,23,42,.06) !important;
+}
+
+.seller-create-page .seller-variant-color-select > select {
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    padding-left: 34px !important;
+    padding-right: 28px !important;
+    background-color: #FFFFFF !important;
+}
+
+/* Color chips in Variant Options also show the same real swatch. */
+.seller-create-page .seller-variant-value-chip--color .seller-variant-color-dot {
+    display: inline-block !important;
+    width: 12px !important;
+    height: 12px !important;
+    flex: 0 0 12px !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+}
+
+/* Keep all nested variant controls flat. */
+.seller-create-page .seller-variant-color-select,
+.seller-create-page .seller-variant-color-select select,
+.seller-create-page .seller-variant-value-chip {
+    transform: none !important;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-select > .seller-variant-color-dot[data-variant-color-dot] {
+        left: 9px !important;
+    }
+
+    .seller-create-page .seller-variant-color-select > select {
+        padding-left: 31px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — NEUTRAL VARIANT CHIPS + MODERN COLOR DROPDOWN
+   ====================================================================== */
+
+.seller-create-page .seller-variant-value-chip {
+    border-color: #DDE2E8 !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+    box-shadow: none !important;
+}
+
+.seller-create-page .seller-variant-value-chip:hover {
+    border-color: #CDD4DD !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-variant-value-chip button {
+    color: #667085 !important;
+}
+
+.seller-create-page .seller-variant-add-value {
+    border-color: #DDE2E8 !important;
+    background: #F8FAFC !important;
+    color: #475467 !important;
+}
+
+.seller-create-page .seller-variant-add-value:hover {
+    border-color: #CBD2DC !important;
+    background: #F1F4F7 !important;
+    color: #344054 !important;
+}
+
+/* Color dropdown: white control, light gray menu, swatches carry the color. */
+.seller-create-page .seller-variant-color-dropdown {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-native-select {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.seller-create-page .seller-variant-color-trigger {
+    display: grid !important;
+    width: 100% !important;
+    height: 32px !important;
+    grid-template-columns: 15px minmax(0, 1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 1px solid #D8DEE7 !important;
+    border-radius: 8px !important;
+    background: #FFFFFF !important;
+    padding: 0 9px !important;
+    color: #344054 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-variant-color-trigger:hover {
+    border-color: #C8D0DA !important;
+    background: #F8FAFC !important;
+}
+
+.seller-create-page .seller-variant-color-trigger:focus-visible,
+.seller-create-page .seller-variant-color-trigger[aria-expanded="true"] {
+    border-color: #AEB7C3 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(71,84,103,.08) !important;
+}
+
+.seller-create-page .seller-variant-color-label {
+    overflow: hidden !important;
+    color: #344054 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.seller-create-page .seller-variant-color-chevron {
+    width: 14px !important;
+    height: 14px !important;
+    color: #98A2B3 !important;
+    transition: transform .14s ease !important;
+}
+
+.seller-create-page .seller-variant-color-trigger[aria-expanded="true"] .seller-variant-color-chevron {
+    transform: rotate(180deg) !important;
+}
+
+.seller-create-page .seller-variant-color-menu {
+    position: absolute !important;
+    top: calc(100% + 5px) !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 90 !important;
+    max-height: 190px !important;
+    overflow-y: auto !important;
+    border: 1px solid #DDE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 5px !important;
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.05),
+        0 14px 30px rgba(15,23,42,.11) !important;
+}
+
+.seller-create-page .seller-variant-color-menu[hidden] {
+    display: none !important;
+}
+
+.seller-create-page .seller-variant-color-choice {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 34px !important;
+    grid-template-columns: 15px minmax(0, 1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    background: #FFFFFF !important;
+    padding: 0 8px !important;
+    color: #475467 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+.seller-create-page .seller-variant-color-choice:hover {
+    background: #F5F7FA !important;
+    color: #344054 !important;
+}
+
+.seller-create-page .seller-variant-color-choice[aria-selected="true"] {
+    background: #F1F4F7 !important;
+    color: #101828 !important;
+    font-weight: 700 !important;
+}
+
+.seller-create-page .seller-variant-color-choice > svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: #667085 !important;
+    opacity: 0 !important;
+}
+
+.seller-create-page .seller-variant-color-choice[aria-selected="true"] > svg {
+    opacity: 1 !important;
+}
+
+.seller-create-page .seller-variant-color-dot {
+    width: 13px !important;
+    height: 13px !important;
+    border-color: rgba(15,23,42,.16) !important;
+    background-color: var(--variant-swatch, #D0D5DD) !important;
+}
+
+/* Prevent duplicate product requests from repeated submit clicks. */
+.seller-create-page #submitProductReview[aria-busy="true"] {
+    cursor: wait !important;
+    opacity: .72 !important;
+    pointer-events: none !important;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-variant-color-menu {
+        max-height: 166px !important;
+    }
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — VARIANT OPTION SUMMARY
+   ====================================================================== */
+
+.seller-create-page #createVariantCombinationSummary,
+.seller-create-page #createVariantCombinationHelp,
+.seller-create-page #createVariantSummaryEyebrow {
+    color: #667085 !important;
+}
+
+.seller-create-page #createVariantCombinationSummary {
+    color: #344054 !important;
+}
+
+/* Keep option chips neutral; swatches are the only colorful element. */
+.seller-create-page .seller-variant-value-chip,
+.seller-create-page .seller-variant-value-chip--color {
+    background: #FFFFFF !important;
+    border-color: #DDE2E8 !important;
+    color: #475467 !important;
+}
+
+
+/* ======================================================================
+   ADD PRODUCT — UNCLIPPED COLOR MENU + CARTESIAN VARIANTS
+   ====================================================================== */
+
+/*
+ * While open, the color menu is moved to <body> and positioned against the
+ * viewport. It cannot be clipped by the table's overflow, rounded panel,
+ * scrolling wrapper, or a long variant list.
+ */
+body > .seller-variant-color-menu.seller-variant-color-menu--portal {
+    position: fixed !important;
+    right: auto !important;
+    z-index: 99999 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border: 1px solid #DDE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 5px !important;
+    box-shadow:
+        0 4px 10px rgba(15,23,42,.05),
+        0 16px 36px rgba(15,23,42,.14) !important;
+    overscroll-behavior: contain !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal[hidden] {
+    display: none !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 34px !important;
+    grid-template-columns: 15px minmax(0,1fr) 14px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    background: #FFFFFF !important;
+    padding: 0 8px !important;
+    color: #475467 !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    font-size: 8.5px !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transform: none !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice:hover {
+    background: #F5F7FA !important;
+    color: #344054 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice[aria-selected="true"] {
+    background: #F1F4F7 !important;
+    color: #101828 !important;
+    font-weight: 700 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice > svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: #667085 !important;
+    opacity: 0 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice[aria-selected="true"] > svg {
+    opacity: 1 !important;
+}
+
+body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-dot {
+    display: inline-block !important;
+    width: 13px !important;
+    height: 13px !important;
+    flex: 0 0 13px !important;
+    border: 1px solid rgba(15,23,42,.16) !important;
+    border-radius: 999px !important;
+    background-color: var(--variant-swatch,#D0D5DD) !important;
+}
+
+/* The table itself may keep horizontal scrolling; dropdown no longer lives in it. */
+.seller-create-page .seller-variant-table-wrap {
+    position: relative !important;
+    isolation: isolate;
+}
+
+/* Combination summary reflects true Size × Color generation. */
+.seller-create-page #createVariantCombinationSummary {
+    color: #344054 !important;
+    font-weight: 700 !important;
+}
+</style>
+
+
+<style id="sariAddProductDragDropGalleryFinal">
+/* ======================================================================
+   ADD PRODUCT — DRAG/DROP COVER + GALLERY ADD TILE
+   Frontend-only. Existing field names, routes, form submission, draft API,
+   validation and backend behavior are unchanged.
+   ====================================================================== */
+
+.seller-create-page .seller-create-upload--dropzone {
+    position: relative !important;
+    isolation: isolate;
+    cursor: pointer !important;
+    outline: none !important;
+}
+
+.seller-create-page .seller-create-upload--dropzone:focus-visible {
+    border-color: #C4A35B !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .10) !important;
+}
+
+.seller-create-page .seller-create-upload--dropzone.is-dragover {
+    border-color: #D59617 !important;
+    background: #FFFBF2 !important;
+    box-shadow: 0 0 0 3px rgba(213, 150, 23, .10) !important;
+}
+
+.seller-create-page .seller-cover-drop-copy {
+    display: grid;
+    place-items: center;
+    padding: 15px 12px;
+    pointer-events: none;
+}
+
+.seller-create-page .seller-cover-drop-copy strong {
+    margin-top: 8px;
+    color: #39414A;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-cover-drop-copy .seller-cover-drop-secondary {
+    margin-top: 3px;
+    color: #7D8793;
+    font-size: 7.5px;
+    font-weight: 500;
+}
+
+.seller-create-page .seller-cover-drop-copy .seller-cover-drop-meta {
+    margin-top: 6px;
+    color: #98A2B3;
+    font-size: 7px;
+}
+
+.seller-create-page .seller-cover-change-hint {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    gap: 5px;
+    min-height: 25px;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 8px;
+    background: rgba(17,24,39,.72);
+    padding: 0 8px;
+    color: #FFFFFF;
+    font-size: 7.5px;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
+}
+
+.seller-create-page .seller-cover-change-hint svg {
+    width: 11px;
+    height: 11px;
+}
+
+.seller-create-page .seller-create-upload--dropzone.has-image .seller-cover-change-hint {
+    display: inline-flex;
+}
+
+.seller-create-page .seller-gallery-dropzone {
+    position: relative;
+    min-width: 0;
+    margin-top: 9px;
+    border-radius: 11px;
+    transition: background-color .12s ease, box-shadow .12s ease;
+}
+
+.seller-create-page .seller-gallery-dropzone.is-dragover {
+    background: #FFFBF2;
+    box-shadow: 0 0 0 3px rgba(213,150,23,.10);
+}
+
+.seller-create-page .seller-gallery-drop-empty {
+    display: flex;
+    width: 100%;
+    min-height: 104px;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    border: 1px dashed #D7DEE7 !important;
+    border-radius: 11px !important;
+    background: #FAFBFC !important;
+    padding: 14px 16px !important;
+    color: #667085;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: border-color .12s ease, background-color .12s ease;
+}
+
+.seller-create-page .seller-gallery-drop-empty:hover,
+.seller-create-page .seller-gallery-drop-empty:focus-visible,
+.seller-create-page .seller-gallery-dropzone.is-dragover .seller-gallery-drop-empty {
+    border-color: #D2AA50 !important;
+    background: #FFFBF2 !important;
+    outline: none;
+}
+
+.seller-create-page .seller-gallery-drop-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: 1px solid #E1E6EC;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #667085;
+}
+
+.seller-create-page .seller-gallery-drop-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.seller-create-page .seller-gallery-drop-copy {
+    min-width: 0;
+}
+
+.seller-create-page .seller-gallery-drop-copy strong {
+    display: block;
+    color: #344054;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-gallery-drop-copy span {
+    display: block;
+    margin-top: 3px;
+    color: #8A94A3;
+    font-size: 7.5px;
+    line-height: 1.45;
+}
+
+.seller-create-page .seller-gallery-dropzone .seller-create-gallery {
+    margin-top: 0 !important;
+}
+
+.seller-create-page .seller-gallery-add-tile {
+    display: flex;
+    aspect-ratio: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px dashed #C9D1DC;
+    border-radius: 9px;
+    background: #FFFFFF;
+    color: #667085;
+    cursor: pointer;
+    box-shadow: none !important;
+    transition: border-color .12s ease, background-color .12s ease, color .12s ease;
+}
+
+.seller-create-page .seller-gallery-add-tile:hover,
+.seller-create-page .seller-gallery-add-tile:focus-visible {
+    border-color: #D0A346;
+    background: #FFFBF2;
+    color: #9A6708;
+    outline: none;
+}
+
+.seller-create-page .seller-gallery-add-tile-icon {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border: 1px solid #E1E6EC;
+    border-radius: 8px;
+    background: #F8FAFC;
+}
+
+.seller-create-page .seller-gallery-add-tile-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.seller-create-page .seller-gallery-add-tile strong {
+    font-size: 7.8px;
+    font-weight: 700;
+}
+
+.seller-create-page .seller-gallery-add-tile span:last-child {
+    color: #98A2B3;
+    font-size: 6.5px;
+    font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .seller-create-page .seller-gallery-drop-empty {
+        min-height: 94px;
+        padding: 12px !important;
+    }
+
+    .seller-create-page .seller-cover-change-hint {
+        right: 6px;
+        bottom: 6px;
+    }
+}
+</style>
+
 @endpush
 
 @section('content')
@@ -2822,18 +4702,40 @@
                 <div class="seller-create-field-grid md:grid-cols-[190px_minmax(0,1fr)]">
                     <div>
                         <label class="seller-create-label">Cover image</label>
-                        <label class="seller-create-upload">
+                        <label
+                            id="createCoverDropzone"
+                            class="seller-create-upload seller-create-upload--dropzone"
+                            tabindex="0"
+                            aria-describedby="createCoverDropHelp"
+                        >
                             <input id="createCoverImage" name="image" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
-                            <span id="createCoverPlaceholder">
+
+                            <span id="createCoverPlaceholder" class="seller-cover-drop-copy">
                                 <span class="mx-auto grid h-11 w-11 place-items-center rounded-[11px] border border-[#dce1e7] bg-white text-[#65707c]">
-                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="m5 17 5-5 4 4 2-2 3 3"></path></svg>
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                                        <path d="M12 4v10"></path>
+                                        <path d="m8.5 7.5 3.5-3.5 3.5 3.5"></path>
+                                        <path d="M5 13.5v4A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-4"></path>
+                                    </svg>
                                 </span>
-                                <strong class="mt-2 block text-[9px] text-[#39414a]">Upload cover image</strong>
-                                <span class="mt-1 block text-[7px] text-[#8a929c]">JPG, PNG or WEBP · up to 4 MB</span>
+                                <strong>Drag &amp; drop cover image</strong>
+                                <span class="seller-cover-drop-secondary">or click to browse</span>
+                                <span id="createCoverDropHelp" class="seller-cover-drop-meta">JPG, PNG or WEBP · up to 4 MB</span>
                             </span>
+
                             <img id="createCoverPreview" class="hidden" alt="Cover preview" decoding="async">
+
+                            <span class="seller-cover-change-hint" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                    <path d="M12 4v10"></path>
+                                    <path d="m8.5 7.5 3.5-3.5 3.5 3.5"></path>
+                                    <path d="M5 13.5v4A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-4"></path>
+                                </svg>
+                                Drop or click to change
+                            </span>
                         </label>
                     </div>
+
                     <div>
                         <label class="seller-create-label">Product description</label>
                         <textarea id="createProductDescription" name="description" maxlength="5000" class="seller-create-textarea" placeholder="Describe the product clearly: features, materials, measurements, condition, package inclusions, warranty, or other important information...">{{ old('description') }}</textarea>
@@ -2842,22 +4744,38 @@
                 </div>
 
                 <div class="mt-4 border-t border-[#edf0f3] pt-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2">
-                                <p class="text-[10px] font-semibold text-[#333840]">Product gallery</p>
-                                <span id="createGalleryCount" class="seller-gallery-count">0 / 12 images</span>
-                            </div>
-                            <p class="mt-1 text-[8px] text-[#818995]">Add up to 12 extra images. You can choose images multiple times and they will stay selected.</p>
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <p class="text-[10px] font-semibold text-[#333840]">Product gallery</p>
+                            <span id="createGalleryCount" class="seller-gallery-count">0 / 12 images</span>
                         </div>
-                        <label class="seller-create-button seller-create-button--soft cursor-pointer">
-                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-                            Add images
-                            <input id="createGalleryImages" name="gallery_images[]" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
-                        </label>
+                        <p class="mt-1 text-[8px] text-[#818995]">Drag images into the gallery first. After that, use the Add images tile whenever you need more.</p>
                     </div>
-                    <div id="createGalleryPreview" class="seller-create-gallery"></div>
-                    <p id="createGalleryEmpty" class="mt-2 rounded-[10px] border border-dashed border-[#d9dee5] bg-[#fafbfc] px-3 py-3 text-center text-[8px] text-[#8b939d]">No gallery images selected.</p>
+
+                    <input id="createGalleryImages" name="gallery_images[]" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
+
+                    <div id="createGalleryDropzone" class="seller-gallery-dropzone">
+                        <button
+                            id="createGalleryEmpty"
+                            type="button"
+                            class="seller-gallery-drop-empty"
+                            aria-label="Choose or drop product gallery images"
+                        >
+                            <span class="seller-gallery-drop-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M12 4v10"></path>
+                                    <path d="m8.5 7.5 3.5-3.5 3.5 3.5"></path>
+                                    <path d="M5 13.5v4A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-4"></path>
+                                </svg>
+                            </span>
+                            <span class="seller-gallery-drop-copy">
+                                <strong>Drag &amp; drop gallery images here</strong>
+                                <span>or click to browse · JPG, PNG or WEBP · up to 12 images</span>
+                            </span>
+                        </button>
+
+                        <div id="createGalleryPreview" class="seller-create-gallery hidden"></div>
+                    </div>
                 </div>
             </section>
 
@@ -2870,9 +4788,9 @@
                     <span class="seller-create-rule"></span>
                 </div>
 
-                <div id="createSimpleInventory" class="seller-create-field-grid">
-                    <div>
-                        <label class="seller-create-label">Price <span class="text-[#dc4c4c]">*</span></label>
+                <div id="createSimpleInventory" class="seller-sales-base-grid">
+                    <div class="seller-sales-base-field">
+                        <label class="seller-create-label">Base Price <span class="text-[#dc4c4c]">*</span></label>
                         <div class="seller-create-money-field">
                             <span class="seller-create-money-prefix" aria-hidden="true">₱</span>
                             <input
@@ -2888,51 +4806,218 @@
                                 inputmode="decimal"
                             >
                         </div>
+                        <p class="seller-create-help">Used as the default price when new variant combinations are generated.</p>
                     </div>
-                    <div>
-                        <label class="seller-create-label">Stock <span class="text-[#dc4c4c]">*</span></label>
-                        <input id="createProductStock" name="stock" type="number" min="0" value="{{ old('stock') }}" required class="seller-create-input" placeholder="0">
-                    </div>
-                </div>
 
-                <div class="seller-create-toggle-row">
-                    <div class="min-w-0">
-                        <strong class="block text-[10px] font-semibold text-[#303640]">Has different options?</strong>
-                        <span class="mt-1 block text-[8px] leading-4 text-[#838b95]">Use variants for sizes, colors, designs or other options. Each row can have its own image, SKU, price and stock.</span>
+                    <div class="seller-sales-base-field">
+                        <label class="seller-create-label">Base Stock <span class="text-[#dc4c4c]">*</span></label>
+                        <input
+                            id="createProductStock"
+                            name="stock"
+                            type="number"
+                            min="0"
+                            value="{{ old('stock') }}"
+                            required
+                            class="seller-create-input"
+                            placeholder="0"
+                        >
+                        <p class="seller-create-help">Used as the default stock when new variant combinations are generated.</p>
                     </div>
-                    <label class="shrink-0 cursor-pointer">
-                        <input id="createVariantsToggle" type="checkbox" class="peer sr-only" @checked(old('has_variants'))>
-                        <span class="seller-create-toggle"></span>
-                    </label>
-                </div>
 
-                <div id="createVariantsArea" class="hidden">
-                    <div class="mt-3 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2">
-                            <span class="seller-create-plain-icon text-[#c98505]" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M4 7h7v7H4z"></path>
-                                    <path d="M13 10h7v7h-7z"></path>
-                                </svg>
-                            </span>
-                            <p class="text-[10px] font-semibold text-[#344054]">Variants <span id="createVariantCount" class="ml-1 font-normal text-[#8a94a3]">0 variants</span></p>
+                    <div class="seller-variant-mode-card">
+                        <div class="seller-variant-mode-title">
+                            <span>Has different options?</span>
+                            <span
+                                class="seller-variant-info-dot"
+                                title="Use variants when buyers need to choose size, color, design or another option."
+                                aria-label="Variant option help"
+                            >?</span>
                         </div>
-                        <button id="addVariantRow" type="button" class="seller-create-button seller-create-button--soft">
-                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <path d="M12 5v14"></path>
-                                <path d="M5 12h14"></path>
-                            </svg>
-                            Add variant
-                        </button>
+
+                        <div class="seller-variant-mode-actions" role="group" aria-label="Product variant mode">
+                            <button
+                                id="createVariantModeNo"
+                                type="button"
+                                class="seller-variant-mode-choice"
+                                data-variant-mode-value="0"
+                                aria-pressed="{{ old('has_variants') ? 'false' : 'true' }}"
+                            >
+                                <span class="seller-variant-mode-radio" aria-hidden="true"></span>
+                                No
+                            </button>
+
+                            <button
+                                id="createVariantModeYes"
+                                type="button"
+                                class="seller-variant-mode-choice"
+                                data-variant-mode-value="1"
+                                aria-pressed="{{ old('has_variants') ? 'true' : 'false' }}"
+                            >
+                                <span class="seller-variant-mode-radio" aria-hidden="true"></span>
+                                Yes
+                            </button>
+                        </div>
+
+                        <p class="seller-create-help">Use variants for sizes, colors, designs or other buyer choices.</p>
+
+                        <input
+                            id="createVariantsToggle"
+                            type="checkbox"
+                            class="sr-only"
+                            @checked(old('has_variants'))
+                        >
                     </div>
-                    <div id="createVariantTableWrap" class="seller-variant-table-wrap hidden">
-                        <table class="seller-variant-table">
-                            <thead>
-                                <tr><th>Image</th><th>Size / Variant</th><th>Color / Design</th><th>SKU</th><th>Price</th><th>Stock</th><th></th></tr>
-                            </thead>
-                            <tbody id="createVariantRows"></tbody>
-                        </table>
-                    </div>
+                </div>
+
+                <div id="createVariantsArea" class="seller-smart-variants hidden" hidden aria-hidden="true">
+                    <section class="seller-variant-options-panel" aria-labelledby="createVariantOptionsTitle">
+                        <div class="seller-variant-subhead">
+                            <div>
+                                <h3 id="createVariantOptionsTitle">Variant Options</h3>
+                                <p>Select the choices that apply to your product. Combinations are generated automatically.</p>
+                            </div>
+                        </div>
+
+                        <div class="seller-variant-option-grid">
+                            <div class="seller-variant-option-card" data-variant-option-card="0">
+                                <label class="seller-variant-option-name-label" for="createVariantOptionName1">Option 1</label>
+                                <input
+                                    id="createVariantOptionName1"
+                                    type="text"
+                                    value="Size"
+                                    maxlength="30"
+                                    class="seller-variant-option-name"
+                                    data-variant-option-name="0"
+                                    aria-label="First variant option name"
+                                >
+
+                                <div
+                                    id="createVariantOptionValues1"
+                                    class="seller-variant-option-values"
+                                    data-variant-option-values="0"
+                                    aria-live="polite"
+                                ></div>
+
+                                <div class="seller-variant-option-add">
+                                    <input
+                                        id="createVariantOptionInput1"
+                                        type="text"
+                                        maxlength="60"
+                                        class="seller-variant-option-value-input"
+                                        data-variant-option-input="0"
+                                        placeholder="e.g. Small"
+                                        aria-label="Add first option value"
+                                    >
+                                    <button type="button" class="seller-variant-add-value" data-add-variant-option="0">
+                                        + Add option
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="seller-variant-option-card" data-variant-option-card="1">
+                                <label class="seller-variant-option-name-label" for="createVariantOptionName2">Option 2</label>
+                                <input
+                                    id="createVariantOptionName2"
+                                    type="text"
+                                    value="Color"
+                                    maxlength="30"
+                                    class="seller-variant-option-name"
+                                    data-variant-option-name="1"
+                                    aria-label="Second variant option name"
+                                >
+
+                                <div
+                                    id="createVariantOptionValues2"
+                                    class="seller-variant-option-values"
+                                    data-variant-option-values="1"
+                                    aria-live="polite"
+                                ></div>
+
+                                <div class="seller-variant-option-add">
+                                    <input
+                                        id="createVariantOptionInput2"
+                                        type="text"
+                                        maxlength="60"
+                                        class="seller-variant-option-value-input"
+                                        data-variant-option-input="1"
+                                        placeholder="e.g. Black"
+                                        aria-label="Add second option value"
+                                    >
+                                    <button type="button" class="seller-variant-add-value" data-add-variant-option="1">
+                                        + Add option
+                                    </button>
+                                </div>
+                            </div>
+
+                            <aside class="seller-variant-combination-summary" aria-live="polite">
+                                <div class="seller-variant-summary-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <path d="M12 10v6"></path>
+                                        <path d="M12 7.2h.01"></path>
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <span id="createVariantSummaryEyebrow">Add option values</span>
+                                    <strong id="createVariantCombinationSummary">No combinations yet</strong>
+                                    <p id="createVariantCombinationHelp">Add a size, color, design or another option to generate variants.</p>
+                                </div>
+                            </aside>
+                        </div>
+                    </section>
+
+                    <section class="seller-variants-panel" aria-labelledby="createVariantsTableTitle">
+                        <div class="seller-variants-panel-head">
+                            <div>
+                                <h3 id="createVariantsTableTitle">
+                                    Variants
+                                    <span id="createVariantCount">0 variants</span>
+                                </h3>
+                                <p>Each combination can have its own image, SKU, price and stock.</p>
+                            </div>
+
+                            <div class="seller-variant-bulk-actions">
+                                <button id="applyBasePriceToVariants" type="button" class="seller-variant-bulk-button">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                        <path d="M12 3 5 10l7 7 7-7-7-7Z"></path>
+                                        <path d="M12 8v4"></path>
+                                    </svg>
+                                    Set price for all variants
+                                </button>
+
+                                <button id="applyBaseStockToVariants" type="button" class="seller-variant-bulk-button">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="8"></circle>
+                                        <path d="M12 8v8"></path>
+                                        <path d="M8 12h8"></path>
+                                    </svg>
+                                    Set stock for all variants
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="createVariantEmpty" class="seller-variant-empty">
+                            Add option values above to generate your variant combinations.
+                        </div>
+
+                        <div id="createVariantTableWrap" class="seller-variant-table-wrap hidden">
+                            <table class="seller-variant-table seller-smart-variant-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th id="createVariantHeader1">Size</th>
+                                        <th id="createVariantHeader2">Color</th>
+                                        <th>SKU</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="createVariantRows"></tbody>
+                            </table>
+                        </div>
+                    </section>
                 </div>
 
 
@@ -3127,9 +5212,11 @@
     const coverInput = document.getElementById('createCoverImage');
     const coverPreview = document.getElementById('createCoverPreview');
     const coverPlaceholder = document.getElementById('createCoverPlaceholder');
+    const coverDropzone = document.getElementById('createCoverDropzone');
     const galleryInput = document.getElementById('createGalleryImages');
     const galleryPreview = document.getElementById('createGalleryPreview');
     const galleryEmpty = document.getElementById('createGalleryEmpty');
+    const galleryDropzone = document.getElementById('createGalleryDropzone');
     const galleryCount = document.getElementById('createGalleryCount');
     const priceInput = document.getElementById('createProductPrice');
     const stockInput = document.getElementById('createProductStock');
@@ -3142,10 +5229,24 @@
     const variantsArea = document.getElementById('createVariantsArea');
     const variantRows = document.getElementById('createVariantRows');
     const variantWrap = document.getElementById('createVariantTableWrap');
+    const variantEmpty = document.getElementById('createVariantEmpty');
     const variantCount = document.getElementById('createVariantCount');
-    const addVariantButton = document.getElementById('addVariantRow');
+    const variantModeNo = document.getElementById('createVariantModeNo');
+    const variantModeYes = document.getElementById('createVariantModeYes');
+    const variantOptionNameInputs = Array.from(document.querySelectorAll('[data-variant-option-name]'));
+    const variantOptionValueContainers = Array.from(document.querySelectorAll('[data-variant-option-values]'));
+    const variantOptionValueInputs = Array.from(document.querySelectorAll('[data-variant-option-input]'));
+    const variantOptionAddButtons = Array.from(document.querySelectorAll('[data-add-variant-option]'));
+    const variantSummaryEyebrow = document.getElementById('createVariantSummaryEyebrow');
+    const variantCombinationSummary = document.getElementById('createVariantCombinationSummary');
+    const variantCombinationHelp = document.getElementById('createVariantCombinationHelp');
+    const variantHeader1 = document.getElementById('createVariantHeader1');
+    const variantHeader2 = document.getElementById('createVariantHeader2');
+    const applyBasePriceToVariants = document.getElementById('applyBasePriceToVariants');
+    const applyBaseStockToVariants = document.getElementById('applyBaseStockToVariants');
     const specRows = document.getElementById('createSpecificationRows');
     const specsEmpty = document.getElementById('createSpecificationsEmpty');
+    const submitProductReview = document.getElementById('submitProductReview');
     const saveDraft = document.getElementById('saveProductDraft');
     const draftButtonLabel = saveDraft?.querySelector('[data-draft-button-label]');
     const draftFeedback = document.getElementById('draftSaveFeedback');
@@ -3185,6 +5286,15 @@
     let variantIndex = 0;
     let specIndex = 0;
     let previewFrame = 0;
+    let productSubmitLocked = false;
+
+    const variantOptionGroups = [
+        { name: 'Size', values: [] },
+        { name: 'Color', values: [] },
+    ];
+
+    const suppressedVariantKeys = new Set();
+    const initialOldVariants = @json(old('variants', []));
 
     const queuePreviewUpdate = () => {
         if (previewFrame) return;
@@ -3196,9 +5306,30 @@
     };
 
     const GALLERY_LIMIT = 12;
+    const ACCEPTED_IMAGE_TYPES = new Set([
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+    ]);
+
     let pendingGalleryFiles = [];
     let savedDraftGallery = [];
     let galleryObjectUrls = [];
+
+    const acceptedImageFiles = (files) =>
+        Array.from(files || []).filter(file =>
+            file instanceof File
+            && ACCEPTED_IMAGE_TYPES.has(String(file.type || '').toLowerCase())
+        );
+
+    function assignCoverFile(file) {
+        if (!coverInput || !file || typeof DataTransfer === 'undefined') return;
+
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        coverInput.files = transfer.files;
+        coverInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
 
     const money = (value) => '₱' + Math.max(0, Number(value || 0)).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -3308,11 +5439,13 @@
     }
 
     function setCoverPreview(file) {
-        if (!file || !previewImage) return;
+        if (!file || !previewImage || !coverPreview || !coverPlaceholder) return;
+
         const url = URL.createObjectURL(file);
         coverPreview.src = url;
         coverPreview.classList.remove('hidden');
         coverPlaceholder.classList.add('hidden');
+        coverDropzone?.classList.add('has-image');
         previewImage.innerHTML = `<img src="${url}" alt="Product preview">`;
     }
 
@@ -3632,7 +5765,11 @@
         galleryPreview.innerHTML = '';
 
         const total = savedDraftGallery.length + pendingGalleryFiles.length;
-        galleryEmpty.classList.toggle('hidden', total > 0);
+        const hasImages = total > 0;
+
+        galleryEmpty.classList.toggle('hidden', hasImages);
+        galleryPreview.classList.toggle('hidden', !hasImages);
+        galleryDropzone?.setAttribute('data-has-images', hasImages ? '1' : '0');
 
         if (galleryCount) {
             galleryCount.textContent = `${total} / ${GALLERY_LIMIT} images`;
@@ -3667,10 +5804,29 @@
             `;
             galleryPreview.appendChild(node);
         });
+
+        if (hasImages && total < GALLERY_LIMIT) {
+            const addTile = document.createElement('button');
+            addTile.type = 'button';
+            addTile.className = 'seller-gallery-add-tile';
+            addTile.setAttribute('data-add-gallery-images', '');
+            addTile.setAttribute('aria-label', 'Add more product gallery images');
+            addTile.innerHTML = `
+                <span class="seller-gallery-add-tile-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                        <path d="M12 5v14"></path>
+                        <path d="M5 12h14"></path>
+                    </svg>
+                </span>
+                <strong>Add images</strong>
+                <span>${GALLERY_LIMIT - total} slots left</span>
+            `;
+            galleryPreview.appendChild(addTile);
+        }
     }
 
     function addGalleryFiles(files) {
-        const incoming = Array.from(files || []).filter(file => file instanceof File);
+        const incoming = acceptedImageFiles(files);
         if (!incoming.length) return;
 
         const existingKeys = new Set(pendingGalleryFiles.map(galleryFileKey));
@@ -3700,6 +5856,12 @@
     }
 
     galleryPreview?.addEventListener('click', event => {
+        const addButton = event.target.closest('[data-add-gallery-images]');
+        if (addButton) {
+            galleryInput?.click();
+            return;
+        }
+
         const button = event.target.closest('[data-remove-pending-gallery]');
         if (!button) return;
 
@@ -3709,6 +5871,10 @@
         pendingGalleryFiles.splice(index, 1);
         syncGalleryInputFiles();
         renderGallery();
+    });
+
+    galleryEmpty?.addEventListener('click', () => {
+        galleryInput?.click();
     });
 
     async function savedGalleryAsFiles() {
@@ -3743,71 +5909,1923 @@
         return files;
     }
 
+    function normalizeVariantText(value) {
+        return String(value ?? '')
+            .trim()
+            .replace(/\s+/g, ' ');
+    }
+
+    function escapeVariantHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function isColorVariantGroup(groupIndex) {
+        const name =
+            normalizeVariantText(
+                variantOptionGroups[groupIndex]?.name
+            ).toLowerCase();
+
+        return [
+            'color',
+            'colour',
+            'colors',
+            'colours',
+        ].includes(name);
+    }
+
+    function variantColorHex(value) {
+        const normalized =
+            normalizeVariantText(value)
+                .toLowerCase();
+
+        const colors = {
+            'black': '#202124',
+            'white': '#F8F8F6',
+            'blue': '#315FC7',
+            'navy': '#1F3A68',
+            'navy blue': '#1F3A68',
+            'royal blue': '#2F5BD3',
+            'sky blue': '#66B7E8',
+            'light blue': '#9FD3F2',
+            'dark blue': '#244A8F',
+            'red': '#D64545',
+            'dark red': '#A92D2D',
+            'green': '#2E9B57',
+            'emerald': '#1F9D68',
+            'forest green': '#237447',
+            'dark green': '#24633F',
+            'light green': '#8FCF9E',
+            'mint': '#8FD7B5',
+            'mint green': '#8FD7B5',
+            'olive': '#808B45',
+            'lime': '#9ACB45',
+            'yellow': '#E8C547',
+            'gold': '#D5A52D',
+            'orange': '#E58A32',
+            'purple': '#7155B7',
+            'violet': '#7D59C6',
+            'lavender': '#B9A7E7',
+            'pink': '#E58AAA',
+            'hot pink': '#E35C98',
+            'magenta': '#C34A9A',
+            'brown': '#8A5B3F',
+            'beige': '#D7C4A1',
+            'cream': '#F2E6C9',
+            'ivory': '#F5F1DF',
+            'gray': '#98A2B3',
+            'grey': '#98A2B3',
+            'silver': '#BFC5CC',
+            'charcoal': '#4A5058',
+            'teal': '#3A9692',
+            'cyan': '#45B8C8',
+            'turquoise': '#42B9B3',
+            'maroon': '#7E3140',
+            'burgundy': '#7A2E3B',
+            'peach': '#EBA783',
+            'coral': '#E77E72',
+            'khaki': '#B7A77A',
+        };
+
+        return colors[normalized] || '#D0D5DD';
+    }
+
+    function isLightVariantColor(value) {
+        return [
+            'white',
+            'cream',
+            'ivory',
+            'beige',
+            'yellow',
+            'light blue',
+            'silver',
+        ].includes(
+            normalizeVariantText(value).toLowerCase()
+        );
+    }
+
+    function variantColorDotMarkup(value, extraClass = '') {
+        const color =
+            variantColorHex(value);
+
+        const light =
+            isLightVariantColor(value)
+                ? 'true'
+                : 'false';
+
+        return `
+            <span
+                class="seller-variant-color-dot ${extraClass}"
+                style="--variant-swatch:${color}"
+                data-light-swatch="${light}"
+                aria-hidden="true"
+            ></span>
+        `;
+    }
+
+    function refreshVariantColorSwatches(scope = document) {
+        scope
+            .querySelectorAll(
+                '[data-variant-color-select-wrap]'
+            )
+            .forEach(wrapper => {
+                const select =
+                    wrapper.querySelector(
+                        '[data-variant-option-select]'
+                    );
+
+                const dot =
+                    wrapper.querySelector(
+                        '[data-variant-color-dot]'
+                    );
+
+                const label =
+                    wrapper.querySelector(
+                        '[data-variant-color-label]'
+                    );
+
+                if (!select || !dot) return;
+
+                const value =
+                    normalizeVariantText(
+                        select.value
+                    );
+
+                dot.style.setProperty(
+                    '--variant-swatch',
+                    variantColorHex(value)
+                );
+
+                dot.dataset.lightSwatch =
+                    isLightVariantColor(value)
+                        ? 'true'
+                        : 'false';
+
+                if (label) {
+                    label.textContent =
+                        value || 'Select color';
+                }
+
+                wrapper
+                    .querySelectorAll(
+                        '[data-variant-color-choice]'
+                    )
+                    .forEach(choice => {
+                        const selected =
+                            normalizeVariantText(
+                                choice.dataset.variantColorChoice
+                            ).toLowerCase()
+                            === value.toLowerCase();
+
+                        choice.setAttribute(
+                            'aria-selected',
+                            selected ? 'true' : 'false'
+                        );
+                    });
+            });
+    }
+
+    function restoreVariantColorMenu(menu) {
+        if (!menu) return;
+
+        const owner =
+            menu.__variantColorOwner;
+
+        menu.hidden = true;
+        menu.classList.remove(
+            'seller-variant-color-menu--portal'
+        );
+
+        menu.style.removeProperty('top');
+        menu.style.removeProperty('left');
+        menu.style.removeProperty('right');
+        menu.style.removeProperty('bottom');
+        menu.style.removeProperty('width');
+        menu.style.removeProperty('max-height');
+
+        if (owner?.isConnected) {
+            owner.appendChild(menu);
+
+            owner
+                .querySelector(
+                    '[data-variant-color-trigger]'
+                )
+                ?.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+        }
+
+        menu.__variantColorOwner = null;
+    }
+
+    function closeVariantColorMenus(except = null) {
+        document
+            .querySelectorAll(
+                '[data-variant-color-menu]'
+            )
+            .forEach(menu => {
+                if (menu === except) return;
+                restoreVariantColorMenu(menu);
+            });
+    }
+
+    function positionVariantColorMenu(
+        trigger,
+        menu
+    ) {
+        if (!trigger || !menu) return;
+
+        const rect =
+            trigger.getBoundingClientRect();
+
+        const viewportGap = 10;
+        const menuGap = 5;
+        const preferredHeight = 210;
+
+        const roomBelow =
+            window.innerHeight
+            - rect.bottom
+            - viewportGap;
+
+        const roomAbove =
+            rect.top
+            - viewportGap;
+
+        const openAbove =
+            roomBelow < 150
+            && roomAbove > roomBelow;
+
+        const availableHeight =
+            Math.max(
+                96,
+                Math.min(
+                    preferredHeight,
+                    openAbove
+                        ? roomAbove - menuGap
+                        : roomBelow - menuGap
+                )
+            );
+
+        const width =
+            Math.max(
+                150,
+                rect.width
+            );
+
+        const left =
+            Math.min(
+                Math.max(
+                    viewportGap,
+                    rect.left
+                ),
+                Math.max(
+                    viewportGap,
+                    window.innerWidth
+                    - width
+                    - viewportGap
+                )
+            );
+
+        menu.style.setProperty(
+            'width',
+            `${width}px`,
+            'important'
+        );
+
+        menu.style.setProperty(
+            'left',
+            `${left}px`,
+            'important'
+        );
+
+        menu.style.setProperty(
+            'max-height',
+            `${availableHeight}px`,
+            'important'
+        );
+
+        if (openAbove) {
+            menu.style.setProperty(
+                'top',
+                'auto',
+                'important'
+            );
+
+            menu.style.setProperty(
+                'bottom',
+                `${Math.max(
+                    viewportGap,
+                    window.innerHeight
+                    - rect.top
+                    + menuGap
+                )}px`,
+                'important'
+            );
+        } else {
+            menu.style.setProperty(
+                'bottom',
+                'auto',
+                'important'
+            );
+
+            menu.style.setProperty(
+                'top',
+                `${Math.min(
+                    window.innerHeight
+                    - viewportGap
+                    - availableHeight,
+                    rect.bottom + menuGap
+                )}px`,
+                'important'
+            );
+        }
+    }
+
+    function openVariantColorMenu(
+        wrapper,
+        trigger,
+        menu
+    ) {
+        if (!wrapper || !trigger || !menu) {
+            return;
+        }
+
+        closeVariantColorMenus(menu);
+
+        menu.__variantColorOwner = wrapper;
+        document.body.appendChild(menu);
+
+        menu.classList.add(
+            'seller-variant-color-menu--portal'
+        );
+
+        menu.hidden = false;
+
+        trigger.setAttribute(
+            'aria-expanded',
+            'true'
+        );
+
+        positionVariantColorMenu(
+            trigger,
+            menu
+        );
+    }
+
+
+    function variantKey(option1 = '', option2 = '') {
+        return [
+            normalizeVariantText(option1).toLowerCase(),
+            normalizeVariantText(option2).toLowerCase(),
+        ].join('|||');
+    }
+
+    function activeVariantGroups() {
+        return variantOptionGroups
+            .map((group, index) => ({
+                index,
+                name: normalizeVariantText(group.name) || `Option ${index + 1}`,
+                values: Array.from(new Set(
+                    (group.values || [])
+                        .map(normalizeVariantText)
+                        .filter(Boolean)
+                )),
+            }))
+            .filter(group => group.values.length > 0);
+    }
+
+    function syncVariantModeButtons() {
+        const active = Boolean(variantsToggle?.checked);
+        variantModeNo?.setAttribute('aria-pressed', active ? 'false' : 'true');
+        variantModeYes?.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+
     function syncVariantMode() {
         const active = Boolean(variantsToggle?.checked);
-        hasVariants.value = active ? '1' : '0';
-        variantsArea.classList.toggle('hidden', !active);
-        priceInput.disabled = active;
-        stockInput.disabled = active;
-        priceInput.required = !active;
-        stockInput.required = !active;
-        if (active && !variantRows.children.length) addVariant();
+
+        if (hasVariants) {
+            hasVariants.value = active ? '1' : '0';
+        }
+
+        if (variantsArea) {
+            /*
+             * Strict visibility rule:
+             * Variant Options + Variants are visible ONLY when Yes is active.
+             * Inline !important prevents older page CSS from accidentally
+             * forcing the smart variant area open.
+             */
+            variantsArea.classList.toggle('hidden', !active);
+            variantsArea.hidden = !active;
+            variantsArea.setAttribute(
+                'aria-hidden',
+                active ? 'false' : 'true'
+            );
+
+            variantsArea.style.setProperty(
+                'display',
+                active ? 'grid' : 'none',
+                'important'
+            );
+
+            variantsArea
+                .querySelectorAll('[name^="variants["]')
+                .forEach(field => {
+                    field.disabled = !active;
+                });
+        }
+
+        /*
+         * Keep Base Price / Base Stock editable in variant mode because they
+         * are now the defaults used when combinations are generated.
+         * They are still valid existing Product form fields.
+         */
+        if (priceInput) {
+            priceInput.disabled = false;
+            priceInput.required = true;
+        }
+
+        if (stockInput) {
+            stockInput.disabled = false;
+            stockInput.required = true;
+        }
+
+        syncVariantModeButtons();
+
+        if (active) {
+            renderVariantOptionBuilder();
+
+            if (!variantRows?.children.length) {
+                regenerateVariantCombinations();
+            }
+        }
+
+        updateVariantCount();
         updatePreview();
     }
 
+    function syncVariantOptionNames() {
+        variantOptionNameInputs.forEach((input, index) => {
+            if (!variantOptionGroups[index]) return;
+
+            const value = normalizeVariantText(input.value);
+            variantOptionGroups[index].name =
+                value || `Option ${index + 1}`;
+        });
+
+        if (variantHeader1) {
+            variantHeader1.textContent =
+                variantOptionGroups[0]?.name || 'Option 1';
+        }
+
+        if (variantHeader2) {
+            variantHeader2.textContent =
+                variantOptionGroups[1]?.name || 'Option 2';
+        }
+
+        variantRows?.querySelectorAll('tr').forEach(syncVariantOptions);
+        updateVariantCombinationSummary();
+
+        /*
+         * If an option is renamed to/from Color, rebuild combination rows so
+         * the appropriate swatch control is applied.
+         */
+        if (variantsToggle?.checked) {
+            regenerateVariantCombinations(true);
+        }
+    }
+
+    function renderVariantOptionBuilder() {
+        variantOptionNameInputs.forEach((input, index) => {
+            const group = variantOptionGroups[index];
+            if (!group) return;
+
+            if (document.activeElement !== input) {
+                input.value =
+                    normalizeVariantText(group.name)
+                    || `Option ${index + 1}`;
+            }
+        });
+
+        variantOptionValueContainers.forEach((container, index) => {
+            const group = variantOptionGroups[index];
+            if (!group) return;
+
+            container.innerHTML = '';
+
+            if (!group.values.length) {
+                const empty = document.createElement('span');
+                empty.className = 'text-[7.5px] text-[#a0a8b3]';
+                empty.textContent = 'No values added yet.';
+                container.appendChild(empty);
+                return;
+            }
+
+            group.values.forEach(value => {
+                const chip = document.createElement('span');
+
+                const colorGroup =
+                    isColorVariantGroup(index);
+
+                chip.className =
+                    colorGroup
+                        ? 'seller-variant-value-chip seller-variant-value-chip--color'
+                        : 'seller-variant-value-chip';
+
+                chip.innerHTML = `
+                    ${colorGroup ? variantColorDotMarkup(value) : ''}
+                    <span>${escapeVariantHtml(value)}</span>
+                    <button
+                        type="button"
+                        data-remove-variant-option="${index}"
+                        data-variant-option-value="${escapeVariantHtml(value)}"
+                        aria-label="Remove ${escapeVariantHtml(value)}"
+                    >×</button>
+                `;
+                container.appendChild(chip);
+            });
+        });
+
+        syncVariantOptionNames();
+        updateVariantCombinationSummary();
+    }
+
+    function variantColorChoicesMarkup(values, currentValue = '') {
+        const current =
+            normalizeVariantText(currentValue);
+
+        return values.map(value => {
+            const safe =
+                escapeVariantHtml(value);
+
+            const isSelected =
+                normalizeVariantText(value).toLowerCase()
+                === current.toLowerCase();
+
+            return `
+                <button
+                    type="button"
+                    class="seller-variant-color-choice"
+                    data-variant-color-choice="${safe}"
+                    role="option"
+                    aria-selected="${isSelected ? 'true' : 'false'}"
+                >
+                    ${variantColorDotMarkup(value)}
+                    <span>${safe}</span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.9"
+                        aria-hidden="true"
+                    >
+                        <path d="m7 12 3 3 7-7"></path>
+                    </svg>
+                </button>
+            `;
+        }).join('');
+    }
+
+    function refreshVariantColorControl(row) {
+        const wrapper =
+            row?.querySelector(
+                '[data-variant-color-select-wrap]'
+            );
+
+        if (!wrapper) {
+            return;
+        }
+
+        const select =
+            wrapper.querySelector(
+                '[data-variant-option-select="1"]'
+            );
+
+        const menu =
+            wrapper.querySelector(
+                '[data-variant-color-menu]'
+            );
+
+        const trigger =
+            wrapper.querySelector(
+                '[data-variant-color-trigger]'
+            );
+
+        if (!select || !menu || !trigger) {
+            return;
+        }
+
+        const colors =
+            variantOptionGroups[1]?.values || [];
+
+        const previous =
+            normalizeVariantText(
+                select.value
+            );
+
+        const nextValue =
+            colors.some(
+                color =>
+                    normalizeVariantText(color).toLowerCase()
+                    === previous.toLowerCase()
+            )
+                ? previous
+                : normalizeVariantText(
+                    colors[0] || ''
+                );
+
+        select.innerHTML =
+            colors.length
+                ? colors.map(color => {
+                    const safe =
+                        escapeVariantHtml(color);
+
+                    return `
+                        <option
+                            value="${safe}"
+                            ${normalizeVariantText(color) === nextValue ? 'selected' : ''}
+                        >${safe}</option>
+                    `;
+                }).join('')
+                : '<option value="">—</option>';
+
+        select.disabled = !colors.length;
+        select.value = nextValue;
+
+        menu.innerHTML =
+            variantColorChoicesMarkup(
+                colors,
+                nextValue
+            );
+
+        trigger.disabled = !colors.length;
+
+        if (!colors.length) {
+            menu.hidden = true;
+            trigger.setAttribute(
+                'aria-expanded',
+                'false'
+            );
+        }
+
+        refreshVariantColorSwatches(row);
+        syncVariantOptions(row);
+    }
+
+    function refreshAllVariantColorControls() {
+        variantRows
+            ?.querySelectorAll('tr')
+            .forEach(row => {
+                refreshVariantColorControl(row);
+            });
+
+        updateVariantCombinationSummary();
+        updatePreview();
+    }
+
+    function addVariantOptionValue(groupIndex, rawValue) {
+        const group = variantOptionGroups[groupIndex];
+        if (!group) return false;
+
+        const value = normalizeVariantText(rawValue);
+        if (!value) return false;
+
+        const exists = group.values.some(
+            current =>
+                normalizeVariantText(current).toLowerCase()
+                === value.toLowerCase()
+        );
+
+        if (exists) return false;
+
+        group.values.push(value);
+        suppressedVariantKeys.clear();
+        renderVariantOptionBuilder();
+
+        /*
+         * Variant rows use a true Cartesian product:
+         * Size × Color. Adding either option group recalculates the rows.
+         */
+        regenerateVariantCombinations();
+
+        const input = variantOptionValueInputs[groupIndex];
+        if (input) input.value = '';
+
+        return true;
+    }
+
+    function removeVariantOptionValue(groupIndex, rawValue) {
+        const group = variantOptionGroups[groupIndex];
+        if (!group) return;
+
+        const target = normalizeVariantText(rawValue).toLowerCase();
+
+        group.values = group.values.filter(
+            value =>
+                normalizeVariantText(value).toLowerCase()
+                !== target
+        );
+
+        suppressedVariantKeys.clear();
+        renderVariantOptionBuilder();
+        regenerateVariantCombinations();
+    }
+
+    function variantCombinations() {
+        const sizes =
+            (variantOptionGroups[0]?.values || [])
+                .map(normalizeVariantText)
+                .filter(Boolean);
+
+        const colors =
+            (variantOptionGroups[1]?.values || [])
+                .map(normalizeVariantText)
+                .filter(Boolean);
+
+        /*
+         * Size is required before variant rows exist.
+         * Once Size exists:
+         * - no Color yet -> one row per Size
+         * - one or more Colors -> Size × Color combinations
+         */
+        if (!sizes.length) {
+            return [];
+        }
+
+        const colorValues =
+            colors.length
+                ? colors
+                : [''];
+
+        const combinations = [];
+
+        sizes.forEach(size => {
+            colorValues.forEach(color => {
+                combinations.push({
+                    option1: size,
+                    option2: color,
+                });
+            });
+        });
+
+        return combinations;
+    }
+
+
+    function updateVariantCombinationSummary() {
+        const sizeCount =
+            variantOptionGroups[0]?.values?.length || 0;
+
+        const colorCount =
+            variantOptionGroups[1]?.values?.length || 0;
+
+        const combinationCount =
+            variantCombinations().length;
+
+        if (
+            !variantSummaryEyebrow
+            || !variantCombinationSummary
+            || !variantCombinationHelp
+        ) {
+            return;
+        }
+
+        if (sizeCount < 1) {
+            variantSummaryEyebrow.textContent =
+                colorCount > 0
+                    ? `${colorCount} color ${colorCount === 1 ? 'option' : 'options'} saved`
+                    : 'Add option values';
+
+            variantCombinationSummary.textContent =
+                'Add at least one Size to create variants';
+
+            variantCombinationHelp.textContent =
+                colorCount > 0
+                    ? 'Your colors are saved. Add a Size to generate Size × Color combinations.'
+                    : 'Add Size values first, then add Colors to generate every combination.';
+
+            return;
+        }
+
+        if (colorCount > 0) {
+            variantSummaryEyebrow.textContent =
+                `You've configured 2 option groups`;
+
+            variantCombinationSummary.textContent =
+                `${sizeCount} ${sizeCount === 1 ? 'size' : 'sizes'} × `
+                + `${colorCount} ${colorCount === 1 ? 'color' : 'colors'} = `
+                + `${combinationCount} ${combinationCount === 1 ? 'variant' : 'variants'}`;
+
+            variantCombinationHelp.textContent =
+                'Every Size is combined with every Color automatically. Each row can keep its own image, SKU, price and stock.';
+
+            return;
+        }
+
+        variantSummaryEyebrow.textContent =
+            `${sizeCount} ${sizeCount === 1 ? 'size' : 'sizes'} configured`;
+
+        variantCombinationSummary.textContent =
+            `${combinationCount} ${combinationCount === 1 ? 'variant' : 'variants'} will be created`;
+
+        variantCombinationHelp.textContent =
+            'Add Colors anytime to expand these into Size × Color combinations.';
+    }
+
+
+    function generateVariantSku(option1 = '', option2 = '', sequence = 1) {
+        const productSku =
+            normalizeVariantText(
+                form?.elements?.namedItem('sku')?.value
+            );
+
+        const productName =
+            normalizeVariantText(nameInput?.value);
+
+        const base =
+            productSku
+            || productName
+                .replace(/[^a-z0-9]+/gi, '-')
+                .replace(/^-|-$/g, '')
+                .slice(0, 12)
+                .toUpperCase()
+            || 'VAR';
+
+        const suffix = [option1, option2]
+            .filter(Boolean)
+            .map(value =>
+                normalizeVariantText(value)
+                    .replace(/[^a-z0-9]+/gi, '')
+                    .slice(0, 3)
+                    .toUpperCase()
+            )
+            .filter(Boolean)
+            .join('-');
+
+        return `${base}${suffix ? '-' + suffix : ''}-${String(sequence).padStart(2, '0')}`;
+    }
+
+    function optionSelectMarkup(groupIndex, selectedValue = '') {
+        const group = variantOptionGroups[groupIndex];
+        const values = group?.values || [];
+        const selected = normalizeVariantText(selectedValue);
+        const colorGroup = isColorVariantGroup(groupIndex);
+
+        if (!values.length) {
+            if (colorGroup) {
+                return `
+                    <div
+                        class="seller-variant-color-dropdown"
+                        data-variant-color-select-wrap
+                    >
+                        <select
+                            class="seller-variant-color-native-select"
+                            data-variant-option-select="${groupIndex}"
+                            disabled
+                            aria-hidden="true"
+                            tabindex="-1"
+                        >
+                            <option value="">—</option>
+                        </select>
+
+                        <button
+                            type="button"
+                            class="seller-variant-color-trigger"
+                            data-variant-color-trigger
+                            aria-expanded="false"
+                            disabled
+                        >
+                            <span
+                                class="seller-variant-color-dot"
+                                data-variant-color-dot
+                                style="--variant-swatch:#D0D5DD"
+                                data-light-swatch="false"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span
+                                class="seller-variant-color-label"
+                                data-variant-color-label
+                            >Select color</span>
+
+                            <svg
+                                class="seller-variant-color-chevron"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                aria-hidden="true"
+                            >
+                                <path d="m7 10 5 5 5-5"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="seller-variant-plain-select">
+                    <select
+                        data-variant-option-select="${groupIndex}"
+                        disabled
+                    >
+                        <option value="">—</option>
+                    </select>
+                </div>
+            `;
+        }
+
+        const current =
+            selected
+            || normalizeVariantText(values[0]);
+
+        const nativeOptions =
+            values.map(value => {
+                const safe =
+                    escapeVariantHtml(value);
+
+                return `
+                    <option
+                        value="${safe}"
+                        ${normalizeVariantText(value) === current ? 'selected' : ''}
+                    >${safe}</option>
+                `;
+            }).join('');
+
+        if (colorGroup) {
+            const colorChoices =
+                values.map(value => {
+                    const safe =
+                        escapeVariantHtml(value);
+
+                    const isSelected =
+                        normalizeVariantText(value).toLowerCase()
+                        === current.toLowerCase();
+
+                    return `
+                        <button
+                            type="button"
+                            class="seller-variant-color-choice"
+                            data-variant-color-choice="${safe}"
+                            role="option"
+                            aria-selected="${isSelected ? 'true' : 'false'}"
+                        >
+                            ${variantColorDotMarkup(value)}
+                            <span>${safe}</span>
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                aria-hidden="true"
+                            >
+                                <path d="m7 12 3 3 7-7"></path>
+                            </svg>
+                        </button>
+                    `;
+                }).join('');
+
+            return `
+                <div
+                    class="seller-variant-color-dropdown"
+                    data-variant-color-select-wrap
+                >
+                    <select
+                        class="seller-variant-color-native-select"
+                        data-variant-option-select="${groupIndex}"
+                        aria-hidden="true"
+                        tabindex="-1"
+                    >
+                        ${nativeOptions}
+                    </select>
+
+                    <button
+                        type="button"
+                        class="seller-variant-color-trigger"
+                        data-variant-color-trigger
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <span
+                            class="seller-variant-color-dot"
+                            data-variant-color-dot
+                            style="--variant-swatch:${variantColorHex(current)}"
+                            data-light-swatch="${isLightVariantColor(current) ? 'true' : 'false'}"
+                            aria-hidden="true"
+                        ></span>
+
+                        <span
+                            class="seller-variant-color-label"
+                            data-variant-color-label
+                        >${escapeVariantHtml(current)}</span>
+
+                        <svg
+                            class="seller-variant-color-chevron"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <path d="m7 10 5 5 5-5"></path>
+                        </svg>
+                    </button>
+
+                    <div
+                        class="seller-variant-color-menu"
+                        data-variant-color-menu
+                        role="listbox"
+                        hidden
+                    >
+                        ${colorChoices}
+                    </div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="seller-variant-plain-select">
+                <select
+                    data-variant-option-select="${groupIndex}"
+                    aria-label="${escapeVariantHtml(group?.name || `Option ${groupIndex + 1}`)}"
+                >
+                    ${nativeOptions}
+                </select>
+            </div>
+        `;
+    }
+
+
     function syncVariantOptions(row) {
-        const size = row.querySelector('[data-variant-size]')?.value?.trim() || '';
-        const color = row.querySelector('[data-variant-color]')?.value?.trim() || '';
         const hidden = row.querySelector('[data-variant-options]');
+        if (!hidden) return;
+
         const options = {};
-        if (size) options.Size = size;
-        if (color) options.Color = color;
-        if (hidden) hidden.value = JSON.stringify(options);
+
+        variantOptionGroups.forEach((group, index) => {
+            const select = row.querySelector(
+                `[data-variant-option-select="${index}"]`
+            );
+
+            const value =
+                normalizeVariantText(select?.value || '');
+
+            const name =
+                normalizeVariantText(group?.name)
+                || `Option ${index + 1}`;
+
+            if (value) {
+                options[name] = value;
+            }
+        });
+
+        hidden.value = JSON.stringify(options);
+
+        const option1 =
+            normalizeVariantText(
+                row.querySelector(
+                    '[data-variant-option-select="0"]'
+                )?.value
+            );
+
+        const option2 =
+            normalizeVariantText(
+                row.querySelector(
+                    '[data-variant-option-select="1"]'
+                )?.value
+            );
+
+        row.dataset.variantKey =
+            variantKey(option1, option2);
     }
 
     function updateVariantCount() {
         const count = variantRows?.children.length || 0;
-        variantCount.textContent = `${count} ${count === 1 ? 'variant' : 'variants'}`;
-        variantWrap.classList.toggle('hidden', count === 0);
+
+        if (variantCount) {
+            variantCount.textContent =
+                `${count} ${count === 1 ? 'variant' : 'variants'}`;
+        }
+
+        variantWrap?.classList.toggle('hidden', count === 0);
+        variantEmpty?.classList.toggle('hidden', count > 0);
+
+        updateVariantCombinationSummary();
         updatePreview();
     }
 
     function addVariant(data = {}) {
+        if (!variantRows) return null;
+
         const index = variantIndex++;
+        const option1 =
+            normalizeVariantText(
+                data.option1
+                ?? data.size
+                ?? ''
+            );
+
+        const option2 =
+            normalizeVariantText(
+                data.option2
+                ?? data.color
+                ?? ''
+            );
+
+        const key = variantKey(option1, option2);
         const row = document.createElement('tr');
+
         row.dataset.variantRow = String(index);
+        row.dataset.variantKey = key;
+
+        const defaultPrice =
+            data.price
+            ?? priceInput?.value
+            ?? '';
+
+        const defaultStock =
+            data.stock
+            ?? stockInput?.value
+            ?? '';
+
+        const defaultSku =
+            data.sku
+            || generateVariantSku(
+                option1,
+                option2,
+                variantRows.children.length + 1
+            );
+
         row.innerHTML = `
             <td>
                 <label class="seller-variant-image-label">
-                    <input name="variants[${index}][image]" type="file" accept="image/jpeg,image/png,image/webp" class="hidden" data-variant-image>
+                    <input
+                        name="variants[${index}][image]"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        class="hidden"
+                        data-variant-image
+                    >
                     <span data-variant-image-preview>
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="m5 17 5-5 4 4 2-2 3 3"></path></svg>
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7">
+                            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                            <path d="m5 17 5-5 4 4 2-2 3 3"></path>
+                        </svg>
                     </span>
                 </label>
             </td>
-            <td><input data-variant-size type="text" value="${data.size || ''}" placeholder="Small (S)"></td>
+            <td>${optionSelectMarkup(0, option1)}</td>
             <td>
-                <input data-variant-color type="text" value="${data.color || ''}" placeholder="Blue / Black">
-                <input data-variant-options name="variants[${index}][options]" type="hidden" value="">
+                ${optionSelectMarkup(1, option2)}
+                <input
+                    data-variant-options
+                    name="variants[${index}][options]"
+                    type="hidden"
+                    value=""
+                >
+                <input
+                    data-variant-draft-image-key
+                    name="variants[${index}][draft_image_key]"
+                    type="hidden"
+                    value="${escapeVariantHtml(data.draftImageKey ?? data.draft_image_key ?? '')}"
+                >
             </td>
-            <td><input name="variants[${index}][sku]" type="text" value="${data.sku || ''}" placeholder="SKU"></td>
-            <td><input data-variant-price name="variants[${index}][price]" type="number" min="0" step="0.01" value="${data.price ?? ''}" placeholder="0.00" required></td>
-            <td><input name="variants[${index}][stock]" type="number" min="0" value="${data.stock ?? ''}" placeholder="0" required></td>
-            <td><button type="button" data-remove-variant class="grid h-8 w-8 place-items-center rounded-[8px] border border-[#f0d0d0] bg-white text-[#d64b4b] hover:bg-[#fff5f5]" aria-label="Remove variant"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7h14"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path></svg></button></td>
+            <td>
+                <input
+                    name="variants[${index}][sku]"
+                    type="text"
+                    value="${escapeVariantHtml(defaultSku)}"
+                    placeholder="SKU"
+                >
+            </td>
+            <td>
+                <div class="seller-variant-money-cell">
+                    <input
+                        data-variant-price
+                        name="variants[${index}][price]"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value="${escapeVariantHtml(defaultPrice)}"
+                        placeholder="0.00"
+                        required
+                    >
+                </div>
+            </td>
+            <td>
+                <input
+                    data-variant-stock
+                    name="variants[${index}][stock]"
+                    type="number"
+                    min="0"
+                    value="${escapeVariantHtml(defaultStock)}"
+                    placeholder="0"
+                    required
+                >
+            </td>
+            <td>
+                <button
+                    type="button"
+                    data-remove-variant
+                    class="seller-variant-remove"
+                    aria-label="Remove variant"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M5 7h14"></path>
+                        <path d="M9 7V5h6v2"></path>
+                        <path d="M8 7l1 12h6l1-12"></path>
+                    </svg>
+                </button>
+            </td>
         `;
+
         variantRows.appendChild(row);
         syncVariantOptions(row);
 
-        row.querySelectorAll('[data-variant-size],[data-variant-color]').forEach(input => input.addEventListener('input', () => syncVariantOptions(row)));
-        row.querySelector('[data-variant-price]')?.addEventListener('input', queuePreviewUpdate);
-        row.querySelector('[data-remove-variant]')?.addEventListener('click', () => { row.remove(); updateVariantCount(); });
-        row.querySelector('[data-variant-image]')?.addEventListener('change', event => {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const target = row.querySelector('[data-variant-image-preview]');
-            target.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Variant image">`;
+        row.querySelectorAll('[data-variant-option-select]').forEach(select => {
+            select.addEventListener('change', () => {
+                syncVariantOptions(row);
+                refreshVariantColorSwatches(row);
+                updatePreview();
+            });
         });
+
+        row.querySelectorAll('[data-variant-color-trigger]').forEach(trigger => {
+            trigger.addEventListener('click', event => {
+                event.stopPropagation();
+
+                const wrapper =
+                    trigger.closest(
+                        '[data-variant-color-select-wrap]'
+                    );
+
+                const nestedMenu =
+                    wrapper?.querySelector(
+                        '[data-variant-color-menu]'
+                    );
+
+                const portalMenu =
+                    Array.from(
+                        document.querySelectorAll(
+                            'body > [data-variant-color-menu]'
+                        )
+                    ).find(
+                        menu =>
+                            menu.__variantColorOwner
+                            === wrapper
+                    );
+
+                const menu =
+                    nestedMenu || portalMenu;
+
+                if (!wrapper || !menu) return;
+
+                const alreadyOpen =
+                    !menu.hidden
+                    && menu.__variantColorOwner
+                        === wrapper;
+
+                if (alreadyOpen) {
+                    restoreVariantColorMenu(menu);
+                    return;
+                }
+
+                openVariantColorMenu(
+                    wrapper,
+                    trigger,
+                    menu
+                );
+            });
+        });
+
+        row.querySelectorAll('[data-variant-color-menu]').forEach(menu => {
+            menu.addEventListener('click', event => {
+                const choice =
+                    event.target.closest(
+                        '[data-variant-color-choice]'
+                    );
+
+                if (!choice) return;
+
+                event.stopPropagation();
+
+                const wrapper =
+                    menu.__variantColorOwner
+                    || menu.closest(
+                        '[data-variant-color-select-wrap]'
+                    );
+
+                const select =
+                    wrapper?.querySelector(
+                        '[data-variant-option-select]'
+                    );
+
+                if (!select) return;
+
+                select.value =
+                    choice.dataset.variantColorChoice
+                    || '';
+
+                select.dispatchEvent(
+                    new Event(
+                        'change',
+                        { bubbles: true }
+                    )
+                );
+
+                restoreVariantColorMenu(menu);
+            });
+        });
+
+        refreshVariantColorSwatches(row);
+
+        const restoredVariantImageUrl =
+            normalizeVariantText(
+                data.draftImageUrl
+                ?? data.draft_image_url
+                ?? ''
+            );
+
+        if (restoredVariantImageUrl) {
+            const target =
+                row.querySelector(
+                    '[data-variant-image-preview]'
+                );
+
+            if (target) {
+                target.innerHTML =
+                    `<img src="${escapeVariantHtml(restoredVariantImageUrl)}" alt="Saved variant image">`;
+            }
+        }
+
+        row.querySelector('[data-variant-price]')?.addEventListener(
+            'input',
+            queuePreviewUpdate
+        );
+
+        row.querySelector('[data-remove-variant]')?.addEventListener(
+            'click',
+            () => {
+                closeVariantColorMenus();
+
+                suppressedVariantKeys.add(
+                    row.dataset.variantKey || key
+                );
+
+                row.remove();
+                updateVariantCount();
+            }
+        );
+
+        row.querySelector('[data-variant-image]')?.addEventListener(
+            'change',
+            event => {
+                const file = event.target.files?.[0];
+                if (!file) return;
+
+                const target =
+                    row.querySelector(
+                        '[data-variant-image-preview]'
+                    );
+
+                const url = URL.createObjectURL(file);
+                target.innerHTML =
+                    `<img src="${url}" alt="Variant image">`;
+            }
+        );
+
         updateVariantCount();
+        return row;
+    }
+
+    function regenerateVariantCombinations(forceRebuild = false) {
+        if (!variantRows) return;
+
+        const combinations =
+            variantCombinations();
+
+        const snapshots = new Map();
+
+        if (forceRebuild) {
+            Array.from(
+                variantRows.querySelectorAll('tr')
+            ).forEach(row => {
+                const key =
+                    row.dataset.variantKey || '';
+
+                snapshots.set(key, {
+                    sku:
+                        row.querySelector(
+                            'input[name$="[sku]"]'
+                        )?.value || '',
+                    price:
+                        row.querySelector(
+                            '[data-variant-price]'
+                        )?.value || '',
+                    stock:
+                        row.querySelector(
+                            '[data-variant-stock]'
+                        )?.value || '',
+                    draftImageKey:
+                        row.querySelector(
+                            '[data-variant-draft-image-key]'
+                        )?.value || '',
+                    draftImageUrl:
+                        row.querySelector(
+                            '[data-variant-image-preview] img'
+                        )?.src || '',
+                });
+            });
+
+            variantRows.innerHTML = '';
+        }
+
+        const desiredKeys =
+            new Set(
+                combinations.map(
+                    combination =>
+                        variantKey(
+                            combination.option1,
+                            combination.option2
+                        )
+                )
+            );
+
+        /*
+         * Preserve existing rows (including selected images and edited SKU,
+         * price and stock) whenever their combination still exists.
+         */
+        Array.from(
+            variantRows.querySelectorAll('tr')
+        ).forEach(row => {
+            const key = row.dataset.variantKey || '';
+
+            if (!desiredKeys.has(key)) {
+                row.remove();
+            }
+        });
+
+        const currentRows =
+            new Map(
+                Array.from(
+                    variantRows.querySelectorAll('tr')
+                ).map(row => [
+                    row.dataset.variantKey || '',
+                    row,
+                ])
+            );
+
+        combinations.forEach((combination, sequence) => {
+            const key =
+                variantKey(
+                    combination.option1,
+                    combination.option2
+                );
+
+            if (suppressedVariantKeys.has(key)) {
+                return;
+            }
+
+            const existing = currentRows.get(key);
+
+            if (existing) {
+                /*
+                 * Preserve edited image/SKU/price/stock for combinations that
+                 * still exist. Only resync the hidden options JSON.
+                 */
+                syncVariantOptions(existing);
+                return;
+            }
+
+            const snapshot =
+                snapshots.get(key);
+
+            addVariant({
+                option1: combination.option1,
+                option2: combination.option2,
+                price:
+                    snapshot?.price
+                    ?? priceInput?.value
+                    ?? '',
+                stock:
+                    snapshot?.stock
+                    ?? stockInput?.value
+                    ?? '',
+                sku:
+                    snapshot?.sku
+                    || generateVariantSku(
+                        combination.option1,
+                        combination.option2,
+                        sequence + 1
+                    ),
+                draftImageKey:
+                    snapshot?.draftImageKey || '',
+                draftImageUrl:
+                    snapshot?.draftImageUrl || '',
+            });
+        });
+
+        updateVariantCount();
+    }
+
+    function normalizeDraftVariantOptionGroups(rawGroups) {
+        let groups = rawGroups;
+
+        if (typeof groups === 'string') {
+            try {
+                groups = JSON.parse(groups);
+            } catch (_) {
+                groups = [];
+            }
+        }
+
+        if (!Array.isArray(groups)) {
+            return [];
+        }
+
+        return groups
+            .slice(0, 2)
+            .map((group, index) => ({
+                name:
+                    normalizeVariantText(
+                        group?.name
+                    )
+                    || (index === 0 ? 'Size' : 'Color'),
+                values:
+                    Array.from(
+                        new Set(
+                            (
+                                Array.isArray(group?.values)
+                                    ? group.values
+                                    : []
+                            )
+                                .map(normalizeVariantText)
+                                .filter(Boolean)
+                        )
+                    ),
+            }));
+    }
+
+    function variantOptionGroupsDraftState() {
+        return variantOptionGroups
+            .slice(0, 2)
+            .map((group, index) => ({
+                name:
+                    normalizeVariantText(
+                        group?.name
+                    )
+                    || (index === 0 ? 'Size' : 'Color'),
+                values:
+                    Array.from(
+                        new Set(
+                            (
+                                Array.isArray(group?.values)
+                                    ? group.values
+                                    : []
+                            )
+                                .map(normalizeVariantText)
+                                .filter(Boolean)
+                        )
+                    ),
+            }));
+    }
+
+    function hydrateVariantBuilder(
+        savedVariants = [],
+        savedOptionGroups = null
+    ) {
+        const variants =
+            Array.isArray(savedVariants)
+                ? savedVariants
+                : [];
+
+        const explicitGroups =
+            normalizeDraftVariantOptionGroups(
+                savedOptionGroups
+            );
+
+        let keys = [];
+
+        if (explicitGroups.length) {
+            variantOptionGroups[0] = {
+                name:
+                    explicitGroups[0]?.name
+                    || 'Size',
+                values:
+                    explicitGroups[0]?.values
+                    || [],
+            };
+
+            variantOptionGroups[1] = {
+                name:
+                    explicitGroups[1]?.name
+                    || 'Color',
+                values:
+                    explicitGroups[1]?.values
+                    || [],
+            };
+
+            keys = [
+                variantOptionGroups[0].name,
+                variantOptionGroups[1].name,
+            ];
+        } else {
+            variantOptionGroups[0] = {
+                name: 'Size',
+                values: [],
+            };
+
+            variantOptionGroups[1] = {
+                name: 'Color',
+                values: [],
+            };
+
+            const parsedForKeys =
+                variants.map(variant => ({
+                    variant,
+                    options:
+                        parseVariantOptions(
+                            variant?.options
+                        ),
+                }));
+
+            parsedForKeys.forEach(item => {
+                Object.keys(item.options || {}).forEach(key => {
+                    if (!keys.includes(key)) {
+                        keys.push(key);
+                    }
+                });
+            });
+
+            keys.slice(0, 2).forEach((key, index) => {
+                variantOptionGroups[index].name =
+                    normalizeVariantText(key)
+                    || `Option ${index + 1}`;
+
+                variantOptionGroups[index].values =
+                    Array.from(
+                        new Set(
+                            parsedForKeys
+                                .map(item =>
+                                    normalizeVariantText(
+                                        item.options?.[key]
+                                    )
+                                )
+                                .filter(Boolean)
+                        )
+                    );
+            });
+        }
+
+        renderVariantOptionBuilder();
+
+        if (variantRows) {
+            variantRows.innerHTML = '';
+            variantIndex = 0;
+        }
+
+        suppressedVariantKeys.clear();
+
+        const parsed =
+            variants.map(variant => ({
+                variant,
+                options:
+                    parseVariantOptions(
+                        variant?.options
+                    ),
+            }));
+
+        const key1 =
+            keys[0]
+            || variantOptionGroups[0]?.name
+            || 'Size';
+
+        const key2 =
+            keys[1]
+            || variantOptionGroups[1]?.name
+            || 'Color';
+
+        parsed.forEach(item => {
+            const size =
+                normalizeVariantText(
+                    item.options?.[key1]
+                    ?? item.options?.Size
+                    ?? item.options?.size
+                    ?? ''
+                );
+
+            const color =
+                normalizeVariantText(
+                    item.options?.[key2]
+                    ?? item.options?.Color
+                    ?? item.options?.color
+                    ?? ''
+                );
+
+            if (!size) {
+                return;
+            }
+
+            addVariant({
+                option1: size,
+                option2: color,
+                sku: item.variant?.sku || '',
+                price:
+                    item.variant?.price
+                    ?? '',
+                stock:
+                    item.variant?.stock
+                    ?? '',
+                draftImageKey:
+                    item.variant?.draft_image_key
+                    ?? '',
+                draftImageUrl:
+                    item.variant?.draft_image_url
+                    ?? '',
+            });
+        });
+
+
+        /*
+         * A draft may contain option-group values before any Size row exists
+         * (for example: Colors were prepared first). Keep those values even
+         * when there are no variants yet.
+         */
+        renderVariantOptionBuilder();
+        refreshAllVariantColorControls();
+        updateVariantCount();
+    }
+
+    function appendVariantDraftState(formData) {
+        if (!formData) return;
+
+        /*
+         * FormData omits disabled fields. Variant rows are intentionally
+         * disabled while "Has different options?" is No, but a draft must
+         * still preserve the Seller's work. Rebuild the draft variant payload
+         * manually from the live UI.
+         */
+        Array.from(formData.keys())
+            .filter(key =>
+                String(key).startsWith(
+                    'variants['
+                )
+            )
+            .forEach(key => {
+                formData.delete(key);
+            });
+
+        const rows =
+            Array.from(
+                variantRows?.querySelectorAll('tr')
+                || []
+            );
+
+        rows.forEach((row, draftIndex) => {
+            syncVariantOptions(row);
+
+            const options =
+                row.querySelector(
+                    '[data-variant-options]'
+                )?.value || '';
+
+            const sku =
+                row.querySelector(
+                    'input[name$="[sku]"]'
+                )?.value || '';
+
+            const price =
+                row.querySelector(
+                    '[data-variant-price]'
+                )?.value || '';
+
+            const stock =
+                row.querySelector(
+                    '[data-variant-stock]'
+                )?.value || '';
+
+            const draftImageKey =
+                row.querySelector(
+                    '[data-variant-draft-image-key]'
+                )?.value || '';
+
+            const imageFile =
+                row.querySelector(
+                    '[data-variant-image]'
+                )?.files?.[0];
+
+            formData.append(
+                `variants[${draftIndex}][options]`,
+                options
+            );
+
+            formData.append(
+                `variants[${draftIndex}][sku]`,
+                sku
+            );
+
+            formData.append(
+                `variants[${draftIndex}][price]`,
+                price
+            );
+
+            formData.append(
+                `variants[${draftIndex}][stock]`,
+                stock
+            );
+
+            if (draftImageKey) {
+                formData.append(
+                    `variants[${draftIndex}][draft_image_key]`,
+                    draftImageKey
+                );
+            }
+
+            if (imageFile instanceof File) {
+                formData.append(
+                    `variants[${draftIndex}][image]`,
+                    imageFile,
+                    imageFile.name
+                );
+            }
+        });
+
+        formData.set(
+            'variant_option_groups',
+            JSON.stringify(
+                variantOptionGroupsDraftState()
+            )
+        );
+
+        /*
+         * Lets the server safely prune variant draft images for rows the
+         * Seller actually removed, while remaining backward-compatible with
+         * older clients.
+         */
+        formData.set(
+            'variant_state_present',
+            '1'
+        );
+
+        formData.set(
+            'has_variants',
+            variantsToggle?.checked
+                ? '1'
+                : '0'
+        );
+    }
+
+
+    function applyBaseValueToVariants(kind) {
+        if (!variantRows?.children.length) {
+            const target =
+                kind === 'price'
+                    ? priceInput
+                    : stockInput;
+
+            target?.focus();
+            return;
+        }
+
+        const source =
+            kind === 'price'
+                ? priceInput
+                : stockInput;
+
+        const value =
+            normalizeVariantText(
+                source?.value
+            );
+
+        if (!value) {
+            source?.focus();
+            return;
+        }
+
+        const selector =
+            kind === 'price'
+                ? '[data-variant-price]'
+                : '[data-variant-stock]';
+
+        variantRows
+            .querySelectorAll(selector)
+            .forEach(input => {
+                input.value = value;
+                input.dispatchEvent(
+                    new Event(
+                        'input',
+                        { bubbles: true }
+                    )
+                );
+            });
+
+        updatePreview();
     }
 
     function addSpecification(data = {}) {
@@ -3906,24 +7924,24 @@
         if (variantsToggle) variantsToggle.checked = variantMode;
         if (hasVariants) hasVariants.value = variantMode ? '1' : '0';
 
-        if (variantRows) {
-            variantRows.innerHTML = '';
-            variantIndex = 0;
-        }
+        const savedVariants =
+            Array.isArray(payload.variants)
+                ? payload.variants
+                : [];
 
-        const savedVariants = Array.isArray(payload.variants) ? payload.variants : [];
-        if (variantMode) {
-            savedVariants.forEach(variant => {
-                const options = parseVariantOptions(variant?.options);
-                addVariant({
-                    size: options.Size || options.size || '',
-                    color: options.Color || options.color || '',
-                    sku: variant?.sku || '',
-                    price: variant?.price ?? '',
-                    stock: variant?.stock ?? '',
-                });
-            });
-        }
+        const savedVariantOptionGroups =
+            payload.variant_option_groups
+            ?? [];
+
+        /*
+         * Restore the complete smart-variant builder even when the Seller
+         * saved the draft with "No" selected. syncVariantMode() below will
+         * keep it hidden, but clicking Yes again brings the saved work back.
+         */
+        hydrateVariantBuilder(
+            savedVariants,
+            savedVariantOptionGroups
+        );
 
         if (specRows) {
             specRows.innerHTML = '';
@@ -3947,6 +7965,7 @@
             coverPreview.src = draft.cover_image_url;
             coverPreview.classList.remove('hidden');
             coverPlaceholder.classList.add('hidden');
+            coverDropzone?.classList.add('has-image');
 
             if (previewImage) {
                 previewImage.innerHTML = `<img src="${draft.cover_image_url}" alt="Product preview">`;
@@ -4212,6 +8231,13 @@
         try {
             const formData = new FormData(form);
 
+            /*
+             * Persist the complete smart-variant editor, including option
+             * names, every Size/Color value, selected row colors, SKU,
+             * price, stock, and variant images.
+             */
+            appendVariantDraftState(formData);
+
             // New Draft mode is explicit. Never allow a stale hidden draft_id
             // to overwrite the previously saved product draft.
             if (isNewDraftMode()) {
@@ -4264,6 +8290,83 @@
             savedDraftGallery = Array.isArray(data.draft?.gallery_images)
                 ? data.draft.gallery_images.slice(0, GALLERY_LIMIT)
                 : savedDraftGallery;
+
+            const savedDraftVariants =
+                Array.isArray(data.draft?.payload?.variants)
+                    ? data.draft.payload.variants
+                    : [];
+
+            const savedBySize =
+                new Map();
+
+            savedDraftVariants.forEach(variant => {
+                const options =
+                    parseVariantOptions(
+                        variant?.options
+                    );
+
+                const size =
+                    normalizeVariantText(
+                        options?.[
+                            variantOptionGroups[0]?.name
+                            || 'Size'
+                        ]
+                        ?? options?.Size
+                        ?? options?.size
+                        ?? ''
+                    ).toLowerCase();
+
+                if (size) {
+                    savedBySize.set(
+                        size,
+                        variant
+                    );
+                }
+            });
+
+            variantRows
+                ?.querySelectorAll('tr')
+                .forEach(row => {
+                    const size =
+                        normalizeVariantText(
+                            row.querySelector(
+                                '[data-variant-option-select="0"]'
+                            )?.value
+                        ).toLowerCase();
+
+                    const saved =
+                        savedBySize.get(size);
+
+                    if (!saved) return;
+
+                    const keyInput =
+                        row.querySelector(
+                            '[data-variant-draft-image-key]'
+                        );
+
+                    if (keyInput) {
+                        keyInput.value =
+                            saved.draft_image_key
+                            || '';
+                    }
+
+                    if (
+                        saved.draft_image_url
+                        && !row.querySelector(
+                            '[data-variant-image]'
+                        )?.files?.length
+                    ) {
+                        const preview =
+                            row.querySelector(
+                                '[data-variant-image-preview]'
+                            );
+
+                        if (preview) {
+                            preview.innerHTML =
+                                `<img src="${escapeVariantHtml(saved.draft_image_url)}" alt="Saved variant image">`;
+                        }
+                    }
+                });
 
             pendingGalleryFiles = [];
             if (galleryInput) galleryInput.value = '';
@@ -4362,8 +8465,67 @@
     });
 
     document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') closeCategoryMenu();
+        if (event.key === 'Escape') {
+            closeCategoryMenu();
+            closeVariantColorMenus();
+        }
     });
+
+    document.addEventListener('click', event => {
+        const clickedInsideTrigger =
+            event.target.closest(
+                '[data-variant-color-select-wrap]'
+            );
+
+        const clickedInsidePortal =
+            event.target.closest(
+                '.seller-variant-color-menu--portal'
+            );
+
+        if (
+            !clickedInsideTrigger
+            && !clickedInsidePortal
+        ) {
+            closeVariantColorMenus();
+        }
+    });
+
+    const repositionOpenVariantColorMenus = () => {
+        document
+            .querySelectorAll(
+                'body > .seller-variant-color-menu--portal'
+            )
+            .forEach(menu => {
+                const owner =
+                    menu.__variantColorOwner;
+
+                const trigger =
+                    owner?.querySelector(
+                        '[data-variant-color-trigger]'
+                    );
+
+                if (
+                    trigger
+                    && !menu.hidden
+                ) {
+                    positionVariantColorMenu(
+                        trigger,
+                        menu
+                    );
+                }
+            });
+    };
+
+    window.addEventListener(
+        'resize',
+        repositionOpenVariantColorMenus
+    );
+
+    window.addEventListener(
+        'scroll',
+        repositionOpenVariantColorMenus,
+        true
+    );
 
         document.querySelectorAll('[data-create-nav]').forEach(button => {
         button.addEventListener('click', () => {
@@ -4388,40 +8550,278 @@
     freeShipping?.addEventListener('change', queuePreviewUpdate);
     codToggle?.addEventListener('change', queuePreviewUpdate);
     description?.addEventListener('input', updateDescriptionCount);
-    coverInput?.addEventListener('change', event => setCoverPreview(event.target.files?.[0]));
+
+    coverInput?.addEventListener('change', event => {
+        const file = acceptedImageFiles(event.target.files)[0];
+        if (file) setCoverPreview(file);
+    });
+
+    coverDropzone?.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        coverInput?.click();
+    });
+
+    ['dragenter', 'dragover'].forEach(type => {
+        coverDropzone?.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+            coverDropzone.classList.add('is-dragover');
+        });
+
+        galleryDropzone?.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+            galleryDropzone.classList.add('is-dragover');
+        });
+    });
+
+    ['dragleave', 'drop'].forEach(type => {
+        coverDropzone?.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            coverDropzone.classList.remove('is-dragover');
+        });
+
+        galleryDropzone?.addEventListener(type, event => {
+            event.preventDefault();
+            event.stopPropagation();
+            galleryDropzone.classList.remove('is-dragover');
+        });
+    });
+
+    coverDropzone?.addEventListener('drop', event => {
+        const file = acceptedImageFiles(event.dataTransfer?.files)[0];
+        if (file) assignCoverFile(file);
+    });
+
+    galleryDropzone?.addEventListener('drop', event => {
+        addGalleryFiles(event.dataTransfer?.files);
+    });
+
     galleryInput?.addEventListener('change', event => {
         addGalleryFiles(event.target.files);
     });
-    variantsToggle?.addEventListener('change', syncVariantMode);
-    addVariantButton?.addEventListener('click', () => addVariant());
+
+    variantsToggle?.addEventListener('change', () => {
+        syncVariantMode();
+    });
+
+    document.querySelectorAll('[data-variant-mode-value]').forEach(button => {
+        button.addEventListener('click', () => {
+            if (!variantsToggle) return;
+
+            variantsToggle.checked =
+                button.dataset.variantModeValue === '1';
+
+            variantsToggle.dispatchEvent(
+                new Event('change', { bubbles: true })
+            );
+        });
+    });
+
+    variantOptionNameInputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+            variantOptionGroups[index].name =
+                normalizeVariantText(input.value)
+                || `Option ${index + 1}`;
+
+            syncVariantOptionNames();
+        });
+
+        input.addEventListener('change', () => {
+            syncVariantOptionNames();
+        });
+    });
+
+    variantOptionAddButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const index =
+                Number(
+                    button.dataset.addVariantOption
+                );
+
+            addVariantOptionValue(
+                index,
+                variantOptionValueInputs[index]?.value
+            );
+        });
+    });
+
+    variantOptionValueInputs.forEach((input, index) => {
+        input.addEventListener('keydown', event => {
+            if (event.key !== 'Enter') return;
+
+            event.preventDefault();
+
+            addVariantOptionValue(
+                index,
+                input.value
+            );
+        });
+    });
+
+    variantOptionValueContainers.forEach(container => {
+        container.addEventListener('click', event => {
+            const button =
+                event.target.closest(
+                    '[data-remove-variant-option]'
+                );
+
+            if (!button) return;
+
+            removeVariantOptionValue(
+                Number(
+                    button.dataset.removeVariantOption
+                ),
+                button.dataset.variantOptionValue || ''
+            );
+        });
+    });
+
+    applyBasePriceToVariants?.addEventListener(
+        'click',
+        () => applyBaseValueToVariants('price')
+    );
+
+    applyBaseStockToVariants?.addEventListener(
+        'click',
+        () => applyBaseValueToVariants('stock')
+    );
+
     document.getElementById('addSpecificationRow')?.addEventListener('click', () => addSpecification());
     saveDraft?.addEventListener('click', saveDraftNow);
 
     form.addEventListener('submit', event => {
         if (variantsToggle?.checked) {
-            const rows = Array.from(variantRows.querySelectorAll('tr'));
-            if (!rows.length) {
+            const rows =
+                Array.from(
+                    variantRows.querySelectorAll('tr')
+                );
+
+            const sizeValues =
+                variantOptionGroups[0]?.values || [];
+
+            if (!sizeValues.length || !rows.length) {
                 event.preventDefault();
-                alert('Add at least one product variant.');
+
+                alert(
+                    'Add at least one Size before submitting variants. Colors alone do not create variant rows.'
+                );
+
+                variantOptionValueInputs[0]?.focus();
                 return;
             }
-            const invalidOption = rows.find(row => {
-                syncVariantOptions(row);
-                const size = row.querySelector('[data-variant-size]')?.value?.trim();
-                const color = row.querySelector('[data-variant-color]')?.value?.trim();
-                return !size && !color;
-            });
+
+            const invalidOption =
+                rows.find(row => {
+                    syncVariantOptions(row);
+
+                    const hidden =
+                        row.querySelector(
+                            '[data-variant-options]'
+                        );
+
+                    const options =
+                        parseVariantOptions(
+                            hidden?.value
+                        );
+
+                    return !Object.keys(options).length;
+                });
+
             if (invalidOption) {
                 event.preventDefault();
-                alert('Every variant needs a size/variant or color/design value.');
-                invalidOption.querySelector('[data-variant-size]')?.focus();
+
+                alert(
+                    'Every variant needs at least one option value.'
+                );
+
+                invalidOption
+                    .querySelector(
+                        '[data-variant-option-select]'
+                    )
+                    ?.focus();
+
+                return;
             }
+        }
+
+        /*
+         * Base Price / Base Stock are defaults in variant mode.
+         * Keep them visible/editable, but preserve the original backend
+         * behavior by omitting them from final variant-mode submission.
+         * Draft saves still keep these values because FormData is created
+         * before this submit-only step.
+         */
+        if (
+            productSubmitLocked
+            || form.dataset.submitting === '1'
+        ) {
+            event.preventDefault();
+            return;
+        }
+
+        /*
+         * One click = one product POST.
+         * Every added size/color is nested in variants[] under the same
+         * product form. Repeated clicks while this request is in-flight
+         * are ignored.
+         */
+        productSubmitLocked = true;
+        form.dataset.submitting = '1';
+
+        if (submitProductReview) {
+            submitProductReview.disabled = true;
+            submitProductReview.setAttribute(
+                'aria-disabled',
+                'true'
+            );
+            submitProductReview.setAttribute(
+                'aria-busy',
+                'true'
+            );
+        }
+
+        if (variantsToggle?.checked) {
+            if (priceInput) priceInput.disabled = true;
+            if (stockInput) stockInput.disabled = true;
+        }
+    });
+
+    window.addEventListener('pageshow', event => {
+        if (!event.persisted) return;
+
+        productSubmitLocked = false;
+        delete form.dataset.submitting;
+
+        if (submitProductReview) {
+            submitProductReview.disabled = false;
+            submitProductReview.removeAttribute(
+                'aria-disabled'
+            );
+            submitProductReview.removeAttribute(
+                'aria-busy'
+            );
         }
     });
 
     syncCategoryPicker();
     updateCustomCategory();
     updateDescriptionCount();
+
+    if (
+        variantsToggle?.checked
+        && Array.isArray(initialOldVariants)
+        && initialOldVariants.length
+    ) {
+        hydrateVariantBuilder(initialOldVariants);
+    } else {
+        renderVariantOptionBuilder();
+    }
+
     syncVariantMode();
     renderGallery();
     updatePreview();

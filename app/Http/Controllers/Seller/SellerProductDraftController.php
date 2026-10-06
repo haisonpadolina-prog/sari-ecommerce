@@ -104,6 +104,43 @@ class SellerProductDraftController extends Controller
             }
         }
 
+        $submittedVariantKeys = [];
+
+        foreach ((array) ($validated['variants'] ?? []) as $index => $variantRow) {
+            $optionsJson = (string) ($variantRow['options'] ?? '');
+            $options = json_decode($optionsJson, true);
+            $currentKey = $this->variantKey(
+                is_array($options) ? $options : []
+            );
+
+            if ($currentKey === '') {
+                continue;
+            }
+
+            $submittedVariantKeys[$currentKey] = true;
+
+            $previousKey = trim(
+                (string) ($variantRow['draft_image_key'] ?? '')
+            );
+
+            /*
+             * The Seller may change a saved row's Color after reopening a
+             * draft. Move the existing draft image to the new options key so
+             * it remains attached without forcing another upload.
+             */
+            if (
+                $previousKey !== ''
+                && $previousKey !== $currentKey
+                && isset($variantPaths[$previousKey])
+                && !isset($variantPaths[$currentKey])
+            ) {
+                $variantPaths[$currentKey] =
+                    $variantPaths[$previousKey];
+
+                unset($variantPaths[$previousKey]);
+            }
+        }
+
         $variantFiles = (array) $request->file('variants', []);
 
         foreach ($variantFiles as $index => $variantFileRow) {
@@ -136,6 +173,20 @@ class SellerProductDraftController extends Controller
             );
         }
 
+        if ($request->boolean('variant_state_present')) {
+            foreach (array_keys($variantPaths) as $key) {
+                if (isset($submittedVariantKeys[$key])) {
+                    continue;
+                }
+
+                $this->deletePublicFile(
+                    $variantPaths[$key] ?? null
+                );
+
+                unset($variantPaths[$key]);
+            }
+        }
+
         $payload = $request->except([
             '_token',
             '_method',
@@ -143,7 +194,11 @@ class SellerProductDraftController extends Controller
             'gallery_images',
         ]);
 
-        unset($payload['draft_id'], $payload['force_new_draft']);
+        unset(
+            $payload['draft_id'],
+            $payload['force_new_draft'],
+            $payload['variant_state_present']
+        );
 
         $draft->forceFill([
             'seller_account_id' => $seller->id,
@@ -267,11 +322,47 @@ class SellerProductDraftController extends Controller
             (array) ($draft->gallery_image_paths ?? [])
         );
 
-        $variants = (array) ($draft->variant_image_paths ?? []);
+        $variantPaths = (array) ($draft->variant_image_paths ?? []);
+        $payload = (array) ($draft->payload ?? []);
+
+        $payloadVariants = array_values(
+            (array) ($payload['variants'] ?? [])
+        );
+
+        foreach ($payloadVariants as $index => $variant) {
+            if (!is_array($variant)) {
+                continue;
+            }
+
+            $options = json_decode(
+                (string) ($variant['options'] ?? ''),
+                true
+            );
+
+            $key = $this->variantKey(
+                is_array($options) ? $options : []
+            );
+
+            $payloadVariants[$index]['draft_image_key'] =
+                isset($variantPaths[$key])
+                    ? $key
+                    : null;
+
+            $payloadVariants[$index]['draft_image_url'] =
+                isset($variantPaths[$key])
+                    ? route('seller.products.draft-media', [
+                        'kind' => 'variant',
+                        'key' => $key,
+                        'draft_id' => $draft->id,
+                    ])
+                    : null;
+        }
+
+        $payload['variants'] = $payloadVariants;
 
         return [
             'id' => (int) $draft->id,
-            'payload' => (array) ($draft->payload ?? []),
+            'payload' => $payload,
             'saved_at' => $draft->updated_at?->toIso8601String(),
 
             'cover_image_url' => $draft->cover_image_path
@@ -294,7 +385,7 @@ class SellerProductDraftController extends Controller
                 ->values()
                 ->all(),
 
-            'variant_images' => collect($variants)
+            'variant_images' => collect($variantPaths)
                 ->map(fn ($path, $key) => [
                     'key' => $key,
                     'url' => route('seller.products.draft-media', [
@@ -353,6 +444,8 @@ class SellerProductDraftController extends Controller
             ],
 
             'has_variants' => ['nullable', 'boolean'],
+            'variant_option_groups' => ['nullable', 'string', 'max:20000'],
+            'variant_state_present' => ['nullable', 'boolean'],
 
             'specifications' => ['nullable', 'array', 'max:30'],
             'specifications.*.name' => ['nullable', 'string', 'max:80'],
@@ -364,6 +457,7 @@ class SellerProductDraftController extends Controller
             'variants.*.sku' => ['nullable', 'string', 'max:120'],
             'variants.*.price' => ['nullable', 'numeric', 'min:0'],
             'variants.*.stock' => ['nullable', 'integer', 'min:0'],
+            'variants.*.draft_image_key' => ['nullable', 'string', 'size:40'],
             'variants.*.image' => [
                 'nullable',
                 'image',

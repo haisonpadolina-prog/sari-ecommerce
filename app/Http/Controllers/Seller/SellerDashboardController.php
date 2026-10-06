@@ -88,6 +88,7 @@ class SellerDashboardController extends Controller
                 'sku',
                 'stock',
                 'low_stock_threshold',
+                'image_path',
             ]);
 
         /*

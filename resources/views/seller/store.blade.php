@@ -1207,6 +1207,247 @@
         }
     }
 
+
+
+/* ======================================================================
+   STORE MANAGEMENT — MAIN CONTAINERS ONLY FLOATING
+   Final visual hierarchy pass.
+   - Top-level Store Management panels float.
+   - Nested cards/media/controls remain flat.
+   - Sticky save bar + alerts use softer elevation.
+   - No layout, sizing, route, form, upload, preview, or JS behavior changes.
+   ====================================================================== */
+
+.store-admin {
+    --sm-float-border: #E5E7EB;
+    --sm-float-divider: #ECEFF2;
+
+    --sm-float-main:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11);
+
+    --sm-float-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065);
+}
+
+/* ------------------------------------------------------------
+   OPEN PAGE HEADER
+   ------------------------------------------------------------ */
+.store-admin .sm-header,
+.store-admin .sm-header:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   TOP-LEVEL MAIN PANELS FLOAT
+   ------------------------------------------------------------ */
+.store-admin .sm-panel,
+.store-admin .sm-panel:hover {
+    border-color: var(--sm-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--sm-float-main) !important;
+    transform: none !important;
+    outline: 0 !important;
+}
+
+/* Panel headers belong to their parent panel, so they stay flat. */
+.store-admin .sm-panel__head {
+    border-bottom-color: var(--sm-float-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   STANDALONE SUPPORTING SURFACES
+   ------------------------------------------------------------ */
+.store-admin .sm-savebar,
+.store-admin .sm-alert {
+    box-shadow: var(--sm-float-soft) !important;
+    transform: none !important;
+}
+
+.store-admin .sm-savebar:hover,
+.store-admin .sm-alert:hover {
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   STORE MEDIA — NESTED CONTENT STAYS FLAT
+   ------------------------------------------------------------ */
+.store-admin .sm-upload-card,
+.store-admin .sm-upload-card:hover,
+.store-admin .sm-image,
+.store-admin .sm-image:hover,
+.store-admin .sm-placeholder,
+.store-admin .sm-media-actions,
+.store-admin .sm-media-action {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.store-admin .sm-upload-card {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+}
+
+.store-admin .sm-image {
+    border-color: #D9DEE5 !important;
+    background: #F8FAFC !important;
+}
+
+/* Media buttons remain controls, not floating mini-cards. */
+.store-admin .sm-media-action,
+.store-admin .sm-media-action:hover,
+.store-admin .sm-media-action:active {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   FORM CONTROLS — FLAT AT REST
+   ------------------------------------------------------------ */
+.store-admin .sm-control,
+.store-admin .sm-select__button,
+.store-admin .sm-account-link,
+.store-admin .sm-section-edit,
+.store-admin .sm-discard,
+.store-admin .sm-save {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.store-admin .sm-control,
+.store-admin .sm-select__button {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+}
+
+.store-admin [data-editable-section]:not(.is-editing) .sm-control {
+    border-color: #E1E5E9 !important;
+    background: #F8F9FA !important;
+}
+
+/* Editing state is indicated by border/focus only, never another card shadow. */
+.store-admin [data-editable-section].is-editing {
+    border-color: var(--sm-float-border) !important;
+    box-shadow: var(--sm-float-main) !important;
+}
+
+.store-admin .sm-control:focus,
+.store-admin .sm-select__button:focus-visible,
+.store-admin .sm-select.is-open .sm-select__button {
+    border-color: #C4A35B !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   READONLY / INFO BLOCKS — FLAT INSIDE MAIN PANELS
+   ------------------------------------------------------------ */
+.store-admin .sm-address-readonly,
+.store-admin .sm-preview-meta,
+.store-admin .sm-field-footer {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.store-admin .sm-address-readonly {
+    background: #FFFAF3 !important;
+}
+
+/* ------------------------------------------------------------
+   LIVE STORE PREVIEW — ONLY OUTER .sm-panel FLOATS
+   ------------------------------------------------------------ */
+.store-admin .sm-preview-cover,
+.store-admin .sm-preview-body,
+.store-admin .sm-preview-identity,
+.store-admin .sm-preview-logo,
+.store-admin .sm-preview-chip,
+.store-admin .sm-status,
+.store-admin .sm-enterprise-status {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.store-admin .sm-preview-cover {
+    border-bottom-color: var(--sm-float-divider) !important;
+}
+
+.store-admin .sm-preview-logo {
+    border-color: #FFFFFF !important;
+}
+
+/* Status pills remain semantic labels, not floating cards. */
+.store-admin .sm-preview-chip,
+.store-admin .sm-status,
+.store-admin .sm-enterprise-status {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   SAVE BAR CONTENT — FLAT INSIDE THE SOFT FLOATING BAR
+   ------------------------------------------------------------ */
+.store-admin .sm-savebar__status,
+.store-admin .sm-savebar__actions,
+.store-admin .sm-unsaved-dot,
+.store-admin .sm-discard,
+.store-admin .sm-save {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Keep CTA emphasis through color, not depth. */
+.store-admin .sm-save:hover,
+.store-admin .sm-discard:hover,
+.store-admin .sm-account-link:hover,
+.store-admin .sm-section-edit:hover,
+.store-admin .sm-section-edit[aria-pressed="true"] {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   CUSTOM DROPDOWN OVERLAY MAY FLOAT
+   ------------------------------------------------------------ */
+.store-admin .sm-select__menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   MOBILE — SAME HIERARCHY, TIGHTER SHADOWS
+   ------------------------------------------------------------ */
+@media (max-width: 680px) {
+    .store-admin .sm-panel {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .store-admin .sm-savebar,
+    .store-admin .sm-alert {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .store-admin .sm-upload-card,
+    .store-admin .sm-image,
+    .store-admin .sm-preview-logo,
+    .store-admin .sm-address-readonly {
+        box-shadow: none !important;
+    }
+}
 </style>
 
 <div class="store-admin">

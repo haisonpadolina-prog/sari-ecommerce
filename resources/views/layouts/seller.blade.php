@@ -47,7 +47,76 @@
             mix-blend-mode: normal !important;
             background: #F4F5F7 !important;
         }
-    </style>
+    
+
+}
+
+
+
+        /* ============================================================
+           UNIFIED HEADER NOTIFICATIONS
+           Bell is visually icon-only; dropdown is the elevated surface.
+           ============================================================ */
+        #sellerNotificationBell,
+        #sellerNotificationBell:hover,
+        #sellerNotificationBell:active {
+            border: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        #sellerNotificationBell {
+            color: #475467 !important;
+        }
+
+        #sellerNotificationBell:hover,
+        #sellerNotificationBell:focus-visible {
+            color: #C9890B !important;
+        }
+
+        #sellerNotificationBell:focus-visible {
+            outline: 2px solid rgba(213, 150, 23, .20) !important;
+            outline-offset: 2px !important;
+        }
+
+        .seller-shell-notification-item {
+            border-bottom: 1px solid #EEF0F3;
+            background: #FFFFFF;
+        }
+
+        .seller-shell-notification-item[data-unread="true"] {
+            background: #FFFCF5;
+        }
+
+        .seller-shell-notification-item:hover {
+            background: #F8FAFC !important;
+        }
+
+        .seller-shell-notification-icon {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            flex: 0 0 auto;
+            place-items: center;
+            border: 1px solid #E5E7EB;
+            border-radius: 10px;
+            background: #FFFFFF;
+            color: #B97805;
+            box-shadow: none !important;
+        }
+
+        .seller-shell-notification-icon svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        #sellerNotificationMarkAllRead[disabled] {
+            cursor: default;
+            opacity: .45;
+        }
+
+</style>
 
     <title>@yield('title', 'SARI Seller')</title>
 
@@ -450,7 +519,7 @@
             height: 15px !important;
         }
 
-        #sellerBellMessageBadge {
+        #sellerBellNotificationBadge {
             right: -5px !important;
             top: -5px !important;
             min-width: 18px !important;
@@ -1426,7 +1495,535 @@
             }
         }
 
-    </style>
+        /* ============================================================
+           SELLER SHELL PROFILE AVATAR — SHARED HEADER + SIDEBAR
+           The parent keeps the existing shell dimensions.
+           ============================================================ */
+        .seller-shell-profile-avatar {
+            position: relative !important;
+            overflow: hidden !important;
+            flex: 0 0 auto !important;
+            border: 1px solid #E5E7EB !important;
+            background: #D9950B !important;
+            isolation: isolate;
+        }
+
+        .seller-shell-profile-avatar__image {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            border-radius: inherit !important;
+            background: #F8FAFC !important;
+        }
+
+        .seller-shell-profile-avatar__fallback {
+            position: relative !important;
+            z-index: 1 !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #FFFFFF !important;
+            line-height: 1 !important;
+        }
+
+        .seller-shell-profile-avatar__image[hidden],
+        .seller-shell-profile-avatar__fallback[hidden] {
+            display: none !important;
+        }
+
+    
+
+/* ======================================================================
+   SELLER SHELL — FLAT SIDEBAR + HEADER
+   Outer shell surfaces stay flat. No layout or functionality changes.
+   ====================================================================== */
+
+#sellerSidebar,
+#sellerSidebar:hover,
+#sellerSidebar:focus-within {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+#sellerContent > header,
+#sellerContent > header:hover,
+#sellerContent > header:focus-within {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+/* Keep structural separation with neutral borders only. */
+#sellerSidebar {
+    border-right-color: #E7E9EE !important;
+}
+
+#sellerContent > header {
+    border-bottom-color: #E7E9EE !important;
+}
+
+/* Do not allow responsive overrides to re-add shell elevation. */
+@media (max-width: 1023px) {
+    #sellerSidebar {
+        box-shadow: none !important;
+    }
+}
+
+@media (max-width: 639px) {
+    #sellerContent > header {
+        box-shadow: none !important;
+    }
+}
+
+
+/* ======================================================================
+   UNIFIED NOTIFICATION DROPDOWN — CLEAN / MODERN / PROFESSIONAL
+   UI-only refinement. No backend/realtime/read-state behavior changed.
+   Sidebar + header remain flat.
+   ====================================================================== */
+
+#sellerNotificationDropdown {
+    width: min(470px, calc(100vw - 32px)) !important;
+    top: 52px !important;
+    right: -10px !important;
+    overflow: visible !important;
+    border: 1px solid #E4E7EC !important;
+    border-radius: 20px !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, .07),
+        0 24px 60px rgba(15, 23, 42, .14) !important;
+}
+
+/* Small pointer toward the bell. */
+#sellerNotificationDropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 30px;
+    width: 15px;
+    height: 15px;
+    border-left: 1px solid #E4E7EC;
+    border-top: 1px solid #E4E7EC;
+    background: #FFFFFF;
+    transform: rotate(45deg);
+    z-index: 0;
+}
+
+#sellerNotificationDropdown > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+#sellerNotificationDropdown > div:first-child {
+    min-height: 88px !important;
+    align-items: center !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    padding: 18px 22px !important;
+}
+
+#sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+    color: #101828 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.025em !important;
+}
+
+#sellerNotificationUnreadText {
+    margin-top: 5px !important;
+    color: #98A2B3 !important;
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+}
+
+#sellerNotificationMarkAllRead,
+#sellerNotificationDropdown a[href*="/notifications"] {
+    font-weight: 600 !important;
+}
+
+#sellerNotificationMarkAllRead {
+    color: #475467 !important;
+    font-size: 10px !important;
+}
+
+#sellerNotificationMarkAllRead:hover {
+    color: #B97805 !important;
+}
+
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"] {
+    color: #B97805 !important;
+    font-size: 10px !important;
+}
+
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"]:hover {
+    color: #8E5905 !important;
+}
+
+/* List */
+#sellerNotificationList {
+    max-height: 430px !important;
+    overflow-y: auto !important;
+    background: #FFFFFF !important;
+}
+
+.seller-shell-notification-item {
+    min-height: 92px !important;
+    padding: 16px 22px !important;
+    border-bottom: 1px solid #EEF1F4 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-shell-notification-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.seller-shell-notification-item[data-unread="true"] {
+    background: #FFFCF5 !important;
+}
+
+.seller-shell-notification-item:hover {
+    background: #F8FAFC !important;
+}
+
+.seller-shell-notification-item > div {
+    gap: 14px !important;
+}
+
+.seller-shell-notification-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 14px !important;
+    background: #FFFBF3 !important;
+    color: #C98506 !important;
+    box-shadow: none !important;
+}
+
+.seller-shell-notification-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Notification title/time/message hierarchy */
+.seller-shell-notification-item p.line-clamp-1 {
+    color: #344054 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+}
+
+.seller-shell-notification-item span.shrink-0.text-\[7px\] {
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+}
+
+.seller-shell-notification-item p.line-clamp-2 {
+    margin-top: 5px !important;
+    color: #667085 !important;
+    font-size: 10px !important;
+    line-height: 1.65 !important;
+}
+
+.seller-shell-notification-item [data-notification-unread-dot] {
+    width: 9px !important;
+    height: 9px !important;
+    margin-top: 5px !important;
+    background: #D9930A !important;
+}
+
+/* Empty state */
+#sellerNotificationEmpty {
+    padding: 44px 28px !important;
+}
+
+#sellerNotificationEmpty > div:first-child {
+    color: #B97805 !important;
+}
+
+#sellerNotificationEmpty > p:first-of-type {
+    margin-top: 12px !important;
+    color: #344054 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+#sellerNotificationEmpty > p:last-child {
+    margin-top: 5px !important;
+    max-width: 320px !important;
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.6 !important;
+}
+
+/* Footer */
+#sellerNotificationDropdown > a[href*="/notifications"] {
+    min-height: 64px !important;
+    margin: 12px 16px 16px !important;
+    border: 1px solid #E1B24E !important;
+    border-radius: 14px !important;
+    background: #FFFDF8 !important;
+    color: #A66F10 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerNotificationDropdown > a[href*="/notifications"]:hover {
+    border-color: #D9930A !important;
+    background: #FFF8E8 !important;
+    color: #8E5905 !important;
+    transform: none !important;
+}
+
+/* Keep bell itself visually icon-only. */
+#sellerNotificationBell,
+#sellerNotificationBell:hover,
+#sellerNotificationBell:active {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Responsive sizing */
+@media (max-width: 639px) {
+    #sellerNotificationDropdown {
+        position: fixed !important;
+        top: 72px !important;
+        left: 12px !important;
+        right: 12px !important;
+        width: auto !important;
+        max-width: none !important;
+        border-radius: 18px !important;
+    }
+
+    #sellerNotificationDropdown::before {
+        display: none !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child {
+        min-height: 80px !important;
+        padding: 16px 18px !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+        font-size: 16px !important;
+    }
+
+    .seller-shell-notification-item {
+        min-height: 86px !important;
+        padding: 14px 18px !important;
+    }
+
+    .seller-shell-notification-icon {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 13px !important;
+    }
+
+    #sellerNotificationDropdown > a[href*="/notifications"] {
+        min-height: 56px !important;
+        margin: 10px 12px 12px !important;
+    }
+}
+
+
+/* ======================================================================
+   UNIFIED NOTIFICATION DROPDOWN — COMPACT PROFESSIONAL PASS
+   Keeps the modern visual language but reduces width/height/spacing.
+   UI-only. Realtime/read-state/backend behavior unchanged.
+   ====================================================================== */
+
+#sellerNotificationDropdown {
+    width: min(380px, calc(100vw - 28px)) !important;
+    top: 50px !important;
+    right: -8px !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 6px 16px rgba(15, 23, 42, .06),
+        0 18px 42px rgba(15, 23, 42, .12) !important;
+}
+
+#sellerNotificationDropdown::before {
+    top: -7px !important;
+    right: 27px !important;
+    width: 13px !important;
+    height: 13px !important;
+}
+
+/* Compact header */
+#sellerNotificationDropdown > div:first-child {
+    min-height: 68px !important;
+    padding: 13px 16px !important;
+}
+
+#sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+    font-size: 14px !important;
+    line-height: 1.15 !important;
+}
+
+#sellerNotificationUnreadText {
+    margin-top: 3px !important;
+    font-size: 8.5px !important;
+}
+
+#sellerNotificationMarkAllRead,
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"] {
+    font-size: 8.5px !important;
+}
+
+/* Compact list */
+#sellerNotificationList {
+    max-height: 330px !important;
+}
+
+.seller-shell-notification-item {
+    min-height: 72px !important;
+    padding: 12px 16px !important;
+}
+
+.seller-shell-notification-item > div {
+    gap: 11px !important;
+}
+
+.seller-shell-notification-icon {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 11px !important;
+}
+
+.seller-shell-notification-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.seller-shell-notification-item p.line-clamp-1 {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-shell-notification-item span.shrink-0.text-\[7px\] {
+    font-size: 7.5px !important;
+}
+
+.seller-shell-notification-item p.line-clamp-2 {
+    margin-top: 3px !important;
+    font-size: 8.5px !important;
+    line-height: 1.5 !important;
+}
+
+.seller-shell-notification-item [data-notification-unread-dot] {
+    width: 7px !important;
+    height: 7px !important;
+    margin-top: 4px !important;
+}
+
+/* Compact empty state */
+#sellerNotificationEmpty {
+    padding: 30px 20px !important;
+}
+
+#sellerNotificationEmpty > p:first-of-type {
+    margin-top: 9px !important;
+    font-size: 9.5px !important;
+}
+
+#sellerNotificationEmpty > p:last-child {
+    margin-top: 4px !important;
+    max-width: 280px !important;
+    font-size: 8px !important;
+    line-height: 1.5 !important;
+}
+
+/* Compact footer */
+#sellerNotificationDropdown > a[href*="/notifications"] {
+    min-height: 46px !important;
+    margin: 9px 12px 12px !important;
+    border-radius: 11px !important;
+    font-size: 9px !important;
+}
+
+/* Keep bell icon-only. */
+#sellerNotificationBell,
+#sellerNotificationBell:hover,
+#sellerNotificationBell:active {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Mobile remains compact but readable. */
+@media (max-width: 639px) {
+    #sellerNotificationDropdown {
+        top: 68px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        border-radius: 15px !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child {
+        min-height: 64px !important;
+        padding: 12px 14px !important;
+    }
+
+    .seller-shell-notification-item {
+        min-height: 68px !important;
+        padding: 11px 14px !important;
+    }
+
+    .seller-shell-notification-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    #sellerNotificationDropdown > a[href*="/notifications"] {
+        min-height: 44px !important;
+        margin: 8px 10px 10px !important;
+    }
+}
+
+
+/* Notification badge absolute zero-state safety.
+   When JS says there are no unread notifications, the badge must not render. */
+#sellerBellNotificationBadge[data-has-unread="false"],
+#sellerBellNotificationBadge[aria-hidden="true"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#sellerBellNotificationBadge[data-has-unread="true"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
+/* Zero unread must hide every header notification badge copy,
+   including transient Livewire DOM instances. */
+[data-seller-notification-badge][data-has-unread="false"],
+[data-seller-notification-badge][aria-hidden="true"],
+[data-seller-notification-badge][hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    animation: none !important;
+}
+
+</style>
 
     @stack('styles')
 
@@ -1461,6 +2058,50 @@
             session('seller_account_id')
         );
     }
+
+    /*
+     * Shared Seller shell profile photo.
+     *
+     * SellerAccountController already owns the secure profile-photo response.
+     * Use the controller action URL directly so the sidebar/header always read
+     * from the same persisted source as Account Management.
+     *
+     * The updated_at query value prevents a replaced image from being stuck in
+     * the browser cache after the seller saves Personal Account changes.
+     */
+    $sellerShellProfilePhotoUrl = null;
+
+    if ($sellerLayoutAccount) {
+        try {
+            $sellerShellProfilePhotoUrl = action([
+                \App\Http\Controllers\Seller\SellerAccountController::class,
+                'profilePhoto',
+            ]);
+
+            $sellerShellProfilePhotoVersion = optional(
+                $sellerLayoutAccount->updated_at
+            )->timestamp ?: 0;
+
+            $sellerShellProfilePhotoUrl .= (
+                str_contains($sellerShellProfilePhotoUrl, '?') ? '&' : '?'
+            ) . 'v=' . $sellerShellProfilePhotoVersion;
+        } catch (\Throwable $error) {
+            /*
+             * Keep the shell resilient if the profile-photo route is not
+             * registered in an unusual test/fallback context.
+             * The initials fallback remains available.
+             */
+            $sellerShellProfilePhotoUrl = null;
+        }
+    }
+
+    $sellerShellProfileInitials = strtoupper(
+        mb_substr(
+            trim((string) ($sellerLayoutAccount?->store_name ?: 'SARI Seller')),
+            0,
+            2
+        )
+    ) ?: 'SS';
 
     $sellerUnreadMessages = 0;
     $sellerRecentAdminMessages = collect();
@@ -2176,8 +2817,25 @@
                 "
                 wire:navigate.hover
             >
-                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[12px] font-semibold text-white">
-                    {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
+                <div
+                    id="sellerSidebarProfileAvatar"
+                    class="seller-shell-profile-avatar grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[12px] font-semibold text-white"
+                    data-profile-photo-url="{{ $sellerShellProfilePhotoUrl }}"
+                >
+                    <img
+                        class="seller-shell-profile-avatar__image"
+                        src="{{ $sellerShellProfilePhotoUrl ?: '' }}"
+                        alt="{{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }} profile photo"
+                        loading="eager"
+                        decoding="async"
+                        @if(!$sellerShellProfilePhotoUrl) hidden @endif
+                    >
+                    <span
+                        class="seller-shell-profile-avatar__fallback"
+                        @if($sellerShellProfilePhotoUrl) hidden @endif
+                    >
+                        {{ $sellerShellProfileInitials }}
+                    </span>
                 </div>
 
                 <div class="seller-sidebar-label min-w-0 flex-1">
@@ -2316,7 +2974,7 @@
                         >
                     </div>
 
-                    {{-- REAL-TIME NOTIFICATION BELL --}}
+                    {{-- UNIFIED REAL-TIME NOTIFICATION CENTER --}}
                     <div class="relative">
                         <button
                             id="sellerNotificationBell"
@@ -2325,9 +2983,9 @@
                             aria-expanded="false"
                             class="
                                 relative grid h-11 w-11 place-items-center
-                                rounded-xl border border-[#e8dfd0] bg-white
-                                text-[#443d33] shadow-sm transition
-                                hover:border-[#d9be8c] hover:bg-[#fff9ef] hover:text-[#b97805]
+                                border-0 bg-transparent
+                                text-[#475467] transition-colors
+                                hover:text-[#c9890b]
                             "
                         >
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -2336,134 +2994,95 @@
                             </svg>
 
                             <span
-                                id="sellerBellMessageBadge"
-                                data-seller-unread-badge
-                                data-has-unread="{{ $sellerUnreadMessages > 0 ? 'true' : 'false' }}"
+                                id="sellerBellNotificationBadge"
+                                data-seller-notification-badge
+                                data-has-unread="false"
                                 class="
-                                    absolute -right-1.5 -top-1.5
-                                    {{ $sellerUnreadMessages > 0 ? 'grid' : 'hidden' }}
-                                    h-[21px] min-w-[21px]
+                                    absolute -right-1 -top-1 hidden
+                                    h-[19px] min-w-[19px]
                                     place-items-center rounded-full
                                     border-2 border-white
                                     bg-[#d9930a]
-                                    px-1 text-[9px] font-bold text-white
+                                    px-1 text-[8px] font-bold text-white
                                 "
-                            >
-                                {{ $sellerUnreadMessages > 99 ? '99+' : $sellerUnreadMessages }}
-                            </span>
+                            >0</span>
                         </button>
 
-                        {{-- NOTIFICATION DROPDOWN --}}
                         <div
                             id="sellerNotificationDropdown"
                             class="
                                 absolute right-0 top-[54px] z-[80]
-                                hidden w-[330px] overflow-hidden
-                                rounded-[18px] border border-[#e8dfd0]
-                                bg-white shadow-[0_18px_50px_rgba(54,43,28,0.14)]
-                                sm:w-[360px]
+                                hidden w-[350px] overflow-hidden
+                                rounded-[18px] border border-[#e5e7eb]
+                                bg-white shadow-[0_18px_50px_rgba(15,23,42,0.16)]
+                                sm:w-[390px]
                             "
                         >
-                            <div class="flex items-center justify-between border-b border-[#eee7dc] px-4 py-3.5">
-                                <div>
-                                    <p class="text-[11px] font-bold text-[#302920]">
+                            <div class="flex items-start justify-between gap-4 border-b border-[#eceff2] px-4 py-3.5">
+                                <div class="min-w-0">
+                                    <p class="text-[11px] font-bold text-[#202124]">
                                         Notifications
                                     </p>
-
-                                    <p id="sellerNotificationUnreadText" class="mt-0.5 text-[8px] text-[#91887b]">
-                                        {{ $sellerUnreadMessages > 0
-                                            ? $sellerUnreadMessages . ' unread message' . ($sellerUnreadMessages === 1 ? '' : 's')
-                                            : 'No unread messages' }}
+                                    <p id="sellerNotificationUnreadText" class="mt-0.5 text-[8px] text-[#8a919b]">
+                                        No unread notifications
                                     </p>
                                 </div>
 
-                                <a
-                                    href="{{ route('seller.messages') }}"
-                                    class="text-[8px] font-semibold text-[#a66f13] transition hover:text-[#7e5007]"
-                wire:navigate.hover
-            >
-                                    Open inbox
-                                </a>
+                                <div class="flex shrink-0 items-center gap-3">
+                                    <button
+                                        id="sellerNotificationMarkAllRead"
+                                        type="button"
+                                        class="text-[8px] font-semibold text-[#8a6a2d] transition-colors hover:text-[#b97805]"
+                                    >
+                                        Mark all read
+                                    </button>
+
+                                    <a
+                                        href="{{ route('seller.notifications.index') }}"
+                                        class="text-[8px] font-semibold text-[#a66f13] transition-colors hover:text-[#7e5007]"
+                                        wire:navigate.hover
+                                    >
+                                        View all
+                                    </a>
+                                </div>
                             </div>
 
                             <div
                                 id="sellerNotificationList"
                                 data-seller-notification-scroll
-                                class="max-h-[360px] overflow-y-auto"
+                                class="max-h-[390px] overflow-y-auto"
                             >
-                                @forelse ($sellerRecentAdminMessages as $notification)
-                                    <a
-                                        href="{{ route('seller.messages') }}"
-                                        data-notification-message-id="{{ $notification->id }}"
-                                        class="
-                                            block border-b border-[#f1ece4]
-                                            px-4 py-3.5 transition
-                                            hover:bg-[#fdf9f2]
-                                            {{ $notification->read_by_seller_at ? 'bg-white' : 'bg-[#fffaf1]' }}
-                                        "
-                wire:navigate.hover
-            >
-                                        <div class="flex gap-3">
-                                            <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#fbf5e9] text-[9px] font-bold text-[#a8731f]">
-                                                SA
-                                            </div>
-
-                                            <div class="min-w-0 flex-1">
-                                                <div class="flex items-start justify-between gap-3">
-                                                    <p class="text-[9px] font-semibold text-[#3f382f]">
-                                                        SARI Admin Support
-                                                    </p>
-
-                                                    <span class="shrink-0 text-[7px] text-[#9a9185]">
-                                                        {{ $notification->created_at?->format('h:i A') }}
-                                                    </span>
-                                                </div>
-
-                                                <p class="mt-1 line-clamp-2 text-[8px] leading-4 text-[#786f64]">
-                                                    {{ $notification->body ?: ($notification->attachment_name ?: 'Sent an attachment') }}
-                                                </p>
-                                            </div>
-
-                                            @if (!$notification->read_by_seller_at)
-                                                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#d9930a]"></span>
-                                            @endif
-                                        </div>
-                                    </a>
-                                @empty
-                                    <div
-                                        id="sellerNotificationEmpty"
-                                        class="px-5 py-9 text-center"
-                                    >
-                                        <div class="mx-auto grid h-11 w-11 place-items-center rounded-2xl bg-[#fbf6ec] text-[#b47e1e]">
-                                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-                                                <path d="M10 21h4"></path>
-                                            </svg>
-                                        </div>
-
-                                        <p class="mt-3 text-[9px] font-semibold text-[#50483e]">
-                                            No notifications yet
-                                        </p>
-
-                                        <p class="mt-1 text-[8px] text-[#978e82]">
-                                            New Admin messages will appear here.
-                                        </p>
+                                <div id="sellerNotificationEmpty" class="px-5 py-9 text-center">
+                                    <div class="mx-auto text-[#b47e1e]">
+                                        <svg viewBox="0 0 24 24" class="mx-auto h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                                            <path d="M10 21h4"></path>
+                                        </svg>
                                     </div>
-                                @endforelse
+
+                                    <p class="mt-3 text-[9px] font-semibold text-[#475467]">
+                                        No notifications yet
+                                    </p>
+
+                                    <p class="mx-auto mt-1 max-w-[250px] text-[8px] leading-4 text-[#98a2b3]">
+                                        Buyer/Admin messages, orders, shipping, reviews, returns,
+                                        inventory and account activity will appear here.
+                                    </p>
+                                </div>
                             </div>
 
                             <a
-                                href="{{ route('seller.messages') }}"
+                                href="{{ route('seller.notifications.index') }}"
                                 class="
                                     flex items-center justify-center
-                                    border-t border-[#eee7dc]
-                                    bg-[#fcfaf6] px-4 py-3
+                                    border-t border-[#eceff2]
+                                    bg-[#fafbfc] px-4 py-3
                                     text-[9px] font-semibold text-[#9a6817]
-                                    transition hover:bg-[#faf4e8]
+                                    transition-colors hover:bg-[#f8fafc]
                                 "
-                wire:navigate.hover
-            >
-                                View all messages
+                                wire:navigate.hover
+                            >
+                                Open Notification Center
                             </a>
                         </div>
                     </div>
@@ -2476,8 +3095,25 @@
                         class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
                 wire:navigate.hover
             >
-                        <div class="grid h-10 w-10 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white">
-                            {{ strtoupper(substr($sellerLayoutAccount?->store_name ?: 'SS', 0, 2)) }}
+                        <div
+                            id="sellerHeaderProfileAvatar"
+                            class="seller-shell-profile-avatar grid h-10 w-10 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white"
+                            data-profile-photo-url="{{ $sellerShellProfilePhotoUrl }}"
+                        >
+                            <img
+                                class="seller-shell-profile-avatar__image"
+                                src="{{ $sellerShellProfilePhotoUrl ?: '' }}"
+                                alt="{{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }} profile photo"
+                                loading="eager"
+                                decoding="async"
+                                @if(!$sellerShellProfilePhotoUrl) hidden @endif
+                            >
+                            <span
+                                class="seller-shell-profile-avatar__fallback"
+                                @if($sellerShellProfilePhotoUrl) hidden @endif
+                            >
+                                {{ $sellerShellProfileInitials }}
+                            </span>
                         </div>
 
                         <div>
@@ -2678,6 +3314,10 @@
             const loginUrl = @json(route('login'));
             const accountStateUrl = @json(route('seller.account-state'));
             const layoutStateUrl = @json(route('seller.layout-state'));
+            const notificationIndexUrl = @json(route('seller.notifications.index'));
+            const notificationReadAllUrl = @json(route('seller.notifications.read-all'));
+            const buyerMessagesUrl = @json(route('seller.buyer-messages'));
+            const csrfToken = @json(csrf_token());
 
             const desktopBreakpoint = 1024;
             const sidebarStorageKey = 'sari:seller-sidebar-collapsed';
@@ -2697,12 +3337,17 @@
             const ordersPath = pathOf(ordersUrl);
             const shippingPath = pathOf(shippingUrl);
             const messagesPath = pathOf(messagesUrl);
+            const buyerMessagesPath = pathOf(buyerMessagesUrl);
+            const notificationPath = pathOf(notificationIndexUrl);
 
             window.__SARI_SELLER_SHELL_STATE__ =
                 window.__SARI_SELLER_SHELL_STATE__ || {
-                    unreadCount: 0,
+                    messageUnreadCount: 0,
+                    notificationUnreadCount: 0,
                     processedMessageIds: new Set(),
+                    processedNotificationIds: new Set(),
                     messageSubscribed: false,
+                    notificationSubscribed: false,
                     complianceSubscribed: false,
                     accountSubscribed: false,
                     orderSubscribed: false,
@@ -2715,12 +3360,122 @@
                     navigationActive: false,
                     layoutStateLoadedAt: 0,
                     layoutStateAbort: null,
+                    layoutStateRequestSeq: 0,
+                    notificationMutationSeq: 0,
                     accountStateAbort: null,
                     orderPollAbort: null,
                     uiAbort: null,
                 };
 
             const state = window.__SARI_SELLER_SHELL_STATE__;
+
+            state.messageUnreadCount = Math.max(
+                0,
+                Number(
+                    state.messageUnreadCount
+                    ?? state.unreadCount
+                    ?? 0
+                )
+            );
+
+            state.notificationUnreadCount = Math.max(
+                0,
+                Number(state.notificationUnreadCount || 0)
+            );
+
+            if (!(state.processedNotificationIds instanceof Set)) {
+                state.processedNotificationIds = new Set();
+            }
+
+            state.layoutStateRequestSeq =
+                Math.max(
+                    0,
+                    Number(state.layoutStateRequestSeq || 0)
+                );
+
+            state.notificationMutationSeq =
+                Math.max(
+                    0,
+                    Number(state.notificationMutationSeq || 0)
+                );
+
+            function beginNotificationMutation() {
+                state.notificationMutationSeq += 1;
+                state.layoutStateRequestSeq += 1;
+                state.layoutStateLoadedAt = 0;
+
+                try {
+                    state.layoutStateAbort?.abort();
+                } catch (_) {}
+
+                state.layoutStateAbort = null;
+
+                return state.notificationMutationSeq;
+            }
+
+            function syncSellerShellProfileAvatar() {
+                const headerAvatar =
+                    document.getElementById('sellerHeaderProfileAvatar');
+
+                const sidebarAvatar =
+                    document.getElementById('sellerSidebarProfileAvatar');
+
+                const freshUrl =
+                    headerAvatar?.dataset.profilePhotoUrl
+                    || sidebarAvatar?.dataset.profilePhotoUrl
+                    || '';
+
+                [headerAvatar, sidebarAvatar]
+                    .filter(Boolean)
+                    .forEach(function (avatar) {
+                        const image =
+                            avatar.querySelector(
+                                '.seller-shell-profile-avatar__image'
+                            );
+
+                        const fallback =
+                            avatar.querySelector(
+                                '.seller-shell-profile-avatar__fallback'
+                            );
+
+                        if (!image || !fallback) {
+                            return;
+                        }
+
+                        avatar.dataset.profilePhotoUrl = freshUrl;
+
+                        const showFallback = function () {
+                            image.hidden = true;
+                            fallback.hidden = false;
+                        };
+
+                        const showImage = function () {
+                            image.hidden = false;
+                            fallback.hidden = true;
+                        };
+
+                        image.onload = showImage;
+                        image.onerror = showFallback;
+
+                        if (!freshUrl) {
+                            image.removeAttribute('src');
+                            showFallback();
+                            return;
+                        }
+
+                        if (image.getAttribute('src') !== freshUrl) {
+                            image.setAttribute('src', freshUrl);
+                        }
+
+                        if (image.complete) {
+                            if (image.naturalWidth > 0) {
+                                showImage();
+                            } else {
+                                showFallback();
+                            }
+                        }
+                    });
+            }
 
             function savedCollapsed() {
                 try {
@@ -2868,9 +3623,12 @@
                     document.getElementById('sellerNotificationBell');
                 const dropdown =
                     document.getElementById('sellerNotificationDropdown');
+                const markAllNotifications =
+                    document.getElementById('sellerNotificationMarkAllRead');
 
                 syncCollapsedState();
                 syncSidebarActiveState();
+                syncSellerShellProfileAvatar();
 
                 mobileMenu?.addEventListener(
                     'click',
@@ -2991,6 +3749,16 @@
                     { signal }
                 );
 
+                markAllNotifications?.addEventListener(
+                    'click',
+                    function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        markAllNotificationsRead();
+                    },
+                    { signal }
+                );
+
                 document.addEventListener(
                     'click',
                     closeNotificationDropdown,
@@ -3018,12 +3786,57 @@
                     return;
                 }
 
-                badge.textContent = displayCount(count);
-                badge.dataset.hasUnread =
-                    count > 0 ? 'true' : 'false';
+                const safeCount =
+                    Math.max(0, Number(count || 0));
 
-                badge.classList.toggle('hidden', count < 1);
-                badge.classList.toggle('grid', count > 0);
+                badge.dataset.hasUnread =
+                    safeCount > 0 ? 'true' : 'false';
+
+                if (safeCount < 1) {
+                    /*
+                     * Force-hide at DOM + inline-style level.
+                     * This avoids any Tailwind/CSS cascade conflict between
+                     * `hidden`, `grid`, and older badge rules.
+                     */
+                    badge.textContent = '';
+                    badge.hidden = true;
+                    badge.setAttribute('aria-hidden', 'true');
+
+                    badge.classList.add('hidden');
+                    badge.classList.remove('grid', 'flex', 'inline-grid');
+
+                    badge.style.setProperty(
+                        'display',
+                        'none',
+                        'important'
+                    );
+
+                    /*
+                     * Cancel any Web Animations that may still be attached
+                     * to the badge from an earlier unread state.
+                     */
+                    if (
+                        typeof badge.getAnimations === 'function'
+                    ) {
+                        badge
+                            .getAnimations()
+                            .forEach(function (animation) {
+                                animation.cancel();
+                            });
+                    }
+
+                    return;
+                }
+
+                badge.hidden = false;
+                badge.removeAttribute('aria-hidden');
+                badge.style.removeProperty('display');
+
+                badge.textContent =
+                    displayCount(safeCount);
+
+                badge.classList.remove('hidden');
+                badge.classList.add('grid');
             }
 
             function syncUnreadUi() {
@@ -3031,15 +3844,19 @@
                     document.getElementById(
                         'sellerSidebarMessageBadge'
                     ),
-                    state.unreadCount
+                    state.messageUnreadCount
                 );
 
-                updateBadge(
-                    document.getElementById(
-                        'sellerBellMessageBadge'
-                    ),
-                    state.unreadCount
-                );
+                document
+                    .querySelectorAll(
+                        '[data-seller-notification-badge]'
+                    )
+                    .forEach(function (badge) {
+                        updateBadge(
+                            badge,
+                            state.notificationUnreadCount
+                        );
+                    });
 
                 const unreadText =
                     document.getElementById(
@@ -3048,9 +3865,19 @@
 
                 if (unreadText) {
                     unreadText.textContent =
-                        state.unreadCount > 0
-                            ? `${state.unreadCount} unread message${state.unreadCount === 1 ? '' : 's'}`
-                            : 'No unread messages';
+                        state.notificationUnreadCount > 0
+                            ? `${state.notificationUnreadCount} unread notification${state.notificationUnreadCount === 1 ? '' : 's'}`
+                            : 'No unread notifications';
+                }
+
+                const markAll =
+                    document.getElementById(
+                        'sellerNotificationMarkAllRead'
+                    );
+
+                if (markAll) {
+                    markAll.disabled =
+                        state.notificationUnreadCount < 1;
                 }
 
                 syncSidebarActiveState();
@@ -3066,61 +3893,65 @@
             }
 
             function notificationText(data) {
-                return (
-                    data?.body ||
-                    data?.attachment_name ||
-                    'Admin sent an attachment.'
+                return String(
+                    data?.message
+                    || data?.body
+                    || data?.attachment_name
+                    || 'Seller activity updated.'
                 );
             }
 
-            function createNotificationItem(data) {
-                if (!data?.id) {
-                    return null;
+            function notificationIcon(type) {
+                const stroke =
+                    'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+
+                switch (String(type || '')) {
+                    case 'admin_message':
+                    case 'buyer_message':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M21 14a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"></path><path d="M8 10h8"></path><path d="M8 14h5"></path></svg>`;
+                    case 'shipment':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M3 7h11v10H3z"></path><path d="M14 10h3l4 4v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="18" cy="18" r="1.6"></circle></svg>`;
+                    case 'review':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg>`;
+                    case 'return_request':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M9 7H5v4"></path><path d="M5 11c1.8-4.5 8-6.2 12-2.8 4.1 3.5 2.4 10.2-2.8 11.2-3.1.6-6.1-.8-7.7-3.2"></path></svg>`;
+                    case 'compliance':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 10 4.2-2.2 7-5.5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>`;
+                    case 'inventory':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M4 5h16v14H4z"></path><path d="M8 9h8"></path><path d="M8 13h8"></path></svg>`;
+                    case 'voucher':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M3 12 12 3h7v7l-9 9-7-7Z"></path><circle cx="16" cy="7" r="1"></circle></svg>`;
+                    case 'finance':
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M4 19h16"></path><path d="M6 16v-5"></path><path d="M12 16V6"></path><path d="M18 16V9"></path></svg>`;
+                    case 'new_order':
+                    case 'order_status':
+                    default:
+                        return `<svg viewBox="0 0 24 24" ${stroke}><path d="M5 7h14l-1 13H6L5 7Z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>`;
                 }
-
-                const item = document.createElement('a');
-                item.href = messagesUrl;
-                item.setAttribute('wire:navigate.hover', '');
-                item.dataset.notificationMessageId = data.id;
-
-                const unread = data.unread !== false;
-
-                item.className =
-                    'block border-b border-[#f1ece4] px-4 py-3.5 transition hover:bg-[#fdf9f2] ' +
-                    (unread ? 'bg-[#fffaf1]' : 'bg-white');
-
-                item.innerHTML = `
-                    <div class="flex gap-3">
-                        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#fbf5e9] text-[9px] font-bold text-[#a8731f]">
-                            SA
-                        </div>
-
-                        <div class="min-w-0 flex-1">
-                            <div class="flex items-start justify-between gap-3">
-                                <p class="text-[9px] font-semibold text-[#3f382f]">
-                                    SARI Admin Support
-                                </p>
-
-                                <span class="shrink-0 text-[7px] text-[#9a9185]">
-                                    ${escapeHtml(data.time || 'Now')}
-                                </span>
-                            </div>
-
-                            <p class="mt-1 line-clamp-2 text-[8px] leading-4 text-[#786f64]">
-                                ${escapeHtml(notificationText(data))}
-                            </p>
-                        </div>
-
-                        ${unread
-                            ? '<span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#d9930a]"></span>'
-                            : ''}
-                    </div>
-                `;
-
-                return item;
             }
 
-            function renderRecentNotifications(messages) {
+            function isMessageNotification(type) {
+                return [
+                    'admin_message',
+                    'buyer_message',
+                ].includes(String(type || ''));
+            }
+
+            function isCurrentMessageDestination(data) {
+                const type = String(data?.type || '');
+
+                if (type === 'admin_message') {
+                    return currentPath() === messagesPath;
+                }
+
+                if (type === 'buyer_message') {
+                    return currentPath() === buyerMessagesPath;
+                }
+
+                return false;
+            }
+
+            function renderNotificationEmptyState() {
                 const list =
                     document.getElementById(
                         'sellerNotificationList'
@@ -3130,34 +3961,373 @@
                     return;
                 }
 
-                list.innerHTML = '';
-
-                if (!messages.length) {
-                    list.innerHTML = `
-                        <div id="sellerNotificationEmpty" class="px-5 py-9 text-center">
-                            <div class="mx-auto grid h-11 w-11 place-items-center rounded-2xl bg-[#fbf6ec] text-[#b47e1e]">
-                                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-                                    <path d="M10 21h4"></path>
-                                </svg>
-                            </div>
-                            <p class="mt-3 text-[9px] font-semibold text-[#50483e]">
-                                No notifications yet
-                            </p>
-                            <p class="mt-1 text-[8px] text-[#978e82]">
-                                New Admin messages will appear here.
-                            </p>
+                list.innerHTML = `
+                    <div id="sellerNotificationEmpty" class="px-5 py-9 text-center">
+                        <div class="mx-auto text-[#b47e1e]">
+                            <svg viewBox="0 0 24 24" class="mx-auto h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                                <path d="M10 21h4"></path>
+                            </svg>
                         </div>
-                    `;
+
+                        <p class="mt-3 text-[9px] font-semibold text-[#475467]">
+                            No notifications yet
+                        </p>
+
+                        <p class="mx-auto mt-1 max-w-[250px] text-[8px] leading-4 text-[#98a2b3]">
+                            New Buyer/Admin messages, orders, shipping, reviews,
+                            returns and account activity will appear here.
+                        </p>
+                    </div>
+                `;
+            }
+
+            function removeNotificationItem(item) {
+                if (!item) {
                     return;
                 }
 
-                messages.slice(0, 5).forEach(function (message) {
-                    const item = createNotificationItem(message);
-                    if (item) {
-                        list.appendChild(item);
+                item.remove();
+
+                const list =
+                    document.getElementById(
+                        'sellerNotificationList'
+                    );
+
+                if (
+                    list
+                    && !list.querySelector(
+                        '[data-notification-id]'
+                    )
+                ) {
+                    renderNotificationEmptyState();
+                }
+            }
+
+            function createNotificationItem(data) {
+                if (!data?.id) {
+                    return null;
+                }
+
+                const item = document.createElement('a');
+
+                item.href =
+                    data.action_url || notificationIndexUrl;
+
+                /*
+                 * Do not attach wire:navigate here.
+                 * We persist the read state first, then navigate.
+                 */
+                item.dataset.notificationId = String(data.id);
+                item.dataset.unread =
+                    data.unread !== false ? 'true' : 'false';
+
+                const unread = item.dataset.unread === 'true';
+
+                item.className =
+                    'seller-shell-notification-item block px-4 py-3.5 transition-colors';
+
+                item.innerHTML = `
+                    <div class="flex gap-3">
+                        <div class="seller-shell-notification-icon">
+                            ${notificationIcon(data.type)}
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-start justify-between gap-3">
+                                <p class="line-clamp-1 text-[9px] font-semibold text-[#344054]">
+                                    ${escapeHtml(data.title || 'Seller notification')}
+                                </p>
+
+                                <span class="shrink-0 text-[7px] text-[#98a2b3]">
+                                    ${escapeHtml(data.time || 'Now')}
+                                </span>
+                            </div>
+
+                            <p class="mt-1 line-clamp-2 text-[8px] leading-4 text-[#667085]">
+                                ${escapeHtml(notificationText(data))}
+                            </p>
+                        </div>
+
+                        ${unread
+                            ? '<span data-notification-unread-dot class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#d9930a]"></span>'
+                            : ''}
+                    </div>
+                `;
+
+                item.addEventListener(
+                    'click',
+                    async function (event) {
+                        if (
+                            item.dataset.unread !== 'true'
+                        ) {
+                            return;
+                        }
+
+                        event.preventDefault();
+
+                        const destination =
+                            item.href
+                            || data.action_url
+                            || notificationIndexUrl;
+
+                        const persisted =
+                            await markNotificationRead(
+                                data,
+                                item
+                            );
+
+                        /*
+                         * Navigate only after the read POST finished.
+                         * If persistence failed, we still let the Seller
+                         * open the destination, but we do NOT falsely
+                         * remove the unread notification locally.
+                         */
+                        if (destination) {
+                            window.location.assign(
+                                destination
+                            );
+                        }
+
+                        return persisted;
+                    },
+                    { once: true }
+                );
+
+                return item;
+            }
+
+            function renderRecentNotifications(notifications) {
+                const list =
+                    document.getElementById(
+                        'sellerNotificationList'
+                    );
+
+                if (!list) {
+                    return;
+                }
+
+                const unreadNotifications =
+                    notifications.filter(function (notification) {
+                        return notification?.unread !== false;
+                    });
+
+                list.innerHTML = '';
+
+                if (!unreadNotifications.length) {
+                    renderNotificationEmptyState();
+                    return;
+                }
+
+                unreadNotifications
+                    .slice(0, 8)
+                    .forEach(function (notification) {
+                        const item =
+                            createNotificationItem(
+                                notification
+                            );
+
+                        if (item) {
+                            list.appendChild(item);
+                        }
+                    });
+            }
+
+            async function markNotificationRead(data, item) {
+                if (
+                    !data?.read_url
+                    || item?.dataset.unread !== 'true'
+                ) {
+                    return true;
+                }
+
+                const mutationSeq =
+                    beginNotificationMutation();
+
+                try {
+                    const response = await fetch(
+                        data.read_url,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            credentials: 'same-origin',
+                            cache: 'no-store',
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            'Could not mark notification as read.'
+                        );
                     }
-                });
+
+                    const payload =
+                        await response.json();
+
+                    if (
+                        mutationSeq !==
+                        state.notificationMutationSeq
+                    ) {
+                        return false;
+                    }
+
+                    item.dataset.unread = 'false';
+
+                    state.notificationUnreadCount =
+                        Math.max(
+                            0,
+                            Number(
+                                payload?.unread_count
+                                ?? Math.max(
+                                    0,
+                                    state.notificationUnreadCount - 1
+                                )
+                            )
+                        );
+
+                    removeNotificationItem(item);
+                    syncUnreadUi();
+
+                    /*
+                     * Read was persisted. The next layout-state response
+                     * is authoritative and contains only unread records.
+                     */
+                    state.layoutStateLoadedAt = 0;
+
+                    return true;
+                } catch (_) {
+                    /*
+                     * Never fake a successful read. Keep the row/count
+                     * visible and resync from the database.
+                     */
+                    if (
+                        mutationSeq ===
+                        state.notificationMutationSeq
+                    ) {
+                        state.layoutStateLoadedAt = 0;
+
+                        window.setTimeout(function () {
+                            loadLayoutState(true);
+                        }, 80);
+                    }
+
+                    return false;
+                }
+            }
+
+            async function markAllNotificationsRead() {
+                if (!notificationReadAllUrl) {
+                    return;
+                }
+
+                if (state.notificationUnreadCount < 1) {
+                    syncUnreadUi();
+                    return;
+                }
+
+                const mutationSeq =
+                    beginNotificationMutation();
+
+                const button =
+                    document.getElementById(
+                        'sellerNotificationMarkAllRead'
+                    );
+
+                if (button) {
+                    button.disabled = true;
+                }
+
+                try {
+                    const response = await fetch(
+                        notificationReadAllUrl,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            credentials: 'same-origin',
+                            cache: 'no-store',
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            'Could not mark notifications as read.'
+                        );
+                    }
+
+                    const payload =
+                        await response.json();
+
+                    if (
+                        mutationSeq !==
+                        state.notificationMutationSeq
+                    ) {
+                        return;
+                    }
+
+                    state.notificationUnreadCount =
+                        Math.max(
+                            0,
+                            Number(
+                                payload?.unread_count
+                                ?? 0
+                            )
+                        );
+
+                    /*
+                     * The read-all write is now committed.
+                     * Header is an unread inbox, so clear the rows.
+                     */
+                    if (
+                        state.notificationUnreadCount < 1
+                    ) {
+                        renderNotificationEmptyState();
+                    }
+
+                    syncUnreadUi();
+
+                    state.layoutStateLoadedAt = 0;
+
+                    /*
+                     * Confirm from the dedicated notification state.
+                     * Stale requests are blocked by mutation/request seq.
+                     */
+                    window.setTimeout(function () {
+                        if (
+                            mutationSeq ===
+                            state.notificationMutationSeq
+                        ) {
+                            loadLayoutState(true);
+                        }
+                    }, 100);
+                } catch (_) {
+                    /*
+                     * Keep current unread UI if the database write failed.
+                     * Then ask the server for authoritative state.
+                     */
+                    if (
+                        mutationSeq ===
+                        state.notificationMutationSeq
+                    ) {
+                        state.layoutStateLoadedAt = 0;
+
+                        window.setTimeout(function () {
+                            loadLayoutState(true);
+                        }, 80);
+                    }
+                } finally {
+                    if (button) {
+                        button.disabled =
+                            state.notificationUnreadCount < 1;
+                    }
+                }
             }
 
             function prependNotification(data) {
@@ -3166,13 +4336,17 @@
                         'sellerNotificationList'
                     );
 
-                if (!list || !data?.id) {
+                if (
+                    !list
+                    || !data?.id
+                    || data?.unread === false
+                ) {
                     return;
                 }
 
                 if (
                     list.querySelector(
-                        `[data-notification-message-id="${data.id}"]`
+                        `[data-notification-id="${data.id}"]`
                     )
                 ) {
                     return;
@@ -3192,12 +4366,52 @@
 
                 const items =
                     list.querySelectorAll(
-                        '[data-notification-message-id]'
+                        '[data-notification-id]'
                     );
 
-                if (items.length > 5) {
+                if (items.length > 8) {
                     items[items.length - 1].remove();
                 }
+            }
+
+            function handleUnifiedNotification(data) {
+                if (
+                    !data
+                    || data.id === undefined
+                    || data.id === null
+                ) {
+                    return;
+                }
+
+                const id = String(data.id);
+
+                if (state.processedNotificationIds.has(id)) {
+                    return;
+                }
+
+                state.processedNotificationIds.add(id);
+
+                if (data.unread !== false) {
+                    state.notificationUnreadCount += 1;
+
+                    if (
+                        isMessageNotification(data.type)
+                        && !isCurrentMessageDestination(data)
+                    ) {
+                        state.messageUnreadCount += 1;
+                    }
+                }
+
+                prependNotification(data);
+                syncUnreadUi();
+                ringBell();
+
+                window.dispatchEvent(
+                    new CustomEvent(
+                        'sari:seller-notification',
+                        { detail: data }
+                    )
+                );
             }
 
             function ringBell() {
@@ -3276,23 +4490,8 @@
             }
 
             function markLayoutAsRead() {
-                state.unreadCount = 0;
+                state.messageUnreadCount = 0;
                 syncUnreadUi();
-
-                document
-                    .querySelectorAll(
-                        '#sellerNotificationList [data-notification-message-id]'
-                    )
-                    .forEach(function (item) {
-                        item.classList.remove('bg-[#fffaf1]');
-                        item.classList.add('bg-white');
-
-                        item
-                            .querySelector(
-                                '.h-2.w-2.shrink-0.rounded-full.bg-\\[\\#d9930a\\]'
-                            )
-                            ?.remove();
-                    });
             }
 
             function abortSellerBackgroundRequests() {
@@ -3311,7 +4510,6 @@
             async function loadLayoutState(force = false) {
                 if (
                     !layoutStateUrl ||
-                    currentPath() === messagesPath ||
                     state.navigationActive
                 ) {
                     return;
@@ -3331,6 +4529,13 @@
                 }
 
                 state.layoutStateAbort?.abort();
+
+                const requestSeq =
+                    ++state.layoutStateRequestSeq;
+
+                const mutationSeqAtStart =
+                    state.notificationMutationSeq;
+
                 const controller = new AbortController();
                 state.layoutStateAbort = controller;
 
@@ -3351,13 +4556,44 @@
                     }
 
                     const data = await response.json();
+
+                    if (
+                        requestSeq !== state.layoutStateRequestSeq
+                        || mutationSeqAtStart !==
+                            state.notificationMutationSeq
+                    ) {
+                        return;
+                    }
+
                     state.layoutStateLoadedAt = Date.now();
 
-                    state.unreadCount =
+                    state.messageUnreadCount =
                         Math.max(
                             0,
-                            Number(data?.unread_count || 0)
+                            Number(data?.message_unread_count || 0)
                         );
+
+                    /*
+                     * IMPORTANT:
+                     * Bell count comes ONLY from SellerNotification state.
+                     * Legacy `unread_count` historically represented unread
+                     * Admin chat messages and must never drive the bell.
+                     */
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            data || {},
+                            'notification_unread_count'
+                        )
+                    ) {
+                        state.notificationUnreadCount =
+                            Math.max(
+                                0,
+                                Number(
+                                    data.notification_unread_count
+                                    || 0
+                                )
+                            );
+                    }
 
                     const messages =
                         Array.isArray(data?.recent_messages)
@@ -3370,8 +4606,29 @@
                         );
                     });
 
+                    const hasNotificationFeed =
+                        Array.isArray(
+                            data?.recent_notifications
+                        );
+
+                    const notifications =
+                        hasNotificationFeed
+                            ? data.recent_notifications
+                            : [];
+
+                    notifications.forEach(function (notification) {
+                        state.processedNotificationIds.add(
+                            String(notification.id)
+                        );
+                    });
+
                     syncUnreadUi();
-                    renderRecentNotifications(messages);
+
+                    if (hasNotificationFeed) {
+                        renderRecentNotifications(
+                            notifications
+                        );
+                    }
                 } catch (error) {
                     if (error?.name !== 'AbortError') {
                         console.debug(
@@ -3387,12 +4644,20 @@
 
             function handleChatMessage(data) {
                 if (
-                    !data ||
-                    data.id === undefined ||
-                    data.id === null
+                    !data
+                    || data.id === undefined
+                    || data.id === null
                 ) {
                     return;
                 }
+
+                const messageId = String(data.id);
+
+                if (state.processedMessageIds.has(messageId)) {
+                    return;
+                }
+
+                state.processedMessageIds.add(messageId);
 
                 window.dispatchEvent(
                     new CustomEvent(
@@ -3401,30 +4666,12 @@
                     )
                 );
 
-                if (data.sender_role !== 'admin') {
-                    return;
-                }
-
-                const messageId = String(data.id);
-
                 if (
-                    state.processedMessageIds.has(messageId)
+                    data.sender_role === 'admin'
+                    && currentPath() !== messagesPath
                 ) {
-                    return;
+                    showMessageToast(data);
                 }
-
-                state.processedMessageIds.add(messageId);
-                prependNotification(data);
-
-                if (currentPath() === messagesPath) {
-                    markLayoutAsRead();
-                    return;
-                }
-
-                state.unreadCount += 1;
-                syncUnreadUi();
-                ringBell();
-                showMessageToast(data);
             }
 
             function subscribeMessages(attempt = 0) {
@@ -3446,6 +4693,36 @@
                     .listen('.chat.message', handleChatMessage);
 
                 state.messageSubscribed = true;
+            }
+
+            function subscribeUnifiedNotifications(attempt = 0) {
+                if (
+                    !sellerChannel
+                    || state.notificationSubscribed
+                ) {
+                    return;
+                }
+
+                if (!window.Echo) {
+                    if (attempt < 24) {
+                        window.setTimeout(function () {
+                            subscribeUnifiedNotifications(
+                                attempt + 1
+                            );
+                        }, 250);
+                    }
+
+                    return;
+                }
+
+                window.Echo
+                    .channel(sellerChannel)
+                    .listen(
+                        '.seller.notification.created',
+                        handleUnifiedNotification
+                    );
+
+                state.notificationSubscribed = true;
             }
 
             function subscribeCompliance(attempt = 0) {
@@ -4012,9 +5289,21 @@
                     bindSellerNavigationPriority();
                     syncRestrictionUi();
                     syncUnreadUi();
+                    syncSellerShellProfileAvatar();
 
-                    if (currentPath() === messagesPath) {
-                        markLayoutAsRead();
+                    if (
+                        [
+                            messagesPath,
+                            buyerMessagesPath,
+                            notificationPath,
+                        ].includes(currentPath())
+                    ) {
+                        window.setTimeout(
+                            function () {
+                                loadLayoutState(true);
+                            },
+                            80
+                        );
                     } else if ('requestIdleCallback' in window) {
                         window.requestIdleCallback(
                             function () {
@@ -4030,6 +5319,7 @@
                     }
 
                     subscribeMessages();
+                    subscribeUnifiedNotifications();
                     subscribeCompliance();
                     subscribeOrders();
                     subscribeAccountStatus();

@@ -4755,6 +4755,1030 @@
     }
 }
 
+
+
+/* ======================================================================
+   ORDER MANAGEMENT — FLOATING CONTAINERS + STATUS DROPDOWN POLISH
+   UI-only. No route, realtime, filter logic, modal actions, or backend
+   behavior changed.
+   ====================================================================== */
+
+.seller-orders-page {
+    --orders-float-border: #E2E7ED;
+    --orders-float-border-strong: #D7DDE5;
+    --orders-float-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 26px rgba(15, 23, 42, .075),
+        inset 0 1px 0 rgba(255, 255, 255, .86);
+    --orders-float-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 6px 16px rgba(15, 23, 42, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+/* Main page surfaces: static floating depth, neutral outline. */
+.seller-orders-page .seller-orders-summary-card,
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-workspace {
+    border-color: var(--orders-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Preserve a calm interface: no container lift on hover. */
+.seller-orders-page .seller-orders-summary-card:hover,
+.seller-orders-page .seller-orders-filter-panel:hover,
+.seller-orders-page .seller-orders-workspace:hover {
+    border-color: var(--orders-float-border) !important;
+    box-shadow: var(--orders-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Main table should float as one surface; rows themselves stay flat. */
+.seller-orders-page .seller-order-row,
+.seller-orders-page .seller-order-row:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Order-detail modal + internal cards use the same neutral elevation family. */
+#sellerOrderDetailModal .seller-order-workflow-panel {
+    border-color: var(--orders-float-border) !important;
+    box-shadow:
+        0 30px 82px rgba(15, 23, 42, .20),
+        0 8px 24px rgba(15, 23, 42, .07) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-card,
+#sellerOrderDetailModal .seller-order-workflow-main {
+    border-color: var(--orders-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Product rows inside the modal stay secondary to their parent card. */
+#sellerOrderDetailModal .seller-order-workflow-product-row {
+    border-color: #E7EBF0 !important;
+    background: #FCFDFE !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .025) !important;
+}
+
+/* ------------------------------------------------------------------
+   STATUS DROPDOWN — enterprise button-like select
+   Existing #sellerOrderStatusFilter remains the actual native control.
+   ------------------------------------------------------------------ */
+.seller-orders-status-field {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    border-radius: 10px;
+}
+
+/* Remove browser-specific arrow so the custom chevron is consistent. */
+.seller-orders-page #sellerOrderStatusFilter {
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    border: 1px solid #D8DEE6 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 0 34px 0 37px !important;
+    color: #344054 !important;
+    font-family: inherit !important;
+    font-size: 9.8px !important;
+    font-weight: 650 !important;
+    line-height: 40px !important;
+    outline: none !important;
+    cursor: pointer !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 4px 10px rgba(15, 23, 42, .035) !important;
+    transition:
+        border-color .14s ease,
+        box-shadow .14s ease,
+        background-color .14s ease !important;
+}
+
+/* Keep native option readability. */
+.seller-orders-page #sellerOrderStatusFilter option {
+    color: #344054;
+    background: #FFFFFF;
+    font-weight: 500;
+}
+
+/* Leading icon. */
+.seller-orders-status-field-icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    z-index: 2;
+    display: grid;
+    width: 16px;
+    height: 16px;
+    place-items: center;
+    transform: translateY(-50%);
+    color: #98A2B3;
+    pointer-events: none;
+}
+
+.seller-orders-status-field-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Custom chevron. */
+.seller-orders-status-field-chevron {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    z-index: 2;
+    display: grid;
+    width: 16px;
+    height: 16px;
+    place-items: center;
+    transform: translateY(-50%);
+    color: #667085;
+    pointer-events: none;
+}
+
+.seller-orders-status-field-chevron svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Neutral professional interaction state — no movement. */
+.seller-orders-status-field:hover #sellerOrderStatusFilter {
+    border-color: #C9D1DB !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 6px 14px rgba(15, 23, 42, .045) !important;
+}
+
+.seller-orders-status-field:focus-within #sellerOrderStatusFilter {
+    border-color: #C6A451 !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(201, 148, 22, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+.seller-orders-status-field:focus-within .seller-orders-status-field-icon,
+.seller-orders-status-field:focus-within .seller-orders-status-field-chevron {
+    color: #A87510;
+}
+
+/* Search control follows the same neutral outlined family. */
+.seller-orders-page #sellerOrderSearch {
+    border-color: #D8DEE6 !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .02),
+        0 4px 10px rgba(15, 23, 42, .035) !important;
+}
+
+.seller-orders-page #sellerOrderSearch:focus {
+    border-color: #C6A451 !important;
+    box-shadow:
+        0 0 0 3px rgba(201, 148, 22, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* Static button behavior: visual state only, no lift. */
+.seller-orders-page .seller-orders-apply-filter,
+.seller-orders-page .seller-orders-reset-filter,
+.seller-orders-page .seller-orders-header-action,
+.seller-orders-page .seller-order-view-button {
+    transform: none !important;
+}
+
+.seller-orders-page .seller-orders-apply-filter:hover,
+.seller-orders-page .seller-orders-reset-filter:hover,
+.seller-orders-page .seller-orders-header-action:hover,
+.seller-orders-page .seller-order-view-button:hover,
+.seller-orders-page .seller-order-view-button:focus-visible {
+    transform: none !important;
+}
+
+/* Neutral structural borders only; status colors remain semantic. */
+.seller-orders-page .seller-orders-summary-card,
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-workspace,
+#sellerOrderDetailModal .seller-order-workflow-panel,
+#sellerOrderDetailModal .seller-order-workflow-card,
+#sellerOrderDetailModal .seller-order-workflow-main {
+    outline: 0 !important;
+}
+
+/* Responsive parity with existing filter grid. */
+@media (max-width: 767px) {
+    .seller-orders-status-field,
+    .seller-orders-page #sellerOrderStatusFilter {
+        height: 42px !important;
+        min-height: 42px !important;
+    }
+
+    .seller-orders-page #sellerOrderStatusFilter {
+        line-height: 42px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* Lighter floating depth on small screens. */
+@media (max-width: 640px) {
+    .seller-orders-page .seller-orders-summary-card,
+    .seller-orders-page .seller-orders-filter-panel,
+    .seller-orders-page .seller-orders-workspace {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .06),
+            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+    }
+}
+
+
+/* ======================================================================
+   ORDER MANAGEMENT — CUSTOM FILTER DROPDOWN + WHITE MODAL FINAL
+   Front-end presentation only. Existing status select ID, values, routes,
+   realtime refresh, order actions and backend behavior remain unchanged.
+   ====================================================================== */
+
+/* -------------------------
+   Custom status dropdown
+   ------------------------- */
+.seller-orders-status-dropdown {
+    position: relative;
+    z-index: 40;
+    min-width: 0;
+    width: 100%;
+}
+
+/* Keep the original select in the DOM for existing filtering logic, but
+   remove the browser/OS-native dropdown from the visual experience. */
+.seller-orders-page #sellerOrderStatusFilter.seller-orders-status-native {
+    position: absolute !important;
+    width: 1px !important;
+    min-width: 1px !important;
+    height: 1px !important;
+    min-height: 1px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.seller-orders-status-trigger {
+    display: grid !important;
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    grid-template-columns: 18px minmax(0, 1fr) 16px !important;
+    align-items: center !important;
+    gap: 9px !important;
+    border: 1px solid #D8DEE6 !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    padding: 0 11px 0 12px !important;
+    color: #344054 !important;
+    font-family: inherit !important;
+    font-size: 9.8px !important;
+    font-weight: 650 !important;
+    text-align: left !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 4px 12px rgba(15, 23, 42, .04) !important;
+    cursor: pointer !important;
+    transform: none !important;
+    transition:
+        border-color .14s ease,
+        box-shadow .14s ease,
+        background-color .14s ease !important;
+}
+
+.seller-orders-status-trigger:hover {
+    border-color: #C8D0DA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .03),
+        0 6px 15px rgba(15, 23, 42, .055) !important;
+    transform: none !important;
+}
+
+.seller-orders-status-trigger:focus-visible,
+.seller-orders-status-trigger[aria-expanded="true"] {
+    outline: none !important;
+    border-color: #D09A2F !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(208, 154, 47, .09),
+        0 6px 16px rgba(15, 23, 42, .05) !important;
+}
+
+.seller-orders-status-trigger-icon,
+.seller-orders-status-trigger-chevron {
+    display: grid;
+    place-items: center;
+    color: #98A2B3;
+    pointer-events: none;
+}
+
+.seller-orders-status-trigger-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.seller-orders-status-trigger-chevron {
+    color: #667085;
+    transition: transform .15s ease, color .15s ease;
+}
+
+.seller-orders-status-trigger-chevron svg {
+    width: 13px;
+    height: 13px;
+}
+
+.seller-orders-status-trigger[aria-expanded="true"] .seller-orders-status-trigger-icon,
+.seller-orders-status-trigger[aria-expanded="true"] .seller-orders-status-trigger-chevron {
+    color: #B77A08;
+}
+
+.seller-orders-status-trigger[aria-expanded="true"] .seller-orders-status-trigger-chevron {
+    transform: rotate(180deg);
+}
+
+.seller-orders-status-trigger-label {
+    min-width: 0;
+    overflow: hidden;
+    color: #344054;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Floating custom menu: white only, no OS-blue selected row. */
+.seller-orders-status-menu {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 0;
+    z-index: 80;
+    width: max(100%, 196px);
+    min-width: 196px;
+    overflow: hidden;
+    border: 1px solid #E1E6EC;
+    border-radius: 12px;
+    background: #FFFFFF;
+    padding: 5px;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, .12),
+        0 4px 12px rgba(15, 23, 42, .04);
+}
+
+.seller-orders-status-menu[hidden] {
+    display: none !important;
+}
+
+.seller-orders-status-option {
+    display: grid;
+    width: 100%;
+    min-height: 36px;
+    grid-template-columns: 8px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 9px;
+    border: 0;
+    border-radius: 8px;
+    background: #FFFFFF;
+    padding: 0 9px;
+    color: #475467;
+    font-family: inherit;
+    font-size: 9.5px;
+    font-weight: 550;
+    text-align: left;
+    cursor: pointer;
+    transform: none !important;
+}
+
+.seller-orders-status-option:hover,
+.seller-orders-status-option:focus-visible {
+    outline: none;
+    background: #F8FAFC;
+    color: #1F2937;
+    transform: none !important;
+}
+
+.seller-orders-status-option[aria-selected="true"] {
+    background: #FFF9EC;
+    color: #9B6505;
+    font-weight: 700;
+}
+
+.seller-orders-status-option-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #D0D5DD;
+}
+
+.seller-orders-status-option[aria-selected="true"] .seller-orders-status-option-dot {
+    background: #D59617;
+    box-shadow: 0 0 0 3px rgba(213, 150, 23, .10);
+}
+
+.seller-orders-status-option-check {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    color: transparent;
+}
+
+.seller-orders-status-option-check svg {
+    width: 13px;
+    height: 13px;
+}
+
+.seller-orders-status-option[aria-selected="true"] .seller-orders-status-option-check {
+    color: #B97805;
+}
+
+/* -------------------------
+   Order Details: white-only
+   ------------------------- */
+#sellerOrderDetailModal {
+    background: rgba(17, 24, 39, .42) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-panel {
+    width: min(1080px, calc(100vw - 24px)) !important;
+    max-width: 1080px !important;
+    border: 1px solid #DDE3EA !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 34px 88px rgba(15, 23, 42, .22),
+        0 8px 24px rgba(15, 23, 42, .07) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-header {
+    min-height: 76px !important;
+    border-bottom: 1px solid #E8ECF1 !important;
+    background: #FFFFFF !important;
+    padding: 12px 16px !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-header-icon,
+#sellerOrderDetailModal .seller-order-workflow-section-icon,
+#sellerOrderDetailModal .seller-order-workflow-action-icon {
+    border-color: #E2E7ED !important;
+    background: #FFFFFF !important;
+    color: #C68107 !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .035) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-close {
+    border-color: #DDE3EA !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-close:hover,
+#sellerOrderDetailModal .seller-order-workflow-close:focus-visible {
+    border-color: #C8D0DA !important;
+    background: #F8FAFC !important;
+    color: #111827 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-body {
+    grid-template-columns: minmax(0, 1.62fr) minmax(300px, .78fr) !important;
+    gap: 12px !important;
+    background: #FFFFFF !important;
+    padding: 12px !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-main,
+#sellerOrderDetailModal .seller-order-workflow-card,
+#sellerOrderDetailModal .seller-order-workflow-summary,
+#sellerOrderDetailModal .seller-order-workflow-progress-card,
+#sellerOrderDetailModal .seller-order-workflow-actions {
+    border-color: #E2E7ED !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, .04) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-main {
+    border-radius: 14px !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-info-grid {
+    border-top-color: #E8ECF1 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
+    border-left-color: #E8ECF1 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-product-row {
+    border-color: #E4E9EF !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .025) !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-product-image {
+    border-color: #E4E9EF !important;
+    background: #FFFFFF !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-total {
+    border-top-color: #E8ECF1 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-progress-bar {
+    background: #EAECF0 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-timeline li:not(:last-child)::after {
+    background: #E4E7EC !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-timeline-dot {
+    border-color: #DDE3EA !important;
+    background: #FFFFFF !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-timeline li.is-complete .seller-order-workflow-timeline-dot {
+    border-color: #E2B85B !important;
+    background: #FFFFFF !important;
+    color: #B97805 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a {
+    border-color: #DDE3EA !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible {
+    border-color: #C8D0DA !important;
+    background: #F8FAFC !important;
+    color: #1F2937 !important;
+}
+
+/* No physical hover movement. */
+#sellerOrderDetailModal .seller-order-workflow-primary-action,
+#sellerOrderDetailModal .seller-order-workflow-primary-action:hover,
+#sellerOrderDetailModal .seller-order-workflow-primary-action:focus-visible,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover {
+    transform: none !important;
+}
+
+@media (max-width: 767px) {
+    .seller-orders-status-trigger {
+        height: 42px !important;
+        min-height: 42px !important;
+        font-size: 10px !important;
+    }
+
+    .seller-orders-status-menu {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+
+/* ======================================================================
+   ORDER MANAGEMENT — DASHBOARD SHADOW REFERENCE FINAL PASS
+   Front-end/CSS only. Search, custom status dropdown, realtime refresh,
+   order workflow/actions, routes, forms and backend behavior unchanged.
+   ====================================================================== */
+
+.seller-orders-page {
+    --orders-dashboard-border: #E5E7EB;
+    --orders-dashboard-border-strong: #D1D5DB;
+    --orders-dashboard-divider: #ECEFF2;
+
+    /* Dashboard-style elevation:
+       contact shadow + middle separation + broad ambient float. */
+    --orders-dashboard-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --orders-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+
+    --orders-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* ------------------------------------------------------------
+   SUMMARY CARDS — medium floating elevation
+   ------------------------------------------------------------ */
+.seller-orders-page .seller-orders-summary-card {
+    border: 1px solid var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.seller-orders-page .seller-orders-summary-card:hover {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Summary icons keep their semantic colors but neutral structure. */
+.seller-orders-page .seller-orders-summary-icon {
+    border-color: var(--orders-dashboard-border) !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+/* ------------------------------------------------------------
+   FILTER BAR + ORDERS WORKSPACE — strongest page surfaces
+   ------------------------------------------------------------ */
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-workspace {
+    border: 1px solid var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.seller-orders-page .seller-orders-filter-panel:hover,
+.seller-orders-page .seller-orders-workspace:hover {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+/* Search/custom dropdown controls receive only restrained inner depth. */
+.seller-orders-page #sellerOrderSearch,
+.seller-orders-page .seller-orders-status-trigger,
+.seller-orders-page .seller-orders-reset-filter {
+    border-color: var(--orders-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 12px rgba(15, 23, 42, .04) !important;
+    transform: none !important;
+}
+
+.seller-orders-page #sellerOrderSearch:hover,
+.seller-orders-page .seller-orders-status-trigger:hover,
+.seller-orders-page .seller-orders-reset-filter:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .03),
+        0 6px 14px rgba(15, 23, 42, .05) !important;
+    transform: none !important;
+}
+
+/* Focus/open states remain professional but structurally neutral. */
+.seller-orders-page #sellerOrderSearch:focus,
+.seller-orders-page .seller-orders-status-trigger:focus-visible,
+.seller-orders-page .seller-orders-status-trigger[aria-expanded="true"] {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* Dropdown popover floats above the filter panel. */
+.seller-orders-page .seller-orders-status-menu {
+    border-color: #E1E5EA !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, .05),
+        0 18px 42px rgba(15, 23, 42, .14),
+        0 32px 70px rgba(15, 23, 42, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   ORDER TABLE — workspace floats, rows stay flat
+   ------------------------------------------------------------ */
+.seller-orders-page .seller-orders-table-head,
+.seller-orders-page .seller-orders-table-titlebar,
+.seller-orders-page .seller-orders-table-footer {
+    border-color: var(--orders-dashboard-divider) !important;
+    background: #FFFFFF !important;
+}
+
+.seller-orders-page .seller-orders-table-head {
+    background: #F8FAFC !important;
+}
+
+.seller-orders-page .seller-order-row {
+    border-bottom-color: var(--orders-dashboard-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Remove remaining cream row hover; use a quiet neutral gray. */
+.seller-orders-page .seller-order-row:hover {
+    border-bottom-color: var(--orders-dashboard-divider) !important;
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Product/image frames stay neutral. */
+.seller-orders-page .seller-order-image-frame {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #F8FAFC !important;
+}
+
+/* View action: neutral surface, gold only as icon/text feedback. */
+.seller-orders-page .seller-order-view-button {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .025) !important;
+    transform: none !important;
+}
+
+.seller-orders-page .seller-order-view-button:hover,
+.seller-orders-page .seller-order-view-button:focus-visible {
+    border-color: var(--orders-dashboard-border-strong) !important;
+    background: #F8FAFC !important;
+    color: #B97805 !important;
+    transform: none !important;
+}
+
+/* Header secondary actions should not turn cream. */
+.seller-orders-page .seller-orders-header-action {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+    transform: none !important;
+}
+
+.seller-orders-page .seller-orders-header-action:hover,
+.seller-orders-page .seller-orders-header-action:focus-visible {
+    border-color: var(--orders-dashboard-border-strong) !important;
+    background: #F8FAFC !important;
+    color: #9B6505 !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   ORDER DETAIL MODAL — strongest overlay elevation
+   ------------------------------------------------------------ */
+#sellerOrderDetailModal .seller-order-workflow-panel {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 22px rgba(15, 23, 42, .08),
+        0 28px 68px rgba(15, 23, 42, .18),
+        0 50px 110px rgba(15, 23, 42, .10) !important;
+}
+
+/* Modal body stays white; no cream canvas. */
+#sellerOrderDetailModal .seller-order-workflow-body {
+    background: #FFFFFF !important;
+}
+
+/* Primary modal information surfaces use medium floating depth. */
+#sellerOrderDetailModal .seller-order-workflow-main,
+#sellerOrderDetailModal .seller-order-workflow-card,
+#sellerOrderDetailModal .seller-order-workflow-summary,
+#sellerOrderDetailModal .seller-order-workflow-progress-card,
+#sellerOrderDetailModal .seller-order-workflow-actions {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Product rows remain subordinate to their parent surfaces. */
+#sellerOrderDetailModal .seller-order-workflow-product-row {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--orders-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-product-image {
+    border-color: var(--orders-dashboard-border) !important;
+    background: #FFFFFF !important;
+}
+
+/* Modal structural dividers stay neutral. */
+#sellerOrderDetailModal .seller-order-workflow-header,
+#sellerOrderDetailModal .seller-order-workflow-info-grid,
+#sellerOrderDetailModal .seller-order-workflow-total {
+    border-color: var(--orders-dashboard-divider) !important;
+}
+
+/* Secondary modal actions: light gray, never cream. */
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible,
+#sellerOrderDetailModal .seller-order-workflow-close:hover,
+#sellerOrderDetailModal .seller-order-workflow-close:focus-visible {
+    background: #F8FAFC !important;
+    border-color: var(--orders-dashboard-border-strong) !important;
+    transform: none !important;
+}
+
+/* All structural surfaces remain static. */
+.seller-orders-page .seller-orders-summary-card,
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-workspace,
+#sellerOrderDetailModal .seller-order-workflow-panel,
+#sellerOrderDetailModal .seller-order-workflow-main,
+#sellerOrderDetailModal .seller-order-workflow-card {
+    outline: 0 !important;
+}
+
+/* Mobile: reduce ambient spread while preserving the floating hierarchy. */
+@media (max-width: 640px) {
+    .seller-orders-page .seller-orders-summary-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .seller-orders-page .seller-orders-filter-panel,
+    .seller-orders-page .seller-orders-workspace {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    #sellerOrderDetailModal .seller-order-workflow-main,
+    #sellerOrderDetailModal .seller-order-workflow-card,
+    #sellerOrderDetailModal .seller-order-workflow-summary,
+    #sellerOrderDetailModal .seller-order-workflow-progress-card,
+    #sellerOrderDetailModal .seller-order-workflow-actions {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .045) !important;
+    }
+}
+
+
+/* ======================================================================
+   ORDER DETAILS MODAL — REMOVE DARK / BLACK STRUCTURAL LINES
+   Visual-only fix. No size, layout, route, action, realtime, or backend
+   behavior changes.
+   ====================================================================== */
+
+/* Outer modal shell: keep elevation, remove the dark outline completely. */
+#sellerOrderDetailModal .seller-order-workflow-panel {
+    border: 0 !important;
+    outline: 0 !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 22px rgba(15, 23, 42, .08),
+        0 28px 68px rgba(15, 23, 42, .18),
+        0 50px 110px rgba(15, 23, 42, .10) !important;
+}
+
+/* Header divider becomes a very light neutral gray instead of a dark line. */
+#sellerOrderDetailModal .seller-order-workflow-header {
+    border: 0 !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    background: #FFFFFF !important;
+}
+
+/* Main left surface and right-side operational cards:
+   explicit neutral borders prevent older dark-border layers from winning. */
+#sellerOrderDetailModal .seller-order-workflow-main,
+#sellerOrderDetailModal .seller-order-workflow-card,
+#sellerOrderDetailModal .seller-order-workflow-summary,
+#sellerOrderDetailModal .seller-order-workflow-progress-card,
+#sellerOrderDetailModal .seller-order-workflow-actions {
+    border: 1px solid #E5E7EB !important;
+    outline: 0 !important;
+    background: #FFFFFF !important;
+}
+
+/* The two Buyer/Delivery sections use only subtle dividers. */
+#sellerOrderDetailModal .seller-order-workflow-info-grid {
+    border: 0 !important;
+    border-top: 1px solid #ECEFF2 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-info-card {
+    border: 0 !important;
+    outline: 0 !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
+    border: 0 !important;
+    border-left: 1px solid #ECEFF2 !important;
+}
+
+/* Product row: light neutral edge only. */
+#sellerOrderDetailModal .seller-order-workflow-product-row {
+    border: 1px solid #E7EAEE !important;
+    outline: 0 !important;
+}
+
+/* Total divider should never render as a dark rule. */
+#sellerOrderDetailModal .seller-order-workflow-total {
+    border: 0 !important;
+    border-top: 1px solid #ECEFF2 !important;
+}
+
+/* Icon/control shells also stay neutral. */
+#sellerOrderDetailModal .seller-order-workflow-header-icon,
+#sellerOrderDetailModal .seller-order-workflow-section-icon,
+#sellerOrderDetailModal .seller-order-workflow-action-icon,
+#sellerOrderDetailModal .seller-order-workflow-close,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a,
+#sellerOrderDetailModal .seller-order-workflow-product-image {
+    border-color: #E5E7EB !important;
+    outline: 0 !important;
+}
+
+/* Timeline keeps only its intentional light connector. */
+#sellerOrderDetailModal .seller-order-workflow-timeline li:not(:last-child)::after {
+    background: #E4E7EC !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-timeline-dot {
+    border-color: #DDE3EA !important;
+}
+
+/* Mobile keeps the same neutral border treatment. */
+@media (max-width: 639px) {
+    #sellerOrderDetailModal .seller-order-workflow-panel {
+        border: 0 !important;
+    }
+
+    #sellerOrderDetailModal .seller-order-workflow-main,
+    #sellerOrderDetailModal .seller-order-workflow-card {
+        border-color: #E5E7EB !important;
+    }
+
+    #sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
+        border-left: 0 !important;
+        border-top: 1px solid #ECEFF2 !important;
+    }
+}
+
+
+/* ======================================================================
+   ORDER DETAILS — SECONDARY ACTION GOLD HOVER
+   Message Buyer + Print Waybill keep their size/layout/route behavior.
+   Only hover/focus palette changes; no movement.
+   ====================================================================== */
+
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a {
+    border-color: #DDE3EA !important;
+    background: #FFFFFF !important;
+    color: #475467 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible {
+    outline: none !important;
+    border-color: #D59617 !important;
+    background: #FFF8E8 !important;
+    color: #A66F10 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover svg,
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible svg {
+    color: #C9890B !important;
+    stroke: currentColor !important;
+}
+
+/* Pressed state: slightly deeper gold, still static. */
+#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:active {
+    border-color: #C9890B !important;
+    background: #FFF3D6 !important;
+    color: #955F07 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
 </style>
 @endpush
 
@@ -4850,7 +5874,7 @@
         </div>
 
         <div class="seller-orders-header-actions">
-            <a href="{{ route('seller.buyer-messages') }}" wire:navigate class="seller-orders-header-action">
+            <a href="{{ route('seller.messages') }}" class="seller-orders-header-action">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 2v-4A7.5 7.5 0 1 1 21 11.5Z"></path>
                 </svg>
@@ -4981,15 +6005,85 @@
             >
         </label>
 
-        <select id="sellerOrderStatusFilter" class="seller-orders-filter-select">
-            <option value="all">All Status</option>
-            <option value="new">New</option>
-            <option value="preparing">Preparing</option>
-            <option value="ready_for_pickup">Ready Pickup</option>
-            <option value="courier">With Courier</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-        </select>
+        <div class="seller-orders-status-dropdown" data-order-status-dropdown>
+            {{-- Preserve the original select as the filter state source.
+                 It stays synchronized with the custom dropdown below. --}}
+            <select
+                id="sellerOrderStatusFilter"
+                class="seller-orders-filter-select seller-orders-status-native"
+                tabindex="-1"
+                aria-hidden="true"
+            >
+                <option value="all">All Status</option>
+                <option value="new">New</option>
+                <option value="preparing">Preparing</option>
+                <option value="ready_for_pickup">Ready Pickup</option>
+                <option value="courier">With Courier</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+
+            <button
+                type="button"
+                class="seller-orders-status-trigger"
+                data-order-status-trigger
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-controls="sellerOrderStatusMenu"
+            >
+                <span class="seller-orders-status-trigger-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 6h16"></path>
+                        <path d="M7 12h10"></path>
+                        <path d="M10 18h4"></path>
+                    </svg>
+                </span>
+
+                <span class="seller-orders-status-trigger-label" data-order-status-label>All Status</span>
+
+                <span class="seller-orders-status-trigger-chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m7 10 5 5 5-5"></path>
+                    </svg>
+                </span>
+            </button>
+
+            <div
+                id="sellerOrderStatusMenu"
+                class="seller-orders-status-menu"
+                data-order-status-menu
+                role="listbox"
+                aria-label="Filter orders by status"
+                hidden
+            >
+                @foreach ([
+                    'all' => 'All Status',
+                    'new' => 'New',
+                    'preparing' => 'Preparing',
+                    'ready_for_pickup' => 'Ready Pickup',
+                    'courier' => 'With Courier',
+                    'delivered' => 'Delivered',
+                    'cancelled' => 'Cancelled',
+                ] as $statusValue => $statusLabel)
+                    <button
+                        type="button"
+                        class="seller-orders-status-option"
+                        data-order-status-option
+                        data-value="{{ $statusValue }}"
+                        role="option"
+                        aria-selected="{{ $statusValue === 'all' ? 'true' : 'false' }}"
+                    >
+                        <span class="seller-orders-status-option-dot" aria-hidden="true"></span>
+                        <span class="seller-orders-status-option-label">{{ $statusLabel }}</span>
+                        <span class="seller-orders-status-option-check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m7 12 3 3 7-7"></path>
+                            </svg>
+                        </span>
+                    </button>
+                @endforeach
+            </div>
+        </div>
 
         <button id="sellerOrderApplyFilter" type="button" class="seller-orders-apply-filter">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -5458,8 +6552,9 @@
                                     <div class="seller-order-workflow-secondary-actions">
                                         @if ($order->buyer_account_id || $order->buyer_social_account_id)
                                             <a
-                                                href="{{ route('seller.buyer-messages', ['buyer' => $order->buyer_account_id ? 'account-' . $order->buyer_account_id : 'social-' . $order->buyer_social_account_id]) }}"
-                                                wire:navigate
+                                                href="{{ route('seller.messages', ['buyer' => $order->buyer_account_id ? 'account-' . $order->buyer_account_id : 'social-' . $order->buyer_social_account_id]) }}"
+                                                data-message-buyer
+                                                aria-label="Message buyer for order {{ $order->order_number }}"
                                             >
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                                                     <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 2v-4A7.5 7.5 0 1 1 21 11.5Z"></path>
@@ -5570,6 +6665,72 @@ function initSellerOrderManagementPage() {
     let refreshQueued = false;
     let subscribedChannel = null;
 
+    function getStatusDropdownElements() {
+        const root = document.querySelector('[data-order-status-dropdown]');
+
+        return {
+            root,
+            select: document.getElementById('sellerOrderStatusFilter'),
+            trigger: root?.querySelector('[data-order-status-trigger]') || null,
+            label: root?.querySelector('[data-order-status-label]') || null,
+            menu: root?.querySelector('[data-order-status-menu]') || null,
+            options: root ? Array.from(root.querySelectorAll('[data-order-status-option]')) : [],
+        };
+    }
+
+    function syncStatusDropdownUi() {
+        const { select, label, options } = getStatusDropdownElements();
+        if (!select) return;
+
+        const selectedValue = select.value || 'all';
+        const selectedText = select.options[select.selectedIndex]?.text || 'All Status';
+
+        if (label) label.textContent = selectedText;
+
+        options.forEach((option) => {
+            option.setAttribute(
+                'aria-selected',
+                option.dataset.value === selectedValue ? 'true' : 'false'
+            );
+        });
+    }
+
+    function closeStatusDropdown({ focusTrigger = false } = {}) {
+        const { trigger, menu } = getStatusDropdownElements();
+        if (!trigger || !menu) return;
+
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+
+        if (focusTrigger) {
+            trigger.focus({ preventScroll: true });
+        }
+    }
+
+    function openStatusDropdown() {
+        const { trigger, menu, options } = getStatusDropdownElements();
+        if (!trigger || !menu) return;
+
+        menu.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+
+        const selected = options.find((option) => option.getAttribute('aria-selected') === 'true');
+        window.requestAnimationFrame(() => {
+            (selected || options[0])?.focus({ preventScroll: true });
+        });
+    }
+
+    function toggleStatusDropdown() {
+        const { trigger, menu } = getStatusDropdownElements();
+        if (!trigger || !menu) return;
+
+        if (menu.hidden) {
+            openStatusDropdown();
+        } else {
+            closeStatusDropdown({ focusTrigger: true });
+        }
+    }
+
 
     function closeOrderModal() {
         if (!modal || !modalContent) return;
@@ -5630,6 +6791,8 @@ function initSellerOrderManagementPage() {
 
         const hasOrderRows = rows.length > 0;
         noResults?.classList.toggle('hidden', !hasOrderRows || visibleCount !== 0);
+
+        syncStatusDropdownUi();
     }
 
     function captureUiState() {
@@ -5793,6 +6956,32 @@ function initSellerOrderManagementPage() {
     }
 
     document.addEventListener('click', function (event) {
+        const statusTrigger = event.target.closest('[data-order-status-trigger]');
+        if (statusTrigger) {
+            event.preventDefault();
+            toggleStatusDropdown();
+            return;
+        }
+
+        const statusOption = event.target.closest('[data-order-status-option]');
+        if (statusOption) {
+            event.preventDefault();
+
+            const { select } = getStatusDropdownElements();
+            if (select) {
+                select.value = statusOption.dataset.value || 'all';
+                syncStatusDropdownUi();
+                closeStatusDropdown({ focusTrigger: true });
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            return;
+        }
+
+        if (!event.target.closest('[data-order-status-dropdown]')) {
+            closeStatusDropdown();
+        }
+
         const viewButton = event.target.closest('.seller-order-view-button');
         if (viewButton) {
             openOrderModal(viewButton.dataset.orderTemplate || '');
@@ -5812,6 +7001,7 @@ function initSellerOrderManagementPage() {
 
     document.addEventListener('change', function (event) {
         if (event.target?.id === 'sellerOrderStatusFilter') {
+            syncStatusDropdownUi();
             applyOrderFilters();
         }
     }, { signal });
@@ -5825,11 +7015,54 @@ function initSellerOrderManagementPage() {
         const statusFilter = document.getElementById('sellerOrderStatusFilter');
         if (searchInput) searchInput.value = '';
         if (statusFilter) statusFilter.value = 'all';
+        syncStatusDropdownUi();
+        closeStatusDropdown();
         applyOrderFilters();
         searchInput?.focus({ preventScroll: true });
     }, { signal });
 
     document.addEventListener('keydown', function (event) {
+        const { trigger, menu, options } = getStatusDropdownElements();
+        const dropdownOpen = Boolean(menu && !menu.hidden);
+        const targetIsTrigger = event.target === trigger;
+        const optionIndex = options.indexOf(event.target);
+
+        if (targetIsTrigger && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+            event.preventDefault();
+            openStatusDropdown();
+
+            const index = event.key === 'ArrowUp' ? options.length - 1 : 0;
+            options[index]?.focus({ preventScroll: true });
+            return;
+        }
+
+        if (dropdownOpen && optionIndex >= 0 && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
+            event.preventDefault();
+
+            const direction = event.key === 'ArrowDown' ? 1 : -1;
+            const nextIndex = (optionIndex + direction + options.length) % options.length;
+            options[nextIndex]?.focus({ preventScroll: true });
+            return;
+        }
+
+        if (dropdownOpen && optionIndex >= 0 && event.key === 'Home') {
+            event.preventDefault();
+            options[0]?.focus({ preventScroll: true });
+            return;
+        }
+
+        if (dropdownOpen && optionIndex >= 0 && event.key === 'End') {
+            event.preventDefault();
+            options[options.length - 1]?.focus({ preventScroll: true });
+            return;
+        }
+
+        if (event.key === 'Escape' && dropdownOpen) {
+            event.preventDefault();
+            closeStatusDropdown({ focusTrigger: true });
+            return;
+        }
+
         if (event.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
             closeOrderModal();
         }

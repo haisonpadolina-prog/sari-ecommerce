@@ -2211,6 +2211,693 @@
     }
 }
 
+
+
+/* ======================================================================
+   INVENTORY — FLOATING CONTAINER EFFECTS
+   Visual-only enhancement. No backend, routes, forms, stock logic,
+   search filtering, variant adjustment behavior, or JavaScript changed.
+   ====================================================================== */
+
+.inventory-shell {
+    --inv-float-border: #E2E7ED;
+    --inv-float-border-soft: #E9EDF2;
+    --inv-float-shadow:
+        0 1px 2px rgba(15, 23, 42, .035),
+        0 10px 26px rgba(15, 23, 42, .075),
+        inset 0 1px 0 rgba(255, 255, 255, .86);
+    --inv-float-shadow-soft:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 6px 16px rgba(15, 23, 42, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+/* Main inventory surfaces — consistent elevated card system. */
+.inventory-shell .inventory-stat-card,
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel,
+.inventory-shell .inventory-search-panel {
+    border-color: var(--inv-float-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inv-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Keep the current compact radius and spacing. */
+.inventory-shell .inventory-stat-card,
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel {
+    border-radius: 13px !important;
+}
+
+/* Static cards: no cursor lift or positional movement. */
+.inventory-shell .inventory-stat-card:hover,
+.inventory-shell .inventory-panel:hover,
+.inventory-shell .inventory-table-panel:hover,
+.inventory-shell .inventory-activity-panel:hover,
+.inventory-shell .inventory-search-panel:hover {
+    border-color: var(--inv-float-border) !important;
+    box-shadow: var(--inv-float-shadow) !important;
+    transform: none !important;
+}
+
+/* Secondary cards get a softer shadow so hierarchy remains clear. */
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-activity-item {
+    border-color: var(--inv-float-border-soft) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inv-float-shadow-soft) !important;
+    transform: none !important;
+}
+
+/* Table header stays visually attached to its main floating panel. */
+.inventory-shell .inventory-table-head {
+    border-bottom-color: #E9EDF2 !important;
+    background: #FFFFFF !important;
+}
+
+/* Table rows remain flat for scanability; only the outer table floats. */
+.inventory-shell .inventory-grid-head {
+    background: #F8FAFC !important;
+}
+
+.inventory-shell .inventory-row {
+    border-top-color: #EDF1F5 !important;
+    background: #FFFFFF !important;
+}
+
+/* Product thumbnails have subtle depth without becoming mini-cards. */
+.inventory-shell .inventory-product-thumb {
+    border-color: #E2E7ED !important;
+    box-shadow: 0 3px 9px rgba(15, 23, 42, .035) !important;
+}
+
+/* Keep empty and informational states secondary. */
+.inventory-shell .inventory-empty,
+.inventory-shell .inventory-activity-empty {
+    background: transparent !important;
+}
+
+/* No structural gold/cream tint: semantic status colors stay untouched. */
+.inventory-shell .inventory-stat-card,
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel,
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-activity-item {
+    outline: 0 !important;
+}
+
+/* Mobile: slightly lighter elevation so stacked cards do not feel heavy. */
+@media (max-width: 640px) {
+    .inventory-shell .inventory-stat-card,
+    .inventory-shell .inventory-panel,
+    .inventory-shell .inventory-table-panel,
+    .inventory-shell .inventory-activity-panel,
+    .inventory-shell .inventory-search-panel {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .06),
+            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+    }
+
+    .inventory-shell .inventory-health-card,
+    .inventory-shell .inventory-activity-item {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .045) !important;
+    }
+}
+
+
+/* ======================================================================
+   INVENTORY — DASHBOARD SHADOW REFERENCE FINAL PASS
+   Front-end/CSS only. Inventory stats, search, stock adjustment forms,
+   variant selection, pagination, stock state logic and backend behavior
+   remain unchanged.
+   ====================================================================== */
+
+.inventory-shell {
+    --inventory-dashboard-border: #E5E7EB;
+    --inventory-dashboard-border-strong: #D1D5DB;
+    --inventory-dashboard-divider: #ECEFF2;
+
+    /* Dashboard-style layered elevation:
+       contact shadow + middle separation + broad ambient float. */
+    --inventory-dashboard-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+
+    --inventory-dashboard-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+
+    --inventory-dashboard-shadow-inner:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 5px 14px rgba(15, 23, 42, .045);
+}
+
+/* Header stays document-like; only divider is neutral. */
+.inventory-shell .inventory-head {
+    border-bottom-color: var(--inventory-dashboard-divider) !important;
+}
+
+/* ------------------------------------------------------------
+   SUMMARY CARDS — medium floating depth
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-stat-card {
+    border: 1px solid var(--inventory-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-stat-card:hover {
+    border-color: var(--inventory-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow-soft) !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-stat-icon {
+    border: 1px solid rgba(15, 23, 42, .045) !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
+}
+
+/* ------------------------------------------------------------
+   PRIMARY WORK SURFACES — strongest dashboard depth
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-search-panel,
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel {
+    border: 1px solid var(--inventory-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-search-panel:hover,
+.inventory-shell .inventory-panel:hover,
+.inventory-shell .inventory-table-panel:hover,
+.inventory-shell .inventory-activity-panel:hover {
+    border-color: var(--inventory-dashboard-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   INNER STOCK / ACTIVITY CARDS — softer hierarchy
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-activity-item {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-health-card:hover,
+.inventory-shell .inventory-activity-item:hover {
+    border-color: #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-dashboard-shadow-inner) !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   TABLE SURFACE
+   Parent floats; individual rows stay flat and scan-friendly.
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-table-head {
+    border-bottom-color: var(--inventory-dashboard-divider) !important;
+    background: #FFFFFF !important;
+}
+
+.inventory-shell .inventory-grid-head {
+    background: #F8FAFC !important;
+    border-color: var(--inventory-dashboard-divider) !important;
+}
+
+.inventory-shell .inventory-row {
+    border-top-color: var(--inventory-dashboard-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-row:hover {
+    background: #F8FAFC !important;
+    border-top-color: var(--inventory-dashboard-divider) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Product thumbnails remain subtle secondary surfaces. */
+.inventory-shell .inventory-product-thumb {
+    border-color: var(--inventory-dashboard-border) !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 3px 9px rgba(15, 23, 42, .035) !important;
+}
+
+/* ------------------------------------------------------------
+   SEARCH + STOCK CONTROLS
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-search-input,
+.inventory-shell .inventory-table-search,
+.inventory-shell .inventory-select,
+.inventory-shell .inventory-qty {
+    border-color: var(--inventory-dashboard-border-strong) !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 4px 10px rgba(15, 23, 42, .03) !important;
+}
+
+.inventory-shell .inventory-search-input:hover,
+.inventory-shell .inventory-table-search:hover,
+.inventory-shell .inventory-select:hover,
+.inventory-shell .inventory-qty:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+}
+
+.inventory-shell .inventory-search-input:focus,
+.inventory-shell .inventory-table-search:focus,
+.inventory-shell .inventory-select:focus,
+.inventory-shell .inventory-qty:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 0 0 3px rgba(196, 163, 91, .08),
+        0 5px 14px rgba(15, 23, 42, .04) !important;
+}
+
+/* Search / update buttons remain static; color change only. */
+.inventory-shell .inventory-search-button,
+.inventory-shell .inventory-update-btn {
+    transform: none !important;
+}
+
+.inventory-shell .inventory-search-button:hover,
+.inventory-shell .inventory-update-btn:hover,
+.inventory-shell .inventory-update-btn:focus-visible {
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   PANEL ICONS / EMPTY STATES / PAGINATION
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-panel-icon,
+.inventory-shell .inventory-table-head-icon {
+    border-radius: 8px;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+}
+
+.inventory-shell .inventory-empty,
+.inventory-shell .inventory-activity-empty {
+    background: transparent !important;
+}
+
+.inventory-shell .inventory-activity-empty-icon {
+    border-radius: 10px;
+    background: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, .03) !important;
+}
+
+.inventory-shell .inventory-table-panel > .border-t {
+    border-color: var(--inventory-dashboard-divider) !important;
+    background: #FFFFFF !important;
+}
+
+.inventory-shell .inventory-table-panel nav a,
+.inventory-shell .inventory-table-panel nav span {
+    border-color: var(--inventory-dashboard-border) !important;
+}
+
+/* Structural surfaces never get colored outlines. */
+.inventory-shell .inventory-stat-card,
+.inventory-shell .inventory-search-panel,
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel,
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-activity-item {
+    outline: 0 !important;
+}
+
+/* Mobile: retain depth without making stacked cards feel heavy. */
+@media (max-width: 640px) {
+    .inventory-shell .inventory-stat-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .inventory-shell .inventory-search-panel,
+    .inventory-shell .inventory-panel,
+    .inventory-shell .inventory-table-panel,
+    .inventory-shell .inventory-activity-panel {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .inventory-shell .inventory-health-card,
+    .inventory-shell .inventory-activity-item {
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .02),
+            0 5px 13px rgba(15, 23, 42, .045) !important;
+    }
+}
+
+
+/* ======================================================================
+   INVENTORY — STOCK BY PRODUCT STRONGER FLOATING FIX
+   Gives the wide Stock by Product workspace the same perceived elevation
+   as the other dashboard containers. CSS-only.
+   ====================================================================== */
+
+.inventory-shell .inventory-table-panel {
+    position: relative !important;
+    z-index: 1 !important;
+    margin-top: 12px !important;
+    margin-bottom: 18px !important;
+
+    border: 1px solid #E2E6EB !important;
+    background: #FFFFFF !important;
+
+    /* Stronger than the generic page shadow because this panel is wide.
+       The extra contact shadow keeps it visibly separated from the page. */
+    box-shadow:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11),
+        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+
+    transform: none !important;
+}
+
+/* Keep exactly the same depth on hover — no physical lift. */
+.inventory-shell .inventory-table-panel:hover {
+    border-color: #E2E6EB !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11),
+        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+    transform: none !important;
+}
+
+/* Crisp top/header separation helps the large panel read like one
+   floating dashboard workspace instead of a flat table block. */
+.inventory-shell .inventory-table-head {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #E9EDF2 !important;
+}
+
+/* The column header remains a quiet inset surface. */
+.inventory-shell .inventory-grid-head {
+    background: #F8FAFC !important;
+    border-color: #ECEFF2 !important;
+}
+
+/* Rows stay flat inside the elevated parent. */
+.inventory-shell .inventory-row {
+    background: #FFFFFF !important;
+    border-top-color: #ECEFF2 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-row:hover {
+    background: #F8FAFC !important;
+    border-top-color: #ECEFF2 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Pagination/footer remains visually attached to the same elevated shell. */
+.inventory-shell .inventory-table-panel > .border-t {
+    border-color: #ECEFF2 !important;
+    background: #FFFFFF !important;
+}
+
+/* Tablet/mobile: keep visible elevation without excessive shadow spread. */
+@media (max-width: 900px) {
+    .inventory-shell .inventory-table-panel {
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .08),
+            0 22px 48px rgba(15, 23, 42, .085),
+            inset 0 1px 0 rgba(255, 255, 255, .94) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .inventory-shell .inventory-table-panel {
+        margin-bottom: 14px !important;
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .04),
+            0 8px 18px rgba(15, 23, 42, .065),
+            0 16px 34px rgba(15, 23, 42, .075) !important;
+    }
+}
+
+
+/* ======================================================================
+   INVENTORY — MAIN CONTAINERS ONLY FLOATING
+   Final hierarchy fix: elevation belongs only to top-level dashboard
+   surfaces. Nested cards/items/thumbnail/icon shells remain flat.
+   Visual-only; inventory data, forms, routes and JavaScript unchanged.
+   ====================================================================== */
+
+.inventory-shell {
+    --inventory-main-border: #E5E7EB;
+    --inventory-main-divider: #ECEFF2;
+    --inventory-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    --inventory-summary-shadow:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+}
+
+/* ------------------------------------------------------------
+   ONLY TOP-LEVEL / MAIN DASHBOARD CONTAINERS FLOAT
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-stat-card {
+    border: 1px solid var(--inventory-main-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-summary-shadow) !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-activity-panel,
+.inventory-shell .inventory-search-panel {
+    border: 1px solid var(--inventory-main-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--inventory-main-shadow) !important;
+    transform: none !important;
+}
+
+/* Stock by Product stays slightly stronger because it is the widest work surface. */
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-table-panel:hover {
+    box-shadow:
+        0 3px 7px rgba(15, 23, 42, .055),
+        0 14px 32px rgba(15, 23, 42, .095),
+        0 30px 68px rgba(15, 23, 42, .11),
+        inset 0 1px 0 rgba(255, 255, 255, .96) !important;
+}
+
+/* No main-container movement on hover. */
+.inventory-shell .inventory-stat-card:hover,
+.inventory-shell .inventory-panel:hover,
+.inventory-shell .inventory-table-panel:hover,
+.inventory-shell .inventory-activity-panel:hover,
+.inventory-shell .inventory-search-panel:hover {
+    border-color: var(--inventory-main-border) !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------------------------
+   NESTED CONTAINERS ARE FLAT
+   Healthy / Low Stock / Out of Stock should not float separately.
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-health-card:hover {
+    border: 1px solid #E7EAEE !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Recent adjustment rows are content rows inside one floating parent. */
+.inventory-shell .inventory-activity-item,
+.inventory-shell .inventory-activity-item:hover {
+    border-color: #E7EAEE !important;
+    background: #FAFBFC !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Product thumbnails are media frames, not mini floating cards. */
+.inventory-shell .inventory-product-thumb,
+.inventory-shell .inventory-product-thumb:hover {
+    border-color: #E5E7EB !important;
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Icon shells stay visually quiet inside their parent cards. */
+.inventory-shell .inventory-stat-icon,
+.inventory-shell .inventory-panel-icon,
+.inventory-shell .inventory-table-head-icon,
+.inventory-shell .inventory-activity-empty-icon {
+    box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   CONTROLS ARE CONTROLS, NOT FLOATING CONTAINERS
+   Keep clean borders; only focus gets a focus ring.
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-search-input,
+.inventory-shell .inventory-table-search,
+.inventory-shell .inventory-select,
+.inventory-shell .inventory-qty {
+    border-color: #D1D5DB !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.inventory-shell .inventory-search-input:hover,
+.inventory-shell .inventory-table-search:hover,
+.inventory-shell .inventory-select:hover,
+.inventory-shell .inventory-qty:hover {
+    border-color: #C9D0D9 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.inventory-shell .inventory-search-input:focus,
+.inventory-shell .inventory-table-search:focus,
+.inventory-shell .inventory-select:focus,
+.inventory-shell .inventory-qty:focus {
+    border-color: #C4A35B !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(196, 163, 91, .08) !important;
+}
+
+/* ------------------------------------------------------------
+   TABLE CONTENT REMAINS FLAT INSIDE ITS FLOATING SHELL
+   ------------------------------------------------------------ */
+.inventory-shell .inventory-table-head {
+    border-bottom-color: var(--inventory-main-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.inventory-shell .inventory-grid-head {
+    background: #F8FAFC !important;
+    border-color: var(--inventory-main-divider) !important;
+    box-shadow: none !important;
+}
+
+.inventory-shell .inventory-row,
+.inventory-shell .inventory-row:hover {
+    border-top-color: var(--inventory-main-divider) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.inventory-shell .inventory-row {
+    background: #FFFFFF !important;
+}
+
+.inventory-shell .inventory-row:hover {
+    background: #F8FAFC !important;
+}
+
+/* Legend/divider rows remain document-like. */
+.inventory-shell .inventory-legend-row {
+    box-shadow: none !important;
+}
+
+/* Empty states sit inside their parent surface, so no independent float. */
+.inventory-shell .inventory-empty,
+.inventory-shell .inventory-activity-empty {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Pagination/footer belongs to the table shell. */
+.inventory-shell .inventory-table-panel > .border-t {
+    border-color: var(--inventory-main-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* Structural nesting stays neutral. */
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-activity-item,
+.inventory-shell .inventory-product-thumb,
+.inventory-shell .inventory-grid-head,
+.inventory-shell .inventory-row {
+    outline: 0 !important;
+}
+
+/* Mobile: only main surfaces retain depth. Nested content remains flat. */
+@media (max-width: 640px) {
+    .inventory-shell .inventory-stat-card {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .03),
+            0 6px 14px rgba(15, 23, 42, .05),
+            0 12px 26px rgba(15, 23, 42, .055) !important;
+    }
+
+    .inventory-shell .inventory-panel,
+    .inventory-shell .inventory-search-panel,
+    .inventory-shell .inventory-activity-panel {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .035),
+            0 8px 18px rgba(15, 23, 42, .06),
+            0 18px 38px rgba(15, 23, 42, .07) !important;
+    }
+
+    .inventory-shell .inventory-table-panel,
+    .inventory-shell .inventory-table-panel:hover {
+        box-shadow:
+            0 2px 4px rgba(15, 23, 42, .04),
+            0 8px 18px rgba(15, 23, 42, .065),
+            0 16px 34px rgba(15, 23, 42, .075) !important;
+    }
+
+    .inventory-shell .inventory-health-card,
+    .inventory-shell .inventory-activity-item,
+    .inventory-shell .inventory-product-thumb {
+        box-shadow: none !important;
+    }
+}
 </style>
 
 

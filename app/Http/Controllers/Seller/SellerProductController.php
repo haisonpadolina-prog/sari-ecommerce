@@ -1154,6 +1154,7 @@ class SellerProductController extends Controller
             'variants.*.sku' => ['nullable', 'string', 'max:120'],
             'variants.*.price' => ['nullable', 'numeric', 'min:0'],
             'variants.*.stock' => ['nullable', 'integer', 'min:0'],
+            'variants.*.draft_image_key' => ['nullable', 'string', 'size:40'],
             'variants.*.image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ]);
     }
@@ -1193,6 +1194,7 @@ class SellerProductController extends Controller
             'variants.*.sku' => ['nullable', 'string', 'max:120'],
             'variants.*.price' => ['nullable', 'numeric', 'min:0'],
             'variants.*.stock' => ['nullable', 'integer', 'min:0'],
+            'variants.*.draft_image_key' => ['nullable', 'string', 'size:40'],
             'variants.*.image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ]);
     }
@@ -1311,6 +1313,7 @@ class SellerProductController extends Controller
                 'stock' => isset($item['stock']) && $item['stock'] !== '' ? (int) $item['stock'] : null,
                 'image_file' => ($item['image'] ?? null) instanceof UploadedFile ? $item['image'] : null,
                 'image_path' => $item['image_path'] ?? null,
+                'draft_image_key' => trim((string) ($item['draft_image_key'] ?? '')) ?: null,
             ];
         }
 
@@ -1344,11 +1347,24 @@ class SellerProductController extends Controller
                     'seller-products/' . $product->id . '/variants',
                     'public'
                 );
-            } elseif (!empty($draftVariantPaths[$key])) {
-                $imagePath = $this->promoteDraftFile(
-                    $draftVariantPaths[$key],
-                    'seller-products/' . $product->id . '/variants'
-                );
+            } else {
+                $draftSourceKey =
+                    $key;
+
+                if (
+                    empty($draftVariantPaths[$draftSourceKey])
+                    && !empty($variant['draft_image_key'])
+                ) {
+                    $draftSourceKey =
+                        (string) $variant['draft_image_key'];
+                }
+
+                if (!empty($draftVariantPaths[$draftSourceKey])) {
+                    $imagePath = $this->promoteDraftFile(
+                        $draftVariantPaths[$draftSourceKey],
+                        'seller-products/' . $product->id . '/variants'
+                    );
+                }
             }
 
             if ($imagePath) {
