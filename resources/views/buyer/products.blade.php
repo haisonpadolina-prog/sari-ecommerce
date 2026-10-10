@@ -38,29 +38,7 @@
         padding: 6px 2px 18px;
         border-bottom: 1px solid #eee8e1;
     }
-
-    .sari-editorial-note {
-        max-width: 235px;
-        padding-left: 18px;
-        border-left: 2px solid #d2982e;
-    }
-
-    .sari-editorial-note strong {
-        display: block;
-        color: #50483f;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1.35;
-    }
-
-    .sari-editorial-note p {
-        margin-top: 7px;
-        color: #999087;
-        font-size: 7.5px;
-        line-height: 1.55;
-    }
-
-    /* ============================================================
+/* ============================================================
        ADMIN CAMPAIGN SPOTLIGHT
     ============================================================ */
     .sari-campaign-shell {
@@ -1337,48 +1315,6 @@
     }
 
 
-    /* ============================================================
-       BANNER = IMAGE ONLY
-       No card, no white/red outer container, no padding.
-    ============================================================ */
-    .sari-sale-banner-image {
-        display: block;
-        width: 100%;
-        margin-top: 12px;
-        overflow: hidden;
-        aspect-ratio: 5.35 / 1;
-        border: 0;
-        border-radius: 15px;
-        background: transparent;
-        box-shadow: none;
-        line-height: 0;
-    }
-
-    .sari-sale-banner-image img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        border: 0;
-        object-fit: cover;
-        object-position: center 54%;
-        background: transparent;
-        box-shadow: none;
-    }
-
-    /* Neutralize all previous temporary banner wrapper rules. */
-    .sari-accurate-sale-banner {
-        display: none !important;
-    }
-
-    @media (max-width: 767px) {
-        .sari-sale-banner-image {
-            margin-top: 8px;
-            aspect-ratio: 4.35 / 1;
-            border-radius: 11px;
-        }
-    }
-
 
     /* ============================================================
        FINAL COMPACT SPACING PASS
@@ -1388,12 +1324,7 @@
         padding-top: 2px !important;
         padding-bottom: 10px !important;
     }
-
-    .sari-sale-banner-image {
-        margin-top: 8px !important;
-    }
-
-    .sari-filter-dock {
+.sari-filter-dock {
         margin-top: 10px !important;
         padding-top: 9px !important;
         padding-bottom: 9px !important;
@@ -1424,18 +1355,1109 @@
         .sari-products-hero {
             padding-bottom: 8px !important;
         }
-
-        .sari-sale-banner-image {
-            margin-top: 6px !important;
-        }
-
-        .sari-reference-category-row {
+.sari-reference-category-row {
             margin-top: 6px !important;
         }
 
         .sari-showcase-grid {
             margin-top: 7px !important;
         }
+    }
+
+
+    /* ============================================================
+       FINAL EQUAL PRODUCT CARD GRID
+       Matches the Home page behavior: every product card has equal weight.
+    ============================================================ */
+    .sari-showcase-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        grid-auto-flow: row !important;
+        align-items: stretch !important;
+        gap: 14px !important;
+        margin-top: 10px !important;
+    }
+
+    .sari-showcase-grid > * {
+        min-width: 0;
+        height: 100%;
+    }
+
+    .sari-showcase-grid > .sari-featured-product-card {
+        grid-row: auto !important;
+        grid-column: auto !important;
+    }
+
+    @media (max-width: 1199px) {
+        .sari-showcase-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 899px) {
+        .sari-showcase-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-showcase-grid {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+    }
+
+
+    /* ============================================================
+       SARI SHOP PRODUCTS — SELLER CREATE DESIGN LANGUAGE
+       Visual-only overrides. Existing search/filter/product logic
+       and all IDs/data attributes remain untouched.
+    ============================================================ */
+
+    .sari-products-page {
+        --catalog-panel: #ffffff;
+        --catalog-page: #f5f6f8;
+        --catalog-border: #e3e6ea;
+        --catalog-border-soft: #eceef1;
+        --catalog-text: #2f343b;
+        --catalog-muted: #818995;
+        --catalog-gold: #c88912;
+        --catalog-gold-dark: #a96f0e;
+
+        background: var(--catalog-page) !important;
+        color: var(--catalog-text);
+    }
+
+    .sari-products-main {
+        max-width: 1440px !important;
+        padding-top: 20px !important;
+        padding-bottom: 34px !important;
+    }
+
+    /* -----------------------------
+       FLOATING PAGE INTRO
+    ----------------------------- */
+    .sari-products-hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--catalog-border) !important;
+        border-radius: 14px !important;
+        background: var(--catalog-panel) !important;
+        padding: 17px 20px 18px !important;
+        box-shadow:
+            0 10px 28px rgba(31, 41, 55, .045),
+            0 2px 7px rgba(31, 41, 55, .025) !important;
+    }
+
+    .sari-products-hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 115px;
+        height: 3px;
+        border-radius: 0 0 0 999px;
+        background: #c88912;
+        opacity: .95;
+    }
+
+    .sari-products-hero > div {
+        max-width: 760px;
+    }
+
+    .sari-products-hero p:first-child {
+        margin: 0 !important;
+        color: #a87316 !important;
+        font-size: 7px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .14em !important;
+        text-transform: uppercase;
+    }
+
+    .sari-products-hero h1 {
+        margin-top: 5px !important;
+        color: #2d3137 !important;
+        font-size: clamp(27px, 2.3vw, 32px) !important;
+        font-weight: 750 !important;
+        line-height: 1.06 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .sari-products-hero h1 span {
+        color: #c88912 !important;
+    }
+
+    .sari-products-hero h1 + p {
+        max-width: 650px !important;
+        margin-top: 7px !important;
+        color: #818995 !important;
+        font-size: 8px !important;
+        font-weight: 400 !important;
+        line-height: 1.65 !important;
+    }
+
+    /* -----------------------------
+       FLOATING SEARCH RESULT NOTICE
+    ----------------------------- */
+    .sari-products-hero + section[class*="mb-4"] {
+        border-color: var(--catalog-border) !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        box-shadow:
+            0 8px 22px rgba(31, 41, 55, .035),
+            0 2px 6px rgba(31, 41, 55, .02) !important;
+    }
+
+    /* -----------------------------
+       FLOATING FILTER WORKSPACE
+    ----------------------------- */
+    .sari-filter-dock {
+        margin-top: 12px !important;
+        border: 1px solid var(--catalog-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        padding: 13px 14px !important;
+        box-shadow:
+            0 10px 28px rgba(31, 41, 55, .045),
+            0 2px 7px rgba(31, 41, 55, .025) !important;
+    }
+
+    .sari-filter-grid {
+        grid-template-columns:
+            minmax(320px, 1.55fr)
+            minmax(145px, .72fr)
+            minmax(145px, .72fr)
+            minmax(145px, .72fr)
+            minmax(145px, .72fr)
+            auto
+            auto !important;
+        gap: 9px !important;
+    }
+
+    .sari-filter-label {
+        margin-bottom: 5px !important;
+        color: #747c86 !important;
+        font-size: 6.2px !important;
+        font-weight: 750 !important;
+        letter-spacing: .07em !important;
+    }
+
+    .sari-filter-control {
+        height: 40px !important;
+        border: 1px solid #dfe3e8 !important;
+        border-radius: 9px !important;
+        background-color: #fff !important;
+        color: #4a515b !important;
+        font-size: 8px !important;
+        font-weight: 500 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-filter-control:hover {
+        border-color: #d3d8de !important;
+        background-color: #fff !important;
+    }
+
+    .sari-filter-control:focus {
+        border-color: #c88912 !important;
+        box-shadow: 0 0 0 3px rgba(200, 137, 18, .08) !important;
+    }
+
+    .sari-live-search input {
+        border-color: #d9c8a8 !important;
+        background: #fffdf9 !important;
+    }
+
+    .sari-live-search > svg {
+        color: #7f8790 !important;
+    }
+
+    .sari-live-search-panel,
+    .sari-price-popover {
+        border-color: var(--catalog-border) !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        box-shadow:
+            0 20px 48px rgba(31, 41, 55, .12),
+            0 4px 12px rgba(31, 41, 55, .035) !important;
+    }
+
+    .sari-live-search-head,
+    .sari-live-search-footer {
+        background: #fafbfc !important;
+        border-color: #eceff2 !important;
+    }
+
+    .sari-filter-reset {
+        height: 40px !important;
+        border: 1px solid transparent;
+        border-radius: 9px !important;
+        color: #9f6b13 !important;
+        font-size: 7.3px !important;
+    }
+
+    .sari-filter-reset:hover {
+        border-color: #eadfc9 !important;
+        background: #fffaf1 !important;
+    }
+
+    .sari-result-pill {
+        height: 40px !important;
+        min-width: 96px !important;
+        border: 1px solid #eadfc9 !important;
+        border-radius: 9px !important;
+        background: #fffaf1 !important;
+        color: #9c6811 !important;
+        font-size: 7.4px !important;
+        box-shadow: none !important;
+    }
+
+    /* -----------------------------
+       FLOATING CATEGORY BAR
+    ----------------------------- */
+    .sari-reference-category-row {
+        justify-content: flex-start !important;
+        margin-top: 11px !important;
+        border: 1px solid var(--catalog-border);
+        border-radius: 13px;
+        background: #fff;
+        padding: 9px 11px;
+        box-shadow:
+            0 8px 22px rgba(31, 41, 55, .035),
+            0 2px 6px rgba(31, 41, 55, .018);
+    }
+
+    .sari-category-chips {
+        gap: 6px !important;
+    }
+
+    .sari-inline-chip {
+        min-height: 30px !important;
+        border: 1px solid #e0e4e8 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        padding: 0 12px !important;
+        color: #59616b !important;
+        font-size: 6.8px !important;
+        font-weight: 650 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-inline-chip:hover {
+        border-color: #dfc995 !important;
+        background: #fffaf1 !important;
+        color: #946313 !important;
+    }
+
+    .sari-inline-chip.is-active {
+        border-color: #c88912 !important;
+        background: #c88912 !important;
+        color: #fff !important;
+        box-shadow: 0 5px 12px rgba(200,137,18,.14) !important;
+    }
+
+    .sari-view-all {
+        min-height: 30px;
+        margin-left: 2px !important;
+        border-radius: 8px;
+        padding: 0 8px;
+        color: #9e6a12 !important;
+        font-size: 7px !important;
+    }
+
+    .sari-view-all:hover {
+        background: #fffaf1;
+    }
+
+    /* -----------------------------
+       PRODUCT GRID / FLOATING CARDS
+       Product card internals stay untouched.
+    ----------------------------- */
+    .sari-showcase-grid {
+        margin-top: 12px !important;
+        gap: 13px !important;
+    }
+
+    .sari-showcase-grid > * {
+        min-width: 0;
+        height: 100%;
+        filter: drop-shadow(0 8px 18px rgba(31, 41, 55, .025));
+    }
+
+    /* -----------------------------
+       FLOATING BUYER PROTECTION
+    ----------------------------- */
+    .sari-benefits-wrap {
+        margin-top: 13px !important;
+        border: 1px solid var(--catalog-border) !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        box-shadow:
+            0 9px 24px rgba(31, 41, 55, .035),
+            0 2px 6px rgba(31, 41, 55, .018) !important;
+    }
+
+    .sari-benefit-tile {
+        min-height: 62px;
+        border-color: #eceef1 !important;
+        padding: 10px 13px !important;
+    }
+
+    .sari-benefit-icon {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 9px !important;
+        background: #fff8eb !important;
+        color: #b9780f !important;
+    }
+
+    .sari-benefit-tile h3 {
+        color: #3d434b !important;
+        font-size: 7.2px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-benefit-tile p {
+        margin-top: 2px !important;
+        color: #8b929b !important;
+        font-size: 5.9px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* -----------------------------
+       FLOATING EMPTY STATE / SHOPS
+    ----------------------------- */
+    #buyerProductEmpty {
+        border-color: var(--catalog-border) !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        box-shadow: 0 9px 24px rgba(31,41,55,.035) !important;
+    }
+
+    /* -----------------------------
+       MODAL MATCHES SAME SYSTEM
+    ----------------------------- */
+    #buyerProductModal > div {
+        border-color: var(--catalog-border) !important;
+        border-radius: 15px !important;
+        box-shadow: 0 30px 80px rgba(31,41,55,.20) !important;
+    }
+
+    /* -----------------------------
+       RESPONSIVE
+    ----------------------------- */
+    @media (max-width: 1279px) {
+        .sari-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        .sari-live-search {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-products-main {
+            padding-top: 13px !important;
+        }
+
+        .sari-products-hero {
+            border-radius: 12px !important;
+            padding: 15px 16px !important;
+        }
+
+        .sari-products-hero h1 {
+            font-size: 25px !important;
+        }
+
+        .sari-products-hero h1 + p {
+            font-size: 7.7px !important;
+        }
+
+        .sari-reference-category-row {
+            margin-top: 8px !important;
+            border-radius: 11px;
+            overflow-x: auto;
+            padding: 8px;
+            scrollbar-width: none;
+        }
+
+        .sari-reference-category-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sari-reference-category-row .sari-category-chips {
+            min-width: max-content;
+            flex-wrap: nowrap !important;
+        }
+
+        .sari-benefits-wrap {
+            border-radius: 11px !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL REFINEMENT — OPEN TITLE + PREMIUM SEARCH/DROPDOWNS
+       Visual-only overrides. Functionality stays unchanged.
+    ============================================================ */
+
+    /* Open heading: remove the floating container treatment */
+    .sari-products-hero {
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 2px 2px 14px !important;
+        box-shadow: none !important;
+    }
+
+    .sari-products-hero::after {
+        display: none !important;
+    }
+
+    .sari-products-hero > div {
+        max-width: 760px;
+    }
+
+    .sari-products-hero p:first-child {
+        color: #a87316 !important;
+        font-size: 6.6px !important;
+        font-weight: 800 !important;
+        letter-spacing: .15em !important;
+    }
+
+    .sari-products-hero h1 {
+        margin-top: 5px !important;
+        color: #2f343b !important;
+        font-size: clamp(27px, 2.25vw, 31px) !important;
+        font-weight: 760 !important;
+        line-height: 1.04 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .sari-products-hero h1 + p {
+        margin-top: 7px !important;
+        max-width: 650px !important;
+        color: #818995 !important;
+        font-size: 8px !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Search gets stronger visual priority */
+    .sari-live-search {
+        position: relative;
+        z-index: 75;
+    }
+
+    .sari-live-search .sari-filter-label {
+        color: #626a74 !important;
+    }
+
+    .sari-live-search input.sari-filter-control {
+        height: 42px !important;
+        border: 1px solid #d9c9aa !important;
+        border-radius: 10px !important;
+        background: #fffefa !important;
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+        color: #343a42 !important;
+        font-size: 8.3px !important;
+        font-weight: 500 !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.75),
+            0 2px 5px rgba(31,41,55,.018) !important;
+        transition:
+            border-color .16s ease,
+            box-shadow .16s ease,
+            background-color .16s ease !important;
+    }
+
+    .sari-live-search input.sari-filter-control::placeholder {
+        color: #9aa1a9 !important;
+        opacity: 1;
+    }
+
+    .sari-live-search input.sari-filter-control:hover {
+        border-color: #ccb684 !important;
+        background: #fff !important;
+    }
+
+    .sari-live-search input.sari-filter-control:focus {
+        border-color: #c88912 !important;
+        background: #fff !important;
+        box-shadow:
+            0 0 0 3px rgba(200,137,18,.09),
+            0 5px 14px rgba(31,41,55,.035) !important;
+    }
+
+    .sari-live-search > svg {
+        left: 13px !important;
+        bottom: 13px !important;
+        width: 16px !important;
+        height: 16px !important;
+        color: #7f8790 !important;
+        stroke-width: 1.9 !important;
+    }
+
+    .sari-live-search-clear {
+        right: 8px !important;
+        bottom: 8px !important;
+        width: 26px !important;
+        height: 26px !important;
+        border-radius: 7px !important;
+    }
+
+    .sari-live-search-clear:hover {
+        background: #f6f7f8 !important;
+        color: #5e6670 !important;
+    }
+
+    /* Premium dropdown/select controls */
+    .sari-products-select,
+    .sari-price-trigger {
+        height: 42px !important;
+        border: 1px solid #dfe3e8 !important;
+        border-radius: 10px !important;
+        background-color: #fff !important;
+        color: #4a515b !important;
+        font-size: 8px !important;
+        font-weight: 550 !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.8),
+            0 2px 5px rgba(31,41,55,.015) !important;
+        transition:
+            border-color .16s ease,
+            box-shadow .16s ease,
+            background-color .16s ease !important;
+    }
+
+    .sari-products-select {
+        padding-left: 12px !important;
+        padding-right: 36px !important;
+        background-position: right 12px center !important;
+        background-size: 13px 13px !important;
+    }
+
+    .sari-products-select:hover,
+    .sari-price-trigger:hover {
+        border-color: #cfd5dc !important;
+        background-color: #fbfcfd !important;
+    }
+
+    .sari-products-select:focus,
+    .sari-price-trigger:focus,
+    .sari-price-trigger[aria-expanded="true"] {
+        border-color: #c88912 !important;
+        background-color: #fff !important;
+        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        outline: none !important;
+    }
+
+    .sari-price-trigger {
+        padding: 0 12px !important;
+        text-align: left !important;
+    }
+
+    .sari-price-trigger > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sari-price-trigger svg {
+        width: 14px !important;
+        height: 14px !important;
+        color: #7a828c !important;
+        transition: transform .16s ease;
+    }
+
+    .sari-price-trigger[aria-expanded="true"] svg {
+        transform: rotate(180deg);
+    }
+
+    /* Cleaner dropdown popover */
+    .sari-price-popover {
+        top: calc(100% + 7px) !important;
+        width: 270px !important;
+        border: 1px solid #e1e5e9 !important;
+        border-radius: 11px !important;
+        background: #fff !important;
+        padding: 12px !important;
+        box-shadow:
+            0 20px 48px rgba(31,41,55,.12),
+            0 4px 12px rgba(31,41,55,.035) !important;
+    }
+
+    .sari-price-field input {
+        height: 38px !important;
+        border: 1px solid #dfe3e8 !important;
+        border-radius: 8px !important;
+        color: #4a515b !important;
+        font-size: 8px !important;
+    }
+
+    .sari-price-field input:focus {
+        border-color: #c88912 !important;
+        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+        outline: none !important;
+    }
+
+    #applyPriceFilter {
+        border-radius: 8px !important;
+        background: #c88912 !important;
+        box-shadow: 0 5px 12px rgba(200,137,18,.14) !important;
+    }
+
+    #applyPriceFilter:hover {
+        background: #ad760f !important;
+    }
+
+    /* Keep row aligned now that controls are 42px */
+    .sari-filter-reset,
+    .sari-result-pill {
+        height: 42px !important;
+    }
+
+    .sari-filter-dock {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+
+    @media (max-width: 767px) {
+        .sari-products-hero {
+            padding: 1px 2px 12px !important;
+        }
+
+        .sari-products-hero h1 {
+            font-size: 25px !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL ENTERPRISE CATEGORY NAV
+       Matches supplied charcoal-active reference.
+    ============================================================ */
+    .sari-reference-category-row {
+        display: flex !important;
+        width: 100% !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        margin-top: 12px !important;
+        overflow: hidden !important;
+        border: 1px solid #e1e5e9 !important;
+        border-radius: 18px !important;
+        background: rgba(255, 255, 255, .985) !important;
+        padding: 10px 14px !important;
+        box-shadow:
+            0 14px 34px rgba(31, 41, 55, .055),
+            0 3px 9px rgba(31, 41, 55, .025) !important;
+    }
+
+    .sari-reference-category-row .sari-category-chips {
+        display: flex !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+    }
+
+    .sari-reference-category-row .sari-inline-chip {
+        display: inline-flex !important;
+        min-height: 42px !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 1px solid #dfe3e8 !important;
+        border-radius: 13px !important;
+        background: #ffffff !important;
+        padding: 0 18px !important;
+        color: #303741 !important;
+        font-size: 8.2px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        letter-spacing: -.015em !important;
+        white-space: nowrap !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.85),
+            0 2px 5px rgba(31,41,55,.018) !important;
+        transition:
+            background-color .16s ease,
+            border-color .16s ease,
+            color .16s ease,
+            box-shadow .16s ease,
+            transform .16s ease !important;
+    }
+
+    .sari-reference-category-row .sari-inline-chip:hover {
+        border-color: #cfd4da !important;
+        background: #f7f8f9 !important;
+        color: #20252b !important;
+        transform: translateY(-1px);
+    }
+
+    .sari-reference-category-row .sari-inline-chip:focus-visible {
+        outline: 2px solid rgba(47, 47, 47, .28) !important;
+        outline-offset: 2px !important;
+    }
+
+    .sari-reference-category-row .sari-inline-chip.is-active {
+        border-color: #2f2f2f !important;
+        background: linear-gradient(180deg, #363636 0%, #292929 100%) !important;
+        color: #ffffff !important;
+        box-shadow:
+            0 8px 18px rgba(24, 24, 24, .17),
+            inset 0 1px 0 rgba(255,255,255,.06) !important;
+        transform: none !important;
+    }
+
+    .sari-reference-category-row .sari-inline-chip.is-active:hover {
+        border-color: #292929 !important;
+        background: linear-gradient(180deg, #333333 0%, #262626 100%) !important;
+        color: #fff !important;
+    }
+
+    @media (max-width: 1279px) {
+        .sari-reference-category-row {
+            overflow-x: auto !important;
+            scrollbar-width: none;
+        }
+
+        .sari-reference-category-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sari-reference-category-row .sari-category-chips {
+            width: max-content !important;
+            min-width: max-content !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-reference-category-row {
+            margin-top: 9px !important;
+            border-radius: 14px !important;
+            padding: 8px 9px !important;
+        }
+
+        .sari-reference-category-row .sari-category-chips {
+            gap: 7px !important;
+        }
+
+        .sari-reference-category-row .sari-inline-chip {
+            min-height: 38px !important;
+            border-radius: 11px !important;
+            padding: 0 14px !important;
+            font-size: 7.7px !important;
+        }
+    }
+
+
+    /* ============================================================
+       RELIABLE NATIVE PRICE DROPDOWN
+       Uses <details>/<summary> so the Price Range always opens
+       without depending on a JavaScript click listener.
+    ============================================================ */
+    .sari-price-details {
+        position: relative;
+        display: block;
+    }
+
+    .sari-price-details > summary {
+        list-style: none;
+    }
+
+    .sari-price-details > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .sari-price-details .sari-price-trigger {
+        display: flex !important;
+        width: 100% !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        user-select: none;
+        pointer-events: auto !important;
+    }
+
+    .sari-price-details .sari-price-trigger > * {
+        pointer-events: none;
+    }
+
+    .sari-price-details[open] .sari-price-trigger {
+        border-color: #c88912 !important;
+        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+    }
+
+    .sari-price-details .sari-price-trigger svg {
+        transition: transform .16s ease;
+    }
+
+    .sari-price-details[open] .sari-price-trigger svg {
+        transform: rotate(180deg);
+    }
+
+    .sari-price-details:not([open]) .sari-price-popover {
+        display: none !important;
+    }
+
+    .sari-price-details[open] .sari-price-popover {
+        display: block !important;
+        pointer-events: auto !important;
+    }
+
+    .sari-price-popover {
+        z-index: 180 !important;
+    }
+
+
+    /* ============================================================
+       FORMAL RELIABLE DROPDOWNS
+       Native <details> handles opening; hidden selects keep existing
+       buyer-products.js behavior as the source of truth.
+    ============================================================ */
+    .sari-formal-dropdown {
+        position: relative;
+        display: block;
+    }
+
+    .sari-formal-dropdown > summary {
+        list-style: none;
+    }
+
+    .sari-formal-dropdown > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .sari-formal-trigger {
+        display: flex !important;
+        width: 100% !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        padding: 0 12px !important;
+        cursor: pointer !important;
+        user-select: none;
+        pointer-events: auto !important;
+        text-align: left;
+    }
+
+    .sari-formal-trigger > * {
+        pointer-events: none;
+    }
+
+    .sari-formal-trigger > span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sari-formal-trigger svg {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 auto;
+        fill: none;
+        stroke: #737c87;
+        stroke-width: 1.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform .16s ease, stroke .16s ease;
+    }
+
+    .sari-formal-dropdown[open] .sari-formal-trigger {
+        border-color: #c88912 !important;
+        background: #fff !important;
+        box-shadow: 0 0 0 3px rgba(200,137,18,.08) !important;
+    }
+
+    .sari-formal-dropdown[open] .sari-formal-trigger svg {
+        transform: rotate(180deg);
+        stroke: #9b6710;
+    }
+
+    .sari-formal-menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(100% + 6px);
+        z-index: 190;
+        max-height: 270px;
+        overflow-y: auto;
+        border: 1px solid #e1e5e9;
+        border-radius: 12px;
+        background: #fff;
+        padding: 5px;
+        box-shadow:
+            0 18px 42px rgba(31,41,55,.13),
+            0 4px 12px rgba(31,41,55,.04);
+        scrollbar-width: thin;
+        scrollbar-color: #d9dde2 transparent;
+    }
+
+    .sari-formal-dropdown:not([open]) .sari-formal-menu {
+        display: none !important;
+    }
+
+    .sari-formal-option {
+        display: flex;
+        width: 100%;
+        min-height: 34px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        padding: 0 10px;
+        color: #4c545e;
+        font-size: 7.6px;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color .13s ease, color .13s ease;
+    }
+
+    .sari-formal-option:hover,
+    .sari-formal-option:focus-visible {
+        background: #f5f6f8;
+        color: #22282f;
+        outline: none;
+    }
+
+    .sari-formal-option.is-selected {
+        background: #f7f3eb;
+        color: #8e5d0e;
+        font-weight: 750;
+    }
+
+    .sari-formal-check {
+        display: none;
+        flex: 0 0 auto;
+        color: #9b6710;
+        font-size: 8px;
+        font-weight: 800;
+    }
+
+    .sari-formal-option.is-selected .sari-formal-check {
+        display: inline;
+    }
+
+
+    /* ============================================================
+       FINAL READABILITY PASS
+       Stronger filter labels and values; benefits strip removed.
+    ============================================================ */
+    .sari-filter-label {
+        color: #4f5964 !important;
+        font-size: 7.2px !important;
+        font-weight: 800 !important;
+        letter-spacing: .07em !important;
+        line-height: 1.2 !important;
+    }
+
+    .sari-live-search input.sari-filter-control {
+        color: #2f3740 !important;
+        font-size: 8.8px !important;
+        font-weight: 550 !important;
+    }
+
+    .sari-live-search input.sari-filter-control::placeholder {
+        color: #737d88 !important;
+        opacity: 1 !important;
+        font-weight: 500 !important;
+    }
+
+    .sari-formal-trigger,
+    .sari-price-trigger {
+        color: #303842 !important;
+        font-size: 8.7px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-formal-trigger > span,
+    .sari-price-trigger > span,
+    #buyerPriceTriggerText {
+        color: #303842 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-formal-option {
+        min-height: 36px !important;
+        color: #3f4852 !important;
+        font-size: 8.2px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-formal-option:hover,
+    .sari-formal-option:focus-visible {
+        color: #1f252c !important;
+    }
+
+    .sari-formal-option.is-selected {
+        color: #89580c !important;
+        font-weight: 800 !important;
+    }
+
+    .sari-formal-check {
+        color: #89580c !important;
+        font-size: 8.5px !important;
+    }
+
+    .sari-price-field input {
+        color: #303842 !important;
+        font-size: 8.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-price-field input::placeholder {
+        color: #858e98 !important;
+        opacity: 1 !important;
+    }
+
+    .sari-filter-reset {
+        color: #865709 !important;
+        font-size: 8.2px !important;
+        font-weight: 800 !important;
+    }
+
+    .sari-result-pill {
+        color: #fff !important;
+        font-size: 8.5px !important;
+        font-weight: 800 !important;
+    }
+
+    #toolbarResultCount {
+        font-weight: 850 !important;
+    }
+
+    .sari-live-search > svg,
+    .sari-formal-trigger svg,
+    .sari-price-trigger svg {
+        color: #596470 !important;
+        stroke: #596470 !important;
+    }
+
+
+    /* Final SARI gold product-count pill */
+    .sari-result-pill {
+        border: 1px solid #d79a28 !important;
+        background: linear-gradient(180deg, #e0a11a 0%, #c98408 100%) !important;
+        color: #ffffff !important;
+        box-shadow:
+            0 7px 16px rgba(201,132,8,.16),
+            inset 0 1px 0 rgba(255,255,255,.18) !important;
+    }
+
+    .sari-result-pill #toolbarResultCount {
+        color: #ffffff !important;
+        font-weight: 850 !important;
     }
 
 </style>
@@ -1446,49 +2468,6 @@
 @include('components.buyer.header')
 
 @php
-    /*
-    |--------------------------------------------------------------------------
-    | MODERN LIVE SEARCH INDEX
-    |--------------------------------------------------------------------------
-    | Uses the same approved products already passed to this page.
-    | No additional database query is added here.
-    */
-    $buyerSearchImageUrl = function ($path) {
-        $path = trim((string) $path);
-
-        if ($path === '') {
-            return null;
-        }
-
-        if (\Illuminate\Support\Str::startsWith($path, ['http://', 'https://', '//'])) {
-            return $path;
-        }
-
-        return asset(ltrim($path, '/'));
-    };
-
-    $buyerSearchIndex = collect($products ?? [])
-        ->map(function ($product) use ($buyerSearchImageUrl) {
-            $id = (int) ($product['id'] ?? 0);
-
-            return [
-                'id' => $id,
-                'name' => trim((string) ($product['name'] ?? 'Product')),
-                'category' => trim((string) ($product['category'] ?? 'General')),
-                'brand' => trim((string) ($product['brand'] ?? '')),
-                'price' => (float) ($product['price'] ?? 0),
-                'old_price' => isset($product['old_price']) && $product['old_price'] !== null
-                    ? (float) $product['old_price']
-                    : null,
-                'stock' => max(0, (int) ($product['stock'] ?? 0)),
-                'image' => $buyerSearchImageUrl($product['image'] ?? null),
-                'url' => $id > 0
-                    ? route('buyer.product.details', ['product' => $id])
-                    : route('buyer.products'),
-            ];
-        })
-        ->filter(fn ($product) => $product['id'] > 0)
-        ->values();
 
 
     /*
@@ -1554,9 +2533,8 @@
          PAGE INTRO
     ========================================================== --}}
     <section class="sari-products-hero">
-        <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div class="min-w-0">
-                <p class="text-[7px] font-bold uppercase tracking-[.18em] text-[#a87316]">SARI Marketplace</p>
+        <div class="min-w-0">
+                <p class="text-[7px] font-bold uppercase tracking-[.18em] text-[#a87316]">Buyer Catalog</p>
 
                 <h1 class="mt-2 text-[32px] font-bold leading-[1.02] tracking-[-.055em] text-[#17130f] sm:text-[40px] lg:text-[47px]">
                     Shop <span class="text-[#c2810d]">Products</span>
@@ -1565,36 +2543,9 @@
                 <p class="mt-2 max-w-[720px] text-[9px] leading-5 text-[#746c63] sm:text-[10px]">
                     Discover approved products from trusted SARI sellers. Search, compare, and find the right item for you.
                 </p>
-            </div>
-
-            <div class="sari-editorial-note hidden lg:block">
-                <strong>Quality Products<br>Meaningful Choices</strong>
-                <p>Support local. Shop trusted.</p>
-            </div>
         </div>
-    </section>
-
-    {{-- =========================================================
-         TEMPORARY 12.12 SALE BANNER
-         Uses the generated asset for an accurate visual match.
-         Dynamic admin campaign data above is preserved for later.
-    ========================================================== --}}
-    <a
-        href="{{ route('buyer.products', ['discounted' => 1]) }}"
-        class="sari-sale-banner-image"
-        aria-label="Shop the SARI 12.12 Mega Sale"
-    >
-        <img
-            src="{{ asset('images/12-12-mega-sale-banner.png') }}"
-            alt="SARI 12.12 Mega Sale — Up to 50% off selected items"
-            width="2159"
-            height="470"
-            loading="eager"
-            decoding="async"
-        >
-    </a>
-
-    {{-- =========================================================
+</section>
+{{-- =========================================================
          SEARCH RESULT NOTICE
     ========================================================== --}}
     @if (request('search'))
@@ -1703,7 +2654,7 @@
                         id="buyerProductSearch"
                         type="search"
                         value="{{ request('search') }}"
-                        placeholder="Search products, brands, or category..."
+                        placeholder="Try “black shirt large”, “shoes under 500”, brand, category, or seller..."
                         autocomplete="off"
                         role="combobox"
                         aria-autocomplete="list"
@@ -1720,7 +2671,7 @@
 
                     <div id="buyerLiveSearchPanel" class="sari-live-search-panel hidden" role="listbox" aria-label="Product suggestions">
                         <div class="sari-live-search-head">
-                            <strong>Popular products</strong>
+                            <strong>Smart search</strong>
                             <span id="buyerLiveSearchCount">0 matches</span>
                         </div>
 
@@ -1734,62 +2685,112 @@
                 </div>
 
                 <div class="min-w-0">
-                    <label for="buyerCategorySelect" class="sari-filter-label">Category</label>
-                    <select id="buyerCategorySelect" class="sari-filter-control sari-products-select">
+                    <span class="sari-filter-label">Category</span>
+
+                    <select id="buyerCategorySelect" class="sr-only" tabindex="-1" aria-hidden="true">
                         <option value="">All Categories</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category['name'] }}">{{ $category['name'] }}</option>
                         @endforeach
                     </select>
+
+                    <details id="buyerCategoryDetails" class="sari-formal-dropdown">
+                        <summary class="sari-filter-control sari-formal-trigger">
+                            <span id="buyerCategoryLabel">All Categories</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+                        </summary>
+
+                        <div class="sari-formal-menu" role="listbox" aria-label="Category">
+                            <button type="button" data-formal-select="buyerCategorySelect" data-formal-value="" class="sari-formal-option is-selected">
+                                <span>All Categories</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            @foreach ($categories as $category)
+                                <button type="button" data-formal-select="buyerCategorySelect" data-formal-value="{{ $category['name'] }}" class="sari-formal-option">
+                                    <span>{{ $category['name'] }}</span><span class="sari-formal-check">✓</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    </details>
                 </div>
 
                 <div class="relative min-w-0">
                     <span class="sari-filter-label">Price Range</span>
-                    <button id="buyerPriceTrigger" type="button" class="sari-filter-control sari-price-trigger" aria-expanded="false">
-                        <span id="buyerPriceTriggerText">Any price</span>
-                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9">
-                            <path d="m7 10 5 5 5-5"></path>
-                        </svg>
-                    </button>
 
-                    <div id="buyerPricePopover" class="sari-price-popover hidden">
-                        <div class="flex items-center justify-between gap-3">
-                            <div>
-                                <p class="text-[8px] font-bold text-[#443c35]">Price Range</p>
-                                <p class="mt-1 text-[6.3px] text-[#9b9289]">Set the minimum and maximum price.</p>
+                    <details id="buyerPriceDetails" class="sari-price-details">
+                        <summary id="buyerPriceTrigger" class="sari-filter-control sari-price-trigger">
+                            <span id="buyerPriceTriggerText">Any price</span>
+                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                                <path d="m7 10 5 5 5-5"></path>
+                            </svg>
+                        </summary>
+
+                        <div id="buyerPricePopover" class="sari-price-popover">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <p class="text-[8px] font-bold text-[#343a42]">Price Range</p>
+                                    <p class="mt-1 text-[6.3px] text-[#939aa3]">Set the minimum and maximum price.</p>
+                                </div>
+                                <button id="closeBuyerPricePopover" type="button" class="grid h-7 w-7 place-items-center rounded-lg text-[#818995] transition hover:bg-[#f5f6f8]" aria-label="Close price filter">×</button>
                             </div>
-                            <button id="closeBuyerPricePopover" type="button" class="grid h-7 w-7 place-items-center rounded-lg text-[#8c8278] hover:bg-[#faf7f2]">×</button>
+
+                            <div class="mt-3 grid grid-cols-2 gap-2">
+                                <label class="sari-price-field">
+                                    <span>₱</span>
+                                    <input id="minPrice" type="number" min="0" step="1" inputmode="numeric" placeholder="Min" aria-label="Minimum price">
+                                </label>
+                                <label class="sari-price-field">
+                                    <span>₱</span>
+                                    <input id="maxPrice" type="number" min="0" step="1" inputmode="numeric" placeholder="Max" aria-label="Maximum price">
+                                </label>
+                            </div>
+
+                            <p id="buyerPriceError" class="mt-2 hidden text-[6.5px] font-semibold text-[#b94a48]">
+                                Maximum price must be greater than or equal to minimum price.
+                            </p>
+
+                            <div class="mt-3 grid grid-cols-[.8fr_1.2fr] gap-2">
+                                <button id="clearPriceFilter" type="button" class="h-9 rounded-[9px] border border-[#dfe3e8] bg-white text-[7.5px] font-semibold text-[#626a74] transition hover:bg-[#f7f8f9]">
+                                    Clear
+                                </button>
+                                <button id="applyPriceFilter" type="button" class="h-9 rounded-[9px] bg-[#c88912] text-[7.5px] font-bold text-white transition hover:bg-[#ad760f]">
+                                    Apply Price
+                                </button>
+                            </div>
                         </div>
-
-                        <div class="mt-3 grid grid-cols-2 gap-2">
-                            <div class="sari-price-field">
-                                <span>₱</span>
-                                <input id="minPrice" type="number" min="0" placeholder="Min">
-                            </div>
-                            <div class="sari-price-field">
-                                <span>₱</span>
-                                <input id="maxPrice" type="number" min="0" placeholder="Max">
-                            </div>
-                        </div>
-
-                        <button id="applyPriceFilter" type="button" class="mt-3 h-9 w-full rounded-[9px] bg-[#cd890b] text-[7.5px] font-bold text-white transition hover:bg-[#ad7008]">
-                            Apply Price
-                        </button>
-                    </div>
+                    </details>
                 </div>
 
                 <div class="min-w-0">
-                    <label for="buyerAvailabilitySelect" class="sari-filter-label">Availability</label>
-                    <select id="buyerAvailabilitySelect" class="sari-filter-control sari-products-select">
+                    <span class="sari-filter-label">Availability</span>
+
+                    <select id="buyerAvailabilitySelect" class="sr-only" tabindex="-1" aria-hidden="true">
                         <option value="">All Products</option>
                         <option value="in-stock">In Stock Only</option>
                     </select>
+
+                    <details id="buyerAvailabilityDetails" class="sari-formal-dropdown">
+                        <summary class="sari-filter-control sari-formal-trigger">
+                            <span id="buyerAvailabilityLabel">All Products</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+                        </summary>
+
+                        <div class="sari-formal-menu" role="listbox" aria-label="Availability">
+                            <button type="button" data-formal-select="buyerAvailabilitySelect" data-formal-value="" class="sari-formal-option is-selected">
+                                <span>All Products</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerAvailabilitySelect" data-formal-value="in-stock" class="sari-formal-option">
+                                <span>In Stock Only</span><span class="sari-formal-check">✓</span>
+                            </button>
+                        </div>
+                    </details>
+
                     <input id="inStockFilter" type="checkbox" class="hidden">
                 </div>
 
                 <div class="min-w-0">
-                    <label for="buyerSort" class="sari-filter-label">Sort By</label>
-                    <select id="buyerSort" class="sari-filter-control sari-products-select">
+                    <span class="sari-filter-label">Sort By</span>
+
+                    <select id="buyerSort" class="sr-only" tabindex="-1" aria-hidden="true">
                         <option value="featured">Featured</option>
                         <option value="latest">Newest</option>
                         <option value="price-low">Price: Low to High</option>
@@ -1797,6 +2798,34 @@
                         <option value="rating">Highest Rated</option>
                         <option value="sold">Most Sold</option>
                     </select>
+
+                    <details id="buyerSortDetails" class="sari-formal-dropdown">
+                        <summary class="sari-filter-control sari-formal-trigger">
+                            <span id="buyerSortLabel">Featured</span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+                        </summary>
+
+                        <div class="sari-formal-menu" role="listbox" aria-label="Sort products">
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="featured" class="sari-formal-option is-selected">
+                                <span>Featured</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="latest" class="sari-formal-option">
+                                <span>Newest</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="price-low" class="sari-formal-option">
+                                <span>Price: Low to High</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="price-high" class="sari-formal-option">
+                                <span>Price: High to Low</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="rating" class="sari-formal-option">
+                                <span>Highest Rated</span><span class="sari-formal-check">✓</span>
+                            </button>
+                            <button type="button" data-formal-select="buyerSort" data-formal-value="sold" class="sari-formal-option">
+                                <span>Most Sold</span><span class="sari-formal-check">✓</span>
+                            </button>
+                        </div>
+                    </details>
                 </div>
 
                 <button id="clearAllFilters" type="button" class="sari-filter-reset">
@@ -1830,16 +2859,12 @@
             <div class="sari-category-chips">
                 <button type="button" data-shop-category-chip="" class="sari-inline-chip is-active">All</button>
 
-                @foreach (collect($categories)->take(5) as $category)
+                @foreach (collect($categories)->take(6) as $category)
                     <button type="button" data-shop-category-chip="{{ $category['name'] }}" class="sari-inline-chip">
                         {{ $category['name'] }}
                     </button>
                 @endforeach
 
-                <button id="showAllProducts" type="button" class="sari-view-all">
-                    View all
-                    <span>→</span>
-                </button>
             </div>
         </div>
 
@@ -1849,7 +2874,6 @@
                 <x-buyer.product-card
                     :product="$product"
                     :priority="$loop->index < 6"
-                    :featured="$loop->first"
                     :interactive="true"
                     :show-promotions="true"
                     :show-stock="true"
@@ -1866,6 +2890,7 @@
             </div>
             <p class="mt-4 text-[11px] font-semibold text-[#4f473e]">No products match your filters</p>
             <p class="mt-1 text-[9px] text-[#958c80]">Try another category, price range, availability, or product option.</p>
+            <div id="buyerZeroResultSuggestions" class="mt-4 flex flex-wrap justify-center gap-2"></div>
             <button id="clearProductFilters" type="button" class="mt-4 inline-flex h-10 items-center justify-center rounded-[9px] bg-[#c9870e] px-4 text-[9px] font-semibold text-white transition hover:bg-[#ae7008]">
                 Clear Filters
             </button>
@@ -1876,59 +2901,6 @@
             <button id="showAllProductsBottom" type="button">Reset Filters</button>
         </div>
 
-        {{-- Buyer protection --}}
-        <div class="sari-benefits-wrap">
-            <div class="sari-benefits-row">
-                @php
-                    $buyerBenefits = [
-                        ['free', 'Free Shipping', 'On eligible orders'],
-                        ['secure', 'Secure Payments', 'Safe and encrypted'],
-                        ['returns', 'Easy Returns', 'Hassle-free returns'],
-                        ['verified', 'Verified Sellers', 'Trusted SARI partners'],
-                    ];
-                @endphp
-
-                @foreach ($buyerBenefits as [$type, $title, $copy])
-                    <div class="sari-benefit-tile">
-                        <span class="sari-benefit-icon">
-                            @if ($type === 'free')
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path>
-                                </svg>
-                            @elseif ($type === 'secure')
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M12 3 5 6v5c0 4.5 2.8 8.1 7 10 4.2-1.9 7-5.5 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-4"></path>
-                                </svg>
-                            @elseif ($type === 'returns')
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M4 12a8 8 0 1 0 2.3-5.7"></path><path d="M4 4v5h5"></path>
-                                </svg>
-                            @else
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M4 7h16v12H4z"></path><path d="M8 7V5h8v2"></path><path d="M8 11h8"></path>
-                                </svg>
-                            @endif
-                        </span>
-                        <div>
-                            <h3>{{ $title }}</h3>
-                            <p>{{ $copy }}</p>
-                        </div>
-                    </div>
-                @endforeach
-
-                <div class="sari-benefit-tile bg-[#fff8e9]">
-                    <span class="sari-benefit-icon">
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M12 21s-7-4.4-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.6-7 11-7 11Z"></path>
-                        </svg>
-                    </span>
-                    <div>
-                        <h3 class="text-[#a76c0c]">Shop with Purpose</h3>
-                        <p>Support local. Build a brighter tomorrow.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
 </main>
@@ -2054,235 +3026,6 @@
 
 <script>
 (function () {
-    const sariSearchProducts = @json($buyerSearchIndex);
-
-    function escapeSearchHtml(value) {
-        return String(value ?? '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    function normalizeSearch(value) {
-        return String(value ?? '')
-            .trim()
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-    }
-
-    function pesoSearch(value) {
-        return '₱' + Number(value || 0).toLocaleString('en-PH', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    }
-
-    function rankedProducts(query) {
-        const q = normalizeSearch(query);
-        if (!q) return [];
-
-        return sariSearchProducts
-            .map((product) => {
-                const name = normalizeSearch(product.name);
-                const category = normalizeSearch(product.category);
-                const brand = normalizeSearch(product.brand);
-
-                let score = 0;
-                if (name === q) score += 100;
-                if (name.startsWith(q)) score += 70;
-                if (name.includes(q)) score += 50;
-                if (brand.startsWith(q)) score += 30;
-                if (brand.includes(q)) score += 20;
-                if (category.startsWith(q)) score += 18;
-                if (category.includes(q)) score += 12;
-
-                return { product, score };
-            })
-            .filter((item) => item.score > 0)
-            .sort((a, b) => b.score - a.score || String(a.product.name).localeCompare(String(b.product.name)))
-            .map((item) => item.product);
-    }
-
-    function resultMarkup(product, index) {
-        const stock = Number(product.stock || 0);
-
-        const image = product.image
-            ? `<img src="${escapeSearchHtml(product.image)}" alt="${escapeSearchHtml(product.name)}" loading="lazy">`
-            : `
-                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.6">
-                    <rect x="4" y="4" width="16" height="16" rx="3"></rect>
-                    <path d="m5 17 5-5 4 4 2-2 3 3"></path>
-                </svg>
-            `;
-
-        const meta = [product.category, product.brand]
-            .filter((value) => String(value || '').trim())
-            .map(escapeSearchHtml)
-            .join(' · ');
-
-        return `
-            <a
-                href="${escapeSearchHtml(product.url)}"
-                id="buyerLiveSearchOption-${index}"
-                class="sari-live-result"
-                role="option"
-                data-live-search-option="${index}"
-            >
-                <span class="sari-live-result-image">${image}</span>
-
-                <span class="sari-live-result-copy">
-                    <span class="sari-live-result-name">${escapeSearchHtml(product.name)}</span>
-                    <span class="sari-live-result-meta">
-                        <span>${meta || 'SARI Marketplace'}</span>
-                        <span class="sari-live-result-stock ${stock <= 0 ? 'is-out' : ''}">
-                            ${stock > 0 ? `${stock.toLocaleString('en-PH')} in stock` : 'Out of stock'}
-                        </span>
-                    </span>
-                </span>
-
-                <span class="sari-live-result-price">${pesoSearch(product.price)}</span>
-            </a>
-        `;
-    }
-
-    function emptyMarkup(query) {
-        return `
-            <div class="sari-live-search-empty">
-                <strong>No product found</strong>
-                <p>No results for “${escapeSearchHtml(query)}”. Try another name, brand, or category.</p>
-            </div>
-        `;
-    }
-
-    function initSariLiveSearch() {
-        const input = document.getElementById('buyerProductSearch');
-        const wrap = document.getElementById('buyerLiveSearchWrap');
-        const clear = document.getElementById('buyerLiveSearchClear');
-        const panel = document.getElementById('buyerLiveSearchPanel');
-        const list = document.getElementById('buyerLiveSearchList');
-        const count = document.getElementById('buyerLiveSearchCount');
-        const viewAll = document.getElementById('buyerLiveSearchViewAll');
-        const viewAllText = document.getElementById('buyerLiveSearchViewAllText');
-
-        if (!input || input.dataset.sariLiveSearchBound === '1') return;
-        input.dataset.sariLiveSearchBound = '1';
-
-        let matches = [];
-        let activeIndex = -1;
-
-        function closePanel() {
-            panel?.classList.add('hidden');
-            input.setAttribute('aria-expanded', 'false');
-            activeIndex = -1;
-            input.removeAttribute('aria-activedescendant');
-        }
-
-        function render() {
-            const query = String(input.value || '').trim();
-            clear?.classList.toggle('is-visible', query !== '');
-
-            if (!query) {
-                matches = [];
-                if (list) list.innerHTML = '';
-                closePanel();
-                return;
-            }
-
-            const allMatches = rankedProducts(query);
-            matches = allMatches.slice(0, 6);
-            activeIndex = -1;
-
-            if (count) {
-                count.textContent = `${allMatches.length} match${allMatches.length === 1 ? '' : 'es'}`;
-            }
-
-            if (viewAllText) {
-                viewAllText.textContent = allMatches.length
-                    ? `View all results for “${query}”`
-                    : 'No matching products';
-            }
-
-            if (list) {
-                list.innerHTML = matches.length
-                    ? matches.map(resultMarkup).join('')
-                    : emptyMarkup(query);
-            }
-
-            panel?.classList.remove('hidden');
-            input.setAttribute('aria-expanded', 'true');
-        }
-
-        function setActive(index) {
-            const options = Array.from(list?.querySelectorAll('[data-live-search-option]') || []);
-            if (!options.length) return;
-
-            activeIndex = Math.max(0, Math.min(index, options.length - 1));
-
-            options.forEach((option, optionIndex) => {
-                option.classList.toggle('is-active', optionIndex === activeIndex);
-            });
-
-            const active = options[activeIndex];
-            if (active) {
-                input.setAttribute('aria-activedescendant', active.id);
-                active.scrollIntoView({ block: 'nearest' });
-            }
-        }
-
-        input.addEventListener('input', render);
-
-        input.addEventListener('focus', function () {
-            if (String(this.value || '').trim()) render();
-        });
-
-        input.addEventListener('keydown', function (event) {
-            if (event.key === 'ArrowDown') {
-                event.preventDefault();
-                if (panel?.classList.contains('hidden')) render();
-                setActive(activeIndex + 1);
-            } else if (event.key === 'ArrowUp') {
-                event.preventDefault();
-                setActive(activeIndex <= 0 ? 0 : activeIndex - 1);
-            } else if (event.key === 'Enter' && activeIndex >= 0 && matches[activeIndex]) {
-                event.preventDefault();
-                window.location.href = matches[activeIndex].url;
-            } else if (event.key === 'Escape') {
-                closePanel();
-            }
-        });
-
-        clear?.addEventListener('click', function () {
-            input.value = '';
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.focus();
-        });
-
-        viewAll?.addEventListener('click', function () {
-            closePanel();
-            document.getElementById('buyerProductGrid')?.scrollIntoView({
-                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-                block: 'start',
-            });
-        });
-
-        document.addEventListener('click', function (event) {
-            if (panel && !panel.classList.contains('hidden') && !wrap?.contains(event.target)) {
-                closePanel();
-            }
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if ((event.ctrlKey || event.metaKey) && String(event.key).toLowerCase() === 'k') {
-                event.preventDefault();
-                input.focus();
-                input.select();
-            }
-        });
-    }
-
     function initSariFilterDock() {
         const categorySelect = document.getElementById('buyerCategorySelect');
         const availabilitySelect = document.getElementById('buyerAvailabilitySelect');
@@ -2300,6 +3043,71 @@
 
         const clearAll = document.getElementById('clearAllFilters');
         const showAll = document.getElementById('showAllProducts');
+
+        const formalDropdowns = Array.from(document.querySelectorAll('.sari-formal-dropdown'));
+
+        function syncFormalDropdown(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            const details = document.querySelector(`.sari-formal-dropdown [data-formal-select="${selectId}"]`)?.closest('.sari-formal-dropdown');
+            if (!details) return;
+
+            const selectedOption = Array.from(select.options).find(
+                (option) => String(option.value) === String(select.value)
+            );
+
+            const label = details.querySelector('.sari-formal-trigger > span');
+            if (label) label.textContent = selectedOption?.textContent?.trim() || 'Select';
+
+            details.querySelectorAll(`[data-formal-select="${selectId}"]`).forEach((button) => {
+                const selected = String(button.dataset.formalValue ?? '') === String(select.value ?? '');
+                button.classList.toggle('is-selected', selected);
+            });
+        }
+
+        function bindFormalDropdown(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            const buttons = Array.from(document.querySelectorAll(`[data-formal-select="${selectId}"]`));
+            if (!buttons.length) return;
+
+            buttons.forEach((button) => {
+                if (button.dataset.bound === '1') return;
+                button.dataset.bound = '1';
+
+                button.addEventListener('click', function () {
+                    select.value = String(this.dataset.formalValue ?? '');
+                    select.dispatchEvent(new Event('change', { bubbles: true }));
+                    syncFormalDropdown(selectId);
+
+                    this.closest('.sari-formal-dropdown')?.removeAttribute('open');
+                });
+            });
+
+            if (select.dataset.formalSyncBound !== '1') {
+                select.dataset.formalSyncBound = '1';
+                select.addEventListener('change', () => syncFormalDropdown(selectId));
+            }
+
+            syncFormalDropdown(selectId);
+        }
+
+        ['buyerCategorySelect', 'buyerAvailabilitySelect', 'buyerSort'].forEach(bindFormalDropdown);
+
+        formalDropdowns.forEach((details) => {
+            if (details.dataset.toggleBound === '1') return;
+            details.dataset.toggleBound = '1';
+
+            details.addEventListener('toggle', function () {
+                if (!this.open) return;
+
+                document.querySelectorAll('.sari-formal-dropdown[open], .sari-price-details[open]').forEach((other) => {
+                    if (other !== this) other.removeAttribute('open');
+                });
+            });
+        });
 
         function chooseCategory(value) {
             const normalized = String(value || '');
@@ -2339,20 +3147,35 @@
             }
         });
 
-        priceTrigger?.addEventListener('click', function () {
-            const opening = pricePopover?.classList.contains('hidden') ?? false;
-            pricePopover?.classList.toggle('hidden', !opening);
-            this.setAttribute('aria-expanded', opening ? 'true' : 'false');
-        });
+        const priceDetails = document.getElementById('buyerPriceDetails');
 
         closePricePopover?.addEventListener('click', function () {
-            pricePopover?.classList.add('hidden');
-            priceTrigger?.setAttribute('aria-expanded', 'false');
+            if (priceDetails) priceDetails.open = false;
         });
 
-        document.getElementById('applyPriceFilter')?.addEventListener('click', function () {
+        const priceError = document.getElementById('buyerPriceError');
+
+        function applyBuyerPriceFilter(closeAfter = true) {
             const min = String(minPrice?.value || '').trim();
             const max = String(maxPrice?.value || '').trim();
+            const minNumber = min === '' ? null : Number(min);
+            const maxNumber = max === '' ? null : Number(max);
+
+            const invalid =
+                minNumber !== null &&
+                maxNumber !== null &&
+                Number.isFinite(minNumber) &&
+                Number.isFinite(maxNumber) &&
+                maxNumber < minNumber;
+
+            priceError?.classList.toggle('hidden', !invalid);
+            if (invalid) return;
+
+            // Trigger the same fields buyer-products.js reads.
+            minPrice?.dispatchEvent(new Event('input', { bubbles: true }));
+            maxPrice?.dispatchEvent(new Event('input', { bubbles: true }));
+            minPrice?.dispatchEvent(new Event('change', { bubbles: true }));
+            maxPrice?.dispatchEvent(new Event('change', { bubbles: true }));
 
             if (priceTriggerText) {
                 if (min && max) {
@@ -2366,14 +3189,42 @@
                 }
             }
 
-            pricePopover?.classList.add('hidden');
-            priceTrigger?.setAttribute('aria-expanded', 'false');
+            if (closeAfter && priceDetails) priceDetails.open = false;
+        }
+
+        document.getElementById('applyPriceFilter')?.addEventListener('click', function () {
+            applyBuyerPriceFilter(true);
+        });
+
+        document.getElementById('clearPriceFilter')?.addEventListener('click', function () {
+            if (minPrice) minPrice.value = '';
+            if (maxPrice) maxPrice.value = '';
+            priceError?.classList.add('hidden');
+            applyBuyerPriceFilter(false);
         });
 
         clearAll?.addEventListener('click', function () {
-            if (categorySelect) categorySelect.value = '';
-            if (availabilitySelect) availabilitySelect.value = '';
+            if (categorySelect) {
+                categorySelect.value = '';
+                categorySelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            if (availabilitySelect) {
+                availabilitySelect.value = '';
+                availabilitySelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            const sortSelect = document.getElementById('buyerSort');
+            if (sortSelect) {
+                sortSelect.value = 'featured';
+                sortSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            if (minPrice) minPrice.value = '';
+            if (maxPrice) maxPrice.value = '';
+            minPrice?.dispatchEvent(new Event('input', { bubbles: true }));
+            maxPrice?.dispatchEvent(new Event('input', { bubbles: true }));
             if (priceTriggerText) priceTriggerText.textContent = 'Any price';
+            if (priceDetails) priceDetails.open = false;
 
             categoryChips.forEach((chip) => {
                 chip.classList.toggle(
@@ -2389,14 +3240,15 @@
 
         document.addEventListener('click', function (event) {
             if (
-                pricePopover &&
-                !pricePopover.classList.contains('hidden') &&
-                !pricePopover.contains(event.target) &&
-                !priceTrigger?.contains(event.target)
+                priceDetails?.open &&
+                !priceDetails.contains(event.target)
             ) {
-                pricePopover.classList.add('hidden');
-                priceTrigger?.setAttribute('aria-expanded', 'false');
+                priceDetails.open = false;
             }
+
+            document.querySelectorAll('.sari-formal-dropdown[open]').forEach((details) => {
+                if (!details.contains(event.target)) details.removeAttribute('open');
+            });
         });
     }
 
@@ -2488,7 +3340,6 @@
     }
 
     function initSariProductsUi() {
-        initSariLiveSearch();
         initSariFilterDock();
     }
 

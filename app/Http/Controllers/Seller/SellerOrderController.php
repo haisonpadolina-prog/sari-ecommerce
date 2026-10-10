@@ -114,8 +114,8 @@ class SellerOrderController extends Controller
             'new',
             'preparing',
             'Order Preparation Started',
-            'You started preparing order ' . $order->order_number . '. Pack the items and mark the package ready when complete.',
-            'seller'
+            'The Seller started preparing order ' . $order->order_number . '.',
+            'both'
         );
 
         return back()->with('success', 'Order is now being prepared.');

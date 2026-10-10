@@ -2,6 +2,17 @@
 
 @section('title', 'Login — SARI')
 
+@push('styles')
+    {{--
+        Warm the Seller first-screen CSS while the user is on the login page.
+        These are low-priority prefetches: they do not style or block the login UI,
+        but a Seller login can reuse the downloaded bytes after the redirect.
+    --}}
+    <link rel="prefetch" as="style" href="{{ asset('css/seller/layout.css') }}?v=20261007-5">
+    <link rel="prefetch" as="style" href="{{ asset('css/seller/dashboard.css') }}?v=20261007-5">
+    <link rel="prefetch" as="style" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}">
+@endpush
+
 @section('content')
 
 {{-- Tailwind CDN for this page --}}

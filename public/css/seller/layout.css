@@ -1,0 +1,1860 @@
+/* Extracted from resources/views/layouts/seller.blade.php — shared Seller shell styles. */
+:root {
+            --seller-sidebar-expanded: 238px;
+            --seller-sidebar-collapsed: 76px;
+            --seller-sidebar-width: var(--seller-sidebar-expanded);
+            --seller-sidebar-ease: cubic-bezier(.22, 1, .36, 1);
+        }
+
+        /*
+         * Critical first-paint shell sizing.
+         * This prevents the sidebar/logo/header from flashing at the wrong size
+         * during a fresh login while the compiled stylesheet is being parsed.
+         */
+        html,
+        body {
+            min-height: 100%;
+            background: #F4F5F7;
+        }
+
+        #sellerSidebarFullLogo,
+        #sellerSidebarCompactLogo {
+            object-fit: contain;
+        }
+
+
+        @media (min-width: 1024px) {
+            html.seller-sidebar-collapsed {
+                --seller-sidebar-width: var(--seller-sidebar-collapsed);
+            }
+
+            #sellerSidebar {
+                width: var(--seller-sidebar-width);
+                overflow-x: hidden;
+                transition: width 130ms var(--seller-sidebar-ease);
+            }
+
+            #sellerContent {
+                padding-left: var(--seller-sidebar-width);
+                transition: padding-left 130ms var(--seller-sidebar-ease);
+            }
+
+            #sellerSidebarBrand {
+                min-height: 110px;
+                transition: min-height 220ms var(--seller-sidebar-ease), padding 220ms var(--seller-sidebar-ease);
+            }
+
+            /*
+             * Admin-style logo behavior:
+             * - no load handlers
+             * - no opacity/cross-fade
+             * - no waiting for DOMContentLoaded
+             * The browser decides which already-present image to paint from the
+             * root class that was restored in <head>.
+             */
+            #sellerSidebarFullLogo {
+                display: block;
+            }
+
+            #sellerSidebarCompactLogo {
+                display: none;
+            }
+
+            .seller-sidebar-label {
+                display: inline-block;
+                max-width: 158px;
+                overflow: hidden;
+                opacity: 1;
+                transform: translateX(0);
+                transition: max-width 180ms var(--seller-sidebar-ease), opacity 110ms ease, transform 180ms var(--seller-sidebar-ease);
+            }
+
+            .seller-sidebar-extra {
+                max-width: 72px;
+                overflow: hidden;
+                opacity: 1;
+                transition: max-width 160ms var(--seller-sidebar-ease), opacity 100ms ease, padding 160ms var(--seller-sidebar-ease);
+            }
+
+            [data-seller-sidebar-item] {
+                transition: padding 190ms var(--seller-sidebar-ease), gap 190ms var(--seller-sidebar-ease), background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+            }
+
+            #sellerSidebarNav,
+            #sellerSidebarProfile {
+                transition: padding 190ms var(--seller-sidebar-ease);
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarBrand {
+                min-height: 88px;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarFullLogo {
+                display: none;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarCompactLogo {
+                display: block;
+            }
+
+            html.seller-sidebar-collapsed .seller-sidebar-label {
+                max-width: 0;
+                opacity: 0;
+                transform: translateX(-6px);
+                pointer-events: none;
+            }
+
+            html.seller-sidebar-collapsed .seller-sidebar-extra {
+                width: 0 !important;
+                min-width: 0 !important;
+                max-width: 0;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            html.seller-sidebar-collapsed [data-seller-sidebar-item] {
+                justify-content: center !important;
+                gap: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            html.seller-sidebar-collapsed [data-seller-sidebar-item] > span:first-child {
+                justify-content: center !important;
+                gap: 0 !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile {
+                padding: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #sellerSidebar,
+            #sellerContent,
+            #sellerSidebarBrand,
+            .seller-sidebar-label,
+            .seller-sidebar-extra,
+            [data-seller-sidebar-item] {
+                transition-duration: 1ms !important;
+            }
+        }
+
+        [data-seller-notification-scroll] {
+            scrollbar-width: thin;
+            scrollbar-color: #d8c7a7 transparent;
+        }
+
+        [data-seller-notification-scroll]::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        [data-seller-notification-scroll]::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        [data-seller-notification-scroll]::-webkit-scrollbar-thumb {
+            background: #d8c7a7;
+            border-radius: 999px;
+        }
+
+        /* Persistent Seller shell */
+        #sellerSidebar {
+            contain: layout paint;
+        }
+
+        [data-seller-shell-loading="true"] #sellerContent main {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+    
+        /* ============================================================
+           FINAL SELLER SHELL SIZING — MATCH ADMIN UI
+           This block intentionally lives inside layouts/seller.blade.php
+           because this layout renders the Seller sidebar + header directly.
+           ============================================================ */
+
+        /* ---------- SIDEBAR ---------- */
+        #sellerSidebar {
+            width: var(--seller-sidebar-width, 275px) !important;
+        }
+
+        #sellerSidebarBrand {
+            min-height: 70px !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        #sellerSidebarLogo {
+            height: 46px !important;
+        }
+
+        #sellerSidebarFullLogo {
+            width: 104px !important;
+            height: auto !important;
+        }
+
+        #sellerSidebarCompactLogo {
+            width: 38px !important;
+            height: 38px !important;
+        }
+
+        #sellerSidebarClose {
+            right: 12px !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 10px !important;
+        }
+
+        #sellerSidebarClose svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+
+        #sellerSidebarNav {
+            padding: 12px 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item],
+        #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+            min-height: 39px !important;
+            gap: 8px !important;
+            border-radius: 10px !important;
+            padding: 8px 10px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item] + a[data-seller-sidebar-item],
+        #sellerSidebarNav > a[data-seller-sidebar-item] + form,
+        #sellerSidebarNav > form + a[data-seller-sidebar-item] {
+            margin-top: 3px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] svg {
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] > span:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerSidebarNav > div.my-4 {
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+        }
+
+        #sellerSidebarMessageBadge {
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 5px !important;
+            font-size: 8px !important;
+        }
+
+        #sellerSidebarProfile {
+            padding: 9px 10px !important;
+        }
+
+        #sellerSidebarProfile > a {
+            gap: 9px !important;
+            border-radius: 10px !important;
+            padding: 9px !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 10.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:first-child {
+            font-size: 10.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:last-child {
+            font-size: 8.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-extra {
+            width: 13px !important;
+            height: 13px !important;
+        }
+
+        /* ---------- HEADER ---------- */
+        #sellerContent > header > div:first-child {
+            min-height: 72px !important;
+            gap: 10px !important;
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+        }
+
+        #sellerContent > header > div:first-child > div:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerMenuButton,
+        #sellerSidebarToggle,
+        #sellerNotificationBell {
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 10px !important;
+        }
+
+        #sellerMenuButton svg,
+        #sellerSidebarToggle svg,
+        #sellerNotificationBell > svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+
+        #sellerContent > header h1 {
+            font-size: 17px !important;
+            line-height: 1.15 !important;
+        }
+
+        #sellerContent > header h1 + div {
+            margin-top: 3px !important;
+            gap: 5px !important;
+            font-size: 9px !important;
+        }
+
+        #sellerContent > header h1 + div svg {
+            width: 10px !important;
+            height: 10px !important;
+        }
+
+        #sellerContent > header > div:first-child > div:last-child {
+            gap: 8px !important;
+        }
+
+        #sellerContent > header input[type="search"] {
+            height: 38px !important;
+            width: 220px !important;
+            border-radius: 11px !important;
+            padding-left: 38px !important;
+            padding-right: 12px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerContent > header input[type="search"] + * {
+            font-size: inherit;
+        }
+
+        #sellerContent > header .relative.hidden.md\:block > svg {
+            left: 13px !important;
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        #sellerBellNotificationBadge {
+            right: -5px !important;
+            top: -5px !important;
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 4px !important;
+            font-size: 8px !important;
+        }
+
+        /* Seller account shortcut in header */
+        #sellerContent > header a[href*="/seller/account"] {
+            gap: 8px !important;
+            border-radius: 10px !important;
+            padding: 4px 6px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:first-child {
+            width: 35px !important;
+            height: 35px !important;
+            font-size: 10px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:last-child p:first-child {
+            font-size: 10.5px !important;
+        }
+
+        #sellerContent > header a[href*="/seller/account"] > div:last-child p:last-child {
+            font-size: 8px !important;
+        }
+
+        @media (min-width: 1024px) {
+            html.seller-sidebar-collapsed #sellerSidebarBrand {
+                min-height: 76px !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav [data-seller-sidebar-item] {
+                min-height: 42px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile {
+                padding: 9px 10px !important;
+            }
+
+            #sellerContent > header input[type="search"] {
+                width: 235px !important;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            #sellerContent > header input[type="search"] {
+                width: 260px !important;
+            }
+        }
+
+        @media (min-width: 1536px) {
+            #sellerContent > header input[type="search"] {
+                width: 285px !important;
+            }
+        }
+
+        /* Same laptop-height compaction used by Admin. */
+        @media (max-height: 820px) and (min-width: 1024px) {
+            #sellerSidebarBrand {
+                min-height: 76px !important;
+            }
+
+            #sellerSidebarFullLogo {
+                width: 98px !important;
+            }
+
+            #sellerSidebarNav {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            #sellerSidebarNav > a[data-seller-sidebar-item],
+            #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 38px !important;
+                padding-top: 7px !important;
+                padding-bottom: 7px !important;
+                font-size: 10.5px !important;
+            }
+
+            #sellerSidebarProfile {
+                padding-top: 9px !important;
+                padding-bottom: 9px !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #sellerContent > header > div:first-child {
+                min-height: 68px !important;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            #sellerMenuButton,
+            #sellerNotificationBell {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            #sellerContent > header h1 {
+                font-size: 16px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * MODERN GROUPED SELLER SIDEBAR
+         * Clean reference-inspired navigation with stronger hierarchy.
+         * ============================================================
+         */
+        #sellerSidebar {
+            background: #ffffff !important;
+            border-right-color: #ece5da !important;
+        }
+
+        #sellerSidebarBrand {
+            min-height: 74px !important;
+            border-bottom-color: #eee7dc !important;
+            background: #ffffff !important;
+        }
+
+        #sellerSidebarLogo {
+            height: 44px !important;
+        }
+
+        #sellerSidebarFullLogo {
+            width: 102px !important;
+        }
+
+        #sellerSidebarNav {
+            padding: 14px 10px 16px !important;
+            scrollbar-width: thin;
+            scrollbar-color: #ddd4c7 transparent;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background: #ddd4c7;
+        }
+
+        .seller-sidebar-section-label {
+            margin: 10px 8px 7px !important;
+            color: #9b7a43 !important;
+            font-size: 7.5px !important;
+            line-height: 1 !important;
+            font-weight: 700 !important;
+            letter-spacing: .13em !important;
+            text-transform: uppercase !important;
+            white-space: nowrap !important;
+            user-select: none !important;
+        }
+
+        .seller-sidebar-section-label:first-child {
+            margin-top: 4px !important;
+        }
+
+        .seller-sidebar-section-divider {
+            height: 1px !important;
+            margin: 11px 6px 9px !important;
+            background: #eee7dd !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item],
+        #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+            min-height: 39px !important;
+            width: 100% !important;
+            gap: 10px !important;
+            border: 1px solid transparent !important;
+            border-radius: 10px !important;
+            padding: 8px 10px !important;
+            font-size: 10.5px !important;
+            line-height: 1.15 !important;
+            box-shadow: none !important;
+            transform: none !important;
+            transition:
+                background-color .12s ease,
+                border-color .12s ease,
+                color .12s ease,
+                box-shadow .12s ease !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item] + a[data-seller-sidebar-item],
+        #sellerSidebarNav > form + a[data-seller-sidebar-item],
+        #sellerSidebarNav > a[data-seller-sidebar-item] + form {
+            margin-top: 2px !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] svg {
+            width: 16px !important;
+            height: 16px !important;
+            stroke-width: 1.75 !important;
+        }
+
+        #sellerSidebarNav [data-seller-sidebar-item] > span:first-child {
+            gap: 10px !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item]:not(.bg-\[\#d9930a\]):hover,
+        #sellerSidebarNav > form > button[data-seller-sidebar-item]:hover {
+            border-color: #eadfcf !important;
+            background: #fff9ef !important;
+            color: #9a680b !important;
+            box-shadow: none !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] {
+            border-color: #d9950b !important;
+            background: #d9950b !important;
+            color: #ffffff !important;
+            box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] svg,
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] .seller-sidebar-label {
+            color: #ffffff !important;
+            stroke: currentColor !important;
+        }
+
+        #sellerSidebarMessageBadge {
+            min-width: 18px !important;
+            height: 18px !important;
+            padding-inline: 5px !important;
+            font-size: 7.5px !important;
+        }
+
+        #sellerSidebarProfile {
+            border-top-color: #eee7dc !important;
+            background: #ffffff !important;
+            padding: 9px 10px !important;
+        }
+
+        #sellerSidebarProfile > a {
+            min-height: 54px !important;
+            gap: 8px !important;
+            border-color: #ebe2d4 !important;
+            border-radius: 11px !important;
+            background: #ffffff !important;
+            padding: 8px 9px !important;
+            box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
+        }
+
+        #sellerSidebarProfile > a:hover {
+            border-color: #ddccb0 !important;
+            background: #fffdf8 !important;
+            box-shadow: 0 4px 12px rgba(40, 31, 21, .03) !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 9.5px !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:first-child {
+            font-size: 9.5px !important;
+            font-weight: 650 !important;
+        }
+
+        #sellerSidebarProfile .seller-sidebar-label p:last-child {
+            font-size: 7.5px !important;
+        }
+
+        @media (min-width: 1024px) {
+            html.seller-sidebar-collapsed .seller-sidebar-section-label,
+            html.seller-sidebar-collapsed .seller-sidebar-section-divider {
+                display: none !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav {
+                padding: 12px 9px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarNav > a[data-seller-sidebar-item],
+            html.seller-sidebar-collapsed #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 40px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile {
+                padding: 9px !important;
+            }
+
+            html.seller-sidebar-collapsed #sellerSidebarProfile > a {
+                justify-content: center !important;
+                padding: 8px !important;
+            }
+        }
+
+        @media (max-height: 820px) and (min-width: 1024px) {
+            #sellerSidebarNav {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .seller-sidebar-section-label {
+                margin-top: 8px !important;
+                margin-bottom: 6px !important;
+            }
+
+            .seller-sidebar-section-divider {
+                margin-top: 8px !important;
+                margin-bottom: 7px !important;
+            }
+
+            #sellerSidebarNav > a[data-seller-sidebar-item],
+            #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+                min-height: 36px !important;
+                padding-top: 7px !important;
+                padding-bottom: 7px !important;
+                font-size: 10px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * SIDEBAR FINAL VISUAL PASS — SOLID GOLD, NO GRADIENTS
+         * ============================================================
+         */
+        #sellerSidebar,
+        #sellerSidebar * {
+            background-image: none !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] {
+            background-color: #d9950b !important;
+            border-color: #d9950b !important;
+            color: #ffffff !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\]:hover {
+            background-color: #cf8d08 !important;
+            border-color: #cf8d08 !important;
+            color: #ffffff !important;
+        }
+
+        #sellerSidebarNav > a[data-seller-sidebar-item]:not(.bg-\[\#d9930a\]):hover,
+        #sellerSidebarNav > form > button[data-seller-sidebar-item]:hover {
+            background-color: #fff9ef !important;
+            border-color: #eadfcf !important;
+            color: #94620a !important;
+        }
+
+        .seller-sidebar-section-label {
+            color: #9a7840 !important;
+        }
+
+        .seller-sidebar-section-divider {
+            background: #eee5d7 !important;
+        }
+
+        #sellerSidebarProfile > a {
+            background-color: #ffffff !important;
+            border-color: #e9e0d3 !important;
+        }
+
+        #sellerSidebarProfile > a:hover {
+            background-color: #fffdf9 !important;
+            border-color: #dcc9a7 !important;
+        }
+
+        #sellerSidebarProfile > a > div:first-child {
+            background-color: #d9950b !important;
+        }
+
+    
+        /*
+         * ============================================================
+         * CENTERED SELLER ACTION / REVIEW NOTICE
+         * ============================================================
+         * No full-screen fade. Only a clean centered notice card.
+         */
+        .seller-action-toast {
+            position: fixed !important;
+            left: 50% !important;
+            top: 20px !important;
+            right: auto !important;
+            z-index: 10050 !important;
+            width: min(440px, calc(100vw - 32px)) !important;
+            transform: translateX(-50%) !important;
+            pointer-events: none !important;
+        }
+
+        .seller-action-toast-card {
+            display: grid !important;
+            grid-template-columns: 42px minmax(0, 1fr) 28px !important;
+            align-items: start !important;
+            gap: 12px !important;
+            border: 1px solid #e7dfd4 !important;
+            border-radius: 18px !important;
+            background: #ffffff !important;
+            padding: 16px 16px 16px 17px !important;
+            box-shadow:
+                0 22px 55px rgba(31, 26, 20, .16),
+                0 3px 12px rgba(31, 26, 20, .05) !important;
+            pointer-events: auto !important;
+        }
+
+        .seller-action-toast:not(.hidden) .seller-action-toast-card {
+            animation: sellerActionToastIn .16s ease-out both;
+        }
+
+        @keyframes sellerActionToastIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.985);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .seller-action-toast-icon {
+            display: grid !important;
+            width: 42px !important;
+            height: 42px !important;
+            place-items: center !important;
+            border-radius: 13px !important;
+            background: #f2f8f4 !important;
+            color: #4d7b62 !important;
+        }
+
+        .seller-action-toast-icon svg {
+            width: 18px !important;
+            height: 18px !important;
+        }
+
+        .seller-action-toast-copy {
+            min-width: 0 !important;
+            padding-top: 2px !important;
+        }
+
+        .seller-action-toast-title {
+            margin: 0 !important;
+            color: #2d4f3a !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
+            letter-spacing: -.015em !important;
+        }
+
+        .seller-action-toast-message {
+            margin-top: 5px !important;
+            color: #6f746f !important;
+            font-size: 9px !important;
+            font-weight: 500 !important;
+            line-height: 1.7 !important;
+        }
+
+        .seller-action-toast-close {
+            display: grid !important;
+            width: 28px !important;
+            height: 28px !important;
+            place-items: center !important;
+            border: 0 !important;
+            border-radius: 8px !important;
+            background: transparent !important;
+            color: #9a9288 !important;
+            cursor: pointer !important;
+            transition: background-color .12s ease, color .12s ease !important;
+        }
+
+        .seller-action-toast-close:hover {
+            background: #f5f2ed !important;
+            color: #514a42 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-card {
+            border-color: #ead7b5 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-icon {
+            background: #fff7e8 !important;
+            color: #ae7415 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-title {
+            color: #8a5d12 !important;
+        }
+
+        .seller-action-toast[data-toast-type="warning"] .seller-action-toast-message {
+            color: #756958 !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-card {
+            border-color: #edd2d2 !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-icon {
+            background: #fff2f2 !important;
+            color: #b45a5a !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-title {
+            color: #9f4c4c !important;
+        }
+
+        .seller-action-toast[data-toast-type="error"] .seller-action-toast-message {
+            color: #7f6666 !important;
+        }
+
+        @media (max-width: 520px) {
+            .seller-action-toast {
+                top: 12px !important;
+                width: min(400px, calc(100vw - 24px)) !important;
+            }
+
+            .seller-action-toast-card {
+                grid-template-columns: 38px minmax(0,1fr) 26px !important;
+                gap: 10px !important;
+                border-radius: 15px !important;
+                padding: 14px !important;
+            }
+
+            .seller-action-toast-icon {
+                width: 38px !important;
+                height: 38px !important;
+                border-radius: 11px !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * FAST SELLER NAVIGATION
+         * Route changes should paint immediately; only sidebar collapse
+         * itself is animated.
+         * ============================================================
+         */
+        #sellerContent {
+            transition-property: padding-left !important;
+            transition-duration: 130ms !important;
+            transition-timing-function: var(--seller-sidebar-ease) !important;
+        }
+
+        #sellerSidebar {
+            transition-property: width, transform !important;
+            transition-duration: 130ms !important;
+            transition-timing-function: var(--seller-sidebar-ease) !important;
+        }
+
+        #sellerContent main {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        html[data-seller-shell-loading="true"] #sellerContent main,
+        [data-seller-shell-loading="true"] #sellerContent main {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        /* Avoid expensive broad transitions on persistent shell elements. */
+        #sellerSidebarNav [data-seller-sidebar-item] {
+            transition:
+                background-color 90ms ease,
+                border-color 90ms ease,
+                color 90ms ease !important;
+        }
+
+        #sellerContent {
+            background: #F4F5F7 !important;
+        }
+
+        #sellerContent main {
+            background: transparent !important;
+        }
+
+        #sellerContent > header {
+            transition: none !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #sellerSidebar,
+            #sellerContent {
+                transition-duration: 1ms !important;
+            }
+        }
+
+
+        /*
+         * ============================================================
+         * NAVIGATION PROGRESS VISUAL — DISABLED
+         * Official source-of-truth should also be:
+         * config/livewire.php -> navigate.show_progress_bar = false
+         * ============================================================
+         */
+        #nprogress,
+        #nprogress .bar,
+        #nprogress .peg,
+        #nprogress .spinner,
+        [data-livewire-navigate-progress],
+        [data-navigate-progress] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Destination content paints immediately after Livewire swaps it. */
+        #sellerContent main {
+            content-visibility: visible !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+
+        /* ============================================================
+           SARI SELLER — UNIFIED DESIGN TOKENS
+           Shared neutral canvas + white surfaces + restrained gold.
+           ============================================================ */
+        :root {
+            --sari-page-bg: #F4F5F7;
+            --sari-surface: #FFFFFF;
+            --sari-surface-soft: #FAFAFB;
+
+            --sari-gold: #D89B10;
+            --sari-gold-dark: #B67A08;
+            --sari-gold-soft: #FFF7E6;
+
+            --sari-text: #202124;
+            --sari-text-secondary: #4B5563;
+            --sari-text-muted: #8A919B;
+
+            --sari-border: #E7E9EE;
+
+            --sari-success: #63A375;
+            --sari-info: #6C8FB5;
+            --sari-warning: #D89B10;
+            --sari-danger: #D97C6C;
+
+            --sari-card-shadow:
+                0 1px 2px rgba(32, 33, 36, .025),
+                0 7px 18px rgba(32, 33, 36, .045),
+                0 16px 34px rgba(32, 33, 36, .050);
+        }
+
+        html,
+        body,
+        #sellerContent {
+            background: var(--sari-page-bg) !important;
+            color: var(--sari-text);
+        }
+
+        #sellerSidebar,
+        #sellerSidebarBrand,
+        #sellerSidebarProfile,
+        #sellerContent > header {
+            background: var(--sari-surface) !important;
+        }
+
+        #sellerSidebar,
+        #sellerSidebarBrand,
+        #sellerSidebarProfile,
+        #sellerContent > header {
+            border-color: var(--sari-border) !important;
+        }
+
+        #sellerContent main {
+            background: transparent !important;
+            color: var(--sari-text);
+        }
+
+        /* Shared form language across Seller pages. */
+        #sellerContent main input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+        #sellerContent main select,
+        #sellerContent main textarea {
+            border-color: var(--sari-border);
+            background-color: var(--sari-surface);
+            color: var(--sari-text);
+        }
+
+        #sellerContent main input::placeholder,
+        #sellerContent main textarea::placeholder {
+            color: #A1A7B0;
+        }
+
+        #sellerContent main input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):focus,
+        #sellerContent main select:focus,
+        #sellerContent main textarea:focus {
+            border-color: var(--sari-gold) !important;
+            box-shadow: 0 0 0 3px rgba(216, 155, 16, .08) !important;
+            outline: none !important;
+        }
+
+        /* Shared table language: quiet separators instead of boxed rows. */
+        #sellerContent main table {
+            color: var(--sari-text-secondary);
+        }
+
+        #sellerContent main thead {
+            background: var(--sari-surface-soft);
+        }
+
+        #sellerContent main th {
+            color: var(--sari-text-secondary);
+            border-color: var(--sari-border) !important;
+        }
+
+        #sellerContent main td {
+            border-color: var(--sari-border) !important;
+        }
+
+        /* Text hierarchy helpers for shared shell elements. */
+        #sellerContent > header h1 {
+            color: var(--sari-text) !important;
+        }
+
+        #sellerContent > header h1 + div {
+            color: var(--sari-text-muted) !important;
+        }
+
+        /* Neutral scrollbar treatment. */
+        #sellerSidebarNav,
+        [data-seller-notification-scroll] {
+            scrollbar-color: #C9CED6 transparent;
+        }
+
+        #sellerSidebarNav::-webkit-scrollbar-thumb,
+        [data-seller-notification-scroll]::-webkit-scrollbar-thumb {
+            background: #C9CED6 !important;
+        }
+
+
+        /* ============================================================
+           SELLER LOGOUT CONFIRMATION MODAL — PREMIUM RED PASS
+           ============================================================ */
+        #sellerLogoutConfirmModal[hidden] {
+            display: none !important;
+        }
+
+        #sellerLogoutConfirmModal {
+            position: fixed;
+            inset: 0;
+            z-index: 11000;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+        }
+
+        .seller-logout-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(24, 28, 34, .54);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 150ms ease;
+        }
+
+        .seller-logout-modal-dialog {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 390px);
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: #FFFFFF;
+            box-shadow:
+                0 30px 80px rgba(15, 23, 42, .24),
+                0 8px 24px rgba(15, 23, 42, .08);
+            opacity: 0;
+            transform: translateY(10px) scale(.985);
+            transition:
+                opacity 160ms ease,
+                transform 160ms cubic-bezier(.22, 1, .36, 1);
+        }
+
+        #sellerLogoutConfirmModal.is-open .seller-logout-modal-backdrop {
+            opacity: 1;
+        }
+
+        #sellerLogoutConfirmModal.is-open .seller-logout-modal-dialog {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .seller-logout-modal-body {
+            padding: 21px 21px 18px;
+        }
+
+        .seller-logout-modal-icon {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid #FFB7BE;
+            border-radius: 8px;
+            background: #FFF0F2;
+            color: #F04438;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.8);
+        }
+
+        .seller-logout-modal-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .seller-logout-modal-title {
+            margin: 14px 0 0;
+            color: #1F2937;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.28;
+            letter-spacing: -.035em;
+        }
+
+        .seller-logout-modal-copy {
+            margin: 6px 0 0;
+            max-width: 410px;
+            color: #667085;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .seller-logout-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #EEF0F3;
+            background: #FAFBFC;
+            padding: 10px 12px;
+        }
+
+        .seller-logout-modal-btn {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 8px;
+            padding: 0 13px;
+            font: inherit;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background-color 120ms ease,
+                border-color 120ms ease,
+                color 120ms ease,
+                box-shadow 120ms ease,
+                transform 120ms ease;
+        }
+
+        .seller-logout-modal-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .seller-logout-modal-btn-cancel {
+            min-width: 84px;
+            border: 1px solid #D8DEE6;
+            background: #FFFFFF;
+            color: #475467;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, .03);
+        }
+
+        .seller-logout-modal-btn-cancel:hover {
+            border-color: #C7CED8;
+            background: #F7F8FA;
+            color: #253142;
+        }
+
+        .seller-logout-modal-btn-danger {
+            min-width: 96px;
+            border: 1px solid #ff0b0b;
+            background: #ff0b0b;
+            color: #FFFFFF;
+            box-shadow:
+                0 6px 14px rgba(127, 29, 45, .20),
+                inset 0 1px 0 rgba(255,255,255,.12);
+        }
+
+        .seller-logout-modal-btn-danger:hover {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 8px 18px rgba(107, 23, 38, .25),
+                inset 0 1px 0 rgba(255,255,255,.10);
+            transform: translateY(-1px);
+        }
+
+        .seller-logout-modal-btn-danger:active {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 4px 10px rgba(86, 17, 31, .22),
+                inset 0 1px 0 rgba(255,255,255,.08);
+            transform: translateY(0);
+        }
+
+        .seller-logout-modal-btn-danger:disabled {
+            border-color: #9B5360;
+            background: #9B5360;
+            box-shadow: none;
+            opacity: .78;
+            cursor: wait;
+            transform: none;
+        }
+
+        .seller-logout-modal-btn:focus-visible {
+            outline: 3px solid rgba(127, 29, 45, .18);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 520px) {
+            #sellerLogoutConfirmModal {
+                align-items: end;
+                padding: 10px;
+            }
+
+            .seller-logout-modal-dialog {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .seller-logout-modal-body {
+                padding: 20px 18px 17px;
+            }
+
+            .seller-logout-modal-title {
+                font-size: 17px;
+            }
+
+            .seller-logout-modal-copy {
+                font-size: 9px;
+            }
+
+            .seller-logout-modal-footer {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding: 10px;
+            }
+
+            .seller-logout-modal-btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .seller-logout-modal-backdrop,
+            .seller-logout-modal-dialog,
+            .seller-logout-modal-btn {
+                transition: none !important;
+            }
+        }
+
+        /* ============================================================
+           SELLER SHELL PROFILE AVATAR — SHARED HEADER + SIDEBAR
+           The parent keeps the existing shell dimensions.
+           ============================================================ */
+        .seller-shell-profile-avatar {
+            position: relative !important;
+            overflow: hidden !important;
+            flex: 0 0 auto !important;
+            border: 1px solid #E5E7EB !important;
+            background: #D9950B !important;
+            isolation: isolate;
+        }
+
+        .seller-shell-profile-avatar__image {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            border-radius: inherit !important;
+            background: #F8FAFC !important;
+        }
+
+        .seller-shell-profile-avatar__fallback {
+            position: relative !important;
+            z-index: 1 !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #FFFFFF !important;
+            line-height: 1 !important;
+        }
+
+        .seller-shell-profile-avatar__image[hidden],
+        .seller-shell-profile-avatar__fallback[hidden] {
+            display: none !important;
+        }
+
+    
+
+/* ======================================================================
+   SELLER SHELL — FLAT SIDEBAR + HEADER
+   Outer shell surfaces stay flat. No layout or functionality changes.
+   ====================================================================== */
+
+#sellerSidebar,
+#sellerSidebar:hover,
+#sellerSidebar:focus-within {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+#sellerContent > header,
+#sellerContent > header:hover,
+#sellerContent > header:focus-within {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+/* Keep structural separation with neutral borders only. */
+#sellerSidebar {
+    border-right-color: #E7E9EE !important;
+}
+
+#sellerContent > header {
+    border-bottom-color: #E7E9EE !important;
+}
+
+/* Do not allow responsive overrides to re-add shell elevation. */
+@media (max-width: 1023px) {
+    #sellerSidebar {
+        box-shadow: none !important;
+    }
+}
+
+@media (max-width: 639px) {
+    #sellerContent > header {
+        box-shadow: none !important;
+    }
+}
+
+
+/* ======================================================================
+   UNIFIED NOTIFICATION DROPDOWN — CLEAN / MODERN / PROFESSIONAL
+   UI-only refinement. No backend/realtime/read-state behavior changed.
+   Sidebar + header remain flat.
+   ====================================================================== */
+
+#sellerNotificationDropdown {
+    width: min(470px, calc(100vw - 32px)) !important;
+    top: 52px !important;
+    right: -10px !important;
+    overflow: visible !important;
+    border: 1px solid #E4E7EC !important;
+    border-radius: 20px !important;
+    background: #FFFFFF !important;
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, .07),
+        0 24px 60px rgba(15, 23, 42, .14) !important;
+}
+
+/* Small pointer toward the bell. */
+#sellerNotificationDropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 30px;
+    width: 15px;
+    height: 15px;
+    border-left: 1px solid #E4E7EC;
+    border-top: 1px solid #E4E7EC;
+    background: #FFFFFF;
+    transform: rotate(45deg);
+    z-index: 0;
+}
+
+#sellerNotificationDropdown > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+#sellerNotificationDropdown > div:first-child {
+    min-height: 88px !important;
+    align-items: center !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    padding: 18px 22px !important;
+}
+
+#sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+    color: #101828 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.025em !important;
+}
+
+#sellerNotificationUnreadText {
+    margin-top: 5px !important;
+    color: #98A2B3 !important;
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+}
+
+#sellerNotificationMarkAllRead,
+#sellerNotificationDropdown a[href*="/notifications"] {
+    font-weight: 600 !important;
+}
+
+#sellerNotificationMarkAllRead {
+    color: #475467 !important;
+    font-size: 10px !important;
+}
+
+#sellerNotificationMarkAllRead:hover {
+    color: #B97805 !important;
+}
+
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"] {
+    color: #B97805 !important;
+    font-size: 10px !important;
+}
+
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"]:hover {
+    color: #8E5905 !important;
+}
+
+/* List */
+#sellerNotificationList {
+    max-height: 430px !important;
+    overflow-y: auto !important;
+    background: #FFFFFF !important;
+}
+
+.seller-shell-notification-item {
+    min-height: 92px !important;
+    padding: 16px 22px !important;
+    border-bottom: 1px solid #EEF1F4 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.seller-shell-notification-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.seller-shell-notification-item[data-unread="true"] {
+    background: #FFFCF5 !important;
+}
+
+.seller-shell-notification-item:hover {
+    background: #F8FAFC !important;
+}
+
+.seller-shell-notification-item > div {
+    gap: 14px !important;
+}
+
+.seller-shell-notification-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 14px !important;
+    background: #FFFBF3 !important;
+    color: #C98506 !important;
+    box-shadow: none !important;
+}
+
+.seller-shell-notification-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Notification title/time/message hierarchy */
+.seller-shell-notification-item p.line-clamp-1 {
+    color: #344054 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+}
+
+.seller-shell-notification-item span.shrink-0.text-\[7px\] {
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+}
+
+.seller-shell-notification-item p.line-clamp-2 {
+    margin-top: 5px !important;
+    color: #667085 !important;
+    font-size: 10px !important;
+    line-height: 1.65 !important;
+}
+
+.seller-shell-notification-item [data-notification-unread-dot] {
+    width: 9px !important;
+    height: 9px !important;
+    margin-top: 5px !important;
+    background: #D9930A !important;
+}
+
+/* Empty state */
+#sellerNotificationEmpty {
+    padding: 44px 28px !important;
+}
+
+#sellerNotificationEmpty > div:first-child {
+    color: #B97805 !important;
+}
+
+#sellerNotificationEmpty > p:first-of-type {
+    margin-top: 12px !important;
+    color: #344054 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+#sellerNotificationEmpty > p:last-child {
+    margin-top: 5px !important;
+    max-width: 320px !important;
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.6 !important;
+}
+
+/* Footer */
+#sellerNotificationDropdown > a[href*="/notifications"] {
+    min-height: 64px !important;
+    margin: 12px 16px 16px !important;
+    border: 1px solid #E1B24E !important;
+    border-radius: 14px !important;
+    background: #FFFDF8 !important;
+    color: #A66F10 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+#sellerNotificationDropdown > a[href*="/notifications"]:hover {
+    border-color: #D9930A !important;
+    background: #FFF8E8 !important;
+    color: #8E5905 !important;
+    transform: none !important;
+}
+
+/* Keep bell itself visually icon-only. */
+#sellerNotificationBell,
+#sellerNotificationBell:hover,
+#sellerNotificationBell:active {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Responsive sizing */
+@media (max-width: 639px) {
+    #sellerNotificationDropdown {
+        position: fixed !important;
+        top: 72px !important;
+        left: 12px !important;
+        right: 12px !important;
+        width: auto !important;
+        max-width: none !important;
+        border-radius: 18px !important;
+    }
+
+    #sellerNotificationDropdown::before {
+        display: none !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child {
+        min-height: 80px !important;
+        padding: 16px 18px !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+        font-size: 16px !important;
+    }
+
+    .seller-shell-notification-item {
+        min-height: 86px !important;
+        padding: 14px 18px !important;
+    }
+
+    .seller-shell-notification-icon {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 13px !important;
+    }
+
+    #sellerNotificationDropdown > a[href*="/notifications"] {
+        min-height: 56px !important;
+        margin: 10px 12px 12px !important;
+    }
+}
+
+
+/* ======================================================================
+   UNIFIED NOTIFICATION DROPDOWN — COMPACT PROFESSIONAL PASS
+   Keeps the modern visual language but reduces width/height/spacing.
+   UI-only. Realtime/read-state/backend behavior unchanged.
+   ====================================================================== */
+
+#sellerNotificationDropdown {
+    width: min(380px, calc(100vw - 28px)) !important;
+    top: 50px !important;
+    right: -8px !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 6px 16px rgba(15, 23, 42, .06),
+        0 18px 42px rgba(15, 23, 42, .12) !important;
+}
+
+#sellerNotificationDropdown::before {
+    top: -7px !important;
+    right: 27px !important;
+    width: 13px !important;
+    height: 13px !important;
+}
+
+/* Compact header */
+#sellerNotificationDropdown > div:first-child {
+    min-height: 68px !important;
+    padding: 13px 16px !important;
+}
+
+#sellerNotificationDropdown > div:first-child > div:first-child > p:first-child {
+    font-size: 14px !important;
+    line-height: 1.15 !important;
+}
+
+#sellerNotificationUnreadText {
+    margin-top: 3px !important;
+    font-size: 8.5px !important;
+}
+
+#sellerNotificationMarkAllRead,
+#sellerNotificationDropdown > div:first-child a[href*="/notifications"] {
+    font-size: 8.5px !important;
+}
+
+/* Compact list */
+#sellerNotificationList {
+    max-height: 330px !important;
+}
+
+.seller-shell-notification-item {
+    min-height: 72px !important;
+    padding: 12px 16px !important;
+}
+
+.seller-shell-notification-item > div {
+    gap: 11px !important;
+}
+
+.seller-shell-notification-icon {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 11px !important;
+}
+
+.seller-shell-notification-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.seller-shell-notification-item p.line-clamp-1 {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+}
+
+.seller-shell-notification-item span.shrink-0.text-\[7px\] {
+    font-size: 7.5px !important;
+}
+
+.seller-shell-notification-item p.line-clamp-2 {
+    margin-top: 3px !important;
+    font-size: 8.5px !important;
+    line-height: 1.5 !important;
+}
+
+.seller-shell-notification-item [data-notification-unread-dot] {
+    width: 7px !important;
+    height: 7px !important;
+    margin-top: 4px !important;
+}
+
+/* Compact empty state */
+#sellerNotificationEmpty {
+    padding: 30px 20px !important;
+}
+
+#sellerNotificationEmpty > p:first-of-type {
+    margin-top: 9px !important;
+    font-size: 9.5px !important;
+}
+
+#sellerNotificationEmpty > p:last-child {
+    margin-top: 4px !important;
+    max-width: 280px !important;
+    font-size: 8px !important;
+    line-height: 1.5 !important;
+}
+
+/* Compact footer */
+#sellerNotificationDropdown > a[href*="/notifications"] {
+    min-height: 46px !important;
+    margin: 9px 12px 12px !important;
+    border-radius: 11px !important;
+    font-size: 9px !important;
+}
+
+/* Keep bell icon-only. */
+#sellerNotificationBell,
+#sellerNotificationBell:hover,
+#sellerNotificationBell:active {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Mobile remains compact but readable. */
+@media (max-width: 639px) {
+    #sellerNotificationDropdown {
+        top: 68px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        border-radius: 15px !important;
+    }
+
+    #sellerNotificationDropdown > div:first-child {
+        min-height: 64px !important;
+        padding: 12px 14px !important;
+    }
+
+    .seller-shell-notification-item {
+        min-height: 68px !important;
+        padding: 11px 14px !important;
+    }
+
+    .seller-shell-notification-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    #sellerNotificationDropdown > a[href*="/notifications"] {
+        min-height: 44px !important;
+        margin: 8px 10px 10px !important;
+    }
+}
+
+
+/* Notification badge absolute zero-state safety.
+   When JS says there are no unread notifications, the badge must not render. */
+#sellerBellNotificationBadge[data-has-unread="false"],
+#sellerBellNotificationBadge[aria-hidden="true"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#sellerBellNotificationBadge[data-has-unread="true"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
+/* Zero unread must hide every header notification badge copy,
+   including transient Livewire DOM instances. */
+[data-seller-notification-badge][data-has-unread="false"],
+[data-seller-notification-badge][aria-hidden="true"],
+[data-seller-notification-badge][hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    animation: none !important;
+}

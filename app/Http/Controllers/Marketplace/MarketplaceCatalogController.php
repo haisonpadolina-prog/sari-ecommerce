@@ -42,15 +42,7 @@ class MarketplaceCatalogController extends Controller
 
     public function image(SellerProduct $product): StreamedResponse
     {
-        $product->loadMissing('seller:id,store_status');
-
-        abort_unless($product->moderation_status === 'approved', 404);
-        abort_unless(is_null($product->archived_at), 404);
-        abort_unless(
-            $product->seller
-            && (is_null($product->seller->store_status) || $product->seller->store_status === 'open'),
-            404
-        );
+        abort_unless($product->isBuyerVisible(), 404);
         abort_unless($product->image_path, 404);
         abort_unless(Storage::disk('public')->exists($product->image_path), 404);
 

@@ -583,8 +583,8 @@ function initSariProductsPage() {
                 `
                 : '');
 
-        const isInitialViewportCard = cardIndex < 6;
-        const isTopPriorityCard = cardIndex < 3;
+        const isInitialViewportCard = cardIndex < 3;
+        const isTopPriorityCard = cardIndex < 2;
 
         const image = product.image_url
             ? `<img
@@ -1072,10 +1072,33 @@ function initSariProductsPage() {
         ].join(':')).join('|');
     }
 
+    function isCompleteProductLibrary(data) {
+        if (!data || !Array.isArray(data?.products)) return false;
+
+        const declaredCount = Number(data.count);
+
+        if (Number.isFinite(declaredCount)) {
+            return data.products.length >= Math.max(0, declaredCount);
+        }
+
+        return !Object.prototype.hasOwnProperty.call(data, 'initial_count');
+    }
+
     function cacheProductLibrary(data) {
         if (!data || !Array.isArray(data?.products)) return;
 
+        const complete = isCompleteProductLibrary(data);
+
         window.__SARI_PRODUCTS_LIBRARY_CACHED__ = data;
+        window.__SARI_PRODUCTS_LIBRARY_CACHE_IS_COMPLETE__ = complete;
+        window.__SARI_PRODUCTS_LIBRARY_CACHE_SAVED_AT__ = Date.now();
+
+        /*
+         * Never replace a useful full-library session cache with the partial
+         * first-screen payload. The partial payload is already represented by
+         * the server-rendered cards and only needs to live in memory.
+         */
+        if (!complete) return;
 
         const key = window.__SARI_PRODUCTS_LIBRARY_CACHE_KEY__;
         if (!key) return;
@@ -1096,7 +1119,7 @@ function initSariProductsPage() {
     function warmVisibleProductImages(items) {
         if (!Array.isArray(items)) return;
 
-        items.slice(0, 3).forEach((product) => {
+        items.slice(0, 2).forEach((product) => {
             const source = String(product?.image_url || '').trim();
             if (!source) return;
 
@@ -1111,7 +1134,7 @@ function initSariProductsPage() {
         });
     }
 
-    function applyProductLibraryData(data, forceRender = false) {
+    function applyProductLibraryData(data, forceRender = false, preserveExistingGrid = false) {
         if (!data || !Array.isArray(data?.products)) return false;
 
         const nextSignature = productLibrarySignature(data);
@@ -1137,7 +1160,16 @@ function initSariProductsPage() {
          */
         warmVisibleProductImages(products);
 
-        if (forceRender || nextSignature !== previousSignature) {
+        if (preserveExistingGrid) {
+            /*
+             * Blade already painted these exact first-screen cards. Hydrate
+             * controls/data without destroying and recreating the same DOM.
+             */
+            window.__SARI_PRODUCTS_LIBRARY_RENDERED_SIGNATURE__ = nextSignature;
+            populateCategories();
+            applyFilters();
+            syncFlashSaleCountdowns();
+        } else if (forceRender || nextSignature !== previousSignature) {
             window.__SARI_PRODUCTS_LIBRARY_RENDERED_SIGNATURE__ = nextSignature;
             renderProducts();
         } else {
@@ -1190,9 +1222,23 @@ function initSariProductsPage() {
             const cached = window.__SARI_PRODUCTS_LIBRARY_CACHED__;
 
             if (cached && Array.isArray(cached?.products)) {
+                const visibleCardCount = grid
+                    ? grid.querySelectorAll('[data-product-item]').length
+                    : 0;
+
+                const cacheIsComplete =
+                    window.__SARI_PRODUCTS_LIBRARY_CACHE_IS_COMPLETE__ === true
+                    || isCompleteProductLibrary(cached);
+
+                const preserveExistingGrid = Boolean(
+                    window.__SARI_PRODUCTS_FAST_PAINTED__
+                    && cached.products.length <= visibleCardCount
+                );
+
                 renderedSomething = applyProductLibraryData(
                     cached,
-                    !window.__SARI_PRODUCTS_FAST_PAINTED__
+                    cacheIsComplete && !preserveExistingGrid,
+                    preserveExistingGrid
                 );
             }
         }

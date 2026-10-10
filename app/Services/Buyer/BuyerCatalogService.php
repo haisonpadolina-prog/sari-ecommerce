@@ -4,12 +4,20 @@ namespace App\Services\Buyer;
 
 use App\Models\Accounts\SellerAccount;
 use App\Models\Catalog\SellerProduct;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Promotions\SellerVoucher;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class BuyerCatalogService
 {
+    /** @var array<int, int>|null */
+    private ?array $soldCounts = null;
+
     private const MARKETPLACE_CATEGORIES = [
         'fashion' => [
             'name' => 'Fashion',
@@ -74,11 +82,15 @@ class BuyerCatalogService
 
     public function catalog(?int $limit = null): array
     {
-        $products = $this->approvedProducts();
+        $query = $this->approvedProductsQuery()
+            ->orderByDesc('reviewed_at')
+            ->orderByDesc('id');
 
         if ($limit !== null && $limit > 0) {
-            $products = $products->take($limit);
+            $query->limit($limit);
         }
+
+        $products = $query->get();
 
         return $products
             ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
@@ -90,17 +102,17 @@ class BuyerCatalogService
     {
         $product = SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,store_status,created_at',
+                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
+                'seller.vouchers' => $this->activeVoucherConstraint(...),
                 'activeVariants',
                 'galleryImages',
                 'reviews:id,seller_product_id,rating,comment,created_at',
+                'reviews.sellerReply:id,product_review_id,seller_account_id,reply,created_at',
             ])
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->whereKey($productId)
-            ->where('moderation_status', 'approved')
-            ->whereNull('archived_at')
-            ->whereHas('seller', fn ($query) => $query->where(function ($q) {
-                $q->whereNull('store_status')->orWhere('store_status', 'open');
-            }))
+            ->buyerVisible()
             ->first();
 
         return $product ? $this->toBuyerProduct($product) : null;
@@ -114,8 +126,11 @@ class BuyerCatalogService
             return [];
         }
 
-        return $this->approvedProducts()
+        return $this->approvedProductsQuery()
             ->where('seller_account_id', $sellerId)
+            ->orderByDesc('reviewed_at')
+            ->orderByDesc('id')
+            ->get()
             ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
             ->values()
             ->all();
@@ -129,14 +144,21 @@ class BuyerCatalogService
             return null;
         }
 
-        $seller = SellerAccount::query()->find($sellerId);
+        $seller = SellerAccount::query()
+            ->with(['vouchers' => $this->activeVoucherConstraint(...)])
+            ->whereKey($sellerId)
+            ->buyerAvailable()
+            ->first();
 
         if (!$seller) {
             return null;
         }
 
-        $products = $this->approvedProducts()
+        $products = $this->approvedProductsQuery()
             ->where('seller_account_id', $sellerId)
+            ->orderByDesc('reviewed_at')
+            ->orderByDesc('id')
+            ->get()
             ->values();
 
         return $this->toBuyerShop($seller, $products);
@@ -150,27 +172,33 @@ class BuyerCatalogService
             return [];
         }
 
-        return $this->approvedProducts()
-            ->groupBy('seller_account_id')
-            ->map(function (Collection $products) {
-                $seller = $products->first()?->seller;
+        $like = '%' . $query . '%';
 
-                return $seller ? $this->toBuyerShop($seller, $products) : null;
+        return SellerAccount::query()
+            ->where(function (Builder $sellerQuery) use ($like): void {
+                $sellerQuery
+                    ->where('store_name', 'like', $like)
+                    ->orWhere('email', 'like', $like);
             })
-            ->filter()
-            ->filter(function (array $shop) use ($query) {
-                return str_contains(strtolower($shop['name'] ?? ''), $query)
-                    || str_contains(strtolower($shop['store_name'] ?? ''), $query)
-                    || str_contains(strtolower($shop['username'] ?? ''), $query);
-            })
-            ->take(5)
+            ->buyerAvailable()
+            ->whereHas('products', fn (Builder $productQuery) => $productQuery->buyerVisible())
+            ->withCount([
+                'products as buyer_visible_products_count' =>
+                    fn (Builder $productQuery) => $productQuery->buyerVisible(),
+            ])
+            ->limit(5)
+            ->get()
+            ->map(fn (SellerAccount $seller) => $this->toBuyerShopResult($seller))
             ->values()
             ->all();
     }
 
     public function categories(): array
     {
-        $discovered = $this->approvedProducts()
+        $discovered = SellerProduct::query()
+            ->buyerVisible()
+            ->select('category')
+            ->distinct()
             ->pluck('category')
             ->filter()
             ->map(fn ($category) => trim((string) $category))
@@ -321,9 +349,15 @@ class BuyerCatalogService
 
         $seller = $product->seller;
         $storeName = trim((string) ($seller?->store_name ?: 'SARI Seller Store'));
-        $rating = $product->reviews?->count()
-            ? round((float) $product->reviews->avg('rating'), 1)
-            : 0.0;
+        $reviewCount = isset($product->reviews_count)
+            ? (int) $product->reviews_count
+            : ($product->relationLoaded('reviews') ? $product->reviews->count() : 0);
+
+        $rating = isset($product->reviews_avg_rating)
+            ? round((float) $product->reviews_avg_rating, 1)
+            : ($reviewCount > 0 && $product->relationLoaded('reviews')
+                ? round((float) $product->reviews->avg('rating'), 1)
+                : 0.0);
 
         $variantPayload = $variants->map(function ($variant) use ($discountPercent) {
             $options = is_array($variant->option_values)
@@ -414,11 +448,14 @@ class BuyerCatalogService
             'discount_percent' => $discountPercent,
             'flash_sale_active' => $this->isFlashSaleActive($product),
             'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
-            'voucher' => null,
+            'voucher' => $this->primaryVoucher($seller, (string) ($product->voucher_code ?? '')),
             'free_shipping' => (bool) ($product->free_shipping ?? false),
+            // Marketplace checkout supports Cash on Delivery for buyer products.
+            // Keep this explicit so the existing product card can render its COD badge.
+            'cod' => true,
             'rating' => $rating,
-            'rating_count' => (int) ($product->reviews?->count() ?? 0),
-            'sold' => 0,
+            'rating_count' => $reviewCount,
+            'sold' => $this->soldCountForProduct((int) $product->id),
             'stock' => $stock,
             'image' => $product->image_path
                 ? 'buyer/products/' . $product->id . '/image'
@@ -447,6 +484,8 @@ class BuyerCatalogService
             'shop_slug' => 'seller-' . (int) $product->seller_account_id,
             'shop_name' => $storeName,
             'store_name' => $storeName,
+            'shop_logo' => $this->publicMediaUrl($seller?->store_logo_path),
+            'shop_description' => (string) ($seller?->store_description ?? ''),
             'seller_account_id' => (int) $product->seller_account_id,
             'shop_badge' => 'SARI Seller',
             'shop_rating' => $rating,
@@ -461,8 +500,31 @@ class BuyerCatalogService
                     'rating' => (int) $review->rating,
                     'comment' => (string) ($review->comment ?? ''),
                     'created_at' => $review->created_at?->format('M d, Y'),
+                    'seller_reply' => $review->sellerReply ? [
+                        'reply' => (string) $review->sellerReply->reply,
+                        'created_at' => $review->sellerReply->created_at?->format('M d, Y'),
+                    ] : null,
                 ])->values()->all()
                 : [],
+        ];
+    }
+
+    private function toBuyerShopResult(SellerAccount $seller): array
+    {
+        $storeName = trim((string) ($seller->store_name ?: 'SARI Seller Store'));
+        $username = $seller->email
+            ? str($seller->email)->before('@')->toString()
+            : 'seller' . $seller->id;
+
+        return [
+            'slug' => 'seller-' . $seller->id,
+            'seller_account_id' => (int) $seller->id,
+            'name' => $storeName,
+            'store_name' => $storeName,
+            'username' => $username,
+            'logo' => $this->publicMediaUrl($seller->store_logo_path) ?: asset('images/sari-logo.png'),
+            'badge' => 'SARI Seller',
+            'products_count' => (int) ($seller->buyer_visible_products_count ?? 0),
         ];
     }
 
@@ -476,20 +538,44 @@ class BuyerCatalogService
             ? str($seller->email)->before('@')->toString()
             : 'seller' . $seller->id;
 
-        $ratings = $products
-            ->flatMap(fn ($product) => $product->reviews ?? collect())
-            ->pluck('rating');
+        $ratingCount = (int) $products->sum(function (SellerProduct $product): int {
+            if (isset($product->reviews_count)) {
+                return (int) $product->reviews_count;
+            }
+
+            return $product->relationLoaded('reviews') ? $product->reviews->count() : 0;
+        });
+
+        $ratingTotal = (float) $products->sum(function (SellerProduct $product): float {
+            $count = isset($product->reviews_count)
+                ? (int) $product->reviews_count
+                : ($product->relationLoaded('reviews') ? $product->reviews->count() : 0);
+
+            if ($count <= 0) {
+                return 0.0;
+            }
+
+            $average = isset($product->reviews_avg_rating)
+                ? (float) $product->reviews_avg_rating
+                : (float) $product->reviews->avg('rating');
+
+            return $average * $count;
+        });
 
         return [
             'slug' => 'seller-' . $seller->id,
             'seller_account_id' => (int) $seller->id,
             'name' => $storeName,
             'store_name' => $storeName,
+            'description' => (string) ($seller->store_description ?? ''),
+            'public_phone' => (string) ($seller->store_phone ?? ''),
+            'public_email' => (string) ($seller->store_public_email ?? ''),
             'username' => $username,
-            'logo' => 'images/sari-logo.png',
+            'logo' => $this->publicMediaUrl($seller->store_logo_path) ?: asset('images/sari-logo.png'),
+            'banner' => $this->publicMediaUrl($seller->store_banner_path),
             'badge' => 'SARI Seller',
-            'rating' => $ratings->isEmpty() ? 0 : round((float) $ratings->avg(), 1),
-            'rating_count' => $ratings->count(),
+            'rating' => $ratingCount > 0 ? round($ratingTotal / $ratingCount, 1) : 0,
+            'rating_count' => $ratingCount,
             'products_count' => $products->count(),
             'followers' => '—',
             'following' => '—',
@@ -497,6 +583,9 @@ class BuyerCatalogService
             'response_time' => '—',
             'joined' => $seller->created_at?->diffForHumans() ?: 'SARI seller',
             'categories' => $categories,
+            'vouchers' => $seller->relationLoaded('vouchers')
+                ? $seller->vouchers->map(fn (SellerVoucher $voucher) => $this->voucherPayload($voucher))->values()->all()
+                : [],
         ];
     }
 
@@ -553,20 +642,113 @@ class BuyerCatalogService
         return [];
     }
 
+    private function soldCountForProduct(int $productId): int
+    {
+        if ($productId <= 0) {
+            return 0;
+        }
+
+        $counts = $this->soldCounts();
+
+        return (int) ($counts[$productId] ?? 0);
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function soldCounts(): array
+    {
+        if ($this->soldCounts !== null) {
+            return $this->soldCounts;
+        }
+
+        $this->soldCounts = Cache::remember('buyer.catalog.sold-counts.v1', now()->addMinute(), function (): array {
+            $counts = [];
+
+            MarketplaceOrder::query()
+                ->where('status', 'delivered')
+                ->select(['id', 'items'])
+                ->orderBy('id')
+                ->chunkById(250, function ($orders) use (&$counts): void {
+                    foreach ($orders as $order) {
+                        foreach ((array) $order->items as $item) {
+                            $productId = (int) ($item['product_id'] ?? 0);
+                            $quantity = max(0, (int) ($item['qty'] ?? $item['quantity'] ?? 0));
+
+                            if ($productId <= 0 || $quantity <= 0) {
+                                continue;
+                            }
+
+                            $counts[$productId] = ($counts[$productId] ?? 0) + $quantity;
+                        }
+                    }
+                });
+
+            return $counts;
+        });
+
+        return $this->soldCounts;
+    }
+
     private function approvedProductsQuery(): Builder
     {
         return SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,store_status,created_at',
+                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
                 'activeVariants',
                 'galleryImages',
-                'reviews:id,seller_product_id,rating,comment,created_at',
             ])
-            ->where('moderation_status', 'approved')
-            ->whereNull('archived_at')
-            ->whereHas('seller', fn (Builder $query) => $query->where(function (Builder $sellerQuery) {
-                $sellerQuery->whereNull('store_status')->orWhere('store_status', 'open');
-            }));
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->buyerVisible();
+    }
+
+    private function activeVoucherConstraint(Builder|Relation $query): void
+    {
+        $query
+            ->currentlyUsable()
+            ->orderByDesc('created_at');
+    }
+
+    private function primaryVoucher(?SellerAccount $seller, string $preferredCode = ''): ?array
+    {
+        if (!$seller || !$seller->relationLoaded('vouchers')) {
+            return null;
+        }
+
+        $preferredCode = strtoupper(trim($preferredCode));
+        $voucher = $preferredCode !== ''
+            ? $seller->vouchers->first(fn (SellerVoucher $candidate) => strtoupper((string) $candidate->code) === $preferredCode)
+            : null;
+
+        $voucher ??= $seller->vouchers->first();
+
+        return $voucher instanceof SellerVoucher ? $this->voucherPayload($voucher) : null;
+    }
+
+    private function voucherPayload(SellerVoucher $voucher): array
+    {
+        $value = $voucher->discount_type === 'percentage'
+            ? rtrim(rtrim(number_format((float) $voucher->discount_value, 2, '.', ''), '0'), '.') . '% off'
+            : '₱' . number_format((float) $voucher->discount_value, 2) . ' off';
+
+        return [
+            'id' => (int) $voucher->id,
+            'code' => (string) $voucher->code,
+            'name' => (string) $voucher->name,
+            'type' => (string) $voucher->discount_type,
+            'value' => $value,
+            'minimum' => (float) $voucher->minimum_spend,
+            'maximum_discount' => $voucher->maximum_discount !== null ? (float) $voucher->maximum_discount : null,
+            'ends_at' => $voucher->ends_at?->toIso8601String(),
+        ];
+    }
+
+    private function publicMediaUrl(?string $path): ?string
+    {
+        $path = trim((string) $path);
+
+        return $path !== '' ? Storage::disk('public')->url($path) : null;
     }
 
     private function categoryImage(string $category): string

@@ -1,670 +1,166 @@
-<header
-    class="
-        sticky
-        top-0
-        z-40
+@php
+    $buyerHeaderEmail = (string) session('buyer_email', 'buyer@gmail.com');
+    $buyerHeaderHandle = trim((string) \Illuminate\Support\Str::before($buyerHeaderEmail, '@'));
+    $buyerHeaderName = trim((string) session('buyer_name', ''));
 
-        border-b
-        border-[#eee4d3]
+    if ($buyerHeaderName === '') {
+        $buyerHeaderName = \Illuminate\Support\Str::of($buyerHeaderHandle ?: 'Buyer Account')
+            ->replace(['.', '_', '-'], ' ')
+            ->title()
+            ->toString();
+    }
 
-        bg-[#fffdf9]/95
+    $buyerHeaderInitials = strtoupper(
+        mb_substr(preg_replace('/[^A-Za-z0-9]/', '', $buyerHeaderName) ?: 'BU', 0, 2)
+    );
+@endphp
 
-        backdrop-blur-md
-    "
->
-
-    {{-- ============================================================
-         HEADER MAIN ROW
-    ============================================================ --}}
-    <div
-        class="
-            flex
-            min-h-[86px]
-            w-full
-            items-center
-            justify-between
-            gap-3
-
-            px-4
-
-            sm:px-6
-
-            lg:px-8
-
-            xl:px-10
-        "
-    >
-
-        {{-- ========================================================
-             LEFT SIDE
-        ========================================================= --}}
-        <div
-            class="
-                flex
-                min-w-0
-                items-center
-                gap-3
-
-                sm:gap-4
-            "
-        >
-
-            {{-- ====================================================
-                 MOBILE SIDEBAR BUTTON
-            ===================================================== --}}
+<header id="buyerHeader" class="sticky top-0 z-40 border-b border-[#eee7dc] bg-white">
+    <div class="buyer-header-main flex w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-5 xl:px-6">
+        {{-- LEFT --}}
+        <div class="flex min-w-0 items-center gap-2.5">
             <button
                 id="buyerMobileMenuButton"
                 type="button"
-                class="
-                    grid
-                    h-11
-                    w-11
-                    shrink-0
-                    place-items-center
-
-                    rounded-xl
-
-                    border
-                    border-[#e8dfd0]
-
-                    bg-white
-
-                    text-[#4f473c]
-
-                    shadow-sm
-
-                    transition
-
-                    hover:border-[#d9be8c]
-                    hover:bg-[#fff9ef]
-                    hover:text-[#b97805]
-
-                    focus:outline-none
-                    focus:ring-4
-                    focus:ring-[#d89a25]/10
-
-                    active:scale-95
-
-                    lg:hidden
-                "
+                class="buyer-header-control grid shrink-0 place-items-center border border-[#e8dfd0] bg-white text-[#4f473c] shadow-sm transition hover:border-[#d9be8c] hover:bg-[#fff9ef] hover:text-[#b97805] focus:outline-none focus:ring-4 focus:ring-[#d89a25]/10 lg:hidden"
                 aria-label="Open buyer navigation"
                 aria-controls="buyerSidebar"
                 aria-expanded="false"
             >
-                <svg
-                    viewBox="0 0 24 24"
-                    class="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    aria-hidden="true"
-                >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <path d="M4 7h16"></path>
                     <path d="M4 12h16"></path>
                     <path d="M4 17h16"></path>
                 </svg>
             </button>
 
-
-            {{-- ====================================================
-                 DESKTOP SIDEBAR TOGGLE
-            ===================================================== --}}
             <button
                 id="buyerSidebarToggle"
                 type="button"
-                class="
-                    hidden
-                    h-11
-                    w-11
-                    shrink-0
-                    place-items-center
-
-                    rounded-xl
-
-                    border
-                    border-[#e8dfd0]
-
-                    bg-white
-
-                    text-[#4f473c]
-
-                    shadow-sm
-
-                    transition-all
-                    duration-200
-
-                    hover:border-[#d9be8c]
-                    hover:bg-[#fff9ef]
-                    hover:text-[#b97805]
-
-                    focus:outline-none
-                    focus:ring-4
-                    focus:ring-[#d89a25]/10
-
-                    active:scale-95
-
-                    lg:grid
-                "
+                class="buyer-header-control hidden shrink-0 place-items-center border border-[#e8dfd0] bg-white text-[#4f473c] shadow-sm transition hover:border-[#d9be8c] hover:bg-[#fff9ef] hover:text-[#b97805] focus:outline-none focus:ring-4 focus:ring-[#d89a25]/10 lg:grid"
                 aria-label="Collapse sidebar"
                 aria-controls="buyerSidebar"
                 aria-expanded="true"
             >
-                <svg
-                    viewBox="0 0 24 24"
-                    class="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    aria-hidden="true"
-                >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <path d="M4 7h16"></path>
                     <path d="M4 12h16"></path>
                     <path d="M4 17h16"></path>
                 </svg>
             </button>
 
-
-            {{-- ====================================================
-                 PAGE TITLE + BREADCRUMB
-            ===================================================== --}}
             <div class="min-w-0">
-
-                <h1
-                    class="
-                        truncate
-
-                        text-[18px]
-                        font-bold
-                        tracking-[-0.025em]
-                        text-[#17140e]
-
-                        sm:text-[20px]
-
-                        xl:text-[22px]
-                    "
-                >
+                <h1 class="truncate font-bold tracking-[-0.025em] text-[#17140e]">
                     @yield('page-title', 'Buyer Home')
                 </h1>
 
-
-                <div
-                    class="
-                        mt-1
-
-                        hidden
-                        items-center
-                        gap-1.5
-
-                        text-[11px]
-                        text-[#978d7d]
-
-                        sm:flex
-                    "
-                >
-
+                <div class="buyer-header-breadcrumb mt-1 hidden items-center gap-1.5 text-[#978d7d] sm:flex">
                     <a
                         id="buyerHeaderBreadcrumbName"
                         href="{{ route('buyer.home') }}"
                         wire:navigate.hover
-                        class="
-                            max-w-[180px]
-                            truncate
-                            transition
-
-                            hover:text-[#b97805]
-                        "
+                        class="max-w-[150px] truncate transition hover:text-[#b97805]"
                     >
                         Buyer
                     </a>
-
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-3 w-3"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="m9 18 6-6-6-6"></path>
                     </svg>
-
-
-                    <span
-                        class="
-                            font-medium
-                            text-[#5c5448]
-                        "
-                    >
-                        @yield('page-title', 'Home')
-                    </span>
-
+                    <span class="truncate font-medium text-[#5c5448]">@yield('page-title', 'Home')</span>
                 </div>
-
             </div>
-
         </div>
 
-
-        {{-- ========================================================
-             RIGHT SIDE
-        ========================================================= --}}
-        <div
-            class="
-                flex
-                min-w-0
-                items-center
-                gap-2
-
-                sm:gap-3
-            "
-        >
-
-            {{-- ====================================================
-                 DESKTOP SEARCH
-            ===================================================== --}}
-            <div
-                class="
-                    relative
-
-                    hidden
-
-                    md:block
-                "
-            >
-
-                <svg
-                    viewBox="0 0 24 24"
-                    class="
-                        pointer-events-none
-
-                        absolute
-                        left-4
-                        top-1/2
-
-                        h-[18px]
-                        w-[18px]
-
-                        -translate-y-1/2
-
-                        text-[#9a9184]
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="7"
-                    ></circle>
-
+        {{-- RIGHT --}}
+        <div class="flex min-w-0 items-center gap-1.5 sm:gap-2">
+            <div class="relative hidden md:block">
+                <svg viewBox="0 0 24 24" class="buyer-header-search-icon pointer-events-none absolute top-1/2 -translate-y-1/2 text-[#9a9184]" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
                     <path d="m20 20-4-4"></path>
                 </svg>
-
-
                 <input
                     id="buyerHeaderSearch"
                     type="search"
                     name="search"
-                    placeholder="Search products, brands..."
+                    placeholder="Search products, stores..."
                     autocomplete="off"
-                    class="
-                        h-11
-                        w-[220px]
-
-                        rounded-[14px]
-
-                        border
-                        border-[#e6ddcf]
-
-                        bg-white
-
-                        pl-11
-                        pr-4
-
-                        text-[10px]
-                        text-[#28231c]
-
-                        outline-none
-
-                        transition
-
-                        placeholder:text-[#a89f92]
-
-                        focus:border-[#d89a25]
-                        focus:ring-4
-                        focus:ring-[#d89a25]/10
-
-                        xl:w-[300px]
-                    "
+                    class="buyer-header-search border border-[#e6ddcf] bg-white text-[#28231c] outline-none transition placeholder:text-[#a89f92] focus:border-[#d89a25] focus:ring-4 focus:ring-[#d89a25]/10"
                 >
-
             </div>
 
+            <a
+                id="buyerNotificationButton"
+                href="{{ route('buyer.notifications') }}"
+                wire:navigate.hover
+                class="buyer-header-icon-button relative grid shrink-0 place-items-center text-[#475467] transition-colors hover:text-[#c9890b] focus:outline-none focus:ring-2 focus:ring-[#d59617]/20"
+                aria-label="View notifications"
+                title="Notifications"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
+                <span id="buyerNotificationCount" class="buyer-header-badge absolute hidden place-items-center rounded-full border-2 border-white bg-[#d9950b] font-bold text-white" aria-label="Unread notification count">0</span>
+            </a>
 
-            {{-- ====================================================
-                 CART
-            ===================================================== --}}
             <a
                 id="buyerCartButton"
                 href="{{ route('buyer.cart') }}"
                 wire:navigate.hover
-                class="
-                    relative
-
-                    grid
-                    h-11
-                    w-11
-                    shrink-0
-                    place-items-center
-
-                    rounded-xl
-
-                    border
-                    border-[#e8dfd0]
-
-                    bg-white
-
-                    text-[#443d33]
-
-                    shadow-sm
-
-                    transition
-
-                    hover:border-[#d9be8c]
-                    hover:bg-[#fff9ef]
-                    hover:text-[#b97805]
-
-                    focus:outline-none
-                    focus:ring-4
-                    focus:ring-[#d89a25]/10
-
-                    active:scale-95
-                "
+                class="buyer-header-icon-button relative grid shrink-0 place-items-center text-[#475467] transition-colors hover:text-[#c9890b] focus:outline-none focus:ring-2 focus:ring-[#d59617]/20"
                 aria-label="View cart"
                 title="Shopping Cart"
             >
-
-                <svg
-                    viewBox="0 0 24 24"
-                    class="
-                        h-[20px]
-                        w-[20px]
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    aria-hidden="true"
-                >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <path d="M3 4h2l2 12h10l2-8H7"></path>
-
-                    <circle
-                        cx="9"
-                        cy="20"
-                        r="1.5"
-                    ></circle>
-
-                    <circle
-                        cx="17"
-                        cy="20"
-                        r="1.5"
-                    ></circle>
+                    <circle cx="9" cy="20" r="1.5"></circle>
+                    <circle cx="17" cy="20" r="1.5"></circle>
                 </svg>
-
-
-                {{-- =================================================
-                     CART COUNT
-                ================================================== --}}
-                <span
-                    id="buyerCartCount"
-                    class="
-                        absolute
-
-                        -right-1.5
-                        -top-1.5
-
-                        hidden
-
-                        h-[21px]
-                        min-w-[21px]
-
-                        place-items-center
-
-                        rounded-full
-
-                        border-2
-                        border-[#fffdf9]
-
-                        bg-[#d9930a]
-
-                        px-1
-
-                        text-[9px]
-                        font-bold
-                        text-white
-                    "
-                    aria-label="Cart item count"
-                >
-                    0
-                </span>
-
+                <span id="buyerCartCount" class="buyer-header-badge absolute hidden place-items-center rounded-full border-2 border-white bg-[#d9950b] font-bold text-white" aria-label="Cart item count">0</span>
             </a>
 
+            <div class="mx-1 hidden h-8 w-px bg-[#eee4d5] xl:block"></div>
 
-            {{-- ====================================================
-                 DIVIDER
-            ===================================================== --}}
-            <div
-                class="
-                    hidden
-                    h-9
-                    w-px
-
-                    bg-[#eee4d5]
-
-                    xl:block
-                "
-            ></div>
-
-
-            {{-- ====================================================
-                 PROFILE
-            ===================================================== --}}
             <a
                 id="buyerProfileButton"
                 href="{{ route('buyer.account') }}"
                 wire:navigate.hover
-                class="
-                    hidden
-                    items-center
-                    gap-2.5
-
-                    rounded-xl
-
-                    px-2
-                    py-1.5
-
-                    transition
-
-                    hover:bg-[#fff7e9]
-
-                    focus:outline-none
-                    focus:ring-4
-                    focus:ring-[#d89a25]/10
-
-                    xl:flex
-                "
+                class="buyer-header-profile hidden items-center transition hover:bg-[#fff9ef] focus:outline-none focus:ring-4 focus:ring-[#d89a25]/10 xl:flex"
                 aria-label="Open Account Management"
                 title="Account Management"
             >
+                <span class="buyer-shell-avatar relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-[#d9950b] font-bold text-white">
+                    <img id="buyerHeaderProfileImage" src="" alt="Buyer profile photo" class="hidden h-full w-full object-cover">
+                    <span id="buyerHeaderProfileInitials">{{ $buyerHeaderInitials ?: 'BU' }}</span>
+                </span>
 
-                <div
-                    class="
-                        relative
-                        grid
-                        h-10
-                        w-10
-                        shrink-0
-                        place-items-center
-                        overflow-hidden
-
-                        rounded-full
-
-                        bg-[#d9930a]
-
-                        text-[11px]
-                        font-bold
-                        text-white
-                    "
-                >
-
-                    <img
-                        id="buyerHeaderProfileImage"
-                        src=""
-                        alt="Buyer profile photo"
-                        class="
-                            hidden
-                            h-full
-                            w-full
-                            object-cover
-                        "
-                    >
-
-                    <span id="buyerHeaderProfileInitials">
-                        BU
-                    </span>
-
-                </div>
-
-
-                <div class="min-w-0">
-
-                    <p
-                        id="buyerHeaderProfileName"
-                        class="
-                            max-w-[140px]
-
-                            truncate
-
-                            text-[11px]
-                            font-semibold
-                            text-[#28231c]
-                        "
-                    >
-                        Buyer Account
-                    </p>
-
-                    <p
+                <span class="min-w-0">
+                    <span id="buyerHeaderProfileName" class="block max-w-[145px] truncate font-semibold text-[#28231c]">{{ $buyerHeaderName ?: 'Buyer Account' }}</span>
+                    <span
                         id="buyerHeaderProfileEmail"
-                        data-buyer-login-email="{{ session('buyer_email', 'buyer@gmail.com') }}"
-                        class="
-                            mt-0.5
-                            max-w-[140px]
-                            truncate
-
-                            text-[9px]
-                            text-[#908779]
-                        "
-                    >
-                        {{ session('buyer_email', 'buyer@gmail.com') }}
-                    </p>
-
-                </div>
-
+                        data-buyer-login-email="{{ $buyerHeaderEmail }}"
+                        class="mt-0.5 block max-w-[145px] truncate text-[#908779]"
+                    >{{ $buyerHeaderEmail }}</span>
+                </span>
             </a>
-
         </div>
-
     </div>
 
-
-    {{-- ============================================================
-         MOBILE SEARCH
-    ============================================================ --}}
-    <div
-        class="
-            border-t
-            border-[#f0e8dc]
-
-            px-4
-            py-3
-
-            md:hidden
-        "
-    >
-
+    {{-- MOBILE SEARCH --}}
+    <div class="buyer-mobile-search border-t border-[#f0e8dc] px-4 py-2.5 md:hidden">
         <div class="relative">
-
-            <svg
-                viewBox="0 0 24 24"
-                class="
-                    pointer-events-none
-
-                    absolute
-                    left-3.5
-                    top-1/2
-
-                    h-4
-                    w-4
-
-                    -translate-y-1/2
-
-                    text-[#9a9184]
-                "
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-            >
-                <circle
-                    cx="11"
-                    cy="11"
-                    r="7"
-                ></circle>
-
+            <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9a9184]" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
                 <path d="m20 20-4-4"></path>
             </svg>
-
-
             <input
                 id="buyerMobileSearch"
                 type="search"
                 name="mobile_search"
                 placeholder="Search products..."
                 autocomplete="off"
-                class="
-                    h-10
-                    w-full
-
-                    rounded-xl
-
-                    border
-                    border-[#e6dfd5]
-
-                    bg-white
-
-                    pl-10
-                    pr-4
-
-                    text-[10px]
-                    text-[#28231c]
-
-                    outline-none
-
-                    transition
-
-                    placeholder:text-[#a89f92]
-
-                    focus:border-[#d89a25]
-                    focus:ring-4
-                    focus:ring-[#d89a25]/10
-                "
+                class="h-10 w-full rounded-[11px] border border-[#e6dfd5] bg-white pl-10 pr-4 text-[10px] text-[#28231c] outline-none transition placeholder:text-[#a89f92] focus:border-[#d89a25] focus:ring-4 focus:ring-[#d89a25]/10"
             >
-
         </div>
-
     </div>
-
 </header>

@@ -49,6 +49,31 @@ async function refreshCartCount() {
     } catch (_) {}
 }
 
+async function refreshNotificationCount() {
+    const url = document.body.dataset.buyerNotificationSummaryUrl;
+    if (!url) return;
+
+    try {
+        const response = await fetch(url, {
+            headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            cache: 'no-store',
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        const count = Number(data.unread_count || 0);
+
+        ['buyerNotificationCount', 'buyerSidebarNotificationCount'].forEach((id) => {
+            const badge = document.getElementById(id);
+            if (!badge) return;
+            badge.textContent = count > 99 ? '99+' : String(count);
+            badge.classList.toggle('hidden', count <= 0);
+            if (count > 0) badge.classList.add('grid');
+            else badge.classList.remove('grid');
+        });
+    } catch (_) {}
+}
+
 async function addProductToCart(productId, quantity = 1, variantId = null) {
     const url = document.body.dataset.buyerCartStoreUrl;
     if (!url) throw new Error('Cart route is unavailable.');
@@ -82,6 +107,7 @@ async function addProductToCart(productId, quantity = 1, variantId = null) {
 }
 
 window.SariBuyerCart = { add: addProductToCart, refresh: refreshCartCount };
+window.SariBuyerNotifications = { refresh: refreshNotificationCount };
 
 function initBuyerShell() {
     const body = document.body;
@@ -198,6 +224,11 @@ function initBuyerShell() {
     });
 
     refreshCartCount();
+    refreshNotificationCount();
 }
 
 document.addEventListener('DOMContentLoaded', initBuyerShell);
+document.addEventListener('livewire:navigated', () => {
+    refreshCartCount();
+    refreshNotificationCount();
+});

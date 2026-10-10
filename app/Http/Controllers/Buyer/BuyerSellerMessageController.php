@@ -11,7 +11,6 @@ use App\Models\Catalog\SellerProduct;
 use App\Services\Buyer\BuyerIdentityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class BuyerSellerMessageController extends Controller
@@ -40,11 +39,12 @@ class BuyerSellerMessageController extends Controller
                 ->pluck('seller_account_id')
         );
 
-        // Let buyers start a conversation before ordering from any approved shop.
+        // Let buyers start a conversation before ordering from currently available shops.
+        // Existing orders/messages remain in the list so support can continue after a store pauses.
         $sellerIds = $sellerIds->merge(
             SellerProduct::query()
-                ->where('moderation_status', 'approved')
-                ->whereNull('archived_at')
+                ->buyerVisible()
+                ->distinct()
                 ->pluck('seller_account_id')
         )->filter()->unique()->values();
 
@@ -79,6 +79,8 @@ class BuyerSellerMessageController extends Controller
     {
         $this->identity->guard($request);
 
+        abort_unless($this->canContactSeller($request, $seller), 404);
+
         $validated = $request->validate([
             'body' => ['required', 'string', 'max:3000'],
             'order_id' => ['nullable', 'integer', 'exists:marketplace_orders,id'],
@@ -109,5 +111,31 @@ class BuyerSellerMessageController extends Controller
         return redirect()
             ->route('buyer.messages', ['seller' => $seller->id])
             ->with('success', 'Message sent to seller.');
+    }
+
+    private function canContactSeller(Request $request, SellerAccount $seller): bool
+    {
+        $hasOrder = $this->identity
+            ->apply(MarketplaceOrder::query(), $request)
+            ->where('seller_account_id', $seller->id)
+            ->exists();
+
+        if ($hasOrder) {
+            return true;
+        }
+
+        $hasConversation = $this->identity
+            ->apply(BuyerSellerMessage::query(), $request)
+            ->where('seller_account_id', $seller->id)
+            ->exists();
+
+        if ($hasConversation) {
+            return true;
+        }
+
+        return SellerProduct::query()
+            ->buyerVisible()
+            ->where('seller_account_id', $seller->id)
+            ->exists();
     }
 }

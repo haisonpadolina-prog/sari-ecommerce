@@ -6,6 +6,7 @@ use App\Models\Accounts\SellerAccount;
 use App\Models\Compliance\SellerWarning;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -25,6 +26,7 @@ class SellerProduct extends Model
         'discount',
         'flash_sale_ends_at',
         'free_shipping',
+        'cash_on_delivery',
         'package_weight',
         'package_length',
         'package_width',
@@ -52,6 +54,7 @@ class SellerProduct extends Model
             'discount' => 'decimal:2',
             'flash_sale_ends_at' => 'datetime',
             'free_shipping' => 'boolean',
+            'cash_on_delivery' => 'boolean',
             'package_weight' => 'decimal:3',
             'package_length' => 'decimal:2',
             'package_width' => 'decimal:2',
@@ -108,5 +111,37 @@ class SellerProduct extends Model
     public function isArchived(): bool
     {
         return !is_null($this->archived_at);
+    }
+
+    /**
+     * Buyer-visible marketplace inventory.
+     *
+     * Keep this invariant in one place so catalog pages, direct product URLs,
+     * image endpoints, and cart operations cannot disagree about whether a
+     * seller listing is currently purchasable.
+     */
+    public function scopeBuyerVisible(Builder $query): Builder
+    {
+        return $query
+            ->where('moderation_status', 'approved')
+            ->whereNull('archived_at')
+            ->whereHas('seller', fn (Builder $sellerQuery) => $sellerQuery->buyerAvailable());
+    }
+
+    public function isBuyerVisible(): bool
+    {
+        $this->loadMissing('seller');
+
+        if ($this->moderation_status !== 'approved' || $this->archived_at !== null) {
+            return false;
+        }
+
+        $seller = $this->seller;
+
+        if (!$seller) {
+            return false;
+        }
+
+        return $seller->isBuyerAvailable();
     }
 }

@@ -8,8 +8,12 @@
 @include('components.buyer.header')
 
 @php
-    $feePerSeller = (float) config('sari.buyer.delivery_fee_per_seller', 80);
+    $feePerSeller = $cart->deliveryFeePerSeller();
     $itemGroups = $items->groupBy(fn ($item) => (int) ($item->product?->seller_account_id ?? 0));
+    $availabilityByItem = $items->mapWithKeys(
+        fn ($item) => [(int) $item->id => $cart->availability($item)]
+    );
+    $selectableCount = $availabilityByItem->filter(fn ($availability) => $availability['selectable'])->count();
 @endphp
 
 <div
@@ -623,18 +627,13 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2.5">
-                <span class="sari-cart-count-pill inline-flex h-10 items-center gap-2 rounded-[12px] border border-[#eadfc9] bg-[#fffaf1] px-4 text-[8px] font-semibold text-[#966719]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M3 4h2l2 11h11l2-8H6"></path>
-                        <circle cx="9" cy="19" r="1.4"></circle>
-                        <circle cx="18" cy="19" r="1.4"></circle>
-                    </svg>
-                    {{ $items->count() }} item{{ $items->count() === 1 ? '' : 's' }} in your cart
+                <span class="sari-cart-availability-text">
+                    {{ $selectableCount }} of {{ $items->count() }} item{{ $items->count() === 1 ? '' : 's' }} available for checkout
                 </span>
 
                 <a
                     href="{{ route('buyer.products') }}"
-                    class="sari-btn-secondary inline-flex h-10 items-center justify-center gap-2 rounded-[12px] border border-[#dfd5c8] bg-white px-4 text-[8px] font-semibold text-[#62594f]"
+                    class="sari-btn-secondary sari-btn-continue-shopping inline-flex h-10 items-center justify-center gap-2 rounded-[12px] px-4 text-[8px] font-semibold"
                 >
                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
                         <path d="m14 7-5 5 5 5"></path>
@@ -678,11 +677,18 @@
                 {{-- SELECT ALL --}}
                 <section class="sari-cart-toolbar flex flex-col gap-3 rounded-[16px] border border-[#e8e0d6] bg-white px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
                     <label class="inline-flex cursor-pointer items-center gap-3">
-                        <input
-                            id="cartSelectAll"
-                            type="checkbox"
-                            class="sari-cart-select h-4 w-4 rounded border-[#d9d0c4]"
-                        >
+                        <span class="sari-select-all-check-wrap">
+                            <input
+                                id="cartSelectAll"
+                                type="checkbox"
+                                class="sari-cart-select sr-only"
+                            >
+                            <span class="sari-select-all-check-shell" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" class="sari-select-all-check-mark" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="m6 12 4 4 8-8"></path>
+                                </svg>
+                            </span>
+                        </span>
                         <span>
                             <span class="block text-[9px] font-semibold text-[#403930]">Select all products</span>
                             <span class="mt-0.5 block text-[7px] text-[#9a9187]">
@@ -706,23 +712,74 @@
                     @php
                         $seller = $sellerItems->first()?->product?->seller;
                         $storeName = $seller?->store_name ?: 'SARI Seller Store';
+
+                        $storeLogoUrl = filled($seller?->store_logo_path)
+                            ? \Illuminate\Support\Facades\Storage::disk('public')->url($seller->store_logo_path)
+                            : null;
+
+                        $storeInitials = collect(preg_split('/\s+/', trim($storeName)))
+                            ->filter()
+                            ->take(2)
+                            ->map(fn ($part) => mb_strtoupper(mb_substr($part, 0, 1)))
+                            ->implode('');
+
+                        $storeInitials = $storeInitials !== '' ? $storeInitials : 'S';
+                        $storeUrl = (int) $sellerId > 0
+                            ? route('buyer.shop', ['shop' => 'seller-' . (int) $sellerId])
+                            : null;
                     @endphp
 
                     <section class="sari-seller-shell overflow-hidden rounded-[18px] border border-[#e8e0d6] bg-white">
                         {{-- SELLER HEADER --}}
                         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#eee8df] bg-[#fcfbf8] px-4 py-3.5">
                             <div class="flex items-center gap-3">
-                                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-[#ead9b8] bg-[#fff8e9] text-[#b97913]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M4 10h16"></path>
-                                        <path d="M5 10 7 5h10l2 5"></path>
-                                        <path d="M6 10v9h12v-9"></path>
-                                        <path d="M9 19v-5h6v5"></path>
-                                    </svg>
-                                </span>
+                                @if ($storeUrl)
+                                    <a
+                                        href="{{ $storeUrl }}"
+                                        class="sari-store-profile"
+                                        aria-label="Visit {{ $storeName }}"
+                                        title="{{ $storeName }}"
+                                    >
+                                        @if ($storeLogoUrl)
+                                            <img
+                                                src="{{ $storeLogoUrl }}"
+                                                alt="{{ $storeName }} store profile"
+                                                class="sari-store-profile-image"
+                                                loading="lazy"
+                                                decoding="async"
+                                                onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                                            >
+                                            <span class="sari-store-profile-fallback" hidden aria-hidden="true">{{ $storeInitials }}</span>
+                                        @else
+                                            <span class="sari-store-profile-fallback" aria-hidden="true">{{ $storeInitials }}</span>
+                                        @endif
+                                    </a>
+                                @else
+                                    <span class="sari-store-profile" title="{{ $storeName }}">
+                                        @if ($storeLogoUrl)
+                                            <img
+                                                src="{{ $storeLogoUrl }}"
+                                                alt="{{ $storeName }} store profile"
+                                                class="sari-store-profile-image"
+                                                loading="lazy"
+                                                decoding="async"
+                                                onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                                            >
+                                            <span class="sari-store-profile-fallback" hidden aria-hidden="true">{{ $storeInitials }}</span>
+                                        @else
+                                            <span class="sari-store-profile-fallback" aria-hidden="true">{{ $storeInitials }}</span>
+                                        @endif
+                                    </span>
+                                @endif
 
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <h2 class="text-[10.5px] font-bold text-[#39322b]">{{ $storeName }}</h2>
+                                    @if ($storeUrl)
+                                        <a href="{{ $storeUrl }}" class="sari-store-name-link">
+                                            {{ $storeName }}
+                                        </a>
+                                    @else
+                                        <h2 class="sari-store-name-link">{{ $storeName }}</h2>
+                                    @endif
                                     <span class="inline-flex items-center gap-1 rounded-full border border-[#cfe3d6] bg-[#f1f8f4] px-2 py-1 text-[6px] font-semibold text-[#4f7d63]">
                                         <svg viewBox="0 0 24 24" class="h-2.5 w-2.5" fill="none" stroke="currentColor" stroke-width="1.9">
                                             <path d="M12 3l7 3v5c0 4.5-2.9 8.2-7 9-4.1-.8-7-4.5-7-9V6l7-3Z"></path>
@@ -733,9 +790,16 @@
                                 </div>
                             </div>
 
-                            <span class="text-[7px] font-medium text-[#9b9287]">
-                                {{ $sellerItems->count() }} product{{ $sellerItems->count() === 1 ? '' : 's' }}
-                            </span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[7px] font-medium text-[#9b9287]">
+                                    {{ $sellerItems->count() }} product{{ $sellerItems->count() === 1 ? '' : 's' }}
+                                </span>
+                                @if ((int) $sellerId > 0)
+                                    <a href="{{ route('buyer.shop', ['shop' => 'seller-' . (int) $sellerId]) }}" class="rounded-lg border border-[#e3d7c7] bg-white px-2.5 py-1.5 text-[6.5px] font-semibold text-[#9b6817] transition hover:bg-[#fff7e8] hover:text-[#b67813]">
+                                        View Seller
+                                    </a>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="space-y-2.5 bg-[#faf9f7] p-2.5">
@@ -743,9 +807,12 @@
                                 @php
                                     $unit = $cart->unitPrice($item);
                                     $line = $cart->lineTotal($item);
-                                    $maxStock = $item->variant
-                                        ? (int) $item->variant->stock
-                                        : (int) $item->product->stock;
+                                    $availability = $availabilityByItem->get((int) $item->id, []);
+                                    $selectable = (bool) ($availability['selectable'] ?? false);
+                                    $quantityEditable = (bool) ($availability['quantity_editable'] ?? false);
+                                    $productVisible = (bool) ($availability['product_visible'] ?? false);
+                                    $availabilityReason = $availability['reason'] ?? null;
+                                    $maxStock = (int) ($availability['max_stock'] ?? 0);
                                     $freeShipping = (bool) ($item->product?->free_shipping ?? false);
                                 @endphp
 
@@ -757,12 +824,14 @@
                                     data-line-total="{{ number_format($line, 2, '.', '') }}"
                                     data-seller-id="{{ (int) ($item->product?->seller_account_id ?? 0) }}"
                                     data-free-shipping="{{ $freeShipping ? '1' : '0' }}"
+                                    data-cart-selectable="{{ $selectable ? '1' : '0' }}"
+                                    @if (!$selectable) aria-disabled="true" @endif
                                 >
                                     <div class="grid grid-cols-[26px_106px_minmax(0,1fr)] gap-3 sm:grid-cols-[28px_120px_minmax(0,1fr)]">
 
                                         {{-- CHECKBOX --}}
                                         <div class="flex justify-center pt-1">
-                                            <label class="cursor-pointer" title="Select for checkout">
+                                            <label class="{{ $selectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-45' }}" title="{{ $selectable ? 'Select for checkout' : $availabilityReason }}">
                                                 <input
                                                     form="selectedCheckoutForm"
                                                     name="items[]"
@@ -770,6 +839,7 @@
                                                     type="checkbox"
                                                     class="sari-cart-select sr-only"
                                                     data-cart-checkbox
+                                                    @disabled(!$selectable)
                                                 >
                                                 <span class="sari-cart-check-shell grid h-5 w-5 place-items-center rounded-[6px] border border-[#d8d0c5] bg-white text-white">
                                                     <svg viewBox="0 0 24 24" class="sari-cart-check-mark h-3 w-3" fill="none" stroke="currentColor" stroke-width="2.4">
@@ -780,17 +850,23 @@
                                         </div>
 
                                         {{-- IMAGE --}}
-                                        <a
-                                            href="{{ route('buyer.product.details', $item->product->id) }}"
-                                            class="flex h-[106px] w-[106px] items-center justify-center overflow-hidden rounded-[12px] border border-[#ebe3d8] bg-[#f8f5ef] p-2 sm:h-[120px] sm:w-[120px]"
-                                        >
-                                            <img
-                                                src="{{ route('buyer.product.image', $item->product->id) }}"
-                                                alt="{{ $item->product->name }}"
-                                                class="sari-cart-img h-full w-full object-contain"
-                                                onerror="this.style.display='none'"
+                                        @if ($productVisible)
+                                            <a
+                                                href="{{ route('buyer.product.details', $item->product->id) }}"
+                                                class="flex h-[106px] w-[106px] items-center justify-center overflow-hidden rounded-[12px] border border-[#ebe3d8] bg-[#f8f5ef] p-2 sm:h-[120px] sm:w-[120px]"
                                             >
-                                        </a>
+                                                <img
+                                                    src="{{ route('buyer.product.image', $item->product->id) }}"
+                                                    alt="{{ $item->product->name }}"
+                                                    class="sari-cart-img h-full w-full object-contain"
+                                                    onerror="this.style.display='none'"
+                                                >
+                                            </a>
+                                        @else
+                                            <div class="grid h-[106px] w-[106px] place-items-center rounded-[12px] border border-[#ebe3d8] bg-[#f5f2ed] p-3 text-center text-[7px] font-semibold text-[#9a9187] sm:h-[120px] sm:w-[120px]">
+                                                Unavailable
+                                            </div>
+                                        @endif
 
                                         {{-- DETAILS --}}
                                         <div class="min-w-0">
@@ -809,14 +885,26 @@
                                                         <span class="rounded-full bg-[#f6f3ef] px-2 py-1 text-[6px] font-semibold text-[#756c62]">
                                                             {{ max(0, $maxStock) }} in stock
                                                         </span>
+
+                                                        @if (!$selectable)
+                                                            <span class="rounded-full border border-[#efcece] bg-[#fff5f5] px-2 py-1 text-[6px] font-semibold text-[#a65353]">Unavailable</span>
+                                                        @endif
                                                     </div>
 
-                                                    <a
-                                                        href="{{ route('buyer.product.details', $item->product->id) }}"
-                                                        class="mt-2 block text-[12px] font-bold leading-5 text-[#2f2923] transition hover:text-[#a86e11]"
-                                                    >
-                                                        {{ $item->product->name }}
-                                                    </a>
+                                                    @if ($productVisible)
+                                                        <a
+                                                            href="{{ route('buyer.product.details', $item->product->id) }}"
+                                                            class="mt-2 block text-[12px] font-bold leading-5 text-[#2f2923] transition hover:text-[#a86e11]"
+                                                        >
+                                                            {{ $item->product->name }}
+                                                        </a>
+                                                    @else
+                                                        <p class="mt-2 block text-[12px] font-bold leading-5 text-[#746c64]">{{ $item->product->name }}</p>
+                                                    @endif
+
+                                                    @if ($availabilityReason)
+                                                        <p class="mt-1.5 text-[7px] font-medium leading-4 text-[#a65353]">{{ $availabilityReason }}</p>
+                                                    @endif
 
                                                     <p class="mt-1 text-[7.5px] leading-4 text-[#8f867a]">
                                                         {{ $cart->variantLabel($item) }}
@@ -856,6 +944,7 @@
                                                                 data-qty-minus
                                                                 class="grid h-full w-9 place-items-center text-[13px] text-[#73695f] transition hover:bg-[#fffaf1] hover:text-[#9a6817]"
                                                                 aria-label="Decrease quantity"
+                                                                @disabled(!$quantityEditable)
                                                             >−</button>
 
                                                             <input
@@ -866,6 +955,7 @@
                                                                 value="{{ $item->quantity }}"
                                                                 class="h-full w-12 border-x border-[#e8e1d8] text-center text-[8.5px] font-semibold text-[#433c35] outline-none"
                                                                 data-qty-input
+                                                                @disabled(!$quantityEditable)
                                                             >
 
                                                             <button
@@ -873,12 +963,14 @@
                                                                 data-qty-plus
                                                                 class="grid h-full w-9 place-items-center text-[13px] text-[#73695f] transition hover:bg-[#fffaf1] hover:text-[#9a6817]"
                                                                 aria-label="Increase quantity"
+                                                                @disabled(!$quantityEditable)
                                                             >+</button>
                                                         </div>
                                                     </div>
 
                                                     <button
-                                                        class="sari-btn-update sari-update-state h-9 rounded-[10px] px-3.5 text-[7px] font-semibold"
+                                                        class="sari-btn-update sari-update-state h-9 rounded-[10px] px-3.5 text-[7px] font-semibold disabled:cursor-not-allowed disabled:opacity-45"
+                                                        @disabled(!$quantityEditable)
                                                     >
                                                         Update
                                                     </button>
@@ -900,7 +992,7 @@
                                                             <path d="M9 7V5h6v2"></path>
                                                             <path d="M8 7l1 12h6l1-12"></path>
                                                         </svg>
-                                                        Remove
+                                                        <span class="sari-remove-label" style="color:#ef4444 !important;">Remove</span>
                                                     </button>
                                                 </form>
                                             </div>
@@ -1036,7 +1128,7 @@
 
         const feePerSeller = Number(@json($feePerSeller));
         const selectAll = page.querySelector('#cartSelectAll');
-        const checkboxes = Array.from(page.querySelectorAll('[data-cart-checkbox]'));
+        const checkboxes = Array.from(page.querySelectorAll('[data-cart-checkbox]:not(:disabled)'));
         const cards = Array.from(page.querySelectorAll('[data-selectable-card]'));
         const updateForms = Array.from(page.querySelectorAll('[data-cart-update-form]'));
 
@@ -1157,7 +1249,7 @@
                 if (event.target.closest('a,button,input,label,form,select,textarea')) return;
 
                 const checkbox = card.querySelector('[data-cart-checkbox]');
-                if (!checkbox) return;
+                if (!checkbox || checkbox.disabled) return;
 
                 checkbox.checked = !checkbox.checked;
                 checkbox.dispatchEvent(new Event('change', { bubbles: true }));
@@ -1617,6 +1709,1183 @@
         padding: 15px !important;
     }
 }
+
+
+/* ============================================================
+   SARI BUYER CART — ENTERPRISE FLOATING DESIGN SYSTEM
+   Final authoritative visual pass.
+   Functionality/backend/JS hooks are intentionally untouched.
+============================================================ */
+
+[data-sari-cart-page] {
+    --cart-page: #f5f6f8;
+    --cart-panel: #ffffff;
+    --cart-border: #e2e6ea;
+    --cart-border-soft: #eceff2;
+    --cart-text: #303740;
+    --cart-muted: #7b8490;
+    --cart-gold: #c88912;
+    --cart-gold-dark: #a96f0e;
+
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin-inline: auto !important;
+    padding: 22px 24px 42px !important;
+    background: transparent !important;
+    color: var(--cart-text);
+}
+
+/* PAGE HEADER — open, compact, same visual scale as reference */
+[data-sari-cart-page] > section:first-of-type {
+    border-bottom: 0 !important;
+    padding: 2px 2px 14px !important;
+}
+
+[data-sari-cart-page] > section:first-of-type > div {
+    gap: 16px !important;
+}
+
+[data-sari-cart-page] > section:first-of-type p:first-child {
+    color: #a87316 !important;
+    font-size: 6.6px !important;
+    font-weight: 800 !important;
+    letter-spacing: .15em !important;
+}
+
+[data-sari-cart-page] > section:first-of-type h1 {
+    margin-top: 5px !important;
+    color: #2e343b !important;
+    font-size: clamp(27px, 2.25vw, 31px) !important;
+    font-weight: 760 !important;
+    line-height: 1.04 !important;
+    letter-spacing: -.035em !important;
+}
+
+[data-sari-cart-page] > section:first-of-type h1 span {
+    color: #c88912 !important;
+}
+
+[data-sari-cart-page] > section:first-of-type h1 + p {
+    max-width: 660px;
+    margin-top: 7px !important;
+    color: #818995 !important;
+    font-size: 8px !important;
+    line-height: 1.6 !important;
+}
+
+/* HEADER ACTIONS */
+.sari-cart-count-pill,
+.sari-btn-secondary {
+    height: 38px !important;
+    border-radius: 9px !important;
+    padding-inline: 13px !important;
+    font-size: 7.4px !important;
+    font-weight: 700 !important;
+}
+
+.sari-cart-count-pill {
+    border: 1px solid #eadfc9 !important;
+    background: #fffaf1 !important;
+    color: #95620e !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-secondary {
+    border: 1px solid #dfe3e8 !important;
+    background: #fff !important;
+    color: #4f5862 !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-secondary:hover {
+    border-color: #d0d6dc !important;
+    background: #f8f9fa !important;
+    color: #2d343b !important;
+}
+
+/* MAIN LAYOUT */
+[data-sari-cart-page] > .mt-5.grid {
+    margin-top: 10px !important;
+    gap: 16px !important;
+    grid-template-columns: minmax(0, 1fr) 340px !important;
+}
+
+/* Shared floating surfaces */
+.sari-cart-toolbar,
+.sari-seller-shell,
+.sari-cart-summary {
+    border: 1px solid var(--cart-border) !important;
+    background: var(--cart-panel) !important;
+    box-shadow:
+        0 12px 30px rgba(31,41,55,.052),
+        0 2px 7px rgba(31,41,55,.022) !important;
+}
+
+/* SELECT ALL */
+.sari-cart-toolbar {
+    padding: 11px 13px !important;
+    border-radius: 13px !important;
+}
+
+.sari-cart-toolbar label {
+    gap: 10px !important;
+}
+
+.sari-cart-toolbar label > span > span:first-child {
+    color: #3b434c !important;
+    font-size: 8.6px !important;
+    font-weight: 700 !important;
+}
+
+.sari-cart-toolbar label > span > span:last-child {
+    margin-top: 2px !important;
+    color: #9098a1 !important;
+    font-size: 6.7px !important;
+}
+
+#cartSelectedTopCount {
+    border-color: #e7dcc8 !important;
+    background: #fffaf1 !important;
+    padding: 4px 8px !important;
+    color: #91600d !important;
+    font-size: 6.8px !important;
+}
+
+.sari-cart-toolbar .text-\[7px\] {
+    color: #939aa3 !important;
+    font-size: 6.6px !important;
+}
+
+/* SELLER GROUP */
+.sari-seller-shell {
+    overflow: hidden !important;
+    border-radius: 14px !important;
+}
+
+.sari-seller-shell > div:first-child {
+    border-bottom: 1px solid var(--cart-border-soft) !important;
+    background: #fff !important;
+    padding: 11px 13px !important;
+}
+
+.sari-seller-shell > div:first-child > div:first-child {
+    gap: 10px !important;
+}
+
+.sari-seller-shell > div:first-child > div:first-child > span {
+    width: 32px !important;
+    height: 32px !important;
+    border: 1px solid #e7dcc8 !important;
+    border-radius: 9px !important;
+    background: #fffaf1 !important;
+    color: #aa7010 !important;
+}
+
+.sari-seller-shell > div:first-child h2 {
+    color: #343b43 !important;
+    font-size: 9px !important;
+    font-weight: 750 !important;
+}
+
+.sari-seller-shell > div:first-child .rounded-full {
+    font-size: 5.9px !important;
+}
+
+.sari-seller-shell > div:first-child .text-\[7px\] {
+    color: #8e969f !important;
+    font-size: 6.3px !important;
+}
+
+.sari-seller-shell > div:first-child a {
+    border-color: #e0e4e8 !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+    color: #8f5e0d !important;
+}
+
+.sari-seller-shell > div:nth-child(2) {
+    background: #f7f8fa !important;
+    padding: 8px !important;
+}
+
+/* PRODUCT ROW — compact floating item card */
+.sari-cart-row {
+    border: 1px solid #e4e8ec !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    padding: 11px !important;
+    box-shadow:
+        0 5px 14px rgba(31,41,55,.032),
+        0 1px 4px rgba(31,41,55,.014) !important;
+    transform: none !important;
+}
+
+.sari-cart-row:hover {
+    border-color: #d8dde2 !important;
+    box-shadow:
+        0 8px 18px rgba(31,41,55,.045),
+        0 2px 6px rgba(31,41,55,.018) !important;
+    transform: none !important;
+}
+
+.sari-cart-row[data-selected="true"] {
+    border-color: #d7b066 !important;
+    background: #fffefa !important;
+    box-shadow:
+        0 7px 18px rgba(179,119,14,.055),
+        inset 3px 0 0 #c88912 !important;
+}
+
+.sari-cart-row > div {
+    grid-template-columns: 24px 96px minmax(0, 1fr) !important;
+    gap: 11px !important;
+}
+
+.sari-cart-row > div > a {
+    width: 96px !important;
+    height: 96px !important;
+    border: 1px solid #e6eaee !important;
+    border-radius: 10px !important;
+    background: #f8f9fa !important;
+    padding: 6px !important;
+    box-shadow: none !important;
+}
+
+.sari-cart-check-shell {
+    width: 18px !important;
+    height: 18px !important;
+    border-color: #d8dde2 !important;
+    border-radius: 5px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+
+.sari-cart-row[data-selected="true"] .sari-cart-check-shell {
+    border-color: #c88912 !important;
+    background: #c88912 !important;
+    box-shadow: none !important;
+}
+
+/* Product badges */
+.sari-cart-row .rounded-full {
+    border-radius: 999px;
+}
+
+.sari-cart-row .bg-\[\#f1f8f4\] {
+    border-color: #d8e8de !important;
+    background: #f5faf7 !important;
+    color: #4d765d !important;
+}
+
+.sari-cart-row .bg-\[\#f6f3ef\] {
+    background: #f3f5f7 !important;
+    color: #68717c !important;
+}
+
+/* Product typography */
+.sari-cart-row .text-\[12px\] {
+    color: #2f363e !important;
+    font-size: 10px !important;
+    font-weight: 750 !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-row .text-\[7\.5px\] {
+    color: #818a94 !important;
+    font-size: 6.8px !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-row .text-\[7px\] {
+    color: #8d959e !important;
+    font-size: 6.5px !important;
+}
+
+.sari-cart-row .text-\[17px\] {
+    color: #b6760b !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.sari-cart-row .text-\[6\.5px\] {
+    color: #949ba3 !important;
+    font-size: 6px !important;
+}
+
+.sari-cart-row .text-\[6px\] {
+    font-size: 5.8px !important;
+}
+
+/* Product lower action divider */
+.sari-cart-row .border-t {
+    border-color: var(--cart-border-soft) !important;
+}
+
+/* Quantity */
+.sari-qty-control {
+    height: 34px !important;
+    overflow: hidden !important;
+    border: 1px solid #dfe3e7 !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+
+.sari-qty-control button {
+    width: 32px !important;
+    color: #626b75 !important;
+    font-size: 12px !important;
+}
+
+.sari-qty-control button:hover {
+    background: #f5f6f8 !important;
+    color: #303740 !important;
+}
+
+.sari-qty-control input {
+    width: 42px !important;
+    border-color: #e6e9ed !important;
+    color: #3d454e !important;
+    font-size: 7.5px !important;
+}
+
+/* Flat formal action buttons */
+.sari-btn-update,
+.sari-btn-remove {
+    height: 34px !important;
+    border-radius: 8px !important;
+    padding-inline: 11px !important;
+    font-size: 6.6px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-update {
+    border: 1px solid #d9c28d !important;
+    background: #fffaf1 !important;
+    color: #8e5d0d !important;
+}
+
+.sari-btn-update:hover {
+    border-color: #cfa957 !important;
+    background: #fff6e6 !important;
+}
+
+.sari-btn-remove {
+    border: 1px solid #e2e5e8 !important;
+    background: #fff !important;
+    color: #69727c !important;
+}
+
+.sari-btn-remove:hover {
+    border-color: #d6dade !important;
+    background: #f7f8f9 !important;
+    color: #444c55 !important;
+}
+
+/* ORDER SUMMARY — strongest floating card */
+.sari-cart-summary {
+    overflow: hidden !important;
+    border-radius: 14px !important;
+    box-shadow:
+        0 16px 36px rgba(31,41,55,.065),
+        0 3px 9px rgba(31,41,55,.025) !important;
+}
+
+.sari-cart-summary > div:first-child {
+    border-bottom: 1px solid var(--cart-border-soft) !important;
+    background: #fff !important;
+    padding: 13px 15px !important;
+}
+
+.sari-cart-summary > div:first-child h2 {
+    color: #303740 !important;
+    font-size: 13px !important;
+    font-weight: 760 !important;
+}
+
+#cartSelectedSummaryCount {
+    border-color: #e7dcc8 !important;
+    background: #fffaf1 !important;
+    color: #8e5d0d !important;
+    font-size: 6.5px !important;
+    padding: 4px 8px !important;
+}
+
+.sari-cart-summary > .p-5 {
+    padding: 15px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 {
+    gap: 10px !important;
+    font-size: 7.5px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:first-child {
+    color: #7d8690 !important;
+    font-size: 7.2px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:last-child {
+    color: #404850 !important;
+    font-size: 7.4px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 .text-\[9px\] {
+    color: #444c55 !important;
+    font-size: 8px !important;
+}
+
+#cartSelectedTotal {
+    color: #b6760b !important;
+    font-size: 21px !important;
+    font-weight: 800 !important;
+}
+
+.sari-btn-checkout {
+    height: 41px !important;
+    border: 1px solid #c88912 !important;
+    border-radius: 9px !important;
+    background: #c88912 !important;
+    color: #fff !important;
+    font-size: 8px !important;
+    font-weight: 750 !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-checkout:not(:disabled):hover {
+    border-color: #ad760f !important;
+    background: #ad760f !important;
+}
+
+.sari-summary-disabled {
+    border-color: #d7dce0 !important;
+    background: #d7dce0 !important;
+    color: #fff !important;
+}
+
+/* Summary info hint */
+.sari-cart-summary .bg-\[\#f4f8fd\] {
+    border-color: #e1e7ee !important;
+    border-radius: 10px !important;
+    background: #f7f9fb !important;
+    box-shadow: none !important;
+}
+
+#cartSelectionHint {
+    color: #75808b !important;
+    font-size: 6.3px !important;
+    line-height: 1.5 !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 {
+    border-color: var(--cart-border-soft) !important;
+    gap: 6px !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 > div > span {
+    width: 29px !important;
+    height: 29px !important;
+    border-radius: 8px !important;
+    background: #f6f7f8 !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 p {
+    color: #747d87 !important;
+    font-size: 5.6px !important;
+    line-height: 1.35 !important;
+}
+
+/* Empty cart */
+[data-sari-cart-page] > section.mt-5.rounded-\[20px\] {
+    border: 1px solid var(--cart-border) !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow:
+        0 12px 30px rgba(31,41,55,.05),
+        0 2px 7px rgba(31,41,55,.02) !important;
+}
+
+/* Toast */
+.sari-cart-feedback {
+    border-radius: 10px !important;
+    font-size: 7.5px !important;
+    box-shadow: 0 12px 28px rgba(31,41,55,.12) !important;
+}
+
+/* Responsive */
+@media (max-width: 1180px) {
+    [data-sari-cart-page] > .mt-5.grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .sari-cart-summary {
+        position: static !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 767px) {
+    [data-sari-cart-page] {
+        padding: 16px 14px 28px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type {
+        padding-bottom: 12px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type h1 {
+        font-size: 25px !important;
+    }
+
+    .sari-cart-row {
+        padding: 10px !important;
+    }
+
+    .sari-cart-row > div {
+        grid-template-columns: 22px 82px minmax(0,1fr) !important;
+        gap: 9px !important;
+    }
+
+    .sari-cart-row > div > a {
+        width: 82px !important;
+        height: 82px !important;
+    }
+
+    .sari-cart-count-pill,
+    .sari-btn-secondary {
+        height: 36px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .sari-cart-row > div {
+        grid-template-columns: 20px 72px minmax(0,1fr) !important;
+    }
+
+    .sari-cart-row > div > a {
+        width: 72px !important;
+        height: 72px !important;
+    }
+}
+
+
+
+/* ============================================================
+   STORE PROFILE — REAL SELLER LOGO
+   Uses SellerAccount::store_logo_path with initials fallback.
+============================================================ */
+.sari-store-profile {
+    position: relative;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #dde2e7;
+    border-radius: 10px;
+    background: #f7f8fa;
+    text-decoration: none;
+    box-shadow:
+        0 3px 8px rgba(31,41,55,.035),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    transition:
+        border-color .16s ease,
+        box-shadow .16s ease,
+        transform .16s ease;
+}
+
+a.sari-store-profile:hover,
+a.sari-store-profile:focus-visible {
+    border-color: #d0b16e;
+    box-shadow:
+        0 6px 14px rgba(31,41,55,.055),
+        0 0 0 3px rgba(200,137,18,.08);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.sari-store-profile-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.sari-store-profile-fallback {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    background: #2f343b;
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.sari-store-profile-fallback[hidden] {
+    display: none !important;
+}
+
+.sari-store-name-link {
+    color: #343b43 !important;
+    font-size: 9px !important;
+    font-weight: 750 !important;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: color .16s ease;
+}
+
+a.sari-store-name-link:hover,
+a.sari-store-name-link:focus-visible {
+    color: #9b6710 !important;
+    outline: none;
+}
+
+@media (max-width: 640px) {
+    .sari-store-profile {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+        border-radius: 9px;
+    }
+
+    .sari-store-profile-fallback {
+        font-size: 7.5px;
+    }
+}
+
+
+
+/* ============================================================
+   CART HEADER FINAL POLISH
+   Text-only availability + SARI gold Continue Shopping button.
+============================================================ */
+.sari-cart-availability-text {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    color: #5f6873;
+    font-size: 7.6px;
+    font-weight: 700;
+    line-height: 1.35;
+    white-space: nowrap;
+}
+
+.sari-cart-availability-text::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    margin-right: 7px;
+    border-radius: 999px;
+    background: #c88912;
+}
+
+.sari-btn-continue-shopping {
+    border: 1px solid #c88912 !important;
+    background: #c88912 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-continue-shopping svg {
+    color: #ffffff !important;
+    stroke: currentColor !important;
+}
+
+.sari-btn-continue-shopping:hover,
+.sari-btn-continue-shopping:focus-visible {
+    border-color: #ad760f !important;
+    background: #ad760f !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.sari-btn-continue-shopping:focus-visible {
+    outline: 3px solid rgba(200,137,18,.12);
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .sari-cart-availability-text {
+        min-height: 34px;
+        font-size: 7.2px;
+        white-space: normal;
+    }
+}
+
+
+
+/* ============================================================
+   CART READABILITY + DANGER ACTION + CHECKBOX POLISH
+============================================================ */
+
+/* Stronger readability across cart toolbar, seller headers and item rows */
+.sari-cart-toolbar label > span > span:first-child {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    color: #303740 !important;
+}
+
+.sari-cart-toolbar label > span > span:last-child {
+    font-size: 7.6px !important;
+    color: #7e8791 !important;
+}
+
+#cartSelectedTopCount {
+    font-size: 7.4px !important;
+    font-weight: 800 !important;
+}
+
+.sari-cart-toolbar .text-\[7px\] {
+    font-size: 7.2px !important;
+    color: #7f8892 !important;
+}
+
+.sari-store-name-link,
+.sari-seller-shell > div:first-child h2 {
+    font-size: 10.2px !important;
+    font-weight: 800 !important;
+    color: #303740 !important;
+}
+
+.sari-seller-shell > div:first-child .rounded-full {
+    font-size: 6.4px !important;
+    font-weight: 700 !important;
+}
+
+.sari-seller-shell > div:first-child .text-\[7px\] {
+    font-size: 7px !important;
+    color: #7f8892 !important;
+}
+
+.sari-seller-shell > div:first-child a:not(.sari-store-profile):not(.sari-store-name-link) {
+    font-size: 7px !important;
+    font-weight: 700 !important;
+}
+
+.sari-cart-row .text-\[12px\] {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-row .text-\[7\.5px\] {
+    font-size: 7.7px !important;
+}
+
+.sari-cart-row .text-\[7px\] {
+    font-size: 7.2px !important;
+}
+
+.sari-cart-row .text-\[17px\] {
+    font-size: 16px !important;
+}
+
+.sari-cart-row .text-\[6\.5px\] {
+    font-size: 6.8px !important;
+}
+
+.sari-cart-row .text-\[6px\] {
+    font-size: 6.4px !important;
+}
+
+.sari-cart-row label.mb-1\.5 {
+    font-size: 6.6px !important;
+}
+
+.sari-qty-control input {
+    font-size: 8.2px !important;
+    font-weight: 700 !important;
+}
+
+.sari-btn-update,
+.sari-btn-remove {
+    font-size: 7.1px !important;
+    font-weight: 750 !important;
+}
+
+/* Bright red Remove treatment */
+.sari-btn-remove {
+    border: 1px solid #ef4444 !important;
+    background: #ffffff !important;
+    color: #dc2626 !important;
+}
+
+.sari-btn-remove svg {
+    color: #dc2626 !important;
+    stroke: currentColor !important;
+}
+
+.sari-btn-remove:hover,
+.sari-btn-remove:focus-visible {
+    border-color: #dc2626 !important;
+    background: #fff5f5 !important;
+    color: #b91c1c !important;
+    box-shadow: none !important;
+}
+
+.sari-btn-remove:hover svg,
+.sari-btn-remove:focus-visible svg {
+    color: #b91c1c !important;
+}
+
+.sari-btn-remove:focus-visible {
+    outline: 3px solid rgba(239,68,68,.11);
+    outline-offset: 2px;
+}
+
+/* Item checkbox: gold box, guaranteed white check */
+.sari-cart-row[data-selected="true"] .sari-cart-check-shell {
+    border-color: #c88912 !important;
+    background: #c88912 !important;
+    color: #ffffff !important;
+}
+
+.sari-cart-row[data-selected="true"] .sari-cart-check-mark {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Select-all checkbox: custom visual so the check is white */
+.sari-select-all-check-wrap {
+    position: relative;
+    display: inline-grid;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    place-items: center;
+}
+
+.sari-select-all-check-shell {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    border: 1px solid #d5dbe0;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+    transition:
+        border-color .14s ease,
+        background-color .14s ease,
+        box-shadow .14s ease;
+}
+
+.sari-select-all-check-mark {
+    width: 12px;
+    height: 12px;
+    color: #ffffff;
+    stroke: #ffffff;
+    opacity: 0;
+    transform: scale(.72);
+    transition: opacity .14s ease, transform .14s ease;
+}
+
+#cartSelectAll:checked + .sari-select-all-check-shell,
+#cartSelectAll:indeterminate + .sari-select-all-check-shell {
+    border-color: #c88912;
+    background: #c88912;
+    box-shadow: 0 4px 10px rgba(200,137,18,.14);
+}
+
+#cartSelectAll:checked + .sari-select-all-check-shell .sari-select-all-check-mark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#cartSelectAll:indeterminate + .sari-select-all-check-shell .sari-select-all-check-mark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#cartSelectAll:focus-visible + .sari-select-all-check-shell {
+    outline: 3px solid rgba(200,137,18,.12);
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .sari-cart-toolbar label > span > span:first-child {
+        font-size: 9.6px !important;
+    }
+
+    .sari-cart-row .text-\[12px\] {
+        font-size: 11px !important;
+    }
+
+    .sari-cart-row .text-\[17px\] {
+        font-size: 15px !important;
+    }
+}
+
+
+
+/* ============================================================
+   FINAL CART READABILITY PASS
+   Larger hierarchy + forced bright-red Remove text/icon.
+============================================================ */
+
+/* Top availability + Continue Shopping */
+.sari-cart-availability-text {
+    min-height: 40px !important;
+    color: #4f5964 !important;
+    font-size: 9px !important;
+    font-weight: 750 !important;
+}
+
+.sari-cart-availability-text::before {
+    width: 7px !important;
+    height: 7px !important;
+    flex-basis: 7px !important;
+}
+
+.sari-btn-continue-shopping {
+    height: 40px !important;
+    padding-inline: 15px !important;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+}
+
+/* Select-all toolbar */
+.sari-cart-toolbar {
+    padding: 13px 15px !important;
+}
+
+.sari-cart-toolbar label > span > span:first-child {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+}
+
+.sari-cart-toolbar label > span > span:last-child {
+    font-size: 8.5px !important;
+    line-height: 1.45 !important;
+}
+
+#cartSelectedTopCount {
+    padding: 5px 9px !important;
+    font-size: 8.2px !important;
+    font-weight: 800 !important;
+}
+
+.sari-cart-toolbar .text-\[7px\] {
+    font-size: 8px !important;
+    color: #737d87 !important;
+}
+
+/* Seller area */
+.sari-store-name-link,
+.sari-seller-shell > div:first-child h2 {
+    font-size: 11.2px !important;
+    font-weight: 800 !important;
+}
+
+.sari-seller-shell > div:first-child .rounded-full {
+    font-size: 7px !important;
+    font-weight: 750 !important;
+}
+
+.sari-seller-shell > div:first-child .text-\[7px\] {
+    font-size: 7.8px !important;
+}
+
+.sari-seller-shell > div:first-child a:not(.sari-store-profile):not(.sari-store-name-link) {
+    font-size: 7.8px !important;
+    font-weight: 750 !important;
+}
+
+/* Product content */
+.sari-cart-row .text-\[12px\] {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-row .text-\[7\.5px\] {
+    font-size: 8.8px !important;
+    line-height: 1.5 !important;
+}
+
+.sari-cart-row .text-\[7px\] {
+    font-size: 8.2px !important;
+}
+
+.sari-cart-row .text-\[17px\] {
+    font-size: 18px !important;
+}
+
+.sari-cart-row .text-\[6\.5px\] {
+    font-size: 7.6px !important;
+}
+
+.sari-cart-row .text-\[6px\] {
+    font-size: 7.2px !important;
+}
+
+.sari-cart-row label.mb-1\.5 {
+    font-size: 7.4px !important;
+    font-weight: 800 !important;
+}
+
+.sari-qty-control {
+    height: 36px !important;
+}
+
+.sari-qty-control button {
+    font-size: 14px !important;
+}
+
+.sari-qty-control input {
+    font-size: 9px !important;
+    font-weight: 750 !important;
+}
+
+.sari-btn-update,
+.sari-btn-remove {
+    height: 36px !important;
+    padding-inline: 12px !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+}
+
+/* Force Remove icon + word bright red */
+.sari-btn-remove,
+.sari-btn-remove *,
+.sari-btn-remove span,
+.sari-btn-remove svg {
+    color: #ef4444 !important;
+    stroke: #ef4444 !important;
+}
+
+.sari-btn-remove {
+    border: 1px solid #ef4444 !important;
+    background: #ffffff !important;
+}
+
+.sari-btn-remove:hover,
+.sari-btn-remove:focus-visible {
+    border-color: #dc2626 !important;
+    background: #fff5f5 !important;
+}
+
+.sari-btn-remove:hover,
+.sari-btn-remove:hover *,
+.sari-btn-remove:hover svg,
+.sari-btn-remove:focus-visible,
+.sari-btn-remove:focus-visible *,
+.sari-btn-remove:focus-visible svg {
+    color: #dc2626 !important;
+    stroke: #dc2626 !important;
+}
+
+/* Order Summary */
+.sari-cart-summary > div:first-child h2 {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+#cartSelectedSummaryCount {
+    padding: 5px 9px !important;
+    font-size: 8px !important;
+    font-weight: 800 !important;
+}
+
+.sari-cart-summary .space-y-3\.5 {
+    gap: 12px !important;
+    font-size: 9px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:first-child {
+    font-size: 9px !important;
+    color: #6f7984 !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:last-child {
+    font-size: 9.2px !important;
+    font-weight: 750 !important;
+}
+
+.sari-cart-summary .space-y-3\.5 .text-\[9px\] {
+    font-size: 10px !important;
+    font-weight: 800 !important;
+}
+
+#cartSelectedTotal {
+    font-size: 25px !important;
+    font-weight: 850 !important;
+}
+
+.sari-btn-checkout {
+    height: 44px !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+}
+
+#cartSelectionHint {
+    font-size: 7.8px !important;
+    line-height: 1.55 !important;
+    color: #68737f !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 p {
+    font-size: 6.8px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+}
+
+/* Slightly larger trust icons for visual balance */
+.sari-cart-summary .grid.grid-cols-3 > div > span {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+/* Mobile keeps readability without becoming oversized */
+@media (max-width: 640px) {
+    .sari-cart-availability-text {
+        font-size: 8.5px !important;
+    }
+
+    .sari-btn-continue-shopping {
+        font-size: 8.5px !important;
+    }
+
+    .sari-cart-toolbar label > span > span:first-child {
+        font-size: 10.5px !important;
+    }
+
+    .sari-cart-row .text-\[12px\] {
+        font-size: 12.2px !important;
+    }
+
+    .sari-cart-row .text-\[17px\] {
+        font-size: 17px !important;
+    }
+
+    .sari-cart-summary > div:first-child h2 {
+        font-size: 15px !important;
+    }
+}
+
+
+
+/* Absolute final override for Remove label */
+.sari-btn-remove .sari-remove-label {
+    color: #ef4444 !important;
+    -webkit-text-fill-color: #ef4444 !important;
+    opacity: 1 !important;
+}
+
+.sari-btn-remove:hover .sari-remove-label,
+.sari-btn-remove:focus-visible .sari-remove-label {
+    color: #dc2626 !important;
+    -webkit-text-fill-color: #dc2626 !important;
+}
+
 </style>
 
 

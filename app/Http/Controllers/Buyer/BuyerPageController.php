@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 
 use App\Models\Accounts\BuyerAccount;
+use App\Services\Buyer\BuyerActivityService;
+use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerCatalogService;
 use Illuminate\Http\Request;
 
 class BuyerPageController extends Controller
 {
     public function __construct(
-        private readonly BuyerCatalogService $catalog
+        private readonly BuyerCatalogService $catalog,
+        private readonly BuyerActivityService $activity,
+        private readonly BuyerCartService $cart,
     ) {
     }
 
@@ -23,10 +27,18 @@ class BuyerPageController extends Controller
 
         $buyerAccount = $this->syncBuyerSession($request);
 
+        $cartItems = $this->cart->items($request);
+
         return view('buyer.home', [
             'categories' => $this->catalog->homeCategories(),
             'featuredProducts' => $this->catalog->catalog(8),
             'buyerAccount' => $buyerAccount,
+            'recentOrders' => $this->activity->recentOrders($request, 4),
+            'activeShipments' => $this->activity->activeShipments($request, 3),
+            'recentNotifications' => $this->activity->latestNotifications($request, 4),
+            'unreadNotificationCount' => $this->activity->unreadNotificationCount($request),
+            'cartItemCount' => $cartItems->sum('quantity'),
+            'cartSubtotal' => $this->cart->subtotal($cartItems),
         ]);
     }
 

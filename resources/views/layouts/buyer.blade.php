@@ -44,14 +44,14 @@
 
                 document.documentElement.style.setProperty(
                     '--buyer-sidebar-width',
-                    mini ? '88px' : '275px'
+                    mini ? '76px' : '238px'
                 );
             } catch (_) {
                 document.documentElement.dataset.buyerSidebarMini = '0';
 
                 document.documentElement.style.setProperty(
                     '--buyer-sidebar-width',
-                    '275px'
+                    '238px'
                 );
             }
         })();
@@ -97,11 +97,34 @@
     ============================================================ --}}
     @stack('styles')
 
+    {{-- BUYER FIRST-PAINT CANVAS — matches the Seller shell background. --}}
+    <style id="sariBuyerFirstPaintCanvas">
+        :root,
+        html,
+        body,
+        #buyerMainContent {
+            min-height: 100%;
+            background: #F4F5F7 !important;
+            background-color: #F4F5F7 !important;
+            background-image: none !important;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #buyerMainContent > main {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+    </style>
+
     <style>
         :root {
-            --buyer-sidebar-width: 275px;
-            --buyer-sidebar-expanded: 275px;
-            --buyer-sidebar-mini: 88px;
+            --buyer-sidebar-width: 238px;
+            --buyer-sidebar-expanded: 238px;
+            --buyer-sidebar-mini: 76px;
             --buyer-sidebar-ease: cubic-bezier(.22, 1, .36, 1);
         }
 
@@ -221,7 +244,7 @@
         */
         @media (max-width: 1023px) {
             #buyerSidebar {
-                width: 275px !important;
+                width: 238px !important;
             }
 
             #buyerMainContent {
@@ -311,18 +334,22 @@
             }
         }
     </style>
+
+    {{-- Buyer shell visual layer: UI-only, modeled after the Seller shell. --}}
+    <link rel="stylesheet" href="{{ asset('css/buyer/shell.css') }}?v=20261008-3">
 </head>
 
 <body
     data-buyer-products-url="{{ route('buyer.products') }}"
     data-buyer-cart-store-url="{{ route('buyer.cart.items.store') }}"
     data-buyer-cart-summary-url="{{ route('buyer.cart.summary') }}"
+    data-buyer-notification-summary-url="{{ route('buyer.notifications.summary') }}"
     data-buyer-cart-url="{{ route('buyer.cart') }}"
     class="
         m-0
         min-h-screen
         overflow-x-hidden
-        bg-[#faf9f6]
+        bg-[#F4F5F7]
         font-['Poppins']
         text-[#1f1b16]
         antialiased
@@ -374,6 +401,35 @@
         @endpersist
 
     </div>
+
+
+    {{-- ============================================================
+         BUYER AI ASSISTANT — UI PREVIEW ONLY
+         Visual shell only. No API call, route, event, or backend behavior.
+    ============================================================ --}}
+    @persist('buyer-ai-preview')
+        <div id="buyerAiPreview" class="buyer-ai-preview" aria-label="SARI AI preview">
+            <div class="buyer-ai-preview-card" role="status" aria-live="polite">
+                <span class="buyer-ai-preview-eyebrow">SARI AI</span>
+                <strong>Shopping assistant</strong>
+                <span>Coming soon</span>
+            </div>
+
+            <button
+                type="button"
+                class="buyer-ai-preview-button"
+                aria-label="SARI AI shopping assistant — coming soon"
+                aria-disabled="true"
+                title="SARI AI — Coming soon"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3 13.6 8.4 19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6L12 3Z"></path>
+                    <path d="m18.5 16 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7.7-2.3Z"></path>
+                </svg>
+                <span class="buyer-ai-preview-dot"></span>
+            </button>
+        </div>
+    @endpersist
 
 
     {{-- ============================================================
@@ -597,7 +653,7 @@
 
                 document.documentElement.style.setProperty(
                     '--buyer-sidebar-width',
-                    next ? '88px' : '275px'
+                    next ? '76px' : '238px'
                 );
 
                 if (persist) {
@@ -974,7 +1030,7 @@
                     document.documentElement.style
                         .setProperty(
                             '--buyer-sidebar-width',
-                            '275px'
+                            '238px'
                         );
                 }
 
@@ -1026,7 +1082,7 @@
                             document.documentElement.style
                                 .setProperty(
                                     '--buyer-sidebar-width',
-                                    '275px'
+                                    '238px'
                                 );
                         }
                     }

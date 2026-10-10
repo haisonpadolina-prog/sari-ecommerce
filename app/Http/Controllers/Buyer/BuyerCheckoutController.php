@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Orders\BuyerCartItem;
 use App\Models\Orders\MarketplaceOrder;
-use App\Models\Platform\PlatformSetting;
 use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Catalog\SellerProduct;
+use App\Models\Catalog\SellerProductVariant;
 use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerIdentityService;
 use App\Services\Products\ProductVariantInventoryService;
@@ -72,6 +72,17 @@ class BuyerCheckoutController extends Controller
                     : ($selectionRequested
                         ? 'The selected cart products are no longer available.'
                         : 'Your cart is empty.'),
+            ]);
+        }
+
+        $unavailable = $items
+            ->map(fn (BuyerCartItem $item) => $this->cart->availability($item))
+            ->first(fn (array $availability) => !$availability['selectable']);
+
+        if ($unavailable) {
+            return redirect()->route('buyer.cart')->withErrors([
+                'cart' => $unavailable['reason']
+                    ?: 'One of the selected products is no longer available for checkout.',
             ]);
         }
 
@@ -139,7 +150,7 @@ class BuyerCheckoutController extends Controller
 
             $identityColumns = $this->identity->columns($request);
             $checkoutReference = 'CHK-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
-            $feePerSeller = (float) PlatformSetting::valueOf('delivery_fee_per_seller', config('sari.buyer.delivery_fee_per_seller', 80));
+            $feePerSeller = $this->cart->deliveryFeePerSeller();
             $created = collect();
             $voucherCode = strtoupper(trim((string) ($validated['voucher_code'] ?? '')));
             $voucherApplied = false;
@@ -147,27 +158,22 @@ class BuyerCheckoutController extends Controller
             foreach ($items->groupBy(fn (BuyerCartItem $item) => (int) $item->product->seller_account_id) as $sellerId => $group) {
                 $seller = SellerAccount::query()->findOrFail((int) $sellerId);
 
-                if (($seller->store_status ?? 'open') !== 'open') {
+                if (!$seller->isBuyerAvailable()) {
                     throw ValidationException::withMessages([
                         'cart' => ($seller->store_name ?: 'This Seller') . ' is temporarily not accepting orders.',
                     ]);
                 }
 
                 $orderItems = [];
+                $lockedProducts = [];
                 $subtotal = 0.0;
 
-                $groupShipsFree = $group->every(
-                    fn (BuyerCartItem $item) => (bool) ($item->product?->free_shipping ?? false)
-                );
-
-                $sellerDeliveryFee = $groupShipsFree ? 0.0 : $feePerSeller;
+                $groupShipsFree = true;
 
                 foreach ($group as $cartItem) {
                     $product = SellerProduct::query()
-                        ->with('activeVariants')
                         ->whereKey($cartItem->seller_product_id)
-                        ->where('moderation_status', 'approved')
-                        ->whereNull('archived_at')
+                        ->buyerVisible()
                         ->lockForUpdate()
                         ->first();
 
@@ -177,25 +183,46 @@ class BuyerCheckoutController extends Controller
                         ]);
                     }
 
+                    $lockedProducts[(int) $cartItem->id] = $product;
+                    $groupShipsFree = $groupShipsFree
+                        && (bool) ($product->free_shipping ?? false);
+
+                    $lockedVariant = null;
+
+                    if ($cartItem->seller_product_variant_id) {
+                        $lockedVariant = SellerProductVariant::query()
+                            ->whereKey((int) $cartItem->seller_product_variant_id)
+                            ->where('seller_product_id', $product->id)
+                            ->where('is_active', true)
+                            ->lockForUpdate()
+                            ->first();
+
+                        if (!$lockedVariant) {
+                            throw ValidationException::withMessages([
+                                'cart' => 'One of the selected product variations is no longer available.',
+                            ]);
+                        }
+                    }
+
                     $this->inventory->assertAvailable(
                         $product,
                         $cartItem->seller_product_variant_id,
                         (int) $cartItem->quantity
                     );
 
-                    $unitPrice = $this->cart->unitPrice($cartItem);
+                    $unitPrice = $this->cart->unitPriceFor($product, $lockedVariant);
                     $lineTotal = round($unitPrice * (int) $cartItem->quantity, 2);
-                    $variantOptions = is_array($cartItem->variant?->option_values)
-                        ? $cartItem->variant->option_values
+                    $variantOptions = is_array($lockedVariant?->option_values)
+                        ? $lockedVariant->option_values
                         : [];
 
                     $orderItems[] = [
                         'product_id' => (int) $product->id,
                         'variant_id' => $cartItem->seller_product_variant_id ? (int) $cartItem->seller_product_variant_id : null,
                         'name' => (string) $product->name,
-                        'sku' => (string) ($cartItem->variant?->sku ?: $product->sku ?: ''),
+                        'sku' => (string) ($lockedVariant?->sku ?: $product->sku ?: ''),
                         'variant_options' => $variantOptions,
-                        'variant_label' => $this->cart->variantLabel($cartItem),
+                        'variant_label' => $this->cart->variantLabelFor($lockedVariant),
                         'qty' => (int) $cartItem->quantity,
                         'price' => $unitPrice,
                         'line_total' => $lineTotal,
@@ -204,6 +231,8 @@ class BuyerCheckoutController extends Controller
 
                     $subtotal += $lineTotal;
                 }
+
+                $sellerDeliveryFee = $groupShipsFree ? 0.0 : $feePerSeller;
 
                 $voucherResult = $this->vouchers->resolveForSeller(
                     (int) $seller->id,
@@ -220,19 +249,23 @@ class BuyerCheckoutController extends Controller
 
                 foreach ($group as $cartItem) {
                     $this->inventory->deductForOrder(
-                        $cartItem->product,
+                        $lockedProducts[(int) $cartItem->id],
                         $cartItem->seller_product_variant_id,
                         (int) $cartItem->quantity
                     );
                 }
 
-                $pickupAddress = collect([
-                    $seller->street_address ?? null,
-                    $seller->barangay_name ?? null,
-                    $seller->municipality_name ?? null,
-                    $seller->province_name ?? null,
-                    'Philippines',
-                ])->filter(fn ($part) => filled($part))->implode(', ');
+                $pickupAddress = trim((string) ($seller->pickup_address ?? ''));
+
+                if ($pickupAddress === '') {
+                    $pickupAddress = collect([
+                        $seller->street_address ?? null,
+                        $seller->barangay_name ?? null,
+                        $seller->municipality_name ?? null,
+                        $seller->province_name ?? null,
+                        'Philippines',
+                    ])->filter(fn ($part) => filled($part))->implode(', ');
+                }
 
                 $order = MarketplaceOrder::create(array_merge($identityColumns, [
                     'order_number' => $this->newOrderNumber(),

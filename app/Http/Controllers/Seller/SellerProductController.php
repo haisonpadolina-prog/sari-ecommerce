@@ -298,6 +298,7 @@ class SellerProductController extends Controller
                 'discount' => $validated['discount'] ?? 0,
                 'flash_sale_ends_at' => $flashSaleEndsAt,
                 'free_shipping' => (bool) ($validated['free_shipping'] ?? false),
+                'cash_on_delivery' => (bool) ($validated['cash_on_delivery'] ?? false),
                 'package_weight' => $validated['package_weight'] ?? null,
                 'package_length' => $validated['package_length'] ?? null,
                 'package_width' => $validated['package_width'] ?? null,
@@ -441,6 +442,7 @@ class SellerProductController extends Controller
             'discount' => $validated['discount'] ?? 0,
             'flash_sale_ends_at' => $flashSaleEndsAt,
             'free_shipping' => $request->boolean('free_shipping'),
+            'cash_on_delivery' => $request->boolean('cash_on_delivery'),
             'package_weight' => $request->exists('package_weight') ? ($validated['package_weight'] ?? null) : $product->package_weight,
             'package_length' => $request->exists('package_length') ? ($validated['package_length'] ?? null) : $product->package_length,
             'package_width' => $request->exists('package_width') ? ($validated['package_width'] ?? null) : $product->package_width,
@@ -847,6 +849,7 @@ class SellerProductController extends Controller
                 'discount',
                 'flash_sale_ends_at',
                 'free_shipping',
+                'cash_on_delivery',
                 'package_weight',
                 'package_length',
                 'package_width',
@@ -939,6 +942,7 @@ class SellerProductController extends Controller
                     'flash_sale_active' => $this->isFlashSaleActive($product),
                     'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
                     'free_shipping' => (bool) ($product->free_shipping ?? false),
+                    'cash_on_delivery' => (bool) ($product->cash_on_delivery ?? false),
                     'package_weight' => $product->package_weight !== null
                         ? (float) $product->package_weight
                         : null,
@@ -1130,6 +1134,7 @@ class SellerProductController extends Controller
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
+            'cash_on_delivery' => ['nullable', 'boolean'],
             'package_weight' => ['nullable', 'numeric', 'min:0', 'max:999999.999'],
             'package_length' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'package_width' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
@@ -1174,6 +1179,7 @@ class SellerProductController extends Controller
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
+            'cash_on_delivery' => ['nullable', 'boolean'],
             'package_weight' => ['nullable', 'numeric', 'min:0', 'max:999999.999'],
             'package_length' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'package_width' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
@@ -1487,7 +1493,7 @@ class SellerProductController extends Controller
                 $isDifferent = $oldTimestamp !== $newTimestamp;
             } elseif (in_array($field, ['stock', 'low_stock_threshold', 'preparation_days'], true)) {
                 $isDifferent = (int) $oldValue !== (int) $newValue;
-            } elseif (in_array($field, ['has_variants', 'free_shipping'], true)) {
+            } elseif (in_array($field, ['has_variants', 'free_shipping', 'cash_on_delivery'], true)) {
                 $isDifferent = (bool) $oldValue !== (bool) $newValue;
             } elseif ($field === 'specifications') {
                 $isDifferent = $this->canonicalJson($oldValue) !== $this->canonicalJson($newValue);
@@ -1532,6 +1538,7 @@ class SellerProductController extends Controller
             'discount' => $product->discount,
             'flash_sale_ends_at' => $product->flash_sale_ends_at,
             'free_shipping' => (bool) ($product->free_shipping ?? false),
+            'cash_on_delivery' => (bool) ($product->cash_on_delivery ?? false),
             'package_weight' => $product->package_weight,
             'package_length' => $product->package_length,
             'package_width' => $product->package_width,

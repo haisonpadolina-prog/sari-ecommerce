@@ -1386,6 +1386,16 @@
                         <p class="mt-3 text-[9px] leading-5 text-[#6f665d]">
                             {{ trim((string) ($review['comment'] ?? '')) !== '' ? $review['comment'] : 'Rating submitted without a written comment.' }}
                         </p>
+
+                        @if (!empty($review['seller_reply']['reply']))
+                            <div class="mt-3 rounded-[11px] border border-[#eadfcd] bg-[#fffbf3] px-3 py-2.5">
+                                <div class="flex items-center justify-between gap-3">
+                                    <span class="text-[7px] font-bold uppercase tracking-[.08em] text-[#a8731f]">Seller reply</span>
+                                    <span class="text-[7px] text-[#aaa198]">{{ $review['seller_reply']['created_at'] ?? '' }}</span>
+                                </div>
+                                <p class="mt-1.5 text-[8px] leading-4 text-[#6f665d]">{{ $review['seller_reply']['reply'] }}</p>
+                            </div>
+                        @endif
                     </article>
                 @endforeach
             </div>

@@ -5,6 +5,8 @@ use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerCartController;
 use App\Http\Controllers\Buyer\BuyerCheckoutController;
 use App\Http\Controllers\Buyer\BuyerOrderController;
+use App\Http\Controllers\Buyer\BuyerNotificationController;
+use App\Http\Controllers\Buyer\BuyerShippingController;
 use App\Http\Controllers\Buyer\BuyerSellerMessageController;
 use App\Http\Controllers\Seller\SellerBuyerMessageController;
 use App\Http\Controllers\Buyer\BuyerReviewController;
@@ -720,6 +722,21 @@ Route::get('/buyer/orders-live-state', [BuyerOrderController::class, 'liveState'
     ->name('buyer.orders.live-state');
 Route::post('/buyer/orders/{order}/reviews', [BuyerReviewController::class, 'store'])
     ->name('buyer.orders.reviews.store');
+
+/* Buyer shipping center — uses the existing MarketplaceOrder + LogisticsParcel flow */
+Route::get('/buyer/shipping', [BuyerShippingController::class, 'index'])
+    ->name('buyer.shipping');
+
+/* Buyer notifications — order workflow events with persistent read state */
+Route::get('/buyer/notifications', [BuyerNotificationController::class, 'index'])
+    ->name('buyer.notifications');
+Route::get('/buyer/notifications-summary', [BuyerNotificationController::class, 'summary'])
+    ->name('buyer.notifications.summary');
+Route::post('/buyer/notifications/read-all', [BuyerNotificationController::class, 'readAll'])
+    ->name('buyer.notifications.read-all');
+Route::post('/buyer/notifications/{event}/read', [BuyerNotificationController::class, 'read'])
+    ->whereNumber('event')
+    ->name('buyer.notifications.read');
 
 /* Buyer ↔ Seller direct messaging */
 Route::get('/buyer/messages', [BuyerSellerMessageController::class, 'buyerIndex'])

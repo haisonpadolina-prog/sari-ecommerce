@@ -8,6 +8,7 @@
 
 @php
     $items = (array) $order->items;
+    $sellerSlug = 'seller-' . (int) $order->seller_account_id;
 
     $statusIndex = match ($order->status) {
         'new' => 1,
@@ -254,6 +255,16 @@
                     <path d="M16 18c0 1.1-.9 2-2 2h-2" stroke-linecap="round"/>
                 </svg>
                 Contact Support
+            </a>
+            <a href="{{ route('buyer.shop', ['shop' => $sellerSlug]) }}"
+               class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e2d8ca] bg-white px-4 text-[13px] font-semibold text-[#665c50] transition hover:border-[#d9bd83] hover:bg-[#fffaf0] hover:text-[#9d6d18]">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h16v10H4z"></path><path d="M3 10 5 4h14l2 6"></path><path d="M8 14h3v6H8z"></path></svg>
+                View Seller Profile
+            </a>
+            <a href="{{ route('buyer.shipping') }}"
+               class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e2d8ca] bg-white px-4 text-[13px] font-semibold text-[#665c50] transition hover:border-[#d9bd83] hover:bg-[#fffaf0] hover:text-[#9d6d18]">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.5"></circle><circle cx="18" cy="18" r="1.5"></circle></svg>
+                Shipping Center
             </a>
         </div>
     </div>

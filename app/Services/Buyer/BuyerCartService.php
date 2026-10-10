@@ -7,6 +7,7 @@ use App\Services\Products\ProductVariantInventoryService;
 use App\Models\Orders\BuyerCartItem;
 use App\Models\Platform\PlatformSetting;
 use App\Models\Catalog\SellerProduct;
+use App\Models\Catalog\SellerProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
@@ -45,9 +46,14 @@ class BuyerCartService
         $product = SellerProduct::query()
             ->with(['seller', 'activeVariants'])
             ->whereKey($productId)
-            ->where('moderation_status', 'approved')
-            ->whereNull('archived_at')
-            ->firstOrFail();
+            ->buyerVisible()
+            ->first();
+
+        if (!$product) {
+            throw ValidationException::withMessages([
+                'cart' => 'This product is no longer available in the marketplace.',
+            ]);
+        }
 
         $this->inventory->assertAvailable(
             $product,
@@ -91,11 +97,7 @@ class BuyerCartService
         $quantity = max(1, $quantity);
         $item->loadMissing(['product', 'variant']);
 
-        if (
-            !$item->product
-            || $item->product->moderation_status !== 'approved'
-            || $item->product->archived_at
-        ) {
+        if (!$item->product || !$item->product->isBuyerVisible()) {
             throw ValidationException::withMessages([
                 'cart' => 'This product is no longer available in the marketplace.',
             ]);
@@ -136,23 +138,30 @@ class BuyerCartService
 
     public function unitPrice(BuyerCartItem $item): float
     {
-        $base = (float) (
-            $item->variant?->price
-            ?? $item->product?->price
-            ?? 0
-        );
+        if (!$item->product) {
+            return 0.0;
+        }
+
+        return $this->unitPriceFor($item->product, $item->variant);
+    }
+
+    public function unitPriceFor(
+        SellerProduct $product,
+        ?SellerProductVariant $variant = null
+    ): float {
+        $base = (float) ($variant?->price ?? $product->price ?? 0);
 
         $discount = min(
             100,
             max(
                 0,
-                (float) ($item->product?->discount ?? 0)
+                (float) ($product->discount ?? 0)
             )
         );
 
         if (
-            $item->product?->flash_sale_ends_at !== null
-            && now()->gte($item->product->flash_sale_ends_at)
+            $product->flash_sale_ends_at !== null
+            && now()->gte($product->flash_sale_ends_at)
         ) {
             $discount = 0.0;
         }
@@ -174,6 +183,79 @@ class BuyerCartService
         );
     }
 
+    /**
+     * Describe whether a cart row can be selected for checkout without
+     * removing rows that became unavailable after the buyer added them.
+     *
+     * @return array{selectable: bool, quantity_editable: bool, product_visible: bool, reason: ?string, max_stock: int}
+     */
+    public function availability(BuyerCartItem $item): array
+    {
+        $item->loadMissing(['product.seller', 'variant']);
+
+        $product = $item->product;
+
+        if (!$product || !$product->isBuyerVisible()) {
+            return [
+                'selectable' => false,
+                'quantity_editable' => false,
+                'product_visible' => false,
+                'reason' => 'This product is no longer available in the marketplace.',
+                'max_stock' => 0,
+            ];
+        }
+
+        if ((bool) $product->has_variants) {
+            $variant = $item->variant;
+
+            if (
+                !$variant
+                || (int) $variant->seller_product_id !== (int) $product->id
+                || !(bool) $variant->is_active
+            ) {
+                return [
+                    'selectable' => false,
+                    'quantity_editable' => false,
+                    'product_visible' => true,
+                    'reason' => 'The selected product variation is no longer available.',
+                    'max_stock' => 0,
+                ];
+            }
+
+            $maxStock = max(0, (int) $variant->stock);
+        } else {
+            $maxStock = max(0, (int) $product->stock);
+        }
+
+        if ($maxStock < 1) {
+            return [
+                'selectable' => false,
+                'quantity_editable' => false,
+                'product_visible' => true,
+                'reason' => 'This item is currently out of stock.',
+                'max_stock' => 0,
+            ];
+        }
+
+        if ((int) $item->quantity > $maxStock) {
+            return [
+                'selectable' => false,
+                'quantity_editable' => true,
+                'product_visible' => true,
+                'reason' => "Only {$maxStock} item" . ($maxStock === 1 ? '' : 's') . ' remain. Update the quantity to continue.',
+                'max_stock' => $maxStock,
+            ];
+        }
+
+        return [
+            'selectable' => true,
+            'quantity_editable' => true,
+            'product_visible' => true,
+            'reason' => null,
+            'max_stock' => $maxStock,
+        ];
+    }
+
     public function subtotal(Collection $items): float
     {
         return round(
@@ -193,16 +275,21 @@ class BuyerCartService
         );
     }
 
+    public function deliveryFeePerSeller(): float
+    {
+        return (float) PlatformSetting::valueOf(
+            'delivery_fee_per_seller',
+            config('sari.buyer.delivery_fee_per_seller', 80)
+        );
+    }
+
     public function deliveryFee(Collection $items): float
     {
         if ($items->isEmpty()) {
             return 0.0;
         }
 
-        $feePerSeller = (float) PlatformSetting::valueOf(
-            'delivery_fee_per_seller',
-            config('sari.buyer.delivery_fee_per_seller', 80)
-        );
+        $feePerSeller = $this->deliveryFeePerSeller();
 
         return round(
             $this->groupedBySeller($items)
@@ -230,7 +317,12 @@ class BuyerCartService
     public function variantLabel(
         BuyerCartItem $item
     ): string {
-        $options = $item->variant?->option_values ?? [];
+        return $this->variantLabelFor($item->variant);
+    }
+
+    public function variantLabelFor(?SellerProductVariant $variant): string
+    {
+        $options = $variant?->option_values ?? [];
 
         if (!is_array($options) || empty($options)) {
             return 'Standard';

@@ -1,0 +1,574 @@
+/*
+ * SARI Buyer shell — compact visual pass
+ * UI-only layer modeled after the existing Seller shell.
+ * No routes, API behavior, authentication, or backend rules live here.
+ */
+
+:root {
+    --buyer-sidebar-expanded: 238px;
+    --buyer-sidebar-mini: 76px;
+    --buyer-sidebar-width: var(--buyer-sidebar-expanded);
+    --buyer-shell-canvas: #F4F5F7; /* same neutral canvas as Seller */
+    --buyer-shell-gold: #D9950B;
+    --buyer-shell-ink: #28231C;
+    --buyer-shell-muted: #8E8578;
+    --buyer-shell-border: #ECE5DA;
+}
+
+html,
+body {
+    min-height: 100%;
+    background: var(--buyer-shell-canvas) !important;
+}
+
+body {
+    background-image: none !important;
+}
+
+#buyerMainContent {
+    min-height: 100vh;
+    background: var(--buyer-shell-canvas) !important;
+    background-image: none !important;
+}
+
+#buyerMainContent > main {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   SIDEBAR
+   -------------------------------------------------------------------------- */
+#buyerSidebar {
+    width: var(--buyer-sidebar-width) !important;
+    overflow-x: hidden;
+    border-right-color: var(--buyer-shell-border) !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+#buyerSidebarBrand {
+    min-height: 74px !important;
+    padding-inline: 12px !important;
+    border-bottom-color: #EEE7DC !important;
+    background: #FFFFFF !important;
+}
+
+#buyerSidebarLogo {
+    height: 44px !important;
+}
+
+#buyerSidebarLogoFull {
+    width: 102px !important;
+    height: auto !important;
+}
+
+#buyerSidebarLogoCompact {
+    width: 38px !important;
+    height: 38px !important;
+}
+
+#buyerSidebarNav {
+    padding: 14px 10px 16px !important;
+    scrollbar-width: thin;
+    scrollbar-color: #DDD4C7 transparent;
+}
+
+#buyerSidebarNav::-webkit-scrollbar {
+    width: 4px;
+}
+
+#buyerSidebarNav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#buyerSidebarNav::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #DDD4C7;
+}
+
+.buyer-sidebar-section-label {
+    margin: 10px 8px 7px !important;
+    color: #9B7A43 !important;
+    font-size: 7.5px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    letter-spacing: .13em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    user-select: none;
+}
+
+.buyer-sidebar-section-label:first-child {
+    margin-top: 4px !important;
+}
+
+.buyer-sidebar-section-divider {
+    height: 1px;
+    margin: 11px 6px 9px !important;
+    background: #EEE7DD;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item] {
+    min-height: 39px !important;
+    width: 100% !important;
+    gap: 10px !important;
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+    padding: 8px 10px !important;
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
+    font-weight: 500 !important;
+    color: #514B42 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    transition:
+        background-color .12s ease,
+        border-color .12s ease,
+        color .12s ease,
+        box-shadow .12s ease !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item] + [data-buyer-sidebar-item],
+#buyerSidebarNav a[data-buyer-sidebar-item] + form,
+#buyerSidebarNav form + a[data-buyer-sidebar-item] {
+    margin-top: 2px !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item] svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex: 0 0 auto;
+    stroke-width: 1.75 !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item] > span:first-child {
+    gap: 10px !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="true"] {
+    border-color: var(--buyer-shell-gold) !important;
+    background: var(--buyer-shell-gold) !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="true"] svg,
+#buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="true"] .buyer-sidebar-label {
+    color: #FFFFFF !important;
+    stroke: currentColor !important;
+}
+
+#buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="false"]:hover,
+#buyerSidebarNav form button[data-buyer-sidebar-item]:hover {
+    border-color: #EADFCF !important;
+    background: #FFF9EF !important;
+    color: #9A680B !important;
+    box-shadow: none !important;
+}
+
+#buyerSidebarCartCount,
+#buyerSidebarNotificationCount,
+#buyerSidebarMessageCount {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding-inline: 5px !important;
+    font-size: 7.5px !important;
+}
+
+#buyerSidebarProfile {
+    padding: 9px 10px !important;
+    border-top-color: #EEE7DC !important;
+    background: #FFFFFF !important;
+}
+
+.buyer-sidebar-profile-card {
+    min-height: 54px;
+    gap: 8px;
+    border: 1px solid #EBE2D4;
+    border-radius: 11px;
+    background: #FFFFFF;
+    padding: 8px 9px;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(40, 31, 21, .02);
+    transition: border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
+}
+
+.buyer-sidebar-profile-card:hover {
+    border-color: #DDCCB0;
+    background: #FFFDF8;
+    box-shadow: 0 4px 12px rgba(40, 31, 21, .03);
+}
+
+.buyer-sidebar-profile-card .buyer-shell-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 9.5px;
+}
+
+.buyer-sidebar-profile-card .buyer-sidebar-label > span:first-child {
+    font-size: 9.5px;
+}
+
+.buyer-sidebar-profile-card .buyer-sidebar-label > span:last-child {
+    font-size: 7.5px;
+}
+
+.buyer-sidebar-profile-card > svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER
+   -------------------------------------------------------------------------- */
+#buyerHeader {
+    border-bottom-color: #EEE7DC !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+#buyerHeader .buyer-header-main {
+    min-height: 72px !important;
+    gap: 10px !important;
+}
+
+.buyer-header-control,
+.buyer-header-icon-button {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+}
+
+.buyer-header-control svg,
+.buyer-header-icon-button > svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+.buyer-header-icon-button {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#buyerHeader h1 {
+    font-size: 17px !important;
+    line-height: 1.15 !important;
+}
+
+.buyer-header-breadcrumb {
+    gap: 5px !important;
+    font-size: 9px !important;
+}
+
+.buyer-header-breadcrumb svg {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.buyer-header-search {
+    width: 220px !important;
+    height: 38px !important;
+    border-radius: 11px !important;
+    padding-left: 38px !important;
+    padding-right: 12px !important;
+    font-size: 10px !important;
+}
+
+.buyer-header-search-icon {
+    left: 13px !important;
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.buyer-header-badge {
+    right: -5px !important;
+    top: -5px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding-inline: 4px !important;
+    font-size: 8px !important;
+}
+
+.buyer-header-profile {
+    gap: 8px !important;
+    border-radius: 10px !important;
+    padding: 4px 6px !important;
+}
+
+.buyer-header-profile .buyer-shell-avatar {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 10px !important;
+}
+
+#buyerHeaderProfileName {
+    font-size: 10.5px !important;
+}
+
+#buyerHeaderProfileEmail {
+    font-size: 8px !important;
+}
+
+/* --------------------------------------------------------------------------
+   FLOATING AI — VISUAL PREVIEW ONLY
+   -------------------------------------------------------------------------- */
+.buyer-ai-preview {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 120;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.buyer-ai-preview-button {
+    position: relative;
+    display: grid;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid #C88709;
+    border-radius: 16px;
+    background: #D9950B;
+    color: #FFFFFF;
+    box-shadow: 0 14px 34px rgba(133, 89, 8, .24);
+    pointer-events: auto;
+    cursor: default;
+    outline: none;
+    transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+
+.buyer-ai-preview-button:hover,
+.buyer-ai-preview-button:focus-visible {
+    transform: translateY(-2px);
+    background: #C9890B;
+    box-shadow: 0 18px 38px rgba(133, 89, 8, .28);
+}
+
+.buyer-ai-preview-button svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.buyer-ai-preview-dot {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #FFFFFF;
+    border-radius: 999px;
+    background: #86B697;
+}
+
+.buyer-ai-preview-card {
+    display: grid;
+    min-width: 160px;
+    gap: 2px;
+    border: 1px solid #E8DECE;
+    border-radius: 13px;
+    background: #FFFFFF;
+    padding: 10px 12px;
+    color: #302920;
+    box-shadow: 0 14px 36px rgba(40, 31, 21, .12);
+    opacity: 0;
+    transform: translateY(4px) scale(.98);
+    transform-origin: right bottom;
+    visibility: hidden;
+    transition: opacity .14s ease, transform .14s ease, visibility .14s ease;
+}
+
+.buyer-ai-preview:hover .buyer-ai-preview-card,
+.buyer-ai-preview:focus-within .buyer-ai-preview-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
+.buyer-ai-preview-card strong {
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.buyer-ai-preview-card > span:last-child {
+    color: #8E8578;
+    font-size: 8px;
+}
+
+.buyer-ai-preview-eyebrow {
+    color: #A56F0C !important;
+    font-size: 7px !important;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   COLLAPSED DESKTOP SHELL
+   -------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+    html[data-buyer-sidebar-mini="1"] {
+        --buyer-sidebar-width: var(--buyer-sidebar-mini);
+    }
+
+    html[data-buyer-sidebar-mini="1"] #buyerSidebarBrand {
+        min-height: 74px !important;
+        padding-inline: 8px !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] #buyerSidebarNav {
+        padding: 12px 9px !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] .buyer-sidebar-section-label,
+    html[data-buyer-sidebar-mini="1"] .buyer-sidebar-section-divider {
+        display: none !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] #buyerSidebarNav [data-buyer-sidebar-item] {
+        min-height: 40px !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        padding-inline: 0 !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] #buyerSidebarNav [data-buyer-sidebar-inner] {
+        justify-content: center !important;
+        gap: 0 !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] #buyerSidebarProfile {
+        padding: 9px !important;
+    }
+
+    html[data-buyer-sidebar-mini="1"] .buyer-sidebar-profile-card {
+        justify-content: center !important;
+        padding: 8px !important;
+    }
+
+    #buyerHeader .buyer-header-search {
+        width: 235px !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    #buyerHeader .buyer-header-search {
+        width: 260px !important;
+    }
+}
+
+@media (min-width: 1536px) {
+    #buyerHeader .buyer-header-search {
+        width: 285px !important;
+    }
+}
+
+@media (max-height: 820px) and (min-width: 1024px) {
+    #buyerSidebarNav {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .buyer-sidebar-section-label {
+        margin-top: 8px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .buyer-sidebar-section-divider {
+        margin-top: 8px !important;
+        margin-bottom: 7px !important;
+    }
+
+    #buyerSidebarNav [data-buyer-sidebar-item] {
+        min-height: 36px !important;
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    #buyerSidebar {
+        width: 238px !important;
+    }
+
+    #buyerMainContent {
+        padding-left: 0 !important;
+    }
+}
+
+@media (max-width: 767px) {
+    #buyerHeader .buyer-header-main {
+        min-height: 68px !important;
+        padding-inline: 12px !important;
+    }
+
+    .buyer-header-control,
+    .buyer-header-icon-button {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    #buyerHeader h1 {
+        font-size: 16px !important;
+    }
+
+    .buyer-ai-preview {
+        right: 14px;
+        bottom: 14px;
+    }
+
+    .buyer-ai-preview-button {
+        width: 48px;
+        height: 48px;
+        border-radius: 15px;
+    }
+
+    .buyer-ai-preview-card {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #buyerSidebar,
+    #buyerMainContent,
+    .buyer-ai-preview-button,
+    .buyer-ai-preview-card,
+    #buyerSidebar * {
+        transition-duration: 1ms !important;
+        animation-duration: 1ms !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   SELLER-MATCHED PAGE CANVAS
+   Keep the shared #F4F5F7 shell visible around Buyer content, exactly like
+   the Seller dashboard. Page cards/panels keep their own white surfaces.
+   -------------------------------------------------------------------------- */
+#buyerMainContent > .sari-home,
+#buyerMainContent > .sari-products-page,
+#buyerMainContent > .sari-orders-page,
+#buyerMainContent > [data-sari-cart-page],
+#buyerMainContent > .buyer-product-page,
+#buyerMainContent > .sari-order-tracking {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}

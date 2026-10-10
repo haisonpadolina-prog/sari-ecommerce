@@ -74,8 +74,7 @@ class BuyerProductController extends Controller
     public function image(Request $request, SellerProduct $product)
     {
         abort_unless($this->isBuyer($request), 403);
-        abort_unless($product->moderation_status === 'approved', 404);
-        abort_unless(is_null($product->archived_at), 404);
+        abort_unless($product->isBuyerVisible(), 404);
         abort_unless($product->image_path, 404);
         abort_unless(Storage::disk('public')->exists($product->image_path), 404);
 
@@ -88,8 +87,7 @@ class BuyerProductController extends Controller
 
         $product = $image->product;
         abort_unless($product, 404);
-        abort_unless($product->moderation_status === 'approved', 404);
-        abort_unless(is_null($product->archived_at), 404);
+        abort_unless($product->isBuyerVisible(), 404);
         abort_unless($image->path && Storage::disk('public')->exists($image->path), 404);
 
         return Storage::disk('public')->response($image->path);
@@ -102,8 +100,7 @@ class BuyerProductController extends Controller
         $product = $variant->product;
         abort_unless($product, 404);
         abort_unless($variant->is_active, 404);
-        abort_unless($product->moderation_status === 'approved', 404);
-        abort_unless(is_null($product->archived_at), 404);
+        abort_unless($product->isBuyerVisible(), 404);
         abort_unless($variant->image_path && Storage::disk('public')->exists($variant->image_path), 404);
 
         return Storage::disk('public')->response($variant->image_path);
