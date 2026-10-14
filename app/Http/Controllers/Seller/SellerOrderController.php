@@ -8,12 +8,16 @@ use App\Models\Orders\MarketplaceOrder;
 use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Accounts\SellerAccount;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
+use App\Services\Delivery\DeliveryRouteService;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 use Illuminate\Http\Request;
 
 class SellerOrderController extends Controller
 {
     public function __construct(
-        private MarketplaceOrderWorkflowService $workflow
+        private MarketplaceOrderWorkflowService $workflow,
+        private DeliveryRouteService $deliveryRoute,
     ) {}
 
     private function seller(Request $request): SellerAccount
@@ -134,6 +138,25 @@ class SellerOrderController extends Controller
             'both',
             ['ready_at' => now()]
         );
+
+        /*
+         * Build the route immediately when possible so the correct Logistics
+         * provider can see the pickup request without waiting for a dashboard
+         * refresh. Geocoding/routing failure must never roll back Seller status.
+         */
+        try {
+            $this->deliveryRoute->ensureStops(
+                $order->fresh(['seller', 'buyer']) ?? $order
+            );
+        } catch (Throwable $e) {
+            Log::warning(
+                'SARI could not pre-route a ready-for-pickup order.',
+                [
+                    'order_id' => $order->id,
+                    'error' => $e->getMessage(),
+                ]
+            );
+        }
 
         return back()->with('success', 'Courier request created. Order is ready for pickup.');
     }

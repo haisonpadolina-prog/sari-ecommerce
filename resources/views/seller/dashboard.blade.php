@@ -2473,15 +2473,7 @@ document.addEventListener('livewire:navigated', function () {
                             </div>
 
                             <div class="mt-2 flex min-h-[22px] items-center justify-between gap-2">
-                                <div>
-                                    ${product.free_shipping
-                                        ? `<span class="seller-free-shipping-badge">
-                                            <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.5"></circle><circle cx="18" cy="18" r="1.5"></circle></svg>
-                                            Free Shipping
-                                        </span>`
-                                        : ''
-                                    }
-                                </div>
+                                <div></div>
 
                                 <p class="text-[7px] font-medium ${stock <= Number(product.low_stock_threshold ?? 5) ? 'text-[#b75c5c]' : 'text-[#56816a]'}">
                                     ${stock <= 0 ? 'Out of stock' : stock + ' in stock'}

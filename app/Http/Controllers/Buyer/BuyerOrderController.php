@@ -8,6 +8,7 @@ use App\Models\Orders\MarketplaceOrder;
 use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Catalog\SellerProduct;
 use App\Services\Buyer\BuyerIdentityService;
+use App\Services\Delivery\DeliveryRouteService;
 use App\Services\Products\ProductVariantInventoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -21,6 +22,7 @@ class BuyerOrderController extends Controller
     public function __construct(
         private readonly BuyerIdentityService $identity,
         private readonly ProductVariantInventoryService $inventory,
+        private readonly DeliveryRouteService $deliveryRoute,
     ) {
     }
 
@@ -63,13 +65,16 @@ class BuyerOrderController extends Controller
 
         $order->load([
             'seller',
+            'buyer',
             'reviews',
             'returnRequest',
             'logisticsParcel',
             'events',
         ]);
 
-        return view('buyer.order-details', compact('order'));
+        $trackingRoute = $this->deliveryRoute->buyerPayload($order);
+
+        return view('buyer.order-details', compact('order', 'trackingRoute'));
     }
 
 

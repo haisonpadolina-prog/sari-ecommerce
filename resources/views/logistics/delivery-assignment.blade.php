@@ -20,12 +20,26 @@
 
     <div class="space-y-3">
         @forelse($orders as $order)
+            @php
+                $routeStops = $order->deliveryRouteStops->keyBy('stop_key');
+                $originFacility = $routeStops->get('origin_facility');
+                $destinationFacility = $routeStops->get('destination_facility');
+            @endphp
             <article class="rounded-[18px] border border-[#eee4d3] bg-white p-5">
                 <div class="grid gap-4 lg:grid-cols-[1fr_1fr_auto] lg:items-center">
                     <div>
                         <p class="text-[11px] font-bold text-[#302a22]">{{ $order->order_number }}</p>
                         <p class="mt-1 text-[8px] text-[#8c8275]">{{ $order->seller?->store_name ?: 'SARI Seller' }} → {{ $order->buyer_name }}</p>
                         <p class="mt-2 text-[8px] leading-4 text-[#81776a]">{{ $order->pickup_address }}</p>
+                        <div class="mt-2 flex flex-wrap gap-1.5 text-[7px]">
+                            <span class="rounded-full bg-[#fff6e5] px-2 py-1 font-semibold text-[#9d6d18]">
+                                {{ $originFacility?->name ?: 'Origin pending' }}
+                            </span>
+                            <span class="self-center text-[#b3aaa0]">→</span>
+                            <span class="rounded-full bg-[#f7f2e9] px-2 py-1 font-semibold text-[#756a5e]">
+                                {{ $destinationFacility?->name ?: 'Destination pending' }}
+                            </span>
+                        </div>
                     </div>
 
                     <form method="POST" action="{{ route('logistics.delivery-assignment.assign', $order) }}" class="contents">

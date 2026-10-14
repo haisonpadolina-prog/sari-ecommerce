@@ -11,6 +11,7 @@ use App\Models\Messaging\ChatMessage;
 use App\Models\Orders\SellerReturnRequest;
 use App\Models\Platform\SellerNotification;
 use App\Models\Promotions\SellerVoucher;
+use App\Models\Promotions\SellerFreeShippingPromotion;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -146,6 +147,11 @@ class SellerAccount extends Model
     public function vouchers(): HasMany
     {
         return $this->hasMany(SellerVoucher::class, 'seller_account_id');
+    }
+
+    public function freeShippingPromotions(): HasMany
+    {
+        return $this->hasMany(SellerFreeShippingPromotion::class, 'seller_account_id');
     }
 
     public function returnRequests(): HasMany

@@ -90,7 +90,7 @@ class CourierPageController extends Controller
             'today' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($today))->sum('delivery_fee_amount'),
             'week' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($week))->sum('delivery_fee_amount'),
             'month' => (float) $ledger->filter(fn ($earning) => $earning->earned_at?->gte($month))->sum('delivery_fee_amount'),
-            'pending' => (float) $active->sum('delivery_fee'),
+            'pending' => (float) $active->sum(fn ($order) => $order->courierDeliveryFee()),
             'available' => (float) $ledger->where('status', 'available')->sum('delivery_fee_amount'),
         ];
 
@@ -152,7 +152,7 @@ class CourierPageController extends Controller
             'route' => ($order->pickup_name ?: 'Seller') . ' → ' . ($order->buyer_name ?: 'Buyer'),
             'date' => ($order->delivered_at ?: $order->updated_at)?->format('M d, Y') ?? '—',
             'time' => ($order->delivered_at ?: $order->updated_at)?->format('h:i A') ?? '—',
-            'fee' => (float) $order->delivery_fee,
+            'fee' => $order->courierDeliveryFee(),
             'status' => $order->status === 'delivered' ? 'Completed' : 'Cancelled',
             'is_today' => ($order->delivered_at ?: $order->updated_at)?->isToday() ?? false,
         ])->all();
@@ -257,7 +257,7 @@ class CourierPageController extends Controller
             $out = fopen('php://output','w');
             fputcsv($out,['Order','Buyer','Status','Delivery Fee','Updated At']);
             foreach ($orders as $order) {
-                fputcsv($out,[$order->order_number,$order->buyer_name,$order->status,$order->delivery_fee,$order->updated_at?->toDateTimeString()]);
+                fputcsv($out,[$order->order_number,$order->buyer_name,$order->status,$order->courierDeliveryFee(),$order->updated_at?->toDateTimeString()]);
             }
             fclose($out);
         }, 'rider-delivery-history.csv', ['Content-Type'=>'text/csv']);

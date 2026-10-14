@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\Orders\MarketplaceOrder;
 use App\Models\Delivery\LogisticsParcel;
+use App\Models\Orders\MarketplaceOrder;
+use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class LogisticsReportsController extends Controller
 {
@@ -18,41 +19,91 @@ class LogisticsReportsController extends Controller
         'arrived_buyer',
     ];
 
-    public function index(): View
+    public function __construct(
+        private readonly LogisticsOrderAccess $orderAccess,
+    ) {
+    }
+
+    public function index(Request $request): View
     {
+        $logistics = $this->orderAccess->prepare($request);
         $monthStart = now()->copy()->startOfMonth();
 
+        $orders = fn () => MarketplaceOrder::query()
+            ->where(
+                'logistics_account_id',
+                $logistics->id
+            );
+
+        $parcels = fn () => LogisticsParcel::query()
+            ->whereHas(
+                'order',
+                fn ($query) =>
+                    $query->where(
+                        'logistics_account_id',
+                        $logistics->id
+                    )
+            );
+
         $stats = [
-            'waiting_assignment' => MarketplaceOrder::query()
+            'waiting_assignment' => $orders()
                 ->where('status', 'ready_for_pickup')
                 ->whereNull('courier_email')
                 ->count(),
-            'active_deliveries' => MarketplaceOrder::query()
-                ->whereIn('status', self::ACTIVE_DELIVERY_STATUSES)
+
+            'active_deliveries' => $orders()
+                ->whereIn(
+                    'status',
+                    self::ACTIVE_DELIVERY_STATUSES
+                )
                 ->count(),
-            'delivered_today' => MarketplaceOrder::query()
+
+            'delivered_today' => $orders()
                 ->where('status', 'delivered')
-                ->whereDate('delivered_at', now()->toDateString())
+                ->whereDate(
+                    'delivered_at',
+                    now()->toDateString()
+                )
                 ->count(),
-            'delivered_this_month' => MarketplaceOrder::query()
+
+            'delivered_this_month' => $orders()
                 ->where('status', 'delivered')
-                ->where('delivered_at', '>=', $monthStart)
+                ->where(
+                    'delivered_at',
+                    '>=',
+                    $monthStart
+                )
                 ->count(),
-            'delivery_fees_this_month' => (float) MarketplaceOrder::query()
-                ->where('status', 'delivered')
-                ->where('delivered_at', '>=', $monthStart)
-                ->sum('delivery_fee'),
-            'hub_received' => LogisticsParcel::query()->whereNotNull('received_at')->count(),
-            'hub_sorted' => LogisticsParcel::query()->where('status', 'sorted')->count(),
+
+            'delivery_fees_this_month' =>
+                (float) $orders()
+                    ->where('status', 'delivered')
+                    ->where(
+                        'delivered_at',
+                        '>=',
+                        $monthStart
+                    )
+                    ->sum('delivery_fee'),
+
+            'hub_received' => $parcels()
+                ->whereNotNull('received_at')
+                ->count(),
+
+            'hub_sorted' => $parcels()
+                ->where('status', 'sorted')
+                ->count(),
         ];
 
-        $recentDelivered = MarketplaceOrder::query()
+        $recentDelivered = $orders()
             ->with('seller')
             ->where('status', 'delivered')
             ->latest('delivered_at')
             ->limit(15)
             ->get();
 
-        return view('logistics.reports', compact('stats', 'recentDelivered'));
+        return view(
+            'logistics.reports',
+            compact('stats', 'recentDelivered')
+        );
     }
 }

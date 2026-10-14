@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Accounts\CourierAccount;
 use App\Models\Orders\MarketplaceOrder;
 use App\Support\CurrentLogisticsAccount;
@@ -26,34 +25,59 @@ class LogisticsRiderManagementController extends Controller
 
         $riders = CourierAccount::query()
             ->where(function ($query) use ($logistics): void {
-                $query->where('logistics_account_id', $logistics->id)
-                    ->orWhereNull('logistics_account_id');
+                $query->where(
+                    'logistics_account_id',
+                    $logistics->id
+                )->orWhereNull('logistics_account_id');
             })
             ->whereNotNull('registration_application_id')
             ->latest('approved_at')
             ->get();
 
         $activeOrders = MarketplaceOrder::query()
-            ->whereIn('status', self::ACTIVE_DELIVERY_STATUSES)
+            ->where(
+                'logistics_account_id',
+                $logistics->id
+            )
+            ->whereIn(
+                'status',
+                self::ACTIVE_DELIVERY_STATUSES
+            )
             ->whereNotNull('courier_email')
             ->latest('updated_at')
             ->get()
-            ->keyBy(fn (MarketplaceOrder $order): string => strtolower((string) $order->courier_email));
+            ->keyBy(
+                fn (MarketplaceOrder $order): string =>
+                    strtolower(
+                        (string) $order->courier_email
+                    )
+            );
 
         $stats = [
             'total' => $riders->count(),
-            'active' => $riders->where('account_status', 'active')->count(),
+            'active' => $riders
+                ->where('account_status', 'active')
+                ->count(),
             'busy' => $riders
-                ->filter(fn (CourierAccount $rider): bool => $activeOrders->has(strtolower((string) $rider->email)))
+                ->filter(
+                    fn (CourierAccount $rider): bool =>
+                        $activeOrders->has(
+                            strtolower(
+                                (string) $rider->email
+                            )
+                        )
+                )
                 ->count(),
         ];
 
-        return view('logistics.rider-management', compact(
-            'riders',
-            'activeOrders',
-            'stats',
-            'logistics'
-        ));
+        return view(
+            'logistics.rider-management',
+            compact(
+                'riders',
+                'activeOrders',
+                'stats',
+                'logistics'
+            )
+        );
     }
-
 }

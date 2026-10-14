@@ -6,6 +6,7 @@ use App\Models\Accounts\SellerAccount;
 use App\Models\Catalog\SellerProduct;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Promotions\SellerVoucher;
+use App\Services\Promotions\SellerFreeShippingPromotionService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Storage;
 
 class BuyerCatalogService
 {
+    public function __construct(
+        private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
+    ) {
+    }
+
     /** @var array<int, int>|null */
     private ?array $soldCounts = null;
 
@@ -438,6 +444,15 @@ class BuyerCatalogService
             ->unique()
             ->values();
 
+        // Catalog messaging must not depend on the buyer's current subtotal.
+        // If the seller has a promotion that is LIVE right now, expose the
+        // offer to every product card from that seller. Cart/checkout performs
+        // the final minimum-spend and shipping-cap validation separately.
+        $freeShippingOffer = $this->freeShippingPromotions->liveOfferForSeller(
+            (int) $product->seller_account_id
+        );
+        $freeShippingActive = $freeShippingOffer !== null;
+
         return [
             'id' => (int) $product->id,
             'name' => (string) $product->name,
@@ -449,7 +464,15 @@ class BuyerCatalogService
             'flash_sale_active' => $this->isFlashSaleActive($product),
             'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
             'voucher' => $this->primaryVoucher($seller, (string) ($product->voucher_code ?? '')),
-            'free_shipping' => (bool) ($product->free_shipping ?? false),
+            'free_shipping' => $freeShippingActive,
+            'free_shipping_promotion' => $freeShippingActive ? [
+                'id' => (int) ($freeShippingOffer['promotion_id'] ?? 0),
+                'minimum_order_amount' => (float) ($freeShippingOffer['minimum_order_amount'] ?? 0),
+                'maximum_shipping_discount' => (float) ($freeShippingOffer['maximum_shipping_discount'] ?? 0),
+                'starts_at' => $freeShippingOffer['starts_at']?->toIso8601String(),
+                'ends_at' => $freeShippingOffer['ends_at']?->toIso8601String(),
+                'funder' => (string) ($freeShippingOffer['funder'] ?? 'seller'),
+            ] : null,
             // Marketplace checkout supports Cash on Delivery for buyer products.
             // Keep this explicit so the existing product card can render its COD badge.
             'cod' => true,

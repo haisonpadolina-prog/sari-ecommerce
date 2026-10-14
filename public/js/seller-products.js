@@ -1562,7 +1562,6 @@ function initSariProductsPage() {
         const variants = Array.isArray(product.variants) ? product.variants : [];
         const specifications = Array.isArray(product.specifications) ? product.specifications : [];
         const isVariantProduct = Boolean(product.has_variants || variants.length);
-        const freeShipping = Boolean(product.free_shipping);
 
         const productName = product.name || 'Product';
         const categoryName = product.category || 'Uncategorized';
@@ -1624,9 +1623,9 @@ function initSariProductsPage() {
 
         const shippingChip = document.getElementById('viewProductShippingChip');
         document.getElementById('viewProductShippingText').textContent =
-            freeShipping ? 'Free Shipping enabled' : 'Standard shipping';
+            'Managed under Promotions & Vouchers';
 
-        shippingChip.classList.toggle('hidden', !freeShipping);
+        shippingChip.classList.add('hidden');
 
         document.getElementById('viewProductCreated').textContent =
             product.created_at_human || '—';

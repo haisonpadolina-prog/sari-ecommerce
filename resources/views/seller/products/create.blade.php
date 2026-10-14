@@ -8,43 +8,756 @@
 {{-- Cacheable Add Product stylesheet; visual rules remain unchanged. --}}
 
 
+<style>
+    .seller-category-locked {
+        display:flex;
+        min-height:42px;
+        align-items:center;
+        gap:10px;
+        width:100%;
+        padding:8px 10px;
+        border:1px solid #dfe4ea;
+        border-radius:9px;
+        background:#f7f8fa;
+        color:#4c5663;
+        cursor:default;
+        user-select:none;
+    }
+
+    .seller-category-locked-icon {
+        display:grid;
+        width:28px;
+        height:28px;
+        flex:0 0 28px;
+        place-items:center;
+        border:1px solid #ead8ad;
+        border-radius:8px;
+        background:#fff8e8;
+        color:#b4780d;
+    }
+
+    .seller-category-locked-icon svg {
+        width:14px;
+        height:14px;
+    }
+
+    .seller-category-locked-copy {
+        display:flex;
+        min-width:0;
+        flex:1 1 auto;
+        flex-direction:column;
+        gap:1px;
+    }
+
+    .seller-category-locked-copy strong {
+        overflow:hidden;
+        color:#303842;
+        font-size:9.5px;
+        font-weight:650;
+        line-height:1.3;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .seller-category-locked-copy small {
+        overflow:hidden;
+        color:#8a929c;
+        font-size:7.5px;
+        font-weight:500;
+        line-height:1.25;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .seller-category-locked-badge {
+        display:inline-flex;
+        min-height:22px;
+        flex:0 0 auto;
+        align-items:center;
+        justify-content:center;
+        border:1px solid #e1e5ea;
+        border-radius:999px;
+        background:#fff;
+        padding:0 8px;
+        color:#7d8690;
+        font-size:7px;
+        font-weight:700;
+        letter-spacing:.04em;
+        text-transform:uppercase;
+    }
+</style>
 
 
 
+<style>
+    /* ============================================================
+       COVER IMAGE DROPZONE — PREVIEW STAYS INSIDE THE SAME CONTAINER
+    ============================================================ */
+    #createCoverDropzone.seller-create-upload--dropzone {
+        position: relative !important;
+        display: grid !important;
+        min-height: 250px !important;
+        overflow: hidden !important;
+        place-items: center !important;
+        padding: 0 !important;
+        isolation: isolate !important;
+    }
+
+    /* Default upload prompt remains centered before an image is selected. */
+    #createCoverDropzone #createCoverPlaceholder {
+        position: relative !important;
+        z-index: 2 !important;
+        display: flex !important;
+    }
+
+    /* Once an image exists, remove the prompt completely. */
+    #createCoverDropzone.has-image #createCoverPlaceholder,
+    #createCoverDropzone.has-image #createCoverPlaceholder.seller-cover-drop-copy {
+        display: none !important;
+    }
+
+    /* Preview fills the ORIGINAL dropzone instead of creating a new block below. */
+    #createCoverDropzone #createCoverPreview {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 1 !important;
+
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        object-fit: cover !important;
+        object-position: center !important;
+
+        border: 0 !important;
+        border-radius: inherit !important;
+        background: #f4f5f7 !important;
+    }
+
+    #createCoverDropzone #createCoverPreview.hidden {
+        display: none !important;
+    }
+
+    #createCoverDropzone.has-image #createCoverPreview {
+        display: block !important;
+    }
+
+    /* Keep the change action over the selected image. */
+    #createCoverDropzone .seller-cover-change-hint {
+        position: absolute !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        z-index: 3 !important;
+
+        display: none !important;
+        align-items: center !important;
+        gap: 6px !important;
+
+        min-height: 32px !important;
+        padding: 0 10px !important;
+
+        border: 1px solid rgba(255,255,255,.55) !important;
+        border-radius: 9px !important;
+        background: rgba(20,25,34,.80) !important;
+
+        color: #fff !important;
+        font-size: 8px !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+
+        box-shadow: 0 5px 16px rgba(0,0,0,.16) !important;
+        backdrop-filter: blur(5px);
+        pointer-events: none !important;
+    }
+
+    #createCoverDropzone.has-image .seller-cover-change-hint {
+        display: inline-flex !important;
+    }
+
+    #createCoverDropzone .seller-cover-change-hint svg {
+        width: 13px !important;
+        height: 13px !important;
+        flex: 0 0 13px !important;
+    }
+
+    /* Drag-over feedback stays on the same image container. */
+    #createCoverDropzone.has-image.is-dragover::after {
+        content: "Drop image to replace";
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 4 !important;
+
+        display: grid !important;
+        place-items: center !important;
+
+        background: rgba(20,25,34,.58) !important;
+        color: #fff !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: .01em !important;
+
+        pointer-events: none !important;
+    }
+
+    @media (max-width: 767px) {
+        #createCoverDropzone.seller-create-upload--dropzone {
+            min-height: 220px !important;
+        }
+    }
+</style>
 
 
+<style>
+    /* ============================================================
+       PRODUCT GALLERY — CLEAN DROPZONE + COMPACT ADD-IMAGES STATE
+    ============================================================ */
+
+    /* ---------- Empty state: before the first image ---------- */
+    #createGalleryDropzone.seller-gallery-dropzone {
+        width:100% !important;
+        min-height:0 !important;
+        margin-top:12px !important;
+        padding:0 !important;
+
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-empty {
+        display:flex !important;
+        width:100% !important;
+        min-height:150px !important;
+        align-items:center !important;
+        justify-content:center !important;
+        gap:14px !important;
+
+        padding:24px !important;
+
+        border:1px dashed #d5dde6 !important;
+        border-radius:13px !important;
+        background:#fafbfc !important;
+
+        color:#4f5b69 !important;
+        cursor:pointer !important;
+        text-align:left !important;
+
+        transition:
+            border-color .15s ease,
+            background-color .15s ease,
+            box-shadow .15s ease !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-empty:hover,
+    #createGalleryDropzone.is-dragover .seller-gallery-drop-empty {
+        border-color:#c9a45a !important;
+        background:#fffdf8 !important;
+        box-shadow:0 0 0 3px rgba(200,137,18,.055) !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-icon {
+        display:grid !important;
+        width:46px !important;
+        height:46px !important;
+        flex:0 0 46px !important;
+        place-items:center !important;
+
+        border:1px solid #dde3e9 !important;
+        border-radius:11px !important;
+        background:#fff !important;
+        color:#6d7886 !important;
+
+        box-shadow:0 3px 9px rgba(28,38,52,.035) !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-icon svg {
+        width:19px !important;
+        height:19px !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-copy {
+        display:flex !important;
+        min-width:0 !important;
+        flex-direction:column !important;
+        gap:3px !important;
+        align-items:flex-start !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-copy strong {
+        color:#374250 !important;
+        font-size:10.5px !important;
+        font-weight:700 !important;
+        line-height:1.3 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-copy > span {
+        color:#7f8a98 !important;
+        font-size:8.5px !important;
+        font-weight:500 !important;
+        line-height:1.35 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-drop-copy small {
+        color:#a0a9b4 !important;
+        font-size:7.5px !important;
+        font-weight:500 !important;
+        line-height:1.35 !important;
+    }
+
+    /* ---------- Critical state: after one or more images ---------- */
+
+    /*
+     * The original large drop area disappears completely after the first image.
+     * JS already sets data-has-images="1"; these rules make that state absolute
+     * even when older CSS has stronger gallery sizing.
+     */
+    #createGalleryDropzone[data-has-images="1"] {
+        min-height:0 !important;
+        padding:0 !important;
+        border:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    #createGalleryDropzone[data-has-images="1"] .seller-gallery-drop-empty,
+    #createGalleryDropzone[data-has-images="1"] #createGalleryEmpty {
+        display:none !important;
+        width:0 !important;
+        height:0 !important;
+        min-height:0 !important;
+        margin:0 !important;
+        padding:0 !important;
+        border:0 !important;
+        overflow:hidden !important;
+        visibility:hidden !important;
+        pointer-events:none !important;
+    }
+
+    #createGalleryDropzone[data-has-images="1"] #createGalleryPreview {
+        display:grid !important;
+        width:100% !important;
+        min-height:0 !important;
+
+        grid-template-columns:repeat(auto-fill, minmax(126px, 142px)) !important;
+        align-items:start !important;
+        justify-content:start !important;
+        gap:10px !important;
+
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    #createGalleryDropzone[data-has-images="1"] #createGalleryPreview.hidden {
+        display:grid !important;
+    }
+
+    /* ---------- Selected image thumbnails ---------- */
+    #createGalleryDropzone .seller-create-gallery-thumb {
+        position:relative !important;
+
+        width:100% !important;
+        aspect-ratio:1 / 1 !important;
+        min-width:0 !important;
+        height:auto !important;
+
+        overflow:hidden !important;
+
+        border:1px solid #e0e5ea !important;
+        border-radius:11px !important;
+        background:#f5f6f8 !important;
+
+        box-shadow:none !important;
+    }
+
+    #createGalleryDropzone .seller-create-gallery-thumb img {
+        display:block !important;
+        width:100% !important;
+        height:100% !important;
+
+        object-fit:cover !important;
+        object-position:center !important;
+
+        border:0 !important;
+        border-radius:inherit !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-remove {
+        position:absolute !important;
+        top:7px !important;
+        right:7px !important;
+        z-index:3 !important;
+
+        display:grid !important;
+        width:25px !important;
+        height:25px !important;
+        place-items:center !important;
+
+        border:1px solid rgba(255,255,255,.55) !important;
+        border-radius:999px !important;
+        background:rgba(24,31,42,.78) !important;
+
+        color:#fff !important;
+
+        box-shadow:0 3px 9px rgba(0,0,0,.14) !important;
+        backdrop-filter:blur(4px) !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-remove:hover {
+        background:#202833 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-remove svg {
+        width:13px !important;
+        height:13px !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-saved-badge {
+        position:absolute !important;
+        left:7px !important;
+        bottom:7px !important;
+
+        min-height:21px !important;
+        padding:0 7px !important;
+
+        display:inline-flex !important;
+        align-items:center !important;
+
+        border:1px solid rgba(255,255,255,.55) !important;
+        border-radius:7px !important;
+        background:rgba(24,31,42,.76) !important;
+
+        color:#fff !important;
+        font-size:6.8px !important;
+        font-weight:650 !important;
+    }
+
+    /* ---------- Add images = only visual drop target after images exist ---------- */
+    #createGalleryDropzone .seller-gallery-add-tile {
+        display:flex !important;
+        width:100% !important;
+        aspect-ratio:1 / 1 !important;
+        min-width:0 !important;
+        height:auto !important;
+
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+        gap:6px !important;
+
+        padding:12px !important;
+
+        border:1px dashed #cfd7e0 !important;
+        border-radius:11px !important;
+        background:#fbfcfd !important;
+
+        color:#697586 !important;
+        cursor:pointer !important;
+        text-align:center !important;
+
+        box-shadow:none !important;
+
+        transition:
+            border-color .15s ease,
+            background-color .15s ease,
+            color .15s ease,
+            box-shadow .15s ease !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile:hover {
+        border-color:#c6983e !important;
+        background:#fffaf0 !important;
+        color:#9a660d !important;
+        box-shadow:0 0 0 3px rgba(200,137,18,.05) !important;
+    }
+
+    /*
+     * Drag events are intentionally still handled by the existing parent
+     * gallery dropzone. Once images exist, only this tile is highlighted,
+     * so visually it behaves as the next-image drop target.
+     */
+    #createGalleryDropzone[data-has-images="1"].is-dragover
+    .seller-gallery-add-tile {
+        border-color:#c88912 !important;
+        background:#fff8e8 !important;
+        color:#93610d !important;
+        box-shadow:0 0 0 3px rgba(200,137,18,.08) !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile-icon {
+        display:grid !important;
+        width:34px !important;
+        height:34px !important;
+        place-items:center !important;
+
+        border:1px solid #dfe4ea !important;
+        border-radius:9px !important;
+        background:#fff !important;
+        color:#758190 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile:hover
+    .seller-gallery-add-tile-icon,
+    #createGalleryDropzone[data-has-images="1"].is-dragover
+    .seller-gallery-add-tile-icon {
+        border-color:#ead7ad !important;
+        background:#fff !important;
+        color:#b2770e !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile-icon svg {
+        width:16px !important;
+        height:16px !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile strong {
+        color:inherit !important;
+        font-size:9px !important;
+        font-weight:700 !important;
+        line-height:1.2 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile > span:last-child {
+        max-width:110px !important;
+
+        color:#9aa4af !important;
+        font-size:7px !important;
+        font-weight:500 !important;
+        line-height:1.3 !important;
+    }
+
+    #createGalleryDropzone .seller-gallery-add-tile:hover > span:last-child,
+    #createGalleryDropzone[data-has-images="1"].is-dragover
+    .seller-gallery-add-tile > span:last-child {
+        color:#a17a36 !important;
+    }
+
+    @media (max-width:640px) {
+        #createGalleryDropzone .seller-gallery-drop-empty {
+            min-height:138px !important;
+            padding:20px 16px !important;
+        }
+
+        #createGalleryDropzone[data-has-images="1"] #createGalleryPreview {
+            grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+            gap:8px !important;
+        }
+    }
+</style>
 
 
+<style>
+    /* ============================================================
+       COVER IMAGE DROPZONE — CLEAN EMPTY STATE
+    ============================================================ */
+    #createCoverDropzone.seller-create-upload--dropzone {
+        position: relative !important;
+        display: grid !important;
+        min-height: 250px !important;
+        overflow: hidden !important;
+        place-items: center !important;
+        padding: 18px !important;
+        border: 1px dashed #d8dfe6 !important;
+        border-radius: 14px !important;
+        background: #fafbfc !important;
+        isolation: isolate !important;
+        transition:
+            border-color .16s ease,
+            background-color .16s ease,
+            box-shadow .16s ease !important;
+    }
 
+    #createCoverDropzone:hover,
+    #createCoverDropzone.is-dragover {
+        border-color: #c79a43 !important;
+        background: #fffdf9 !important;
+        box-shadow: 0 0 0 3px rgba(200,137,18,.05) !important;
+    }
 
+    #createCoverDropzone #createCoverPlaceholder {
+        position: relative !important;
+        z-index: 2 !important;
+        display: flex !important;
+        width: min(100%, 320px) !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        text-align: center !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-icon {
+        display: grid !important;
+        width: 56px !important;
+        height: 56px !important;
+        flex: 0 0 56px !important;
+        place-items: center !important;
+        border: 1px solid #d9e0e7 !important;
+        border-radius: 14px !important;
+        background: #ffffff !important;
+        color: #687587 !important;
+        box-shadow: 0 4px 12px rgba(24,37,53,.04) !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-text {
+        display: flex !important;
+        min-width: 0 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-copy strong {
+        color: #313b48 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-text > span {
+        color: #778392 !important;
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        line-height: 1.45 !important;
+    }
 
+    #createCoverDropzone .seller-cover-drop-text small {
+        color: #9ca6b1 !important;
+        font-size: 8px !important;
+        font-weight: 500 !important;
+        line-height: 1.4 !important;
+    }
 
+    #createCoverDropzone.has-image #createCoverPlaceholder {
+        display: none !important;
+    }
+
+    #createCoverDropzone #createCoverPreview {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        border: 0 !important;
+        border-radius: inherit !important;
+        background: #f4f5f7 !important;
+    }
+
+    #createCoverDropzone #createCoverPreview.hidden {
+        display: none !important;
+    }
+
+    #createCoverDropzone.has-image #createCoverPreview {
+        display: block !important;
+    }
+
+    #createCoverDropzone .seller-cover-change-hint {
+        position: absolute !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        z-index: 3 !important;
+        display: none !important;
+        align-items: center !important;
+        gap: 6px !important;
+        min-height: 32px !important;
+        padding: 0 10px !important;
+        border: 1px solid rgba(255,255,255,.55) !important;
+        border-radius: 9px !important;
+        background: rgba(20,25,34,.80) !important;
+        color: #fff !important;
+        font-size: 8px !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+        box-shadow: 0 5px 16px rgba(0,0,0,.16) !important;
+        backdrop-filter: blur(5px);
+        pointer-events: none !important;
+    }
+
+    #createCoverDropzone.has-image .seller-cover-change-hint {
+        display: inline-flex !important;
+    }
+
+    #createCoverDropzone .seller-cover-change-hint svg {
+        width: 13px !important;
+        height: 13px !important;
+        flex: 0 0 13px !important;
+    }
+
+    #createCoverDropzone.has-image.is-dragover::after {
+        content: "Drop image to replace";
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 4 !important;
+        display: grid !important;
+        place-items: center !important;
+        background: rgba(20,25,34,.58) !important;
+        color: #fff !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: .01em !important;
+        pointer-events: none !important;
+    }
+
+    @media (max-width: 767px) {
+        #createCoverDropzone.seller-create-upload--dropzone {
+            min-height: 220px !important;
+            padding: 14px !important;
+        }
+
+        #createCoverDropzone #createCoverPlaceholder {
+            width: min(100%, 280px) !important;
+            gap: 10px !important;
+        }
+
+        #createCoverDropzone .seller-cover-drop-icon {
+            width: 52px !important;
+            height: 52px !important;
+            border-radius: 13px !important;
+        }
+    }
+</style>
 
 @endpush
 
 @section('content')
 @php
-    $categories = [
-        'Electronics',
-        'Fashion & Apparel',
-        'Beauty & Personal Care',
-        'Home & Living',
-        'Food & Beverages',
-        'Sports & Outdoors',
-        'Books & Stationery',
-        'Automotive',
-        'Baby & Kids',
-        'Pet Supplies',
-        'Health & Wellness',
-        'Toys & Collectibles',
-        'Appliances',
-        'Others',
-    ];
+    /*
+    |--------------------------------------------------------------------------
+    | SELLER-LOCKED PRODUCT CATEGORY
+    |--------------------------------------------------------------------------
+    | One seller account = one selling category.
+    | The category is displayed as read-only and submitted through a hidden
+    | field so the rest of the existing Add Product flow stays unchanged.
+    */
+    $sellerDefaultCategory = collect([
+        data_get($sellerAccount ?? null, 'category'),
+        data_get($sellerAccount ?? null, 'store_category'),
+        data_get($sellerAccount ?? null, 'business_category'),
+    ])
+        ->map(fn ($value) => trim((string) $value))
+        ->first(fn ($value) => $value !== '');
+
+    if (!$sellerDefaultCategory && isset($sellerAccount) && method_exists($sellerAccount, 'products')) {
+        $sellerDefaultCategory = trim((string) (
+            $sellerAccount->products()
+                ->whereNotNull('category')
+                ->where('category', '!=', '')
+                ->value('category')
+            ?? ''
+        ));
+    }
 @endphp
 
 
@@ -203,64 +916,50 @@
                         <input id="createProductName" name="name" value="{{ old('name') }}" required maxlength="150" class="seller-create-input" placeholder="e.g. Nordic Solid Wood Dining Chair">
                     </div>
                     <div>
-                        <label class="seller-create-label">Category <span class="text-[#dc4c4c]">*</span></label>
+                        <label class="seller-create-label">
+                            Category
+                            <span class="text-[#dc4c4c]">*</span>
+                        </label>
 
-                        <div id="createCategoryPicker" class="seller-category-picker">
-                            <select id="createProductCategory" name="category" required class="sr-only" tabindex="-1" aria-hidden="true">
-                                <option value="">Choose product category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category }}" @selected(old('category') === $category)>{{ $category }}</option>
-                                @endforeach
-                            </select>
+                        <input
+                            id="createProductCategory"
+                            type="hidden"
+                            name="category"
+                            value="{{ $sellerDefaultCategory }}"
+                        >
 
-                            <button
-                                id="createCategoryTrigger"
-                                type="button"
-                                class="seller-category-trigger"
-                                aria-haspopup="listbox"
-                                aria-expanded="false"
-                                aria-controls="createCategoryMenu"
-                            >
-                                <span class="seller-category-trigger-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <path d="M20 13 11 22l-8-8 9-9h7v7Z"></path>
-                                        <circle cx="16" cy="9" r="1.4"></circle>
-                                    </svg>
-                                </span>
-                                <span id="createCategoryTriggerText" class="seller-category-trigger-text">Choose product category</span>
-                                <svg class="seller-category-trigger-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
-                                    <path d="m7 10 5 5 5-5"></path>
+                        <div
+                            class="seller-category-locked"
+                            role="textbox"
+                            aria-readonly="true"
+                            aria-label="Seller product category"
+                        >
+                            <span class="seller-category-locked-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M20 13 11 22l-8-8 9-9h7v7Z"></path>
+                                    <circle cx="16" cy="9" r="1.3"></circle>
                                 </svg>
-                            </button>
+                            </span>
 
-                            <div id="createCategoryMenu" class="seller-category-menu hidden" role="listbox">
-                                @foreach ($categories as $category)
-                                    <button
-                                        type="button"
-                                        class="seller-category-option"
-                                        data-category-option="{{ $category }}"
-                                        role="option"
-                                        aria-selected="{{ old('category') === $category ? 'true' : 'false' }}"
-                                    >
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M20 13 11 22l-8-8 9-9h7v7Z"></path>
-                                            <circle cx="16" cy="9" r="1.2"></circle>
-                                        </svg>
-                                        <span>{{ $category }}</span>
-                                    </button>
-                                @endforeach
-                            </div>
+                            <span class="seller-category-locked-copy">
+                                <strong>{{ $sellerDefaultCategory ?: 'Category not assigned' }}</strong>
+                                <small>
+                                    {{ $sellerDefaultCategory
+                                        ? 'Assigned to your seller account'
+                                        : 'Contact SARI support to assign your seller category' }}
+                                </small>
+                            </span>
+
+                            <span class="seller-category-locked-badge">
+                                Locked
+                            </span>
                         </div>
                     </div>
                     <div>
                         <label class="seller-create-label">Brand</label>
                         <input id="createProductBrand" name="brand" value="{{ old('brand') }}" maxlength="120" class="seller-create-input" placeholder="Brand name or No Brand">
                     </div>
-                    <div id="createCustomCategoryWrap" class="seller-create-span-2 hidden">
-                        <label class="seller-create-label">Custom category</label>
-                        <input id="createCustomCategory" name="custom_category" value="{{ old('custom_category') }}" maxlength="100" class="seller-create-input" placeholder="Enter your product category">
-                    </div>
-                </div>
+</div>
 
                 <details class="mt-4 rounded-[11px] border border-[#e4e8ed] bg-[#fafbfc]">
                     <summary class="cursor-pointer list-none px-3 py-3 text-[9px] font-semibold text-[#49515b]">More listing information <span class="ml-1 font-normal text-[#8a929c]">SKU, voucher and condition</span></summary>
@@ -307,16 +1006,19 @@
                             <input id="createCoverImage" name="image" type="file" accept="image/jpeg,image/png,image/webp" class="hidden">
 
                             <span id="createCoverPlaceholder" class="seller-cover-drop-copy">
-                                <span class="mx-auto grid h-11 w-11 place-items-center rounded-[11px] border border-[#dce1e7] bg-white text-[#65707c]">
-                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                                        <path d="M12 4v10"></path>
-                                        <path d="m8.5 7.5 3.5-3.5 3.5 3.5"></path>
-                                        <path d="M5 13.5v4A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-4"></path>
+                                <span class="seller-cover-drop-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M12 16V8"></path>
+                                        <path d="M8.5 11.5 12 8l3.5 3.5"></path>
+                                        <path d="M5 18.5h14"></path>
                                     </svg>
                                 </span>
-                                <strong>Drag &amp; drop cover image</strong>
-                                <span class="seller-cover-drop-secondary">or click to browse</span>
-                                <span id="createCoverDropHelp" class="seller-cover-drop-meta">JPG, PNG or WEBP · up to 4 MB</span>
+
+                                <span class="seller-cover-drop-text">
+                                    <strong>Upload cover image</strong>
+                                    <span>Drag &amp; drop your product cover here</span>
+                                    <small id="createCoverDropHelp">or click to browse · JPG, PNG or WEBP · up to 4 MB</small>
+                                </span>
                             </span>
 
                             <img id="createCoverPreview" class="hidden" alt="Cover preview" decoding="async">
@@ -365,8 +1067,9 @@
                                 </svg>
                             </span>
                             <span class="seller-gallery-drop-copy">
-                                <strong>Drag &amp; drop gallery images here</strong>
-                                <span>or click to browse · JPG, PNG or WEBP · up to 12 images</span>
+                                <strong>Add product images</strong>
+                                <span>Drop images here or click to browse</span>
+                                <small>JPG, PNG or WEBP · up to 12 images</small>
                             </span>
                         </button>
 
@@ -653,7 +1356,7 @@
                     </div>
 
                     <div class="seller-create-setting-grid">
-                        <label class="seller-create-setting-card cursor-pointer">
+                        <a href="{{ route('seller.vouchers.index') }}" class="seller-create-setting-card" style="text-decoration:none;">
                             <span class="seller-create-setting-copy">
                                 <span class="seller-create-plain-icon seller-create-plain-icon--shipping" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -664,15 +1367,12 @@
                                     </svg>
                                 </span>
                                 <span>
-                                    <strong>Free Shipping</strong>
-                                    <span>Show the Free Shipping badge and waive the standard delivery fee when eligible.</span>
+                                    <strong>Free Shipping Promotions</strong>
+                                    <span>Free Shipping is now configured at Seller level with minimum spend, schedule, and a maximum shipping discount.</span>
                                 </span>
                             </span>
-                            <span class="shrink-0">
-                                <input id="createFreeShipping" name="free_shipping" type="checkbox" value="1" class="peer sr-only" @checked(old('free_shipping'))>
-                                <span class="seller-create-toggle"></span>
-                            </span>
-                        </label>
+                            <span class="shrink-0 text-[8px] font-semibold text-[#a86d0d]">Manage →</span>
+                        </a>
 
                         <label class="seller-create-setting-card cursor-pointer">
                             <span class="seller-create-setting-copy">
@@ -962,9 +1662,8 @@
     }
 
     function updateCustomCategory() {
-        const show = category?.value === 'Others';
-        customCategoryWrap?.classList.toggle('hidden', !show);
-        if (customCategory) customCategory.required = show;
+        // Seller category is account-locked. Keep the existing function name
+        // because the rest of the page already calls it.
         updatePreview();
     }
 
@@ -974,9 +1673,7 @@
 
     function updatePreview() {
         const title = (nameInput?.value || '').trim() || 'Product title';
-        const categoryText = category?.value === 'Others'
-            ? ((customCategory?.value || '').trim() || 'Other category')
-            : (category?.value || 'Category');
+        const categoryText = category?.value || 'Category';
         const discount = Math.min(100, Math.max(0, Number(discountInput?.value || 0)));
         const hasFlash = Boolean(flashInput?.value);
         const hasFreeShipping = Boolean(freeShipping?.checked);
@@ -1420,13 +2117,13 @@
             addTile.setAttribute('aria-label', 'Add more product gallery images');
             addTile.innerHTML = `
                 <span class="seller-gallery-add-tile-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M12 5v14"></path>
                         <path d="M5 12h14"></path>
                     </svg>
                 </span>
                 <strong>Add images</strong>
-                <span>${GALLERY_LIMIT - total} slots left</span>
+                <span>Drop or click · ${GALLERY_LIMIT - total} slots left</span>
             `;
             galleryPreview.appendChild(addTile);
         }
@@ -3527,11 +4224,12 @@
             'preparation_days',
             'low_stock_threshold',
             'description',
-            'custom_category',
         ].forEach(name => assignDraftField(name, payload[name] ?? ''));
 
+        // Category is owned by the seller account and must never be restored
+        // from an older draft or changed by draft payload data.
         if (category) {
-            category.value = payload.category || '';
+            category.value = @json($sellerDefaultCategory);
         }
 
         if (freeShipping) {

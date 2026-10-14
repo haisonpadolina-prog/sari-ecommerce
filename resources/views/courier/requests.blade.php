@@ -39,7 +39,7 @@
                     <div class="rounded-xl border border-[#eee5d6] bg-white p-3"><p class="text-[7px] uppercase tracking-[.1em] text-[#a09484]">Buyer</p><p class="mt-1 text-[9px] font-semibold text-[#2a251f]">{{ $order->buyer_name }}</p><p class="mt-1 text-[7px] leading-4 text-[#8a8073]">{{ $order->buyer_address }}</p></div>
                 </div>
                 <div class="mt-4 flex items-center justify-between border-t border-[#eee5d6] pt-4">
-                    <p class="text-[9px] font-bold text-[#29241e]">₱{{ number_format((float) $order->delivery_fee, 2) }}</p>
+                    <p class="text-[9px] font-bold text-[#29241e]">₱{{ number_format($order->courierDeliveryFee(), 2) }}</p>
                     <a href="{{ route('courier.dashboard') }}" class="rounded-xl bg-[#D99600] px-5 py-3 text-[9px] font-semibold text-white">Start Workflow</a>
                 </div>
             </article>

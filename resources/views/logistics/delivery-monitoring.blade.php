@@ -15,7 +15,7 @@
         <table class="w-full min-w-[980px] text-left">
             <thead class="bg-[#fcfaf6] text-[8px] uppercase tracking-[.08em] text-[#978d80]">
                 <tr>
-                    <th class="px-4 py-3">Order</th><th class="px-4 py-3">Seller</th><th class="px-4 py-3">Buyer</th><th class="px-4 py-3">Rider</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Hub</th><th class="px-4 py-3">Updated</th>
+                    <th class="px-4 py-3">Order</th><th class="px-4 py-3">Seller</th><th class="px-4 py-3">Buyer</th><th class="px-4 py-3">Rider</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Facilities</th><th class="px-4 py-3">Route</th><th class="px-4 py-3">Updated</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-[#f0e9df]">
@@ -26,11 +26,33 @@
                         <td class="px-4 py-3">{{ $order->buyer_name }}</td>
                         <td class="px-4 py-3">{{ $order->courier_name }}</td>
                         <td class="px-4 py-3"><span class="rounded-full bg-[#f2f7fb] px-2.5 py-1 font-semibold text-[#3C6E91]">{{ $order->statusLabel() }}</span></td>
-                        <td class="px-4 py-3">{{ $order->logisticsParcel ? strtoupper(str_replace('_',' ',$order->logisticsParcel->status)) : 'LEGACY' }}</td>
+                        @php
+                            $routeStops = $order->deliveryRouteStops->keyBy('stop_key');
+                            $originFacility = $routeStops->get('origin_facility');
+                            $destinationFacility = $routeStops->get('destination_facility');
+                        @endphp
+                        <td class="px-4 py-3">
+                            <div class="max-w-[220px]">
+                                <p class="font-semibold text-[#5b5147]">{{ $originFacility?->name ?: 'Origin pending' }}</p>
+                                <p class="mt-1 text-[7px] text-[#a19990]">→ {{ $destinationFacility?->name ?: 'Destination pending' }}</p>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3">
+                            @if ($order->logisticsParcel)
+                                <a
+                                    href="{{ route('logistics.delivery-routes.edit', $order) }}"
+                                    class="inline-flex h-8 items-center rounded-lg border border-[#ead7b4] bg-[#fffaf0] px-3 text-[8px] font-bold text-[#9d6d18] hover:border-[#d9b66e]"
+                                >
+                                    View route
+                                </a>
+                            @else
+                                <span class="text-[#aaa198]">—</span>
+                            @endif
+                        </td>
                         <td class="px-4 py-3">{{ $order->updated_at?->diffForHumans() }}</td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="px-4 py-10 text-center text-[9px] text-[#8c8275]">No active deliveries.</td></tr>
+                    <tr><td colspan="8" class="px-4 py-10 text-center text-[9px] text-[#8c8275]">No active deliveries.</td></tr>
                 @endforelse
             </tbody>
         </table>

@@ -21,7 +21,19 @@
     $image = $product['image'] ?? null;
     $variations = $product['variations'] ?? [];
     $voucher = $product['voucher'] ?? null;
-    $freeShipping = !empty($product['free_shipping']);
+
+    $freeShippingPromotion = is_array($product['free_shipping_promotion'] ?? null)
+        ? $product['free_shipping_promotion']
+        : null;
+
+    // Product cards only advertise a currently-live SELLER promotion.
+    // Cart / checkout remains authoritative for final eligibility.
+    $freeShipping = $freeShippingPromotion !== null;
+    $freeShippingMinimum = max(
+        0,
+        (float) ($freeShippingPromotion['minimum_order_amount'] ?? 0)
+    );
+
     $hasVariants = !empty($product['has_variants']);
     $codAvailable = !empty($product['cod'])
         || !empty($product['cash_on_delivery'])
@@ -587,11 +599,11 @@
 
     @media (hover:hover) and (pointer:fine) {
         .sari-product-card:hover {
-            transform: translateY(-3px);
+            transform: none !important;
             border-color: #ded5c9 !important;
             box-shadow:
-                0 20px 38px rgba(43,34,24,.10),
-                0 6px 14px rgba(43,34,24,.045) !important;
+                0 16px 32px rgba(43,34,24,.085),
+                0 5px 12px rgba(43,34,24,.04) !important;
         }
 
         .sari-product-card:hover .sari-buyer-card-media img {
@@ -747,6 +759,15 @@
         }
     }
 
+
+    /* Keep the shared product-card container spatially stable. */
+    .sari-product-card,
+    .sari-product-card:hover,
+    .sari-product-card:active,
+    .sari-product-card:focus-within {
+        transform: none !important;
+    }
+
 </style>
 
 <article
@@ -848,7 +869,11 @@
                         <span class="sari-buyer-card-offer-item sari-buyer-card-offer-item--shipping">
                             <span class="sari-buyer-card-offer-stack">
                                 <span class="sari-buyer-card-offer-kicker">XTRA</span>
-                                <span class="sari-buyer-card-offer-main">Free Shipping</span>
+                                <span class="sari-buyer-card-offer-main">
+                                    {{ $freeShippingMinimum > 0
+                                        ? 'Free Shipping ₱' . number_format($freeShippingMinimum, 0) . '+'
+                                        : 'Free Shipping' }}
+                                </span>
                             </span>
                         </span>
                     @endif

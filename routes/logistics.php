@@ -4,7 +4,9 @@ use App\Http\Controllers\Logistics\LogisticsAccountManagementController;
 use App\Http\Controllers\Logistics\LogisticsDashboardController;
 use App\Http\Controllers\Logistics\LogisticsDeliveryAssignmentController;
 use App\Http\Controllers\Logistics\LogisticsDeliveryMonitoringController;
+use App\Http\Controllers\Logistics\LogisticsDeliveryRouteController;
 use App\Http\Controllers\Logistics\LogisticsIncomingParcelController;
+use App\Http\Controllers\Logistics\LogisticsFacilityController;
 use App\Http\Controllers\Logistics\LogisticsMessageController;
 use App\Http\Controllers\Logistics\LogisticsParcelSortingController;
 use App\Http\Controllers\Logistics\LogisticsPickupRequestController;
@@ -55,6 +57,24 @@ Route::prefix('logistics')
             ->whereIn('document', ['id', 'orcr'])->name('rider-applications.document');
 
         Route::get('/rider-management', [LogisticsRiderManagementController::class, 'index'])->name('rider-management');
+
+        Route::get('/sorting-facilities', [LogisticsFacilityController::class, 'index'])
+            ->name('facilities.index');
+        Route::post('/sorting-facilities', [LogisticsFacilityController::class, 'store'])
+            ->name('facilities.store');
+        Route::get('/sorting-facilities/{facility}/edit', [LogisticsFacilityController::class, 'edit'])
+            ->whereNumber('facility')
+            ->name('facilities.edit');
+        Route::patch('/sorting-facilities/{facility}', [LogisticsFacilityController::class, 'update'])
+            ->whereNumber('facility')
+            ->name('facilities.update');
+        Route::patch('/sorting-facilities/{facility}/status', [LogisticsFacilityController::class, 'toggle'])
+            ->whereNumber('facility')
+            ->name('facilities.toggle');
+        Route::delete('/sorting-facilities/{facility}', [LogisticsFacilityController::class, 'destroy'])
+            ->whereNumber('facility')
+            ->name('facilities.destroy');
+
         Route::get('/pickup-requests', [LogisticsPickupRequestController::class, 'index'])->name('pickup-requests');
         Route::post('/pickup-requests/{order}/verify', [LogisticsPickupRequestController::class, 'verify'])->name('pickup-requests.verify');
 
@@ -68,6 +88,12 @@ Route::prefix('logistics')
         Route::post('/delivery-assignment/{order}/assign', [LogisticsDeliveryAssignmentController::class, 'assign'])->name('delivery-assignment.assign');
 
         Route::get('/delivery-monitoring', [LogisticsDeliveryMonitoringController::class, 'index'])->name('delivery-monitoring');
+        Route::get('/delivery-routes/{order}', [LogisticsDeliveryRouteController::class, 'edit'])
+            ->name('delivery-routes.edit');
+        Route::patch('/delivery-routes/{order}', [LogisticsDeliveryRouteController::class, 'update'])
+            ->name('delivery-routes.update');
+        Route::post('/delivery-routes/{order}/stops/{stop}/reached', [LogisticsDeliveryRouteController::class, 'reached'])
+            ->name('delivery-routes.stops.reached');
         Route::get('/reports', [LogisticsReportsController::class, 'index'])->name('reports');
 
         Route::get('/messages', [LogisticsMessageController::class, 'index'])->name('messages');

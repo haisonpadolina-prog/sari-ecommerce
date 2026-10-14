@@ -14,6 +14,7 @@ use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerIdentityService;
 use App\Services\Products\ProductVariantInventoryService;
 use App\Services\Seller\SellerVoucherService;
+use App\Services\Promotions\SellerFreeShippingPromotionService;
 use App\Models\Promotions\SellerVoucherRedemption;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ class BuyerCheckoutController extends Controller
         private readonly BuyerIdentityService $identity,
         private readonly ProductVariantInventoryService $inventory,
         private readonly SellerVoucherService $vouchers,
+        private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
     ) {
     }
 
@@ -88,7 +90,8 @@ class BuyerCheckoutController extends Controller
 
         $snapshot = $this->identity->snapshot($request);
         $sellerGroups = $this->cart->groupedBySeller($items);
-        $deliveryFee = $this->cart->deliveryFee($items);
+        $shipping = $this->cart->shippingSummary($items);
+        $deliveryFee = (float) $shipping['delivery_fee'];
         $subtotal = $this->cart->subtotal($items);
 
         return view('buyer.checkout', [
@@ -96,6 +99,9 @@ class BuyerCheckoutController extends Controller
             'groups' => $sellerGroups,
             'subtotal' => $subtotal,
             'deliveryFee' => $deliveryFee,
+            'originalDeliveryFee' => (float) $shipping['original_delivery_fee'],
+            'shippingDiscount' => (float) $shipping['shipping_discount'],
+            'shippingBySeller' => $shipping['groups'],
             'grandTotal' => round($subtotal + $deliveryFee, 2),
             'profile' => $snapshot,
             'cart' => $this->cart,
@@ -168,8 +174,6 @@ class BuyerCheckoutController extends Controller
                 $lockedProducts = [];
                 $subtotal = 0.0;
 
-                $groupShipsFree = true;
-
                 foreach ($group as $cartItem) {
                     $product = SellerProduct::query()
                         ->whereKey($cartItem->seller_product_id)
@@ -184,8 +188,6 @@ class BuyerCheckoutController extends Controller
                     }
 
                     $lockedProducts[(int) $cartItem->id] = $product;
-                    $groupShipsFree = $groupShipsFree
-                        && (bool) ($product->free_shipping ?? false);
 
                     $lockedVariant = null;
 
@@ -226,13 +228,20 @@ class BuyerCheckoutController extends Controller
                         'qty' => (int) $cartItem->quantity,
                         'price' => $unitPrice,
                         'line_total' => $lineTotal,
-                        'free_shipping' => (bool) ($product->free_shipping ?? false),
                     ];
 
                     $subtotal += $lineTotal;
                 }
 
-                $sellerDeliveryFee = $groupShipsFree ? 0.0 : $feePerSeller;
+                $shippingQuote = $this->freeShippingPromotions->checkoutQuote(
+                    (int) $seller->id,
+                    round($subtotal, 2),
+                    $feePerSeller,
+                    true
+                );
+                $originalDeliveryFee = round($feePerSeller, 2);
+                $shippingDiscountAmount = round((float) ($shippingQuote['shipping_discount'] ?? 0), 2);
+                $sellerDeliveryFee = round(max(0, $originalDeliveryFee - $shippingDiscountAmount), 2);
 
                 $voucherResult = $this->vouchers->resolveForSeller(
                     (int) $seller->id,
@@ -283,6 +292,12 @@ class BuyerCheckoutController extends Controller
                     'voucher_code' => $voucher?->code,
                     'seller_voucher_id' => $voucher?->id,
                     'subtotal' => $discountedSubtotal,
+                    'original_delivery_fee' => $originalDeliveryFee,
+                    'shipping_discount_amount' => $shippingDiscountAmount,
+                    'seller_free_shipping_promotion_id' => $shippingQuote['promotion_id'] ?? null,
+                    'shipping_discount_funder' => $shippingDiscountAmount > 0
+                        ? SellerFreeShippingPromotionService::FUNDER
+                        : null,
                     'delivery_fee' => $sellerDeliveryFee,
                     'total' => round($discountedSubtotal + $sellerDeliveryFee, 2),
                     'pickup_name' => $seller->store_name ?: 'SARI Seller Store',

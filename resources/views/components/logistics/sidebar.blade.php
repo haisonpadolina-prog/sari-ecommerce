@@ -3,6 +3,7 @@
         ['route' => 'logistics.dashboard', 'label' => 'Dashboard Overview', 'match' => 'logistics.dashboard', 'icon' => 'dashboard'],
         ['route' => 'logistics.rider-applications', 'label' => 'Rider Applications', 'match' => 'logistics.rider-applications', 'icon' => 'user-plus'],
         ['route' => 'logistics.rider-management', 'label' => 'Rider Management', 'match' => 'logistics.rider-management', 'icon' => 'users'],
+        ['route' => 'logistics.facilities.index', 'label' => 'Sorting Facilities', 'match' => 'logistics.facilities.*', 'icon' => 'warehouse'],
         ['route' => 'logistics.pickup-requests', 'label' => 'Pickup Requests', 'match' => 'logistics.pickup-requests', 'icon' => 'clipboard'],
         ['route' => 'logistics.incoming-parcels', 'label' => 'Incoming Parcels', 'match' => 'logistics.incoming-parcels', 'icon' => 'box'],
         ['route' => 'logistics.parcel-sorting', 'label' => 'Parcel Sorting', 'match' => 'logistics.parcel-sorting', 'icon' => 'sort'],
@@ -46,6 +47,15 @@
                             @break
                         @case('users')
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.5"></circle><path d="M2.5 20c.5-4 2.5-6 5.5-6"></path><path d="M13 15c3.2 0 5.2 1.7 5.7 5"></path></svg>
+                            @break
+                        @case('warehouse')
+                            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M3 21h18"></path>
+                                <path d="M5 21V8l7-4 7 4v13"></path>
+                                <path d="M8 12h3"></path>
+                                <path d="M13 12h3"></path>
+                                <path d="M8 16h8"></path>
+                            </svg>
                             @break
                         @case('clipboard')
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 4V2h6v2"></path><path d="M8 10h8"></path><path d="M8 14h6"></path></svg>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Accounts\SellerAccount;
 use App\Models\Promotions\SellerVoucher;
+use App\Models\Promotions\SellerFreeShippingPromotion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,27 @@ class SellerVoucherController extends Controller
         $vouchers=SellerVoucher::query()
             ->where('seller_account_id',$seller->id)
             ->latest()->paginate(20);
-        return view('seller.vouchers',compact('seller','vouchers'));
+
+        SellerFreeShippingPromotion::query()
+            ->where('seller_account_id', $seller->id)
+            ->where('status', SellerFreeShippingPromotion::STATUS_ACTIVE)
+            ->where('ends_at', '<=', now())
+            ->update([
+                'status' => SellerFreeShippingPromotion::STATUS_ENDED,
+                'ended_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+        $freeShippingPromotions = SellerFreeShippingPromotion::query()
+            ->where('seller_account_id', $seller->id)
+            ->latest('id')
+            ->get();
+
+        return view('seller.vouchers', compact(
+            'seller',
+            'vouchers',
+            'freeShippingPromotions'
+        ));
     }
 
     public function store(Request $request): RedirectResponse

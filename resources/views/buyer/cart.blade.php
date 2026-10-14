@@ -727,6 +727,13 @@
                         $storeUrl = (int) $sellerId > 0
                             ? route('buyer.shop', ['shop' => 'seller-' . (int) $sellerId])
                             : null;
+
+                        $sellerShippingOffer = $cart->shippingOfferForGroup($sellerItems);
+                        $sellerShippingActive = (bool) ($sellerShippingOffer['active'] ?? false);
+                        $sellerShippingMinimum = (float) ($sellerShippingOffer['minimum_order_amount'] ?? 0);
+                        $sellerShippingMaximum = (float) ($sellerShippingOffer['maximum_shipping_discount'] ?? 0);
+                        $sellerShippingEligible = (bool) ($sellerShippingOffer['eligible'] ?? false);
+                        $sellerShippingRemaining = (float) ($sellerShippingOffer['remaining_to_qualify'] ?? 0);
                     @endphp
 
                     <section class="sari-seller-shell overflow-hidden rounded-[18px] border border-[#e8e0d6] bg-white">
@@ -802,6 +809,36 @@
                             </div>
                         </div>
 
+                        @if ($sellerShippingActive)
+                            <div
+                                class="border-b border-[#e5eee8] bg-[#f5faf7] px-4 py-3"
+                                data-shipping-offer-seller="{{ (int) $sellerId }}"
+                                data-shipping-offer-minimum="{{ number_format($sellerShippingMinimum, 2, '.', '') }}"
+                            >
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="grid h-7 w-7 place-items-center rounded-lg border border-[#cfe3d6] bg-white text-[#4f7d63]">
+                                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.4"></circle><circle cx="18" cy="18" r="1.4"></circle>
+                                            </svg>
+                                        </span>
+                                        <div>
+                                            <p class="text-[8px] font-bold text-[#3f7453]">Free Shipping Promotion</p>
+                                            <p class="mt-0.5 text-[7px] text-[#718178]">
+                                                Spend ₱{{ number_format($sellerShippingMinimum, 2) }} from this seller · up to ₱{{ number_format($sellerShippingMaximum, 2) }} shipping off
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="rounded-full px-2 py-1 text-[6.5px] font-semibold {{ $sellerShippingEligible ? 'bg-[#e9f7ee] text-[#397451]' : 'bg-white text-[#728078] border border-[#d8e6dc]' }}"
+                                        data-shipping-offer-status
+                                    >
+                                        {{ $sellerShippingEligible ? 'Qualified' : 'Add ₱' . number_format($sellerShippingRemaining, 2) . ' more' }}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="space-y-2.5 bg-[#faf9f7] p-2.5">
                             @foreach ($sellerItems as $item)
                                 @php
@@ -813,7 +850,6 @@
                                     $productVisible = (bool) ($availability['product_visible'] ?? false);
                                     $availabilityReason = $availability['reason'] ?? null;
                                     $maxStock = (int) ($availability['max_stock'] ?? 0);
-                                    $freeShipping = (bool) ($item->product?->free_shipping ?? false);
                                 @endphp
 
                                 <article
@@ -823,7 +859,9 @@
                                     data-selected="false"
                                     data-line-total="{{ number_format($line, 2, '.', '') }}"
                                     data-seller-id="{{ (int) ($item->product?->seller_account_id ?? 0) }}"
-                                    data-free-shipping="{{ $freeShipping ? '1' : '0' }}"
+                                    data-shipping-promo-active="{{ $sellerShippingActive ? '1' : '0' }}"
+                                    data-shipping-minimum="{{ number_format($sellerShippingMinimum, 2, '.', '') }}"
+                                    data-shipping-max-discount="{{ number_format($sellerShippingMaximum, 2, '.', '') }}"
                                     data-cart-selectable="{{ $selectable ? '1' : '0' }}"
                                     @if (!$selectable) aria-disabled="true" @endif
                                 >
@@ -873,16 +911,7 @@
                                             <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                                                 <div class="min-w-0">
                                                     <div class="flex flex-wrap items-center gap-1.5">
-                                                        @if ($freeShipping)
-                                                            <span class="inline-flex items-center gap-1 rounded-full border border-[#cfe3d6] bg-[#f1f8f4] px-2 py-1 text-[6px] font-semibold text-[#4f7d63]">
-                                                                <svg viewBox="0 0 24 24" class="h-2.5 w-2.5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                                    <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path>
-                                                                </svg>
-                                                                Free Shipping
-                                                            </span>
-                                                        @endif
-
-                                                        <span class="rounded-full bg-[#f6f3ef] px-2 py-1 text-[6px] font-semibold text-[#756c62]">
+<span class="rounded-full bg-[#f6f3ef] px-2 py-1 text-[6px] font-semibold text-[#756c62]">
                                                             {{ max(0, $maxStock) }} in stock
                                                         </span>
 
@@ -1036,6 +1065,11 @@
                             <span id="cartSelectedDelivery" class="font-semibold text-[#4c453d]">₱0.00</span>
                         </div>
 
+                        <div id="cartSelectedShippingDiscountRow" class="hidden justify-between gap-4 text-[#4f8065]">
+                            <span>Free Shipping discount</span>
+                            <span id="cartSelectedShippingDiscount" class="font-semibold">-₱0.00</span>
+                        </div>
+
                         <div class="border-t border-[#eee8df] pt-4">
                             <div class="flex items-end justify-between gap-4">
                                 <span class="text-[9px] font-semibold text-[#514a42]">Estimated Total</span>
@@ -1136,6 +1170,8 @@
         const summaryCount = page.querySelector('#cartSelectedSummaryCount');
         const subtotalNode = page.querySelector('#cartSelectedSubtotal');
         const deliveryNode = page.querySelector('#cartSelectedDelivery');
+        const shippingDiscountRow = page.querySelector('#cartSelectedShippingDiscountRow');
+        const shippingDiscountNode = page.querySelector('#cartSelectedShippingDiscount');
         const totalNode = page.querySelector('#cartSelectedTotal');
         const hintNode = page.querySelector('#cartSelectionHint');
         const checkoutButton = page.querySelector('#selectedCheckoutButton');
@@ -1161,6 +1197,44 @@
             feedbackTimer = window.setTimeout(() => toast.remove(), 2200);
         }
 
+        const shippingOfferRows = Array.from(document.querySelectorAll('[data-shipping-offer-seller]'));
+
+        function syncShippingOfferRows(entries) {
+            const sellerSubtotals = new Map();
+
+            entries.forEach((entry) => {
+                sellerSubtotals.set(
+                    entry.seller,
+                    (sellerSubtotals.get(entry.seller) || 0) + Number(entry.line || 0)
+                );
+            });
+
+            shippingOfferRows.forEach((row) => {
+                const sellerId = String(row.dataset.shippingOfferSeller || '');
+                const minimum = Number(row.dataset.shippingOfferMinimum || 0);
+                const selectedSubtotal = Number(sellerSubtotals.get(sellerId) || 0);
+                const status = row.querySelector('[data-shipping-offer-status]');
+
+                if (!status) return;
+
+                const qualified = selectedSubtotal >= minimum && selectedSubtotal > 0;
+                const remaining = Math.max(0, minimum - selectedSubtotal);
+
+                status.textContent = qualified
+                    ? 'Qualified'
+                    : (selectedSubtotal > 0
+                        ? `Add ${peso(remaining)} more`
+                        : `Spend ${peso(minimum)} to qualify`);
+
+                status.classList.toggle('bg-[#e9f7ee]', qualified);
+                status.classList.toggle('text-[#397451]', qualified);
+                status.classList.toggle('bg-white', !qualified);
+                status.classList.toggle('text-[#728078]', !qualified);
+                status.classList.toggle('border', !qualified);
+                status.classList.toggle('border-[#d8e6dc]', !qualified);
+            });
+        }
+
         function selectedEntries() {
             return checkboxes
                 .filter((checkbox) => checkbox.checked)
@@ -1172,12 +1246,14 @@
                         card,
                         line: Number(card?.dataset.lineTotal || 0),
                         seller: String(card?.dataset.sellerId || ''),
-                        freeShipping: String(card?.dataset.freeShipping || '0') === '1',
+                        promotionActive: String(card?.dataset.shippingPromoActive || '0') === '1',
+                        shippingMinimum: Number(card?.dataset.shippingMinimum || 0),
+                        shippingMaxDiscount: Number(card?.dataset.shippingMaxDiscount || 0),
                     };
                 });
         }
 
-        function calculateDelivery(entries) {
+        function calculateShipping(entries) {
             const groups = new Map();
 
             entries.forEach((entry) => {
@@ -1185,21 +1261,35 @@
                 groups.get(entry.seller).push(entry);
             });
 
-            let fee = 0;
+            let original = 0;
+            let discount = 0;
+            let payable = 0;
 
             groups.forEach((group) => {
-                const allShipFree = group.every((entry) => entry.freeShipping);
-                if (!allShipFree) fee += feePerSeller;
+                original += feePerSeller;
+
+                const sellerSubtotal = group.reduce((sum, entry) => sum + entry.line, 0);
+                const terms = group[0] || {};
+                const qualified = Boolean(terms.promotionActive)
+                    && sellerSubtotal >= Number(terms.shippingMinimum || 0);
+                const sellerDiscount = qualified
+                    ? Math.min(feePerSeller, Math.max(0, Number(terms.shippingMaxDiscount || 0)))
+                    : 0;
+
+                discount += sellerDiscount;
+                payable += Math.max(0, feePerSeller - sellerDiscount);
             });
 
-            return fee;
+            return { original, discount, payable };
         }
 
         function sync() {
             const entries = selectedEntries();
+            syncShippingOfferRows(entries);
             const selectedCount = entries.length;
             const subtotal = entries.reduce((sum, entry) => sum + entry.line, 0);
-            const delivery = calculateDelivery(entries);
+            const shipping = calculateShipping(entries);
+            const delivery = shipping.payable;
             const total = subtotal + delivery;
 
             cards.forEach((card) => {
@@ -1218,6 +1308,11 @@
             if (summaryCount) summaryCount.textContent = countText;
             if (subtotalNode) subtotalNode.textContent = peso(subtotal);
             if (deliveryNode) deliveryNode.textContent = peso(delivery);
+            if (shippingDiscountNode) shippingDiscountNode.textContent = '-' + peso(shipping.discount);
+            if (shippingDiscountRow) {
+                shippingDiscountRow.classList.toggle('hidden', shipping.discount <= 0);
+                shippingDiscountRow.classList.toggle('flex', shipping.discount > 0);
+            }
             if (totalNode) totalNode.textContent = peso(total);
 
             if (hintNode) {

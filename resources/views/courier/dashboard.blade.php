@@ -64,7 +64,7 @@
                     </div>
                     <div class="rounded-xl border border-[#eadfc9] bg-white px-4 py-2.5">
                         <p class="text-[7px] text-[#918677]">Delivery Fee</p>
-                        <p class="mt-1 text-[12px] font-bold text-[#201c16]">₱{{ number_format((float)$currentDelivery->delivery_fee,2) }}</p>
+                        <p class="mt-1 text-[12px] font-bold text-[#201c16]">₱{{ number_format($currentDelivery->courierDeliveryFee(),2) }}</p>
                     </div>
                 </div>
 

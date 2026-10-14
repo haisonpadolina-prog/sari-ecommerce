@@ -10,6 +10,7 @@ use App\Http\Controllers\Seller\SellerReviewsCenterController;
 use App\Http\Controllers\Seller\SellerAccountController;
 use App\Http\Controllers\Seller\SellerStoreController;
 use App\Http\Controllers\Seller\SellerVoucherController;
+use App\Http\Controllers\Seller\SellerFreeShippingPromotionController;
 use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
 use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,17 @@ Route::middleware(['web'])->group(function (): void {
             Route::post('/vouchers', [SellerVoucherController::class, 'store'])->name('vouchers.store');
             Route::post('/vouchers/{voucher}/toggle', [SellerVoucherController::class, 'toggle'])->name('vouchers.toggle');
             Route::delete('/vouchers/{voucher}', [SellerVoucherController::class, 'destroy'])->name('vouchers.destroy');
+
+            Route::post('/free-shipping-promotions', [SellerFreeShippingPromotionController::class, 'store'])
+                ->name('free-shipping-promotions.store');
+            Route::patch('/free-shipping-promotions/{promotion}', [SellerFreeShippingPromotionController::class, 'update'])
+                ->name('free-shipping-promotions.update');
+            Route::post('/free-shipping-promotions/{promotion}/pause', [SellerFreeShippingPromotionController::class, 'pause'])
+                ->name('free-shipping-promotions.pause');
+            Route::post('/free-shipping-promotions/{promotion}/resume', [SellerFreeShippingPromotionController::class, 'resume'])
+                ->name('free-shipping-promotions.resume');
+            Route::post('/free-shipping-promotions/{promotion}/end', [SellerFreeShippingPromotionController::class, 'end'])
+                ->name('free-shipping-promotions.end');
 
             Route::get('/finance', [SellerFinanceController::class, 'index'])->name('finance.index');
 

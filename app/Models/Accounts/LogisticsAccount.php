@@ -2,15 +2,17 @@
 
 namespace App\Models\Accounts;
 
+use App\Models\Delivery\LogisticsFacility;
+use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
-
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class LogisticsAccount extends Authenticatable
 {
     use SoftDeletes;
+
     protected $table = 'logistics_accounts';
 
     protected $fillable = [
@@ -49,12 +51,34 @@ class LogisticsAccount extends Authenticatable
 
     public function riderApplications(): HasMany
     {
-        return $this->hasMany(RegistrationApplication::class, 'logistics_account_id');
+        return $this->hasMany(
+            RegistrationApplication::class,
+            'logistics_account_id'
+        );
     }
 
     public function riders(): HasMany
     {
-        return $this->hasMany(CourierAccount::class, 'logistics_account_id');
+        return $this->hasMany(
+            CourierAccount::class,
+            'logistics_account_id'
+        );
+    }
+
+    public function facilities(): HasMany
+    {
+        return $this->hasMany(
+            LogisticsFacility::class,
+            'logistics_account_id'
+        );
+    }
+
+    public function marketplaceOrders(): HasMany
+    {
+        return $this->hasMany(
+            MarketplaceOrder::class,
+            'logistics_account_id'
+        );
     }
 
     public function displayName(): string

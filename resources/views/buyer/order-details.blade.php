@@ -3,11 +3,20 @@
 @section('title', 'Order Tracking — SARI')
 @section('page-title', 'Order Tracking')
 
+
 @section('content')
 @include('components.buyer.header')
 
+
 @php
     $items = (array) $order->items;
+    $primaryItem = $items[0] ?? null;
+    $primaryItemName = trim((string) ($primaryItem['name'] ?? 'Order item'));
+    $primaryItemImage = $primaryItem['image'] ?? null;
+    $primaryItemVariant = trim((string) ($primaryItem['variant_label'] ?? 'Standard'));
+    $primaryItemQty = max(1, (int) ($primaryItem['qty'] ?? 1));
+    $remainingItemCount = max(0, count($items) - 1);
+
     $sellerSlug = 'seller-' . (int) $order->seller_account_id;
 
     $statusIndex = match ($order->status) {
@@ -77,10 +86,10 @@
     };
 
     $summarySteps = [
-        ['label' => 'Order Placed', 'threshold' => 1],
+        ['label' => 'Order placed', 'threshold' => 1],
         ['label' => 'Processing', 'threshold' => 2],
-        ['label' => 'In Transit', 'threshold' => 5],
-        ['label' => 'Out for Delivery', 'threshold' => 6],
+        ['label' => 'In transit', 'threshold' => 5],
+        ['label' => 'Out for delivery', 'threshold' => 6],
         ['label' => 'Delivered', 'threshold' => 7],
     ];
 
@@ -133,308 +142,1521 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-    .sari-order-tracking {
+    .sari-track-page {
+        --sari-gold: #c98913;
+        --sari-gold-dark: #9d6910;
+        --sari-gold-soft: #fff7e8;
+        --sari-ink: #25211d;
+        --sari-text: #514a43;
+        --sari-muted: #8d857c;
+        --sari-border: #e8e3dc;
+        --sari-surface: #ffffff;
+        --sari-subtle: #f8f7f5;
+        --sari-success: #37805a;
         font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: var(--sari-ink);
     }
 
-    /*
-     * Soft elevation system:
-     * keeps the page white while giving the main surfaces a restrained
-     * neumorphic lift without making the interface look overly glossy.
-     */
-    .sari-soft-panel {
-        box-shadow:
-            0 16px 36px rgba(44, 39, 33, 0.065),
-            0 4px 12px rgba(44, 39, 33, 0.035),
-            inset 0 1px 0 rgba(255, 255, 255, 0.96);
+    .sari-track-page * {
+        box-sizing: border-box;
     }
 
-    .sari-soft-panel-sm {
-        box-shadow:
-            0 10px 24px rgba(44, 39, 33, 0.055),
-            0 2px 8px rgba(44, 39, 33, 0.03),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    .sari-track-shell {
+        width: min(100%, 1380px);
+        margin: 0 auto;
+        padding: 24px 22px 42px;
     }
 
-    .sari-map-panel {
-        box-shadow:
-            0 14px 30px rgba(48, 42, 35, 0.07),
-            0 3px 10px rgba(48, 42, 35, 0.035),
-            inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    .sari-track-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 18px;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-        .sari-soft-panel,
-        .sari-soft-panel-sm {
-            transition:
-                box-shadow .22s ease,
-                transform .22s ease,
-                border-color .22s ease;
-        }
-
-        .sari-soft-panel:hover {
-            box-shadow:
-                0 18px 42px rgba(44, 39, 33, 0.075),
-                0 5px 14px rgba(44, 39, 33, 0.04),
-                inset 0 1px 0 rgba(255, 255, 255, 0.98);
-        }
-
-        .sari-soft-panel-sm:hover {
-            box-shadow:
-                0 12px 28px rgba(44, 39, 33, 0.065),
-                0 3px 9px rgba(44, 39, 33, 0.035),
-                inset 0 1px 0 rgba(255, 255, 255, 0.98);
-        }
+    .sari-track-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #716961;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color .16s ease;
     }
 
-    .sari-map-route-progress {
+    .sari-track-back:hover {
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-back svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .sari-track-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .sari-track-action {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        border: 1px solid var(--sari-border);
+        border-radius: 10px;
+        background: #fff;
+        padding: 0 13px;
+        color: #625b54;
+        font-size: 10.5px;
+        font-weight: 650;
+        text-decoration: none;
+        transition: border-color .16s ease, background .16s ease, color .16s ease;
+    }
+
+    .sari-track-action:hover {
+        border-color: #d9bb80;
+        background: #fffbf3;
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-action--primary {
+        border-color: #ead4a7;
+        background: var(--sari-gold-soft);
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-action svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .sari-track-hero {
+        overflow: hidden;
+        border: 1px solid var(--sari-border);
+        border-radius: 18px;
+        background: var(--sari-surface);
+    }
+
+    .sari-track-hero-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 28px;
+        align-items: center;
+        padding: 24px 26px 22px;
+    }
+
+    .sari-track-eyebrow {
+        margin: 0 0 7px;
+        color: var(--sari-gold-dark);
+        font-size: 9px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sari-track-title {
+        margin: 0;
+        color: var(--sari-ink);
+        font-size: clamp(22px, 3vw, 31px);
+        line-height: 1.16;
+        font-weight: 700;
+        letter-spacing: -.035em;
+    }
+
+    .sari-track-status {
+        display: inline-flex;
+        min-height: 26px;
+        align-items: center;
+        border-radius: 999px;
+        background: var(--sari-gold-soft);
+        padding: 0 10px;
+        color: var(--sari-gold-dark);
+        font-size: 8.5px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-meta {
+        margin: 8px 0 0;
+        color: var(--sari-muted);
+        font-size: 10.5px;
+        line-height: 1.6;
+    }
+
+    .sari-track-meta strong {
+        color: #5a524a;
+        font-weight: 600;
+    }
+
+    .sari-track-hero-side {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 0;
+        min-width: 300px;
+        border: 1px solid var(--sari-border);
+        border-radius: 13px;
+        overflow: hidden;
+        background: #fbfaf8;
+    }
+
+    .sari-track-stat {
+        padding: 14px 16px;
+    }
+
+    .sari-track-stat + .sari-track-stat {
+        border-left: 1px solid var(--sari-border);
+    }
+
+    .sari-track-stat-label {
+        display: block;
+        color: var(--sari-muted);
+        font-size: 8px;
+        font-weight: 650;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-stat-value {
+        display: block;
+        margin-top: 5px;
+        color: #37322d;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .sari-track-stat-value--gold {
+        color: var(--sari-gold-dark);
+        font-size: 17px;
+    }
+
+    .sari-track-progress-wrap {
+        border-top: 1px solid #eee9e3;
+        padding: 21px 26px 22px;
+    }
+
+    .sari-track-progress {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .sari-track-progress::before,
+    .sari-track-progress::after {
+        content: '';
+        position: absolute;
+        top: 13px;
+        left: 9%;
+        right: 9%;
+        height: 2px;
+        border-radius: 999px;
+    }
+
+    .sari-track-progress::before {
+        background: #e8e3dc;
+    }
+
+    .sari-track-progress::after {
+        right: auto;
+        width: calc(max(0, min(100, {{ $progress }})) * .82%);
+        max-width: 82%;
+        background: var(--sari-gold);
+        transition: width .3s ease;
+    }
+
+    .sari-track-progress-step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .sari-track-progress-dot {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        margin: 0 auto;
+        place-items: center;
+        border: 2px solid #ded8d1;
+        border-radius: 50%;
+        background: #fff;
+        color: #a9a098;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .sari-track-progress-step.is-complete .sari-track-progress-dot,
+    .sari-track-progress-step.is-current .sari-track-progress-dot {
+        border-color: var(--sari-gold);
+        background: var(--sari-gold-soft);
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-progress-step.is-current .sari-track-progress-dot {
+        box-shadow: 0 0 0 5px rgba(201, 137, 19, .09);
+    }
+
+    .sari-track-progress-label {
+        margin: 8px 0 0;
+        color: #918980;
+        font-size: 9px;
+        line-height: 1.35;
+        font-weight: 600;
+    }
+
+    .sari-track-progress-step.is-complete .sari-track-progress-label,
+    .sari-track-progress-step.is-current .sari-track-progress-label {
+        color: #443d37;
+        font-weight: 700;
+    }
+
+    .sari-track-current {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 14px;
+        border: 1px solid #eee7dc;
+        border-radius: 14px;
+        background: #fffdf9;
+        padding: 14px 16px;
+    }
+
+    .sari-track-current-copy {
+        min-width: 0;
+    }
+
+    .sari-track-current-title {
+        margin: 0;
+        color: #38322d;
+        font-size: 12.5px;
+        font-weight: 700;
+    }
+
+    .sari-track-current-sub {
+        margin: 4px 0 0;
+        color: var(--sari-muted);
+        font-size: 9.5px;
+        line-height: 1.5;
+    }
+
+    .sari-track-current-badge {
+        flex: 0 0 auto;
+        border-radius: 9px;
+        background: #f7f3eb;
+        padding: 8px 10px;
+        color: var(--sari-gold-dark);
+        font-size: 9px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .sari-track-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(310px, .72fr);
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .sari-track-panel {
+        border: 1px solid var(--sari-border);
+        border-radius: 17px;
+        background: #fff;
+    }
+
+    .sari-track-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid #eee9e3;
+        padding: 17px 19px;
+    }
+
+    .sari-track-panel-eyebrow {
+        margin: 0;
+        color: var(--sari-gold-dark);
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-panel-title {
+        margin: 3px 0 0;
+        color: #332e29;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -.015em;
+    }
+
+    .sari-track-panel-note {
+        color: #9a9188;
+        font-size: 8.5px;
+        font-weight: 500;
+    }
+
+    .sari-track-journey {
+        display: grid;
+        grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+    }
+
+    .sari-track-timeline {
+        border-right: 1px solid #eee9e3;
+        padding: 18px 18px 18px 19px;
+    }
+
+    .sari-track-event {
+        position: relative;
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 10px;
+        padding-bottom: 17px;
+    }
+
+    .sari-track-event:last-child {
+        padding-bottom: 0;
+    }
+
+    .sari-track-event::before {
+        content: '';
+        position: absolute;
+        top: 22px;
+        bottom: -1px;
+        left: 10px;
+        width: 1px;
+        background: #e7e2dc;
+    }
+
+    .sari-track-event:last-child::before {
+        display: none;
+    }
+
+    .sari-track-event.is-complete::before {
+        background: #d9b56f;
+    }
+
+    .sari-track-event-dot {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        width: 22px;
+        height: 22px;
+        place-items: center;
+        border: 1px solid #ddd7d0;
+        border-radius: 50%;
+        background: #fff;
+        color: #aaa29a;
+        font-size: 7px;
+        font-weight: 700;
+    }
+
+    .sari-track-event.is-complete .sari-track-event-dot {
+        border-color: #dab468;
+        background: #fff8ea;
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-event.is-current .sari-track-event-dot {
+        box-shadow: 0 0 0 4px rgba(201, 137, 19, .09);
+    }
+
+    .sari-track-event-title {
+        margin: 1px 0 0;
+        color: #3d3732;
+        font-size: 10.5px;
+        line-height: 1.4;
+        font-weight: 700;
+    }
+
+    .sari-track-event:not(.is-complete) .sari-track-event-title {
+        color: #9c948c;
+    }
+
+    .sari-track-event-time {
+        margin: 3px 0 0;
+        color: #9b9289;
+        font-size: 7.5px;
+        font-weight: 500;
+    }
+
+    .sari-track-event-copy {
+        margin: 4px 0 0;
+        color: #887f76;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    .sari-track-map-wrap {
+        padding: 15px;
+    }
+
+    .sari-track-map {
+        position: relative;
+        min-height: 385px;
+        overflow: hidden;
+        border: 1px solid #e7e2dc;
+        border-radius: 14px;
+        background: #f6f5f2;
+    }
+
+    .sari-track-map-bar {
+        position: absolute;
+        z-index: 3;
+        top: 13px;
+        left: 13px;
+        right: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid rgba(255,255,255,.9);
+        border-radius: 11px;
+        background: rgba(255,255,255,.94);
+        padding: 10px 11px;
+        box-shadow: 0 8px 20px rgba(45,39,33,.05);
+        backdrop-filter: blur(6px);
+    }
+
+    .sari-track-map-title {
+        margin: 0;
+        color: #3a3530;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .sari-track-map-sub {
+        margin: 2px 0 0;
+        color: #948b82;
+        font-size: 7.5px;
+    }
+
+    .sari-track-map-progress {
+        flex: 0 0 auto;
+        border-radius: 8px;
+        background: var(--sari-gold-soft);
+        padding: 6px 8px;
+        color: var(--sari-gold-dark);
+        font-size: 8px;
+        font-weight: 700;
+    }
+
+    .sari-track-map svg {
+        display: block;
+        width: 100%;
+        height: 385px;
+    }
+
+    .sari-track-route-progress {
         stroke-dasharray: 100;
         stroke-dashoffset: var(--route-offset, 100);
-        animation: sariRouteReveal 1.15s cubic-bezier(.22, 1, .36, 1) forwards;
+        transition: stroke-dashoffset .6s ease;
     }
 
-    .sari-map-courier {
-        filter: drop-shadow(0 8px 10px rgba(108, 74, 22, .18));
+    .sari-track-map-footer {
+        position: absolute;
+        z-index: 3;
+        left: 13px;
+        right: 13px;
+        bottom: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid rgba(255,255,255,.9);
+        border-radius: 11px;
+        background: rgba(255,255,255,.95);
+        padding: 10px 11px;
+        box-shadow: 0 8px 20px rgba(45,39,33,.05);
+        backdrop-filter: blur(6px);
     }
 
-    .sari-map-road-label {
-        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-        font-size: 10px;
-        font-weight: 600;
-        fill: #9c958c;
-        letter-spacing: .02em;
-    }
-
-    .sari-map-place-label {
-        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-        font-size: 11px;
+    .sari-track-courier-name {
+        margin: 0;
+        color: #3f3933;
+        font-size: 9.5px;
         font-weight: 700;
-        fill: #4a443e;
     }
 
-    @keyframes sariRouteReveal {
-        from {
-            stroke-dashoffset: 100;
+    .sari-track-courier-note {
+        margin: 2px 0 0;
+        color: #958b82;
+        font-size: 7.5px;
+        line-height: 1.4;
+    }
+
+    .sari-track-side {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .sari-track-summary {
+        padding: 18px;
+    }
+
+    .sari-track-summary-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .sari-track-summary-title {
+        margin: 0;
+        color: #342f2a;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .sari-track-chip {
+        display: inline-flex;
+        min-height: 23px;
+        align-items: center;
+        border-radius: 999px;
+        background: #f7f5f1;
+        padding: 0 8px;
+        color: #81786f;
+        font-size: 7.5px;
+        font-weight: 650;
+    }
+
+    .sari-track-summary-list {
+        margin: 0;
+    }
+
+    .sari-track-summary-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 8px 0;
+    }
+
+    .sari-track-summary-row dt {
+        color: #91887f;
+        font-size: 8.5px;
+        line-height: 1.45;
+    }
+
+    .sari-track-summary-row dd {
+        margin: 0;
+        color: #48413a;
+        font-size: 8.5px;
+        line-height: 1.45;
+        font-weight: 650;
+        text-align: right;
+    }
+
+    .sari-track-summary-address {
+        margin-top: 11px;
+        border-top: 1px solid #eee9e3;
+        padding-top: 13px;
+    }
+
+    .sari-track-summary-address-label {
+        color: #91887f;
+        font-size: 8.5px;
+    }
+
+    .sari-track-summary-address-name {
+        margin: 5px 0 0;
+        color: #433d37;
+        font-size: 9.5px;
+        font-weight: 700;
+    }
+
+    .sari-track-summary-address-copy {
+        margin: 3px 0 0;
+        color: #837a72;
+        font-size: 8px;
+        line-height: 1.55;
+    }
+
+    .sari-track-totals {
+        margin-top: 13px;
+        border-top: 1px solid #eee9e3;
+        padding-top: 11px;
+    }
+
+    .sari-track-total-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 4px 0;
+    }
+
+    .sari-track-total-row span:first-child {
+        color: #8f867d;
+        font-size: 8.5px;
+    }
+
+    .sari-track-total-row span:last-child {
+        color: #45403a;
+        font-size: 9px;
+        font-weight: 650;
+    }
+
+    .sari-track-total-row--grand {
+        margin-top: 8px;
+        border-top: 1px solid #eee9e3;
+        padding-top: 11px;
+    }
+
+    .sari-track-total-row--grand span:first-child {
+        color: #38332e;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .sari-track-total-row--grand span:last-child {
+        color: var(--sari-gold-dark);
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -.02em;
+    }
+
+    .sari-track-courier {
+        padding: 17px 18px;
+    }
+
+    .sari-track-courier-head {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .sari-track-courier-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        place-items: center;
+        border-radius: 9px;
+        background: var(--sari-gold-soft);
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-courier-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .sari-track-courier-label {
+        margin: 0;
+        color: #91887f;
+        font-size: 7.5px;
+        font-weight: 650;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-courier-value {
+        margin: 3px 0 0;
+        color: #39342f;
+        font-size: 10.5px;
+        font-weight: 700;
+    }
+
+    .sari-track-courier-contact {
+        margin-top: 12px;
+        border-top: 1px solid #eee9e3;
+        padding-top: 11px;
+        color: #7f776f;
+        font-size: 8px;
+        line-height: 1.5;
+    }
+
+    .sari-track-items {
+        margin-top: 16px;
+    }
+
+    .sari-track-items-body {
+        padding: 0 18px;
+    }
+
+    .sari-track-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 13px 0;
+    }
+
+    .sari-track-item + .sari-track-item {
+        border-top: 1px solid #eee9e3;
+    }
+
+    .sari-track-item-main {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .sari-track-item-image {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+        overflow: hidden;
+        place-items: center;
+        border: 1px solid #e9e4de;
+        border-radius: 10px;
+        background: #f8f7f5;
+        color: #aaa29a;
+    }
+
+    .sari-track-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .sari-track-item-image svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .sari-track-item-name {
+        margin: 0;
+        overflow: hidden;
+        color: #413b35;
+        font-size: 10px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sari-track-item-meta {
+        margin: 4px 0 0;
+        color: #948b83;
+        font-size: 8px;
+    }
+
+    .sari-track-item-price {
+        flex: 0 0 auto;
+        color: #37322d;
+        font-size: 10.5px;
+        font-weight: 700;
+    }
+
+    .sari-track-reminder {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 16px;
+        border: 1px solid #eadfc9;
+        border-radius: 14px;
+        background: #fffaf1;
+        padding: 13px 14px;
+    }
+
+    .sari-track-reminder svg {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        margin-top: 1px;
+        color: var(--sari-gold-dark);
+    }
+
+    .sari-track-reminder strong {
+        display: block;
+        color: #61513a;
+        font-size: 9.5px;
+    }
+
+    .sari-track-reminder p {
+        margin: 3px 0 0;
+        color: #8a7657;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    .sari-track-cancelled {
+        border: 1px solid #efd1d1;
+        border-radius: 17px;
+        background: #fffafa;
+        padding: 18px;
+    }
+
+    .sari-track-cancelled-title {
+        margin: 0;
+        color: #944848;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .sari-track-cancelled-copy {
+        margin: 5px 0 0;
+        color: #946f6f;
+        font-size: 9.5px;
+        line-height: 1.55;
+    }
+
+    .sari-track-cancelled-time {
+        margin: 8px 0 0;
+        color: #a98c8c;
+        font-size: 8px;
+    }
+
+    @media (max-width: 1100px) {
+        .sari-track-grid {
+            grid-template-columns: 1fr;
         }
-        to {
-            stroke-dashoffset: var(--route-offset, 100);
+
+        .sari-track-side {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr);
+        }
+    }
+
+    @media (max-width: 840px) {
+        .sari-track-shell {
+            padding: 18px 14px 32px;
+        }
+
+        .sari-track-topbar {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .sari-track-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .sari-track-hero-main {
+            grid-template-columns: 1fr;
+            gap: 18px;
+            padding: 20px;
+        }
+
+        .sari-track-hero-side {
+            min-width: 0;
+            width: 100%;
+        }
+
+        .sari-track-progress-wrap {
+            padding: 18px 20px 19px;
+        }
+
+        .sari-track-progress {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .sari-track-progress::before,
+        .sari-track-progress::after {
+            display: none;
+        }
+
+        .sari-track-progress-step {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr);
+            gap: 10px;
+            align-items: center;
+            padding: 6px 0;
+            text-align: left;
+        }
+
+        .sari-track-progress-dot {
+            margin: 0;
+        }
+
+        .sari-track-progress-label {
+            margin: 0;
+            font-size: 9.5px;
+        }
+
+        .sari-track-journey {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-track-timeline {
+            border-right: 0;
+            border-bottom: 1px solid #eee9e3;
+        }
+
+        .sari-track-side {
+            display: flex;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .sari-track-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .sari-track-action {
+            width: 100%;
+            padding-inline: 10px;
+        }
+
+        .sari-track-title {
+            font-size: 24px;
+        }
+
+        .sari-track-hero-side {
+            grid-template-columns: 1fr;
+        }
+
+        .sari-track-stat + .sari-track-stat {
+            border-top: 1px solid var(--sari-border);
+            border-left: 0;
+        }
+
+        .sari-track-current {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .sari-track-map {
+            min-height: 330px;
+        }
+
+        .sari-track-map svg {
+            height: 330px;
+        }
+
+        .sari-track-map-bar,
+        .sari-track-map-footer {
+            left: 9px;
+            right: 9px;
+        }
+
+        .sari-track-item {
+            align-items: flex-start;
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .sari-map-route-progress {
-            animation: none !important;
+        .sari-track-route-progress,
+        .sari-track-progress::after {
+            transition: none !important;
         }
     }
+
+    .sari-track-product-hero {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr) minmax(220px, .58fr);
+        gap: 18px;
+        align-items: center;
+        border: 1px solid var(--sari-border);
+        border-radius: 18px;
+        background: #fff;
+        padding: 16px 18px;
+    }
+
+    .sari-track-product-media {
+        display: grid;
+        width: 92px;
+        height: 92px;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid #e8e3dc;
+        border-radius: 14px;
+        background: #f8f7f5;
+        color: #aaa29a;
+    }
+
+    .sari-track-product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .sari-track-product-media svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .sari-track-product-copy {
+        min-width: 0;
+    }
+
+    .sari-track-product-topline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sari-track-product-label {
+        color: #9a9188;
+        font-size: 8.5px;
+        font-weight: 650;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-product-name {
+        margin: 8px 0 0;
+        overflow: hidden;
+        color: #2f2a26;
+        font-size: clamp(20px, 2.3vw, 27px);
+        line-height: 1.2;
+        font-weight: 700;
+        letter-spacing: -.03em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sari-track-product-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 7px 0 0;
+        color: #837b73;
+        font-size: 9.5px;
+        line-height: 1.5;
+    }
+
+    .sari-track-product-order-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 7px;
+        margin-top: 9px;
+        color: #9a9188;
+        font-size: 8.5px;
+        font-weight: 500;
+    }
+
+    .sari-track-product-order-dot {
+        color: #c9c2ba;
+    }
+
+    .sari-track-product-side {
+        min-width: 0;
+        border-left: 1px solid #eee9e3;
+        padding-left: 18px;
+    }
+
+    .sari-track-product-side-label {
+        display: block;
+        color: #978e85;
+        font-size: 7.5px;
+        font-weight: 650;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .sari-track-product-side strong {
+        display: block;
+        margin-top: 6px;
+        color: #3c3631;
+        font-size: 11.5px;
+        line-height: 1.45;
+        font-weight: 700;
+    }
+
+    .sari-track-product-side small {
+        display: block;
+        margin-top: 4px;
+        color: #8c837a;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 820px) {
+        .sari-track-product-hero {
+            grid-template-columns: 76px minmax(0, 1fr);
+            gap: 14px;
+            padding: 14px;
+        }
+
+        .sari-track-product-media {
+            width: 76px;
+            height: 76px;
+            border-radius: 12px;
+        }
+
+        .sari-track-product-side {
+            grid-column: 1 / -1;
+            border-top: 1px solid #eee9e3;
+            border-left: 0;
+            padding-top: 12px;
+            padding-left: 0;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .sari-track-product-hero {
+            grid-template-columns: 64px minmax(0, 1fr);
+        }
+
+        .sari-track-product-media {
+            width: 64px;
+            height: 64px;
+        }
+
+        .sari-track-product-name {
+            font-size: 18px;
+        }
+    }
+
+
+
+    /* ============================================================
+       DELIVERY JOURNEY — SARI GOLD PROGRESS PALETTE
+    ============================================================ */
+    .sari-track-timeline {
+        background: #ffffff;
+    }
+
+    .sari-track-event::before {
+        background: #eadfc9 !important;
+    }
+
+    .sari-track-event.is-complete::before {
+        background: #c98913 !important;
+    }
+
+    .sari-track-event-dot {
+        border-color: #e2dbd1 !important;
+        background: #ffffff !important;
+        color: #a69c91 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-track-event.is-complete .sari-track-event-dot {
+        border-color: #c98913 !important;
+        background: #c98913 !important;
+        color: #ffffff !important;
+    }
+
+    .sari-track-event.is-current .sari-track-event-dot {
+        border-color: #b87905 !important;
+        background: #b87905 !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 0 5px rgba(201, 135, 17, .10) !important;
+    }
+
+    .sari-track-event.is-complete .sari-track-event-title {
+        color: #453821 !important;
+    }
+
+    .sari-track-event.is-current .sari-track-event-title {
+        color: #8d5d08 !important;
+    }
+
+    .sari-track-event:not(.is-complete) .sari-track-event-title {
+        color: #9c948c !important;
+    }
+
+    .sari-track-event.is-complete .sari-track-event-time {
+        color: #b17a18 !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-track-event.is-current .sari-track-event-time {
+        color: #9b6509 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-track-event.is-complete .sari-track-event-copy {
+        color: #76664d !important;
+    }
+
+    .sari-track-event.is-current .sari-track-event-copy {
+        color: #72582d !important;
+    }
+
+    .sari-track-event.is-current {
+        margin: 2px -8px 14px;
+        padding: 10px 8px 18px;
+        border: 1px solid #eadfcd;
+        border-radius: 12px;
+        background: #ffffff;
+    }
+
+    .sari-track-event.is-current::before {
+        left: 18px !important;
+        top: 32px !important;
+    }
+
+    @media (max-width: 840px) {
+        .sari-track-event.is-current {
+            margin-inline: 0;
+        }
+    }
+
+
+    /* Real interactive delivery map */
+    .sari-track-map {
+        position: relative;
+        min-height: 430px;
+        overflow: hidden;
+        background: #eef1ed;
+    }
+
+    #sariBuyerDeliveryMap {
+        width: 100%;
+        height: 430px;
+    }
+
+    /* ============================================================
+       MAPLIBRE VECTOR MAP — avoids raster <img> tile conflicts
+       ============================================================ */
+    #sariBuyerDeliveryMap {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: #eef1ed;
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-canvas {
+        outline: none;
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-ctrl-top-right {
+        top: 58px;
+        right: 10px;
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-ctrl-group {
+        overflow: hidden;
+        border: 1px solid #e2dbd2;
+        border-radius: 10px;
+        background: rgba(255,255,255,.96);
+        box-shadow: 0 6px 18px rgba(48,40,31,.08);
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-ctrl-group button {
+        width: 31px;
+        height: 31px;
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-ctrl-attrib {
+        border-radius: 7px 0 0 0;
+        background: rgba(255,255,255,.84);
+        color: #7e766e;
+        font-size: 7px;
+    }
+
+    #sariBuyerDeliveryMap .maplibregl-ctrl-attrib a {
+        color: #996813;
+    }
+
+    .sari-buyer-map-marker {
+        display: grid;
+        width: 31px;
+        height: 31px;
+        place-items: center;
+        border: 3px solid #fff;
+        border-radius: 999px;
+        background: #c98913;
+        color: #fff;
+        font-size: 8px;
+        font-weight: 800;
+        box-shadow:
+            0 0 0 1px rgba(130,88,15,.18),
+            0 6px 16px rgba(45,35,22,.22);
+    }
+
+    .sari-buyer-map-marker.is-buyer {
+        background: #2f2b27;
+    }
+
+    .sari-buyer-map-marker.is-future {
+        background: #aaa39b;
+    }
+
+    .sari-buyer-map-marker.is-current {
+        box-shadow:
+            0 0 0 6px rgba(201,137,19,.14),
+            0 6px 16px rgba(45,35,22,.22);
+    }
+
+    .sari-map-route-notice {
+        z-index: 12;
+    }
+
+    .sari-track-map-bar,
+    .sari-track-map-footer {
+        z-index: 14;
+    }
+
+
+
+    .sari-map-loading {
+        position: absolute;
+        z-index: 13;
+        right: 14px;
+        bottom: 68px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border: 1px solid rgba(230,223,214,.96);
+        border-radius: 999px;
+        background: rgba(255,255,255,.94);
+        padding: 7px 10px;
+        color: #837970;
+        font-size: 7.5px;
+        font-weight: 650;
+        box-shadow: 0 6px 18px rgba(44,37,30,.07);
+        backdrop-filter: blur(6px);
+        pointer-events: none;
+        transition: opacity .2s ease, visibility .2s ease;
+    }
+
+    .sari-map-loading::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border: 2px solid #ead7b1;
+        border-top-color: #c98913;
+        border-radius: 50%;
+        animation: sariMapSpin .75s linear infinite;
+    }
+
+    .sari-map-loading.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    @keyframes sariMapSpin {
+        to { transform: rotate(360deg); }
+    }
+
 </style>
 
-<div class="sari-order-tracking mx-auto w-full max-w-[1450px] p-4 sm:p-6 lg:p-8">
-    <div class="mb-5 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-        <div>
-            <a href="{{ route('buyer.orders') }}"
-               class="inline-flex items-center gap-2 text-[14px] font-semibold text-[#7c746c] transition hover:text-[#b67813]">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                    <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+<div class="sari-track-page">
+    <div class="sari-track-shell">
+
+        <div class="sari-track-topbar">
+            <a href="{{ route('buyer.orders') }}" class="sari-track-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 Back to My Orders
             </a>
 
-            <p class="mt-5 text-[13px] font-semibold uppercase tracking-[.16em] text-[#b47b1e]">Order tracking</p>
-            <h1 class="mt-1 text-[30px] font-bold tracking-[-.04em] text-[#201d19] sm:text-[36px]">Track your delivery</h1>
-            <p class="mt-2 max-w-[680px] text-[14px] leading-5 text-[#857b70]">
-                Follow your order status and delivery progress from checkout to doorstep.
-            </p>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[13px] text-[#9a9187]">Need help?</span>
-            <a href="{{ route('buyer.messages', ['seller' => $order->seller_account_id]) }}"
-               class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e8d7b6] bg-[#fffaf0] px-4 text-[13px] font-semibold text-[#9d6d18] transition hover:border-[#d9bd83] hover:bg-[#fff6e7]">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                    <path d="M4 13a8 8 0 0116 0v3a2 2 0 01-2 2h-2v-6h4M4 12v6h4v-6H4z" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16 18c0 1.1-.9 2-2 2h-2" stroke-linecap="round"/>
-                </svg>
-                Contact Support
-            </a>
-            <a href="{{ route('buyer.shop', ['shop' => $sellerSlug]) }}"
-               class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e2d8ca] bg-white px-4 text-[13px] font-semibold text-[#665c50] transition hover:border-[#d9bd83] hover:bg-[#fffaf0] hover:text-[#9d6d18]">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h16v10H4z"></path><path d="M3 10 5 4h14l2 6"></path><path d="M8 14h3v6H8z"></path></svg>
-                View Seller Profile
-            </a>
-            <a href="{{ route('buyer.shipping') }}"
-               class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#e2d8ca] bg-white px-4 text-[13px] font-semibold text-[#665c50] transition hover:border-[#d9bd83] hover:bg-[#fffaf0] hover:text-[#9d6d18]">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.5"></circle><circle cx="18" cy="18" r="1.5"></circle></svg>
-                Shipping Center
-            </a>
-        </div>
-    </div>
-
-    <div class="mb-5 flex flex-wrap items-center gap-2 text-[12px] font-medium text-[#9b9289]">
-        <a href="{{ route('buyer.home') }}" class="transition hover:text-[#b67813]">Home</a>
-        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <a href="{{ route('buyer.orders') }}" class="transition hover:text-[#b67813]">Orders</a>
-        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="font-semibold text-[#b67813]">{{ $order->order_number }}</span>
-    </div>
-
-    @if ($cancelled)
-        <section class="rounded-[24px] border border-[#efcece] bg-[#fff8f8] p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#fbe4e4] text-[#a65353]">
-                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                        <path d="M12 8v4m0 4h.01M10.3 3.9L2.6 17.3A2 2 0 004.3 20h15.4a2 2 0 001.7-2.7L13.7 3.9a2 2 0 00-3.4 0z" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="sari-track-actions">
+                <a
+                    href="{{ route('buyer.messages', ['seller' => $order->seller_account_id]) }}"
+                    class="sari-track-action sari-track-action--primary"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="M4 6h16v11H8l-4 3V6Z" stroke-linejoin="round"></path>
                     </svg>
-                </div>
-                <div>
-                    <h2 class="text-[17px] font-bold text-[#913f3f]">Order cancelled</h2>
-                    <p class="mt-1 text-[13px] leading-5 text-[#926e6e]">
-                        {{ $order->cancellation_reason ?: 'This order was cancelled.' }}
+                    Contact seller
+                </a>
+
+                <a href="{{ route('buyer.shop', ['shop' => $sellerSlug]) }}" class="sari-track-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="M4 10h16v10H4z"></path>
+                        <path d="M3 10 5 4h14l2 6"></path>
+                    </svg>
+                    View store
+                </a>
+
+                <a href="{{ route('buyer.shipping') }}" class="sari-track-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="M3 7h11v9H3z"></path>
+                        <path d="M14 10h4l3 3v3h-7z"></path>
+                    </svg>
+                    Shipping center
+                </a>
+            </div>
+        </div>
+
+        @if ($cancelled)
+            <section class="sari-track-cancelled">
+                <p class="sari-track-eyebrow">Order update</p>
+                <h1 class="sari-track-cancelled-title">Order cancelled</h1>
+                <p class="sari-track-cancelled-copy">
+                    {{ $order->cancellation_reason ?: 'This order was cancelled.' }}
+                </p>
+                @if ($order->cancelled_at)
+                    <p class="sari-track-cancelled-time">
+                        {{ $order->cancelled_at->format('M d, Y · h:i A') }}
                     </p>
-                    @if ($order->cancelled_at)
-                        <p class="mt-2 text-[11px] text-[#ad8b8b]">{{ $order->cancelled_at->format('M d, Y · h:i A') }}</p>
+                @endif
+            </section>
+        @else
+            <section class="sari-track-product-hero">
+                <div class="sari-track-product-media">
+                    @if ($primaryItemImage)
+                        <img
+                            src="{{ $primaryItemImage }}"
+                            alt="{{ $primaryItemName }}"
+                            loading="eager"
+                            decoding="async"
+                        >
+                    @else
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                            <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9z" stroke-linejoin="round"></path>
+                            <path d="M4.5 7.7 12 12l7.5-4.3M12 12v9" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
                     @endif
                 </div>
-            </div>
-        </section>
-    @else
-        <section class="sari-soft-panel overflow-hidden rounded-[26px] border border-[#ebe4da] bg-white">
-            <div class="flex flex-col gap-4 border-b border-[#efe8df] px-5 py-5 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-7">
-                <div class="flex min-w-0 items-start gap-4">
-                    <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#fff5df] text-[#b77914]">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                            <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9z" stroke-linejoin="round"/>
-                            <path d="M4.5 7.7L12 12l7.5-4.3M12 12v9M8 5.2l8 4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+
+                <div class="sari-track-product-copy">
+                    <div class="sari-track-product-topline">
+                        <span class="sari-track-product-label">Tracking this order</span>
+                        <span class="sari-track-status">{{ $order->statusLabel() }}</span>
                     </div>
 
-                    <div class="min-w-0">
-                        <div class="flex flex-wrap items-center gap-2.5">
-                            <h2 class="truncate text-[20px] font-bold tracking-[-.025em] text-[#26211d] sm:text-[22px]">{{ $order->order_number }}</h2>
-                            <span class="rounded-full bg-[#fff2d6] px-3 py-1 text-[11px] font-bold uppercase tracking-[.11em] text-[#a66f0f]">
-                                {{ $order->statusLabel() }}
-                            </span>
-                        </div>
-                        <p class="mt-1.5 text-[12px] text-[#968c82]">
-                            Placed {{ $order->created_at?->format('M d, Y · h:i A') }}
-                            <span class="mx-1.5">•</span>
-                            {{ $order->seller?->store_name ?: 'SARI Seller' }}
-                        </p>
+                    <h1 class="sari-track-product-name">{{ $primaryItemName }}</h1>
+
+                    <p class="sari-track-product-meta">
+                        {{ $primaryItemVariant }}
+                        <span>·</span>
+                        Qty {{ $primaryItemQty }}
+                        @if ($remainingItemCount > 0)
+                            <span>·</span>
+                            +{{ $remainingItemCount }} more {{ $remainingItemCount === 1 ? 'item' : 'items' }}
+                        @endif
+                    </p>
+
+                    <div class="sari-track-product-order-meta">
+                        <span>{{ $order->seller?->store_name ?: 'SARI Seller' }}</span>
+                        <span class="sari-track-product-order-dot">•</span>
+                        <span>{{ $order->order_number }}</span>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4 lg:text-right">
-                    <div>
-                        <p class="text-[11px] font-semibold uppercase tracking-[.13em] text-[#9b9289]">Fulfillment</p>
-                        <p class="mt-1 text-[18px] font-bold text-[#b67813]">{{ $progress }}%</p>
-                    </div>
-                    <div class="h-10 w-px bg-[#eee6dc]"></div>
-                    <div>
-                        <p class="text-[11px] font-semibold uppercase tracking-[.13em] text-[#9b9289]">Payment</p>
-                        <p class="mt-1 text-[13px] font-semibold text-[#4e4740]">{{ $order->payment_method }} · {{ ucfirst($order->payment_status) }}</p>
-                    </div>
+                <div class="sari-track-product-side">
+                    <span class="sari-track-product-side-label">Current status</span>
+                    <strong>{{ $deliveryHeadline }}</strong>
+                    <small>{{ $deliverySubtext }}</small>
                 </div>
-            </div>
+            </section>
 
-            <div class="px-5 py-6 sm:px-6 lg:px-7 lg:py-7">
-                <div class="relative hidden lg:block">
-                    <div class="absolute left-[8%] right-[8%] top-[22px] h-[2px] bg-[#ece6de]"></div>
-                    <div class="absolute left-[8%] top-[22px] h-[2px] bg-[#e9ad32] transition-all duration-500"
-                         style="width: {{ max(0, min(84, (($activeSummaryStep - 1) / 4) * 84)) }}%;"></div>
-
-                    <div class="relative grid grid-cols-5 gap-4">
-                        @foreach ($summarySteps as $index => $summaryStep)
-                            @php
-                                $summaryNumber = $index + 1;
-                                $isComplete = $activeSummaryStep > $summaryNumber || $statusIndex >= $summaryStep['threshold'] && $activeSummaryStep >= $summaryNumber;
-                                $isCurrent = $activeSummaryStep === $summaryNumber && $order->status !== 'delivered';
-                            @endphp
-
-                            <div class="text-center">
-                                <div class="mx-auto grid h-11 w-11 place-items-center rounded-full border-2 bg-white transition
-                                    {{ $isComplete ? 'border-[#ecb033] text-[#b67813]' : 'border-[#ded8cf] text-[#aaa198]' }}
-                                    {{ $isCurrent ? 'ring-8 ring-[#fff7e7]' : '' }}">
-                                    @if ($summaryNumber === 1)
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    @elseif ($summaryNumber === 2)
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M4 7h16M6 7l1 12h10l1-12M9 11v4m6-4v4M8 4h8" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    @elseif ($summaryNumber === 3)
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M3 7h11v10H3V7zm11 3h3l3 3v4h-6v-7zM7 19a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4z" stroke-linejoin="round"/>
-                                        </svg>
-                                    @elseif ($summaryNumber === 4)
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M12 3a7 7 0 017 7v3a5 5 0 11-10 0v-3a3 3 0 116 0v3a1 1 0 11-2 0v-3a1 1 0 10-2 0v3a3 3 0 106 0v-3a5 5 0 00-10 0v3" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    @else
-                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    @endif
-                                </div>
-                                <p class="mt-3 text-[13px] font-semibold {{ $isComplete ? 'text-[#332d28]' : 'text-[#9f968d]' }}">{{ $summaryStep['label'] }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="lg:hidden">
-                    <div class="mb-3 flex items-center justify-between gap-3">
+            <div class="sari-track-grid">
+                <section class="sari-track-panel">
+                    <div class="sari-track-panel-head">
                         <div>
-                            <p class="text-[11px] font-semibold uppercase tracking-[.12em] text-[#9c9186]">Current stage</p>
-                            <p class="mt-1 text-[14px] font-bold text-[#342e28]">{{ $order->statusLabel() }}</p>
+                            <p class="sari-track-panel-eyebrow">Shipment progress</p>
+                            <h2 class="sari-track-panel-title">Delivery journey</h2>
                         </div>
-                        <span class="text-[15px] font-bold text-[#b67813]">{{ $progress }}%</span>
-                    </div>
-                    <div class="h-2 overflow-hidden rounded-full bg-[#ede7df]">
-                        <div class="h-full rounded-full bg-[#e2a328] transition-all duration-500" style="width: {{ $progress }}%"></div>
-                    </div>
-                </div>
-
-                <div class="sari-soft-panel-sm mt-7 flex flex-col gap-4 rounded-2xl border border-[#eee5d8] bg-[#fffdf9] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-                    <div class="flex min-w-0 items-center gap-3.5">
-                        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#fff3d7] text-[#b67813]">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                <path d="M3 7h11v10H3V7zm11 3h3l3 3v4h-6v-7zM7 19a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4z" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[14px] font-bold text-[#332d28]">{{ $deliveryHeadline }}</p>
-                            <p class="mt-1 text-[12px] leading-5 text-[#8a8076]">{{ $deliverySubtext }}</p>
-                        </div>
+                        <span class="sari-track-panel-note">Status-based preview</span>
                     </div>
 
-                    <div class="shrink-0 sm:text-right">
-                        <p class="text-[11px] font-semibold uppercase tracking-[.12em] text-[#9c9186]">Delivery status</p>
-                        <p class="mt-1 text-[14px] font-bold text-[#413a34]">{{ $order->statusLabel() }}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,.75fr)]">
-            <section class="sari-soft-panel overflow-hidden rounded-[24px] border border-[#ebe4da] bg-white">
-                <div class="flex flex-col gap-4 border-b border-[#eee7de] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-                    <div>
-                        <p class="text-[11px] font-semibold uppercase tracking-[.14em] text-[#a8751c]">Shipment progress</p>
-                        <h2 class="mt-1 text-[19px] font-bold tracking-[-.025em] text-[#312b26]">Delivery journey</h2>
-                    </div>
-                    <span class="inline-flex w-fit items-center gap-2 rounded-full border border-[#eadfcf] bg-[#fcfaf6] px-3 py-1.5 text-[11px] font-semibold text-[#80766c]">
-                        <span class="h-1.5 w-1.5 rounded-full bg-[#d59b2d]"></span>
-                        Status-based preview
-                    </span>
-                </div>
-
-                <div class="grid lg:grid-cols-[300px_minmax(0,1fr)]">
-                    <div class="border-b border-[#eee7de] p-5 sm:p-6 lg:border-b-0 lg:border-r">
-                        <div class="relative">
+                    <div class="sari-track-journey">
+                        <div class="sari-track-timeline">
                             @foreach ($steps as $index => $step)
                                 @php
                                     $stepNumber = $index + 1;
@@ -442,353 +1664,671 @@
                                     $current = $statusIndex === $stepNumber && $order->status !== 'delivered';
                                 @endphp
 
-                                <div class="relative flex gap-3.5 pb-6 last:pb-0">
-                                    @if (!$loop->last)
-                                        <div class="absolute left-[15px] top-8 h-[calc(100%-10px)] w-px {{ $complete && $statusIndex > $stepNumber ? 'bg-[#dca137]' : 'bg-[#e6dfd6]' }}"></div>
-                                    @endif
-
-                                    <div class="relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full border text-[12px] font-bold
-                                        {{ $complete ? 'border-[#d9a13c] bg-[#fff6e5] text-[#b67813]' : 'border-[#e2dbd2] bg-white text-[#b4aaa0]' }}
-                                        {{ $current ? 'ring-4 ring-[#fff6e7]' : '' }}">
+                                <div class="sari-track-event {{ $complete ? 'is-complete' : '' }} {{ $current ? 'is-current' : '' }}">
+                                    <span class="sari-track-event-dot">
                                         @if ($complete && !$current)
-                                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                                <path d="M5 12l4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                                                <path d="m6 12 4 4 8-9" stroke-linecap="round" stroke-linejoin="round"></path>
                                             </svg>
                                         @else
                                             {{ $stepNumber }}
                                         @endif
-                                    </div>
+                                    </span>
 
-                                    <div class="min-w-0 pt-0.5">
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <p class="text-[13px] font-bold {{ $complete ? 'text-[#3b342e]' : 'text-[#a29a91]' }}">{{ $step['label'] }}</p>
-                                            @if ($current)
-                                                <span class="rounded-full bg-[#fff1d3] px-2 py-0.5 text-[9px] font-bold uppercase tracking-[.1em] text-[#a66f0f]">Current</span>
-                                            @endif
-                                        </div>
+                                    <div>
+                                        <p class="sari-track-event-title">{{ $step['label'] }}</p>
+
                                         @if ($step['time'])
-                                            <p class="mt-1 text-[10px] font-medium text-[#9b9187]">{{ $step['time']->format('M d, Y · h:i A') }}</p>
+                                            <p class="sari-track-event-time">
+                                                {{ $step['time']->format('M d, Y · h:i A') }}
+                                            </p>
                                         @endif
-                                        <p class="mt-1 text-[11px] leading-4 {{ $complete ? 'text-[#8b8177]' : 'text-[#aaa198]' }}">{{ $step['description'] }}</p>
+
+                                        <p class="sari-track-event-copy">{{ $step['description'] }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
-                    </div>
 
-                    <div class="p-4 sm:p-5">
-                        <div class="sari-map-panel relative overflow-hidden rounded-[24px] border border-[#e7e0d7] bg-[#f7f5f1]">
-                            <div class="absolute left-4 top-4 z-20 flex max-w-[calc(100%-2rem)] items-center gap-3 rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[0_8px_26px_rgba(55,46,37,0.08)] backdrop-blur">
-                                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#fff3d8] text-[#b77914]">
-                                    <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                        <path d="M3 7h11v10H3V7zm11 3h3l3 3v4h-6v-7zM7 19a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4z" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                                <div class="min-w-0">
-                                    <p class="text-[12px] font-bold text-[#3e3832]">Delivery route</p>
-                                    <p class="mt-0.5 text-[10px] font-medium text-[#91877d]">
-                                        Progress preview based on your current order status
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="absolute right-4 top-4 z-20 hidden rounded-full border border-[#e8dfd1] bg-[#fffaf0] px-3 py-2 text-[10px] font-semibold text-[#9b6b17] sm:inline-flex">
-                                {{ $routeProgress }}% route progress
-                            </div>
-
-                            <svg class="block h-auto w-full" viewBox="0 0 820 520" role="img" aria-label="Premium static delivery map showing route progress to the buyer">
-                                <defs>
-                                    <linearGradient id="sariMapBackground" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#f9f7f2"/>
-                                        <stop offset="100%" stop-color="#f0eee8"/>
-                                    </linearGradient>
-                                    <linearGradient id="sariRouteGold" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#c88818"/>
-                                        <stop offset="100%" stop-color="#e1ac3e"/>
-                                    </linearGradient>
-                                    <filter id="sariMapSoftShadow" x="-40%" y="-40%" width="180%" height="180%">
-                                        <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#6e5635" flood-opacity=".14"/>
-                                    </filter>
-                                </defs>
-
-                                <rect width="820" height="520" fill="url(#sariMapBackground)"/>
-
-                                {{-- Water --}}
-                                <path d="M690 -10C674 69 677 126 698 184C722 252 764 293 834 326V-10Z" fill="#e9f0f1"/>
-                                <path d="M702 -10C686 70 689 126 710 181C733 239 773 281 829 305" fill="none" stroke="#d8e5e7" stroke-width="4"/>
-
-                                {{-- Green spaces --}}
-                                <path d="M66 90L174 58L236 108L205 184L93 177L47 136Z" fill="#e8ecdf"/>
-                                <path d="M534 70L654 48L715 112L681 177L559 165L516 117Z" fill="#e7ecdf"/>
-                                <path d="M421 337L553 308L630 369L592 455L454 446L398 395Z" fill="#e7ebdf"/>
-                                <path d="M75 341L188 306L256 365L220 447L103 436L54 394Z" fill="#e9ede2"/>
-
-                                {{-- Major roads --}}
-                                <path d="M-20 104C128 63 256 74 375 105C511 139 624 111 850 45" fill="none" stroke="#dedad3" stroke-width="30" stroke-linecap="round"/>
-                                <path d="M-25 397C126 350 262 351 390 386C535 426 665 402 850 317" fill="none" stroke="#dfdbd4" stroke-width="25" stroke-linecap="round"/>
-                                <path d="M193 -35C215 89 232 169 269 247C304 320 331 405 339 555" fill="none" stroke="#ddd9d2" stroke-width="24" stroke-linecap="round"/>
-                                <path d="M589 -30C548 77 531 159 525 251C519 348 549 431 598 550" fill="none" stroke="#dedad3" stroke-width="24" stroke-linecap="round"/>
-
-                                {{-- Road center lines --}}
-                                <path d="M-20 104C128 63 256 74 375 105C511 139 624 111 850 45" fill="none" stroke="#f8f6f2" stroke-width="5" stroke-linecap="round" opacity=".95"/>
-                                <path d="M-25 397C126 350 262 351 390 386C535 426 665 402 850 317" fill="none" stroke="#f8f6f2" stroke-width="4" stroke-linecap="round" opacity=".9"/>
-                                <path d="M193 -35C215 89 232 169 269 247C304 320 331 405 339 555" fill="none" stroke="#f8f6f2" stroke-width="4" stroke-linecap="round" opacity=".9"/>
-                                <path d="M589 -30C548 77 531 159 525 251C519 348 549 431 598 550" fill="none" stroke="#f8f6f2" stroke-width="4" stroke-linecap="round" opacity=".9"/>
-
-                                {{-- Secondary streets --}}
-                                <g fill="none" stroke="#e5e1da" stroke-width="8" stroke-linecap="round" opacity=".95">
-                                    <path d="M32 237C145 215 255 219 378 246C505 275 632 261 799 215"/>
-                                    <path d="M122 30C116 138 130 218 166 287C196 346 211 420 215 497"/>
-                                    <path d="M404 19C384 113 382 196 404 266C425 335 447 403 455 511"/>
-                                    <path d="M655 114C599 174 570 231 560 297C551 360 565 421 611 494"/>
-                                </g>
-
-                                {{-- Buildings --}}
-                                <g fill="#e4e0d8">
-                                    <rect x="103" y="204" width="42" height="34" rx="7"/>
-                                    <rect x="157" y="210" width="58" height="43" rx="8"/>
-                                    <rect x="320" y="122" width="63" height="42" rx="8"/>
-                                    <rect x="405" y="157" width="46" height="34" rx="7"/>
-                                    <rect x="608" y="231" width="55" height="38" rx="8"/>
-                                    <rect x="283" y="416" width="55" height="39" rx="8"/>
-                                    <rect x="485" y="271" width="39" height="31" rx="7"/>
-                                    <rect x="94" y="279" width="54" height="35" rx="7"/>
-                                </g>
-
-                                {{-- Map labels --}}
-                                <text x="47" y="122" class="sari-map-road-label">North Avenue</text>
-                                <text x="606" y="405" class="sari-map-road-label">Central Road</text>
-                                <text x="541" y="285" class="sari-map-road-label" transform="rotate(-78 541 285)">Delivery Avenue</text>
-                                <text x="199" y="305" class="sari-map-road-label" transform="rotate(75 199 305)">Market Street</text>
-
-                                {{-- Full route base --}}
-                                <path id="sariPremiumRoute"
-                                      pathLength="100"
-                                      d="M171 385C223 366 256 340 287 306C323 267 340 229 387 215C440 199 487 212 525 183C561 155 590 124 635 102"
-                                      fill="none"
-                                      stroke="#eadfca"
-                                      stroke-width="14"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"/>
-
-                                {{-- Completed route --}}
-                                <path pathLength="100"
-                                      d="M171 385C223 366 256 340 287 306C323 267 340 229 387 215C440 199 487 212 525 183C561 155 590 124 635 102"
-                                      fill="none"
-                                      stroke="url(#sariRouteGold)"
-                                      stroke-width="7"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      class="sari-map-route-progress"
-                                      style="--route-offset: {{ $routeOffset }};"/>
-
-                                {{-- Sorting center --}}
-                                <g transform="translate(171 385)" filter="url(#sariMapSoftShadow)">
-                                    <circle r="27" fill="#fff" stroke="#ded5c8" stroke-width="2"/>
-                                    <circle r="20" fill="#2f2b27"/>
-                                    <path d="M-9 4V-7H9V4M-12 4H12M-5-7V-12H5V-7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </g>
-                                <text x="126" y="429" class="sari-map-place-label">Sorting Center</text>
-
-                                {{-- Destination --}}
-                                <g transform="translate(635 102)" filter="url(#sariMapSoftShadow)">
-                                    <circle r="28" fill="#fff" stroke="#e1d6c5" stroke-width="2"/>
-                                    <circle r="20" fill="#fff4d9"/>
-                                    <path d="M0-10C-7-10-12-5-12 2c0 9 12 19 12 19S12 11 12 2C12-5 7-10 0-10Z" fill="#c98b1c"/>
-                                    <circle cy="2" r="4" fill="#fff"/>
-                                </g>
-                                <text x="650" y="108" class="sari-map-place-label">Delivery Area</text>
-
-                                {{-- Courier moves once to current progress and stays there --}}
-                                @if ($routeProgress > 0)
-                                    <g class="sari-map-courier">
-                                        <circle r="23" fill="#fff" stroke="#e5d6bb" stroke-width="2"/>
-                                        <circle r="17" fill="#d79a2b"/>
-                                        <g transform="translate(-10 -8)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M1 5h12v8H1zM13 8h4l3 3v2h-7z"/>
-                                            <circle cx="5" cy="15" r="2"/>
-                                            <circle cx="16" cy="15" r="2"/>
-                                        </g>
-                                        <animateMotion
-                                            dur="1.15s"
-                                            begin="0s"
-                                            fill="freeze"
-                                            rotate="auto"
-                                            calcMode="linear"
-                                            keyPoints="0;{{ number_format($routeProgress / 100, 2, '.', '') }}"
-                                            keyTimes="0;1">
-                                            <mpath href="#sariPremiumRoute"/>
-                                        </animateMotion>
-                                    </g>
-                                @else
-                                    <g transform="translate(171 385)" class="sari-map-courier">
-                                        <circle r="23" fill="#fff" stroke="#e5d6bb" stroke-width="2"/>
-                                        <circle r="17" fill="#d79a2b"/>
-                                        <g transform="translate(-10 -8)" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M1 5h12v8H1zM13 8h4l3 3v2h-7z"/>
-                                            <circle cx="5" cy="15" r="2"/>
-                                            <circle cx="16" cy="15" r="2"/>
-                                        </g>
-                                    </g>
-                                @endif
-                            </svg>
-
-                            <div class="absolute bottom-4 left-4 right-4 z-20 rounded-2xl border border-white/80 bg-white/95 p-4 shadow-[0_10px_30px_rgba(52,44,34,0.09)] backdrop-blur">
-                                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                    <div class="min-w-0">
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <p class="truncate text-[13px] font-bold text-[#3b352f]">{{ $order->courier_name ?: 'Courier not yet assigned' }}</p>
-                                            <span class="rounded-full bg-[#fff3d8] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[.08em] text-[#9d6c17]">
-                                                {{ $order->statusLabel() }}
-                                            </span>
-                                        </div>
-                                        <p class="mt-1.5 text-[10px] leading-5 text-[#8c8278]">
-                                            The route fills to the parcel's current stage and then stops. This is a status preview, not live GPS tracking.
+                        <div class="sari-track-map-wrap">
+                            <div
+                                class="sari-track-map"
+                                data-sari-delivery-route="{{ json_encode($trackingRoute, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_TAG) }}"
+                            >
+                                <div class="sari-track-map-bar">
+                                    <div>
+                                        <p class="sari-track-map-title">Delivery route</p>
+                                        <p class="sari-track-map-sub">
+                                            Seller → Origin facility → Destination facility → Buyer
                                         </p>
                                     </div>
+                                    <span class="sari-track-map-progress">
+                                        {{ (int) ($trackingRoute['progress'] ?? 0) }}%
+                                    </span>
+                                </div>
 
-                                    <div class="shrink-0 rounded-xl bg-[#f8f5ef] px-4 py-2.5 sm:text-right">
-                                        <p class="text-[9px] font-semibold uppercase tracking-[.1em] text-[#9b9187]">Route progress</p>
-                                        <p class="mt-0.5 text-[16px] font-bold text-[#b67813]">{{ $routeProgress }}%</p>
+                                <div
+                                    id="sariBuyerDeliveryMap"
+                                    data-sari-maplibre-map
+                                    aria-label="Interactive delivery route map"
+                                ></div>
+                                <span class="sari-map-loading" data-sari-map-loading>
+                                    Loading street map
+                                </span>
+
+                                @if (empty($trackingRoute['ready']))
+                                    <div class="sari-map-route-notice" data-sari-route-notice>
+                                        <span class="sari-map-route-notice-icon" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                                <path d="M12 21s7-6.2 7-12A7 7 0 1 0 5 9c0 5.8 7 12 7 12Z"></path>
+                                                <circle cx="12" cy="9" r="2.4"></circle>
+                                            </svg>
+                                        </span>
+
+                                        <span>
+                                            <strong>
+                                                {{ $order->status === 'delivered'
+                                                    ? 'Route history is not available for this order'
+                                                    : 'Delivery route is being prepared' }}
+                                            </strong>
+                                            <small>
+                                                {{ $order->status === 'delivered'
+                                                    ? 'This order was completed before its five map coordinates were saved. The real map remains available, and any saved route points will appear automatically.'
+                                                    : 'SARI Logistics is resolving the Seller, nearest origin facility, nearest destination facility, and Buyer coordinates. Saved stops will appear here automatically.' }}
+                                            </small>
+                                        </span>
                                     </div>
+                                @endif
+
+                                <div class="sari-track-map-footer">
+                                    <div>
+                                        <p class="sari-track-courier-name">
+                                            {{ $order->courier_name ?: 'Courier not yet assigned' }}
+                                        </p>
+                                        <p class="sari-track-courier-note">
+                                            Real route stops · progress follows Logistics updates
+                                        </p>
+                                    </div>
+                                    <span class="sari-track-status">{{ $order->statusLabel() }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <aside class="space-y-5">
-                <section class="sari-soft-panel-sm rounded-[24px] border border-[#ebe4da] bg-white p-5 sm:p-6">
-                    <div class="flex items-center justify-between gap-3 border-b border-[#eee7de] pb-4">
-                        <h2 class="text-[17px] font-bold text-[#322c27]">Order summary</h2>
-                        <span class="rounded-full bg-[#fbf7ef] px-2.5 py-1 text-[10px] font-semibold text-[#8b8177]">{{ count($items) }} {{ count($items) === 1 ? 'item' : 'items' }}</span>
-                    </div>
+                <aside class="sari-track-side">
+                    <section class="sari-track-panel sari-track-summary">
+                        <div class="sari-track-summary-head">
+                            <h2 class="sari-track-summary-title">Order summary</h2>
+                            <span class="sari-track-chip">
+                                {{ count($items) }} {{ count($items) === 1 ? 'item' : 'items' }}
+                            </span>
+                        </div>
 
-                    <dl class="mt-4 space-y-4">
-                        <div class="flex items-start justify-between gap-4">
-                            <dt class="text-[11px] text-[#968c82]">Order ID</dt>
-                            <dd class="text-right text-[11px] font-semibold text-[#403932]">{{ $order->order_number }}</dd>
-                        </div>
-                        <div class="flex items-start justify-between gap-4">
-                            <dt class="text-[11px] text-[#968c82]">Payment method</dt>
-                            <dd class="text-right text-[11px] font-semibold text-[#403932]">{{ $order->payment_method }}</dd>
-                        </div>
-                        <div class="border-t border-[#eee7de] pt-4">
-                            <dt class="text-[11px] text-[#968c82]">Shipping address</dt>
-                            <dd class="mt-2 text-[12px] font-semibold leading-5 text-[#49423b]">{{ $order->buyer_name }}</dd>
-                            <dd class="mt-0.5 text-[11px] leading-4 text-[#847a70]">{{ $order->buyer_address }}</dd>
+                        <dl class="sari-track-summary-list">
+                            <div class="sari-track-summary-row">
+                                <dt>Order ID</dt>
+                                <dd>{{ $order->order_number }}</dd>
+                            </div>
+
+                            <div class="sari-track-summary-row">
+                                <dt>Payment method</dt>
+                                <dd>{{ $order->payment_method }}</dd>
+                            </div>
+
+                            <div class="sari-track-summary-row">
+                                <dt>Payment status</dt>
+                                <dd>{{ ucfirst($order->payment_status) }}</dd>
+                            </div>
+                        </dl>
+
+                        <div class="sari-track-summary-address">
+                            <span class="sari-track-summary-address-label">Shipping address</span>
+                            <p class="sari-track-summary-address-name">{{ $order->buyer_name }}</p>
+                            <p class="sari-track-summary-address-copy">{{ $order->buyer_address }}</p>
                             @if ($order->buyer_phone)
-                                <dd class="mt-1 text-[10px] text-[#9c9186]">{{ $order->buyer_phone }}</dd>
+                                <p class="sari-track-summary-address-copy">{{ $order->buyer_phone }}</p>
                             @endif
                         </div>
-                        <div class="border-t border-[#eee7de] pt-4">
-                            <div class="flex items-center justify-between gap-4">
-                                <dt class="text-[11px] text-[#968c82]">Subtotal</dt>
-                                <dd class="text-[11px] font-semibold text-[#403932]">₱{{ number_format((float) $order->subtotal, 2) }}</dd>
+
+                        <div class="sari-track-totals">
+                            <div class="sari-track-total-row">
+                                <span>Subtotal</span>
+                                <span>₱{{ number_format((float) $order->subtotal, 2) }}</span>
                             </div>
-                            <div class="mt-2.5 flex items-center justify-between gap-4">
-                                <dt class="text-[11px] text-[#968c82]">Delivery fee</dt>
-                                <dd class="text-[11px] font-semibold text-[#403932]">₱{{ number_format((float) $order->delivery_fee, 2) }}</dd>
+
+                            <div class="sari-track-total-row">
+                                <span>Delivery fee</span>
+                                <span>₱{{ number_format((float) $order->delivery_fee, 2) }}</span>
                             </div>
-                            <div class="mt-4 flex items-center justify-between gap-4 border-t border-[#eee7de] pt-4">
-                                <dt class="text-[13px] font-bold text-[#39332d]">Total amount</dt>
-                                <dd class="text-[20px] font-bold tracking-[-.02em] text-[#b67813]">₱{{ number_format((float) $order->total, 2) }}</dd>
+
+                            <div class="sari-track-total-row sari-track-total-row--grand">
+                                <span>Total amount</span>
+                                <span>₱{{ number_format((float) $order->total, 2) }}</span>
                             </div>
                         </div>
-                    </dl>
-                </section>
+                    </section>
 
-                <section class="sari-soft-panel-sm rounded-[24px] border border-[#ebe4da] bg-white p-5 sm:p-6">
-                    <div class="flex items-center gap-3">
-                        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#fff4dd] text-[#b67813]">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                <path d="M3 7h11v10H3V7zm11 3h3l3 3v4h-6v-7zM7 19a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4z" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[11px] font-semibold uppercase tracking-[.11em] text-[#978d82]">Courier details</p>
-                            <p class="mt-1 truncate text-[14px] font-bold text-[#3d3630]">{{ $order->courier_name ?: 'Waiting for assignment' }}</p>
-                        </div>
-                    </div>
-
-                    @if ($order->courier_email)
-                        <div class="mt-4 rounded-xl bg-[#faf8f4] px-3.5 py-3">
-                            <p class="text-[10px] font-semibold uppercase tracking-[.1em] text-[#9a9086]">Courier contact</p>
-                            <p class="mt-1 break-all text-[11px] font-medium text-[#59514a]">{{ $order->courier_email }}</p>
-                        </div>
-                    @endif
-
-                    <div class="mt-4 rounded-xl border border-[#efe3cd] bg-[#fffaf1] px-3.5 py-3">
-                        <p class="text-[11px] font-semibold text-[#8d631c]">Map preview only</p>
-                        <p class="mt-1 text-[10px] leading-4 text-[#9b8664]">Courier movement on the map is an interface animation, not live location data.</p>
-                    </div>
-                </section>
-            </aside>
-        </div>
-    @endif
-
-    <section class="sari-soft-panel mt-5 rounded-[24px] border border-[#ebe4da] bg-white p-5 sm:p-6">
-        <div class="flex flex-wrap items-end justify-between gap-3 border-b border-[#eee7de] pb-4">
-            <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[.13em] text-[#978d82]">Items in this order</p>
-                <h2 class="mt-1 text-[19px] font-bold text-[#342e28]">{{ count($items) }} {{ count($items) === 1 ? 'item' : 'items' }}</h2>
-            </div>
-            <span class="text-[11px] font-semibold text-[#91867b]">{{ $order->payment_method }} · {{ ucfirst($order->payment_status) }}</span>
-        </div>
-
-        <div class="divide-y divide-[#eee7dd]">
-            @forelse ($items as $item)
-                <div class="flex items-start justify-between gap-4 py-4">
-                    <div class="flex min-w-0 items-start gap-3">
-                        <div class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-[#eee7de] bg-[#faf8f4] text-[#aa9f93]">
-                            @if (!empty($item['image']))
-                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] ?? 'Product' }}" class="h-full w-full object-cover">
-                            @else
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                                    <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9z" stroke-linejoin="round"/>
-                                    <path d="M4.5 7.7L12 12l7.5-4.3M12 12v9" stroke-linecap="round" stroke-linejoin="round"/>
+                    <section class="sari-track-panel sari-track-courier">
+                        <div class="sari-track-courier-head">
+                            <span class="sari-track-courier-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="M3 7h11v9H3z"></path>
+                                    <path d="M14 10h4l3 3v3h-7z"></path>
+                                    <circle cx="7" cy="18" r="1.5"></circle>
+                                    <circle cx="18" cy="18" r="1.5"></circle>
                                 </svg>
-                            @endif
+                            </span>
+
+                            <div>
+                                <p class="sari-track-courier-label">Courier details</p>
+                                <p class="sari-track-courier-value">
+                                    {{ $order->courier_name ?: 'Waiting for assignment' }}
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="min-w-0 pt-0.5">
-                            <p class="truncate text-[13px] font-bold text-[#4b443d]">{{ $item['name'] ?? 'Product' }}</p>
-                            <p class="mt-1 text-[11px] text-[#92887c]">
-                                {{ $item['variant_label'] ?? 'Standard' }}
-                                <span class="mx-1">•</span>
-                                Qty {{ $item['qty'] ?? 1 }}
-                            </p>
-                        </div>
-                    </div>
+                        @if ($order->courier_email)
+                            <div class="sari-track-courier-contact">
+                                {{ $order->courier_email }}
+                            </div>
+                        @endif
+                    </section>
+                </aside>
+            </div>
+        @endif
 
-                    <span class="shrink-0 pt-1 text-[13px] font-bold text-[#342e28]">
-                        ₱{{ number_format((float) ($item['line_total'] ?? (($item['price'] ?? 0) * ($item['qty'] ?? 1))), 2) }}
-                    </span>
-                </div>
-            @empty
-                <div class="py-8 text-center">
-                    <p class="text-[12px] text-[#958b80]">No order items found.</p>
-                </div>
-            @endforelse
-        </div>
-    </section>
-
-    <div class="sari-soft-panel-sm mt-5 flex items-start gap-3 rounded-[20px] border border-[#efe2ca] bg-[#fffaf1] p-4 sm:p-5">
-        <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#fff1d2] text-[#b67813]">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path d="M12 3l7 3v5c0 4.6-2.9 8.1-7 10-4.1-1.9-7-5.4-7-10V6l7-3z" stroke-linejoin="round"/>
-                <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        <div>
-            <p class="text-[12px] font-bold text-[#5a4b32]">Delivery reminder</p>
-            <p class="mt-1 text-[11px] leading-4 text-[#8c795a]">Please inspect your order upon delivery. If there are any issues, contact the seller through Messages.</p>
-        </div>
-    </div>
+            </div>
 </div>
 @endsection
 
 @push('scripts')
     @vite('resources/js/buyer-orders.js')
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.css"
+    >
+
+    <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
+
+    <script>
+    (() => {
+        const MAP_STYLE = {
+            version: 8,
+            name: 'SARI Street Map',
+            sources: {
+                'osm-streets': {
+                    type: 'raster',
+                    tiles: [
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    ],
+                    tileSize: 256,
+                    minzoom: 0,
+                    maxzoom: 19,
+                    attribution: '© OpenStreetMap contributors',
+                },
+            },
+            layers: [
+                {
+                    id: 'sari-osm-background',
+                    type: 'raster',
+                    source: 'osm-streets',
+                    minzoom: 0,
+                    maxzoom: 19,
+                    paint: {
+                        'raster-opacity': 1,
+                        'raster-saturation': -0.12,
+                        'raster-contrast': 0.04,
+                    },
+                },
+            ],
+        };
+
+        const PHILIPPINES_CENTER = [121.7740, 12.8797];
+
+        let animationTimer = null;
+        let activeMap = null;
+
+        const parseRoute = (wrapper) => {
+            try {
+                return JSON.parse(wrapper?.dataset?.sariDeliveryRoute || '{}');
+            } catch (_) {
+                return {};
+            }
+        };
+
+        const validStops = (route) => {
+            return Array.isArray(route?.stops)
+                ? route.stops.filter((stop) => {
+                    const lat = Number(stop?.lat);
+                    const lng = Number(stop?.lng);
+
+                    return Number.isFinite(lat)
+                        && Number.isFinite(lng)
+                        && lat >= 4.0
+                        && lat <= 22.5
+                        && lng >= 116.0
+                        && lng <= 127.5;
+                })
+                : [];
+        };
+
+        const stopLabel = (stop) => {
+            if (stop.type === 'seller') return 'S';
+            if (stop.type === 'buyer') return 'B';
+            if (stop.key === 'origin_facility') return 'O';
+            if (stop.key === 'destination_facility') return 'D';
+
+            return String(stop.sequence || '');
+        };
+
+        const markerElement = (stop, route) => {
+            const el = document.createElement('div');
+            el.className = 'sari-buyer-map-marker';
+            el.textContent = stopLabel(stop);
+
+            if (stop.type === 'buyer') {
+                el.classList.add('is-buyer');
+            }
+
+            if (
+                !stop.reached
+                && Number(stop.sequence) > Number(route?.current_sequence || 1)
+            ) {
+                el.classList.add('is-future');
+            }
+
+            if (Number(stop.sequence) === Number(route?.current_sequence || 0)) {
+                el.classList.add('is-current');
+            }
+
+            return el;
+        };
+
+        const lineFeature = (coordinates) => ({
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates,
+            },
+        });
+
+        const addLine = (
+            map,
+            id,
+            coordinates,
+            {
+                color,
+                width,
+                opacity = 1,
+                dasharray = null,
+            }
+        ) => {
+            if (!Array.isArray(coordinates) || coordinates.length < 2) {
+                return false;
+            }
+
+            map.addSource(id, {
+                type: 'geojson',
+                data: lineFeature(coordinates),
+            });
+
+            const paint = {
+                'line-color': color,
+                'line-width': width,
+                'line-opacity': opacity,
+            };
+
+            if (dasharray) {
+                paint['line-dasharray'] = dasharray;
+            }
+
+            map.addLayer({
+                id,
+                type: 'line',
+                source: id,
+                layout: {
+                    'line-cap': 'round',
+                    'line-join': 'round',
+                },
+                paint,
+            });
+
+            return true;
+        };
+
+        const startCurrentLegAnimation = (map, layerId) => {
+            if (!map.getLayer(layerId)) return;
+
+            const patterns = [
+                [0.5, 2.1],
+                [0.8, 1.8],
+                [1.1, 1.5],
+                [1.4, 1.2],
+                [1.1, 1.5],
+                [0.8, 1.8],
+            ];
+
+            let index = 0;
+
+            if (animationTimer) {
+                window.clearInterval(animationTimer);
+            }
+
+            animationTimer = window.setInterval(() => {
+                if (!map.getLayer(layerId)) return;
+
+                index = (index + 1) % patterns.length;
+                map.setPaintProperty(
+                    layerId,
+                    'line-dasharray',
+                    patterns[index]
+                );
+            }, 160);
+        };
+
+        const fitRoute = (map, stops) => {
+            if (stops.length === 0) {
+                map.setCenter(PHILIPPINES_CENTER);
+                map.setZoom(5.2);
+                return;
+            }
+
+            if (stops.length === 1) {
+                map.setCenter([
+                    Number(stops[0].lng),
+                    Number(stops[0].lat),
+                ]);
+                map.setZoom(13);
+                return;
+            }
+
+            const bounds = new maplibregl.LngLatBounds();
+
+            stops.forEach((stop) => {
+                bounds.extend([
+                    Number(stop.lng),
+                    Number(stop.lat),
+                ]);
+            });
+
+            map.fitBounds(bounds, {
+                padding: {
+                    top: 90,
+                    right: 70,
+                    bottom: 90,
+                    left: 70,
+                },
+                maxZoom: 14,
+                duration: 0,
+            });
+        };
+
+        const buildRouteLayers = (map, route, stops) => {
+            const coordinates = stops.map((stop) => [
+                Number(stop.lng),
+                Number(stop.lat),
+            ]);
+
+            if (coordinates.length < 2) return;
+
+            addLine(map, 'sari-route-full', coordinates, {
+                color: '#d5d0c9',
+                width: 5,
+                opacity: .92,
+            });
+
+            const lastReached = Math.max(
+                0,
+                Math.min(
+                    stops.length,
+                    Number(route?.last_reached_sequence || 0)
+                )
+            );
+
+            const completedStops = stops.filter(
+                (stop) => Number(stop.sequence) <= lastReached
+            );
+
+            const completedCoordinates = completedStops.map((stop) => [
+                Number(stop.lng),
+                Number(stop.lat),
+            ]);
+
+            addLine(map, 'sari-route-completed', completedCoordinates, {
+                color: '#c98913',
+                width: 5.5,
+                opacity: 1,
+            });
+
+            const currentStop = stops.find(
+                (stop) => Number(stop.sequence) === lastReached
+            );
+
+            const nextStop = stops.find(
+                (stop) => Number(stop.sequence) === lastReached + 1
+            );
+
+            const currentLegStart = currentStop || stops.find(
+                (stop) => Number(stop.sequence) === 1
+            );
+
+            const currentLegEnd = nextStop || (
+                lastReached === 0
+                    ? stops.find((stop) => Number(stop.sequence) === 2)
+                    : null
+            );
+
+            if (currentLegStart && currentLegEnd) {
+                const added = addLine(
+                    map,
+                    'sari-route-current',
+                    [
+                        [
+                            Number(currentLegStart.lng),
+                            Number(currentLegStart.lat),
+                        ],
+                        [
+                            Number(currentLegEnd.lng),
+                            Number(currentLegEnd.lat),
+                        ],
+                    ],
+                    {
+                        color: '#d89513',
+                        width: 5.5,
+                        opacity: 1,
+                        dasharray: [0.8, 1.8],
+                    }
+                );
+
+                if (added) {
+                    startCurrentLegAnimation(
+                        map,
+                        'sari-route-current'
+                    );
+                }
+            }
+        };
+
+        const addMarkers = (map, route, stops) => {
+            stops.forEach((stop) => {
+                const popup = new maplibregl.Popup({
+                    offset: 18,
+                    closeButton: false,
+                    maxWidth: '250px',
+                }).setHTML(`
+                    <div style="font-family:Poppins,system-ui,sans-serif;padding:2px 1px;">
+                        <strong style="display:block;font-size:11px;color:#3c3631;">
+                            ${String(stop.name || 'Route stop')}
+                        </strong>
+                        ${
+                            stop.address
+                                ? `<span style="display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#81776d;">
+                                    ${String(stop.address)}
+                                   </span>`
+                                : ''
+                        }
+                    </div>
+                `);
+
+                new maplibregl.Marker({
+                    element: markerElement(stop, route),
+                    anchor: 'center',
+                })
+                    .setLngLat([
+                        Number(stop.lng),
+                        Number(stop.lat),
+                    ])
+                    .setPopup(popup)
+                    .addTo(map);
+            });
+        };
+
+        const updateNotice = (wrapper, title, copy) => {
+            const notice = wrapper?.querySelector(
+                '[data-sari-route-notice]'
+            );
+
+            if (!notice) return;
+
+            const titleNode = notice.querySelector('strong');
+            const copyNode = notice.querySelector('small');
+
+            if (titleNode && title) titleNode.textContent = title;
+            if (copyNode && copy) copyNode.textContent = copy;
+        };
+
+        const destroyMap = () => {
+            if (animationTimer) {
+                window.clearInterval(animationTimer);
+                animationTimer = null;
+            }
+
+            if (activeMap) {
+                try {
+                    activeMap.remove();
+                } catch (_) {}
+                activeMap = null;
+            }
+
+            const mapNode = document.querySelector(
+                '[data-sari-maplibre-map]'
+            );
+
+            if (mapNode) {
+                delete mapNode.dataset.ready;
+            }
+        };
+
+        const boot = () => {
+            const wrapper = document.querySelector(
+                '[data-sari-delivery-route]'
+            );
+
+            const mapNode = document.querySelector(
+                '[data-sari-maplibre-map]'
+            );
+
+            if (!wrapper || !mapNode || mapNode.dataset.ready === '1') {
+                return;
+            }
+
+            if (!window.maplibregl) {
+                updateNotice(
+                    wrapper,
+                    'Map library failed to load',
+                    'Refresh the page and check that unpkg.com is allowed by the browser or server network policy.'
+                );
+                return;
+            }
+
+            mapNode.dataset.ready = '1';
+
+            const route = parseRoute(wrapper);
+            const stops = validStops(route);
+
+            const map = new maplibregl.Map({
+                container: mapNode,
+                style: MAP_STYLE,
+                center: PHILIPPINES_CENTER,
+                zoom: 5.2,
+                attributionControl: true,
+                interactive: true,
+                dragRotate: false,
+                pitchWithRotate: false,
+            });
+
+            activeMap = map;
+
+            map.addControl(
+                new maplibregl.NavigationControl({
+                    showCompass: false,
+                    visualizePitch: false,
+                }),
+                'top-right'
+            );
+
+            map.on('load', () => {
+                wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
+
+                fitRoute(map, stops);
+                addMarkers(map, route, stops);
+                buildRouteLayers(map, route, stops);
+
+                if (stops.length >= 2 && route?.ready) {
+                    wrapper
+                        .querySelector('[data-sari-route-notice]')
+                        ?.remove();
+                }
+            });
+
+            map.on('error', (event) => {
+                wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
+
+                const message = String(
+                    event?.error?.message || ''
+                ).toLowerCase();
+
+                if (
+                    message.includes('style')
+                    || message.includes('source')
+                    || message.includes('tile')
+                    || message.includes('network')
+                    || message.includes('fetch')
+                ) {
+                    updateNotice(
+                        wrapper,
+                        'Map background could not load',
+                        'The tracking data is safe. Refresh the page or verify that tile.openstreetmap.org is allowed by your browser/server network policy.'
+                    );
+                }
+            });
+
+            window.setTimeout(() => {
+                map.resize();
+                fitRoute(map, stops);
+            }, 180);
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener(
+                'DOMContentLoaded',
+                boot,
+                { once: true }
+            );
+        } else {
+            boot();
+        }
+
+        document.addEventListener(
+            'livewire:navigated',
+            () => {
+                destroyMap();
+                boot();
+            }
+        );
+    })();
+    </script>
 @endpush

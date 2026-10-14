@@ -62,7 +62,8 @@ class CourierDashboardController extends Controller
                 ->whereRaw('LOWER(courier_email) = ?', [$courierEmail])
                 ->where('status', 'delivered')
                 ->whereDate('delivered_at', now()->toDateString())
-                ->sum('delivery_fee'),
+                ->selectRaw('COALESCE(SUM(CASE WHEN original_delivery_fee > 0 THEN original_delivery_fee ELSE delivery_fee END), 0) AS courier_fee_total')
+                ->value('courier_fee_total'),
         ];
 
         return view('courier.dashboard', compact(

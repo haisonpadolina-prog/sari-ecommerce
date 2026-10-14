@@ -1,3 +1,12 @@
+@php
+    $logisticsHeaderId = (int) session('logistics_account_id', 0);
+    $logisticsHeaderAccount = $logisticsHeaderId > 0
+        ? \App\Models\Accounts\LogisticsAccount::query()->find($logisticsHeaderId)
+        : null;
+    $logisticsHeaderName = $logisticsHeaderAccount?->displayName()
+        ?: session('logistics_name', 'SARI Logistics');
+@endphp
+
 <header id="logisticsHeader" class="sticky top-0 z-40 border-b border-[#eee4d3] bg-[#fffdf9]/95 backdrop-blur-md">
     <div class="flex min-h-[86px] w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 xl:px-10">
         <div class="flex min-w-0 items-center gap-3 sm:gap-4">
@@ -38,10 +47,43 @@
                     </div>
                     @php
                         $logisticsHeaderAlerts = [
-                            ['Pending Rider Applications', \App\Models\Registration\RegistrationApplication::query()->where('role','rider')->where('status','pending')->count(), 'logistics.rider-applications'],
-                            ['Pickup Requests', \App\Models\Orders\MarketplaceOrder::query()->where('status','ready_for_pickup')->whereNull('courier_email')->count(), 'logistics.pickup-requests'],
-                            ['Parcels to Sort', \App\Models\Delivery\LogisticsParcel::query()->where('status','received')->count(), 'logistics.parcel-sorting'],
-                            ['Unread Rider Messages', \App\Models\Messaging\LogisticsMessage::query()->where('sender_role','rider')->whereNull('read_at')->count(), 'logistics.messages'],
+                            [
+                                'Pending Rider Applications',
+                                \App\Models\Registration\RegistrationApplication::query()
+                                    ->where('role', 'rider')
+                                    ->where('status', 'pending')
+                                    ->where(function ($query) use ($logisticsHeaderId) {
+                                        $query->where('logistics_account_id', $logisticsHeaderId)
+                                            ->orWhereNull('logistics_account_id');
+                                    })
+                                    ->count(),
+                                'logistics.rider-applications',
+                            ],
+                            [
+                                'Pickup Requests',
+                                \App\Models\Orders\MarketplaceOrder::query()
+                                    ->where('logistics_account_id', $logisticsHeaderId)
+                                    ->where('status', 'ready_for_pickup')
+                                    ->whereNull('courier_email')
+                                    ->count(),
+                                'logistics.pickup-requests',
+                            ],
+                            [
+                                'Parcels to Sort',
+                                \App\Models\Delivery\LogisticsParcel::query()
+                                    ->where('status', 'received')
+                                    ->whereHas('order', fn ($query) => $query->where('logistics_account_id', $logisticsHeaderId))
+                                    ->count(),
+                                'logistics.parcel-sorting',
+                            ],
+                            [
+                                'Active Facilities',
+                                \App\Models\Delivery\LogisticsFacility::query()
+                                    ->where('logistics_account_id', $logisticsHeaderId)
+                                    ->where('is_active', true)
+                                    ->count(),
+                                'logistics.facilities.index',
+                            ],
                         ];
                     @endphp
                     <div class="divide-y divide-[#eee4d3]">
@@ -58,7 +100,7 @@
             <a href="{{ route('logistics.account-management') }}" class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex">
                 <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[11px] font-bold text-white">SL</div>
                 <div class="min-w-0">
-                    <p class="truncate text-[11px] font-semibold text-[#28231c]">SARI Logistics</p>
+                    <p class="truncate text-[11px] font-semibold text-[#28231c]">{{ $logisticsHeaderName }}</p>
                     <p class="mt-0.5 text-[10px] text-[#908779]">Logistics Manager</p>
                 </div>
             </a>

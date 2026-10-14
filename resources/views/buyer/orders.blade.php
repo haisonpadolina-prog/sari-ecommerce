@@ -54,11 +54,37 @@
 
     $featuredStep = $featuredOrder ? $statusIndex($featuredOrder->status) : 0;
 
+    $featuredItems = $featuredOrder
+        ? collect($featuredOrder->items ?? [])->values()
+        : collect();
+
+    $featuredFirstItem = $featuredItems->first() ?? [];
+    $featuredProductId = (int) ($featuredFirstItem['product_id'] ?? 0);
+    $featuredProductImageUrl = $featuredProductId > 0
+        ? route('buyer.product.image', ['product' => $featuredProductId])
+        : null;
+    $featuredProductName = trim((string) ($featuredFirstItem['name'] ?? 'Ordered product'));
+    $featuredProductQty = max(1, (int) ($featuredFirstItem['qty'] ?? 1));
+    $featuredProductVariant = trim((string) ($featuredFirstItem['variant_label'] ?? ''));
+    $featuredExtraProducts = max(0, $featuredItems->count() - 1);
+
     $toShipCount = $orders->filter(fn($o) => in_array($o->status, ['new', 'preparing', 'ready_for_pickup']))->count();
 
     $inTransitCount = $orders->filter(fn($o) => in_array($o->status, ['courier_accepted', 'heading_pickup', 'arrived_pickup', 'in_transit', 'arrived_buyer']))->count();
 
     $deliveredCount = $orders->where('status', 'delivered')->count();
+
+    $cancellationReasons = [
+        'Need to change shipping address',
+        'Need to change payment method',
+        'Need item sooner',
+        'Need to change color or size',
+        'High delivery costs',
+        'Better price available',
+        'No longer needed',
+        'Seller not responsive to inquiries',
+        'Seller requesting order cancellation',
+    ];
 
 @endphp
 
@@ -2747,7 +2773,20 @@
     .sari-order-more-details[open] .sari-order-more-label--open {
         display:inline;
     }
+.sari-order-more-label {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0 !important;
+}
 
+.sari-order-more-summary {
+    min-height: 40px !important;
+}
+
+.sari-order-more-chevron {
+    font-size: 16px !important;
+}
     .sari-order-more-chevron {
         font-size:16px !important;
         transition:transform .18s ease;
@@ -4271,23 +4310,1498 @@
         }
     }
 
+
+
+    /* ============================================================
+       FINAL BUYER ORDERS POLISH
+       Compact KPI summary + improved order-detail readability.
+       UI-only override: no backend, Blade logic, or JS behavior changed.
+    ============================================================ */
+
+    /* Compact top KPI bar */
+    .sari-orders-reference .sari-kpi-bar {
+        min-height:82px !important;
+        margin-bottom:14px !important;
+        border-radius:14px !important;
+    }
+
+    .sari-orders-reference .sari-kpi-cell {
+        min-height:82px !important;
+        padding:14px 22px !important;
+    }
+
+    .sari-orders-reference .sari-kpi-cell + .sari-kpi-cell::before {
+        top:18px !important;
+        bottom:18px !important;
+    }
+
+    .sari-orders-reference .sari-kpi-label {
+        top:13px !important;
+        left:22px !important;
+        color:#697586 !important;
+        font-size:9px !important;
+        font-weight:800 !important;
+        line-height:1.2 !important;
+        letter-spacing:.07em !important;
+    }
+
+    .sari-orders-reference .sari-kpi-value {
+        top:64% !important;
+        color:#111827 !important;
+        font-size:29px !important;
+        font-weight:800 !important;
+        line-height:1 !important;
+        letter-spacing:-.04em !important;
+    }
+
+    /* Expanded order details: compact container, larger readable text */
+    .sari-order-detail-column {
+        min-height:108px !important;
+        padding:17px 20px !important;
+    }
+
+    .sari-order-detail-row {
+        gap:11px !important;
+        align-items:flex-start !important;
+    }
+
+    .sari-order-detail-icon .material-symbols-rounded {
+        font-size:20px !important;
+        line-height:1 !important;
+    }
+
+    .sari-order-detail-title {
+        color:#202938 !important;
+        font-size:11px !important;
+        font-weight:800 !important;
+        line-height:1.3 !important;
+    }
+
+    .sari-order-detail-primary {
+        margin-top:5px !important;
+        color:#2d3748 !important;
+        font-size:10px !important;
+        font-weight:700 !important;
+        line-height:1.45 !important;
+    }
+
+    .sari-order-detail-secondary {
+        margin-top:4px !important;
+        color:#707c8c !important;
+        font-size:9px !important;
+        font-weight:500 !important;
+        line-height:1.55 !important;
+    }
+
+    .sari-order-detail-address {
+        max-width:100% !important;
+        margin-top:5px !important;
+    }
+
+    @media (max-width:767px) {
+        .sari-orders-reference .sari-kpi-bar {
+            border-radius:13px !important;
+        }
+
+        .sari-orders-reference .sari-kpi-cell {
+            min-height:76px !important;
+            padding:12px 16px !important;
+        }
+
+        .sari-orders-reference .sari-kpi-label {
+            top:12px !important;
+            left:16px !important;
+            font-size:8px !important;
+        }
+
+        .sari-orders-reference .sari-kpi-value {
+            top:65% !important;
+            font-size:25px !important;
+        }
+
+        .sari-orders-reference .sari-kpi-cell + .sari-kpi-cell::before {
+            top:15px !important;
+            bottom:15px !important;
+        }
+
+        .sari-order-detail-column {
+            min-height:auto !important;
+            padding:15px 16px !important;
+        }
+
+        .sari-order-detail-title {
+            font-size:10.5px !important;
+        }
+
+        .sari-order-detail-primary {
+            font-size:9.5px !important;
+        }
+
+        .sari-order-detail-secondary {
+            font-size:8.8px !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL TRACKING SELECTION + DETAILS POLISH
+       - Clicking an order only updates the tracking sidebar.
+       - No gold/colored selected-card accent.
+       - Details disclosure is borderless and right-aligned.
+    ============================================================ */
+
+    /* Selection is functional only: keep every order card visually neutral. */
+    .sari-order-card.is-tracking-selected,
+    .sari-order-card[data-tracking-selected="true"],
+    .sari-order-card.is-tracking-selected:hover,
+    .sari-order-card[data-tracking-selected="true"]:hover {
+        border-color:#dfe5ea !important;
+        box-shadow:0 8px 22px rgba(31,41,55,.035) !important;
+    }
+
+    /* Do not tint the product/container when it is the active tracking order. */
+    .sari-order-card.is-tracking-selected .sari-track-order-container,
+    .sari-order-card[data-tracking-selected="true"] .sari-track-order-container {
+        background:transparent !important;
+    }
+
+    .sari-order-card.is-tracking-selected .sari-order-product-image,
+    .sari-order-card[data-tracking-selected="true"] .sari-order-product-image,
+    button.sari-track-order-trigger[aria-pressed="true"].sari-order-product-image {
+        border-color:#e1e6eb !important;
+        box-shadow:none !important;
+    }
+
+    .sari-order-card.is-tracking-selected .sari-order-product-name,
+    .sari-order-card[data-tracking-selected="true"] .sari-order-product-name,
+    button.sari-track-order-trigger[aria-pressed="true"].sari-order-product-name {
+        color:#202a38 !important;
+    }
+
+    /* Keep hover feedback subtle and neutral. */
+    .sari-order-card:not(.is-tracking-selected):hover,
+    .sari-order-card.is-tracking-selected:hover,
+    .sari-order-card[data-tracking-selected="true"]:hover {
+        border-color:#d4dbe2 !important;
+        box-shadow:0 10px 25px rgba(31,41,55,.045) !important;
+    }
+
+    /* Remove the horizontal divider treatment from the details disclosure. */
+    .sari-order-more-details,
+    .sari-order-more-details[open],
+    .sari-order-more-details[open] .sari-order-more-summary {
+        border-top:0 !important;
+        border-bottom:0 !important;
+        border-color:transparent !important;
+        box-shadow:none !important;
+    }
+
+    /* Slightly larger, cleaner disclosure positioned on the right. */
+    .sari-order-more-summary {
+        width:max-content !important;
+        min-height:42px !important;
+        margin-left:auto !important;
+        justify-content:flex-end !important;
+        gap:6px !important;
+        padding:0 18px !important;
+        background:transparent !important;
+        color:#a86d08 !important;
+        font-size:9px !important;
+        font-weight:800 !important;
+        line-height:1 !important;
+        border:0 !important;
+        box-shadow:none !important;
+    }
+
+    .sari-order-more-summary:hover,
+    .sari-order-more-summary:focus-visible {
+        background:transparent !important;
+        color:#7f530d !important;
+        text-decoration:none !important;
+    }
+
+    .sari-order-more-chevron {
+        font-size:17px !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-order-more-summary {
+            min-height:42px !important;
+            padding:0 14px !important;
+            font-size:10.5px !important;
+        }
+    }
+
+    /* ============================================================
+       FINAL SEE MORE DETAILS CLEANUP
+       Remove the divider above and below the disclosure completely.
+    ============================================================ */
+
+    /* Upper divider: comes from the main order content wrapper. */
+    .sari-order-card > div:first-child {
+        border-bottom:0 !important;
+    }
+
+    /* Disclosure itself must never draw a border. */
+    .sari-order-more-details,
+    .sari-order-more-details[open],
+    .sari-order-more-summary,
+    .sari-order-more-details[open] .sari-order-more-summary {
+        border:0 !important;
+        border-top:0 !important;
+        border-bottom:0 !important;
+        box-shadow:none !important;
+    }
+
+    /* Lower divider: comes from the actions section after details. */
+    .sari-order-more-details + .grid.gap-2\.5 {
+        border-top:0 !important;
+    }
+
+    /* Larger, clearer right-aligned disclosure. */
+    .sari-order-more-summary {
+        min-height:46px !important;
+        padding:0 18px !important;
+        font-size:11.5px !important;
+        font-weight:800 !important;
+        letter-spacing:0 !important;
+    }
+
+    .sari-order-more-chevron {
+        font-size:19px !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-order-more-summary {
+            min-height:44px !important;
+            padding:0 14px !important;
+            font-size:10.5px !important;
+        }
+
+        .sari-order-more-chevron {
+            font-size:18px !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL PRODUCT SUMMARY READABILITY
+       Larger item heading, product preview text and details trigger.
+    ============================================================ */
+
+    /* "Items in this order" */
+    .sari-order-card .mt-5.flex.flex-col > div:first-child > p:first-child {
+        margin-bottom:10px !important;
+        color:#697586 !important;
+        font-size:10.5px !important;
+        font-weight:800 !important;
+        line-height:1.2 !important;
+        letter-spacing:.10em !important;
+    }
+
+    /* Give the product preview a little more visual presence. */
+    .sari-order-product-image,
+    .sari-product-thumb.sari-order-product-image {
+        width:74px !important;
+        height:74px !important;
+        flex-basis:74px !important;
+        border-radius:12px !important;
+    }
+
+    .sari-product-strip {
+        gap:14px !important;
+    }
+
+    /* Product name: HSHP */
+    .sari-order-product-name,
+    button.sari-order-product-name {
+        font-size:12px !important;
+        font-weight:800 !important;
+        line-height:1.35 !important;
+        letter-spacing:-.01em !important;
+    }
+
+    /* Qty 1 • Standard */
+    .sari-order-product-meta {
+        margin-top:6px !important;
+        gap:6px !important;
+        color:#778394 !important;
+        font-size:9.5px !important;
+        font-weight:500 !important;
+        line-height:1.45 !important;
+    }
+
+    /* Make See more / See less details clearly readable. */
+    .sari-order-more-summary {
+        min-height:48px !important;
+        padding:0 20px !important;
+        font-size:13px !important;
+        font-weight:800 !important;
+        line-height:1.2 !important;
+        gap:7px !important;
+    }
+
+    .sari-order-more-chevron {
+        font-size:20px !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-order-card .mt-5.flex.flex-col > div:first-child > p:first-child {
+            font-size:9.5px !important;
+        }
+
+        .sari-order-product-image,
+        .sari-product-thumb.sari-order-product-image {
+            width:64px !important;
+            height:64px !important;
+            flex-basis:64px !important;
+        }
+
+        .sari-order-product-name,
+        button.sari-order-product-name {
+            font-size:11px !important;
+        }
+
+        .sari-order-product-meta {
+            font-size:9px !important;
+        }
+
+        .sari-order-more-summary {
+            min-height:46px !important;
+            padding:0 14px !important;
+            font-size:12px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       FINAL PRODUCT TEXT SIZE TUNE
+       Slightly larger product summary + details disclosure text.
+    ============================================================ */
+
+    .sari-order-card .mt-5.flex.flex-col > div:first-child > p:first-child {
+        font-size:11.5px !important;
+    }
+
+    .sari-order-product-name,
+    button.sari-order-product-name {
+        font-size:13.5px !important;
+    }
+
+    .sari-order-product-meta {
+        font-size:10.5px !important;
+    }
+
+    .sari-order-more-summary {
+        min-height:50px !important;
+        font-size:15px !important;
+        font-weight:800 !important;
+        gap:8px !important;
+    }
+
+    .sari-order-more-chevron {
+        font-size:21px !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-order-card .mt-5.flex.flex-col > div:first-child > p:first-child {
+            font-size:10px !important;
+        }
+
+        .sari-order-product-name,
+        button.sari-order-product-name {
+            font-size:12px !important;
+        }
+
+        .sari-order-product-meta {
+            font-size:9.5px !important;
+        }
+
+        .sari-order-more-summary {
+            min-height:48px !important;
+            font-size:13.5px !important;
+        }
+
+        .sari-order-more-chevron {
+            font-size:19px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       FINAL SEE MORE DETAILS SIZE
+       Larger, clearer disclosure control without changing behavior.
+    ============================================================ */
+    .sari-order-more-summary {
+        min-height: 44px !important;
+        gap: 8px !important;
+        padding: 0 16px !important;
+        color: #96610a !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .sari-order-more-chevron {
+        font-size: 20px !important;
+        line-height: 1 !important;
+    }
+
+    @media (max-width: 640px) {
+        .sari-order-more-summary {
+            min-height: 42px !important;
+            font-size: 11px !important;
+        }
+
+        .sari-order-more-chevron {
+            font-size: 19px !important;
+        }
+    }
+
+
+    /* FINAL DIRECT UI FIX — action text + Latest Update bell */
+    .sari-order-detail-column:first-child .sari-order-detail-icon,
+    .sari-order-detail-column:first-child .sari-order-detail-icon .material-symbols-rounded {
+        color:#c88912 !important;
+    }
+
+
+    /* ============================================================
+       FINAL FILTER + TRACKING TYPOGRAPHY
+       Larger, lighter, cleaner text without changing behavior.
+    ============================================================ */
+
+    /* Order filter pills: All / To Ship / In Transit / Delivered / Cancelled */
+    .sari-orders-reference #orderFilters .sari-filter {
+        min-height: 34px !important;
+        padding-inline: 12px !important;
+        font-size: 10.5px !important;
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0 !important;
+    }
+
+    .sari-orders-reference #orderFilters .sari-filter.is-active {
+        font-weight: 600 !important;
+    }
+
+    .sari-orders-reference #orderFilters .sari-filter span {
+        font-size: inherit !important;
+        font-weight: inherit !important;
+    }
+
+    /* Sidebar tracking step names */
+    .sari-orders-reference .sari-sidebar .sari-tracking-row p.text-xs {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+    }
+
+    /* "Current status" / "Pending" */
+    .sari-orders-reference .sari-sidebar .sari-tracking-row .text-\[9px\] {
+        margin-top: 3px !important;
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0 !important;
+    }
+
+    /* Keep milestone check readable and aligned */
+    .sari-orders-reference .sari-sidebar .sari-tracking-icon {
+        width: 19px !important;
+        height: 19px !important;
+        min-width: 19px !important;
+        min-height: 19px !important;
+        flex-basis: 19px !important;
+    }
+
+    .sari-orders-reference .sari-sidebar .sari-tracking-icon .material-symbols-rounded {
+        width: 12px !important;
+        height: 12px !important;
+        font-size: 12px !important;
+        line-height: 12px !important;
+    }
+
+    @media (max-width: 640px) {
+        .sari-orders-reference #orderFilters .sari-filter {
+            font-size: 10px !important;
+        }
+
+        .sari-orders-reference .sari-sidebar .sari-tracking-row p.text-xs {
+            font-size: 10px !important;
+        }
+
+        .sari-orders-reference .sari-sidebar .sari-tracking-row .text-\[9px\] {
+            font-size: 8.5px !important;
+        }
+    }
+
+
+    /* ============================================================
+       PRODUCT CONTAINER TAP FEEDBACK
+       Light gray pressed state only; tracking behavior is unchanged.
+    ============================================================ */
+    .sari-orders-reference .sari-track-order-container {
+        padding: 6px 8px !important;
+        margin: -6px -8px !important;
+        border-radius: 12px !important;
+        transition:
+            background-color .12s ease,
+            transform .12s ease,
+            box-shadow .12s ease !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .sari-orders-reference .sari-track-order-container:hover {
+        background:#f7f8f9 !important;
+    }
+
+    .sari-orders-reference .sari-track-order-container:active,
+    .sari-orders-reference .sari-track-order-container.is-tap-feedback {
+        background:#eceff2 !important;
+        transform:scale(.992) !important;
+        box-shadow:inset 0 0 0 1px rgba(31,41,55,.035) !important;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .sari-orders-reference .sari-track-order-container {
+            transition:none !important;
+        }
+
+        .sari-orders-reference .sari-track-order-container:active,
+        .sari-orders-reference .sari-track-order-container.is-tap-feedback {
+            transform:none !important;
+        }
+    }
+
+
+    /* ============================================================
+       FULL PRODUCT ROW TAP FEEDBACK
+       Entire Items + Product + Order Total area reacts to tap.
+    ============================================================ */
+    .sari-orders-reference .sari-order-product-row {
+        position: relative !important;
+        cursor: pointer !important;
+        border-radius: 12px !important;
+        transition:
+            background-color .13s ease,
+            box-shadow .13s ease,
+            transform .13s ease !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .sari-orders-reference .sari-order-product-row:hover {
+        background:#f8f9fa !important;
+    }
+
+    .sari-orders-reference .sari-order-product-row:active,
+    .sari-orders-reference .sari-order-product-row.is-tap-feedback {
+        background:#eceff2 !important;
+        box-shadow:inset 0 0 0 1px rgba(31,41,55,.04) !important;
+        transform:scale(.996) !important;
+    }
+
+    .sari-orders-reference .sari-order-product-row:focus-visible {
+        outline:2px solid rgba(200,137,18,.20) !important;
+        outline-offset:3px !important;
+    }
+
+    /* Inner image/name block stays transparent so the whole row reads as one target. */
+    .sari-orders-reference .sari-order-product-row .sari-track-order-container,
+    .sari-orders-reference .sari-order-product-row .sari-track-order-container:hover,
+    .sari-orders-reference .sari-order-product-row .sari-track-order-container:active,
+    .sari-orders-reference .sari-order-product-row .sari-track-order-container.is-tap-feedback {
+        background:transparent !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .sari-orders-reference .sari-order-product-row {
+            transition:none !important;
+        }
+
+        .sari-orders-reference .sari-order-product-row:active,
+        .sari-orders-reference .sari-order-product-row.is-tap-feedback {
+            transform:none !important;
+        }
+    }
+
+
+    /* ============================================================
+       FULL ORDER CARD TAP FEEDBACK
+       Entire card flashes light gray, including all white child areas.
+    ============================================================ */
+    .sari-orders-reference .sari-order-card {
+        position: relative !important;
+        isolation: isolate !important;
+        overflow: hidden !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Overlay is required because child sections have their own white backgrounds. */
+    .sari-orders-reference .sari-order-card::after {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 50 !important;
+        border-radius: inherit !important;
+        background: rgba(100, 116, 139, .085) !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity .13s ease !important;
+    }
+
+    .sari-orders-reference .sari-order-card:active::after,
+    .sari-orders-reference .sari-order-card.is-card-tap-feedback::after {
+        opacity: 1 !important;
+    }
+
+    /* Disable the previous inner-only gray effects so there is one clean card-level response. */
+    .sari-orders-reference .sari-order-product-row,
+    .sari-orders-reference .sari-order-product-row:hover,
+    .sari-orders-reference .sari-order-product-row:active,
+    .sari-orders-reference .sari-order-product-row.is-tap-feedback,
+    .sari-orders-reference .sari-track-order-container,
+    .sari-orders-reference .sari-track-order-container:hover,
+    .sari-orders-reference .sari-track-order-container:active,
+    .sari-orders-reference .sari-track-order-container.is-tap-feedback {
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sari-orders-reference .sari-order-card::after {
+            transition: none !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL HEADER + SUPPORT POLISH
+       Flat SARI gold button, no Buyer Protection card, larger support text.
+    ============================================================ */
+
+    .sari-orders-reference .sari-continue-shopping-btn {
+        height:44px !important;
+        padding-inline:18px !important;
+        gap:8px !important;
+        border:1px solid #c88912 !important;
+        border-radius:11px !important;
+
+        background:#c88912 !important;
+        background-image:none !important;
+
+        color:#ffffff !important;
+        font-size:11px !important;
+        font-weight:600 !important;
+        line-height:1.2 !important;
+
+        box-shadow:0 6px 14px rgba(200,137,18,.14) !important;
+        transform:none !important;
+    }
+
+    .sari-orders-reference .sari-continue-shopping-btn:hover,
+    .sari-orders-reference .sari-continue-shopping-btn:focus-visible {
+        border-color:#a96f0e !important;
+        background:#a96f0e !important;
+        background-image:none !important;
+        color:#ffffff !important;
+        transform:none !important;
+        box-shadow:0 7px 16px rgba(169,111,14,.16) !important;
+        outline:none !important;
+    }
+
+    .sari-orders-reference .sari-continue-shopping-btn .material-symbols-rounded {
+        font-size:19px !important;
+        color:currentColor !important;
+    }
+
+    /* Need Help? action links */
+    .sari-orders-reference .sari-support-link {
+        min-height:46px !important;
+        padding-block:11px !important;
+        color:#4b5563 !important;
+        font-size:10.5px !important;
+        font-weight:500 !important;
+        line-height:1.3 !important;
+        letter-spacing:0 !important;
+    }
+
+    .sari-orders-reference .sari-support-link:hover,
+    .sari-orders-reference .sari-support-link:focus-visible {
+        color:#a96f0e !important;
+        outline:none !important;
+    }
+
+    .sari-orders-reference .sari-support-link > span:first-child {
+        gap:9px !important;
+        font-size:inherit !important;
+        font-weight:inherit !important;
+    }
+
+    .sari-orders-reference .sari-support-link .material-symbols-rounded {
+        font-size:18px !important;
+        line-height:1 !important;
+    }
+
+    .sari-orders-reference .sari-support-link > span:first-child .material-symbols-rounded {
+        color:#7b8490 !important;
+    }
+
+    .sari-orders-reference .sari-support-link:hover > span:first-child .material-symbols-rounded,
+    .sari-orders-reference .sari-support-link:focus-visible > span:first-child .material-symbols-rounded {
+        color:#c88912 !important;
+    }
+
+    .sari-orders-reference .sari-support-link > .material-symbols-rounded:last-child {
+        color:#a7afb8 !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-orders-reference .sari-continue-shopping-btn {
+            height:42px !important;
+            padding-inline:15px !important;
+            font-size:10.5px !important;
+        }
+
+        .sari-orders-reference .sari-support-link {
+            min-height:44px !important;
+            font-size:10px !important;
+        }
+    }
+
+
+    /* ============================================================
+       ABSOLUTE FINAL HEADER/SUPPORT OVERRIDES
+       Higher specificity than legacy compact rules.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference .sari-orders-shell
+    > .mb-5.flex:first-of-type > a.sari-continue-shopping-btn {
+        background:#c88912 !important;
+        background-image:none !important;
+        border-color:#c88912 !important;
+        color:#fff !important;
+        transform:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-shell
+    > .mb-5.flex:first-of-type > a.sari-continue-shopping-btn:hover,
+    .sari-orders-page.sari-orders-reference .sari-orders-shell
+    > .mb-5.flex:first-of-type > a.sari-continue-shopping-btn:focus-visible {
+        background:#a96f0e !important;
+        background-image:none !important;
+        border-color:#a96f0e !important;
+        color:#fff !important;
+        transform:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference
+    .sari-sidebar-card .divide-y > a.sari-support-link {
+        font-size:11.5px !important;
+        font-weight:500 !important;
+        line-height:1.3 !important;
+        min-height:48px !important;
+    }
+
+
+    /* ============================================================
+       FINAL ORDER STATUS — PLAIN TEXT ONLY
+       Removes pill/badge containers for statuses such as
+       Order Placed and Cancelled.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference
+    .sari-order-card [class*="rounded-full"][class*="bg-[#fff4d9]"] {
+        min-height:0 !important;
+        height:auto !important;
+        padding:0 !important;
+        margin:0 !important;
+
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+
+        color:#a96f0e !important;
+        font-size:9px !important;
+        font-weight:600 !important;
+        line-height:1.2 !important;
+    }
+
+    /* Remove the decorative status dot. */
+    .sari-orders-page.sari-orders-reference
+    .sari-order-card [class*="rounded-full"][class*="bg-[#fff4d9]"] > span:first-child {
+        display:none !important;
+    }
+
+    /* Cancelled stays red, but still plain text. */
+    .sari-orders-page.sari-orders-reference
+    .sari-order-card[data-status="cancelled"]
+    [class*="rounded-full"][class*="bg-[#fff4d9]"] {
+        border:0 !important;
+        background:transparent !important;
+        color:#ef4444 !important;
+        box-shadow:none !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-orders-page.sari-orders-reference
+        .sari-order-card [class*="rounded-full"][class*="bg-[#fff4d9]"] {
+            font-size:8.5px !important;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL STATUS BADGE REMOVAL
+       Hide the duplicate status badge entirely.
+       The separate Delivery/status text remains visible.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference
+    .sari-order-card [class*="rounded-full"][class*="bg-[#fff4d9]"] {
+        display:none !important;
+    }
+
+
+    /* ============================================================
+       BUYER CANCEL ORDER REASON MODAL
+       Fully functional UI; backend still owns authorization/state checks.
+    ============================================================ */
+    body.sari-cancel-modal-open {
+        overflow:hidden !important;
+    }
+
+    .sari-cancel-modal[hidden] {
+        display:none !important;
+    }
+
+    .sari-cancel-modal {
+        position:fixed;
+        inset:0;
+        z-index:9999;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+    }
+
+    .sari-cancel-modal-backdrop {
+        position:absolute;
+        inset:0;
+        background:rgba(15,23,42,.48);
+        backdrop-filter:blur(2px);
+        -webkit-backdrop-filter:blur(2px);
+    }
+
+    .sari-cancel-modal-panel {
+        position:relative;
+        z-index:1;
+        width:min(560px,100%);
+        max-height:min(720px,calc(100vh - 40px));
+        overflow:hidden;
+        border:1px solid #e5e7eb;
+        border-radius:20px;
+        background:#ffffff;
+        box-shadow:0 28px 80px rgba(15,23,42,.22);
+    }
+
+    .sari-cancel-modal-header {
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:16px;
+        padding:22px 22px 16px;
+        border-bottom:1px solid #edf0f3;
+    }
+
+    .sari-cancel-modal-title {
+        margin:0;
+        color:#172033;
+        font-size:20px;
+        font-weight:700;
+        line-height:1.2;
+    }
+
+    .sari-cancel-modal-subtitle {
+        margin:5px 0 0;
+        color:#7b8795;
+        font-size:12px;
+        font-weight:400;
+        line-height:1.45;
+    }
+
+    .sari-cancel-modal-close {
+        display:grid;
+        width:36px;
+        height:36px;
+        flex:0 0 36px;
+        place-items:center;
+        border:0;
+        border-radius:10px;
+        background:#f7f8fa;
+        color:#4b5563;
+        cursor:pointer;
+    }
+
+    .sari-cancel-modal-close:hover,
+    .sari-cancel-modal-close:focus-visible {
+        background:#eef1f4;
+        color:#111827;
+        outline:2px solid rgba(200,137,18,.18);
+        outline-offset:2px;
+    }
+
+    .sari-cancel-modal-order {
+        padding:0 22px 14px;
+        color:#9a6811;
+        font-size:11px;
+        font-weight:600;
+    }
+
+    .sari-cancel-reason-list {
+        max-height:min(430px,55vh);
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        border-top:1px solid #edf0f3;
+        border-bottom:1px solid #edf0f3;
+    }
+
+    .sari-cancel-reason-option {
+        display:flex;
+        min-height:58px;
+        align-items:center;
+        justify-content:space-between;
+        gap:16px;
+        padding:13px 22px;
+        border-bottom:1px solid #edf0f3;
+        background:#fff;
+        cursor:pointer;
+        transition:background-color .14s ease;
+    }
+
+    .sari-cancel-reason-option:last-child {
+        border-bottom:0;
+    }
+
+    .sari-cancel-reason-option:hover {
+        background:#f8f9fa;
+    }
+
+    .sari-cancel-reason-text {
+        color:#303a46;
+        font-size:13px;
+        font-weight:500;
+        line-height:1.4;
+    }
+
+    .sari-cancel-reason-radio {
+        position:absolute;
+        opacity:0;
+        pointer-events:none;
+    }
+
+    .sari-cancel-reason-indicator {
+        display:grid;
+        width:22px;
+        height:22px;
+        flex:0 0 22px;
+        place-items:center;
+        border:2px solid #cbd2d9;
+        border-radius:999px;
+        background:#fff;
+        transition:border-color .14s ease, background-color .14s ease, box-shadow .14s ease;
+    }
+
+    .sari-cancel-reason-indicator::after {
+        content:"";
+        width:8px;
+        height:8px;
+        border-radius:999px;
+        background:#fff;
+        transform:scale(0);
+        transition:transform .14s ease;
+    }
+
+    .sari-cancel-reason-radio:checked + .sari-cancel-reason-indicator {
+        border-color:#c88912;
+        background:#c88912;
+        box-shadow:0 0 0 3px rgba(200,137,18,.10);
+    }
+
+    .sari-cancel-reason-radio:checked + .sari-cancel-reason-indicator::after {
+        transform:scale(1);
+    }
+
+    .sari-cancel-reason-radio:focus-visible + .sari-cancel-reason-indicator {
+        outline:2px solid rgba(200,137,18,.28);
+        outline-offset:3px;
+    }
+
+    .sari-cancel-modal-footer {
+        padding:18px 22px 22px;
+        background:#fff;
+    }
+
+    .sari-cancel-confirm-btn {
+        display:flex;
+        width:100%;
+        min-height:46px;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        border:1px solid #ef4444;
+        border-radius:12px;
+        background:#ef4444;
+        color:#fff;
+        font-size:13px;
+        font-weight:600;
+        cursor:pointer;
+        transition:background-color .14s ease,border-color .14s ease,opacity .14s ease;
+    }
+
+    .sari-cancel-confirm-btn:not(:disabled):hover,
+    .sari-cancel-confirm-btn:not(:disabled):focus-visible {
+        border-color:#dc2626;
+        background:#dc2626;
+        outline:none;
+    }
+
+    .sari-cancel-confirm-btn:disabled {
+        border-color:#e5e7eb;
+        background:#e5e7eb;
+        color:#9ca3af;
+        cursor:not-allowed;
+        opacity:1;
+    }
+
+    .sari-cancel-modal-note {
+        margin:10px 0 0;
+        color:#8a94a1;
+        font-size:10px;
+        line-height:1.5;
+        text-align:center;
+    }
+
+    @media (max-width:640px) {
+        .sari-cancel-modal {
+            align-items:flex-end;
+            padding:0;
+        }
+
+        .sari-cancel-modal-panel {
+            width:100%;
+            max-height:88vh;
+            border-radius:20px 20px 0 0;
+            border-bottom:0;
+        }
+
+        .sari-cancel-modal-header {
+            padding:20px 18px 14px;
+        }
+
+        .sari-cancel-modal-title {
+            font-size:18px;
+        }
+
+        .sari-cancel-modal-subtitle {
+            font-size:11px;
+        }
+
+        .sari-cancel-modal-order {
+            padding:0 18px 12px;
+        }
+
+        .sari-cancel-reason-option {
+            min-height:56px;
+            padding:12px 18px;
+        }
+
+        .sari-cancel-reason-text {
+            font-size:12.5px;
+        }
+
+        .sari-cancel-modal-footer {
+            padding:16px 18px max(18px,env(safe-area-inset-bottom));
+        }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .sari-cancel-reason-option,
+        .sari-cancel-reason-indicator,
+        .sari-cancel-reason-indicator::after,
+        .sari-cancel-confirm-btn {
+            transition:none !important;
+        }
+    }
+
+
+    /* ============================================================
+       CANCEL SUCCESS TOAST — TOP CENTER
+    ============================================================ */
+    .sari-cancel-success-toast {
+        position:fixed;
+        top:24px;
+        left:50%;
+        z-index:10050;
+        display:grid;
+        grid-template-columns:auto minmax(0,1fr) auto;
+        align-items:center;
+        gap:12px;
+        width:min(460px,calc(100vw - 28px));
+        padding:14px 14px 14px 15px;
+
+        transform:translate(-50%,0);
+        border:1px solid #dce9df;
+        border-radius:14px;
+        background:#ffffff;
+        box-shadow:
+            0 18px 42px rgba(15,23,42,.12),
+            0 4px 12px rgba(15,23,42,.05);
+
+        animation:sariCancelSuccessIn .24s ease both;
+    }
+
+    .sari-cancel-success-toast.is-hiding {
+        animation:sariCancelSuccessOut .22s ease both;
+    }
+
+    .sari-cancel-success-icon {
+        display:grid;
+        width:34px;
+        height:34px;
+        place-items:center;
+        border-radius:999px;
+        background:#ecfdf3;
+        color:#16a34a;
+    }
+
+    .sari-cancel-success-icon .material-symbols-rounded {
+        font-size:20px !important;
+        font-weight:600;
+        line-height:1;
+    }
+
+    .sari-cancel-success-title {
+        margin:0;
+        color:#172033;
+        font-size:12.5px;
+        font-weight:700;
+        line-height:1.3;
+    }
+
+    .sari-cancel-success-message {
+        margin:3px 0 0;
+        color:#6f7b88;
+        font-size:10px;
+        font-weight:500;
+        line-height:1.45;
+    }
+
+    .sari-cancel-success-close {
+        display:grid;
+        width:30px;
+        height:30px;
+        place-items:center;
+        border:0;
+        border-radius:8px;
+        background:transparent;
+        color:#9aa3ad;
+        cursor:pointer;
+    }
+
+    .sari-cancel-success-close:hover,
+    .sari-cancel-success-close:focus-visible {
+        background:#f3f5f7;
+        color:#4b5563;
+        outline:none;
+    }
+
+    .sari-cancel-success-close .material-symbols-rounded {
+        font-size:18px !important;
+        line-height:1;
+    }
+
+    @keyframes sariCancelSuccessIn {
+        from {
+            opacity:0;
+            transform:translate(-50%,-12px) scale(.985);
+        }
+        to {
+            opacity:1;
+            transform:translate(-50%,0) scale(1);
+        }
+    }
+
+    @keyframes sariCancelSuccessOut {
+        from {
+            opacity:1;
+            transform:translate(-50%,0) scale(1);
+        }
+        to {
+            opacity:0;
+            transform:translate(-50%,-10px) scale(.985);
+        }
+    }
+
+    @media (max-width:640px) {
+        .sari-cancel-success-toast {
+            top:14px;
+            width:calc(100vw - 20px);
+            padding:12px;
+            gap:10px;
+            border-radius:12px;
+        }
+
+        .sari-cancel-success-title {
+            font-size:12px;
+        }
+
+        .sari-cancel-success-message {
+            font-size:9.5px;
+        }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+        .sari-cancel-success-toast,
+        .sari-cancel-success-toast.is-hiding {
+            animation:none !important;
+        }
+    }
+
+
+    .sari-cancel-success-toast[hidden] {
+        display:none !important;
+    }
+
+
+    /* ============================================================
+       ORDER TRACKING — PRODUCT IDENTITY SUMMARY
+       Image + product name + order number + qty/variant.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference .sari-tracking-current-card {
+        display:flex !important;
+        align-items:center !important;
+        gap:12px !important;
+        min-width:0 !important;
+        padding:11px 12px !important;
+
+        border:1px solid #e4e9ed !important;
+        border-radius:12px !important;
+        background:#fbfcfd !important;
+
+        box-shadow:0 3px 10px rgba(31,41,55,.025) !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-media {
+        position:relative !important;
+        display:grid !important;
+        width:56px !important;
+        height:56px !important;
+        min-width:56px !important;
+        flex:0 0 56px !important;
+        place-items:center !important;
+
+        overflow:hidden !important;
+        border:1px solid #e0e5e9 !important;
+        border-radius:10px !important;
+        background:#f5f7f8 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-image {
+        display:block !important;
+        width:100% !important;
+        height:100% !important;
+        object-fit:cover !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-image.hidden {
+        display:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-fallback {
+        display:grid !important;
+        width:100% !important;
+        height:100% !important;
+        place-items:center !important;
+        color:#a1a9b2 !important;
+        background:#f5f7f8 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-fallback.hidden {
+        display:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference
+    .sari-tracking-product-fallback .material-symbols-rounded {
+        font-size:22px !important;
+        line-height:1 !important;
+        color:currentColor !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-extra {
+        position:absolute !important;
+        right:3px !important;
+        bottom:3px !important;
+
+        display:grid !important;
+        min-width:18px !important;
+        height:18px !important;
+        place-items:center !important;
+
+        padding:0 4px !important;
+        border:1px solid rgba(255,255,255,.9) !important;
+        border-radius:999px !important;
+        background:rgba(31,41,55,.88) !important;
+
+        color:#fff !important;
+        font-size:7px !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-extra.hidden {
+        display:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-current-label {
+        margin:0 !important;
+        color:#b5790e !important;
+        font-size:8.5px !important;
+        font-weight:700 !important;
+        line-height:1.2 !important;
+        letter-spacing:.08em !important;
+        text-transform:uppercase !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-name {
+        display:block !important;
+        max-width:100% !important;
+        margin:4px 0 0 !important;
+
+        overflow:hidden !important;
+        text-overflow:ellipsis !important;
+        white-space:nowrap !important;
+
+        color:#202936 !important;
+        font-size:12px !important;
+        font-weight:650 !important;
+        line-height:1.3 !important;
+        letter-spacing:-.01em !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-meta {
+        display:flex !important;
+        min-width:0 !important;
+        align-items:center !important;
+        gap:5px !important;
+        margin-top:5px !important;
+
+        color:#818b97 !important;
+        font-size:8.8px !important;
+        font-weight:500 !important;
+        line-height:1.25 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference
+    .sari-tracking-product-meta #sidebarTrackingOrderNumber {
+        max-width:112px !important;
+        color:#697586 !important;
+        font-weight:600 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-meta-dot {
+        color:#c7cdd3 !important;
+        flex:0 0 auto !important;
+    }
+
+    .sari-orders-page.sari-orders-reference
+    .sari-tracking-product-meta #sidebarTrackingProductMeta {
+        min-width:0 !important;
+    }
+
+    @media (max-width:1180px) {
+        .sari-orders-page.sari-orders-reference .sari-tracking-current-card {
+            max-width:420px !important;
+        }
+    }
+
+    @media (max-width:640px) {
+        .sari-orders-page.sari-orders-reference .sari-tracking-product-media {
+            width:52px !important;
+            height:52px !important;
+            min-width:52px !important;
+            flex-basis:52px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-tracking-product-name {
+            font-size:11.5px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-tracking-product-meta {
+            font-size:8.5px !important;
+        }
+    }
+
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-selected-helper {
+        margin:3px 0 0 !important;
+        color:#9aa3ad !important;
+        font-size:7.8px !important;
+        font-weight:500 !important;
+        line-height:1.2 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-product-image {
+        transition:opacity .14s ease, transform .14s ease !important;
+    }
+
+    .sari-orders-page.sari-orders-reference
+    [data-tracking-sidebar].is-tracking-changing .sari-tracking-product-image {
+        opacity:.58 !important;
+        transform:scale(.97) !important;
+    }
+
 </style>
 
 <div class="sari-orders-page sari-orders-reference min-h-full">
 
     <div class="sari-orders-shell mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
 
-        @if(session('success'))
-
-            <div class="sari-fade-in mb-5 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-
-                <span class="material-symbols-rounded text-[20px]">check_circle</span>
-
-                <span>{{ session('success') }}</span>
-
+        <div
+            id="sariCancelSuccessToast"
+            class="sari-cancel-success-toast"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            data-server-show="{{ session('cancel_success') ? '1' : '0' }}"
+            data-server-message="{{ session('cancel_success', '') }}"
+            hidden
+        >
+            <div class="sari-cancel-success-icon" aria-hidden="true">
+                <span class="material-symbols-rounded">check</span>
             </div>
 
-        @endif
+            <div class="min-w-0">
+                <p class="sari-cancel-success-title">Order cancelled successfully</p>
+                <p class="sari-cancel-success-message" data-cancel-success-message>
+                    Your order has been cancelled successfully.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="sari-cancel-success-close"
+                aria-label="Dismiss success message"
+                data-dismiss-cancel-success
+            >
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
 
         {{-- PREMIUM PAGE HEADING --}}
 
@@ -4318,7 +5832,17 @@
 
             <a href="{{ route('buyer.products') }}"
 
-               class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#191919] px-5 text-sm font-semibold text-white transition hover:bg-black hover:-translate-y-0.5">
+               class="sari-continue-shopping-btn inline-flex h-11 items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold text-white transition"
+               style="
+                   background:#c88912 !important;
+                   background-image:none !important;
+                   border:1px solid #c88912 !important;
+                   color:#ffffff !important;
+                   box-shadow:0 6px 14px rgba(200,137,18,.14) !important;
+                   transform:none !important;
+                   font-size:11px !important;
+                   font-weight:600 !important;
+               ">
 
                 <span class="material-symbols-rounded text-[19px]">shopping_bag</span>
 
@@ -4499,6 +6023,16 @@
 
                                  data-order-number="{{ $order->order_number }}"
 
+                                 data-product-name="{{ $firstProductName }}"
+
+                                 data-product-image="{{ $firstProductImageUrl ?: '' }}"
+
+                                 data-product-qty="{{ $firstQty }}"
+
+                                 data-product-variant="{{ $firstVariantLabel }}"
+
+                                 data-product-extra="{{ $extraProductCount }}"
+
                                  data-current-step="{{ $currentStep }}"
 
                                  data-order-status="{{ $order->status }}"
@@ -4615,7 +6149,18 @@
 
                             {{-- PRODUCT PREVIEW + ORDER TOTAL --}}
 
-                            <div class="mt-5 flex flex-col gap-4 border-t border-dashed border-[#eee8dc] pt-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div
+                                class="sari-order-product-row mt-5 flex flex-col gap-4 border-t border-dashed border-[#eee8dc] pt-4 sm:flex-row sm:items-center sm:justify-between"
+                                role="button"
+                                tabindex="0"
+                                aria-label="Show tracking for {{ $firstProductName }}"
+                                data-track-order="{{ $order->getKey() }}"
+                                data-product-name="{{ $firstProductName }}"
+                                data-product-image="{{ $firstProductImageUrl ?: '' }}"
+                                data-product-qty="{{ $firstQty }}"
+                                data-product-variant="{{ $firstVariantLabel }}"
+                                data-product-extra="{{ $extraProductCount }}"
+                            >
 
                                 <div class="min-w-0">
 
@@ -4627,6 +6172,11 @@
                                         tabindex="0"
                                         aria-label="Show tracking for {{ $firstProductName }}"
                                         data-track-order="{{ $order->getKey() }}"
+                                        data-product-name="{{ $firstProductName }}"
+                                        data-product-image="{{ $firstProductImageUrl ?: '' }}"
+                                        data-product-qty="{{ $firstQty }}"
+                                        data-product-variant="{{ $firstVariantLabel }}"
+                                        data-product-extra="{{ $extraProductCount }}"
                                     >
 
                                         @if($firstProductUrl)
@@ -4636,6 +6186,11 @@
                                                 aria-label="Show tracking for {{ $firstProductName }}"
                                                 title="Show order tracking"
                                                 data-track-order="{{ $order->getKey() }}"
+                                                data-product-name="{{ $firstProductName }}"
+                                                data-product-image="{{ $firstProductImageUrl ?: '' }}"
+                                                data-product-qty="{{ $firstQty }}"
+                                                data-product-variant="{{ $firstVariantLabel }}"
+                                                data-product-extra="{{ $extraProductCount }}"
                                             >
                                                 @if($firstProductImageUrl)
                                                     <img
@@ -4680,6 +6235,11 @@
                                                     aria-label="Show tracking for {{ $firstProductName }}"
                                                     title="Show order tracking"
                                                     data-track-order="{{ $order->getKey() }}"
+                                                    data-product-name="{{ $firstProductName }}"
+                                                    data-product-image="{{ $firstProductImageUrl ?: '' }}"
+                                                    data-product-qty="{{ $firstQty }}"
+                                                    data-product-variant="{{ $firstVariantLabel }}"
+                                                    data-product-extra="{{ $extraProductCount }}"
                                                 >
                                                     {{ $firstProductName }}
                                                 </button>
@@ -4738,7 +6298,7 @@
 
                                         <div class="sari-order-detail-row">
                                             <span class="sari-order-detail-icon" aria-hidden="true">
-                                                <span class="material-symbols-rounded">notifications</span>
+                                                <span class="material-symbols-rounded" style="color:#c88912 !important;">notifications</span>
                                             </span>
 
                                             <div class="min-w-0">
@@ -4800,7 +6360,7 @@
 
                                 <a href="{{ route('buyer.messages', ['seller' => $order->seller_account_id]) }}"
 
-                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]">
+                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]" style="font-size:12px !important; font-weight:500 !important; line-height:1.2 !important;">
 
                                     <span class="material-symbols-rounded text-[18px]">chat</span>
 
@@ -4810,7 +6370,7 @@
 
                                 <a href="{{ route('buyer.orders.show', $order) }}"
 
-                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]">
+                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]" style="font-size:12px !important; font-weight:500 !important; line-height:1.2 !important;">
 
                                     <span class="material-symbols-rounded text-[18px]">receipt_long</span>
 
@@ -4820,7 +6380,7 @@
 
                                 <a href="{{ route('buyer.shop', ['shop' => $sellerSlug]) }}"
 
-                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]">
+                                   class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-[#dca62d] text-xs font-bold text-[#b87905] transition hover:bg-[#fff8e9]" style="font-size:12px !important; font-weight:500 !important; line-height:1.2 !important;">
 
                                     <span class="material-symbols-rounded text-[18px]">storefront</span>
 
@@ -4830,18 +6390,39 @@
 
                                 @if($order->status === 'new')
                                     <form
+                                        id="cancel-order-form-{{ $order->getKey() }}"
                                         method="POST"
                                         action="{{ route('buyer.orders.cancel', $order) }}"
                                         class="sari-cancel-order-form"
-                                        onsubmit="return confirm('Cancel this order? Reserved stock will be restored and this action cannot be undone.');"
                                     >
                                         @csrf
+                                        <input
+                                            type="hidden"
+                                            name="reason"
+                                            value=""
+                                            data-cancel-reason-input
+                                        >
 
                                         <button
-                                            type="submit"
-                                            class="sari-cancel-order-btn inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl text-xs font-bold transition"
+                                            type="button"
+                                            class="sari-cancel-order-btn sari-cancel-order-trigger inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl text-xs font-bold transition"
+                                            style="
+                                                font-size:12px !important;
+                                                font-weight:500 !important;
+                                                line-height:1.2 !important;
+                                                color:#ef4444 !important;
+                                                border-color:#ef4444 !important;
+                                                background:#ffffff !important;
+                                            "
+                                            data-cancel-form-id="cancel-order-form-{{ $order->getKey() }}"
+                                            data-cancel-order-number="{{ $order->order_number }}"
+                                            aria-haspopup="dialog"
+                                            aria-controls="cancelOrderReasonModal"
                                         >
-                                            <span class="material-symbols-rounded text-[18px]">cancel</span>
+                                            <span
+                                                class="material-symbols-rounded text-[18px]"
+                                                style="color:#ef4444 !important;"
+                                            >cancel</span>
                                             Cancel Order
                                         </button>
                                     </form>
@@ -4860,13 +6441,16 @@
                                             pointer-events:none !important;
                                             opacity:1 !important;
                                             box-shadow:none !important;
+                                            font-size:12px !important;
+                                            font-weight:500 !important;
+                                            line-height:1.2 !important;
                                         "
                                     >
                                         <span
                                             class="material-symbols-rounded text-[15px]"
                                             style="color:#a8afb7 !important;"
                                         >cancel</span>
-                                        <span style="color:#a8afb7 !important;">Cancel Order</span>
+                                        <span style="color:#a8afb7 !important; font-size:12px !important; font-weight:500 !important;">Cancel Order</span>
                                     </button>
                                 @endif
 
@@ -4987,38 +6571,7 @@
                     </section>
 
                 @endif
-
-                {{-- BUYER PROTECTION --}}
-
-                <section class="sari-soft-panel-sm mt-5 flex flex-col gap-4 rounded-[18px] border border-[#f0dfb7] bg-[#fffaf0] p-5 sm:flex-row sm:items-center">
-
-                    <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white text-[#d99a18] shadow-sm">
-
-                        <span class="material-symbols-rounded">verified_user</span>
-
-                    </div>
-
-                    <div class="flex-1">
-
-                        <h3 class="text-sm font-bold text-[#282622]">Buyer Protection</h3>
-
-                        <p class="mt-0.5 text-xs text-[#716d65]">
-
-                            Your order is protected by SARI Buyer Protection.
-
-                        </p>
-
-                    </div>
-
-                    <a href="#" class="text-xs font-bold text-[#b87905] hover:underline">
-
-                        Learn More →
-
-                    </a>
-
-                </section>
-
-            </main>
+</main>
 
             {{-- RIGHT SIDEBAR --}}
 
@@ -5054,12 +6607,103 @@
 
                         <div class="px-5 py-5">
 
-                            <div class="mb-4 rounded-xl bg-[#fffaf0] px-3 py-2.5">
+                            <div class="sari-tracking-current-card mb-4"
+                                 style="
+                                     display:flex !important;
+                                     align-items:center !important;
+                                     gap:12px !important;
+                                     padding:11px 12px !important;
+                                     border:1px solid #e4e9ed !important;
+                                     border-radius:12px !important;
+                                     background:#fbfcfd !important;
+                                 ">
+                                <div class="sari-tracking-product-media"
+                                     style="
+                                         position:relative !important;
+                                         display:grid !important;
+                                         width:64px !important;
+                                         height:64px !important;
+                                         min-width:64px !important;
+                                         place-items:center !important;
+                                         overflow:hidden !important;
+                                         border:1px solid #e0e5e9 !important;
+                                         border-radius:10px !important;
+                                         background:#f5f7f8 !important;
+                                     ">
+                                    <img
+                                        id="sidebarTrackingProductImage"
+                                        @if($featuredProductImageUrl)
+                                            src="{{ $featuredProductImageUrl }}"
+                                        @endif
+                                        alt="{{ $featuredProductName }}"
+                                        width="64"
+                                        height="64"
+                                        decoding="async"
+                                        class="sari-tracking-product-image {{ $featuredProductImageUrl ? '' : 'hidden' }}"
+                                    >
 
-                                <p class="text-[9px] font-bold uppercase tracking-[.14em] text-[#a39c90]">Current Order</p>
+                                    <div
+                                        id="sidebarTrackingProductFallback"
+                                        class="sari-tracking-product-fallback {{ $featuredProductImageUrl ? 'hidden' : '' }}"
+                                        aria-hidden="true"
+                                    >
+                                        <span class="material-symbols-rounded">image</span>
+                                    </div>
 
-                                <p id="sidebarTrackingOrderNumber" class="mt-1 truncate text-xs font-bold text-[#34312c]">{{ $featuredOrder->order_number }}</p>
+                                    <span
+                                        id="sidebarTrackingProductExtra"
+                                        class="sari-tracking-product-extra {{ $featuredExtraProducts > 0 ? '' : 'hidden' }}"
+                                    >
+                                        +{{ $featuredExtraProducts }}
+                                    </span>
+                                </div>
 
+                                <div class="min-w-0 flex-1">
+                                    <p class="sari-tracking-current-label">Current Order</p>
+
+                                    <p class="sari-tracking-selected-helper">Selected product</p>
+
+                                    <p
+                                        id="sidebarTrackingProductName"
+                                        class="sari-tracking-product-name"
+                                        style="
+                                            margin-top:4px !important;
+                                            color:#202936 !important;
+                                            font-size:12px !important;
+                                            font-weight:650 !important;
+                                            line-height:1.3 !important;
+                                        "
+                                    >
+                                        {{ $featuredProductName }}
+                                    </p>
+
+                                    <div class="sari-tracking-product-meta"
+                                         style="
+                                             display:flex !important;
+                                             align-items:center !important;
+                                             gap:5px !important;
+                                             margin-top:5px !important;
+                                             color:#818b97 !important;
+                                             font-size:8.8px !important;
+                                             font-weight:500 !important;
+                                         ">
+                                        <span
+                                            id="sidebarTrackingOrderNumber"
+                                            class="truncate"
+                                        >
+                                            {{ $featuredOrder->order_number }}
+                                        </span>
+
+                                        <span class="sari-tracking-meta-dot" aria-hidden="true">•</span>
+
+                                        <span
+                                            id="sidebarTrackingProductMeta"
+                                            class="truncate"
+                                        >
+                                            Qty {{ $featuredProductQty }}@if($featuredProductVariant !== '') · {{ $featuredProductVariant }}@endif
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="space-y-3">
@@ -5197,45 +6841,48 @@
 
                         <div class="mt-4 divide-y divide-[#f0ebe2]">
 
-                            <a href="#" class="flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]">
+                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
+                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
 
                                 <span class="flex items-center gap-2">
 
-                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]">chat_bubble_outline</span>
+                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]" style="font-size:19px !important; color:#c88912 !important;">chat_bubble_outline</span>
 
                                     Chat with Support
 
                                 </span>
 
-                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]">chevron_right</span>
+                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
 
                             </a>
 
-                            <a href="#" class="flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]">
+                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
+                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
 
                                 <span class="flex items-center gap-2">
 
-                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]">assignment_return</span>
+                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]" style="font-size:19px !important; color:#c88912 !important;">assignment_return</span>
 
                                     Return & Refund Policy
 
                                 </span>
 
-                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]">chevron_right</span>
+                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
 
                             </a>
 
-                            <a href="#" class="flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]">
+                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
+                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
 
                                 <span class="flex items-center gap-2">
 
-                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]">report_problem</span>
+                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]" style="font-size:19px !important; color:#c88912 !important;">report_problem</span>
 
                                     Report an Issue
 
                                 </span>
 
-                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]">chevron_right</span>
+                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
 
                             </a>
 
@@ -5291,6 +6938,79 @@
 
 </div>
 
+
+{{-- BUYER CANCEL ORDER REASON MODAL --}}
+<div
+    id="cancelOrderReasonModal"
+    class="sari-cancel-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cancelOrderReasonTitle"
+    aria-describedby="cancelOrderReasonDescription"
+    aria-hidden="true"
+    hidden
+>
+    <div class="sari-cancel-modal-backdrop" data-cancel-modal-close></div>
+
+    <section class="sari-cancel-modal-panel" tabindex="-1">
+        <header class="sari-cancel-modal-header">
+            <div>
+                <h2 id="cancelOrderReasonTitle" class="sari-cancel-modal-title">Select reason</h2>
+                <p id="cancelOrderReasonDescription" class="sari-cancel-modal-subtitle">
+                    Select why you want to cancel this order.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="sari-cancel-modal-close"
+                data-cancel-modal-close
+                aria-label="Close cancellation dialog"
+            >
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </header>
+
+        <p class="sari-cancel-modal-order">
+            Order <span id="cancelModalOrderNumber">—</span>
+        </p>
+
+        <div class="sari-cancel-reason-list" role="radiogroup" aria-label="Cancellation reason">
+            @foreach($cancellationReasons as $reason)
+                <label class="sari-cancel-reason-option">
+                    <span class="sari-cancel-reason-text">{{ $reason }}</span>
+
+                    <span>
+                        <input
+                            type="radio"
+                            name="cancel_modal_reason"
+                            value="{{ $reason }}"
+                            class="sari-cancel-reason-radio"
+                        >
+                        <span class="sari-cancel-reason-indicator" aria-hidden="true"></span>
+                    </span>
+                </label>
+            @endforeach
+        </div>
+
+        <footer class="sari-cancel-modal-footer">
+            <button
+                type="button"
+                id="confirmCancelOrderButton"
+                class="sari-cancel-confirm-btn"
+                disabled
+            >
+                <span class="material-symbols-rounded text-[18px]">cancel</span>
+                Cancel Order
+            </button>
+
+            <p class="sari-cancel-modal-note">
+                The seller will be notified of your selected cancellation reason.
+            </p>
+        </footer>
+    </section>
+</div>
+
 @push('scripts')
 
     @vite('resources/js/buyer-orders.js')
@@ -5298,6 +7018,212 @@
     <script>
 
         document.addEventListener('DOMContentLoaded', () => {
+
+
+
+            // Successful cancellation top-center toast.
+            const cancelSuccessToast = document.getElementById('sariCancelSuccessToast');
+            const cancelSuccessMessage = cancelSuccessToast?.querySelector('[data-cancel-success-message]');
+
+            let cancelSuccessTimer = null;
+
+            const dismissCancelSuccessToast = () => {
+                if (!cancelSuccessToast || cancelSuccessToast.hidden) return;
+
+                cancelSuccessToast.classList.add('is-hiding');
+
+                window.setTimeout(() => {
+                    cancelSuccessToast.hidden = true;
+                    cancelSuccessToast.classList.remove('is-hiding');
+                }, 240);
+            };
+
+            const showCancelSuccessToast = (message = 'Your order has been cancelled successfully.') => {
+                if (!cancelSuccessToast) return;
+
+                if (cancelSuccessTimer) {
+                    window.clearTimeout(cancelSuccessTimer);
+                }
+
+                if (cancelSuccessMessage) {
+                    cancelSuccessMessage.textContent = message;
+                }
+
+                cancelSuccessToast.classList.remove('is-hiding');
+                cancelSuccessToast.hidden = false;
+
+                cancelSuccessTimer = window.setTimeout(
+                    dismissCancelSuccessToast,
+                    4200
+                );
+            };
+
+            cancelSuccessToast
+                ?.querySelector('[data-dismiss-cancel-success]')
+                ?.addEventListener('click', dismissCancelSuccessToast);
+
+            // Fallback for a normal non-AJAX redirect.
+            if (cancelSuccessToast?.dataset.serverShow === '1') {
+                showCancelSuccessToast(
+                    cancelSuccessToast.dataset.serverMessage ||
+                    'Your order has been cancelled successfully.'
+                );
+            }
+
+            // Cancel Order reason modal
+            const cancelModal = document.getElementById('cancelOrderReasonModal');
+            const cancelModalPanel = cancelModal?.querySelector('.sari-cancel-modal-panel');
+            const cancelModalOrderNumber = document.getElementById('cancelModalOrderNumber');
+            const confirmCancelOrderButton = document.getElementById('confirmCancelOrderButton');
+            const cancelReasonRadios = [...document.querySelectorAll('input[name="cancel_modal_reason"]')];
+
+            let activeCancelForm = null;
+            let activeCancelTrigger = null;
+            let selectedCancelReason = '';
+
+            const resetCancelModal = () => {
+                selectedCancelReason = '';
+                cancelReasonRadios.forEach((radio) => {
+                    radio.checked = false;
+                });
+
+                if (confirmCancelOrderButton) {
+                    confirmCancelOrderButton.disabled = true;
+                    confirmCancelOrderButton.removeAttribute('aria-busy');
+                }
+            };
+
+            const openCancelModal = (trigger) => {
+                if (!cancelModal || !trigger) return;
+
+                const formId = trigger.dataset.cancelFormId || '';
+                const form = formId ? document.getElementById(formId) : null;
+                if (!form) return;
+
+                activeCancelForm = form;
+                activeCancelTrigger = trigger;
+
+                resetCancelModal();
+
+                if (cancelModalOrderNumber) {
+                    cancelModalOrderNumber.textContent =
+                        trigger.dataset.cancelOrderNumber || '—';
+                }
+
+                cancelModal.hidden = false;
+                cancelModal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('sari-cancel-modal-open');
+
+                requestAnimationFrame(() => {
+                    cancelModalPanel?.focus();
+                });
+            };
+
+            const closeCancelModal = ({ restoreFocus = true } = {}) => {
+                if (!cancelModal) return;
+
+                cancelModal.hidden = true;
+                cancelModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('sari-cancel-modal-open');
+
+                resetCancelModal();
+
+                if (restoreFocus) {
+                    activeCancelTrigger?.focus();
+                }
+
+                activeCancelForm = null;
+                activeCancelTrigger = null;
+            };
+
+            document.querySelectorAll('.sari-cancel-order-trigger').forEach((trigger) => {
+                trigger.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    openCancelModal(trigger);
+                });
+            });
+
+            cancelModal?.querySelectorAll('[data-cancel-modal-close]').forEach((button) => {
+                button.addEventListener('click', () => closeCancelModal());
+            });
+
+            cancelReasonRadios.forEach((radio) => {
+                radio.addEventListener('change', () => {
+                    selectedCancelReason = radio.checked ? radio.value : '';
+
+                    if (confirmCancelOrderButton) {
+                        confirmCancelOrderButton.disabled = !selectedCancelReason;
+                    }
+                });
+            });
+
+            confirmCancelOrderButton?.addEventListener('click', async () => {
+                if (!activeCancelForm || !selectedCancelReason) return;
+
+                const reasonInput = activeCancelForm.querySelector('[data-cancel-reason-input]');
+                if (!reasonInput) return;
+
+                reasonInput.value = selectedCancelReason;
+
+                confirmCancelOrderButton.disabled = true;
+                confirmCancelOrderButton.setAttribute('aria-busy', 'true');
+
+                try {
+                    const response = await fetch(activeCancelForm.action, {
+                        method: 'POST',
+                        body: new FormData(activeCancelForm),
+                        credentials: 'same-origin',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                    });
+
+                    const payload = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(
+                            payload.message ||
+                            'Unable to cancel this order. Please try again.'
+                        );
+                    }
+
+                    closeCancelModal({ restoreFocus: false });
+
+                    showCancelSuccessToast(
+                        payload.message ||
+                        'Your order has been cancelled successfully.'
+                    );
+
+                    // Let the buyer see the confirmation first, then refresh
+                    // the orders list so the new Cancelled state is visible.
+                    window.setTimeout(() => {
+                        window.location.assign(
+                            payload.redirect_url || @json(route('buyer.orders'))
+                        );
+                    }, 1800);
+                } catch (error) {
+                    confirmCancelOrderButton.disabled = false;
+                    confirmCancelOrderButton.removeAttribute('aria-busy');
+
+                    window.alert(
+                        error instanceof Error
+                            ? error.message
+                            : 'Unable to cancel this order. Please try again.'
+                    );
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (!cancelModal || cancelModal.hidden) return;
+
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeCancelModal();
+                }
+            });
+
 
             // Copy order number
 
@@ -5392,15 +7318,94 @@
             // Product click -> show that order's progress in the right sidebar.
             const trackingSidebar = document.querySelector('[data-tracking-sidebar]');
             const trackingOrderNumber = document.getElementById('sidebarTrackingOrderNumber');
+            const trackingProductName = document.getElementById('sidebarTrackingProductName');
+            const trackingProductImage = document.getElementById('sidebarTrackingProductImage');
+            const trackingProductFallback = document.getElementById('sidebarTrackingProductFallback');
+            const trackingProductMeta = document.getElementById('sidebarTrackingProductMeta');
+            const trackingProductExtra = document.getElementById('sidebarTrackingProductExtra');
             const trackingRows = [...document.querySelectorAll('[data-sidebar-step]')];
 
-            const selectOrderForTracking = (card, shouldScroll = true) => {
+            const showTrackingProductFallback = () => {
+                trackingProductImage?.classList.add('hidden');
+                trackingProductFallback?.classList.remove('hidden');
+            };
+
+            trackingProductImage?.addEventListener('error', showTrackingProductFallback);
+
+            const selectOrderForTracking = (card, source = null, shouldScroll = true) => {
                 if (!card || !trackingSidebar || !trackingOrderNumber || !trackingRows.length) return;
 
                 const currentStep = Number(card.dataset.currentStep || 0);
                 const orderNumber = card.dataset.orderNumber || '';
 
+                // Prefer the exact product element that was tapped.
+                // Fall back to the order-card product when the whole card is selected.
+                const productSource = source?.dataset ? source : card;
+
+                const productName =
+                    productSource.dataset.productName ||
+                    card.dataset.productName ||
+                    'Ordered product';
+
+                const productImage =
+                    productSource.dataset.productImage ||
+                    card.dataset.productImage ||
+                    '';
+
+                const productQty = Math.max(
+                    1,
+                    Number(
+                        productSource.dataset.productQty ||
+                        card.dataset.productQty ||
+                        1
+                    )
+                );
+
+                const productVariant =
+                    productSource.dataset.productVariant ||
+                    card.dataset.productVariant ||
+                    '';
+
+                const productExtra = Math.max(
+                    0,
+                    Number(
+                        productSource.dataset.productExtra ||
+                        card.dataset.productExtra ||
+                        0
+                    )
+                );
+
                 trackingOrderNumber.textContent = orderNumber;
+
+                if (trackingProductName) {
+                    trackingProductName.textContent = productName;
+                }
+
+                if (trackingProductMeta) {
+                    trackingProductMeta.textContent =
+                        `Qty ${productQty}${productVariant ? ` · ${productVariant}` : ''}`;
+                }
+
+                if (trackingProductExtra) {
+                    trackingProductExtra.textContent = `+${productExtra}`;
+                    trackingProductExtra.classList.toggle('hidden', productExtra <= 0);
+                }
+
+                if (trackingProductImage && trackingProductFallback) {
+                    trackingProductImage.alt = productName;
+
+                    if (productImage) {
+                        trackingProductFallback.classList.add('hidden');
+                        trackingProductImage.classList.remove('hidden');
+
+                        if (trackingProductImage.getAttribute('src') !== productImage) {
+                            trackingProductImage.src = productImage;
+                        }
+                    } else {
+                        trackingProductImage.removeAttribute('src');
+                        showTrackingProductFallback();
+                    }
+                }
 
                 trackingRows.forEach((row) => {
                     const step = Number(row.dataset.sidebarStep || 0);
@@ -5458,13 +7463,13 @@
             };
 
             // Instant product selection: update tracking without reloading the page.
-            const activateOrderTracking = (card, shouldScroll = true) => {
+            const activateOrderTracking = (card, source = null, shouldScroll = true) => {
                 if (!card || !trackingSidebar) return;
 
                 trackingSidebar.classList.remove('is-tracking-updated');
                 trackingSidebar.classList.add('is-tracking-changing');
 
-                selectOrderForTracking(card, false);
+                selectOrderForTracking(card, source, false);
 
                 requestAnimationFrame(() => {
                     trackingSidebar.classList.remove('is-tracking-changing');
@@ -5483,6 +7488,90 @@
                 }
             };
 
+
+            // Product container tap feedback: subtle light-gray press effect.
+            // This is visual-only and does not change tracking or navigation behavior.
+            const clearProductTapFeedback = (container, delay = 110) => {
+                if (!container) return;
+                window.setTimeout(() => {
+                    container.classList.remove('is-tap-feedback');
+                }, delay);
+            };
+
+            document.addEventListener('pointerdown', (event) => {
+                const container = event.target.closest('.sari-order-product-row');
+                if (!container) return;
+
+                container.classList.remove('is-tap-feedback');
+                // Force a fresh state even on repeated quick taps.
+                void container.offsetWidth;
+                container.classList.add('is-tap-feedback');
+            });
+
+            document.addEventListener('pointerup', (event) => {
+                const container = event.target.closest('.sari-order-product-row');
+                clearProductTapFeedback(container, 120);
+            });
+
+            document.addEventListener('pointercancel', (event) => {
+                const container = event.target.closest('.sari-order-product-row');
+                clearProductTapFeedback(container, 0);
+            });
+
+
+            // Keyboard activation for the full product row.
+            document.addEventListener('keydown', (event) => {
+                const row = event.target.closest('.sari-order-product-row');
+                if (!row || !['Enter', ' '].includes(event.key)) return;
+
+                const interactive = event.target.closest('a, button, input, select, textarea, summary, details, form, label');
+                if (interactive && interactive !== row) return;
+
+                event.preventDefault();
+
+                const card = row.closest('.sari-order-card');
+                if (!card) return;
+
+                activateOrderTracking(card, row, true);
+
+                row.classList.add('is-tap-feedback');
+                clearProductTapFeedback(row, 120);
+            });
+
+
+            // Full order-card tap feedback.
+            // Visual only: it does not change links, buttons, forms, or tracking logic.
+            const clearCardTapFeedback = (card, delay = 115) => {
+                if (!card) return;
+                window.setTimeout(() => {
+                    card.classList.remove('is-card-tap-feedback');
+                }, delay);
+            };
+
+            document.addEventListener('pointerdown', (event) => {
+                const card = event.target.closest('.sari-order-card');
+                if (!card) return;
+
+                card.classList.remove('is-card-tap-feedback');
+                void card.offsetWidth;
+                card.classList.add('is-card-tap-feedback');
+            });
+
+            document.addEventListener('pointerup', (event) => {
+                const card = event.target.closest('.sari-order-card');
+                clearCardTapFeedback(card, 120);
+            });
+
+            document.addEventListener('pointercancel', (event) => {
+                const card = event.target.closest('.sari-order-card');
+                clearCardTapFeedback(card, 0);
+            });
+
+            document.addEventListener('pointerleave', (event) => {
+                const card = event.target.closest?.('.sari-order-card');
+                clearCardTapFeedback(card, 0);
+            }, true);
+
             // Whole order card selects tracking.
             // Real controls inside the card keep their original actions.
             document.addEventListener('click', (event) => {
@@ -5499,7 +7588,12 @@
                     return;
                 }
 
-                activateOrderTracking(card, true);
+                const selectedProductSource =
+                    event.target.closest('.sari-track-order-trigger') ||
+                    event.target.closest('.sari-track-order-container') ||
+                    event.target.closest('.sari-order-product-row');
+
+                activateOrderTracking(card, selectedProductSource, true);
             });
 
             // Keyboard selection when the order card itself has focus.
@@ -5510,7 +7604,7 @@
                 if (event.key !== 'Enter' && event.key !== ' ') return;
 
                 event.preventDefault();
-                activateOrderTracking(card, true);
+                activateOrderTracking(card, null, true);
             });
 
             // Keep the server-selected order visible in Order Tracking.
@@ -5519,7 +7613,7 @@
                 document.querySelector('.sari-order-card');
 
             if (initialTrackingCard) {
-                selectOrderForTracking(initialTrackingCard, false);
+                selectOrderForTracking(initialTrackingCard, null, false);
             }
 
         });

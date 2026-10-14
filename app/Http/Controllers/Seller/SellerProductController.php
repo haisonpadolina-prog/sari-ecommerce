@@ -441,7 +441,9 @@ class SellerProductController extends Controller
             'low_stock_threshold' => (int) ($validated['low_stock_threshold'] ?? $product->low_stock_threshold ?? 5),
             'discount' => $validated['discount'] ?? 0,
             'flash_sale_ends_at' => $flashSaleEndsAt,
-            'free_shipping' => $request->boolean('free_shipping'),
+            // Legacy product flag is preserved for historical data only.
+            // Buyer shipping eligibility now comes from Seller-level promotions.
+            'free_shipping' => (bool) ($product->free_shipping ?? false),
             'cash_on_delivery' => $request->boolean('cash_on_delivery'),
             'package_weight' => $request->exists('package_weight') ? ($validated['package_weight'] ?? null) : $product->package_weight,
             'package_length' => $request->exists('package_length') ? ($validated['package_length'] ?? null) : $product->package_length,

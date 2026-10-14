@@ -59,7 +59,24 @@ class SellerSettlementService
              */
             $withholdingRate = 0.0;
             $withholdingTax = 0.0;
-            $sellerNet = round(max(0, $merchandise - $platformCommission - $withholdingTax), 2);
+            $sellerShippingPromotion = round(max(
+                0,
+                (float) ($lockedOrder->shipping_discount_amount ?? 0)
+            ), 2);
+
+            /*
+             * Free Shipping promotions are explicitly seller-funded. The Buyer
+             * pays the reduced delivery fee, the rider still earns the original
+             * courier fee, and this discount is funded by reducing the Seller's
+             * settlement. No platform shipping expense is invented here.
+             */
+            $sellerNet = round(max(
+                0,
+                $merchandise
+                    - $platformCommission
+                    - $withholdingTax
+                    - $sellerShippingPromotion
+            ), 2);
 
             return SellerSettlement::query()->firstOrCreate(
                 ['marketplace_order_id' => $lockedOrder->id],
@@ -80,6 +97,13 @@ class SellerSettlementService
                         'financial_recognition' => 'delivered_and_paid',
                         'merchandise_field' => 'marketplace_orders.subtotal',
                         'delivery_fee_excluded_from_seller_merchandise_settlement' => true,
+                        'free_shipping_promotion' => [
+                            'funder' => $sellerShippingPromotion > 0 ? 'seller' : null,
+                            'seller_funded_discount' => $sellerShippingPromotion,
+                            'promotion_id' => $lockedOrder->seller_free_shipping_promotion_id,
+                            'original_delivery_fee' => $lockedOrder->courierDeliveryFee(),
+                            'buyer_delivery_fee' => (float) $lockedOrder->delivery_fee,
+                        ],
                         'commission_record_id' => $lockedCommission->id,
                         'commission_rate_percent' => (float) $lockedCommission->rate_percent,
                         'withholding' => [
@@ -113,11 +137,17 @@ class SellerSettlementService
             }
 
             $platformCommission = round(max(0, (float) $lockedCommission->net_commission), 2);
+            $order = MarketplaceOrder::query()->find($settlement->marketplace_order_id);
+            $sellerShippingPromotion = round(max(
+                0,
+                (float) ($order?->shipping_discount_amount ?? 0)
+            ), 2);
             $sellerNet = round(max(
                 0,
                 (float) $settlement->merchandise_amount
                     - $platformCommission
                     - (float) $settlement->withholding_tax_amount
+                    - $sellerShippingPromotion
             ), 2);
 
             $settlement->forceFill([

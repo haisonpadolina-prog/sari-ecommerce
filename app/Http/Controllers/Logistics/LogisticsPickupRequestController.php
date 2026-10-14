@@ -3,40 +3,59 @@
 namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Delivery\LogisticsParcel;
 use App\Models\Orders\MarketplaceOrder;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
+use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LogisticsPickupRequestController extends Controller
 {
     public function __construct(
-        private readonly MarketplaceOrderWorkflowService $workflow
+        private readonly MarketplaceOrderWorkflowService $workflow,
+        private readonly LogisticsOrderAccess $orderAccess,
     ) {
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
+        $logistics = $this->orderAccess->prepare($request);
+
         $orders = MarketplaceOrder::query()
-            ->with(['seller', 'logisticsParcel'])
+            ->with(['seller', 'logisticsParcel', 'deliveryRouteStops'])
+            ->where('logistics_account_id', $logistics->id)
             ->where('status', 'ready_for_pickup')
             ->whereNull('courier_email')
             ->oldest('ready_at')
             ->oldest('id')
             ->get();
 
-        return view('logistics.pickup-requests', compact('orders'));
+        return view(
+            'logistics.pickup-requests',
+            compact('orders')
+        );
     }
 
-    public function verify(MarketplaceOrder $order): RedirectResponse
-    {
-        DB::transaction(function () use ($order): void {
+    public function verify(
+        Request $request,
+        MarketplaceOrder $order
+    ): RedirectResponse {
+        $owned = $this->orderAccess->ownedOrder(
+            $request,
+            $order
+        );
+
+        DB::transaction(function () use ($owned): void {
             $locked = MarketplaceOrder::query()
-                ->whereKey($order->id)
+                ->whereKey($owned->id)
+                ->where(
+                    'logistics_account_id',
+                    $owned->logistics_account_id
+                )
                 ->lockForUpdate()
                 ->firstOrFail();
 
@@ -45,7 +64,8 @@ class LogisticsPickupRequestController extends Controller
                 || filled($locked->courier_email)
             ) {
                 throw ValidationException::withMessages([
-                    'order' => 'This pickup request is no longer available for Logistics verification.',
+                    'order' =>
+                        'This pickup request is no longer available for Logistics verification.',
                 ]);
             }
 
@@ -54,9 +74,17 @@ class LogisticsPickupRequestController extends Controller
                 ->lockForUpdate()
                 ->first();
 
-            if ($parcel && in_array($parcel->status, ['awaiting_intake', 'received', 'sorted'], true)) {
+            if (
+                $parcel
+                && in_array(
+                    $parcel->status,
+                    ['awaiting_intake', 'received', 'sorted'],
+                    true
+                )
+            ) {
                 throw ValidationException::withMessages([
-                    'order' => 'This parcel has already moved beyond pickup verification.',
+                    'order' =>
+                        'This parcel has already moved beyond pickup verification.',
                 ]);
             }
 
@@ -81,6 +109,9 @@ class LogisticsPickupRequestController extends Controller
             );
         }, 3);
 
-        return back()->with('success', 'Pickup request verified. You can now assign an approved Rider.');
+        return back()->with(
+            'success',
+            'Pickup request verified. You can now assign an approved Rider.'
+        );
     }
 }

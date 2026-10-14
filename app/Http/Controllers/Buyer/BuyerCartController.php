@@ -27,11 +27,14 @@ class BuyerCartController extends Controller
         }
 
         $items = $this->cart->items($request);
+        $shipping = $this->cart->shippingSummary($items);
 
         return view('buyer.cart', [
             'items' => $items,
             'subtotal' => $this->cart->subtotal($items),
-            'deliveryFee' => $this->cart->deliveryFee($items),
+            'deliveryFee' => $shipping['delivery_fee'],
+            'shippingDiscount' => $shipping['shipping_discount'],
+            'shippingSummary' => $shipping,
             'cart' => $this->cart,
         ]);
     }
@@ -76,12 +79,17 @@ class BuyerCartController extends Controller
         if ($request->expectsJson()) {
             $items = $this->cart->items($request);
 
+            $shipping = $this->cart->shippingSummary($items);
+
             return response()->json([
                 'ok' => true,
                 'message' => 'Cart updated.',
                 'cart_count' => $this->cart->count($request),
                 'line_total' => $this->cart->lineTotal($item),
                 'subtotal' => $this->cart->subtotal($items),
+                'original_delivery_fee' => $shipping['original_delivery_fee'],
+                'shipping_discount' => $shipping['shipping_discount'],
+                'delivery_fee' => $shipping['delivery_fee'],
             ]);
         }
 
@@ -95,11 +103,16 @@ class BuyerCartController extends Controller
         if ($request->expectsJson()) {
             $items = $this->cart->items($request);
 
+            $shipping = $this->cart->shippingSummary($items);
+
             return response()->json([
                 'ok' => true,
                 'message' => 'Item removed from cart.',
                 'cart_count' => $this->cart->count($request),
                 'subtotal' => $this->cart->subtotal($items),
+                'original_delivery_fee' => $shipping['original_delivery_fee'],
+                'shipping_discount' => $shipping['shipping_discount'],
+                'delivery_fee' => $shipping['delivery_fee'],
             ]);
         }
 

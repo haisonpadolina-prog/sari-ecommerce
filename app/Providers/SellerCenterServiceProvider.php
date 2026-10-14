@@ -16,6 +16,7 @@ use App\Models\Platform\SellerNotification;
 use App\Models\Promotions\SellerVoucher;
 use App\Models\Promotions\SellerVoucherRedemption;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -49,9 +50,29 @@ class SellerCenterServiceProvider extends ServiceProvider
                     return;
                 }
 
-                $token = $seller->ensureRealtimeToken();
+                /*
+                |--------------------------------------------------------------------------
+                | Realtime delivery is best-effort only
+                |--------------------------------------------------------------------------
+                |
+                | The database notification is the source of truth. If Reverb/Pusher is
+                | temporarily unavailable, the request that created the notification
+                | must still succeed. The seller will still see the persisted
+                | notification on refresh, and realtime delivery resumes automatically
+                | once the broadcast server is available again.
+                |
+                */
+                try {
+                    $token = $seller->ensureRealtimeToken();
 
-                SellerNotificationCreated::dispatch($fresh, $token);
+                    SellerNotificationCreated::dispatch($fresh, $token);
+                } catch (\Throwable $exception) {
+                    Log::warning('Seller realtime notification broadcast failed.', [
+                        'seller_notification_id' => $fresh->id,
+                        'seller_account_id' => $fresh->seller_account_id,
+                        'exception' => $exception->getMessage(),
+                    ]);
+                }
             });
         });
 
@@ -97,7 +118,12 @@ class SellerCenterServiceProvider extends ServiceProvider
                 'title' => $isShipping
                     ? 'Shipment update'
                     : 'Order status updated',
-                'message' => $order->order_number . ' is now ' . $order->statusLabel() . '.',
+                'message' => $order->status === 'cancelled'
+                    ? $order->order_number . ' was cancelled by the buyer.'
+                        . (filled($order->cancellation_reason)
+                            ? ' Reason: ' . $order->cancellation_reason
+                            : '')
+                    : $order->order_number . ' is now ' . $order->statusLabel() . '.',
                 'action_url' => $isShipping
                     ? '/seller/shipping/' . $order->id
                     : '/seller/orders',

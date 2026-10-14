@@ -3,10 +3,12 @@
 namespace App\Models\Orders;
 
 use App\Models\Accounts\BuyerAccount;
+use App\Models\Accounts\LogisticsAccount;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Accounts\SocialAccount;
 use App\Models\Catalog\ProductReview;
 use App\Models\Delivery\LogisticsParcel;
+use App\Models\Delivery\DeliveryRouteStop;
 use App\Models\Finance\OrderCommission;
 use App\Models\Finance\PaymentTransaction;
 use App\Models\Finance\RiderEarning;
@@ -24,6 +26,7 @@ class MarketplaceOrder extends Model
         'order_number',
         'checkout_reference',
         'seller_account_id',
+        'logistics_account_id',
         'buyer_account_id',
         'buyer_social_account_id',
         'buyer_name',
@@ -82,6 +85,7 @@ class MarketplaceOrder extends Model
         static::updated(function (self $order): void {
             if (!$order->wasChanged([
                 'status',
+                'logistics_account_id',
                 'items',
                 'subtotal',
                 'delivery_fee',
@@ -136,6 +140,14 @@ class MarketplaceOrder extends Model
         return $this->belongsTo(SellerAccount::class, 'seller_account_id');
     }
 
+    public function logisticsAccount(): BelongsTo
+    {
+        return $this->belongsTo(
+            LogisticsAccount::class,
+            'logistics_account_id'
+        );
+    }
+
     public function buyer(): BelongsTo
     {
         return $this->belongsTo(BuyerAccount::class, 'buyer_account_id');
@@ -169,6 +181,12 @@ class MarketplaceOrder extends Model
     public function riderEarning(): HasOne
     {
         return $this->hasOne(RiderEarning::class, 'marketplace_order_id');
+    }
+
+    public function deliveryRouteStops(): HasMany
+    {
+        return $this->hasMany(DeliveryRouteStop::class, 'marketplace_order_id')
+            ->orderBy('sequence');
     }
 
     public function logisticsParcel(): HasOne

@@ -29,6 +29,11 @@
 
     <div class="grid gap-4 xl:grid-cols-2">
         @forelse($orders as $order)
+            @php
+                $routeStops = $order->deliveryRouteStops->keyBy('stop_key');
+                $originFacility = $routeStops->get('origin_facility');
+                $destinationFacility = $routeStops->get('destination_facility');
+            @endphp
             <article class="rounded-[18px] border border-[#eee4d3] bg-white p-5">
                 <div class="flex items-start justify-between gap-3">
                     <div>
@@ -51,6 +56,20 @@
                         <p class="text-[7px] uppercase tracking-[.08em] text-[#9b9184]">Buyer</p>
                         <p class="mt-1 text-[9px] font-semibold text-[#423a31]">{{ $order->buyer_name }}</p>
                         <p class="mt-1 text-[8px] leading-4 text-[#81776a]">{{ $order->buyer_address }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-3 rounded-xl border border-[#efe5d6] bg-[#fffdf8] p-3">
+                    <p class="text-[7px] font-bold uppercase tracking-[.08em] text-[#a96e05]">Assigned sorting route</p>
+                    <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                        <div>
+                            <p class="text-[7px] text-[#9b9184]">Origin facility</p>
+                            <p class="mt-0.5 text-[8px] font-semibold text-[#4a4239]">{{ $originFacility?->name ?: 'Waiting for facility routing' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[7px] text-[#9b9184]">Destination facility</p>
+                            <p class="mt-0.5 text-[8px] font-semibold text-[#4a4239]">{{ $destinationFacility?->name ?: 'Waiting for facility routing' }}</p>
+                        </div>
                     </div>
                 </div>
 

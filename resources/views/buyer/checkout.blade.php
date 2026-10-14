@@ -63,6 +63,32 @@
                     @foreach ($groups as $sellerId => $sellerItems)
                         <div class="rounded-2xl border border-[#eee7dc] bg-[#fcfbf8] p-4">
                             <p class="text-[9px] font-semibold text-[#a8731f]">{{ $sellerItems->first()->product->seller?->store_name ?: 'SARI Seller' }}</p>
+
+                            @php
+                                $sellerShipping = $shippingBySeller[(int) $sellerId] ?? null;
+                                $shippingOffer = $sellerShipping['promotion'] ?? null;
+                            @endphp
+
+                            @if($shippingOffer && ($shippingOffer['active'] ?? false))
+                                <div class="mt-3 rounded-xl border border-[#d9e8de] bg-[#f4faf6] px-3 py-2.5">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div>
+                                            <p class="text-[8px] font-semibold text-[#46775a]">Free Shipping Promotion</p>
+                                            <p class="mt-1 text-[7px] leading-4 text-[#708078]">
+                                                Minimum spend ₱{{ number_format((float) ($shippingOffer['minimum_order_amount'] ?? 0), 2) }} · up to ₱{{ number_format((float) ($shippingOffer['maximum_shipping_discount'] ?? 0), 2) }} shipping off
+                                            </p>
+                                        </div>
+                                        <span class="shrink-0 rounded-full px-2 py-1 text-[6.5px] font-semibold {{ ($shippingOffer['eligible'] ?? false) ? 'bg-[#e5f5eb] text-[#397451]' : 'border border-[#d5e3da] bg-white text-[#748178]' }}">
+                                            @if($shippingOffer['eligible'] ?? false)
+                                                Applied · save ₱{{ number_format((float) ($shippingOffer['shipping_discount'] ?? 0), 2) }}
+                                            @else
+                                                Add ₱{{ number_format((float) ($shippingOffer['remaining_to_qualify'] ?? 0), 2) }} more
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="mt-3 space-y-2">
                                 @foreach ($sellerItems as $item)
                                     <div class="flex items-start justify-between gap-3 text-[9px]">
@@ -88,11 +114,15 @@
 
             <div class="mt-5 space-y-3 text-[9px]">
                 <div class="flex justify-between"><span class="text-[#8d8479]">Products</span><span class="font-semibold">₱{{ number_format($subtotal, 2) }}</span></div>
-                <div class="flex justify-between"><span class="text-[#8d8479]">Delivery</span><span class="font-semibold">₱{{ number_format($deliveryFee, 2) }}</span></div>
+                <div class="flex justify-between"><span class="text-[#8d8479]">Courier delivery fee</span><span class="font-semibold">₱{{ number_format($originalDeliveryFee, 2) }}</span></div>
+                @if(($shippingDiscount ?? 0) > 0)
+                    <div class="flex justify-between text-[#4f8065]"><span>Free Shipping discount</span><span class="font-semibold">-₱{{ number_format($shippingDiscount, 2) }}</span></div>
+                @endif
+                <div class="flex justify-between"><span class="text-[#8d8479]">Delivery payable</span><span class="font-semibold">₱{{ number_format($deliveryFee, 2) }}</span></div>
                 <div class="border-t border-[#eee8df] pt-3"><div class="flex items-end justify-between"><span class="font-semibold">Total</span><span class="text-[21px] font-bold text-[#b97805]">₱{{ number_format($grandTotal, 2) }}</span></div></div>
             </div>
             <button id="buyerPlaceOrderButton" class="mt-5 h-12 w-full rounded-xl bg-[#c99128] text-[10px] font-semibold text-white hover:bg-[#b47e1e]">Place Order</button>
-            <p class="mt-3 text-[7px] leading-4 text-[#9b9287]">Stock deduction and order creation happen in one database transaction. If any item becomes unavailable, the checkout is rolled back.</p>
+            <p class="mt-3 text-[7px] leading-4 text-[#9b9287]">Stock, vouchers, and Free Shipping eligibility are revalidated on the server when you place the order. Promotion schedules use Asia/Manila time.</p>
         </aside>
     </form>
 </div>

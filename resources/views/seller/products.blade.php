@@ -1262,16 +1262,13 @@
                 </div>
 
                 <div class="seller-edit-field seller-edit-field--full">
-                    <label class="seller-edit-shipping-card" for="editProductFreeShipping">
-                        <span class="seller-edit-shipping-control">
-                            <input id="editProductFreeShipping" name="free_shipping" type="checkbox" value="1" class="sr-only">
-                            <span class="seller-edit-gold-switch" aria-hidden="true"></span>
-                        </span>
+                    <a href="{{ route('seller.vouchers.index') }}" class="seller-edit-shipping-card" style="text-decoration:none;">
                         <span class="seller-edit-shipping-copy">
-                            <strong>Free Shipping</strong>
-                            <small>Show the gold Free Shipping badge and waive the eligible buyer delivery fee.</small>
+                            <strong>Free Shipping Promotions</strong>
+                            <small>Shipping promotions are Seller-level campaigns with minimum spend, schedule, and maximum discount rules.</small>
                         </span>
-                    </label>
+                        <span class="text-[8px] font-semibold text-[#a86d0d]">Manage →</span>
+                    </a>
                 </div>
 
                 <div class="seller-edit-field seller-edit-media-field">

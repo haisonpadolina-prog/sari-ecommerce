@@ -3,6 +3,7 @@
 namespace App\Services\Buyer;
 
 use App\Services\Products\ProductVariantInventoryService;
+use App\Services\Promotions\SellerFreeShippingPromotionService;
 
 use App\Models\Orders\BuyerCartItem;
 use App\Models\Platform\PlatformSetting;
@@ -17,6 +18,7 @@ class BuyerCartService
     public function __construct(
         private readonly BuyerIdentityService $identity,
         private readonly ProductVariantInventoryService $inventory,
+        private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
     ) {
     }
 
@@ -283,35 +285,92 @@ class BuyerCartService
         );
     }
 
-    public function deliveryFee(Collection $items): float
+    /**
+     * @return array{
+     *   original_delivery_fee: float,
+     *   shipping_discount: float,
+     *   delivery_fee: float,
+     *   groups: array<int, array<string, mixed>>
+     * }
+     */
+    public function shippingSummary(Collection $items): array
     {
         if ($items->isEmpty()) {
-            return 0.0;
+            return [
+                'original_delivery_fee' => 0.0,
+                'shipping_discount' => 0.0,
+                'delivery_fee' => 0.0,
+                'groups' => [],
+            ];
         }
 
-        $feePerSeller = $this->deliveryFeePerSeller();
+        $feePerSeller = round(max(0, $this->deliveryFeePerSeller()), 2);
+        $originalTotal = 0.0;
+        $discountTotal = 0.0;
+        $payableTotal = 0.0;
+        $groups = [];
 
-        return round(
-            $this->groupedBySeller($items)
-                ->sum(
-                    function (
-                        Collection $group
-                    ) use ($feePerSeller) {
-                        $allItemsShipFree = $group->every(
-                            fn (BuyerCartItem $item) =>
-                                (bool) (
-                                    $item->product?->free_shipping
-                                    ?? false
-                                )
-                        );
+        foreach ($this->groupedBySeller($items) as $sellerId => $group) {
+            $sellerSubtotal = round(
+                $group->sum(fn (BuyerCartItem $item) => $this->lineTotal($item)),
+                2
+            );
 
-                        return $allItemsShipFree
-                            ? 0
-                            : $feePerSeller;
-                    }
-                ),
+            $quote = $this->freeShippingPromotions->offerForSeller(
+                (int) $sellerId,
+                $sellerSubtotal,
+                $feePerSeller
+            );
+
+            $discount = round((float) ($quote['shipping_discount'] ?? 0), 2);
+            $payable = round(max(0, $feePerSeller - $discount), 2);
+
+            $groups[(int) $sellerId] = [
+                'seller_id' => (int) $sellerId,
+                'seller_subtotal' => $sellerSubtotal,
+                'original_delivery_fee' => $feePerSeller,
+                'shipping_discount' => $discount,
+                'delivery_fee' => $payable,
+                'promotion' => $quote,
+            ];
+
+            $originalTotal += $feePerSeller;
+            $discountTotal += $discount;
+            $payableTotal += $payable;
+        }
+
+        return [
+            'original_delivery_fee' => round($originalTotal, 2),
+            'shipping_discount' => round($discountTotal, 2),
+            'delivery_fee' => round($payableTotal, 2),
+            'groups' => $groups,
+        ];
+    }
+
+    public function shippingOfferForGroup(Collection $group): ?array
+    {
+        $first = $group->first();
+        $sellerId = (int) ($first?->product?->seller_account_id ?? 0);
+
+        if ($sellerId <= 0) {
+            return null;
+        }
+
+        $sellerSubtotal = round(
+            $group->sum(fn (BuyerCartItem $item) => $this->lineTotal($item)),
             2
         );
+
+        return $this->freeShippingPromotions->offerForSeller(
+            $sellerId,
+            $sellerSubtotal,
+            $this->deliveryFeePerSeller()
+        );
+    }
+
+    public function deliveryFee(Collection $items): float
+    {
+        return (float) $this->shippingSummary($items)['delivery_fee'];
     }
 
     public function variantLabel(
