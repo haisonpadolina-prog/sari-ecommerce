@@ -54,6 +54,7 @@ use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Shared\AddressLookupController;
 use App\Http\Controllers\Marketplace\MarketplaceCatalogController;
 use App\Http\Controllers\Auth\MarketplaceAuthController;
+use App\Http\Controllers\Courier\CourierLastMileController;
 
 use App\Models\Accounts\AdminAccount;
 use App\Models\Accounts\BuyerAccount;
@@ -1395,6 +1396,11 @@ Route::get(
     [CourierDashboardController::class, 'index']
 )->name('courier.dashboard');
 
+Route::get(
+    '/courier/delivery/{order}',
+    [CourierDashboardController::class, 'show']
+)->name('courier.delivery.show');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -1571,7 +1577,25 @@ Route::post(
     }
 )->name('admin.message-notifications.read-all');
 
+Route::get(
+    '/courier/last-mile',
+    [CourierLastMileController::class, 'index']
+)->name('courier.last-mile');
 
+Route::post(
+    '/courier/last-mile/{assignment}/start',
+    [CourierLastMileController::class, 'start']
+)->name('courier.last-mile.start');
+
+Route::post(
+    '/courier/last-mile/{assignment}/orders/{order}/arrived',
+    [CourierLastMileController::class, 'arrived']
+)->name('courier.last-mile.arrived');
+
+Route::post(
+    '/courier/last-mile/{assignment}/orders/{order}/delivered',
+    [CourierLastMileController::class, 'delivered']
+)->name('courier.last-mile.delivered');
 
 Route::get(
     '/seller/messages/{message}/meta',

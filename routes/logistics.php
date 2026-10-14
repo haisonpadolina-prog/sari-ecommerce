@@ -15,6 +15,8 @@ use App\Http\Controllers\Logistics\LogisticsRiderApplicationController;
 use App\Http\Controllers\Logistics\LogisticsRiderManagementController;
 use App\Http\Controllers\Courier\RiderRegistrationController;
 use App\Http\Middleware\Logistics\EnsureLogisticsAuthenticated;
+use App\Http\Controllers\Logistics\LogisticsHubTransferController;
+use App\Http\Controllers\Logistics\LogisticsLastMileAssignmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -84,8 +86,20 @@ Route::prefix('logistics')
         Route::get('/parcel-sorting', [LogisticsParcelSortingController::class, 'index'])->name('parcel-sorting');
         Route::post('/parcel-sorting/{parcel}/sort', [LogisticsParcelSortingController::class, 'sort'])->name('parcel-sorting.sort');
 
-        Route::get('/delivery-assignment', [LogisticsDeliveryAssignmentController::class, 'index'])->name('delivery-assignment');
-        Route::post('/delivery-assignment/{order}/assign', [LogisticsDeliveryAssignmentController::class, 'assign'])->name('delivery-assignment.assign');
+        Route::get(
+            '/delivery-assignment',
+            [LogisticsDeliveryAssignmentController::class, 'index']
+        )->name('delivery-assignment');
+
+        Route::post(
+            '/delivery-assignment/batch/assign',
+            [LogisticsDeliveryAssignmentController::class, 'assignBatch']
+        )->name('delivery-assignment.batch-assign');
+
+        Route::post(
+            '/delivery-assignment/{order}/assign',
+            [LogisticsDeliveryAssignmentController::class, 'assign']
+        )->name('delivery-assignment.assign');
 
         Route::get('/delivery-monitoring', [LogisticsDeliveryMonitoringController::class, 'index'])->name('delivery-monitoring');
         Route::get('/delivery-routes/{order}', [LogisticsDeliveryRouteController::class, 'edit'])
@@ -110,4 +124,34 @@ Route::prefix('logistics')
             $request->session()->regenerateToken();
             return redirect()->route('login');
         })->name('logout');
+
+        Route::get(
+    '/hub-transfers',
+    [LogisticsHubTransferController::class, 'index']
+)->name('hub-transfers');
+
+Route::post(
+    '/hub-transfers',
+    [LogisticsHubTransferController::class, 'store']
+)->name('hub-transfers.store');
+
+Route::post(
+    '/hub-transfers/{transfer}/dispatch',
+    [LogisticsHubTransferController::class, 'dispatch']
+)->name('hub-transfers.dispatch');
+
+Route::post(
+    '/hub-transfers/{transfer}/receive',
+    [LogisticsHubTransferController::class, 'receive']
+)->name('hub-transfers.receive');
+
+Route::get(
+    '/last-mile-assignment',
+    [LogisticsLastMileAssignmentController::class, 'index']
+)->name('last-mile-assignment');
+
+Route::post(
+    '/last-mile-assignment/batch/assign',
+    [LogisticsLastMileAssignmentController::class, 'assignBatch']
+)->name('last-mile-assignment.batch-assign');
     });

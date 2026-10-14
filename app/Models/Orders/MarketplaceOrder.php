@@ -220,4 +220,15 @@ class MarketplaceOrder extends Model
             default => str($this->status)->replace('_', ' ')->title()->toString(),
         };
     }
+
+    public function courierDeliveryFee(): float
+    {
+        $originalDeliveryFee = (float) ($this->original_delivery_fee ?? 0);
+
+        if ($originalDeliveryFee > 0) {
+            return $originalDeliveryFee;
+        }
+
+        return (float) ($this->delivery_fee ?? 0);
+    }
 }
