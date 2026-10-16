@@ -3,19 +3,35 @@
 namespace App\Http\Controllers\Courier;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accounts\CourierAccount;
+use App\Models\Finance\RiderEarning;
 use App\Models\Orders\MarketplaceOrder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourierDashboardController extends Controller
 {
-    private const ACTIVE_DELIVERY_STATUSES = [
+    private const PICKUP_ACTIVE_STATUSES = [
+        'courier_accepted',
+        'heading_pickup',
+        'arrived_pickup',
+        'in_transit',
+    ];
+
+    private const DIRECT_ACTIVE_STATUSES = [
         'courier_accepted',
         'heading_pickup',
         'arrived_pickup',
         'in_transit',
         'arrived_buyer',
+    ];
+
+    private const ACTIVE_LAST_MILE_STATUSES = [
+        'assigned',
+        'out_for_delivery',
     ];
 
     public function index(Request $request): View|RedirectResponse
@@ -24,23 +40,19 @@ class CourierDashboardController extends Controller
             return redirect()->route('login');
         }
 
-        $courierEmail = $this->courierEmail($request);
+        $rider = $this->currentRider($request);
 
-        $currentDelivery = MarketplaceOrder::query()
-            ->with('logisticsParcel')
-            ->whereRaw(
-                'LOWER(courier_email) = ?',
-                [$courierEmail]
-            )
-            ->whereIn(
-                'status',
-                self::ACTIVE_DELIVERY_STATUSES
-            )
+        $currentDelivery = $this->activeMarketplaceWorkQuery($rider)
+            ->with([
+                'seller',
+                'logisticsParcel',
+            ])
             ->latest('updated_at')
             ->first();
 
         return $this->dashboard(
             $request,
+            $rider,
             $currentDelivery
         );
     }
@@ -53,147 +65,577 @@ class CourierDashboardController extends Controller
             return redirect()->route('login');
         }
 
-        $courierEmail = $this->courierEmail($request);
+        $rider = $this->currentRider($request);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Security
-        |--------------------------------------------------------------------------
-        | Rider may only open an order assigned to their own account.
-        */
+        $courierEmail = strtolower(
+            trim(
+                (string) $rider->email
+            )
+        );
 
         abort_unless(
             strtolower(
-                (string) $order->courier_email
+                trim(
+                    (string) $order->courier_email
+                )
             ) === $courierEmail,
             403
         );
 
-        abort_unless(
-            in_array(
-                $order->status,
-                self::ACTIVE_DELIVERY_STATUSES,
-                true
-            ),
-            404
-        );
+        $order->loadMissing([
+            'seller',
+            'logisticsParcel',
+        ]);
 
-        $order->load('logisticsParcel');
+        /*
+        |--------------------------------------------------------------------------
+        | Logistics pickup Rider
+        |--------------------------------------------------------------------------
+        |
+        | A Logistics pickup order is only operationally owned by this Rider
+        | while the parcel is still awaiting intake at the origin hub.
+        |
+        */
+
+        if ($order->logisticsParcel) {
+            abort_unless(
+                in_array(
+                    $order->status,
+                    self::PICKUP_ACTIVE_STATUSES,
+                    true
+                )
+                &&
+                $order->logisticsParcel->status
+                    === 'awaiting_intake',
+                404
+            );
+        } else {
+            /*
+            |--------------------------------------------------------------------------
+            | Legacy / direct delivery
+            |--------------------------------------------------------------------------
+            */
+
+            abort_unless(
+                in_array(
+                    $order->status,
+                    self::DIRECT_ACTIVE_STATUSES,
+                    true
+                ),
+                404
+            );
+        }
 
         return $this->dashboard(
             $request,
+            $rider,
             $order
         );
     }
 
     private function dashboard(
         Request $request,
+        CourierAccount $rider,
         ?MarketplaceOrder $currentDelivery
     ): View {
-        $courierEmail = $this->courierEmail($request);
+        $courierEmail = strtolower(
+            trim(
+                (string) $rider->email
+            )
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pickup / direct assignments waiting to start
+        |--------------------------------------------------------------------------
+        */
 
         $assignments = MarketplaceOrder::query()
-            ->with('seller')
+            ->with([
+                'seller',
+                'logisticsParcel',
+            ])
             ->whereRaw(
                 'LOWER(courier_email) = ?',
-                [$courierEmail]
+                [
+                    $courierEmail,
+                ]
             )
             ->where(
                 'status',
                 'courier_accepted'
             )
-            ->latest('accepted_at')
+            ->where(
+                function (
+                    Builder $query
+                ): void {
+                    $query
+                        ->whereDoesntHave(
+                            'logisticsParcel'
+                        )
+                        ->orWhereHas(
+                            'logisticsParcel',
+                            fn (
+                                Builder $parcel
+                            ) =>
+                                $parcel->where(
+                                    'status',
+                                    'awaiting_intake'
+                                )
+                        );
+                }
+            )
+            ->latest(
+                'accepted_at'
+            )
             ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Active Last-Mile assignments
+        |--------------------------------------------------------------------------
+        */
+
+        $lastMileAssignments =
+            DB::table(
+                'last_mile_assignments as assignment'
+            )
+                ->join(
+                    'logistics_facilities as facility',
+                    'facility.id',
+                    '=',
+                    'assignment.destination_facility_id'
+                )
+                ->where(
+                    'assignment.courier_account_id',
+                    $rider->id
+                )
+                ->whereIn(
+                    'assignment.status',
+                    self::ACTIVE_LAST_MILE_STATUSES
+                )
+                ->select([
+                    'assignment.id',
+                    'assignment.assignment_code',
+                    'assignment.delivery_area',
+                    'assignment.status',
+                    'assignment.assigned_at',
+                    'assignment.started_at',
+
+                    'facility.name as facility_name',
+                    'facility.address as facility_address',
+                ])
+                ->orderByRaw(
+                    "
+                    CASE
+                        WHEN assignment.status = 'out_for_delivery'
+                            THEN 1
+                        ELSE 2
+                    END
+                    "
+                )
+                ->orderByDesc(
+                    'assignment.id'
+                )
+                ->get();
+
+        foreach (
+            $lastMileAssignments
+            as $assignment
+        ) {
+            $assignment->parcel_count =
+                DB::table(
+                    'last_mile_assignment_orders'
+                )
+                    ->where(
+                        'last_mile_assignment_id',
+                        $assignment->id
+                    )
+                    ->count();
+
+            $assignment->delivery_fee_total =
+                (float) DB::table(
+                    'last_mile_assignment_orders as link'
+                )
+                    ->join(
+                        'marketplace_orders as orders',
+                        'orders.id',
+                        '=',
+                        'link.marketplace_order_id'
+                    )
+                    ->where(
+                        'link.last_mile_assignment_id',
+                        $assignment->id
+                    )
+                    ->sum(
+                        'orders.delivery_fee'
+                    );
+        }
+
+        $currentLastMile =
+            $lastMileAssignments->first();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Pickup work statistics
+        |--------------------------------------------------------------------------
+        */
+
+        $pickupWaiting =
+            MarketplaceOrder::query()
+                ->whereRaw(
+                    'LOWER(courier_email) = ?',
+                    [
+                        $courierEmail,
+                    ]
+                )
+                ->where(
+                    'status',
+                    'courier_accepted'
+                )
+                ->whereHas(
+                    'logisticsParcel',
+                    fn (
+                        Builder $query
+                    ) =>
+                        $query->where(
+                            'status',
+                            'awaiting_intake'
+                        )
+                )
+                ->count();
+
+        $pickupActive =
+            MarketplaceOrder::query()
+                ->whereRaw(
+                    'LOWER(courier_email) = ?',
+                    [
+                        $courierEmail,
+                    ]
+                )
+                ->whereIn(
+                    'status',
+                    [
+                        'heading_pickup',
+                        'arrived_pickup',
+                        'in_transit',
+                    ]
+                )
+                ->whereHas(
+                    'logisticsParcel',
+                    fn (
+                        Builder $query
+                    ) =>
+                        $query->where(
+                            'status',
+                            'awaiting_intake'
+                        )
+                )
+                ->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Legacy/direct delivery statistics
+        |--------------------------------------------------------------------------
+        */
+
+        $directWaiting =
+            MarketplaceOrder::query()
+                ->whereRaw(
+                    'LOWER(courier_email) = ?',
+                    [
+                        $courierEmail,
+                    ]
+                )
+                ->where(
+                    'status',
+                    'courier_accepted'
+                )
+                ->whereDoesntHave(
+                    'logisticsParcel'
+                )
+                ->count();
+
+        $directActive =
+            MarketplaceOrder::query()
+                ->whereRaw(
+                    'LOWER(courier_email) = ?',
+                    [
+                        $courierEmail,
+                    ]
+                )
+                ->whereIn(
+                    'status',
+                    [
+                        'heading_pickup',
+                        'arrived_pickup',
+                        'in_transit',
+                        'arrived_buyer',
+                    ]
+                )
+                ->whereDoesntHave(
+                    'logisticsParcel'
+                )
+                ->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Last-Mile statistics
+        |--------------------------------------------------------------------------
+        */
+
+        $lastMileWaiting =
+            $lastMileAssignments
+                ->where(
+                    'status',
+                    'assigned'
+                )
+                ->count();
+
+        $lastMileActive =
+            $lastMileAssignments
+                ->where(
+                    'status',
+                    'out_for_delivery'
+                )
+                ->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Completed work / earnings
+        |--------------------------------------------------------------------------
+        |
+        | RiderEarning is now the source of truth for actual earned delivery
+        | fees. This means the Last-Mile Rider receives completion credit,
+        | rather than the historical pickup Rider stored in courier_email.
+        |
+        */
+
+        $todayStart =
+            now('Asia/Manila')
+                ->startOfDay()
+                ->utc();
+
+        $tomorrowStart =
+            now('Asia/Manila')
+                ->addDay()
+                ->startOfDay()
+                ->utc();
+
+        $todayLedger =
+            RiderEarning::query()
+                ->where(
+                    'courier_account_id',
+                    $rider->id
+                )
+                ->where(
+                    'earned_at',
+                    '>=',
+                    $todayStart
+                )
+                ->where(
+                    'earned_at',
+                    '<',
+                    $tomorrowStart
+                );
 
         $stats = [
             'assigned_waiting' =>
-                MarketplaceOrder::query()
-                    ->whereRaw(
-                        'LOWER(courier_email) = ?',
-                        [$courierEmail]
-                    )
-                    ->where(
-                        'status',
-                        'courier_accepted'
-                    )
-                    ->count(),
+                $pickupWaiting
+                + $directWaiting
+                + $lastMileWaiting,
 
             'active_deliveries' =>
-                MarketplaceOrder::query()
-                    ->whereRaw(
-                        'LOWER(courier_email) = ?',
-                        [$courierEmail]
-                    )
-                    ->whereIn(
-                        'status',
-                        self::ACTIVE_DELIVERY_STATUSES
-                    )
-                    ->count(),
+                $pickupActive
+                + $directActive
+                + $lastMileActive,
 
             'completed_today' =>
-                MarketplaceOrder::query()
-                    ->whereRaw(
-                        'LOWER(courier_email) = ?',
-                        [$courierEmail]
-                    )
-                    ->where(
-                        'status',
-                        'delivered'
-                    )
-                    ->whereDate(
-                        'delivered_at',
-                        now()->toDateString()
-                    )
+                (clone $todayLedger)
                     ->count(),
 
             'earnings_today' =>
-                (float) MarketplaceOrder::query()
-                    ->whereRaw(
-                        'LOWER(courier_email) = ?',
-                        [$courierEmail]
-                    )
-                    ->where(
-                        'status',
-                        'delivered'
-                    )
-                    ->whereDate(
-                        'delivered_at',
-                        now()->toDateString()
-                    )
-                    ->selectRaw(
-                        '
-                        COALESCE(
-                            SUM(
-                                CASE
-                                    WHEN original_delivery_fee > 0
-                                    THEN original_delivery_fee
-                                    ELSE delivery_fee
-                                END
-                            ),
-                            0
-                        ) AS courier_fee_total
-                        '
-                    )
-                    ->value('courier_fee_total'),
+                (float) (
+                    clone $todayLedger
+                )->sum(
+                    'delivery_fee_amount'
+                ),
+
+            'pickup_waiting' =>
+                $pickupWaiting
+                + $directWaiting,
+
+            'pickup_active' =>
+                $pickupActive
+                + $directActive,
+
+            'last_mile_waiting' =>
+                $lastMileWaiting,
+
+            'last_mile_active' =>
+                $lastMileActive,
+
+            'available_requests' =>
+                $pickupWaiting
+                + $directWaiting,
         ];
 
         return view(
             'courier.dashboard',
             compact(
                 'currentDelivery',
+                'currentLastMile',
+                'lastMileAssignments',
                 'assignments',
-                'stats'
+                'stats',
+                'rider'
             )
         );
     }
 
-    private function courierEmail(
-        Request $request
-    ): string {
-        return strtolower(
-            (string) $request
-                ->session()
-                ->get('courier_email', '')
+    private function activeMarketplaceWorkQuery(
+        CourierAccount $rider
+    ): Builder {
+        $courierEmail = strtolower(
+            trim(
+                (string) $rider->email
+            )
         );
+
+        return MarketplaceOrder::query()
+            ->whereRaw(
+                'LOWER(courier_email) = ?',
+                [
+                    $courierEmail,
+                ]
+            )
+            ->where(
+                function (
+                    Builder $query
+                ): void {
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Direct delivery
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $query
+                        ->where(
+                            function (
+                                Builder $direct
+                            ): void {
+                                $direct
+                                    ->whereDoesntHave(
+                                        'logisticsParcel'
+                                    )
+                                    ->whereIn(
+                                        'status',
+                                        self::DIRECT_ACTIVE_STATUSES
+                                    );
+                            }
+                        )
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Logistics Seller pickup
+                        |--------------------------------------------------------------------------
+                        */
+
+                        ->orWhere(
+                            function (
+                                Builder $pickup
+                            ): void {
+                                $pickup
+                                    ->whereIn(
+                                        'status',
+                                        self::PICKUP_ACTIVE_STATUSES
+                                    )
+                                    ->whereHas(
+                                        'logisticsParcel',
+                                        fn (
+                                            Builder $parcel
+                                        ) =>
+                                            $parcel->where(
+                                                'status',
+                                                'awaiting_intake'
+                                            )
+                                    );
+                            }
+                        );
+                }
+            );
+    }
+
+    private function currentRider(
+        Request $request
+    ): CourierAccount {
+        $id =
+            (int) $request
+                ->session()
+                ->get(
+                    'courier_account_id',
+                    0
+                );
+
+        $rider =
+            $id > 0
+                ? CourierAccount::query()
+                    ->whereKey(
+                        $id
+                    )
+                    ->where(
+                        'account_status',
+                        'active'
+                    )
+                    ->first()
+                : null;
+
+        if (! $rider) {
+            $email = strtolower(
+                trim(
+                    (string) $request
+                        ->session()
+                        ->get(
+                            'courier_email',
+                            ''
+                        )
+                )
+            );
+
+            abort_if(
+                $email === '',
+                403,
+                'Rider identity is missing from the session.'
+            );
+
+            $rider =
+                CourierAccount::query()
+                    ->whereRaw(
+                        'LOWER(email) = ?',
+                        [
+                            $email,
+                        ]
+                    )
+                    ->where(
+                        'account_status',
+                        'active'
+                    )
+                    ->first();
+        }
+
+        abort_unless(
+            $rider,
+            403,
+            'Active Rider account required.'
+        );
+
+        $request
+            ->session()
+            ->put(
+                'courier_account_id',
+                $rider->id
+            );
+
+        return $rider;
     }
 }

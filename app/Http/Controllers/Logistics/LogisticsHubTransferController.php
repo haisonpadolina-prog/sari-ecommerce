@@ -3,100 +3,69 @@
 namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
-use App\Support\CurrentLogisticsAccount;
+use App\Models\Delivery\LogisticsParcel;
+use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LogisticsHubTransferController extends Controller
 {
+    public function __construct(
+        private readonly LogisticsOrderAccess $orderAccess,
+    ) {
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hub Transfers
+    |--------------------------------------------------------------------------
+    */
+
     public function index(Request $request): View
     {
-        $logistics = CurrentLogisticsAccount::resolve($request);
+        $logistics =
+            $this->orderAccess->prepare($request);
 
         /*
         |--------------------------------------------------------------------------
-        | Sorted parcels ready for Hub-to-Hub transfer
+        | Sorted parcels waiting for linehaul
         |--------------------------------------------------------------------------
         */
 
-        $readyParcels = DB::table('logistics_parcels as parcel')
-            ->join(
-                'marketplace_orders as orders',
-                'orders.id',
-                '=',
-                'parcel.marketplace_order_id'
-            )
-            ->join(
-                'delivery_route_stops as origin_stop',
-                function ($join) {
-                    $join
-                        ->on(
-                            'origin_stop.marketplace_order_id',
-                            '=',
-                            'orders.id'
+        $readyParcels =
+            LogisticsParcel::query()
+                ->with([
+                    'order.seller',
+                    'order.deliveryRouteStops.facility',
+                ])
+                ->where(
+                    'status',
+                    'sorted'
+                )
+                ->whereHas(
+                    'order',
+                    fn ($query) =>
+                        $query->where(
+                            'logistics_account_id',
+                            $logistics->id
                         )
-                        ->where(
-                            'origin_stop.stop_key',
-                            '=',
-                            'origin_facility'
-                        );
-                }
-            )
-            ->join(
-                'delivery_route_stops as destination_stop',
-                function ($join) {
-                    $join
-                        ->on(
-                            'destination_stop.marketplace_order_id',
-                            '=',
-                            'orders.id'
-                        )
-                        ->where(
-                            'destination_stop.stop_key',
-                            '=',
-                            'destination_facility'
-                        );
-                }
-            )
-            ->join(
-                'logistics_facilities as origin',
-                'origin.id',
-                '=',
-                'origin_stop.logistics_facility_id'
-            )
-            ->join(
-                'logistics_facilities as destination',
-                'destination.id',
-                '=',
-                'destination_stop.logistics_facility_id'
-            )
-            ->where(
-                'orders.logistics_account_id',
-                $logistics->id
-            )
-            ->where(
-                'parcel.status',
-                'sorted'
-            )
-            ->select([
-                'parcel.id as parcel_id',
-                'parcel.sorting_zone',
-
-                'orders.id as order_id',
-                'orders.order_number',
-                'orders.buyer_name',
-
-                'origin.id as origin_facility_id',
-                'origin.name as origin_facility_name',
-
-                'destination.id as destination_facility_id',
-                'destination.name as destination_facility_name',
-            ])
-            ->orderBy('orders.order_number')
-            ->get();
+                )
+                ->whereNotIn(
+                    'id',
+                    DB::table(
+                        'hub_transfer_parcels'
+                    )->select(
+                        'logistics_parcel_id'
+                    )
+                )
+                ->oldest('sorted_at')
+                ->oldest('id')
+                ->get();
 
         /*
         |--------------------------------------------------------------------------
@@ -104,12 +73,203 @@ class LogisticsHubTransferController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $transferGroups = $readyParcels->groupBy(
-            fn ($parcel) =>
-                $parcel->origin_facility_id
-                . '|'
-                . $parcel->destination_facility_id
-        );
+        $readyGroups =
+            $readyParcels
+                ->map(
+                    function (
+                        LogisticsParcel $parcel
+                    ): array {
+                        $order =
+                            $parcel->order;
+
+                        $stops =
+                            $order
+                                ?->deliveryRouteStops
+                                ?->keyBy('stop_key')
+                            ?? collect();
+
+                        $origin =
+                            $stops->get(
+                                'origin_facility'
+                            );
+
+                        $destination =
+                            $stops->get(
+                                'destination_facility'
+                            );
+
+                        return [
+                            'parcel' =>
+                                $parcel,
+
+                            'order' =>
+                                $order,
+
+                            'origin_stop' =>
+                                $origin,
+
+                            'destination_stop' =>
+                                $destination,
+
+                            'origin_facility' =>
+                                $origin?->facility,
+
+                            'destination_facility' =>
+                                $destination?->facility,
+                        ];
+                    }
+                )
+                ->filter(
+                    fn (array $row): bool =>
+                        filled(
+                            $row['origin_stop']
+                                ?->logistics_facility_id
+                        )
+                        &&
+                        filled(
+                            $row['destination_stop']
+                                ?->logistics_facility_id
+                        )
+                        &&
+                        (
+                            (int) $row['origin_stop']
+                                ->logistics_facility_id
+                            !==
+                            (int) $row['destination_stop']
+                                ->logistics_facility_id
+                        )
+                )
+                ->groupBy(
+                    function (array $row): string {
+                        return implode(
+                            ':',
+                            [
+                                (int) $row[
+                                    'origin_stop'
+                                ]->logistics_facility_id,
+
+                                (int) $row[
+                                    'destination_stop'
+                                ]->logistics_facility_id,
+                            ]
+                        );
+                    }
+                )
+                ->map(
+                    function (
+                        Collection $rows,
+                        string $key
+                    ): array {
+                        $first =
+                            $rows->first();
+
+                        $parcels =
+                            $rows
+                                ->pluck('parcel')
+                                ->values();
+
+                        $orders =
+                            $rows
+                                ->pluck('order')
+                                ->filter()
+                                ->values();
+
+                        $origin =
+                            $first[
+                                'origin_facility'
+                            ];
+
+                        $destination =
+                            $first[
+                                'destination_facility'
+                            ];
+
+                        return [
+                            'key' =>
+                                $key,
+
+                            'origin_facility_id' =>
+                                (int) $first[
+                                    'origin_stop'
+                                ]->logistics_facility_id,
+
+                            'destination_facility_id' =>
+                                (int) $first[
+                                    'destination_stop'
+                                ]->logistics_facility_id,
+
+                            'origin_name' =>
+                                $origin?->name
+                                ?: $first[
+                                    'origin_stop'
+                                ]->name,
+
+                            'origin_code' =>
+                                $origin?->code,
+
+                            'origin_municipality' =>
+                                $origin
+                                    ?->municipality_name,
+
+                            'destination_name' =>
+                                $destination?->name
+                                ?: $first[
+                                    'destination_stop'
+                                ]->name,
+
+                            'destination_code' =>
+                                $destination?->code,
+
+                            'destination_municipality' =>
+                                $destination
+                                    ?->municipality_name,
+
+                            'parcels' =>
+                                $parcels,
+
+                            'orders' =>
+                                $orders,
+
+                            'parcel_count' =>
+                                $parcels->count(),
+
+                            'seller_count' =>
+                                $orders
+                                    ->pluck(
+                                        'seller_account_id'
+                                    )
+                                    ->filter()
+                                    ->unique()
+                                    ->count(),
+
+                            'buyer_count' =>
+                                $orders
+                                    ->pluck(
+                                        'buyer_name'
+                                    )
+                                    ->filter()
+                                    ->unique()
+                                    ->count(),
+
+                            'oldest_sorted_at' =>
+                                $parcels
+                                    ->pluck(
+                                        'sorted_at'
+                                    )
+                                    ->filter()
+                                    ->sort()
+                                    ->first(),
+                        ];
+                    }
+                )
+                ->sortBy(
+                    fn (array $group) =>
+                        $group[
+                            'oldest_sorted_at'
+                        ]
+                        ?: now()
+                )
+                ->values();
 
         /*
         |--------------------------------------------------------------------------
@@ -117,459 +277,861 @@ class LogisticsHubTransferController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $transfers = DB::table('hub_transfers as transfer')
-            ->join(
-                'logistics_facilities as origin',
-                'origin.id',
-                '=',
-                'transfer.origin_facility_id'
+        $transfers =
+            DB::table(
+                'hub_transfers as transfer'
             )
-            ->join(
-                'logistics_facilities as destination',
-                'destination.id',
-                '=',
-                'transfer.destination_facility_id'
-            )
-            ->where(
-                'transfer.logistics_account_id',
-                $logistics->id
-            )
-            ->select([
-                'transfer.*',
-                'origin.name as origin_name',
-                'destination.name as destination_name',
-            ])
-            ->orderByDesc('transfer.id')
-            ->get();
-
-        foreach ($transfers as $transfer) {
-            $transfer->parcel_count = DB::table(
-                'hub_transfer_parcels'
-            )
+                ->join(
+                    'logistics_facilities as origin',
+                    'origin.id',
+                    '=',
+                    'transfer.origin_facility_id'
+                )
+                ->join(
+                    'logistics_facilities as destination',
+                    'destination.id',
+                    '=',
+                    'transfer.destination_facility_id'
+                )
                 ->where(
-                    'hub_transfer_id',
-                    $transfer->id
+                    'transfer.logistics_account_id',
+                    $logistics->id
                 )
-                ->count();
-        }
+                ->select([
+                    'transfer.*',
 
-        return view(
-            'logistics.hub-transfers',
-            compact(
-                'transferGroups',
-                'transfers'
-            )
-        );
-    }
+                    'origin.name as origin_name',
+                    'origin.code as origin_code',
+                    'origin.municipality_name as origin_municipality',
 
-    public function store(
-        Request $request
-    ): RedirectResponse {
-        $validated = $request->validate([
-            'parcel_ids' => [
-                'required',
-                'array',
-                'min:1',
-            ],
-
-            'parcel_ids.*' => [
-                'integer',
-                'distinct',
-                'exists:logistics_parcels,id',
-            ],
-
-            'vehicle_type' => [
-                'required',
-                'string',
-                'max:50',
-            ],
-
-            'vehicle_plate' => [
-                'nullable',
-                'string',
-                'max:50',
-            ],
-
-            'driver_name' => [
-                'nullable',
-                'string',
-                'max:100',
-            ],
-
-            'notes' => [
-                'nullable',
-                'string',
-                'max:1000',
-            ],
-        ]);
-
-        $logistics =
-            CurrentLogisticsAccount::resolve($request);
-
-        DB::transaction(
-            function () use (
-                $validated,
-                $logistics
-            ): void {
-                $parcelIds = collect(
-                    $validated['parcel_ids']
+                    'destination.name as destination_name',
+                    'destination.code as destination_code',
+                    'destination.municipality_name as destination_municipality',
+                ])
+                ->orderByRaw(
+                    "
+                    CASE transfer.status
+                        WHEN 'in_transit' THEN 1
+                        WHEN 'preparing' THEN 2
+                        WHEN 'received' THEN 3
+                        ELSE 4
+                    END
+                    "
                 )
-                    ->map(fn ($id) => (int) $id)
-                    ->unique()
-                    ->values();
-
-                $parcels = DB::table(
-                    'logistics_parcels as parcel'
+                ->orderByDesc(
+                    'transfer.id'
                 )
+                ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Parcels belonging to existing transfers
+        |--------------------------------------------------------------------------
+        */
+
+        $transferParcels =
+            collect();
+
+        if ($transfers->isNotEmpty()) {
+            $transferParcels =
+                DB::table(
+                    'hub_transfer_parcels as item'
+                )
+                    ->join(
+                        'logistics_parcels as parcel',
+                        'parcel.id',
+                        '=',
+                        'item.logistics_parcel_id'
+                    )
                     ->join(
                         'marketplace_orders as orders',
                         'orders.id',
                         '=',
                         'parcel.marketplace_order_id'
                     )
-                    ->join(
-                        'delivery_route_stops as origin_stop',
-                        function ($join) {
-                            $join
-                                ->on(
-                                    'origin_stop.marketplace_order_id',
-                                    '=',
-                                    'orders.id'
-                                )
-                                ->where(
-                                    'origin_stop.stop_key',
-                                    '=',
-                                    'origin_facility'
-                                );
-                        }
-                    )
-                    ->join(
-                        'delivery_route_stops as destination_stop',
-                        function ($join) {
-                            $join
-                                ->on(
-                                    'destination_stop.marketplace_order_id',
-                                    '=',
-                                    'orders.id'
-                                )
-                                ->where(
-                                    'destination_stop.stop_key',
-                                    '=',
-                                    'destination_facility'
-                                );
-                        }
-                    )
                     ->whereIn(
-                        'parcel.id',
-                        $parcelIds->all()
-                    )
-                    ->where(
-                        'orders.logistics_account_id',
-                        $logistics->id
-                    )
-                    ->where(
-                        'parcel.status',
-                        'sorted'
+                        'item.hub_transfer_id',
+                        $transfers
+                            ->pluck('id')
+                            ->all()
                     )
                     ->select([
-                        'parcel.id',
-                        'origin_stop.logistics_facility_id as origin_id',
-                        'destination_stop.logistics_facility_id as destination_id',
+                        'item.hub_transfer_id',
+                        'item.logistics_parcel_id',
+
+                        'parcel.status as parcel_status',
+                        'parcel.sorting_zone',
+
+                        'orders.id as order_id',
+                        'orders.order_number',
+                        'orders.buyer_name',
+                        'orders.buyer_address',
+                        'orders.pickup_name',
+                        'orders.total',
                     ])
-                    ->lockForUpdate()
-                    ->get();
-
-                if (
-                    $parcels->count()
-                    !== $parcelIds->count()
-                ) {
-                    throw ValidationException::withMessages([
-                        'parcel_ids' =>
-                            'Some selected parcels are no longer available for transfer.',
-                    ]);
-                }
-
-                $routePairs = $parcels
-                    ->map(
-                        fn ($parcel) =>
-                            $parcel->origin_id
-                            . '|'
-                            . $parcel->destination_id
+                    ->orderBy(
+                        'orders.order_number'
                     )
-                    ->unique();
+                    ->get()
+                    ->groupBy(
+                        'hub_transfer_id'
+                    );
+        }
 
-                if ($routePairs->count() !== 1) {
-                    throw ValidationException::withMessages([
-                        'parcel_ids' =>
-                            'A Hub Transfer may only contain parcels with the same origin and destination hub.',
-                    ]);
-                }
+        /*
+        |--------------------------------------------------------------------------
+        | Stats
+        |--------------------------------------------------------------------------
+        */
 
-                $first = $parcels->first();
+        $today =
+            now('Asia/Manila')
+                ->toDateString();
 
-                $transferId = DB::table(
-                    'hub_transfers'
-                )->insertGetId([
-                    'logistics_account_id' =>
-                        $logistics->id,
+        $stats = [
+            'ready_parcels' =>
+                $readyGroups->sum(
+                    'parcel_count'
+                ),
 
-                    'origin_facility_id' =>
-                        $first->origin_id,
+            'ready_routes' =>
+                $readyGroups->count(),
 
-                    'destination_facility_id' =>
-                        $first->destination_id,
+            'preparing' =>
+                $transfers
+                    ->where(
+                        'status',
+                        'preparing'
+                    )
+                    ->count(),
 
-                    'transfer_code' =>
-                        'HT-'
-                        . now()->format('Ymd-His')
-                        . '-'
-                        . strtoupper(
-                            substr(
-                                bin2hex(random_bytes(3)),
+            'in_transit' =>
+                $transfers
+                    ->where(
+                        'status',
+                        'in_transit'
+                    )
+                    ->count(),
+
+            'received_today' =>
+                $transfers
+                    ->filter(
+                        function ($transfer) use (
+                            $today
+                        ): bool {
+                            if (
+                                $transfer->status
+                                !== 'received'
+                                ||
+                                blank(
+                                    $transfer
+                                        ->received_at
+                                )
+                            ) {
+                                return false;
+                            }
+
+                            return substr(
+                                (string) $transfer
+                                    ->received_at,
                                 0,
-                                6
+                                10
+                            ) === $today;
+                        }
+                    )
+                    ->count(),
+        ];
+
+        return view(
+            'logistics.hub-transfers',
+            compact(
+                'readyGroups',
+                'transfers',
+                'transferParcels',
+                'stats'
+            )
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create Transfer Manifest
+    |--------------------------------------------------------------------------
+    */
+
+    public function store(
+        Request $request
+    ): RedirectResponse {
+        $validated =
+            $request->validate([
+                'parcel_ids' => [
+                    'required',
+                    'array',
+                    'min:1',
+                    'max:300',
+                ],
+
+                'parcel_ids.*' => [
+                    'required',
+                    'integer',
+                    'distinct',
+                    'exists:logistics_parcels,id',
+                ],
+
+                'vehicle_type' => [
+                    'required',
+                    'string',
+                    'max:80',
+                ],
+
+                'vehicle_plate' => [
+                    'nullable',
+                    'string',
+                    'max:40',
+                ],
+
+                'driver_name' => [
+                    'required',
+                    'string',
+                    'max:140',
+                ],
+
+                'notes' => [
+                    'nullable',
+                    'string',
+                    'max:1500',
+                ],
+            ]);
+
+        $logistics =
+            $this->orderAccess
+                ->prepare($request);
+
+        $parcelIds =
+            collect(
+                $validated['parcel_ids']
+            )
+                ->map(
+                    fn ($id): int =>
+                        (int) $id
+                )
+                ->unique()
+                ->sort()
+                ->values();
+
+        $transferCode =
+            DB::transaction(
+                function () use (
+                    $parcelIds,
+                    $validated,
+                    $logistics
+                ): string {
+                    $parcels =
+                        LogisticsParcel::query()
+                            ->with([
+                                'order.deliveryRouteStops.facility',
+                            ])
+                            ->whereIn(
+                                'id',
+                                $parcelIds
+                                    ->all()
                             )
-                        ),
+                            ->where(
+                                'status',
+                                'sorted'
+                            )
+                            ->whereHas(
+                                'order',
+                                fn ($query) =>
+                                    $query->where(
+                                        'logistics_account_id',
+                                        $logistics->id
+                                    )
+                            )
+                            ->orderBy('id')
+                            ->lockForUpdate()
+                            ->get();
 
-                    'vehicle_type' =>
-                        $validated['vehicle_type'],
+                    if (
+                        $parcels->count()
+                        !==
+                        $parcelIds->count()
+                    ) {
+                        throw ValidationException::withMessages([
+                            'parcel_ids' =>
+                                'One or more parcels are no longer available for Hub Transfer. Refresh the page.',
+                        ]);
+                    }
 
-                    'vehicle_plate' =>
-                        $validated['vehicle_plate']
-                        ?? null,
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Parcels must share one origin and one destination
+                    |--------------------------------------------------------------------------
+                    */
 
-                    'driver_name' =>
-                        $validated['driver_name']
-                        ?? null,
+                    $routePairs =
+                        $parcels
+                            ->map(
+                                function (
+                                    LogisticsParcel $parcel
+                                ): string {
+                                    $stops =
+                                        $parcel
+                                            ->order
+                                            ?->deliveryRouteStops
+                                            ?->keyBy(
+                                                'stop_key'
+                                            )
+                                        ?? collect();
 
-                    'notes' =>
-                        $validated['notes']
-                        ?? null,
+                                    $origin =
+                                        $stops->get(
+                                            'origin_facility'
+                                        );
 
-                    'status' =>
-                        'preparing',
+                                    $destination =
+                                        $stops->get(
+                                            'destination_facility'
+                                        );
 
-                    'created_at' =>
-                        now(),
+                                    if (
+                                        ! $origin
+                                        ||
+                                        ! $destination
+                                        ||
+                                        ! $origin
+                                            ->logistics_facility_id
+                                        ||
+                                        ! $destination
+                                            ->logistics_facility_id
+                                    ) {
+                                        throw ValidationException::withMessages([
+                                            'parcel_ids' =>
+                                                'One or more parcels do not have a complete Hub route.',
+                                        ]);
+                                    }
 
-                    'updated_at' =>
-                        now(),
-                ]);
+                                    if (
+                                        (int) $origin
+                                            ->logistics_facility_id
+                                        ===
+                                        (int) $destination
+                                            ->logistics_facility_id
+                                    ) {
+                                        throw ValidationException::withMessages([
+                                            'parcel_ids' =>
+                                                'A Hub Transfer requires different origin and destination facilities.',
+                                        ]);
+                                    }
 
-                foreach ($parcelIds as $parcelId) {
+                                    return
+                                        (int) $origin
+                                            ->logistics_facility_id
+                                        . ':'
+                                        . (int) $destination
+                                            ->logistics_facility_id;
+                                }
+                            )
+                            ->unique()
+                            ->values();
+
+                    if (
+                        $routePairs->count()
+                        !== 1
+                    ) {
+                        throw ValidationException::withMessages([
+                            'parcel_ids' =>
+                                'All parcels in one manifest must have the same origin and destination hubs.',
+                        ]);
+                    }
+
+                    [$originFacilityId, $destinationFacilityId] =
+                        array_map(
+                            'intval',
+                            explode(
+                                ':',
+                                $routePairs->first()
+                            )
+                        );
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Facilities must belong to Logistics account
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $facilityCount =
+                        DB::table(
+                            'logistics_facilities'
+                        )
+                            ->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            )
+                            ->whereIn(
+                                'id',
+                                [
+                                    $originFacilityId,
+                                    $destinationFacilityId,
+                                ]
+                            )
+                            ->count();
+
+                    if (
+                        $facilityCount !== 2
+                    ) {
+                        throw ValidationException::withMessages([
+                            'parcel_ids' =>
+                                'The selected Hub route does not belong to this Logistics network.',
+                        ]);
+                    }
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Create transfer
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $transferCode =
+                        $this
+                            ->generateTransferCode();
+
+                    $transferId =
+                        DB::table(
+                            'hub_transfers'
+                        )
+                            ->insertGetId([
+                                'logistics_account_id' =>
+                                    $logistics->id,
+
+                                'origin_facility_id' =>
+                                    $originFacilityId,
+
+                                'destination_facility_id' =>
+                                    $destinationFacilityId,
+
+                                'transfer_code' =>
+                                    $transferCode,
+
+                                'vehicle_type' =>
+                                    trim(
+                                        $validated[
+                                            'vehicle_type'
+                                        ]
+                                    ),
+
+                                'vehicle_plate' =>
+                                    filled(
+                                        $validated[
+                                            'vehicle_plate'
+                                        ] ?? null
+                                    )
+                                        ? strtoupper(
+                                            trim(
+                                                $validated[
+                                                    'vehicle_plate'
+                                                ]
+                                            )
+                                        )
+                                        : null,
+
+                                'driver_name' =>
+                                    trim(
+                                        $validated[
+                                            'driver_name'
+                                        ]
+                                    ),
+
+                                'status' =>
+                                    'preparing',
+
+                                'notes' =>
+                                    filled(
+                                        $validated[
+                                            'notes'
+                                        ] ?? null
+                                    )
+                                        ? trim(
+                                            $validated[
+                                                'notes'
+                                            ]
+                                        )
+                                        : null,
+
+                                'dispatched_at' =>
+                                    null,
+
+                                'received_at' =>
+                                    null,
+
+                                'created_at' =>
+                                    now(),
+
+                                'updated_at' =>
+                                    now(),
+                            ]);
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Attach parcels
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $pivotRows =
+                        $parcelIds
+                            ->map(
+                                fn (int $parcelId): array => [
+                                    'hub_transfer_id' =>
+                                        $transferId,
+
+                                    'logistics_parcel_id' =>
+                                        $parcelId,
+
+                                    'created_at' =>
+                                        now(),
+
+                                    'updated_at' =>
+                                        now(),
+                                ]
+                            )
+                            ->all();
+
                     DB::table(
                         'hub_transfer_parcels'
-                    )->insert([
-                        'hub_transfer_id' =>
-                            $transferId,
+                    )->insert(
+                        $pivotRows
+                    );
 
-                        'logistics_parcel_id' =>
-                            $parcelId,
+                    LogisticsParcel::query()
+                        ->whereIn(
+                            'id',
+                            $parcelIds
+                                ->all()
+                        )
+                        ->update([
+                            'status' =>
+                                'linehaul_assigned',
 
-                        'created_at' =>
-                            now(),
+                            'updated_at' =>
+                                now(),
+                        ]);
 
-                        'updated_at' =>
-                            now(),
-                    ]);
-                }
-
-                DB::table('logistics_parcels')
-                    ->whereIn(
-                        'id',
-                        $parcelIds->all()
-                    )
-                    ->update([
-                        'status' =>
-                            'linehaul_assigned',
-
-                        'updated_at' =>
-                            now(),
-                    ]);
-            }
-        );
+                    return $transferCode;
+                },
+                3
+            );
 
         return back()->with(
             'success',
-            'Hub Transfer created successfully.'
+            'Transfer '
+                . $transferCode
+                . ' created successfully. Review the manifest before dispatch.'
         );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dispatch Transfer
+    |--------------------------------------------------------------------------
+    */
 
     public function dispatch(
         Request $request,
         int $transfer
     ): RedirectResponse {
         $logistics =
-            CurrentLogisticsAccount::resolve($request);
+            $this->orderAccess
+                ->prepare($request);
 
-        DB::transaction(
-            function () use (
-                $logistics,
-                $transfer
-            ): void {
-                $hubTransfer = DB::table(
-                    'hub_transfers'
-                )
-                    ->where(
-                        'id',
-                        $transfer
+        $code =
+            DB::transaction(
+                function () use (
+                    $transfer,
+                    $logistics
+                ): string {
+                    $record =
+                        DB::table(
+                            'hub_transfers'
+                        )
+                            ->where(
+                                'id',
+                                $transfer
+                            )
+                            ->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            )
+                            ->lockForUpdate()
+                            ->first();
+
+                    if (! $record) {
+                        abort(404);
+                    }
+
+                    if (
+                        $record->status
+                        !== 'preparing'
+                    ) {
+                        throw ValidationException::withMessages([
+                            'transfer' =>
+                                'Only a preparing transfer can be dispatched.',
+                        ]);
+                    }
+
+                    $parcelIds =
+                        DB::table(
+                            'hub_transfer_parcels'
+                        )
+                            ->where(
+                                'hub_transfer_id',
+                                $record->id
+                            )
+                            ->pluck(
+                                'logistics_parcel_id'
+                            );
+
+                    if (
+                        $parcelIds->isEmpty()
+                    ) {
+                        throw ValidationException::withMessages([
+                            'transfer' =>
+                                'This transfer manifest does not contain any parcels.',
+                        ]);
+                    }
+
+                    $validCount =
+                        LogisticsParcel::query()
+                            ->whereIn(
+                                'id',
+                                $parcelIds
+                                    ->all()
+                            )
+                            ->where(
+                                'status',
+                                'linehaul_assigned'
+                            )
+                            ->lockForUpdate()
+                            ->count();
+
+                    if (
+                        $validCount
+                        !==
+                        $parcelIds->count()
+                    ) {
+                        throw ValidationException::withMessages([
+                            'transfer' =>
+                                'One or more manifest parcels are not ready for dispatch.',
+                        ]);
+                    }
+
+                    DB::table(
+                        'hub_transfers'
                     )
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
-                    ->lockForUpdate()
-                    ->first();
+                        ->where(
+                            'id',
+                            $record->id
+                        )
+                        ->update([
+                            'status' =>
+                                'in_transit',
 
-                abort_unless(
-                    $hubTransfer,
-                    404
-                );
+                            'dispatched_at' =>
+                                now(),
 
-                if (
-                    $hubTransfer->status
-                    !== 'preparing'
-                ) {
-                    throw ValidationException::withMessages([
-                        'transfer' =>
-                            'This Hub Transfer cannot be dispatched.',
-                    ]);
-                }
+                            'updated_at' =>
+                                now(),
+                        ]);
 
-                DB::table('hub_transfers')
-                    ->where(
-                        'id',
-                        $transfer
-                    )
-                    ->update([
-                        'status' =>
-                            'in_transit',
+                    LogisticsParcel::query()
+                        ->whereIn(
+                            'id',
+                            $parcelIds
+                                ->all()
+                        )
+                        ->update([
+                            'status' =>
+                                'linehaul_in_transit',
 
-                        'dispatched_at' =>
-                            now(),
+                            'updated_at' =>
+                                now(),
+                        ]);
 
-                        'updated_at' =>
-                            now(),
-                    ]);
-
-                $parcelIds = DB::table(
-                    'hub_transfer_parcels'
-                )
-                    ->where(
-                        'hub_transfer_id',
-                        $transfer
-                    )
-                    ->pluck(
-                        'logistics_parcel_id'
-                    );
-
-                DB::table('logistics_parcels')
-                    ->whereIn(
-                        'id',
-                        $parcelIds
-                    )
-                    ->update([
-                        'status' =>
-                            'linehaul_in_transit',
-
-                        'updated_at' =>
-                            now(),
-                    ]);
-            }
-        );
+                    return
+                        $record
+                            ->transfer_code;
+                },
+                3
+            );
 
         return back()->with(
             'success',
-            'Hub Transfer dispatched.'
+            'Transfer '
+                . $code
+                . ' has departed the origin hub.'
         );
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Destination Hub Receipt
+    |--------------------------------------------------------------------------
+    */
 
     public function receive(
         Request $request,
         int $transfer
     ): RedirectResponse {
         $logistics =
-            CurrentLogisticsAccount::resolve($request);
+            $this->orderAccess
+                ->prepare($request);
 
-        DB::transaction(
-            function () use (
-                $logistics,
-                $transfer
-            ): void {
-                $hubTransfer = DB::table(
-                    'hub_transfers'
-                )
-                    ->where(
-                        'id',
-                        $transfer
+        $code =
+            DB::transaction(
+                function () use (
+                    $transfer,
+                    $logistics
+                ): string {
+                    $record =
+                        DB::table(
+                            'hub_transfers'
+                        )
+                            ->where(
+                                'id',
+                                $transfer
+                            )
+                            ->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            )
+                            ->lockForUpdate()
+                            ->first();
+
+                    if (! $record) {
+                        abort(404);
+                    }
+
+                    if (
+                        $record->status
+                        !== 'in_transit'
+                    ) {
+                        throw ValidationException::withMessages([
+                            'transfer' =>
+                                'Only an in-transit Hub Transfer can be received.',
+                        ]);
+                    }
+
+                    $parcelIds =
+                        DB::table(
+                            'hub_transfer_parcels'
+                        )
+                            ->where(
+                                'hub_transfer_id',
+                                $record->id
+                            )
+                            ->pluck(
+                                'logistics_parcel_id'
+                            );
+
+                    $validCount =
+                        LogisticsParcel::query()
+                            ->whereIn(
+                                'id',
+                                $parcelIds
+                                    ->all()
+                            )
+                            ->where(
+                                'status',
+                                'linehaul_in_transit'
+                            )
+                            ->lockForUpdate()
+                            ->count();
+
+                    if (
+                        $validCount
+                        !==
+                        $parcelIds->count()
+                    ) {
+                        throw ValidationException::withMessages([
+                            'transfer' =>
+                                'One or more parcels are not in the expected linehaul state.',
+                        ]);
+                    }
+
+                    DB::table(
+                        'hub_transfers'
                     )
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
-                    ->lockForUpdate()
-                    ->first();
+                        ->where(
+                            'id',
+                            $record->id
+                        )
+                        ->update([
+                            'status' =>
+                                'received',
 
-                abort_unless(
-                    $hubTransfer,
-                    404
-                );
+                            'received_at' =>
+                                now(),
 
-                if (
-                    $hubTransfer->status
-                    !== 'in_transit'
-                ) {
-                    throw ValidationException::withMessages([
-                        'transfer' =>
-                            'Only an in-transit Hub Transfer may be received.',
-                    ]);
-                }
+                            'updated_at' =>
+                                now(),
+                        ]);
 
-                DB::table('hub_transfers')
-                    ->where(
-                        'id',
-                        $transfer
-                    )
-                    ->update([
-                        'status' =>
-                            'received',
+                    LogisticsParcel::query()
+                        ->whereIn(
+                            'id',
+                            $parcelIds
+                                ->all()
+                        )
+                        ->update([
+                            'status' =>
+                                'destination_received',
 
-                        'received_at' =>
-                            now(),
+                            'updated_at' =>
+                                now(),
+                        ]);
 
-                        'updated_at' =>
-                            now(),
-                    ]);
-
-                $parcelIds = DB::table(
-                    'hub_transfer_parcels'
-                )
-                    ->where(
-                        'hub_transfer_id',
-                        $transfer
-                    )
-                    ->pluck(
-                        'logistics_parcel_id'
-                    );
-
-                DB::table('logistics_parcels')
-                    ->whereIn(
-                        'id',
-                        $parcelIds
-                    )
-                    ->update([
-                        'status' =>
-                            'destination_received',
-
-                        'updated_at' =>
-                            now(),
-                    ]);
-            }
-        );
+                    return
+                        $record
+                            ->transfer_code;
+                },
+                3
+            );
 
         return back()->with(
             'success',
-            'Transfer received at destination hub.'
+            'Transfer '
+                . $code
+                . ' was received at the destination hub. Parcels are ready for Last-Mile Assignment.'
         );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Transfer Code
+    |--------------------------------------------------------------------------
+    */
+
+    private function generateTransferCode(): string
+    {
+        do {
+            $code =
+                'HT-'
+                . now()
+                    ->format('ymd')
+                . '-'
+                . Str::upper(
+                    Str::random(5)
+                );
+        } while (
+            DB::table(
+                'hub_transfers'
+            )
+                ->where(
+                    'transfer_code',
+                    $code
+                )
+                ->exists()
+        );
+
+        return $code;
     }
 }

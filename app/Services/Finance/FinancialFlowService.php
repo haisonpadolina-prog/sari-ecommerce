@@ -21,44 +21,98 @@ class FinancialFlowService
      *
      * This method recognizes obligations and earnings. It does not claim that
      * seller or rider funds were externally transferred by a bank/e-wallet.
+     *
+     * When $riderEarningCourierId is provided, the delivery fee belongs to that
+     * CourierAccount instead of the historical marketplace_orders.courier_email
+     * snapshot.
+     *
+     * Logistics last-mile delivery uses this so that the final-mile Rider gets
+     * the delivery fee while the Seller-pickup Rider remains preserved as an
+     * operational snapshot on the MarketplaceOrder.
      */
     public function recordCompletedOrder(
         MarketplaceOrder $order,
-        string $source = 'order_workflow_delivery'
+        string $source = 'order_workflow_delivery',
+        ?int $riderEarningCourierId = null
     ): array {
-        return DB::transaction(function () use ($order, $source): array {
-            $locked = MarketplaceOrder::query()
-                ->whereKey($order->getKey())
-                ->lockForUpdate()
-                ->firstOrFail();
+        return DB::transaction(
+            function () use (
+                $order,
+                $source,
+                $riderEarningCourierId
+            ): array {
+                $locked = MarketplaceOrder::query()
+                    ->whereKey(
+                        $order->getKey()
+                    )
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
-            if ($locked->status !== 'delivered' || !$locked->delivered_at) {
-                throw ValidationException::withMessages([
-                    'order' => 'Financial completion requires a delivered order.',
-                ]);
+                if (
+                    $locked->status !== 'delivered'
+                    || ! $locked->delivered_at
+                ) {
+                    throw ValidationException::withMessages([
+                        'order' =>
+                            'Financial completion requires a delivered order.',
+                    ]);
+                }
+
+                if (
+                    strtolower(
+                        (string) $locked->payment_status
+                    ) !== 'paid'
+                ) {
+                    throw ValidationException::withMessages([
+                        'payment' =>
+                            'Financial completion requires a paid order.',
+                    ]);
+                }
+
+                $commission =
+                    $this->commissions
+                        ->recordForDeliveredOrder(
+                            $locked,
+                            $source
+                        );
+
+                $payment =
+                    $this->payments
+                        ->recordCompletedOrderCollection(
+                            $locked,
+                            $source
+                        );
+
+                $sellerSettlement =
+                    $this->sellerSettlements
+                        ->recordForCompletedOrder(
+                            $locked,
+                            $commission,
+                            $source
+                        );
+
+                $riderEarning =
+                    $this->riderEarnings
+                        ->recordForCompletedOrder(
+                            $locked,
+                            $source,
+                            $riderEarningCourierId
+                        );
+
+                return [
+                    'commission' =>
+                        $commission,
+
+                    'payment' =>
+                        $payment,
+
+                    'seller_settlement' =>
+                        $sellerSettlement,
+
+                    'rider_earning' =>
+                        $riderEarning,
+                ];
             }
-
-            if (strtolower((string) $locked->payment_status) !== 'paid') {
-                throw ValidationException::withMessages([
-                    'payment' => 'Financial completion requires a paid order.',
-                ]);
-            }
-
-            $commission = $this->commissions->recordForDeliveredOrder($locked, $source);
-            $payment = $this->payments->recordCompletedOrderCollection($locked, $source);
-            $sellerSettlement = $this->sellerSettlements->recordForCompletedOrder(
-                $locked,
-                $commission,
-                $source
-            );
-            $riderEarning = $this->riderEarnings->recordForCompletedOrder($locked, $source);
-
-            return [
-                'commission' => $commission,
-                'payment' => $payment,
-                'seller_settlement' => $sellerSettlement,
-                'rider_earning' => $riderEarning,
-            ];
-        });
+        );
     }
 }

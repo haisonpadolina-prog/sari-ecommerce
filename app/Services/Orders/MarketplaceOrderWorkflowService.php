@@ -2,10 +2,9 @@
 
 namespace App\Services\Orders;
 
-use App\Services\Finance\FinancialFlowService;
-
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Orders\MarketplaceOrderEvent;
+use App\Services\Finance\FinancialFlowService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -23,7 +22,8 @@ class MarketplaceOrderWorkflowService
         string $title,
         string $message,
         string $audience = 'seller',
-        array $extra = []
+        array $extra = [],
+        ?int $riderEarningCourierId = null
     ): MarketplaceOrder {
         return DB::transaction(function () use (
             $order,
@@ -32,7 +32,8 @@ class MarketplaceOrderWorkflowService
             $title,
             $message,
             $audience,
-            $extra
+            $extra,
+            $riderEarningCourierId
         ) {
             $locked = MarketplaceOrder::query()
                 ->whereKey($order->id)
@@ -41,28 +42,44 @@ class MarketplaceOrderWorkflowService
 
             if ($locked->status !== $expectedStatus) {
                 throw ValidationException::withMessages([
-                    'order' => 'This order already changed. Current status: ' . $locked->statusLabel() . '.',
+                    'order' =>
+                        'This order already changed. Current status: '
+                        . $locked->statusLabel()
+                        . '.',
                 ]);
             }
 
-            $locked->forceFill(array_merge([
-                'status' => $newStatus,
-            ], $extra))->save();
+            $locked->forceFill(
+                array_merge(
+                    [
+                        'status' => $newStatus,
+                    ],
+                    $extra
+                )
+            )->save();
 
             MarketplaceOrderEvent::create([
-                'marketplace_order_id' => $locked->id,
-                'seller_account_id' => $locked->seller_account_id,
-                'audience' => $audience,
-                'type' => $newStatus,
-                'title' => $title,
-                'message' => $message,
-                'status' => $newStatus,
+                'marketplace_order_id' =>
+                    $locked->id,
+                'seller_account_id' =>
+                    $locked->seller_account_id,
+                'audience' =>
+                    $audience,
+                'type' =>
+                    $newStatus,
+                'title' =>
+                    $title,
+                'message' =>
+                    $message,
+                'status' =>
+                    $newStatus,
             ]);
 
             if ($newStatus === 'delivered') {
                 $this->finance->recordCompletedOrder(
                     $locked,
-                    'order_workflow_delivery'
+                    'order_workflow_delivery',
+                    $riderEarningCourierId
                 );
             }
 
@@ -84,13 +101,20 @@ class MarketplaceOrderWorkflowService
         string $message
     ): void {
         MarketplaceOrderEvent::create([
-            'marketplace_order_id' => $order->id,
-            'seller_account_id' => $order->seller_account_id,
-            'audience' => $audience,
-            'type' => $type,
-            'title' => $title,
-            'message' => $message,
-            'status' => $order->status,
+            'marketplace_order_id' =>
+                $order->id,
+            'seller_account_id' =>
+                $order->seller_account_id,
+            'audience' =>
+                $audience,
+            'type' =>
+                $type,
+            'title' =>
+                $title,
+            'message' =>
+                $message,
+            'status' =>
+                $order->status,
         ]);
     }
 }
