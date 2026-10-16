@@ -1,0 +1,1963 @@
+/*
+|--------------------------------------------------------------------------
+| SARI LOGISTICS — LAST-MILE ASSIGNMENT
+|--------------------------------------------------------------------------
+|
+| Seller-inspired destination hub dispatch workspace.
+|
+*/
+
+
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+
+.lastmile-page {
+    --lm-ink: #302a23;
+    --lm-soft: #51483d;
+
+    --lm-muted: #8f877d;
+    --lm-muted-light: #aaa198;
+
+    --lm-line: #e8e2da;
+    --lm-line-soft: #f0ebe4;
+
+    --lm-gold: #d89b10;
+    --lm-gold-dark: #b97805;
+
+    --lm-green: #327a53;
+    --lm-green-soft: #f1faf5;
+
+    --lm-blue: #4f7899;
+    --lm-blue-soft: #f1f6fb;
+
+    --lm-red: #b75b55;
+    --lm-red-soft: #fff5f4;
+
+    width: 100%;
+    max-width: 1800px;
+
+    margin-inline: auto;
+    padding-bottom: 26px;
+
+    color: var(--lm-ink);
+
+    font-family:
+        "Poppins",
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+
+.lastmile-page *,
+.lastmile-page *::before,
+.lastmile-page *::after {
+    box-sizing: border-box;
+}
+
+
+.lastmile-page [hidden] {
+    display: none !important;
+}
+
+
+.lastmile-page button,
+.lastmile-page input,
+.lastmile-page select,
+.lastmile-page textarea {
+    font: inherit;
+}
+
+
+.lastmile-page button,
+.lastmile-page summary {
+    cursor: pointer;
+}
+
+
+.lastmile-page button:disabled,
+.lastmile-page select:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+
+.lastmile-page :is(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    summary
+):focus-visible {
+    outline: 2px solid rgba(216, 155, 16, .72);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.lastmile-page-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 116px;
+
+    gap: 24px;
+
+    margin-bottom: 14px;
+    padding: 17px 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #2f2a23;
+    border-radius: 19px;
+
+    background:
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(216, 155, 16, .13) 0,
+            rgba(216, 155, 16, .06) 21%,
+            transparent 42%
+        ),
+        linear-gradient(
+            135deg,
+            #211f1c 0%,
+            #25231f 48%,
+            #1b1917 100%
+        );
+
+    box-shadow:
+        0 8px 22px rgba(20, 17, 13, .08);
+}
+
+
+.lastmile-page-header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    right: -72px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border:
+        1px solid rgba(216, 155, 16, .12);
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 0 0 24px rgba(216, 155, 16, .035),
+        0 0 0 50px rgba(216, 155, 16, .018);
+
+    pointer-events: none;
+}
+
+
+.lastmile-page-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+.lastmile-eyebrow {
+    margin: 0 0 5px;
+
+    color: #ab8950;
+
+    font-size: 7px;
+    line-height: 1.2;
+    font-weight: 600;
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+
+.lastmile-page-header
+.lastmile-eyebrow {
+    color: rgba(226, 161, 15, .92);
+}
+
+
+.lastmile-page-header h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(19px, 1.55vw, 23px);
+    line-height: 1.12;
+    font-weight: 600;
+
+    letter-spacing: -.038em;
+}
+
+
+.lastmile-page-header h1 span {
+    color: #e2a10f;
+}
+
+
+.lastmile-subtitle {
+    max-width: 690px;
+
+    margin: 6px 0 0;
+
+    color: rgba(255, 255, 255, .57);
+
+    font-size: 8.5px;
+    line-height: 1.65;
+}
+
+
+.lastmile-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.lastmile-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    border: 1px solid #dfd7cc;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #62594f;
+
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 600;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        background-color .16s ease,
+        border-color .16s ease,
+        color .16s ease,
+        transform .16s ease;
+}
+
+
+.lastmile-button:hover {
+    transform: translateY(-1px);
+
+    border-color: #d7c49c;
+
+    background: #fffaf1;
+
+    color: #946611;
+}
+
+
+.lastmile-button-primary {
+    border-color: var(--lm-gold);
+
+    background: var(--lm-gold);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 13px rgba(215, 144, 4, .14);
+}
+
+
+.lastmile-button-primary:hover {
+    border-color: #c68908;
+
+    background: #c68908;
+
+    color: #ffffff;
+}
+
+
+.lastmile-page-header
+.lastmile-button:not(
+    .lastmile-button-primary
+) {
+    border-color:
+        rgba(255, 255, 255, .13);
+
+    background:
+        rgba(255, 255, 255, .055);
+
+    color:
+        rgba(255, 255, 255, .82);
+}
+
+
+/* ==========================================================================
+   ALERTS
+   ========================================================================== */
+
+.lastmile-alert {
+    margin-bottom: 14px;
+    padding: 13px 16px;
+
+    border: 1px solid;
+    border-radius: 14px;
+}
+
+
+.lastmile-alert strong {
+    display: block;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+.lastmile-alert p {
+    margin: 3px 0 0;
+
+    font-size: 8px;
+}
+
+
+.lastmile-alert ul {
+    margin: 5px 0 0;
+    padding-left: 18px;
+
+    font-size: 8px;
+}
+
+
+.lastmile-alert-success {
+    border-color: #c9e0d2;
+
+    background: var(--lm-green-soft);
+
+    color: #427259;
+}
+
+
+.lastmile-alert-danger {
+    border-color: #ebd1ce;
+
+    background: var(--lm-red-soft);
+
+    color: #a65353;
+}
+
+
+/* ==========================================================================
+   SUMMARY
+   ========================================================================== */
+
+.lastmile-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.lastmile-stat {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 14px 15px 13px;
+
+    border: 1px solid var(--lm-line);
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 16px rgba(39, 31, 22, .025);
+}
+
+
+.lastmile-stat::after {
+    content: "";
+
+    position: absolute;
+
+    right: 13px;
+    top: 13px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 999px;
+
+    background: #a79e93;
+}
+
+
+.lastmile-stat p {
+    margin: 0;
+
+    color: #81786e;
+
+    font-size: 7px;
+    font-weight: 600;
+
+    letter-spacing: .085em;
+    text-transform: uppercase;
+}
+
+
+.lastmile-stat strong {
+    display: block;
+
+    margin: 5px 0 2px;
+
+    color: #302a23;
+
+    font-size: 23px;
+    line-height: 1.12;
+    font-weight: 600;
+
+    letter-spacing: -.035em;
+}
+
+
+.lastmile-stat span {
+    color: #978f85;
+
+    font-size: 7px;
+}
+
+
+.lastmile-stat-amber {
+    border-color: #eadfc9;
+}
+
+
+.lastmile-stat-amber::after {
+    background: #d89b10;
+}
+
+
+.lastmile-stat-amber strong {
+    color: #ad7713;
+}
+
+
+.lastmile-stat-blue {
+    border-color: #d7e3ed;
+}
+
+
+.lastmile-stat-blue::after {
+    background: #6c8fb5;
+}
+
+
+.lastmile-stat-blue strong {
+    color: #587b99;
+}
+
+
+.lastmile-stat-green {
+    border-color: #d5e5da;
+}
+
+
+.lastmile-stat-green::after {
+    background: #63a375;
+}
+
+
+.lastmile-stat-green strong {
+    color: #4f7c5b;
+}
+
+
+/* ==========================================================================
+   FLOW
+   ========================================================================== */
+
+.lastmile-flow {
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+    max-width: 100%;
+
+    gap: 4px;
+
+    margin: 13px 0;
+    padding: 5px;
+
+    border: 1px solid var(--lm-line);
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+.lastmile-flow :is(a, span) {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 31px;
+
+    gap: 7px;
+
+    padding: 4px 9px;
+
+    border-radius: 8px;
+
+    color: #938a80;
+
+    font-size: 7.5px;
+    font-weight: 500;
+
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+
+.lastmile-flow a:hover {
+    background: #faf7f1;
+
+    color: #796647;
+}
+
+
+.lastmile-flow b {
+    display: grid;
+
+    width: 20px;
+    height: 20px;
+
+    place-items: center;
+
+    border: 1px solid #e5ded5;
+    border-radius: 999px;
+
+    background: #ffffff;
+
+    color: #948a7f;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-flow .is-current {
+    background: #fff6df;
+
+    color: #9c6a0e;
+
+    font-weight: 600;
+}
+
+
+.lastmile-flow .is-current b {
+    border-color: #e4c681;
+
+    background: #e3a41a;
+
+    color: #ffffff;
+}
+
+
+/* ==========================================================================
+   WORKSPACE
+   ========================================================================== */
+
+.lastmile-workspace {
+    overflow: hidden;
+
+    border: 1px solid var(--lm-line);
+    border-radius: 19px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 18px rgba(33, 24, 14, .03);
+}
+
+
+.lastmile-assignment-history {
+    margin-top: 14px;
+}
+
+
+/* ==========================================================================
+   TOOLBAR
+   ========================================================================== */
+
+.lastmile-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 16px 18px 13px;
+}
+
+
+.lastmile-toolbar h2 {
+    margin: 0;
+
+    color: #302a23;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.lastmile-toolbar p {
+    margin: 3px 0 0;
+
+    color: var(--lm-muted);
+
+    font-size: 7.5px;
+}
+
+
+.lastmile-search {
+    width: min(290px, 100%);
+
+    flex-shrink: 0;
+}
+
+
+.lastmile-search input {
+    width: 100%;
+    height: 36px;
+
+    padding: 8px 11px;
+
+    border: 1px solid #e5ded5;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: var(--lm-ink);
+
+    font-size: 7.5px;
+
+    outline: none;
+}
+
+
+.lastmile-search input::placeholder {
+    color: #aaa198;
+}
+
+
+.lastmile-search input:focus {
+    border-color: #d6b46d;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(216, 155, 16, .075);
+}
+
+
+/* ==========================================================================
+   FILTERS
+   ========================================================================== */
+
+.lastmile-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding:
+        0
+        18px
+        13px;
+
+    border-bottom: 1px solid var(--lm-line);
+}
+
+
+.lastmile-tabs {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+
+.lastmile-tabs button {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 30px;
+
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #887f75;
+
+    font-size: 7.5px;
+}
+
+
+.lastmile-tabs button:hover {
+    background: #faf7f1;
+}
+
+
+.lastmile-tabs
+button[aria-pressed="true"] {
+    border-color: #ead7b3;
+
+    background: #fff6e5;
+
+    color: #a07121;
+
+    font-weight: 600;
+}
+
+
+.lastmile-tabs span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 21px;
+    height: 18px;
+
+    padding-inline: 5px;
+
+    border-radius: 6px;
+
+    background: #f0ece6;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-tabs
+button[aria-pressed="true"]
+span {
+    background: #ecd8ad;
+}
+
+
+/* ==========================================================================
+   TEXT LINK
+   ========================================================================== */
+
+.lastmile-text-link {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #b2770f;
+
+    font-size: 7.5px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.lastmile-text-link:hover {
+    color: #84580a;
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   DELIVERY AREA LIST
+   ========================================================================== */
+
+.lastmile-area-list {
+    display: grid;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    background: #f7f7f6;
+}
+
+
+.lastmile-area-card {
+    overflow: hidden;
+
+    border: 1px solid var(--lm-line);
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px rgba(43, 33, 21, .022);
+
+    transition:
+        border-color .16s ease,
+        box-shadow .16s ease;
+}
+
+
+.lastmile-area-card:hover {
+    border-color: #d8ccb9;
+
+    box-shadow:
+        0 10px 26px rgba(43, 33, 21, .045);
+}
+
+
+/* ==========================================================================
+   AREA HEADER
+   ========================================================================== */
+
+.lastmile-area-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    min-height: 68px;
+
+    padding: 13px 16px;
+
+    border-bottom: 1px solid var(--lm-line);
+}
+
+
+.lastmile-area-title {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 11px;
+}
+
+
+.lastmile-area-icon {
+    display: grid;
+
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    place-items: center;
+
+    border: 1px solid #ead8b4;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff7e9,
+            #fff2d5
+        );
+
+    color: #ad781b;
+
+    font-size: 8px;
+    font-weight: 600;
+}
+
+
+.lastmile-area-title h3 {
+    margin: 0;
+
+    color: #373029;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+.lastmile-area-title
+.lastmile-eyebrow {
+    margin-bottom: 2px;
+
+    font-size: 5.8px;
+}
+
+
+.lastmile-area-title p {
+    margin: 2px 0 0;
+
+    color: #8f8579;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-area-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+
+.lastmile-area-tags span {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 23px;
+
+    padding: 4px 8px;
+
+    border: 1px solid #e9e2d8;
+    border-radius: 999px;
+
+    background: #faf8f4;
+
+    color: #83796d;
+
+    font-size: 6.5px;
+    font-weight: 600;
+}
+
+
+.lastmile-area-tags
+.is-serviceable {
+    border-color: #d5e5da;
+
+    background: #f0f8f2;
+
+    color: #4f7c5b;
+}
+
+
+.lastmile-area-tags
+.is-unserved {
+    border-color: #ecd5cf;
+
+    background: #fff4f2;
+
+    color: #a85f58;
+}
+
+
+/* ==========================================================================
+   AREA LAYOUT
+   ========================================================================== */
+
+.lastmile-area-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        275px;
+}
+
+
+.lastmile-area-main {
+    min-width: 0;
+
+    padding: 15px 16px;
+}
+
+
+.lastmile-dispatch-panel {
+    padding: 16px;
+
+    border-left: 1px solid var(--lm-line);
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffdf8,
+            #fbf8f1
+        );
+}
+
+
+/* ==========================================================================
+   ROUTE SUMMARY
+   ========================================================================== */
+
+.lastmile-route-summary {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        minmax(0, 1fr);
+
+    gap: 14px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid var(--lm-line-soft);
+}
+
+
+.lastmile-route-summary strong {
+    display: block;
+
+    color: #4b433a;
+
+    font-size: 8px;
+    font-weight: 600;
+}
+
+
+.lastmile-route-summary p {
+    margin: 3px 0 0;
+
+    color: #91877b;
+
+    font-size: 7px;
+}
+
+
+.lastmile-route-arrow {
+    display: grid;
+
+    width: 27px;
+    height: 27px;
+
+    place-items: center;
+
+    align-self: center;
+
+    border: 1px solid #eadfcf;
+    border-radius: 999px;
+
+    background: #fffaf1;
+
+    color: #c4963f;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================================================
+   LABEL
+   ========================================================================== */
+
+.lastmile-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #a08e75;
+
+    font-size: 6px;
+    font-weight: 600;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   PARCELS
+   ========================================================================== */
+
+.lastmile-parcel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin: 13px 0 9px;
+}
+
+
+.lastmile-parcel-heading h4 {
+    margin: 0;
+
+    color: #4c443b;
+
+    font-size: 8px;
+    font-weight: 600;
+}
+
+
+.lastmile-parcel-heading p {
+    margin: 2px 0 0;
+
+    color: #978d80;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-parcel-heading > span {
+    min-width: 22px;
+
+    padding: 3px 6px;
+
+    border-radius: 6px;
+
+    background: #f0ece6;
+
+    color: #81786e;
+
+    font-size: 6.5px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+
+.lastmile-parcel-list {
+    display: grid;
+
+    gap: 7px;
+}
+
+
+.lastmile-parcel {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    gap: 7px 12px;
+
+    padding: 10px;
+
+    border: 1px solid #ece6de;
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+
+.lastmile-parcel-main strong {
+    color: #50483f;
+
+    font-size: 7.5px;
+    font-weight: 600;
+}
+
+
+.lastmile-parcel-main p {
+    margin: 2px 0 0;
+
+    color: #7b7166;
+
+    font-size: 7px;
+}
+
+
+.lastmile-parcel-status {
+    align-self: start;
+
+    padding: 4px 7px;
+
+    border: 1px solid #d7e3ed;
+    border-radius: 999px;
+
+    background: #f1f6fb;
+
+    color: #587892;
+
+    font-size: 5.5px;
+    font-weight: 600;
+}
+
+
+.lastmile-parcel-address {
+    grid-column: 1 / -1;
+
+    padding-top: 7px;
+
+    border-top: 1px solid #f0ebe4;
+}
+
+
+.lastmile-parcel-address p {
+    margin: 0;
+
+    color: #81786d;
+
+    font-size: 6.5px;
+    line-height: 1.55;
+}
+
+
+/* ==========================================================================
+   DETAILS
+   ========================================================================== */
+
+.lastmile-details {
+    grid-column: 1 / -1;
+}
+
+
+.lastmile-details summary {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    list-style: none;
+
+    color: #9d752f;
+
+    font-size: 7px;
+}
+
+
+.lastmile-details
+summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.lastmile-details summary span {
+    display: grid;
+
+    width: 18px;
+    height: 18px;
+
+    place-items: center;
+
+    border-radius: 6px;
+
+    background: #f7f1e7;
+
+    transition: transform .17s ease;
+}
+
+
+.lastmile-details[open]
+summary span {
+    transform: rotate(45deg);
+}
+
+
+.lastmile-detail-body {
+    margin-top: 8px;
+    padding: 10px;
+
+    border: 1px solid #e8dfd2;
+    border-radius: 9px;
+
+    background: #faf8f4;
+}
+
+
+.lastmile-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.lastmile-detail-grid strong {
+    color: #50473d;
+
+    font-size: 7px;
+}
+
+
+.lastmile-detail-grid p {
+    margin: 3px 0 0;
+
+    color: #8f8276;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   DISPATCH PANEL
+   ========================================================================== */
+
+.lastmile-dispatch-panel h4 {
+    margin: 0;
+
+    color: #383129;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+.lastmile-dispatch-note {
+    margin: 5px 0 14px;
+
+    color: #918679;
+
+    font-size: 7px;
+    line-height: 1.55;
+}
+
+
+.lastmile-dispatch-panel label {
+    display: block;
+}
+
+
+.lastmile-dispatch-panel select {
+    width: 100%;
+    min-height: 38px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #dfd5c5;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #5f5548;
+
+    font-size: 7.5px;
+
+    outline: none;
+}
+
+
+.lastmile-dispatch-panel select:focus {
+    border-color: #d4ad61;
+
+    box-shadow:
+        0 0 0 4px rgba(216, 155, 16, .075);
+}
+
+
+/* ==========================================================================
+   RIDER PREVIEW
+   ========================================================================== */
+
+.lastmile-rider-preview {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 10px;
+    padding: 10px;
+
+    border: 1px solid #e6dccb;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, .75);
+}
+
+
+.lastmile-rider-avatar {
+    display: grid;
+
+    width: 31px;
+    height: 31px;
+
+    flex: 0 0 31px;
+
+    place-items: center;
+
+    border: 1px solid #ead8b4;
+    border-radius: 9px;
+
+    background: #fff5df;
+
+    color: #ad781b;
+
+    font-size: 7px;
+    font-weight: 600;
+}
+
+
+.lastmile-rider-preview strong {
+    color: #443c33;
+
+    font-size: 8px;
+}
+
+
+.lastmile-rider-preview p {
+    margin: 2px 0;
+
+    color: #8d8172;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-dispatch-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 13px 0 10px;
+
+    color: #93856f;
+
+    font-size: 7px;
+}
+
+
+.lastmile-dispatch-total strong {
+    color: #9e721b;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+.lastmile-dispatch-panel
+.lastmile-button {
+    width: 100%;
+}
+
+
+.lastmile-dispatch-footnote {
+    margin: 8px 0 0;
+
+    color: #9e917e;
+
+    font-size: 6px;
+    line-height: 1.5;
+}
+
+
+.lastmile-rider-warning {
+    margin-top: 11px;
+    padding: 10px;
+
+    border: 1px solid #ecd5cf;
+    border-radius: 9px;
+
+    background: #fff5f3;
+
+    color: #96625d;
+}
+
+
+.lastmile-rider-warning strong {
+    font-size: 7px;
+}
+
+
+.lastmile-rider-warning p {
+    margin: 3px 0 0;
+
+    font-size: 6.5px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   ASSIGNMENT HISTORY
+   ========================================================================== */
+
+.lastmile-assignment-list {
+    display: grid;
+
+    gap: 8px;
+
+    padding: 14px;
+
+    background: #f7f7f6;
+}
+
+
+.lastmile-assignment-card {
+    display: grid;
+
+    grid-template-columns:
+        minmax(150px, .8fr)
+        minmax(260px, 1.5fr)
+        minmax(180px, 1fr)
+        85px
+        auto;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--lm-line);
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+
+.lastmile-assignment-card strong {
+    display: block;
+
+    color: #494137;
+
+    font-size: 7.5px;
+    font-weight: 600;
+}
+
+
+.lastmile-assignment-card p {
+    margin: 2px 0 0;
+
+    color: #91877b;
+
+    font-size: 6.5px;
+}
+
+
+.lastmile-assignment-route {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.lastmile-mini-arrow {
+    color: #c39543;
+}
+
+
+.lastmile-assignment-rider {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.lastmile-assignment-load strong {
+    font-size: 13px;
+}
+
+
+/* ==========================================================================
+   STATUS
+   ========================================================================== */
+
+.lastmile-status {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 23px;
+
+    padding: 4px 8px;
+
+    border: 1px solid;
+    border-radius: 999px;
+
+    font-size: 6.5px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.lastmile-status-assigned {
+    border-color: #ead9b2;
+
+    background: #fff8e8;
+
+    color: #9a6b16;
+}
+
+
+.lastmile-status-out_for_delivery {
+    border-color: #d7e3ed;
+
+    background: #f1f6fb;
+
+    color: #587892;
+}
+
+
+.lastmile-status-completed {
+    border-color: #d4e4d8;
+
+    background: #f0f8f2;
+
+    color: #4e7a59;
+}
+
+
+/* ==========================================================================
+   EMPTY
+   ========================================================================== */
+
+.lastmile-empty {
+    padding: 40px 20px;
+
+    text-align: center;
+}
+
+
+.lastmile-empty-icon {
+    display: grid;
+
+    width: 40px;
+    height: 40px;
+
+    place-items: center;
+
+    margin: 0 auto 12px;
+
+    border: 1px solid #ead9b8;
+    border-radius: 12px;
+
+    background: #fff6e3;
+
+    color: #b78327;
+
+    font-size: 14px;
+}
+
+
+.lastmile-empty h3 {
+    margin: 0 0 6px;
+
+    color: #5e554b;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+.lastmile-empty p {
+    max-width: 430px;
+
+    margin: 0 auto 14px;
+
+    color: #999086;
+
+    font-size: 7.5px;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.lastmile-list-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    padding: 10px 18px;
+
+    border-top: 1px solid var(--lm-line);
+
+    background: #fcfbf9;
+
+    color: #9a9288;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 1050px) {
+
+    .lastmile-area-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            240px;
+    }
+
+
+    .lastmile-assignment-card {
+        grid-template-columns:
+            1fr
+            1.5fr
+            1fr
+            auto;
+    }
+
+
+    .lastmile-assignment-status {
+        grid-column:
+            1 / -1;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .lastmile-page-header {
+        align-items: flex-start;
+
+        min-height: 0;
+    }
+
+
+    .lastmile-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .lastmile-area-layout {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-dispatch-panel {
+        border-top: 1px solid var(--lm-line);
+        border-left: 0;
+    }
+
+
+    .lastmile-assignment-card {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .lastmile-assignment-status {
+        grid-column: auto;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 767px) {
+
+    .lastmile-page-header,
+    .lastmile-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 13px;
+    }
+
+
+    .lastmile-page-header {
+        border-radius: 17px;
+    }
+
+
+    .lastmile-header-actions {
+        flex-wrap: wrap;
+    }
+
+
+    .lastmile-header-actions
+    .lastmile-button {
+        flex: 1;
+    }
+
+
+    .lastmile-stats {
+        gap: 8px;
+    }
+
+
+    .lastmile-stat {
+        padding: 12px;
+    }
+
+
+    .lastmile-stat strong {
+        font-size: 20px;
+    }
+
+
+    .lastmile-flow {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+
+    .lastmile-flow :is(a, span) {
+        flex-shrink: 0;
+
+        font-size: 7px;
+    }
+
+
+    .lastmile-toolbar {
+        padding: 14px;
+    }
+
+
+    .lastmile-search {
+        width: 100%;
+    }
+
+
+    .lastmile-filter-row {
+        align-items: flex-start;
+
+        padding:
+            0
+            14px
+            12px;
+    }
+
+
+    .lastmile-area-list,
+    .lastmile-assignment-list {
+        padding: 9px;
+    }
+
+
+    .lastmile-area-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .lastmile-area-tags {
+        padding-left: 47px;
+    }
+
+
+    .lastmile-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-list-footer {
+        padding-inline: 14px;
+    }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 520px) {
+
+    .lastmile-page-header {
+        padding: 15px 14px;
+    }
+
+
+    .lastmile-header-actions {
+        flex-direction: column;
+    }
+
+
+    .lastmile-header-actions
+    .lastmile-button {
+        width: 100%;
+    }
+
+
+    .lastmile-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .lastmile-route-summary {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-route-arrow {
+        transform: rotate(90deg);
+    }
+
+
+    .lastmile-area-tags {
+        padding-left: 0;
+    }
+
+
+    .lastmile-parcel {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-parcel-status {
+        justify-self: start;
+    }
+
+
+    .lastmile-assignment-card {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-assignment-route {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lastmile-mini-arrow {
+        transform: rotate(90deg);
+    }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .lastmile-page *,
+    .lastmile-page *::before,
+    .lastmile-page *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,1549 @@
+/*
+|--------------------------------------------------------------------------
+| SARI LOGISTICS — PARCEL SORTING
+|--------------------------------------------------------------------------
+|
+| Seller-inspired styling for origin hub sorting operations.
+|
+*/
+
+
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+
+.sorting-page {
+    --sorting-ink: #302a23;
+    --sorting-soft-ink: #51483d;
+
+    --sorting-muted: #8f877d;
+    --sorting-muted-light: #aaa198;
+
+    --sorting-line: #e8e2da;
+    --sorting-line-soft: #f0ebe4;
+
+    --sorting-gold: #d89b10;
+    --sorting-gold-dark: #b97805;
+
+    --sorting-green: #327a53;
+    --sorting-green-soft: #f1faf5;
+
+    --sorting-blue: #4f7899;
+    --sorting-blue-soft: #f1f6fb;
+
+    --sorting-red: #b75b55;
+    --sorting-red-soft: #fff5f4;
+
+    width: 100%;
+    max-width: 1800px;
+
+    margin-inline: auto;
+    padding-bottom: 26px;
+
+    color: var(--sorting-ink);
+
+    font-family:
+        "Poppins",
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+
+.sorting-page *,
+.sorting-page *::before,
+.sorting-page *::after {
+    box-sizing: border-box;
+}
+
+
+.sorting-page [hidden] {
+    display: none !important;
+}
+
+
+.sorting-page button,
+.sorting-page input,
+.sorting-page textarea {
+    font: inherit;
+}
+
+
+.sorting-page button,
+.sorting-page summary {
+    cursor: pointer;
+}
+
+
+.sorting-page button:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+
+.sorting-page :is(
+    button,
+    a,
+    input,
+    textarea,
+    summary
+):focus-visible {
+    outline: 2px solid rgba(216, 155, 16, .72);
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.sorting-page-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 116px;
+
+    gap: 24px;
+
+    margin-bottom: 14px;
+    padding: 17px 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #2f2a23;
+    border-radius: 19px;
+
+    background:
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(216, 155, 16, .13) 0,
+            rgba(216, 155, 16, .06) 21%,
+            rgba(216, 155, 16, 0) 42%
+        ),
+        linear-gradient(
+            135deg,
+            #211f1c 0%,
+            #25231f 48%,
+            #1b1917 100%
+        );
+
+    box-shadow:
+        0 8px 22px rgba(20, 17, 13, .08);
+}
+
+
+.sorting-page-header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    right: -72px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border:
+        1px solid rgba(216, 155, 16, .12);
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 0 0 24px rgba(216, 155, 16, .035),
+        0 0 0 50px rgba(216, 155, 16, .018);
+
+    pointer-events: none;
+}
+
+
+.sorting-page-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+.sorting-eyebrow {
+    margin: 0 0 5px;
+
+    color: rgba(226, 161, 15, .92);
+
+    font-size: 7px;
+    line-height: 1.2;
+    font-weight: 600;
+
+    letter-spacing: .15em;
+}
+
+
+.sorting-page-header h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(19px, 1.55vw, 23px);
+    line-height: 1.12;
+    font-weight: 600;
+
+    letter-spacing: -.038em;
+}
+
+
+.sorting-page-header h1 span {
+    color: #e2a10f;
+}
+
+
+.sorting-subtitle {
+    max-width: 690px;
+
+    margin: 6px 0 0;
+
+    color: rgba(255, 255, 255, .57);
+
+    font-size: 8.5px;
+    line-height: 1.65;
+}
+
+
+.sorting-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.sorting-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    border: 1px solid #dfd7cc;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #62594f;
+
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 600;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        background-color .16s ease,
+        border-color .16s ease,
+        color .16s ease,
+        transform .16s ease;
+}
+
+
+.sorting-button:hover {
+    transform: translateY(-1px);
+
+    border-color: #d7c49c;
+
+    background: #fffaf1;
+
+    color: #946611;
+}
+
+
+.sorting-button-primary {
+    border-color: var(--sorting-gold);
+
+    background: var(--sorting-gold);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 13px rgba(215, 144, 4, .14);
+}
+
+
+.sorting-button-primary:hover {
+    border-color: #c68908;
+
+    background: #c68908;
+
+    color: #ffffff;
+}
+
+
+.sorting-page-header
+.sorting-button:not(.sorting-button-primary) {
+    border-color: rgba(255, 255, 255, .13);
+
+    background: rgba(255, 255, 255, .055);
+
+    color: rgba(255, 255, 255, .82);
+}
+
+
+.sorting-page-header
+.sorting-button:not(.sorting-button-primary):hover {
+    border-color: rgba(226, 161, 15, .32);
+
+    background: rgba(216, 155, 16, .08);
+
+    color: #f0ba45;
+}
+
+
+/* ==========================================================================
+   ALERTS
+   ========================================================================== */
+
+.sorting-alert {
+    margin-bottom: 14px;
+    padding: 13px 16px;
+
+    border: 1px solid;
+    border-radius: 14px;
+}
+
+
+.sorting-alert strong {
+    display: block;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+.sorting-alert p {
+    margin: 3px 0 0;
+
+    font-size: 8px;
+}
+
+
+.sorting-alert ul {
+    margin: 5px 0 0;
+    padding-left: 18px;
+
+    font-size: 8px;
+}
+
+
+.sorting-alert-success {
+    border-color: #c9e0d2;
+
+    background: var(--sorting-green-soft);
+
+    color: #427259;
+}
+
+
+.sorting-alert-danger {
+    border-color: #ebd1ce;
+
+    background: var(--sorting-red-soft);
+
+    color: #a65353;
+}
+
+
+/* ==========================================================================
+   STATS
+   ========================================================================== */
+
+.sorting-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.sorting-stat {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 14px 15px 13px;
+
+    border: 1px solid var(--sorting-line);
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 5px 16px rgba(39, 31, 22, .025);
+}
+
+
+.sorting-stat::after {
+    content: "";
+
+    position: absolute;
+
+    right: 13px;
+    top: 13px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 999px;
+
+    background: #a79e93;
+}
+
+
+.sorting-stat p {
+    margin: 0;
+
+    color: #81786e;
+
+    font-size: 7px;
+    font-weight: 600;
+
+    letter-spacing: .085em;
+    text-transform: uppercase;
+}
+
+
+.sorting-stat strong {
+    display: block;
+
+    margin: 5px 0 2px;
+
+    color: #302a23;
+
+    font-size: 23px;
+    line-height: 1.12;
+    font-weight: 600;
+
+    letter-spacing: -.035em;
+}
+
+
+.sorting-stat span {
+    display: block;
+
+    color: #978f85;
+
+    font-size: 7px;
+}
+
+
+.sorting-stat-amber {
+    border-color: #eadfc9;
+}
+
+
+.sorting-stat-amber::after {
+    background: #d89b10;
+}
+
+
+.sorting-stat-amber strong {
+    color: #ad7713;
+}
+
+
+.sorting-stat-green {
+    border-color: #d5e5da;
+}
+
+
+.sorting-stat-green::after {
+    background: #63a375;
+}
+
+
+.sorting-stat-green strong {
+    color: #4f7c5b;
+}
+
+
+.sorting-stat-blue {
+    border-color: #d7e3ed;
+}
+
+
+.sorting-stat-blue::after {
+    background: #6c8fb5;
+}
+
+
+.sorting-stat-blue strong {
+    color: #587b99;
+}
+
+
+/* ==========================================================================
+   FLOW
+   ========================================================================== */
+
+.sorting-flow {
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+    max-width: 100%;
+
+    gap: 4px;
+
+    margin: 13px 0;
+    padding: 5px;
+
+    border: 1px solid var(--sorting-line);
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+.sorting-flow :is(a, span) {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 31px;
+
+    gap: 7px;
+
+    padding: 4px 9px;
+
+    border-radius: 8px;
+
+    color: #938a80;
+
+    font-size: 7.5px;
+    font-weight: 500;
+
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+
+.sorting-flow a:hover {
+    background: #faf7f1;
+
+    color: #796647;
+}
+
+
+.sorting-flow b {
+    display: grid;
+
+    width: 20px;
+    height: 20px;
+
+    place-items: center;
+
+    border: 1px solid #e5ded5;
+    border-radius: 999px;
+
+    background: #ffffff;
+
+    color: #948a7f;
+
+    font-size: 6.5px;
+}
+
+
+.sorting-flow .is-current {
+    background: #fff6df;
+
+    color: #9c6a0e;
+
+    font-weight: 600;
+}
+
+
+.sorting-flow .is-current b {
+    border-color: #e4c681;
+
+    background: #e3a41a;
+
+    color: #ffffff;
+}
+
+
+/* ==========================================================================
+   WORKSPACE
+   ========================================================================== */
+
+.sorting-workspace {
+    overflow: hidden;
+
+    border: 1px solid var(--sorting-line);
+    border-radius: 19px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 18px rgba(33, 24, 14, .03);
+}
+
+
+/* ==========================================================================
+   TOOLBAR
+   ========================================================================== */
+
+.sorting-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 16px 18px 13px;
+}
+
+
+.sorting-toolbar h2 {
+    margin: 0;
+
+    color: #302a23;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.sorting-toolbar p {
+    margin: 3px 0 0;
+
+    color: var(--sorting-muted);
+
+    font-size: 7.5px;
+}
+
+
+.sorting-search {
+    width: min(290px, 100%);
+
+    flex-shrink: 0;
+}
+
+
+.sorting-search input {
+    width: 100%;
+    height: 36px;
+
+    padding: 8px 11px;
+
+    border: 1px solid #e5ded5;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: var(--sorting-ink);
+
+    font-size: 7.5px;
+
+    outline: none;
+}
+
+
+.sorting-search input::placeholder {
+    color: #aaa198;
+}
+
+
+.sorting-search input:focus {
+    border-color: #d6b46d;
+
+    box-shadow:
+        0 0 0 4px rgba(216, 155, 16, .075);
+}
+
+
+/* ==========================================================================
+   FILTERS
+   ========================================================================== */
+
+.sorting-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 0 18px 13px;
+
+    border-bottom: 1px solid var(--sorting-line);
+}
+
+
+.sorting-tabs {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+}
+
+
+.sorting-tabs button {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 30px;
+
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #887f75;
+
+    font-size: 7.5px;
+}
+
+
+.sorting-tabs button:hover {
+    background: #faf7f1;
+}
+
+
+.sorting-tabs button[aria-pressed="true"] {
+    border-color: #ead7b3;
+
+    background: #fff6e5;
+
+    color: #a07121;
+
+    font-weight: 600;
+}
+
+
+.sorting-tabs span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 21px;
+    height: 18px;
+
+    padding-inline: 5px;
+
+    border-radius: 6px;
+
+    background: #f0ece6;
+
+    font-size: 6.5px;
+}
+
+
+.sorting-tabs
+button[aria-pressed="true"]
+span {
+    background: #ecd8ad;
+}
+
+
+/* ==========================================================================
+   TEXT LINK
+   ========================================================================== */
+
+.sorting-text-link {
+    display: inline-flex;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #b2770f;
+
+    font-size: 7.5px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.sorting-text-link:hover {
+    color: #84580a;
+
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   TABLE
+   ========================================================================== */
+
+.sorting-table-scroll {
+    overflow: auto;
+}
+
+
+.sorting-table {
+    width: 100%;
+
+    min-width: 1120px;
+
+    border-collapse: collapse;
+
+    text-align: left;
+
+    font-size: 8px;
+}
+
+
+.sorting-table thead {
+    background: #fcfbf9;
+}
+
+
+.sorting-table th {
+    padding: 10px 14px;
+
+    border-bottom: 1px solid var(--sorting-line);
+
+    color: #988f85;
+
+    font-size: 6.5px;
+    font-weight: 600;
+
+    letter-spacing: .075em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+.sorting-table td {
+    min-width: 130px;
+
+    padding: 13px 14px;
+
+    border-bottom: 1px solid var(--sorting-line-soft);
+
+    vertical-align: top;
+
+    color: #61584f;
+}
+
+
+.sorting-table tbody tr:hover {
+    background: #fffdf9;
+}
+
+
+.sorting-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+.sorting-table td strong {
+    display: block;
+
+    color: #443c33;
+
+    font-size: 8px;
+    font-weight: 600;
+}
+
+
+.sorting-table td p {
+    margin: 3px 0 0;
+
+    color: #91887e;
+
+    font-size: 7px;
+    line-height: 1.5;
+}
+
+
+.sorting-order-number {
+    color: #332d26 !important;
+}
+
+
+.sorting-primary-text {
+    color: #655b50 !important;
+
+    font-weight: 500;
+}
+
+
+/* ==========================================================================
+   HUBS
+   ========================================================================== */
+
+.sorting-hub {
+    display: flex;
+    align-items: center;
+
+    min-width: 165px;
+
+    gap: 9px;
+}
+
+
+.sorting-hub-icon {
+    display: grid;
+
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    place-items: center;
+
+    border-radius: 9px;
+
+    font-size: 6.5px;
+    font-weight: 700;
+}
+
+
+.sorting-hub-origin {
+    border: 1px solid #ead8b4;
+
+    background: #fff5df;
+
+    color: #ad781b;
+}
+
+
+.sorting-hub-destination {
+    border: 1px solid #d7e3ed;
+
+    background: #f1f6fb;
+
+    color: #587b99;
+}
+
+
+/* ==========================================================================
+   ZONE
+   ========================================================================== */
+
+.sorting-zone-display {
+    min-width: 110px;
+}
+
+
+.sorting-zone-code {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 27px;
+
+    padding: 5px 9px;
+
+    border: 1px solid #d9e5dc;
+    border-radius: 8px;
+
+    background: #f2f8f4;
+
+    color: #4f795a;
+
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    letter-spacing: .03em;
+}
+
+
+.sorting-zone-unassigned {
+    display: inline-flex;
+
+    padding: 5px 8px;
+
+    border-radius: 8px;
+
+    background: #f6f3ef;
+
+    color: #958b80;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   BADGES
+   ========================================================================== */
+
+.sorting-badge {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 23px;
+
+    padding: 4px 8px;
+
+    border: 1px solid;
+    border-radius: 999px;
+
+    font-size: 6.5px;
+    line-height: 1;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.sorting-badge-received {
+    border-color: #ead9b2;
+
+    background: #fff8e8;
+
+    color: #9a6b16;
+}
+
+
+.sorting-badge-sorted {
+    border-color: #d4e4d8;
+
+    background: #f0f8f2;
+
+    color: #4e7a59;
+}
+
+
+/* ==========================================================================
+   SORTING FORM
+   ========================================================================== */
+
+.sorting-form {
+    width: 200px;
+
+    margin-top: 8px;
+}
+
+
+.sorting-form label {
+    display: block;
+}
+
+
+.sorting-form label + label {
+    margin-top: 7px;
+}
+
+
+.sorting-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #a08e75;
+
+    font-size: 6px;
+    font-weight: 600;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+.sorting-form input,
+.sorting-form textarea {
+    width: 100%;
+
+    padding: 8px 9px;
+
+    border: 1px solid #e5ded5;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #51483d;
+
+    font-size: 7px;
+
+    outline: none;
+}
+
+
+.sorting-form input {
+    height: 34px;
+}
+
+
+.sorting-form textarea {
+    min-height: 50px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+.sorting-form input::placeholder,
+.sorting-form textarea::placeholder {
+    color: #aaa198;
+}
+
+
+.sorting-form input:focus,
+.sorting-form textarea:focus {
+    border-color: #d6b46d;
+
+    box-shadow:
+        0 0 0 3px rgba(216, 155, 16, .07);
+}
+
+
+.sorting-form .sorting-button {
+    width: 100%;
+
+    min-height: 33px;
+
+    margin-top: 7px;
+
+    padding: 6px 9px;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   COMPLETED
+   ========================================================================== */
+
+.sorting-completed {
+    width: 190px;
+
+    margin-top: 8px;
+    padding: 9px;
+
+    border: 1px solid #dce9df;
+    border-radius: 9px;
+
+    background: #f7fbf8;
+}
+
+
+.sorting-completed strong {
+    color: #4f725c !important;
+
+    font-size: 7px !important;
+}
+
+
+.sorting-completed p {
+    color: #7a9481 !important;
+
+    font-size: 6.5px !important;
+}
+
+
+.sorting-completed .sorting-note {
+    margin-top: 6px !important;
+    padding-top: 6px;
+
+    border-top: 1px solid #e0ebe3;
+
+    color: #7f857f !important;
+}
+
+
+/* ==========================================================================
+   DETAILS
+   ========================================================================== */
+
+.sorting-details {
+    margin-top: 8px;
+}
+
+
+.sorting-details summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 145px;
+
+    gap: 8px;
+
+    list-style: none;
+
+    color: #9d752f;
+
+    font-size: 7px;
+}
+
+
+.sorting-details summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.sorting-details summary span {
+    display: grid;
+
+    width: 18px;
+    height: 18px;
+
+    place-items: center;
+
+    border-radius: 6px;
+
+    background: #f7f1e7;
+
+    transition: transform .17s ease;
+}
+
+
+.sorting-details[open] summary span {
+    transform: rotate(45deg);
+}
+
+
+.sorting-detail-body {
+    width: min(420px, 80vw);
+
+    margin-top: 8px;
+    padding: 11px;
+
+    border: 1px solid #e8dfd2;
+    border-radius: 10px;
+
+    background: #faf8f4;
+}
+
+
+.sorting-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.sorting-detail-grid strong {
+    font-size: 7px !important;
+}
+
+
+.sorting-detail-grid p {
+    font-size: 6.5px !important;
+}
+
+
+.sorting-existing-note {
+    margin-top: 9px;
+    padding-top: 9px;
+
+    border-top: 1px solid #e7ded0;
+}
+
+
+.sorting-existing-note p {
+    color: #766d63 !important;
+
+    font-size: 6.5px !important;
+}
+
+
+/* ==========================================================================
+   PRODUCTS
+   ========================================================================== */
+
+.sorting-products {
+    list-style: none;
+
+    margin: 9px 0 0;
+    padding: 0;
+
+    border-top: 1px solid #e7ded0;
+}
+
+
+.sorting-products li {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-top: 8px;
+
+    color: #6f665d;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   EMPTY STATE
+   ========================================================================== */
+
+.sorting-empty {
+    padding: 42px 20px;
+
+    text-align: center;
+}
+
+
+.sorting-empty-icon {
+    display: grid;
+
+    width: 40px;
+    height: 40px;
+
+    place-items: center;
+
+    margin: 0 auto 12px;
+
+    border: 1px solid #ead9b8;
+    border-radius: 12px;
+
+    background: #fff6e3;
+
+    color: #b78327;
+
+    font-size: 14px;
+}
+
+
+.sorting-empty h3 {
+    margin: 0 0 6px;
+
+    color: #5e554b;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+.sorting-empty p {
+    max-width: 430px;
+
+    margin: 0 auto 14px;
+
+    color: #999086;
+
+    font-size: 7.5px;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.sorting-list-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    padding: 10px 18px;
+
+    border-top: 1px solid var(--sorting-line);
+
+    background: #fcfbf9;
+
+    color: #9a9288;
+
+    font-size: 6.5px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .sorting-page-header {
+        align-items: flex-start;
+
+        min-height: 0;
+
+        padding: 16px;
+    }
+
+
+    .sorting-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .sorting-header-actions {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 767px) {
+
+    .sorting-page-header,
+    .sorting-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 13px;
+    }
+
+
+    .sorting-page-header {
+        border-radius: 17px;
+    }
+
+
+    .sorting-header-actions {
+        width: 100%;
+    }
+
+
+    .sorting-header-actions .sorting-button {
+        flex: 1;
+    }
+
+
+    .sorting-stats {
+        gap: 8px;
+    }
+
+
+    .sorting-stat {
+        padding: 12px;
+    }
+
+
+    .sorting-stat strong {
+        font-size: 20px;
+    }
+
+
+    .sorting-flow {
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+
+    .sorting-flow :is(a, span) {
+        flex-shrink: 0;
+
+        font-size: 7px;
+    }
+
+
+    .sorting-toolbar {
+        padding: 14px;
+    }
+
+
+    .sorting-search {
+        width: 100%;
+    }
+
+
+    .sorting-filter-row {
+        align-items: flex-start;
+
+        padding:
+            0
+            14px
+            12px;
+    }
+
+
+    .sorting-list-footer {
+        padding-inline: 14px;
+    }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 520px) {
+
+    .sorting-page-header {
+        padding: 15px 14px;
+    }
+
+
+    .sorting-header-actions {
+        flex-direction: column;
+    }
+
+
+    .sorting-header-actions .sorting-button {
+        width: 100%;
+    }
+
+
+    .sorting-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .sorting-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .sorting-stat p {
+        font-size: 6.3px;
+    }
+
+
+    .sorting-stat span {
+        font-size: 6.4px;
+    }
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sorting-page *,
+    .sorting-page *::before,
+    .sorting-page *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

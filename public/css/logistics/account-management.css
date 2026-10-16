@@ -1,0 +1,1062 @@
+/*
+|--------------------------------------------------------------------------
+| SARI LOGISTICS — ACCOUNT MANAGEMENT
+|--------------------------------------------------------------------------
+|
+| Seller-aligned account/profile workspace.
+|
+*/
+
+
+/* ==========================================================================
+   PAGE
+   ========================================================================== */
+
+.account-page {
+    --account-ink: #1f2937;
+    --account-text: #344054;
+    --account-muted: #98a2b3;
+
+    --account-line: #e5e7eb;
+    --account-soft-line: #edf0f3;
+
+    --account-gold: #d59617;
+    --account-gold-hover: #c9890f;
+    --account-gold-soft: #fffaf0;
+
+    --account-canvas: #f7f8fa;
+    --account-white: #ffffff;
+
+    width: 100%;
+    max-width: 1500px;
+
+    margin-inline: auto;
+    padding-bottom: 24px;
+
+    color: var(--account-text);
+
+    font-family:
+        "Poppins",
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+}
+
+
+.account-page *,
+.account-page *::before,
+.account-page *::after {
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.account-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 14px;
+    padding: 18px 20px;
+
+    border: 1px solid var(--account-line);
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, .025);
+}
+
+
+.account-eyebrow {
+    margin: 0 0 4px;
+
+    color: #a8731f;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+
+.account-page-header h1 {
+    margin: 0;
+
+    color: var(--account-ink);
+
+    font-size: 21px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    letter-spacing: -.025em;
+}
+
+
+.account-subtitle {
+    max-width: 680px;
+
+    margin: 6px 0 0;
+
+    color: #7c8592;
+
+    font-size: 8.5px;
+    line-height: 1.65;
+}
+
+
+/* ==========================================================================
+   HEADER IDENTITY
+   ========================================================================== */
+
+.account-header-identity {
+    display: flex;
+    align-items: center;
+
+    min-width: 240px;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--account-line);
+    border-radius: 12px;
+
+    background: #fafbfc;
+}
+
+
+.account-header-avatar {
+    display: grid;
+
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    place-items: center;
+
+    border: 1px solid #efd9a7;
+    border-radius: 11px;
+
+    background: var(--account-gold-soft);
+
+    color: #a96f06;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+.account-header-identity > div {
+    min-width: 0;
+}
+
+
+.account-header-identity span:not(
+    .account-header-avatar
+) {
+    display: block;
+
+    color: #98a2b3;
+
+    font-size: 6px;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+}
+
+
+.account-header-identity strong {
+    display: block;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+
+    color: #344054;
+
+    font-size: 8.5px;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.account-header-identity p {
+    margin: 1px 0 0;
+
+    overflow: hidden;
+
+    color: #98a2b3;
+
+    font-size: 7px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   ALERTS
+   ========================================================================== */
+
+.account-alert {
+    margin-bottom: 14px;
+    padding: 12px 14px;
+
+    border: 1px solid;
+    border-radius: 12px;
+}
+
+
+.account-alert strong {
+    display: block;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+.account-alert p {
+    margin: 3px 0 0;
+
+    font-size: 8px;
+}
+
+
+.account-alert ul {
+    margin: 5px 0 0;
+    padding-left: 17px;
+
+    font-size: 8px;
+}
+
+
+.account-alert-success {
+    border-color: #dce7df;
+
+    background: #f4f9f6;
+
+    color: #4f7d63;
+}
+
+
+.account-alert-danger {
+    border-color: #efcece;
+
+    background: #fff5f5;
+
+    color: #a65353;
+}
+
+
+/* ==========================================================================
+   FORM LAYOUT
+   ========================================================================== */
+
+.account-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(300px, .7fr);
+
+    align-items: start;
+
+    gap: 14px;
+}
+
+
+.account-main-column,
+.account-side-column {
+    display: grid;
+
+    gap: 14px;
+}
+
+
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
+.account-card {
+    overflow: hidden;
+
+    border: 1px solid var(--account-line);
+    border-radius: 17px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, .025);
+}
+
+
+.account-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding:
+        15px
+        17px;
+
+    border-bottom: 1px solid var(--account-soft-line);
+}
+
+
+.account-card-header h2 {
+    margin: 0;
+
+    color: var(--account-ink);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.account-card-header p:not(
+    .account-eyebrow
+) {
+    margin: 3px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 7.5px;
+    line-height: 1.5;
+}
+
+
+.account-card-body {
+    padding:
+        17px;
+}
+
+
+/* ==========================================================================
+   PROFILE PHOTO
+   ========================================================================== */
+
+.account-photo-section {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        220px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 17px;
+}
+
+
+.account-photo-component {
+    min-width: 0;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Shared profile-photo component normalization
+|--------------------------------------------------------------------------
+*/
+
+.account-photo-component input[type="file"] {
+    max-width: 100%;
+}
+
+
+.account-photo-note {
+    padding: 11px 12px;
+
+    border: 1px solid #e8e1d6;
+    border-radius: 10px;
+
+    background: #fffaf0;
+}
+
+
+.account-photo-note strong {
+    display: block;
+
+    color: #7f632d;
+
+    font-size: 7.5px;
+    font-weight: 700;
+}
+
+
+.account-photo-note p {
+    margin: 3px 0 0;
+
+    color: #a18d69;
+
+    font-size: 6.5px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   FIELDS
+   ========================================================================== */
+
+.account-fields-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.account-field {
+    display: block;
+
+    min-width: 0;
+}
+
+
+.account-field-wide {
+    grid-column: 1 / -1;
+}
+
+
+.account-field > span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #667085;
+
+    font-size: 7.5px;
+    font-weight: 600;
+}
+
+
+.account-field input,
+.account-field textarea {
+    width: 100%;
+
+    border: 1px solid #d8dee6;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-size: 9px;
+
+    outline: none;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease,
+        background-color .15s ease;
+}
+
+
+.account-field input {
+    height: 41px;
+
+    padding:
+        0
+        11px;
+}
+
+
+.account-field textarea {
+    min-height: 78px;
+
+    resize: vertical;
+
+    padding:
+        10px
+        11px;
+
+    line-height: 1.55;
+}
+
+
+.account-field input:hover,
+.account-field textarea:hover {
+    border-color: #cdd4dd;
+}
+
+
+.account-field input:focus,
+.account-field textarea:focus {
+    border-color: var(--account-gold);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(213, 150, 23, .08);
+}
+
+
+.account-field-help {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #98a2b3;
+
+    font-size: 6.5px;
+    line-height: 1.45;
+}
+
+
+.account-field-error {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #b35b5b;
+
+    font-size: 6.8px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================================
+   ACCOUNT SUMMARY
+   ========================================================================== */
+
+.account-summary-card {
+    padding:
+        18px
+        16px
+        15px;
+}
+
+
+.account-summary-profile {
+    text-align: center;
+}
+
+
+.account-summary-avatar {
+    display: grid;
+
+    width: 58px;
+    height: 58px;
+
+    place-items: center;
+
+    margin:
+        0
+        auto;
+
+    border: 1px solid #efd9a7;
+    border-radius: 16px;
+
+    background: #fffaf0;
+
+    color: #a96f06;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 16px
+        rgba(213, 150, 23, .07);
+}
+
+
+.account-summary-profile h2 {
+    margin:
+        10px
+        0
+        0;
+
+    color: #1f2937;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.account-summary-profile p {
+    margin: 2px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 7px;
+}
+
+
+.account-summary-list {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 16px;
+}
+
+
+.account-summary-list > div {
+    padding: 10px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    background: #fafbfc;
+}
+
+
+.account-summary-list span {
+    display: block;
+
+    color: #98a2b3;
+
+    font-size: 6px;
+    font-weight: 700;
+
+    letter-spacing: .07em;
+}
+
+
+.account-summary-list strong {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #344054;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ==========================================================================
+   SECURITY
+   ========================================================================== */
+
+.account-security-fields {
+    display: grid;
+
+    gap: 13px;
+}
+
+
+.account-password-field {
+    position: relative;
+}
+
+
+.account-password-field input {
+    padding-right: 52px;
+}
+
+
+.account-password-field button {
+    position: absolute;
+
+    right: 5px;
+    top: 50%;
+
+    min-width: 42px;
+    height: 30px;
+
+    transform: translateY(-50%);
+
+    border: 0;
+    border-radius: 7px;
+
+    background: #f6f7f9;
+
+    color: #667085;
+
+    font-size: 6.5px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.account-password-field button:hover {
+    background: #fff7e7;
+
+    color: #9b6505;
+}
+
+
+/* ==========================================================================
+   SAVE CARD
+   ========================================================================== */
+
+.account-save-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding: 14px;
+
+    border: 1px solid #eadfc9;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf8,
+            #fff8e9
+        );
+}
+
+
+.account-save-card strong {
+    display: block;
+
+    color: #5c4930;
+
+    font-size: 8px;
+    font-weight: 700;
+}
+
+
+.account-save-card p {
+    margin: 3px 0 0;
+
+    color: #a08b6c;
+
+    font-size: 6.5px;
+    line-height: 1.45;
+}
+
+
+.account-save-button {
+    min-height: 38px;
+
+    flex: 0 0 auto;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: var(--account-gold);
+
+    padding:
+        0
+        14px;
+
+    color: #ffffff;
+
+    font-size: 7.5px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 12px
+        rgba(213, 150, 23, .14);
+
+    transition:
+        background-color .15s ease,
+        opacity .15s ease;
+}
+
+
+.account-save-button:hover:not(:disabled) {
+    background: var(--account-gold-hover);
+}
+
+
+.account-save-button:disabled {
+    cursor: not-allowed;
+
+    opacity: .55;
+}
+
+
+/* ==========================================================================
+   NO ACCOUNT
+   ========================================================================== */
+
+.account-no-account {
+    padding: 36px 22px;
+
+    text-align: center;
+}
+
+
+.account-no-account-icon {
+    display: grid;
+
+    width: 42px;
+    height: 42px;
+
+    place-items: center;
+
+    margin:
+        0
+        auto
+        11px;
+
+    border: 1px solid #ead9b2;
+    border-radius: 12px;
+
+    background: #fff8e8;
+
+    color: #a8731f;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.account-no-account h2 {
+    margin: 0;
+
+    color: #344054;
+
+    font-size: 11px;
+}
+
+
+.account-no-account p {
+    max-width: 500px;
+
+    margin:
+        6px
+        auto
+        0;
+
+    color: #98a2b3;
+
+    font-size: 8px;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   SUPPORT
+   ========================================================================== */
+
+.account-support-section {
+    margin-top: 14px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--account-line);
+    border-radius: 17px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px
+        rgba(15, 23, 42, .025);
+}
+
+
+.account-section-heading {
+    padding:
+        15px
+        17px;
+
+    border-bottom: 1px solid var(--account-soft-line);
+}
+
+
+.account-section-heading h2 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.account-section-heading p:not(
+    .account-eyebrow
+) {
+    margin: 3px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 7.5px;
+}
+
+
+.account-support-component {
+    padding: 16px;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Keep the shared support form visually contained.
+|--------------------------------------------------------------------------
+*/
+
+.account-support-component > * {
+    max-width: none !important;
+
+    margin-top: 0 !important;
+}
+
+
+/* ==========================================================================
+   FOCUS
+   ========================================================================== */
+
+.account-page
+:is(
+    button,
+    input,
+    textarea,
+    a
+):focus-visible {
+    outline:
+        2px solid rgba(213, 150, 23, .28);
+
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1050px) {
+
+    .account-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            280px;
+    }
+
+
+    .account-photo-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+
+    .account-side-column {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        align-items: start;
+    }
+
+
+    .account-save-card {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .account-page-header {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 14px;
+
+        padding: 16px;
+    }
+
+
+    .account-header-identity {
+        min-width: 0;
+    }
+
+
+    .account-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .account-field-wide {
+        grid-column: auto;
+    }
+
+
+    .account-side-column {
+        grid-template-columns: 1fr;
+    }
+
+
+    .account-save-card {
+        grid-column: auto;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .account-page-header h1 {
+        font-size: 18px;
+    }
+
+
+    .account-card-header,
+    .account-card-body,
+    .account-photo-section,
+    .account-support-component {
+        padding:
+            13px
+            14px;
+    }
+
+
+    .account-save-card {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .account-save-button {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .account-page *,
+    .account-page *::before,
+    .account-page *::after {
+        animation: none !important;
+
+        transition: none !important;
+    }
+
+}

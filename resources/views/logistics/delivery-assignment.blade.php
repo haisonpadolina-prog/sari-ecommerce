@@ -1,342 +1,1631 @@
 @extends('layouts.logistics')
 
-@section('title', 'Delivery Assignment | SARI Logistics')
-@section('page-title', 'Delivery Assignment')
+@section('title', 'Pickup Assignment — SARI Logistics')
+@section('page-title', 'Pickup Assignment')
+
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/logistics/pickup.css') }}?v=20261015-3"
+    >
+@endpush
+
 
 @section('content')
-<section class="space-y-4">
+
+<div
+    class="pickup-page"
+    data-pickup-workspace="assignment"
+    data-focus-order="{{ (int) request('order', 0) }}"
+>
+
+    {{-- =====================================================
+        PAGE HEADER
+    ====================================================== --}}
+
+    <header class="pickup-page-header">
+
+        <div>
+
+            <p class="pickup-eyebrow">
+                SELLER COLLECTIONS
+            </p>
+
+            <h1>
+                Pickup <span>Assignment</span>
+            </h1>
+
+            <p class="pickup-subtitle">
+                Dispatch one available Rider to each verified Seller pickup
+                batch. Orders from the same Seller, pickup location, and
+                origin hub are collected together.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ route('logistics.pickup-requests') }}"
+            class="pickup-button"
+        >
+            <span aria-hidden="true">←</span>
+            Pickup Requests
+        </a>
+
+    </header>
+
+
+    {{-- =====================================================
+        FLASH MESSAGES
+    ====================================================== --}}
 
     @if(session('success'))
+
         <div
-            class="rounded-xl border border-[#cfe2d5] bg-[#f4faf6] px-4 py-3 text-[9px] font-semibold text-[#56816a]"
+            class="pickup-alert pickup-alert-success"
+            role="status"
         >
-            {{ session('success') }}
+            <strong>Pickup Rider assigned</strong>
+
+            <p>
+                {{ session('success') }}
+            </p>
         </div>
+
     @endif
+
 
     @if($errors->any())
+
         <div
-            class="rounded-xl border border-[#ead0d0] bg-[#fff6f6] px-4 py-3 text-[9px] font-semibold text-[#a65f5f]"
+            class="pickup-alert pickup-alert-danger"
+            role="alert"
         >
-            {{ $errors->first() }}
+            <strong>Could not assign pickup batch</strong>
+
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+
     @endif
 
-    {{-- Header --}}
-    <div
-        class="rounded-[20px] border border-[#eee4d3] bg-white p-5"
-    >
-        <p
-            class="text-[9px] font-bold uppercase tracking-[.1em] text-[#b97805]"
-        >
-            Logistics Dispatch
-        </p>
 
-        <h2
-            class="mt-1 text-[20px] font-bold text-[#2c261f]"
-        >
-            Assign pickup Riders
-        </h2>
+    {{-- =====================================================
+        SUMMARY
+    ====================================================== --}}
 
-        <p
-            class="mt-1 max-w-3xl text-[9px] leading-4 text-[#8c8275]"
-        >
-            Verified orders from the same Seller, pickup location,
-            and origin hub are grouped together so one Rider can
-            collect all parcels in a single pickup run.
-        </p>
+    @php
+        $summaryCards = [
+            [
+                'Verified parcels',
+                $stats['verified_orders'],
+                'Waiting for Pickup Rider',
+                'green',
+            ],
+            [
+                'Pickup batches',
+                $stats['pickup_groups'],
+                'Seller collection stops',
+                'amber',
+            ],
+            [
+                'Available Riders',
+                $stats['available_riders'],
+                'Online with no active work',
+                'blue',
+            ],
+            [
+                'Multi-parcel batches',
+                $stats['multi_order_groups'],
+                'One stop, multiple parcels',
+                'neutral',
+            ],
+        ];
+    @endphp
+
+
+    <div class="pickup-stats">
+
+        @foreach($summaryCards as [$label, $value, $note, $tone])
+
+            <article class="pickup-stat pickup-stat-{{ $tone }}">
+
+                <p>
+                    {{ $label }}
+                </p>
+
+                <strong>
+                    {{ $value }}
+                </strong>
+
+                <span>
+                    {{ $note }}
+                </span>
+
+            </article>
+
+        @endforeach
+
     </div>
 
-    {{-- Pickup Groups --}}
-    <div class="space-y-4">
 
-        @forelse($pickupGroups as $pickupGroup)
+    {{-- =====================================================
+        WORKFLOW
+    ====================================================== --}}
 
-            @php
-                $firstOrder = $pickupGroup->first();
+    <nav
+        class="pickup-flow"
+        aria-label="Pickup workflow"
+    >
 
-                $routeStops = $firstOrder
-                    ->deliveryRouteStops
-                    ->keyBy('stop_key');
+        <a href="{{ route('logistics.pickup-requests') }}">
+            <b>1</b>
+            Review & verify
+        </a>
 
-                $originFacility =
-                    $routeStops->get(
-                        'origin_facility'
-                    );
 
-                $orderCount =
-                    $pickupGroup->count();
+        <span
+            class="is-current"
+            aria-current="step"
+        >
+            <b>2</b>
+            Assign Pickup Rider
+        </span>
 
-                $sellerName =
-                    $firstOrder->seller?->store_name
-                    ?: $firstOrder->pickup_name
-                    ?: 'SARI Seller';
-            @endphp
 
-            <article
-                class="overflow-hidden rounded-[20px] border border-[#eee4d3] bg-white"
+        <a href="{{ route('logistics.incoming-parcels') }}">
+            <b>3</b>
+            Origin hub intake
+        </a>
+
+    </nav>
+
+
+    {{-- =====================================================
+        ASSIGNMENT WORKSPACE
+    ====================================================== --}}
+
+    <section
+        class="pickup-workspace"
+        aria-labelledby="pickup-assignment-title"
+    >
+
+        {{-- =================================================
+            TOOLBAR
+        ================================================== --}}
+
+        <div class="pickup-toolbar">
+
+            <div>
+
+                <h2 id="pickup-assignment-title">
+                    Verified pickup batches
+                </h2>
+
+                <p>
+                    One Rider handles the entire Seller collection batch.
+                </p>
+
+            </div>
+
+
+            <label class="pickup-search">
+
+                <span class="sr-only">
+                    Search pickup batches
+                </span>
+
+                <input
+                    type="search"
+                    data-assignment-search
+                    placeholder="Search Seller, order, Buyer, or hub…"
+                >
+
+            </label>
+
+        </div>
+
+
+        {{-- =================================================
+            FILTERS
+        ================================================== --}}
+
+        <div class="pickup-filter-row">
+
+            <div
+                class="pickup-tabs"
+                role="group"
+                aria-label="Filter pickup batches"
             >
 
-                {{-- Group Header --}}
-                <div
-                    class="border-b border-[#eee4d3] px-5 py-4"
+                <button
+                    type="button"
+                    data-assignment-filter="all"
+                    aria-pressed="true"
                 >
-                    <div
-                        class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
-                    >
+                    All
 
-                        <div>
-                            <p
-                                class="text-[8px] font-bold uppercase tracking-[.1em] text-[#b97805]"
-                            >
-                                Seller Pickup
-                            </p>
+                    <span>
+                        {{ $stats['pickup_groups'] }}
+                    </span>
+                </button>
 
-                            <h3
-                                class="mt-1 text-[15px] font-bold text-[#302a22]"
-                            >
-                                {{ $sellerName }}
-                            </h3>
 
-                            <p
-                                class="mt-1 text-[8px] text-[#8c8275]"
-                            >
-                                {{ $firstOrder->pickup_address }}
-                            </p>
-                        </div>
+                <button
+                    type="button"
+                    data-assignment-filter="batch"
+                    aria-pressed="false"
+                >
+                    Multi-parcel
 
-                        <div
-                            class="flex flex-wrap items-center gap-2"
-                        >
+                    <span>
+                        {{ $stats['multi_order_groups'] }}
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    data-assignment-filter="single"
+                    aria-pressed="false"
+                >
+                    Single parcel
+
+                    <span>
+                        {{
+                            max(
+                                0,
+                                $stats['pickup_groups']
+                                - $stats['multi_order_groups']
+                            )
+                        }}
+                    </span>
+                </button>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="pickup-text-link"
+                data-assignment-clear
+            >
+                Clear filters
+            </button>
+
+        </div>
+
+
+        {{-- =================================================
+            BATCH CARDS
+        ================================================== --}}
+
+        <div class="pickup-batches">
+
+            @foreach($pickupGroups as $group)
+
+                @php
+                    $sellerName =
+                        $group['seller_name']
+                        ?: 'Seller Pickup';
+
+                    $sellerInitial =
+                        mb_strtoupper(
+                            mb_substr(
+                                trim($sellerName),
+                                0,
+                                1
+                            )
+                        );
+
+                    $batchType =
+                        $group['order_count'] > 1
+                            ? 'batch'
+                            : 'single';
+
+                    $orderIds =
+                        $group['orders']
+                            ->pluck('id')
+                            ->map(fn ($id) => (int) $id)
+                            ->values();
+
+                    $searchValues = [
+                        $sellerName,
+                        $group['pickup_name'],
+                        $group['pickup_address'],
+                        $group['origin_facility_name'],
+                    ];
+
+                    foreach($group['orders'] as $searchOrder) {
+                        $searchValues[] =
+                            $searchOrder->order_number;
+
+                        $searchValues[] =
+                            $searchOrder->buyer_name;
+
+                        $destinationStop =
+                            $searchOrder
+                                ->deliveryRouteStops
+                                ->firstWhere(
+                                    'stop_key',
+                                    'destination_facility'
+                                );
+
+                        $searchValues[] =
+                            $destinationStop
+                                ?->facility
+                                ?->name
+                            ?: $destinationStop
+                                ?->name;
+                    }
+
+                    $searchText =
+                        implode(
+                            ' ',
+                            array_filter($searchValues)
+                        );
+                @endphp
+
+
+                <article
+                    class="pickup-batch"
+                    data-assignment-batch
+                    data-batch-type="{{ $batchType }}"
+                    data-search="{{ $searchText }}"
+                    data-order-ids="{{ $orderIds->implode(',') }}"
+                >
+
+                    {{-- =====================================
+                        BATCH HEADER
+                    ====================================== --}}
+
+                    <header class="pickup-batch-header">
+
+                        <div class="pickup-seller-heading">
+
                             <span
-                                class="rounded-full bg-[#fff6e5] px-3 py-1.5 text-[8px] font-bold text-[#9d6d18]"
+                                class="pickup-avatar"
+                                aria-hidden="true"
                             >
-                                {{ $orderCount }}
-                                {{ $orderCount === 1 ? 'ORDER' : 'ORDERS' }}
+                                {{ $sellerInitial ?: 'S' }}
                             </span>
 
-                            <span
-                                class="rounded-full bg-[#f4faf6] px-3 py-1.5 text-[8px] font-bold text-[#56816a]"
-                            >
-                                VERIFIED
+
+                            <div>
+
+                                <p class="pickup-eyebrow">
+                                    SELLER PICKUP
+                                </p>
+
+                                <h3>
+                                    {{ $sellerName }}
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="pickup-batch-tags">
+
+                            <span>
+                                {{ $group['order_count'] }}
+                                {{
+                                    $group['order_count'] === 1
+                                        ? 'parcel'
+                                        : 'parcels'
+                                }}
                             </span>
+
+
+                            <span>
+                                {{ $group['buyer_count'] }}
+                                {{
+                                    $group['buyer_count'] === 1
+                                        ? 'buyer'
+                                        : 'buyers'
+                                }}
+                            </span>
+
+
+                            <span>
+                                {{ $group['destination_count'] }}
+                                {{
+                                    $group['destination_count'] === 1
+                                        ? 'destination'
+                                        : 'destinations'
+                                }}
+                            </span>
+
                         </div>
 
-                    </div>
-                </div>
+                    </header>
 
-                {{-- Pickup Route --}}
-                <div
-                    class="border-b border-[#eee4d3] bg-[#fffdf9] px-5 py-4"
-                >
-                    <p
-                        class="text-[7px] font-bold uppercase tracking-[.08em] text-[#a39787]"
-                    >
-                        Pickup Route
-                    </p>
 
-                    <div
-                        class="mt-2 flex flex-wrap items-center gap-2 text-[8px]"
-                    >
-                        <span
-                            class="rounded-full bg-[#fff6e5] px-3 py-1.5 font-semibold text-[#9d6d18]"
-                        >
-                            {{ $sellerName }}
-                        </span>
+                    {{-- =====================================
+                        BATCH BODY
+                    ====================================== --}}
 
-                        <span
-                            class="text-[#b3aaa0]"
-                        >
-                            →
-                        </span>
+                    <div class="pickup-batch-layout">
 
-                        <span
-                            class="rounded-full bg-[#f7f2e9] px-3 py-1.5 font-semibold text-[#756a5e]"
-                        >
-                            {{ $originFacility?->name ?: 'Origin hub pending' }}
-                        </span>
-                    </div>
-                </div>
 
-                {{-- Orders --}}
-                <div class="px-5 py-4">
+                        {{-- =================================
+                            LEFT — PARCELS
+                        ================================== --}}
 
-                    <div
-                        class="mb-3 flex items-center justify-between"
-                    >
-                        <div>
-                            <p
-                                class="text-[9px] font-bold text-[#302a22]"
-                            >
-                                Orders for pickup
-                            </p>
+                        <div class="pickup-batch-main">
 
-                            <p
-                                class="mt-0.5 text-[8px] text-[#8c8275]"
-                            >
-                                All orders below will be assigned to the same Rider.
-                            </p>
-                        </div>
-                    </div>
 
-                    <div
-                        class="overflow-hidden rounded-xl border border-[#eee4d3]"
-                    >
-
-                        @foreach($pickupGroup as $order)
-
-                            <div
-                                class="grid gap-2 border-b border-[#f0e8dc] px-4 py-3 last:border-b-0 md:grid-cols-[140px_1fr_1fr]"
-                            >
+                            {{-- Route summary --}}
+                            <div class="pickup-route-summary">
 
                                 <div>
-                                    <p
-                                        class="text-[7px] uppercase tracking-wide text-[#a39787]"
-                                    >
-                                        Order
+
+                                    <span class="pickup-label">
+                                        Seller pickup
+                                    </span>
+
+                                    <strong>
+                                        {{
+                                            $group['pickup_name']
+                                            ?: $sellerName
+                                        }}
+                                    </strong>
+
+                                    <p>
+                                        {{ $group['pickup_address'] }}
                                     </p>
 
-                                    <p
-                                        class="mt-1 text-[9px] font-bold text-[#302a22]"
-                                    >
-                                        {{ $order->order_number }}
-                                    </p>
                                 </div>
 
-                                <div>
-                                    <p
-                                        class="text-[7px] uppercase tracking-wide text-[#a39787]"
-                                    >
-                                        Buyer
-                                    </p>
 
-                                    <p
-                                        class="mt-1 text-[9px] font-semibold text-[#40382f]"
-                                    >
-                                        {{ $order->buyer_name }}
-                                    </p>
-                                </div>
+                                <span
+                                    class="pickup-route-arrow"
+                                    aria-hidden="true"
+                                >
+                                    →
+                                </span>
+
 
                                 <div>
-                                    <p
-                                        class="text-[7px] uppercase tracking-wide text-[#a39787]"
-                                    >
-                                        Delivery Address
+
+                                    <span class="pickup-label">
+                                        Origin sorting hub
+                                    </span>
+
+                                    <strong>
+                                        {{ $group['origin_facility_name'] }}
+                                    </strong>
+
+                                    <p>
+                                        Rider delivers the entire pickup
+                                        batch to this facility.
                                     </p>
 
-                                    <p
-                                        class="mt-1 text-[8px] leading-4 text-[#81776a]"
-                                    >
-                                        {{ $order->buyer_address }}
-                                    </p>
                                 </div>
 
                             </div>
 
-                        @endforeach
 
-                    </div>
+                            {{-- Parcel heading --}}
+                            <div class="pickup-parcel-heading">
 
-                </div>
+                                <div>
 
-                {{-- Assignment --}}
-                <form
-                    method="POST"
-                    action="{{ route('logistics.delivery-assignment.batch-assign') }}"
-                    class="border-t border-[#eee4d3] bg-[#fffdf9] px-5 py-4"
-                >
-                    @csrf
+                                    <h4>
+                                        Parcels in this collection
+                                    </h4>
 
-                    @foreach($pickupGroup as $order)
-                        <input
-                            type="hidden"
-                            name="order_ids[]"
-                            value="{{ $order->id }}"
-                        >
-                    @endforeach
+                                    <p
+                                        style="
+                                            margin: 2px 0 0;
+                                            color: #978d80;
+                                            font-size: 6.5px;
+                                        "
+                                    >
+                                        Buyers and destination hubs may differ.
+                                    </p>
 
-                    <div
-                        class="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end"
-                    >
+                                </div>
 
-                        <div>
-                            <label
-                                class="mb-1.5 block text-[8px] font-semibold text-[#5f574e]"
-                            >
-                                Select Pickup Rider
-                            </label>
 
-                            <select
-                                name="rider_id"
-                                required
-                                class="h-11 w-full rounded-xl border border-[#e5ddd2] bg-white px-3 text-[9px] text-[#40382f]"
-                            >
-                                <option value="">
-                                    Choose available Rider
-                                </option>
+                                <span class="pickup-count">
+                                    {{ $group['order_count'] }}
+                                </span>
 
-                                @foreach($riders as $rider)
+                            </div>
+
+
+                            {{-- Parcel list --}}
+                            <div class="pickup-batch-parcels">
+
+                                @foreach($group['orders'] as $order)
 
                                     @php
-                                        $busy = in_array(
-                                            strtolower(
-                                                (string) $rider->email
-                                            ),
-                                            $busyRiderEmails,
-                                            true
-                                        );
+                                        $destination =
+                                            $order
+                                                ->deliveryRouteStops
+                                                ->firstWhere(
+                                                    'stop_key',
+                                                    'destination_facility'
+                                                );
+
+                                        $destinationName =
+                                            $destination
+                                                ?->facility
+                                                ?->name
+                                            ?: $destination
+                                                ?->name
+                                            ?: 'Destination pending';
                                     @endphp
 
-                                    <option
-                                        value="{{ $rider->id }}"
-                                        @disabled($busy)
-                                    >
-                                        {{ trim($rider->first_name.' '.$rider->last_name) }}
-                                        —
-                                        {{ $rider->vehicle_type }}
 
-                                        {{ $busy ? ' (Busy)' : '' }}
-                                    </option>
+                                    <article class="pickup-parcel">
+
+                                        <div>
+
+                                            <strong>
+                                                {{ $order->order_number }}
+                                            </strong>
+
+                                            <small>
+                                                {{ $order->buyer_name }}
+                                                ·
+                                                {{ $destinationName }}
+                                            </small>
+
+                                        </div>
+
+
+                                        <span class="pickup-parcel-value">
+                                            ₱{{ number_format(
+                                                (float) $order->total,
+                                                2
+                                            ) }}
+                                        </span>
+
+
+                                        <details class="pickup-details">
+
+                                            <summary>
+                                                Parcel details
+                                                <span aria-hidden="true">
+                                                    +
+                                                </span>
+                                            </summary>
+
+
+                                            <div class="pickup-detail-body">
+
+                                                <div class="pickup-detail-grid">
+
+                                                    <div>
+
+                                                        <span class="pickup-label">
+                                                            Buyer
+                                                        </span>
+
+                                                        <strong>
+                                                            {{ $order->buyer_name }}
+                                                        </strong>
+
+                                                        <p>
+                                                            {{ $order->buyer_address }}
+                                                        </p>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <span class="pickup-label">
+                                                            Destination hub
+                                                        </span>
+
+                                                        <strong>
+                                                            {{ $destinationName }}
+                                                        </strong>
+
+                                                        <p>
+                                                            Delivery routing continues
+                                                            after origin hub sorting.
+                                                        </p>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <span class="pickup-label">
+                                                            Payment
+                                                        </span>
+
+                                                        <strong>
+                                                            {{
+                                                                $order->payment_method
+                                                                ?: 'Not recorded'
+                                                            }}
+                                                        </strong>
+
+                                                        <p>
+                                                            {{
+                                                                ucfirst(
+                                                                    $order->payment_status
+                                                                    ?: 'pending'
+                                                                )
+                                                            }}
+                                                        </p>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <span class="pickup-label">
+                                                            Order value
+                                                        </span>
+
+                                                        <strong>
+                                                            ₱{{ number_format(
+                                                                (float) $order->total,
+                                                                2
+                                                            ) }}
+                                                        </strong>
+
+                                                        <p>
+                                                            Marketplace order total
+                                                        </p>
+
+                                                    </div>
+
+                                                </div>
+
+
+                                                <ul class="pickup-products">
+
+                                                    @forelse(
+                                                        ($order->items ?? [])
+                                                        as $item
+                                                    )
+
+                                                        <li>
+
+                                                            <span>
+                                                                {{
+                                                                    $item['name']
+                                                                    ?? 'Product'
+                                                                }}
+
+                                                                @if(
+                                                                    !empty(
+                                                                        $item[
+                                                                            'variant_label'
+                                                                        ]
+                                                                    )
+                                                                )
+                                                                    ·
+                                                                    {{
+                                                                        $item[
+                                                                            'variant_label'
+                                                                        ]
+                                                                    }}
+                                                                @endif
+                                                            </span>
+
+                                                            <strong>
+                                                                ×
+                                                                {{
+                                                                    $item['qty']
+                                                                    ?? $item['quantity']
+                                                                    ?? 1
+                                                                }}
+                                                            </strong>
+
+                                                        </li>
+
+                                                    @empty
+
+                                                        <li>
+                                                            <span>
+                                                                Product details unavailable.
+                                                            </span>
+                                                        </li>
+
+                                                    @endforelse
+
+                                                </ul>
+
+                                            </div>
+
+                                        </details>
+
+                                    </article>
 
                                 @endforeach
-                            </select>
+
+                            </div>
+
+
+                            {{-- Destination summary --}}
+                            @if(
+                                $group['destination_names']
+                                    ->isNotEmpty()
+                            )
+
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        align-items: center;
+                                        gap: 5px;
+                                        margin-top: 12px;
+                                    "
+                                >
+
+                                    <span class="pickup-label">
+                                        Future destination hubs
+                                    </span>
+
+
+                                    @foreach(
+                                        $group['destination_names']
+                                        as $destinationName
+                                    )
+
+                                        <span class="pickup-badge pickup-badge-active">
+                                            {{ $destinationName }}
+                                        </span>
+
+                                    @endforeach
+
+                                </div>
+
+                            @endif
+
                         </div>
 
-                        <button
-                            type="submit"
-                            class="h-11 rounded-xl bg-[#d9930a] px-6 text-[8px] font-bold text-white transition hover:bg-[#c98508]"
-                        >
-                            Assign {{ $orderCount }}
-                            {{ $orderCount === 1 ? 'Order' : 'Orders' }}
-                        </button>
+
+                        {{-- =================================
+                            RIGHT — RIDER DISPATCH
+                        ================================== --}}
+
+                        <aside class="pickup-dispatch-panel">
+
+                            <h4>
+                                Assign Pickup Rider
+                            </h4>
+
+                            <p class="pickup-dispatch-note">
+                                Choose one approved, active and online
+                                Rider for this entire Seller collection.
+                            </p>
+
+
+                            <form
+                                method="POST"
+                                action="{{ route(
+                                    'logistics.delivery-assignment.batch-assign'
+                                ) }}"
+                                data-pickup-dispatch-form
+                            >
+
+                                @csrf
+
+
+                                @foreach(
+                                    $group['orders']
+                                    as $order
+                                )
+
+                                    <input
+                                        type="hidden"
+                                        name="order_ids[]"
+                                        value="{{ $order->id }}"
+                                    >
+
+                                @endforeach
+
+
+                                <label>
+
+                                    <span class="pickup-label">
+                                        Pickup Rider
+                                    </span>
+
+
+                                    <select
+                                        name="rider_id"
+                                        required
+                                        data-rider-select
+                                    >
+
+                                        <option value="">
+                                            Select available Rider
+                                        </option>
+
+
+                                        @foreach($riders as $rider)
+
+                                            @php
+                                                $busy =
+                                                    (bool) $rider
+                                                        ->getAttribute(
+                                                            'is_dispatch_busy'
+                                                        );
+
+                                                $riderName =
+                                                    trim(
+                                                        $rider->first_name
+                                                        .' '
+                                                        .$rider->last_name
+                                                    );
+
+                                                $riderArea =
+                                                    collect([
+                                                        $rider->barangay_name,
+                                                        $rider->municipality_name,
+                                                    ])
+                                                        ->filter()
+                                                        ->implode(', ');
+
+                                                $vehicle =
+                                                    collect([
+                                                        $rider->vehicle_type,
+                                                        $rider->vehicle_model,
+                                                    ])
+                                                        ->filter()
+                                                        ->implode(' · ');
+                                            @endphp
+
+
+                                            <option
+                                                value="{{ $rider->id }}"
+
+                                                data-rider-name="{{ $riderName }}"
+
+                                                data-rider-area="{{ $riderArea }}"
+
+                                                data-rider-vehicle="{{ $vehicle }}"
+
+                                                data-rider-plate="{{ $rider->plate_number }}"
+
+                                                @disabled($busy)
+                                            >
+                                                {{ $riderName }}
+
+                                                @if($rider->vehicle_type)
+                                                    — {{ $rider->vehicle_type }}
+                                                @endif
+
+                                                @if($rider->plate_number)
+                                                    · {{ $rider->plate_number }}
+                                                @endif
+
+                                                @if($busy)
+                                                    — Busy
+                                                @endif
+                                            </option>
+
+                                        @endforeach
+
+                                    </select>
+
+                                </label>
+
+
+                                {{-- Rider preview --}}
+                                <div
+                                    class="pickup-rider-preview"
+                                    data-rider-preview
+                                    hidden
+                                >
+
+                                    <strong data-rider-preview-name></strong>
+
+                                    <p data-rider-preview-area></p>
+
+                                    <p data-rider-preview-vehicle></p>
+
+                                </div>
+
+
+                                {{-- Total --}}
+                                <div class="pickup-dispatch-total">
+
+                                    <span>
+                                        Parcels to collect
+                                    </span>
+
+                                    <strong>
+                                        {{ $group['order_count'] }}
+                                    </strong>
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="pickup-button pickup-button-primary"
+                                    @disabled(
+                                        $stats['available_riders'] === 0
+                                    )
+                                >
+                                    Assign Entire Batch
+                                    <span aria-hidden="true">→</span>
+                                </button>
+
+
+                                <p class="pickup-dispatch-footnote">
+                                    The selected Rider receives all
+                                    {{ $group['order_count'] }}
+                                    {{
+                                        $group['order_count'] === 1
+                                            ? 'parcel'
+                                            : 'parcels'
+                                    }}
+                                    from this Seller pickup stop.
+                                </p>
+
+                            </form>
+
+
+                            @if($stats['available_riders'] === 0)
+
+                                <div
+                                    class="pickup-alert pickup-alert-warning"
+                                    style="margin-top: 12px; margin-bottom: 0;"
+                                >
+                                    <strong>No Rider available</strong>
+
+                                    <p>
+                                        All online Riders currently have
+                                        active Logistics work.
+                                    </p>
+                                </div>
+
+                            @endif
+
+                        </aside>
 
                     </div>
 
-                </form>
+                </article>
 
-            </article>
+            @endforeach
 
-        @empty
+        </div>
 
-            <div
-                class="rounded-[18px] border border-dashed border-[#ded5c9] bg-white p-10 text-center"
-            >
-                <p
-                    class="text-[10px] font-semibold text-[#5f574e]"
+
+        {{-- =================================================
+            EMPTY STATE
+        ================================================== --}}
+
+        @if($pickupGroups->isEmpty())
+
+            <div class="pickup-empty">
+
+                <span
+                    class="pickup-empty-icon"
+                    aria-hidden="true"
                 >
-                    No pickup groups waiting for assignment.
+                    ✓
+                </span>
+
+                <h3>
+                    No pickup batches waiting
+                </h3>
+
+                <p>
+                    Verified Seller requests will appear here once they
+                    are ready for Pickup Rider assignment.
                 </p>
 
-                <p
-                    class="mt-1 text-[8px] text-[#8c8275]"
+
+                <a
+                    href="{{ route('logistics.pickup-requests') }}"
+                    class="pickup-button pickup-button-primary"
                 >
-                    Verified Seller pickup requests will appear here.
-                </p>
+                    View Pickup Requests
+                </a>
+
             </div>
 
-        @endforelse
+        @endif
 
-    </div>
 
-</section>
+        {{-- =================================================
+            SEARCH EMPTY
+        ================================================== --}}
+
+        <div
+            class="pickup-empty"
+            data-assignment-empty
+            hidden
+        >
+
+            <h3>
+                No matching pickup batches
+            </h3>
+
+            <p>
+                Try another Seller, order number, Buyer,
+                location, or hub.
+            </p>
+
+
+            <button
+                type="button"
+                class="pickup-text-link"
+                data-assignment-clear
+            >
+                Clear filters
+            </button>
+
+        </div>
+
+
+        {{-- =================================================
+            FOOTER
+        ================================================== --}}
+
+        <footer class="pickup-list-footer">
+
+            <span
+                data-assignment-visible-count
+                aria-live="polite"
+            >
+                {{ $pickupGroups->count() }}
+                pickup batches shown
+            </span>
+
+
+            <span>
+                {{ $stats['available_riders'] }}
+                available Rider{{
+                    $stats['available_riders'] === 1
+                        ? ''
+                        : 's'
+                }}
+            </span>
+
+        </footer>
+
+    </section>
+
+</div>
+
 @endsection
+
+
+@push('scripts')
+
+<script>
+(() => {
+    'use strict';
+
+
+    function initializePickupAssignment() {
+
+        document.querySelectorAll(
+            '[data-pickup-workspace="assignment"]'
+        ).forEach((root) => {
+
+            if (root.dataset.initialized) {
+                return;
+            }
+
+            root.dataset.initialized = 'true';
+
+
+            const batches = [
+                ...root.querySelectorAll(
+                    '[data-assignment-batch]'
+                )
+            ];
+
+
+            const search =
+                root.querySelector(
+                    '[data-assignment-search]'
+                );
+
+
+            const tabs = [
+                ...root.querySelectorAll(
+                    '[data-assignment-filter]'
+                )
+            ];
+
+
+            const empty =
+                root.querySelector(
+                    '[data-assignment-empty]'
+                );
+
+
+            const visibleCount =
+                root.querySelector(
+                    '[data-assignment-visible-count]'
+                );
+
+
+            let filter = 'all';
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Normalize
+            |--------------------------------------------------------------------------
+            */
+
+            const normalize = (value) => {
+                return String(value || '')
+                    .toLocaleLowerCase()
+                    .trim();
+            };
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Search + filter
+            |--------------------------------------------------------------------------
+            */
+
+            function applyFilters() {
+
+                const keyword =
+                    normalize(
+                        search?.value
+                    );
+
+
+                let shown = 0;
+
+
+                batches.forEach((batch) => {
+
+                    const matchesType =
+                        filter === 'all'
+                        || batch.dataset.batchType
+                            === filter;
+
+
+                    const matchesSearch =
+                        normalize(
+                            batch.dataset.search
+                        ).includes(keyword);
+
+
+                    batch.hidden =
+                        !matchesType
+                        || !matchesSearch;
+
+
+                    if (!batch.hidden) {
+                        shown++;
+                    }
+
+                });
+
+
+                tabs.forEach((tab) => {
+
+                    tab.setAttribute(
+                        'aria-pressed',
+                        String(
+                            tab.dataset.assignmentFilter
+                            === filter
+                        )
+                    );
+
+                });
+
+
+                if (empty) {
+                    empty.hidden =
+                        batches.length === 0
+                        || shown > 0;
+                }
+
+
+                if (visibleCount) {
+
+                    visibleCount.textContent =
+                        `${shown} of ${batches.length} `
+                        + `pickup ${
+                            batches.length === 1
+                                ? 'batch'
+                                : 'batches'
+                        } shown`;
+                }
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Filter buttons
+            |--------------------------------------------------------------------------
+            */
+
+            tabs.forEach((tab) => {
+
+                tab.addEventListener(
+                    'click',
+                    () => {
+
+                        filter =
+                            tab.dataset
+                                .assignmentFilter
+                            || 'all';
+
+                        applyFilters();
+                    }
+                );
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Search
+            |--------------------------------------------------------------------------
+            */
+
+            search?.addEventListener(
+                'input',
+                applyFilters
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Clear filters
+            |--------------------------------------------------------------------------
+            */
+
+            root.querySelectorAll(
+                '[data-assignment-clear]'
+            ).forEach((button) => {
+
+                button.addEventListener(
+                    'click',
+                    () => {
+
+                        filter = 'all';
+
+                        if (search) {
+                            search.value = '';
+                        }
+
+                        applyFilters();
+                    }
+                );
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Rider preview
+            |--------------------------------------------------------------------------
+            */
+
+            root.querySelectorAll(
+                '[data-rider-select]'
+            ).forEach((select) => {
+
+                const form =
+                    select.closest(
+                        '[data-pickup-dispatch-form]'
+                    );
+
+
+                const preview =
+                    form?.querySelector(
+                        '[data-rider-preview]'
+                    );
+
+
+                const nameNode =
+                    form?.querySelector(
+                        '[data-rider-preview-name]'
+                    );
+
+
+                const areaNode =
+                    form?.querySelector(
+                        '[data-rider-preview-area]'
+                    );
+
+
+                const vehicleNode =
+                    form?.querySelector(
+                        '[data-rider-preview-vehicle]'
+                    );
+
+
+                function renderRider() {
+
+                    const option =
+                        select.options[
+                            select.selectedIndex
+                        ];
+
+
+                    if (
+                        !option
+                        || !option.value
+                    ) {
+
+                        if (preview) {
+                            preview.hidden = true;
+                        }
+
+                        return;
+                    }
+
+
+                    const riderName =
+                        option.dataset.riderName
+                        || option.textContent.trim();
+
+
+                    const riderArea =
+                        option.dataset.riderArea
+                        || 'Service area not specified';
+
+
+                    const vehicle =
+                        option.dataset.riderVehicle
+                        || 'Vehicle not specified';
+
+
+                    const plate =
+                        option.dataset.riderPlate;
+
+
+                    if (nameNode) {
+                        nameNode.textContent =
+                            riderName;
+                    }
+
+
+                    if (areaNode) {
+                        areaNode.textContent =
+                            riderArea;
+                    }
+
+
+                    if (vehicleNode) {
+
+                        vehicleNode.textContent =
+                            plate
+                                ? `${vehicle} · ${plate}`
+                                : vehicle;
+                    }
+
+
+                    if (preview) {
+                        preview.hidden = false;
+                    }
+
+                }
+
+
+                select.addEventListener(
+                    'change',
+                    renderRider
+                );
+
+
+                renderRider();
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dispatch confirmation
+            |--------------------------------------------------------------------------
+            */
+
+            root.querySelectorAll(
+                '[data-pickup-dispatch-form]'
+            ).forEach((form) => {
+
+                form.addEventListener(
+                    'submit',
+                    (event) => {
+
+                        const riderSelect =
+                            form.querySelector(
+                                '[data-rider-select]'
+                            );
+
+
+                        if (
+                            !riderSelect
+                            || !riderSelect.value
+                        ) {
+                            return;
+                        }
+
+
+                        const riderOption =
+                            riderSelect.options[
+                                riderSelect.selectedIndex
+                            ];
+
+
+                        const riderName =
+                            riderOption
+                                ?.dataset
+                                ?.riderName
+                            || 'this Rider';
+
+
+                        const parcelCount =
+                            form.querySelectorAll(
+                                'input[name="order_ids[]"]'
+                            ).length;
+
+
+                        const confirmed =
+                            window.confirm(
+                                `Assign ${parcelCount} `
+                                + `${
+                                    parcelCount === 1
+                                        ? 'parcel'
+                                        : 'parcels'
+                                } to ${riderName} `
+                                + 'for this Seller pickup?'
+                            );
+
+
+                        if (!confirmed) {
+                            event.preventDefault();
+                            return;
+                        }
+
+
+                        const submitButton =
+                            form.querySelector(
+                                'button[type="submit"]'
+                            );
+
+
+                        if (submitButton) {
+
+                            submitButton.disabled = true;
+
+                            submitButton.textContent =
+                                'Assigning batch…';
+                        }
+
+                    }
+                );
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Focus requested order
+            |--------------------------------------------------------------------------
+            |
+            | Pickup Requests links to:
+            | /delivery-assignment?order=123
+            |
+            | Find the batch containing that order and scroll it into view.
+            |
+            */
+
+            const focusOrder =
+                String(
+                    root.dataset.focusOrder
+                    || ''
+                );
+
+
+            if (
+                focusOrder
+                && focusOrder !== '0'
+            ) {
+
+                const target =
+                    batches.find((batch) => {
+
+                        const ids =
+                            String(
+                                batch.dataset.orderIds
+                                || ''
+                            )
+                                .split(',')
+                                .map(
+                                    (value) =>
+                                        value.trim()
+                                );
+
+                        return ids.includes(
+                            focusOrder
+                        );
+                    });
+
+
+                if (target) {
+
+                    target.dataset.focused =
+                        'true';
+
+
+                    window.setTimeout(
+                        () => {
+
+                            target.scrollIntoView({
+                                behavior:
+                                    window.matchMedia(
+                                        '(prefers-reduced-motion: reduce)'
+                                    ).matches
+                                        ? 'auto'
+                                        : 'smooth',
+
+                                block: 'center',
+                            });
+
+                        },
+                        120
+                    );
+
+
+                    window.setTimeout(
+                        () => {
+                            delete target.dataset.focused;
+                        },
+                        3500
+                    );
+                }
+
+            }
+
+
+            applyFilters();
+
+        });
+
+    }
+
+
+    if (
+        document.readyState === 'loading'
+    ) {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initializePickupAssignment
+        );
+
+    } else {
+
+        initializePickupAssignment();
+    }
+
+
+    window.addEventListener(
+        'pageshow',
+        (event) => {
+
+            if (event.persisted) {
+                window.location.reload();
+            }
+
+        }
+    );
+
+})();
+</script>
+
+@endpush
