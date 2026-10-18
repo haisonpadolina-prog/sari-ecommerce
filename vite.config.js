@@ -12,7 +12,7 @@ export default defineConfig({
 
                 // BUYER
                 'resources/js/buyer.js',
-                'resources/js/buyer-products.js',
+                // 'resources/js/buyer-products.js',
                 'resources/js/buyer-shop.js',
                 'resources/js/buyer-product-details.js',
                 'resources/js/buyer-cart.js',

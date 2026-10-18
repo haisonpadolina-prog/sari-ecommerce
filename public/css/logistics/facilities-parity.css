@@ -1,0 +1,587 @@
+
+/*
+|--------------------------------------------------------------------------
+| SARI LOGISTICS — MUNICIPAL HUBS
+| Seller Design Parity
+|--------------------------------------------------------------------------
+|
+| Visual changes only.
+| Existing hub functionality, address API, MapLibre, and validation
+| are preserved.
+|
+*/
+
+#logisticsFacilitiesWorkspace {
+    --fh-ink: #211d19;
+    --fh-muted: #897f75;
+    --fh-border: #e8e2d9;
+    --fh-gold: #d9950b;
+    --fh-gold-dark: #c78809;
+    --fh-pale: #fff9ef;
+
+    --fh-shadow:
+        0 6px 18px rgba(33, 24, 14, .03);
+
+    --fh-shadow-hover:
+        0 14px 30px rgba(43, 33, 21, .06);
+
+    max-width: 1620px;
+
+    color: var(--fh-ink);
+
+    font-family:
+        Poppins,
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+}
+
+
+/* =========================================================
+   PAGE HEADING
+   Same unboxed heading approach as Seller Management pages
+========================================================= */
+
+#logisticsFacilitiesWorkspace > section:first-of-type {
+    overflow: visible;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+
+    box-shadow: none !important;
+}
+
+/* Remove the old decorative hero glow */
+
+#logisticsFacilitiesWorkspace
+> section:first-of-type
+> div:first-child {
+    display: none;
+}
+
+/* Heading layout */
+
+#logisticsFacilitiesWorkspace
+> section:first-of-type
+> div:nth-child(2) {
+    padding: 5px 2px 8px !important;
+    gap: 18px;
+}
+
+/* Main title */
+
+#logisticsFacilitiesWorkspace
+> section:first-of-type h2 {
+    font-size: clamp(23px, 2vw, 30px) !important;
+    line-height: 1.2 !important;
+
+    letter-spacing: -.045em !important;
+
+    color: #251f19 !important;
+}
+
+/* Description */
+
+#logisticsFacilitiesWorkspace
+> section:first-of-type h2 + p {
+    max-width: 700px;
+
+    font-size: 10px !important;
+    line-height: 1.7 !important;
+
+    color: var(--fh-muted) !important;
+}
+
+/* Network status card */
+
+#logisticsFacilitiesWorkspace
+> section:first-of-type
+> div:nth-child(2)
+> div:last-child {
+    border-radius: 11px !important;
+
+    box-shadow: var(--fh-shadow);
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+#logisticsFacilitiesWorkspace
+> section:nth-of-type(2) {
+    gap: 12px !important;
+}
+
+#logisticsFacilitiesWorkspace
+> section:nth-of-type(2)
+> div {
+    min-height: 100px;
+
+    border: 1px solid var(--fh-border) !important;
+    border-radius: 16px !important;
+
+    background: #fff !important;
+
+    padding: 15px 16px !important;
+
+    box-shadow: var(--fh-shadow) !important;
+
+    transition:
+        transform .18s cubic-bezier(.22, 1, .36, 1),
+        border-color .18s ease,
+        box-shadow .18s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    #logisticsFacilitiesWorkspace
+    > section:nth-of-type(2)
+    > div:hover {
+        transform: translateY(-2px);
+
+        border-color: #d9cdbb !important;
+
+        box-shadow: var(--fh-shadow-hover) !important;
+    }
+
+}
+
+/* KPI title */
+
+#logisticsFacilitiesWorkspace
+> section:nth-of-type(2)
+> div > p:first-child {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+
+    color: #756a60 !important;
+}
+
+/* KPI value */
+
+#logisticsFacilitiesWorkspace
+> section:nth-of-type(2)
+> div > p:nth-child(2) {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+
+    color: var(--fh-ink) !important;
+}
+
+/* KPI description */
+
+#logisticsFacilitiesWorkspace
+> section:nth-of-type(2)
+> div > p:last-child {
+    font-size: 9px !important;
+    line-height: 1.5 !important;
+
+    color: var(--fh-muted) !important;
+}
+
+
+/* =========================================================
+   MUNICIPAL HUB NETWORK
+========================================================= */
+
+#logisticsFacilitiesWorkspace #facilityNetworkList {
+    background: #fff !important;
+
+    gap: 12px !important;
+}
+
+/* Hub cards */
+
+#logisticsFacilitiesWorkspace
+#facilityNetworkList
+article[data-facility-card] {
+    background: #fff !important;
+
+    border: 1px solid var(--fh-border) !important;
+    border-radius: 13px !important;
+
+    box-shadow:
+        0 4px 13px rgba(35, 27, 18, .02);
+
+    transition:
+        transform .18s cubic-bezier(.22, 1, .36, 1),
+        border-color .18s ease,
+        box-shadow .18s ease !important;
+}
+
+/* Seller-style hover elevation */
+
+@media (hover: hover) and (pointer: fine) {
+
+    #logisticsFacilitiesWorkspace
+    #facilityNetworkList
+    article[data-facility-card]:hover {
+        transform: translateY(-2px);
+
+        border-color: #d8c9ad !important;
+
+        box-shadow: var(--fh-shadow-hover) !important;
+    }
+
+}
+
+/* Hub action buttons */
+
+#logisticsFacilitiesWorkspace
+#facilityNetworkList
+article[data-facility-card] a,
+
+#logisticsFacilitiesWorkspace
+#facilityNetworkList
+article[data-facility-card] button {
+    transition:
+        background-color .15s ease,
+        color .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease !important;
+}
+
+
+/* =========================================================
+   HUB EDITOR
+========================================================= */
+
+#logisticsFacilitiesWorkspace #hubEditor {
+    scroll-margin-top: 100px;
+
+    border: 1px solid var(--fh-border) !important;
+    border-radius: 17px !important;
+
+    background: #fff !important;
+
+    box-shadow: var(--fh-shadow) !important;
+}
+
+/* Editor header */
+
+#logisticsFacilitiesWorkspace
+#hubEditor > div:first-child {
+    padding: 16px 18px !important;
+
+    border-color: #eee8df !important;
+}
+
+#logisticsFacilitiesWorkspace
+#hubEditor > div:first-child h3 {
+    font-size: 16px !important;
+
+    letter-spacing: -.025em;
+}
+
+#logisticsFacilitiesWorkspace
+#hubEditor > div:first-child p:last-child {
+    font-size: 9px !important;
+    line-height: 1.5 !important;
+}
+
+/* Form spacing */
+
+#logisticsFacilitiesWorkspace #sariFacilityForm {
+    padding: 18px !important;
+}
+
+#logisticsFacilitiesWorkspace .hub-setup-grid {
+    gap: 20px !important;
+}
+
+
+/* =========================================================
+   HUB OPERATOR PANEL
+========================================================= */
+
+#logisticsFacilitiesWorkspace .hub-operator-panel {
+    border: 1px solid #ece4d9 !important;
+    border-radius: 13px !important;
+
+    padding: 18px !important;
+
+    background: #fbfbfc !important;
+}
+
+/* Section titles */
+
+#logisticsFacilitiesWorkspace
+:is(
+    .hub-details-panel,
+    .hub-operator-panel
+)
+> div:first-child
+> p:first-child {
+    color: #a06b0b !important;
+    font-size: 8px !important;
+}
+
+
+/* =========================================================
+   FORM LABELS
+========================================================= */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm label > span,
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm label[for^="facility-"] {
+    font-size: 10px !important;
+
+    color: #534b43 !important;
+}
+
+
+/* =========================================================
+   FORM CONTROLS
+========================================================= */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+:is(
+    input:not([type="hidden"]):not([type="checkbox"]),
+    select,
+    textarea
+),
+
+#logisticsFacilitiesWorkspace
+#facilitySearchInput {
+    border: 1px solid #dce1e7 !important;
+    border-radius: 10px !important;
+
+    background: #fff !important;
+
+    color: #37322d !important;
+
+    font-size: 10px !important;
+
+    transition:
+        border-color .16s ease,
+        box-shadow .16s ease,
+        background-color .16s ease !important;
+}
+
+/* Consistent input height */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+:is(
+    input:not([type="hidden"]):not([type="checkbox"]),
+    select
+) {
+    min-height: 41px;
+}
+
+/* Focus animation */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+:is(input, select, textarea):focus-visible,
+
+#logisticsFacilitiesWorkspace
+#facilitySearchInput:focus-visible {
+    outline: none !important;
+
+    border-color: #d9950b !important;
+
+    box-shadow:
+        0 0 0 3px rgba(217, 149, 11, .10) !important;
+}
+
+/* Disabled inputs */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+:is(input, select, textarea):disabled {
+    background: #f4f5f7 !important;
+
+    color: #a09a92 !important;
+
+    cursor: not-allowed;
+}
+
+/* Preserve validation indicators */
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+.operator-field-invalid {
+    border-color: #d97e79 !important;
+    background: #fffafa !important;
+}
+
+#logisticsFacilitiesWorkspace
+#sariFacilityForm
+.operator-field-valid {
+    border-color: #8fc7a1 !important;
+}
+
+
+/* =========================================================
+   ADDRESS API SEARCH RESULTS
+========================================================= */
+
+#logisticsFacilitiesWorkspace .facility-address-results {
+    border-color: var(--fh-border);
+    border-radius: 10px;
+
+    box-shadow:
+        0 16px 32px rgba(37, 29, 20, .11);
+}
+
+#logisticsFacilitiesWorkspace
+.facility-address-results button {
+    font-size: 10px;
+
+    transition:
+        background-color .12s ease,
+        color .12s ease;
+}
+
+#logisticsFacilitiesWorkspace
+.facility-address-results button:hover,
+
+#logisticsFacilitiesWorkspace
+.facility-address-results button:focus-visible {
+    background: var(--fh-pale);
+
+    color: #93600a;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+#logisticsFacilitiesWorkspace #sariFacilityMap {
+    border-radius: 12px;
+
+    border: 1px solid #e6e3dc;
+}
+
+
+/* =========================================================
+   PASSWORD VALIDATION
+========================================================= */
+
+#logisticsFacilitiesWorkspace .operator-rule-list {
+    border-color: var(--fh-border);
+
+    background: #fff;
+}
+
+
+/* =========================================================
+   PRIMARY ACTION BUTTONS
+========================================================= */
+
+#logisticsFacilitiesWorkspace .hub-jump-link,
+
+#logisticsFacilitiesWorkspace .hub-save-button {
+    background: var(--fh-gold) !important;
+
+    border-radius: 10px !important;
+
+    box-shadow:
+        0 5px 12px rgba(194, 132, 10, .12) !important;
+
+    transition:
+        background-color .16s ease,
+        box-shadow .16s ease,
+        transform .16s ease !important;
+}
+
+#logisticsFacilitiesWorkspace .hub-jump-link:hover,
+
+#logisticsFacilitiesWorkspace .hub-save-button:hover {
+    background: var(--fh-gold-dark) !important;
+
+    box-shadow:
+        0 7px 16px rgba(194, 132, 10, .17) !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+#logisticsFacilitiesWorkspace
+:is(
+    a,
+    button,
+    input,
+    select,
+    textarea
+):focus-visible {
+    outline: 2px solid rgba(217, 149, 11, .5);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 639px) {
+
+    #logisticsFacilitiesWorkspace
+    > section:first-of-type h2 {
+        font-size: 23px !important;
+    }
+
+    #logisticsFacilitiesWorkspace
+    > section:nth-of-type(2) > div {
+        min-height: 90px;
+    }
+
+    #logisticsFacilitiesWorkspace #sariFacilityForm {
+        padding: 14px !important;
+    }
+
+    #logisticsFacilitiesWorkspace .hub-operator-panel {
+        padding: 14px !important;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #logisticsFacilitiesWorkspace *,
+
+    #logisticsFacilitiesWorkspace *::before,
+
+    #logisticsFacilitiesWorkspace *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+
+        scroll-behavior: auto !important;
+    }
+
+    #logisticsFacilitiesWorkspace
+    :is(
+        .hub-jump-link,
+        .hub-save-button
+    ):hover,
+
+    #logisticsFacilitiesWorkspace
+    article[data-facility-card]:hover,
+
+    #logisticsFacilitiesWorkspace
+    > section:nth-of-type(2) > div:hover {
+        transform: none !important;
+    }
+
+}

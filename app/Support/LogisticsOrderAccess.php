@@ -4,16 +4,10 @@ namespace App\Support;
 
 use App\Models\Accounts\LogisticsAccount;
 use App\Models\Orders\MarketplaceOrder;
-use App\Services\Delivery\DeliveryRouteService;
 use Illuminate\Http\Request;
 
 final class LogisticsOrderAccess
 {
-    public function __construct(
-        private readonly DeliveryRouteService $deliveryRoute,
-    ) {
-    }
-
     /**
      * Resolve the signed-in Logistics provider only.
      *
@@ -34,11 +28,6 @@ final class LogisticsOrderAccess
         MarketplaceOrder $order
     ): MarketplaceOrder {
         $logistics = CurrentLogisticsAccount::resolve($request);
-
-        if (!$order->logistics_account_id) {
-            $this->deliveryRoute->ensureStops($order);
-            $order->refresh();
-        }
 
         abort_unless(
             (int) $order->logistics_account_id

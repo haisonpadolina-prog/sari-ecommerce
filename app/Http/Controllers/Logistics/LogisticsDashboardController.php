@@ -8,6 +8,7 @@ use App\Models\Delivery\LogisticsFacility;
 use App\Models\Delivery\LogisticsParcel;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
+use App\Support\CurrentLogisticsHub;
 use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -36,7 +37,217 @@ class LogisticsDashboardController extends Controller
 
     public function index(Request $request): View
     {
-        $logistics = $this->orderAccess->prepare($request);
+        $logistics =
+            $this->orderAccess->prepare($request);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Current Hub Context
+        |--------------------------------------------------------------------------
+        */
+
+        $isHubOperator =
+            CurrentLogisticsHub::isHubOperator($request);
+
+        $hubFacility =
+            $isHubOperator
+                ? CurrentLogisticsHub::requireFacility($request)
+                : null;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Order ID Subqueries Per Hub Leg
+        |--------------------------------------------------------------------------
+        */
+
+        $originOrderIds =
+            function () use ($hubFacility) {
+                return DB::table('delivery_route_stops')
+                    ->select('marketplace_order_id')
+                    ->where(
+                        'stop_key',
+                        'origin_facility'
+                    )
+                    ->when(
+                        $hubFacility,
+                        fn ($query) =>
+                            $query->where(
+                                'logistics_facility_id',
+                                $hubFacility->id
+                            )
+                    );
+            };
+
+        $destinationOrderIds =
+            function () use ($hubFacility) {
+                return DB::table('delivery_route_stops')
+                    ->select('marketplace_order_id')
+                    ->where(
+                        'stop_key',
+                        'destination_facility'
+                    )
+                    ->when(
+                        $hubFacility,
+                        fn ($query) =>
+                            $query->where(
+                                'logistics_facility_id',
+                                $hubFacility->id
+                            )
+                    );
+            };
+
+        $hubOrderIds =
+            function () use ($hubFacility) {
+                return DB::table('delivery_route_stops')
+                    ->select('marketplace_order_id')
+                    ->whereIn(
+                        'stop_key',
+                        [
+                            'origin_facility',
+                            'destination_facility',
+                        ]
+                    )
+                    ->when(
+                        $hubFacility,
+                        fn ($query) =>
+                            $query->where(
+                                'logistics_facility_id',
+                                $hubFacility->id
+                            )
+                    );
+            };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reusable Owned Order Queries
+        |--------------------------------------------------------------------------
+        */
+
+        $ownedOrders =
+            fn () =>
+                MarketplaceOrder::query()
+                    ->where(
+                        'logistics_account_id',
+                        $logistics->id
+                    );
+
+        $originOrders =
+            function () use (
+                $ownedOrders,
+                $originOrderIds,
+                $hubFacility
+            ) {
+                $query = $ownedOrders();
+
+                if ($hubFacility) {
+                    $query->whereIn(
+                        'id',
+                        $originOrderIds()
+                    );
+                }
+
+                return $query;
+            };
+
+        $destinationOrders =
+            function () use (
+                $ownedOrders,
+                $destinationOrderIds,
+                $hubFacility
+            ) {
+                $query = $ownedOrders();
+
+                if ($hubFacility) {
+                    $query->whereIn(
+                        'id',
+                        $destinationOrderIds()
+                    );
+                }
+
+                return $query;
+            };
+
+        $hubOrders =
+            function () use (
+                $ownedOrders,
+                $hubOrderIds,
+                $hubFacility
+            ) {
+                $query = $ownedOrders();
+
+                if ($hubFacility) {
+                    $query->whereIn(
+                        'id',
+                        $hubOrderIds()
+                    );
+                }
+
+                return $query;
+            };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reusable Owned Parcel Queries
+        |--------------------------------------------------------------------------
+        */
+
+        $originParcels =
+            function () use (
+                $logistics,
+                $originOrderIds,
+                $hubFacility
+            ) {
+                return LogisticsParcel::query()
+                    ->whereHas(
+                        'order',
+                        function ($query) use (
+                            $logistics,
+                            $originOrderIds,
+                            $hubFacility
+                        ): void {
+                            $query->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            );
+
+                            if ($hubFacility) {
+                                $query->whereIn(
+                                    'id',
+                                    $originOrderIds()
+                                );
+                            }
+                        }
+                    );
+            };
+
+        $destinationParcels =
+            function () use (
+                $logistics,
+                $destinationOrderIds,
+                $hubFacility
+            ) {
+                return LogisticsParcel::query()
+                    ->whereHas(
+                        'order',
+                        function ($query) use (
+                            $logistics,
+                            $destinationOrderIds,
+                            $hubFacility
+                        ): void {
+                            $query->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            );
+
+                            if ($hubFacility) {
+                                $query->whereIn(
+                                    'id',
+                                    $destinationOrderIds()
+                                );
+                            }
+                        }
+                    );
+            };
 
         /*
         |--------------------------------------------------------------------------
@@ -46,43 +257,137 @@ class LogisticsDashboardController extends Controller
 
         $approvedRiderApplicationIds =
             RegistrationApplication::query()
-                ->where(function ($query) use ($logistics): void {
-                    $query
-                        ->where(
-                            'logistics_account_id',
-                            $logistics->id
-                        )
-                        ->orWhereNull(
-                            'logistics_account_id'
-                        );
-                })
-                ->where('role', 'rider')
-                ->where('status', 'approved')
+                ->where(
+                    function ($query) use ($logistics): void {
+                        $query
+                            ->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            )
+                            ->orWhereNull(
+                                'logistics_account_id'
+                            );
+                    }
+                )
+                ->where(
+                    'role',
+                    'rider'
+                )
+                ->where(
+                    'status',
+                    'approved'
+                )
                 ->select('id');
+
+        $riders =
+            function () use (
+                $logistics,
+                $approvedRiderApplicationIds,
+                $hubFacility
+            ) {
+                $query =
+                    CourierAccount::query()
+                        ->where(
+                            function ($query) use ($logistics): void {
+                                $query
+                                    ->where(
+                                        'logistics_account_id',
+                                        $logistics->id
+                                    )
+                                    ->orWhereNull(
+                                        'logistics_account_id'
+                                    );
+                            }
+                        )
+                        ->whereIn(
+                            'registration_application_id',
+                            $approvedRiderApplicationIds
+                        );
+
+                if ($hubFacility) {
+                    $query->whereRaw(
+                        'LOWER(TRIM(municipality_name)) = ?',
+                        [
+                            strtolower(
+                                trim(
+                                    (string)
+                                        $hubFacility
+                                            ->municipality_name
+                                )
+                            ),
+                        ]
+                    );
+                }
+
+                return $query;
+            };
 
         /*
         |--------------------------------------------------------------------------
-        | Reusable owned Order / Parcel queries
+        | Hub Transfer Query
         |--------------------------------------------------------------------------
         */
 
-        $ownedOrders = fn () =>
-            MarketplaceOrder::query()
-                ->where(
-                    'logistics_account_id',
-                    $logistics->id
-                );
-
-        $ownedParcels = fn () =>
-            LogisticsParcel::query()
-                ->whereHas(
-                    'order',
-                    fn ($query) =>
-                        $query->where(
+        $hubTransfers =
+            function () use (
+                $logistics,
+                $hubFacility
+            ) {
+                $query =
+                    DB::table('hub_transfers')
+                        ->where(
                             'logistics_account_id',
                             $logistics->id
-                        )
-                );
+                        );
+
+                if ($hubFacility) {
+                    $query->where(
+                        function ($query) use ($hubFacility): void {
+                            $query
+                                ->where(
+                                    'origin_facility_id',
+                                    $hubFacility->id
+                                )
+                                ->orWhere(
+                                    'destination_facility_id',
+                                    $hubFacility->id
+                                );
+                        }
+                    );
+                }
+
+                return $query;
+            };
+
+        /*
+        |--------------------------------------------------------------------------
+        | Last-Mile Assignment Query
+        |--------------------------------------------------------------------------
+        */
+
+        $lastMileAssignments =
+            function () use (
+                $logistics,
+                $hubFacility
+            ) {
+                $query =
+                    DB::table(
+                        'last_mile_assignments'
+                    )
+                        ->where(
+                            'logistics_account_id',
+                            $logistics->id
+                        );
+
+                if ($hubFacility) {
+                    $query->where(
+                        'destination_facility_id',
+                        $hubFacility->id
+                    );
+                }
+
+                return $query;
+            };
 
         /*
         |--------------------------------------------------------------------------
@@ -92,65 +397,42 @@ class LogisticsDashboardController extends Controller
 
         $stats = [
 
-            /*
-             * Riders / Network
-             */
             'pending_rider_applications' =>
-                RegistrationApplication::query()
-                    ->where(
-                        function ($query) use ($logistics): void {
-                            $query
-                                ->where(
-                                    'logistics_account_id',
-                                    $logistics->id
-                                )
-                                ->orWhereNull(
-                                    'logistics_account_id'
-                                );
-                        }
-                    )
-                    ->where('role', 'rider')
-                    ->where('status', 'pending')
-                    ->count(),
+                $hubFacility
+                    ? 0
+                    : RegistrationApplication::query()
+                        ->where(
+                            function ($query) use ($logistics): void {
+                                $query
+                                    ->where(
+                                        'logistics_account_id',
+                                        $logistics->id
+                                    )
+                                    ->orWhereNull(
+                                        'logistics_account_id'
+                                    );
+                            }
+                        )
+                        ->where(
+                            'role',
+                            'rider'
+                        )
+                        ->where(
+                            'status',
+                            'pending'
+                        )
+                        ->count(),
 
             'active_riders' =>
-                CourierAccount::query()
-                    ->where(
-                        function ($query) use ($logistics): void {
-                            $query
-                                ->where(
-                                    'logistics_account_id',
-                                    $logistics->id
-                                )
-                                ->orWhereNull(
-                                    'logistics_account_id'
-                                );
-                        }
-                    )
+                $riders()
                     ->where(
                         'account_status',
                         'active'
                     )
-                    ->whereIn(
-                        'registration_application_id',
-                        $approvedRiderApplicationIds
-                    )
                     ->count(),
 
             'online_riders' =>
-                CourierAccount::query()
-                    ->where(
-                        function ($query) use ($logistics): void {
-                            $query
-                                ->where(
-                                    'logistics_account_id',
-                                    $logistics->id
-                                )
-                                ->orWhereNull(
-                                    'logistics_account_id'
-                                );
-                        }
-                    )
+                $riders()
                     ->where(
                         'account_status',
                         'active'
@@ -159,25 +441,24 @@ class LogisticsDashboardController extends Controller
                         'availability_status',
                         'online'
                     )
-                    ->whereIn(
-                        'registration_application_id',
-                        $approvedRiderApplicationIds
-                    )
                     ->count(),
 
             'active_facilities' =>
-                LogisticsFacility::query()
-                    ->forLogistics(
-                        $logistics->id
-                    )
-                    ->active()
-                    ->count(),
+                $hubFacility
+                    ? 1
+                    : LogisticsFacility::query()
+                        ->forLogistics(
+                            $logistics->id
+                        )
+                        ->active()
+                        ->count(),
 
             /*
-             * Seller Pickup
+             * Seller Pickup / Origin Hub
              */
+
             'pickup_requests' =>
-                $ownedOrders()
+                $originOrders()
                     ->where(
                         'status',
                         'ready_for_pickup'
@@ -188,7 +469,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'pickup_active' =>
-                $ownedOrders()
+                $originOrders()
                     ->whereIn(
                         'status',
                         self::PICKUP_ACTIVE_STATUSES
@@ -198,11 +479,8 @@ class LogisticsDashboardController extends Controller
                     )
                     ->count(),
 
-            /*
-             * Origin Hub
-             */
             'awaiting_intake' =>
-                $ownedParcels()
+                $originParcels()
                     ->where(
                         'status',
                         'awaiting_intake'
@@ -210,7 +488,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'sorting_queue' =>
-                $ownedParcels()
+                $originParcels()
                     ->where(
                         'status',
                         'received'
@@ -218,7 +496,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'ready_for_transfer' =>
-                $ownedParcels()
+                $originParcels()
                     ->where(
                         'status',
                         'sorted'
@@ -228,12 +506,9 @@ class LogisticsDashboardController extends Controller
             /*
              * Hub Transfer
              */
+
             'hub_transfer_preparing' =>
-                DB::table('hub_transfers')
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
+                $hubTransfers()
                     ->where(
                         'status',
                         'preparing'
@@ -241,11 +516,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'hub_transfer_in_transit' =>
-                DB::table('hub_transfers')
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
+                $hubTransfers()
                     ->where(
                         'status',
                         'in_transit'
@@ -255,8 +526,9 @@ class LogisticsDashboardController extends Controller
             /*
              * Destination Hub
              */
+
             'destination_received' =>
-                $ownedParcels()
+                $destinationParcels()
                     ->where(
                         'status',
                         'destination_received'
@@ -266,12 +538,9 @@ class LogisticsDashboardController extends Controller
             /*
              * Last Mile
              */
+
             'last_mile_assigned' =>
-                DB::table('last_mile_assignments')
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
+                $lastMileAssignments()
                     ->where(
                         'status',
                         'assigned'
@@ -279,11 +548,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'last_mile_out_for_delivery' =>
-                DB::table('last_mile_assignments')
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
+                $lastMileAssignments()
                     ->where(
                         'status',
                         'out_for_delivery'
@@ -293,8 +558,9 @@ class LogisticsDashboardController extends Controller
             /*
              * Completed
              */
+
             'delivered_today' =>
-                $ownedOrders()
+                $destinationOrders()
                     ->where(
                         'status',
                         'delivered'
@@ -306,7 +572,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'total_delivered' =>
-                $ownedOrders()
+                $destinationOrders()
                     ->where(
                         'status',
                         'delivered'
@@ -314,7 +580,7 @@ class LogisticsDashboardController extends Controller
                     ->count(),
 
             'active_deliveries' =>
-                $ownedOrders()
+                $hubOrders()
                     ->whereIn(
                         'status',
                         self::DELIVERY_ACTIVE_STATUSES
@@ -343,10 +609,11 @@ class LogisticsDashboardController extends Controller
         */
 
         $recentOrders =
-            $ownedOrders()
+            $hubOrders()
                 ->with([
                     'seller',
                     'logisticsParcel',
+                    'deliveryRouteStops.facility',
                 ])
                 ->latest('updated_at')
                 ->limit(8)
@@ -354,7 +621,7 @@ class LogisticsDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Last-Mile details for Recent Orders
+        | Last-Mile Details for Recent Orders
         |--------------------------------------------------------------------------
         */
 
@@ -408,7 +675,7 @@ class LogisticsDashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $recentTransfers =
+        $recentTransfersQuery =
             DB::table(
                 'hub_transfers as transfer'
             )
@@ -427,7 +694,26 @@ class LogisticsDashboardController extends Controller
                 ->where(
                     'transfer.logistics_account_id',
                     $logistics->id
-                )
+                );
+
+        if ($hubFacility) {
+            $recentTransfersQuery->where(
+                function ($query) use ($hubFacility): void {
+                    $query
+                        ->where(
+                            'transfer.origin_facility_id',
+                            $hubFacility->id
+                        )
+                        ->orWhere(
+                            'transfer.destination_facility_id',
+                            $hubFacility->id
+                        );
+                }
+            );
+        }
+
+        $recentTransfers =
+            $recentTransfersQuery
                 ->select([
                     'transfer.id',
                     'transfer.transfer_code',
@@ -532,8 +818,16 @@ class LogisticsDashboardController extends Controller
             ],
         ];
 
+        /*
+        |--------------------------------------------------------------------------
+        | Display Identity
+        |--------------------------------------------------------------------------
+        */
+
         $logisticsName =
-            $logistics->displayName();
+            $hubFacility
+                ? $hubFacility->name
+                : $logistics->displayName();
 
         return view(
             'logistics.dashboard',
@@ -544,7 +838,9 @@ class LogisticsDashboardController extends Controller
                 'lastMileByOrder',
                 'recentTransfers',
                 'logistics',
-                'logisticsName'
+                'logisticsName',
+                'hubFacility',
+                'isHubOperator'
             )
         );
     }

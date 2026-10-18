@@ -1,70 +1,75 @@
 <?php
+
+use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminCommissionsController;
+use App\Http\Controllers\Admin\AdminComplaintsController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminPlatformSettingsController;
+use App\Http\Controllers\Admin\AdminRegistrationController;
+use App\Http\Controllers\Admin\AdminReportsController;
+use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
+use App\Http\Controllers\Admin\AdminSellerChatActionController;
+use App\Http\Controllers\Admin\AdminSellerComplianceController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Auth\MarketplaceAuthController;
+use App\Http\Controllers\Auth\PasswordResetOtpController;
+use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\SocialAuthController;
-use App\Http\Controllers\Buyer\BuyerPageController;
-use App\Http\Controllers\Buyer\BuyerProductController;
+use App\Http\Controllers\Buyer\BuyerAccountController;
 use App\Http\Controllers\Buyer\BuyerCartController;
 use App\Http\Controllers\Buyer\BuyerCheckoutController;
-use App\Http\Controllers\Buyer\BuyerOrderController;
 use App\Http\Controllers\Buyer\BuyerNotificationController;
-use App\Http\Controllers\Buyer\BuyerShippingController;
-use App\Http\Controllers\Buyer\BuyerSellerMessageController;
-use App\Http\Controllers\Seller\SellerBuyerMessageController;
+use App\Http\Controllers\Buyer\BuyerOrderController;
+use App\Http\Controllers\Buyer\BuyerPageController;
+use App\Http\Controllers\Buyer\BuyerProductController;
+use App\Http\Controllers\Buyer\BuyerRegistrationController;
 use App\Http\Controllers\Buyer\BuyerReviewController;
-use App\Http\Controllers\Seller\SellerReviewController;
-use App\Http\Controllers\Buyer\BuyerAccountController;
-use App\Http\Controllers\Courier\CourierPageController;
-use App\Http\Controllers\Admin\AdminSellerComplianceController;
-use App\Http\Controllers\Seller\SellerComplianceMessageController;
-use App\Http\Controllers\Seller\SellerDashboardController;
-use App\Http\Controllers\Seller\SellerAiAssistantController;
-use App\Http\Controllers\Seller\SellerLayoutStateController;
-use App\Http\Controllers\Seller\SellerAdminChatController;
-use App\Http\Controllers\Seller\SellerProductController;
-use App\Http\Controllers\Seller\SellerProductDraftController;
-use App\Http\Controllers\Seller\SellerOrderController;
+use App\Http\Controllers\Buyer\BuyerSellerMessageController;
+use App\Http\Controllers\Buyer\BuyerShippingController;
+use App\Http\Controllers\Courier\CourierDashboardController;
 use App\Http\Controllers\Courier\CourierDeliveryController;
-use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
-use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
-use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
-use App\Services\Seller\SellerAccountStatusService;
-use App\Http\Controllers\Shared\ChatMessageReactionController;
-use App\Http\Controllers\Admin\AdminSellerChatActionController;
-use App\Http\Middleware\Seller\HandleSellerSupportChat;
-use App\Http\Controllers\Auth\PasswordResetOtpController;
-
+use App\Http\Controllers\Courier\CourierLastMileController;
+use App\Http\Controllers\Courier\CourierPageController;
+use App\Http\Controllers\Logistics\LogisticsRegistrationController;
+use App\Http\Controllers\Marketplace\MarketplaceCatalogController;
 /*
 |--------------------------------------------------------------------------
 | NEW — COURIER CONTROLLER
 |--------------------------------------------------------------------------
 */
-use App\Http\Controllers\Courier\CourierDashboardController;
-use App\Http\Controllers\Auth\RegistrationController;
-use App\Http\Controllers\Buyer\BuyerRegistrationController;
+use App\Http\Controllers\Seller\SellerAccountController;
+use App\Http\Controllers\Seller\SellerAdminChatController;
+use App\Http\Controllers\Seller\SellerAiAssistantController;
+use App\Http\Controllers\Seller\SellerBuyerMessageController;
+use App\Http\Controllers\Seller\SellerComplianceMessageController;
+use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\Seller\SellerLayoutStateController;
+use App\Http\Controllers\Seller\SellerOrderController;
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerProductDraftController;
 use App\Http\Controllers\Seller\SellerRegistrationController;
-use App\Http\Controllers\Logistics\LogisticsRegistrationController;
-use App\Http\Controllers\Admin\AdminRegistrationController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Shared\PlatformComplaintController;
-use App\Http\Controllers\Admin\AdminComplaintsController;
-use App\Http\Controllers\Admin\AdminAccountController;
-use App\Http\Controllers\Admin\AdminPlatformSettingsController;
-use App\Http\Controllers\Admin\AdminReportsController;
-use App\Http\Controllers\Admin\AdminCommissionsController;
-use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Seller\SellerReportController;
+use App\Http\Controllers\Seller\SellerReviewController;
 use App\Http\Controllers\Shared\AddressLookupController;
-use App\Http\Controllers\Marketplace\MarketplaceCatalogController;
-use App\Http\Controllers\Auth\MarketplaceAuthController;
-use App\Http\Controllers\Courier\CourierLastMileController;
-
+use App\Http\Controllers\Shared\ChatMessageReactionController;
+use App\Http\Controllers\Shared\PlatformComplaintController;
+use App\Http\Middleware\Courier\CourierOnly;
+use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
+use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
+use App\Http\Middleware\Seller\HandleSellerSupportChat;
 use App\Models\Accounts\AdminAccount;
 use App\Models\Accounts\BuyerAccount;
 use App\Models\Accounts\CourierAccount;
 use App\Models\Accounts\LogisticsAccount;
-use App\Models\Registration\RegistrationApplication;
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\Accounts\SellerAccount;
+use App\Models\Messaging\ChatMessage;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Registration\RegistrationApplication;
+use App\Services\Seller\SellerAccountStatusService;
+use App\Support\LogisticsHubAuthentication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,11 +82,9 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
-
 Route::get('/login', function () {
     return view('pages.login');
 })->name('login');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -100,15 +103,12 @@ Route::get(
     ->whereIn('provider', ['google', 'facebook'])
     ->name('oauth.redirect');
 
-
 Route::get(
     '/auth/{provider}/callback',
     [SocialAuthController::class, 'callback']
 )
     ->whereIn('provider', ['google', 'facebook'])
     ->name('oauth.callback');
-
-
 
 Route::post('/login', function (Request $request) {
 
@@ -126,7 +126,7 @@ Route::post('/login', function (Request $request) {
     $adminEmail = strtolower(trim($request->email));
     $admin = AdminAccount::query()->where('email', $adminEmail)->first();
 
-    if (!$admin && $adminEmail === 'admin@gmail.com') {
+    if (app()->environment(['local', 'testing']) && ! $admin && $adminEmail === 'admin@gmail.com') {
         $admin = AdminAccount::query()->firstOrCreate(
             ['email' => 'admin@gmail.com'],
             ['name' => 'SARI Administrator', 'password' => Hash::make('admin123')]
@@ -142,7 +142,14 @@ Route::post('/login', function (Request $request) {
             'is_courier', 'courier_account_id', 'courier_email', 'courier_name',
             'is_buyer', 'buyer_account_id', 'buyer_social_account_id',
             'is_logistics', 'logistics_account_id', 'logistics_email', 'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
+
         return redirect()->route('admin.dashboard');
     }
 
@@ -153,6 +160,7 @@ Route::post('/login', function (Request $request) {
     */
 
     if (
+        app()->environment(['local', 'testing']) &&
         $request->email === 'seller@gmail.com' &&
         $request->password === 'seller123'
     ) {
@@ -197,6 +205,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         /*
@@ -205,7 +219,6 @@ Route::post('/login', function (Request $request) {
         */
         return redirect()->route('seller.dashboard');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -218,6 +231,7 @@ Route::post('/login', function (Request $request) {
     */
 
     if (
+        app()->environment(['local', 'testing']) &&
         $request->email === 'courier@gmail.com' &&
         $request->password === 'courier123'
     ) {
@@ -240,11 +254,16 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('courier.dashboard');
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -260,6 +279,7 @@ Route::post('/login', function (Request $request) {
     */
 
     if (
+        app()->environment(['local', 'testing']) &&
         $request->email === 'buyer@gmail.com' &&
         $request->password === 'buyer123'
     ) {
@@ -299,7 +319,7 @@ Route::post('/login', function (Request $request) {
         $request->session()->put('buyer_email', $buyer->email);
         $request->session()->put(
             'buyer_name',
-            trim($buyer->first_name . ' ' . $buyer->last_name)
+            trim($buyer->first_name.' '.$buyer->last_name)
         );
 
         /*
@@ -320,54 +340,23 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('buyer.dashboard');
     }
 
-
     /*
     |--------------------------------------------------------------------------
-    | TEMPORARY LOGISTICS ACCOUNT
+    | Logistics accounts use database-backed authentication only.
+    | The former hardcoded temporary Logistics login has been removed.
     |--------------------------------------------------------------------------
-    |
-    | Email: logistics@gmail.com
-    | Password: logistics123
-    |
     */
-
-    if (
-        $request->email === 'logistics@gmail.com' &&
-        $request->password === 'logistics123'
-    ) {
-        $request->session()->regenerate();
-
-        $request->session()->put('is_logistics', true);
-        $request->session()->put('logistics_email', 'logistics@gmail.com');
-        $request->session()->put('logistics_name', 'SARI Logistics');
-
-        /*
-        | Prevent another role from remaining active in the same session.
-        */
-        $request->session()->forget([
-            'is_admin',
-            'is_seller',
-            'seller_account_id',
-            'is_buyer',
-            'buyer_account_id',
-            'buyer_social_account_id',
-            'buyer_email',
-            'buyer_name',
-            'buyer_avatar',
-            'is_courier',
-            'courier_account_id',
-            'courier_email',
-            'courier_name',
-        ]);
-
-        return redirect()->route('logistics.dashboard');
-    }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -376,6 +365,33 @@ Route::post('/login', function (Request $request) {
     */
 
     $email = strtolower(trim($request->email));
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGISTICS HUB OPERATOR ACCOUNT
+    |--------------------------------------------------------------------------
+    |
+    | Hub Operators share the parent Logistics provider but carry their own
+    | logistics_facility_id so hub-scoped pages can restrict operations.
+    |
+    */
+
+    $hubLogin = LogisticsHubAuthentication::attempt($request, $email);
+
+    if ($hubLogin) {
+        // The helper sets these identifiers only after successful Hub login.
+        // Do not create a new role from an unsuccessful login redirect.
+        if (
+            (bool) $request->session()->get('is_logistics_hub_operator', false)
+            && (int) $request->session()->get('logistics_hub_account_id', 0) > 0
+            && (int) $request->session()->get('logistics_facility_id', 0) > 0
+            && (int) $request->session()->get('logistics_account_id', 0) > 0
+        ) {
+            $request->session()->put('logistics_role', 'hub_operator');
+        }
+
+        return $hubLogin;
+    }
 
     $buyer = BuyerAccount::query()->where('email', $email)->first();
 
@@ -392,7 +408,7 @@ Route::post('/login', function (Request $request) {
         $request->session()->put('buyer_email', $buyer->email);
         $request->session()->put(
             'buyer_name',
-            trim($buyer->first_name . ' ' . $buyer->last_name) ?: 'SARI Buyer'
+            trim($buyer->first_name.' '.$buyer->last_name) ?: 'SARI Buyer'
         );
 
         $request->session()->forget([
@@ -409,6 +425,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('buyer.dashboard');
@@ -462,6 +484,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('seller.dashboard');
@@ -482,7 +510,7 @@ Route::post('/login', function (Request $request) {
         $request->session()->put('courier_email', $courier->email);
         $request->session()->put(
             'courier_name',
-            trim($courier->first_name . ' ' . $courier->last_name)
+            trim($courier->first_name.' '.$courier->last_name)
         );
 
         $request->session()->forget([
@@ -495,6 +523,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('courier.dashboard');
@@ -515,7 +549,7 @@ Route::post('/login', function (Request $request) {
         $request->session()->put('logistics_email', $logistics->email);
         $request->session()->put(
             'logistics_name',
-            trim($logistics->first_name . ' ' . $logistics->last_name) ?: 'SARI Logistics'
+            trim($logistics->first_name.' '.$logistics->last_name) ?: 'SARI Logistics'
         );
 
         $request->session()->forget([
@@ -532,7 +566,15 @@ Route::post('/login', function (Request $request) {
             'courier_account_id',
             'courier_email',
             'courier_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
+
+        $request->session()->put('logistics_role', 'manager');
 
         return redirect()->route('logistics.dashboard');
     }
@@ -571,7 +613,6 @@ Route::post('/login', function (Request $request) {
         ->onlyInput('email');
 
 })->name('login.submit');
-
 
 Route::get(
     '/register',
@@ -614,7 +655,6 @@ Route::get(
 Route::post('/complaints', [PlatformComplaintController::class, 'store'])
     ->name('platform.complaints.store');
 
-
 /*
 |--------------------------------------------------------------------------
 | PUBLIC MARKETPLACE CATALOG
@@ -634,7 +674,6 @@ Route::get('/marketplace/products/{product}/image', [MarketplaceCatalogControlle
 
 Route::post('/marketplace/login', [MarketplaceAuthController::class, 'login'])
     ->name('marketplace.login');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -656,7 +695,6 @@ Route::get(
     '/address/municipalities/{municipalityCode}/barangays',
     [AddressLookupController::class, 'barangays']
 )->name('address.barangays');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -695,18 +733,23 @@ Route::get('/buyer/products/{product}', [BuyerProductController::class, 'show'])
 /* Buyer cart — MySQL backed */
 Route::get('/buyer/cart', [BuyerCartController::class, 'index'])
     ->name('buyer.cart');
+
 Route::post('/buyer/cart/items', [BuyerCartController::class, 'store'])
     ->name('buyer.cart.items.store');
+
 Route::patch('/buyer/cart/items/{item}', [BuyerCartController::class, 'update'])
     ->name('buyer.cart.items.update');
+
 Route::delete('/buyer/cart/items/{item}', [BuyerCartController::class, 'destroy'])
     ->name('buyer.cart.items.destroy');
+
 Route::get('/buyer/cart-summary', [BuyerCartController::class, 'summary'])
     ->name('buyer.cart.summary');
 
 /* Checkout creates real MarketplaceOrder records grouped by seller */
 Route::get('/buyer/checkout', [BuyerCheckoutController::class, 'index'])
     ->name('buyer.checkout');
+
 Route::post('/buyer/checkout', [BuyerCheckoutController::class, 'store'])
     ->name('buyer.checkout.store');
 
@@ -719,8 +762,10 @@ Route::get('/buyer/orders/{order}', [BuyerOrderController::class, 'show'])
 
 Route::post('/buyer/orders/{order}/cancel', [BuyerOrderController::class, 'cancel'])
     ->name('buyer.orders.cancel');
+
 Route::get('/buyer/orders-live-state', [BuyerOrderController::class, 'liveState'])
     ->name('buyer.orders.live-state');
+
 Route::post('/buyer/orders/{order}/reviews', [BuyerReviewController::class, 'store'])
     ->name('buyer.orders.reviews.store');
 
@@ -731,10 +776,13 @@ Route::get('/buyer/shipping', [BuyerShippingController::class, 'index'])
 /* Buyer notifications — order workflow events with persistent read state */
 Route::get('/buyer/notifications', [BuyerNotificationController::class, 'index'])
     ->name('buyer.notifications');
+
 Route::get('/buyer/notifications-summary', [BuyerNotificationController::class, 'summary'])
     ->name('buyer.notifications.summary');
+
 Route::post('/buyer/notifications/read-all', [BuyerNotificationController::class, 'readAll'])
     ->name('buyer.notifications.read-all');
+
 Route::post('/buyer/notifications/{event}/read', [BuyerNotificationController::class, 'read'])
     ->whereNumber('event')
     ->name('buyer.notifications.read');
@@ -742,20 +790,22 @@ Route::post('/buyer/notifications/{event}/read', [BuyerNotificationController::c
 /* Buyer ↔ Seller direct messaging */
 Route::get('/buyer/messages', [BuyerSellerMessageController::class, 'buyerIndex'])
     ->name('buyer.messages');
+
 Route::post('/buyer/messages/{seller}', [BuyerSellerMessageController::class, 'buyerSend'])
     ->name('buyer.messages.send');
 
 /* Buyer account + dynamic rewards */
 Route::get('/buyer/account', [BuyerAccountController::class, 'index'])
     ->name('buyer.account');
+
 Route::patch('/buyer/account', [BuyerAccountController::class, 'update'])
     ->name('buyer.account.update');
+
 Route::get('/buyer/rewards', [BuyerPageController::class, 'rewards'])
     ->name('buyer.rewards');
 
 Route::post('/buyer/logout', [BuyerPageController::class, 'logout'])
     ->name('buyer.logout');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -765,7 +815,6 @@ Route::post('/buyer/logout', [BuyerPageController::class, 'logout'])
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
     ->name('admin.dashboard');
-
 
 Route::get(
     '/admin/registrations',
@@ -787,12 +836,12 @@ Route::get(
     [AdminRegistrationController::class, 'document']
 )->name('admin.registrations.document');
 
-
 /*
 |--------------------------------------------------------------------------
 | ADMIN — USER MANAGEMENT
 |--------------------------------------------------------------------------
 */
+
 Route::get('/admin/users', [AdminUsersController::class, 'index'])
     ->name('admin.users');
 
@@ -826,6 +875,10 @@ Route::post('/admin/users/{role}/{id}/note', [AdminUsersController::class, 'note
     ->whereNumber('id')
     ->name('admin.users.note');
 
+Route::delete('/admin/users/{role}/{id}', [AdminUsersController::class, 'destroy'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereNumber('id')
+    ->name('admin.users.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -838,48 +891,42 @@ Route::get(
     [AdminSellerComplianceController::class, 'index']
 )->name('admin.seller-compliance');
 
-
 Route::post(
     '/admin/seller-compliance/products/{product}/approve',
     [AdminSellerComplianceController::class, 'approve']
 )->name('admin.compliance.products.approve');
-
 
 Route::post(
     '/admin/seller-compliance/products/{product}/reject',
     [AdminSellerComplianceController::class, 'reject']
 )->name('admin.compliance.products.reject');
 
-
 Route::post(
     '/admin/seller-compliance/products/{product}/warn',
     [AdminSellerComplianceController::class, 'warn']
 )->name('admin.compliance.products.warn');
-
 
 Route::post(
     '/admin/seller-compliance/sellers/{seller}/suspend-30',
     [AdminSellerAccountStatusController::class, 'suspend30']
 )->name('admin.compliance.sellers.suspend30');
 
-
 Route::post(
     '/admin/seller-compliance/sellers/{seller}/unsuspend',
     [AdminSellerAccountStatusController::class, 'liftSuspension']
 )->name('admin.compliance.sellers.unsuspend');
-
 
 Route::post(
     '/admin/seller-compliance/sellers/{seller}/reply',
     [AdminSellerComplianceController::class, 'reply']
 )->name('admin.compliance.sellers.reply');
 
-
 /*
 |--------------------------------------------------------------------------
 | ADMIN — SELLER ACCOUNT CONTROL
 |--------------------------------------------------------------------------
 */
+
 Route::get(
     '/admin/seller-account-control',
     [AdminSellerAccountStatusController::class, 'index']
@@ -905,7 +952,6 @@ Route::post(
     [AdminSellerAccountStatusController::class, 'restore']
 )->name('admin.seller-accounts.restore');
 
-
 Route::get('/admin/complaints', [AdminComplaintsController::class, 'index'])
     ->name('admin.complaints');
 
@@ -915,17 +961,17 @@ Route::post('/admin/complaints/{complaint}/resolve', [AdminComplaintsController:
 Route::post('/admin/complaints/{complaint}/reopen', [AdminComplaintsController::class, 'reopen'])
     ->name('admin.complaints.reopen');
 
-
 Route::get('/admin/commissions', [AdminCommissionsController::class, 'index'])
     ->name('admin.commissions');
 
 Route::post('/admin/commissions/payouts/{payout}/approve', [AdminCommissionsController::class, 'approvePayout'])
     ->name('admin.commissions.payouts.approve');
+
 Route::post('/admin/commissions/payouts/{payout}/paid', [AdminCommissionsController::class, 'markPayoutPaid'])
     ->name('admin.commissions.payouts.paid');
+
 Route::post('/admin/commissions/payouts/{payout}/reject', [AdminCommissionsController::class, 'rejectPayout'])
     ->name('admin.commissions.payouts.reject');
-
 
 Route::get('/admin/reports', [AdminReportsController::class, 'index'])
     ->name('admin.reports');
@@ -933,31 +979,26 @@ Route::get('/admin/reports', [AdminReportsController::class, 'index'])
 Route::get('/admin/reports/export', [AdminReportsController::class, 'export'])
     ->name('admin.reports.export');
 
-
 Route::get('/admin/platform-settings', [AdminPlatformSettingsController::class, 'index'])
     ->name('admin.platform-settings');
 
 Route::patch('/admin/platform-settings', [AdminPlatformSettingsController::class, 'update'])
     ->name('admin.platform-settings.update');
 
-
 Route::get(
     '/admin/messages',
     [SellerAdminChatController::class, 'adminIndex']
 )->name('admin.messages');
-
 
 Route::post(
     '/admin/messages/{seller}',
     [SellerAdminChatController::class, 'adminSend']
 )->name('admin.messages.send');
 
-
 Route::post(
     '/admin/messages/{seller}/read',
     [SellerAdminChatController::class, 'adminRead']
 )->name('admin.messages.read');
-
 
 Route::get('/admin/account', [AdminAccountController::class, 'index'])
     ->name('admin.account');
@@ -971,7 +1012,6 @@ Route::patch('/admin/account/profile', [AdminAccountController::class, 'updatePr
 Route::patch('/admin/account/password', [AdminAccountController::class, 'updatePassword'])
     ->name('admin.account.password.update');
 
-
 Route::post('/admin/logout', function (Request $request) {
 
     $request->session()->forget(['is_admin', 'admin_account_id']);
@@ -983,7 +1023,6 @@ Route::post('/admin/logout', function (Request $request) {
 
 })->name('admin.logout');
 
-
 /*
 |--------------------------------------------------------------------------
 | SELLER ROUTES
@@ -994,8 +1033,7 @@ Route::get(
     '/seller/dashboard',
     [SellerDashboardController::class, 'index']
 )->middleware(EnsureSellerAccountAccessible::class)
-  ->name('seller.dashboard');
-
+    ->name('seller.dashboard');
 
 Route::post(
     '/seller/ai-assistant/message',
@@ -1004,7 +1042,6 @@ Route::post(
     EnsureSellerAccountAccessible::class,
     'throttle:30,1',
 ])->name('seller.ai-assistant.message');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -1017,9 +1054,10 @@ Route::post(
 | even when Reverb is temporarily unavailable.
 |
 */
+
 Route::get('/seller/account-state', function (Request $request) {
 
-    if (!$request->session()->get('is_seller')) {
+    if (! $request->session()->get('is_seller')) {
         return response()->json([
             'authenticated' => false,
         ], 401);
@@ -1029,19 +1067,19 @@ Route::get('/seller/account-state', function (Request $request) {
         $request->session()->get('seller_account_id')
     );
 
-    if (!$seller) {
+    if (! $seller) {
         return response()->json([
             'authenticated' => false,
         ], 401);
     }
 
-    $seller = app(\App\Services\Seller\SellerAccountStatusService::class)
+    $seller = app(SellerAccountStatusService::class)
         ->refresh($seller);
 
     $status = (string) ($seller->account_status ?: 'active');
 
     $activeSuspension = $seller->suspended_until
-        ? now()->lt(\Illuminate\Support\Carbon::parse($seller->suspended_until))
+        ? now()->lt(Carbon::parse($seller->suspended_until))
         : false;
 
     return response()->json([
@@ -1057,8 +1095,6 @@ Route::get('/seller/account-state', function (Request $request) {
     ]);
 
 })->name('seller.account-state');
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -1077,154 +1113,153 @@ Route::get('/seller/account-state', function (Request $request) {
 | Dedicated Products Page
 | Presentation only: it reuses the existing library + CRUD endpoints below.
 */
+
 Route::get(
     '/seller/products',
     [SellerProductController::class, 'index']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.index');
-
+    ->name('seller.products.index');
 
 /*
 | Dedicated Add Product Page
 */
+
 Route::get(
     '/seller/products/create',
     [SellerProductController::class, 'create']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.create');
-
+    ->name('seller.products.create');
 
 /*
 | Add Product
 */
+
 Route::post(
     '/seller/products',
     [SellerProductController::class, 'store']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.store');
-
+    ->name('seller.products.store');
 
 /*
 | Multiple Persistent Add Product Drafts
 */
+
 Route::get(
     '/seller/product-drafts',
     [SellerProductDraftController::class, 'index']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.draft');
+    ->name('seller.products.draft');
 
 Route::post(
     '/seller/product-drafts',
     [SellerProductDraftController::class, 'store']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.draft.save');
+    ->name('seller.products.draft.save');
 
 Route::delete(
     '/seller/product-drafts',
     [SellerProductDraftController::class, 'destroy']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.draft.delete');
+    ->name('seller.products.draft.delete');
 
 Route::get(
     '/seller/product-drafts/media/{kind}/{key?}',
     [SellerProductDraftController::class, 'media']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->whereIn('kind', ['cover', 'gallery', 'variant'])
-  ->name('seller.products.draft-media');
-
+    ->whereIn('kind', ['cover', 'gallery', 'variant'])
+    ->name('seller.products.draft-media');
 
 /*
 | Lazy Product Library JSON
 | Loaded only when the Seller opens the full Product Library modal.
 */
+
 Route::get(
     '/seller/products/library-data',
     [SellerProductController::class, 'library']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.library');
-
+    ->name('seller.products.library');
 
 /*
 | Archived Products Page
 | Keep this route above product parameter routes for clarity.
 */
+
 Route::get(
     '/seller/products/archive',
     [SellerProductController::class, 'archived']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.archive');
-
+    ->name('seller.products.archive');
 
 /*
 | Product Version Image
 */
+
 Route::get(
     '/seller/product-versions/{version}/image',
     [SellerProductController::class, 'versionImage']
 )->name('seller.products.version-image');
 
-
 /*
 | Current Product Image
 */
+
 Route::get(
     '/seller/products/{product}/image',
     [SellerProductController::class, 'image']
 )->name('seller.products.image');
 
-
 Route::get(
     '/seller/product-images/{image}/image',
     [SellerProductController::class, 'galleryImage']
 )->whereNumber('image')
-  ->name('seller.products.gallery-image');
+    ->name('seller.products.gallery-image');
 
 Route::get(
     '/seller/product-variants/{variant}/image',
     [SellerProductController::class, 'variantImage']
 )->whereNumber('variant')
-  ->name('seller.products.variant-image');
-
+    ->name('seller.products.variant-image');
 
 /*
 | Update / Edit Product
 */
+
 Route::put(
     '/seller/products/{product}',
     [SellerProductController::class, 'update']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.update');
-
+    ->name('seller.products.update');
 
 /*
 | Archive One Product
 */
+
 Route::post(
     '/seller/products/{product}/archive',
     [SellerProductController::class, 'archive']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.archive-product');
-
+    ->name('seller.products.archive-product');
 
 /*
 | Recoverable Delete
 */
+
 Route::post(
     '/seller/products/{product}/delete',
     [SellerProductController::class, 'destroy']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.delete');
-
+    ->name('seller.products.delete');
 
 /*
 | Restore Archived / Deleted Product
 */
+
 Route::post(
     '/seller/products/{product}/restore',
     [SellerProductController::class, 'restore']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.products.restore');
-
+    ->name('seller.products.restore');
 
 /*
 |--------------------------------------------------------------------------
@@ -1248,7 +1283,6 @@ Route::get('/seller/reviews', [SellerReviewController::class, 'index'])
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.reviews');
 
-
 /*
 |--------------------------------------------------------------------------
 | SELLER COMPLIANCE MESSAGE
@@ -1259,8 +1293,7 @@ Route::post(
     '/seller/compliance/message',
     [SellerComplianceMessageController::class, 'store']
 )->middleware(EnsureSellerAccountAccessible::class)
-  ->name('seller.compliance.message');
-
+    ->name('seller.compliance.message');
 
 /*
 |--------------------------------------------------------------------------
@@ -1272,54 +1305,50 @@ Route::get(
     '/seller/orders',
     [SellerOrderController::class, 'index']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.orders');
+    ->name('seller.orders');
 
 Route::post(
     '/seller/orders/{order}/prepare',
     [SellerOrderController::class, 'prepare']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.orders.prepare');
+    ->name('seller.orders.prepare');
 
 Route::post(
     '/seller/orders/{order}/ready-pickup',
     [SellerOrderController::class, 'readyForPickup']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.orders.ready-pickup');
+    ->name('seller.orders.ready-pickup');
 
 Route::get(
     '/seller/orders/{order}/waybill',
     [SellerOrderController::class, 'waybill']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.orders.waybill');
+    ->name('seller.orders.waybill');
 
 Route::get(
     '/seller/orders-live-state',
     [SellerOrderController::class, 'liveState']
 )->name('seller.orders.live-state');
 
-
 Route::get(
     '/seller/reports',
-    [\App\Http\Controllers\Seller\SellerReportController::class, 'index']
+    [SellerReportController::class, 'index']
 )
-    ->middleware(\App\Http\Middleware\Seller\EnsureSellerNotRestricted::class)
+    ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.reports');
-
 
 Route::get(
     '/seller/reports/download',
-    [\App\Http\Controllers\Seller\SellerReportController::class, 'downloadCsv']
+    [SellerReportController::class, 'downloadCsv']
 )
-    ->middleware(\App\Http\Middleware\Seller\EnsureSellerNotRestricted::class)
+    ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.reports.download');
-
 
 Route::get(
     '/seller/messages',
     [SellerAdminChatController::class, 'sellerIndex']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.messages');
-
+    ->name('seller.messages');
 
 Route::post(
     '/seller/messages',
@@ -1329,41 +1358,38 @@ Route::post(
     HandleSellerSupportChat::class,
 ])->name('seller.messages.send');
 
-
 Route::post(
     '/seller/messages/read',
     [SellerAdminChatController::class, 'sellerRead']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.messages.read');
+    ->name('seller.messages.read');
 
-
-Route::get('/seller/account', [\App\Http\Controllers\Seller\SellerAccountController::class, 'index'])
+Route::get('/seller/account', [SellerAccountController::class, 'index'])
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.account');
 
-Route::patch('/seller/account', [\App\Http\Controllers\Seller\SellerAccountController::class, 'update'])
+Route::patch('/seller/account', [SellerAccountController::class, 'update'])
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.account.update');
-
 
 /*
 | Protected seller/admin chat attachment
 */
+
 Route::get(
     '/messages/attachments/{message}',
     [SellerAdminChatController::class, 'attachment']
 )->name('chat.attachments.show');
-
 
 Route::post('/seller/logout', function (Request $request) {
 
     $request->session()->forget([
         'is_seller',
         'seller_account_id',
-            'is_logistics',
-            'logistics_account_id',
-            'logistics_email',
-            'logistics_name',
+        'is_logistics',
+        'logistics_account_id',
+        'logistics_email',
+        'logistics_name',
     ]);
 
     $request->session()->invalidate();
@@ -1372,7 +1398,6 @@ Route::post('/seller/logout', function (Request $request) {
     return redirect()->route('login');
 
 })->name('seller.logout');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -1384,186 +1409,185 @@ Route::post('/seller/logout', function (Request $request) {
 |
 */
 
-
 /*
 |--------------------------------------------------------------------------
 | COURIER DASHBOARD
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/courier/dashboard',
-    [CourierDashboardController::class, 'index']
-)->name('courier.dashboard');
+Route::middleware(CourierOnly::class)->group(function (): void {
 
-Route::get(
-    '/courier/delivery/{order}',
-    [CourierDashboardController::class, 'show']
-)->name('courier.delivery.show');
+    Route::get(
+        '/courier/dashboard',
+        [CourierDashboardController::class, 'index']
+    )->name('courier.dashboard');
 
+    Route::get(
+        '/courier/delivery/{order}',
+        [CourierDashboardController::class, 'show']
+    )->name('courier.delivery.show');
 
-/*
-|--------------------------------------------------------------------------
-| COURIER DELIVERY PROCESS
-|--------------------------------------------------------------------------
-|
-| Added for the Courier Dashboard delivery workflow only.
-| Existing Admin, Seller, Product, Compliance, and Chat backend routes
-| above are left unchanged.
-|
-*/
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER DELIVERY PROCESS
+    |--------------------------------------------------------------------------
+    |
+    | Added for the Courier Dashboard delivery workflow only.
+    | Existing Admin, Seller, Product, Compliance, and Chat backend routes
+    | above are left unchanged.
+    |
+    */
 
-Route::get(
-    '/courier/requests',
-    [CourierDeliveryController::class, 'requests']
-)->name('courier.requests');
+    Route::get(
+        '/courier/requests',
+        [CourierDeliveryController::class, 'requests']
+    )->name('courier.requests');
 
-Route::post(
-    '/courier/orders/{order}/accept',
-    [CourierDeliveryController::class, 'accept']
-)->name('courier.orders.accept');
+    Route::post(
+        '/courier/orders/{order}/accept',
+        [CourierDeliveryController::class, 'accept']
+    )->name('courier.orders.accept');
 
-Route::post(
-    '/courier/orders/{order}/proceed-pickup',
-    [CourierDeliveryController::class, 'proceedToPickup']
-)->name('courier.orders.proceed-pickup');
+    Route::post(
+        '/courier/orders/{order}/proceed-pickup',
+        [CourierDeliveryController::class, 'proceedToPickup']
+    )->name('courier.orders.proceed-pickup');
 
-Route::post(
-    '/courier/orders/{order}/arrived-pickup',
-    [CourierDeliveryController::class, 'arrivedAtPickup']
-)->name('courier.orders.arrived-pickup');
+    Route::post(
+        '/courier/orders/{order}/arrived-pickup',
+        [CourierDeliveryController::class, 'arrivedAtPickup']
+    )->name('courier.orders.arrived-pickup');
 
-Route::post(
-    '/courier/orders/{order}/confirm-pickup',
-    [CourierDeliveryController::class, 'confirmPickup']
-)->name('courier.orders.confirm-pickup');
+    Route::post(
+        '/courier/orders/{order}/confirm-pickup',
+        [CourierDeliveryController::class, 'confirmPickup']
+    )->name('courier.orders.confirm-pickup');
 
-Route::post(
-    '/courier/orders/{order}/arrived-buyer',
-    [CourierDeliveryController::class, 'arrivedAtBuyer']
-)->name('courier.orders.arrived-buyer');
+    Route::post(
+        '/courier/orders/{order}/arrived-buyer',
+        [CourierDeliveryController::class, 'arrivedAtBuyer']
+    )->name('courier.orders.arrived-buyer');
 
-Route::post(
-    '/courier/orders/{order}/complete',
-    [CourierDeliveryController::class, 'complete']
-)->name('courier.orders.complete');
+    Route::post(
+        '/courier/orders/{order}/complete',
+        [CourierDeliveryController::class, 'complete']
+    )->name('courier.orders.complete');
 
-Route::get(
-    '/courier/orders-live-state',
-    [CourierDeliveryController::class, 'liveState']
-)->name('courier.orders.live-state');
+    Route::get(
+        '/courier/orders-live-state',
+        [CourierDeliveryController::class, 'liveState']
+    )->name('courier.orders.live-state');
 
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER LOGOUT
+    |--------------------------------------------------------------------------
+    */
 
-/*
-|--------------------------------------------------------------------------
-| COURIER LOGOUT
-|--------------------------------------------------------------------------
-*/
+    Route::post('/courier/logout', function (Request $request) {
 
-Route::post('/courier/logout', function (Request $request) {
-
-    $request->session()->forget([
-        'is_courier',
-        'courier_account_id',
-        'courier_email',
-        'courier_name',
+        $request->session()->forget([
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
             'is_logistics',
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
-    ]);
+        ]);
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    return redirect()->route('login');
-
-})->name('courier.logout');
-
-
-/*
-|--------------------------------------------------------------------------
-| COURIER PAGES
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/courier/pickups', function (Request $request) {
-    if (!$request->session()->get('is_courier')) {
         return redirect()->route('login');
-    }
 
-    $orders = \App\Models\Orders\MarketplaceOrder::query()
-        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
-        ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
-        ->latest('updated_at')
-        ->get();
+    })->name('courier.logout');
 
-    return view('courier.pickups', compact('orders'));
-})->name('courier.pickups');
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER PAGES
+    |--------------------------------------------------------------------------
+    */
 
-Route::get('/courier/deliveries', function (Request $request) {
-    if (!$request->session()->get('is_courier')) {
-        return redirect()->route('login');
-    }
+    Route::get('/courier/pickups', function (Request $request) {
+        if (! $request->session()->get('is_courier')) {
+            return redirect()->route('login');
+        }
 
-    $orders = \App\Models\Orders\MarketplaceOrder::query()
-        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
-        ->whereIn('status', ['in_transit', 'arrived_buyer'])
-        ->latest('updated_at')
-        ->get();
+        $orders = MarketplaceOrder::query()
+            ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+            ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
+            ->latest('updated_at')
+            ->get();
 
-    return view('courier.deliveries', compact('orders'));
-})->name('courier.deliveries');
+        return view('courier.pickups', compact('orders'));
+    })->name('courier.pickups');
 
-Route::get(
-    '/courier/earnings',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'earnings']
-)->name('courier.earnings');
+    Route::get('/courier/deliveries', function (Request $request) {
+        if (! $request->session()->get('is_courier')) {
+            return redirect()->route('login');
+        }
 
-Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
-    ->name('courier.earnings.statement');
-Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestPayout'])
-    ->name('courier.earnings.payout');
+        $orders = MarketplaceOrder::query()
+            ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+            ->whereDoesntHave('logisticsParcel')
+            ->whereIn('status', ['in_transit', 'arrived_buyer'])
+            ->latest('updated_at')
+            ->get();
 
+        return view('courier.deliveries', compact('orders'));
+    })->name('courier.deliveries');
 
-Route::get(
-    '/courier/history',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'history']
-)->name('courier.history');
+    Route::get(
+        '/courier/earnings',
+        [CourierPageController::class, 'earnings']
+    )->name('courier.earnings');
 
-Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
-    ->name('courier.history.export');
+    Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
+        ->name('courier.earnings.statement');
 
+    Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestPayout'])
+        ->name('courier.earnings.payout');
 
-Route::get(
-    '/courier/messages',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'messages']
-)->name('courier.messages');
+    Route::get(
+        '/courier/history',
+        [CourierPageController::class, 'history']
+    )->name('courier.history');
 
-Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
-    ->name('courier.messages.send');
+    Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
+        ->name('courier.history.export');
 
+    Route::get(
+        '/courier/messages',
+        [CourierPageController::class, 'messages']
+    )->name('courier.messages');
 
-Route::get(
-    '/courier/profile',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'profile']
-)->name('courier.profile');
+    Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
+        ->name('courier.messages.send');
 
-Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
-    ->name('courier.profile.update');
+    Route::get(
+        '/courier/profile',
+        [CourierPageController::class, 'profile']
+    )->name('courier.profile');
 
-Route::patch('/courier/profile/availability', [CourierPageController::class, 'availability'])
-    ->name('courier.profile.availability');
+    Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
+        ->name('courier.profile.update');
+
+    Route::patch('/courier/profile/availability', [CourierPageController::class, 'availability'])
+        ->name('courier.profile.availability');
+
+});
 
 Route::post(
     '/admin/message-notifications/read-all',
-    function (\Illuminate\Http\Request $request) {
+    function (Request $request) {
 
-        if (!$request->session()->get('is_admin')) {
+        if (! $request->session()->get('is_admin')) {
             abort(403, 'Admin session required.');
         }
 
-        $updated = \App\Models\Messaging\ChatMessage::query()
+        $updated = ChatMessage::query()
             ->where('sender_role', 'seller')
             ->whereNull('read_by_admin_at')
             ->update([
@@ -1577,25 +1601,29 @@ Route::post(
     }
 )->name('admin.message-notifications.read-all');
 
-Route::get(
-    '/courier/last-mile',
-    [CourierLastMileController::class, 'index']
-)->name('courier.last-mile');
+Route::middleware(CourierOnly::class)->group(function (): void {
 
-Route::post(
-    '/courier/last-mile/{assignment}/start',
-    [CourierLastMileController::class, 'start']
-)->name('courier.last-mile.start');
+    Route::get(
+        '/courier/last-mile',
+        [CourierLastMileController::class, 'index']
+    )->name('courier.last-mile');
 
-Route::post(
-    '/courier/last-mile/{assignment}/orders/{order}/arrived',
-    [CourierLastMileController::class, 'arrived']
-)->name('courier.last-mile.arrived');
+    Route::post(
+        '/courier/last-mile/{assignment}/start',
+        [CourierLastMileController::class, 'start']
+    )->name('courier.last-mile.start');
 
-Route::post(
-    '/courier/last-mile/{assignment}/orders/{order}/delivered',
-    [CourierLastMileController::class, 'delivered']
-)->name('courier.last-mile.delivered');
+    Route::post(
+        '/courier/last-mile/{assignment}/orders/{order}/arrived',
+        [CourierLastMileController::class, 'arrived']
+    )->name('courier.last-mile.arrived');
+
+    Route::post(
+        '/courier/last-mile/{assignment}/orders/{order}/delivered',
+        [CourierLastMileController::class, 'delivered']
+    )->name('courier.last-mile.delivered');
+
+});
 
 Route::get(
     '/seller/messages/{message}/meta',
@@ -1606,12 +1634,6 @@ Route::post(
     '/seller/messages/{message}/reaction',
     [ChatMessageReactionController::class, 'sellerToggle']
 )->name('seller.messages.react');
-
-
-
-
-
-
 
 Route::post(
     '/admin/messages/presence',
@@ -1642,8 +1664,7 @@ Route::get(
     '/seller/layout-state',
     SellerLayoutStateController::class
 )->middleware(EnsureSellerAccountAccessible::class)
-  ->name('seller.layout-state');
-
+    ->name('seller.layout-state');
 
 /*
 |--------------------------------------------------------------------------
@@ -1674,6 +1695,7 @@ Route::post('/forgot-password/verify-code', [PasswordResetOtpController::class, 
 Route::post('/forgot-password/reset', [PasswordResetOtpController::class, 'reset'])
     ->middleware('throttle:8,1')
     ->name('password.update');
+
 Route::post('/forgot-password/restart', [PasswordResetOtpController::class, 'restart'])
     ->middleware('throttle:12,1')
     ->name('password.otp.restart');
@@ -1685,9 +1707,5 @@ Route::post('/forgot-password/restart', [PasswordResetOtpController::class, 'res
 */
 
 require __DIR__.'/logistics.php';
-
-
-
-
 
 require __DIR__.'/messaging.php';

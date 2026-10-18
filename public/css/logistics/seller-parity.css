@@ -1,0 +1,475 @@
+
+/*
+ * SARI Logistics — Seller-parity foundation
+ * Visual layer only: no changes to routes, forms, permissions or JS.
+ */
+
+:root {
+    --logistics-sidebar-width: 238px;
+    --logistics-shell-bg: #f4f5f7;
+    --logistics-surface: #fff;
+    --logistics-ink: #24201b;
+    --logistics-muted: #91877b;
+    --logistics-border: #ece5da;
+    --logistics-gold: #d9950b;
+    --logistics-gold-dark: #c88708;
+    --logistics-gold-pale: #fff9ef;
+    --logistics-shadow: 0 6px 18px rgba(33,24,14,.035);
+    --logistics-shadow-hover: 0 12px 27px rgba(43,33,21,.065);
+    --logistics-shell-ease: cubic-bezier(.22,1,.36,1);
+}
+
+/* Main shell */
+
+html,
+body,
+#logisticsContent {
+    background: var(--logistics-shell-bg) !important;
+    background-image: none !important;
+}
+
+body {
+    color: var(--logistics-ink);
+    font-family: Poppins, sans-serif;
+}
+
+#logisticsContent > main {
+    width: 100%;
+    min-height: calc(100vh - 72px);
+    padding: 28px 40px 36px;
+    background: transparent;
+}
+
+/* Sidebar */
+
+#logisticsSidebar {
+    width: min(238px, 86vw);
+    background: var(--logistics-surface) !important;
+    border-right: 1px solid var(--logistics-border) !important;
+    box-shadow: none !important;
+
+    transition:
+        width 130ms var(--logistics-shell-ease),
+        transform 180ms var(--logistics-shell-ease) !important;
+}
+
+#logisticsContent {
+    transition:
+        padding-left 130ms var(--logistics-shell-ease) !important;
+}
+
+#logisticsSidebarBrand {
+    min-height: 74px !important;
+    background: #fff !important;
+    border-bottom-color: #eee7dc !important;
+}
+
+#logisticsSidebarLogoStage {
+    height: 44px !important;
+}
+
+#logisticsSidebarLogoFull {
+    width: 102px !important;
+}
+
+#logisticsSidebarNav {
+    padding: 14px 10px 16px !important;
+    scrollbar-color: #ddd4c7 transparent !important;
+}
+
+#logisticsSidebarNav::-webkit-scrollbar-thumb {
+    background: #ddd4c7 !important;
+}
+
+#logisticsSidebarNav .logistics-sidebar-section-label {
+    margin: 10px 8px 7px !important;
+    padding: 0 !important;
+    color: #9a7840 !important;
+    font-size: 7.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: .13em !important;
+    line-height: 1.15 !important;
+}
+
+#logisticsSidebarNav > div.border-t {
+    margin: 11px 6px 9px !important;
+    border-color: #eee7dd !important;
+}
+
+#logisticsSidebarNav .logistics-sidebar-item {
+    min-height: 39px !important;
+    margin-bottom: 2px !important;
+    padding: 8px 10px !important;
+    gap: 10px !important;
+
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
+
+    box-shadow: none;
+    transform: none !important;
+
+    transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease,
+        box-shadow 120ms ease !important;
+}
+
+#logisticsSidebarNav .logistics-sidebar-item svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 1.75;
+}
+
+/* Inactive navigation hover */
+
+#logisticsSidebarNav
+.logistics-sidebar-item:not([class*="bg-[#d9930a]"]):hover {
+    background: var(--logistics-gold-pale) !important;
+    border-color: #eadfcf !important;
+    color: #94620a !important;
+    box-shadow: none !important;
+}
+
+/* Active navigation */
+
+#logisticsSidebarNav
+.logistics-sidebar-item[class*="bg-[#d9930a]"] {
+    background: var(--logistics-gold) !important;
+    border-color: var(--logistics-gold) !important;
+    color: #fff !important;
+
+    box-shadow:
+        0 5px 12px rgba(194,132,10,.12) !important;
+}
+
+#logisticsSidebarNav
+.logistics-sidebar-item[class*="bg-[#d9930a]"]:hover {
+    background: var(--logistics-gold-dark) !important;
+    border-color: var(--logistics-gold-dark) !important;
+    color: #fff !important;
+}
+
+#logisticsSidebarNav
+.logistics-sidebar-item[class*="bg-[#d9930a]"] svg {
+    color: #fff !important;
+}
+
+/* Sidebar profile */
+
+#logisticsSidebarProfile {
+    padding: 9px 10px !important;
+    background: #fff !important;
+    border-top-color: #eee7dc !important;
+}
+
+#logisticsSidebarProfile > a {
+    min-height: 54px !important;
+    border: 1px solid #e9e0d3 !important;
+    border-radius: 11px !important;
+    background: #fff !important;
+    padding: 8px 9px !important;
+
+    box-shadow:
+        0 3px 10px rgba(40,31,21,.02);
+
+    transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        box-shadow 120ms ease !important;
+}
+
+#logisticsSidebarProfile > a:hover {
+    background: #fffdf9 !important;
+    border-color: #dcc9a7 !important;
+
+    box-shadow:
+        0 4px 12px rgba(40,31,21,.03);
+}
+
+/* Header */
+
+#logisticsHeader {
+    background: #fff !important;
+    border-bottom: 1px solid #eee4d3 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+#logisticsHeader > div {
+    min-height: 72px !important;
+    padding-inline: 18px !important;
+}
+
+#logisticsHeader h1 {
+    color: #191712 !important;
+    letter-spacing: -.025em;
+}
+
+#logisticsHeader input[type="search"] {
+    background: #fff !important;
+    border-color: #e3dcd1 !important;
+    border-radius: 11px !important;
+
+    transition:
+        border-color 120ms ease,
+        box-shadow 120ms ease !important;
+}
+
+#logisticsHeader input[type="search"]:focus {
+    border-color: #d9950b !important;
+
+    box-shadow:
+        0 0 0 3px rgba(216,155,16,.09) !important;
+}
+
+/* Icon-only notification bell */
+
+#logisticsNotificationButton {
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+    color: #475467 !important;
+}
+
+#logisticsNotificationButton:hover,
+#logisticsNotificationButton:focus-visible {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: #c9890b !important;
+    box-shadow: none !important;
+}
+
+/* Menu buttons */
+
+#logisticsMenuButton,
+#logisticsSidebarToggle {
+    border-radius: 10px !important;
+    background: #fff !important;
+    border-color: #e5ded2 !important;
+
+    box-shadow:
+        0 2px 5px rgba(40,31,21,.035) !important;
+
+    transition:
+        background-color 120ms ease,
+        color 120ms ease,
+        border-color 120ms ease !important;
+}
+
+#logisticsMenuButton:hover,
+#logisticsSidebarToggle:hover {
+    background: #fff9ef !important;
+    color: #a96f09 !important;
+    border-color: #dec99f !important;
+}
+
+/* Shared Logistics workspace colors */
+
+:is(
+    .pickup-page,
+    .intake-page,
+    .sorting-page,
+    .transfer-page,
+    .lastmile-page,
+    .monitor-page,
+    .reports-page,
+    .account-page
+) {
+    color: var(--logistics-ink);
+}
+
+/* Uniform form focus states */
+
+:is(
+    .pickup-page,
+    .intake-page,
+    .sorting-page,
+    .transfer-page,
+    .lastmile-page,
+    .monitor-page,
+    .reports-page,
+    .account-page
+)
+:is(
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea
+) {
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease !important;
+}
+
+:is(
+    .pickup-page,
+    .intake-page,
+    .sorting-page,
+    .transfer-page,
+    .lastmile-page,
+    .monitor-page,
+    .reports-page,
+    .account-page
+)
+:is(
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea
+):focus-visible {
+    outline: none;
+    border-color: #d9950b !important;
+
+    box-shadow:
+        0 0 0 3px rgba(216,155,16,.09) !important;
+}
+
+/* Keyboard accessibility */
+
+:is(
+    .pickup-page,
+    .intake-page,
+    .sorting-page,
+    .transfer-page,
+    .lastmile-page,
+    .monitor-page,
+    .reports-page,
+    .account-page
+)
+:is(
+    button,
+    a,
+    summary,
+    select,
+    input,
+    textarea
+):focus-visible {
+    outline: 2px solid rgba(216,155,16,.7);
+    outline-offset: 2px;
+}
+
+/* Seller-style card elevation */
+
+:is(
+    .pickup-stat,
+    .pickup-batch,
+    .intake-stat,
+    .sorting-stat,
+    .transfer-stat,
+    .transfer-manifest,
+    .lastmile-stat,
+    .lastmile-area-card,
+    .monitor-stat,
+    .monitor-order-card,
+    .reports-stat,
+    .reports-card,
+    .account-card
+) {
+    box-shadow: var(--logistics-shadow);
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    :is(
+        .pickup-stat,
+        .pickup-batch,
+        .intake-stat,
+        .sorting-stat,
+        .transfer-stat,
+        .transfer-manifest,
+        .lastmile-stat,
+        .lastmile-area-card,
+        .monitor-stat,
+        .monitor-order-card,
+        .reports-stat,
+        .reports-card,
+        .account-card
+    ):hover {
+        transform: translateY(-1px);
+        box-shadow: var(--logistics-shadow-hover);
+    }
+}
+
+/* Desktop collapsed state */
+
+@media (min-width: 1024px) {
+    body.logistics-sidebar-collapsed {
+        --logistics-sidebar-width: 76px;
+    }
+
+    #logisticsSidebar {
+        width: var(--logistics-sidebar-width) !important;
+    }
+
+    #logisticsContent {
+        padding-left: var(--logistics-sidebar-width) !important;
+    }
+
+    body.logistics-sidebar-collapsed #logisticsSidebarNav {
+        padding: 12px 9px !important;
+    }
+
+    body.logistics-sidebar-collapsed
+    #logisticsSidebarNav .logistics-sidebar-item {
+        justify-content: center !important;
+        padding-inline: 0 !important;
+    }
+
+    body.logistics-sidebar-collapsed #logisticsSidebarProfile {
+        padding: 9px !important;
+    }
+}
+
+/* Responsive content padding */
+
+@media (max-width: 1199px) {
+    #logisticsContent > main {
+        padding: 24px 26px 32px;
+    }
+}
+
+@media (max-width: 767px) {
+    #logisticsContent > main {
+        padding: 18px 16px 24px;
+    }
+
+    #logisticsHeader > div {
+        padding-inline: 14px !important;
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    #logisticsSidebar,
+    #logisticsContent,
+    #logisticsSidebarNav *,
+    #logisticsHeader *,
+    :is(
+        .pickup-stat,
+        .pickup-batch,
+        .intake-stat,
+        .sorting-stat,
+        .transfer-stat,
+        .transfer-manifest,
+        .lastmile-stat,
+        .lastmile-area-card,
+        .monitor-stat,
+        .monitor-order-card,
+        .reports-stat,
+        .reports-card,
+        .account-card
+    ) {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        transform: none !important;
+    }
+}

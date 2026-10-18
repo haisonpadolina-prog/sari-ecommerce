@@ -250,6 +250,8 @@
         }
     </style>
 
+    <link rel="stylesheet" href="{{ asset('css/logistics/seller-parity.css') }}?v=20261018-1">
+
     @stack('styles')
 </head>
 

@@ -15,7 +15,7 @@ beforeEach(function (): void {
 
 function managedSellerAccount(array $overrides = []): SellerAccount
 {
-    return SellerAccount::query()->create(array_merge([
+    return SellerAccount::query()->forceCreate(array_merge([
         'last_name' => 'Seller',
         'first_name' => 'Sari',
         'middle_initial' => 'A',
@@ -68,6 +68,10 @@ test('seller account update changes identity without overwriting store or verifi
             'sex' => 'Female',
             'contact_no' => '09999999999',
             'birthday' => '1999-06-15',
+            'street_address' => $seller->street_address,
+            'province_name' => $seller->province_name,
+            'municipality_name' => $seller->municipality_name,
+            'barangay_name' => $seller->barangay_name,
         ])
         ->assertRedirect()
         ->assertSessionHas('success');
@@ -84,9 +88,20 @@ test('seller account update changes identity without overwriting store or verifi
 test('seller can securely view their stored profile photo and verification documents', function (): void {
     $seller = managedSellerAccount();
 
-    Storage::disk('public')->put($seller->profile_image_path, 'profile-photo-bytes');
-    Storage::disk('local')->put($seller->id_path, 'valid-id-bytes');
-    Storage::disk('local')->put($seller->business_permit_path, 'permit-bytes');
+    Storage::disk('public')->put(
+        $seller->profile_image_path,
+        'profile-photo-bytes'
+    );
+
+    Storage::disk('local')->put(
+        $seller->id_path,
+        'valid-id-bytes'
+    );
+
+    Storage::disk('local')->put(
+        $seller->business_permit_path,
+        'permit-bytes'
+    );
 
     $this->withSession(sellerSession($seller))
         ->get(route('seller.account.profile-photo'))
@@ -101,10 +116,13 @@ test('seller can securely view their stored profile photo and verification docum
         ->assertOk();
 });
 
-
 test('removing the active profile photo does not delete the original registration evidence', function (): void {
     $seller = managedSellerAccount();
-    Storage::disk('public')->put($seller->profile_image_path, 'registration-profile-photo');
+
+    Storage::disk('public')->put(
+        $seller->profile_image_path,
+        'registration-profile-photo'
+    );
 
     $this->withSession(sellerSession($seller))
         ->patch(route('seller.account.update'), [
@@ -113,13 +131,20 @@ test('removing the active profile photo does not delete the original registratio
             'middle_initial' => $seller->middle_initial,
             'sex' => $seller->sex,
             'contact_no' => $seller->contact_no,
-            'birthday' => $seller->birthday->format('Y-m-d'),
+            'birthday' => (string) $seller->getRawOriginal('birthday'),
+            'street_address' => $seller->street_address,
+            'province_name' => $seller->province_name,
+            'municipality_name' => $seller->municipality_name,
+            'barangay_name' => $seller->barangay_name,
             'remove_profile_image' => '1',
         ])
         ->assertRedirect();
 
     expect($seller->fresh()->profile_image_path)->toBeNull();
-    Storage::disk('public')->assertExists('profile-images/seller/avatar.jpg');
+
+    Storage::disk('public')->assertExists(
+        'profile-images/seller/avatar.jpg'
+    );
 });
 
 test('seller password update requires the current password and stores the new hash', function (): void {
@@ -131,7 +156,11 @@ test('seller password update requires the current password and stores the new ha
             'password' => 'new-secret-123',
             'password_confirmation' => 'new-secret-123',
         ])
-        ->assertSessionHasErrors('current_password', null, 'password');
+        ->assertSessionHasErrors(
+            'current_password',
+            null,
+            'password'
+        );
 
     $this->withSession(sellerSession($seller))
         ->patch(route('seller.account.password.update'), [
@@ -142,7 +171,12 @@ test('seller password update requires the current password and stores the new ha
         ->assertRedirect()
         ->assertSessionHas('success');
 
-    expect(Hash::check('new-secret-123', (string) $seller->fresh()->password))->toBeTrue();
+    expect(
+        Hash::check(
+            'new-secret-123',
+            (string) $seller->fresh()->password
+        )
+    )->toBeTrue();
 });
 
 test('store management updates public and pickup settings without changing verified registration address', function (): void {

@@ -51,7 +51,6 @@ class CourierDashboardController extends Controller
             ->first();
 
         return $this->dashboard(
-            $request,
             $rider,
             $currentDelivery
         );
@@ -89,11 +88,11 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Logistics pickup Rider
+        | Logistics Seller pickup
         |--------------------------------------------------------------------------
         |
-        | A Logistics pickup order is only operationally owned by this Rider
-        | while the parcel is still awaiting intake at the origin hub.
+        | The pickup Rider owns this job only until the parcel is physically
+        | accepted by the origin hub.
         |
         */
 
@@ -105,8 +104,7 @@ class CourierDashboardController extends Controller
                     true
                 )
                 &&
-                $order->logisticsParcel->status
-                    === 'awaiting_intake',
+                $order->logisticsParcel->status === 'awaiting_intake',
                 404
             );
         } else {
@@ -126,15 +124,22 @@ class CourierDashboardController extends Controller
             );
         }
 
-        return $this->dashboard(
-            $request,
-            $rider,
-            $order
+        /*
+        |--------------------------------------------------------------------------
+        | Dedicated workflow page
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'courier.delivery',
+            compact(
+                'order',
+                'rider'
+            )
         );
     }
 
     private function dashboard(
-        Request $request,
         CourierAccount $rider,
         ?MarketplaceOrder $currentDelivery
     ): View {
@@ -146,7 +151,7 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Pickup / direct assignments waiting to start
+        | Pickup / Direct queue
         |--------------------------------------------------------------------------
         */
 
@@ -192,7 +197,7 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Active Last-Mile assignments
+        | Last-Mile work
         |--------------------------------------------------------------------------
         */
 
@@ -277,7 +282,7 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Pickup work statistics
+        | Logistics pickup statistics
         |--------------------------------------------------------------------------
         */
 
@@ -335,7 +340,7 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Legacy/direct delivery statistics
+        | Legacy / direct statistics
         |--------------------------------------------------------------------------
         */
 
@@ -402,13 +407,8 @@ class CourierDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Completed work / earnings
+        | Rider earnings
         |--------------------------------------------------------------------------
-        |
-        | RiderEarning is now the source of truth for actual earned delivery
-        | fees. This means the Last-Mile Rider receives completion credit,
-        | rather than the historical pickup Rider stored in courier_email.
-        |
         */
 
         $todayStart =
@@ -515,7 +515,7 @@ class CourierDashboardController extends Controller
                 ): void {
                     /*
                     |--------------------------------------------------------------------------
-                    | Direct delivery
+                    | Direct work
                     |--------------------------------------------------------------------------
                     */
 

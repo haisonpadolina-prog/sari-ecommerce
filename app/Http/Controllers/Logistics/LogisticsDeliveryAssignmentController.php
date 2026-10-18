@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Logistics;
 
 use App\Http\Controllers\Controller;
 use App\Models\Accounts\CourierAccount;
+use App\Models\Delivery\DeliveryRouteStop;
 use App\Models\Delivery\LogisticsParcel;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
+use App\Services\Logistics\LogisticsNotificationService;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
 use App\Support\CurrentLogisticsAccount;
+use App\Support\CurrentLogisticsHub;
 use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -19,27 +22,12 @@ use Illuminate\Validation\ValidationException;
 
 class LogisticsDeliveryAssignmentController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Active pickup delivery statuses
-    |--------------------------------------------------------------------------
-    |
-    | Used when checking if a Rider already has an active Seller pickup job.
-    |
-    */
-
     private const ACTIVE_PICKUP_STATUSES = [
         'courier_accepted',
         'heading_pickup',
         'arrived_pickup',
         'in_transit',
     ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | Active last-mile assignment statuses
-    |--------------------------------------------------------------------------
-    */
 
     private const ACTIVE_LAST_MILE_STATUSES = [
         'assigned',
@@ -49,447 +37,324 @@ class LogisticsDeliveryAssignmentController extends Controller
     public function __construct(
         private readonly MarketplaceOrderWorkflowService $workflow,
         private readonly LogisticsOrderAccess $orderAccess,
-    ) {
-    }
+        private readonly LogisticsNotificationService $notifications,
+    ) {}
 
     /*
     |--------------------------------------------------------------------------
-    | Pickup Assignment
+    | Pickup Assignment Page
     |--------------------------------------------------------------------------
     */
 
     public function index(Request $request): View
     {
-        $logistics =
-            $this->orderAccess->prepare($request);
+        $logistics = $this->orderAccess->prepare($request);
+
+        $queueQuery = MarketplaceOrder::query()
+            ->with([
+                'seller',
+                'logisticsParcel',
+                'deliveryRouteStops.facility',
+            ])
+            ->where('logistics_account_id', $logistics->id)
+            ->where('status', 'ready_for_pickup')
+            ->whereNull('courier_email');
 
         /*
-        |--------------------------------------------------------------------------
-        | Verified, unassigned Seller pickup orders
-        |--------------------------------------------------------------------------
-        */
+         * The manager sees the provider-wide queue.
+         * A Hub Operator sees only orders originating from their hub.
+         *
+         * Include pending siblings, not just verified parcels.
+         */
 
-        $orders =
-            MarketplaceOrder::query()
-                ->with([
-                    'seller',
-                    'logisticsParcel',
-                    'deliveryRouteStops.facility',
-                ])
-                ->where(
-                    'logistics_account_id',
-                    $logistics->id
-                )
-                ->where(
-                    'status',
-                    'ready_for_pickup'
-                )
-                ->whereNull(
-                    'courier_email'
-                )
-                ->whereHas(
-                    'logisticsParcel',
-                    fn ($query) =>
-                        $query->where(
-                            'status',
-                            'pickup_verified'
-                        )
-                )
-                ->oldest('ready_at')
-                ->oldest('id')
-                ->get();
+        $queueOrders = CurrentLogisticsHub::scopeOrders(
+            $request,
+            $queueQuery,
+            'origin'
+        )
+            ->oldest('ready_at')
+            ->oldest('id')
+            ->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Group orders into Seller pickup batches
-        |--------------------------------------------------------------------------
-        |
-        | SAME:
-        | - Seller
-        | - Pickup address
-        | - Origin hub
-        |
-        | NOT PART OF GROUP KEY:
-        | - Buyer
-        | - Product
-        | - Destination hub
-        |
-        */
+        $queueGroups = $queueOrders->groupBy(
+            fn (MarketplaceOrder $order): string => $this->pickupGroupKey($order)
+        );
 
-        $pickupGroups =
-            $orders
-                ->groupBy(
-                    fn (MarketplaceOrder $order): string =>
-                        $this->pickupGroupKey(
-                            $order
-                        )
-                )
-                ->map(
-                    function (
-                        Collection $group,
-                        string $groupKey
-                    ): array {
-                        /** @var MarketplaceOrder $firstOrder */
-                        $firstOrder =
-                            $group->first();
-
-                        $routeStops =
-                            $firstOrder
-                                ->deliveryRouteStops
-                                ->keyBy('stop_key');
-
-                        $originStop =
-                            $routeStops->get(
-                                'origin_facility'
-                            );
-
-                        $originFacility =
-                            $originStop?->facility;
-
-                        $destinationNames =
-                            $group
-                                ->map(
-                                    function (
-                                        MarketplaceOrder $order
-                                    ): ?string {
-                                        $destination =
-                                            $order
-                                                ->deliveryRouteStops
-                                                ->firstWhere(
-                                                    'stop_key',
-                                                    'destination_facility'
-                                                );
-
-                                        return $destination
-                                                ?->facility
-                                                ?->name
-                                            ?: $destination
-                                                ?->name;
-                                    }
-                                )
-                                ->filter()
-                                ->unique()
-                                ->values();
-
-                        $buyerCount =
-                            $group
-                                ->pluck(
-                                    'buyer_name'
-                                )
-                                ->filter()
-                                ->unique()
-                                ->count();
-
-                        $totalValue =
-                            $group
-                                ->sum(
-                                    fn (
-                                        MarketplaceOrder $order
-                                    ): float =>
-                                        (float) $order->total
-                                );
-
-                        return [
-                            'key' =>
-                                $groupKey,
-
-                            'seller_name' =>
-                                $firstOrder
-                                    ->seller
-                                    ?->store_name
-                                ?: $firstOrder
-                                    ->pickup_name
-                                ?: 'SARI Seller',
-
-                            'pickup_name' =>
-                                $firstOrder
-                                    ->pickup_name
-                                ?: $firstOrder
-                                    ->seller
-                                    ?->store_name
-                                ?: 'Seller Pickup',
-
-                            'pickup_address' =>
-                                $firstOrder
-                                    ->pickup_address
-                                ?: 'Pickup address unavailable',
-
-                            'origin_facility_id' =>
-                                $originStop
-                                    ?->logistics_facility_id,
-
-                            'origin_facility_name' =>
-                                $originFacility
-                                    ?->name
-                                ?: $originStop
-                                    ?->name
-                                ?: 'Origin hub unavailable',
-
-                            'orders' =>
-                                $group->values(),
-
-                            'order_count' =>
-                                $group->count(),
-
-                            'buyer_count' =>
-                                $buyerCount,
-
-                            'destination_count' =>
-                                $destinationNames->count(),
-
-                            'destination_names' =>
-                                $destinationNames,
-
-                            'total_value' =>
-                                $totalValue,
-
-                            'oldest_ready_at' =>
-                                $group
-                                    ->pluck('ready_at')
-                                    ->filter()
-                                    ->sort()
-                                    ->first(),
-                        ];
-                    }
-                )
-                ->sortBy(
-                    fn (array $group) =>
-                        $group['oldest_ready_at']
-                        ?: now()
-                )
-                ->values();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Approved, active and online Riders
-        |--------------------------------------------------------------------------
-        */
-
-        $approvedRiderApplicationIds =
-            RegistrationApplication::query()
-                ->where(
-                    function ($query) use ($logistics): void {
-                        $query
-                            ->where(
-                                'logistics_account_id',
-                                $logistics->id
-                            )
-                            ->orWhereNull(
-                                'logistics_account_id'
-                            );
-                    }
-                )
-                ->where(
-                    'role',
-                    'rider'
-                )
-                ->where(
-                    'status',
-                    'approved'
-                )
-                ->select('id');
-
-        $riders =
-            CourierAccount::query()
-                ->where(
-                    function ($query) use ($logistics): void {
-                        $query
-                            ->where(
-                                'logistics_account_id',
-                                $logistics->id
-                            )
-                            ->orWhereNull(
-                                'logistics_account_id'
-                            );
-                    }
-                )
-                ->where(
-                    'account_status',
-                    'active'
-                )
-                ->where(
-                    'availability_status',
-                    'online'
-                )
-                ->whereIn(
-                    'registration_application_id',
-                    $approvedRiderApplicationIds
-                )
-                ->orderBy('first_name')
-                ->orderBy('last_name')
-                ->get();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Riders busy with active Seller pickup work
-        |--------------------------------------------------------------------------
-        |
-        | courier_email remains as the pickup Rider snapshot even after hub
-        | intake, so a Rider is only considered busy while the related parcel
-        | is still awaiting intake at the origin hub.
-        |
-        */
-
-        $busyPickupEmails =
-            MarketplaceOrder::query()
-                ->where(
-                    'logistics_account_id',
-                    $logistics->id
-                )
-                ->whereIn(
-                    'status',
-                    self::ACTIVE_PICKUP_STATUSES
-                )
-                ->whereNotNull(
-                    'courier_email'
-                )
-                ->whereHas(
-                    'logisticsParcel',
-                    fn ($query) =>
-                        $query->where(
-                            'status',
-                            'awaiting_intake'
-                        )
-                )
-                ->pluck(
-                    'courier_email'
-                )
-                ->filter()
-                ->map(
-                    fn ($email): string =>
-                        strtolower(
-                            trim(
-                                (string) $email
-                            )
-                        )
-                )
-                ->unique()
-                ->values();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Riders busy with active Last-Mile work
-        |--------------------------------------------------------------------------
-        */
-
-        $busyLastMileRiderIds =
-            DB::table(
-                'last_mile_assignments'
+        $orders = $queueOrders
+            ->filter(
+                fn (MarketplaceOrder $order): bool => $order->logisticsParcel?->status === 'pickup_verified'
             )
-                ->where(
-                    'logistics_account_id',
-                    $logistics->id
-                )
-                ->whereIn(
-                    'status',
-                    self::ACTIVE_LAST_MILE_STATUSES
-                )
-                ->pluck(
-                    'courier_account_id'
-                )
-                ->map(
-                    fn ($id): int =>
-                        (int) $id
-                )
-                ->unique()
-                ->values();
+            ->values();
 
         /*
         |--------------------------------------------------------------------------
-        | Add availability metadata
+        | Seller Pickup Groups
         |--------------------------------------------------------------------------
         */
 
-        $riders =
-            $riders->map(
-                function (
-                    CourierAccount $rider
-                ) use (
-                    $busyPickupEmails,
-                    $busyLastMileRiderIds
-                ): CourierAccount {
-                    $email =
-                        strtolower(
-                            trim(
-                                (string) $rider->email
-                            )
-                        );
+        $pickupGroups = $orders
+            ->groupBy(
+                fn (MarketplaceOrder $order): string => $this->pickupGroupKey($order)
+            )
+            ->map(function (
+                Collection $group,
+                string $groupKey
+            ) use ($queueGroups): array {
 
-                    $busyPickup =
-                        $busyPickupEmails
-                            ->contains(
-                                $email
+                $firstOrder = $group->first();
+
+                $origin = $firstOrder
+                    ->deliveryRouteStops
+                    ->firstWhere('stop_key', 'origin_facility');
+
+                $destinationNames = $group
+                    ->map(function (MarketplaceOrder $order): ?string {
+                        $destination = $order
+                            ->deliveryRouteStops
+                            ->firstWhere(
+                                'stop_key',
+                                'destination_facility'
                             );
 
-                    $busyLastMile =
-                        $busyLastMileRiderIds
-                            ->contains(
-                                (int) $rider->id
-                            );
+                        return $destination?->facility?->name
+                            ?: $destination?->name;
+                    })
+                    ->filter()
+                    ->unique()
+                    ->values();
 
-                    $rider->setAttribute(
-                        'is_dispatch_busy',
-                        $busyPickup
-                        || $busyLastMile
-                    );
+                $allSiblings = $queueGroups->get(
+                    $groupKey,
+                    collect()
+                );
 
-                    $rider->setAttribute(
-                        'dispatch_busy_reason',
-                        $busyLastMile
-                            ? 'Last-mile delivery'
-                            : (
-                                $busyPickup
-                                    ? 'Seller pickup'
-                                    : null
-                            )
-                    );
+                $unverified = $allSiblings
+                    ->filter(
+                        fn (MarketplaceOrder $order): bool => $order->logisticsParcel?->status
+                            !== 'pickup_verified'
+                    )
+                    ->values();
 
-                    return $rider;
-                }
-            );
+                return [
+                    'key' => $groupKey,
+
+                    'seller_name' => $firstOrder->seller?->store_name
+                        ?: $firstOrder->pickup_name
+                        ?: 'SARI Seller',
+
+                    'pickup_name' => $firstOrder->pickup_name
+                        ?: $firstOrder->seller?->store_name
+                        ?: 'Seller Pickup',
+
+                    'pickup_address' => $firstOrder->pickup_address
+                        ?: 'Pickup address unavailable',
+
+                    'origin_facility_id' => $origin?->logistics_facility_id,
+
+                    'origin_facility_name' => $origin?->facility?->name
+                        ?: $origin?->name
+                        ?: 'Origin hub unavailable',
+
+                    'orders' => $group->values(),
+
+                    'order_count' => $group->count(),
+
+                    'buyer_count' => $group
+                        ->pluck('buyer_name')
+                        ->filter()
+                        ->unique()
+                        ->count(),
+
+                    'destination_count' => $destinationNames->count(),
+
+                    'destination_names' => $destinationNames,
+
+                    'total_value' => $group->sum(
+                        fn (MarketplaceOrder $order): float => (float) $order->total
+                    ),
+
+                    'oldest_ready_at' => $group
+                        ->pluck('ready_at')
+                        ->filter()
+                        ->sort()
+                        ->first(),
+
+                    'total_group_orders' => $allSiblings->count(),
+
+                    'pending_count' => $unverified->count(),
+
+                    'pending_order_numbers' => $unverified->pluck('order_number')->values(),
+
+                    'is_blocked' => $unverified->isNotEmpty(),
+                ];
+            })
+            ->sortBy(
+                fn (array $group) => $group['oldest_ready_at'] ?: now()
+            )
+            ->values();
 
         /*
         |--------------------------------------------------------------------------
-        | Summary
+        | Approved Riders
+        |--------------------------------------------------------------------------
+        */
+
+        $approvedIds = RegistrationApplication::query()
+            ->where(function ($query) use ($logistics): void {
+                $query
+                    ->where('logistics_account_id', $logistics->id)
+                    ->orWhereNull('logistics_account_id');
+            })
+            ->where('role', 'rider')
+            ->where('status', 'approved')
+            ->select('id');
+
+        $hubFacility = CurrentLogisticsHub::isHubOperator($request)
+            ? CurrentLogisticsHub::requireFacility($request)
+            : null;
+
+        $riderQuery = CourierAccount::query();
+
+        if ($hubFacility) {
+
+            /*
+             * Hub Operators may use only approved Riders belonging
+             * to their provider and local municipality/province.
+             *
+             * They cannot claim unowned legacy Rider accounts.
+             */
+
+            $riderQuery
+                ->where('logistics_account_id', $logistics->id)
+                ->whereRaw('LOWER(TRIM(municipality_name)) = ?', [
+                    mb_strtolower(
+                        trim((string) $hubFacility->municipality_name)
+                    ),
+                ])
+                ->whereRaw('LOWER(TRIM(province_name)) = ?', [
+                    mb_strtolower(
+                        trim((string) $hubFacility->province_name)
+                    ),
+                ]);
+
+        } else {
+
+            /*
+             * Preserve the manager's existing Rider pool.
+             */
+
+            $riderQuery->where(function ($query) use ($logistics): void {
+                $query
+                    ->where('logistics_account_id', $logistics->id)
+                    ->orWhereNull('logistics_account_id');
+            });
+        }
+
+        $riders = $riderQuery
+            ->where('account_status', 'active')
+            ->where('availability_status', 'online')
+            ->whereIn('registration_application_id', $approvedIds)
+            ->orderBy('first_name')
+            ->orderBy('last_name')
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Network-wide Busy Rider Checks
+        |--------------------------------------------------------------------------
+        */
+
+        $busyPickupEmails = MarketplaceOrder::query()
+            ->whereIn('status', [...self::ACTIVE_PICKUP_STATUSES, 'arrived_buyer'])
+            ->whereNotNull('courier_email')
+            ->where(function ($query): void {
+                $query->whereDoesntHave('logisticsParcel')
+                    ->orWhereHas('logisticsParcel', fn ($parcel) => $parcel->where('status', 'awaiting_intake'));
+            })
+            ->pluck('courier_email')
+            ->filter()
+            ->map(
+                fn ($email): string => strtolower(trim((string) $email))
+            )
+            ->unique()
+            ->values();
+
+        $busyLastMileIds = DB::table('last_mile_assignments')
+            ->whereIn(
+                'status',
+                self::ACTIVE_LAST_MILE_STATUSES
+            )
+            ->pluck('courier_account_id')
+            ->map(fn ($id): int => (int) $id)
+            ->unique()
+            ->values();
+
+        $riders = $riders->map(
+            function (CourierAccount $rider) use (
+                $busyPickupEmails,
+                $busyLastMileIds
+            ): CourierAccount {
+
+                $busyPickup = $busyPickupEmails->contains(
+                    strtolower(trim((string) $rider->email))
+                );
+
+                $busyLastMile = $busyLastMileIds->contains(
+                    (int) $rider->id
+                );
+
+                $rider->setAttribute(
+                    'is_dispatch_busy',
+                    $busyPickup || $busyLastMile
+                );
+
+                $rider->setAttribute(
+                    'dispatch_busy_reason',
+                    $busyLastMile
+                        ? 'Last-mile delivery'
+                        : ($busyPickup ? 'Seller pickup' : null)
+                );
+
+                return $rider;
+            }
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Statistics
         |--------------------------------------------------------------------------
         */
 
         $stats = [
-            'verified_orders' =>
-                $orders->count(),
+            'verified_orders' => $orders->count(),
 
-            'pickup_groups' =>
-                $pickupGroups->count(),
+            'pickup_groups' => $pickupGroups->count(),
 
-            'multi_order_groups' =>
-                $pickupGroups
-                    ->filter(
-                        fn (array $group): bool =>
-                            $group['order_count'] > 1
-                    )
-                    ->count(),
+            'multi_order_groups' => $pickupGroups
+                ->filter(
+                    fn (array $group): bool => $group['order_count'] > 1
+                )
+                ->count(),
 
-            'available_riders' =>
-                $riders
-                    ->filter(
-                        fn (CourierAccount $rider): bool =>
-                            ! (bool) $rider
-                                ->getAttribute(
-                                    'is_dispatch_busy'
-                                )
-                    )
-                    ->count(),
+            'blocked_groups' => $pickupGroups
+                ->filter(
+                    fn (array $group): bool => $group['is_blocked']
+                )
+                ->count(),
 
-            'busy_riders' =>
-                $riders
-                    ->filter(
-                        fn (CourierAccount $rider): bool =>
-                            (bool) $rider
-                                ->getAttribute(
-                                    'is_dispatch_busy'
-                                )
-                    )
-                    ->count(),
+            'unverified_orders' => $queueOrders->count() - $orders->count(),
+
+            'available_riders' => $riders
+                ->filter(
+                    fn (CourierAccount $rider): bool => ! (bool) $rider->getAttribute('is_dispatch_busy')
+                )
+                ->count(),
+
+            'busy_riders' => $riders
+                ->filter(
+                    fn (CourierAccount $rider): bool => (bool) $rider->getAttribute('is_dispatch_busy')
+                )
+                ->count(),
         ];
 
         return view(
@@ -504,515 +369,479 @@ class LogisticsDeliveryAssignmentController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Batch assign Seller pickup
+    | Assign Complete Seller Pickup Batch
     |--------------------------------------------------------------------------
     */
 
-    public function assignBatch(
-        Request $request
-    ): RedirectResponse {
-        $validated =
-            $request->validate([
-                'order_ids' => [
-                    'required',
-                    'array',
-                    'min:1',
-                ],
+    public function assignBatch(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'order_ids' => [
+                'required',
+                'array',
+                'min:1',
+                'max:200',
+            ],
 
-                'order_ids.*' => [
-                    'required',
-                    'integer',
-                    'distinct',
-                    'exists:marketplace_orders,id',
-                ],
+            'order_ids.*' => [
+                'required',
+                'integer',
+                'distinct',
+                'exists:marketplace_orders,id',
+            ],
 
-                'rider_id' => [
-                    'required',
-                    'integer',
-                    'exists:courier_accounts,id',
-                ],
-            ]);
+            'rider_id' => [
+                'required',
+                'integer',
+                'exists:courier_accounts,id',
+            ],
+        ]);
 
-        $logistics =
-            CurrentLogisticsAccount::resolve(
-                $request
-            );
+        $logistics = CurrentLogisticsAccount::resolve($request);
 
-        $selectedOrderIds =
-            collect(
-                $validated['order_ids']
-            )
-                ->map(
-                    fn ($id): int =>
-                        (int) $id
-                )
-                ->unique()
-                ->values();
+        $hubAccount = CurrentLogisticsHub::isHubOperator($request)
+            ? CurrentLogisticsHub::requireAccount($request)
+            : null;
 
-        $assignedCount =
-            $selectedOrderIds->count();
+        $hubFacility = $hubAccount
+            ? CurrentLogisticsHub::requireFacility($request)
+            : null;
+
+        $ids = collect($validated['order_ids'])
+            ->map(fn ($id): int => (int) $id)
+            ->sort()
+            ->values();
+
+        /*
+         * Recheck the whole group inside the transaction.
+         * Do not trust the order IDs submitted by the browser.
+         */
 
         DB::transaction(
             function () use (
-                $selectedOrderIds,
+                $request,
+                $ids,
                 $validated,
-                $logistics
+                $logistics,
+                $hubAccount,
+                $hubFacility
             ): void {
-                /*
-                |--------------------------------------------------------------------------
-                | Lock all selected orders
-                |--------------------------------------------------------------------------
-                */
-
-                $lockedOrders =
-                    MarketplaceOrder::query()
-                        ->whereIn(
-                            'id',
-                            $selectedOrderIds
-                                ->all()
-                        )
-                        ->where(
-                            'logistics_account_id',
-                            $logistics->id
-                        )
-                        ->lockForUpdate()
-                        ->get();
-
-                if (
-                    $lockedOrders->count()
-                    !== $selectedOrderIds->count()
-                ) {
-                    throw ValidationException::withMessages([
-                        'order_ids' =>
-                            'One or more selected orders do not belong to this Logistics account.',
-                    ]);
-                }
 
                 /*
-                |--------------------------------------------------------------------------
-                | Validate order states
-                |--------------------------------------------------------------------------
-                */
+                 * Lock the entire available queue so the existing
+                 * Seller sibling completeness rule is preserved.
+                 */
 
-                foreach (
-                    $lockedOrders
-                    as $order
-                ) {
-                    if (
-                        $order->status
-                        !== 'ready_for_pickup'
-                        ||
-                        filled(
-                            $order->courier_email
-                        )
-                    ) {
-                        throw ValidationException::withMessages([
-                            'order_ids' =>
-                                'One or more selected orders are no longer available for pickup assignment.',
-                        ]);
-                    }
-                }
+                $queueQuery = MarketplaceOrder::query()
+                    ->where('logistics_account_id', $logistics->id)
+                    ->where('status', 'ready_for_pickup')
+                    ->whereNull('courier_email');
+
+                $queue = CurrentLogisticsHub::scopeOrders(
+                    $request,
+                    $queueQuery,
+                    'origin'
+                )
+                    ->orderBy('id')
+                    ->lockForUpdate()
+                    ->get();
 
                 /*
-                |--------------------------------------------------------------------------
-                | Validate verified parcels
-                |--------------------------------------------------------------------------
-                */
+                 * Lock origin route stops and independently confirm
+                 * actual facility ownership.
+                 */
 
-                $verifiedParcels =
-                    LogisticsParcel::query()
-                        ->whereIn(
-                            'marketplace_order_id',
-                            $selectedOrderIds
-                                ->all()
-                        )
-                        ->where(
-                            'status',
-                            'pickup_verified'
-                        )
-                        ->lockForUpdate()
-                        ->get();
+                $origins = DeliveryRouteStop::query()
+                    ->whereIn(
+                        'marketplace_order_id',
+                        $queue->pluck('id')->all()
+                    )
+                    ->where('stop_key', 'origin_facility')
+                    ->orderBy('marketplace_order_id')
+                    ->lockForUpdate()
+                    ->get()
+                    ->keyBy('marketplace_order_id');
 
-                if (
-                    $verifiedParcels->count()
-                    !== $selectedOrderIds->count()
-                ) {
-                    throw ValidationException::withMessages([
-                        'order_ids' =>
-                            'Every order in the batch must be verified by Logistics before Rider assignment.',
-                    ]);
-                }
-
-                /*
-                |--------------------------------------------------------------------------
-                | Load route data for grouping validation
-                |--------------------------------------------------------------------------
-                */
-
-                $lockedOrders->load([
+                $queue->load([
                     'seller',
                     'deliveryRouteStops.facility',
                 ]);
 
-                /*
-                |--------------------------------------------------------------------------
-                | Selected orders must be one Seller pickup group
-                |--------------------------------------------------------------------------
-                */
+                $selected = $queue
+                    ->whereIn('id', $ids->all())
+                    ->values();
 
-                $groupKeys =
-                    $lockedOrders
-                        ->map(
-                            fn (
-                                MarketplaceOrder $order
-                            ): string =>
-                                $this->pickupGroupKey(
-                                    $order
-                                )
-                        )
-                        ->unique()
-                        ->values();
-
-                if (
-                    $groupKeys->count() !== 1
-                ) {
+                if ($selected->count() !== $ids->count()) {
                     throw ValidationException::withMessages([
-                        'order_ids' =>
-                            'A pickup batch must contain orders from the same Seller, pickup location, and origin hub.',
+                        'order_ids' => 'One or more orders are no longer available. Refresh the queue.',
                     ]);
                 }
 
                 /*
-                |--------------------------------------------------------------------------
-                | Origin hub must exist
-                |--------------------------------------------------------------------------
-                */
+                 * The batch must contain the same Seller, normalized
+                 * pickup address, and origin facility.
+                 */
 
-                foreach (
-                    $lockedOrders
-                    as $order
-                ) {
-                    $originStop =
-                        $order
-                            ->deliveryRouteStops
-                            ->firstWhere(
-                                'stop_key',
-                                'origin_facility'
-                            );
+                $keys = $selected
+                    ->map(
+                        fn (MarketplaceOrder $order): string => $this->pickupGroupKey($order)
+                    )
+                    ->unique();
+
+                if ($keys->count() !== 1) {
+                    throw ValidationException::withMessages([
+                        'order_ids' => 'A pickup batch must have the same Seller, pickup address and origin hub.',
+                    ]);
+                }
+
+                /*
+                 * The submitted IDs must equal every ready and
+                 * unassigned order in this Seller group.
+                 */
+
+                $wholeGroupIds = $queue
+                    ->filter(
+                        fn (MarketplaceOrder $order): bool => $this->pickupGroupKey($order)
+                            === $keys->first()
+                    )
+                    ->pluck('id')
+                    ->map(fn ($id): int => (int) $id)
+                    ->sort()
+                    ->values()
+                    ->all();
+
+                if ($wholeGroupIds !== $ids->all()) {
+                    throw ValidationException::withMessages([
+                        'order_ids' => 'Awaiting complete batch verification. Verify all sibling orders under Pickup Requests before assigning one Rider.',
+                    ]);
+                }
+
+                /*
+                 * Lock parcel records.
+                 */
+
+                $parcels = LogisticsParcel::query()
+                    ->whereIn(
+                        'marketplace_order_id',
+                        $ids->all()
+                    )
+                    ->orderBy('marketplace_order_id')
+                    ->lockForUpdate()
+                    ->get()
+                    ->keyBy('marketplace_order_id');
+
+                /*
+                 * Validate every parcel and its origin hub.
+                 */
+
+                foreach ($selected as $order) {
+
+                    $origin = $origins->get($order->id);
+                    $facility = $origin?->facility;
 
                     if (
-                        ! $originStop
-                        ||
-                        ! $originStop
-                            ->logistics_facility_id
+                        $hubFacility
+                        && (int) ($origin?->logistics_facility_id ?? 0)
+                            !== (int) $hubFacility->id
                     ) {
                         throw ValidationException::withMessages([
-                            'order_ids' =>
-                                'One or more orders do not have a valid origin sorting hub.',
+                            'order_ids' => 'A selected order is not assigned to your origin hub. Refresh the queue.',
+                        ]);
+                    }
+
+                    if (
+                        blank($order->pickup_address)
+                        || ! $facility
+                        || ! $facility->is_active
+                        || (int) $facility->logistics_account_id
+                            !== (int) $logistics->id
+                    ) {
+                        throw ValidationException::withMessages([
+                            'order_ids' => $order->order_number
+                                .' has a missing address or invalid origin hub.',
+                        ]);
+                    }
+
+                    if (
+                        $parcels->get($order->id)?->status
+                        !== 'pickup_verified'
+                    ) {
+                        throw ValidationException::withMessages([
+                            'order_ids' => 'All orders in this Seller group must be verified before assignment.',
                         ]);
                     }
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Lock selected Rider
+                | Validate Selected Rider
                 |--------------------------------------------------------------------------
                 */
 
-                $rider =
-                    CourierAccount::query()
-                        ->whereKey(
-                            (int) $validated[
-                                'rider_id'
-                            ]
-                        )
-                        ->where(
-                            function (
-                                $query
-                            ) use (
-                                $logistics
-                            ): void {
-                                $query
-                                    ->where(
-                                        'logistics_account_id',
-                                        $logistics->id
-                                    )
-                                    ->orWhereNull(
-                                        'logistics_account_id'
-                                    );
-                            }
-                        )
-                        ->lockForUpdate()
-                        ->firstOrFail();
+                $riderQuery = CourierAccount::query()
+                    ->whereKey((int) $validated['rider_id']);
 
-                /*
-                |--------------------------------------------------------------------------
-                | Confirm Rider approval
-                |--------------------------------------------------------------------------
-                */
+                if ($hubFacility) {
 
-                $approvedRider =
-                    RegistrationApplication::query()
-                        ->whereKey(
-                            $rider
-                                ->registration_application_id
-                        )
-                        ->where(
-                            function (
-                                $query
-                            ) use (
-                                $logistics
-                            ): void {
-                                $query
-                                    ->where(
-                                        'logistics_account_id',
-                                        $logistics->id
-                                    )
-                                    ->orWhereNull(
-                                        'logistics_account_id'
-                                    );
-                            }
-                        )
-                        ->where(
-                            'role',
-                            'rider'
-                        )
-                        ->where(
-                            'status',
-                            'approved'
-                        )
-                        ->exists();
+                    /*
+                     * Hub Operator:
+                     * Provider + municipality + province must match.
+                     */
+
+                    $riderQuery
+                        ->where('logistics_account_id', $logistics->id)
+                        ->whereRaw('LOWER(TRIM(municipality_name)) = ?', [
+                            mb_strtolower(
+                                trim((string) $hubFacility->municipality_name)
+                            ),
+                        ])
+                        ->whereRaw('LOWER(TRIM(province_name)) = ?', [
+                            mb_strtolower(
+                                trim((string) $hubFacility->province_name)
+                            ),
+                        ]);
+
+                } else {
+
+                    /*
+                     * Manager:
+                     * Preserve existing provider-wide and legacy pool.
+                     */
+
+                    $riderQuery->where(function ($query) use ($logistics): void {
+                        $query
+                            ->where('logistics_account_id', $logistics->id)
+                            ->orWhereNull('logistics_account_id');
+                    });
+                }
+
+                $rider = $riderQuery
+                    ->lockForUpdate()
+                    ->first();
+
+                if (! $rider) {
+                    throw ValidationException::withMessages([
+                        'rider_id' => 'Select an eligible Rider for your assigned Logistics service area.',
+                    ]);
+                }
+
+                $approved = RegistrationApplication::query()
+                    ->whereKey(
+                        $rider->registration_application_id
+                    )
+                    ->where(function ($query) use ($logistics): void {
+                        $query
+                            ->where(
+                                'logistics_account_id',
+                                $logistics->id
+                            )
+                            ->orWhereNull('logistics_account_id');
+                    })
+                    ->where('role', 'rider')
+                    ->where('status', 'approved')
+                    ->exists();
 
                 if (
-                    ! $approvedRider
-                    ||
-                    (
-                        $rider
-                            ->logistics_account_id
-                        &&
-                        (int) $rider
-                            ->logistics_account_id
-                            !==
-                            (int) $logistics->id
+                    ! $approved
+                    || (
+                        $rider->logistics_account_id
+                        && (int) $rider->logistics_account_id
+                            !== (int) $logistics->id
                     )
-                    ||
-                    $rider->account_status
-                        !== 'active'
-                    ||
-                    $rider->availability_status
-                        !== 'online'
+                    || $rider->account_status !== 'active'
+                    || $rider->availability_status !== 'online'
                 ) {
                     throw ValidationException::withMessages([
-                        'rider_id' =>
-                            'Only approved, active and online Riders from your Logistics network can receive pickup batches.',
+                        'rider_id' => 'Select an approved, active, online Rider from your Logistics network.',
                     ]);
                 }
 
                 /*
-                |--------------------------------------------------------------------------
-                | Claim legacy Rider under this Logistics account
-                |--------------------------------------------------------------------------
-                */
+                 * Preserve legacy Rider claiming for Manager only.
+                 * Hub Operators cannot claim unowned Rider accounts.
+                 */
 
-                if (
-                    ! $rider
-                        ->logistics_account_id
-                ) {
+                if (! $hubFacility && ! $rider->logistics_account_id) {
+
                     $rider->forceFill([
-                        'logistics_account_id' =>
-                            $logistics->id,
+                        'logistics_account_id' => $logistics->id,
                     ])->save();
 
-                    if (
-                        $rider
-                            ->registration_application_id
-                    ) {
+                    if ($rider->registration_application_id) {
+
                         RegistrationApplication::query()
                             ->whereKey(
-                                $rider
-                                    ->registration_application_id
+                                $rider->registration_application_id
                             )
-                            ->whereNull(
-                                'logistics_account_id'
-                            )
+                            ->whereNull('logistics_account_id')
                             ->update([
-                                'logistics_account_id' =>
-                                    $logistics->id,
+                                'logistics_account_id' => $logistics->id,
                             ]);
                     }
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Rider cannot have another active Seller pickup
+                | Prevent Conflicting Pickup and Last-Mile Assignments
                 |--------------------------------------------------------------------------
-                |
-                | courier_email remains on the MarketplaceOrder as a historical
-                | pickup Rider snapshot. Therefore the Rider is only considered
-                | occupied while the LogisticsParcel is still awaiting intake.
-                |
                 */
 
-                $hasActivePickup =
-                    MarketplaceOrder::query()
-                        ->where(
-                            'logistics_account_id',
-                            $logistics->id
-                        )
-                        ->whereRaw(
-                            'LOWER(courier_email) = ?',
-                            [
-                                strtolower(
-                                    trim(
-                                        (string) $rider
-                                            ->email
-                                    )
-                                ),
-                            ]
-                        )
-                        ->whereIn(
-                            'status',
-                            self::ACTIVE_PICKUP_STATUSES
-                        )
-                        ->whereHas(
-                            'logisticsParcel',
-                            fn ($query) =>
-                                $query->where(
-                                    'status',
-                                    'awaiting_intake'
-                                )
-                        )
-                        ->lockForUpdate()
-                        ->exists();
+                $email = strtolower(
+                    trim((string) $rider->email)
+                );
 
-                if ($hasActivePickup) {
+                $busyPickup = MarketplaceOrder::query()
+                    ->whereRaw('LOWER(TRIM(courier_email)) = ?', [$email])
+                    ->whereIn('status', [...self::ACTIVE_PICKUP_STATUSES, 'arrived_buyer'])
+                    ->where(function ($query): void {
+                        $query->whereDoesntHave('logisticsParcel')
+                            ->orWhereHas('logisticsParcel', fn ($parcel) => $parcel->where('status', 'awaiting_intake'));
+                    })->exists();
+
+                if ($busyPickup) {
                     throw ValidationException::withMessages([
-                        'rider_id' =>
-                            'This Rider already has an active Seller pickup batch.',
+                        'rider_id' => 'Rider already has an active Seller pickup or direct delivery.',
                     ]);
                 }
 
-                /*
-                |--------------------------------------------------------------------------
-                | Rider cannot have active Last-Mile work
-                |--------------------------------------------------------------------------
-                */
-
-                $hasActiveLastMile =
-                    DB::table(
-                        'last_mile_assignments'
+                $busyLastMile = DB::table('last_mile_assignments')
+                    ->where(
+                        'courier_account_id',
+                        $rider->id
                     )
-                        ->where(
-                            'logistics_account_id',
-                            $logistics->id
-                        )
-                        ->where(
-                            'courier_account_id',
-                            $rider->id
-                        )
-                        ->whereIn(
-                            'status',
-                            self::ACTIVE_LAST_MILE_STATUSES
-                        )
-                        ->exists();
+                    ->whereIn(
+                        'status',
+                        self::ACTIVE_LAST_MILE_STATUSES
+                    )
+                    ->exists();
 
-                if ($hasActiveLastMile) {
+                if ($busyLastMile) {
                     throw ValidationException::withMessages([
-                        'rider_id' =>
-                            'This Rider currently has an active last-mile delivery assignment.',
+                        'rider_id' => 'Rider has an active last-mile assignment.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Rider display name
+                | Atomic Whole-Batch Assignment
                 |--------------------------------------------------------------------------
                 */
 
-                $riderName =
-                    trim(
-                        $rider->first_name
-                        . ' '
-                        . (
-                            $rider->middle_initial
-                                ? $rider
-                                    ->middle_initial
-                                    . '. '
-                                : ''
-                        )
-                        . $rider->last_name
-                    );
+                $riderName = trim(
+                    $rider->first_name
+                    .' '
+                    .(
+                        $rider->middle_initial
+                            ? $rider->middle_initial.'. '
+                            : ''
+                    )
+                    .$rider->last_name
+                ) ?: 'SARI Rider';
 
-                $riderName =
-                    $riderName
-                    ?: 'SARI Rider';
+                $assignedAt = now();
 
-                $batchSize =
-                    $lockedOrders->count();
+                $assignedBy = $hubAccount
+                    ? (trim((string) $hubAccount->name) ?: 'Hub Operator')
+                        .' ('.$hubFacility->name.')'
+                    : $logistics->displayName();
 
-                /*
-                |--------------------------------------------------------------------------
-                | Assign entire batch to one Rider
-                |--------------------------------------------------------------------------
-                */
+                foreach ($selected as $order) {
 
-                foreach (
-                    $lockedOrders
-                    as $lockedOrder
-                ) {
-                    $lockedOrder->forceFill([
-                        'status' =>
-                            'courier_accepted',
-
-                        'courier_name' =>
-                            $riderName,
-
-                        'courier_email' =>
-                            strtolower(
-                                trim(
-                                    (string) $rider
-                                        ->email
-                                )
-                            ),
-
-                        'accepted_at' =>
-                            now(),
+                    $order->forceFill([
+                        'status' => 'courier_accepted',
+                        'courier_name' => $riderName,
+                        'courier_email' => $email,
+                        'accepted_at' => $assignedAt,
                     ])->save();
 
-                    LogisticsParcel::query()
+                    $updated = LogisticsParcel::query()
                         ->where(
                             'marketplace_order_id',
-                            $lockedOrder->id
+                            $order->id
+                        )
+                        ->where(
+                            'status',
+                            'pickup_verified'
                         )
                         ->update([
-                            'status' =>
-                                'awaiting_intake',
-
-                            'sorting_zone' =>
-                                null,
-
-                            'received_at' =>
-                                null,
-
-                            'sorted_at' =>
-                                null,
-
-                            'updated_at' =>
-                                now(),
+                            'status' => 'awaiting_intake',
+                            'sorting_zone' => null,
+                            'received_at' => null,
+                            'sorted_at' => null,
+                            'updated_at' => $assignedAt,
                         ]);
 
+                    if ($updated !== 1) {
+                        throw ValidationException::withMessages([
+                            'order_ids' => 'A parcel changed during assignment. No orders were assigned. Refresh and retry.',
+                        ]);
+                    }
+
                     $this->workflow->record(
-                        $lockedOrder,
+                        $order,
                         'both',
                         'courier_accepted',
                         'Pickup Rider Assigned by Logistics',
                         $riderName
-                            . ' was assigned by '
-                            . $logistics
-                                ->displayName()
-                            . ' to collect this order as part of a '
-                            . $batchSize
-                            . '-parcel Seller pickup batch.'
+                            .' was assigned by '
+                            .$assignedBy
+                            .' to collect this order as part of a '
+                            .$selected->count()
+                            .'-parcel Seller pickup batch.'
+                    );
+
+                    /*
+                    |----------------------------------------------------------
+                    | Persistent Logistics notifications
+                    |
+                    | Same transaction: a failed batch leaves no alerts.
+                    | Each order has a stable per-recipient event key.
+                    |----------------------------------------------------------
+                    */
+
+                    $originFacilityId = (int) $origins
+                        ->get($order->id)
+                        ?->logistics_facility_id;
+
+                    $eventKey = 'pickup_rider_assigned:order:'.$order->id;
+
+                    $notificationMessage = $riderName
+                        .' was assigned by '
+                        .$assignedBy
+                        .' to collect order '
+                        .$order->order_number
+                        .' as part of a '
+                        .$selected->count()
+                        .'-parcel Seller pickup batch.';
+
+                    $notificationData = [
+                        'order_id' => (int) $order->id,
+                        'order_number' => (string) $order->order_number,
+                        'rider_id' => (int) $rider->id,
+                        'rider_name' => $riderName,
+                        'origin_facility_id' => $originFacilityId,
+                        'batch_size' => (int) $selected->count(),
+                    ];
+
+                    $this->notifications->notifyManager(
+                        logisticsAccountId: (int) $logistics->id,
+                        eventKey: $eventKey,
+                        type: 'pickup_rider_assigned',
+                        title: 'Pickup Rider assigned',
+                        message: $notificationMessage,
+                        actionRoute: 'logistics.delivery-monitoring',
+                        data: $notificationData
+                    );
+
+                    $this->notifications->notifyFacilityOperators(
+                        logisticsAccountId: (int) $logistics->id,
+                        facilityId: $originFacilityId,
+                        eventKey: $eventKey,
+                        type: 'pickup_rider_assigned',
+                        title: 'Rider assigned to your origin-hub pickup',
+                        message: $notificationMessage,
+                        actionRoute: 'logistics.delivery-monitoring',
+                        data: $notificationData
                     );
                 }
             },
@@ -1021,123 +850,91 @@ class LogisticsDeliveryAssignmentController extends Controller
 
         return back()->with(
             'success',
-            $assignedCount
-                . ' '
-                . (
-                    $assignedCount === 1
-                        ? 'parcel was'
-                        : 'parcels were'
-                )
-                . ' assigned to the pickup Rider successfully.'
+            $ids->count()
+            .' '
+            .(
+                $ids->count() === 1
+                    ? 'parcel was'
+                    : 'parcels were'
+            )
+            .' assigned to the pickup Rider successfully.'
         );
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Legacy single-order assignment
+    | Legacy Single-Order Assignment
     |--------------------------------------------------------------------------
-    |
-    | Retained so old links/routes continue to work.
-    | It delegates to the same batch assignment logic.
-    |
     */
 
     public function assign(
         Request $request,
         MarketplaceOrder $order
     ): RedirectResponse {
-        $order =
-            $this->orderAccess->ownedOrder(
+
+        if (CurrentLogisticsHub::isHubOperator($request)) {
+
+            /*
+             * Don't call legacy ownedOrder() before authorization:
+             * it may generate route stops for previously unrouted orders.
+             */
+
+            CurrentLogisticsHub::authorizeOrder(
+                $request,
+                $order,
+                'origin'
+            );
+
+        } else {
+
+            $order = $this->orderAccess->ownedOrder(
                 $request,
                 $order
             );
+        }
 
         $request->merge([
-            'order_ids' => [
-                $order->id,
-            ],
+            'order_ids' => [$order->id],
         ]);
 
-        return $this->assignBatch(
-            $request
-        );
+        return $this->assignBatch($request);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Seller pickup grouping key
+    | Same Seller Group Key as Pickup Requests
     |--------------------------------------------------------------------------
     */
 
     private function pickupGroupKey(
         MarketplaceOrder $order
     ): string {
-        $originStop =
-            $order
-                ->deliveryRouteStops
-                ->firstWhere(
-                    'stop_key',
-                    'origin_facility'
-                );
 
-        $sellerKey =
-            $order->seller_account_id
-                ? 'seller:'
-                    . $order
-                        ->seller_account_id
-                : 'seller-name:'
-                    . $this->normalizeText(
-                        $order->pickup_name
-                        ?: $order
-                            ->seller
-                            ?->store_name
-                        ?: 'unknown'
-                    );
-
-        $pickupAddress =
-            $this->normalizeText(
-                $order->pickup_address
-                ?: ''
+        $origin = $order->deliveryRouteStops
+            ->firstWhere(
+                'stop_key',
+                'origin_facility'
             );
 
-        $originFacilityId =
-            $originStop
-                ?->logistics_facility_id
-            ?: 'none';
+        $seller = $order->seller_account_id
+            ? 'seller:'.$order->seller_account_id
+            : 'order:'.$order->id;
 
-        return implode(
-            '|',
-            [
-                $sellerKey,
-                'pickup:' . $pickupAddress,
-                'origin:' . $originFacilityId,
-            ]
-        );
+        return json_encode([
+            $seller,
+            $this->normalizePickupText($order->pickup_address),
+            $origin?->logistics_facility_id,
+        ], JSON_THROW_ON_ERROR);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Normalize grouping text
-    |--------------------------------------------------------------------------
-    */
-
-    private function normalizeText(
-        ?string $value
-    ): string {
-        $value =
-            trim(
-                (string) $value
-            );
-
-        $value =
+    private function normalizePickupText(?string $value): string
+    {
+        return mb_strtolower(
             preg_replace(
                 '/\s+/u',
                 ' ',
-                $value
-            ) ?: $value;
-
-        return mb_strtolower(
-            $value
+                trim((string) $value)
+            ) ?: ''
         );
     }
 }

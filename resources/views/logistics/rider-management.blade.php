@@ -1,890 +1,1305 @@
+
 @extends('layouts.logistics')
 
 @section('title', 'Rider Management | SARI Logistics')
 @section('page-title', 'Rider Management')
 
+@push('styles')
+<style>
+/*
+|--------------------------------------------------------------------------
+| SARI LOGISTICS — RIDER MANAGEMENT
+| Unified Current Work UI
+|--------------------------------------------------------------------------
+|
+| All Riders use the same Current Work component.
+| Only the content and subtle status indicator change.
+|
+*/
+
+#lgRiderManagement {
+    --rm-amber: #d9950b;
+    --rm-ink: #25211c;
+    --rm-muted: #8a8177;
+    --rm-border: #e8e2d9;
+    --rm-shadow: 0 6px 18px rgba(33,24,14,.035);
+
+    width: 100%;
+    max-width: 1620px;
+    margin-inline: auto;
+    color: var(--rm-ink);
+    font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
+}
+
+#lgRiderManagement [hidden] {
+    display: none !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| HEADING
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 5px 2px 17px;
+    border-bottom: 1px solid #e4e1dc;
+}
+
+#lgRiderManagement .rm-eyebrow {
+    color: #a76f11;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+#lgRiderManagement .rm-page-title {
+    margin-top: 5px;
+    color: #24201b;
+    font-size: clamp(23px,2.15vw,30px);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -.045em;
+}
+
+#lgRiderManagement .rm-page-title span {
+    color: var(--rm-amber);
+}
+
+#lgRiderManagement .rm-intro {
+    max-width: 710px;
+    margin-top: 6px;
+    color: var(--rm-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#lgRiderManagement .rm-coverage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+#lgRiderManagement .rm-coverage-item {
+    min-width: 118px;
+    padding: 10px 13px;
+    border: 1px solid var(--rm-border);
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: var(--rm-shadow);
+}
+
+#lgRiderManagement .rm-coverage-item small {
+    display: block;
+    color: #8f8579;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+#lgRiderManagement .rm-coverage-item strong {
+    display: block;
+    margin-top: 4px;
+    color: #28221c;
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+/*
+|--------------------------------------------------------------------------
+| KPI CARDS
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-kpis {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 12px;
+}
+
+#lgRiderManagement .rm-kpi {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 98px;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--rm-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--rm-shadow);
+
+    transition:
+        transform .18s cubic-bezier(.22,1,.36,1),
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgRiderManagement .rm-kpi-label {
+    color: #756b60;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#lgRiderManagement .rm-kpi-value {
+    margin-top: 8px;
+    color: #211d18;
+    font-size: 25px;
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -.045em;
+}
+
+#lgRiderManagement .rm-kpi-note {
+    margin-top: 7px;
+    color: #8d8378;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+#lgRiderManagement .rm-kpi-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 41px;
+    width: 41px;
+    height: 41px;
+    border-radius: 11px;
+    background: #f0f6ff;
+    color: #507cab;
+}
+
+#lgRiderManagement .rm-kpi-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+#lgRiderManagement .rm-kpi-icon.online {
+    background: #eff8f2;
+    color: #47845c;
+}
+
+#lgRiderManagement .rm-kpi-icon.busy {
+    background: #fff7e9;
+    color: #bd8420;
+}
+
+#lgRiderManagement .rm-kpi-icon.available {
+    background: #f5f2fb;
+    color: #7864a2;
+}
+
+/*
+|--------------------------------------------------------------------------
+| RIDER DIRECTORY PANEL
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--rm-border);
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: var(--rm-shadow);
+}
+
+#lgRiderManagement .rm-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 15px 17px;
+    border-bottom: 1px solid #eee8df;
+}
+
+#lgRiderManagement .rm-panel-title {
+    margin-top: 4px;
+    color: #29231d;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+#lgRiderManagement .rm-panel-desc {
+    margin-top: 4px;
+    color: #93897e;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+/*
+|--------------------------------------------------------------------------
+| TOOLBAR
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid #eee8df;
+    background: #fff;
+}
+
+#lgRiderManagement .rm-search-wrap {
+    position: relative;
+    flex: 1 1 220px;
+    max-width: 350px;
+}
+
+#lgRiderManagement .rm-search-wrap svg {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%);
+    color: #a3988c;
+    pointer-events: none;
+}
+
+#lgRiderManagement .rm-search {
+    width: 100%;
+    height: 39px;
+    padding: 0 12px 0 36px;
+    border: 1px solid #dfe2e6;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: #50483e;
+    font: inherit;
+    font-size: 10px;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+#lgRiderManagement .rm-search:focus {
+    border-color: var(--rm-amber);
+    box-shadow: 0 0 0 3px rgba(217,149,11,.09);
+}
+
+#lgRiderManagement .rm-toolbar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#lgRiderManagement .rm-filters {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 4px;
+    border: 1px solid #e6e1d9;
+    border-radius: 10px;
+    background: #f7f8fa;
+}
+
+#lgRiderManagement .rm-filter {
+    min-height: 30px;
+    padding: 0 11px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: #756d63;
+    font: inherit;
+    font-size: 9px;
+    font-weight: 550;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        color .15s ease,
+        box-shadow .15s ease;
+}
+
+#lgRiderManagement .rm-filter:hover {
+    background: #fff9ee;
+    color: #a46e10;
+}
+
+#lgRiderManagement .rm-filter[aria-pressed="true"] {
+    border-color: #e9dfce;
+    background: #fff;
+    color: #a36c0a;
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(35,29,22,.035);
+}
+
+#lgRiderManagement .rm-reset {
+    height: 36px;
+    padding: 0 11px;
+    border: 1px solid #e6e1d9;
+    border-radius: 9px;
+    background: #fff;
+    color: #897b6a;
+    font-size: 9px;
+    font-weight: 600;
+
+    transition:
+        background .15s ease,
+        color .15s ease;
+}
+
+#lgRiderManagement .rm-reset:hover {
+    background: #fff9ef;
+    color: #a36c0a;
+}
+
+/*
+|--------------------------------------------------------------------------
+| RIDER DIRECTORY TABLE
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#lgRiderManagement .rm-table {
+    width: 100%;
+    min-width: 920px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: left;
+}
+
+#lgRiderManagement .rm-table th:nth-child(1) {
+    width: 20%;
+}
+
+#lgRiderManagement .rm-table th:nth-child(2) {
+    width: 15%;
+}
+
+#lgRiderManagement .rm-table th:nth-child(3) {
+    width: 15%;
+}
+
+#lgRiderManagement .rm-table th:nth-child(4) {
+    width: 10%;
+}
+
+#lgRiderManagement .rm-table th:nth-child(5) {
+    width: 11%;
+}
+
+#lgRiderManagement .rm-table th:nth-child(6) {
+    width: 29%;
+}
+
+#lgRiderManagement .rm-table thead {
+    background: #f7f8fa;
+}
+
+#lgRiderManagement .rm-table th {
+    padding: 12px 11px;
+    color: #81776d;
+    font-size: 8.5px;
+    font-weight: 650;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+#lgRiderManagement .rm-table td {
+    min-width: 0;
+    padding: 11px;
+    border-top: 1px solid #f0ebe5;
+    color: #61584e;
+    font-size: 10px;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+#lgRiderManagement .rm-rider-row {
+    transition: background-color .16s ease;
+}
+
+#lgRiderManagement .rm-rider-row:hover {
+    background: #fffaf2;
+}
+
+/*
+|--------------------------------------------------------------------------
+| RIDER IDENTITY
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-person {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 10px;
+}
+
+#lgRiderManagement .rm-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #eee3ce;
+    border-radius: 11px;
+    background: #fff5e1;
+    color: #a97312;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#lgRiderManagement .rm-person-name {
+    color: #342d25;
+    font-size: 10.5px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+#lgRiderManagement .rm-secondary {
+    margin-top: 3px;
+    color: #908579;
+    font-size: 9px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#lgRiderManagement .rm-cell-title {
+    color: #51483e;
+    font-size: 10px;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+/*
+|--------------------------------------------------------------------------
+| VEHICLE
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-vehicle {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 8px;
+}
+
+#lgRiderManagement .rm-vehicle-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: #f6f2eb;
+    color: #756b5f;
+}
+
+#lgRiderManagement .rm-vehicle-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| ACCOUNT AND AVAILABILITY BADGES
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 5px 8px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 8.5px;
+    font-weight: 650;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+#lgRiderManagement .rm-badge-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+#lgRiderManagement .rm-badge.active,
+#lgRiderManagement .rm-badge.available {
+    border-color: #d5e9da;
+    background: #eff9f2;
+    color: #408056;
+}
+
+#lgRiderManagement .rm-badge.busy {
+    border-color: #efdfc0;
+    background: #fff8e9;
+    color: #a87415;
+}
+
+#lgRiderManagement .rm-badge.offline {
+    border-color: #e7e2dc;
+    background: #f4f3f1;
+    color: #817970;
+}
+
+#lgRiderManagement .rm-badge.inactive {
+    border-color: #ecd5d5;
+    background: #fff2f2;
+    color: #aa6060;
+}
+
+/*
+|--------------------------------------------------------------------------
+| UNIFIED CURRENT WORK COMPONENT
+|--------------------------------------------------------------------------
+|
+| IMPORTANT:
+|
+| Available, Busy, Offline, Inactive, Pickup and Last Mile
+| ALL use the same surface, dimensions and hierarchy.
+|
+| No oversized colored work cards.
+|
+*/
+
+#lgRiderManagement .rm-work-list {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    gap: 6px;
+}
+
+/* Shared visual surface for every Rider state */
+
+#lgRiderManagement .rm-workbox {
+    display: grid;
+    grid-template-columns: 27px minmax(0,1fr);
+    align-items: center;
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 62px;
+
+    padding: 9px 10px;
+
+    border: 1px solid #e9e5df;
+    border-radius: 10px;
+
+    background: #fbfbfc;
+    color: inherit;
+
+    text-decoration: none;
+
+    box-shadow: none;
+
+    transition:
+        background-color .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+/* Clickable work uses the same surface */
+
+#lgRiderManagement a.rm-workbox {
+    cursor: pointer;
+}
+
+#lgRiderManagement a.rm-workbox:hover {
+    background: #fffaf2;
+    border-color: #d9c8a8;
+    box-shadow: 0 3px 10px rgba(43,33,21,.035);
+}
+
+/* Every icon has identical geometry */
+
+#lgRiderManagement .rm-work-icon {
+    display: grid;
+    place-items: center;
+
+    width: 27px;
+    height: 27px;
+
+    border-radius: 8px;
+
+    background: #f0efec;
+    color: #898077;
+}
+
+#lgRiderManagement .rm-work-icon svg {
+    width: 14px;
+    height: 14px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Subtle icon distinctions only */
+
+#lgRiderManagement .rm-work-icon.available {
+    background: #eaf6ee;
+    color: #4b8b63;
+}
+
+#lgRiderManagement .rm-work-icon.pickup {
+    background: #fff4df;
+    color: #ae791b;
+}
+
+#lgRiderManagement .rm-work-icon.last-mile {
+    background: #edf3fa;
+    color: #5b7ea1;
+}
+
+#lgRiderManagement .rm-work-icon.offline,
+#lgRiderManagement .rm-work-icon.inactive {
+    background: #f0efec;
+    color: #898077;
+}
+
+/* Same typography across all states */
+
+#lgRiderManagement .rm-work-content {
+    min-width: 0;
+}
+
+#lgRiderManagement .rm-work-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px 7px;
+    min-width: 0;
+}
+
+#lgRiderManagement .rm-work-type {
+    color: #807568;
+    font-size: 8px;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: .035em;
+    text-transform: uppercase;
+}
+
+#lgRiderManagement .rm-work-count {
+    color: #a08a68;
+    font-size: 8px;
+    font-weight: 600;
+}
+
+/* Full route, no clipping */
+
+#lgRiderManagement .rm-work-primary {
+    display: block;
+    margin-top: 4px;
+
+    color: #453d33;
+    font-size: 9.5px;
+    font-weight: 650;
+    line-height: 1.55;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Supporting status */
+
+#lgRiderManagement .rm-work-detail {
+    display: block;
+    margin-top: 3px;
+
+    color: #91877c;
+    font-size: 8.5px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+/* No special colored card for busy Riders */
+
+#lgRiderManagement .rm-workbox[data-work-kind="pickup"],
+#lgRiderManagement .rm-workbox[data-work-kind="last-mile"] {
+    background: #fbfbfc;
+}
+
+/*
+|--------------------------------------------------------------------------
+| EMPTY STATE
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-empty {
+    padding: 42px 20px !important;
+    text-align: center;
+}
+
+#lgRiderManagement .rm-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background: #fff7e8;
+    color: #ba8526;
+}
+
+#lgRiderManagement .rm-empty-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+#lgRiderManagement .rm-empty strong {
+    display: block;
+    margin-top: 11px;
+    font-size: 11px;
+    color: #51483e;
+}
+
+#lgRiderManagement .rm-empty p {
+    margin-top: 5px;
+    color: #948a7e;
+    font-size: 9px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| FOOTER
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement .rm-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 9px;
+    padding: 12px 16px;
+    border-top: 1px solid #eee8df;
+    background: #fff;
+    color: #978d80;
+    font-size: 9px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| ACCESSIBILITY AND RESPONSIVE
+|--------------------------------------------------------------------------
+*/
+
+#lgRiderManagement
+:is(button,input,a):focus-visible {
+    outline: 2px solid rgba(217,149,11,.6);
+    outline-offset: 2px;
+}
+
+@media (hover:hover) and (pointer:fine) {
+    #lgRiderManagement .rm-kpi:hover {
+        transform: translateY(-2px);
+        border-color: #d8c9b2;
+        box-shadow: 0 13px 28px rgba(43,33,21,.06);
+    }
+}
+
+@media (max-width:1199px) {
+    #lgRiderManagement .rm-kpis {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width:767px) {
+    #lgRiderManagement .rm-toolbar {
+        align-items: stretch;
+    }
+
+    #lgRiderManagement .rm-search-wrap {
+        max-width: none;
+        flex-basis: 100%;
+    }
+
+    #lgRiderManagement .rm-toolbar-right {
+        width: 100%;
+    }
+}
+
+@media (max-width:480px) {
+    #lgRiderManagement .rm-coverage {
+        width: 100%;
+    }
+
+    #lgRiderManagement .rm-coverage-item {
+        flex: 1;
+    }
+
+    #lgRiderManagement .rm-kpis {
+        gap: 9px;
+    }
+
+    #lgRiderManagement .rm-kpi {
+        padding: 12px;
+    }
+
+    #lgRiderManagement .rm-kpi-value {
+        font-size: 22px;
+    }
+
+    #lgRiderManagement .rm-kpi-icon {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    #lgRiderManagement .rm-filters {
+        width: 100%;
+    }
+
+    #lgRiderManagement .rm-filter {
+        flex: 1;
+        padding-inline: 5px;
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    #lgRiderManagement *,
+    #lgRiderManagement *::before,
+    #lgRiderManagement *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+
+    #lgRiderManagement .rm-kpi:hover {
+        transform: none !important;
+    }
+}
+</style>
+@endpush
+
 @section('content')
 
-<div
-    class="
-        mx-auto w-full
-        max-w-[1800px]
-        space-y-4
-    "
->
+<div id="lgRiderManagement" class="w-full space-y-4">
 
-    {{-- =====================================================
-        HERO
-    ====================================================== --}}
+    {{-- PAGE HEADING --}}
 
-    <section
-        class="
-            relative overflow-hidden
-            rounded-[20px]
-            border border-[#e8dfd1]
-            bg-white
-            shadow-[0_5px_22px_rgba(51,39,25,.035)]
-        "
-    >
-        <div
-            class="
-                pointer-events-none
-                absolute -right-[90px] -top-[120px]
-                h-[260px] w-[260px]
-                rounded-full
-                bg-[#f4d58b]/20
-                blur-2xl
-            "
-        ></div>
+    <header class="rm-heading">
 
-        <div
-            class="
-                relative
-                flex flex-col gap-4
-                px-5 py-5
-                sm:px-6
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
-        >
+        <div class="min-w-0">
 
-            <div class="flex min-w-0 items-start gap-3.5">
+            <p class="rm-eyebrow">
+                Riders &amp; Network
+            </p>
 
-                <div
-                    class="
-                        grid h-[42px] w-[42px]
-                        shrink-0 place-items-center
-                        rounded-[13px]
-                        bg-[#f2f7fd]
-                        text-[#4d79a1]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[20px] w-[20px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="8" cy="8" r="3"></circle>
-                        <circle cx="17" cy="9" r="2.5"></circle>
+            <h2 class="rm-page-title">
+                Rider <span>Management</span>
+            </h2>
 
-                        <path
-                            d="M2.5 20c.5-4 2.5-6 5.5-6"
-                        ></path>
+            <p class="rm-intro">
+                Monitor Rider availability, pickup batches, last-mile
+                assignments, service areas and vehicle information
+                across your Logistics network.
+            </p>
 
-                        <path
-                            d="M13 15c3.2 0 5.2 1.7 5.7 5"
-                        ></path>
-                    </svg>
-                </div>
+        </div>
+
+        <div class="rm-coverage">
+
+            <div class="rm-coverage-item">
+                <small>Municipalities</small>
+
+                <strong>
+                    {{ number_format($stats['municipalities']) }}
+                </strong>
+            </div>
+
+            <div class="rm-coverage-item">
+                <small>Barangays</small>
+
+                <strong>
+                    {{ number_format($stats['barangays']) }}
+                </strong>
+            </div>
+
+        </div>
+
+    </header>
+
+    {{-- KPI CARDS --}}
+
+    @php
+        $riderMetrics = [
+            [
+                'label' => 'Approved Riders',
+                'value' => $stats['total'],
+                'note' => $stats['active'].' active accounts',
+                'tone' => '',
+                'icon' => 'person',
+            ],
+            [
+                'label' => 'Online Riders',
+                'value' => $stats['online'],
+                'note' => 'Ready or currently working',
+                'tone' => 'online',
+                'icon' => 'check',
+            ],
+            [
+                'label' => 'Busy Now',
+                'value' => $stats['busy'],
+                'note' => 'Active pickup or last-mile work',
+                'tone' => 'busy',
+                'icon' => 'clock',
+            ],
+            [
+                'label' => 'Available Now',
+                'value' => $stats['available'],
+                'note' => 'Online with no active work',
+                'tone' => 'available',
+                'icon' => 'arrow',
+            ],
+        ];
+    @endphp
+
+    <section class="rm-kpis" aria-label="Rider overview">
+
+        @foreach($riderMetrics as $metric)
+
+            <article class="rm-kpi">
 
                 <div class="min-w-0">
 
-                    <p
-                        class="
-                            text-[7.5px]
-                            font-bold
-                            uppercase
-                            tracking-[.14em]
-                            text-[#b97805]
-                        "
-                    >
-                        Rider Network
+                    <p class="rm-kpi-label">
+                        {{ $metric['label'] }}
                     </p>
 
-                    <h2
-                        class="
-                            mt-1
-                            text-[20px]
-                            font-bold
-                            tracking-[-.035em]
-                            text-[#211d17]
-                        "
-                    >
-                        Manage your delivery workforce
-                    </h2>
+                    <p class="rm-kpi-value">
+                        {{ number_format($metric['value']) }}
+                    </p>
 
-                    <p
-                        class="
-                            mt-1
-                            max-w-[720px]
-                            text-[8.5px]
-                            leading-[18px]
-                            text-[#807668]
-                        "
-                    >
-                        Monitor Rider availability, assigned pickup batches,
-                        last-mile work, service areas, and vehicle information
-                        across your Logistics network.
+                    <p class="rm-kpi-note">
+                        {{ $metric['note'] }}
                     </p>
 
                 </div>
-            </div>
 
-
-            {{-- Coverage --}}
-            <div
-                class="
-                    grid grid-cols-2 gap-2
-                    sm:flex
-                "
-            >
-
-                <div
-                    class="
-                        min-w-[120px]
-                        rounded-[12px]
-                        border border-[#e7dece]
-                        bg-[#fffdf9]
-                        px-4 py-3
-                    "
+                <span
+                    class="rm-kpi-icon {{ $metric['tone'] }}"
+                    aria-hidden="true"
                 >
-                    <p
-                        class="
-                            text-[6.5px]
-                            font-bold
-                            uppercase
-                            tracking-[.1em]
-                            text-[#9a8f80]
-                        "
-                    >
-                        Municipalities
-                    </p>
 
-                    <p
-                        class="
-                            mt-1
-                            text-[18px]
-                            font-bold
-                            text-[#2b251e]
-                        "
-                    >
-                        {{ $stats['municipalities'] }}
-                    </p>
-                </div>
+                    @switch($metric['icon'])
 
-                <div
-                    class="
-                        min-w-[120px]
-                        rounded-[12px]
-                        border border-[#e7dece]
-                        bg-[#fffdf9]
-                        px-4 py-3
-                    "
-                >
-                    <p
-                        class="
-                            text-[6.5px]
-                            font-bold
-                            uppercase
-                            tracking-[.1em]
-                            text-[#9a8f80]
-                        "
-                    >
-                        Barangays
-                    </p>
+                        @case('person')
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M5 21c.6-4.5 3-7 7-7s6.4 2.5 7 7"/>
+                            </svg>
+                            @break
 
-                    <p
-                        class="
-                            mt-1
-                            text-[18px]
-                            font-bold
-                            text-[#2b251e]
-                        "
-                    >
-                        {{ $stats['barangays'] }}
-                    </p>
-                </div>
+                        @case('check')
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="m8 12 2.5 2.5L16 9"/>
+                            </svg>
+                            @break
 
-            </div>
+                        @case('clock')
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 7v5l3 2"/>
+                            </svg>
+                            @break
 
-        </div>
-    </section>
+                        @default
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="M4 12h16m-5-5 5 5-5 5"/>
+                            </svg>
 
+                    @endswitch
 
-    {{-- =====================================================
-        METRICS
-    ====================================================== --}}
+                </span>
 
-    <section
-        class="
-            grid gap-3
-            sm:grid-cols-2
-            xl:grid-cols-4
-        "
-    >
+            </article>
 
-        {{-- Approved --}}
-        <div
-            class="
-                rounded-[16px]
-                border border-[#e8dfd1]
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold
-                            uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Approved Riders
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['total'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        {{ $stats['active'] }} active accounts
-                    </p>
-
-                </div>
-
-                <div
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#f2f7fd]
-                        text-[#4d79a1]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="8" r="4"></circle>
-                        <path d="M5 21c.6-4.5 3-7 7-7s6.4 2.5 7 7"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- Online --}}
-        <div
-            class="
-                rounded-[16px]
-                border border-[#e8dfd1]
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold
-                            uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Online Riders
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['online'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Ready or currently working
-                    </p>
-
-                </div>
-
-                <div
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#f1faf5]
-                        text-[#327a53]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="m8 12 2.5 2.5L16 9"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- Busy --}}
-        <div
-            class="
-                rounded-[16px]
-                border border-[#e8dfd1]
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold
-                            uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Busy Now
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['busy'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Active pickup or last-mile work
-                    </p>
-
-                </div>
-
-                <div
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#fff6e5]
-                        text-[#b97805]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="M12 7v5l3 2"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
-
-
-        {{-- Available --}}
-        <div
-            class="
-                rounded-[16px]
-                border border-[#e8dfd1]
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold
-                            uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Available Now
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['available'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Online with no active work
-                    </p>
-
-                </div>
-
-                <div
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#f5f2fb]
-                        text-[#7967a5]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <path d="M4 12h16"></path>
-                        <path d="m15 7 5 5-5 5"></path>
-                    </svg>
-                </div>
-
-            </div>
-        </div>
+        @endforeach
 
     </section>
 
-
-    {{-- =====================================================
-        RIDER DIRECTORY
-    ====================================================== --}}
+    {{-- RIDER DIRECTORY --}}
 
     <section
-        class="
-            overflow-hidden
-            rounded-[20px]
-            border border-[#e8dfd1]
-            bg-white
-            shadow-[0_4px_20px_rgba(51,39,25,.035)]
-        "
+        class="rm-panel"
+        aria-labelledby="rmDirectoryHeading"
     >
 
-        {{-- Header --}}
-        <div
-            class="
-                flex flex-col gap-3
-                border-b border-[#eee5d8]
-                px-5 py-4
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
-        >
+        <header class="rm-panel-head">
 
             <div>
 
-                <p
-                    class="
-                        text-[7.5px]
-                        font-bold
-                        uppercase
-                        tracking-[.12em]
-                        text-[#b97805]
-                    "
-                >
+                <p class="rm-eyebrow">
                     Rider Directory
                 </p>
 
                 <h3
-                    class="
-                        mt-1
-                        text-[13px]
-                        font-bold
-                        text-[#2e2821]
-                    "
+                    id="rmDirectoryHeading"
+                    class="rm-panel-title"
                 >
                     Approved Logistics Riders
                 </h3>
 
-                <p
-                    class="
-                        mt-0.5
-                        text-[8px]
-                        text-[#918779]
-                    "
-                >
+                <p class="rm-panel-desc">
                     Current service area, availability and assignment status.
                 </p>
 
             </div>
 
+            <span class="rm-badge active">
+                <span
+                    class="rm-badge-dot"
+                    aria-hidden="true"
+                ></span>
 
-            {{-- Search --}}
-            <div
-                class="
-                    flex flex-col gap-2
-                    sm:flex-row
-                    sm:items-center
-                "
-            >
+                Network Directory
+            </span>
 
-                <div class="relative">
+        </header>
 
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="
-                            pointer-events-none
-                            absolute left-3 top-1/2
-                            h-[14px] w-[14px]
-                            -translate-y-1/2
-                            text-[#aaa094]
-                        "
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <path d="m20 20-4-4"></path>
-                    </svg>
+        {{-- SEARCH AND FILTER TOOLBAR --}}
 
-                    <input
-                        id="riderManagementSearch"
-                        type="search"
-                        placeholder="Search Rider..."
-                        class="
-                            h-[36px]
-                            w-full
-                            rounded-[10px]
-                            border border-[#e5dccf]
-                            bg-white
-                            pl-9 pr-3
-                            text-[8px]
-                            outline-none
-                            placeholder:text-[#aaa094]
-                            focus:border-[#d9a03d]
-                            focus:ring-4
-                            focus:ring-[#d9a03d]/10
-                            sm:w-[210px]
-                        "
-                    >
+        <div class="rm-toolbar">
 
-                </div>
+            <label class="rm-search-wrap">
+
+                <span class="sr-only">
+                    Search Riders
+                </span>
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                >
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="m20 20-4-4"/>
+                </svg>
+
+                <input
+                    id="riderManagementSearch"
+                    class="rm-search"
+                    type="search"
+                    autocomplete="off"
+                    placeholder="Search Rider, barangay, vehicle..."
+                >
+
+            </label>
+
+            <div class="rm-toolbar-right">
 
                 <div
-                    class="
-                        flex overflow-hidden
-                        rounded-[10px]
-                        border border-[#e5dccf]
-                        bg-white
-                    "
+                    class="rm-filters"
+                    role="group"
+                    aria-label="Filter Rider availability"
                 >
 
                     <button
                         type="button"
+                        class="rm-filter"
                         data-rider-filter="all"
-                        class="
-                            rider-filter-button
-                            bg-[#fff6e5]
-                            px-3 py-2
-                            text-[7.5px]
-                            font-semibold
-                            text-[#a96e05]
-                        "
+                        aria-pressed="true"
                     >
                         All
                     </button>
 
                     <button
                         type="button"
+                        class="rm-filter"
                         data-rider-filter="available"
-                        class="
-                            rider-filter-button
-                            px-3 py-2
-                            text-[7.5px]
-                            font-medium
-                            text-[#756b5f]
-                            transition
-                            hover:bg-[#faf6ee]
-                        "
+                        aria-pressed="false"
                     >
                         Available
                     </button>
 
                     <button
                         type="button"
+                        class="rm-filter"
                         data-rider-filter="busy"
-                        class="
-                            rider-filter-button
-                            px-3 py-2
-                            text-[7.5px]
-                            font-medium
-                            text-[#756b5f]
-                            transition
-                            hover:bg-[#faf6ee]
-                        "
+                        aria-pressed="false"
                     >
                         Busy
                     </button>
 
                     <button
                         type="button"
+                        class="rm-filter"
                         data-rider-filter="offline"
-                        class="
-                            rider-filter-button
-                            px-3 py-2
-                            text-[7.5px]
-                            font-medium
-                            text-[#756b5f]
-                            transition
-                            hover:bg-[#faf6ee]
-                        "
+                        aria-pressed="false"
                     >
                         Offline
                     </button>
 
+                    <button
+                        type="button"
+                        class="rm-filter"
+                        data-rider-filter="inactive"
+                        aria-pressed="false"
+                    >
+                        Inactive
+                    </button>
+
                 </div>
+
+                <button
+                    id="rmResetFilters"
+                    type="button"
+                    class="rm-reset"
+                >
+                    Reset
+                </button>
 
             </div>
 
         </div>
 
+        {{-- DIRECTORY TABLE --}}
 
-        {{-- Table --}}
-        <div class="overflow-x-auto">
+        <div class="rm-table-wrap">
 
-            <table
-                class="
-                    w-full
-                    min-w-[1100px]
-                    text-left
-                "
-            >
+            <table class="rm-table">
 
-                <thead
-                    class="
-                        bg-[#fcfaf6]
-                        text-[7px]
-                        uppercase
-                        tracking-[.08em]
-                        text-[#978d80]
-                    "
-                >
+                <thead>
                     <tr>
-
-                        <th class="px-5 py-3 font-semibold">
-                            Rider
-                        </th>
-
-                        <th class="px-4 py-3 font-semibold">
-                            Service Area
-                        </th>
-
-                        <th class="px-4 py-3 font-semibold">
-                            Vehicle
-                        </th>
-
-                        <th class="px-4 py-3 font-semibold">
-                            Account
-                        </th>
-
-                        <th class="px-4 py-3 font-semibold">
-                            Availability
-                        </th>
-
-                        <th class="px-4 py-3 font-semibold">
-                            Current Work
-                        </th>
-
+                        <th scope="col">Rider</th>
+                        <th scope="col">Service Area</th>
+                        <th scope="col">Vehicle</th>
+                        <th scope="col">Account</th>
+                        <th scope="col">Availability</th>
+                        <th scope="col">Current Work</th>
                     </tr>
                 </thead>
 
-
-                <tbody
-                    id="riderManagementTableBody"
-                    class="divide-y divide-[#f0e9df]"
-                >
+                <tbody id="riderManagementTableBody">
 
                     @forelse($riderRows as $row)
 
                         @php
-                            $rider =
-                                $row['rider'];
+                            $rider = $row['rider'];
 
-                            $name =
-                                trim(
-                                    $rider->first_name
-                                    . ' '
-                                    . $rider->last_name
-                                );
+                            $name = trim(
+                                ($rider->first_name ?? '') .
+                                ' ' .
+                                ($rider->last_name ?? '')
+                            );
 
-                            $initials =
-                                strtoupper(
-                                    mb_substr(
-                                        $rider->first_name ?: '',
-                                        0,
-                                        1
-                                    )
-                                    .
-                                    mb_substr(
-                                        $rider->last_name ?: '',
-                                        0,
-                                        1
-                                    )
-                                );
+                            $initials = strtoupper(
+                                mb_substr(
+                                    $rider->first_name ?: '',
+                                    0,
+                                    1
+                                )
+                                .
+                                mb_substr(
+                                    $rider->last_name ?: '',
+                                    0,
+                                    1
+                                )
+                            );
 
-                            $searchText =
-                                strtolower(
-                                    implode(
-                                        ' ',
-                                        [
-                                            $name,
-                                            $rider->email,
-                                            $rider->contact_no,
-                                            $rider->municipality_name,
-                                            $rider->barangay_name,
-                                            $rider->vehicle_type,
-                                            $rider->vehicle_model,
-                                            $rider->plate_number,
-                                        ]
-                                    )
-                                );
+                            $searchText = strtolower(
+                                implode(' ', [
+                                    $name,
+                                    $rider->email,
+                                    $rider->contact_no,
+                                    $rider->municipality_name,
+                                    $rider->barangay_name,
+                                    $rider->province_name,
+                                    $rider->vehicle_type,
+                                    $rider->vehicle_model,
+                                    $rider->plate_number,
+                                ])
+                            );
 
-                            $state =
-                                $row['state'];
+                            $state = $row['state'];
+
+                            $isActive = (bool) $row['is_active'];
                         @endphp
 
                         <tr
+                            class="rm-rider-row"
                             data-rider-row
                             data-state="{{ $state }}"
                             data-search="{{ $searchText }}"
-                            class="
-                                text-[8px]
-                                text-[#61584d]
-                                transition
-                                hover:bg-[#fffdf9]
-                            "
                         >
 
-                            {{-- Rider --}}
-                            <td class="px-5 py-3.5">
+                            {{-- RIDER IDENTITY --}}
 
-                                <div
-                                    class="
-                                        flex items-center
-                                        gap-3
-                                    "
-                                >
+                            <td>
 
-                                    <div
-                                        class="
-                                            grid h-9 w-9
-                                            shrink-0 place-items-center
-                                            rounded-full
-                                            bg-[#fff3da]
-                                            text-[8px]
-                                            font-bold
-                                            text-[#aa7209]
-                                        "
+                                <div class="rm-person">
+
+                                    <span
+                                        class="rm-avatar"
+                                        aria-hidden="true"
                                     >
                                         {{ $initials ?: 'R' }}
-                                    </div>
+                                    </span>
 
                                     <div class="min-w-0">
 
-                                        <p
-                                            class="
-                                                max-w-[180px]
-                                                truncate
-                                                font-bold
-                                                text-[#332c24]
-                                            "
-                                        >
-                                            {{ $name }}
+                                        <p class="rm-person-name">
+                                            {{ $name ?: 'Unnamed Rider' }}
                                         </p>
 
-                                        <p
-                                            class="
-                                                mt-0.5
-                                                max-w-[180px]
-                                                truncate
-                                                text-[6.5px]
-                                                text-[#92877a]
-                                            "
-                                        >
+                                        <p class="rm-secondary">
                                             {{ $rider->email }}
                                         </p>
 
-                                        <p
-                                            class="
-                                                mt-0.5
-                                                text-[6.5px]
-                                                text-[#aaa094]
-                                            "
-                                        >
-                                            {{ $rider->contact_no ?: 'No contact number' }}
+                                        <p class="rm-secondary">
+                                            {{
+                                                $rider->contact_no
+                                                ?: 'No contact number'
+                                            }}
                                         </p>
 
                                     </div>
@@ -893,93 +1308,76 @@
 
                             </td>
 
+                            {{-- SERVICE AREA --}}
 
-                            {{-- Service Area --}}
-                            <td class="px-4 py-3.5">
+                            <td>
 
-                                <p
-                                    class="
-                                        font-semibold
-                                        text-[#51483d]
-                                    "
-                                >
-                                    {{ $rider->barangay_name ?: 'Unassigned Barangay' }}
+                                <p class="rm-cell-title">
+                                    {{
+                                        $rider->barangay_name
+                                        ?: 'Unassigned Barangay'
+                                    }}
                                 </p>
 
-                                <p
-                                    class="
-                                        mt-1
-                                        text-[6.5px]
-                                        text-[#92877a]
-                                    "
-                                >
-                                    {{ $rider->municipality_name ?: '—' }}
+                                <p class="rm-secondary">
+
+                                    {{
+                                        $rider->municipality_name
+                                        ?: '—'
+                                    }}
 
                                     @if($rider->province_name)
                                         · {{ $rider->province_name }}
                                     @endif
+
                                 </p>
 
                             </td>
 
+                            {{-- VEHICLE --}}
 
-                            {{-- Vehicle --}}
-                            <td class="px-4 py-3.5">
+                            <td>
 
-                                <div
-                                    class="
-                                        inline-flex
-                                        items-center gap-2
-                                    "
-                                >
+                                <div class="rm-vehicle">
 
                                     <span
-                                        class="
-                                            grid h-7 w-7
-                                            place-items-center
-                                            rounded-[8px]
-                                            bg-[#f6f2eb]
-                                            text-[#756b5f]
-                                        "
+                                        class="rm-vehicle-icon"
+                                        aria-hidden="true"
                                     >
+
                                         <svg
                                             viewBox="0 0 24 24"
-                                            class="h-[14px] w-[14px]"
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="1.8"
                                         >
-                                            <circle cx="6" cy="17" r="2"></circle>
-                                            <circle cx="18" cy="17" r="2"></circle>
-                                            <path d="M8 17h8"></path>
-                                            <path d="M6 15 8 9h7l3 6"></path>
+                                            <circle cx="6" cy="17" r="2"/>
+                                            <circle cx="18" cy="17" r="2"/>
+                                            <path d="M8 17h8M6 15 8 9h7l3 6"/>
                                         </svg>
+
                                     </span>
 
-                                    <div>
+                                    <div class="min-w-0">
 
-                                        <p
-                                            class="
-                                                font-semibold
-                                                text-[#51483d]
-                                            "
-                                        >
-                                            {{ $rider->vehicle_type ?: 'Vehicle' }}
+                                        <p class="rm-cell-title">
+                                            {{
+                                                $rider->vehicle_type
+                                                ?: 'Vehicle not specified'
+                                            }}
                                         </p>
 
-                                        <p
-                                            class="
-                                                mt-0.5
-                                                text-[6.5px]
-                                                text-[#92877a]
-                                            "
-                                        >
+                                        <p class="rm-secondary">
+
                                             @if($rider->vehicle_model)
-                                                {{ $rider->vehicle_model }}
-                                                ·
+                                                {{ $rider->vehicle_model }} ·
                                             @endif
 
-                                            {{ $rider->plate_number ?: 'No plate' }}
+                                            {{
+                                                $rider->plate_number
+                                                ?: 'No plate'
+                                            }}
+
                                         </p>
 
                                     </div>
@@ -988,335 +1386,281 @@
 
                             </td>
 
+                            {{-- ACCOUNT --}}
 
-                            {{-- Account --}}
-                            <td class="px-4 py-3.5">
+                            <td>
 
-                                @if($row['is_active'])
-
-                                    <span
-                                        class="
-                                            inline-flex
-                                            items-center
-                                            gap-1.5
-                                            rounded-full
-                                            bg-[#edf8f1]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#327a53]
-                                        "
-                                    >
-                                        <span
-                                            class="
-                                                h-1.5 w-1.5
-                                                rounded-full
-                                                bg-[#4ca36e]
-                                            "
-                                        ></span>
-
-                                        Active
-                                    </span>
-
-                                @else
+                                <span
+                                    class="rm-badge {{ $isActive ? 'active' : 'inactive' }}"
+                                >
 
                                     <span
-                                        class="
-                                            inline-flex
-                                            items-center
-                                            gap-1.5
-                                            rounded-full
-                                            bg-[#fff1f1]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#a65d5d]
-                                        "
-                                    >
-                                        <span
-                                            class="
-                                                h-1.5 w-1.5
-                                                rounded-full
-                                                bg-[#c96666]
-                                            "
-                                        ></span>
+                                        class="rm-badge-dot"
+                                        aria-hidden="true"
+                                    ></span>
 
-                                        Inactive
-                                    </span>
+                                    {{ $isActive ? 'Active' : 'Inactive' }}
 
-                                @endif
+                                </span>
 
                             </td>
 
+                            {{-- AVAILABILITY --}}
 
-                            {{-- Availability --}}
-                            <td class="px-4 py-3.5">
+                            <td>
 
-                                @if($state === 'available')
+                                @php
+                                    $stateTone = in_array(
+                                        $state,
+                                        [
+                                            'available',
+                                            'busy',
+                                            'offline',
+                                        ],
+                                        true
+                                    )
+                                        ? $state
+                                        : 'inactive';
+                                @endphp
 
-                                    <span
-                                        class="
-                                            inline-flex
-                                            rounded-full
-                                            bg-[#eef7f1]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#56816a]
-                                        "
-                                    >
-                                        Available
-                                    </span>
-
-                                @elseif($state === 'busy')
+                                <span class="rm-badge {{ $stateTone }}">
 
                                     <span
-                                        class="
-                                            inline-flex
-                                            rounded-full
-                                            bg-[#fff6e5]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#a96e05]
-                                        "
-                                    >
-                                        Busy
-                                    </span>
+                                        class="rm-badge-dot"
+                                        aria-hidden="true"
+                                    ></span>
 
-                                @elseif($state === 'offline')
+                                    {{ ucfirst($state) }}
 
-                                    <span
-                                        class="
-                                            inline-flex
-                                            rounded-full
-                                            bg-[#f4f1ed]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#756b5f]
-                                        "
-                                    >
-                                        Offline
-                                    </span>
-
-                                @else
-
-                                    <span
-                                        class="
-                                            inline-flex
-                                            rounded-full
-                                            bg-[#fff1f1]
-                                            px-2.5 py-1
-                                            text-[6.5px]
-                                            font-semibold
-                                            text-[#a65d5d]
-                                        "
-                                    >
-                                        Inactive
-                                    </span>
-
-                                @endif
+                                </span>
 
                             </td>
 
+                            {{-- UNIFIED CURRENT WORK --}}
 
-                            {{-- Current Work --}}
-                            <td class="px-4 py-3">
+                            <td>
 
-                                @if(!empty($row['work_items']))
+                                <div class="rm-work-list">
 
-                                    <div
-                                        class="
-                                            min-w-[300px]
-                                            space-y-2
-                                        "
-                                    >
+                                    @if(!empty($row['work_items']))
+
+                                        {{--
+                                            Active work still comes from
+                                            the existing controller.
+
+                                            Pickup and Last Mile now use
+                                            the SAME neutral component.
+                                        --}}
 
                                         @foreach($row['work_items'] as $work)
 
                                             @php
                                                 $isPickup =
-                                                    $work['type']
-                                                    === 'pickup';
+                                                    $work['type'] === 'pickup';
 
-                                                $workUrl =
-                                                    $isPickup
-                                                        ? route(
-                                                            'logistics.delivery-monitoring'
-                                                        )
-                                                        : route(
-                                                            'logistics.last-mile-assignment'
-                                                        );
+                                                $workKind = $isPickup
+                                                    ? 'pickup'
+                                                    : 'last-mile';
+
+                                                $workUrl = $isPickup
+                                                    ? route(
+                                                        'logistics.delivery-monitoring'
+                                                    )
+                                                    : route(
+                                                        'logistics.last-mile-assignment'
+                                                    );
                                             @endphp
 
                                             <a
                                                 href="{{ $workUrl }}"
-                                                class="
-                                                    block
-                                                    rounded-[11px]
-                                                    border
-                                                    px-3 py-2.5
-                                                    transition
-
-                                                    {{
-                                                        $isPickup
-                                                            ? 'border-[#f0dfba] bg-[#fffaf0] hover:border-[#deb96b]'
-                                                            : 'border-[#dce4ed] bg-[#f6f9fc] hover:border-[#aec5d9]'
-                                                    }}
-                                                "
+                                                class="rm-workbox"
+                                                data-work-kind="{{ $workKind }}"
+                                                aria-label="{{
+                                                    $work['label']
+                                                    . ': '
+                                                    . $work['title']
+                                                    . '. '
+                                                    . $work['route']
+                                                    . '. '
+                                                    . $work['status']
+                                                }}"
                                             >
 
-                                                <div
-                                                    class="
-                                                        flex items-center
-                                                        justify-between gap-3
-                                                    "
+                                                <span
+                                                    class="rm-work-icon {{ $workKind }}"
+                                                    aria-hidden="true"
                                                 >
 
-                                                    <p
-                                                        class="
-                                                            text-[6.5px]
-                                                            font-bold
-                                                            uppercase
-                                                            tracking-[.08em]
+                                                    @if($isPickup)
 
-                                                            {{
-                                                                $isPickup
-                                                                    ? 'text-[#a96e05]'
-                                                                    : 'text-[#4d79a1]'
-                                                            }}
-                                                        "
-                                                    >
-                                                        {{ $work['label'] }}
-                                                    </p>
+                                                        <svg viewBox="0 0 24 24">
 
-                                                    <span
-                                                        class="
-                                                            text-[6.5px]
-                                                            font-semibold
-                                                            text-[#817769]
-                                                        "
-                                                    >
-                                                        {{ $work['title'] }}
+                                                            <path d="M3 7h12v10H3z"/>
+
+                                                            <path d="M15 10h3l3 3v4h-6"/>
+
+                                                            <circle cx="7" cy="18" r="1.7"/>
+
+                                                            <circle cx="18" cy="18" r="1.7"/>
+
+                                                        </svg>
+
+                                                    @else
+
+                                                        <svg viewBox="0 0 24 24">
+
+                                                            <path d="M4 7h16v13H4z"/>
+
+                                                            <path d="M8 7V4h8v3"/>
+
+                                                            <path d="m9 13 2.5 2.5L16 11"/>
+
+                                                        </svg>
+
+                                                    @endif
+
+                                                </span>
+
+                                                <div class="rm-work-content">
+
+                                                    <div class="rm-work-top">
+
+                                                        <span class="rm-work-type">
+                                                            {{ $work['label'] }}
+                                                        </span>
+
+                                                        <span class="rm-work-count">
+                                                            · {{ $work['title'] }}
+                                                        </span>
+
+                                                    </div>
+
+                                                    <span class="rm-work-primary">
+                                                        {{ $work['route'] }}
+                                                    </span>
+
+                                                    <span class="rm-work-detail">
+                                                        {{ $work['status'] }}
                                                     </span>
 
                                                 </div>
-
-                                                <p
-                                                    class="
-                                                        mt-1
-                                                        max-w-[300px]
-                                                        truncate
-                                                        text-[7.5px]
-                                                        font-semibold
-                                                        text-[#443c32]
-                                                    "
-                                                >
-                                                    {{ $work['route'] }}
-                                                </p>
-
-                                                <p
-                                                    class="
-                                                        mt-1
-                                                        text-[6.5px]
-                                                        text-[#92877a]
-                                                    "
-                                                >
-                                                    {{ $work['status'] }}
-                                                </p>
 
                                             </a>
 
                                         @endforeach
 
-                                    </div>
+                                    @else
 
-                                @else
+                                        {{--
+                                            No assignment uses the exact
+                                            same component and dimensions.
+                                        --}}
 
-                                    <div
-                                        class="
-                                            flex items-center gap-2
-                                        "
-                                    >
-
-                                        <span
-                                            class="
-                                                grid h-6 w-6
-                                                place-items-center
-                                                rounded-full
-
-                                                {{
-                                                    $state === 'available'
-                                                        ? 'bg-[#eef7f1] text-[#56816a]'
-                                                        : 'bg-[#f4f1ed] text-[#92877a]'
-                                                }}
-                                            "
+                                        <div
+                                            class="rm-workbox"
+                                            data-work-kind="{{ $state }}"
                                         >
-                                            @if($state === 'available')
 
-                                                <svg
-                                                    viewBox="0 0 24 24"
-                                                    class="h-[12px] w-[12px]"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                >
-                                                    <path d="m7 12 3 3 7-7"></path>
-                                                </svg>
-
-                                            @else
-
-                                                <span
-                                                    class="
-                                                        h-1.5 w-1.5
-                                                        rounded-full
-                                                        bg-current
-                                                    "
-                                                ></span>
-
-                                            @endif
-                                        </span>
-
-                                        <div>
-
-                                            <p
-                                                class="
-                                                    text-[7.5px]
-                                                    font-semibold
-                                                    text-[#61584d]
-                                                "
+                                            <span
+                                                class="rm-work-icon {{ $state }}"
+                                                aria-hidden="true"
                                             >
-                                                {{
-                                                    $state === 'available'
-                                                        ? 'Ready for assignment'
-                                                        : (
-                                                            $state === 'offline'
-                                                                ? 'Rider is offline'
-                                                                : 'No active work'
-                                                        )
-                                                }}
-                                            </p>
 
-                                            @if($state === 'available')
+                                                @if($state === 'available')
 
-                                                <p
-                                                    class="
-                                                        mt-0.5
-                                                        text-[6.5px]
-                                                        text-[#aaa094]
-                                                    "
-                                                >
-                                                    Available for Logistics dispatch
-                                                </p>
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="9"/>
+                                                        <path d="m8 12 2.5 2.5L16 9"/>
+                                                    </svg>
 
-                                            @endif
+                                                @elseif($state === 'offline')
+
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="9"/>
+                                                        <path d="M8 8l8 8m0-8-8 8"/>
+                                                    </svg>
+
+                                                @elseif($state === 'inactive')
+
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="9"/>
+                                                        <path d="M12 7v6M12 17h.01"/>
+                                                    </svg>
+
+                                                @else
+
+                                                    <svg viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="9"/>
+                                                        <path d="M12 7v5l3 2"/>
+                                                    </svg>
+
+                                                @endif
+
+                                            </span>
+
+                                            <div class="rm-work-content">
+
+                                                <div class="rm-work-top">
+
+                                                    <span class="rm-work-type">
+                                                        No Current Assignment
+                                                    </span>
+
+                                                </div>
+
+                                                <span class="rm-work-primary">
+
+                                                    @switch($state)
+
+                                                        @case('available')
+                                                            Ready for assignment
+                                                            @break
+
+                                                        @case('offline')
+                                                            Rider is offline
+                                                            @break
+
+                                                        @case('inactive')
+                                                            Account inactive
+                                                            @break
+
+                                                        @default
+                                                            No active work
+
+                                                    @endswitch
+
+                                                </span>
+
+                                                <span class="rm-work-detail">
+
+                                                    @switch($state)
+
+                                                        @case('available')
+                                                            Available for Logistics dispatch
+                                                            @break
+
+                                                        @case('offline')
+                                                            Not accepting assignments
+                                                            @break
+
+                                                        @case('inactive')
+                                                            Account currently unavailable
+                                                            @break
+
+                                                        @default
+                                                            No active assignment recorded
+
+                                                    @endswitch
+
+                                                </span>
+
+                                            </div>
 
                                         </div>
 
-                                    </div>
+                                    @endif
 
-                                @endif
+                                </div>
 
                             </td>
 
@@ -1324,95 +1668,78 @@
 
                     @empty
 
+                        {{-- NO APPROVED RIDERS --}}
+
                         <tr>
-                            <td
-                                colspan="6"
-                                class="
-                                    px-5 py-12
-                                    text-center
-                                "
-                            >
-                                <div
-                                    class="
-                                        mx-auto
-                                        grid h-11 w-11
-                                        place-items-center
-                                        rounded-full
-                                        bg-[#faf5ec]
-                                        text-[#b97805]
-                                    "
+
+                            <td colspan="6" class="rm-empty">
+
+                                <span
+                                    class="rm-empty-icon"
+                                    aria-hidden="true"
                                 >
+
                                     <svg
                                         viewBox="0 0 24 24"
-                                        class="h-[19px] w-[19px]"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
                                     >
-                                        <circle cx="8" cy="8" r="3"></circle>
-                                        <circle cx="17" cy="9" r="2.5"></circle>
-                                        <path d="M2.5 20c.5-4 2.5-6 5.5-6"></path>
-                                        <path d="M13 15c3.2 0 5.2 1.7 5.7 5"></path>
+                                        <circle cx="8" cy="8" r="3"/>
+                                        <circle cx="17" cy="9" r="2.5"/>
+                                        <path d="M2.5 20c.5-4 2.5-6 5.5-6M13 15c3.2 0 5.2 1.7 5.7 5"/>
                                     </svg>
-                                </div>
 
-                                <p
-                                    class="
-                                        mt-3
-                                        text-[9px]
-                                        font-semibold
-                                        text-[#51483d]
-                                    "
-                                >
-                                    No approved Riders yet.
-                                </p>
+                                </span>
 
-                                <p
-                                    class="
-                                        mt-1
-                                        text-[7.5px]
-                                        text-[#918677]
-                                    "
-                                >
+                                <strong>
+                                    No approved Riders yet
+                                </strong>
+
+                                <p>
                                     Approved Rider applications will appear here.
                                 </p>
+
                             </td>
+
                         </tr>
 
                     @endforelse
 
-                    {{-- Search/filter empty state --}}
-                    <tr
-                        id="riderFilterEmptyState"
-                        class="hidden"
-                    >
-                        <td
-                            colspan="6"
-                            class="
-                                px-5 py-12
-                                text-center
-                            "
-                        >
-                            <p
-                                class="
-                                    text-[9px]
-                                    font-semibold
-                                    text-[#51483d]
-                                "
+                    {{-- FILTER EMPTY STATE --}}
+
+                    <tr id="riderFilterEmptyState" hidden>
+
+                        <td colspan="6" class="rm-empty">
+
+                            <span
+                                class="rm-empty-icon"
+                                aria-hidden="true"
                             >
-                                No Riders match your search.
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                >
+                                    <circle cx="11" cy="11" r="7"/>
+                                    <path d="m20 20-4-4"/>
+                                </svg>
+
+                            </span>
+
+                            <strong>
+                                No matching Riders
+                            </strong>
+
+                            <p>
+                                Try another name, barangay, vehicle
+                                or availability filter.
                             </p>
 
-                            <p
-                                class="
-                                    mt-1
-                                    text-[7.5px]
-                                    text-[#918677]
-                                "
-                            >
-                                Try another name, area, vehicle, or status.
-                            </p>
                         </td>
+
                     </tr>
 
                 </tbody>
@@ -1421,166 +1748,222 @@
 
         </div>
 
+        {{-- FOOTER --}}
+
+        <footer class="rm-footer">
+
+            <span id="rmVisibleCount">
+
+                {{ count($riderRows) }}
+
+                {{
+                    count($riderRows) === 1
+                        ? 'Rider'
+                        : 'Riders'
+                }}
+
+                shown
+
+            </span>
+
+            <span>
+                Live network availability
+            </span>
+
+        </footer>
+
     </section>
 
 </div>
 
+@endsection
 
 @push('scripts')
 
 <script>
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-        const searchInput =
-            document.getElementById(
-                'riderManagementSearch'
-            );
+    'use strict';
 
-        const rows =
-            Array.from(
-                document.querySelectorAll(
-                    '[data-rider-row]'
-                )
-            );
+    const root = document.getElementById(
+        'lgRiderManagement'
+    );
 
-        const filterButtons =
-            Array.from(
-                document.querySelectorAll(
-                    '[data-rider-filter]'
-                )
-            );
+    if (!root) {
+        return;
+    }
 
-        const emptyState =
-            document.getElementById(
-                'riderFilterEmptyState'
-            );
+    const searchInput = root.querySelector(
+        '#riderManagementSearch'
+    );
 
-        let activeFilter = 'all';
+    const rows = Array.from(
+        root.querySelectorAll('[data-rider-row]')
+    );
 
+    const filterButtons = Array.from(
+        root.querySelectorAll('[data-rider-filter]')
+    );
 
-        function normalize(value) {
-            return String(value || '')
-                .toLowerCase()
-                .trim();
-        }
+    const emptyState = root.querySelector(
+        '#riderFilterEmptyState'
+    );
 
+    const visibleCount = root.querySelector(
+        '#rmVisibleCount'
+    );
 
-        function renderRows() {
+    const resetButton = root.querySelector(
+        '#rmResetFilters'
+    );
 
-            const keyword =
-                normalize(
-                    searchInput?.value
-                );
+    let activeFilter = 'all';
 
-            let visibleCount = 0;
+    /*
+    |--------------------------------------------------------------------------
+    | NORMALIZATION
+    |--------------------------------------------------------------------------
+    */
 
-            rows.forEach(function (row) {
+    function normalize(value) {
 
-                const searchText =
-                    normalize(
-                        row.dataset.search
-                    );
-
-                const state =
-                    normalize(
-                        row.dataset.state
-                    );
-
-                const matchesSearch =
-                    ! keyword
-                    || searchText.includes(
-                        keyword
-                    );
-
-                const matchesFilter =
-                    activeFilter === 'all'
-                    || state === activeFilter;
-
-                const visible =
-                    matchesSearch
-                    && matchesFilter;
-
-                row.classList.toggle(
-                    'hidden',
-                    ! visible
-                );
-
-                if (visible) {
-                    visibleCount++;
-                }
-
-            });
-
-            emptyState?.classList.toggle(
-                'hidden',
-                visibleCount !== 0
-            );
-        }
-
-
-        searchInput?.addEventListener(
-            'input',
-            renderRows
-        );
-
-
-        filterButtons.forEach(
-            function (button) {
-
-                button.addEventListener(
-                    'click',
-                    function () {
-
-                        activeFilter =
-                            button.dataset
-                                .riderFilter
-                            || 'all';
-
-                        filterButtons.forEach(
-                            function (item) {
-
-                                const isActive =
-                                    item === button;
-
-                                item.classList.toggle(
-                                    'bg-[#fff6e5]',
-                                    isActive
-                                );
-
-                                item.classList.toggle(
-                                    'text-[#a96e05]',
-                                    isActive
-                                );
-
-                                item.classList.toggle(
-                                    'font-semibold',
-                                    isActive
-                                );
-
-                                item.classList.toggle(
-                                    'text-[#756b5f]',
-                                    ! isActive
-                                );
-
-                                item.classList.toggle(
-                                    'font-medium',
-                                    ! isActive
-                                );
-                            }
-                        );
-
-                        renderRows();
-                    }
-                );
-            }
-        );
+        return String(value || '')
+            .toLocaleLowerCase()
+            .trim();
 
     }
-);
+
+    /*
+    |--------------------------------------------------------------------------
+    | DIRECTORY FILTERING
+    |--------------------------------------------------------------------------
+    */
+
+    function renderRows() {
+
+        const keyword = normalize(
+            searchInput?.value
+        );
+
+        let shown = 0;
+
+        rows.forEach(function (row) {
+
+            const searchable = normalize(
+                row.dataset.search
+            );
+
+            const state = normalize(
+                row.dataset.state
+            );
+
+            const matchesSearch =
+                !keyword ||
+                searchable.includes(keyword);
+
+            const matchesFilter =
+                activeFilter === 'all' ||
+                state === activeFilter;
+
+            const visible =
+                matchesSearch &&
+                matchesFilter;
+
+            row.hidden = !visible;
+
+            if (visible) {
+                shown++;
+            }
+
+        });
+
+        if (emptyState) {
+
+            emptyState.hidden =
+                rows.length === 0 ||
+                shown !== 0;
+
+        }
+
+        if (visibleCount) {
+
+            visibleCount.textContent =
+                `${shown} of ${rows.length} ` +
+                `${rows.length === 1 ? 'Rider' : 'Riders'} shown`;
+
+        }
+
+        filterButtons.forEach(function (button) {
+
+            const selected =
+                button.dataset.riderFilter === activeFilter;
+
+            button.setAttribute(
+                'aria-pressed',
+                String(selected)
+            );
+
+        });
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEARCH EVENT
+    |--------------------------------------------------------------------------
+    */
+
+    searchInput?.addEventListener(
+        'input',
+        renderRows
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | FILTER EVENTS
+    |--------------------------------------------------------------------------
+    */
+
+    filterButtons.forEach(function (button) {
+
+        button.addEventListener('click', function () {
+
+            activeFilter =
+                button.dataset.riderFilter || 'all';
+
+            renderRows();
+
+        });
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET FILTERS
+    |--------------------------------------------------------------------------
+    */
+
+    resetButton?.addEventListener('click', function () {
+
+        activeFilter = 'all';
+
+        if (searchInput) {
+            searchInput.value = '';
+        }
+
+        renderRows();
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | INITIALIZE
+    |--------------------------------------------------------------------------
+    */
+
+    renderRows();
+
+});
 </script>
 
 @endpush
-
-@endsection

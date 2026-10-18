@@ -10,7 +10,7 @@ use App\Models\Accounts\SellerAccount;
 use App\Models\Messaging\PlatformConversation;
 use App\Models\Messaging\PlatformConversationParticipant;
 use App\Models\Messaging\PlatformMessage;
-use App\Services\Messaging\SariAdminAssistantService;
+use App\Services\Messaging\SariAdminAssistantReplyService;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Contracts\Broadcasting\ShouldRescue;
@@ -18,13 +18,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class SellerSupportMessagingReliabilityTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_seller_support_send_uses_worker_free_deferred_assistant_connection(): void
+    public function test_seller_support_send_creates_a_worker_free_acknowledgement(): void
     {
         config([
             'sari.assistant.enabled' => true,
@@ -45,31 +46,91 @@ class SellerSupportMessagingReliabilityTest extends TestCase
         $uuid = $support->json('conversation.uuid');
 
         $this->withSession($this->sellerSession($seller))
-            ->postJson(route('messaging.api.send', ['conversation' => $uuid]), [
-                'body' => 'How do I add a product?',
-            ])
+            ->postJson(
+                route('messaging.api.send', [
+                    'conversation' => $uuid,
+                ]),
+                [
+                    'body' => 'How do I add a product?',
+                ]
+            )
             ->assertCreated()
             ->assertJsonPath('message.sender_role', 'seller');
 
-        Bus::assertDispatched(SendSariAdminAssistantReply::class, function ($job): bool {
-            return $job->connection === 'deferred'
-                && $job->waitSeconds === 0
-                && $job->triggerMessageId > 0;
-        });
+        Bus::assertNotDispatched(
+            SendSariAdminAssistantReply::class
+        );
+
+        $reply = PlatformMessage::query()
+            ->where('sender_role', 'admin')
+            ->latest('id')
+            ->firstOrFail();
+
+        $this->assertTrue(
+            (bool) data_get(
+                $reply->metadata,
+                'support_acknowledgement'
+            )
+        );
+
+        $this->assertStringContainsString(
+            'received your message successfully',
+            $reply->body
+        );
     }
 
     public function test_message_and_reaction_broadcasts_are_queued_and_rescuable(): void
     {
-        $this->assertTrue(is_a(PlatformMessageSent::class, ShouldBroadcast::class, true));
-        $this->assertFalse(is_a(PlatformMessageSent::class, ShouldBroadcastNow::class, true));
-        $this->assertTrue(is_a(PlatformMessageSent::class, ShouldRescue::class, true));
+        $this->assertTrue(
+            is_a(
+                PlatformMessageSent::class,
+                ShouldBroadcast::class,
+                true
+            )
+        );
 
-        $this->assertTrue(is_a(PlatformMessageReactionUpdated::class, ShouldBroadcast::class, true));
-        $this->assertFalse(is_a(PlatformMessageReactionUpdated::class, ShouldBroadcastNow::class, true));
-        $this->assertTrue(is_a(PlatformMessageReactionUpdated::class, ShouldRescue::class, true));
+        $this->assertFalse(
+            is_a(
+                PlatformMessageSent::class,
+                ShouldBroadcastNow::class,
+                true
+            )
+        );
+
+        $this->assertTrue(
+            is_a(
+                PlatformMessageSent::class,
+                ShouldRescue::class,
+                true
+            )
+        );
+
+        $this->assertTrue(
+            is_a(
+                PlatformMessageReactionUpdated::class,
+                ShouldBroadcast::class,
+                true
+            )
+        );
+
+        $this->assertFalse(
+            is_a(
+                PlatformMessageReactionUpdated::class,
+                ShouldBroadcastNow::class,
+                true
+            )
+        );
+
+        $this->assertTrue(
+            is_a(
+                PlatformMessageReactionUpdated::class,
+                ShouldRescue::class,
+                true
+            )
+        );
     }
 
-    public function test_assistant_has_a_useful_local_fallback_when_provider_configuration_is_missing(): void
+    public function test_support_acknowledgement_is_available_without_provider_configuration(): void
     {
         config([
             'sari.assistant.enabled' => true,
@@ -83,11 +144,11 @@ class SellerSupportMessagingReliabilityTest extends TestCase
         $seller = $this->seller();
 
         $conversation = PlatformConversation::query()->create([
-            'uuid' => (string) \Illuminate\Support\Str::uuid(),
+            'uuid' => (string) Str::uuid(),
             'conversation_type' => 'admin_support',
             'context_type' => 'account_support',
             'context_id' => $seller->id,
-            'dedupe_key' => 'assistant-test:' . $seller->id,
+            'dedupe_key' => 'assistant-test:'.$seller->id,
             'subject' => 'SARI Support',
             'status' => 'active',
             'created_by_role' => 'seller',
@@ -98,7 +159,7 @@ class SellerSupportMessagingReliabilityTest extends TestCase
             'platform_conversation_id' => $conversation->id,
             'participant_role' => 'seller',
             'participant_id' => $seller->id,
-            'realtime_token' => \Illuminate\Support\Str::random(48),
+            'realtime_token' => Str::random(48),
             'joined_at' => now(),
         ]);
 
@@ -106,7 +167,7 @@ class SellerSupportMessagingReliabilityTest extends TestCase
             'platform_conversation_id' => $conversation->id,
             'participant_role' => 'admin',
             'participant_id' => $admin->id,
-            'realtime_token' => \Illuminate\Support\Str::random(48),
+            'realtime_token' => Str::random(48),
             'joined_at' => now(),
         ]);
 
@@ -118,18 +179,54 @@ class SellerSupportMessagingReliabilityTest extends TestCase
             'body' => 'How do I add a new product?',
         ]);
 
-        (new SendSariAdminAssistantReply($trigger->id, 0))
-            ->handle(app(SariAdminAssistantService::class));
+        (new SendSariAdminAssistantReply($trigger->id))
+            ->handle(
+                app(SariAdminAssistantReplyService::class)
+            );
 
         $reply = PlatformMessage::query()
-            ->where('platform_conversation_id', $conversation->id)
+            ->where(
+                'platform_conversation_id',
+                $conversation->id
+            )
             ->where('sender_role', 'admin')
             ->where('id', '>', $trigger->id)
             ->firstOrFail();
 
-        $this->assertTrue((bool) data_get($reply->metadata, 'ai_assistant'));
-        $this->assertStringContainsString('Product Management', (string) $reply->body);
-        $this->assertStringContainsString('Add New Product', (string) $reply->body);
+        $this->assertTrue(
+            (bool) data_get(
+                $reply->metadata,
+                'ai_assistant'
+            )
+        );
+
+        $this->assertTrue(
+            (bool) data_get(
+                $reply->metadata,
+                'support_acknowledgement'
+            )
+        );
+
+        $this->assertStringContainsString(
+            'SARI administrator to respond',
+            (string) $reply->body
+        );
+
+        (new SendSariAdminAssistantReply($trigger->id))
+            ->handle(
+                app(SariAdminAssistantReplyService::class)
+            );
+
+        $this->assertSame(
+            1,
+            PlatformMessage::query()
+                ->where(
+                    'platform_conversation_id',
+                    $conversation->id
+                )
+                ->where('sender_role', 'admin')
+                ->count()
+        );
     }
 
     private function baseSession(): array
@@ -164,7 +261,7 @@ class SellerSupportMessagingReliabilityTest extends TestCase
     {
         return AdminAccount::query()->create([
             'name' => 'Messaging Admin',
-            'email' => 'messaging-admin-' . uniqid() . '@example.test',
+            'email' => 'messaging-admin-'.uniqid().'@example.test',
             'password' => Hash::make('password'),
         ]);
     }
@@ -172,8 +269,8 @@ class SellerSupportMessagingReliabilityTest extends TestCase
     private function seller(): SellerAccount
     {
         return SellerAccount::query()->create([
-            'email' => 'seller-' . uniqid() . '@example.test',
-            'store_name' => 'Messaging Test Store ' . uniqid(),
+            'email' => 'seller-'.uniqid().'@example.test',
+            'store_name' => 'Messaging Test Store '.uniqid(),
             'warning_count' => 0,
             'account_status' => 'active',
         ]);

@@ -4,30 +4,934 @@
 @section('page-title', 'Delivery Monitoring')
 
 @push('styles')
-    <link
-        rel="stylesheet"
-        href="{{ asset('css/logistics/delivery-monitoring.css') }}?v=20261015-1"
-    >
-@endpush
+<link rel="stylesheet" href="{{ asset('css/logistics/delivery-monitoring.css') }}?v=20261015-1">
 
+<style>
+#lgDeliveryMonitoring {
+    --monitor-ink: #25211c;
+    --monitor-muted: #8a8177;
+    --monitor-line: #e8e2d9;
+    --monitor-line-soft: #f0ebe5;
+    --monitor-gold: #d9950b;
+    width: 100%;
+    max-width: 1620px;
+    margin-inline: auto;
+    font-size: 10px;
+}
+
+#lgDeliveryMonitoring [hidden] {
+    display: none !important;
+}
+
+#lgDeliveryMonitoring :is(a, button, input):focus-visible {
+    outline: 2px solid rgba(217,149,11,.65);
+    outline-offset: 2px;
+}
+
+/* PAGE HEADING */
+
+#lgDeliveryMonitoring .monitor-page-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    min-height: 0;
+    gap: 16px;
+    padding: 5px 2px 17px;
+    margin-bottom: 14px;
+    overflow: visible;
+    border: 0;
+    border-bottom: 1px solid #e4e1dc;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#lgDeliveryMonitoring .monitor-page-header::after {
+    display: none;
+}
+
+#lgDeliveryMonitoring .monitor-eyebrow,
+#lgDeliveryMonitoring .monitor-page-header .monitor-eyebrow {
+    margin-bottom: 5px;
+    color: #a76f11;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    line-height: 1.4;
+}
+
+#lgDeliveryMonitoring .monitor-page-header h1 {
+    color: #24201b;
+    font-size: clamp(23px, 2.15vw, 30px);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -.045em;
+}
+
+#lgDeliveryMonitoring .monitor-page-header h1 span {
+    color: var(--monitor-gold);
+}
+
+#lgDeliveryMonitoring .monitor-subtitle {
+    max-width: 740px;
+    margin-top: 6px;
+    color: #897f75;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#lgDeliveryMonitoring .monitor-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* BUTTONS */
+
+#lgDeliveryMonitoring .monitor-button {
+    min-height: 39px;
+    padding: 9px 14px;
+    border: 1px solid #e4d8c6;
+    border-radius: 10px;
+    background: #fff;
+    color: #776a5a;
+    font-size: 10px;
+    font-weight: 650;
+    box-shadow: none;
+}
+
+#lgDeliveryMonitoring .monitor-page-header
+.monitor-button:not(.monitor-button-primary) {
+    border-color: #e4d8c6;
+    background: #fff;
+    color: #776a5a;
+}
+
+#lgDeliveryMonitoring .monitor-page-header
+.monitor-button:not(.monitor-button-primary):hover {
+    border-color: #d5bb87;
+    background: #fff9ed;
+    color: #a36c0a;
+}
+
+#lgDeliveryMonitoring .monitor-button-primary,
+#lgDeliveryMonitoring .monitor-page-header .monitor-button-primary {
+    background: var(--monitor-gold);
+    border-color: var(--monitor-gold);
+    color: #fff;
+}
+
+#lgDeliveryMonitoring .monitor-button-primary:hover,
+#lgDeliveryMonitoring .monitor-page-header .monitor-button-primary:hover {
+    background: #c88708;
+    border-color: #c88708;
+    color: #fff;
+}
+
+/* KPI CARDS */
+
+#lgDeliveryMonitoring .monitor-stats {
+    display: grid;
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    gap: 12px;
+}
+
+#lgDeliveryMonitoring .monitor-stat {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-width: 0;
+    min-height: 99px;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid #e8e2d9;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(33,24,14,.035);
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgDeliveryMonitoring .monitor-stat::after {
+    display: none;
+}
+
+#lgDeliveryMonitoring .monitor-stat p {
+    color: #756b60;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+#lgDeliveryMonitoring .monitor-stat strong,
+#lgDeliveryMonitoring .monitor-stat-amber strong,
+#lgDeliveryMonitoring .monitor-stat-blue strong,
+#lgDeliveryMonitoring .monitor-stat-green strong {
+    display: block;
+    margin: 8px 0 5px;
+    color: #211d18;
+    font-size: 25px;
+    font-weight: 750;
+    line-height: 1.1;
+}
+
+#lgDeliveryMonitoring .monitor-stat span:not(.dm-stat-icon) {
+    color: #8d8378;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+#lgDeliveryMonitoring .dm-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 41px;
+    width: 41px;
+    height: 41px;
+    border-radius: 11px;
+    background: #f2f1ef;
+    color: #80776d;
+}
+
+#lgDeliveryMonitoring .dm-stat-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+#lgDeliveryMonitoring .monitor-stat-amber .dm-stat-icon {
+    background: #fff7e9;
+    color: #bc8420;
+}
+
+#lgDeliveryMonitoring .monitor-stat-blue .dm-stat-icon {
+    background: #eff5fa;
+    color: #587ead;
+}
+
+#lgDeliveryMonitoring .monitor-stat-green .dm-stat-icon {
+    background: #eef8f2;
+    color: #4c8663;
+}
+
+/* WORKFLOW AND WORKSPACE */
+
+#lgDeliveryMonitoring .monitor-flow {
+    max-width: 100%;
+    gap: 4px;
+    margin: 14px 0;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+#lgDeliveryMonitoring .monitor-flow :is(a,span) {
+    min-height: 32px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-flow b {
+    width: 21px;
+    height: 21px;
+    font-size: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-workspace {
+    min-width: 0;
+    border-color: #e8e2d9;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(33,24,14,.035);
+}
+
+#lgDeliveryMonitoring .monitor-delivered-workspace {
+    margin-top: 14px;
+}
+
+#lgDeliveryMonitoring .monitor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 15px 17px;
+}
+
+#lgDeliveryMonitoring .monitor-toolbar h2 {
+    margin-top: 4px;
+    color: #29231d;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+#lgDeliveryMonitoring .monitor-toolbar p:not(.monitor-eyebrow) {
+    margin-top: 4px;
+    color: #93897e;
+    font-size: 9px;
+    line-height: 1.55;
+}
+
+/* SEARCH AND FILTERS */
+
+#lgDeliveryMonitoring .monitor-search {
+    width: min(315px,100%);
+}
+
+#lgDeliveryMonitoring .monitor-search input {
+    height: 39px;
+    padding: 0 12px;
+    border: 1px solid #dfe2e6;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+#lgDeliveryMonitoring .monitor-search input:focus {
+    border-color: var(--monitor-gold);
+    box-shadow: 0 0 0 3px rgba(217,149,11,.09);
+}
+
+#lgDeliveryMonitoring .monitor-filter-row {
+    gap: 10px;
+    padding: 0 17px 13px;
+    border-color: #eee8df;
+}
+
+#lgDeliveryMonitoring .monitor-tabs {
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid #e6e1d9;
+    border-radius: 10px;
+    background: #f7f8fa;
+}
+
+#lgDeliveryMonitoring .monitor-tabs button {
+    min-height: 30px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-tabs button[aria-pressed="true"] {
+    border-color: #e9dfce;
+    background: #fff;
+    color: #a36c0a;
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(35,29,22,.035);
+}
+
+#lgDeliveryMonitoring .monitor-tabs span {
+    min-width: 21px;
+    height: 19px;
+    font-size: 8px;
+}
+
+#lgDeliveryMonitoring .monitor-text-link {
+    color: #a66d0b;
+    font-size: 9px;
+    font-weight: 650;
+    line-height: 1.5;
+}
+
+/* ACTIVE ORDER CARDS */
+
+#lgDeliveryMonitoring .monitor-order-list {
+    gap: 12px;
+    padding: 14px;
+    background: #fff;
+}
+
+#lgDeliveryMonitoring .monitor-order-card {
+    min-width: 0;
+    border: 1px solid #e8e2d9;
+    border-radius: 13px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(35,27,18,.025);
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgDeliveryMonitoring .monitor-order-header {
+    gap: 12px;
+    padding: 14px 15px;
+    border-bottom-color: #eee8df;
+}
+
+#lgDeliveryMonitoring .monitor-order-identity {
+    min-width: 0;
+    gap: 11px;
+}
+
+#lgDeliveryMonitoring .monitor-order-identity > div {
+    min-width: 0;
+}
+
+#lgDeliveryMonitoring .monitor-order-icon {
+    flex: 0 0 41px;
+    width: 41px;
+    height: 41px;
+    border: 1px solid #eee3ce;
+    border-radius: 11px;
+    background: #fff5e1;
+    color: #a97312;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-order-identity .monitor-eyebrow {
+    margin: 0 0 3px;
+    color: #a68c61;
+    font-size: 8px;
+}
+
+#lgDeliveryMonitoring .monitor-order-identity h3 {
+    color: #383027;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#lgDeliveryMonitoring .monitor-order-identity p:not(.monitor-eyebrow) {
+    margin-top: 4px;
+    color: #8f8579;
+    font-size: 9px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#lgDeliveryMonitoring .monitor-order-status {
+    gap: 6px;
+    text-align: right;
+}
+
+#lgDeliveryMonitoring .monitor-order-status small {
+    color: #92887e;
+    font-size: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-status {
+    min-height: 25px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 8.5px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+/* CURRENT OPERATION / HANDLER */
+
+#lgDeliveryMonitoring .monitor-current-state {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(230px,.52fr);
+    gap: 10px;
+    padding: 13px 15px;
+    border-bottom: 1px solid #eee8df;
+    background: #fff;
+}
+
+#lgDeliveryMonitoring .dm-operation-cell {
+    min-width: 0;
+    min-height: 83px;
+    padding: 12px;
+    border: 1px solid #e9e5df;
+    border-radius: 10px;
+    background: #fbfbfc;
+}
+
+#lgDeliveryMonitoring .monitor-current-handler {
+    align-items: center;
+    gap: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-handler-avatar {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border-color: #e4daca;
+    background: #f6f2e9;
+    color: #8c7856;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-label {
+    margin-bottom: 5px;
+    color: #958879;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .065em;
+}
+
+#lgDeliveryMonitoring .monitor-current-state strong {
+    color: #443c33;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#lgDeliveryMonitoring .monitor-current-state p {
+    margin-top: 4px;
+    color: #908679;
+    font-size: 9px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* SEVEN-STEP PARCEL JOURNEY */
+
+#lgDeliveryMonitoring .monitor-journey-scroll {
+    padding: 16px 15px;
+    overflow-x: auto;
+}
+
+#lgDeliveryMonitoring .monitor-journey {
+    display: grid;
+    grid-template-columns: repeat(7,minmax(118px,1fr));
+    min-width: 875px;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step {
+    align-items: center;
+    gap: 7px;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step::after {
+    top: 15px;
+    left: 38px;
+    right: 8px;
+}
+
+#lgDeliveryMonitoring .monitor-step-marker {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    color: #9b9288;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step > div:last-child {
+    padding-right: 5px;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step strong {
+    color: #756c62;
+    font-size: 9px;
+    font-weight: 650;
+    line-height: 1.45;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step span {
+    margin-top: 3px;
+    color: #a1988e;
+    font-size: 8px;
+    line-height: 1.35;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step.is-current .monitor-step-marker {
+    background: #d9950b;
+    border-color: #d9950b;
+}
+
+#lgDeliveryMonitoring .monitor-journey-step.is-current strong {
+    color: #9c6a0e;
+}
+
+/* OPERATIONAL DETAILS */
+
+#lgDeliveryMonitoring .monitor-detail-grid {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    border-top-color: #eee8df;
+}
+
+#lgDeliveryMonitoring .monitor-detail {
+    min-width: 0;
+    padding: 13px 15px;
+    border-color: #f0ebe5;
+}
+
+#lgDeliveryMonitoring .monitor-detail strong {
+    color: #4c443b;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#lgDeliveryMonitoring .monitor-detail p {
+    margin-top: 4px;
+    color: #91877b;
+    font-size: 9px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#lgDeliveryMonitoring .monitor-order-footer {
+    gap: 12px;
+    padding: 12px 15px;
+    background: #fcfcfd;
+    color: #938b82;
+    font-size: 9px;
+}
+
+#lgDeliveryMonitoring .monitor-order-footer strong {
+    color: #51473d;
+    font-weight: 700;
+}
+
+/* DELIVERED TODAY */
+
+#lgDeliveryMonitoring .monitor-delivered-total {
+    min-height: 25px;
+    padding: 5px 9px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-grid {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 12px;
+    padding: 0 14px 14px;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-card {
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #e8e2d9;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(35,27,18,.025);
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-header {
+    padding-bottom: 10px;
+    border-bottom-color: #eee8df;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-header strong {
+    color: #443c33;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-check {
+    flex: 0 0 29px;
+    width: 29px;
+    height: 29px;
+    background: #edf7ef;
+    color: #4f795a;
+    font-size: 12px;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-body {
+    gap: 9px;
+    margin: 12px 0;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-body > div {
+    min-width: 0;
+}
+
+#lgDeliveryMonitoring .monitor-delivered-body strong {
+    display: block;
+    color: #51483e;
+    font-size: 10px;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+/* EMPTY STATES AND FOOTERS */
+
+#lgDeliveryMonitoring .monitor-empty {
+    padding: 40px 20px;
+}
+
+#lgDeliveryMonitoring .monitor-empty-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    background: #fff7e8;
+}
+
+#lgDeliveryMonitoring .monitor-empty h3 {
+    color: #51483e;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-empty p {
+    color: #948a7e;
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+#lgDeliveryMonitoring .monitor-list-footer {
+    padding: 12px 16px;
+    background: #fff;
+    border-top-color: #eee8df;
+    font-size: 9px;
+}
+
+/* HOVER */
+
+@media (hover:hover) and (pointer:fine) {
+    #lgDeliveryMonitoring .monitor-stat:hover,
+    #lgDeliveryMonitoring .monitor-order-card:hover,
+    #lgDeliveryMonitoring .monitor-delivered-card:hover {
+        transform: translateY(-2px);
+        border-color: #d8c9b2;
+        box-shadow: 0 13px 28px rgba(43,33,21,.055);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width:1200px) {
+    #lgDeliveryMonitoring .monitor-stats {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    #lgDeliveryMonitoring .monitor-delivered-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+}
+
+@media (max-width:900px) {
+    #lgDeliveryMonitoring .monitor-current-state {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    #lgDeliveryMonitoring .monitor-detail-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    #lgDeliveryMonitoring .monitor-detail:nth-child(3n) {
+        border-right: 1px solid #f0ebe5;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail:nth-child(2n) {
+        border-right: 0;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+3) {
+        border-bottom: 1px solid #f0ebe5;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+2) {
+        border-bottom: 0;
+    }
+}
+
+@media (max-width:767px) {
+    #lgDeliveryMonitoring .monitor-page-header,
+    #lgDeliveryMonitoring .monitor-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #lgDeliveryMonitoring .monitor-header-actions {
+        width: 100%;
+    }
+
+    #lgDeliveryMonitoring .monitor-header-actions .monitor-button {
+        flex: 1;
+    }
+
+    #lgDeliveryMonitoring .monitor-stats {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    #lgDeliveryMonitoring .monitor-search {
+        width: 100%;
+    }
+
+    #lgDeliveryMonitoring .monitor-filter-row {
+        padding-inline: 14px;
+    }
+
+    #lgDeliveryMonitoring .monitor-order-list {
+        padding: 10px;
+    }
+
+    #lgDeliveryMonitoring .monitor-current-state {
+        grid-template-columns: 1fr;
+    }
+
+    #lgDeliveryMonitoring .monitor-delivered-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width:520px) {
+    #lgDeliveryMonitoring .monitor-page-header {
+        padding: 5px 2px 17px;
+    }
+
+    #lgDeliveryMonitoring .monitor-header-actions {
+        flex-direction: column;
+    }
+
+    #lgDeliveryMonitoring .monitor-header-actions .monitor-button {
+        width: 100%;
+    }
+
+    #lgDeliveryMonitoring .monitor-stat {
+        padding: 12px;
+    }
+
+    #lgDeliveryMonitoring .monitor-stat strong {
+        font-size: 22px;
+    }
+
+    #lgDeliveryMonitoring .dm-stat-icon {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    #lgDeliveryMonitoring .monitor-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #lgDeliveryMonitoring .monitor-order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #lgDeliveryMonitoring .monitor-order-status {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail,
+    #lgDeliveryMonitoring .monitor-detail:nth-child(2n),
+    #lgDeliveryMonitoring .monitor-detail:nth-child(3n),
+    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+3),
+    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+2) {
+        border-right: 0;
+        border-bottom: 1px solid #f0ebe5;
+    }
+
+    #lgDeliveryMonitoring .monitor-detail:last-child {
+        border-bottom: 0;
+    }
+
+    #lgDeliveryMonitoring .monitor-delivered-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    #lgDeliveryMonitoring *,
+    #lgDeliveryMonitoring *::before,
+    #lgDeliveryMonitoring *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+
+    #lgDeliveryMonitoring .monitor-stat:hover,
+    #lgDeliveryMonitoring .monitor-order-card:hover,
+    #lgDeliveryMonitoring .monitor-delivered-card:hover {
+        transform: none !important;
+    }
+}
+
+/* HUB OPERATOR SCOPE */
+
+#lgDeliveryMonitoring .monitor-hub-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border: 1px solid #e8dfd0;
+    border-radius: 11px;
+    background: #fffaf1;
+    color: #6f604c;
+}
+
+#lgDeliveryMonitoring .monitor-hub-banner svg {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    color: #a97312;
+}
+
+#lgDeliveryMonitoring .monitor-hub-banner strong {
+    display: block;
+    color: #5b4525;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+#lgDeliveryMonitoring .monitor-hub-banner p {
+    margin: 4px 0 0;
+    color: #817260;
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+#lgDeliveryMonitoring .monitor-readonly-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #8b8276;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#lgDeliveryMonitoring .monitor-readonly-indicator svg {
+    width: 13px;
+    height: 13px;
+}
+
+@media (max-width: 520px) {
+    #lgDeliveryMonitoring .monitor-hub-banner {
+        padding: 11px;
+    }
+}
+</style>
+@endpush
 
 @section('content')
 
+@php
+    // Authorization is enforced by the Controller.
+    $isHubOperator = (bool) ($isHubOperator ?? false);
+    $hubFacility = $hubFacility ?? null;
+@endphp
+
 <div
+    id="lgDeliveryMonitoring"
     class="monitor-page"
     data-monitor-workspace
 >
-
-    {{-- =====================================================
-        HERO
-    ====================================================== --}}
+    {{-- PAGE HEADING --}}
 
     <header class="monitor-page-header">
-
-        <div>
-
+        <div class="min-w-0">
             <p class="monitor-eyebrow">
-                END-TO-END OPERATIONS
+                {{ $isHubOperator ? 'ASSIGNED HUB · READ-ONLY JOURNEYS' : 'END-TO-END OPERATIONS' }}
             </p>
 
             <h1>
@@ -35,16 +939,18 @@
             </h1>
 
             <p class="monitor-subtitle">
-                Follow every active parcel from Seller pickup through
-                origin hub processing, linehaul, destination hub dispatch,
-                Last-Mile delivery, and final Buyer handoff.
+                @if($isHubOperator)
+                    Follow parcels originating from or destined for your assigned hub,
+                    including their full Seller-to-Buyer journey. Monitoring is read-only.
+                @else
+                    Follow every active parcel from Seller pickup through
+                    origin hub processing, linehaul, destination hub dispatch,
+                    Last-Mile delivery, and final Buyer handoff.
+                @endif
             </p>
-
         </div>
 
-
         <div class="monitor-header-actions">
-
             <a
                 href="{{ route('logistics.last-mile-assignment') }}"
                 class="monitor-button"
@@ -53,29 +959,55 @@
                 Last Mile
             </a>
 
-
             <a
                 href="{{ route('logistics.dashboard') }}"
                 class="monitor-button monitor-button-primary"
             >
                 Dashboard
             </a>
-
         </div>
-
     </header>
 
+    @if($isHubOperator)
+        <aside
+            class="monitor-hub-banner"
+            role="note"
+            aria-label="Monitoring visibility"
+        >
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+            >
+                <path d="M3 10.5 12 4l9 6.5V21H3zM9 21v-7h6v7"/>
+            </svg>
 
-    {{-- =====================================================
-        SUMMARY
-    ====================================================== --}}
+            <div>
+                <strong>
+                    {{ $hubFacility?->name ?: 'Assigned Municipal Hub' }}
+                    @if($hubFacility?->municipality_name)
+                        · {{ $hubFacility->municipality_name }}
+                    @endif
+                </strong>
+
+                <p>
+                    Only parcels whose origin or destination route stop belongs to this hub are included.
+                    You can track the complete journey here, but delivery-route editing remains a Main Logistics action.
+                </p>
+            </div>
+        </aside>
+    @endif
+
+    {{-- KPI SUMMARY --}}
 
     @php
         $summaryCards = [
             [
                 'Active Deliveries',
                 $stats['active'],
-                'Across all delivery legs',
+                $isHubOperator ? 'Journeys involving this hub' : 'Across all delivery legs',
                 'neutral',
             ],
             [
@@ -105,118 +1037,152 @@
         ];
     @endphp
 
+    <section
+        class="monitor-stats"
+        aria-label="Delivery Monitoring overview"
+    >
+        @foreach($summaryCards as $index => [$label, $value, $note, $tone])
+            <article class="monitor-stat monitor-stat-{{ $tone }}">
+                <div class="min-w-0">
+                    <p>{{ $label }}</p>
 
-    <div class="monitor-stats">
+                    <strong>
+                        {{ number_format($value) }}
+                    </strong>
 
-        @foreach(
-            $summaryCards
-            as [$label, $value, $note, $tone]
-        )
+                    <span>{{ $note }}</span>
+                </div>
 
-            <article
-                class="
-                    monitor-stat
-                    monitor-stat-{{ $tone }}
-                "
-            >
+                <span class="dm-stat-icon" aria-hidden="true">
+                    @switch($index)
+                        @case(0)
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="M4 5h16v14H4zM8 9h8M8 13h8"/>
+                            </svg>
+                            @break
 
-                <p>
-                    {{ $label }}
-                </p>
+                        @case(1)
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <rect x="3" y="5" width="8" height="7" rx="1"/>
+                                <rect x="13" y="5" width="8" height="7" rx="1"/>
+                                <rect x="8" y="14" width="8" height="7" rx="1"/>
+                            </svg>
+                            @break
 
-                <strong>
-                    {{ $value }}
-                </strong>
+                        @case(2)
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="M3 7h12v10H3z"/>
+                                <path d="M15 10h3l3 3v4h-6"/>
+                                <circle cx="7" cy="18" r="1.5"/>
+                                <circle cx="18" cy="18" r="1.5"/>
+                            </svg>
+                            @break
 
-                <span>
-                    {{ $note }}
+                        @case(3)
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 7v5l3 2"/>
+                            </svg>
+                            @break
+
+                        @default
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="m8 12 2.5 2.5L16 9"/>
+                            </svg>
+                    @endswitch
                 </span>
-
             </article>
-
         @endforeach
+    </section>
 
-    </div>
-
-
-    {{-- =====================================================
-        FLOW
-    ====================================================== --}}
+    {{-- DELIVERY WORKFLOW --}}
 
     <nav
         class="monitor-flow"
         aria-label="Delivery operations workflow"
     >
-
         <a href="{{ route('logistics.pickup-requests') }}">
             <b>1</b>
             Seller Pickup
         </a>
-
 
         <a href="{{ route('logistics.incoming-parcels') }}">
             <b>2</b>
             Origin Hub
         </a>
 
-
         <a href="{{ route('logistics.parcel-sorting') }}">
             <b>3</b>
             Sorting
         </a>
-
 
         <a href="{{ route('logistics.hub-transfers') }}">
             <b>4</b>
             Linehaul
         </a>
 
-
         <a href="{{ route('logistics.last-mile-assignment') }}">
             <b>5</b>
             Last Mile
         </a>
 
-
-        <span
-            class="is-current"
-            aria-current="step"
-        >
+        <span class="is-current" aria-current="step">
             <b>6</b>
             Monitoring
         </span>
-
     </nav>
 
-
-    {{-- =====================================================
-        ACTIVE DELIVERIES
-    ====================================================== --}}
+    {{-- ACTIVE PARCEL JOURNEYS --}}
 
     <section
         class="monitor-workspace"
         aria-labelledby="active-deliveries-title"
     >
-
-        {{-- Toolbar --}}
-        <div class="monitor-toolbar">
-
+        <header class="monitor-toolbar">
             <div>
+                <p class="monitor-eyebrow">
+                    PARCEL JOURNEYS
+                </p>
 
                 <h2 id="active-deliveries-title">
-                    Active parcel journeys
+                    Active Parcel Journeys
                 </h2>
 
                 <p>
-                    Current operational stage is derived from the
-                    Marketplace Order and Logistics Parcel states.
+                    Current stage is derived from Marketplace Order and Logistics Parcel states.
+                    @if($isHubOperator)
+                        Only your hub's permitted journeys appear here.
+                    @endif
                 </p>
-
             </div>
 
-
             <label class="monitor-search">
-
                 <span class="sr-only">
                     Search active deliveries
                 </span>
@@ -224,124 +1190,58 @@
                 <input
                     type="search"
                     data-monitor-search
+                    value="{{ request()->query('q', '') }}"
+                    autocomplete="off"
                     placeholder="Search order, Buyer, Seller, Rider, hub…"
                 >
-
             </label>
+        </header>
 
-        </div>
+        {{-- STAGE FILTERS --}}
 
-
-        {{-- Filters --}}
         @php
-            $pickupCount =
-                $activeOrders
-                    ->where(
-                        'monitor_stage_group',
-                        'pickup'
-                    )
-                    ->count();
+            $pickupCount = $activeOrders
+                ->where('monitor_stage_group', 'pickup')
+                ->count();
 
-            $hubCount =
-                $activeOrders
-                    ->where(
-                        'monitor_stage_group',
-                        'hub'
-                    )
-                    ->count();
+            $hubCount = $activeOrders
+                ->where('monitor_stage_group', 'hub')
+                ->count();
 
-            $linehaulCount =
-                $activeOrders
-                    ->where(
-                        'monitor_stage_group',
-                        'linehaul'
-                    )
-                    ->count();
+            $linehaulCount = $activeOrders
+                ->where('monitor_stage_group', 'linehaul')
+                ->count();
 
-            $lastMileCount =
-                $activeOrders
-                    ->where(
-                        'monitor_stage_group',
-                        'last_mile'
-                    )
-                    ->count();
+            $lastMileCount = $activeOrders
+                ->where('monitor_stage_group', 'last_mile')
+                ->count();
+
+            $filters = [
+                'all' => ['All', $activeOrders->count()],
+                'pickup' => ['Pickup', $pickupCount],
+                'hub' => ['At Hub', $hubCount],
+                'linehaul' => ['Linehaul', $linehaulCount],
+                'last_mile' => ['Last Mile', $lastMileCount],
+            ];
         @endphp
 
-
         <div class="monitor-filter-row">
-
             <div
                 class="monitor-tabs"
                 role="group"
                 aria-label="Filter delivery stage"
             >
-
-                <button
-                    type="button"
-                    data-monitor-filter="all"
-                    aria-pressed="true"
-                >
-                    All
-
-                    <span>
-                        {{ $activeOrders->count() }}
-                    </span>
-                </button>
-
-
-                <button
-                    type="button"
-                    data-monitor-filter="pickup"
-                    aria-pressed="false"
-                >
-                    Pickup
-
-                    <span>
-                        {{ $pickupCount }}
-                    </span>
-                </button>
-
-
-                <button
-                    type="button"
-                    data-monitor-filter="hub"
-                    aria-pressed="false"
-                >
-                    At Hub
-
-                    <span>
-                        {{ $hubCount }}
-                    </span>
-                </button>
-
-
-                <button
-                    type="button"
-                    data-monitor-filter="linehaul"
-                    aria-pressed="false"
-                >
-                    Linehaul
-
-                    <span>
-                        {{ $linehaulCount }}
-                    </span>
-                </button>
-
-
-                <button
-                    type="button"
-                    data-monitor-filter="last_mile"
-                    aria-pressed="false"
-                >
-                    Last Mile
-
-                    <span>
-                        {{ $lastMileCount }}
-                    </span>
-                </button>
-
+                @foreach($filters as $filter => [$label, $count])
+                    <button
+                        type="button"
+                        data-monitor-filter="{{ $filter }}"
+                        aria-pressed="{{ $filter === 'all' ? 'true' : 'false' }}"
+                    >
+                        {{ $label }}
+                        <span>{{ $count }}</span>
+                    </button>
+                @endforeach
             </div>
-
 
             <button
                 type="button"
@@ -350,139 +1250,102 @@
             >
                 Clear filters
             </button>
-
         </div>
 
-
-        {{-- =================================================
-            ACTIVE ORDER CARDS
-        ================================================== --}}
+        {{-- ACTIVE ORDER CARDS --}}
 
         <div class="monitor-order-list">
-
             @forelse($activeOrders as $order)
-
                 @php
-                    $routeStops =
-                        $order
-                            ->deliveryRouteStops
-                            ->keyBy('stop_key');
+                    $routeStops = $order
+                        ->deliveryRouteStops
+                        ->keyBy('stop_key');
 
-                    $originStop =
-                        $routeStops->get(
-                            'origin_facility'
-                        );
+                    $originStop = $routeStops->get('origin_facility');
 
-                    $destinationStop =
-                        $routeStops->get(
-                            'destination_facility'
-                        );
+                    $destinationStop = $routeStops->get(
+                        'destination_facility'
+                    );
 
-                    $originName =
-                        $originStop
-                            ?->facility
-                            ?->name
-                        ?: $originStop
-                            ?->name
+                    $originName = $originStop?->facility?->name
+                        ?: $originStop?->name
                         ?: 'Origin hub pending';
 
-                    $destinationName =
-                        $destinationStop
-                            ?->facility
-                            ?->name
-                        ?: $destinationStop
-                            ?->name
+                    $destinationName = $destinationStop?->facility?->name
+                        ?: $destinationStop?->name
                         ?: 'Destination hub pending';
 
-                    $lastMile =
-                        $order->getAttribute(
-                            'monitor_last_mile'
-                        );
+                    $lastMile = $order->getAttribute(
+                        'monitor_last_mile'
+                    );
 
-                    $transfer =
-                        $order->getAttribute(
-                            'monitor_transfer'
-                        );
+                    $transfer = $order->getAttribute(
+                        'monitor_transfer'
+                    );
 
-                    $currentStep =
-                        (int) $order->getAttribute(
-                            'monitor_stage_step'
-                        );
+                    $currentStep = (int) $order->getAttribute(
+                        'monitor_stage_step'
+                    );
 
-                    $stageGroup =
-                        $order->getAttribute(
-                            'monitor_stage_group'
-                        );
+                    $stageGroup = $order->getAttribute(
+                        'monitor_stage_group'
+                    );
 
-                    $stageTone =
-                        $order->getAttribute(
-                            'monitor_stage_tone'
-                        );
+                    $stageTone = $order->getAttribute(
+                        'monitor_stage_tone'
+                    );
 
-                    $localRiderName =
-                        $lastMile
-                            ? trim(
-                                $lastMile->first_name
-                                .' '
-                                .$lastMile->last_name
-                            )
-                            : null;
+                    $stageLabel = $order->getAttribute(
+                        'monitor_stage_label'
+                    );
 
-                    $searchText =
-                        implode(
-                            ' ',
-                            array_filter([
-                                $order->order_number,
-                                $order->buyer_name,
-                                $order->buyer_address,
-                                $order->seller?->store_name,
-                                $order->pickup_name,
-                                $order->courier_name,
-                                $order->courier_email,
-                                $localRiderName,
-                                $lastMile?->delivery_area,
-                                $originName,
-                                $destinationName,
-                                $transfer?->transfer_code,
-                                $transfer?->driver_name,
-                                $order->getAttribute(
-                                    'monitor_stage_label'
-                                ),
-                            ])
-                        );
+                    $stageNote = $order->getAttribute(
+                        'monitor_stage_note'
+                    );
+
+                    $handlerName = $order->getAttribute(
+                        'monitor_handler_name'
+                    );
+
+                    $handlerRole = $order->getAttribute(
+                        'monitor_handler_role'
+                    );
+
+                    $localRiderName = $lastMile
+                        ? trim(
+                            $lastMile->first_name
+                            . ' '
+                            . $lastMile->last_name
+                        )
+                        : null;
+
+                    $searchText = implode(' ', array_filter([
+                        $order->order_number,
+                        $order->buyer_name,
+                        $order->buyer_address,
+                        $order->seller?->store_name,
+                        $order->pickup_name,
+                        $order->courier_name,
+                        $order->courier_email,
+                        $localRiderName,
+                        $lastMile?->delivery_area,
+                        $originName,
+                        $destinationName,
+                        $transfer?->transfer_code,
+                        $transfer?->driver_name,
+                        $stageLabel,
+                    ]));
 
                     $journeySteps = [
-                        [
-                            'Seller Pickup',
-                            'Pickup Rider',
-                        ],
-                        [
-                            'Origin Hub',
-                            'Hub Intake',
-                        ],
-                        [
-                            'Sorting',
-                            'Sort Zone',
-                        ],
-                        [
-                            'Hub Transfer',
-                            'Linehaul',
-                        ],
-                        [
-                            'Destination Hub',
-                            'Hub Receipt',
-                        ],
-                        [
-                            'Local Rider',
-                            'Last Mile',
-                        ],
-                        [
-                            'Buyer',
-                            'Delivery',
-                        ],
+                        ['Seller Pickup', 'Pickup Rider'],
+                        ['Origin Hub', 'Hub Intake'],
+                        ['Sorting', 'Sort Zone'],
+                        ['Hub Transfer', 'Linehaul'],
+                        ['Destination Hub', 'Hub Receipt'],
+                        ['Local Rider', 'Last Mile'],
+                        ['Buyer', 'Delivery'],
                     ];
                 @endphp
-
 
                 <article
                     class="monitor-order-card"
@@ -490,15 +1353,8 @@
                     data-stage-group="{{ $stageGroup }}"
                     data-search="{{ $searchText }}"
                 >
-
-                    {{-- =====================================
-                        ORDER HEADER
-                    ====================================== --}}
-
                     <header class="monitor-order-header">
-
                         <div class="monitor-order-identity">
-
                             <span
                                 class="monitor-order-icon"
                                 aria-hidden="true"
@@ -508,8 +1364,7 @@
                                         mb_substr(
                                             trim(
                                                 (string) (
-                                                    $order->buyer_name
-                                                    ?: 'O'
+                                                    $order->buyer_name ?: 'O'
                                                 )
                                             ),
                                             0,
@@ -519,91 +1374,52 @@
                                 }}
                             </span>
 
-
                             <div>
-
                                 <p class="monitor-eyebrow">
                                     MARKETPLACE ORDER
                                 </p>
-
 
                                 <h3>
                                     {{ $order->order_number }}
                                 </h3>
 
-
                                 <p>
                                     {{ $order->seller?->store_name ?: 'SARI Seller' }}
-                                    <span aria-hidden="true">·</span>
+                                    ·
                                     {{ $order->buyer_name }}
                                 </p>
-
                             </div>
-
                         </div>
-
 
                         <div class="monitor-order-status">
-
-                            <span
-                                class="
-                                    monitor-status
-                                    monitor-status-{{ $stageTone }}
-                                "
-                            >
-                                {{
-                                    $order->getAttribute(
-                                        'monitor_stage_label'
-                                    )
-                                }}
+                            <span class="monitor-status monitor-status-{{ $stageTone }}">
+                                {{ $stageLabel }}
                             </span>
 
-
                             <small>
-                                Updated
-                                {{ $order->updated_at?->diffForHumans() }}
+                                Updated {{ $order->updated_at?->diffForHumans() }}
                             </small>
-
                         </div>
-
                     </header>
 
-
-                    {{-- =====================================
-                        CURRENT STATE
-                    ====================================== --}}
+                    {{-- CURRENT OPERATION / HANDLER --}}
 
                     <div class="monitor-current-state">
-
-                        <div>
-
+                        <div class="dm-operation-cell">
                             <span class="monitor-label">
                                 Current Operation
                             </span>
 
-
                             <strong>
-                                {{
-                                    $order->getAttribute(
-                                        'monitor_stage_label'
-                                    )
-                                }}
+                                {{ $stageLabel }}
                             </strong>
 
-
                             <p>
-                                {{
-                                    $order->getAttribute(
-                                        'monitor_stage_note'
-                                    )
-                                }}
+                                {{ $stageNote }}
                             </p>
-
                         </div>
 
-
-                        <div class="monitor-current-handler">
-
+                        <div class="dm-operation-cell monitor-current-handler">
                             <span
                                 class="monitor-handler-avatar"
                                 aria-hidden="true"
@@ -611,102 +1427,56 @@
                                 {{
                                     mb_strtoupper(
                                         mb_substr(
-                                            trim(
-                                                (string) $order
-                                                    ->getAttribute(
-                                                        'monitor_handler_name'
-                                                    )
-                                            ),
+                                            trim((string) $handlerName),
                                             0,
                                             1
                                         )
-                                    )
+                                    ) ?: '—'
                                 }}
                             </span>
 
-
-                            <div>
-
+                            <div class="min-w-0">
                                 <span class="monitor-label">
                                     Current Handler
                                 </span>
 
-
                                 <strong>
-                                    {{
-                                        $order->getAttribute(
-                                            'monitor_handler_name'
-                                        )
-                                    }}
+                                    {{ $handlerName }}
                                 </strong>
 
-
                                 <p>
-                                    {{
-                                        $order->getAttribute(
-                                            'monitor_handler_role'
-                                        )
-                                    }}
+                                    {{ $handlerRole }}
                                 </p>
-
                             </div>
-
                         </div>
-
                     </div>
 
+                    {{-- SEVEN-STEP JOURNEY --}}
 
-                    {{-- =====================================
-                        JOURNEY TIMELINE
-                    ====================================== --}}
-
-                    <div class="monitor-journey-scroll">
-
+                    <div
+                        class="monitor-journey-scroll"
+                        aria-label="Parcel journey progress"
+                    >
                         <div class="monitor-journey">
-
-                            @foreach(
-                                $journeySteps
-                                as $stepIndex => [$stepName, $stepNote]
-                            )
-
+                            @foreach($journeySteps as $stepIndex => [$stepName, $stepNote])
                                 @php
-                                    $stepNumber =
-                                        $stepIndex + 1;
+                                    $stepNumber = $stepIndex + 1;
 
-                                    $stepState =
-                                        $stepNumber < $currentStep
-                                            ? 'complete'
-                                            : (
-                                                $stepNumber === $currentStep
-                                                    ? 'current'
-                                                    : 'pending'
-                                            );
+                                    $stepState = $stepNumber < $currentStep
+                                        ? 'complete'
+                                        : (
+                                            $stepNumber === $currentStep
+                                                ? 'current'
+                                                : 'pending'
+                                        );
                                 @endphp
 
-
-                                <div
-                                    class="
-                                        monitor-journey-step
-                                        is-{{ $stepState }}
-                                    "
-                                >
-
+                                <div class="monitor-journey-step is-{{ $stepState }}">
                                     <div class="monitor-step-marker">
-
-                                        @if(
-                                            $stepState
-                                            === 'complete'
-                                        )
-                                            ✓
-                                        @else
-                                            {{ $stepNumber }}
-                                        @endif
-
+                                        {{ $stepState === 'complete' ? '✓' : $stepNumber }}
                                     </div>
 
-
                                     <div>
-
                                         <strong>
                                             {{ $stepName }}
                                         </strong>
@@ -714,232 +1484,151 @@
                                         <span>
                                             {{ $stepNote }}
                                         </span>
-
                                     </div>
-
                                 </div>
-
                             @endforeach
-
                         </div>
-
                     </div>
 
-
-                    {{-- =====================================
-                        OPERATION DETAILS
-                    ====================================== --}}
+                    {{-- OPERATION DETAILS --}}
 
                     <div class="monitor-detail-grid">
-
-                        {{-- Pickup Rider --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Pickup Rider
                             </span>
 
-
                             <strong>
-                                {{
-                                    $order->courier_name
-                                    ?: 'Not assigned'
-                                }}
+                                {{ $order->courier_name ?: 'Not assigned' }}
                             </strong>
 
-
                             <p>
-                                {{
-                                    $order->courier_email
-                                    ?: 'No pickup Rider email'
-                                }}
+                                {{ $order->courier_email ?: 'No pickup Rider email' }}
                             </p>
-
                         </div>
 
-
-                        {{-- Origin Hub --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Origin Hub
                             </span>
-
 
                             <strong>
                                 {{ $originName }}
                             </strong>
 
-
                             <p>
                                 {{
-                                    $order
-                                        ->logisticsParcel
-                                        ?->sorting_zone
-                                    ? 'Zone '
-                                        .$order
-                                            ->logisticsParcel
-                                            ->sorting_zone
-                                    : 'Sorting zone not assigned'
+                                    $order->logisticsParcel?->sorting_zone
+                                        ? 'Zone ' . $order->logisticsParcel->sorting_zone
+                                        : 'Sorting zone not assigned'
                                 }}
                             </p>
-
                         </div>
 
-
-                        {{-- Transfer --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Hub Transfer
                             </span>
 
-
                             @if($transfer)
-
                                 <strong>
                                     {{ $transfer->transfer_code }}
                                 </strong>
-
 
                                 <p>
                                     {{ $transfer->vehicle_type }}
 
                                     @if($transfer->vehicle_plate)
-                                        ·
-                                        {{ $transfer->vehicle_plate }}
+                                        · {{ $transfer->vehicle_plate }}
                                     @endif
                                 </p>
 
-
                                 <p>
-                                    Driver:
-                                    {{ $transfer->driver_name }}
+                                    Driver: {{ $transfer->driver_name }}
                                 </p>
-
                             @else
-
                                 <strong>
                                     Not yet assigned
                                 </strong>
 
-
                                 <p>
                                     Awaiting linehaul stage
                                 </p>
-
                             @endif
-
                         </div>
 
-
-                        {{-- Destination --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Destination Hub
                             </span>
-
 
                             <strong>
                                 {{ $destinationName }}
                             </strong>
 
-
                             <p>
                                 {{
                                     $lastMile?->delivery_area
-                                    ? 'Delivery area: Barangay '
-                                        .$lastMile->delivery_area
-                                    : 'Last-mile area pending'
+                                        ? 'Delivery area: Barangay ' . $lastMile->delivery_area
+                                        : 'Last-mile area pending'
                                 }}
                             </p>
-
                         </div>
 
-
-                        {{-- Local Rider --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Local Rider
                             </span>
 
-
                             @if($lastMile)
-
                                 <strong>
                                     {{ $localRiderName }}
                                 </strong>
 
-
                                 <p>
-                                    {{
-                                        $lastMile->vehicle_type
-                                        ?: 'Vehicle not recorded'
-                                    }}
+                                    {{ $lastMile->vehicle_type ?: 'Vehicle not recorded' }}
 
                                     @if($lastMile->plate_number)
-                                        ·
-                                        {{ $lastMile->plate_number }}
+                                        · {{ $lastMile->plate_number }}
                                     @endif
                                 </p>
-
 
                                 <p>
                                     {{ $lastMile->assignment_code }}
                                 </p>
-
                             @else
-
                                 <strong>
                                     Not yet assigned
                                 </strong>
 
-
                                 <p>
                                     Destination dispatch pending
                                 </p>
-
                             @endif
-
                         </div>
 
-
-                        {{-- Buyer --}}
                         <div class="monitor-detail">
-
                             <span class="monitor-label">
                                 Buyer Destination
                             </span>
-
 
                             <strong>
                                 {{ $order->buyer_name }}
                             </strong>
 
-
                             <p>
                                 {{ $order->buyer_address }}
                             </p>
-
                         </div>
-
                     </div>
 
-
-                    {{-- =====================================
-                        FOOTER
-                    ====================================== --}}
+                    {{-- ORDER FOOTER --}}
 
                     <footer class="monitor-order-footer">
-
                         <div>
-
                             <span>
                                 Parcel state:
                             </span>
-
 
                             <strong>
                                 {{
@@ -947,36 +1636,43 @@
                                         str_replace(
                                             '_',
                                             ' ',
-                                            $order
-                                                ->logisticsParcel
-                                                ?->status
-                                            ?: $order->status
+                                            $order->logisticsParcel?->status
+                                                ?: $order->status
                                         )
                                     )
                                 }}
                             </strong>
-
                         </div>
 
-
-                        <a
-                            href="{{ route(
-                                'logistics.delivery-routes.edit',
-                                $order
-                            ) }}"
-                            class="monitor-text-link"
-                        >
-                            View Delivery Route →
-                        </a>
-
+                        @if($isHubOperator)
+                            <span
+                                class="monitor-readonly-indicator"
+                                title="Journey shown above; route editing is restricted to Main Logistics"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    aria-hidden="true"
+                                >
+                                    <rect x="5" y="10" width="14" height="11" rx="2"/>
+                                    <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                                </svg>
+                                Journey details · Read-only
+                            </span>
+                        @else
+                            <a
+                                href="{{ route('logistics.delivery-routes.edit', $order) }}"
+                                class="monitor-text-link"
+                            >
+                                View Delivery Route →
+                            </a>
+                        @endif
                     </footer>
-
                 </article>
-
             @empty
-
                 <div class="monitor-empty">
-
                     <span
                         class="monitor-empty-icon"
                         aria-hidden="true"
@@ -984,38 +1680,30 @@
                         ✓
                     </span>
 
-
                     <h3>
                         No active deliveries
                     </h3>
-
 
                     <p>
                         Active Seller pickup, hub, linehaul, and
                         Last-Mile operations will appear here.
                     </p>
-
                 </div>
-
             @endforelse
-
 
             <div
                 class="monitor-empty"
                 data-monitor-empty
                 hidden
             >
-
                 <h3>
                     No matching active deliveries
                 </h3>
-
 
                 <p>
                     Try another order, Buyer, Seller, Rider,
                     hub, or delivery stage.
                 </p>
-
 
                 <button
                     type="button"
@@ -1024,14 +1712,10 @@
                 >
                     Clear filters
                 </button>
-
             </div>
-
         </div>
 
-
         <footer class="monitor-list-footer">
-
             <span
                 data-monitor-visible-count
                 aria-live="polite"
@@ -1040,100 +1724,78 @@
                 active deliveries shown
             </span>
 
-
             <span>
                 Seller → Pickup → Hubs → Last Mile → Buyer
             </span>
-
         </footer>
-
     </section>
 
-
-    {{-- =====================================================
-        DELIVERED TODAY
-    ====================================================== --}}
+    {{-- DELIVERED TODAY --}}
 
     <section
-        class="
-            monitor-workspace
-            monitor-delivered-workspace
-        "
+        class="monitor-workspace monitor-delivered-workspace"
+        aria-labelledby="monitor-delivered-heading"
     >
-
-        <div class="monitor-toolbar">
-
+        <header class="monitor-toolbar">
             <div>
+                <p class="monitor-eyebrow">
+                    COMPLETED HANDOFFS
+                </p>
 
-                <h2>
-                    Delivered today
+                <h2 id="monitor-delivered-heading">
+                    Delivered Today
                 </h2>
 
                 <p>
                     Completed Buyer handoffs for the current day.
+                    Showing the latest {{ $deliveredToday->count() }} {{ $deliveredToday->count() === 1 ? 'record' : 'records' }}.
                 </p>
-
             </div>
 
-
             <span class="monitor-delivered-total">
-                {{ $deliveredToday->count() }}
-                completed
+                {{ $stats['delivered_today'] }}
+                completed today
             </span>
-
-        </div>
-
+        </header>
 
         <div class="monitor-delivered-grid">
-
             @forelse($deliveredToday as $order)
-
                 @php
-                    $lastMile =
-                        $order->getAttribute(
-                            'monitor_last_mile'
-                        );
+                    $lastMile = $order->getAttribute(
+                        'monitor_last_mile'
+                    );
 
-                    $localRiderName =
-                        $lastMile
-                            ? trim(
-                                $lastMile->first_name
-                                .' '
-                                .$lastMile->last_name
-                            )
-                            : null;
+                    $localRiderName = $lastMile
+                        ? trim(
+                            $lastMile->first_name
+                            . ' '
+                            . $lastMile->last_name
+                        )
+                        : null;
                 @endphp
 
-
                 <article class="monitor-delivered-card">
-
-                    <div class="monitor-delivered-header">
-
+                    <header class="monitor-delivered-header">
                         <div>
-
                             <span class="monitor-label">
                                 Delivered Order
                             </span>
 
-
                             <strong>
                                 {{ $order->order_number }}
                             </strong>
-
                         </div>
 
-
-                        <span class="monitor-delivered-check">
+                        <span
+                            class="monitor-delivered-check"
+                            aria-hidden="true"
+                        >
                             ✓
                         </span>
-
-                    </div>
-
+                    </header>
 
                     <div class="monitor-delivered-body">
-
                         <div>
-
                             <span class="monitor-label">
                                 Buyer
                             </span>
@@ -1141,12 +1803,9 @@
                             <strong>
                                 {{ $order->buyer_name }}
                             </strong>
-
                         </div>
 
-
                         <div>
-
                             <span class="monitor-label">
                                 Local Rider
                             </span>
@@ -1154,16 +1813,13 @@
                             <strong>
                                 {{
                                     $localRiderName
-                                    ?: $order->courier_name
-                                    ?: 'Rider'
+                                        ?: $order->courier_name
+                                        ?: 'Rider'
                                 }}
                             </strong>
-
                         </div>
 
-
                         <div>
-
                             <span class="monitor-label">
                                 Completed
                             </span>
@@ -1171,205 +1827,133 @@
                             <strong>
                                 {{
                                     $order->delivered_at
-                                        ?->timezone(
-                                            'Asia/Manila'
-                                        )
-                                        ->format(
-                                            'g:i A'
-                                        )
-                                    ?: 'Delivered'
+                                        ?->timezone('Asia/Manila')
+                                        ->format('g:i A')
+                                        ?: 'Delivered'
                                 }}
                             </strong>
-
                         </div>
-
                     </div>
 
-
-                    <a
-                        href="{{ route(
-                            'logistics.delivery-routes.edit',
-                            $order
-                        ) }}"
-                        class="monitor-text-link"
-                    >
-                        View completed journey →
-                    </a>
-
+                    @if($isHubOperator)
+                        <span
+                            class="monitor-readonly-indicator"
+                            title="Completed journey details are read-only"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                aria-hidden="true"
+                            >
+                                <rect x="5" y="10" width="14" height="11" rx="2"/>
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                            </svg>
+                            Completed journey · Read-only
+                        </span>
+                    @else
+                        <a
+                            href="{{ route('logistics.delivery-routes.edit', $order) }}"
+                            class="monitor-text-link"
+                        >
+                            View completed journey →
+                        </a>
+                    @endif
                 </article>
-
             @empty
-
                 <div class="monitor-empty monitor-empty-small">
-
                     <h3>
                         No completed deliveries today
                     </h3>
 
-
                     <p>
                         Completed Last-Mile deliveries will appear here.
                     </p>
-
                 </div>
-
             @endforelse
-
         </div>
-
     </section>
-
 </div>
 
 @endsection
 
-
 @push('scripts')
-
 <script>
 (() => {
     'use strict';
 
-
     function initializeDeliveryMonitoring() {
+        const root = document.querySelector(
+            '[data-monitor-workspace]'
+        );
 
-        const root =
-            document.querySelector(
-                '[data-monitor-workspace]'
-            );
-
-
-        if (
-            !root
-            || root.dataset.initialized
-        ) {
+        if (!root || root.dataset.initialized) {
             return;
         }
 
-
-        root.dataset.initialized =
-            'true';
-
+        root.dataset.initialized = 'true';
 
         const cards = [
-            ...root.querySelectorAll(
-                '[data-monitor-order]'
-            )
+            ...root.querySelectorAll('[data-monitor-order]')
         ];
 
-
-        const search =
-            root.querySelector(
-                '[data-monitor-search]'
-            );
-
+        const search = root.querySelector(
+            '[data-monitor-search]'
+        );
 
         const tabs = [
-            ...root.querySelectorAll(
-                '[data-monitor-filter]'
-            )
+            ...root.querySelectorAll('[data-monitor-filter]')
         ];
 
+        const empty = root.querySelector(
+            '[data-monitor-empty]'
+        );
 
-        const empty =
-            root.querySelector(
-                '[data-monitor-empty]'
-            );
+        const visibleCount = root.querySelector(
+            '[data-monitor-visible-count]'
+        );
 
+        let filter = 'all';
 
-        const visibleCount =
-            root.querySelector(
-                '[data-monitor-visible-count]'
-            );
-
-
-        let filter =
-            'all';
-
-
-        const normalize = (value) => {
-            return String(value || '')
+        const normalize = value =>
+            String(value || '')
                 .toLocaleLowerCase()
                 .trim();
-        };
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Filters
-        |--------------------------------------------------------------------------
-        */
 
         function applyFilters() {
+            const keyword = normalize(search?.value);
+            let shown = 0;
 
-            const keyword =
-                normalize(
-                    search?.value
+            cards.forEach(card => {
+                const matchesStage =
+                    filter === 'all'
+                    || card.dataset.stageGroup === filter;
+
+                const matchesSearch =
+                    normalize(card.dataset.search).includes(keyword);
+
+                card.hidden = !matchesStage || !matchesSearch;
+
+                if (!card.hidden) {
+                    shown++;
+                }
+            });
+
+            tabs.forEach(tab => {
+                tab.setAttribute(
+                    'aria-pressed',
+                    String(
+                        tab.dataset.monitorFilter === filter
+                    )
                 );
-
-
-            let shown =
-                0;
-
-
-            cards.forEach(
-                (card) => {
-
-                    const matchesStage =
-                        filter === 'all'
-                        ||
-                        card.dataset.stageGroup
-                            === filter;
-
-
-                    const matchesSearch =
-                        normalize(
-                            card.dataset.search
-                        ).includes(
-                            keyword
-                        );
-
-
-                    card.hidden =
-                        !matchesStage
-                        ||
-                        !matchesSearch;
-
-
-                    if (!card.hidden) {
-                        shown++;
-                    }
-
-                }
-            );
-
-
-            tabs.forEach(
-                (tab) => {
-
-                    tab.setAttribute(
-                        'aria-pressed',
-                        String(
-                            tab.dataset.monitorFilter
-                            === filter
-                        )
-                    );
-
-                }
-            );
-
+            });
 
             if (empty) {
-
-                empty.hidden =
-                    cards.length === 0
-                    ||
-                    shown > 0;
+                empty.hidden = cards.length === 0 || shown > 0;
             }
 
-
             if (visibleCount) {
-
                 visibleCount.textContent =
                     `${shown} of ${cards.length} `
                     + `${
@@ -1378,82 +1962,45 @@
                             : 'active deliveries'
                     } shown`;
             }
-
         }
 
-
-        tabs.forEach(
-            (tab) => {
-
-                tab.addEventListener(
-                    'click',
-                    () => {
-
-                        filter =
-                            tab.dataset.monitorFilter
-                            || 'all';
-
-
-                        applyFilters();
-                    }
-                );
-
-            }
-        );
-
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                filter = tab.dataset.monitorFilter || 'all';
+                applyFilters();
+            });
+        });
 
         search?.addEventListener(
             'input',
             applyFilters
         );
 
-
         root.querySelectorAll(
             '[data-monitor-clear]'
-        ).forEach(
-            (button) => {
+        ).forEach(button => {
+            button.addEventListener('click', () => {
+                filter = 'all';
 
-                button.addEventListener(
-                    'click',
-                    () => {
+                if (search) {
+                    search.value = '';
+                }
 
-                        filter =
-                            'all';
-
-
-                        if (search) {
-                            search.value = '';
-                        }
-
-
-                        applyFilters();
-                    }
-                );
-
-            }
-        );
-
+                applyFilters();
+            });
+        });
 
         applyFilters();
-
     }
 
-
-    if (
-        document.readyState === 'loading'
-    ) {
-
+    if (document.readyState === 'loading') {
         document.addEventListener(
             'DOMContentLoaded',
             initializeDeliveryMonitoring
         );
-
     } else {
-
         initializeDeliveryMonitoring();
     }
-
 })();
 </script>
-
 @endpush

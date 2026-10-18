@@ -1,33 +1,760 @@
+
 @extends('layouts.logistics')
 
 @section('title', 'Rider Applications | SARI Logistics')
 @section('page-title', 'Rider Applications')
 
+@push('styles')
+<style>
+/* SARI Rider Applications — Seller design language, page-scoped. */
+
+#lgRiderApplications {
+    --ra-amber: #d9950b;
+    --ra-ink: #26211c;
+    --ra-muted: #8a8177;
+    --ra-border: #e8e2d9;
+    --ra-shadow: 0 6px 18px rgba(33, 24, 14, .035);
+
+    max-width: 1620px;
+    color: var(--ra-ink);
+    font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
+}
+
+#lgRiderApplications [hidden] {
+    display: none !important;
+}
+
+/* PAGE HEADING */
+
+#lgRiderApplications .ra-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 5px 2px 17px;
+    border-bottom: 1px solid #e4e1dc;
+}
+
+#lgRiderApplications .ra-eyebrow {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #aa7315;
+}
+
+#lgRiderApplications .ra-page-title {
+    margin-top: 5px;
+    color: #24201b;
+    font-size: clamp(23px, 2.15vw, 30px);
+    font-weight: 750;
+    letter-spacing: -.045em;
+    line-height: 1.2;
+}
+
+#lgRiderApplications .ra-page-title span {
+    color: var(--ra-amber);
+}
+
+#lgRiderApplications .ra-intro {
+    margin-top: 6px;
+    max-width: 710px;
+    color: var(--ra-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#lgRiderApplications .ra-viewing {
+    min-width: 136px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid var(--ra-border);
+    border-radius: 11px;
+    box-shadow: var(--ra-shadow);
+}
+
+#lgRiderApplications .ra-viewing small {
+    display: block;
+    font-size: 8px;
+    color: #8c8277;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+#lgRiderApplications .ra-viewing strong {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 650;
+    text-transform: capitalize;
+}
+
+#lgRiderApplications .ra-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #d9950b;
+}
+
+#lgRiderApplications .ra-dot.approved {
+    background: #4c9d6b;
+}
+
+#lgRiderApplications .ra-dot.rejected {
+    background: #c66c65;
+}
+
+/* KPI CARDS */
+
+#lgRiderApplications .ra-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+#lgRiderApplications .ra-kpi {
+    display: flex;
+    min-width: 0;
+    min-height: 96px;
+    justify-content: space-between;
+    gap: 9px;
+    padding: 14px;
+    border: 1px solid var(--ra-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--ra-shadow);
+
+    transition:
+        transform .18s cubic-bezier(.22, 1, .36, 1),
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgRiderApplications .ra-kpi.is-selected {
+    border-color: #dcbf82;
+    box-shadow: 0 0 0 2px rgba(217, 149, 11, .08);
+}
+
+#lgRiderApplications .ra-kpi-label {
+    font-size: 10px;
+    color: #756d63;
+    font-weight: 600;
+}
+
+#lgRiderApplications .ra-kpi-value {
+    margin-top: 8px;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -.045em;
+    line-height: 1.15;
+}
+
+#lgRiderApplications .ra-kpi-note {
+    margin-top: 7px;
+    color: #8b8277;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+#lgRiderApplications .ra-kpi-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: #f3f7fd;
+    color: #5c82ac;
+}
+
+#lgRiderApplications .ra-kpi-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+#lgRiderApplications .ra-kpi-icon.pending {
+    background: #fff8ed;
+    color: #c18a22;
+}
+
+#lgRiderApplications .ra-kpi-icon.approved {
+    background: #f0f8f3;
+    color: #528866;
+}
+
+#lgRiderApplications .ra-kpi-icon.rejected {
+    background: #fff2f2;
+    color: #bf6c68;
+}
+
+/* MAIN PANEL */
+
+#lgRiderApplications .ra-panel {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--ra-border);
+    border-radius: 17px;
+    box-shadow: var(--ra-shadow);
+}
+
+#lgRiderApplications .ra-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 15px 17px;
+    border-bottom: 1px solid #eee8df;
+}
+
+#lgRiderApplications .ra-panel-title {
+    margin-top: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+#lgRiderApplications .ra-panel-desc {
+    margin-top: 4px;
+    font-size: 9px;
+    color: #948a80;
+    line-height: 1.5;
+}
+
+/* SEARCH AND FILTER */
+
+#lgRiderApplications .ra-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+#lgRiderApplications .ra-search-wrap {
+    position: relative;
+}
+
+#lgRiderApplications .ra-search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%);
+    color: #a3988c;
+    pointer-events: none;
+}
+
+#lgRiderApplications .ra-search,
+#lgRiderApplications .ra-filter {
+    height: 39px;
+    border: 1px solid #dfe2e6;
+    border-radius: 10px;
+    background: white;
+    outline: 0;
+    font: inherit;
+    font-size: 10px;
+    color: #50483e;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+#lgRiderApplications .ra-search {
+    width: 230px;
+    padding: 0 12px 0 34px;
+}
+
+#lgRiderApplications .ra-filter {
+    min-width: 118px;
+    padding: 0 12px;
+}
+
+#lgRiderApplications .ra-search:focus,
+#lgRiderApplications .ra-filter:focus,
+#lgRiderApplications .ra-note:focus {
+    border-color: var(--ra-amber);
+    box-shadow: 0 0 0 3px rgba(217, 149, 11, .09);
+}
+
+#lgRiderApplications .ra-apply {
+    height: 39px;
+    padding: 0 17px;
+    color: white;
+    font-size: 10px;
+    font-weight: 650;
+    background: #d9950b;
+    border-radius: 10px;
+
+    transition:
+        background .15s ease,
+        box-shadow .15s ease;
+}
+
+#lgRiderApplications .ra-apply:hover {
+    background: #c88708;
+    box-shadow: 0 5px 12px rgba(194, 132, 10, .14);
+}
+
+/* APPLICANT CARDS */
+
+#lgRiderApplications .ra-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 12px;
+    padding: 14px;
+}
+
+#lgRiderApplications .ra-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e9e3db;
+    border-radius: 13px;
+    background: white;
+
+    transition:
+        transform .18s cubic-bezier(.22, 1, .36, 1),
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+#lgRiderApplications .ra-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+    border-bottom: 1px solid #f0ebe5;
+}
+
+#lgRiderApplications .ra-person {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 11px;
+}
+
+#lgRiderApplications .ra-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
+    border: 1px solid #eee3ce;
+    border-radius: 11px;
+    background: #fff6e5;
+    color: #a97312;
+    font-size: 12px;
+    font-weight: 700;
+    object-fit: cover;
+}
+
+#lgRiderApplications .ra-name {
+    font-size: 12px;
+    color: #322c25;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+#lgRiderApplications .ra-contact {
+    margin-top: 3px;
+    color: #847b70;
+    font-size: 9px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+#lgRiderApplications .ra-date {
+    margin-top: 6px;
+    color: #a09589;
+    font-size: 8px;
+    white-space: nowrap;
+}
+
+/* STATUS BADGES */
+
+#lgRiderApplications .ra-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    padding: 5px 9px;
+    border: 1px solid #eadfc9;
+    border-radius: 999px;
+    color: #a36d16;
+    background: #fff8ea;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .025em;
+}
+
+#lgRiderApplications .ra-badge.approved {
+    border-color: #cfe1d5;
+    background: #f1faf4;
+    color: #3b7f54;
+}
+
+#lgRiderApplications .ra-badge.rejected {
+    border-color: #e8cccc;
+    background: #fff3f3;
+    color: #a55a5a;
+}
+
+#lgRiderApplications .ra-card-content {
+    padding: 14px 15px 15px;
+}
+
+/* SERVICE AREA AND VEHICLE */
+
+#lgRiderApplications .ra-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+}
+
+#lgRiderApplications .ra-detail {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #eee8e0;
+    border-radius: 10px;
+    background: #fbfbfc;
+}
+
+#lgRiderApplications .ra-mini-label {
+    display: block;
+    color: #93897d;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+#lgRiderApplications .ra-detail strong {
+    display: block;
+    margin-top: 6px;
+    color: #453d34;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+#lgRiderApplications .ra-detail p {
+    margin-top: 3px;
+    color: #8d8378;
+    font-size: 9px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* ADDRESS AND REVIEW NOTES */
+
+#lgRiderApplications .ra-address,
+#lgRiderApplications .ra-review-note {
+    margin-top: 9px;
+    padding: 12px;
+    border: 1px solid #eee8e0;
+    border-radius: 10px;
+    background: #fbfbfc;
+}
+
+#lgRiderApplications .ra-address p,
+#lgRiderApplications .ra-review-note p {
+    margin-top: 5px;
+    color: #61594f;
+    font-size: 9px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* DOCUMENT BUTTONS */
+
+#lgRiderApplications .ra-documents {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    margin-top: 13px;
+}
+
+#lgRiderApplications .ra-document {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 0 10px;
+    border: 1px solid #dfded9;
+    border-radius: 8px;
+    background: white;
+    font-size: 9px;
+    font-weight: 600;
+    color: #60574e;
+
+    transition:
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease;
+}
+
+#lgRiderApplications .ra-document svg {
+    width: 13px;
+    height: 13px;
+}
+
+#lgRiderApplications a.ra-document:hover {
+    background: #fff9ef;
+    color: #92600e;
+    border-color: #dbc49b;
+}
+
+#lgRiderApplications .ra-document.is-missing {
+    border-style: dashed;
+    color: #a79c91;
+}
+
+/* APPROVE / REJECT ACTIONS */
+
+#lgRiderApplications .ra-review-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1px solid #eee9e2;
+}
+
+#lgRiderApplications .ra-decision {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #dce7df;
+    border-radius: 11px;
+    background: #f8fbf9;
+}
+
+#lgRiderApplications .ra-decision.reject {
+    border-color: #eddcdb;
+    background: #fffafa;
+}
+
+#lgRiderApplications .ra-decision-title {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    color: #467758;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+#lgRiderApplications .ra-decision.reject .ra-decision-title {
+    color: #a65c58;
+}
+
+#lgRiderApplications .ra-decision small {
+    display: block;
+    margin-top: 4px;
+    font-size: 8px;
+    color: #8b968e;
+    line-height: 1.4;
+}
+
+#lgRiderApplications .ra-decision.reject small {
+    color: #a18b8a;
+}
+
+#lgRiderApplications .ra-note {
+    width: 100%;
+    height: 38px;
+    margin-top: 12px;
+    padding: 0 10px;
+    border: 1px solid #dedfdb;
+    border-radius: 8px;
+    background: white;
+    outline: 0;
+    color: #453c34;
+    font: inherit;
+    font-size: 9px;
+}
+
+#lgRiderApplications .ra-decision-button {
+    display: block;
+    width: 100%;
+    min-height: 37px;
+    margin-top: 8px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: #fff;
+    background: #548365;
+    font-size: 9px;
+    font-weight: 700;
+    transition: background .15s ease;
+}
+
+#lgRiderApplications .ra-decision-button:hover {
+    background: #426c52;
+}
+
+#lgRiderApplications .ra-decision.reject .ra-decision-button {
+    background: #ad635d;
+}
+
+#lgRiderApplications .ra-decision.reject .ra-decision-button:hover {
+    background: #914e49;
+}
+
+#lgRiderApplications .ra-completed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid #eee9e2;
+}
+
+#lgRiderApplications .ra-completed p {
+    color: #8e8377;
+    font-size: 9px;
+}
+
+/* EMPTY STATES */
+
+#lgRiderApplications .ra-empty {
+    grid-column: 1 / -1;
+    padding: 42px 17px;
+    text-align: center;
+    border: 1px dashed #e2d9cc;
+    border-radius: 12px;
+    background: #fff;
+}
+
+#lgRiderApplications .ra-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background: #fff7e8;
+    color: #c28a27;
+}
+
+#lgRiderApplications .ra-empty strong {
+    display: block;
+    margin-top: 12px;
+    font-size: 11px;
+    color: #51483e;
+}
+
+#lgRiderApplications .ra-empty p {
+    margin-top: 5px;
+    font-size: 9px;
+    color: #94897c;
+    line-height: 1.5;
+}
+
+#lgRiderApplications .ra-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 11px 16px;
+    border-top: 1px solid #eee8df;
+    color: #95897e;
+    font-size: 9px;
+}
+
+/* HOVER ANIMATIONS */
+
+@media (hover: hover) and (pointer: fine) {
+    #lgRiderApplications .ra-kpi:hover,
+    #lgRiderApplications .ra-card:hover {
+        transform: translateY(-2px);
+        border-color: #d8c9b2;
+        box-shadow: 0 13px 28px rgba(43, 33, 21, .06);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1199px) {
+    #lgRiderApplications .ra-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+    #lgRiderApplications .ra-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    #lgRiderApplications .ra-panel-head {
+        align-items: stretch;
+    }
+
+    #lgRiderApplications .ra-tools {
+        width: 100%;
+    }
+
+    #lgRiderApplications .ra-search-wrap {
+        flex: 1 1 100%;
+    }
+
+    #lgRiderApplications .ra-search {
+        width: 100%;
+    }
+
+    #lgRiderApplications .ra-heading {
+        align-items: flex-start;
+    }
+
+    #lgRiderApplications .ra-detail-grid,
+    #lgRiderApplications .ra-review-actions {
+        grid-template-columns: 1fr;
+    }
+
+    #lgRiderApplications .ra-card-grid {
+        padding: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #lgRiderApplications *,
+    #lgRiderApplications *::before,
+    #lgRiderApplications *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+
+    #lgRiderApplications .ra-kpi:hover,
+    #lgRiderApplications .ra-card:hover {
+        transform: none !important;
+    }
+}
+</style>
+@endpush
+
 @section('content')
 
-<div
-    class="
-        mx-auto w-full
-        max-w-[1800px]
-        space-y-4
-    "
->
+<div id="lgRiderApplications" class="mx-auto w-full space-y-4">
 
-    {{-- =====================================================
-        FLASH MESSAGES
-    ====================================================== --}}
+    {{-- FLASH MESSAGES --}}
 
     @if(session('success'))
         <div
-            class="
-                rounded-[16px]
-                border border-[#bfe0cd]
-                bg-[#f1faf5]
-                px-5 py-4
-                text-[9px]
-                font-medium
-                text-[#327a53]
-            "
+            class="rounded-xl border border-[#bfe0cd] bg-[#f1faf5] px-4 py-3 text-[10px] text-[#327a53]"
+            role="status"
         >
             {{ session('success') }}
         </div>
@@ -35,660 +762,307 @@
 
     @if($errors->any())
         <div
-            class="
-                rounded-[16px]
-                border border-[#efc6c6]
-                bg-[#fff4f4]
-                px-5 py-4
-                text-[9px]
-                font-medium
-                text-[#b53e3e]
-            "
+            class="rounded-xl border border-[#efc6c6] bg-[#fff4f4] px-4 py-3 text-[10px] text-[#b53e3e]"
+            role="alert"
         >
-            {{ $errors->first() }}
+            <strong class="mb-1 block">
+                Please review the following:
+            </strong>
+
+            <ul class="list-inside list-disc">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
+    {{-- SELLER-STYLE PAGE HEADING --}}
 
-    {{-- =====================================================
-        HERO
-    ====================================================== --}}
+    <header class="ra-heading">
 
-    <section
-        class="
-            relative overflow-hidden
-            rounded-[20px]
-            border border-[#e8dfd1]
-            bg-white
-            shadow-[0_5px_22px_rgba(51,39,25,.035)]
-        "
-    >
-        <div
-            class="
-                pointer-events-none
-                absolute -right-[90px] -top-[120px]
-                h-[270px] w-[270px]
-                rounded-full
-                bg-[#f4d58b]/20
-                blur-2xl
-            "
-        ></div>
+        <div class="min-w-0">
 
-        <div
-            class="
-                relative
-                flex flex-col gap-4
-                px-5 py-5
-                sm:px-6
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
-        >
+            <p class="ra-eyebrow">
+                Riders &amp; Network
+            </p>
 
-            <div class="flex min-w-0 items-start gap-3.5">
+            <h2 class="ra-page-title">
+                Rider <span>Applications</span>
+            </h2>
 
-                <div
-                    class="
-                        grid h-[42px] w-[42px]
-                        shrink-0 place-items-center
-                        rounded-[13px]
-                        bg-[#fff6e5]
-                        text-[#b97805]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[20px] w-[20px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="9" cy="8" r="3"></circle>
-                        <path d="M3 20c.6-4 2.8-6 6-6"></path>
-                        <path d="M17 8h4"></path>
-                        <path d="M19 6v4"></path>
-                    </svg>
-                </div>
+            <p class="ra-intro">
+                Review applicants who selected
 
-                <div class="min-w-0">
+                <strong class="font-semibold text-[#51483d]">
+                    {{ $logistics->displayName() }}
+                </strong>
 
-                    <p
-                        class="
-                            text-[7.5px]
-                            font-bold
-                            uppercase
-                            tracking-[.14em]
-                            text-[#b97805]
-                        "
-                    >
-                        Rider Recruitment
-                    </p>
-
-                    <h2
-                        class="
-                            mt-1
-                            text-[20px]
-                            font-bold
-                            tracking-[-.035em]
-                            text-[#211d17]
-                        "
-                    >
-                        Review Rider applications
-                    </h2>
-
-                    <p
-                        class="
-                            mt-1
-                            max-w-[760px]
-                            text-[8.5px]
-                            leading-[18px]
-                            text-[#807668]
-                        "
-                    >
-                        Review applicants who selected
-                        <strong class="font-semibold text-[#51483d]">
-                            {{ $logistics->displayName() }}
-                        </strong>
-                        as their Logistics provider. Verify their service area,
-                        vehicle, and uploaded documents before approving access.
-                    </p>
-
-                </div>
-            </div>
-
-
-            {{-- Current Filter --}}
-            <div
-                class="
-                    rounded-[12px]
-                    border border-[#e7dece]
-                    bg-[#fffdf9]
-                    px-4 py-3
-                "
-            >
-                <p
-                    class="
-                        text-[6.5px]
-                        font-bold
-                        uppercase
-                        tracking-[.1em]
-                        text-[#9a8f80]
-                    "
-                >
-                    Viewing
-                </p>
-
-                <div
-                    class="
-                        mt-1
-                        flex items-center gap-2
-                    "
-                >
-                    <span
-                        class="
-                            h-2 w-2
-                            rounded-full
-
-                            {{
-                                $status === 'approved'
-                                    ? 'bg-[#4ca36e]'
-                                    : (
-                                        $status === 'rejected'
-                                            ? 'bg-[#c96666]'
-                                            : 'bg-[#d9930a]'
-                                    )
-                            }}
-                        "
-                    ></span>
-
-                    <p
-                        class="
-                            text-[11px]
-                            font-semibold
-                            capitalize
-                            text-[#342d25]
-                        "
-                    >
-                        {{ $status }}
-                    </p>
-                </div>
-            </div>
+                as their Logistics provider. Verify their service area,
+                vehicle and documents before making a decision.
+            </p>
 
         </div>
-    </section>
-
-
-    {{-- =====================================================
-        STATUS METRICS
-    ====================================================== --}}
-
-    <section
-        class="
-            grid gap-3
-            grid-cols-2
-            xl:grid-cols-4
-        "
-    >
-
-        {{-- Total --}}
-        <a
-            href="{{ route('logistics.rider-applications', ['status' => 'pending']) }}"
-            class="
-                rounded-[16px]
-                border border-[#e8dfd1]
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-                transition
-                hover:-translate-y-[1px]
-                hover:border-[#d8c18e]
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Total Applications
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['total'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        All Rider submissions
-                    </p>
-                </div>
-
-                <span
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#f4f1ed]
-                        text-[#756b5f]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="8" cy="8" r="3"></circle>
-                        <circle cx="17" cy="9" r="2.5"></circle>
-                        <path d="M2.5 20c.5-4 2.5-6 5.5-6"></path>
-                        <path d="M13 15c3.2 0 5.2 1.7 5.7 5"></path>
-                    </svg>
-                </span>
-
-            </div>
-        </a>
-
-
-        {{-- Pending --}}
-        <a
-            href="{{ route('logistics.rider-applications', ['status' => 'pending']) }}"
-            class="
-                rounded-[16px]
-                border
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-                transition
-                hover:-translate-y-[1px]
-
-                {{
-                    $status === 'pending'
-                        ? 'border-[#dfbd78] ring-2 ring-[#d9930a]/10'
-                        : 'border-[#e8dfd1] hover:border-[#d8c18e]'
-                }}
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Pending Review
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['pending'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Waiting for decision
-                    </p>
-                </div>
-
-                <span
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#fff6e5]
-                        text-[#b97805]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="M12 7v5l3 2"></path>
-                    </svg>
-                </span>
-
-            </div>
-        </a>
-
-
-        {{-- Approved --}}
-        <a
-            href="{{ route('logistics.rider-applications', ['status' => 'approved']) }}"
-            class="
-                rounded-[16px]
-                border
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-                transition
-                hover:-translate-y-[1px]
-
-                {{
-                    $status === 'approved'
-                        ? 'border-[#9fc8ae] ring-2 ring-[#4ca36e]/10'
-                        : 'border-[#e8dfd1] hover:border-[#bcd7c5]'
-                }}
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Approved
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['approved'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Rider accounts created
-                    </p>
-                </div>
-
-                <span
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#edf8f1]
-                        text-[#327a53]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="m8 12 2.5 2.5L16 9"></path>
-                    </svg>
-                </span>
-
-            </div>
-        </a>
-
-
-        {{-- Rejected --}}
-        <a
-            href="{{ route('logistics.rider-applications', ['status' => 'rejected']) }}"
-            class="
-                rounded-[16px]
-                border
-                bg-white
-                p-4
-                shadow-[0_4px_18px_rgba(51,39,25,.035)]
-                transition
-                hover:-translate-y-[1px]
-
-                {{
-                    $status === 'rejected'
-                        ? 'border-[#dda9a9] ring-2 ring-[#c96666]/10'
-                        : 'border-[#e8dfd1] hover:border-[#e0c1c1]'
-                }}
-            "
-        >
-            <div class="flex items-start justify-between">
-
-                <div>
-                    <p
-                        class="
-                            text-[7px]
-                            font-bold uppercase
-                            tracking-[.11em]
-                            text-[#978d7f]
-                        "
-                    >
-                        Rejected
-                    </p>
-
-                    <p
-                        class="
-                            mt-1.5
-                            text-[23px]
-                            font-bold
-                            tracking-[-.04em]
-                            text-[#272119]
-                        "
-                    >
-                        {{ $stats['rejected'] }}
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7.5px]
-                            text-[#918779]
-                        "
-                    >
-                        Applications declined
-                    </p>
-                </div>
-
-                <span
-                    class="
-                        grid h-9 w-9
-                        place-items-center
-                        rounded-[11px]
-                        bg-[#fff1f1]
-                        text-[#a65d5d]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-[17px] w-[17px]"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                    >
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="m9 9 6 6"></path>
-                        <path d="m15 9-6 6"></path>
-                    </svg>
-                </span>
-
-            </div>
-        </a>
-
-    </section>
-
-
-    {{-- =====================================================
-        LIST TOOLBAR
-    ====================================================== --}}
-
-    <section
-        class="
-            rounded-[20px]
-            border border-[#e8dfd1]
-            bg-white
-            shadow-[0_4px_20px_rgba(51,39,25,.035)]
-        "
-    >
 
         <div
-            class="
-                flex flex-col gap-3
-                border-b border-[#eee5d8]
-                px-5 py-4
-                xl:flex-row
-                xl:items-center
-                xl:justify-between
-            "
+            class="ra-viewing"
+            aria-label="Current application filter"
+        >
+            <small>Currently viewing</small>
+
+            <strong>
+                <span
+                    class="ra-dot {{ $status }}"
+                    aria-hidden="true"
+                ></span>
+
+                {{ $status }} applications
+            </strong>
+        </div>
+
+    </header>
+
+    {{-- APPLICATION STATISTICS --}}
+
+    <section
+        class="ra-kpis"
+        aria-label="Rider application overview"
+    >
+
+        {{-- TOTAL APPLICATIONS --}}
+
+        <article class="ra-kpi">
+
+            <div class="min-w-0">
+
+                <p class="ra-kpi-label">
+                    Total Applications
+                </p>
+
+                <p class="ra-kpi-value">
+                    {{ number_format($stats['total']) }}
+                </p>
+
+                <p class="ra-kpi-note">
+                    All Rider submissions
+                </p>
+
+            </div>
+
+            <span class="ra-kpi-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <circle cx="8" cy="8" r="3"/>
+                    <circle cx="17" cy="9" r="2.5"/>
+                    <path d="M2.5 20c.5-4 2.5-6 5.5-6M13 15c3.2 0 5.2 1.7 5.7 5"/>
+                </svg>
+            </span>
+
+        </article>
+
+        {{-- PENDING --}}
+
+        <a
+            href="{{ route('logistics.rider-applications', ['status' => 'pending']) }}"
+            class="ra-kpi {{ $status === 'pending' ? 'is-selected' : '' }}"
+            @if($status === 'pending') aria-current="page" @endif
         >
 
-            <div>
-                <p
-                    class="
-                        text-[7.5px]
-                        font-bold uppercase
-                        tracking-[.12em]
-                        text-[#b97805]
-                    "
+            <div class="min-w-0">
+
+                <p class="ra-kpi-label">
+                    Pending Review
+                </p>
+
+                <p class="ra-kpi-value">
+                    {{ number_format($stats['pending']) }}
+                </p>
+
+                <p class="ra-kpi-note">
+                    Waiting for decision
+                </p>
+
+            </div>
+
+            <span class="ra-kpi-icon pending" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
                 >
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 7v5l3 2"/>
+                </svg>
+            </span>
+
+        </a>
+
+        {{-- APPROVED --}}
+
+        <a
+            href="{{ route('logistics.rider-applications', ['status' => 'approved']) }}"
+            class="ra-kpi {{ $status === 'approved' ? 'is-selected' : '' }}"
+            @if($status === 'approved') aria-current="page" @endif
+        >
+
+            <div class="min-w-0">
+
+                <p class="ra-kpi-label">
+                    Approved
+                </p>
+
+                <p class="ra-kpi-value">
+                    {{ number_format($stats['approved']) }}
+                </p>
+
+                <p class="ra-kpi-note">
+                    Approved Rider applications
+                </p>
+
+            </div>
+
+            <span class="ra-kpi-icon approved" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="m8 12 2.5 2.5L16 9"/>
+                </svg>
+            </span>
+
+        </a>
+
+        {{-- REJECTED --}}
+
+        <a
+            href="{{ route('logistics.rider-applications', ['status' => 'rejected']) }}"
+            class="ra-kpi {{ $status === 'rejected' ? 'is-selected' : '' }}"
+            @if($status === 'rejected') aria-current="page" @endif
+        >
+
+            <div class="min-w-0">
+
+                <p class="ra-kpi-label">
+                    Rejected
+                </p>
+
+                <p class="ra-kpi-value">
+                    {{ number_format($stats['rejected']) }}
+                </p>
+
+                <p class="ra-kpi-note">
+                    Applications declined
+                </p>
+
+            </div>
+
+            <span class="ra-kpi-icon rejected" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="m9 9 6 6m0-6-6 6"/>
+                </svg>
+            </span>
+
+        </a>
+
+    </section>
+
+    {{-- APPLICATION QUEUE --}}
+
+    <section
+        class="ra-panel"
+        aria-labelledby="raQueueHeading"
+    >
+
+        <header class="ra-panel-head">
+
+            <div>
+
+                <p class="ra-eyebrow">
                     Application Queue
                 </p>
 
                 <h3
-                    class="
-                        mt-1
-                        text-[13px]
-                        font-bold
-                        capitalize
-                        text-[#2e2821]
-                    "
+                    id="raQueueHeading"
+                    class="ra-panel-title capitalize"
                 >
                     {{ $status }} Rider applications
                 </h3>
 
-                <p
-                    class="
-                        mt-0.5
-                        text-[8px]
-                        text-[#918779]
-                    "
-                >
+                <p class="ra-panel-desc">
                     {{ $applications->count() }}
-                    {{ $applications->count() === 1 ? 'application' : 'applications' }}
+
+                    {{
+                        $applications->count() === 1
+                            ? 'application'
+                            : 'applications'
+                    }}
+
                     in this view
                 </p>
+
             </div>
 
+            {{-- SEARCH AND STATUS FILTER --}}
 
-            <div
-                class="
-                    flex flex-col gap-2
-                    sm:flex-row
-                    sm:items-center
-                "
-            >
+            <div class="ra-tools">
 
-                {{-- Search --}}
-                <div class="relative">
+                <label class="ra-search-wrap">
+
+                    <span class="sr-only">
+                        Search applicants
+                    </span>
 
                     <svg
+                        class="ra-search-icon"
                         viewBox="0 0 24 24"
-                        class="
-                            pointer-events-none
-                            absolute left-3 top-1/2
-                            h-[14px] w-[14px]
-                            -translate-y-1/2
-                            text-[#aaa094]
-                        "
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <path d="m20 20-4-4"></path>
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-4-4"/>
                     </svg>
 
                     <input
                         id="riderApplicationSearch"
+                        class="ra-search"
                         type="search"
-                        placeholder="Search applicant..."
-                        class="
-                            h-[36px]
-                            w-full
-                            rounded-[10px]
-                            border border-[#e5dccf]
-                            bg-white
-                            pl-9 pr-3
-                            text-[8px]
-                            outline-none
-                            placeholder:text-[#aaa094]
-                            focus:border-[#d9a03d]
-                            focus:ring-4
-                            focus:ring-[#d9a03d]/10
-                            sm:w-[220px]
-                        "
+                        placeholder="Search applicant, area or plate..."
+                        autocomplete="off"
                     >
 
-                </div>
+                </label>
 
+                <form method="GET" class="ra-tools">
 
-                {{-- Status dropdown --}}
-                <form
-                    method="GET"
-                    class="flex items-center gap-2"
-                >
+                    <label
+                        class="sr-only"
+                        for="raStatusFilter"
+                    >
+                        Application status
+                    </label>
+
                     <select
+                        id="raStatusFilter"
                         name="status"
-                        class="
-                            h-[36px]
-                            rounded-[10px]
-                            border border-[#e5dccf]
-                            bg-white
-                            px-3
-                            text-[8px]
-                            font-medium
-                            text-[#51483d]
-                            outline-none
-                            focus:border-[#d9a03d]
-                        "
+                        class="ra-filter"
                     >
+
                         <option
                             value="pending"
                             @selected($status === 'pending')
@@ -709,198 +1083,103 @@
                         >
                             Rejected
                         </option>
+
                     </select>
 
-                    <button
-                        type="submit"
-                        class="
-                            h-[36px]
-                            rounded-[10px]
-                            bg-[#d9930a]
-                            px-4
-                            text-[8px]
-                            font-semibold
-                            text-white
-                            transition
-                            hover:bg-[#c48608]
-                        "
-                    >
-                        Apply
+                    <button type="submit" class="ra-apply">
+                        Apply Filter
                     </button>
+
                 </form>
 
             </div>
 
-        </div>
+        </header>
 
+        {{-- APPLICANT GRID --}}
 
-        {{-- =================================================
-            APPLICATION CARDS
-        ================================================== --}}
-
-        <div
-            id="riderApplicationGrid"
-            class="
-                grid gap-3
-                p-4
-                2xl:grid-cols-2
-            "
-        >
+        <div id="riderApplicationGrid" class="ra-card-grid">
 
             @forelse($applications as $application)
 
                 @php
-                    $searchText =
-                        strtolower(
-                            implode(
-                                ' ',
-                                [
-                                    $application->fullName(),
-                                    $application->email,
-                                    $application->contact_no,
-                                    $application->vehicle_type,
-                                    $application->plate_number,
-                                    $application->province_name,
-                                    $application->municipality_name,
-                                    $application->barangay_name,
-                                    $application->street_address,
-                                ]
-                            )
-                        );
+                    $searchText = strtolower(implode(' ', [
+                        $application->fullName(),
+                        $application->email,
+                        $application->contact_no,
+                        $application->vehicle_type,
+                        $application->plate_number,
+                        $application->province_name,
+                        $application->municipality_name,
+                        $application->barangay_name,
+                        $application->street_address,
+                    ]));
 
-                    $initials =
-                        strtoupper(
-                            mb_substr(
-                                $application->first_name ?: '',
-                                0,
-                                1
-                            )
-                            .
-                            mb_substr(
-                                $application->last_name ?: '',
-                                0,
-                                1
-                            )
-                        );
+                    $initials = strtoupper(
+                        mb_substr(
+                            $application->first_name ?: '',
+                            0,
+                            1
+                        )
+                        .
+                        mb_substr(
+                            $application->last_name ?: '',
+                            0,
+                            1
+                        )
+                    );
 
-                    $statusClasses =
-                        match($application->status) {
-                            'approved' =>
-                                'border-[#cfe1d5] bg-[#f2f8f4] text-[#4f7c60]',
-
-                            'rejected' =>
-                                'border-[#e8cccc] bg-[#fff3f3] text-[#a55a5a]',
-
-                            default =>
-                                'border-[#eadfc9] bg-[#fffaf2] text-[#a8731f]',
-                        };
+                    $badgeTone = in_array(
+                        $application->status,
+                        ['approved', 'rejected'],
+                        true
+                    )
+                        ? $application->status
+                        : '';
                 @endphp
 
                 <article
+                    class="ra-card"
                     data-rider-application
                     data-search="{{ $searchText }}"
-                    class="
-                        overflow-hidden
-                        rounded-[17px]
-                        border border-[#e9e0d3]
-                        bg-[#fffdf9]
-                        transition
-                        hover:border-[#ddccb0]
-                        hover:shadow-[0_7px_22px_rgba(51,39,25,.045)]
-                    "
                 >
 
-                    {{-- =====================================
-                        Applicant header
-                    ====================================== --}}
+                    {{-- APPLICANT HEADER --}}
 
-                    <div
-                        class="
-                            flex flex-col gap-3
-                            border-b border-[#eee6da]
-                            bg-white
-                            px-4 py-4
-                            sm:flex-row
-                            sm:items-start
-                            sm:justify-between
-                        "
-                    >
+                    <header class="ra-card-head">
 
-                        <div
-                            class="
-                                flex min-w-0
-                                items-center gap-3
-                            "
-                        >
+                        <div class="ra-person">
 
                             @if($application->profile_image_path)
 
                                 <img
-                                    src="{{ asset(
-                                        'storage/'
-                                        . $application->profile_image_path
-                                    ) }}"
-                                    alt="{{ $application->fullName() }}"
-                                    class="
-                                        h-11 w-11
-                                        shrink-0
-                                        rounded-[12px]
-                                        border border-[#e5ded4]
-                                        object-cover
-                                    "
+                                    class="ra-avatar"
+                                    src="{{ asset('storage/' . $application->profile_image_path) }}"
+                                    alt="Profile photo of {{ $application->fullName() }}"
                                 >
 
                             @else
 
-                                <div
-                                    class="
-                                        grid h-11 w-11
-                                        shrink-0
-                                        place-items-center
-                                        rounded-[12px]
-                                        bg-[#fff3da]
-                                        text-[9px]
-                                        font-bold
-                                        text-[#aa7209]
-                                    "
+                                <span
+                                    class="ra-avatar"
+                                    aria-hidden="true"
                                 >
                                     {{ $initials ?: 'R' }}
-                                </div>
+                                </span>
 
                             @endif
 
-
                             <div class="min-w-0">
 
-                                <h3
-                                    class="
-                                        truncate
-                                        text-[11px]
-                                        font-bold
-                                        text-[#312b25]
-                                    "
-                                >
+                                <h4 class="ra-name">
                                     {{ $application->fullName() }}
-                                </h3>
+                                </h4>
 
-                                <p
-                                    class="
-                                        mt-1
-                                        truncate
-                                        text-[7px]
-                                        text-[#81786c]
-                                    "
-                                >
+                                <p class="ra-contact">
                                     {{ $application->email }}
                                 </p>
 
-                                <p
-                                    class="
-                                        mt-0.5
-                                        text-[6.5px]
-                                        text-[#9b9389]
-                                    "
-                                >
+                                <p class="ra-contact">
                                     {{ $application->contact_no ?: 'No contact number' }}
                                 </p>
 
@@ -908,249 +1187,78 @@
 
                         </div>
 
+                        <div class="flex flex-col items-start gap-1 sm:items-end">
 
-                        <div
-                            class="
-                                flex items-center
-                                gap-2
-                                sm:flex-col
-                                sm:items-end
-                            "
-                        >
-
-                            <span
-                                class="
-                                    inline-flex
-                                    rounded-full
-                                    border
-                                    px-2.5 py-1
-                                    text-[6.5px]
-                                    font-bold
-                                    uppercase
-                                    {{ $statusClasses }}
-                                "
-                            >
+                            <span class="ra-badge {{ $badgeTone }}">
                                 {{ $application->status }}
                             </span>
 
-                            <span
-                                class="
-                                    text-[6.5px]
-                                    text-[#9b9389]
-                                "
-                            >
+                            <span class="ra-date">
                                 {{ $application->created_at?->format('M d, Y · h:i A') }}
                             </span>
 
                         </div>
 
-                    </div>
+                    </header>
 
+                    {{-- APPLICANT DETAILS --}}
 
-                    {{-- =====================================
-                        Applicant information
-                    ====================================== --}}
+                    <div class="ra-card-content">
 
-                    <div class="p-4">
+                        <div class="ra-detail-grid">
 
-                        <div
-                            class="
-                                grid gap-2
-                                sm:grid-cols-2
-                            "
-                        >
+                            {{-- SERVICE AREA --}}
 
-                            {{-- Service Area --}}
-                            <div
-                                class="
-                                    rounded-[12px]
-                                    border border-[#eee6da]
-                                    bg-white
-                                    p-3
-                                "
-                            >
-                                <div
-                                    class="
-                                        flex items-start gap-2.5
-                                    "
-                                >
+                            <div class="ra-detail">
 
-                                    <span
-                                        class="
-                                            grid h-7 w-7
-                                            shrink-0 place-items-center
-                                            rounded-[8px]
-                                            bg-[#f6f2eb]
-                                            text-[#756b5f]
-                                        "
-                                    >
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            class="h-[14px] w-[14px]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.8"
-                                        >
-                                            <path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"></path>
-                                            <circle cx="12" cy="10" r="2"></circle>
-                                        </svg>
-                                    </span>
+                                <span class="ra-mini-label">
+                                    Service Area
+                                </span>
 
-                                    <div>
+                                <strong>
+                                    {{ $application->barangay_name ?: '—' }}
+                                </strong>
 
-                                        <p
-                                            class="
-                                                text-[6.5px]
-                                                font-bold uppercase
-                                                tracking-[.08em]
-                                                text-[#958c80]
-                                            "
-                                        >
-                                            Service Area
-                                        </p>
+                                <p>
+                                    {{ $application->municipality_name ?: '—' }}
 
-                                        <p
-                                            class="
-                                                mt-1
-                                                text-[8px]
-                                                font-semibold
-                                                text-[#403a33]
-                                            "
-                                        >
-                                            {{ $application->barangay_name ?: '—' }}
-                                        </p>
+                                    @if($application->province_name)
+                                        · {{ $application->province_name }}
+                                    @endif
+                                </p>
 
-                                        <p
-                                            class="
-                                                mt-0.5
-                                                text-[6.5px]
-                                                leading-[13px]
-                                                text-[#918779]
-                                            "
-                                        >
-                                            {{ $application->municipality_name ?: '—' }}
-
-                                            @if($application->province_name)
-                                                · {{ $application->province_name }}
-                                            @endif
-                                        </p>
-
-                                    </div>
-
-                                </div>
                             </div>
 
+                            {{-- VEHICLE --}}
 
-                            {{-- Vehicle --}}
-                            <div
-                                class="
-                                    rounded-[12px]
-                                    border border-[#eee6da]
-                                    bg-white
-                                    p-3
-                                "
-                            >
-                                <div
-                                    class="
-                                        flex items-start gap-2.5
-                                    "
-                                >
+                            <div class="ra-detail">
 
-                                    <span
-                                        class="
-                                            grid h-7 w-7
-                                            shrink-0 place-items-center
-                                            rounded-[8px]
-                                            bg-[#fff6e5]
-                                            text-[#b97805]
-                                        "
-                                    >
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            class="h-[14px] w-[14px]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.8"
-                                        >
-                                            <circle cx="6" cy="17" r="2"></circle>
-                                            <circle cx="18" cy="17" r="2"></circle>
-                                            <path d="M8 17h8"></path>
-                                            <path d="M6 15 8 9h7l3 6"></path>
-                                        </svg>
-                                    </span>
+                                <span class="ra-mini-label">
+                                    Vehicle
+                                </span>
 
-                                    <div>
+                                <strong>
+                                    {{ $application->vehicle_type ?: '—' }}
+                                </strong>
 
-                                        <p
-                                            class="
-                                                text-[6.5px]
-                                                font-bold uppercase
-                                                tracking-[.08em]
-                                                text-[#958c80]
-                                            "
-                                        >
-                                            Vehicle
-                                        </p>
+                                <p>
+                                    Plate:
+                                    {{ $application->plate_number ?: 'Not provided' }}
+                                </p>
 
-                                        <p
-                                            class="
-                                                mt-1
-                                                text-[8px]
-                                                font-semibold
-                                                text-[#403a33]
-                                            "
-                                        >
-                                            {{ $application->vehicle_type ?: '—' }}
-                                        </p>
-
-                                        <p
-                                            class="
-                                                mt-0.5
-                                                text-[6.5px]
-                                                text-[#918779]
-                                            "
-                                        >
-                                            Plate:
-                                            {{ $application->plate_number ?: 'Not provided' }}
-                                        </p>
-
-                                    </div>
-
-                                </div>
                             </div>
 
                         </div>
 
+                        {{-- RESIDENTIAL ADDRESS --}}
 
-                        {{-- Full address --}}
-                        <div
-                            class="
-                                mt-2
-                                rounded-[12px]
-                                border border-[#eee6da]
-                                bg-white
-                                p-3
-                            "
-                        >
-                            <p
-                                class="
-                                    text-[6.5px]
-                                    font-bold uppercase
-                                    tracking-[.08em]
-                                    text-[#958c80]
-                                "
-                            >
+                        <div class="ra-address">
+
+                            <span class="ra-mini-label">
                                 Residential Address
-                            </p>
+                            </span>
 
-                            <p
-                                class="
-                                    mt-1
-                                    text-[7.5px]
-                                    leading-[15px]
-                                    text-[#61584d]
-                                "
-                            >
+                            <p>
                                 {{ $application->street_address ?: 'No street address' }}
 
                                 @if($application->barangay_name)
@@ -1165,68 +1273,36 @@
                                     , {{ $application->province_name }}
                                 @endif
                             </p>
+
                         </div>
 
+                        {{-- DOCUMENTS --}}
 
-                        {{-- Documents --}}
-                        <div
-                            class="
-                                mt-3
-                                flex flex-wrap
-                                items-center gap-2
-                            "
-                        >
+                        <div class="ra-documents">
 
-                            <p
-                                class="
-                                    mr-1
-                                    text-[6.5px]
-                                    font-bold uppercase
-                                    tracking-[.08em]
-                                    text-[#958c80]
-                                "
-                            >
+                            <span class="ra-mini-label mr-1">
                                 Documents
-                            </p>
+                            </span>
 
                             @if($application->id_path)
 
                                 <a
-                                    href="{{ route(
-                                        'logistics.rider-applications.document',
-                                        [
-                                            $application,
-                                            'id'
-                                        ]
-                                    ) }}"
+                                    class="ra-document"
+                                    href="{{ route('logistics.rider-applications.document', [$application, 'id']) }}"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="
-                                        inline-flex h-8
-                                        items-center gap-1.5
-                                        rounded-[8px]
-                                        border border-[#ddd7ce]
-                                        bg-white
-                                        px-3
-                                        text-[7px]
-                                        font-semibold
-                                        text-[#62594e]
-                                        transition
-                                        hover:bg-[#faf8f4]
-                                    "
                                 >
+
                                     <svg
                                         viewBox="0 0 24 24"
-                                        class="h-[12px] w-[12px]"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
+                                        aria-hidden="true"
                                     >
-                                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                                        <circle cx="9" cy="11" r="2"></circle>
-                                        <path d="M5.5 16c.5-2 1.7-3 3.5-3s3 1 3.5 3"></path>
-                                        <path d="M15 10h3"></path>
-                                        <path d="M15 14h3"></path>
+                                        <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                        <circle cx="9" cy="11" r="2"/>
+                                        <path d="M15 10h3M15 14h3"/>
                                     </svg>
 
                                     ID / License
@@ -1234,61 +1310,29 @@
 
                             @else
 
-                                <span
-                                    class="
-                                        inline-flex h-8
-                                        items-center
-                                        rounded-[8px]
-                                        border border-dashed
-                                        border-[#ddd7ce]
-                                        px-3
-                                        text-[7px]
-                                        text-[#aaa094]
-                                    "
-                                >
+                                <span class="ra-document is-missing">
                                     No ID
                                 </span>
 
                             @endif
 
-
                             @if($application->orcr_path)
 
                                 <a
-                                    href="{{ route(
-                                        'logistics.rider-applications.document',
-                                        [
-                                            $application,
-                                            'orcr'
-                                        ]
-                                    ) }}"
+                                    class="ra-document"
+                                    href="{{ route('logistics.rider-applications.document', [$application, 'orcr']) }}"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="
-                                        inline-flex h-8
-                                        items-center gap-1.5
-                                        rounded-[8px]
-                                        border border-[#d9e2ea]
-                                        bg-[#f6f9fb]
-                                        px-3
-                                        text-[7px]
-                                        font-semibold
-                                        text-[#57758c]
-                                        transition
-                                        hover:bg-[#eef5fa]
-                                    "
                                 >
+
                                     <svg
                                         viewBox="0 0 24 24"
-                                        class="h-[12px] w-[12px]"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
+                                        aria-hidden="true"
                                     >
-                                        <path d="M6 2h9l4 4v16H6z"></path>
-                                        <path d="M14 2v5h5"></path>
-                                        <path d="M9 12h6"></path>
-                                        <path d="M9 16h6"></path>
+                                        <path d="M6 2h9l4 4v16H6zM14 2v5h5M9 12h6M9 16h6"/>
                                     </svg>
 
                                     OR / CR
@@ -1296,18 +1340,7 @@
 
                             @else
 
-                                <span
-                                    class="
-                                        inline-flex h-8
-                                        items-center
-                                        rounded-[8px]
-                                        border border-dashed
-                                        border-[#ddd7ce]
-                                        px-3
-                                        text-[7px]
-                                        text-[#aaa094]
-                                    "
-                                >
+                                <span class="ra-document is-missing">
                                     No OR / CR
                                 </span>
 
@@ -1315,261 +1348,140 @@
 
                         </div>
 
+                        {{-- EXISTING REVIEW NOTE --}}
 
-                        {{-- Existing review note --}}
                         @if($application->admin_note)
 
-                            <div
-                                class="
-                                    mt-3
-                                    rounded-[11px]
-                                    border border-[#eee7de]
-                                    bg-[#fcfaf7]
-                                    px-3 py-2.5
-                                "
-                            >
-                                <p
-                                    class="
-                                        text-[6.5px]
-                                        font-bold uppercase
-                                        tracking-[.08em]
-                                        text-[#958c80]
-                                    "
-                                >
-                                    Review Note
-                                </p>
+                            <div class="ra-review-note">
 
-                                <p
-                                    class="
-                                        mt-1
-                                        text-[7px]
-                                        leading-[14px]
-                                        text-[#756d63]
-                                    "
-                                >
+                                <span class="ra-mini-label">
+                                    Review Note
+                                </span>
+
+                                <p>
                                     {{ $application->admin_note }}
                                 </p>
+
                             </div>
 
                         @endif
 
-
-                        {{-- =================================
-                            REVIEW ACTIONS
-                        ================================== --}}
+                        {{-- REVIEW ACTIONS --}}
 
                         @if($application->status === 'pending')
 
-                            <div
-                                class="
-                                    mt-4
-                                    grid gap-3
-                                    border-t border-[#eee8df]
-                                    pt-4
-                                    xl:grid-cols-2
-                                "
-                            >
+                            <div class="ra-review-actions">
 
-                                {{-- Approve --}}
+                                {{-- APPROVE --}}
+
                                 <form
                                     method="POST"
-                                    action="{{ route(
-                                        'logistics.rider-applications.approve',
-                                        $application
-                                    ) }}"
-                                    class="
-                                        rounded-[12px]
-                                        border border-[#dce7df]
-                                        bg-[#f8fbf9]
-                                        p-3
-                                    "
+                                    action="{{ route('logistics.rider-applications.approve', $application) }}"
+                                    class="ra-decision"
                                 >
+
                                     @csrf
 
-                                    <div
-                                        class="
-                                            flex items-center gap-2
-                                        "
-                                    >
-                                        <span
-                                            class="
-                                                grid h-7 w-7
-                                                place-items-center
-                                                rounded-[8px]
-                                                bg-[#e9f5ee]
-                                                text-[#56816a]
-                                            "
+                                    <div class="ra-decision-title">
+
+                                        <svg
+                                            width="17"
+                                            height="17"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            aria-hidden="true"
                                         >
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                class="h-[13px] w-[13px]"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                            >
-                                                <path d="m7 12 3 3 7-7"></path>
-                                            </svg>
-                                        </span>
+                                            <circle cx="12" cy="12" r="9"/>
+                                            <path d="m8 12 2.5 2.5L16 9"/>
+                                        </svg>
 
-                                        <div>
-                                            <p
-                                                class="
-                                                    text-[7.5px]
-                                                    font-bold
-                                                    text-[#52715d]
-                                                "
-                                            >
-                                                Approve Rider
-                                            </p>
-
-                                            <p
-                                                class="
-                                                    text-[6.5px]
-                                                    text-[#84958a]
-                                                "
-                                            >
-                                                Creates an active Rider account
-                                            </p>
-                                        </div>
+                                        Approve Rider
                                     </div>
 
+                                    <small>
+                                        Creates an active Rider account
+                                    </small>
+
+                                    <label
+                                        class="sr-only"
+                                        for="raApproveNote{{ $application->id }}"
+                                    >
+                                        Optional approval note
+                                    </label>
+
                                     <input
+                                        id="raApproveNote{{ $application->id }}"
+                                        class="ra-note"
                                         type="text"
                                         name="review_note"
                                         maxlength="1500"
                                         placeholder="Optional approval note..."
-                                        class="
-                                            mt-3 h-9 w-full
-                                            rounded-[9px]
-                                            border border-[#dce4de]
-                                            bg-white
-                                            px-3
-                                            text-[7.5px]
-                                            text-[#403a33]
-                                            outline-none
-                                            placeholder:text-[#aaa49c]
-                                            focus:border-[#7fa58e]
-                                        "
                                     >
 
                                     <button
                                         type="submit"
-                                        class="
-                                            mt-2
-                                            h-9 w-full
-                                            rounded-[9px]
-                                            bg-[#56816a]
-                                            text-[7.5px]
-                                            font-bold
-                                            text-white
-                                            transition
-                                            hover:bg-[#496f5b]
-                                        "
+                                        class="ra-decision-button"
                                     >
                                         Approve Application
                                     </button>
 
                                 </form>
 
+                                {{-- REJECT --}}
 
-                                {{-- Reject --}}
                                 <form
                                     method="POST"
-                                    action="{{ route(
-                                        'logistics.rider-applications.reject',
-                                        $application
-                                    ) }}"
-                                    class="
-                                        rounded-[12px]
-                                        border border-[#eadada]
-                                        bg-[#fffafa]
-                                        p-3
-                                    "
+                                    action="{{ route('logistics.rider-applications.reject', $application) }}"
+                                    class="ra-decision reject"
                                 >
+
                                     @csrf
 
-                                    <div
-                                        class="
-                                            flex items-center gap-2
-                                        "
-                                    >
-                                        <span
-                                            class="
-                                                grid h-7 w-7
-                                                place-items-center
-                                                rounded-[8px]
-                                                bg-[#fff0f0]
-                                                text-[#a85c54]
-                                            "
+                                    <div class="ra-decision-title">
+
+                                        <svg
+                                            width="17"
+                                            height="17"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            aria-hidden="true"
                                         >
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                class="h-[13px] w-[13px]"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                            >
-                                                <path d="m8 8 8 8"></path>
-                                                <path d="m16 8-8 8"></path>
-                                            </svg>
-                                        </span>
+                                            <circle cx="12" cy="12" r="9"/>
+                                            <path d="m9 9 6 6m0-6-6 6"/>
+                                        </svg>
 
-                                        <div>
-                                            <p
-                                                class="
-                                                    text-[7.5px]
-                                                    font-bold
-                                                    text-[#8e5d5d]
-                                                "
-                                            >
-                                                Reject Rider
-                                            </p>
-
-                                            <p
-                                                class="
-                                                    text-[6.5px]
-                                                    text-[#a58b8b]
-                                                "
-                                            >
-                                                Rejection reason is required
-                                            </p>
-                                        </div>
+                                        Reject Rider
                                     </div>
 
+                                    <small>
+                                        Rejection reason is required
+                                    </small>
+
+                                    <label
+                                        class="sr-only"
+                                        for="raRejectNote{{ $application->id }}"
+                                    >
+                                        Reason for rejection
+                                    </label>
+
                                     <input
+                                        id="raRejectNote{{ $application->id }}"
+                                        class="ra-note"
                                         type="text"
                                         name="review_note"
                                         required
                                         minlength="5"
                                         maxlength="1500"
                                         placeholder="Reason for rejection..."
-                                        class="
-                                            mt-3 h-9 w-full
-                                            rounded-[9px]
-                                            border border-[#ead9d9]
-                                            bg-white
-                                            px-3
-                                            text-[7.5px]
-                                            text-[#403a33]
-                                            outline-none
-                                            placeholder:text-[#b4a2a2]
-                                            focus:border-[#c98680]
-                                        "
                                     >
 
                                     <button
                                         type="submit"
-                                        class="
-                                            mt-2
-                                            h-9 w-full
-                                            rounded-[9px]
-                                            bg-[#a85c54]
-                                            text-[7.5px]
-                                            font-bold
-                                            text-white
-                                            transition
-                                            hover:bg-[#934f48]
-                                        "
+                                        class="ra-decision-button"
                                     >
                                         Reject Application
                                     </button>
@@ -1580,52 +1492,26 @@
 
                         @else
 
-                            {{-- Already reviewed --}}
-                            <div
-                                class="
-                                    mt-4
-                                    flex items-center
-                                    justify-between gap-3
-                                    border-t border-[#eee8df]
-                                    pt-3
-                                "
-                            >
+                            {{-- ALREADY REVIEWED --}}
+
+                            <div class="ra-completed">
+
                                 <div>
 
-                                    <p
-                                        class="
-                                            text-[6.5px]
-                                            font-bold uppercase
-                                            tracking-[.08em]
-                                            text-[#958c80]
-                                        "
-                                    >
+                                    <span class="ra-mini-label">
                                         Review Completed
-                                    </p>
+                                    </span>
 
-                                    <p
-                                        class="
-                                            mt-0.5
-                                            text-[7px]
-                                            text-[#817769]
-                                        "
-                                    >
-                                        {{ $application->reviewed_at?->format('M d, Y · h:i A') ?: 'Decision recorded' }}
+                                    <p>
+                                        {{
+                                            $application->reviewed_at?->format('M d, Y · h:i A')
+                                            ?: 'Decision recorded'
+                                        }}
                                     </p>
 
                                 </div>
 
-                                <span
-                                    class="
-                                        rounded-full
-                                        border
-                                        px-2.5 py-1
-                                        text-[6.5px]
-                                        font-bold
-                                        uppercase
-                                        {{ $statusClasses }}
-                                    "
-                                >
+                                <span class="ra-badge {{ $badgeTone }}">
                                     {{ $application->status }}
                                 </span>
 
@@ -1639,201 +1525,161 @@
 
             @empty
 
-                <div
-                    class="
-                        rounded-[17px]
-                        border border-dashed
-                        border-[#ded5c9]
-                        bg-[#fffdf9]
-                        px-6 py-12
-                        text-center
-                        2xl:col-span-2
-                    "
-                >
-                    <div
-                        class="
-                            mx-auto
-                            grid h-11 w-11
-                            place-items-center
-                            rounded-full
-                            bg-[#faf5ec]
-                            text-[#b97805]
-                        "
+                {{-- EMPTY QUEUE --}}
+
+                <div class="ra-empty">
+
+                    <span
+                        class="ra-empty-icon"
+                        aria-hidden="true"
                     >
                         <svg
+                            width="21"
+                            height="21"
                             viewBox="0 0 24 24"
-                            class="h-[19px] w-[19px]"
                             fill="none"
                             stroke="currentColor"
                             stroke-width="1.8"
                         >
-                            <circle cx="9" cy="8" r="3"></circle>
-                            <path d="M3 20c.6-4 2.8-6 6-6"></path>
-                            <path d="M17 8h4"></path>
-                            <path d="M19 6v4"></path>
+                            <circle cx="9" cy="8" r="3"/>
+                            <path d="M3 20c.6-4 2.8-6 6-6M17 8h4M19 6v4"/>
                         </svg>
-                    </div>
+                    </span>
 
-                    <p
-                        class="
-                            mt-3
-                            text-[9px]
-                            font-semibold
-                            text-[#514a42]
-                        "
-                    >
+                    <strong>
                         No {{ $status }} Rider applications
-                    </p>
+                    </strong>
 
-                    <p
-                        class="
-                            mx-auto mt-1
-                            max-w-[420px]
-                            text-[7.5px]
-                            leading-[15px]
-                            text-[#8d8479]
-                        "
-                    >
-                        Rider applications submitted to
+                    <p>
+                        Applications submitted to
                         {{ $logistics->displayName() }}
-                        will automatically appear here.
+                        will appear here.
                     </p>
 
                 </div>
 
             @endforelse
 
+            {{-- SEARCH EMPTY STATE --}}
 
-            {{-- Search empty state --}}
             <div
                 id="riderApplicationSearchEmpty"
-                class="
-                    hidden
-                    rounded-[17px]
-                    border border-dashed
-                    border-[#ded5c9]
-                    bg-[#fffdf9]
-                    px-6 py-10
-                    text-center
-                    2xl:col-span-2
-                "
+                class="ra-empty"
+                hidden
             >
-                <p
-                    class="
-                        text-[9px]
-                        font-semibold
-                        text-[#514a42]
-                    "
-                >
-                    No matching applicants
-                </p>
 
-                <p
-                    class="
-                        mt-1
-                        text-[7.5px]
-                        text-[#8d8479]
-                    "
-                >
+                <strong>
+                    No matching applicants
+                </strong>
+
+                <p>
                     Try another name, location, vehicle, or plate number.
                 </p>
+
             </div>
 
         </div>
+
+        {{-- FOOTER --}}
+
+        <footer class="ra-footer">
+
+            <span id="raVisibleCount">
+                {{ $applications->count() }}
+
+                {{
+                    $applications->count() === 1
+                        ? 'application'
+                        : 'applications'
+                }}
+
+                shown
+            </span>
+
+            <span>
+                Current filter: {{ ucfirst($status) }}
+            </span>
+
+        </footer>
 
     </section>
 
 </div>
 
+@endsection
 
 @push('scripts')
 
 <script>
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
+document.addEventListener('DOMContentLoaded', () => {
 
-        const searchInput =
-            document.getElementById(
-                'riderApplicationSearch'
-            );
+    const root = document.getElementById('lgRiderApplications');
 
-        const cards =
-            Array.from(
-                document.querySelectorAll(
-                    '[data-rider-application]'
-                )
-            );
+    if (!root) {
+        return;
+    }
 
-        const emptyState =
-            document.getElementById(
-                'riderApplicationSearchEmpty'
-            );
+    const search = root.querySelector(
+        '#riderApplicationSearch'
+    );
 
+    const cards = [
+        ...root.querySelectorAll('[data-rider-application]')
+    ];
 
-        function normalize(value) {
-            return String(value || '')
-                .toLowerCase()
-                .trim();
-        }
+    const empty = root.querySelector(
+        '#riderApplicationSearchEmpty'
+    );
 
+    const visibleCount = root.querySelector(
+        '#raVisibleCount'
+    );
 
-        function filterApplications() {
+    const normalize = value =>
+        String(value || '').toLocaleLowerCase().trim();
 
-            const keyword =
-                normalize(
-                    searchInput?.value
-                );
+    function filterApplications() {
 
-            let visibleCount = 0;
+        const keyword = normalize(search?.value);
 
-            cards.forEach(
-                function (card) {
+        let shown = 0;
 
-                    const searchable =
-                        normalize(
-                            card.dataset.search
-                        );
+        cards.forEach(card => {
 
-                    const visible =
-                        ! keyword
-                        || searchable.includes(
-                            keyword
-                        );
+            const visible =
+                !keyword ||
+                normalize(card.dataset.search).includes(keyword);
 
-                    card.classList.toggle(
-                        'hidden',
-                        ! visible
-                    );
+            card.hidden = !visible;
 
-                    if (visible) {
-                        visibleCount++;
-                    }
-                }
-            );
-
-
-            if (
-                cards.length > 0
-                && emptyState
-            ) {
-                emptyState.classList.toggle(
-                    'hidden',
-                    visibleCount !== 0
-                );
+            if (visible) {
+                shown++;
             }
+
+        });
+
+        if (empty) {
+            empty.hidden = !cards.length || shown !== 0;
         }
 
+        if (visibleCount) {
 
-        searchInput?.addEventListener(
-            'input',
-            filterApplications
-        );
+            visibleCount.textContent =
+                `${shown} of ${cards.length} ` +
+                `${cards.length === 1 ? 'application' : 'applications'} shown`;
+
+        }
 
     }
-);
+
+    search?.addEventListener(
+        'input',
+        filterApplications
+    );
+
+    filterApplications();
+
+});
 </script>
 
 @endpush
-
-@endsection

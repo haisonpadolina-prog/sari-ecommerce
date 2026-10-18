@@ -1,0 +1,307 @@
+
+/*
+ * SARI Logistics Dashboard — Seller-inspired visual parity
+ * Scoped to #logisticsDashboard. Presentation only.
+ * Load AFTER seller-parity.css through the dashboard's @push('styles').
+ */
+
+#logisticsDashboard {
+    --dash-ink: #24211d;
+    --dash-muted: #8b8277;
+    --dash-border: #e8e3dc;
+    --dash-gold: #d9950b;
+    --dash-gold-hover: #c68808;
+    --dash-surface: #ffffff;
+    --dash-shadow: 0 7px 22px rgba(35, 29, 22, .055);
+    --dash-shadow-hover: 0 13px 30px rgba(35, 29, 22, .09);
+    color: var(--dash-ink);
+    max-width: 1620px;
+    font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
+}
+
+#logisticsDashboard > section,
+#logisticsDashboard > div.grid > section,
+#logisticsDashboard > div.grid > div > section {
+    border-radius: 19px;
+}
+
+/* Dark Seller-style hero; no fabricated time/weather data. */
+#logisticsDashboard > section:first-of-type {
+    isolation: isolate;
+    min-height: 136px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #302d29 !important;
+    background:
+        radial-gradient(circle at 100% 45%, rgba(215, 150, 17, .13), transparent 33%),
+        linear-gradient(120deg, #242321 0%, #1d1c1a 100%) !important;
+    box-shadow: 0 9px 25px rgba(31, 26, 20, .09) !important;
+}
+
+#logisticsDashboard > section:first-of-type > div:first-child {
+    opacity: .7;
+    background: rgba(215, 150, 17, .13) !important;
+}
+
+#logisticsDashboard > section:first-of-type > div.relative {
+    width: 100%;
+    padding: 25px 28px !important;
+    gap: 22px;
+}
+
+#logisticsDashboard > section:first-of-type .min-w-0 > p:first-child {
+    color: #e2a72c !important;
+    font-size: 9px !important;
+    letter-spacing: .12em;
+}
+
+#logisticsDashboard > section:first-of-type h2 {
+    color: #fff !important;
+    font-size: clamp(20px, 2vw, 25px) !important;
+    line-height: 1.35;
+    letter-spacing: -.04em;
+}
+
+#logisticsDashboard > section:first-of-type h2 + p {
+    color: rgba(255, 255, 255, .68) !important;
+    font-size: 10px !important;
+    line-height: 1.7 !important;
+}
+
+#logisticsDashboard > section:first-of-type .min-w-0 > div:first-child {
+    flex-shrink: 0;
+    background: rgba(234, 169, 47, .13) !important;
+    border: 1px solid rgba(234, 169, 47, .16);
+    color: #e7aa36 !important;
+}
+
+#logisticsDashboard > section:first-of-type a {
+    border-radius: 10px;
+    min-height: 39px;
+    font-size: 10px !important;
+    transform: none !important;
+    transition:
+        background-color .16s ease,
+        border-color .16s ease,
+        box-shadow .2s ease,
+        color .16s ease !important;
+}
+
+#logisticsDashboard > section:first-of-type a:first-child {
+    color: #f8f4eb !important;
+    background: rgba(255, 255, 255, .065) !important;
+    border-color: rgba(255, 255, 255, .2) !important;
+}
+
+#logisticsDashboard > section:first-of-type a:first-child:hover {
+    background: rgba(255, 255, 255, .13) !important;
+    border-color: rgba(255, 255, 255, .4) !important;
+}
+
+#logisticsDashboard > section:first-of-type a:last-child {
+    color: #fff !important;
+    background: var(--dash-gold) !important;
+    border-color: var(--dash-gold) !important;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .11) !important;
+}
+
+#logisticsDashboard > section:first-of-type a:last-child:hover {
+    background: var(--dash-gold-hover) !important;
+    box-shadow: 0 7px 18px rgba(0, 0, 0, .14) !important;
+}
+
+/* KPI row — Seller's clean, lightly elevated cards. */
+#logisticsDashboard > section:nth-of-type(2) {
+    gap: 12px;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a {
+    min-height: 116px;
+    padding: 17px 17px !important;
+    border: 1px solid var(--dash-border) !important;
+    border-radius: 17px !important;
+    background: var(--dash-surface) !important;
+    box-shadow: var(--dash-shadow) !important;
+    transform: none;
+    transition:
+        border-color .18s ease,
+        box-shadow .2s ease,
+        transform .2s cubic-bezier(.22, 1, .36, 1) !important;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a:hover {
+    transform: translateY(-2px) !important;
+    border-color: #dbcfbb !important;
+    box-shadow: var(--dash-shadow-hover) !important;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a > div > div > p:first-child {
+    color: #83776c !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+    letter-spacing: .02em !important;
+    text-transform: none !important;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a > div > div > p:nth-of-type(2) {
+    color: #1e1b18 !important;
+    font-size: 26px !important;
+    letter-spacing: -.045em;
+    line-height: 1.25;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a > div > div > p:nth-of-type(3) {
+    color: var(--dash-muted) !important;
+    font-size: 8.5px !important;
+    line-height: 1.5;
+}
+
+#logisticsDashboard > section:nth-of-type(2) > a > div > span {
+    width: 41px !important;
+    height: 41px !important;
+    border-radius: 12px !important;
+}
+
+/* Operations pipeline matches the Seller analytics panels. */
+#logisticsDashboard > section:nth-of-type(3),
+#logisticsDashboard > div.grid > section,
+#logisticsDashboard > div.grid > div > section {
+    background: #fff !important;
+    border: 1px solid var(--dash-border) !important;
+    box-shadow: var(--dash-shadow) !important;
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div:first-child,
+#logisticsDashboard > div.grid > section > div:first-child {
+    padding: 17px 19px !important;
+    border-bottom-color: #ece8e1 !important;
+}
+
+#logisticsDashboard > section:nth-of-type(3) h3,
+#logisticsDashboard > div.grid h3 {
+    color: #25211e !important;
+    font-size: 14px !important;
+    letter-spacing: -.025em;
+}
+
+#logisticsDashboard > section:nth-of-type(3) h3 + p,
+#logisticsDashboard > div.grid h3 + p {
+    color: var(--dash-muted) !important;
+    font-size: 9px !important;
+    line-height: 1.6;
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div.grid > a {
+    min-height: 116px;
+    border-color: #eee9e2 !important;
+    padding: 15px !important;
+    background: #fff;
+    transition:
+        background-color .16s ease,
+        box-shadow .16s ease !important;
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div.grid > a:hover {
+    background: #fffaf1 !important;
+    box-shadow: inset 0 0 0 1px rgba(215, 150, 17, .11);
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div.grid > a > p:nth-of-type(1) {
+    font-size: 23px !important;
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div.grid > a > p:nth-of-type(2) {
+    font-size: 9px !important;
+}
+
+#logisticsDashboard > section:nth-of-type(3) > div.grid > a > p:nth-of-type(3) {
+    font-size: 8px !important;
+    line-height: 1.6;
+}
+
+/* Recent orders, network status and line-haul panels. */
+#logisticsDashboard > div.grid {
+    gap: 16px;
+}
+
+#logisticsDashboard > div.grid > div > section {
+    padding: 17px !important;
+    transition: box-shadow .18s ease;
+}
+
+#logisticsDashboard > div.grid > div > section:hover {
+    box-shadow: var(--dash-shadow-hover) !important;
+}
+
+#logisticsDashboard > div.grid table {
+    border-collapse: collapse;
+}
+
+#logisticsDashboard > div.grid table thead {
+    background: #f7f8fa !important;
+    color: #7c7369 !important;
+    font-size: 8px !important;
+    letter-spacing: .055em;
+}
+
+#logisticsDashboard > div.grid table tbody tr {
+    transition: background-color .14s ease;
+}
+
+#logisticsDashboard > div.grid table tbody tr:hover {
+    background: #fffaf2;
+}
+
+#logisticsDashboard > div.grid > div > section a {
+    transition:
+        background-color .15s ease,
+        color .15s ease,
+        border-color .15s ease !important;
+}
+
+#logisticsDashboard > div.grid > div > section a:hover {
+    color: #ac760e;
+}
+
+/* Keep meaningful status colors; make their containers cleaner. */
+#logisticsDashboard > div.grid > div > section .rounded-\[13px\] {
+    border-radius: 12px !important;
+}
+
+@media (max-width: 1279px) {
+    #logisticsDashboard > section:first-of-type > div.relative {
+        padding: 22px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    #logisticsDashboard > section:first-of-type > div.relative {
+        padding: 20px 17px !important;
+    }
+
+    #logisticsDashboard > section:first-of-type h2 {
+        font-size: 20px !important;
+    }
+
+    #logisticsDashboard > section:first-of-type a {
+        width: 100%;
+    }
+
+    #logisticsDashboard > section:nth-of-type(2) > a {
+        min-height: 104px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #logisticsDashboard *,
+    #logisticsDashboard *::before,
+    #logisticsDashboard *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    #logisticsDashboard > section:nth-of-type(2) > a:hover {
+        transform: none !important;
+    }
+}

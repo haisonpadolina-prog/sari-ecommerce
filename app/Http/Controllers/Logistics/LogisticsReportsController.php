@@ -5,107 +5,131 @@ namespace App\Http\Controllers\Logistics;
 use App\Http\Controllers\Controller;
 use App\Models\Delivery\LogisticsParcel;
 use App\Models\Orders\MarketplaceOrder;
+use App\Support\CurrentLogisticsHub;
 use App\Support\LogisticsOrderAccess;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class LogisticsReportsController extends Controller
 {
-    private const ACTIVE_DELIVERY_STATUSES = [
-        'courier_accepted',
-        'heading_pickup',
-        'arrived_pickup',
-        'in_transit',
-        'arrived_buyer',
+    private const ACTIVE_STATUSES = [
+        'courier_accepted', 'heading_pickup', 'arrived_pickup',
+        'in_transit', 'arrived_buyer',
     ];
 
     public function __construct(
         private readonly LogisticsOrderAccess $orderAccess,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): View
     {
-        $logistics =
-            $this->orderAccess->prepare($request);
+        $logistics = $this->orderAccess->prepare($request);
+        $isHubOperator = CurrentLogisticsHub::isHubOperator($request);
+        $hubFacility = $isHubOperator
+            ? CurrentLogisticsHub::requireFacility($request)
+            : null;
 
-        $now =
-            now('Asia/Manila');
-
-        $today =
-            $now->toDateString();
-
-        $monthStart =
-            $now
-                ->copy()
-                ->startOfMonth();
+        if ($hubFacility) {
+            abort_unless(
+                (int) $hubFacility->logistics_account_id === (int) $logistics->id,
+                403,
+                'Your assigned hub does not belong to this Logistics network.'
+            );
+        }
 
         /*
         |--------------------------------------------------------------------------
-        | Reusable scoped queries
+        | Server-side report filters
         |--------------------------------------------------------------------------
         */
 
-        $orders =
-            fn () =>
+        $now = CarbonImmutable::now('Asia/Manila');
+
+        $input = $request->validate([
+            'from' => ['nullable', 'date_format:Y-m-d'],
+            'to' => ['nullable', 'date_format:Y-m-d'],
+            'type' => ['nullable', 'in:all,deliveries,pipeline,riders,fees'],
+        ]);
+
+        $from = $input['from'] ?? $now->subDays(29)->toDateString();
+        $to = $input['to'] ?? $now->toDateString();
+        $reportType = $input['type'] ?? 'all';
+
+        $dateFrom = CarbonImmutable::createFromFormat(
+            '!Y-m-d',
+            $from,
+            'Asia/Manila'
+        );
+
+        $dateTo = CarbonImmutable::createFromFormat(
+            '!Y-m-d',
+            $to,
+            'Asia/Manila'
+        );
+
+        if (
+            $dateFrom->greaterThan($dateTo)
+            || $dateFrom->diffInDays($dateTo) > 366
+        ) {
+            throw ValidationException::withMessages([
+                'from' => 'Select a valid date range of up to 367 calendar days (inclusive).',
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Provider and assigned-hub visibility
+        |--------------------------------------------------------------------------
+        */
+
+        $orders = fn (string $visibility = 'involved'): Builder =>
+            CurrentLogisticsHub::scopeOrders(
+                $request,
                 MarketplaceOrder::query()
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    );
+                    ->where('logistics_account_id', $logistics->id),
+                $visibility
+            );
 
-        $parcels =
-            fn () =>
-                LogisticsParcel::query()
-                    ->whereHas(
-                        'order',
-                        fn ($query) =>
-                            $query->where(
-                                'logistics_account_id',
-                                $logistics->id
-                            )
+        $parcels = fn (string $visibility = 'involved'): Builder =>
+            LogisticsParcel::query()->whereHas(
+                'order',
+                function (Builder $query) use (
+                    $request,
+                    $logistics,
+                    $visibility
+                ): void {
+                    CurrentLogisticsHub::scopeOrders(
+                        $request,
+                        $query->where(
+                            'logistics_account_id',
+                            $logistics->id
+                        ),
+                        $visibility
                     );
+                }
+            );
 
         /*
         |--------------------------------------------------------------------------
-        | Delivered this month
+        | Completed orders within selected dates
         |--------------------------------------------------------------------------
         */
 
-        $deliveredThisMonth =
-            $orders()
-                ->where(
-                    'status',
-                    'delivered'
-                )
-                ->where(
-                    'delivered_at',
-                    '>=',
-                    $monthStart
-                )
-                ->count();
+        $completedInRange = fn (): Builder => $orders()
+            ->where('status', 'delivered')
+            ->whereDate('delivered_at', '>=', $from)
+            ->whereDate('delivered_at', '<=', $to);
 
-        $deliveryFeesThisMonth =
-            (float) $orders()
-                ->where(
-                    'status',
-                    'delivered'
-                )
-                ->where(
-                    'delivered_at',
-                    '>=',
-                    $monthStart
-                )
-                ->sum(
-                    'delivery_fee'
-                );
+        $periodDelivered = $completedInRange()->count();
 
-        $averageDeliveryFee =
-            $deliveredThisMonth > 0
-                ? $deliveryFeesThisMonth
-                    / $deliveredThisMonth
-                : 0;
+        $periodFees = (float) $completedInRange()
+            ->sum('delivery_fee');
 
         /*
         |--------------------------------------------------------------------------
@@ -113,422 +137,272 @@ class LogisticsReportsController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $parcelStatusCounts =
-            $parcels()
-                ->select('status')
-                ->selectRaw(
-                    'COUNT(*) as total'
-                )
-                ->groupBy('status')
-                ->pluck(
-                    'total',
-                    'status'
-                )
-                ->map(
-                    fn ($value): int =>
-                        (int) $value
-                );
+        $originCounts = $this->statusCounts(
+            $parcels('origin')
+        );
+
+        $destinationCounts = $hubFacility
+            ? $this->statusCounts($parcels('destination'))
+            : $originCounts;
+
+        $origin = fn (string $status): int =>
+            (int) $originCounts->get($status, 0);
+
+        $destination = fn (string $status): int =>
+            (int) $destinationCounts->get($status, 0);
 
         /*
         |--------------------------------------------------------------------------
         | Summary
         |--------------------------------------------------------------------------
+        |
+        | Delivered and fee figures use selected dates.
+        | Active operations and pipeline remain current snapshots.
+        |
         */
 
         $stats = [
-            'waiting_assignment' =>
-                $orders()
-                    ->where(
-                        'status',
-                        'ready_for_pickup'
-                    )
-                    ->whereNull(
-                        'courier_email'
-                    )
-                    ->count(),
+            'waiting_assignment' => $orders('origin')
+                ->where('status', 'ready_for_pickup')
+                ->whereNull('courier_email')
+                ->count(),
 
-            'active_deliveries' =>
-                $orders()
-                    ->whereIn(
-                        'status',
-                        self::ACTIVE_DELIVERY_STATUSES
-                    )
-                    ->count(),
+            'active_deliveries' => $orders()
+                ->whereIn('status', self::ACTIVE_STATUSES)
+                ->count(),
 
-            'delivered_today' =>
-                $orders()
-                    ->where(
-                        'status',
-                        'delivered'
-                    )
-                    ->whereDate(
-                        'delivered_at',
-                        $today
-                    )
-                    ->count(),
+            'delivered_today' => $orders()
+                ->where('status', 'delivered')
+                ->whereDate(
+                    'delivered_at',
+                    $now->toDateString()
+                )
+                ->count(),
 
-            'delivered_this_month' =>
-                $deliveredThisMonth,
+            'delivered_this_month' => $periodDelivered,
 
-            'delivery_fees_this_month' =>
-                $deliveryFeesThisMonth,
+            'delivery_fees_this_month' => $periodFees,
 
-            'average_delivery_fee' =>
-                $averageDeliveryFee,
+            'average_delivery_fee' => $periodDelivered
+                ? $periodFees / $periodDelivered
+                : 0,
 
-            'origin_processed' =>
-                $parcels()
-                    ->whereNotNull(
-                        'received_at'
-                    )
-                    ->count(),
+            'origin_processed' => $parcels('origin')
+                ->whereNotNull('received_at')
+                ->count(),
 
-            'ready_linehaul' =>
-                (int) (
-                    $parcelStatusCounts[
-                        'sorted'
-                    ]
-                    ?? 0
-                ),
+            'ready_linehaul' => $origin('sorted'),
 
             'linehaul_active' =>
-                (int) (
-                    (
-                        $parcelStatusCounts[
-                            'linehaul_assigned'
-                        ]
-                        ?? 0
-                    )
-                    +
-                    (
-                        $parcelStatusCounts[
-                            'linehaul_in_transit'
-                        ]
-                        ?? 0
-                    )
-                ),
+                $origin('linehaul_assigned')
+                + $origin('linehaul_in_transit'),
 
             'destination_ready' =>
-                (int) (
-                    $parcelStatusCounts[
-                        'destination_received'
-                    ]
-                    ?? 0
-                ),
+                $destination('destination_received'),
 
             'last_mile_active' =>
-                (int) (
-                    (
-                        $parcelStatusCounts[
-                            'last_mile_assigned'
-                        ]
-                        ?? 0
-                    )
-                    +
-                    (
-                        $parcelStatusCounts[
-                            'out_for_delivery'
-                        ]
-                        ?? 0
-                    )
-                    +
-                    (
-                        $parcelStatusCounts[
-                            'arrived_buyer'
-                        ]
-                        ?? 0
-                    )
-                ),
+                $destination('last_mile_assigned')
+                + $destination('out_for_delivery')
+                + $destination('arrived_buyer'),
         ];
 
         /*
         |--------------------------------------------------------------------------
-        | Seven-day delivery trend
+        | Delivery trend
         |--------------------------------------------------------------------------
+        |
+        | Displays the last seven calendar days that fall within the
+        | user-selected date range.
+        |
         */
 
-        $deliveryTrend =
-            collect(
-                range(6, 0)
-            )
-                ->map(
-                    function (
-                        int $daysAgo
-                    ) use (
-                        $orders,
-                        $now
-                    ): array {
-                        $date =
-                            $now
-                                ->copy()
-                                ->subDays(
-                                    $daysAgo
-                                );
+        $trendStart = $dateTo->subDays(6);
 
-                        $count =
-                            $orders()
-                                ->where(
-                                    'status',
-                                    'delivered'
-                                )
-                                ->whereDate(
-                                    'delivered_at',
-                                    $date
-                                        ->toDateString()
-                                )
-                                ->count();
+        if ($trendStart->lessThan($dateFrom)) {
+            $trendStart = $dateFrom;
+        }
 
-                        $fees =
-                            (float) $orders()
-                                ->where(
-                                    'status',
-                                    'delivered'
-                                )
-                                ->whereDate(
-                                    'delivered_at',
-                                    $date
-                                        ->toDateString()
-                                )
-                                ->sum(
-                                    'delivery_fee'
-                                );
+        $deliveryTrend = collect();
 
-                        return [
-                            'date' =>
-                                $date,
+        for (
+            $day = $trendStart;
+            $day->lessThanOrEqualTo($dateTo);
+            $day = $day->addDay()
+        ) {
+            $key = $day->toDateString();
 
-                            'label' =>
-                                $date->format(
-                                    'D'
-                                ),
+            $daily = $completedInRange()
+                ->whereDate('delivered_at', $key);
 
-                            'short_date' =>
-                                $date->format(
-                                    'M d'
-                                ),
-
-                            'count' =>
-                                $count,
-
-                            'fees' =>
-                                $fees,
-                        ];
-                    }
-                );
+            $deliveryTrend->push([
+                'date' => $day,
+                'label' => $day->format('D'),
+                'short_date' => $day->format('M d'),
+                'count' => (clone $daily)->count(),
+                'fees' => (float) (clone $daily)
+                    ->sum('delivery_fee'),
+            ]);
+        }
 
         /*
         |--------------------------------------------------------------------------
-        | Current parcel pipeline
+        | Current pipeline (not historical)
         |--------------------------------------------------------------------------
         */
 
         $pipeline = collect([
             [
-                'key' =>
-                    'pickup',
-
-                'label' =>
-                    'Pickup Queue',
-
-                'description' =>
-                    'Waiting for Seller pickup assignment',
-
-                'count' =>
-                    $stats[
-                        'waiting_assignment'
-                    ],
-
-                'tone' =>
-                    'amber',
+                'key' => 'pickup',
+                'label' => 'Pickup Queue',
+                'description' => 'Currently waiting for Seller pickup assignment',
+                'count' => $stats['waiting_assignment'],
+                'tone' => 'amber',
             ],
-
             [
-                'key' =>
-                    'origin',
-
-                'label' =>
-                    'Origin Hub',
-
-                'description' =>
-                    'Currently received or sorted at origin',
-
-                'count' =>
-                    (
-                        $parcelStatusCounts[
-                            'received'
-                        ]
-                        ?? 0
-                    )
-                    +
-                    (
-                        $parcelStatusCounts[
-                            'sorted'
-                        ]
-                        ?? 0
-                    ),
-
-                'tone' =>
-                    'neutral',
+                'key' => 'origin',
+                'label' => 'Origin Hub',
+                'description' => 'Currently received or sorted at origin',
+                'count' => $origin('received') + $origin('sorted'),
+                'tone' => 'neutral',
             ],
-
             [
-                'key' =>
-                    'linehaul',
-
-                'label' =>
-                    'Hub Transfer',
-
-                'description' =>
-                    'Assigned to or moving in linehaul',
-
-                'count' =>
-                    $stats[
-                        'linehaul_active'
-                    ],
-
-                'tone' =>
-                    'blue',
+                'key' => 'linehaul',
+                'label' => 'Hub Transfer',
+                'description' => 'Currently assigned to or moving in linehaul',
+                'count' => $stats['linehaul_active'],
+                'tone' => 'blue',
             ],
-
             [
-                'key' =>
-                    'destination',
-
-                'label' =>
-                    'Destination Hub',
-
-                'description' =>
-                    'Received and waiting for local dispatch',
-
-                'count' =>
-                    $stats[
-                        'destination_ready'
-                    ],
-
-                'tone' =>
-                    'green',
+                'key' => 'destination',
+                'label' => 'Destination Hub',
+                'description' => 'Currently received and waiting for local dispatch',
+                'count' => $stats['destination_ready'],
+                'tone' => 'green',
             ],
-
             [
-                'key' =>
-                    'last_mile',
-
-                'label' =>
-                    'Last Mile',
-
-                'description' =>
-                    'Assigned or currently with local Rider',
-
-                'count' =>
-                    $stats[
-                        'last_mile_active'
-                    ],
-
-                'tone' =>
-                    'blue',
+                'key' => 'last_mile',
+                'label' => 'Last Mile',
+                'description' => 'Currently assigned or with local Rider',
+                'count' => $stats['last_mile_active'],
+                'tone' => 'blue',
             ],
         ]);
 
         /*
         |--------------------------------------------------------------------------
-        | Top Last-Mile Riders this month
+        | Last-Mile Rider ranking within selected dates
         |--------------------------------------------------------------------------
         */
 
-        $topLastMileRiders =
-            DB::table(
-                'last_mile_assignment_orders as item'
+        $ranking = DB::table(
+            'last_mile_assignment_orders as item'
+        )
+            ->join(
+                'last_mile_assignments as assignment',
+                'assignment.id',
+                '=',
+                'item.last_mile_assignment_id'
             )
-                ->join(
-                    'last_mile_assignments as assignment',
-                    'assignment.id',
-                    '=',
-                    'item.last_mile_assignment_id'
-                )
-                ->join(
-                    'courier_accounts as rider',
-                    'rider.id',
-                    '=',
-                    'assignment.courier_account_id'
-                )
-                ->join(
-                    'marketplace_orders as orders',
-                    'orders.id',
-                    '=',
-                    'item.marketplace_order_id'
-                )
+            ->join(
+                'courier_accounts as rider',
+                'rider.id',
+                '=',
+                'assignment.courier_account_id'
+            )
+            ->join(
+                'marketplace_orders as orders',
+                'orders.id',
+                '=',
+                'item.marketplace_order_id'
+            )
+            ->where(
+                'assignment.logistics_account_id',
+                $logistics->id
+            )
+            ->where(
+                'orders.logistics_account_id',
+                $logistics->id
+            )
+            ->where('orders.status', 'delivered')
+            ->whereDate('orders.delivered_at', '>=', $from)
+            ->whereDate('orders.delivered_at', '<=', $to);
+
+        /*
+        | Hub Operators see rankings belonging to their
+        | assigned destination hub only.
+        */
+
+        if ($hubFacility) {
+            $ranking
                 ->where(
-                    'assignment.logistics_account_id',
-                    $logistics->id
+                    'assignment.destination_facility_id',
+                    $hubFacility->id
                 )
-                ->where(
-                    'orders.status',
-                    'delivered'
-                )
-                ->where(
-                    'orders.delivered_at',
-                    '>=',
-                    $monthStart
-                )
-                ->select([
-                    'rider.id',
-                    'rider.first_name',
-                    'rider.last_name',
-                    'rider.vehicle_type',
-                    'rider.barangay_name',
-                    'rider.municipality_name',
-                ])
-                ->selectRaw(
-                    'COUNT(*) as delivered_count'
-                )
-                ->selectRaw(
-                    '
-                    SUM(
-                        COALESCE(
-                            orders.delivery_fee,
-                            0
-                        )
-                    ) as delivered_fees
-                    '
-                )
-                ->groupBy([
-                    'rider.id',
-                    'rider.first_name',
-                    'rider.last_name',
-                    'rider.vehicle_type',
-                    'rider.barangay_name',
-                    'rider.municipality_name',
-                ])
-                ->orderByDesc(
-                    'delivered_count'
-                )
-                ->orderBy(
-                    'rider.first_name'
-                )
-                ->limit(5)
-                ->get();
+                ->whereExists(
+                    function (QueryBuilder $query) use ($hubFacility): void {
+                        $query
+                            ->selectRaw('1')
+                            ->from(
+                                'delivery_route_stops as route_stop'
+                            )
+                            ->whereColumn(
+                                'route_stop.marketplace_order_id',
+                                'orders.id'
+                            )
+                            ->where(
+                                'route_stop.stop_key',
+                                'destination_facility'
+                            )
+                            ->where(
+                                'route_stop.logistics_facility_id',
+                                $hubFacility->id
+                            );
+                    }
+                );
+        }
+
+        $topLastMileRiders = $ranking
+            ->select(
+                'rider.id',
+                'rider.first_name',
+                'rider.last_name',
+                'rider.vehicle_type',
+                'rider.barangay_name',
+                'rider.municipality_name'
+            )
+            ->selectRaw(
+                'COUNT(DISTINCT orders.id) as delivered_count'
+            )
+            ->selectRaw(
+                'SUM(COALESCE(orders.delivery_fee, 0)) as delivered_fees'
+            )
+            ->groupBy(
+                'rider.id',
+                'rider.first_name',
+                'rider.last_name',
+                'rider.vehicle_type',
+                'rider.barangay_name',
+                'rider.municipality_name'
+            )
+            ->orderByDesc('delivered_count')
+            ->orderBy('rider.first_name')
+            ->limit(5)
+            ->get();
 
         /*
         |--------------------------------------------------------------------------
-        | Recent completed deliveries
+        | Filtered completed-order breakdown
         |--------------------------------------------------------------------------
         */
 
-        $recentDelivered =
-            $orders()
-                ->with([
-                    'seller',
-                    'deliveryRouteStops.facility',
-                ])
-                ->where(
-                    'status',
-                    'delivered'
-                )
-                ->latest(
-                    'delivered_at'
-                )
-                ->limit(15)
-                ->get();
+        $recentDelivered = $completedInRange()
+            ->with([
+                'seller',
+                'deliveryRouteStops.facility',
+            ])
+            ->latest('delivered_at')
+            ->limit(15)
+            ->get();
 
         return view(
             'logistics.reports',
@@ -537,8 +411,25 @@ class LogisticsReportsController extends Controller
                 'deliveryTrend',
                 'pipeline',
                 'topLastMileRiders',
-                'recentDelivered'
+                'recentDelivered',
+                'isHubOperator',
+                'hubFacility',
+                'from',
+                'to',
+                'reportType',
+                'periodDelivered',
+                'periodFees'
             )
         );
+    }
+
+    private function statusCounts(Builder $query): Collection
+    {
+        return $query
+            ->select('status')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->map(fn ($count): int => (int) $count);
     }
 }
