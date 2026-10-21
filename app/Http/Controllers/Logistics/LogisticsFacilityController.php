@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Accounts\LogisticsHubAccount;
 use App\Models\Delivery\LogisticsFacility;
 use App\Services\Delivery\DeliveryRouteService;
+use App\Services\Logistics\LogisticsActivityLogger;
 use App\Support\CurrentLogisticsAccount;
 use App\Support\LogisticsServiceArea;
 use Illuminate\Contracts\View\View;
@@ -20,7 +21,8 @@ use Illuminate\Validation\ValidationException;
 class LogisticsFacilityController extends Controller
 {
     public function __construct(
-        private readonly DeliveryRouteService $deliveryRoute
+        private readonly DeliveryRouteService $deliveryRoute,
+        private readonly LogisticsActivityLogger $activityLogger
     ) {}
 
     /*
@@ -126,6 +128,14 @@ class LogisticsFacilityController extends Controller
 
         $this->deliveryRoute->assignUnownedOrders(30);
 
+        /*
+         * The middleware records successful creation using the real,
+         * newly saved facility ID. Never take this ID from form input.
+         */
+        $request->attributes->set('activity_changed', true);
+        $request->attributes->set('activity_created_facility_id', (int) $facility->id);
+        $request->attributes->set('activity_facility_id', (int) $facility->id);
+
         return redirect()
             ->route('logistics.facilities.index')
             ->with(
@@ -174,19 +184,21 @@ class LogisticsFacilityController extends Controller
             ]);
         }
 
-        DB::transaction(
+        /*
+         * A successful request is not necessarily an actual change.
+         * Report true only when the facility/operator was modified.
+         */
+        $changed = DB::transaction(
             function () use (
                 $request,
                 $validated,
                 $facility,
                 $operator,
                 $logistics
-            ): void {
+            ): bool {
                 /*
-                 * Update facility without changing
-                 * historical order route snapshots.
+                 * Keep existing historical order route snapshots intact.
                  */
-
                 $facility->fill([
                     'name' => $validated['name'],
 
@@ -203,12 +215,18 @@ class LogisticsFacilityController extends Controller
                     'longitude' => $validated['longitude'],
 
                     'is_active' => $request->boolean('is_active'),
-                ])->save();
+                ]);
+
+                $facilityChanged = $facility->isDirty();
+
+                if ($facilityChanged) {
+                    $facility->save();
+                }
 
                 /*
-                 * Existing Hub Operator
+                 * Existing Hub Operator: blank credential fields mean
+                 * retain existing values, exactly as before.
                  */
-
                 if ($operator) {
                     $updates = [];
 
@@ -220,30 +238,30 @@ class LogisticsFacilityController extends Controller
                         $updates['email'] = $validated['operator_email'];
                     }
 
-                    /*
-                     * Blank password means retain existing password.
-                     * When supplied, validation has already enforced
-                     * every password requirement and confirmation.
-                     */
-
                     if (filled($validated['operator_password'] ?? null)) {
                         $updates['password'] = Hash::make(
                             $validated['operator_password']
                         );
                     }
 
-                    if (! empty($updates)) {
-                        $operator->forceFill($updates)->save();
+                    $operatorChanged = false;
+
+                    if ($updates !== []) {
+                        $operator->forceFill($updates);
+                        $operatorChanged = $operator->isDirty();
+
+                        if ($operatorChanged) {
+                            $operator->save();
+                        }
                     }
 
-                    return;
+                    return $facilityChanged || $operatorChanged;
                 }
 
                 /*
-                 * Legacy facility without an operator.
-                 * A complete operator account is required.
+                 * Legacy facility without an operator: create its
+                 * required operator account inside the transaction.
                  */
-
                 LogisticsHubAccount::query()->create([
                     'logistics_account_id' => $logistics->id,
 
@@ -261,9 +279,18 @@ class LogisticsFacilityController extends Controller
                     'account_status' => 'active',
                     'last_login_at' => null,
                 ]);
+
+                return true;
             },
             3
         );
+
+        /*
+         * The middleware skips no-op updates (activity_changed=false).
+         * Facility ownership is revalidated by the logger.
+         */
+        $request->attributes->set('activity_changed', $changed);
+        $request->attributes->set('activity_facility_id', (int) $facility->id);
 
         return redirect()
             ->route('logistics.facilities.index')
@@ -290,6 +317,9 @@ class LogisticsFacilityController extends Controller
         $facility->forceFill([
             'is_active' => ! $facility->is_active,
         ])->save();
+
+        $request->attributes->set('activity_changed', true);
+        $request->attributes->set('activity_facility_id', (int) $facility->id);
 
         return back()->with(
             'success',
@@ -323,14 +353,45 @@ class LogisticsFacilityController extends Controller
             ]);
         }
 
+        /*
+         * Deletion needs special handling: the generic middleware runs
+         * after the controller and cannot look up a deleted facility.
+         * Instead, write the audit snapshot INSIDE the delete transaction
+         * while the facility still exists. A failed delete rolls it back.
+         * The delete route is intentionally absent from middleware EVENTS.
+         */
         DB::transaction(
-            function () use ($facility, $logistics): void {
+            function () use ($request, $facility, $logistics): void {
+                $lockedFacility = LogisticsFacility::query()
+                    ->whereKey($facility->id)
+                    ->where('logistics_account_id', $logistics->id)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                // Recheck after obtaining the facility row lock.
+                if ($lockedFacility->routeStops()->exists()) {
+                    throw ValidationException::withMessages([
+                        'facility' => 'This hub already belongs to an order route. Deactivate it instead so historical tracking remains intact.',
+                    ]);
+                }
+
+                // Save the facility/actor names before deleting the source rows.
+                $this->activityLogger->record(
+                    $request,
+                    'Sorting Facilities',
+                    'deleted',
+                    'Unused municipal hub and operator deleted',
+                    'facility',
+                    (int) $lockedFacility->id,
+                    (int) $lockedFacility->id
+                );
+
                 LogisticsHubAccount::query()
                     ->where('logistics_account_id', $logistics->id)
-                    ->where('logistics_facility_id', $facility->id)
+                    ->where('logistics_facility_id', $lockedFacility->id)
                     ->delete();
 
-                $facility->delete();
+                $lockedFacility->delete();
             },
             3
         );

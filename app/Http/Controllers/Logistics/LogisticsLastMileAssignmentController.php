@@ -26,19 +26,6 @@ class LogisticsLastMileAssignmentController extends Controller
     {
         $logistics = CurrentLogisticsAccount::resolve($request);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Current Hub Context
-        |--------------------------------------------------------------------------
-        |
-        | Logistics Manager:
-        | - network-wide Last-Mile Assignment access
-        |
-        | Hub Operator:
-        | - only parcels received at their assigned destination hub
-        |
-        */
-
         $isHubOperator =
             CurrentLogisticsHub::isHubOperator($request);
 
@@ -46,12 +33,6 @@ class LogisticsLastMileAssignmentController extends Controller
             $isHubOperator
                 ? CurrentLogisticsHub::requireFacility($request)
                 : null;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Parcels already received at destination hub
-        |--------------------------------------------------------------------------
-        */
 
         $readyParcelsQuery =
             DB::table('logistics_parcels as parcel')
@@ -115,9 +96,6 @@ class LogisticsLastMileAssignmentController extends Controller
                     'orders.buyer_name',
                     'orders.buyer_address',
 
-                    /*
-                    | Preserve pickup Rider snapshot.
-                    */
                     'orders.courier_name as pickup_rider_name',
                     'orders.courier_email as pickup_rider_email',
 
@@ -126,15 +104,7 @@ class LogisticsLastMileAssignmentController extends Controller
                     'destination.municipality_name as destination_municipality',
                     'destination.province_name as destination_province',
                 ])
-                ->orderBy(
-                    'orders.order_number'
-                );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Hub Operator Destination Scope
-        |--------------------------------------------------------------------------
-        */
+                ->orderBy('orders.order_number');
 
         if ($hubFacility) {
             $readyParcelsQuery->where(
@@ -143,58 +113,34 @@ class LogisticsLastMileAssignmentController extends Controller
             );
         }
 
-        $readyParcels =
-            $readyParcelsQuery->get();
+        $readyParcels = $readyParcelsQuery->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Extract Barangay / Service Area
-        |--------------------------------------------------------------------------
-        */
-
-        $readyParcels =
-            $readyParcels->map(
-                function ($parcel) {
-                    $parcel->barangay_name =
-                        $this->extractBarangay(
-                            $parcel->buyer_address,
-                            $parcel->destination_municipality
-                        );
-
-                    return $parcel;
-                }
-            );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Group by Destination Hub + Barangay
-        |--------------------------------------------------------------------------
-        */
-
-        $deliveryGroups =
-            $readyParcels->groupBy(
-                function ($parcel): string {
-                    return implode(
-                        '|',
-                        [
-                            $parcel
-                                ->destination_facility_id,
-
-                            strtolower(
-                                trim(
-                                    $parcel->barangay_name
-                                )
-                            ),
-                        ]
+        $readyParcels = $readyParcels->map(
+            function ($parcel) {
+                $parcel->barangay_name =
+                    $this->extractBarangay(
+                        $parcel->buyer_address,
+                        $parcel->destination_municipality
                     );
-                }
-            );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Approved Local Riders
-        |--------------------------------------------------------------------------
-        */
+                return $parcel;
+            }
+        );
+
+        $deliveryGroups = $readyParcels->groupBy(
+            function ($parcel): string {
+                return implode(
+                    '|',
+                    [
+                        $parcel->destination_facility_id,
+
+                        strtolower(
+                            trim($parcel->barangay_name)
+                        ),
+                    ]
+                );
+            }
+        );
 
         $approvedApplications =
             RegistrationApplication::query()
@@ -202,14 +148,8 @@ class LogisticsLastMileAssignmentController extends Controller
                     'logistics_account_id',
                     $logistics->id
                 )
-                ->where(
-                    'role',
-                    'rider'
-                )
-                ->where(
-                    'status',
-                    'approved'
-                )
+                ->where('role', 'rider')
+                ->where('status', 'approved')
                 ->select('id');
 
         $ridersQuery =
@@ -218,38 +158,29 @@ class LogisticsLastMileAssignmentController extends Controller
                     'logistics_account_id',
                     $logistics->id
                 )
-                ->where(
-                    'account_status',
-                    'active'
-                )
-                ->where(
-                    'availability_status',
-                    'online'
-                )
+                ->where('account_status', 'active')
+                ->where('availability_status', 'online')
                 ->whereIn(
                     'registration_application_id',
                     $approvedApplications
                 );
 
-        /*
-        |--------------------------------------------------------------------------
-        | Hub Operator Rider Scope
-        |--------------------------------------------------------------------------
-        |
-        | The stricter Barangay eligibility rule is enforced again during
-        | the actual assignment.
-        */
-
         if ($hubFacility) {
-            $ridersQuery->whereRaw('LOWER(TRIM(province_name)) = ?', [mb_strtolower(trim($hubFacility->province_name))]);
+            $ridersQuery->whereRaw(
+                'LOWER(TRIM(province_name)) = ?',
+                [
+                    mb_strtolower(
+                        trim($hubFacility->province_name)
+                    ),
+                ]
+            );
+
             $ridersQuery->whereRaw(
                 'LOWER(TRIM(municipality_name)) = ?',
                 [
                     strtolower(
                         trim(
-                            (string)
-                                $hubFacility
-                                    ->municipality_name
+                            (string) $hubFacility->municipality_name
                         )
                     ),
                 ]
@@ -258,27 +189,13 @@ class LogisticsLastMileAssignmentController extends Controller
 
         $riders =
             $ridersQuery
-                ->orderBy(
-                    'barangay_name'
-                )
-                ->orderBy(
-                    'first_name'
-                )
-                ->orderBy(
-                    'last_name'
-                )
+                ->orderBy('barangay_name')
+                ->orderBy('first_name')
+                ->orderBy('last_name')
                 ->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Existing Last-Mile Assignments
-        |--------------------------------------------------------------------------
-        */
-
         $assignmentsQuery =
-            DB::table(
-                'last_mile_assignments as assignment'
-            )
+            DB::table('last_mile_assignments as assignment')
                 ->join(
                     'courier_accounts as rider',
                     'rider.id',
@@ -305,12 +222,6 @@ class LogisticsLastMileAssignmentController extends Controller
                     'facility.name as facility_name',
                 ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Hub Operator Assignment History Scope
-        |--------------------------------------------------------------------------
-        */
-
         if ($hubFacility) {
             $assignmentsQuery->where(
                 'assignment.destination_facility_id',
@@ -320,16 +231,12 @@ class LogisticsLastMileAssignmentController extends Controller
 
         $assignments =
             $assignmentsQuery
-                ->orderByDesc(
-                    'assignment.id'
-                )
+                ->orderByDesc('assignment.id')
                 ->get();
 
         foreach ($assignments as $assignment) {
             $assignment->order_count =
-                DB::table(
-                    'last_mile_assignment_orders'
-                )
+                DB::table('last_mile_assignment_orders')
                     ->where(
                         'last_mile_assignment_id',
                         $assignment->id
@@ -338,18 +245,52 @@ class LogisticsLastMileAssignmentController extends Controller
         }
 
         $busyPickupEmails = MarketplaceOrder::query()
-            ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup', 'in_transit', 'arrived_buyer'])
+            ->whereIn('status', [
+                'courier_accepted',
+                'heading_pickup',
+                'arrived_pickup',
+                'in_transit',
+                'arrived_buyer',
+            ])
             ->where(function ($query): void {
-                $query->whereDoesntHave('logisticsParcel')
-                    ->orWhereHas('logisticsParcel', fn ($parcel) => $parcel->where('status', 'awaiting_intake'));
-            })->pluck('courier_email')->map(fn ($email) => strtolower(trim((string) $email)));
+                $query
+                    ->whereDoesntHave('logisticsParcel')
+                    ->orWhereHas(
+                        'logisticsParcel',
+                        fn ($parcel) => $parcel->where(
+                            'status',
+                            'awaiting_intake'
+                        )
+                    );
+            })
+            ->pluck('courier_email')
+            ->map(
+                fn ($email) => strtolower(
+                    trim((string) $email)
+                )
+            );
 
         $busyRiderIds = DB::table('last_mile_assignments')
-            ->whereIn('status', ['assigned', 'out_for_delivery'])
-            ->whereIn('courier_account_id', $riders->modelKeys())
+            ->whereIn('status', [
+                'assigned',
+                'out_for_delivery',
+            ])
+            ->whereIn(
+                'courier_account_id',
+                $riders->modelKeys()
+            )
             ->pluck('courier_account_id')
-            ->merge($riders->filter(fn ($rider) => $busyPickupEmails->contains(strtolower(trim($rider->email))))->modelKeys())
-            ->map(fn ($id) => (int) $id)->unique();
+            ->merge(
+                $riders
+                    ->filter(
+                        fn ($rider) => $busyPickupEmails->contains(
+                            strtolower(trim($rider->email))
+                        )
+                    )
+                    ->modelKeys()
+            )
+            ->map(fn ($id) => (int) $id)
+            ->unique();
 
         return view(
             'logistics.last-mile-assignment',
@@ -373,76 +314,64 @@ class LogisticsLastMileAssignmentController extends Controller
     public function assignBatch(
         Request $request
     ): RedirectResponse {
-        $validated =
-            $request->validate([
-                'rider_id' => [
-                    'required',
-                    'integer',
-                    'exists:courier_accounts,id',
-                ],
 
-                'order_ids' => [
-                    'required',
-                    'array',
-                    'min:1',
-                ],
+        $validated = $request->validate([
+            'rider_id' => [
+                'required',
+                'integer',
+                'exists:courier_accounts,id',
+            ],
 
-                'order_ids.*' => [
-                    'required',
-                    'integer',
-                    'distinct',
-                    'exists:marketplace_orders,id',
-                ],
-            ]);
+            'order_ids' => [
+                'required',
+                'array',
+                'min:1',
+            ],
 
-        /*
-        |--------------------------------------------------------------------------
-        | Parent Logistics Provider
-        |--------------------------------------------------------------------------
-        */
+            'order_ids.*' => [
+                'required',
+                'integer',
+                'distinct',
+                'exists:marketplace_orders,id',
+            ],
+        ]);
 
         $logistics =
-            CurrentLogisticsAccount::resolve(
-                $request
-            );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Current Hub Context
-        |--------------------------------------------------------------------------
-        */
+            CurrentLogisticsAccount::resolve($request);
 
         $isHubOperator =
-            CurrentLogisticsHub::isHubOperator(
-                $request
-            );
+            CurrentLogisticsHub::isHubOperator($request);
 
         $hubFacility =
             $isHubOperator
-                ? CurrentLogisticsHub::requireFacility(
-                    $request
-                )
+                ? CurrentLogisticsHub::requireFacility($request)
                 : null;
 
-        $orderIds =
-            collect(
-                $validated['order_ids']
-            )
-                ->map(
-                    fn ($id): int => (int) $id
-                )
-                ->unique()
-                ->sort()
-                ->values();
+        $orderIds = collect($validated['order_ids'])
+            ->map(fn ($id): int => (int) $id)
+            ->unique()
+            ->sort()
+            ->values();
 
-        DB::transaction(
+        /*
+        |--------------------------------------------------------------------------
+        | Atomic Last-Mile Assignment
+        |--------------------------------------------------------------------------
+        |
+        | Return the newly created assignment and destination hub
+        | so that activity logging only happens after commit.
+        |
+        */
+
+        $activityContext = DB::transaction(
             function () use (
                 $request,
                 $validated,
                 $logistics,
                 $orderIds,
                 $hubFacility
-            ): void {
+            ): array {
+
                 /*
                 |--------------------------------------------------------------------------
                 | Lock and Verify Orders
@@ -450,9 +379,7 @@ class LogisticsLastMileAssignmentController extends Controller
                 */
 
                 $orders =
-                    DB::table(
-                        'marketplace_orders as orders'
-                    )
+                    DB::table('marketplace_orders as orders')
                         ->join(
                             'logistics_parcels as parcel',
                             'parcel.marketplace_order_id',
@@ -493,7 +420,10 @@ class LogisticsLastMileAssignmentController extends Controller
                             'parcel.status',
                             'destination_received'
                         )
-                        ->where('orders.status', 'in_transit')
+                        ->where(
+                            'orders.status',
+                            'in_transit'
+                        )
                         ->select([
                             'orders.id',
                             'orders.order_number',
@@ -509,32 +439,26 @@ class LogisticsLastMileAssignmentController extends Controller
                         ->lockForUpdate()
                         ->get();
 
-                if (
-                    $orders->count()
-                    !==
-                    $orderIds->count()
-                ) {
+                if ($orders->count() !== $orderIds->count()) {
                     throw ValidationException::withMessages([
-                        'order_ids' => 'Some selected parcels are no longer available for last-mile assignment.',
+                        'order_ids' =>
+                            'Some selected parcels are no longer available for last-mile assignment.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Hub Operator Destination Authorization
+                | Hub Operator Authorization
                 |--------------------------------------------------------------------------
-                |
-                | Revalidate the current operator's facility inside the
-                | transaction before applying any changes.
                 */
 
                 if ($hubFacility) {
-                    $currentHub = CurrentLogisticsHub::requireFacility(
-                        $request
-                    );
+                    $currentHub =
+                        CurrentLogisticsHub::requireFacility($request);
 
                     abort_unless(
-                        (int) $currentHub->id === (int) $hubFacility->id,
+                        (int) $currentHub->id
+                            === (int) $hubFacility->id,
                         403,
                         'Your assigned Logistics hub has changed. Sign in again.'
                     );
@@ -542,14 +466,10 @@ class LogisticsLastMileAssignmentController extends Controller
 
                 if (
                     $hubFacility
-                    &&
-                    $orders->contains(
-                        fn ($order): bool => (int)
-                                $order
-                                    ->destination_facility_id
-                            !==
-                            (int)
-                                $hubFacility->id
+                    && $orders->contains(
+                        fn ($order): bool =>
+                            (int) $order->destination_facility_id
+                            !== (int) $hubFacility->id
                     )
                 ) {
                     abort(
@@ -565,9 +485,7 @@ class LogisticsLastMileAssignmentController extends Controller
                 */
 
                 $alreadyAssigned =
-                    DB::table(
-                        'last_mile_assignment_orders'
-                    )
+                    DB::table('last_mile_assignment_orders')
                         ->whereIn(
                             'marketplace_order_id',
                             $orderIds->all()
@@ -576,91 +494,77 @@ class LogisticsLastMileAssignmentController extends Controller
 
                 if ($alreadyAssigned) {
                     throw ValidationException::withMessages([
-                        'order_ids' => 'One or more selected orders already have a last-mile assignment.',
+                        'order_ids' =>
+                            'One or more selected orders already have a last-mile assignment.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Every Order Must Have Same Destination Hub + Barangay
+                | Same Destination Hub + Barangay
                 |--------------------------------------------------------------------------
                 */
 
-                $groupKeys =
-                    $orders
-                        ->map(
-                            function ($order): string {
-                                return implode(
-                                    '|',
-                                    [
-                                        $order
-                                            ->destination_facility_id,
+                $groupKeys = $orders
+                    ->map(function ($order): string {
+                        return implode(
+                            '|',
+                            [
+                                $order->destination_facility_id,
 
-                                        strtolower(
-                                            trim(
-                                                $this
-                                                    ->extractBarangay(
-                                                        $order
-                                                            ->buyer_address,
-                                                        $order->destination_municipality
-                                                    )
-                                            )
-                                        ),
-                                    ]
-                                );
-                            }
-                        )
-                        ->unique();
+                                strtolower(
+                                    trim(
+                                        $this->extractBarangay(
+                                            $order->buyer_address,
+                                            $order->destination_municipality
+                                        )
+                                    )
+                                ),
+                            ]
+                        );
+                    })
+                    ->unique();
 
-                if (
-                    $groupKeys->count()
-                    !== 1
-                ) {
+                if ($groupKeys->count() !== 1) {
                     throw ValidationException::withMessages([
-                        'order_ids' => 'Last-mile batches must contain orders for the same destination hub and barangay.',
+                        'order_ids' =>
+                            'Last-mile batches must contain orders for the same destination hub and barangay.',
                     ]);
                 }
 
-                $firstOrder =
-                    $orders->first();
+                $firstOrder = $orders->first();
 
                 /*
                 |--------------------------------------------------------------------------
-                | Validate the Actual Destination Facility
+                | Validate Destination Facility
                 |--------------------------------------------------------------------------
-                |
-                | No cross-network or inactive facility can be used as a
-                | Last-Mile assignment or notification recipient.
                 */
 
-                $destinationFacility = DB::table('logistics_facilities')
-                    ->where(
-                        'id',
-                        (int) $firstOrder->destination_facility_id
-                    )
-                    ->where(
-                        'logistics_account_id',
-                        $logistics->id
-                    )
-                    ->where(
-                        'is_active',
-                        true
-                    )
-                    ->lockForUpdate()
-                    ->first(['id', 'name']);
+                $destinationFacility =
+                    DB::table('logistics_facilities')
+                        ->where(
+                            'id',
+                            (int) $firstOrder->destination_facility_id
+                        )
+                        ->where(
+                            'logistics_account_id',
+                            $logistics->id
+                        )
+                        ->where('is_active', true)
+                        ->lockForUpdate()
+                        ->first(['id', 'name']);
 
                 if (! $destinationFacility) {
                     throw ValidationException::withMessages([
-                        'order_ids' => 'The destination hub is inactive or does not belong to this Logistics network.',
+                        'order_ids' =>
+                            'The destination hub is inactive or does not belong to this Logistics network.',
                     ]);
                 }
 
-                $deliveryArea =
-                    $this->extractBarangay(
-                        $firstOrder
-                            ->buyer_address,
-                        $firstOrder->destination_municipality
-                    );
+                $deliveryArea = $this->extractBarangay(
+                    $firstOrder->buyer_address,
+                    $firstOrder->destination_municipality
+                );
 
                 /*
                 |--------------------------------------------------------------------------
@@ -668,118 +572,121 @@ class LogisticsLastMileAssignmentController extends Controller
                 |--------------------------------------------------------------------------
                 */
 
-                $rider =
-                    CourierAccount::query()
-                        ->whereKey(
-                            (int)
-                                $validated[
-                                    'rider_id'
-                                ]
-                        )
-                        ->where(
-                            'logistics_account_id',
-                            $logistics->id
-                        )
-                        ->where(
-                            'account_status',
-                            'active'
-                        )
-                        ->where(
-                            'availability_status',
-                            'online'
-                        )
-                        ->lockForUpdate()
-                        ->firstOrFail();
+                $rider = CourierAccount::query()
+                    ->whereKey(
+                        (int) $validated['rider_id']
+                    )
+                    ->where(
+                        'logistics_account_id',
+                        $logistics->id
+                    )
+                    ->where('account_status', 'active')
+                    ->where('availability_status', 'online')
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
                 /*
                 |--------------------------------------------------------------------------
-                | Rider Approval
+                | Verify Rider Approval
                 |--------------------------------------------------------------------------
                 */
 
                 $approved =
                     RegistrationApplication::query()
                         ->whereKey(
-                            $rider
-                                ->registration_application_id
+                            $rider->registration_application_id
                         )
                         ->where(
                             'logistics_account_id',
                             $logistics->id
                         )
-                        ->where(
-                            'role',
-                            'rider'
-                        )
-                        ->where(
-                            'status',
-                            'approved'
-                        )
+                        ->where('role', 'rider')
+                        ->where('status', 'approved')
                         ->exists();
 
                 if (! $approved) {
                     throw ValidationException::withMessages([
-                        'rider_id' => 'The selected Rider is not approved for this Logistics network.',
+                        'rider_id' =>
+                            'The selected Rider is not approved for this Logistics network.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Rider Must Match Destination Municipality + Barangay
+                | Check Barangay Service Area
                 |--------------------------------------------------------------------------
                 */
 
                 $firstOrder->barangay_name = $deliveryArea;
 
-                if (! LogisticsServiceArea::matchesRider($rider, $firstOrder)) {
+                if (! LogisticsServiceArea::matchesRider(
+                    $rider,
+                    $firstOrder
+                )) {
                     throw ValidationException::withMessages([
-                        'rider_id' => 'Select a Rider assigned to '
+                        'rider_id' =>
+                            'Select a Rider assigned to '
                             .$deliveryArea
                             .', '
-                            .$firstOrder
-                                ->destination_municipality
+                            .$firstOrder->destination_municipality
                             .'.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | One Active Last-Mile Batch Per Rider
+                | Prevent Conflicting Rider Assignments
                 |--------------------------------------------------------------------------
                 */
 
                 $busyPickup = MarketplaceOrder::query()
-                    ->whereRaw('LOWER(TRIM(courier_email)) = ?', [strtolower(trim($rider->email))])
-                    ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup', 'in_transit', 'arrived_buyer'])
+                    ->whereRaw(
+                        'LOWER(TRIM(courier_email)) = ?',
+                        [strtolower(trim($rider->email))]
+                    )
+                    ->whereIn('status', [
+                        'courier_accepted',
+                        'heading_pickup',
+                        'arrived_pickup',
+                        'in_transit',
+                        'arrived_buyer',
+                    ])
                     ->where(function ($query): void {
-                        $query->whereDoesntHave('logisticsParcel')
-                            ->orWhereHas('logisticsParcel', fn ($parcel) => $parcel->where('status', 'awaiting_intake'));
-                    })->exists();
+                        $query
+                            ->whereDoesntHave('logisticsParcel')
+                            ->orWhereHas(
+                                'logisticsParcel',
+                                fn ($parcel) => $parcel->where(
+                                    'status',
+                                    'awaiting_intake'
+                                )
+                            );
+                    })
+                    ->exists();
 
                 if ($busyPickup) {
-                    throw ValidationException::withMessages(['rider_id' => 'This Rider already has an active Seller pickup or delivery.']);
+                    throw ValidationException::withMessages([
+                        'rider_id' =>
+                            'This Rider already has an active Seller pickup or delivery.',
+                    ]);
                 }
 
                 $riderBusy =
-                    DB::table(
-                        'last_mile_assignments'
-                    )
+                    DB::table('last_mile_assignments')
                         ->where(
                             'courier_account_id',
                             $rider->id
                         )
-                        ->whereIn(
-                            'status',
-                            [
-                                'assigned',
-                                'out_for_delivery',
-                            ]
-                        )
+                        ->whereIn('status', [
+                            'assigned',
+                            'out_for_delivery',
+                        ])
                         ->exists();
 
                 if ($riderBusy) {
                     throw ValidationException::withMessages([
-                        'rider_id' => 'This Rider already has an active last-mile batch.',
+                        'rider_id' =>
+                            'This Rider already has an active last-mile batch.',
                     ]);
                 }
 
@@ -789,104 +696,91 @@ class LogisticsLastMileAssignmentController extends Controller
                 |--------------------------------------------------------------------------
                 */
 
-                $assignmentCode = 'LM-'
+                $assignmentCode =
+                    'LM-'
                     .now()->format('Ymd-His')
                     .'-'
                     .strtoupper(bin2hex(random_bytes(3)));
 
                 $assignmentId =
-                    DB::table(
-                        'last_mile_assignments'
-                    )->insertGetId([
-                        'logistics_account_id' => $logistics->id,
+                    DB::table('last_mile_assignments')
+                        ->insertGetId([
+                            'logistics_account_id' => $logistics->id,
 
-                        'destination_facility_id' => $firstOrder
-                            ->destination_facility_id,
+                            'destination_facility_id' =>
+                                $firstOrder->destination_facility_id,
 
-                        'courier_account_id' => $rider->id,
+                            'courier_account_id' => $rider->id,
 
-                        'assignment_code' => $assignmentCode,
+                            'assignment_code' => $assignmentCode,
 
-                        'delivery_area' => $deliveryArea,
+                            'delivery_area' => $deliveryArea,
 
-                        'status' => 'assigned',
+                            'status' => 'assigned',
 
-                        'assigned_at' => now(),
+                            'assigned_at' => now(),
 
-                        'created_at' => now(),
+                            'created_at' => now(),
 
-                        'updated_at' => now(),
-                    ]);
+                            'updated_at' => now(),
+                        ]);
 
                 /*
                 |--------------------------------------------------------------------------
-                | Attach Orders to Local Rider Batch
+                | Attach Orders
                 |--------------------------------------------------------------------------
                 */
 
-                foreach (
-                    $orderIds as $orderId
-                ) {
-                    DB::table(
-                        'last_mile_assignment_orders'
-                    )->insert([
-                        'last_mile_assignment_id' => $assignmentId,
+                foreach ($orderIds as $orderId) {
+                    DB::table('last_mile_assignment_orders')
+                        ->insert([
+                            'last_mile_assignment_id' => $assignmentId,
 
-                        'marketplace_order_id' => $orderId,
+                            'marketplace_order_id' => $orderId,
 
-                        'created_at' => now(),
+                            'created_at' => now(),
 
-                        'updated_at' => now(),
-                    ]);
+                            'updated_at' => now(),
+                        ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Parcel State
+                | Update Parcel Status
                 |--------------------------------------------------------------------------
                 |
-                | IMPORTANT:
-                |
-                | Do NOT overwrite marketplace_orders.courier_email.
-                |
-                | courier_email remains the historical pickup Rider snapshot.
-                | The actual final-mile Rider is represented by:
-                |
-                | last_mile_assignments.courier_account_id
+                | Do not overwrite marketplace_orders.courier_email.
+                | This remains the historical Pickup Rider snapshot.
                 |
                 */
 
-                $updatedParcels = DB::table(
-                    'logistics_parcels'
-                )
-                    ->whereIn(
-                        'marketplace_order_id',
-                        $orderIds->all()
-                    )
-                    ->where('status', 'destination_received')
-                    ->update([
-                        'status' => 'last_mile_assigned',
+                $updatedParcels =
+                    DB::table('logistics_parcels')
+                        ->whereIn(
+                            'marketplace_order_id',
+                            $orderIds->all()
+                        )
+                        ->where(
+                            'status',
+                            'destination_received'
+                        )
+                        ->update([
+                            'status' => 'last_mile_assigned',
 
-                        'updated_at' => now(),
-                    ]);
+                            'updated_at' => now(),
+                        ]);
 
                 if ($updatedParcels !== $orderIds->count()) {
                     throw ValidationException::withMessages([
-                        'order_ids' => 'A parcel changed while creating the Last-Mile batch. No assignment was saved. Refresh and retry.',
+                        'order_ids' =>
+                            'A parcel changed while creating the Last-Mile batch. No assignment was saved. Refresh and retry.',
                     ]);
                 }
 
                 /*
                 |--------------------------------------------------------------------------
-                | Persistent Last-Mile Assignment Notifications
+                | Persistent Notifications
                 |--------------------------------------------------------------------------
-                |
-                | One event per newly created BATCH per recipient, not per
-                | order. The Manager and each active destination-hub operator
-                | get independent read/unread records.
-                |
-                | These inserts are inside this assignment transaction. A
-                | failure rolls back the assignment, parcel status and alerts.
                 */
 
                 $riderName = trim(
@@ -895,10 +789,12 @@ class LogisticsLastMileAssignmentController extends Controller
                     .(string) $rider->last_name
                 ) ?: 'SARI Rider';
 
-                $eventKey = 'last_mile_assigned:assignment:'
+                $eventKey =
+                    'last_mile_assigned:assignment:'
                     .$assignmentId;
 
-                $message = 'Last-Mile batch '
+                $message =
+                    'Last-Mile batch '
                     .$assignmentCode
                     .' containing '
                     .$orderIds->count()
@@ -912,17 +808,25 @@ class LogisticsLastMileAssignmentController extends Controller
 
                 $data = [
                     'assignment_id' => (int) $assignmentId,
+
                     'assignment_code' => $assignmentCode,
-                    'destination_facility_id' => (int) $destinationFacility->id,
+
+                    'destination_facility_id' =>
+                        (int) $destinationFacility->id,
+
                     'rider_id' => (int) $rider->id,
+
                     'rider_name' => $riderName,
+
                     'delivery_area' => $deliveryArea,
+
                     'parcel_count' => (int) $orderIds->count(),
+
                     'order_ids' => $orderIds->all(),
                 ];
 
                 /*
-                 * Main Logistics Manager notification.
+                 * Main Logistics Notification
                  */
 
                 $this->notifications->notifyManager(
@@ -936,8 +840,7 @@ class LogisticsLastMileAssignmentController extends Controller
                 );
 
                 /*
-                 * Private notifications for active operators assigned
-                 * to the actual destination hub.
+                 * Destination Hub Notification
                  */
 
                 $this->notifications->notifyFacilityOperators(
@@ -950,13 +853,49 @@ class LogisticsLastMileAssignmentController extends Controller
                     actionRoute: 'logistics.last-mile-assignment',
                     data: $data
                 );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Activity Logs — Return Actual Saved Values
+                |--------------------------------------------------------------------------
+                */
+
+                return [
+                    'assignment_id' => (int) $assignmentId,
+
+                    'destination_facility_id' =>
+                        (int) $destinationFacility->id,
+                ];
             },
             3
         );
 
         /*
         |--------------------------------------------------------------------------
-        | Success
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | Execute only after successful transaction commit.
+        */
+
+        $request->attributes->set(
+            'activity_changed',
+            true
+        );
+
+        $request->attributes->set(
+            'activity_facility_id',
+            $activityContext['destination_facility_id']
+        );
+
+        $request->attributes->set(
+            'activity_subject_id',
+            $activityContext['assignment_id']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Success Response
         |--------------------------------------------------------------------------
         */
 
@@ -975,19 +914,17 @@ class LogisticsLastMileAssignmentController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Temporary V1 Address Parser
+    | Barangay Address Parser
     |--------------------------------------------------------------------------
-    |
-    | "Barangay Bubukal, Santa Cruz, Laguna"
-    |
-    | becomes:
-    |
-    | "Bubukal"
-    |
     */
 
-    private function extractBarangay(?string $address, ?string $municipality = null): string
-    {
-        return LogisticsServiceArea::fromAddress($address, $municipality);
+    private function extractBarangay(
+        ?string $address,
+        ?string $municipality = null
+    ): string {
+        return LogisticsServiceArea::fromAddress(
+            $address,
+            $municipality
+        );
     }
 }

@@ -41,10 +41,14 @@ class LogisticsMessageController extends Controller
             ->get();
 
         $selectedRider = null;
+
         $selectedId = (int) $request->query('rider', 0);
 
         if ($selectedId > 0) {
-            $selectedRider = $riders->firstWhere('id', $selectedId);
+            $selectedRider = $riders->firstWhere(
+                'id',
+                $selectedId
+            );
         }
 
         $selectedRider ??= $riders->first();
@@ -52,30 +56,72 @@ class LogisticsMessageController extends Controller
         $messages = collect();
 
         if ($selectedRider) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Mark Rider Messages as Read
+            |--------------------------------------------------------------------------
+            */
+
             LogisticsMessage::query()
-                ->where('logistics_account_id', $logistics->id)
-                ->where('courier_account_id', $selectedRider->id)
+                ->where(
+                    'logistics_account_id',
+                    $logistics->id
+                )
+                ->where(
+                    'courier_account_id',
+                    $selectedRider->id
+                )
                 ->where('sender_role', 'rider')
                 ->whereNull('read_at')
                 ->update([
                     'read_at' => now(),
                 ]);
 
+            /*
+            |--------------------------------------------------------------------------
+            | Retrieve Conversation
+            |--------------------------------------------------------------------------
+            */
+
             $messages = LogisticsMessage::query()
-                ->where('logistics_account_id', $logistics->id)
-                ->where('courier_account_id', $selectedRider->id)
+                ->where(
+                    'logistics_account_id',
+                    $logistics->id
+                )
+                ->where(
+                    'courier_account_id',
+                    $selectedRider->id
+                )
                 ->oldest('id')
                 ->get();
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Unread Message Counters
+        |--------------------------------------------------------------------------
+        */
+
         $unreadByRider = LogisticsMessage::query()
-            ->where('logistics_account_id', $logistics->id)
-            ->whereIn('courier_account_id', $riders->pluck('id'))
+            ->where(
+                'logistics_account_id',
+                $logistics->id
+            )
+            ->whereIn(
+                'courier_account_id',
+                $riders->pluck('id')
+            )
             ->where('sender_role', 'rider')
             ->whereNull('read_at')
-            ->selectRaw('courier_account_id, COUNT(*) AS unread_count')
+            ->selectRaw(
+                'courier_account_id, COUNT(*) AS unread_count'
+            )
             ->groupBy('courier_account_id')
-            ->pluck('unread_count', 'courier_account_id');
+            ->pluck(
+                'unread_count',
+                'courier_account_id'
+            );
 
         return view(
             'logistics.messages',
@@ -88,11 +134,24 @@ class LogisticsMessageController extends Controller
         );
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Send Message to Rider
+    |--------------------------------------------------------------------------
+    */
+
     public function send(
         Request $request,
         CourierAccount $rider
     ): RedirectResponse {
+
         $logistics = CurrentLogisticsAccount::resolve($request);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate Message
+        |--------------------------------------------------------------------------
+        */
 
         $validated = $request->validate([
             'body' => [
@@ -102,15 +161,33 @@ class LogisticsMessageController extends Controller
             ],
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Save Message Transaction
+        |--------------------------------------------------------------------------
+        */
+
         DB::transaction(function () use (
             $rider,
             $logistics,
             $validated
         ): void {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Lock Rider Account
+            |--------------------------------------------------------------------------
+            */
+
             $locked = CourierAccount::query()
                 ->whereKey($rider->id)
                 ->lockForUpdate()
                 ->firstOrFail();
+
+            /*
+             * Rider must belong to the current Logistics provider
+             * or be an eligible unclaimed legacy Rider.
+             */
 
             abort_unless(
                 ! $locked->logistics_account_id
@@ -119,8 +196,16 @@ class LogisticsMessageController extends Controller
                 404
             );
 
+            /*
+            |--------------------------------------------------------------------------
+            | Verify Rider Application
+            |--------------------------------------------------------------------------
+            */
+
             $application = RegistrationApplication::query()
-                ->whereKey($locked->registration_application_id)
+                ->whereKey(
+                    $locked->registration_application_id
+                )
                 ->lockForUpdate()
                 ->first();
 
@@ -138,7 +223,14 @@ class LogisticsMessageController extends Controller
                 'Only approved active Riders can be messaged here.'
             );
 
+            /*
+            |--------------------------------------------------------------------------
+            | Claim Eligible Legacy Rider
+            |--------------------------------------------------------------------------
+            */
+
             if (! $locked->logistics_account_id) {
+
                 $locked->forceFill([
                     'logistics_account_id' => $logistics->id,
                 ])->save();
@@ -148,18 +240,65 @@ class LogisticsMessageController extends Controller
                 ])->save();
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | Create Message
+            |--------------------------------------------------------------------------
+            |
+            | The actual message body is stored in the existing
+            | Messaging table, NOT in the Activity Logs table.
+            |
+            */
+
             LogisticsMessage::create([
                 'courier_account_id' => $locked->id,
+
                 'logistics_account_id' => $logistics->id,
+
                 'sender_role' => 'logistics',
+
                 'body' => $validated['body'],
             ]);
+
         }, 3);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | Set this flag only after the transaction commits.
+        |
+        | The middleware automatically resolves:
+        | - Module: Messaging
+        | - Action: sent
+        | - Description: Message sent to Rider
+        | - Subject: rider
+        | - Subject ID: Authorized Rider route parameter
+        |
+        | Do not pass the message body or private conversation
+        | contents to the Activity Logger.
+        |
+        */
+
+        $request->attributes->set(
+            'activity_changed',
+            true
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Success Response
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()
             ->route('logistics.messages', [
                 'rider' => $rider->id,
             ])
-            ->with('success', 'Message sent to Rider.');
+            ->with(
+                'success',
+                'Message sent to Rider.'
+            );
     }
 }

@@ -502,12 +502,42 @@ class LogisticsParcelSortingController extends Controller
                     data: $notificationData
                 );
 
+                /*
+                |--------------------------------------------------------------------------
+                | Return Verified Sorting Result
+                |--------------------------------------------------------------------------
+                */
+
                 return [
                     'hub_name' => $originFacility->name,
+                    'facility_id' => (int) $originFacility->id,
                     'local' => $isLocalHandoff,
                 ];
             },
             3
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | Set audit attributes only after the sorting transaction
+        | commits successfully.
+        |
+        | The facility ID comes from the actual database record,
+        | not from user-submitted input.
+        |
+        */
+
+        $request->attributes->set(
+            'activity_changed',
+            true
+        );
+
+        $request->attributes->set(
+            'activity_facility_id',
+            $result['facility_id']
         );
 
         /*

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Courier\RiderRegistrationController;
 use App\Http\Controllers\Logistics\LogisticsAccountManagementController;
+use App\Http\Controllers\Logistics\LogisticsActivityLogController;
 use App\Http\Controllers\Logistics\LogisticsDashboardController;
 use App\Http\Controllers\Logistics\LogisticsDeliveryAssignmentController;
 use App\Http\Controllers\Logistics\LogisticsDeliveryMonitoringController;
@@ -17,223 +18,317 @@ use App\Http\Controllers\Logistics\LogisticsPickupRequestController;
 use App\Http\Controllers\Logistics\LogisticsReportsController;
 use App\Http\Controllers\Logistics\LogisticsRiderApplicationController;
 use App\Http\Controllers\Logistics\LogisticsRiderManagementController;
+
 use App\Http\Middleware\Logistics\EnsureLogisticsAuthenticated;
 use App\Http\Middleware\Logistics\EnsureLogisticsManager;
+use App\Http\Middleware\Logistics\LogCompletedLogisticsActivity;
+
+use App\Services\Logistics\LogisticsActivityLogger;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Rider Registration (unchanged)
+| PUBLIC RIDER REGISTRATION
 |--------------------------------------------------------------------------
 */
 
-Route::get('/register/rider', [RiderRegistrationController::class, 'index'])
-    ->name('rider.logistics.index');
+Route::get(
+    '/register/rider',
+    [RiderRegistrationController::class, 'index']
+)->name('rider.logistics.index');
 
-Route::get('/register/rider/{logistics}', [RiderRegistrationController::class, 'create'])
+Route::get(
+    '/register/rider/{logistics}',
+    [RiderRegistrationController::class, 'create']
+)
     ->whereNumber('logistics')
     ->name('rider.logistics.apply');
 
-Route::post('/register/rider/{logistics}/email/send', [RiderRegistrationController::class, 'sendEmailCode'])
+Route::post(
+    '/register/rider/{logistics}/email/send',
+    [RiderRegistrationController::class, 'sendEmailCode']
+)
     ->whereNumber('logistics')
     ->middleware('throttle:8,1')
     ->name('rider.logistics.email.send');
 
-Route::post('/register/rider/{logistics}/email/verify', [RiderRegistrationController::class, 'verifyEmailCode'])
+Route::post(
+    '/register/rider/{logistics}/email/verify',
+    [RiderRegistrationController::class, 'verifyEmailCode']
+)
     ->whereNumber('logistics')
     ->middleware('throttle:12,1')
     ->name('rider.logistics.email.verify');
 
-Route::post('/register/rider/{logistics}', [RiderRegistrationController::class, 'store'])
+Route::post(
+    '/register/rider/{logistics}',
+    [RiderRegistrationController::class, 'store']
+)
     ->whereNumber('logistics')
     ->name('rider.logistics.submit');
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated Logistics — Manager and assigned Hub Operator
+| AUTHENTICATED LOGISTICS ROUTES
 |--------------------------------------------------------------------------
+|
+| Accessible to:
+| - Main Logistics Manager
+| - Assigned Hub Operator
+|
+| Activity middleware records eligible successful write operations.
+| Individual controllers retain their existing authorization rules.
+|
 */
 
 Route::prefix('logistics')
     ->name('logistics.')
-    ->middleware(EnsureLogisticsAuthenticated::class)
+    ->middleware([
+        EnsureLogisticsAuthenticated::class,
+        LogCompletedLogisticsActivity::class,
+    ])
     ->group(function (): void {
 
         /*
         |--------------------------------------------------------------------------
-        | Dashboard
+        | DASHBOARD
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/', [LogisticsDashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get(
+            '/',
+            [LogisticsDashboardController::class, 'index']
+        )->name('dashboard');
 
         /*
         |--------------------------------------------------------------------------
-        | Shared Operational Routes
-        |--------------------------------------------------------------------------
-        |
-        | Main Logistics has provider-wide access.
-        | Hub Operators have assigned-hub access.
-        |
-        | The respective controllers enforce actual data and action scoping.
-        |
-        */
-
-        /*
-        |--------------------------------------------------------------------------
-        | Pickup Requests
+        | PICKUP REQUESTS
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/pickup-requests', [LogisticsPickupRequestController::class, 'index'])
-            ->name('pickup-requests');
+        Route::get(
+            '/pickup-requests',
+            [LogisticsPickupRequestController::class, 'index']
+        )->name('pickup-requests');
 
-        Route::post('/pickup-requests/batch/verify', [LogisticsPickupRequestController::class, 'verifyBatch'])
-            ->name('pickup-requests.batch-verify');
+        Route::post(
+            '/pickup-requests/batch/verify',
+            [LogisticsPickupRequestController::class, 'verifyBatch']
+        )->name('pickup-requests.batch-verify');
 
-        Route::post('/pickup-requests/{order}/verify', [LogisticsPickupRequestController::class, 'verify'])
+        Route::post(
+            '/pickup-requests/{order}/verify',
+            [LogisticsPickupRequestController::class, 'verify']
+        )
             ->whereNumber('order')
             ->name('pickup-requests.verify');
 
         /*
         |--------------------------------------------------------------------------
-        | Pickup Assignment
+        | PICKUP ASSIGNMENT
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/delivery-assignment', [LogisticsDeliveryAssignmentController::class, 'index'])
-            ->name('delivery-assignment');
+        Route::get(
+            '/delivery-assignment',
+            [LogisticsDeliveryAssignmentController::class, 'index']
+        )->name('delivery-assignment');
 
-        Route::post('/delivery-assignment/batch/assign', [LogisticsDeliveryAssignmentController::class, 'assignBatch'])
-            ->name('delivery-assignment.batch-assign');
+        Route::post(
+            '/delivery-assignment/batch/assign',
+            [LogisticsDeliveryAssignmentController::class, 'assignBatch']
+        )->name('delivery-assignment.batch-assign');
 
-        Route::post('/delivery-assignment/{order}/assign', [LogisticsDeliveryAssignmentController::class, 'assign'])
+        Route::post(
+            '/delivery-assignment/{order}/assign',
+            [LogisticsDeliveryAssignmentController::class, 'assign']
+        )
             ->whereNumber('order')
             ->name('delivery-assignment.assign');
 
         /*
         |--------------------------------------------------------------------------
-        | Rider Management — Hub view is local and read-only
+        | RIDER MANAGEMENT
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/rider-management', [LogisticsRiderManagementController::class, 'index'])
-            ->name('rider-management');
+        Route::get(
+            '/rider-management',
+            [LogisticsRiderManagementController::class, 'index']
+        )->name('rider-management');
 
         /*
         |--------------------------------------------------------------------------
-        | Incoming Parcels
+        | INCOMING PARCELS
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/incoming-parcels', [LogisticsIncomingParcelController::class, 'index'])
-            ->name('incoming-parcels');
+        Route::get(
+            '/incoming-parcels',
+            [LogisticsIncomingParcelController::class, 'index']
+        )->name('incoming-parcels');
 
-        Route::post('/incoming-parcels/{order}/receive', [LogisticsIncomingParcelController::class, 'receive'])
+        Route::post(
+            '/incoming-parcels/{order}/receive',
+            [LogisticsIncomingParcelController::class, 'receive']
+        )
             ->whereNumber('order')
             ->name('incoming-parcels.receive');
 
         /*
         |--------------------------------------------------------------------------
-        | Parcel Sorting
+        | PARCEL SORTING
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/parcel-sorting', [LogisticsParcelSortingController::class, 'index'])
-            ->name('parcel-sorting');
+        Route::get(
+            '/parcel-sorting',
+            [LogisticsParcelSortingController::class, 'index']
+        )->name('parcel-sorting');
 
-        Route::post('/parcel-sorting/{parcel}/sort', [LogisticsParcelSortingController::class, 'sort'])
+        Route::post(
+            '/parcel-sorting/{parcel}/sort',
+            [LogisticsParcelSortingController::class, 'sort']
+        )
             ->whereNumber('parcel')
             ->name('parcel-sorting.sort');
 
         /*
         |--------------------------------------------------------------------------
-        | Hub Transfers
+        | HUB TRANSFERS
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/hub-transfers', [LogisticsHubTransferController::class, 'index'])
-            ->name('hub-transfers');
+        Route::get(
+            '/hub-transfers',
+            [LogisticsHubTransferController::class, 'index']
+        )->name('hub-transfers');
 
-        Route::post('/hub-transfers', [LogisticsHubTransferController::class, 'store'])
-            ->name('hub-transfers.store');
+        Route::post(
+            '/hub-transfers',
+            [LogisticsHubTransferController::class, 'store']
+        )->name('hub-transfers.store');
 
-        Route::post('/hub-transfers/{transfer}/dispatch', [LogisticsHubTransferController::class, 'dispatch'])
+        Route::post(
+            '/hub-transfers/{transfer}/dispatch',
+            [LogisticsHubTransferController::class, 'dispatch']
+        )
             ->whereNumber('transfer')
             ->name('hub-transfers.dispatch');
 
-        Route::post('/hub-transfers/{transfer}/receive', [LogisticsHubTransferController::class, 'receive'])
+        Route::post(
+            '/hub-transfers/{transfer}/receive',
+            [LogisticsHubTransferController::class, 'receive']
+        )
             ->whereNumber('transfer')
             ->name('hub-transfers.receive');
 
         /*
         |--------------------------------------------------------------------------
-        | Last-Mile Assignment
+        | LAST-MILE ASSIGNMENT
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/last-mile-assignment', [LogisticsLastMileAssignmentController::class, 'index'])
-            ->name('last-mile-assignment');
+        Route::get(
+            '/last-mile-assignment',
+            [LogisticsLastMileAssignmentController::class, 'index']
+        )->name('last-mile-assignment');
 
-        Route::post('/last-mile-assignment/batch/assign', [LogisticsLastMileAssignmentController::class, 'assignBatch'])
-            ->name('last-mile-assignment.batch-assign');
+        Route::post(
+            '/last-mile-assignment/batch/assign',
+            [LogisticsLastMileAssignmentController::class, 'assignBatch']
+        )->name('last-mile-assignment.batch-assign');
 
         /*
         |--------------------------------------------------------------------------
-        | Delivery Monitoring and Reports
+        | DELIVERY MONITORING
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/delivery-monitoring', [LogisticsDeliveryMonitoringController::class, 'index'])
-            ->name('delivery-monitoring');
-
-        Route::get('/reports', [LogisticsReportsController::class, 'index'])
-            ->name('reports');
+        Route::get(
+            '/delivery-monitoring',
+            [LogisticsDeliveryMonitoringController::class, 'index']
+        )->name('delivery-monitoring');
 
         /*
         |--------------------------------------------------------------------------
-        | Persistent Notifications
+        | REPORTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/reports',
+            [LogisticsReportsController::class, 'index']
+        )->name('reports');
+
+        /*
+        |--------------------------------------------------------------------------
+        | ACTIVITY LOGS
         |--------------------------------------------------------------------------
         |
-        | Both Manager and Hub Operator can use these routes.
+        | Main Logistics:
+        | Provider-wide activity history.
         |
-        | The controller resolves the recipient from the authenticated
-        | session. It never accepts a recipient ID from the browser.
+        | Hub Operator:
+        | Assigned-hub activity history.
         |
-        | Reading notification history is GET.
-        | Updating notification read state is POST + CSRF.
+        | Actual visibility restrictions are applied by the controller.
+        | No edit or delete routes are registered.
         |
         */
 
-        Route::get('/notifications', [LogisticsNotificationController::class, 'index'])
-            ->name('notifications');
+        Route::get(
+            '/activity-logs',
+            [LogisticsActivityLogController::class, 'index']
+        )->name('activity-logs');
 
-        Route::get('/notifications/summary', [LogisticsNotificationController::class, 'summary'])
-            ->name('notifications.summary');
+        /*
+        |--------------------------------------------------------------------------
+        | PERSISTENT NOTIFICATIONS
+        |--------------------------------------------------------------------------
+        */
 
-        Route::post('/notifications/read-all', [LogisticsNotificationController::class, 'readAll'])
+        Route::get(
+            '/notifications',
+            [LogisticsNotificationController::class, 'index']
+        )->name('notifications');
+
+        Route::get(
+            '/notifications/summary',
+            [LogisticsNotificationController::class, 'summary']
+        )->name('notifications.summary');
+
+        Route::post(
+            '/notifications/read-all',
+            [LogisticsNotificationController::class, 'readAll']
+        )
             ->middleware('throttle:10,1')
             ->name('notifications.read-all');
 
-        Route::post('/notifications/{notification}/read', [LogisticsNotificationController::class, 'read'])
+        Route::post(
+            '/notifications/{notification}/read',
+            [LogisticsNotificationController::class, 'read']
+        )
             ->whereNumber('notification')
             ->middleware('throttle:30,1')
             ->name('notifications.read');
 
-        Route::post('/notifications/{notification}/open', [LogisticsNotificationController::class, 'open'])
+        Route::post(
+            '/notifications/{notification}/open',
+            [LogisticsNotificationController::class, 'open']
+        )
             ->whereNumber('notification')
             ->middleware('throttle:30,1')
             ->name('notifications.open');
 
         /*
         |--------------------------------------------------------------------------
-        | Manager-Only Routes
+        | MAIN LOGISTICS ONLY
         |--------------------------------------------------------------------------
         |
-        | Hub Operators must receive 403 Forbidden even if they manually
-        | visit these URLs or submit a request.
+        | Hub Operators cannot access these routes.
         |
         */
 
@@ -242,106 +337,167 @@ Route::prefix('logistics')
 
                 /*
                 |--------------------------------------------------------------------------
-                | Rider Applications
+                | RIDER APPLICATIONS
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('/rider-applications', [LogisticsRiderApplicationController::class, 'index'])
-                    ->name('rider-applications');
+                Route::get(
+                    '/rider-applications',
+                    [LogisticsRiderApplicationController::class, 'index']
+                )->name('rider-applications');
 
-                Route::post('/rider-applications/{application}/approve', [LogisticsRiderApplicationController::class, 'approve'])
+                Route::post(
+                    '/rider-applications/{application}/approve',
+                    [LogisticsRiderApplicationController::class, 'approve']
+                )
                     ->whereNumber('application')
                     ->name('rider-applications.approve');
 
-                Route::post('/rider-applications/{application}/reject', [LogisticsRiderApplicationController::class, 'reject'])
+                Route::post(
+                    '/rider-applications/{application}/reject',
+                    [LogisticsRiderApplicationController::class, 'reject']
+                )
                     ->whereNumber('application')
                     ->name('rider-applications.reject');
 
-                Route::get('/rider-applications/{application}/document/{document}', [LogisticsRiderApplicationController::class, 'document'])
+                Route::get(
+                    '/rider-applications/{application}/document/{document}',
+                    [LogisticsRiderApplicationController::class, 'document']
+                )
                     ->whereNumber('application')
                     ->whereIn('document', ['id', 'orcr'])
                     ->name('rider-applications.document');
 
                 /*
                 |--------------------------------------------------------------------------
-                | Sorting Facilities / Municipal Hub Administration
+                | SORTING FACILITIES
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('/sorting-facilities', [LogisticsFacilityController::class, 'index'])
-                    ->name('facilities.index');
+                Route::get(
+                    '/sorting-facilities',
+                    [LogisticsFacilityController::class, 'index']
+                )->name('facilities.index');
 
-                Route::post('/sorting-facilities', [LogisticsFacilityController::class, 'store'])
-                    ->name('facilities.store');
+                Route::post(
+                    '/sorting-facilities',
+                    [LogisticsFacilityController::class, 'store']
+                )->name('facilities.store');
 
-                Route::get('/sorting-facilities/{facility}/edit', [LogisticsFacilityController::class, 'edit'])
+                Route::get(
+                    '/sorting-facilities/{facility}/edit',
+                    [LogisticsFacilityController::class, 'edit']
+                )
                     ->whereNumber('facility')
                     ->name('facilities.edit');
 
-                Route::patch('/sorting-facilities/{facility}', [LogisticsFacilityController::class, 'update'])
+                Route::patch(
+                    '/sorting-facilities/{facility}',
+                    [LogisticsFacilityController::class, 'update']
+                )
                     ->whereNumber('facility')
                     ->name('facilities.update');
 
-                Route::patch('/sorting-facilities/{facility}/status', [LogisticsFacilityController::class, 'toggle'])
+                Route::patch(
+                    '/sorting-facilities/{facility}/status',
+                    [LogisticsFacilityController::class, 'toggle']
+                )
                     ->whereNumber('facility')
                     ->name('facilities.toggle');
 
-                Route::delete('/sorting-facilities/{facility}', [LogisticsFacilityController::class, 'destroy'])
+                Route::delete(
+                    '/sorting-facilities/{facility}',
+                    [LogisticsFacilityController::class, 'destroy']
+                )
                     ->whereNumber('facility')
                     ->name('facilities.destroy');
 
                 /*
                 |--------------------------------------------------------------------------
-                | Delivery Route Editing
+                | DELIVERY ROUTES
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('/delivery-routes/{order}', [LogisticsDeliveryRouteController::class, 'edit'])
+                Route::get(
+                    '/delivery-routes/{order}',
+                    [LogisticsDeliveryRouteController::class, 'edit']
+                )
                     ->whereNumber('order')
                     ->name('delivery-routes.edit');
 
-                Route::patch('/delivery-routes/{order}', [LogisticsDeliveryRouteController::class, 'update'])
+                Route::patch(
+                    '/delivery-routes/{order}',
+                    [LogisticsDeliveryRouteController::class, 'update']
+                )
                     ->whereNumber('order')
                     ->name('delivery-routes.update');
 
-                Route::post('/delivery-routes/{order}/stops/{stop}/reached', [LogisticsDeliveryRouteController::class, 'reached'])
+                Route::post(
+                    '/delivery-routes/{order}/stops/{stop}/reached',
+                    [LogisticsDeliveryRouteController::class, 'reached']
+                )
                     ->whereNumber('order')
                     ->whereNumber('stop')
                     ->name('delivery-routes.stops.reached');
 
                 /*
                 |--------------------------------------------------------------------------
-                | Provider Messaging
+                | MESSAGING
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('/messages', [LogisticsMessageController::class, 'index'])
-                    ->name('messages');
+                Route::get(
+                    '/messages',
+                    [LogisticsMessageController::class, 'index']
+                )->name('messages');
 
-                Route::post('/messages/{rider}', [LogisticsMessageController::class, 'send'])
+                Route::post(
+                    '/messages/{rider}',
+                    [LogisticsMessageController::class, 'send']
+                )
                     ->whereNumber('rider')
                     ->name('messages.send');
 
                 /*
                 |--------------------------------------------------------------------------
-                | Provider Account Management
+                | ACCOUNT MANAGEMENT
                 |--------------------------------------------------------------------------
                 */
 
-                Route::get('/account-management', [LogisticsAccountManagementController::class, 'index'])
-                    ->name('account-management');
+                Route::get(
+                    '/account-management',
+                    [LogisticsAccountManagementController::class, 'index']
+                )->name('account-management');
 
-                Route::patch('/account-management', [LogisticsAccountManagementController::class, 'update'])
-                    ->name('account-management.update');
+                Route::patch(
+                    '/account-management',
+                    [LogisticsAccountManagementController::class, 'update']
+                )->name('account-management.update');
             });
 
         /*
         |--------------------------------------------------------------------------
-        | Shared Logout
+        | SHARED LOGOUT
         |--------------------------------------------------------------------------
+        |
+        | Record logout before removing session identity.
+        | A logging failure must not prevent the user from signing out.
+        |
         */
 
         Route::post('/logout', function (Request $request) {
+
+            try {
+                app(LogisticsActivityLogger::class)->record(
+                    $request,
+                    'Authentication',
+                    'logout',
+                    'Signed out of Logistics'
+                );
+            } catch (\Throwable $exception) {
+                report($exception);
+            }
+
             $request->session()->forget([
                 'is_logistics',
                 'logistics_account_id',
@@ -357,8 +513,10 @@ Route::prefix('logistics')
             ]);
 
             $request->session()->invalidate();
+
             $request->session()->regenerateToken();
 
             return redirect()->route('login');
+
         })->name('logout');
     });

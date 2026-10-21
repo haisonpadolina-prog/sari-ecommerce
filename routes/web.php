@@ -67,6 +67,7 @@ use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
 use App\Services\Seller\SellerAccountStatusService;
 use App\Support\LogisticsHubAuthentication;
+use App\Services\Logistics\LogisticsActivityLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -575,6 +576,22 @@ Route::post('/login', function (Request $request) {
         ]);
 
         $request->session()->put('logistics_role', 'manager');
+
+        /*
+         * Audit the authenticated manager only after the session is ready.
+         * Never include the submitted password or login form payload.
+         * A logging failure must not block a valid sign-in.
+         */
+        try {
+            app(LogisticsActivityLogger::class)->record(
+                $request,
+                'Authentication',
+                'login',
+                'Main Logistics signed in'
+            );
+        } catch (\Throwable $exception) {
+            report($exception);
+        }
 
         return redirect()->route('logistics.dashboard');
     }

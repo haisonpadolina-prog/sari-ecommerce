@@ -110,6 +110,7 @@ class LogisticsIncomingParcelController extends Controller
         Request $request,
         MarketplaceOrder $order
     ): RedirectResponse {
+
         /*
          * Authorize the Hub Operator against the existing origin route
          * BEFORE calling the legacy ownedOrder() resolver. That resolver
@@ -149,13 +150,13 @@ class LogisticsIncomingParcelController extends Controller
          * together or roll back.
          */
 
-        $location = DB::transaction(function () use (
+        $result = DB::transaction(function () use (
             $request,
             $order,
             $logisticsId,
             $hubFacility,
             $validated
-        ): string {
+        ): array {
 
             $lockedOrder = MarketplaceOrder::query()
                 ->whereKey($order->id)
@@ -343,13 +344,59 @@ class LogisticsIncomingParcelController extends Controller
                 data: $data
             );
 
-            return $originFacility->name;
+            /*
+            |--------------------------------------------------------------------------
+            | Activity Logs — Return Actual Origin Facility
+            |--------------------------------------------------------------------------
+            |
+            | Return verified facility information from the database.
+            | Never trust browser-submitted facility IDs.
+            |
+            */
+
+            return [
+                'facility_id' => (int) $originFacility->id,
+                'facility_name' => (string) $originFacility->name,
+            ];
+
         }, 3);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | This part executes only AFTER the database transaction
+        | has successfully committed.
+        |
+        | The shared middleware will use these server-side attributes
+        | to record the completed parcel intake.
+        |
+        | Duplicate intake, invalid parcel states, and unauthorized
+        | actions throw before reaching this section.
+        |
+        */
+
+        $request->attributes->set(
+            'activity_changed',
+            true
+        );
+
+        $request->attributes->set(
+            'activity_facility_id',
+            $result['facility_id']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Success Response
+        |--------------------------------------------------------------------------
+        */
 
         return back()->with(
             'success',
             'Parcel received at '
-                . $location
+                . $result['facility_name']
                 . '. It is now ready for sorting.'
         );
     }

@@ -199,9 +199,9 @@ class LogisticsHubTransferController extends Controller
         $parcelIds = collect($validated['parcel_ids'])
             ->map(fn ($id): int => (int) $id)->unique()->sort()->values();
 
-        $transferCode = DB::transaction(function () use (
+        $result = DB::transaction(function () use (
             $request, $parcelIds, $validated, $logistics, $hubFacility
-        ): string {
+        ): array {
             $parcels = LogisticsParcel::query()
                 ->with(['order.deliveryRouteStops.facility'])
                 ->whereIn('id', $parcelIds->all())
@@ -349,12 +349,23 @@ class LogisticsHubTransferController extends Controller
                 $data
             );
 
-            return $transferCode;
+            return [
+                'id' => (int) $transferId,
+                'code' => (string) $transferCode,
+                'facility_id' => (int) $originFacilityId,
+            ];
         }, 3);
+
+        // Only mark an actual change after the full transaction commits.
+        // The middleware reads these server-side values; no browser IDs are trusted.
+        $request->attributes->set('activity_changed', true);
+        $request->attributes->set('activity_created_transfer_id', $result['id']);
+        $request->attributes->set('activity_subject_id', $result['id']);
+        $request->attributes->set('activity_facility_id', $result['facility_id']);
 
         return back()->with(
             'success',
-            'Transfer '.$transferCode
+            'Transfer '.$result['code']
                 .' created successfully. Review the manifest before dispatch.'
         );
     }
@@ -374,9 +385,9 @@ class LogisticsHubTransferController extends Controller
             ? CurrentLogisticsHub::requireFacility($request)
             : null;
 
-        $code = DB::transaction(function () use (
+        $result = DB::transaction(function () use (
             $request, $transfer, $logistics, $hubFacility
-        ): string {
+        ): array {
             $record = DB::table('hub_transfers')
                 ->where('id', $transfer)
                 ->where('logistics_account_id', $logistics->id)
@@ -513,12 +524,19 @@ class LogisticsHubTransferController extends Controller
                 $data
             );
 
-            return (string) $record->transfer_code;
+            return [
+                'code' => (string) $record->transfer_code,
+                'facility_id' => (int) $record->origin_facility_id,
+            ];
         }, 3);
+
+        // Dispatch belongs to the ORIGIN hub, even when a manager acts.
+        $request->attributes->set('activity_changed', true);
+        $request->attributes->set('activity_facility_id', $result['facility_id']);
 
         return back()->with(
             'success',
-            'Transfer '.$code.' has departed the origin hub.'
+            'Transfer '.$result['code'].' has departed the origin hub.'
         );
     }
 
@@ -537,9 +555,9 @@ class LogisticsHubTransferController extends Controller
             ? CurrentLogisticsHub::requireFacility($request)
             : null;
 
-        $code = DB::transaction(function () use (
+        $result = DB::transaction(function () use (
             $request, $transfer, $logistics, $hubFacility
-        ): string {
+        ): array {
             $record = DB::table('hub_transfers')
                 ->where('id', $transfer)
                 ->where('logistics_account_id', $logistics->id)
@@ -681,12 +699,19 @@ class LogisticsHubTransferController extends Controller
                 $data
             );
 
-            return (string) $record->transfer_code;
+            return [
+                'code' => (string) $record->transfer_code,
+                'facility_id' => (int) $record->destination_facility_id,
+            ];
         }, 3);
+
+        // Receipt belongs to the DESTINATION hub, even when a manager acts.
+        $request->attributes->set('activity_changed', true);
+        $request->attributes->set('activity_facility_id', $result['facility_id']);
 
         return back()->with(
             'success',
-            'Transfer '.$code
+            'Transfer '.$result['code']
                 .' was received at the destination hub. Parcels are ready for Last-Mile Assignment.'
         );
     }

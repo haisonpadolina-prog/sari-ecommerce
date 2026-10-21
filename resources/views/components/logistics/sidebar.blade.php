@@ -149,6 +149,13 @@
                     'logistics.account-management*',
                     'account',
                 ],
+
+                [
+                    'logistics.activity-logs',
+                    'Activity Logs',
+                    'logistics.activity-logs*',
+                    'history',
+                ],
             ],
         ],
     ];
@@ -256,6 +263,13 @@
                     'logistics.reports*',
                     'chart',
                 ],
+
+                [
+                    'logistics.activity-logs',
+                    'Hub Activity',
+                    'logistics.activity-logs*',
+                    'history',
+                ],
             ],
         ],
     ];
@@ -328,6 +342,10 @@
         'account' =>
             '<circle cx="12" cy="8" r="3.5"/>'
             .'<path d="M5 20c.5-4.2 3-6.5 7-6.5s6.5 2.3 7 6.5"/>',
+
+        'history' =>
+            '<path d="M3 12a9 9 0 1 0 2.6-6.4"/>'
+            .'<path d="M3 4v5h5M12 7v5l3 2"/>',
     ];
 @endphp
 

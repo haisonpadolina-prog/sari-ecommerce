@@ -25,12 +25,12 @@ class LogisticsPickupRequestController extends Controller
         private readonly LogisticsNotificationService $notifications,
     ) {}
 
-    /**
-     * The manager sees the provider's queue.
-     *
-     * A Hub Operator sees only orders whose actual origin_facility
-     * stop is the operator's assigned hub.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Pickup Request Queue
+    |--------------------------------------------------------------------------
+    */
+
     public function index(Request $request): View
     {
         $logistics = $this->orderAccess->prepare($request);
@@ -47,7 +47,7 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Hub-level queue visibility
+        | Hub-Level Queue Visibility
         |--------------------------------------------------------------------------
         */
 
@@ -62,7 +62,7 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Preserve original pickup queue states
+        | Pickup Queue States
         |--------------------------------------------------------------------------
         */
 
@@ -95,7 +95,7 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Queue statistics
+        | Queue Statistics
         |--------------------------------------------------------------------------
         */
 
@@ -131,23 +131,25 @@ class LogisticsPickupRequestController extends Controller
         );
     }
 
-    /**
-     * Single pickup request verification.
-     *
-     * A Hub Operator must pass origin-hub authorization before any
-     * legacy route-resolution logic is allowed to run.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Single Pickup Verification
+    |--------------------------------------------------------------------------
+    */
+
     public function verify(
         Request $request,
         MarketplaceOrder $order
     ): RedirectResponse {
+
         /*
         |--------------------------------------------------------------------------
-        | Authorize selected order
+        | Authorize Selected Order
         |--------------------------------------------------------------------------
         */
 
         if (CurrentLogisticsHub::isHubOperator($request)) {
+
             CurrentLogisticsHub::authorizeOrder(
                 $request,
                 $order,
@@ -155,7 +157,9 @@ class LogisticsPickupRequestController extends Controller
             );
 
             $owned = $order;
+
         } else {
+
             $owned = $this->orderAccess->ownedOrder(
                 $request,
                 $order
@@ -164,7 +168,7 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Reuse the same secure batch verification flow
+        | Reuse Secure Batch Verification
         |--------------------------------------------------------------------------
         */
 
@@ -175,18 +179,17 @@ class LogisticsPickupRequestController extends Controller
         return $this->verifyBatch($request);
     }
 
-    /**
-     * Verify up to 200 pickup requests.
-     *
-     * All submitted order IDs are checked again inside the transaction.
-     * This prevents a Hub Operator from verifying another facility's
-     * parcels through a manually constructed POST request.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Batch Pickup Verification
+    |--------------------------------------------------------------------------
+    */
+
     public function verifyBatch(Request $request): RedirectResponse
     {
         /*
         |--------------------------------------------------------------------------
-        | Request validation
+        | Request Validation
         |--------------------------------------------------------------------------
         */
 
@@ -207,7 +210,7 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Resolve current account and assigned hub
+        | Resolve Authenticated Logistics Identity
         |--------------------------------------------------------------------------
         */
 
@@ -232,21 +235,22 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Transactional pickup verification
+        | Transactional Pickup Verification
         |--------------------------------------------------------------------------
         */
 
-        $count = DB::transaction(function () use (
+        $result = DB::transaction(function () use (
             $request,
             $ids,
             $logistics,
             $hubAccount,
             $hubFacility
-        ): int {
+        ): array {
+
             /*
-            |--------------------------------------------------------------
-            | Lock orders using a stable ordering.
-            |--------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | Lock Selected Orders
+            |--------------------------------------------------------------------------
             */
 
             $query = MarketplaceOrder::query()
@@ -257,12 +261,9 @@ class LogisticsPickupRequestController extends Controller
                 );
 
             /*
-            |--------------------------------------------------------------
-            | Reapply origin-hub authorization inside the transaction.
-            |
-            | Manager: provider-wide visibility.
-            | Hub:     assigned origin facility only.
-            |--------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | Reapply Hub Authorization
+            |--------------------------------------------------------------------------
             */
 
             $orders = CurrentLogisticsHub::scopeOrders(
@@ -275,6 +276,7 @@ class LogisticsPickupRequestController extends Controller
                 ->get();
 
             if ($orders->count() !== $ids->count()) {
+
                 throw ValidationException::withMessages([
                     'order_ids' =>
                         'One or more pickup requests are unavailable '
@@ -284,12 +286,9 @@ class LogisticsPickupRequestController extends Controller
             }
 
             /*
-            |--------------------------------------------------------------
-            | Lock actual origin route stops.
-            |
-            | The selected IDs must still belong to the same permitted
-            | facility when the transaction processes the verification.
-            |--------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | Lock Origin Route Stops
+            |--------------------------------------------------------------------------
             */
 
             $origins = DeliveryRouteStop::query()
@@ -307,9 +306,9 @@ class LogisticsPickupRequestController extends Controller
                 ->keyBy('marketplace_order_id');
 
             /*
-            |--------------------------------------------------------------
-            | Load current route data and lock existing parcels.
-            |--------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | Load Route Data and Lock Existing Parcels
+            |--------------------------------------------------------------------------
             */
 
             $orders->load('deliveryRouteStops.facility');
@@ -325,9 +324,9 @@ class LogisticsPickupRequestController extends Controller
                 ->keyBy('marketplace_order_id');
 
             /*
-            |--------------------------------------------------------------
-            | Record the actual verifying operator.
-            |--------------------------------------------------------------
+            |--------------------------------------------------------------------------
+            | Resolve Actual Verifying Operator
+            |--------------------------------------------------------------------------
             */
 
             $actor = $hubAccount
@@ -340,23 +339,36 @@ class LogisticsPickupRequestController extends Controller
                     .')'
                 : $logistics->displayName();
 
+            /*
+            |--------------------------------------------------------------------------
+            | Verification Tracking
+            |--------------------------------------------------------------------------
+            |
+            | Count only newly verified parcels.
+            |
+            | Facility IDs are collected from the actual successfully
+            | verified orders, not from browser-supplied facility IDs.
+            |
+            */
+
             $count = 0;
+
+            $verifiedFacilityIds = [];
 
             /*
             |--------------------------------------------------------------------------
-            | Verify each requested order
+            | Process Selected Orders
             |--------------------------------------------------------------------------
             */
 
             foreach ($orders as $order) {
+
                 $origin = $origins->get($order->id);
 
                 /*
-                |----------------------------------------------------------
-                | Hub Operator ownership recheck.
-                |
-                | Never trust the order IDs supplied by the browser.
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Hub Ownership Recheck
+                |--------------------------------------------------------------------------
                 */
 
                 if (
@@ -369,6 +381,7 @@ class LogisticsPickupRequestController extends Controller
                         )
                     )
                 ) {
+
                     throw ValidationException::withMessages([
                         'order_ids' =>
                             'A selected pickup request is no longer '
@@ -377,15 +390,16 @@ class LogisticsPickupRequestController extends Controller
                 }
 
                 /*
-                |----------------------------------------------------------
-                | Original order-state validation
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Order State Validation
+                |--------------------------------------------------------------------------
                 */
 
                 if (
                     $order->status !== 'ready_for_pickup'
                     || filled($order->courier_email)
                 ) {
+
                     throw ValidationException::withMessages([
                         'order_ids' => $order->order_number
                             .' is no longer available for verification. '
@@ -394,14 +408,15 @@ class LogisticsPickupRequestController extends Controller
                 }
 
                 /*
-                |----------------------------------------------------------
-                | Validate pickup address and origin facility
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Pickup Address and Facility Validation
+                |--------------------------------------------------------------------------
                 */
 
                 $issues = $this->pickupIssues($order);
 
                 if ($issues) {
+
                     throw ValidationException::withMessages([
                         'order_ids' => $order->order_number
                             .': '.$issues[0],
@@ -409,18 +424,24 @@ class LogisticsPickupRequestController extends Controller
                 }
 
                 /*
-                |----------------------------------------------------------
-                | Check current parcel state
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Existing Parcel State
+                |--------------------------------------------------------------------------
                 */
 
                 $parcel = $parcels->get($order->id);
+
+                /*
+                 * Already verified parcels must not generate
+                 * duplicate workflow events, notifications, or logs.
+                 */
 
                 if ($parcel?->status === 'pickup_verified') {
                     continue;
                 }
 
                 if ($parcel) {
+
                     throw ValidationException::withMessages([
                         'order_ids' => $order->order_number
                             .' has already entered the Logistics intake flow.',
@@ -428,9 +449,9 @@ class LogisticsPickupRequestController extends Controller
                 }
 
                 /*
-                |----------------------------------------------------------
-                | Create verified Logistics Parcel
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Create Verified Logistics Parcel
+                |--------------------------------------------------------------------------
                 */
 
                 LogisticsParcel::query()->create([
@@ -439,9 +460,9 @@ class LogisticsPickupRequestController extends Controller
                 ]);
 
                 /*
-                |----------------------------------------------------------
-                | Record Seller and Buyer workflow event
-                |----------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | Record Seller and Buyer Workflow Event
+                |--------------------------------------------------------------------------
                 */
 
                 $this->workflow->record(
@@ -456,16 +477,13 @@ class LogisticsPickupRequestController extends Controller
                 );
 
                 /*
-                |----------------------------------------------------------
-                | Persist notifications only for a newly verified pickup.
+                |--------------------------------------------------------------------------
+                | Persist Notifications
+                |--------------------------------------------------------------------------
                 |
-                | This remains inside the same transaction as parcel
-                | creation and the Seller/Buyer workflow event. A failed
-                | verification cannot leave an orphaned notification.
+                | Notifications remain inside the same database
+                | transaction as the original pickup verification.
                 |
-                | Each recipient has a separate read state. Repeating the
-                | event uses the same key and will not reset read_at.
-                |----------------------------------------------------------
                 */
 
                 $eventKey = 'pickup_verified:order:'.$order->id;
@@ -477,9 +495,18 @@ class LogisticsPickupRequestController extends Controller
 
                 $notificationData = [
                     'order_id' => (int) $order->id,
+
                     'order_number' => (string) $order->order_number,
-                    'origin_facility_id' => (int) $origin->logistics_facility_id,
+
+                    'origin_facility_id' =>
+                        (int) $origin->logistics_facility_id,
                 ];
+
+                /*
+                |--------------------------------------------------------------------------
+                | Main Logistics Notification
+                |--------------------------------------------------------------------------
+                */
 
                 $this->notifications->notifyManager(
                     logisticsAccountId: (int) $logistics->id,
@@ -490,6 +517,12 @@ class LogisticsPickupRequestController extends Controller
                     actionRoute: 'logistics.delivery-assignment',
                     data: $notificationData
                 );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Origin Hub Notification
+                |--------------------------------------------------------------------------
+                */
 
                 $this->notifications->notifyFacilityOperators(
                     logisticsAccountId: (int) $logistics->id,
@@ -502,11 +535,81 @@ class LogisticsPickupRequestController extends Controller
                     data: $notificationData
                 );
 
+                /*
+                |--------------------------------------------------------------------------
+                | Track Newly Verified Order
+                |--------------------------------------------------------------------------
+                */
+
                 $count++;
+
+                $verifiedFacilityIds[] =
+                    (int) $origin->logistics_facility_id;
             }
 
-            return $count;
+            /*
+            |--------------------------------------------------------------------------
+            | Resolve Actual Affected Hub
+            |--------------------------------------------------------------------------
+            |
+            | One hub:
+            | Store its facility ID in the activity record.
+            |
+            | Multiple hubs:
+            | Keep the batch as a network-wide activity for the manager.
+            |
+            | Already-verified orders do not affect this calculation.
+            |
+            */
+
+            $uniqueFacilityIds = array_values(
+                array_unique($verifiedFacilityIds)
+            );
+
+            return [
+                'count' => $count,
+
+                'facility_id' => count($uniqueFacilityIds) === 1
+                    ? $uniqueFacilityIds[0]
+                    : null,
+            ];
+
         }, 3);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | This code executes only after the database transaction
+        | has completed successfully.
+        |
+        | The middleware checks these server-side attributes.
+        |
+        | activity_changed:
+        |     true  = at least one newly verified pickup
+        |     false = no actual changes
+        |
+        | activity_facility_id:
+        |     Actual hub ID when all newly verified parcels
+        |     belong to the same origin hub.
+        |
+        */
+
+        $count = $result['count'];
+
+        $request->attributes->set(
+            'activity_changed',
+            $count > 0
+        );
+
+        if ($result['facility_id'] !== null) {
+
+            $request->attributes->set(
+                'activity_facility_id',
+                $result['facility_id']
+            );
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -529,10 +632,12 @@ class LogisticsPickupRequestController extends Controller
         );
     }
 
-    /**
-     * Keep the original Seller + pickup location + origin hub
-     * grouping behavior.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Seller Pickup Batch Grouping
+    |--------------------------------------------------------------------------
+    */
+
     private function pickupGroupKey(MarketplaceOrder $order): string
     {
         $origin = $order->deliveryRouteStops->firstWhere(
@@ -546,16 +651,22 @@ class LogisticsPickupRequestController extends Controller
 
         return json_encode([
             $seller,
+
             $this->normalizePickupText(
                 $order->pickup_address
             ),
+
             $origin?->logistics_facility_id,
+
         ], JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * @return array<int, string>
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Pickup Validation Issues
+    |--------------------------------------------------------------------------
+    */
+
     private function pickupIssues(MarketplaceOrder $order): array
     {
         $issues = [];
@@ -569,31 +680,37 @@ class LogisticsPickupRequestController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Pickup address
+        | Pickup Address
         |--------------------------------------------------------------------------
         */
 
         if (blank($order->pickup_address)) {
+
             $issues[] =
                 'Pickup address is missing. Ask the Seller to update it.';
         }
 
         /*
         |--------------------------------------------------------------------------
-        | Origin facility validation
+        | Origin Facility Validation
         |--------------------------------------------------------------------------
         */
 
         if (! $facility) {
+
             $issues[] =
                 'Origin hub is missing. Review the delivery route.';
+
         } elseif (
             (int) $facility->logistics_account_id
             !== (int) $order->logistics_account_id
         ) {
+
             $issues[] =
                 'Origin hub belongs to another Logistics provider.';
+
         } elseif (! $facility->is_active) {
+
             $issues[] =
                 'Origin hub is inactive. Review the delivery route.';
         }
@@ -601,9 +718,12 @@ class LogisticsPickupRequestController extends Controller
         return $issues;
     }
 
-    /**
-     * Normalize pickup addresses for stable Seller batch grouping.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Normalize Pickup Location
+    |--------------------------------------------------------------------------
+    */
+
     private function normalizePickupText(?string $value): string
     {
         return mb_strtolower(

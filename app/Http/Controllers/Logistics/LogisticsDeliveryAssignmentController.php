@@ -415,9 +415,12 @@ class LogisticsDeliveryAssignmentController extends Controller
         /*
          * Recheck the whole group inside the transaction.
          * Do not trust the order IDs submitted by the browser.
+         *
+         * ACTIVITY LOGS:
+         * Return the actual origin hub after successful assignment.
          */
 
-        DB::transaction(
+        $assignedFacilityId = DB::transaction(
             function () use (
                 $request,
                 $ids,
@@ -425,7 +428,7 @@ class LogisticsDeliveryAssignmentController extends Controller
                 $logistics,
                 $hubAccount,
                 $hubFacility
-            ): void {
+            ): int {
 
                 /*
                  * Lock the entire available queue so the existing
@@ -844,9 +847,56 @@ class LogisticsDeliveryAssignmentController extends Controller
                         data: $notificationData
                     );
                 }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Activity Logs — Confirm Affected Hub
+                |--------------------------------------------------------------------------
+                |
+                | All selected orders belong to the same origin hub,
+                | as enforced by the pickup group validation.
+                |
+                | Return that hub for the audit middleware.
+                |
+                */
+
+                return (int) $origins
+                    ->get($selected->first()->id)
+                    ?->logistics_facility_id;
             },
             3
         );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Logs Integration
+        |--------------------------------------------------------------------------
+        |
+        | Reaching this point means the assignment transaction
+        | has successfully committed.
+        |
+        | This includes both single-order and batch assignment.
+        |
+        | The middleware will create only one activity record
+        | for the successful request.
+        |
+        */
+
+        $request->attributes->set(
+            'activity_changed',
+            true
+        );
+
+        $request->attributes->set(
+            'activity_facility_id',
+            $assignedFacilityId
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Success Response
+        |--------------------------------------------------------------------------
+        */
 
         return back()->with(
             'success',
