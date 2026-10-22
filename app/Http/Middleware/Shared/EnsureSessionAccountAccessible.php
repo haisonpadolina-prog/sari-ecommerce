@@ -72,20 +72,39 @@ class EnsureSessionAccountAccessible
         }
 
         if (!$account) {
-            return $next($request);
+            if ($sessionKeys === []) {
+                return $next($request);
+            }
+
+            $request->session()->forget($sessionKeys);
+
+            $message = 'This SARI account is no longer available. Please sign in again.';
+
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'message' => $message,
+                    'status' => 'deleted',
+                ], 401);
+            }
+
+            return redirect()
+                ->route('login')
+                ->withErrors(['email' => $message]);
         }
 
         $status = strtolower((string) ($account->account_status ?? 'active'));
 
-        if (!in_array($status, ['banned', 'deactivated'], true)) {
+        if (!in_array($status, ['banned', 'deactivated', 'blocked'], true)) {
             return $next($request);
         }
 
         $request->session()->forget($sessionKeys);
 
-        $message = $status === 'banned'
-            ? 'This SARI account has been banned by an administrator.'
-            : 'This SARI account is currently suspended by an administrator.';
+        $message = match ($status) {
+            'banned' => 'This SARI account has been banned by an administrator.',
+            'blocked' => 'This SARI account has been blocked by an administrator.',
+            default => 'This SARI account is currently suspended by an administrator.',
+        };
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([

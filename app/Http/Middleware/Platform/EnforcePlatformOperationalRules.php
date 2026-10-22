@@ -8,6 +8,8 @@ use App\Http\Controllers\Courier\CourierPageController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Buyer\BuyerRegistrationController;
 use App\Http\Controllers\Seller\SellerRegistrationController;
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerProductDraftController;
 use App\Http\Controllers\Logistics\LogisticsRegistrationController;
 use App\Http\Controllers\Courier\RiderRegistrationController;
 use App\Models\Accounts\CourierAccount;
@@ -60,6 +62,17 @@ class EnforcePlatformOperationalRules
             && in_array($method, ['create', 'store'], true)
         ) {
             $this->assertRegistrationOpen();
+        }
+
+        if (
+            ($class === SellerProductController::class
+                && in_array($method, ['create', 'store'], true))
+            || ($class === SellerProductDraftController::class
+                && $method === 'store')
+        ) {
+            if ($response = $this->sellerProductPostingGuard($request)) {
+                return $response;
+            }
         }
 
         if (
@@ -202,6 +215,24 @@ class EnforcePlatformOperationalRules
         }
 
         return null;
+    }
+
+    private function sellerProductPostingGuard(
+        Request $request
+    ): ?Response {
+        if (!$request->session()->get('is_seller')) {
+            return null;
+        }
+
+        if ($this->boolSetting('seller_product_posting_enabled', true)) {
+            return null;
+        }
+
+        return redirect()
+            ->route('seller.products.index')
+            ->withErrors([
+                'product' => 'New product posting is temporarily disabled by the administrator. Existing products remain available for management.',
+            ]);
     }
 
     private function buyerCancellationGuard(

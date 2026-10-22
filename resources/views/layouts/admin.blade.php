@@ -41,8 +41,8 @@
 
     <style>
         :root {
-            --admin-sidebar-expanded: 275px;
-            --admin-sidebar-collapsed-width: 88px;
+            --admin-sidebar-expanded: 238px;
+            --admin-sidebar-collapsed-width: 76px;
             --admin-sidebar-width: var(--admin-sidebar-expanded);
             --admin-sidebar-ease: cubic-bezier(.22, 1, .36, 1);
         }
@@ -63,16 +63,53 @@
                 transition: padding-left 220ms var(--admin-sidebar-ease);
             }
 
-            html.admin-sidebar-collapsed #adminSidebarLogo {
+            #adminSidebarFullLogo {
+                display: block;
+            }
+
+            #adminSidebarCompactLogo {
+                display: none;
+            }
+
+            #adminSidebar .sidebar-label {
+                display: inline-block;
+                max-width: 158px;
+                overflow: hidden;
+                opacity: 1;
+                transform: translateX(0);
+                transition: max-width 180ms var(--admin-sidebar-ease), opacity 110ms ease, transform 180ms var(--admin-sidebar-ease);
+            }
+
+            #adminSidebar .sidebar-extra {
+                max-width: 72px;
+                overflow: hidden;
+                opacity: 1;
+                transition: max-width 160ms var(--admin-sidebar-ease), opacity 100ms ease, padding 160ms var(--admin-sidebar-ease);
+            }
+
+            html.admin-sidebar-collapsed #adminSidebarFullLogo {
                 display: none !important;
+            }
+
+            html.admin-sidebar-collapsed #adminSidebarCompactLogo {
+                display: block !important;
             }
 
             html.admin-sidebar-collapsed #adminSidebar .sidebar-label {
-                display: none !important;
+                max-width: 0;
+                opacity: 0;
+                transform: translateX(-6px);
+                pointer-events: none;
             }
 
             html.admin-sidebar-collapsed #adminSidebar .sidebar-extra {
-                display: none !important;
+                width: 0 !important;
+                min-width: 0 !important;
+                max-width: 0;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                opacity: 0;
+                pointer-events: none;
             }
 
             html.admin-sidebar-collapsed #adminSidebar [data-sidebar-item] {
@@ -107,9 +144,9 @@
         | let JavaScript update the active item after every navigation.
         */
         #adminSidebar [data-sidebar-item][data-admin-nav-active="true"] {
-            background-color: #d9930a !important;
+            background-color: #d9950b !important;
             color: #ffffff !important;
-            box-shadow: 0 10px 25px rgba(217, 147, 10, .18) !important;
+            box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="false"] {
@@ -119,8 +156,8 @@
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="false"]:hover {
-            background-color: #f9f1e3 !important;
-            color: #a96e05 !important;
+            background-color: #fff9ef !important;
+            color: #94620a !important;
         }
 
         #adminSidebar [data-sidebar-item][data-admin-nav-active="true"] [data-admin-unread-badge] {
@@ -268,6 +305,8 @@
             </div>
         </div>
     @endpersist
+
+    @include('admin.partials.security-alert-overlay')
 
     @stack('scripts')
 

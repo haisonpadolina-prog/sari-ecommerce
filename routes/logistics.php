@@ -14,6 +14,7 @@ use App\Http\Controllers\Logistics\LogisticsReportsController;
 use App\Http\Controllers\Logistics\LogisticsRiderApplicationController;
 use App\Http\Controllers\Logistics\LogisticsRiderManagementController;
 use App\Http\Controllers\Courier\RiderRegistrationController;
+use App\Http\Controllers\Courier\RiderActivationController;
 use App\Http\Middleware\Logistics\EnsureLogisticsAuthenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | PUBLIC RIDER → LOGISTICS APPLICATION FLOW
 |--------------------------------------------------------------------------
+| A Rider chooses an active Logistics provider first, verifies their email,
+| then submits an application to that provider for review. Logistics-created
+| Rider invitations and activation links remain available as a separate flow.
 */
 Route::get('/register/rider', [RiderRegistrationController::class, 'index'])
     ->name('rider.logistics.index');
@@ -42,7 +46,15 @@ Route::post('/register/rider/{logistics}/email/verify', [RiderRegistrationContro
 
 Route::post('/register/rider/{logistics}', [RiderRegistrationController::class, 'store'])
     ->whereNumber('logistics')
+    ->middleware('throttle:10,1')
     ->name('rider.logistics.submit');
+
+Route::get('/rider/activate/{token}', [RiderActivationController::class, 'show'])
+    ->middleware('throttle:30,1')
+    ->name('rider.activation.show');
+Route::post('/rider/activate/{token}', [RiderActivationController::class, 'activate'])
+    ->middleware('throttle:10,1')
+    ->name('rider.activation.activate');
 
 Route::prefix('logistics')
     ->name('logistics.')
@@ -57,6 +69,8 @@ Route::prefix('logistics')
             ->whereIn('document', ['id', 'orcr'])->name('rider-applications.document');
 
         Route::get('/rider-management', [LogisticsRiderManagementController::class, 'index'])->name('rider-management');
+        Route::post('/rider-management', [LogisticsRiderManagementController::class, 'store'])->middleware('throttle:10,1')->name('rider-management.store');
+        Route::post('/rider-management/{rider}/resend-activation', [LogisticsRiderManagementController::class, 'resendActivation'])->middleware('throttle:6,1')->name('rider-management.resend-activation');
 
         Route::get('/sorting-facilities', [LogisticsFacilityController::class, 'index'])
             ->name('facilities.index');

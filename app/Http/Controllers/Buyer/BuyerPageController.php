@@ -8,6 +8,8 @@ use App\Models\Accounts\BuyerAccount;
 use App\Services\Buyer\BuyerActivityService;
 use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerCatalogService;
+use App\Services\Buyer\BuyerIdentityService;
+use App\Services\Promotions\PlatformCampaignService;
 use Illuminate\Http\Request;
 
 class BuyerPageController extends Controller
@@ -16,6 +18,8 @@ class BuyerPageController extends Controller
         private readonly BuyerCatalogService $catalog,
         private readonly BuyerActivityService $activity,
         private readonly BuyerCartService $cart,
+        private readonly BuyerIdentityService $identity,
+        private readonly PlatformCampaignService $platformCampaigns,
     ) {
     }
 
@@ -69,7 +73,17 @@ class BuyerPageController extends Controller
 
     public function rewards(Request $request)
     {
-        return $this->renderBuyerView($request, 'buyer.rewards');
+        if (!$this->isBuyer($request)) {
+            return redirect()->route('login');
+        }
+
+        return view('buyer.rewards', [
+            'buyerAccount' => $this->syncBuyerSession($request),
+            'platformVouchers' => $this->platformCampaigns->buyerVoucherCatalog(
+                $this->identity->columns($request)
+            ),
+            'promotionTimezone' => \App\Models\Promotions\PlatformCampaign::TIMEZONE,
+        ]);
     }
 
     public function logout(Request $request)

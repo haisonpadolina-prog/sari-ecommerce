@@ -1,0 +1,60 @@
+SARI — MISSING SECURITY FUNCTIONS ONLY (V2)
+
+IMPORTANT
+- Do NOT use the older full Command Center package.
+- This package adds only the missing Security Center functions.
+- It does not create another Dashboard, another User Management system, or another audit table.
+- No migration is required.
+- V2 fixes test isolation so the Force Logout test does not leave the session driver changed for later tests.
+
+NEW FUNCTIONS ONLY
+- Failed login watch
+- Security Center page
+- Smart rule-based risk/fraud flags
+- Active database sessions viewer
+- Secure Force Logout
+- Critical red alert overlay
+- Audible alert
+- Alert acknowledgement
+- Before/after metadata added to the existing admin_user_activities audit records
+- Logistics operations map added inside the existing Logistics Monitoring detail view
+
+SAFEST INSTALL METHOD
+
+1. Extract this ZIP DIRECTLY into:
+   C:\Users\user\LARAVEL-E-COMMERCE
+
+   Allow the corrected test file to replace the previous AdminSecurityCenterDeltaTest.php.
+   The package also contains the .patch file and installer script at the project root.
+
+2. From PowerShell in your Laravel project root run:
+
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\install-security-delta.ps1
+
+The installer:
+- copies only the brand-new Security Center files,
+- checks the integration patch before touching existing files,
+- creates a timestamped backup of only the 7 existing files affected,
+- refuses to force-apply if your local versions differ,
+- does not duplicate changes if the patch is already applied,
+- clears Laravel caches,
+- lists the registered admin.security routes.
+
+3. Then run the tests SEPARATELY:
+
+   php artisan test tests/Feature/AdminSecurityCenterDeltaTest.php
+   php artisan test tests/Feature/AdminPlatformMonitoringTest.php
+
+Expected Security routes:
+- admin.security
+- admin.security.alert-feed
+- admin.security.alerts.acknowledge
+- admin.security.sessions.force-logout
+
+WHY YOUR PREVIOUS RUN FAILED
+- The patch file was not present in your project root, so git apply never ran.
+- Therefore routes/web.php never required routes/admin-security.php and the Security routes did not exist.
+- The older Security test also switched SESSION_DRIVER to database for Force Logout without reliably resetting the cached session manager. That contaminated later tests and caused 419 responses. V2 resets the session configuration/driver between tests.
+
+NO MIGRATION REQUIRED.

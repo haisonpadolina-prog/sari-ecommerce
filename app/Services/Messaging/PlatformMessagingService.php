@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -577,35 +578,9 @@ class PlatformMessagingService
         // Push the new message immediately to every active participant.
         event(new PlatformMessageSent($message));
 
-        /*
-        | Seller -> SARI Admin Support:
-        | create a deterministic receipt acknowledgement immediately.
-        | This is DB-only: no Gemini request, no extra HTTP endpoint, and no
-        | queue worker is required for the acknowledgement.
-        */
-        if (
-            $actor['role'] === 'seller'
-            && $message->conversation?->conversation_type === 'admin_support'
-            && (bool) config('sari.assistant.enabled', true)
-        ) {
-            try {
-                app(SariAdminAssistantReplyService::class)
-                    ->replyToTrigger($message->id);
-            } catch (\Throwable $e) {
-                /*
-                | Never fail the Seller's successfully stored message because
-                | the acknowledgement layer encountered a problem.
-                */
-                report($e);
-            }
-        }
-
-        // Keep the legacy AI-cover queue only outside Admin Support.
-        if (
-            $actor['role'] !== 'admin'
-            && $body !== ''
-            && $message->conversation?->conversation_type !== 'admin_support'
-        ) {
+        // AI cover is text-only. Attachment-only messages wait for a human
+        // Admin instead of asking the assistant to guess what a file contains.
+        if ($actor['role'] !== 'admin' && $body !== '') {
             $hasAdminParticipant = $message->conversation
                 ?->participants
                 ->contains(
@@ -622,18 +597,31 @@ class PlatformMessagingService
                     0,
                     (int) config('sari.assistant.delay_seconds', 0)
                 );
+                $assistantConnection = trim((string) config(
+                    'sari.assistant.queue_connection',
+                    'deferred'
+                ));
 
-                $pendingAssistantReply = SendSariAdminAssistantReply::dispatch(
-                    $message->id
-                );
+                if ($assistantConnection === '') {
+                    $assistantConnection = 'deferred';
+                }
 
-                // Zero means immediate async processing by the queue worker.
-                // An optional delay can still be configured explicitly.
+                $assistantJob = (new SendSariAdminAssistantReply(
+                    $message->id,
+                    $assistantDelay
+                ))->onConnection($assistantConnection);
+
                 if ($assistantDelay > 0) {
-                    $pendingAssistantReply->delay(
+                    $assistantJob->delay(
                         now()->addSeconds($assistantDelay)
                     );
                 }
+
+                // Dispatch explicitly instead of relying on PendingDispatch's
+                // destructor. This keeps the deferred queue behavior in
+                // production and makes the dispatch observable to Bus::fake()
+                // immediately during request-level reliability tests.
+                Bus::dispatch($assistantJob);
             }
         }
 

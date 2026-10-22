@@ -14,7 +14,7 @@ class SellerAccountStatusService
         $status = (string) ($seller->account_status ?: 'active');
 
         // Ban/deactivation are permanent until an Admin explicitly changes them.
-        if (in_array($status, ['banned', 'deactivated'], true)) {
+        if (in_array($status, ['banned', 'deactivated', 'blocked'], true)) {
             return $seller;
         }
 
@@ -73,9 +73,14 @@ class SellerAccountStatusService
         return $this->status($seller) === 'deactivated';
     }
 
+    public function isBlocked(SellerAccount $seller): bool
+    {
+        return $this->status($seller) === 'blocked';
+    }
+
     public function isTerminated(SellerAccount $seller): bool
     {
-        return $this->isBanned($seller) || $this->isDeactivated($seller);
+        return $this->isBanned($seller) || $this->isDeactivated($seller) || $this->isBlocked($seller);
     }
 
     public function isSuspended(SellerAccount $seller): bool
@@ -197,6 +202,46 @@ class SellerAccountStatusService
 
             return $seller->refresh();
         });
+    }
+
+    public function block(
+        SellerAccount $seller,
+        string $reason
+    ): SellerAccount {
+        return DB::transaction(function () use ($seller, $reason) {
+            $seller->forceFill([
+                'account_status' => 'blocked',
+                'deactivated_at' => now(),
+                'deactivation_reason' => $reason,
+                'suspended_until' => null,
+                'suspension_reason' => null,
+            ])->save();
+
+            SellerProduct::query()
+                ->where('seller_account_id', $seller->id)
+                ->whereNull('archived_at')
+                ->update([
+                    'moderation_status' => 'removed',
+                    'admin_review_note' => 'Listing removed because the seller account was blocked. Reason: ' . $reason,
+                    'reviewed_at' => now(),
+                ]);
+
+            return $seller->refresh();
+        });
+    }
+
+    public function unblock(SellerAccount $seller): SellerAccount
+    {
+        $seller->forceFill([
+            'account_status' => 'active',
+            'deactivated_at' => null,
+            'deactivation_reason' => null,
+            'suspended_until' => null,
+            'suspension_reason' => null,
+        ])->save();
+
+        // Listings remain removed until Admin explicitly reviews them again.
+        return $seller->refresh();
     }
 
     public function restore(SellerAccount $seller): SellerAccount

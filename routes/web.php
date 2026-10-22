@@ -5,6 +5,7 @@ use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerCartController;
 use App\Http\Controllers\Buyer\BuyerCheckoutController;
 use App\Http\Controllers\Buyer\BuyerOrderController;
+use App\Http\Controllers\Buyer\BuyerRecentController;
 use App\Http\Controllers\Buyer\BuyerNotificationController;
 use App\Http\Controllers\Buyer\BuyerShippingController;
 use App\Http\Controllers\Buyer\BuyerSellerMessageController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Seller\SellerBuyerMessageController;
 use App\Http\Controllers\Buyer\BuyerReviewController;
 use App\Http\Controllers\Seller\SellerReviewController;
 use App\Http\Controllers\Buyer\BuyerAccountController;
+use App\Http\Controllers\Buyer\BuyerAddressController;
 use App\Http\Controllers\Courier\CourierPageController;
 use App\Http\Controllers\Admin\AdminSellerComplianceController;
 use App\Http\Controllers\Seller\SellerComplianceMessageController;
@@ -27,6 +29,7 @@ use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
 use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
 use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
 use App\Services\Seller\SellerAccountStatusService;
+use App\Services\Accounts\AccountEmailBanService;
 use App\Http\Controllers\Shared\ChatMessageReactionController;
 use App\Http\Controllers\Admin\AdminSellerChatActionController;
 use App\Http\Middleware\Seller\HandleSellerSupportChat;
@@ -47,6 +50,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Shared\PlatformComplaintController;
 use App\Http\Controllers\Admin\AdminComplaintsController;
 use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminActivityController;
 use App\Http\Controllers\Admin\AdminPlatformSettingsController;
 use App\Http\Controllers\Admin\AdminReportsController;
 use App\Http\Controllers\Admin\AdminCommissionsController;
@@ -147,234 +151,17 @@ Route::post('/login', function (Request $request) {
 
     /*
     |--------------------------------------------------------------------------
-    | TEMPORARY SELLER ACCOUNT
-    |--------------------------------------------------------------------------
-    */
-
-    if (
-        $request->email === 'seller@gmail.com' &&
-        $request->password === 'seller123'
-    ) {
-        $seller = SellerAccount::firstOrCreate(
-            [
-                'email' => 'seller@gmail.com',
-            ],
-            [
-                'store_name' => 'SARI Seller Store',
-            ]
-        );
-
-        $seller = app(SellerAccountStatusService::class)->refresh($seller);
-        $seller->ensureRealtimeToken();
-
-        if (($seller->account_status ?: 'active') === 'banned') {
-            return back()->withErrors([
-                'email' => 'This seller account has been banned. Please contact the SARI Administrator if you need a review.',
-            ])->onlyInput('email');
-        }
-
-        if (($seller->account_status ?: 'active') === 'deactivated') {
-            return back()->withErrors([
-                'email' => 'This seller account has been deactivated by the administrator.',
-            ])->onlyInput('email');
-        }
-
-        $request->session()->regenerate();
-
-        $request->session()->put('is_seller', true);
-        $request->session()->put('seller_account_id', $seller->id);
-
-        $request->session()->forget([
-            'is_admin',
-            'is_courier',
-            'courier_account_id',
-            'courier_email',
-            'courier_name',
-            'is_buyer',
-            'buyer_account_id',
-            'is_logistics',
-            'logistics_account_id',
-            'logistics_email',
-            'logistics_name',
-        ]);
-
-        /*
-        | Suspended sellers are still allowed to log in so they can
-        | view compliance information and contact the administrator.
-        */
-        return redirect()->route('seller.dashboard');
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | NEW — TEMPORARY COURIER ACCOUNT
-    |--------------------------------------------------------------------------
-    |
-    | Email: courier@gmail.com
-    | Password: courier123
-    |
-    */
-
-    if (
-        $request->email === 'courier@gmail.com' &&
-        $request->password === 'courier123'
-    ) {
-        $request->session()->regenerate();
-
-        $request->session()->put('is_courier', true);
-        $request->session()->put('courier_email', 'courier@gmail.com');
-        $request->session()->put('courier_name', 'SARI Courier');
-
-        /*
-        | Prevent another role from remaining active in the same session.
-        */
-        $request->session()->forget([
-            'is_admin',
-            'is_seller',
-            'seller_account_id',
-            'is_buyer',
-            'buyer_account_id',
-            'is_logistics',
-            'logistics_account_id',
-            'logistics_email',
-            'logistics_name',
-        ]);
-
-        return redirect()->route('courier.dashboard');
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TEMPORARY BUYER TEST ACCOUNT
-    |--------------------------------------------------------------------------
-    |
-    | Email: buyer@gmail.com
-    | Password: buyer123
-    |
-    | A real buyer_accounts row is created/updated so the Buyer pages can
-    | safely use buyer_account_id during testing.
-    |
-    */
-
-    if (
-        $request->email === 'buyer@gmail.com' &&
-        $request->password === 'buyer123'
-    ) {
-        $buyer = BuyerAccount::query()->firstOrCreate(
-            [
-                'email' => 'buyer@gmail.com',
-            ],
-            [
-                'registration_application_id' => null,
-                'last_name' => 'Buyer',
-                'first_name' => 'SARI',
-                'middle_initial' => null,
-                'sex' => 'Male',
-                'contact_no' => '09123456789',
-                'birthday' => '2000-01-01',
-                'age' => 26,
-
-                'province_code' => 'TEST-PROVINCE',
-                'province_name' => 'Metro Manila',
-                'municipality_code' => 'TEST-CITY',
-                'municipality_name' => 'Manila',
-                'barangay_code' => 'TEST-BARANGAY',
-                'barangay_name' => 'Test Barangay',
-                'street_address' => 'SARI Buyer Test Address',
-
-                'password' => Hash::make('buyer123'),
-                'id_path' => null,
-                'account_status' => 'active',
-                'approved_at' => now(),
-            ]
-        );
-
-        $request->session()->regenerate();
-
-        $request->session()->put('is_buyer', true);
-        $request->session()->put('buyer_account_id', $buyer->id);
-        $request->session()->put('buyer_email', $buyer->email);
-        $request->session()->put(
-            'buyer_name',
-            trim($buyer->first_name . ' ' . $buyer->last_name)
-        );
-
-        /*
-        | Prevent another role/social Buyer identity from remaining active
-        | in the same browser session.
-        */
-        $request->session()->forget([
-            'buyer_social_account_id',
-            'buyer_avatar',
-            'is_admin',
-            'is_seller',
-            'seller_account_id',
-            'is_courier',
-            'courier_account_id',
-            'courier_email',
-            'courier_name',
-            'is_logistics',
-            'logistics_account_id',
-            'logistics_email',
-            'logistics_name',
-        ]);
-
-        return redirect()->route('buyer.dashboard');
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TEMPORARY LOGISTICS ACCOUNT
-    |--------------------------------------------------------------------------
-    |
-    | Email: logistics@gmail.com
-    | Password: logistics123
-    |
-    */
-
-    if (
-        $request->email === 'logistics@gmail.com' &&
-        $request->password === 'logistics123'
-    ) {
-        $request->session()->regenerate();
-
-        $request->session()->put('is_logistics', true);
-        $request->session()->put('logistics_email', 'logistics@gmail.com');
-        $request->session()->put('logistics_name', 'SARI Logistics');
-
-        /*
-        | Prevent another role from remaining active in the same session.
-        */
-        $request->session()->forget([
-            'is_admin',
-            'is_seller',
-            'seller_account_id',
-            'is_buyer',
-            'buyer_account_id',
-            'buyer_social_account_id',
-            'buyer_email',
-            'buyer_name',
-            'buyer_avatar',
-            'is_courier',
-            'courier_account_id',
-            'courier_email',
-            'courier_name',
-        ]);
-
-        return redirect()->route('logistics.dashboard');
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
     | APPROVED DATABASE ACCOUNTS
     |--------------------------------------------------------------------------
     */
 
     $email = strtolower(trim($request->email));
+
+    if (app(AccountEmailBanService::class)->isBanned($email)) {
+        return back()->withErrors([
+            'email' => 'This email address has been banned by SARI.',
+        ])->onlyInput('email');
+    }
 
     $buyer = BuyerAccount::query()->where('email', $email)->first();
 
@@ -442,6 +229,12 @@ Route::post('/login', function (Request $request) {
         if (($registeredSeller->account_status ?: 'active') === 'deactivated') {
             return back()->withErrors([
                 'email' => 'This seller account has been deactivated.',
+            ])->onlyInput('email');
+        }
+
+        if (($registeredSeller->account_status ?: 'active') === 'blocked') {
+            return back()->withErrors([
+                'email' => 'This seller account has been blocked by an administrator.',
             ])->onlyInput('email');
         }
 
@@ -552,8 +345,60 @@ Route::post('/login', function (Request $request) {
     }
 
     if ($application && $application->status === 'rejected') {
+        $wasReleasedByAdmin = str_contains(
+            strtolower((string) $application->admin_note),
+            'previous account was deleted or released by an administrator'
+        );
+
+        if ($wasReleasedByAdmin) {
+            return back()->withErrors([
+                'email' => 'This account was deleted. Please register again to create a new account with this email.',
+            ])->onlyInput('email');
+        }
+
+        if (
+            in_array($application->role, ['seller', 'logistics'], true)
+            && Hash::check($request->password, (string) $application->password)
+        ) {
+            $request->session()->put([
+                'registration_tracking_id' => (int) $application->id,
+                'registration_email' => $application->email,
+                'registration_role' => $application->role,
+                'registration_otp_pending' => false,
+            ]);
+
+            return redirect()->route('register.' . $application->role)
+                ->with('registration_resubmission', true)
+                ->with('registration_rejected_reason', $application->admin_note)
+                ->withInput([
+                    'role' => $application->role,
+                    'first_name' => $application->first_name,
+                    'last_name' => $application->last_name,
+                    'middle_initial' => $application->middle_initial,
+                    'email' => $application->email,
+                    'contact_no' => $application->contact_no,
+                    'region_code' => $application->region_code,
+                    'region_name' => $application->region_name,
+                    'province_code' => $application->province_code,
+                    'province_name' => $application->province_name,
+                    'municipality_code' => $application->municipality_code,
+                    'municipality_name' => $application->municipality_name,
+                    'barangay_code' => $application->barangay_code,
+                    'barangay_name' => $application->barangay_name,
+                    'street_address' => $application->street_address,
+                    'postal_code' => $application->postal_code,
+                    'business_name' => $application->business_name,
+                    'seller_type' => $application->seller_type,
+                    'tin' => $application->tin,
+                    'sec_registration_no' => $application->sec_registration_no,
+                    'line_of_business' => $application->line_of_business,
+                    'position' => $application->position,
+                    'service_areas' => $application->service_areas,
+                ]);
+        }
+
         return back()->withErrors([
-            'email' => 'Your registration was not approved. You may submit a corrected registration using the same email address.',
+            'email' => 'Your registration was not approved. Sign in with the submitted password to correct and resubmit it.',
         ])->onlyInput('email');
     }
 
@@ -642,6 +487,16 @@ Route::post('/marketplace/login', [MarketplaceAuthController::class, 'login'])
 */
 
 Route::get(
+    '/address/regions',
+    [AddressLookupController::class, 'regions']
+)->name('address.regions');
+
+Route::get(
+    '/address/regions/{regionCode}/provinces',
+    [AddressLookupController::class, 'regionProvinces']
+)->name('address.region-provinces');
+
+Route::get(
     '/address/provinces',
     [AddressLookupController::class, 'provinces']
 )->name('address.provinces');
@@ -720,6 +575,14 @@ Route::post('/buyer/orders/{order}/cancel', [BuyerOrderController::class, 'cance
     ->name('buyer.orders.cancel');
 Route::get('/buyer/orders-live-state', [BuyerOrderController::class, 'liveState'])
     ->name('buyer.orders.live-state');
+
+
+/* Buyer recent views — read-only projections of the existing order/activity flow */
+Route::get('/buyer/recent-orders', [BuyerRecentController::class, 'orders'])
+    ->name('buyer.recent-orders');
+
+Route::get('/buyer/recent-activity', [BuyerRecentController::class, 'activity'])
+    ->name('buyer.recent-activity');
 Route::post('/buyer/orders/{order}/reviews', [BuyerReviewController::class, 'store'])
     ->name('buyer.orders.reviews.store');
 
@@ -749,6 +612,22 @@ Route::get('/buyer/account', [BuyerAccountController::class, 'index'])
     ->name('buyer.account');
 Route::patch('/buyer/account', [BuyerAccountController::class, 'update'])
     ->name('buyer.account.update');
+Route::post('/buyer/account/addresses', [BuyerAddressController::class, 'store'])
+    ->name('buyer.account.addresses.store');
+Route::patch('/buyer/account/addresses/{address}', [BuyerAddressController::class, 'update'])
+    ->whereNumber('address')
+    ->name('buyer.account.addresses.update');
+Route::post('/buyer/account/addresses/{address}/default', [BuyerAddressController::class, 'setDefault'])
+    ->whereNumber('address')
+    ->name('buyer.account.addresses.default');
+Route::post('/buyer/account/addresses/use-registration', [BuyerAddressController::class, 'useRegistration'])
+    ->name('buyer.account.addresses.use-registration');
+Route::delete('/buyer/account/addresses/{address}', [BuyerAddressController::class, 'destroy'])
+    ->whereNumber('address')
+    ->name('buyer.account.addresses.destroy');
+Route::get('/buyer/account/documents/{document}', [BuyerAccountController::class, 'document'])
+    ->whereIn('document', ['id'])
+    ->name('buyer.account.documents.show');
 Route::get('/buyer/rewards', [BuyerPageController::class, 'rewards'])
     ->name('buyer.rewards');
 
@@ -795,10 +674,26 @@ Route::get(
 Route::get('/admin/users', [AdminUsersController::class, 'index'])
     ->name('admin.users');
 
+Route::get('/admin/users/{role}/{id}/photo', [AdminUsersController::class, 'photo'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->name('admin.users.photo');
+
+Route::get('/admin/users/{role}/{id}/document/{document}', [AdminUsersController::class, 'document'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
+    ->whereNumber('id')
+    ->whereIn('document', ['id', 'permit', 'bir', 'sec', 'license', 'orcr'])
+    ->name('admin.users.document');
+
 Route::patch('/admin/users/{role}/{id}', [AdminUsersController::class, 'update'])
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
     ->whereNumber('id')
     ->name('admin.users.update');
+
+Route::delete('/admin/users/{role}/{id}', [AdminUsersController::class, 'destroy'])
+    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereNumber('id')
+    ->name('admin.users.destroy');
 
 Route::post('/admin/users/{role}/{id}/suspend', [AdminUsersController::class, 'suspend'])
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
@@ -958,6 +853,13 @@ Route::post(
 )->name('admin.messages.read');
 
 
+Route::get('/admin/activity/users', [AdminActivityController::class, 'users'])
+    ->name('admin.user-activity');
+
+Route::get('/admin/activity/admin', [AdminActivityController::class, 'admin'])
+    ->name('admin.recent-activity');
+
+
 Route::get('/admin/account', [AdminAccountController::class, 'index'])
     ->name('admin.account');
 
@@ -981,6 +883,20 @@ Route::post('/admin/logout', function (Request $request) {
     return redirect()->route('login');
 
 })->name('admin.logout');
+
+// Admin Events & Promotions routes are isolated to avoid bloating this file.
+require __DIR__ . '/admin-promotions.php';
+
+// Admin-created targeted marketplace announcements.
+require __DIR__ . '/admin-announcements.php';
+
+
+// Admin Platform Monitoring routes are isolated to keep account monitoring cohesive.
+require __DIR__ . '/admin-monitoring.php';
+
+
+// Security Center: failed-login watch, risk review, session controls and critical alerts.
+require __DIR__ . '/admin-security.php';
 
 
 /*

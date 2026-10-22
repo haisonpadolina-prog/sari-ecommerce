@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Shared;
 use App\Http\Controllers\Controller;
 
 use App\Models\Platform\PlatformComplaint;
+use App\Services\Messaging\PlatformMessagingService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PlatformComplaintController extends Controller
 {
+    public function __construct(private readonly PlatformMessagingService $messaging)
+    {
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $role = null;
@@ -35,14 +41,23 @@ class PlatformComplaintController extends Controller
             'description' => ['required','string','min:10','max:3000'],
         ]);
 
-        PlatformComplaint::create([
-            'reporter_role' => $role,
-            'reporter_identifier' => $identifier ?: null,
-            'subject' => $validated['subject'],
-            'description' => $validated['description'],
-            'status' => 'open',
-        ]);
+        $complaint = DB::transaction(function () use ($request, $role, $identifier, $validated): PlatformComplaint {
+            $complaint = PlatformComplaint::create([
+                'reporter_role' => $role,
+                'reporter_identifier' => $identifier ?: null,
+                'subject' => trim((string) $validated['subject']),
+                'description' => trim((string) $validated['description']),
+                'status' => 'open',
+            ]);
 
-        return back()->with('success', 'Your issue was submitted to the SARI Administrator.');
+            $conversation = $this->messaging->openReportConversation($request, $complaint);
+            $this->messaging->send($request, $conversation, (string) $complaint->description);
+
+            return $complaint;
+        });
+
+        return back()
+            ->with('success', 'Your issue was sent to SARI Admin and added to your support messages.')
+            ->with('submitted_complaint_id', $complaint->id);
     }
 }

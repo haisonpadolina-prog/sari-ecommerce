@@ -10,7 +10,6 @@ use App\Models\Accounts\SellerAccount;
 use App\Models\Accounts\SocialAccount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 final class CurrentMessagingActor
 {
@@ -159,44 +158,6 @@ final class CurrentMessagingActor
                     ->whereRaw('LOWER(email) = ?', [$email])
                     ->first();
             }
-        }
-
-        if (
-            !$account
-            && app()->environment(['local', 'testing'])
-            && strtolower((string) $request->session()->get(
-                'courier_email',
-                ''
-            )) === 'courier@gmail.com'
-        ) {
-            $account = CourierAccount::query()->firstOrCreate(
-                ['email' => 'courier@gmail.com'],
-                [
-                    'registration_application_id' => null,
-                    'logistics_account_id' => null,
-                    'last_name' => 'Rider',
-                    'first_name' => 'SARI',
-                    'middle_initial' => null,
-                    'sex' => 'Male',
-                    'contact_no' => '09123456789',
-                    'birthday' => '2000-01-01',
-                    'age' => 26,
-                    'province_code' => 'TEST',
-                    'province_name' => 'Metro Manila',
-                    'municipality_code' => 'TEST',
-                    'municipality_name' => 'Manila',
-                    'barangay_code' => 'TEST',
-                    'barangay_name' => 'Test Barangay',
-                    'street_address' => 'SARI Rider Test Address',
-                    'password' => Hash::make('courier123'),
-                    'vehicle_type' => 'Motorcycle',
-                    'plate_number' => 'TEST-001',
-                    'account_status' => 'active',
-                    'approved_at' => now(),
-                    'availability_status' => 'online',
-                    'rating' => 5.00,
-                ]
-            );
         }
 
         abort_unless(

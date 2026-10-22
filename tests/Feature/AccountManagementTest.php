@@ -97,10 +97,10 @@ test('seller password changes require the current password', function (): void {
     expect(Hash::check('new-password', $account->fresh()->password))->toBeTrue();
 });
 
-test('buyer login keeps previously edited demo profile details', function (): void {
+test('buyer login keeps previously edited database profile details', function (): void {
     $account = sariProfileAccount('buyer', 'buyer@gmail.com');
     $account->update(['first_name' => 'Saved Profile']);
-    $this->post(route('login.submit'), ['email' => 'buyer@gmail.com', 'password' => 'buyer123'])->assertRedirect(route('buyer.dashboard'));
+    $this->post(route('login.submit'), ['email' => 'buyer@gmail.com', 'password' => 'original-password'])->assertRedirect(route('buyer.dashboard'));
     expect($account->fresh()->first_name)->toBe('Saved Profile');
 });
 

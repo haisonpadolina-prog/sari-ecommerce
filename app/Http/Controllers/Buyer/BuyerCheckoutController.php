@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\Orders\BuyerCartItem;
-use App\Models\Orders\MarketplaceOrder;
-use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Catalog\SellerProduct;
 use App\Models\Catalog\SellerProductVariant;
+use App\Models\Orders\BuyerCartItem;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Orders\MarketplaceOrderEvent;
+use App\Models\Promotions\SellerVoucherRedemption;
 use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerIdentityService;
 use App\Services\Products\ProductVariantInventoryService;
-use App\Services\Seller\SellerVoucherService;
+use App\Services\Promotions\PlatformCampaignService;
 use App\Services\Promotions\SellerFreeShippingPromotionService;
-use App\Models\Promotions\SellerVoucherRedemption;
+use App\Services\Seller\SellerVoucherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +31,7 @@ class BuyerCheckoutController extends Controller
         private readonly ProductVariantInventoryService $inventory,
         private readonly SellerVoucherService $vouchers,
         private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
+        private readonly PlatformCampaignService $platformCampaigns,
     ) {
     }
 
@@ -89,21 +90,95 @@ class BuyerCheckoutController extends Controller
         }
 
         $snapshot = $this->identity->snapshot($request);
+        $registeredProfile = $snapshot;
+        $savedAddresses = collect();
+        $selectedAddressId = null;
+
+        if ($buyer = $this->identity->account($request)) {
+            $savedAddresses = $buyer->addresses()
+                ->orderByDesc('is_default')
+                ->orderByDesc('updated_at')
+                ->orderByDesc('id')
+                ->get();
+
+            $defaultAddress = $savedAddresses->firstWhere('is_default', true);
+
+            if ($defaultAddress) {
+                $snapshot['name'] = $defaultAddress->recipient_name;
+                $snapshot['phone'] = $defaultAddress->contact_no;
+                $snapshot['address'] = $defaultAddress->fullAddress();
+                $selectedAddressId = (int) $defaultAddress->id;
+            }
+        }
         $sellerGroups = $this->cart->groupedBySeller($items);
         $shipping = $this->cart->shippingSummary($items);
         $deliveryFee = (float) $shipping['delivery_fee'];
         $subtotal = $this->cart->subtotal($items);
+        $sellerSubtotal = round(
+            $items->sum(fn (BuyerCartItem $item) => $this->cart->sellerLineTotal($item)),
+            2
+        );
+        $platformSaleDiscount = round(max(0, $sellerSubtotal - $subtotal), 2);
+
+        $appliedVoucherCode = strtoupper(trim((string) $request->query('voucher_code', '')));
+        $platformVoucherPreview = null;
+        $platformVoucherDiscount = 0.0;
+        $voucherPreviewError = null;
+
+        if ($appliedVoucherCode !== '') {
+            $previewLines = $items->map(function (BuyerCartItem $item): array {
+                return [
+                    'product' => $item->product,
+                    'seller_id' => (int) $item->product->seller_account_id,
+                    'buyer_line_total' => $this->cart->lineTotal($item),
+                ];
+            });
+
+            try {
+                $platformVoucherPreview = $this->platformCampaigns->previewVoucherForCheckout(
+                    $appliedVoucherCode,
+                    $previewLines,
+                    $this->identity->columns($request)
+                );
+
+                if ($platformVoucherPreview !== null) {
+                    $platformVoucherDiscount = round(
+                        (float) $platformVoucherPreview['discount'],
+                        2
+                    );
+                } else {
+                    $voucherPreviewError = 'This is not an active SARI event voucher for the selected products. Seller vouchers are still validated when you place the order.';
+                }
+            } catch (ValidationException $exception) {
+                $voucherPreviewError = collect($exception->errors())
+                    ->flatten()
+                    ->first() ?: 'This voucher could not be applied.';
+            }
+        }
 
         return view('buyer.checkout', [
             'items' => $items,
             'groups' => $sellerGroups,
             'subtotal' => $subtotal,
+            'sellerSubtotal' => $sellerSubtotal,
+            'platformSaleDiscount' => $platformSaleDiscount,
+            'platformVoucherPreview' => $platformVoucherPreview,
+            'platformVoucherDiscount' => $platformVoucherDiscount,
+            'appliedVoucherCode' => $appliedVoucherCode,
+            'voucherPreviewError' => $voucherPreviewError,
+            'platformVoucherOffers' => $this->platformCampaigns->voucherOffersForItems(
+                $items,
+                $this->identity->columns($request)
+            ),
             'deliveryFee' => $deliveryFee,
             'originalDeliveryFee' => (float) $shipping['original_delivery_fee'],
             'shippingDiscount' => (float) $shipping['shipping_discount'],
             'shippingBySeller' => $shipping['groups'],
-            'grandTotal' => round($subtotal + $deliveryFee, 2),
+            'grandTotal' => round(max(0, $subtotal - $platformVoucherDiscount) + $deliveryFee, 2),
             'profile' => $snapshot,
+            'registeredProfile' => $registeredProfile,
+            'savedAddresses' => $savedAddresses,
+            'selectedAddressId' => $selectedAddressId,
             'cart' => $this->cart,
             'buyNowItemId' => $buyNowItemId,
             'selectedItemIds' => $buyNowItemId ? collect() : $items->pluck('id')->map(fn ($id) => (int) $id)->values(),
@@ -157,9 +232,9 @@ class BuyerCheckoutController extends Controller
             $identityColumns = $this->identity->columns($request);
             $checkoutReference = 'CHK-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(5));
             $feePerSeller = $this->cart->deliveryFeePerSeller();
-            $created = collect();
             $voucherCode = strtoupper(trim((string) ($validated['voucher_code'] ?? '')));
-            $voucherApplied = false;
+            $preparedGroups = collect();
+            $platformVoucherLines = collect();
 
             foreach ($items->groupBy(fn (BuyerCartItem $item) => (int) $item->product->seller_account_id) as $sellerId => $group) {
                 $seller = SellerAccount::query()->findOrFail((int) $sellerId);
@@ -172,7 +247,9 @@ class BuyerCheckoutController extends Controller
 
                 $orderItems = [];
                 $lockedProducts = [];
-                $subtotal = 0.0;
+                $sellerSubtotal = 0.0;
+                $buyerSaleSubtotal = 0.0;
+                $automaticCampaigns = [];
 
                 foreach ($group as $cartItem) {
                     $product = SellerProduct::query()
@@ -188,7 +265,6 @@ class BuyerCheckoutController extends Controller
                     }
 
                     $lockedProducts[(int) $cartItem->id] = $product;
-
                     $lockedVariant = null;
 
                     if ($cartItem->seller_product_variant_id) {
@@ -212,11 +288,20 @@ class BuyerCheckoutController extends Controller
                         (int) $cartItem->quantity
                     );
 
-                    $unitPrice = $this->cart->unitPriceFor($product, $lockedVariant);
-                    $lineTotal = round($unitPrice * (int) $cartItem->quantity, 2);
+                    $sellerUnitPrice = $this->cart->sellerUnitPriceFor($product, $lockedVariant);
+                    $platformSale = $this->cart->platformSaleQuoteFor($product, $lockedVariant);
+                    $buyerUnitPrice = (float) $platformSale['buyer_price'];
+                    $quantity = (int) $cartItem->quantity;
+                    $sellerLineTotal = round($sellerUnitPrice * $quantity, 2);
+                    $buyerLineTotal = round($buyerUnitPrice * $quantity, 2);
+                    $platformLineDiscount = round(max(0, $sellerLineTotal - $buyerLineTotal), 2);
                     $variantOptions = is_array($lockedVariant?->option_values)
                         ? $lockedVariant->option_values
                         : [];
+
+                    if (!empty($platformSale['snapshot']['id'])) {
+                        $automaticCampaigns[(int) $platformSale['snapshot']['id']] = $platformSale['snapshot'];
+                    }
 
                     $orderItems[] = [
                         'product_id' => (int) $product->id,
@@ -225,17 +310,82 @@ class BuyerCheckoutController extends Controller
                         'sku' => (string) ($lockedVariant?->sku ?: $product->sku ?: ''),
                         'variant_options' => $variantOptions,
                         'variant_label' => $this->cart->variantLabelFor($lockedVariant),
-                        'qty' => (int) $cartItem->quantity,
-                        'price' => $unitPrice,
-                        'line_total' => $lineTotal,
+                        'qty' => $quantity,
+                        'price' => $buyerUnitPrice,
+                        'line_total' => $buyerLineTotal,
+                        'seller_price' => $sellerUnitPrice,
+                        'seller_line_total' => $sellerLineTotal,
+                        'platform_discount_amount' => $platformLineDiscount,
+                        'platform_campaign' => $platformSale['snapshot'],
                     ];
 
-                    $subtotal += $lineTotal;
+                    $sellerSubtotal += $sellerLineTotal;
+                    $buyerSaleSubtotal += $buyerLineTotal;
+
+                    $platformVoucherLines->push([
+                        'product' => $product,
+                        'seller_id' => (int) $seller->id,
+                        'buyer_line_total' => $buyerLineTotal,
+                    ]);
                 }
+
+                $preparedGroups->put((int) $sellerId, [
+                    'seller' => $seller,
+                    'cart_items' => $group,
+                    'locked_products' => $lockedProducts,
+                    'order_items' => $orderItems,
+                    'seller_subtotal' => round($sellerSubtotal, 2),
+                    'buyer_sale_subtotal' => round($buyerSaleSubtotal, 2),
+                    'automatic_campaigns' => array_values($automaticCampaigns),
+                ]);
+            }
+
+            $platformVoucher = $this->platformCampaigns->resolveVoucherForCheckout(
+                $voucherCode,
+                $platformVoucherLines,
+                $identityColumns
+            );
+
+            $created = collect();
+            $sellerVoucherApplied = false;
+
+            foreach ($preparedGroups as $sellerId => $prepared) {
+                /** @var SellerAccount $seller */
+                $seller = $prepared['seller'];
+                $sellerSubtotal = (float) $prepared['seller_subtotal'];
+                $buyerSaleSubtotal = (float) $prepared['buyer_sale_subtotal'];
+                $platformSaleDiscount = round(max(0, $sellerSubtotal - $buyerSaleSubtotal), 2);
+
+                $sellerVoucherResult = null;
+                if ($platformVoucher === null) {
+                    $sellerVoucherResult = $this->vouchers->resolveForSeller(
+                        (int) $seller->id,
+                        $voucherCode,
+                        $buyerSaleSubtotal
+                    );
+                }
+
+                $sellerVoucherDiscount = (float) ($sellerVoucherResult['discount'] ?? 0);
+                $sellerVoucher = $sellerVoucherResult['voucher'] ?? null;
+                $sellerReceivableSubtotal = round(max(0, $sellerSubtotal - $sellerVoucherDiscount), 2);
+
+                if ($sellerVoucher) {
+                    $sellerVoucherApplied = true;
+                }
+
+                $platformVoucherDiscount = round(
+                    (float) ($platformVoucher['allocations'][(int) $sellerId] ?? 0),
+                    2
+                );
+
+                $buyerSubtotal = round(max(
+                    0,
+                    $buyerSaleSubtotal - $sellerVoucherDiscount - $platformVoucherDiscount
+                ), 2);
 
                 $shippingQuote = $this->freeShippingPromotions->checkoutQuote(
                     (int) $seller->id,
-                    round($subtotal, 2),
+                    $sellerSubtotal,
                     $feePerSeller,
                     true
                 );
@@ -243,29 +393,15 @@ class BuyerCheckoutController extends Controller
                 $shippingDiscountAmount = round((float) ($shippingQuote['shipping_discount'] ?? 0), 2);
                 $sellerDeliveryFee = round(max(0, $originalDeliveryFee - $shippingDiscountAmount), 2);
 
-                $voucherResult = $this->vouchers->resolveForSeller(
-                    (int) $seller->id,
-                    $voucherCode,
-                    round($subtotal, 2)
-                );
-                $discountAmount = (float) ($voucherResult['discount'] ?? 0);
-                $voucher = $voucherResult['voucher'] ?? null;
-                $discountedSubtotal = round(max(0, $subtotal - $discountAmount), 2);
-
-                if ($voucher) {
-                    $voucherApplied = true;
-                }
-
-                foreach ($group as $cartItem) {
+                foreach ($prepared['cart_items'] as $cartItem) {
                     $this->inventory->deductForOrder(
-                        $lockedProducts[(int) $cartItem->id],
+                        $prepared['locked_products'][(int) $cartItem->id],
                         $cartItem->seller_product_variant_id,
                         (int) $cartItem->quantity
                     );
                 }
 
                 $pickupAddress = trim((string) ($seller->pickup_address ?? ''));
-
                 if ($pickupAddress === '') {
                     $pickupAddress = collect([
                         $seller->street_address ?? null,
@@ -275,6 +411,11 @@ class BuyerCheckoutController extends Controller
                         'Philippines',
                     ])->filter(fn ($part) => filled($part))->implode(', ');
                 }
+
+                $campaignSnapshot = [
+                    'automatic_sales' => $prepared['automatic_campaigns'],
+                    'voucher' => $platformVoucher['snapshot'] ?? null,
+                ];
 
                 $order = MarketplaceOrder::create(array_merge($identityColumns, [
                     'order_number' => $this->newOrderNumber(),
@@ -286,12 +427,18 @@ class BuyerCheckoutController extends Controller
                     'buyer_address' => $validated['buyer_address'],
                     'payment_method' => 'COD',
                     'payment_status' => 'pending',
-                    'items' => $orderItems,
-                    'original_subtotal' => round($subtotal, 2),
-                    'discount_amount' => $discountAmount,
-                    'voucher_code' => $voucher?->code,
-                    'seller_voucher_id' => $voucher?->id,
-                    'subtotal' => $discountedSubtotal,
+                    'items' => $prepared['order_items'],
+                    'original_subtotal' => $sellerSubtotal,
+                    'discount_amount' => $sellerVoucherDiscount,
+                    'seller_receivable_subtotal' => $sellerReceivableSubtotal,
+                    'voucher_code' => $sellerVoucher?->code,
+                    'seller_voucher_id' => $sellerVoucher?->id,
+                    'platform_sale_discount_amount' => $platformSaleDiscount,
+                    'platform_voucher_discount_amount' => $platformVoucherDiscount,
+                    'platform_discount_amount' => round($platformSaleDiscount + $platformVoucherDiscount, 2),
+                    'platform_voucher_code' => $platformVoucher ? $voucherCode : null,
+                    'platform_campaign_snapshot' => $campaignSnapshot,
+                    'subtotal' => $buyerSubtotal,
                     'original_delivery_fee' => $originalDeliveryFee,
                     'shipping_discount_amount' => $shippingDiscountAmount,
                     'seller_free_shipping_promotion_id' => $shippingQuote['promotion_id'] ?? null,
@@ -299,21 +446,21 @@ class BuyerCheckoutController extends Controller
                         ? SellerFreeShippingPromotionService::FUNDER
                         : null,
                     'delivery_fee' => $sellerDeliveryFee,
-                    'total' => round($discountedSubtotal + $sellerDeliveryFee, 2),
+                    'total' => round($buyerSubtotal + $sellerDeliveryFee, 2),
                     'pickup_name' => $seller->store_name ?: 'SARI Seller Store',
                     'pickup_address' => $pickupAddress !== '' ? $pickupAddress : 'Seller pickup address to be confirmed',
                     'status' => 'new',
                 ]));
 
-                if ($voucher) {
+                if ($sellerVoucher) {
                     SellerVoucherRedemption::create([
-                        'seller_voucher_id' => $voucher->id,
+                        'seller_voucher_id' => $sellerVoucher->id,
                         'marketplace_order_id' => $order->id,
                         'buyer_account_id' => $order->buyer_account_id,
                         'buyer_social_account_id' => $order->buyer_social_account_id,
-                        'discount_amount' => $discountAmount,
+                        'discount_amount' => $sellerVoucherDiscount,
                     ]);
-                    $voucher->increment('used_count');
+                    $sellerVoucher->increment('used_count');
                 }
 
                 MarketplaceOrderEvent::create([
@@ -329,10 +476,20 @@ class BuyerCheckoutController extends Controller
                 $created->push($order);
             }
 
-            if ($voucherCode !== '' && !$voucherApplied) {
+            if ($voucherCode !== '' && $platformVoucher === null && !$sellerVoucherApplied) {
                 throw ValidationException::withMessages([
-                    'voucher_code' => 'That voucher code does not apply to any Seller in this checkout.',
+                    'voucher_code' => 'That voucher code does not apply to this checkout.',
                 ]);
+            }
+
+            if ($platformVoucher !== null) {
+                $this->platformCampaigns->recordVoucherRedemption(
+                    $platformVoucher['campaign'],
+                    $checkoutReference,
+                    $identityColumns,
+                    (float) $platformVoucher['discount'],
+                    $created->pluck('id')->map(fn ($id) => (int) $id)->all()
+                );
             }
 
             $cartQuery->delete();

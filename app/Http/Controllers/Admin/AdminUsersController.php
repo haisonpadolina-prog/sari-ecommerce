@@ -16,13 +16,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use App\Services\Seller\SellerAccountStatusService;
 use App\Services\Accounts\AccountEmailBanService;
 use App\Models\Registration\RegistrationApplication;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class AdminUsersController extends Controller
 {
@@ -46,11 +49,21 @@ class AdminUsersController extends Controller
                 ->groupBy(fn (AdminUserActivity $row) => strtolower($row->user_role) . ':' . $row->user_id)
             : collect();
 
+        $lastSignIns = Schema::hasTable('admin_user_activities')
+            ? AdminUserActivity::query()
+                ->where('action', 'login')
+                ->select('user_role', 'user_id')
+                ->selectRaw('MAX(created_at) AS last_sign_in_at')
+                ->groupBy('user_role', 'user_id')
+                ->get()
+                ->keyBy(fn (AdminUserActivity $row) => strtolower($row->user_role) . ':' . $row->user_id)
+            : collect();
+
         $accounts = collect()
-            ->concat($this->mapAccounts(BuyerAccount::query()->latest()->get(), 'Buyer', $activity))
-            ->concat($this->mapAccounts(SellerAccount::query()->latest()->get(), 'Seller', $activity))
-            ->concat($this->mapAccounts(CourierAccount::query()->latest()->get(), 'Rider', $activity))
-            ->concat($this->mapAccounts(LogisticsAccount::query()->latest()->get(), 'Logistics', $activity))
+            ->concat($this->mapAccounts(BuyerAccount::query()->with('registrationApplication')->latest()->get(), 'Buyer', $activity, $lastSignIns))
+            ->concat($this->mapAccounts(SellerAccount::query()->with('registrationApplication')->latest()->get(), 'Seller', $activity, $lastSignIns))
+            ->concat($this->mapAccounts(CourierAccount::query()->with(['registrationApplication', 'logistics'])->latest()->get(), 'Rider', $activity, $lastSignIns))
+            ->concat($this->mapAccounts(LogisticsAccount::query()->with('registrationApplication')->latest()->get(), 'Logistics', $activity, $lastSignIns))
             ->sortByDesc('created_at')
             ->values();
 
@@ -65,6 +78,45 @@ class AdminUsersController extends Controller
         ];
 
         return view('admin.users', compact('accounts', 'stats'));
+    }
+
+    public function photo(Request $request, string $role, int $id): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        $this->guard($request);
+        $account = $this->resolveAccount($role, $id);
+        $path = $account->profile_image_path;
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        abort_unless(filled($path) && $disk->exists($path), 404, 'Profile photo not found.');
+
+        return response()->file($disk->path($path), [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    public function document(
+        Request $request,
+        string $role,
+        int $id,
+        string $document
+    ): \Symfony\Component\HttpFoundation\BinaryFileResponse {
+        $this->guard($request);
+
+        $normalizedRole = $this->normalizeRole($role);
+        $account = $this->resolveAccount($normalizedRole, $id);
+        $path = $this->accountDocumentPath($account, $normalizedRole, $document);
+        $disk = Storage::disk('local');
+
+        abort_unless(
+            filled($path) && $disk->exists($path),
+            404,
+            'Account document not found.'
+        );
+
+        return response()->file($disk->path($path), [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     public function update(Request $request, string $role, int $id): RedirectResponse
@@ -187,6 +239,88 @@ class AdminUsersController extends Controller
         return $this->respond(
             $request,
             'User access restored successfully.',
+            $account,
+            $normalizedRole
+        );
+    }
+
+    public function block(Request $request, string $role, int $id): RedirectResponse|JsonResponse
+    {
+        $this->guard($request);
+
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'min:5', 'max:500'],
+        ]);
+
+        $account = $this->resolveAccount($role, $id);
+        $normalizedRole = $this->normalizeRole($role);
+        $status = strtolower((string) ($account->account_status ?? 'active'));
+
+        if ($status === 'banned') {
+            throw ValidationException::withMessages([
+                'account' => 'A permanently banned account cannot be blocked.',
+            ]);
+        }
+
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->block($account, $validated['reason']);
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'blocked'])->save();
+            $account->refresh();
+        }
+
+        $this->recordActivity(
+            $request,
+            $normalizedRole,
+            (int) $account->getKey(),
+            'blocked',
+            $validated['reason'],
+            ['status' => 'blocked']
+        );
+
+        return $this->respond(
+            $request,
+            'Account blocked successfully. Sign-in and active sessions are no longer allowed.',
+            $account,
+            $normalizedRole
+        );
+    }
+
+    public function unblock(Request $request, string $role, int $id): RedirectResponse|JsonResponse
+    {
+        $this->guard($request);
+
+        $account = $this->resolveAccount($role, $id);
+        $normalizedRole = $this->normalizeRole($role);
+        $status = strtolower((string) ($account->account_status ?? 'active'));
+
+        if ($status !== 'blocked') {
+            throw ValidationException::withMessages([
+                'account' => 'Only blocked accounts can be unblocked.',
+            ]);
+        }
+
+        if ($normalizedRole === 'seller') {
+            /** @var SellerAccount $account */
+            $account = $this->sellerStatusService->unblock($account);
+        } elseif (Schema::hasColumn($account->getTable(), 'account_status')) {
+            $account->forceFill(['account_status' => 'active'])->save();
+            $account->refresh();
+        }
+
+        $this->recordActivity(
+            $request,
+            $normalizedRole,
+            (int) $account->getKey(),
+            'unblocked',
+            'Admin restored access to a blocked account.',
+            ['status' => 'active']
+        );
+
+        return $this->respond(
+            $request,
+            'Account unblocked successfully.',
             $account,
             $normalizedRole
         );
@@ -374,12 +508,11 @@ class AdminUsersController extends Controller
         };
     }
 
-    private function mapAccounts(Collection $accounts, string $role, Collection $activity): Collection
+    private function mapAccounts(Collection $accounts, string $role, Collection $activity, Collection $lastSignIns): Collection
     {
-        return $accounts->map(function ($account) use ($role, $activity): array {
-            $name = $role === 'Seller'
-                ? ($account->store_name ?: trim(($account->first_name ?? '') . ' ' . ($account->last_name ?? '')))
-                : trim(($account->first_name ?? '') . ' ' . ($account->last_name ?? ''));
+        return $accounts->map(function ($account) use ($role, $activity, $lastSignIns): array {
+            $personalName = trim(($account->first_name ?? '') . ' ' . ($account->last_name ?? ''));
+            $name = $personalName ?: ($account->store_name ?? $account->business_name ?? '');
 
             $status = strtolower((string) ($account->account_status ?? ($account->registration_status ?? 'active')));
             $roleKey = strtolower($role);
@@ -401,10 +534,21 @@ class AdminUsersController extends Controller
                 ]);
             }
 
+            $lastLogin = $lastSignIns->get($key);
+            $lastSignInAt = $lastLogin && $lastLogin->last_sign_in_at
+                ? \Illuminate\Support\Carbon::parse($lastLogin->last_sign_in_at)
+                : null;
+            $reference = strtoupper($roleKey) . '-' . str_pad((string) $account->id, 3, '0', STR_PAD_LEFT);
+
             return [
                 'id' => $account->id,
                 'role' => $role,
                 'role_key' => $roleKey,
+                'account_reference' => $reference,
+                'profile_photo_url' => filled($account->profile_image_path)
+                    ? route('admin.users.photo', [$roleKey, $account->id])
+                    : null,
+                'last_sign_in_at' => $lastSignInAt,
                 'name' => $name ?: $role . ' Account',
                 'first_name' => $account->first_name ?? '',
                 'last_name' => $account->last_name ?? '',
@@ -415,36 +559,336 @@ class AdminUsersController extends Controller
                 'created_at' => $account->created_at,
                 'updated_at' => $account->updated_at,
                 'registration_application_id' => $account->registration_application_id ?? null,
+                'profile' => $this->accountProfilePayload(
+                    $account,
+                    $roleKey,
+                    $reference,
+                    $lastSignInAt
+                ),
                 'activity' => $timeline,
             ];
         });
     }
 
+    private function accountProfilePayload(
+        Model $account,
+        string $role,
+        string $reference,
+        ?\Illuminate\Support\Carbon $lastSignInAt
+    ): array {
+        /** @var RegistrationApplication|null $registration */
+        $registration = $account->relationLoaded('registrationApplication')
+            ? $account->getRelation('registrationApplication')
+            : null;
+
+        $value = function (string $attribute) use ($account, $registration): mixed {
+            $accountValue = $account->getAttribute($attribute);
+
+            if ($accountValue !== null && $accountValue !== '') {
+                return $accountValue;
+            }
+
+            return $registration?->getAttribute($attribute);
+        };
+
+        $personal = [
+            $this->profileField('First name', $value('first_name')),
+            $this->profileField('Middle initial', $value('middle_initial')),
+            $this->profileField('Last name', $value('last_name')),
+            $this->profileField('Sex', $value('sex')),
+            $this->profileField('Birthday', $this->formatProfileDate($value('birthday'))),
+            $this->profileField('Age', $value('age')),
+            $this->profileField('Email address', $value('email')),
+            $this->profileField('Contact number', $value('contact_no')),
+        ];
+
+        $address = [
+            $this->profileField('Region', $value('region_name')),
+            $this->profileField('Region code', $value('region_code')),
+            $this->profileField('Province', $value('province_name')),
+            $this->profileField('Province code', $value('province_code')),
+            $this->profileField('Municipality / City', $value('municipality_name')),
+            $this->profileField('Municipality code', $value('municipality_code')),
+            $this->profileField('Barangay', $value('barangay_name')),
+            $this->profileField('Barangay code', $value('barangay_code')),
+            $this->profileField('Street address', $value('street_address')),
+            $this->profileField('Postal code', $value('postal_code')),
+        ];
+
+        $roleDetails = match ($role) {
+            'seller' => [
+                $this->profileField('Store / business name', $account->store_name ?: $registration?->business_name),
+                $this->profileField('Seller type', $this->humanizeProfileValue($value('seller_type'))),
+                $this->profileField('Line of business', $value('line_of_business')),
+                $this->profileField('TIN', $value('tin')),
+                $this->profileField('SEC registration no.', $value('sec_registration_no')),
+                $this->profileField('Store description', $account->store_description),
+                $this->profileField('Store phone', $account->store_phone),
+                $this->profileField('Store public email', $account->store_public_email),
+                $this->profileField('Store status', $this->humanizeProfileValue($account->store_status)),
+                $this->profileField('Pickup address', $account->pickup_address),
+                $this->profileField('Pickup instructions', $account->pickup_instructions),
+                $this->profileField('Warning count', $account->warning_count),
+                $this->profileField('Suspension reason', $account->suspension_reason),
+                $this->profileField('Suspended at', $this->formatProfileDateTime($account->suspended_at)),
+                $this->profileField('Suspended until', $this->formatProfileDateTime($account->suspended_until)),
+            ],
+            'logistics' => [
+                $this->profileField('Business name', $account->business_name ?: $registration?->business_name),
+                $this->profileField('Position', $value('position')),
+                $this->profileField('Service areas', $value('service_areas')),
+                $this->profileField('TIN', $value('tin')),
+                $this->profileField('SEC registration no.', $value('sec_registration_no')),
+            ],
+            'rider' => [
+                $this->profileField('Logistics provider', $account->logistics?->displayName()),
+                $this->profileField('Logistics account ID', $account->logistics_account_id),
+                $this->profileField('Vehicle type', $value('vehicle_type')),
+                $this->profileField('Vehicle model', $account->vehicle_model),
+                $this->profileField('Plate number', $value('plate_number')),
+                $this->profileField('Driver license number', $value('license_number')),
+                $this->profileField('License expiry date', $this->formatProfileDate($value('license_expiry_date'))),
+                $this->profileField('Availability status', $this->humanizeProfileValue($account->availability_status)),
+                $this->profileField('Rating', $account->rating),
+                $this->profileField('Activated at', $this->formatProfileDateTime($account->activated_at)),
+            ],
+            default => [],
+        };
+
+        $registrationFields = [
+            $this->profileField('Account reference', $reference),
+            $this->profileField('Role', ucfirst(str_replace('_', ' ', $role))),
+            $this->profileField('Account status', $this->humanizeProfileValue($account->account_status ?? $account->registration_status ?? 'active')),
+            $this->profileField('Registration application ID', $registration?->id ?? $account->registration_application_id),
+            $this->profileField('Registration status', $this->humanizeProfileValue($registration?->status ?? $account->registration_status)),
+            $this->profileField('Application submitted', $this->formatProfileDateTime($registration?->created_at)),
+            $this->profileField('Reviewed at', $this->formatProfileDateTime($registration?->reviewed_at)),
+            $this->profileField('Approved at', $this->formatProfileDateTime($account->approved_at ?? $registration?->approved_at)),
+            $this->profileField('Rejected at', $this->formatProfileDateTime($registration?->rejected_at)),
+            $this->profileField('Review note', $registration?->admin_note),
+            $this->profileField('Last sign-in', $this->formatProfileDateTime($lastSignInAt)),
+            $this->profileField('Account created', $this->formatProfileDateTime($account->created_at)),
+            $this->profileField('Last updated', $this->formatProfileDateTime($account->updated_at)),
+        ];
+
+        return [
+            'sections' => [
+                ['title' => 'Personal & Contact Information', 'fields' => $personal],
+                ['title' => 'Address Information', 'fields' => $address],
+                ...($roleDetails !== [] ? [['title' => $this->roleSectionTitle($role), 'fields' => $roleDetails]] : []),
+                ['title' => 'Registration & Account Record', 'fields' => $registrationFields],
+            ],
+            'documents' => $this->accountDocumentLinks($account, $role),
+        ];
+    }
+
+    private function profileField(string $label, mixed $value): array
+    {
+        $display = is_string($value) ? trim($value) : $value;
+
+        if ($display === null || $display === '') {
+            $display = '—';
+        } elseif (is_bool($display)) {
+            $display = $display ? 'Yes' : 'No';
+        } elseif (is_array($display)) {
+            $display = implode(', ', array_map('strval', $display));
+        }
+
+        return [
+            'label' => $label,
+            'value' => (string) $display,
+        ];
+    }
+
+    private function roleSectionTitle(string $role): string
+    {
+        return match ($role) {
+            'seller' => 'Seller & Store Information',
+            'logistics' => 'Logistics Business Information',
+            'rider' => 'Rider & Vehicle Information',
+            default => 'Role Information',
+        };
+    }
+
+    private function humanizeProfileValue(mixed $value): mixed
+    {
+        if (!is_string($value) || trim($value) === '') {
+            return $value;
+        }
+
+        return ucwords(str_replace(['_', '-'], ' ', trim($value)));
+    }
+
+    private function formatProfileDate(mixed $value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        try {
+            return \Illuminate\Support\Carbon::parse($value)->format('M d, Y');
+        } catch (\Throwable) {
+            return (string) $value;
+        }
+    }
+
+    private function formatProfileDateTime(mixed $value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        try {
+            return \Illuminate\Support\Carbon::parse($value)
+                ->timezone('Asia/Manila')
+                ->format('M d, Y h:i A') . ' PHT';
+        } catch (\Throwable) {
+            return (string) $value;
+        }
+    }
+
+    private function accountDocumentLinks(Model $account, string $role): array
+    {
+        $definitions = $this->accountDocumentDefinitions($role);
+        $documents = [];
+
+        foreach ($definitions as $key => $definition) {
+            if (!filled($this->accountDocumentPath($account, $role, $key))) {
+                continue;
+            }
+
+            $documents[] = [
+                'key' => $key,
+                'label' => $definition['label'],
+                'url' => route('admin.users.document', [$role, $account->getKey(), $key]),
+            ];
+        }
+
+        return $documents;
+    }
+
+    private function accountDocumentDefinitions(string $role): array
+    {
+        return match ($role) {
+            'buyer' => [
+                'id' => ['label' => 'Valid ID', 'account_columns' => ['id_path'], 'registration_column' => 'id_path'],
+            ],
+            'seller' => [
+                'id' => ['label' => 'Valid ID', 'account_columns' => ['id_path'], 'registration_column' => 'id_path'],
+                'permit' => ['label' => 'Business Permit', 'account_columns' => ['business_permit_path'], 'registration_column' => 'business_permit_path'],
+                'bir' => ['label' => 'BIR Document', 'account_columns' => ['bir_path'], 'registration_column' => 'bir_path'],
+                'sec' => ['label' => 'SEC Document', 'account_columns' => ['sec_path'], 'registration_column' => 'sec_path'],
+            ],
+            'logistics' => [
+                'id' => ['label' => 'Valid ID', 'account_columns' => ['id_path'], 'registration_column' => 'id_path'],
+                'permit' => ['label' => 'Business Permit', 'account_columns' => ['business_permit_path'], 'registration_column' => 'business_permit_path'],
+                'bir' => ['label' => 'BIR Document', 'account_columns' => ['bir_path'], 'registration_column' => 'bir_path'],
+                'sec' => ['label' => 'SEC Document', 'account_columns' => ['sec_path'], 'registration_column' => 'sec_path'],
+            ],
+            'rider' => [
+                'license' => ['label' => "Driver's License", 'account_columns' => ['driver_license_path', 'id_path'], 'registration_column' => 'id_path'],
+                'orcr' => ['label' => 'OR/CR', 'account_columns' => ['orcr_path'], 'registration_column' => 'orcr_path'],
+            ],
+            default => [],
+        };
+    }
+
+    private function accountDocumentPath(Model $account, string $role, string $document): ?string
+    {
+        $definition = $this->accountDocumentDefinitions($role)[$document] ?? null;
+        abort_unless($definition, 404);
+
+        foreach ($definition['account_columns'] as $column) {
+            $path = $account->getAttribute($column);
+            if (filled($path)) {
+                return (string) $path;
+            }
+        }
+
+        /** @var RegistrationApplication|null $registration */
+        $registration = $account->relationLoaded('registrationApplication')
+            ? $account->getRelation('registrationApplication')
+            : null;
+
+        if (!$registration && filled($account->registration_application_id ?? null)) {
+            $registration = RegistrationApplication::query()->find($account->registration_application_id);
+        }
+
+        $path = $registration?->getAttribute($definition['registration_column']);
+
+        return filled($path) ? (string) $path : null;
+    }
+
     private function releaseAccountForReregistration(Model $account, string $role): void
     {
+        $originalEmail = strtolower(trim((string) ($account->email ?? '')));
+
         $registrationApplicationId = Schema::hasColumn($account->getTable(), 'registration_application_id')
             ? $account->registration_application_id
             : null;
 
-        if ($registrationApplicationId) {
+        /*
+         * Release every active registration application that can still reserve
+         * this email. Older/test accounts may not have registration_application_id
+         * populated, so the email fallback is required.
+         *
+         * AccountRegistrationPolicy treats unverified, pending and approved
+         * registration applications as "email in use", while rejected records
+         * no longer block a fresh registration.
+         */
+        if ($registrationApplicationId || $originalEmail !== '') {
+            $releasedRegistrationPassword = Hash::make(Str::random(64));
+
             RegistrationApplication::query()
-                ->whereKey($registrationApplicationId)
+                ->where(function ($query) use ($registrationApplicationId, $originalEmail): void {
+                    if ($registrationApplicationId) {
+                        $query->whereKey($registrationApplicationId);
+                    }
+
+                    if ($originalEmail !== '') {
+                        if ($registrationApplicationId) {
+                            $query->orWhereRaw('LOWER(email) = ?', [$originalEmail]);
+                        } else {
+                            $query->whereRaw('LOWER(email) = ?', [$originalEmail]);
+                        }
+                    }
+                })
+                ->whereIn('status', ['unverified', 'pending', 'approved'])
                 ->update([
                     'status' => 'rejected',
-                    'admin_note' => 'Previous account access was released by an administrator. This email may be used for a new registration.',
+                    'password' => $releasedRegistrationPassword,
+                    'admin_note' => 'Previous account was deleted or released by an administrator. This email may be used for a new registration.',
                     'reviewed_at' => now(),
                     'approved_at' => null,
                     'rejected_at' => now(),
                 ]);
         }
 
+        /*
+         * The account itself may be soft-deleted. Replace its email first so a
+         * database UNIQUE index cannot keep the original email reserved.
+         */
         $updates = [
             'email' => 'released+' . $role . '+' . $account->getKey() . '+' . now()->timestamp . '@deleted.sari.local',
         ];
 
+        if (Schema::hasColumn($account->getTable(), 'password')) {
+            $updates['password'] = Hash::make(Str::random(64));
+        }
+
+        // Unique identifiers on soft-deleted Seller/Logistics rows must be
+        // released too, otherwise a fresh registration can still fail at the
+        // database UNIQUE constraint even though the account is deleted.
+        foreach (['tin', 'sec_registration_no', 'activation_token_hash'] as $column) {
+            if (Schema::hasColumn($account->getTable(), $column)) {
+                $updates[$column] = null;
+            }
+        }
+
         if (Schema::hasColumn($account->getTable(), 'registration_application_id')) {
             $updates['registration_application_id'] = null;
         }
+
         if (Schema::hasColumn($account->getTable(), 'account_status')) {
             $updates['account_status'] = 'deleted';
         }

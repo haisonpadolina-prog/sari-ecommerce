@@ -6309,6 +6309,9 @@
         >
             @csrf
 
+            <input type="hidden" id="profileImageSelected" name="profile_image_selected" value="{{ old('profile_image_selected', '0') }}">
+            <input type="hidden" id="regionCode" name="region_code" value="{{ old('region_code') }}">
+            <input type="hidden" id="regionName" name="region_name" value="{{ old('region_name') }}">
             <input type="hidden" id="provinceCode" name="province_code" value="{{ old('province_code') }}">
             <input type="hidden" id="provinceName" name="province_name" value="{{ old('province_name') }}">
             <input type="hidden" id="municipalityCode" name="municipality_code" value="{{ old('municipality_code') }}">
@@ -6400,10 +6403,11 @@
                                 </span>
                                 <span class="sari-role-copy">
                                     <span class="sari-role-name">Rider</span>
-                                    <span class="sari-role-description">Choose a Logistics provider first, then apply directly to their team.</span>
+                                    <span class="sari-role-description">Choose an approved Logistics company and submit your Rider application.</span>
                                 </span>
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
                             </button>
+
                         </div>
 
                         <div id="rolePreview" hidden class="sari-role-preview-wrap" aria-live="polite">
@@ -6535,12 +6539,11 @@
                             </div>
 
                             <div>
-                                <label id="sexFieldLabel" class="sari-field-label">Sex *</label>
+                                <label id="sexFieldLabel" class="sari-field-label">Sex <span class="font-normal text-[#9a9186]">(Optional)</span></label>
 
                                 <div class="sari-custom-select" data-sari-select>
                                     <select
                                         name="sex"
-                                        required
                                         tabindex="-1"
                                         class="sari-custom-select-native"
                                         data-sari-select-native
@@ -6594,13 +6597,13 @@
                             </div>
 
                             <div>
-                                <label class="sari-field-label">Birthday *</label>
+                                <label id="birthdayFieldLabel" class="sari-field-label">Birthday *</label>
                                 <input
                                     id="birthday"
                                     type="date"
                                     name="birthday"
                                     value="{{ old('birthday') }}"
-                                    required
+                                    data-buyer-only-required
                                     min="1900-01-01"
                                     max="{{ now()->subYears(18)->toDateString() }}"
                                     class="sari-control w-full border border-[#e3ddd4]"
@@ -6632,7 +6635,7 @@
                                     <input
                                         type="email"
                                         name="email"
-                                        value="{{ old('email') }}"
+                                        value="{{ old('email', session('registration_email')) }}"
                                         required
                                         maxlength="190"
                                         autocomplete="email"
@@ -6656,26 +6659,26 @@
                                         name="contact_no"
                                         value="{{ old('contact_no') }}"
                                         required
-                                        inputmode="numeric"
-                                        maxlength="11"
-                                        pattern="09[0-9]{9}"
+                                        inputmode="tel"
+                                        maxlength="13"
+                                        pattern="(?:09[0-9]{9}|\+639[0-9]{9})"
                                         autocomplete="tel"
-                                        placeholder="09XXXXXXXXX"
+                                        placeholder="09XXXXXXXXX or +639XXXXXXXXX"
                                         class="sari-control w-full border border-[#e3ddd4]"
                                     >
                                 </div>
-                                <p id="contactHint" class="sari-field-hint">11 digits only, starting with 09.</p>
+                                <p id="contactHint" class="sari-field-hint">Use 09XXXXXXXXX or +639XXXXXXXXX.</p>
                             </div>
                         </div>
                         <div class="sari-profile-row">
                             <div class="sari-profile-copy">
                                 <div class="sari-profile-title">
                                     <strong id="profileImageLabel">Profile Photo</strong>
-                                    <span id="profileImageRequirement" class="sari-profile-requirement">(Optional)</span>
+                                    <span id="profileImageRequirement" class="sari-profile-requirement">(Required)</span>
                                 </div>
 
                                 <p id="profileImageHelp" class="sr-only">
-                                    Add a clear profile image, or continue with the default SARI avatar.
+                                    A profile photo is required. Choose a JPG, JPEG, PNG, or WEBP image up to 5 MB.
                                 </p>
                             </div>
 
@@ -6735,6 +6738,7 @@
                                 id="profileImageInput"
                                 type="file"
                                 name="profile_image"
+                                required
                                 accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
                                 class="sr-only"
                                 data-profile-input
@@ -6746,7 +6750,7 @@
                     </section>
 
                     {{-- ADDRESS --}}
-                    <section class="sari-form-section" aria-labelledby="addressSectionTitle">
+                    <section id="addressDetailsSection" class="sari-form-section" aria-labelledby="addressSectionTitle">
                         <div class="sari-form-section-head">
                             <span class="sari-form-section-icon" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -6766,12 +6770,25 @@
 
                         <div class="sari-address-grid mt-5">
                             <div class="relative">
+                                <label class="sari-field-label">Region *</label>
+                                <input
+                                    id="regionSearch"
+                                    type="text"
+                                    autocomplete="off"
+                                    placeholder="Search region"
+                                    class="sari-control w-full border border-[#e3ddd4]"
+                                >
+                                <div id="regionResults" hidden class="sari-location-list sari-location-popover"></div>
+                            </div>
+
+                            <div class="relative">
                                 <label class="sari-field-label">Province / Area *</label>
                                 <input
                                     id="provinceSearch"
                                     type="text"
                                     autocomplete="off"
-                                    placeholder="Search province"
+                                    disabled
+                                    placeholder="Choose region first"
                                     class="sari-control w-full border border-[#e3ddd4]"
                                 >
                                 <div id="provinceResults" hidden class="sari-location-list sari-location-popover"></div>
@@ -6807,12 +6824,16 @@
                                 <label class="sari-field-label">Street / House No. / Subdivision *</label>
                                 <textarea
                                     name="street_address"
-                                    required
+                                    data-business-address-required
                                     rows="2"
                                     maxlength="500"
                                     placeholder="House number, street, subdivision, landmark, etc."
                                     class="sari-control w-full resize-none border border-[#e3ddd4]"
                                 >{{ old('street_address') }}</textarea>
+                            </div>
+                            <div>
+                                <label class="sari-field-label">Postal Code *</label>
+                                <input name="postal_code" value="{{ old('postal_code') }}" inputmode="numeric" maxlength="4" pattern="\d{4}" data-business-required disabled placeholder="0000" class="sari-control w-full border border-[#e3ddd4]">
                             </div>
                         </div>
 
@@ -6825,7 +6846,8 @@
                                 </div>
                             </div>
 
-                            <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+                            <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+                                <input id="manualRegion" type="text" maxlength="100" placeholder="Region" class="sari-control border border-[#e3ddd4]">
                                 <input id="manualProvince" type="text" maxlength="100" placeholder="Province / Area" class="sari-control border border-[#e3ddd4]">
                                 <input id="manualMunicipality" type="text" maxlength="100" placeholder="City / Municipality" class="sari-control border border-[#e3ddd4]">
                                 <input id="manualBarangay" type="text" maxlength="100" placeholder="Barangay" class="sari-control border border-[#e3ddd4]">
@@ -6866,6 +6888,52 @@
                                     class="sari-control w-full border border-[#e3ddd4]"
                                 >
                                 <p id="businessNameHint" class="sari-field-hint">Use the name shown on your permit or registration.</p>
+                            </div>
+
+                            <div data-seller-extra hidden>
+                                <label class="sari-field-label">Seller Type *</label>
+                                <select name="seller_type" data-seller-only-required disabled class="sari-control w-full border border-[#e3ddd4]">
+                                    <option value="">Select seller type</option>
+                                    <option value="individual" {{ old('seller_type') === 'individual' ? 'selected' : '' }}>Individual</option>
+                                    <option value="sole_proprietorship" {{ old('seller_type') === 'sole_proprietorship' ? 'selected' : '' }}>Sole Proprietorship</option>
+                                    <option value="corporation" {{ old('seller_type') === 'corporation' ? 'selected' : '' }}>Corporation</option>
+                                </select>
+                            </div>
+
+                            <div data-business-extra hidden>
+                                <label class="sari-field-label">TIN *</label>
+                                <input name="tin" value="{{ old('tin') }}" placeholder="000-000-000-000" maxlength="15" data-business-required disabled class="sari-control w-full border border-[#e3ddd4]">
+                            </div>
+
+                            <div data-logistics-extra hidden>
+                                <label class="sari-field-label">SEC Registration No. *</label>
+                                <input name="sec_registration_no" value="{{ old('sec_registration_no') }}" placeholder="CS202012345" maxlength="11" data-logistics-only-required disabled class="sari-control w-full border border-[#e3ddd4]">
+                            </div>
+
+                            <div data-logistics-extra hidden>
+                                <label class="sari-field-label">Contact Person Position *</label>
+                                <input name="position" value="{{ old('position') }}" maxlength="120" data-logistics-only-required disabled class="sari-control w-full border border-[#e3ddd4]">
+                            </div>
+
+                            <div data-logistics-extra hidden class="md:col-span-2">
+                                <label class="sari-field-label">Service Areas *</label>
+                                @php
+                                    $selectedServiceAreas = old('service_areas', []);
+                                    if (is_string($selectedServiceAreas)) {
+                                        $selectedServiceAreas = array_values(array_filter(array_map('trim', explode(';', $selectedServiceAreas))));
+                                    }
+                                @endphp
+                                <select name="service_areas[]" multiple data-logistics-only-required disabled class="sari-control w-full border border-[#e3ddd4]" aria-label="Service areas">
+                                    @foreach(['NCR','CAR','Region I (Ilocos Region)','Region II (Cagayan Valley)','Region III (Central Luzon)','Region IV-A (CALABARZON)','MIMAROPA Region','Region V (Bicol Region)','Region VI (Western Visayas)','Region VII (Central Visayas)','Region VIII (Eastern Visayas)','Region IX (Zamboanga Peninsula)','Region X (Northern Mindanao)','Region XI (Davao Region)','Region XII (SOCCSKSARGEN)','Region XIII (Caraga)','BARMM'] as $area)
+                                        <option value="{{ $area }}" {{ in_array($area, (array) $selectedServiceAreas, true) ? 'selected' : '' }}>{{ $area }}</option>
+                                    @endforeach
+                                </select>
+                                <p class="sari-field-hint">Hold Ctrl (Windows) or Command (Mac) to select multiple service areas.</p>
+                            </div>
+
+                            <div data-seller-extra hidden>
+                                <label class="sari-field-label">SEC Registration No. <span class="font-normal text-[#9a9186]">(Corporation only)</span></label>
+                                <input name="sec_registration_no" value="{{ old('sec_registration_no') }}" placeholder="CS202012345" maxlength="11" data-seller-extra-input disabled class="sari-control w-full border border-[#e3ddd4]">
                             </div>
 
                             <div id="sellerLineOfBusinessGroup" hidden>
@@ -6972,7 +7040,7 @@
 
                 <div class="mt-7 space-y-6">
                     <div>
-                        <label id="idDocumentLabel" class="sari-document-label block">Valid ID *</label>
+                        <label id="idDocumentLabel" class="sari-document-label block">Valid ID</label>
 
                         <div
                             class="sari-upload-zone"
@@ -6985,7 +7053,7 @@
                                 id="idDocumentInput"
                                 type="file"
                                 name="id_document"
-                                required
+                                data-business-id-required
                                 accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf"
                                 class="sari-upload-input"
                                 data-upload-input
@@ -7056,6 +7124,17 @@
                         <p id="businessPermitHint" class="sr-only">
                             Upload a clear copy of the required business registration document.
                         </p>
+                    </div>
+                </div>
+
+                <div id="businessComplianceDocuments" hidden class="mt-6 grid gap-4 md:grid-cols-2">
+                    <div>
+                        <label class="sari-document-label block">BIR Form 2303</label>
+                        <input type="file" name="bir_document" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" data-business-compliance-file disabled class="sari-control w-full border border-[#e3ddd4]">
+                    </div>
+                    <div>
+                        <label class="sari-document-label block">SEC Certificate <span class="font-normal text-[#9a9186]">(when applicable)</span></label>
+                        <input type="file" name="sec_document" accept="image/jpeg,image/png,application/pdf,.jpg,.jpeg,.png,.pdf" data-business-compliance-file disabled class="sari-control w-full border border-[#e3ddd4]">
                     </div>
                 </div>
 
@@ -7481,7 +7560,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function flow() {
-        return ['role', 'details', 'documents', 'credentials', 'otp'];
+        if (selectedRole() === 'rider') {
+            return ['role'];
+        }
+
+        return selectedRole() === 'buyer'
+            ? ['role', 'details', 'credentials', 'otp']
+            : ['role', 'details', 'documents', 'credentials', 'otp'];
     }
 
     function activeStep() {
@@ -7547,9 +7632,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            if (stepName === 'details' && !addressLoaded) {
+            if (stepName === 'details' && ['seller', 'logistics'].includes(selectedRole()) && !addressLoaded) {
                 addressLoaded = true;
-                loadProvinces();
+                loadRegions();
             }
         }, current ? 185 : 0);
     }
@@ -7587,7 +7672,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (field.validity.patternMismatch && field.id === 'contactNumber') {
-            return 'Enter exactly 11 digits starting with 09.';
+            return 'Enter 09XXXXXXXXX or +639XXXXXXXXX.';
         }
 
         if (field.validity.tooShort) {
@@ -7676,15 +7761,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function syncAddressFieldValidity() {
-        if (typeof manualMode !== 'undefined' && manualMode) return;
-
+        const addressRequired = ['seller', 'logistics'].includes(selectedRole());
+        const regionField = document.getElementById('regionSearch');
         const provinceField = document.getElementById('provinceSearch');
         const municipalityField = document.getElementById('municipalitySearch');
         const barangayField = document.getElementById('barangaySearch');
+
+        if (!addressRequired) {
+            [regionField, provinceField, municipalityField, barangayField].forEach(field => field?.setCustomValidity(''));
+            return;
+        }
+
+        if (typeof manualMode !== 'undefined' && manualMode) return;
+
+        const regionValue = document.getElementById('regionName')?.value || '';
         const provinceValue = document.getElementById('provinceName')?.value || '';
         const municipalityValue = document.getElementById('municipalityName')?.value || '';
         const barangayValue = document.getElementById('barangayName')?.value || '';
 
+        regionField?.setCustomValidity(
+            regionValue ? '' : 'Please select a Region from the suggestions.'
+        );
         provinceField?.setCustomValidity(
             provinceValue ? '' : 'Please select a Province / Area from the suggestions.'
         );
@@ -7757,7 +7854,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 showProfileImageError(
                     field.files?.length
                         ? validationMessageFor(field)
-                        : 'A Logistics / Sorting Center business image is required.'
+                        : 'A profile photo is required before you can continue.'
                 );
             } else {
                 showFieldError(field);
@@ -7806,6 +7903,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const rolePreviewTitle = document.getElementById('rolePreviewTitle');
     const rolePreviewText = document.getElementById('rolePreviewText');
     const roleContinueButton = document.getElementById('roleContinueButton');
+    const roleContinueLabel = roleContinueButton?.querySelector('span');
     const roleProcessToggle = document.getElementById('roleProcessToggle');
     const roleProcessToggleLabel = document.getElementById('roleProcessToggleLabel');
     const roleProcessPanel = document.getElementById('roleProcessPanel');
@@ -7823,6 +7921,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const businessStepDescription = document.getElementById('businessStepDescription');
 
     const profileImageInput = document.getElementById('profileImageInput');
+    const profileImageSelected = document.getElementById('profileImageSelected');
+    let selectedProfileImage = null;
     const profileImageBrowse = document.getElementById('profileImageBrowse');
     const profileImageRemove = document.getElementById('profileImageRemove');
     const profileImageActions = document.getElementById('profileImageActions');
@@ -7863,9 +7963,26 @@ document.addEventListener('DOMContentLoaded', function () {
     function syncRoleRequirements() {
         const role = selectedRole();
         form.action = registrationSubmitUrls[role] || legacyRegistrationSubmitUrl;
+        const isBuyer = role === 'buyer';
         const isSeller = role === 'seller';
         const isLogistics = role === 'logistics';
+
+        if (businessName) {
+            businessName.maxLength = isSeller ? 30 : 180;
+        }
         const needsBusiness = isSeller || isLogistics;
+
+        document.querySelectorAll('[data-buyer-only-required]').forEach(function (field) {
+            field.required = isBuyer;
+        });
+
+        document.querySelectorAll('[data-business-address-required]').forEach(function (field) {
+            field.required = needsBusiness;
+        });
+
+        document.querySelectorAll('[data-business-id-required]').forEach(function (field) {
+            field.required = needsBusiness;
+        });
 
         document.querySelectorAll('[data-business-required]').forEach(function (field) {
             field.disabled = !needsBusiness;
@@ -7877,10 +7994,33 @@ document.addEventListener('DOMContentLoaded', function () {
             field.required = isSeller;
         });
 
+        document.querySelectorAll('[data-logistics-only-required]').forEach(function (field) {
+            field.disabled = !isLogistics;
+            field.required = isLogistics;
+        });
+        document.querySelectorAll('[data-seller-extra-input]').forEach(function (field) { field.disabled = !isSeller; });
+        document.querySelectorAll('[data-business-compliance-file]').forEach(function (field) { field.disabled = !needsBusiness; });
+        document.querySelectorAll('[data-seller-extra]').forEach(function (el) { el.hidden = !isSeller; });
+        document.querySelectorAll('[data-logistics-extra]').forEach(function (el) { el.hidden = !isLogistics; });
+        document.querySelectorAll('[data-business-extra]').forEach(function (el) { el.hidden = !needsBusiness; });
+        const complianceDocs = document.getElementById('businessComplianceDocuments');
+        if (complianceDocs) complianceDocs.hidden = !needsBusiness;
+
         document.querySelectorAll('[data-business-permit-required]').forEach(function (field) {
             field.disabled = !needsBusiness;
-            field.required = needsBusiness;
+            field.required = isLogistics;
         });
+
+        const addressDetailsSection = document.getElementById('addressDetailsSection');
+        if (addressDetailsSection) addressDetailsSection.hidden = !needsBusiness;
+
+        const birthdayFieldLabel = document.getElementById('birthdayFieldLabel');
+        if (birthdayFieldLabel) birthdayFieldLabel.textContent = isBuyer ? 'Birthday *' : 'Birthday (Optional)';
+        const ageRequirement = document.getElementById('ageRequirement');
+        if (ageRequirement) ageRequirement.hidden = !isBuyer;
+
+        const idDocumentLabel = document.getElementById('idDocumentLabel');
+        if (idDocumentLabel) idDocumentLabel.textContent = needsBusiness ? 'Valid ID *' : 'Valid ID (Optional)';
 
         businessDetailsSection.hidden = !needsBusiness;
         sellerLineOfBusinessGroup.hidden = !isSeller;
@@ -7888,27 +8028,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         customSelects.forEach(syncCustomSelect);
 
-        const requiresProfileImage = isLogistics;
-        profileImageInput.required = requiresProfileImage;
+        profileImageInput.required = true;
 
         if (isLogistics) {
-            profileImageLabel.textContent = 'Logistics / Business Photo';
-            profileImageRequirement.textContent = '* Required';
-            profileImageHelp.textContent = 'Upload a clear Logistics / Sorting Center image.';
+            profileImageLabel.textContent = 'Profile Photo';
+            profileImageRequirement.textContent = '(Required)';
+            profileImageHelp.textContent = 'Upload your profile photo. JPG, PNG, or WEBP, up to 5 MB.';
         } else if (isSeller) {
-            profileImageLabel.textContent = 'Store / Business Photo';
-            profileImageRequirement.textContent = '(Optional)';
-            profileImageHelp.textContent = 'Optional store image.';
+            profileImageLabel.textContent = 'Profile Photo';
+            profileImageRequirement.textContent = '(Required)';
+            profileImageHelp.textContent = 'Upload your profile photo. JPG, PNG, or WEBP, up to 5 MB.';
         } else {
             profileImageLabel.textContent = 'Profile Photo';
-            profileImageRequirement.textContent = '(Optional)';
-            profileImageHelp.textContent = 'Optional profile image.';
+            profileImageRequirement.textContent = '(Required)';
+            profileImageHelp.textContent = 'Upload a clear profile photo. JPG, PNG, or WEBP, up to 5 MB.';
         }
 
-        if (!requiresProfileImage && !profileImageInput.files?.length) {
-            profileImageInput.setCustomValidity('');
-            clearProfileImageError();
-        }
 
         if (!needsBusiness) {
             resetUploadField('businessPermitInput');
@@ -7936,14 +8071,12 @@ document.addEventListener('DOMContentLoaded', function () {
             buyer: {
                 title: 'Buyer',
                 text: 'Buyer registration selected.',
-                summary: 'Complete your account details, verify your email, then wait for administrator review.',
+                summary: 'Complete your account details and verify your email to activate your Buyer account.',
                 steps: [
                     ['Personal information', 'Basic identity and contact details.'],
-                    ['Address', 'Province, city / municipality, barangay, and exact address.'],
-                    ['Valid ID', 'Upload one accepted verification document.'],
                     ['Login credentials', 'Create your password and accept the terms.'],
                     ['Email verification', 'Enter the 6-digit code sent to your email.'],
-                    ['Administrator review', 'Your application is reviewed before account access.']
+                    ['Account activation', 'Your Buyer account becomes active after successful verification.']
                 ]
             },
             seller: {
@@ -7976,14 +8109,14 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             rider: {
                 title: 'Rider',
-                text: 'You will choose a Logistics provider next.',
-                summary: 'Riders apply directly to a selected Logistics / Sorting Center instead of the administrator registration flow.',
+                text: 'Choose a Logistics provider and submit your Rider application.',
+                summary: 'Pick an approved Logistics company first, verify your email, then complete the Rider application and requirements for that provider to review.',
                 steps: [
-                    ['Choose Logistics', 'Select the Logistics / Sorting Center you want to join.'],
-                    ['Rider application', 'Provide personal, address, vehicle, and document details.'],
-                    ['Login credentials', 'Create the credentials for your Rider account.'],
-                    ['Logistics review', 'Your selected Logistics provider reviews the application.'],
-                    ['Rider activation', 'Approved Riders can access the Rider dashboard.']
+                    ['Choose Logistics', 'Select the approved Logistics company you want to apply to.'],
+                    ['Verify email', 'Confirm your email using the 6-digit verification code.'],
+                    ['Complete application', 'Enter your personal, contact, vehicle, license, and document requirements.'],
+                    ['Logistics review', 'The selected Logistics company reviews and approves or rejects your application.'],
+                    ['Sign in after approval', 'Approved Riders can sign in using the credentials submitted in the application.']
                 ]
             }
         };
@@ -7991,6 +8124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!details[role]) {
             rolePreview.hidden = true;
             roleContinueButton.disabled = true;
+            if (roleContinueLabel) roleContinueLabel.textContent = 'Continue';
             rolePreviewIcon.innerHTML = '';
             setRoleProcessOpen(false);
             roleProcessSteps.innerHTML = '';
@@ -8041,6 +8175,9 @@ document.addEventListener('DOMContentLoaded', function () {
         rolePreviewText.textContent = details[role].text;
         rolePreview.hidden = false;
         roleContinueButton.disabled = false;
+        if (roleContinueLabel) {
+            roleContinueLabel.textContent = role === 'rider' ? 'Choose Logistics' : 'Continue';
+        }
     }
 
     function syncRoleCards() {
@@ -8072,7 +8209,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (roleSelect.value === 'rider') {
-            window.location.href = @json(route('rider.logistics.index'));
+            window.location.assign(@json(route('rider.logistics.index')));
             return;
         }
 
@@ -8101,17 +8238,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const contactHint = document.getElementById('contactHint');
 
     function syncPhone() {
-        contactNumber.value = contactNumber.value.replace(/\D/g, '').slice(0, 11);
+        let value = contactNumber.value.replace(/\s+/g, '');
+
+        if (value.startsWith('+')) {
+            value = '+' + value.slice(1).replace(/\D/g, '').slice(0, 12);
+        } else {
+            value = value.replace(/\D/g, '').slice(0, 11);
+        }
+
+        contactNumber.value = value;
 
         if (!contactNumber.value) {
-            contactHint.textContent = '11 digits only, starting with 09.';
+            contactHint.textContent = 'Use 09XXXXXXXXX or +639XXXXXXXXX.';
             contactHint.className = 'sari-field-hint';
             contactNumber.setCustomValidity('');
             contactHint.style.color = '#938a80';
             return;
         }
 
-        const valid = /^09\d{9}$/.test(contactNumber.value);
+        const valid = /^(?:09\d{9}|\+639\d{9})$/.test(contactNumber.value);
 
         if (valid) {
             contactHint.textContent = 'Valid Philippine mobile number.';
@@ -8119,11 +8264,11 @@ document.addEventListener('DOMContentLoaded', function () {
             contactHint.style.color = '#56816a';
             contactNumber.setCustomValidity('');
         } else {
-            contactHint.textContent = 'Enter exactly 11 digits starting with 09.';
+            contactHint.textContent = 'Enter 09XXXXXXXXX or +639XXXXXXXXX.';
             contactHint.className = 'sari-field-hint';
             contactHint.style.color = '#b25a5a';
             contactNumber.setCustomValidity(
-                'Enter an 11-digit Philippine mobile number starting with 09.'
+                'Enter a Philippine mobile number as 09XXXXXXXXX or +639XXXXXXXXX.'
             );
         }
     }
@@ -8258,6 +8403,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (clearInput && profileImageInput) {
             profileImageInput.value = '';
+            selectedProfileImage = null;
+            if (profileImageSelected) profileImageSelected.value = '0';
         }
 
         setProfileDropEmptyState();
@@ -8272,14 +8419,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validateProfileImage(file) {
         if (!file) {
+            selectedProfileImage = null;
+            if (profileImageSelected?.value === '1') {
+                profileImageInput.setCustomValidity('Please select your profile photo again before submitting.');
+                showProfileImageError('Your previous photo selection was not retained. Select your profile photo again before submitting.');
+                return false;
+            }
             resetProfileImagePreview(false);
 
             if (profileImageInput?.required) {
                 profileImageInput.setCustomValidity(
-                    'A Logistics / Sorting Center business image is required.'
+                    'A profile photo is required before you can continue.'
                 );
                 showProfileImageError(
-                    'A Logistics / Sorting Center business image is required.'
+                    'A profile photo is required before you can continue.'
                 );
                 return false;
             }
@@ -8294,6 +8447,7 @@ document.addEventListener('DOMContentLoaded', function () {
             !profileImageAllowedExtensions.includes(extension)
             || !profileImageAllowedTypes.includes(type)
         ) {
+            selectedProfileImage = null;
             profileImageInput.value = '';
             setProfileDropEmptyState();
             profileImageInput.setCustomValidity(
@@ -8306,6 +8460,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (file.size > profileImageMaxBytes) {
+            selectedProfileImage = null;
             profileImageInput.value = '';
             setProfileDropEmptyState();
             profileImageInput.setCustomValidity(
@@ -8317,6 +8472,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
 
+        selectedProfileImage = file;
+        if (profileImageSelected) profileImageSelected.value = '1';
         profileImageInput.setCustomValidity('');
         clearProfileImageError();
 
@@ -8380,6 +8537,16 @@ document.addEventListener('DOMContentLoaded', function () {
         openProfilePicker();
     });
 
+    // A preview alone is not proof the file is present in the submitted form.
+    // Native multipart submission also dispatches this FormData event.
+    form.addEventListener('formdata', function (event) {
+        const photo = selectedProfileImage || profileImageInput?.files?.[0];
+        if (photo) {
+            event.formData.set('profile_image', photo, photo.name);
+            event.formData.set('profile_image_selected', '1');
+        }
+    });
+
     profileImageInput?.addEventListener('change', function () {
         validateProfileImage(profileImageInput.files?.[0] || null);
     });
@@ -8390,10 +8557,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (profileImageInput.required) {
             profileImageInput.setCustomValidity(
-                'A Logistics / Sorting Center business image is required.'
+                'A profile photo is required before you can continue.'
             );
             showProfileImageError(
-                'A Logistics / Sorting Center business image is required.'
+                'A profile photo is required before you can continue.'
             );
         }
     });
@@ -8667,14 +8834,18 @@ document.addEventListener('DOMContentLoaded', function () {
     setupUploadField('businessPermitInput');
 
     /* ADDRESS */
+    const regionSearch = document.getElementById('regionSearch');
     const provinceSearch = document.getElementById('provinceSearch');
     const municipalitySearch = document.getElementById('municipalitySearch');
     const barangaySearch = document.getElementById('barangaySearch');
 
+    const regionResults = document.getElementById('regionResults');
     const provinceResults = document.getElementById('provinceResults');
     const municipalityResults = document.getElementById('municipalityResults');
     const barangayResults = document.getElementById('barangayResults');
 
+    const regionCode = document.getElementById('regionCode');
+    const regionName = document.getElementById('regionName');
     const provinceCode = document.getElementById('provinceCode');
     const provinceName = document.getElementById('provinceName');
     const municipalityCode = document.getElementById('municipalityCode');
@@ -8686,14 +8857,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusText = document.getElementById('addressStatusText');
 
     const manualFallback = document.getElementById('manualAddressFallback');
+    const manualRegion = document.getElementById('manualRegion');
     const manualProvince = document.getElementById('manualProvince');
     const manualMunicipality = document.getElementById('manualMunicipality');
     const manualBarangay = document.getElementById('manualBarangay');
 
+    let regions = [];
     let provinces = [];
     let municipalities = [];
     let barangays = [];
     let manualMode = false;
+
+    regionSearch.value = regionName.value || '';
+    provinceSearch.value = provinceName.value || '';
+    municipalitySearch.value = municipalityName.value || '';
+    barangaySearch.value = barangayName.value || '';
+    if (regionCode.value) provinceSearch.disabled = false;
+    if (provinceCode.value) municipalitySearch.disabled = false;
+    if (municipalityCode.value) barangaySearch.disabled = false;
 
     function normalizeList(payload) {
         if (Array.isArray(payload)) return payload;
@@ -8811,19 +8992,42 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    async function loadProvinces() {
+    async function loadRegions() {
         setAddressStatus('loading', 'Loading Philippine address directory...');
 
         try {
-            provinces = normalizeList(
-                await fetchJson(@json(route('address.provinces')))
-            );
-
-            if (!provinces.length) throw new Error('No provinces returned.');
-
-            setAddressStatus('ready', 'Address directory ready. Type a province or area.');
+            regions = normalizeList(await fetchJson(@json(route('address.regions'))));
+            if (!regions.length) throw new Error('No regions returned.');
+            setAddressStatus('ready', 'Address directory ready. Choose a region first.');
         } catch (error) {
             console.error('SARI address directory:', error);
+            enableManualAddress();
+        }
+    }
+
+    async function loadProvinces(selectedRegionCode) {
+        provinceSearch.disabled = true;
+        municipalitySearch.disabled = true;
+        barangaySearch.disabled = true;
+        provinceSearch.value = '';
+        municipalitySearch.value = '';
+        barangaySearch.value = '';
+        provinceCode.value = '';
+        provinceName.value = '';
+        municipalityCode.value = '';
+        municipalityName.value = '';
+        barangayCode.value = '';
+        barangayName.value = '';
+        provinceSearch.placeholder = 'Loading provinces...';
+
+        try {
+            const url = @json(url('/address/regions')) + '/' + encodeURIComponent(selectedRegionCode) + '/provinces';
+            provinces = normalizeList(await fetchJson(url));
+            if (!provinces.length) throw new Error('No provinces returned.');
+            provinceSearch.disabled = false;
+            provinceSearch.placeholder = 'Type province or area';
+        } catch (error) {
+            console.error('SARI province directory:', error);
             enableManualAddress();
         }
     }
@@ -8888,6 +9092,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function selectRegion(item) {
+        regionCode.value = locationCode(item);
+        regionName.value = locationName(item);
+        regionSearch.value = locationName(item);
+        regionSearch.setCustomValidity('');
+        clearFieldError(regionSearch);
+        regionResults.hidden = true;
+        loadProvinces(locationCode(item));
+    }
+
     function selectProvince(item) {
         provinceCode.value = locationCode(item);
         provinceName.value = locationName(item);
@@ -8920,6 +9134,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     bindAutocomplete(
+        regionSearch,
+        regionResults,
+        () => regions,
+        selectRegion
+    );
+
+    bindAutocomplete(
         provinceSearch,
         provinceResults,
         () => provinces,
@@ -8939,6 +9160,25 @@ document.addEventListener('DOMContentLoaded', function () {
         () => barangays,
         selectBarangay
     );
+
+    regionSearch.addEventListener('input', function () {
+        if (regionSearch.value !== regionName.value) {
+            regionCode.value = '';
+            regionName.value = '';
+            provinceCode.value = '';
+            provinceName.value = '';
+            provinceSearch.value = '';
+            provinceSearch.disabled = true;
+            municipalityCode.value = '';
+            municipalityName.value = '';
+            municipalitySearch.value = '';
+            municipalitySearch.disabled = true;
+            barangayCode.value = '';
+            barangayName.value = '';
+            barangaySearch.value = '';
+            barangaySearch.disabled = true;
+        }
+    });
 
     provinceSearch.addEventListener('input', function () {
         if (provinceSearch.value !== provinceName.value) {
@@ -8979,12 +9219,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function enableManualAddress() {
         manualMode = true;
 
+        regionSearch.disabled = true;
         provinceSearch.disabled = true;
         municipalitySearch.disabled = true;
         barangaySearch.disabled = true;
 
         manualFallback.hidden = false;
 
+        manualRegion.required = true;
         manualProvince.required = true;
         manualMunicipality.required = true;
         manualBarangay.required = true;
@@ -9000,16 +9242,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function syncManualAddress() {
         if (!manualMode) return;
 
+        regionCode.value = 'MANUAL';
         provinceCode.value = 'MANUAL';
         municipalityCode.value = 'MANUAL';
         barangayCode.value = 'MANUAL';
 
+        regionName.value = manualRegion.value.trim();
         provinceName.value = manualProvince.value.trim();
         municipalityName.value = manualMunicipality.value.trim();
         barangayName.value = manualBarangay.value.trim();
     }
 
-    [manualProvince, manualMunicipality, manualBarangay].forEach(
+    [manualRegion, manualProvince, manualMunicipality, manualBarangay].forEach(
         input => input.addEventListener('input', syncManualAddress)
     );
 
@@ -9018,20 +9262,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, true);
 
     form.addEventListener('submit', function (event) {
-        if (!otpVerified) {
-            event.preventDefault();
-
-            if (currentStepName === 'otp') {
-                verifyOtpCode();
-            } else if (currentStepName === 'credentials') {
-                startOtpFlow();
-            } else {
-                showStep('credentials');
-            }
-
-            return;
-        }
-
+        validateProfileImage(selectedProfileImage || profileImageInput.files?.[0] || null);
         syncPhone();
         calculateAge();
         syncAddressFieldValidity();
@@ -9067,7 +9298,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         showProfileImageError(
                             invalid.files?.length
                                 ? validationMessageFor(invalid)
-                                : 'A Logistics / Sorting Center business image is required.'
+                                : 'A profile photo is required before you can continue.'
                         );
                     } else {
                         showFieldError(invalid);
@@ -9108,6 +9339,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const serverErrors = @json($errors->messages());
     const serverFieldMap = {
+        region_code: 'regionSearch',
+        region_name: 'regionSearch',
         province_code: 'provinceSearch',
         province_name: 'provinceSearch',
         municipality_code: 'municipalitySearch',
@@ -9186,12 +9419,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    [provinceSearch, municipalitySearch, barangaySearch].forEach(bindLocationTextGuard);
+    [regionSearch, provinceSearch, municipalitySearch, barangaySearch].forEach(bindLocationTextGuard);
     [manualProvince, manualMunicipality, manualBarangay].forEach(bindLocationTextGuard);
 
     contactNumber.addEventListener('beforeinput', function (event) {
         if (!event.data || event.inputType.startsWith('delete')) return;
         if (/^\d+$/.test(event.data)) return;
+
+        const canInsertPlus = event.data === '+'
+            && contactNumber.selectionStart === 0
+            && !contactNumber.value.includes('+');
+
+        if (canInsertPlus) return;
         event.preventDefault();
     });
 
@@ -9259,6 +9498,8 @@ document.addEventListener('DOMContentLoaded', function () {
             && session('registration_email_otp.email') === strtolower((string) old('email'))
         )
     );
+    const otpPendingFromServer = @json((bool) session('registration_otp_pending'));
+    const otpEmailFromServer = @json((string) session('registration_email', ''));
     let otpResendTimer = null;
     let otpRequestBusy = false;
 
@@ -9438,11 +9679,6 @@ document.addEventListener('DOMContentLoaded', function () {
     async function startOtpFlow() {
         if (otpRequestBusy) return;
 
-        if (otpVerified) {
-            form.requestSubmit(finalRegistrationSubmit);
-            return;
-        }
-
         if (currentStepName !== 'credentials') {
             showStep('credentials');
             return;
@@ -9450,64 +9686,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!validateCurrentStep()) return;
 
-        const email = String(emailField?.value || '').trim();
-
-        if (!email) {
-            showFieldError(emailField, 'Email Address is required.');
-            focusInvalidField(emailField);
-            return;
-        }
-
-        otpRequestBusy = true;
-        otpLaunchError.hidden = true;
-        otpLaunchError.textContent = '';
-
-        setButtonBusy(
-            otpLaunchButton,
-            otpLaunchButtonLabel,
-            true,
-            'Sending code...',
-            'Continue to Email Verification'
-        );
-
-        try {
-            const data = await postRegistrationOtp('otp_send', { email });
-
-            otpDestination.textContent = data.masked_email || maskEmailForUi(email);
-            resetOtpInputs();
-            setOtpProgress('sent');
-            showStep('otp');
-            startOtpResendCountdown(data.retry_after || 45);
-
-            window.setTimeout(() => otpDigits[0]?.focus(), 240);
-        } catch (error) {
-            if (error.status === 429 && error.data?.retry_after) {
-                otpDestination.textContent = maskEmailForUi(email);
-                resetOtpInputs();
-                setOtpProgress('sent');
-                showStep('otp');
-                startOtpResendCountdown(error.data.retry_after);
-                window.setTimeout(() => otpDigits[0]?.focus(), 240);
-            } else {
-                otpLaunchError.textContent = error.message;
-                otpLaunchError.hidden = false;
-
-                if (error.data?.errors?.email?.[0] && emailField) {
-                    emailField.dataset.sariTouched = 'true';
-                    showFieldError(emailField, error.data.errors.email[0]);
-                    focusInvalidField(emailField);
-                }
-            }
-        } finally {
-            otpRequestBusy = false;
-            setButtonBusy(
-                otpLaunchButton,
-                otpLaunchButtonLabel,
-                false,
-                'Sending code...',
-                'Continue to Email Verification'
-            );
-        }
+        // Persist the registration first as Unverified. The backend sends the
+        // OTP only after the record is safely stored, then redirects back to
+        // this page with the OTP step active.
+        form.requestSubmit(finalRegistrationSubmit);
     }
 
     function playOtpSuccessAnimation() {
@@ -9731,7 +9913,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
         try {
-            await postRegistrationOtp('otp_verify', {
+            const data = await postRegistrationOtp('otp_verify', {
                 email: String(emailField?.value || '').trim(),
                 otp: code,
             });
@@ -9760,7 +9942,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            form.requestSubmit(finalRegistrationSubmit);
+            window.location.assign(data.redirect || @json(route('login')));
         } catch (error) {
             setOtpProgress('sent');
             showOtpError(error.message);
@@ -9875,6 +10057,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     syncRoleRequirements();
     syncRoleCards();
+
+    if (otpPendingFromServer && otpEmailFromServer) {
+        if (emailField) emailField.value = otpEmailFromServer;
+        if (otpDestination) otpDestination.textContent = maskEmailForUi(otpEmailFromServer);
+        setOtpProgress('sent');
+        showStep('otp');
+        startOtpResendCountdown(45);
+    }
+
     calculateAge();
     syncPhone();
     updateProgress();

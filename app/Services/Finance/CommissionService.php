@@ -81,7 +81,7 @@ class CommissionService
             }
 
             $rate = $this->rateFor($lockedOrder->delivered_at);
-            $eligibleAmount = round(max(0, (float) $lockedOrder->subtotal), 2);
+            $eligibleAmount = round(max(0, (float) ($lockedOrder->seller_receivable_subtotal ?? $lockedOrder->subtotal)), 2);
             $ratePercent = (float) $rate->rate_percent;
             $grossCommission = round($eligibleAmount * ($ratePercent / 100), 2);
 
@@ -99,7 +99,7 @@ class CommissionService
                 'source' => $source,
                 'policy_snapshot' => [
                     'basis' => self::BASIS,
-                    'eligible_field' => 'marketplace_orders.subtotal',
+                    'eligible_field' => 'marketplace_orders.seller_receivable_subtotal',
                     'excluded' => [
                         'delivery_fee',
                         'cancelled_orders',

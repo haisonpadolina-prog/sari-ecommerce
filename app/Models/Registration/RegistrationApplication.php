@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class RegistrationApplication extends Model
 {
     protected $fillable = [
+        'profile_image_path',
         'role',
         'logistics_account_id',
         'last_name',
@@ -20,6 +21,8 @@ class RegistrationApplication extends Model
         'contact_no',
         'birthday',
         'age',
+        'region_code',
+        'region_name',
         'province_code',
         'province_name',
         'municipality_code',
@@ -27,13 +30,23 @@ class RegistrationApplication extends Model
         'barangay_code',
         'barangay_name',
         'street_address',
+        'postal_code',
         'password',
         'business_name',
+        'seller_type',
+        'tin',
+        'sec_registration_no',
         'line_of_business',
+        'position',
+        'service_areas',
         'vehicle_type',
         'plate_number',
+        'license_number',
+        'license_expiry_date',
         'id_path',
         'business_permit_path',
+        'bir_path',
+        'sec_path',
         'orcr_path',
         'status',
         'admin_note',
@@ -48,6 +61,7 @@ class RegistrationApplication extends Model
 
     protected $casts = [
         'birthday' => 'date',
+        'license_expiry_date' => 'date',
         'reviewed_at' => 'datetime',
         'approved_at' => 'datetime',
         'rejected_at' => 'datetime',

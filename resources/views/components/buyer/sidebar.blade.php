@@ -173,6 +173,37 @@
         </a>
 
         <a
+            href="{{ route('buyer.recent-orders') }}"
+            wire:navigate.hover
+            title="Recent Orders"
+            data-buyer-sidebar-item
+            data-buyer-nav-active="{{ request()->routeIs('buyer.recent-orders') ? 'true' : 'false' }}"
+            class="buyer-sidebar-item flex items-center gap-3"
+        >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M4 6h16"></path>
+                <path d="M4 12h10"></path>
+                <path d="M4 18h7"></path>
+                <path d="m17 15 3 3-3 3"></path>
+            </svg>
+            <span class="buyer-sidebar-label whitespace-nowrap">Recent Orders</span>
+        </a>
+
+        <a
+            href="{{ route('buyer.recent-activity') }}"
+            wire:navigate.hover
+            title="Recent Activity"
+            data-buyer-sidebar-item
+            data-buyer-nav-active="{{ request()->routeIs('buyer.recent-activity') ? 'true' : 'false' }}"
+            class="buyer-sidebar-item flex items-center gap-3"
+        >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M4 12h3l2-5 4 10 2-5h5"></path>
+            </svg>
+            <span class="buyer-sidebar-label whitespace-nowrap">Recent Activity</span>
+        </a>
+
+        <a
             href="{{ route('buyer.shipping') }}"
             wire:navigate.hover
             title="Shipping"

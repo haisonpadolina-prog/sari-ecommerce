@@ -14,6 +14,55 @@ class AddressLookupController extends Controller
     private string $cloudBase = 'https://psgc.cloud/api/v1';
     private string $gitlabBase = 'https://psgc.gitlab.io/api';
 
+    public function regions()
+    {
+        $items = Cache::remember(
+            'sari.psgc.regions.wizard.v1',
+            now()->addDay(),
+            fn () => $this->fetchFirstAvailable([
+                [
+                    'url' => $this->cloudBase . '/regions',
+                    'query' => ['per_page' => 100],
+                ],
+                [
+                    'url' => $this->gitlabBase . '/regions/',
+                    'query' => [],
+                ],
+            ])
+        );
+
+        return response()->json($items);
+    }
+
+    public function regionProvinces(string $regionCode)
+    {
+        abort_unless(preg_match('/^[0-9]+$/', $regionCode), 422);
+
+        if ($regionCode === '130000000') {
+            return response()->json([[
+                'code' => '130000000',
+                'name' => 'Metro Manila (NCR)',
+            ]]);
+        }
+
+        $items = Cache::remember(
+            'sari.psgc.region-provinces.' . $regionCode . '.wizard.v1',
+            now()->addDay(),
+            fn () => $this->fetchFirstAvailable([
+                [
+                    'url' => $this->cloudBase . '/regions/' . $regionCode . '/provinces',
+                    'query' => ['per_page' => 200],
+                ],
+                [
+                    'url' => $this->gitlabBase . '/regions/' . $regionCode . '/provinces/',
+                    'query' => [],
+                ],
+            ])
+        );
+
+        return response()->json($items);
+    }
+
     public function provinces()
     {
         $items = Cache::remember(

@@ -14,24 +14,558 @@
     }
     .sari-account-page .account-card{box-shadow:0 8px 26px rgba(55,45,32,.035);}
     .sari-account-page .field-input:focus{border-color:#d6b363;box-shadow:0 0 0 4px rgba(201,145,40,.07);outline:none;}
+
+    /* ============================================================
+       SELLER VISUAL SYSTEM — FINAL ADMIN ACCOUNT OVERRIDE
+       Presentation only. Profile/password routes and JS stay intact.
+       ============================================================ */
+
+    .sari-account-page{
+        --account-canvas:#F4F5F7;
+        --account-surface:#FFFFFF;
+        --account-surface-soft:#F9FAFB;
+        --account-text:#111827;
+        --account-text-secondary:#344054;
+        --account-muted:#7C8592;
+        --account-gold:#D59617;
+        --account-gold-strong:#B97805;
+        --account-border:#E5E7EB;
+        --account-border-strong:#D1D5DB;
+        --account-divider:#ECEFF2;
+        --account-radius:14px;
+        --account-shadow-main:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92);
+        --account-shadow-soft:
+            0 1px 3px rgba(15,23,42,.035),
+            0 7px 18px rgba(15,23,42,.06),
+            0 15px 32px rgba(15,23,42,.065),
+            inset 0 1px 0 rgba(255,255,255,.90);
+        --account-shadow-focal:
+            0 3px 7px rgba(15,23,42,.055),
+            0 14px 32px rgba(15,23,42,.095),
+            0 30px 68px rgba(15,23,42,.11);
+
+        width:100% !important;
+        max-width:1500px !important;
+        margin-inline:auto !important;
+        padding-bottom:24px !important;
+        color:var(--account-text) !important;
+        font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    }
+
+    .sari-account-page *,
+    .sari-account-page *::before,
+    .sari-account-page *::after{
+        box-sizing:border-box;
+    }
+
+    /* Open document-style header */
+    .sari-account-page > .mb-5{
+        min-height:66px !important;
+        margin-bottom:14px !important;
+        padding:2px 2px 13px !important;
+        border-bottom:1px solid var(--account-divider) !important;
+        align-items:flex-end !important;
+    }
+
+    .sari-account-page > .mb-5 > div:first-child{
+        align-items:flex-start !important;
+        gap:0 !important;
+    }
+
+    .sari-account-page > .mb-5 > div:first-child > div:first-child{
+        display:none !important;
+    }
+
+    .sari-account-page > .mb-5 p:first-child{
+        margin:0 !important;
+        color:var(--account-gold-strong) !important;
+        font-size:8px !important;
+        font-weight:800 !important;
+        line-height:1.15 !important;
+        letter-spacing:.16em !important;
+        text-transform:uppercase !important;
+    }
+
+    .sari-account-page > .mb-5 h1{
+        margin-top:5px !important;
+        color:var(--account-text) !important;
+        font-size:clamp(29px,2.2vw,36px) !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        letter-spacing:-.035em !important;
+    }
+
+    .sari-account-page > .mb-5 h1 span{
+        color:var(--account-gold) !important;
+    }
+
+    .sari-account-page > .mb-5 h1 + p{
+        max-width:760px !important;
+        margin-top:7px !important;
+        color:var(--account-muted) !important;
+        font-size:10px !important;
+        font-weight:400 !important;
+        line-height:1.55 !important;
+    }
+
+    /* Alerts */
+    .sari-account-page > .mb-4{
+        margin-bottom:14px !important;
+        border-radius:14px !important;
+        border-color:#D7E7DB !important;
+        background:#F5FAF6 !important;
+        padding:10px 12px !important;
+        color:#4F725A !important;
+        font-size:9px !important;
+        box-shadow:var(--account-shadow-soft) !important;
+    }
+
+    .sari-account-page > .mb-4 > span:first-child{
+        width:26px !important;
+        height:26px !important;
+        background:#fff !important;
+        box-shadow:none !important;
+    }
+
+    /* Main profile/access workspace */
+    .sari-account-page > .grid{
+        grid-template-columns:minmax(0,1.55fr) minmax(300px,.72fr) !important;
+        gap:14px !important;
+        align-items:stretch !important;
+    }
+
+    .sari-account-page .account-card{
+        border:1px solid var(--account-border) !important;
+        border-radius:var(--account-radius) !important;
+        background:var(--account-surface) !important;
+        box-shadow:var(--account-shadow-main) !important;
+    }
+
+    .sari-account-page > .grid > .account-card{
+        min-height:100% !important;
+        padding:18px !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card{
+        background:var(--account-surface) !important;
+        box-shadow:var(--account-shadow-soft) !important;
+    }
+
+    /* Profile identity header */
+    .sari-account-page > .grid > section.account-card > div:first-child{
+        gap:14px !important;
+        padding-bottom:15px !important;
+        border-bottom:1px solid var(--account-divider) !important;
+    }
+
+    .sari-account-page > .grid > section.account-card > div:first-child > div:first-child{
+        gap:11px !important;
+    }
+
+    .sari-account-page > .grid > section.account-card > div:first-child .h-12.w-12{
+        width:42px !important;
+        height:42px !important;
+        flex-basis:42px !important;
+        border:1px solid #DDE6E2 !important;
+        background:#F1F5F3 !important;
+        color:#60756E !important;
+        font-size:10px !important;
+        box-shadow:none !important;
+    }
+
+    .sari-account-page > .grid > section.account-card h2{
+        color:var(--account-text) !important;
+        font-size:14px !important;
+        font-weight:700 !important;
+        letter-spacing:-.02em !important;
+    }
+
+    .sari-account-page > .grid > section.account-card h2 + div{
+        margin-top:5px !important;
+        gap:6px !important;
+    }
+
+    .sari-account-page > .grid > section.account-card h2 + div > span{
+        height:21px !important;
+        min-height:21px !important;
+        padding-inline:7px !important;
+        border-radius:999px !important;
+        font-size:6.5px !important;
+        box-shadow:none !important;
+    }
+
+    /* Account ID stays a flat nested tile */
+    .sari-account-page > .grid > section.account-card > div:first-child > div:last-child{
+        border-color:var(--account-border) !important;
+        border-radius:10px !important;
+        background:var(--account-surface-soft) !important;
+        padding:8px 10px !important;
+        box-shadow:none !important;
+    }
+
+    .sari-account-page > .grid > section.account-card > div:first-child > div:last-child p:first-child{
+        color:var(--account-muted) !important;
+        font-size:6.5px !important;
+        letter-spacing:.12em !important;
+    }
+
+    .sari-account-page > .grid > section.account-card > div:first-child > div:last-child p:last-child{
+        margin-top:3px !important;
+        color:var(--account-text-secondary) !important;
+        font-size:9px !important;
+    }
+
+    /* Section headings */
+    .sari-account-page .account-card p.font-bold.uppercase{
+        color:#8B6B31 !important;
+        font-size:8px !important;
+        font-weight:800 !important;
+        letter-spacing:.14em !important;
+    }
+
+    .sari-account-page .account-card p.font-bold.uppercase + p{
+        color:var(--account-muted) !important;
+        font-size:9px !important;
+        line-height:1.5 !important;
+    }
+
+    /* Profile form */
+    .sari-account-page > .grid > section.account-card > .mt-5{
+        margin-top:16px !important;
+    }
+
+    .sari-account-page > .grid > section.account-card form{
+        gap:13px !important;
+    }
+
+    .sari-account-page .field-input{
+        height:40px !important;
+        margin-top:6px !important;
+        border:1px solid var(--account-border-strong) !important;
+        border-radius:10px !important;
+        background:#fff !important;
+        padding-inline:12px !important;
+        color:var(--account-text-secondary) !important;
+        font-size:10px !important;
+        font-weight:500 !important;
+        box-shadow:none !important;
+        outline:none !important;
+        transition:border-color .14s ease,box-shadow .14s ease,background-color .14s ease !important;
+    }
+
+    .sari-account-page .field-input:hover{
+        border-color:#C7CCD3 !important;
+    }
+
+    .sari-account-page .field-input:focus{
+        border-color:var(--account-gold) !important;
+        background:#fff !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.10) !important;
+    }
+
+    .sari-account-page label > span:first-child{
+        color:var(--account-text-secondary) !important;
+        font-size:9px !important;
+        font-weight:600 !important;
+    }
+
+    .sari-account-page form button[type="submit"]{
+        min-height:40px !important;
+        height:40px !important;
+        border-radius:10px !important;
+        padding-inline:14px !important;
+        font-size:9px !important;
+        font-weight:700 !important;
+        transform:none !important;
+    }
+
+    .sari-account-page > .grid > section.account-card form button[type="submit"]{
+        border:1px solid var(--account-gold) !important;
+        background:var(--account-gold) !important;
+        color:#fff !important;
+        box-shadow:0 4px 10px rgba(185,120,5,.12) !important;
+    }
+
+    .sari-account-page > .grid > section.account-card form button[type="submit"]:hover{
+        border-color:var(--account-gold-strong) !important;
+        background:var(--account-gold-strong) !important;
+    }
+
+    /* Access panel */
+    .sari-account-page > .grid > aside.account-card > div:first-child{
+        align-items:flex-start !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card > div:first-child > span{
+        min-height:22px !important;
+        height:22px !important;
+        padding-inline:8px !important;
+        border-radius:999px !important;
+        font-size:6.5px !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card dl{
+        margin-top:16px !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card dl > div{
+        min-height:36px !important;
+        padding-bottom:10px !important;
+        border-color:var(--account-divider) !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card dl > div:last-child{
+        min-height:auto !important;
+        padding-bottom:0 !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card dt{
+        color:var(--account-muted) !important;
+        font-size:8px !important;
+    }
+
+    .sari-account-page > .grid > aside.account-card dd{
+        color:var(--account-text-secondary) !important;
+        font-size:8.5px !important;
+        font-weight:650 !important;
+    }
+
+    /* Security */
+    .sari-account-page > section.account-card{
+        margin-top:14px !important;
+        padding:18px !important;
+    }
+
+    .sari-account-page > section.account-card > div:first-child{
+        gap:12px !important;
+    }
+
+    .sari-account-page > section.account-card > div:first-child > div:first-child > div:first-child{
+        gap:7px !important;
+    }
+
+    .sari-account-page > section.account-card > div:first-child > div:last-child.rounded-\[10px\]{
+        border-color:#E9DEC3 !important;
+        background:#FFFBF3 !important;
+        color:#8A682A !important;
+        box-shadow:none !important;
+    }
+
+    .sari-account-page > section.account-card form.mt-5{
+        margin-top:16px !important;
+        gap:13px !important;
+    }
+
+    .sari-account-page [data-password-toggle]{
+        width:30px !important;
+        height:30px !important;
+        border-radius:8px !important;
+        color:var(--account-muted) !important;
+    }
+
+    .sari-account-page [data-password-toggle]:hover,
+    .sari-account-page [data-password-toggle]:focus-visible{
+        outline:none !important;
+        background:#F5F3EF !important;
+        color:#7E5C21 !important;
+    }
+
+    .sari-account-page #passwordStrengthBar{
+        background:var(--account-gold) !important;
+    }
+
+    .sari-account-page > section.account-card form > div:last-child{
+        margin-top:2px !important;
+        padding-top:13px !important;
+        border-color:var(--account-divider) !important;
+    }
+
+    .sari-account-page > section.account-card form > div:last-child button[type="submit"]{
+        border:1px solid #E1C98D !important;
+        background:#FFFAEF !important;
+        color:#8B641E !important;
+        box-shadow:none !important;
+    }
+
+    .sari-account-page > section.account-card form > div:last-child button[type="submit"]:hover{
+        border-color:#D8B86A !important;
+        background:#FFF5DE !important;
+        color:#7B5718 !important;
+    }
+
+    /* Activity section + flat nested stats */
+    .sari-account-page > section.account-card:last-of-type{
+        background:#fff !important;
+        box-shadow:var(--account-shadow-main) !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > div:first-child > span{
+        min-height:22px !important;
+        height:22px !important;
+        padding-inline:8px !important;
+        border-radius:999px !important;
+        font-size:6.5px !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > .mt-5{
+        margin-top:15px !important;
+        gap:10px !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > .mt-5 > div{
+        min-height:88px !important;
+        border:1px solid var(--account-border) !important;
+        border-radius:11px !important;
+        background:var(--account-surface-soft) !important;
+        padding:13px !important;
+        box-shadow:none !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > .mt-5 > div p:first-child{
+        color:var(--account-muted) !important;
+        font-size:6.5px !important;
+        font-weight:800 !important;
+        letter-spacing:.12em !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > .mt-5 > div p:nth-child(2){
+        margin-top:7px !important;
+        color:var(--account-text-secondary) !important;
+        font-size:9px !important;
+        font-weight:700 !important;
+        line-height:1.4 !important;
+    }
+
+    .sari-account-page > section.account-card:last-of-type > .mt-5 > div p:last-child{
+        margin-top:4px !important;
+        color:var(--account-muted) !important;
+        font-size:7px !important;
+        line-height:1.45 !important;
+    }
+
+    /* Validation text */
+    .sari-account-page .text-\[7px\].text-\[\#a65f57\]{
+        color:#A65F57 !important;
+        font-size:7px !important;
+    }
+
+    /* Responsive */
+    @media(max-width:1100px){
+        .sari-account-page > .grid{
+            grid-template-columns:1fr !important;
+        }
+
+        .sari-account-page > .grid > aside.account-card{
+            min-height:auto !important;
+        }
+    }
+
+    @media(max-width:700px){
+        .sari-account-page{
+            padding-bottom:18px !important;
+        }
+
+        .sari-account-page > .mb-5{
+            min-height:auto !important;
+            margin-bottom:12px !important;
+            padding:0 0 12px !important;
+        }
+
+        .sari-account-page > .mb-5 h1{
+            font-size:clamp(28px,8vw,34px) !important;
+        }
+
+        .sari-account-page > .grid,
+        .sari-account-page > section.account-card:last-of-type > .mt-5{
+            gap:10px !important;
+        }
+
+        .sari-account-page > .grid > .account-card,
+        .sari-account-page > section.account-card{
+            padding:14px !important;
+            border-radius:13px !important;
+        }
+
+        .sari-account-page > .grid > section.account-card > div:first-child{
+            align-items:flex-start !important;
+        }
+
+        .sari-account-page > .grid > section.account-card > div:first-child > div:last-child{
+            width:100% !important;
+            text-align:left !important;
+        }
+
+        .sari-account-page .field-input{
+            height:42px !important;
+            font-size:10px !important;
+        }
+
+        .sari-account-page form button[type="submit"]{
+            min-height:42px !important;
+            height:42px !important;
+        }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+        .sari-account-page *,
+        .sari-account-page *::before,
+        .sari-account-page *::after{
+            animation:none !important;
+            transition:none !important;
+            scroll-behavior:auto !important;
+        }
+    }
+
 </style>
 @endpush
 
 @section('content')
 @php
-    $roleLabel = match($adminAccount->role ?? 'super_admin') {
+    $roleValue = (string) ($adminAccount->role ?? 'super_admin');
+
+    $roleLabel = match($roleValue) {
         'super_admin' => 'Super Administrator',
         'admin' => 'Administrator',
-        default => ucwords(str_replace('_', ' ', (string) ($adminAccount->role ?? 'Administrator'))),
+        default => ucwords(str_replace('_', ' ', $roleValue ?: 'Administrator')),
     };
 
-    $accessLabel = $adminAccount->canManagePlatformSettings()
+    $canManageSettings = method_exists($adminAccount, 'canManagePlatformSettings')
+        ? (bool) $adminAccount->canManagePlatformSettings()
+        : ($roleValue === 'super_admin' || (bool) ($adminAccount->can_manage_platform_settings ?? false));
+
+    $accessLabel = $canManageSettings
         ? 'Full Platform Access'
         : 'Standard Admin Access';
 
-    $profileUpdated = $adminAccount->profile_updated_at ?? $adminAccount->updated_at;
-    $passwordChanged = $adminAccount->password_changed_at;
-    $lastLogin = $adminAccount->last_login_at;
+    $toDateTime = static function ($value) {
+        if (!$value) {
+            return null;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return \Illuminate\Support\Carbon::instance($value);
+        }
+
+        try {
+            return \Illuminate\Support\Carbon::parse((string) $value);
+        } catch (\Throwable $exception) {
+            return null;
+        }
+    };
+
+    $profileUpdated = $toDateTime($adminAccount->profile_updated_at ?? $adminAccount->updated_at ?? null);
+    $passwordChanged = $toDateTime($adminAccount->password_changed_at ?? null);
+    $lastLogin = $toDateTime($adminAccount->last_login_at ?? null);
+
+    $sessionBrowser = (string) data_get($sessionInfo ?? [], 'browser', 'Web browser');
+    $sessionPlatform = (string) data_get($sessionInfo ?? [], 'platform', 'Unknown platform');
+
+    $hasAdminRecentActivityRoute = \Illuminate\Support\Facades\Route::has('admin.recent-activity');
+    $hasUserActivityRoute = \Illuminate\Support\Facades\Route::has('admin.user-activity');
 @endphp
 
 <div class="sari-account-page mx-auto max-w-[1180px] pb-8">
@@ -126,7 +660,7 @@
                 <div class="flex items-center justify-between gap-4 border-b border-[#ece7e0] pb-3"><dt class="text-[8px] text-[#8f867d]">Role</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">{{ $roleLabel }}</dd></div>
                 <div class="flex items-center justify-between gap-4 border-b border-[#ece7e0] pb-3"><dt class="text-[8px] text-[#8f867d]">Access level</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">{{ $accessLabel }}</dd></div>
                 <div class="flex items-center justify-between gap-4 border-b border-[#ece7e0] pb-3"><dt class="text-[8px] text-[#8f867d]">Authentication</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">Password</dd></div>
-                <div class="flex items-center justify-between gap-4 border-b border-[#ece7e0] pb-3"><dt class="text-[8px] text-[#8f867d]">Platform settings</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">{{ $adminAccount->canManagePlatformSettings() ? 'Allowed' : 'Restricted' }}</dd></div>
+                <div class="flex items-center justify-between gap-4 border-b border-[#ece7e0] pb-3"><dt class="text-[8px] text-[#8f867d]">Platform settings</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">{{ $canManageSettings ? 'Allowed' : 'Restricted' }}</dd></div>
                 <div class="flex items-center justify-between gap-4"><dt class="text-[8px] text-[#8f867d]">Account created</dt><dd class="text-right text-[8px] font-semibold text-[#413a34]">{{ optional($adminAccount->created_at)->format('M d, Y') ?? '—' }}</dd></div>
             </dl>
         </aside>
@@ -188,13 +722,21 @@
                 <p class="text-[8px] font-bold uppercase tracking-[.14em] text-[#8f806d]">Login & Account Activity</p>
                 <p class="mt-1 text-[9px] text-[#91887e]">Security information recorded by the administrator account.</p>
             </div>
-            <span class="inline-flex w-fit h-6 items-center gap-1.5 rounded-full border border-[#dce7df] bg-white px-2.5 text-[7px] font-bold text-[#617568]"><span class="h-1.5 w-1.5 rounded-full bg-[#4a9a68]"></span>Current session active</span>
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex w-fit h-6 items-center gap-1.5 rounded-full border border-[#dce7df] bg-white px-2.5 text-[7px] font-bold text-[#617568]"><span class="h-1.5 w-1.5 rounded-full bg-[#4a9a68]"></span>Current session active</span>
+                @if($hasAdminRecentActivityRoute)
+                    <a href="{{ route('admin.recent-activity') }}" class="inline-flex h-8 items-center justify-center rounded-[9px] border border-[#d7b86f] bg-[#fff9ec] px-3 text-[7px] font-bold text-[#8f651c] transition hover:bg-[#fff3d8]">Admin Recent Activity</a>
+                @endif
+                @if($hasUserActivityRoute)
+                    <a href="{{ route('admin.user-activity') }}" class="inline-flex h-8 items-center justify-center rounded-[9px] border border-[#ddd7cf] bg-white px-3 text-[7px] font-bold text-[#655e56] transition hover:bg-[#f8f6f2]">User Activity Log</a>
+                @endif
+            </div>
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <div class="rounded-[12px] border border-[#e8e3dc] bg-white p-4">
                 <p class="text-[6.5px] font-bold uppercase tracking-[.12em] text-[#a0968c]">Current session</p>
-                <p class="mt-2 text-[9px] font-bold text-[#413a34]">{{ $sessionInfo['browser'] }} · {{ $sessionInfo['platform'] }}</p>
+                <p class="mt-2 text-[9px] font-bold text-[#413a34]">{{ $sessionBrowser }} · {{ $sessionPlatform }}</p>
                 <p class="mt-1 text-[7px] text-[#8f867d]">Active now</p>
             </div>
             <div class="rounded-[12px] border border-[#e8e3dc] bg-white p-4">

@@ -1807,6 +1807,954 @@
         }
     }
 
+
+    /* ============================================================
+       FINAL SELLER-DERIVED ADMIN VISUAL SYSTEM — PLATFORM COMMISSIONS
+       Visual-only authority layer. Finance calculations, routes,
+       filters, payouts, exports, chart data, and JS remain untouched.
+       ============================================================ */
+
+    .finance-commissions {
+        --fc-shell-line: #e5e7eb;
+        --fc-shell-divider: #eceff2;
+        --fc-shell-canvas: #f4f5f7;
+        --fc-shell-shadow:
+            0 1px 2px rgba(31, 24, 17, .035),
+            0 8px 24px rgba(31, 24, 17, .055);
+        --fc-shell-shadow-soft:
+            0 1px 2px rgba(31, 24, 17, .025),
+            0 5px 16px rgba(31, 24, 17, .04);
+        --fc-shell-shadow-modal:
+            0 26px 70px rgba(31, 24, 17, .19),
+            0 10px 28px rgba(31, 24, 17, .08);
+
+        max-width: 1600px !important;
+        padding-bottom: 32px !important;
+    }
+
+    /* Open Seller-style document header */
+    .finance-commissions .fc-page-head {
+        align-items: flex-end !important;
+        gap: 24px !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 18px !important;
+        border-bottom: 1px solid var(--fc-shell-divider) !important;
+    }
+
+    .finance-commissions .fc-title-side {
+        align-items: flex-start !important;
+        gap: 0 !important;
+    }
+
+    .finance-commissions .fc-title-icon {
+        display: none !important;
+    }
+
+    .finance-commissions .fc-eyebrow {
+        margin: 0 !important;
+        color: #9a6f23 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        line-height: 1.15 !important;
+        letter-spacing: .14em !important;
+    }
+
+    .finance-commissions .fc-title {
+        margin: 5px 0 0 !important;
+        font-size: clamp(29px, 2vw, 36px) !important;
+        font-weight: 700 !important;
+        line-height: 1.02 !important;
+        letter-spacing: -.045em !important;
+    }
+
+    .finance-commissions .fc-subtitle {
+        max-width: 820px !important;
+        margin-top: 8px !important;
+        color: #7f756a !important;
+        font-size: 10px !important;
+        font-weight: 400 !important;
+        line-height: 1.55 !important;
+    }
+
+    .finance-commissions .fc-head-actions {
+        gap: 9px !important;
+        padding-bottom: 1px !important;
+    }
+
+    .finance-commissions .fc-date-control,
+    .finance-commissions .fc-primary-button {
+        min-height: 40px !important;
+        height: 40px !important;
+        border-radius: 10px !important;
+    }
+
+    .finance-commissions .fc-date-control {
+        border-color: #e2e5e9 !important;
+        padding-inline: 10px 8px !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-primary-button {
+        padding-inline: 13px !important;
+        font-size: 8.5px !important;
+        box-shadow: 0 5px 13px rgba(194, 132, 10, .13) !important;
+    }
+
+    /* Seller elevation hierarchy: float major surfaces only */
+    .finance-commissions .fc-card,
+    .finance-commissions .fc-stat-card {
+        border-color: var(--fc-shell-line) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+    }
+
+    .finance-commissions .fc-card {
+        box-shadow: var(--fc-shell-shadow) !important;
+    }
+
+    .finance-commissions .fc-stat-card {
+        min-height: 82px !important;
+        padding: 13px 52px 13px 15px !important;
+        box-shadow: var(--fc-shell-shadow-soft) !important;
+        transform: none !important;
+    }
+
+    .finance-commissions .fc-stat-card:hover {
+        border-color: var(--fc-shell-line) !important;
+        background: #fff !important;
+        box-shadow: var(--fc-shell-shadow-soft) !important;
+        transform: none !important;
+    }
+
+    .finance-commissions .fc-summary-grid {
+        gap: 12px !important;
+        margin-top: 16px !important;
+    }
+
+    .finance-commissions .fc-stat-inner {
+        min-height: 54px !important;
+    }
+
+    .finance-commissions .fc-stat-icon {
+        top: 14px !important;
+        right: 14px !important;
+        width: 32px !important;
+        height: 32px !important;
+        border: 1px solid #eceff2 !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-stat-label {
+        font-size: 8px !important;
+        color: #85807a !important;
+    }
+
+    .finance-commissions .fc-stat-value {
+        font-size: 20px !important;
+        letter-spacing: -.04em !important;
+    }
+
+    .finance-commissions .fc-stat-help {
+        margin-top: 7px !important;
+        font-size: 7.3px !important;
+    }
+
+    /* Analytics / policy workspace */
+    .finance-commissions .fc-analytics-grid {
+        gap: 14px !important;
+        margin-top: 14px !important;
+    }
+
+    .finance-commissions .fc-chart-panel,
+    .finance-commissions .fc-policy-panel {
+        min-height: 292px !important;
+        padding: 17px !important;
+    }
+
+    .finance-commissions .fc-panel-title {
+        font-size: 11px !important;
+        color: #2f2924 !important;
+    }
+
+    .finance-commissions .fc-panel-copy {
+        margin-top: 4px !important;
+        font-size: 7.5px !important;
+    }
+
+    .finance-commissions .fc-range-tab,
+    .finance-commissions .fc-mini-button,
+    .finance-commissions .fc-history-button,
+    .finance-commissions .fc-detail-box,
+    .finance-commissions .fc-history-row,
+    .finance-commissions .fc-action,
+    .finance-commissions .fc-payout-input {
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-range-tab {
+        min-width: 36px !important;
+        height: 28px !important;
+        border-color: #e3e6ea !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+    }
+
+    .finance-commissions .fc-range-tab.active {
+        border-color: #d99500 !important;
+        background: #d99500 !important;
+        color: #fff !important;
+    }
+
+    .finance-commissions .fc-chart-wrap {
+        margin-top: 13px !important;
+    }
+
+    .finance-commissions .fc-chart-tooltip {
+        border-color: #e1e4e8 !important;
+        border-radius: 10px !important;
+        box-shadow:
+            0 10px 26px rgba(31, 24, 17, .10),
+            0 2px 7px rgba(31, 24, 17, .04) !important;
+    }
+
+    .finance-commissions .fc-policy-body {
+        margin-top: 16px !important;
+    }
+
+    .finance-commissions .fc-history-button {
+        border-color: #e3e6ea !important;
+        border-radius: 9px !important;
+    }
+
+    /* Finance filter bar: one elevated surface, flat internals */
+    .finance-commissions .fc-filter-card {
+        margin-top: 14px !important;
+        padding: 11px !important;
+        overflow: visible !important;
+    }
+
+    .finance-commissions .fc-filter-grid {
+        gap: 9px !important;
+    }
+
+    .finance-commissions .fc-control,
+    .finance-commissions .fc-custom-select-trigger,
+    .finance-commissions .fc-filter-reset,
+    .finance-commissions .fc-filter-apply {
+        height: 40px !important;
+        min-height: 40px !important;
+        border-radius: 9px !important;
+        font-size: 8.5px !important;
+    }
+
+    .finance-commissions .fc-control,
+    .finance-commissions .fc-custom-select-trigger,
+    .finance-commissions .fc-filter-reset {
+        border-color: #e2e5e9 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-control:focus,
+    .finance-commissions .fc-custom-select-trigger:focus-visible,
+    .finance-commissions .fc-custom-select.is-open .fc-custom-select-trigger,
+    .finance-commissions .fc-payout-input:focus {
+        outline: none !important;
+        border-color: #d49a2b !important;
+        box-shadow: 0 0 0 3px rgba(217, 149, 0, .075) !important;
+    }
+
+    .finance-commissions .fc-filter-apply {
+        box-shadow: 0 5px 13px rgba(194, 132, 10, .12) !important;
+    }
+
+    .finance-commissions .fc-filter-apply:hover {
+        transform: none !important;
+    }
+
+    .finance-commissions .fc-custom-select-menu {
+        border-color: #e1e4e8 !important;
+        border-radius: 10px !important;
+        box-shadow:
+            0 15px 34px rgba(31, 24, 17, .11),
+            0 3px 10px rgba(31, 24, 17, .04) !important;
+    }
+
+    /* Ledger */
+    .finance-commissions .fc-ledger {
+        margin-top: 14px !important;
+    }
+
+    .finance-commissions .fc-section-head {
+        padding: 13px 15px !important;
+        border-bottom-color: var(--fc-shell-divider) !important;
+    }
+
+    .finance-commissions .fc-table th {
+        padding: 10px 12px !important;
+        border-bottom-color: var(--fc-shell-divider) !important;
+        background: #fafbfc !important;
+        color: #7d776f !important;
+        font-size: 7.5px !important;
+        letter-spacing: .05em !important;
+    }
+
+    .finance-commissions .fc-table td {
+        padding: 10px 12px !important;
+        border-bottom-color: #f0f1f3 !important;
+        font-size: 8px !important;
+    }
+
+    .finance-commissions .fc-table tbody tr:hover {
+        background: #fcfbf9 !important;
+    }
+
+    .finance-commissions .fc-view-button {
+        height: 30px !important;
+        border-color: #e1e4e8 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-view-button:hover,
+    .finance-commissions .fc-view-button:focus-visible {
+        outline: none !important;
+        border-color: #e4c77e !important;
+        background: #fff9ef !important;
+        color: #94620a !important;
+    }
+
+    .finance-commissions .fc-table-footer {
+        min-height: 48px !important;
+        padding: 9px 12px !important;
+        border-top-color: var(--fc-shell-divider) !important;
+    }
+
+    /* Supporting finance cards */
+    .finance-commissions .fc-bottom-grid {
+        gap: 14px !important;
+        margin-top: 14px !important;
+    }
+
+    .finance-commissions .fc-bottom-card {
+        min-height: 224px !important;
+        padding: 16px !important;
+    }
+
+    .finance-commissions .fc-seller-row,
+    .finance-commissions .fc-recent-row {
+        border-color: #f0f1f3 !important;
+    }
+
+    .finance-commissions .fc-payout-panel {
+        margin-top: 14px !important;
+    }
+
+    .finance-commissions .fc-payout-row {
+        border-bottom-color: #f0f1f3 !important;
+    }
+
+    .finance-commissions .fc-payout-input,
+    .finance-commissions .fc-action {
+        border-color: #e2e5e9 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+    }
+
+    /* Focal finance modals */
+    .fc-modal-backdrop {
+        background: rgba(28, 24, 20, .44) !important;
+    }
+
+    .fc-modal {
+        border-color: #dfe3e7 !important;
+        border-radius: 16px !important;
+        background: #f7f8f9 !important;
+        box-shadow: var(--fc-shell-shadow-modal) !important;
+    }
+
+    .fc-modal-head {
+        min-height: 58px !important;
+        padding: 11px 14px !important;
+        border-bottom-color: var(--fc-shell-divider) !important;
+        background: #fff !important;
+    }
+
+    .fc-modal-title {
+        font-size: 13px !important;
+        letter-spacing: -.02em !important;
+    }
+
+    .fc-modal-close {
+        width: 30px !important;
+        height: 30px !important;
+        border-color: #e1e4e8 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+    }
+
+    .fc-modal-body {
+        padding: 14px !important;
+        background: #f7f8f9 !important;
+    }
+
+    .fc-detail-box,
+    .fc-history-row {
+        border-color: #e1e4e8 !important;
+        border-radius: 9px !important;
+        background: #fff !important;
+    }
+
+    /* Keep smaller screens usable without changing finance behavior */
+    @media (max-width: 1250px) {
+        .finance-commissions {
+            max-width: 100% !important;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .finance-commissions {
+            padding-bottom: 20px !important;
+        }
+
+        .finance-commissions .fc-page-head {
+            align-items: stretch !important;
+            padding-bottom: 14px !important;
+        }
+
+        .finance-commissions .fc-title {
+            font-size: 26px !important;
+        }
+
+        .finance-commissions .fc-subtitle {
+            font-size: 9.5px !important;
+        }
+
+        .finance-commissions .fc-head-actions {
+            width: 100% !important;
+            padding-bottom: 0 !important;
+        }
+
+        .finance-commissions .fc-date-control,
+        .finance-commissions .fc-primary-button {
+            min-height: 42px !important;
+            height: auto !important;
+        }
+
+        .finance-commissions .fc-stat-card {
+            min-height: 80px !important;
+        }
+
+        .finance-commissions .fc-chart-panel,
+        .finance-commissions .fc-policy-panel,
+        .finance-commissions .fc-bottom-card {
+            padding: 14px !important;
+        }
+
+        .finance-commissions .fc-control,
+        .finance-commissions .fc-custom-select-trigger,
+        .finance-commissions .fc-filter-reset,
+        .finance-commissions .fc-filter-apply {
+            min-height: 42px !important;
+            height: 42px !important;
+            font-size: 9px !important;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .finance-commissions .fc-stat-card,
+        .finance-commissions .fc-filter-apply {
+            transform: none !important;
+        }
+    }
+
+
+    /* ============================================================
+       PLATFORM COMMISSIONS — FINAL ADMIN USERS UI PARITY
+       Visual-only override. Preserves finance calculations, routes,
+       filters, chart data, exports, payouts, modals, and JavaScript.
+       ============================================================ */
+
+    .finance-commissions {
+        --users-gold: #D99500;
+        --users-ink: #1F2937;
+        --users-muted: #7C8592;
+        --users-border: #E5E7EB;
+        --users-divider: #EEF0F3;
+        max-width: 1880px !important;
+        padding-bottom: 30px !important;
+    }
+
+    /* Open User Management-style page header. */
+    .finance-commissions .fc-page-head {
+        align-items: flex-end !important;
+        gap: 24px !important;
+        padding: 2px 0 18px !important;
+        border-bottom: 1px solid #E7E9EC !important;
+    }
+
+    .finance-commissions .fc-title-side {
+        display: block !important;
+        min-width: 0 !important;
+    }
+
+    .finance-commissions .fc-title-icon {
+        display: none !important;
+    }
+
+    .finance-commissions .fc-eyebrow {
+        margin: 0 0 5px !important;
+        color: #9A6F23 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        line-height: 1.15 !important;
+        letter-spacing: .14em !important;
+        text-transform: uppercase !important;
+    }
+
+    .finance-commissions .fc-title {
+        margin: 0 !important;
+        font-size: clamp(30px, 2.15vw, 37px) !important;
+        font-weight: 700 !important;
+        line-height: 1.02 !important;
+        letter-spacing: -.045em !important;
+    }
+
+    .finance-commissions .fc-subtitle {
+        max-width: 920px !important;
+        margin-top: 7px !important;
+        color: #7F8590 !important;
+        font-size: 10.5px !important;
+        line-height: 1.6 !important;
+    }
+
+    .finance-commissions .fc-head-actions {
+        gap: 10px !important;
+        padding-bottom: 0 !important;
+    }
+
+    .finance-commissions .fc-date-control,
+    .finance-commissions .fc-primary-button {
+        min-height: 42px !important;
+        height: 42px !important;
+        border-radius: 10px !important;
+    }
+
+    /* KPI cards: exact User Management visual scale. */
+    .finance-commissions .fc-summary-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        margin-top: 18px !important;
+    }
+
+    .finance-commissions .fc-stat-card {
+        position: relative !important;
+        min-height: 110px !important;
+        overflow: hidden !important;
+        border: 1px solid var(--users-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        padding: 17px 64px 16px 18px !important;
+        box-shadow:
+            0 1px 2px rgba(17, 24, 39, .025),
+            0 8px 24px rgba(17, 24, 39, .055),
+            0 20px 44px rgba(17, 24, 39, .03) !important;
+        transform: none !important;
+        contain: paint;
+        transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease !important;
+    }
+
+    .finance-commissions .fc-stat-card:hover {
+        border-color: #DADDE2 !important;
+        background: #FFFFFF !important;
+        box-shadow:
+            0 1px 2px rgba(17, 24, 39, .025),
+            0 10px 27px rgba(17, 24, 39, .065),
+            0 22px 48px rgba(17, 24, 39, .03) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    .finance-commissions .fc-stat-inner {
+        min-height: 76px !important;
+    }
+
+    .finance-commissions .fc-stat-label {
+        color: #7D8590 !important;
+        font-size: 11.5px !important;
+        font-weight: 500 !important;
+        line-height: 1.35 !important;
+    }
+
+    .finance-commissions .fc-stat-row {
+        gap: 6px !important;
+        margin-top: 7px !important;
+    }
+
+    .finance-commissions .fc-stat-value {
+        color: #20242B !important;
+        font-size: 26px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .finance-commissions .fc-stat-help {
+        margin-top: 8px !important;
+        color: #98A0AA !important;
+        font-size: 9px !important;
+        line-height: 1.4 !important;
+    }
+
+    .finance-commissions .fc-delta {
+        min-height: 21px !important;
+        padding: 0 7px !important;
+        font-size: 7px !important;
+    }
+
+    /* Final Users-page icon treatment: no box, tile, circle, border, or background. */
+    .finance-commissions .fc-stat-icon,
+    .finance-commissions .fc-stat-icon.rate,
+    .finance-commissions .fc-stat-icon.orders,
+    .finance-commissions .fc-stat-icon.sales,
+    .finance-commissions .fc-stat-icon.earned {
+        position: absolute !important;
+        top: 16px !important;
+        right: 16px !important;
+        display: grid !important;
+        width: 28px !important;
+        height: 28px !important;
+        place-items: center !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .finance-commissions .fc-stat-icon svg {
+        width: 24px !important;
+        height: 24px !important;
+        stroke-width: 1.8 !important;
+    }
+
+    .finance-commissions .fc-stat-icon.rate {
+        color: #D99500 !important;
+    }
+
+    .finance-commissions .fc-stat-icon.orders {
+        color: #2563EB !important;
+    }
+
+    .finance-commissions .fc-stat-icon.sales {
+        color: #7C3AED !important;
+    }
+
+    .finance-commissions .fc-stat-icon.earned {
+        color: #16A34A !important;
+    }
+
+    /* Keep analytics useful but align surface depth/radii with Users. */
+    .finance-commissions .fc-analytics-grid {
+        gap: 14px !important;
+        margin-top: 14px !important;
+    }
+
+    .finance-commissions .fc-chart-panel,
+    .finance-commissions .fc-policy-panel,
+    .finance-commissions .fc-bottom-card,
+    .finance-commissions .fc-payout-panel {
+        border: 1px solid var(--users-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow:
+            0 1px 2px rgba(17,24,39,.025),
+            0 8px 24px rgba(17,24,39,.05),
+            0 20px 44px rgba(17,24,39,.025) !important;
+    }
+
+    /* User Management-style bare filter row instead of an extra filter card. */
+    .finance-commissions .fc-filter-card {
+        margin-top: 14px !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-filter-grid {
+        grid-template-columns: minmax(260px, 1.2fr) 165px 185px minmax(220px, .9fr) 82px 118px !important;
+        gap: 10px !important;
+    }
+
+    .finance-commissions .fc-control,
+    .finance-commissions .fc-custom-select-trigger,
+    .finance-commissions .fc-filter-reset,
+    .finance-commissions .fc-filter-apply {
+        min-height: 42px !important;
+        height: 42px !important;
+        border-radius: 10px !important;
+        font-size: 9.5px !important;
+    }
+
+    .finance-commissions .fc-control,
+    .finance-commissions .fc-custom-select-trigger,
+    .finance-commissions .fc-filter-reset {
+        border-color: #E2E5E9 !important;
+        background: #FFFFFF !important;
+        color: #344054 !important;
+        box-shadow: 0 1px 2px rgba(17,24,39,.025) !important;
+    }
+
+    .finance-commissions .fc-filter-apply {
+        border-color: #D99500 !important;
+        background: #D99500 !important;
+        box-shadow: 0 6px 16px rgba(217,149,0,.14) !important;
+    }
+
+    .finance-commissions .fc-filter-apply:hover {
+        background: #C48700 !important;
+        border-color: #C48700 !important;
+        transform: none !important;
+    }
+
+    /* Commission ledger = Admin Users table scale and hierarchy. */
+    .finance-commissions .fc-ledger {
+        margin-top: 14px !important;
+        overflow: hidden !important;
+        border: 1px solid var(--users-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow:
+            0 1px 2px rgba(17,24,39,.025),
+            0 9px 26px rgba(17,24,39,.055),
+            0 22px 48px rgba(17,24,39,.025) !important;
+    }
+
+    .finance-commissions .fc-section-head {
+        min-height: 66px !important;
+        padding: 14px 16px !important;
+        border-bottom: 1px solid #ECEFF2 !important;
+        background: #FFFFFF !important;
+    }
+
+    .finance-commissions .fc-ledger .fc-panel-title {
+        color: #252A32 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+    }
+
+    .finance-commissions .fc-ledger .fc-panel-copy {
+        margin-top: 4px !important;
+        color: #98A2B3 !important;
+        font-size: 9px !important;
+    }
+
+    .finance-commissions .fc-link-button {
+        min-height: 38px !important;
+        border-color: #E2E5E9 !important;
+        border-radius: 9px !important;
+        background: #FFFFFF !important;
+        color: #667085 !important;
+        box-shadow: none !important;
+    }
+
+    .finance-commissions .fc-table {
+        min-width: 1080px !important;
+    }
+
+    .finance-commissions .fc-table thead {
+        background: #F8FAFC !important;
+    }
+
+    .finance-commissions .fc-table th {
+        padding: 12px 16px !important;
+        border-bottom: 1px solid #ECEFF2 !important;
+        background: #F8FAFC !important;
+        color: #667085 !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        letter-spacing: .065em !important;
+        text-transform: uppercase !important;
+        white-space: nowrap;
+    }
+
+    .finance-commissions .fc-table td {
+        padding: 13px 16px !important;
+        border-bottom: 1px solid #EEF0F3 !important;
+        color: #475467 !important;
+        font-size: 10.5px !important;
+        line-height: 1.45 !important;
+        vertical-align: middle !important;
+    }
+
+    .finance-commissions .fc-table tbody tr {
+        min-height: 68px !important;
+        contain-intrinsic-size: 68px !important;
+        background: #FFFFFF !important;
+    }
+
+    .finance-commissions .fc-table tbody tr:hover {
+        background: #FAFBFC !important;
+    }
+
+    .finance-commissions .fc-order,
+    .finance-commissions .fc-money {
+        color: #252A32 !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+    }
+
+    .finance-commissions .fc-status {
+        min-height: 25px !important;
+        gap: 6px !important;
+        padding: 0 9px !important;
+        border-radius: 999px !important;
+        font-size: 9px !important;
+        font-weight: 600 !important;
+    }
+
+    .finance-commissions .fc-status::before {
+        width: 5px !important;
+        height: 5px !important;
+    }
+
+    .finance-commissions .fc-view-button {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        border: 1px solid transparent !important;
+        border-radius: 9px !important;
+        background: transparent !important;
+        color: #667085 !important;
+        font-size: 0 !important;
+        box-shadow: none !important;
+        position: relative;
+    }
+
+    .finance-commissions .fc-view-button::before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        display: block;
+        background:
+            center / 15px 15px no-repeat
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='1.8'%3E%3Cpath d='M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6S2.5 12 2.5 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.5'/%3E%3C/svg%3E");
+    }
+
+    .finance-commissions .fc-view-button:hover,
+    .finance-commissions .fc-view-button:focus-visible {
+        outline: none !important;
+        border-color: #F0E1BF !important;
+        background: #FFFAF0 !important;
+        color: #D99500 !important;
+    }
+
+    .finance-commissions .fc-view-button:hover::before,
+    .finance-commissions .fc-view-button:focus-visible::before {
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D99500' stroke-width='1.8'%3E%3Cpath d='M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6S2.5 12 2.5 12Z'/%3E%3Ccircle cx='12' cy='12' r='2.5'/%3E%3C/svg%3E");
+    }
+
+    .finance-commissions .fc-table-footer {
+        min-height: 54px !important;
+        padding: 11px 16px !important;
+        border-top: 1px solid #ECEFF2 !important;
+        background: #FFFFFF !important;
+        color: #667085 !important;
+        font-size: 9.5px !important;
+    }
+
+    .finance-commissions .fc-pagination {
+        gap: 6px !important;
+    }
+
+    .finance-commissions .fc-page-link {
+        min-width: 32px !important;
+        height: 32px !important;
+        border-color: #E2E5E9 !important;
+        border-radius: 9px !important;
+        background: #FFFFFF !important;
+        color: #667085 !important;
+        font-size: 9px !important;
+    }
+
+    .finance-commissions .fc-page-link.active {
+        border-color: #D99500 !important;
+        background: #D99500 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 6px 16px rgba(217,149,0,.14) !important;
+    }
+
+    @media (max-width: 1250px) {
+        .finance-commissions .fc-summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        .finance-commissions .fc-filter-grid {
+            grid-template-columns: minmax(240px, 1fr) 160px 180px !important;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .finance-commissions {
+            padding-bottom: 20px !important;
+        }
+
+        .finance-commissions .fc-page-head {
+            align-items: stretch !important;
+            padding-bottom: 14px !important;
+        }
+
+        .finance-commissions .fc-title {
+            font-size: 26px !important;
+        }
+
+        .finance-commissions .fc-subtitle {
+            font-size: 10px !important;
+        }
+
+        .finance-commissions .fc-summary-grid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+        }
+
+        .finance-commissions .fc-stat-card {
+            min-height: 104px !important;
+        }
+
+        .finance-commissions .fc-stat-icon {
+            top: 15px !important;
+            right: 15px !important;
+        }
+
+        .finance-commissions .fc-filter-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .finance-commissions .fc-control,
+        .finance-commissions .fc-custom-select-trigger,
+        .finance-commissions .fc-filter-reset,
+        .finance-commissions .fc-filter-apply {
+            min-height: 44px !important;
+            height: 44px !important;
+            font-size: 10px !important;
+        }
+
+        .finance-commissions .fc-ledger,
+        .finance-commissions .fc-chart-panel,
+        .finance-commissions .fc-policy-panel,
+        .finance-commissions .fc-bottom-card,
+        .finance-commissions .fc-payout-panel {
+            border-radius: 14px !important;
+        }
+    }
+
 </style>
 
 @php

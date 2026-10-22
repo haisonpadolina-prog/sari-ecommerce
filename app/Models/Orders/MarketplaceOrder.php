@@ -38,9 +38,19 @@ class MarketplaceOrder extends Model
         'items',
         'original_subtotal',
         'discount_amount',
+        'seller_receivable_subtotal',
+        'platform_sale_discount_amount',
+        'platform_voucher_discount_amount',
+        'platform_discount_amount',
+        'platform_voucher_code',
+        'platform_campaign_snapshot',
         'voucher_code',
         'seller_voucher_id',
         'subtotal',
+        'original_delivery_fee',
+        'shipping_discount_amount',
+        'seller_free_shipping_promotion_id',
+        'shipping_discount_funder',
         'delivery_fee',
         'total',
         'pickup_name',
@@ -63,7 +73,14 @@ class MarketplaceOrder extends Model
         'items' => 'array',
         'original_subtotal' => 'decimal:2',
         'discount_amount' => 'decimal:2',
+        'seller_receivable_subtotal' => 'decimal:2',
+        'platform_sale_discount_amount' => 'decimal:2',
+        'platform_voucher_discount_amount' => 'decimal:2',
+        'platform_discount_amount' => 'decimal:2',
+        'platform_campaign_snapshot' => 'array',
         'subtotal' => 'decimal:2',
+        'original_delivery_fee' => 'decimal:2',
+        'shipping_discount_amount' => 'decimal:2',
         'delivery_fee' => 'decimal:2',
         'total' => 'decimal:2',
         'accepted_at' => 'datetime',
@@ -88,6 +105,10 @@ class MarketplaceOrder extends Model
                 'logistics_account_id',
                 'items',
                 'subtotal',
+                'original_delivery_fee',
+                'shipping_discount_amount',
+                'seller_free_shipping_promotion_id',
+                'shipping_discount_funder',
                 'delivery_fee',
                 'total',
                 'buyer_name',
@@ -202,6 +223,17 @@ class MarketplaceOrder extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(ProductReview::class, 'marketplace_order_id');
+    }
+
+    public function courierDeliveryFee(): float
+    {
+        $original = round(max(0, (float) ($this->original_delivery_fee ?? 0)), 2);
+
+        if ($original > 0) {
+            return $original;
+        }
+
+        return round(max(0, (float) $this->delivery_fee), 2);
     }
 
     public function statusLabel(): string

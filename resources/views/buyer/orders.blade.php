@@ -5766,6 +5766,287 @@
         transform:scale(.97) !important;
     }
 
+
+    /* ============================================================
+       EMPTY ORDERS + EMPTY TRACKING — FINAL MATCH
+       Mirrors the clean cart-empty visual language.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-state {
+        display:flex !important;
+        min-height:350px !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+        border:0 !important;
+        border-radius:16px !important;
+        background:#ffffff !important;
+        padding:58px 24px 62px !important;
+        box-shadow:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-icon {
+        display:block !important;
+        margin:0 !important;
+        color:#aeb6bf !important;
+        font-size:58px !important;
+        font-weight:400 !important;
+        line-height:1 !important;
+        font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 48 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-title {
+        margin:25px 0 0 !important;
+        color:#9ca5af !important;
+        font-size:22px !important;
+        font-weight:700 !important;
+        line-height:1.2 !important;
+        letter-spacing:-.02em !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-copy {
+        margin:10px 0 0 !important;
+        color:#b0b8c1 !important;
+        font-size:12px !important;
+        font-weight:500 !important;
+        line-height:1.55 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-button {
+        display:inline-flex !important;
+        min-width:190px !important;
+        height:50px !important;
+        align-items:center !important;
+        justify-content:center !important;
+        margin-top:30px !important;
+        border:1px solid #c88912 !important;
+        border-radius:12px !important;
+        background:#c88912 !important;
+        background-image:none !important;
+        padding:0 28px !important;
+        color:#ffffff !important;
+        font-size:11.5px !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        text-decoration:none !important;
+        box-shadow:none !important;
+        transition:background-color .14s ease,border-color .14s ease !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-button:hover,
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-button:focus-visible {
+        border-color:#ad760f !important;
+        background:#ad760f !important;
+        color:#ffffff !important;
+        outline:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-empty-state {
+        display:flex !important;
+        min-height:150px !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-empty-icon {
+        display:block !important;
+        color:#aeb6bf !important;
+        font-size:34px !important;
+        font-weight:400 !important;
+        line-height:1 !important;
+        font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 40 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-tracking-empty-copy {
+        margin:10px 0 0 !important;
+        color:#8f99a4 !important;
+        font-size:10px !important;
+        font-weight:500 !important;
+        line-height:1.5 !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-state {
+            min-height:320px !important;
+            padding:48px 20px 52px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-icon {
+            font-size:50px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-title {
+            margin-top:21px !important;
+            font-size:20px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-copy {
+            font-size:11px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-button {
+            min-width:175px !important;
+            height:48px !important;
+            margin-top:26px !important;
+            font-size:11px !important;
+        }
+    }
+
+
+    /* ============================================================
+       MY ORDERS HEADER — MATCH BUYER CART
+       Same visual scale, alignment and text-link action.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference .sari-orders-page-header {
+        display:flex !important;
+        align-items:flex-end !important;
+        justify-content:space-between !important;
+        gap:16px !important;
+        margin:0 0 14px !important;
+        padding:2px 2px 14px !important;
+        border:0 !important;
+        border-bottom:0 !important;
+        background:transparent !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-heading {
+        min-width:0 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-eyebrow {
+        margin:0 !important;
+        color:#a87316 !important;
+        font-size:10.5px !important;
+        font-weight:800 !important;
+        line-height:1.2 !important;
+        letter-spacing:.14em !important;
+        text-transform:uppercase !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-title {
+        margin:5px 0 0 !important;
+        color:#2e343b !important;
+        font-size:clamp(27px,2.25vw,31px) !important;
+        font-weight:760 !important;
+        line-height:1.04 !important;
+        letter-spacing:-.035em !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-title .sari-page-title-my {
+        color:#2e343b !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-title .sari-page-title-orders {
+        color:#c88912 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-page-description {
+        max-width:620px !important;
+        margin:6px 0 0 !important;
+        color:#818995 !important;
+        font-size:10.5px !important;
+        font-weight:500 !important;
+        line-height:1.5 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-continue-text {
+        position:relative !important;
+        top:-8px !important;
+        display:inline-flex !important;
+        flex:0 0 auto !important;
+        align-items:center !important;
+        gap:8px !important;
+        min-height:0 !important;
+        height:auto !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        background-image:none !important;
+        padding:0 !important;
+        color:#59636e !important;
+        font-size:11.5px !important;
+        font-weight:750 !important;
+        line-height:1.35 !important;
+        text-decoration:none !important;
+        box-shadow:none !important;
+        transform:none !important;
+        transition:color .14s ease !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-continue-arrow {
+        display:inline-block !important;
+        color:currentColor !important;
+        font-size:18px !important;
+        font-weight:800 !important;
+        line-height:.8 !important;
+        transform:translateY(-1px) !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-continue-text:hover,
+    .sari-orders-page.sari-orders-reference .sari-orders-continue-text:focus-visible {
+        color:#c88912 !important;
+        background:transparent !important;
+        outline:none !important;
+        text-decoration:none !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    @media (max-width:640px) {
+        .sari-orders-page.sari-orders-reference .sari-orders-page-header {
+            align-items:flex-start !important;
+            flex-direction:column !important;
+            gap:12px !important;
+            padding-bottom:12px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-page-eyebrow {
+            font-size:9.5px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-page-title {
+            font-size:29px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-page-description {
+            font-size:10px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-continue-text {
+            top:0 !important;
+            font-size:10.5px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-continue-arrow {
+            font-size:16px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       FINAL OPEN FILTER BAR
+       Remove the outer filter/search card while preserving controls.
+    ============================================================ */
+    .sari-orders-page.sari-orders-reference .sari-orders-filter-bar {
+        margin-bottom: 14px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-filter-bar > .flex {
+        gap: 10px !important;
+    }
+
+    @media (max-width: 767px) {
+        .sari-orders-page.sari-orders-reference .sari-orders-filter-bar {
+            margin-bottom: 12px !important;
+        }
+    }
+
 </style>
 
 <div class="sari-orders-page sari-orders-reference min-h-full">
@@ -5803,54 +6084,23 @@
             </button>
         </div>
 
-        {{-- PREMIUM PAGE HEADING --}}
+        {{-- PAGE HEADING — MATCHES BUYER CART SCALE / LAYOUT --}}
+        <section class="sari-orders-page-header">
+            <div class="sari-orders-page-heading">
+                <p class="sari-orders-page-eyebrow">SARI Marketplace</p>
 
-        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-
-            <div>
-
-                <div class="mb-2 flex items-center gap-2">
-
-                    <span class="h-1 w-7 rounded-full bg-[#d99a18]"></span>
-
-                    <span class="text-[10px] font-bold uppercase tracking-[.2em] text-[#b87908]">SARI Marketplace</span>
-
-                </div>
-
-                <h1 class="text-[28px] font-bold tracking-[-.035em] sm:text-[34px]">
+                <h1 class="sari-orders-page-title">
                     <span class="sari-page-title-my">My</span>
                     <span class="sari-page-title-orders">Orders</span>
                 </h1>
 
-                <p class="mt-1 text-sm text-[#77736b]">
-
-                    Track, manage, and view all your orders in one place.
-
-                </p>
-
             </div>
 
-            <a href="{{ route('buyer.products') }}"
-
-               class="sari-continue-shopping-btn inline-flex h-11 items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold text-white transition"
-               style="
-                   background:#c88912 !important;
-                   background-image:none !important;
-                   border:1px solid #c88912 !important;
-                   color:#ffffff !important;
-                   box-shadow:0 6px 14px rgba(200,137,18,.14) !important;
-                   transform:none !important;
-                   font-size:11px !important;
-                   font-weight:600 !important;
-               ">
-
-                <span class="material-symbols-rounded text-[19px]">shopping_bag</span>
-
+            <a href="{{ route('buyer.products') }}" class="sari-orders-continue-text">
                 Continue Shopping
-
+                <span class="sari-orders-continue-arrow" aria-hidden="true">&gt;</span>
             </a>
-
-        </div>
+        </section>
 
         {{-- ORDER SUMMARY --}}
         <section class="sari-kpi-bar" aria-label="Order summary">
@@ -5883,7 +6133,7 @@
 
                 {{-- SEARCH + ORDER FILTERS --}}
 
-                <div class="sari-card mb-5 rounded-2xl p-3">
+                <div class="sari-orders-filter-bar mb-5">
 
                     <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
 
@@ -6512,24 +6762,16 @@
 
                     @empty
 
-                        <div class="sari-card rounded-[20px] p-12 text-center">
+                        <div class="sari-orders-empty-state sari-card rounded-[20px] text-center">
 
-                            <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-[#fff5dc] text-[#c7890b]">
+                            <span class="sari-orders-empty-icon material-symbols-rounded" aria-hidden="true">shopping_bag</span>
 
-                                <span class="material-symbols-rounded text-[30px]">shopping_bag</span>
+                            <h2 class="sari-orders-empty-title">No Orders Yet</h2>
 
-                            </div>
+                            <p class="sari-orders-empty-copy">Your purchased products will appear here.</p>
 
-                            <h2 class="mt-4 text-lg font-bold text-[#33312d]">No Orders Yet</h2>
-
-                            <p class="mt-1 text-sm text-[#77736b]">Your purchased products will appear here.</p>
-
-                            <a href="{{ route('buyer.products') }}"
-
-                               class="sari-gold-btn mt-5 inline-flex h-10 items-center rounded-xl px-5 text-sm font-bold text-white">
-
+                            <a href="{{ route('buyer.products') }}" class="sari-orders-empty-button">
                                 Start Shopping
-
                             </a>
 
                         </div>
@@ -6803,11 +7045,11 @@
 
                     @else
 
-                        <div class="px-5 py-8 text-center">
+                        <div class="sari-tracking-empty-state px-5 py-8 text-center">
 
-                            <span class="material-symbols-rounded text-3xl text-[#d4b36a]">local_shipping</span>
+                            <span class="sari-tracking-empty-icon material-symbols-rounded" aria-hidden="true">local_shipping</span>
 
-                            <p class="mt-2 text-xs text-[#77736b]">Your tracking updates will appear here.</p>
+                            <p class="sari-tracking-empty-copy">Your tracking updates will appear here.</p>
 
                         </div>
 

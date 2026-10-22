@@ -2460,6 +2460,252 @@
         font-weight: 850 !important;
     }
 
+
+
+    /* ============================================================
+       FINAL OPEN FILTER + CATEGORY LAYOUT
+       Removes the outer filter/category cards while preserving all
+       search, dropdown, reset, count and category functionality.
+    ============================================================ */
+
+    /* Filter workspace: controls float directly on the page. */
+    .sari-filter-dock {
+        margin-top: 12px !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-filter-grid {
+        align-items: end !important;
+    }
+
+    /* Category row: remove the surrounding white card/container. */
+    .sari-reference-category-row {
+        margin-top: 12px !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Keep category choices as clean independent controls. */
+    .sari-reference-category-row .sari-category-chips {
+        gap: 8px !important;
+    }
+
+    /* Product result count: flat text, no gold gradient/pill. */
+    .sari-result-pill {
+        display: inline-flex !important;
+        height: 42px !important;
+        min-width: auto !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 4px !important;
+        color: #59636f !important;
+        font-size: 8.8px !important;
+        font-weight: 650 !important;
+        box-shadow: none !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-result-pill #toolbarResultCount {
+        color: #343d47 !important;
+        font-weight: 800 !important;
+    }
+
+    /* Reset remains a text action instead of visually merging into a card. */
+    .sari-filter-reset {
+        border-color: transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .sari-filter-reset:hover,
+    .sari-filter-reset:focus-visible {
+        border-color: transparent !important;
+        background: transparent !important;
+        color: #c88912 !important;
+        box-shadow: none !important;
+    }
+
+    @media (max-width: 1279px) {
+        .sari-reference-category-row {
+            overflow-x: auto !important;
+            padding-bottom: 2px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-reference-category-row {
+            margin-top: 9px !important;
+            padding: 0 0 2px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       FINAL BUYER CATALOG — CART-STYLE HEADER + NO PRICE RANGE
+    ============================================================ */
+    .sari-products-page .sari-products-hero {
+        padding: 2px 2px 14px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .sari-products-page .sari-products-hero p:first-child {
+        margin: 0 !important;
+        color: #a87316 !important;
+        font-size: 10.5px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .14em !important;
+        text-transform: uppercase !important;
+    }
+
+    .sari-products-page .sari-products-hero h1 {
+        margin-top: 5px !important;
+        color: #2e343b !important;
+        font-size: clamp(29px, 2.35vw, 34px) !important;
+        font-weight: 760 !important;
+        line-height: 1.04 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .sari-products-page .sari-products-hero h1 span {
+        color: #c88912 !important;
+    }
+
+    .sari-products-page .sari-products-hero h1 + p {
+        max-width: 760px !important;
+        margin-top: 7px !important;
+        color: #7d8792 !important;
+        font-size: 11.5px !important;
+        font-weight: 450 !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-products-page .sari-price-details,
+    .sari-products-page .sari-price-popover {
+        display: none !important;
+    }
+
+    .sari-products-page .sari-filter-grid {
+        grid-template-columns:
+            minmax(320px, 1.65fr)
+            minmax(155px, .78fr)
+            minmax(155px, .78fr)
+            minmax(155px, .78fr)
+            auto
+            auto !important;
+        gap: 10px !important;
+        align-items: end !important;
+    }
+
+    .sari-products-page .sari-filter-label {
+        font-size: 8.5px !important;
+        font-weight: 750 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .06em !important;
+    }
+
+    .sari-products-page .sari-live-search input.sari-filter-control,
+    .sari-products-page .sari-formal-trigger {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+
+    .sari-products-page .sari-formal-option {
+        font-size: 9.5px !important;
+        font-weight: 550 !important;
+    }
+
+    .sari-products-page .sari-filter-reset,
+    .sari-products-page .sari-result-pill {
+        font-size: 9.5px !important;
+    }
+
+    .sari-products-page .sari-reference-category-row .sari-inline-chip {
+        font-size: 9px !important;
+        font-weight: 650 !important;
+    }
+
+    @media (max-width: 1279px) {
+        .sari-products-page .sari-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        .sari-products-page .sari-live-search {
+            grid-column: 1 / -1 !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-products-page .sari-products-hero p:first-child {
+            font-size: 9.5px !important;
+        }
+
+        .sari-products-page .sari-products-hero h1 {
+            font-size: 29px !important;
+        }
+
+        .sari-products-page .sari-products-hero h1 + p {
+            font-size: 10.5px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       FINAL CATALOG HEADER + PURE WHITE SEARCH
+    ============================================================ */
+    .sari-products-page .sari-products-hero h1 + p {
+        display: none !important;
+    }
+
+    .sari-products-page .sari-live-search input.sari-filter-control,
+    .sari-products-page .sari-live-search input.sari-filter-control:hover,
+    .sari-products-page .sari-live-search input.sari-filter-control:focus {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+    }
+
+    /*
+     * Mobile filter drawer is explicitly controlled here instead of relying
+     * only on generated utility classes. This prevents stale/malformed drawer
+     * markup from ever leaking into the normal catalog document flow.
+     */
+    #mobileFilterDrawer[hidden] {
+        display: none !important;
+    }
+
+    #mobileFilterDrawer {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+    }
+
+    body.sari-mobile-filter-open {
+        overflow: hidden;
+    }
+
+    @media (min-width: 1024px) {
+        #mobileFilterDrawer {
+            display: none !important;
+        }
+    }
+
 </style>
 @endpush
 
@@ -2540,9 +2786,6 @@
                     Shop <span class="text-[#c2810d]">Products</span>
                 </h1>
 
-                <p class="mt-2 max-w-[720px] text-[9px] leading-5 text-[#746c63] sm:text-[10px]">
-                    Discover approved products from trusted SARI sellers. Search, compare, and find the right item for you.
-                </p>
         </div>
 </section>
 {{-- =========================================================
@@ -2713,52 +2956,6 @@
                     </details>
                 </div>
 
-                <div class="relative min-w-0">
-                    <span class="sari-filter-label">Price Range</span>
-
-                    <details id="buyerPriceDetails" class="sari-price-details">
-                        <summary id="buyerPriceTrigger" class="sari-filter-control sari-price-trigger">
-                            <span id="buyerPriceTriggerText">Any price</span>
-                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
-                                <path d="m7 10 5 5 5-5"></path>
-                            </svg>
-                        </summary>
-
-                        <div id="buyerPricePopover" class="sari-price-popover">
-                            <div class="flex items-center justify-between gap-3">
-                                <div>
-                                    <p class="text-[8px] font-bold text-[#343a42]">Price Range</p>
-                                    <p class="mt-1 text-[6.3px] text-[#939aa3]">Set the minimum and maximum price.</p>
-                                </div>
-                                <button id="closeBuyerPricePopover" type="button" class="grid h-7 w-7 place-items-center rounded-lg text-[#818995] transition hover:bg-[#f5f6f8]" aria-label="Close price filter">×</button>
-                            </div>
-
-                            <div class="mt-3 grid grid-cols-2 gap-2">
-                                <label class="sari-price-field">
-                                    <span>₱</span>
-                                    <input id="minPrice" type="number" min="0" step="1" inputmode="numeric" placeholder="Min" aria-label="Minimum price">
-                                </label>
-                                <label class="sari-price-field">
-                                    <span>₱</span>
-                                    <input id="maxPrice" type="number" min="0" step="1" inputmode="numeric" placeholder="Max" aria-label="Maximum price">
-                                </label>
-                            </div>
-
-                            <p id="buyerPriceError" class="mt-2 hidden text-[6.5px] font-semibold text-[#b94a48]">
-                                Maximum price must be greater than or equal to minimum price.
-                            </p>
-
-                            <div class="mt-3 grid grid-cols-[.8fr_1.2fr] gap-2">
-                                <button id="clearPriceFilter" type="button" class="h-9 rounded-[9px] border border-[#dfe3e8] bg-white text-[7.5px] font-semibold text-[#626a74] transition hover:bg-[#f7f8f9]">
-                                    Clear
-                                </button>
-                                <button id="applyPriceFilter" type="button" class="h-9 rounded-[9px] bg-[#c88912] text-[7.5px] font-bold text-white transition hover:bg-[#ad760f]">
-                                    Apply Price
-                                </button>
-                            </div>
-                        </div>
-                    </details>
-                </div>
 
                 <div class="min-w-0">
                     <span class="sari-filter-label">Availability</span>
@@ -2846,6 +3043,15 @@
             </div>
         </div>
 
+
+        {{-- Price Range UI removed. Hidden compatibility fields preserve existing JS hooks safely. --}}
+        <div class="hidden" aria-hidden="true">
+            <input id="minPrice" type="hidden" value="">
+            <input id="maxPrice" type="hidden" value="">
+            <input id="mobileMinPrice" type="hidden" value="">
+            <input id="mobileMaxPrice" type="hidden" value="">
+        </div>
+
         {{-- Hidden buttons keep buyer-products.js category behavior intact. --}}
         <div class="hidden" aria-hidden="true">
             <button type="button" data-filter-category=""></button>
@@ -2909,43 +3115,66 @@
 {{-- =========================================================
      MOBILE FILTER DRAWER
 ========================================================= --}}
-<div id="mobileFilterDrawer" class="fixed inset-0 z-[90] hidden sari-products-page">
+<div
+    id="mobileFilterDrawer"
+    class="sari-products-page"
+    hidden
+    aria-hidden="true"
+>
     <div id="mobileFilterOverlay" class="absolute inset-0 bg-black/30 backdrop-blur-[1px]"></div>
-    <aside class="absolute right-0 top-0 flex h-full w-[340px] max-w-[90vw] flex-col border-l border-[#eee4d3] bg-white shadow-[0_24px_70px_rgba(44,34,22,0.15)]">
+
+    <aside
+        class="absolute right-0 top-0 flex h-full w-[340px] max-w-[90vw] flex-col border-l border-[#eee4d3] bg-white shadow-[0_24px_70px_rgba(44,34,22,0.15)]"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mobileFilterTitle"
+    >
         <div class="flex min-h-[76px] items-center justify-between border-b border-[#eee4d3] px-5">
-            <div><p class="text-[8px] font-semibold uppercase tracking-[0.12em] text-[#a8731f]">Product Filters</p><h2 class="mt-1 text-[15px] font-semibold text-[#28221b]">Narrow Results</h2></div>
-            <button id="closeMobileFilters" type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-[#e8dfd0] bg-white text-[#6e6558] transition hover:bg-[#f7eedf] hover:text-[#b97805]">
-                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg>
+            <div>
+                <p class="text-[8px] font-semibold uppercase tracking-[0.12em] text-[#a8731f]">Product Filters</p>
+                <h2 id="mobileFilterTitle" class="mt-1 text-[15px] font-semibold text-[#28221b]">Narrow Results</h2>
+            </div>
+
+            <button
+                id="closeMobileFilters"
+                type="button"
+                class="grid h-10 w-10 place-items-center rounded-xl border border-[#e8dfd0] bg-white text-[#6e6558] transition hover:bg-[#f7eedf] hover:text-[#b97805]"
+                aria-label="Close product filters"
+            >
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M6 6l12 12"></path>
+                    <path d="M18 6 6 18"></path>
+                </svg>
             </button>
         </div>
 
         <div class="flex-1 overflow-y-auto p-5">
             <div class="border-b border-[#eee8df] pb-5">
                 <p class="text-[10px] font-semibold text-[#403930]">Category</p>
+
                 <div class="mt-3 space-y-1">
-                    <button type="button" data-filter-category-mobile="" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[9px] transition hover:bg-[#fcf8f1]"><span>All Categories</span><span data-category-check-mobile="" class="hidden text-[#a8731f]">✓</span></button>
+                    <button type="button" data-filter-category-mobile="" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[9px] transition hover:bg-[#fcf8f1]">
+                        <span>All Categories</span>
+                        <span data-category-check-mobile="" class="hidden text-[#a8731f]">✓</span>
+                    </button>
+
                     @foreach ($categories as $category)
-                        <button type="button" data-filter-category-mobile="{{ $category['name'] }}" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[9px] transition hover:bg-[#fcf8f1]"><span>{{ $category['name'] }}</span><span data-category-check-mobile="{{ $category['name'] }}" class="hidden text-[#a8731f]">✓</span></button>
+                        <button type="button" data-filter-category-mobile="{{ $category['name'] }}" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-[9px] transition hover:bg-[#fcf8f1]">
+                            <span>{{ $category['name'] }}</span>
+                            <span data-category-check-mobile="{{ $category['name'] }}" class="hidden text-[#a8731f]">✓</span>
+                        </button>
                     @endforeach
                 </div>
             </div>
 
-            <div class="border-b border-[#eee8df] py-5">
-                <p class="text-[10px] font-semibold text-[#403930]">Price Range</p>
-                <div class="mt-3 grid grid-cols-2 gap-2">
-                    <div class="relative"><span class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[8px] text-[#a1988d]">₱</span><input id="mobileMinPrice" type="number" min="0" placeholder="Min" class="h-9 w-full rounded-xl border border-[#e6dfd5] bg-white pl-6 pr-2 text-[9px] outline-none focus:border-[#c99a3d] focus:ring-4 focus:ring-[#c99a3d]/10"></div>
-                    <div class="relative"><span class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[8px] text-[#a1988d]">₱</span><input id="mobileMaxPrice" type="number" min="0" placeholder="Max" class="h-9 w-full rounded-xl border border-[#e6dfd5] bg-white pl-6 pr-2 text-[9px] outline-none focus:border-[#c99a3d] focus:ring-4 focus:ring-[#c99a3d]/10"></div>
-                </div>
-            </div>
-
-            <input type="radio" name="mobileRatingFilter" value="" checked class="hidden">
-
-                        <div class="border-b border-[#eee8df] py-5">
+            <div class="py-5">
                 <p class="text-[10px] font-semibold text-[#403930]">Availability</p>
-                <label class="mt-3 flex cursor-pointer items-center gap-2"><input id="mobileInStockFilter" type="checkbox" class="h-3.5 w-3.5 rounded accent-[#c99128]"><span class="text-[9px] text-[#665e54]">In Stock Only</span></label>
-            </div>
 
-            <div class="py-5"><p class="text-[10px] font-semibold text-[#403930]">Size / Variation</p><div id="mobileVariationFilters" class="mt-3 flex flex-wrap gap-2"></div></div>
+                <label class="mt-3 flex cursor-pointer items-center gap-2">
+                    <input id="mobileInStockFilter" type="checkbox" class="h-3.5 w-3.5 rounded accent-[#c99128]">
+                    <span class="text-[9px] text-[#665e54]">In Stock Only</span>
+                </label>
+            </div>
         </div>
 
         <div class="border-t border-[#eee4d3] bg-white p-4">
@@ -3034,10 +3263,6 @@
         const hiddenCategoryButtons = Array.from(document.querySelectorAll('[data-filter-category]'));
         const categoryChips = Array.from(document.querySelectorAll('[data-shop-category-chip]'));
 
-        const priceTrigger = document.getElementById('buyerPriceTrigger');
-        const pricePopover = document.getElementById('buyerPricePopover');
-        const closePricePopover = document.getElementById('closeBuyerPricePopover');
-        const priceTriggerText = document.getElementById('buyerPriceTriggerText');
         const minPrice = document.getElementById('minPrice');
         const maxPrice = document.getElementById('maxPrice');
 
@@ -3045,6 +3270,17 @@
         const showAll = document.getElementById('showAllProducts');
 
         const formalDropdowns = Array.from(document.querySelectorAll('.sari-formal-dropdown'));
+
+        const mobileFilterDrawer = document.getElementById('mobileFilterDrawer');
+        const openMobileFilters = document.getElementById('openMobileFilters');
+        const closeMobileFilters = document.getElementById('closeMobileFilters');
+        const mobileFilterOverlay = document.getElementById('mobileFilterOverlay');
+        const mobileClearFilters = document.getElementById('mobileClearFilters');
+        const applyMobileFilters = document.getElementById('applyMobileFilters');
+        const mobileInStockFilter = document.getElementById('mobileInStockFilter');
+        const mobileFilterSummary = document.getElementById('mobileFilterSummary');
+        const mobileFilterCount = document.getElementById('mobileFilterCount');
+        const mobileCategoryButtons = Array.from(document.querySelectorAll('[data-filter-category-mobile]'));
 
         function syncFormalDropdown(selectId) {
             const select = document.getElementById(selectId);
@@ -3103,11 +3339,61 @@
             details.addEventListener('toggle', function () {
                 if (!this.open) return;
 
-                document.querySelectorAll('.sari-formal-dropdown[open], .sari-price-details[open]').forEach((other) => {
+                document.querySelectorAll('.sari-formal-dropdown[open]').forEach((other) => {
                     if (other !== this) other.removeAttribute('open');
                 });
             });
         });
+
+        function syncMobileFilterUi() {
+            const selectedCategory = String(categorySelect?.value || '');
+            const inStockOnly = availabilitySelect?.value === 'in-stock';
+
+            mobileCategoryButtons.forEach((button) => {
+                const selected = String(button.dataset.filterCategoryMobile || '') === selectedCategory;
+                button.classList.toggle('bg-[#fcf8f1]', selected);
+                button.classList.toggle('font-semibold', selected);
+
+                const check = button.querySelector('[data-category-check-mobile]');
+                check?.classList.toggle('hidden', !selected);
+            });
+
+            if (mobileInStockFilter) mobileInStockFilter.checked = inStockOnly;
+
+            const activeCount = Number(Boolean(selectedCategory)) + Number(inStockOnly);
+            if (mobileFilterCount) {
+                mobileFilterCount.textContent = String(activeCount);
+                mobileFilterCount.classList.toggle('hidden', activeCount === 0);
+            }
+
+            if (mobileFilterSummary) {
+                if (selectedCategory && inStockOnly) {
+                    mobileFilterSummary.textContent = `${selectedCategory} · In Stock`;
+                } else if (selectedCategory) {
+                    mobileFilterSummary.textContent = selectedCategory;
+                } else if (inStockOnly) {
+                    mobileFilterSummary.textContent = 'In Stock Only';
+                } else {
+                    mobileFilterSummary.textContent = 'All Products';
+                }
+            }
+        }
+
+        function setMobileFilterDrawerOpen(open) {
+            if (!mobileFilterDrawer) return;
+
+            const shouldOpen = Boolean(open) && window.matchMedia('(max-width: 1023px)').matches;
+            mobileFilterDrawer.hidden = !shouldOpen;
+            mobileFilterDrawer.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+            document.body.classList.toggle('sari-mobile-filter-open', shouldOpen);
+
+            if (shouldOpen) {
+                syncMobileFilterUi();
+                window.requestAnimationFrame(() => closeMobileFilters?.focus());
+            } else {
+                openMobileFilters?.focus({ preventScroll: true });
+            }
+        }
 
         function chooseCategory(value) {
             const normalized = String(value || '');
@@ -3124,6 +3410,8 @@
                     String(chip.dataset.shopCategoryChip || '') === normalized
                 );
             });
+
+            syncMobileFilterUi();
         }
 
         categorySelect?.addEventListener('change', function () {
@@ -3137,71 +3425,48 @@
         });
 
         availabilitySelect?.addEventListener('change', function () {
-            if (!inStockFilter) return;
-
             const shouldCheck = this.value === 'in-stock';
 
-            if (inStockFilter.checked !== shouldCheck) {
+            if (inStockFilter && inStockFilter.checked !== shouldCheck) {
                 inStockFilter.checked = shouldCheck;
                 inStockFilter.dispatchEvent(new Event('change', { bubbles: true }));
             }
+
+            syncMobileFilterUi();
         });
 
-        const priceDetails = document.getElementById('buyerPriceDetails');
+        if (mobileFilterDrawer && mobileFilterDrawer.dataset.bound !== '1') {
+            mobileFilterDrawer.dataset.bound = '1';
 
-        closePricePopover?.addEventListener('click', function () {
-            if (priceDetails) priceDetails.open = false;
-        });
+            openMobileFilters?.addEventListener('click', () => setMobileFilterDrawerOpen(true));
+            closeMobileFilters?.addEventListener('click', () => setMobileFilterDrawerOpen(false));
+            mobileFilterOverlay?.addEventListener('click', () => setMobileFilterDrawerOpen(false));
+            applyMobileFilters?.addEventListener('click', () => setMobileFilterDrawerOpen(false));
 
-        const priceError = document.getElementById('buyerPriceError');
+            mobileCategoryButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    chooseCategory(button.dataset.filterCategoryMobile || '');
+                });
+            });
 
-        function applyBuyerPriceFilter(closeAfter = true) {
-            const min = String(minPrice?.value || '').trim();
-            const max = String(maxPrice?.value || '').trim();
-            const minNumber = min === '' ? null : Number(min);
-            const maxNumber = max === '' ? null : Number(max);
+            mobileInStockFilter?.addEventListener('change', function () {
+                if (!availabilitySelect) return;
+                availabilitySelect.value = this.checked ? 'in-stock' : '';
+                availabilitySelect.dispatchEvent(new Event('change', { bubbles: true }));
+            });
 
-            const invalid =
-                minNumber !== null &&
-                maxNumber !== null &&
-                Number.isFinite(minNumber) &&
-                Number.isFinite(maxNumber) &&
-                maxNumber < minNumber;
+            mobileClearFilters?.addEventListener('click', () => {
+                clearAll?.click();
+                syncMobileFilterUi();
+            });
 
-            priceError?.classList.toggle('hidden', !invalid);
-            if (invalid) return;
-
-            // Trigger the same fields buyer-products.js reads.
-            minPrice?.dispatchEvent(new Event('input', { bubbles: true }));
-            maxPrice?.dispatchEvent(new Event('input', { bubbles: true }));
-            minPrice?.dispatchEvent(new Event('change', { bubbles: true }));
-            maxPrice?.dispatchEvent(new Event('change', { bubbles: true }));
-
-            if (priceTriggerText) {
-                if (min && max) {
-                    priceTriggerText.textContent = `₱${min} – ₱${max}`;
-                } else if (min) {
-                    priceTriggerText.textContent = `From ₱${min}`;
-                } else if (max) {
-                    priceTriggerText.textContent = `Up to ₱${max}`;
-                } else {
-                    priceTriggerText.textContent = 'Any price';
-                }
-            }
-
-            if (closeAfter && priceDetails) priceDetails.open = false;
+            mobileFilterDrawer.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') setMobileFilterDrawerOpen(false);
+            });
         }
 
-        document.getElementById('applyPriceFilter')?.addEventListener('click', function () {
-            applyBuyerPriceFilter(true);
-        });
+        syncMobileFilterUi();
 
-        document.getElementById('clearPriceFilter')?.addEventListener('click', function () {
-            if (minPrice) minPrice.value = '';
-            if (maxPrice) maxPrice.value = '';
-            priceError?.classList.add('hidden');
-            applyBuyerPriceFilter(false);
-        });
 
         clearAll?.addEventListener('click', function () {
             if (categorySelect) {
@@ -3221,10 +3486,6 @@
             }
             if (minPrice) minPrice.value = '';
             if (maxPrice) maxPrice.value = '';
-            minPrice?.dispatchEvent(new Event('input', { bubbles: true }));
-            maxPrice?.dispatchEvent(new Event('input', { bubbles: true }));
-            if (priceTriggerText) priceTriggerText.textContent = 'Any price';
-            if (priceDetails) priceDetails.open = false;
 
             categoryChips.forEach((chip) => {
                 chip.classList.toggle(
@@ -3232,6 +3493,8 @@
                     String(chip.dataset.shopCategoryChip || '') === ''
                 );
             });
+
+            syncMobileFilterUi();
         });
 
         showAll?.addEventListener('click', function () {
@@ -3239,12 +3502,7 @@
         });
 
         document.addEventListener('click', function (event) {
-            if (
-                priceDetails?.open &&
-                !priceDetails.contains(event.target)
-            ) {
-                priceDetails.open = false;
-            }
+
 
             document.querySelectorAll('.sari-formal-dropdown[open]').forEach((details) => {
                 if (!details.contains(event.target)) details.removeAttribute('open');

@@ -91,23 +91,27 @@ class SellerAccountController extends Controller
             ],
 
             'street_address' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:300',
             ],
             'barangay_name' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:100',
                 'regex:/^[\pL\pN\s.,\'()\/-]+$/u',
             ],
             'municipality_name' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:100',
                 'regex:/^[\pL\pN\s.,\'()\/-]+$/u',
             ],
             'province_name' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:100',
@@ -119,7 +123,6 @@ class SellerAccountController extends Controller
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 'max:5120',
-                'dimensions:min_width=120,min_height=120,max_width=6000,max_height=6000',
             ],
             'remove_profile_image' => [
                 'nullable',
@@ -129,14 +132,29 @@ class SellerAccountController extends Controller
             'government_id' => [
                 'nullable',
                 'file',
-                'mimes:pdf,jpg,jpeg,png,webp',
-                'max:10240',
+                'mimetypes:application/pdf,image/jpeg,image/png',
+                'mimes:pdf,jpg,jpeg,png',
+                'max:5120',
             ],
             'business_permit' => [
                 'nullable',
                 'file',
-                'mimes:pdf,jpg,jpeg,png,webp',
-                'max:10240',
+                'mimetypes:application/pdf,image/jpeg,image/png',
+                'mimes:pdf,jpg,jpeg,png',
+                'max:5120',
+            ],
+            'current_password' => [
+                'nullable',
+                'string',
+                'required_with:password',
+            ],
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
+                'max:255',
+                'confirmed',
+                'required_with:current_password',
             ],
         ], [
             'first_name.regex' =>
@@ -164,14 +182,28 @@ class SellerAccountController extends Controller
             'profile_image.max' =>
                 'Profile photo must not be larger than 5 MB.',
             'government_id.mimes' =>
-                'Government ID must be a PDF, JPG, PNG, or WEBP file.',
+                'Government ID must be a PDF, JPG, or PNG file.',
             'government_id.max' =>
-                'Government ID must not be larger than 10 MB.',
+                'Government ID must not be larger than 5 MB.',
             'business_permit.mimes' =>
-                'Business Permit must be a PDF, JPG, PNG, or WEBP file.',
+                'Business Permit must be a PDF, JPG, or PNG file.',
             'business_permit.max' =>
-                'Business Permit must not be larger than 10 MB.',
+                'Business Permit must not be larger than 5 MB.',
         ]);
+
+        if (filled($validated['password'] ?? null)) {
+            if (!Hash::check((string) ($validated['current_password'] ?? ''), (string) $account->password)) {
+                return back()->withErrors([
+                    'current_password' => 'Current password is incorrect.',
+                ])->withInput($request->except(['password', 'password_confirmation', 'current_password']));
+            }
+
+            if (Hash::check((string) $validated['password'], (string) $account->password)) {
+                return back()->withErrors([
+                    'password' => 'Choose a new password that is different from your current password.',
+                ])->withInput($request->except(['password', 'password_confirmation', 'current_password']));
+            }
+        }
 
         $attributes = [
             'first_name' => trim($validated['first_name']),
@@ -183,12 +215,17 @@ class SellerAccountController extends Controller
             'contact_no' => trim($validated['contact_no']),
             'birthday' => $validated['birthday'],
             'age' => (int) Carbon::parse($validated['birthday'])->age,
-
-            'street_address' => trim($validated['street_address']),
-            'barangay_name' => trim($validated['barangay_name']),
-            'municipality_name' => trim($validated['municipality_name']),
-            'province_name' => trim($validated['province_name']),
         ];
+
+        foreach (['street_address', 'barangay_name', 'municipality_name', 'province_name'] as $addressField) {
+            if (array_key_exists($addressField, $validated)) {
+                $attributes[$addressField] = trim((string) $validated[$addressField]);
+            }
+        }
+
+        if (filled($validated['password'] ?? null)) {
+            $attributes['password'] = Hash::make((string) $validated['password']);
+        }
 
         $oldDocuments = [
             'id_path' => (string) ($account->id_path ?? ''),

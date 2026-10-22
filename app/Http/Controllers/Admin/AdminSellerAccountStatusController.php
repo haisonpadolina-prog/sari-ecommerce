@@ -8,13 +8,15 @@ use App\Jobs\DispatchAdminSellerRealtime;
 use App\Models\Compliance\ComplianceMessage;
 use App\Models\Accounts\SellerAccount;
 use App\Services\Seller\SellerAccountStatusService;
+use App\Services\Platform\UserActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class AdminSellerAccountStatusController extends Controller
 {
     public function __construct(
-        private SellerAccountStatusService $statusService
+        private SellerAccountStatusService $statusService,
+        private UserActivityLogService $activityLog
     ) {}
 
     private function guard(Request $request): void
@@ -180,6 +182,15 @@ class AdminSellerAccountStatusController extends Controller
             'Your seller account was suspended for 30 days. Please contact the administrator from the locked dashboard.'
         );
 
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'suspended',
+            'Admin suspended the seller account for 30 days.',
+            ['status' => 'suspended']
+        );
+
         return $this->success(
             $request,
             'Seller suspended for 30 days.'
@@ -213,6 +224,15 @@ class AdminSellerAccountStatusController extends Controller
             $seller,
             'suspension_lifted',
             'Your suspension has been lifted. Your active warning counter is now 0 / 3.'
+        );
+
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'restored',
+            'Admin lifted the seller suspension and restored active access.',
+            ['status' => 'active']
         );
 
         return $this->success(
@@ -270,6 +290,15 @@ class AdminSellerAccountStatusController extends Controller
             'Your seller account has been banned by the SARI Administrator.'
         );
 
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'banned',
+            'Admin banned the seller account.',
+            ['status' => 'banned']
+        );
+
         return $this->success(
             $request,
             'Seller account banned.'
@@ -306,6 +335,15 @@ class AdminSellerAccountStatusController extends Controller
             $seller,
             'unbanned',
             'Your seller account has been restored. Your active warning counter is now 0 / 3.'
+        );
+
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'unbanned',
+            'Admin removed the seller account ban.',
+            ['status' => 'active']
         );
 
         return $this->success(
@@ -354,6 +392,15 @@ class AdminSellerAccountStatusController extends Controller
             'Your seller account has been deactivated by the SARI Administrator.'
         );
 
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'deactivated',
+            'Admin deactivated the seller account.',
+            ['status' => 'deactivated']
+        );
+
         return $this->success(
             $request,
             'Seller account deactivated. Compliance history was preserved.'
@@ -390,6 +437,15 @@ class AdminSellerAccountStatusController extends Controller
             $seller,
             'restored',
             'Your seller account has been restored. Your active warning counter is now 0 / 3.'
+        );
+
+        $this->activityLog->recordAdminEvent(
+            $request,
+            'seller',
+            (int) $seller->id,
+            'restored',
+            'Admin restored the deactivated seller account.',
+            ['status' => 'active']
         );
 
         return $this->success(

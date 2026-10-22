@@ -14,6 +14,8 @@
         if (in_array($key, [
             'checkout_enabled',
             'registrations_enabled',
+            'seller_product_posting_enabled',
+            'platform_campaigns_enabled',
             'registration_decision_email_enabled',
             'maintenance_mode',
         ], true)) {
@@ -941,6 +943,697 @@
         }
     }
 
+
+    /* ============================================================
+       SELLER VISUAL SYSTEM — FINAL PLATFORM SETTINGS OVERRIDE
+       Visual-only. Settings keys, permissions, scheduling, routes,
+       form behavior, audit data and JavaScript remain untouched.
+       ============================================================ */
+
+    .platform-settings-page{
+        --ps-bg:#f4f5f7 !important;
+        --ps-surface:#ffffff !important;
+        --ps-surface-2:#f9fafb !important;
+        --ps-ink:#111827 !important;
+        --ps-text:#475467 !important;
+        --ps-muted:#7c8592 !important;
+        --ps-line:#e5e7eb !important;
+        --ps-line-strong:#d1d5db !important;
+        --ps-accent:#d59617 !important;
+        --ps-accent-ink:#b97805 !important;
+        --ps-accent-soft:#fff8e8 !important;
+        --ps-accent-line:#ead7ae !important;
+        --ps-radius-lg:14px !important;
+        --ps-radius-md:10px !important;
+        --ps-radius-sm:9px !important;
+        --ps-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+        --ps-shadow-strong:
+            0 3px 7px rgba(15,23,42,.055),
+            0 14px 32px rgba(15,23,42,.095),
+            0 30px 68px rgba(15,23,42,.11) !important;
+
+        width:100% !important;
+        max-width:1500px !important;
+        margin:0 auto !important;
+        padding:0 0 28px !important;
+        color:var(--ps-ink) !important;
+        font-size:11px !important;
+    }
+
+    /* Open Seller-style page heading. */
+    .platform-settings-page .ps-header{
+        min-height:66px !important;
+        align-items:center !important;
+        gap:18px !important;
+        margin:0 0 14px !important;
+        padding:2px 2px 13px !important;
+        border-bottom:1px solid #eceff2 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    .platform-settings-page .ps-header-left{
+        align-items:flex-start !important;
+        gap:0 !important;
+    }
+
+    .platform-settings-page .ps-header-icon{
+        display:none !important;
+    }
+
+    .platform-settings-page .ps-eyebrow{
+        margin:0 !important;
+        color:#b97805 !important;
+        -webkit-text-fill-color:#b97805 !important;
+        font-size:8px !important;
+        font-weight:800 !important;
+        line-height:1.2 !important;
+        letter-spacing:.16em !important;
+    }
+
+    .platform-settings-page .ps-title{
+        margin:4px 0 0 !important;
+        font-size:clamp(29px,2.2vw,36px) !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        letter-spacing:-.035em !important;
+    }
+
+    .platform-settings-page .ps-title-dark{
+        color:#111827 !important;
+        -webkit-text-fill-color:#111827 !important;
+    }
+
+    .platform-settings-page .ps-title-accent{
+        color:#d59617 !important;
+        -webkit-text-fill-color:#d59617 !important;
+    }
+
+    .platform-settings-page .ps-subtitle{
+        max-width:760px !important;
+        margin:7px 0 0 !important;
+        color:#7c8592 !important;
+        -webkit-text-fill-color:#7c8592 !important;
+        font-size:10px !important;
+        font-weight:400 !important;
+        line-height:1.55 !important;
+    }
+
+    .platform-settings-page .ps-header-actions{
+        align-items:center !important;
+        justify-content:flex-end !important;
+        gap:7px !important;
+        padding-top:0 !important;
+    }
+
+    .platform-settings-page .ps-header-actions .ps-badge,
+    .platform-settings-page .ps-header-actions .ps-help-trigger{
+        min-height:36px !important;
+        height:36px !important;
+        border:1px solid #e5e7eb !important;
+        border-radius:9px !important;
+        background:#fff !important;
+        padding:0 10px !important;
+        color:#475467 !important;
+        font-size:8.5px !important;
+        font-weight:600 !important;
+        box-shadow:none !important;
+    }
+
+    .platform-settings-page .ps-header-actions .ps-badge::before{
+        background:#d59617 !important;
+    }
+
+    /* Main page surfaces carry depth; nested UI remains flat. */
+    .platform-settings-page .ps-card{
+        border:1px solid #e5e7eb !important;
+        border-radius:14px !important;
+        background:#fff !important;
+        box-shadow:var(--ps-shadow) !important;
+        transform:none !important;
+    }
+
+    .platform-settings-page .ps-policy-strip{
+        grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+        margin-bottom:14px !important;
+        overflow:hidden !important;
+    }
+
+    .platform-settings-page .ps-policy-cell{
+        min-height:92px !important;
+        padding:14px 16px !important;
+        border-right:1px solid #eceff2 !important;
+    }
+
+    .platform-settings-page .ps-kicker{
+        color:#7c8592 !important;
+        font-size:8px !important;
+        font-weight:700 !important;
+        letter-spacing:.02em !important;
+    }
+
+    .platform-settings-page .ps-policy-value{
+        margin-top:5px !important;
+        color:#111827 !important;
+        font-size:21px !important;
+        font-weight:700 !important;
+        line-height:1.05 !important;
+        letter-spacing:-.025em !important;
+    }
+
+    .platform-settings-page .ps-policy-note{
+        margin-top:6px !important;
+        color:#8a93a0 !important;
+        font-size:8px !important;
+        line-height:1.45 !important;
+    }
+
+    .platform-settings-page .ps-grid{
+        grid-template-columns:minmax(0,1.6fr) minmax(330px,.78fr) !important;
+        gap:14px !important;
+    }
+
+    .platform-settings-page .ps-stack{
+        gap:14px !important;
+    }
+
+    .platform-settings-page .ps-section{
+        padding:16px !important;
+    }
+
+    .platform-settings-page .ps-section-head{
+        gap:12px !important;
+        margin-bottom:14px !important;
+        padding-bottom:12px !important;
+        border-bottom:1px solid #eceff2 !important;
+    }
+
+    .platform-settings-page .ps-section-title{
+        color:#1f2937 !important;
+        font-size:12px !important;
+        font-weight:700 !important;
+        line-height:1.35 !important;
+        letter-spacing:-.015em !important;
+    }
+
+    .platform-settings-page .ps-section-copy{
+        max-width:560px !important;
+        margin-top:4px !important;
+        color:#7c8592 !important;
+        font-size:8.5px !important;
+        line-height:1.5 !important;
+    }
+
+    .platform-settings-page .ps-head-actions{
+        gap:6px !important;
+    }
+
+    .platform-settings-page .ps-tag,
+    .platform-settings-page .ps-help-trigger{
+        min-height:28px !important;
+        height:28px !important;
+        border:1px solid #e5e7eb !important;
+        border-radius:8px !important;
+        background:#fff !important;
+        padding:0 8px !important;
+        color:#667085 !important;
+        font-size:7.5px !important;
+        font-weight:650 !important;
+        box-shadow:none !important;
+    }
+
+    /* Form density matches the Seller admin workspaces. */
+    .platform-settings-page .ps-form-grid{
+        gap:13px !important;
+    }
+
+    .platform-settings-page .ps-label-row{
+        margin-bottom:5px !important;
+    }
+
+    .platform-settings-page .ps-label{
+        color:#344054 !important;
+        font-size:9px !important;
+        font-weight:650 !important;
+    }
+
+    .platform-settings-page .ps-current{
+        color:#98a2b3 !important;
+        font-size:7.5px !important;
+        font-weight:500 !important;
+    }
+
+    .platform-settings-page .ps-input,
+    .platform-settings-page .ps-textarea{
+        border:1px solid #d1d5db !important;
+        border-radius:9px !important;
+        background:#fff !important;
+        color:#344054 !important;
+        font-size:9px !important;
+        font-weight:500 !important;
+        box-shadow:none !important;
+    }
+
+    .platform-settings-page .ps-input{
+        height:40px !important;
+        padding:0 10px !important;
+    }
+
+    .platform-settings-page .ps-textarea{
+        min-height:82px !important;
+        padding:9px 10px !important;
+        line-height:1.55 !important;
+    }
+
+    .platform-settings-page .ps-input:hover,
+    .platform-settings-page .ps-textarea:hover{
+        border-color:#c5cad1 !important;
+    }
+
+    .platform-settings-page .ps-input:focus,
+    .platform-settings-page .ps-textarea:focus{
+        border-color:#d59617 !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.085) !important;
+    }
+
+    .platform-settings-page .ps-input-wrap .ps-input{
+        padding-right:44px !important;
+    }
+
+    .platform-settings-page .ps-suffix{
+        min-width:28px !important;
+        height:24px !important;
+        border-radius:6px !important;
+        background:#f3f4f6 !important;
+        color:#7c8592 !important;
+        font-size:8px !important;
+    }
+
+    .platform-settings-page .ps-help{
+        margin-top:5px !important;
+        color:#8a93a0 !important;
+        font-size:7.6px !important;
+        line-height:1.5 !important;
+    }
+
+    .platform-settings-page .ps-divider{
+        margin:14px 0 !important;
+        background:#eceff2 !important;
+    }
+
+    /* Nested operational blocks stay visually quiet. */
+    .platform-settings-page .ps-toggle-list{
+        gap:7px !important;
+    }
+
+    .platform-settings-page .ps-toggle-row,
+    .platform-settings-page .ps-governance,
+    .platform-settings-page .ps-mini,
+    .platform-settings-page .ps-help-step,
+    .platform-settings-page .ps-modal-summary{
+        border:1px solid #e5e7eb !important;
+        background:#f9fafb !important;
+        box-shadow:none !important;
+    }
+
+    .platform-settings-page .ps-toggle-row{
+        border-radius:10px !important;
+        padding:10px 11px !important;
+    }
+
+    .platform-settings-page .ps-toggle-title,
+    .platform-settings-page .ps-governance-title{
+        color:#344054 !important;
+        font-size:9px !important;
+        font-weight:650 !important;
+    }
+
+    .platform-settings-page .ps-toggle-copy,
+    .platform-settings-page .ps-governance-copy{
+        color:#7c8592 !important;
+        font-size:7.8px !important;
+        line-height:1.5 !important;
+    }
+
+    .platform-settings-page .ps-switch{
+        width:38px !important;
+        height:22px !important;
+        flex-basis:38px !important;
+    }
+
+    .platform-settings-page .ps-switch input:checked + span{
+        border-color:#d59617 !important;
+        background:#d59617 !important;
+    }
+
+    .platform-settings-page .ps-governance{
+        border-radius:10px !important;
+        padding:11px 12px !important;
+    }
+
+    .platform-settings-page .ps-permission{
+        margin-top:14px !important;
+        padding-top:12px !important;
+        border-top:1px solid #eceff2 !important;
+        color:#667085 !important;
+        font-size:8px !important;
+    }
+
+    .platform-settings-page .ps-scheduled{
+        border-color:#e8d6af !important;
+        margin-top:14px !important;
+    }
+
+    .platform-settings-page .ps-scheduled-meta{
+        gap:7px !important;
+        margin-top:12px !important;
+    }
+
+    .platform-settings-page .ps-mini{
+        padding:8px 9px !important;
+    }
+
+    .platform-settings-page .ps-mini span{
+        color:#8a93a0 !important;
+        font-size:7px !important;
+    }
+
+    .platform-settings-page .ps-mini strong{
+        color:#344054 !important;
+        font-size:8px !important;
+    }
+
+    .platform-settings-page .ps-diff{
+        border-top:1px solid #eceff2 !important;
+        padding:8px 0 !important;
+        color:#667085 !important;
+        font-size:8px !important;
+    }
+
+    /* Buttons: one strong gold action, quiet supporting controls. */
+    .platform-settings-page .ps-btn{
+        height:38px !important;
+        border-radius:9px !important;
+        padding:0 12px !important;
+        font-size:8.5px !important;
+        font-weight:650 !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    .platform-settings-page .ps-btn-primary{
+        border-color:#d59617 !important;
+        background:#d59617 !important;
+        color:#fff !important;
+        box-shadow:0 4px 10px rgba(213,150,23,.11) !important;
+    }
+
+    .platform-settings-page .ps-btn-primary:hover,
+    .platform-settings-page .ps-btn-primary:focus-visible{
+        border-color:#b97805 !important;
+        background:#b97805 !important;
+        outline:none !important;
+    }
+
+    .platform-settings-page .ps-btn-secondary{
+        border-color:#d1d5db !important;
+        background:#fff !important;
+        color:#475467 !important;
+    }
+
+    /* Sticky action bar is the focal workflow surface. */
+    .platform-settings-page .ps-actions{
+        bottom:12px !important;
+        margin-top:14px !important;
+        border:1px solid #d1d5db !important;
+        border-radius:14px !important;
+        background:#fff !important;
+        padding:10px 12px !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.055),
+            0 12px 28px rgba(15,23,42,.10),
+            0 26px 58px rgba(15,23,42,.11) !important;
+    }
+
+    .platform-settings-page .ps-change-state{
+        color:#7c8592 !important;
+        font-size:8.5px !important;
+    }
+
+    .platform-settings-page .ps-actions.is-dirty .ps-change-dot{
+        background:#d59617 !important;
+    }
+
+    .platform-settings-page .ps-actions.is-dirty .ps-change-state{
+        color:#b97805 !important;
+    }
+
+    /* Help overlays and confirmation modal receive focal elevation. */
+    .platform-settings-page .ps-help-panel{
+        width:min(360px,calc(100vw - 40px)) !important;
+        border:1px solid #e5e7eb !important;
+        border-radius:12px !important;
+        background:#fff !important;
+        padding:12px !important;
+        box-shadow:
+            0 3px 7px rgba(15,23,42,.05),
+            0 14px 32px rgba(15,23,42,.095),
+            0 28px 60px rgba(15,23,42,.10) !important;
+    }
+
+    .platform-settings-page .ps-help-panel-title{
+        margin-bottom:9px !important;
+        color:#344054 !important;
+        font-size:9px !important;
+    }
+
+    .platform-settings-page .ps-help-steps{
+        gap:7px !important;
+    }
+
+    .platform-settings-page .ps-help-step{
+        border-radius:8px !important;
+        padding:8px !important;
+    }
+
+    .platform-settings-page .ps-help-step strong{
+        color:#344054 !important;
+        font-size:8px !important;
+    }
+
+    .platform-settings-page .ps-help-step p,
+    .platform-settings-page .ps-help-note{
+        font-size:7.5px !important;
+        line-height:1.5 !important;
+    }
+
+    .platform-settings-page .ps-help-note{
+        border-left-color:#d59617 !important;
+        background:#fff8e8 !important;
+        color:#94620a !important;
+    }
+
+    .ps-modal-backdrop{
+        background:rgba(17,24,39,.48) !important;
+        backdrop-filter:none !important;
+    }
+
+    .ps-modal{
+        width:min(500px,calc(100vw - 28px)) !important;
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#fff !important;
+        padding:18px !important;
+        box-shadow:
+            0 3px 7px rgba(15,23,42,.055),
+            0 14px 32px rgba(15,23,42,.095),
+            0 30px 68px rgba(15,23,42,.11) !important;
+    }
+
+    .ps-modal h3{
+        color:#1f2937 !important;
+        font-size:15px !important;
+        font-weight:700 !important;
+        letter-spacing:-.02em !important;
+    }
+
+    .ps-modal p{
+        color:#7c8592 !important;
+        font-size:8.5px !important;
+        line-height:1.55 !important;
+    }
+
+    .ps-modal-summary{
+        margin-top:12px !important;
+        border-radius:10px !important;
+        padding:10px 11px !important;
+        color:#475467 !important;
+        font-size:8.5px !important;
+        line-height:1.7 !important;
+    }
+
+    /* Audit history remains a dense data surface. */
+    .platform-settings-page .ps-audit{
+        margin-top:14px !important;
+        overflow:hidden !important;
+    }
+
+    .platform-settings-page .ps-audit-head{
+        gap:12px !important;
+        padding:14px 16px !important;
+        border-bottom:1px solid #eceff2 !important;
+    }
+
+    .platform-settings-page .ps-table{
+        min-width:960px !important;
+    }
+
+    .platform-settings-page .ps-table th{
+        padding:9px 11px !important;
+        border-bottom:1px solid #eceff2 !important;
+        background:#f9fafb !important;
+        color:#7c8592 !important;
+        font-size:7.5px !important;
+        font-weight:700 !important;
+        letter-spacing:.035em !important;
+        text-transform:uppercase !important;
+    }
+
+    .platform-settings-page .ps-table td{
+        padding:9px 11px !important;
+        border-bottom:1px solid #f0f2f4 !important;
+        color:#475467 !important;
+        font-size:8px !important;
+        line-height:1.45 !important;
+    }
+
+    .platform-settings-page .ps-table tbody tr:hover td{
+        background:#fffcf5 !important;
+    }
+
+    .platform-settings-page .ps-audit-setting{
+        color:#344054 !important;
+        font-weight:650 !important;
+    }
+
+    .platform-settings-page .ps-alert,
+    .platform-settings-page .ps-errors{
+        border-radius:10px !important;
+        padding:10px 12px !important;
+        font-size:8.5px !important;
+        box-shadow:
+            0 1px 3px rgba(15,23,42,.035),
+            0 7px 18px rgba(15,23,42,.06),
+            0 15px 32px rgba(15,23,42,.065) !important;
+    }
+
+    @media(max-width:1200px){
+        .platform-settings-page .ps-policy-strip{
+            grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+        }
+
+        .platform-settings-page .ps-grid{
+            grid-template-columns:1fr !important;
+        }
+    }
+
+    @media(max-width:700px){
+        .platform-settings-page{
+            padding:0 0 20px !important;
+        }
+
+        .platform-settings-page .ps-header{
+            align-items:flex-start !important;
+            flex-direction:column !important;
+            gap:10px !important;
+            padding:0 0 12px !important;
+        }
+
+        .platform-settings-page .ps-title{
+            font-size:clamp(28px,8vw,34px) !important;
+        }
+
+        .platform-settings-page .ps-subtitle{
+            font-size:9.5px !important;
+        }
+
+        .platform-settings-page .ps-header-actions{
+            width:100% !important;
+            justify-content:flex-start !important;
+            padding-left:0 !important;
+        }
+
+        .platform-settings-page .ps-policy-strip,
+        .platform-settings-page .ps-form-grid{
+            grid-template-columns:1fr !important;
+        }
+
+        .platform-settings-page .ps-policy-cell{
+            min-height:0 !important;
+            border-right:0 !important;
+            border-bottom:1px solid #eceff2 !important;
+        }
+
+        .platform-settings-page .ps-section{
+            padding:14px !important;
+        }
+
+        .platform-settings-page .ps-section-head{
+            align-items:flex-start !important;
+            flex-direction:column !important;
+        }
+
+        .platform-settings-page .ps-head-actions{
+            width:100% !important;
+            flex-wrap:wrap !important;
+        }
+
+        .platform-settings-page .ps-input{
+            height:42px !important;
+        }
+
+        .platform-settings-page .ps-actions{
+            bottom:8px !important;
+            align-items:stretch !important;
+            flex-direction:column !important;
+        }
+
+        .platform-settings-page .ps-actions-right{
+            width:100% !important;
+        }
+
+        .platform-settings-page .ps-actions-right .ps-btn{
+            min-height:42px !important;
+            flex:1 !important;
+        }
+
+        .platform-settings-page .ps-help-panel{
+            left:10px !important;
+            right:10px !important;
+            bottom:12px !important;
+            width:auto !important;
+        }
+
+        .ps-modal{
+            width:calc(100vw - 14px) !important;
+            border-radius:14px !important;
+            padding:14px !important;
+        }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+        .platform-settings-page *,
+        .ps-modal,
+        .ps-modal-backdrop{
+            animation:none !important;
+            transition:none !important;
+            scroll-behavior:auto !important;
+        }
+    }
 </style>
 
 <div class="platform-settings-page">
@@ -1250,7 +1943,7 @@
                         <div class="ps-section-head">
                             <div>
                                 <h2 class="ps-section-title">Commerce maintenance</h2>
-                                <p class="ps-section-copy">Temporarily pause buyer checkout and new registrations without locking the Admin workspace.</p>
+                                <p class="ps-section-copy">Control commerce availability without shutting down the Admin workspace. Existing checkout and registration controls are preserved; Seller posting and platform-campaign delivery are managed here too.</p>
                             </div>
                             <div class="ps-head-actions">
                                 <details class="ps-help-menu">
@@ -1266,7 +1959,7 @@
                                     <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Write the public message</strong><p>Enter a clear maintenance message explaining why the action is unavailable.</p></div></div>
                                     <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Admin remains available</strong><p>The maintenance switch does not lock the Admin settings page, so an administrator can turn it off again.</p></div></div>
                                         </div>
-                                <div class="ps-help-note">Current implementation blocks checkout and new registration entry points; it does not shut down the entire Laravel application.</div>
+                                <div class="ps-help-note">Maintenance mode continues to pause checkout and registration entry points. The separate feature switches below let Admin pause Seller product posting or Buyer-facing platform campaigns without disabling the rest of SARI.</div>
                                     </div>
                                 </details>
                             </div>
@@ -1280,6 +1973,30 @@
                             <label class="ps-switch">
                                 <input type="hidden" name="maintenance_mode" value="0">
                                 <input type="checkbox" name="maintenance_mode" value="1" @checked($boolValue('maintenance_mode',false))>
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="ps-toggle-row" style="margin-top:12px">
+                            <div>
+                                <div class="ps-toggle-title">Seller product posting</div>
+                                <div class="ps-toggle-copy">When disabled, Sellers can still manage existing products, but cannot open Add Product or save new product drafts/listings.</div>
+                            </div>
+                            <label class="ps-switch">
+                                <input type="hidden" name="seller_product_posting_enabled" value="0">
+                                <input type="checkbox" name="seller_product_posting_enabled" value="1" @checked($boolValue('seller_product_posting_enabled',true))>
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="ps-toggle-row" style="margin-top:12px">
+                            <div>
+                                <div class="ps-toggle-title">Platform campaigns</div>
+                                <div class="ps-toggle-copy">When disabled, Admin event discounts and SARI platform vouchers stop applying to Buyer quotes and checkout. Campaign records stay intact for later reactivation.</div>
+                            </div>
+                            <label class="ps-switch">
+                                <input type="hidden" name="platform_campaigns_enabled" value="0">
+                                <input type="checkbox" name="platform_campaigns_enabled" value="1" @checked($boolValue('platform_campaigns_enabled',true))>
                                 <span></span>
                             </label>
                         </div>
@@ -1566,13 +2283,17 @@
         const delivery=form.querySelector('[name="delivery_fee_per_seller"]')?.value || '0';
         const effective=form.querySelector('[name="effective_at"]')?.value || '';
         const maintenance=form.querySelector('input[type="checkbox"][name="maintenance_mode"]')?.checked;
+        const sellerPosting=form.querySelector('input[type="checkbox"][name="seller_product_posting_enabled"]')?.checked;
+        const campaigns=form.querySelector('input[type="checkbox"][name="platform_campaigns_enabled"]')?.checked;
 
         if(summary){
             summary.innerHTML=
                 `<div><strong>Commission:</strong> ${Number(commission).toFixed(2)}%</div>`+
                 `<div><strong>Delivery fee / seller:</strong> ₱${Number(delivery).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>`+
                 `<div><strong>Effective:</strong> ${effective || 'Now'}</div>`+
-                `<div><strong>Maintenance mode:</strong> ${maintenance?'Enabled':'Disabled'}</div>`;
+                `<div><strong>Maintenance mode:</strong> ${maintenance?'Enabled':'Disabled'}</div>`+
+                `<div><strong>Seller product posting:</strong> ${sellerPosting?'Enabled':'Disabled'}</div>`+
+                `<div><strong>Platform campaigns:</strong> ${campaigns?'Enabled':'Disabled'}</div>`;
         }
 
         modal?.classList.add('show');

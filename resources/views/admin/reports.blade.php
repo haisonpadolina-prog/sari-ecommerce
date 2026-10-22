@@ -1727,6 +1727,868 @@
         }
     }
 
+
+
+    /* ============================================================
+       FINAL SELLER-DERIVED ADMIN VISUAL SYSTEM — PLATFORM REPORTS
+       Visual-only authority layer. Report data, exports, calendar,
+       chart rendering, routes, and JavaScript behavior are unchanged.
+       ============================================================ */
+
+    .reports-page {
+        --rp-seller-canvas: #F4F5F7;
+        --rp-seller-surface: #FFFFFF;
+        --rp-seller-soft: #F8FAFC;
+        --rp-seller-gold: #D59617;
+        --rp-seller-gold-strong: #B97805;
+        --rp-seller-ink: #111827;
+        --rp-seller-text: #344054;
+        --rp-seller-muted: #7C8592;
+        --rp-seller-border: #E5E7EB;
+        --rp-seller-border-strong: #D1D5DB;
+        --rp-seller-divider: #ECEFF2;
+        --rp-seller-shadow-main:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92);
+        --rp-seller-shadow-soft:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .06),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+        --rp-seller-shadow-focal:
+            0 3px 7px rgba(15, 23, 42, .055),
+            0 14px 32px rgba(15, 23, 42, .095),
+            0 30px 68px rgba(15, 23, 42, .11);
+
+        max-width: 1440px !important;
+        padding-bottom: 24px !important;
+        color: var(--rp-seller-ink) !important;
+    }
+
+    /* Open Seller-style document header. */
+    .reports-page .rp-header {
+        min-height: 66px !important;
+        align-items: flex-end !important;
+        gap: 18px !important;
+        margin: 0 0 12px !important;
+        padding: 2px 2px 13px !important;
+        border-bottom: 1px solid var(--rp-seller-divider) !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-title-wrap {
+        min-width: 0 !important;
+        align-items: flex-start !important;
+        gap: 0 !important;
+    }
+
+    .reports-page .rp-title-icon {
+        display: none !important;
+    }
+
+    .reports-page .rp-eyebrow {
+        margin: 0 !important;
+        color: #9A6F23 !important;
+        font-size: 8px !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        letter-spacing: .16em !important;
+        text-transform: uppercase !important;
+    }
+
+    .reports-page .rp-title {
+        margin: 5px 0 0 !important;
+        color: var(--rp-seller-ink) !important;
+        font-size: clamp(29px, 2.2vw, 36px) !important;
+        font-weight: 650 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .reports-page .rp-title-platform {
+        color: var(--rp-seller-ink) !important;
+    }
+
+    .reports-page .rp-title-gold {
+        color: var(--rp-seller-gold) !important;
+    }
+
+    .reports-page .rp-subtitle {
+        max-width: 760px !important;
+        margin-top: 7px !important;
+        color: var(--rp-seller-muted) !important;
+        font-size: 10px !important;
+        font-weight: 400 !important;
+        line-height: 1.6 !important;
+    }
+
+    .reports-page .rp-actions,
+    .reports-page .rp-filter-form {
+        align-items: center !important;
+    }
+
+    .reports-page .rp-actions {
+        justify-content: flex-end !important;
+        gap: 8px !important;
+        flex: 0 0 auto !important;
+    }
+
+    /* Header controls use the same compact Seller control language. */
+    .reports-page .rp-date-range-trigger,
+    .reports-page .rp-btn {
+        min-height: 38px !important;
+        height: 38px !important;
+        border-radius: 9px !important;
+        font-family: 'Poppins', sans-serif !important;
+    }
+
+    .reports-page .rp-date-range-trigger {
+        min-width: 242px !important;
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        padding: 0 10px !important;
+        color: var(--rp-seller-text) !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-date-range-trigger:hover,
+    .reports-page .rp-range-picker.is-open .rp-date-range-trigger,
+    .reports-page .rp-date-range-trigger:focus-visible {
+        outline: none !important;
+        border-color: var(--rp-seller-gold) !important;
+        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
+    }
+
+    .reports-page .rp-btn {
+        padding: 0 11px !important;
+        font-size: 8.5px !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    .reports-page .rp-btn-primary {
+        border-color: var(--rp-seller-gold) !important;
+        background: var(--rp-seller-gold) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 10px rgba(213, 150, 23, .11) !important;
+    }
+
+    .reports-page .rp-btn-primary:hover,
+    .reports-page .rp-btn-primary:focus-visible {
+        outline: none !important;
+        border-color: var(--rp-seller-gold-strong) !important;
+        background: var(--rp-seller-gold-strong) !important;
+        transform: none !important;
+    }
+
+    .reports-page .rp-btn-secondary,
+    .reports-page .rp-btn-link {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        color: #667085 !important;
+    }
+
+    .reports-page .rp-btn-secondary:hover,
+    .reports-page .rp-btn-secondary:focus-visible,
+    .reports-page .rp-btn-link:hover,
+    .reports-page .rp-btn-link:focus-visible {
+        outline: none !important;
+        border-color: var(--rp-seller-border-strong) !important;
+        background: #F9FAFB !important;
+        color: #344054 !important;
+        transform: none !important;
+    }
+
+    /* Major report surfaces carry depth; structural/nested surfaces stay flat. */
+    .reports-page .rp-panel,
+    .reports-page .rp-mini-panel,
+    .reports-page .rp-ledger {
+        border: 1px solid var(--rp-seller-border) !important;
+        border-radius: 14px !important;
+        background: var(--rp-seller-surface) !important;
+        box-shadow: var(--rp-seller-shadow-main) !important;
+    }
+
+    .reports-page .rp-summary-grid .rp-card {
+        border: 1px solid var(--rp-seller-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        box-shadow: var(--rp-seller-shadow-soft) !important;
+    }
+
+    .reports-page .rp-stat,
+    .reports-page .rp-stat:hover,
+    .reports-page .rp-stat:focus-within {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        box-shadow: var(--rp-seller-shadow-soft) !important;
+        transform: none !important;
+    }
+
+    .reports-page .rp-stat-label {
+        color: #7C8592 !important;
+    }
+
+    .reports-page .rp-stat-value {
+        color: var(--rp-seller-ink) !important;
+    }
+
+    .reports-page .rp-stat-help {
+        color: #98A2B3 !important;
+    }
+
+    /* Keep panel heads and data visualization internals document-flat. */
+    .reports-page .rp-panel-head,
+    .reports-page .rp-section-head,
+    .reports-page .rp-calendar-panel,
+    .reports-page .rp-calendar-selection {
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-panel-title {
+        color: #1D2939 !important;
+    }
+
+    .reports-page .rp-panel-copy {
+        color: #8A94A3 !important;
+    }
+
+    .reports-page .rp-period-chip {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        color: #667085 !important;
+        box-shadow: none !important;
+    }
+
+    /* Calendar is an interactive overlay, so it receives focal depth. */
+    .reports-page .rp-calendar-popover {
+        border-color: var(--rp-seller-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        box-shadow: var(--rp-seller-shadow-focal) !important;
+    }
+
+    .reports-page .rp-calendar-panel {
+        border-color: var(--rp-seller-border) !important;
+        border-radius: 10px !important;
+        background: #fff !important;
+    }
+
+    .reports-page .rp-cal-select-trigger,
+    .reports-page .rp-calendar-nav,
+    .reports-page .rp-calendar-ghost {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        color: #667085 !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-cal-select-trigger:hover,
+    .reports-page .rp-cal-select.is-open .rp-cal-select-trigger,
+    .reports-page .rp-calendar-nav:hover:not(:disabled),
+    .reports-page .rp-calendar-ghost:hover,
+    .reports-page .rp-calendar-ghost:focus-visible {
+        outline: none !important;
+        border-color: #D8B56A !important;
+        background: #FFF9EF !important;
+        color: #94620A !important;
+    }
+
+    .reports-page .rp-cal-select-menu {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        box-shadow: 0 14px 32px rgba(15, 23, 42, .12) !important;
+    }
+
+    .reports-page .rp-cal-select-option:hover,
+    .reports-page .rp-cal-select-option:focus-visible,
+    .reports-page .rp-cal-select-option.is-selected,
+    .reports-page .rp-calendar-day:hover:not(:disabled),
+    .reports-page .rp-calendar-day.is-in-range {
+        background: #FFF9EF !important;
+        color: #94620A !important;
+    }
+
+    .reports-page .rp-calendar-day.is-selected,
+    .reports-page .rp-calendar-apply {
+        border-color: var(--rp-seller-gold) !important;
+        background: var(--rp-seller-gold) !important;
+        color: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-calendar-apply:hover,
+    .reports-page .rp-calendar-apply:focus-visible {
+        outline: none !important;
+        border-color: var(--rp-seller-gold-strong) !important;
+        background: var(--rp-seller-gold-strong) !important;
+    }
+
+    .reports-page .rp-calendar-selection {
+        border-color: var(--rp-seller-border) !important;
+        background: #F9FAFB !important;
+    }
+
+    /* Charts and tables remain visually quiet inside the elevated parent. */
+    .reports-page .rp-chart-tooltip,
+    .reports-page .rp-bar-tip {
+        border-color: var(--rp-seller-border) !important;
+        background: #fff !important;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, .10) !important;
+    }
+
+    .reports-page .rp-ledger {
+        overflow: hidden !important;
+    }
+
+    .reports-page .rp-section-head {
+        border-bottom-color: var(--rp-seller-divider) !important;
+        background: #fff !important;
+    }
+
+    .reports-page .rp-table thead {
+        background: #F8FAFC !important;
+    }
+
+    .reports-page .rp-table th {
+        border-bottom-color: var(--rp-seller-divider) !important;
+        color: #7C8592 !important;
+    }
+
+    .reports-page .rp-table td {
+        border-bottom-color: #EEF1F4 !important;
+        color: #475467 !important;
+    }
+
+    .reports-page .rp-table tbody tr:hover {
+        background: #FCFCFD !important;
+    }
+
+    .reports-page .rp-order,
+    .reports-page .rp-money {
+        color: #1D2939 !important;
+    }
+
+    .reports-page .rp-error {
+        border-color: #F3D3CE !important;
+        background: #FFF7F5 !important;
+        box-shadow: var(--rp-seller-shadow-soft) !important;
+    }
+
+    /* No structural lift/bounce on report cards or controls. */
+    .reports-page .rp-card:hover,
+    .reports-page .rp-panel:hover,
+    .reports-page .rp-mini-panel:hover,
+    .reports-page .rp-ledger:hover,
+    .reports-page .rp-btn:hover,
+    .reports-page .rp-date-range-trigger:hover {
+        transform: none !important;
+    }
+
+    @media (max-width: 850px) {
+        .reports-page .rp-header {
+            min-height: 0 !important;
+            align-items: flex-start !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            padding: 0 0 13px !important;
+        }
+
+        .reports-page .rp-title {
+            font-size: clamp(28px, 8vw, 34px) !important;
+        }
+
+        .reports-page .rp-subtitle {
+            max-width: none !important;
+            font-size: 10px !important;
+        }
+
+        .reports-page .rp-actions,
+        .reports-page .rp-filter-form {
+            width: 100% !important;
+            justify-content: flex-start !important;
+        }
+
+        .reports-page .rp-range-picker,
+        .reports-page .rp-date-range-trigger {
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .reports-page .rp-btn,
+        .reports-page .rp-date-range-trigger {
+            min-height: 42px !important;
+            height: 42px !important;
+        }
+
+        .reports-page .rp-calendar-popover {
+            border-radius: 13px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       ADMIN USERS UI PARITY — PLATFORM REPORTS
+       Visual-only authority layer.
+       Preserves report data, routes, date-range picker, exports,
+       charts, IDs, Blade bindings, and JavaScript behavior.
+       ============================================================ */
+
+    .reports-page {
+        --users-gold: #D99500;
+        --users-gold-dark: #B97805;
+        --users-ink: #111827;
+        --users-text: #344054;
+        --users-muted: #7C8592;
+        --users-border: #E5E7EB;
+        --users-divider: #EEF0F3;
+        --users-head: #F8FAFC;
+        --users-row-hover: #FAFBFC;
+        --users-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .09),
+            inset 0 1px 0 rgba(255,255,255,.92);
+        --users-summary-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .055),
+            0 15px 32px rgba(15, 23, 42, .06),
+            inset 0 1px 0 rgba(255,255,255,.90);
+
+        width: 100% !important;
+        max-width: 1880px !important;
+        padding-bottom: 30px !important;
+        color: var(--users-ink) !important;
+    }
+
+    /* ---------------- OPEN ADMIN HEADER ---------------- */
+    .reports-page .rp-header {
+        align-items: flex-end !important;
+        gap: 22px !important;
+        margin: 0 0 16px !important;
+        padding: 2px 2px 17px !important;
+        border-bottom: 1px solid #E7E9EC !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-title-wrap {
+        display: block !important;
+        min-width: 0 !important;
+    }
+
+    .reports-page .rp-title-icon {
+        display: none !important;
+    }
+
+    .reports-page .rp-eyebrow {
+        margin: 0 0 5px !important;
+        color: #9A6F23 !important;
+        font-size: 8px !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        letter-spacing: .16em !important;
+    }
+
+    .reports-page .rp-title {
+        margin: 0 !important;
+        color: var(--users-ink) !important;
+        font-size: clamp(29px, 2.1vw, 36px) !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        letter-spacing: -.035em !important;
+    }
+
+    .reports-page .rp-title-platform { color: var(--users-ink) !important; }
+    .reports-page .rp-title-gold { color: var(--users-gold) !important; }
+
+    .reports-page .rp-subtitle {
+        max-width: 920px !important;
+        margin: 7px 0 0 !important;
+        color: var(--users-muted) !important;
+        font-size: 10.5px !important;
+        font-weight: 400 !important;
+        line-height: 1.6 !important;
+    }
+
+    .reports-page .rp-actions,
+    .reports-page .rp-filter-form {
+        align-items: center !important;
+    }
+
+    .reports-page .rp-actions {
+        gap: 8px !important;
+        flex: 0 0 auto !important;
+    }
+
+    .reports-page .rp-date-range-trigger,
+    .reports-page .rp-btn {
+        min-height: 40px !important;
+        height: 40px !important;
+        border-radius: 10px !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 9px !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    .reports-page .rp-date-range-trigger {
+        min-width: 250px !important;
+        border-color: var(--users-border) !important;
+        background: #FFFFFF !important;
+        color: var(--users-text) !important;
+    }
+
+    .reports-page .rp-date-range-trigger:hover,
+    .reports-page .rp-date-range-trigger:focus-visible,
+    .reports-page .rp-range-picker.is-open .rp-date-range-trigger {
+        outline: none !important;
+        border-color: var(--users-gold) !important;
+        box-shadow: 0 0 0 3px rgba(217,149,0,.08) !important;
+    }
+
+    .reports-page .rp-btn-primary {
+        border-color: var(--users-gold) !important;
+        background: var(--users-gold) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 5px 14px rgba(217,149,0,.13) !important;
+    }
+
+    .reports-page .rp-btn-primary:hover,
+    .reports-page .rp-btn-primary:focus-visible {
+        border-color: var(--users-gold-dark) !important;
+        background: var(--users-gold-dark) !important;
+    }
+
+    .reports-page .rp-btn-secondary,
+    .reports-page .rp-btn-link {
+        border-color: var(--users-border) !important;
+        background: #FFFFFF !important;
+        color: #667085 !important;
+    }
+
+    /* ---------------- USERS-PAGE KPI CARDS ---------------- */
+    .reports-page .rp-summary-grid {
+        width: 100% !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+    }
+
+    .reports-page .rp-summary-grid .rp-card,
+    .reports-page .rp-stat,
+    .reports-page .rp-stat:hover,
+    .reports-page .rp-stat:focus-within {
+        min-height: 110px !important;
+        border: 1px solid var(--users-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow: var(--users-summary-shadow) !important;
+        transform: none !important;
+    }
+
+    .reports-page .rp-stat {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        padding: 18px 58px 16px 18px !important;
+        overflow: hidden !important;
+    }
+
+    .reports-page .rp-stat:hover {
+        border-color: #D8DDE5 !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* Final Users-page icon treatment: no tile, no box, no circle. */
+    .reports-page .rp-stat-icon,
+    .reports-page .rp-stat.blue .rp-stat-icon,
+    .reports-page .rp-stat.green .rp-stat-icon,
+    .reports-page .rp-stat.violet .rp-stat-icon,
+    .reports-page .rp-stat.orange .rp-stat-icon,
+    .reports-page .rp-stat.teal .rp-stat-icon,
+    .reports-page .rp-stat.red .rp-stat-icon,
+    .reports-page .rp-stat.purple .rp-stat-icon,
+    .reports-page .rp-stat.amber .rp-stat-icon {
+        position: absolute !important;
+        top: 16px !important;
+        right: 16px !important;
+        display: block !important;
+        width: 24px !important;
+        height: 24px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+    }
+
+    .reports-page .rp-stat-icon svg {
+        display: block !important;
+        width: 24px !important;
+        height: 24px !important;
+        stroke-width: 1.8 !important;
+        stroke-linecap: round !important;
+        stroke-linejoin: round !important;
+    }
+
+    .reports-page .rp-stat.blue .rp-stat-icon   { color: #2563EB !important; }
+    .reports-page .rp-stat.green .rp-stat-icon  { color: #16A34A !important; }
+    .reports-page .rp-stat.violet .rp-stat-icon { color: #7C3AED !important; }
+    .reports-page .rp-stat.orange .rp-stat-icon { color: #EA580C !important; }
+    .reports-page .rp-stat.teal .rp-stat-icon   { color: #0F766E !important; }
+    .reports-page .rp-stat.red .rp-stat-icon    { color: #DC2626 !important; }
+    .reports-page .rp-stat.purple .rp-stat-icon { color: #9333EA !important; }
+    .reports-page .rp-stat.amber .rp-stat-icon  { color: var(--users-gold) !important; }
+
+    .reports-page .rp-stat-label {
+        min-height: 0 !important;
+        margin: 0 !important;
+        color: #7C8592 !important;
+        font-size: 11.5px !important;
+        font-weight: 500 !important;
+        line-height: 1.35 !important;
+    }
+
+    .reports-page .rp-stat-value {
+        margin-top: 7px !important;
+        color: var(--users-ink) !important;
+        font-size: 26px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        letter-spacing: -.04em !important;
+    }
+
+    .reports-page .rp-stat-footer {
+        display: flex !important;
+        min-height: 20px !important;
+        align-items: center !important;
+        gap: 7px !important;
+        margin-top: auto !important;
+        padding-top: 10px !important;
+        flex: 0 0 auto !important;
+    }
+
+    .reports-page .rp-delta {
+        min-height: 20px !important;
+        padding: 0 7px !important;
+        font-size: 7.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .reports-page .rp-stat-help {
+        color: #98A2B3 !important;
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+    }
+
+    /* ---------------- REPORT SURFACES ---------------- */
+    .reports-page .rp-panel,
+    .reports-page .rp-mini-panel,
+    .reports-page .rp-ledger {
+        border: 1px solid var(--users-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow: var(--users-shadow) !important;
+    }
+
+    .reports-page .rp-main-grid,
+    .reports-page .rp-secondary-grid {
+        gap: 14px !important;
+        margin-top: 14px !important;
+    }
+
+    .reports-page .rp-panel,
+    .reports-page .rp-mini-panel {
+        padding: 18px !important;
+    }
+
+    .reports-page .rp-panel-title {
+        color: #1F2937 !important;
+        font-size: 12.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .reports-page .rp-panel-copy {
+        margin-top: 4px !important;
+        color: #98A2B3 !important;
+        font-size: 8.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .reports-page .rp-period-chip {
+        min-height: 28px !important;
+        border-color: var(--users-border) !important;
+        border-radius: 8px !important;
+        background: #FFFFFF !important;
+        padding: 0 9px !important;
+        color: #667085 !important;
+        font-size: 8px !important;
+        box-shadow: none !important;
+    }
+
+    /* ---------------- USERS-PAGE TABLE LANGUAGE ---------------- */
+    .reports-page .rp-ledger {
+        margin-top: 14px !important;
+        overflow: hidden !important;
+    }
+
+    .reports-page .rp-section-head {
+        min-height: 60px !important;
+        padding: 13px 16px !important;
+        border-bottom: 1px solid var(--users-divider) !important;
+        background: #FFFFFF !important;
+        box-shadow: none !important;
+    }
+
+    .reports-page .rp-table-wrap {
+        overflow-x: auto !important;
+        background: #FFFFFF !important;
+    }
+
+    .reports-page .rp-table {
+        min-width: 1060px !important;
+        background: #FFFFFF !important;
+    }
+
+    .reports-page .rp-table thead {
+        background: var(--users-head) !important;
+    }
+
+    .reports-page .rp-table th {
+        padding: 13px 16px !important;
+        border-bottom: 1px solid var(--users-divider) !important;
+        background: var(--users-head) !important;
+        color: #667085 !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+        letter-spacing: .055em !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
+    }
+
+    .reports-page .rp-table td {
+        min-height: 58px !important;
+        padding: 13px 16px !important;
+        border-bottom: 1px solid var(--users-divider) !important;
+        background: #FFFFFF !important;
+        color: #475467 !important;
+        font-size: 10.5px !important;
+        line-height: 1.45 !important;
+        vertical-align: middle !important;
+    }
+
+    .reports-page .rp-table tbody tr:hover td {
+        background: var(--users-row-hover) !important;
+    }
+
+    .reports-page .rp-order,
+    .reports-page .rp-money {
+        color: #1F2937 !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+    }
+
+    .reports-page .rp-status {
+        min-height: 24px !important;
+        gap: 5px !important;
+        border-radius: 999px !important;
+        padding: 0 8px !important;
+        font-size: 8.5px !important;
+        font-weight: 600 !important;
+    }
+
+    .reports-page .rp-status::before {
+        width: 5px !important;
+        height: 5px !important;
+    }
+
+    .reports-page .rp-empty {
+        min-height: 110px !important;
+        color: #98A2B3 !important;
+        font-size: 9.5px !important;
+    }
+
+    /* Keep the existing calendar behavior, but visually align it. */
+    .reports-page .rp-calendar-popover {
+        border-color: var(--users-border) !important;
+        border-radius: 14px !important;
+        background: #FFFFFF !important;
+        box-shadow:
+            0 10px 24px rgba(15,23,42,.09),
+            0 26px 60px rgba(15,23,42,.12) !important;
+    }
+
+    .reports-page .rp-calendar-panel,
+    .reports-page .rp-calendar-selection,
+    .reports-page .rp-cal-select-trigger,
+    .reports-page .rp-calendar-nav,
+    .reports-page .rp-calendar-ghost {
+        border-color: var(--users-border) !important;
+        box-shadow: none !important;
+    }
+
+    @media (min-width: 1450px) {
+        .reports-page .rp-summary-grid {
+            grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (min-width: 1101px) and (max-width: 1449px) {
+        .reports-page .rp-summary-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .reports-page .rp-summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 850px) {
+        .reports-page .rp-header {
+            align-items: flex-start !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            padding-bottom: 14px !important;
+        }
+
+        .reports-page .rp-actions,
+        .reports-page .rp-filter-form,
+        .reports-page .rp-range-picker,
+        .reports-page .rp-date-range-trigger {
+            width: 100% !important;
+        }
+
+        .reports-page .rp-date-range-trigger {
+            min-width: 0 !important;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .reports-page .rp-summary-grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .reports-page .rp-stat {
+            min-height: 102px !important;
+        }
+
+        .reports-page .rp-panel,
+        .reports-page .rp-mini-panel {
+            padding: 14px !important;
+        }
+    }
+
 </style>
 
 <div class="reports-page">
@@ -1867,7 +2729,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="rp-btn rp-btn-secondary">
+                <button type="submit" class="rp-btn rp-btn-primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>
                     Apply
                 </button>

@@ -9,14 +9,15 @@ use Throwable;
 class RegistrationEmailVerificationService
 {
     private const SESSION_KEY = 'registration_email_otp';
-    private const EXPIRES_MINUTES = 10;
+    private const EXPIRES_MINUTES = 5;
     private const RESEND_SECONDS = 45;
     private const MAX_ATTEMPTS = 5;
     private const VERIFIED_MINUTES = 20;
 
-    public function sendCode(Request $request, string $email): array
+    public function sendCode(Request $request, string $email, string $purpose = 'registration'): array
     {
         $email = strtolower(trim($email));
+        $purpose = strtolower(trim($purpose));
 
         $mailer = (string) config('mail.default', '');
 
@@ -46,6 +47,7 @@ class RegistrationEmailVerificationService
 
         if (
             ($current['email'] ?? null) === $email
+            && ($current['purpose'] ?? 'registration') === $purpose
             && $lastSentAt > 0
         ) {
             $secondsSinceLastSend = now()->timestamp - $lastSentAt;
@@ -90,6 +92,7 @@ class RegistrationEmailVerificationService
 
         $request->session()->put(self::SESSION_KEY, [
             'email' => $email,
+            'purpose' => $purpose,
             'hash' => $hash,
             'expires_at' => $expiresAt->timestamp,
             'last_sent_at' => now()->timestamp,
@@ -110,14 +113,15 @@ class RegistrationEmailVerificationService
         ];
     }
 
-    public function verifyCode(Request $request, string $email, string $otp): array
+    public function verifyCode(Request $request, string $email, string $otp, string $purpose = 'registration'): array
     {
         $email = strtolower(trim($email));
+        $purpose = strtolower(trim($purpose));
         $otp = trim($otp);
 
         $state = $request->session()->get(self::SESSION_KEY);
 
-        if (!is_array($state) || ($state['email'] ?? null) !== $email) {
+        if (!is_array($state) || ($state['email'] ?? null) !== $email || ($state['purpose'] ?? 'registration') !== $purpose) {
             return [
                 'ok' => false,
                 'status' => 422,
@@ -205,16 +209,38 @@ class RegistrationEmailVerificationService
         ];
     }
 
-    public function isVerified(Request $request, string $email): bool
+    public function hasActiveChallenge(Request $request, string $email, string $purpose = 'registration'): bool
     {
         $email = strtolower(trim($email));
+        $purpose = strtolower(trim($purpose));
         $state = $request->session()->get(self::SESSION_KEY);
 
         if (!is_array($state)) {
             return false;
         }
 
-        if (($state['email'] ?? null) !== $email) {
+        if (($state['email'] ?? null) !== $email || ($state['purpose'] ?? 'registration') !== $purpose) {
+            return false;
+        }
+
+        if (!empty($state['verified_at'])) {
+            return true;
+        }
+
+        return (int) ($state['expires_at'] ?? 0) > now()->timestamp;
+    }
+
+    public function isVerified(Request $request, string $email, string $purpose = 'registration'): bool
+    {
+        $email = strtolower(trim($email));
+        $purpose = strtolower(trim($purpose));
+        $state = $request->session()->get(self::SESSION_KEY);
+
+        if (!is_array($state)) {
+            return false;
+        }
+
+        if (($state['email'] ?? null) !== $email || ($state['purpose'] ?? 'registration') !== $purpose) {
             return false;
         }
 

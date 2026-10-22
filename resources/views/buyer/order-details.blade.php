@@ -1792,6 +1792,24 @@
                         </div>
 
                         <div class="sari-track-totals">
+                            @if(((float) ($order->discount_amount ?? 0)) > 0 || ((float) ($order->platform_discount_amount ?? 0)) > 0)
+                                <div class="sari-track-total-row">
+                                    <span>Products before vouchers/events</span>
+                                    <span>₱{{ number_format((float) ($order->original_subtotal ?? $order->subtotal), 2) }}</span>
+                                </div>
+                                @if(((float) ($order->discount_amount ?? 0)) > 0)
+                                    <div class="sari-track-total-row">
+                                        <span>Seller voucher{{ $order->voucher_code ? ' · '.$order->voucher_code : '' }}</span>
+                                        <span>-₱{{ number_format((float) $order->discount_amount, 2) }}</span>
+                                    </div>
+                                @endif
+                                @if(((float) ($order->platform_discount_amount ?? 0)) > 0)
+                                    <div class="sari-track-total-row">
+                                        <span>SARI event discount{{ $order->platform_voucher_code ? ' · '.$order->platform_voucher_code : '' }}</span>
+                                        <span>-₱{{ number_format((float) $order->platform_discount_amount, 2) }}</span>
+                                    </div>
+                                @endif
+                            @endif
                             <div class="sari-track-total-row">
                                 <span>Subtotal</span>
                                 <span>₱{{ number_format((float) $order->subtotal, 2) }}</span>

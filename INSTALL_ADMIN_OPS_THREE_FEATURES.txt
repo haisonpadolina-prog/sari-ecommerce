@@ -1,0 +1,96 @@
+SARI ADMIN — ANNOUNCEMENTS + FEATURE CONTROLS + DELIVERY SLA
+
+This package is intentionally duplicate-aware.
+
+IMPORTANT SAFETY
+- No `RefreshDatabase` test is included.
+- Do NOT run `migrate:fresh`, `db:wipe`, `migrate:reset`, or destructive seed/reset commands.
+- The only database migration in this package is ADDITIVE: it creates two new announcement tables.
+- Existing user/order/product data is not altered by that migration.
+
+WHAT IS NEW
+1. Platform Announcements
+   Admin -> MARKETING -> Announcements
+   Target Buyer / Seller / Logistics / Rider
+   Draft / Publish / Pause / Delete
+   Philippine-time scheduling
+   Per-user Dismiss/Read persistence
+
+2. Maintenance / Feature Controls
+   Extends the EXISTING Admin -> Platform Settings page.
+   Existing checkout / registration / maintenance controls are preserved.
+   Adds:
+   - Seller Product Posting
+   - Platform Campaigns
+
+3. Delivery SLA Monitor
+   Extends the EXISTING Admin -> Platform Monitoring page with a Delivery SLA tab.
+   It reuses the Security Center's existing stuck-order detector as one source of truth.
+
+INSTALL
+
+A. Extract this ZIP directly into:
+   C:\Users\user\LARAVEL-E-COMMERCE
+
+B. From the project root, run:
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\install-admin-ops-three-features.ps1 -ProjectRoot "C:\Users\user\LARAVEL-E-COMMERCE"
+
+The installer:
+- checks the existing-file patch first
+- creates a backup of only the existing files it modifies
+- applies the integration patch
+- does NOT migrate the database
+- does NOT run tests
+- does NOT reset any data
+
+C. Preview the additive migration:
+   php artisan migrate --pretend --path=database/migrations/2026_10_16_235500_create_platform_announcements.php
+
+D. Apply only the new migration:
+   php artisan migrate --path=database/migrations/2026_10_16_235500_create_platform_announcements.php
+
+E. Clear caches:
+   php artisan optimize:clear
+
+F. Verify routes:
+   php artisan route:list --name=admin.announcements
+   php artisan route:list --name=platform-announcements
+   php artisan route:list --name=admin.monitoring
+
+MANUAL VERIFICATION — NO DATABASE-RESET TESTS
+
+Announcements
+1. Login Admin -> Announcements.
+2. Create a Buyer-only announcement and Publish.
+3. Open Buyer account; announcement appears.
+4. Open Seller/Logistics/Rider; Buyer-only announcement must not appear.
+5. Click Dismiss as Buyer; it should remain dismissed for that same Buyer.
+6. Create another notice targeted to all four roles and confirm each sees it.
+7. Schedule a future PHT start time and confirm it is not visible early.
+
+Feature Controls
+1. Admin -> Platform Settings.
+2. Disable Seller Product Posting, save the governed policy.
+3. Seller should still open existing Products, but Add Product/new product submission must be blocked.
+4. Re-enable it.
+5. Disable Platform Campaigns.
+6. Buyer campaign discounts / SARI platform vouchers must stop applying.
+7. Existing campaign records must remain in Admin Promotions.
+8. Re-enable it and confirm campaign effects return.
+
+Delivery SLA
+1. Admin -> Platform Monitoring -> Delivery SLA.
+2. Confirm active orders show stage, elapsed time and expected SLA.
+3. Breached rows show overdue hours and High/Critical status.
+4. Security Center stuck-order alerts should reference the same breached order set.
+5. No fake GPS is used; Seller/Logistics/Rider context comes from existing order assignments.
+
+ROLLBACK CODE
+The installer prints the backup folder path. Restore those files if you need to undo the code integration.
+
+ROLLBACK DATABASE
+Only if you explicitly want to remove the new announcement tables:
+php artisan migrate:rollback --path=database/migrations/2026_10_16_235500_create_platform_announcements.php
+
+Do not run a general rollback unless you understand every pending migration in your environment.

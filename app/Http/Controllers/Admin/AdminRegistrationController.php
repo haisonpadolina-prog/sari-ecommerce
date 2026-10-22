@@ -205,6 +205,14 @@ class AdminRegistrationController extends Controller
 
                 $seller->forceFill(array_merge($common, [
                     'store_name' => $locked->business_name,
+                    'region_code' => $locked->region_code,
+                    'region_name' => $locked->region_name,
+                    'postal_code' => $locked->postal_code,
+                    'seller_type' => $locked->seller_type,
+                    'tin' => $locked->tin,
+                    'sec_registration_no' => $locked->sec_registration_no,
+                    'bir_path' => $locked->bir_path,
+                    'sec_path' => $locked->sec_path,
                     'line_of_business' => $locked->line_of_business,
                     'business_permit_path' => $locked->business_permit_path,
                     'registration_status' => 'approved',
@@ -236,6 +244,15 @@ class AdminRegistrationController extends Controller
 
                 $logistics->forceFill(array_merge($common, [
                     'business_name' => $locked->business_name,
+                    'region_code' => $locked->region_code,
+                    'region_name' => $locked->region_name,
+                    'postal_code' => $locked->postal_code,
+                    'tin' => $locked->tin,
+                    'sec_registration_no' => $locked->sec_registration_no,
+                    'position' => $locked->position,
+                    'service_areas' => $locked->service_areas,
+                    'bir_path' => $locked->bir_path,
+                    'sec_path' => $locked->sec_path,
                     'business_permit_path' => $locked->business_permit_path,
                     'account_status' => 'active',
                 ]))->save();
@@ -337,22 +354,30 @@ class AdminRegistrationController extends Controller
         $this->guard($request);
 
         $column = match ($document) {
+            'profile' => 'profile_image_path',
             'id' => 'id_path',
             'permit' => 'business_permit_path',
             'orcr' => 'orcr_path',
+            'bir' => 'bir_path',
+            'sec' => 'sec_path',
             default => abort(404),
         };
 
         $path = $application->{$column};
+        $disk = $document === 'profile' ? 'public' : 'local';
 
         abort_unless(
-            $path && Storage::disk('local')->exists($path),
+            $path && Storage::disk($disk)->exists($path),
             404,
             'Uploaded document not found.'
         );
 
         return response()->file(
-            Storage::disk('local')->path($path)
+            Storage::disk($disk)->path($path),
+            [
+                'Cache-Control' => 'private, max-age=300',
+                'X-Content-Type-Options' => 'nosniff',
+            ]
         );
     }
 

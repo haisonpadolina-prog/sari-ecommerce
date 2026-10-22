@@ -4,6 +4,7 @@ namespace App\Services\Buyer;
 
 use App\Services\Products\ProductVariantInventoryService;
 use App\Services\Promotions\SellerFreeShippingPromotionService;
+use App\Services\Promotions\PlatformCampaignService;
 
 use App\Models\Orders\BuyerCartItem;
 use App\Models\Platform\PlatformSetting;
@@ -19,6 +20,7 @@ class BuyerCartService
         private readonly BuyerIdentityService $identity,
         private readonly ProductVariantInventoryService $inventory,
         private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
+        private readonly PlatformCampaignService $platformCampaigns,
     ) {
     }
 
@@ -147,7 +149,11 @@ class BuyerCartService
         return $this->unitPriceFor($item->product, $item->variant);
     }
 
-    public function unitPriceFor(
+    /**
+     * Seller-controlled effective price before any Admin platform campaign.
+     * This is the amount used as the Seller receivable/commission basis.
+     */
+    public function sellerUnitPriceFor(
         SellerProduct $product,
         ?SellerProductVariant $variant = null
     ): float {
@@ -172,6 +178,44 @@ class BuyerCartService
             $discount > 0
                 ? $base * (1 - ($discount / 100))
                 : $base,
+            2
+        );
+    }
+
+    /**
+     * Buyer-facing effective price. Admin campaign discounts are overlaid here
+     * without changing SellerProduct/SellerProductVariant stored prices.
+     */
+    public function unitPriceFor(
+        SellerProduct $product,
+        ?SellerProductVariant $variant = null
+    ): float {
+        $sellerPrice = $this->sellerUnitPriceFor($product, $variant);
+
+        return (float) $this->platformCampaigns
+            ->saleQuote($product, $variant, $sellerPrice)['buyer_price'];
+    }
+
+    public function platformSaleQuoteFor(
+        SellerProduct $product,
+        ?SellerProductVariant $variant = null
+    ): array {
+        return $this->platformCampaigns->saleQuote(
+            $product,
+            $variant,
+            $this->sellerUnitPriceFor($product, $variant)
+        );
+    }
+
+    public function sellerLineTotal(BuyerCartItem $item): float
+    {
+        if (!$item->product) {
+            return 0.0;
+        }
+
+        return round(
+            $this->sellerUnitPriceFor($item->product, $item->variant)
+                * max(1, (int) $item->quantity),
             2
         );
     }
@@ -312,7 +356,7 @@ class BuyerCartService
 
         foreach ($this->groupedBySeller($items) as $sellerId => $group) {
             $sellerSubtotal = round(
-                $group->sum(fn (BuyerCartItem $item) => $this->lineTotal($item)),
+                $group->sum(fn (BuyerCartItem $item) => $this->sellerLineTotal($item)),
                 2
             );
 
@@ -357,7 +401,7 @@ class BuyerCartService
         }
 
         $sellerSubtotal = round(
-            $group->sum(fn (BuyerCartItem $item) => $this->lineTotal($item)),
+            $group->sum(fn (BuyerCartItem $item) => $this->sellerLineTotal($item)),
             2
         );
 

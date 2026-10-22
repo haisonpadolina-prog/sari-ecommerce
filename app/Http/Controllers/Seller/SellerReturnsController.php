@@ -145,11 +145,17 @@ class SellerReturnsController extends Controller
             $commission=$order->commission;
             $settlement=$order->sellerSettlement;
 
-            if ($commission && (float)$commission->net_commission > 0 && (float)$order->subtotal > 0) {
-                $ratio=min(1, $amount / (float)$order->subtotal);
+            $buyerMerchandise = max(0, (float) $order->subtotal);
+            $sellerMerchandise = max(0, (float) ($order->seller_receivable_subtotal ?? $order->subtotal));
+            $refundRatio = $buyerMerchandise > 0
+                ? min(1, $amount / $buyerMerchandise)
+                : 0;
+            $sellerRefundReduction = round($sellerMerchandise * $refundRatio, 2);
+
+            if ($commission && (float)$commission->net_commission > 0 && $refundRatio > 0) {
                 $commissionReduction=round(-1 * min(
                     (float)$commission->net_commission,
-                    (float)$commission->gross_commission * $ratio
+                    (float)$commission->gross_commission * $refundRatio
                 ), 2);
 
                 if ($commissionReduction < 0) {
@@ -167,7 +173,7 @@ class SellerReturnsController extends Controller
 
             if ($settlement) {
                 $settlement->refresh();
-                $newMerchandise=round(max(0,(float)$settlement->merchandise_amount-$amount),2);
+                $newMerchandise=round(max(0,(float)$settlement->merchandise_amount-$sellerRefundReduction),2);
                 $newNet=round(max(
                     0,
                     $newMerchandise

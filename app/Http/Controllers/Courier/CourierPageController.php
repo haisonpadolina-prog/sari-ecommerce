@@ -46,24 +46,7 @@ class CourierPageController extends Controller
             return $account;
         }
 
-        abort_unless($email === 'courier@gmail.com', 403, 'Rider account is no longer available.');
-
-        $account = CourierAccount::create([
-            'registration_application_id' => null,
-            'last_name' => 'Rider', 'first_name' => 'SARI', 'middle_initial' => null,
-            'sex' => 'Male', 'email' => $email, 'contact_no' => '09123456789',
-            'birthday' => '2000-01-01', 'age' => 26,
-            'province_code' => 'TEST', 'province_name' => 'Metro Manila',
-            'municipality_code' => 'TEST', 'municipality_name' => 'Manila',
-            'barangay_code' => 'TEST', 'barangay_name' => 'Test Barangay',
-            'street_address' => 'SARI Rider Test Address',
-            'password' => Hash::make('courier123'),
-            'vehicle_type' => 'Motorcycle', 'plate_number' => 'TEST-001',
-            'account_status' => 'active', 'approved_at' => now(),
-            'availability_status' => 'online', 'rating' => 5.00,
-        ]);
-        $request->session()->put('courier_account_id', $account->id);
-        return $account;
+        abort(403, 'Rider account is no longer available.');
     }
 
     private function ordersFor(CourierAccount $account)

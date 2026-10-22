@@ -11,27 +11,27 @@ use App\Models\Accounts\LogisticsAccount;
 use App\Models\Registration\RegistrationApplication;
 use App\Models\Accounts\SellerAccount;
 use App\Services\Registration\RegistrationEmailVerificationService;
+use App\Services\Registration\AccountRegistrationPolicy;
 use App\Services\Accounts\AccountEmailBanService;
-use App\Support\CurrentLogisticsAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class RiderRegistrationController extends Controller
 {
     public function __construct(
         private readonly RegistrationEmailVerificationService $emailVerification,
-        private readonly AccountEmailBanService $emailBanService
+        private readonly AccountEmailBanService $emailBanService,
+        private readonly AccountRegistrationPolicy $registrationPolicy
     ) {}
 
     public function index(Request $request): View
     {
-        CurrentLogisticsAccount::ensureDevelopmentProvider();
-
         $search = trim((string) $request->query('q', ''));
 
         $logistics = LogisticsAccount::query()
@@ -46,7 +46,8 @@ class RiderRegistrationController extends Controller
 
                 $query->where(function ($query) use ($like): void {
                     $query
-                        ->where('first_name', 'like', $like)
+                        ->where('business_name', 'like', $like)
+                        ->orWhere('first_name', 'like', $like)
                         ->orWhere('last_name', 'like', $like)
                         ->orWhere('province_name', 'like', $like)
                         ->orWhere('municipality_name', 'like', $like)
@@ -116,7 +117,7 @@ class RiderRegistrationController extends Controller
             'email' => ['required', 'email:rfc', 'max:180'],
         ]);
 
-        $email = strtolower(trim($validated['email']));
+        $email = $this->registrationPolicy->normalizeEmail($validated['email']);
 
         if ($this->emailBanService->isBanned($email)) {
             return back()->withErrors(['email' => 'This email address has been banned by SARI and cannot be used to register.'])->withInput();
@@ -189,7 +190,7 @@ class RiderRegistrationController extends Controller
             'otp' => ['required', 'digits:6'],
         ]);
 
-        $email = strtolower(trim($validated['email']));
+        $email = $this->registrationPolicy->normalizeEmail($validated['email']);
 
         $sessionEmail = strtolower(trim(
             (string) $request->session()->get('rider_registration_otp_email', '')
@@ -247,10 +248,18 @@ class RiderRegistrationController extends Controller
     {
         abort_unless($logistics->account_status === 'active', 404);
 
+        $request->merge([
+            'email' => $this->registrationPolicy->normalizeEmail($request->input('email')),
+            'contact_no' => $this->registrationPolicy->normalizeMobile($request->input('contact_no')),
+            'license_number' => strtoupper(trim((string) $request->input('license_number'))),
+            'plate_number' => strtoupper(trim((string) $request->input('plate_number'))),
+        ]);
+
         $personName = [
             'required',
             'string',
-            'max:100',
+            'min:2',
+            'max:50',
             'regex:/^[\pL\s.\'-]+$/u',
         ];
 
@@ -276,19 +285,23 @@ class RiderRegistrationController extends Controller
             'barangay_name' => ['required', 'string', 'max:150'],
             'street_address' => ['required', 'string', 'max:500'],
 
-            'vehicle_type' => [
+            'license_number' => [
                 'required',
-                Rule::in(['Motorcycle', 'Bicycle', 'Car', 'Van', 'Truck']),
+                'string',
+                'size:13',
+                'regex:/^[A-Z]\d{2}-\d{2}-\d{6}$/',
             ],
+            'license_expiry_date' => ['required', 'date', 'after_or_equal:today'],
+            'vehicle_type' => ['required', Rule::in(['Motorcycle', 'Car', 'Van'])],
             'plate_number' => [
                 'required',
                 'string',
-                'max:30',
-                'regex:/^[A-Za-z0-9 -]+$/',
+                'max:20',
+                'regex:/^[A-Z0-9 -]+$/',
             ],
 
             'profile_image' => [
-                'nullable',
+                'required',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 'max:5120',
@@ -297,33 +310,54 @@ class RiderRegistrationController extends Controller
             'id_document' => [
                 'required',
                 'file',
-                'mimes:jpg,jpeg,png,webp,pdf',
+                'mimetypes:image/jpeg,image/png,application/pdf',
+                'mimes:jpg,jpeg,png,pdf',
                 'max:5120',
             ],
             'orcr_document' => [
                 'required',
                 'file',
-                'mimes:jpg,jpeg,png,webp,pdf',
-                'max:8192',
+                'mimetypes:image/jpeg,image/png,application/pdf',
+                'mimes:jpg,jpeg,png,pdf',
+                'max:5120',
             ],
 
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                'max:255',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols(),
+            ],
             'terms' => ['accepted'],
         ], [
+            'last_name.min' => 'Last name must contain at least 2 characters.',
+            'last_name.max' => 'Last name must not be greater than 50 characters.',
             'last_name.regex' => 'Last name may only contain letters, spaces, apostrophes, periods, and hyphens.',
+            'first_name.min' => 'First name must contain at least 2 characters.',
+            'first_name.max' => 'First name must not be greater than 50 characters.',
             'first_name.regex' => 'First name may only contain letters, spaces, apostrophes, periods, and hyphens.',
             'middle_initial.size' => 'Middle initial must contain exactly one letter.',
             'middle_initial.regex' => 'Middle initial must contain one letter only.',
-            'contact_no.regex' => 'Enter an 11-digit Philippine mobile number starting with 09.',
+            'contact_no.regex' => 'Enter a Philippine mobile number as 09XXXXXXXXX or +639XXXXXXXXX.',
             'birthday.before_or_equal' => 'You must be 18 years old or older to register.',
             'birthday.after_or_equal' => 'Enter a valid birthday.',
+            'license_number.size' => 'Driver\'s license number must use the format A00-00-000000.',
+            'license_number.regex' => 'Driver\'s license number must use the format A00-00-000000.',
+            'license_expiry_date.after_or_equal' => 'Driver\'s license must expire today or later.',
+            'profile_image.required' => 'A profile photo is required before submitting your Rider application.',
             'profile_image.image' => 'Profile photo must be a valid image.',
             'profile_image.mimes' => 'Profile photo must be a JPG, JPEG, PNG, or WEBP image.',
             'profile_image.max' => 'Profile photo must not be larger than 5 MB.',
+            'id_document.mimes' => 'Driver\'s license document must be a JPG, JPEG, PNG, or PDF.',
+            'id_document.max' => 'Driver\'s license document must not be larger than 5 MB.',
+            'orcr_document.mimes' => 'OR / CR must be a JPG, JPEG, PNG, or PDF.',
+            'orcr_document.max' => 'OR / CR must not be larger than 5 MB.',
             'plate_number.regex' => 'Plate number may contain letters, numbers, spaces, and hyphens only.',
         ]);
 
-        $email = strtolower(trim($validated['email']));
+        $email = $this->registrationPolicy->normalizeEmail($validated['email']);
+        $contactNo = $this->registrationPolicy->normalizeMobile($validated['contact_no']);
 
         $verifiedEmail = strtolower(trim(
             (string) $request->session()->get('rider_registration_verified_email', '')
@@ -351,16 +385,8 @@ class RiderRegistrationController extends Controller
             return back()->withErrors(['email' => 'This email address has been banned by SARI and cannot be used to register.'])->withInput();
         }
 
-        if ($this->approvedAccountUsesEmail($email)) {
-            return back()
-                ->withErrors([
-                    'email' => 'An approved SARI account already uses this email address.',
-                ])
-                ->withInput();
-        }
-
         $existing = RegistrationApplication::query()
-            ->where('email', $email)
+            ->whereRaw('LOWER(email) = ?', [$email])
             ->first();
 
         if ($existing && $existing->status === 'pending') {
@@ -381,6 +407,24 @@ class RiderRegistrationController extends Controller
                 ->withInput();
         }
 
+        $exceptApplicationId = $existing?->id;
+
+        if ($this->registrationPolicy->emailInUse($email, $exceptApplicationId)) {
+            return back()->withErrors(['email' => 'This email address is already used by a SARI account or active registration.'])->withInput();
+        }
+
+        if ($this->registrationPolicy->mobileInUse($contactNo, $exceptApplicationId)) {
+            return back()->withErrors(['contact_no' => 'This mobile number is already used by a SARI account or active registration.'])->withInput();
+        }
+
+        if ($this->riderLicenseInUse($validated['license_number'], $exceptApplicationId)) {
+            return back()->withErrors(['license_number' => 'This driver\'s license number is already registered.'])->withInput();
+        }
+
+        if ($this->riderPlateInUse($validated['plate_number'], $exceptApplicationId)) {
+            return back()->withErrors(['plate_number' => 'This plate number is already registered.'])->withInput();
+        }
+
         if ($existing && $existing->status === 'rejected') {
             foreach ([$existing->id_path, $existing->orcr_path] as $oldFile) {
                 if ($oldFile) {
@@ -393,11 +437,11 @@ class RiderRegistrationController extends Controller
             }
         }
 
-        $folder = 'registration-documents/rider/' . now()->format('Y/m');
+        $folder = 'registration-documents/rider/' . $logistics->id . '/' . now()->format('Y/m');
 
         $idPath = $request
             ->file('id_document')
-            ->store($folder . '/id', 'local');
+            ->store($folder . '/license', 'local');
 
         $orcrPath = $request
             ->file('orcr_document')
@@ -409,6 +453,12 @@ class RiderRegistrationController extends Controller
                 'public'
             )
             : null;
+
+        if (!$profileImagePath || !Storage::disk('public')->exists($profileImagePath)) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'profile_image' => 'Your profile photo could not be saved. Please upload it again.',
+            ]);
+        }
 
         $birthday = Carbon::parse($validated['birthday']);
 
@@ -422,7 +472,7 @@ class RiderRegistrationController extends Controller
                 : null,
             'sex' => $validated['sex'],
             'email' => $email,
-            'contact_no' => $validated['contact_no'],
+            'contact_no' => $contactNo,
             'birthday' => $birthday->toDateString(),
             'age' => $birthday->age,
             'province_code' => $validated['province_code'],
@@ -436,7 +486,9 @@ class RiderRegistrationController extends Controller
             'business_name' => null,
             'line_of_business' => null,
             'vehicle_type' => $validated['vehicle_type'],
-            'plate_number' => strtoupper(trim($validated['plate_number'])),
+            'plate_number' => $validated['plate_number'],
+            'license_number' => $validated['license_number'],
+            'license_expiry_date' => $validated['license_expiry_date'],
             'profile_image_path' => $profileImagePath,
             'id_path' => $idPath,
             'business_permit_path' => null,
@@ -469,6 +521,36 @@ class RiderRegistrationController extends Controller
         ]);
 
         return redirect()->route('registration.pending');
+    }
+
+    private function riderLicenseInUse(string $licenseNumber, ?int $exceptApplicationId = null): bool
+    {
+        $licenseNumber = strtoupper(trim($licenseNumber));
+
+        return CourierAccount::query()
+            ->whereRaw('UPPER(license_number) = ?', [$licenseNumber])
+            ->exists()
+            || RegistrationApplication::query()
+                ->when($exceptApplicationId, fn ($query) => $query->whereKeyNot($exceptApplicationId))
+                ->where('role', 'rider')
+                ->whereRaw('UPPER(license_number) = ?', [$licenseNumber])
+                ->whereIn('status', ['unverified', 'pending', 'approved'])
+                ->exists();
+    }
+
+    private function riderPlateInUse(string $plateNumber, ?int $exceptApplicationId = null): bool
+    {
+        $plateNumber = strtoupper(trim($plateNumber));
+
+        return CourierAccount::query()
+            ->whereRaw('UPPER(plate_number) = ?', [$plateNumber])
+            ->exists()
+            || RegistrationApplication::query()
+                ->when($exceptApplicationId, fn ($query) => $query->whereKeyNot($exceptApplicationId))
+                ->where('role', 'rider')
+                ->whereRaw('UPPER(plate_number) = ?', [$plateNumber])
+                ->whereIn('status', ['unverified', 'pending', 'approved'])
+                ->exists();
     }
 
     private function approvedAccountUsesEmail(string $email): bool

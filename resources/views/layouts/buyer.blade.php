@@ -375,6 +375,17 @@
             id="buyerMainContent"
             class="min-h-screen"
         >
+            @if(session('is_buyer'))
+                {{--
+                    Platform announcements render as a fixed overlay and must not
+                    reserve vertical space above the shared Buyer header.
+                --}}
+                @include('components.platform-announcements', [
+                    'audienceRole' => 'buyer',
+                    'identityType' => session('buyer_account_id') ? 'buyer' : 'social_buyer',
+                    'accountId' => (int) (session('buyer_account_id') ?: session('buyer_social_account_id', 0)),
+                ])
+            @endif
             @yield('content')
         </div>
 

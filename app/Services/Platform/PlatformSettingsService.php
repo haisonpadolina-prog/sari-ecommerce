@@ -46,6 +46,16 @@ class PlatformSettingsService
                 true
             ),
 
+            'seller_product_posting_enabled' => PlatformSetting::valueOf(
+                'seller_product_posting_enabled',
+                true
+            ),
+
+            'platform_campaigns_enabled' => PlatformSetting::valueOf(
+                'platform_campaigns_enabled',
+                true
+            ),
+
             'max_sellers_per_checkout' => PlatformSetting::valueOf(
                 'max_sellers_per_checkout',
                 0
@@ -90,6 +100,8 @@ class PlatformSettingsService
             'delivery_fee_per_seller' => 'Delivery Fee / Seller',
             'checkout_enabled' => 'Checkout Enabled',
             'registrations_enabled' => 'Registrations Enabled',
+            'seller_product_posting_enabled' => 'Seller Product Posting',
+            'platform_campaigns_enabled' => 'Platform Campaigns',
             'max_sellers_per_checkout' => 'Max Sellers / Checkout',
             'buyer_cancellation_window_minutes' => 'Buyer Cancellation Window',
             'seller_settlement_hold_days' => 'Seller Settlement Hold',
@@ -337,6 +349,8 @@ class PlatformSettingsService
         if (in_array($key, [
             'checkout_enabled',
             'registrations_enabled',
+            'seller_product_posting_enabled',
+            'platform_campaigns_enabled',
             'registration_decision_email_enabled',
             'maintenance_mode',
         ], true)) {
@@ -466,6 +480,14 @@ class PlatformSettingsService
 
             'registrations_enabled' => $this->toBool(
                 $settings['registrations_enabled'] ?? true
+            ),
+
+            'seller_product_posting_enabled' => $this->toBool(
+                $settings['seller_product_posting_enabled'] ?? true
+            ),
+
+            'platform_campaigns_enabled' => $this->toBool(
+                $settings['platform_campaigns_enabled'] ?? true
             ),
 
             'max_sellers_per_checkout' => max(

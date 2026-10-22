@@ -93,6 +93,14 @@
                         <p class="text-[7px] text-[#958c80]">Plate Number</p>
                         <p class="mt-1 text-[9px] font-semibold text-[#403a33]">{{ $application->plate_number }}</p>
                     </div>
+                    <div class="rounded-xl bg-[#faf9f6] p-3">
+                        <p class="text-[7px] text-[#958c80]">Driver's License No.</p>
+                        <p class="mt-1 text-[9px] font-semibold text-[#403a33]">{{ $application->license_number ?: '—' }}</p>
+                    </div>
+                    <div class="rounded-xl bg-[#faf9f6] p-3">
+                        <p class="text-[7px] text-[#958c80]">License Expiry</p>
+                        <p class="mt-1 text-[9px] font-semibold text-[#403a33]">{{ $application->license_expiry_date?->format('M d, Y') ?? '—' }}</p>
+                    </div>
                 </div>
 
                 <div class="mt-3 rounded-xl border border-[#eee7de] bg-[#fcfbf8] p-3.5">
@@ -105,7 +113,7 @@
                 <div class="mt-3 flex flex-wrap gap-2">
                     @if($application->id_path)
                         <a href="{{ route('logistics.rider-applications.document', [$application, 'id']) }}" target="_blank" rel="noopener noreferrer" class="inline-flex h-9 items-center rounded-lg border border-[#ddd7ce] px-3 text-[8px] font-semibold text-[#62594e] hover:bg-[#faf8f4]">
-                            View ID / License
+                            View Driver's License
                         </a>
                     @endif
                     @if($application->orcr_path)

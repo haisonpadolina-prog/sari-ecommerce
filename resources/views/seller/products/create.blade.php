@@ -735,29 +735,16 @@
 @php
     /*
     |--------------------------------------------------------------------------
-    | SELLER-LOCKED PRODUCT CATEGORY
+    | SELLER REGISTRATION CATEGORY
     |--------------------------------------------------------------------------
-    | One seller account = one selling category.
-    | The category is displayed as read-only and submitted through a hidden
-    | field so the rest of the existing Add Product flow stays unchanged.
+    | The Seller chooses this once during registration. Add Product only shows
+    | that saved category and never asks the Seller to choose it again.
     */
-    $sellerDefaultCategory = collect([
-        data_get($sellerAccount ?? null, 'category'),
-        data_get($sellerAccount ?? null, 'store_category'),
-        data_get($sellerAccount ?? null, 'business_category'),
-    ])
-        ->map(fn ($value) => trim((string) $value))
-        ->first(fn ($value) => $value !== '');
-
-    if (!$sellerDefaultCategory && isset($sellerAccount) && method_exists($sellerAccount, 'products')) {
-        $sellerDefaultCategory = trim((string) (
-            $sellerAccount->products()
-                ->whereNotNull('category')
-                ->where('category', '!=', '')
-                ->value('category')
-            ?? ''
-        ));
-    }
+    $sellerDefaultCategory = trim((string) (
+        $sellerDefaultCategory
+        ?? data_get($sellerAccount ?? null, 'line_of_business')
+        ?? ''
+    ));
 @endphp
 
 
@@ -942,12 +929,8 @@
                             </span>
 
                             <span class="seller-category-locked-copy">
-                                <strong>{{ $sellerDefaultCategory ?: 'Category not assigned' }}</strong>
-                                <small>
-                                    {{ $sellerDefaultCategory
-                                        ? 'Assigned to your seller account'
-                                        : 'Contact SARI support to assign your seller category' }}
-                                </small>
+                                <strong>{{ $sellerDefaultCategory ?: 'Registration category unavailable' }}</strong>
+                                <small>Selected by you during Seller registration and used automatically for every listing.</small>
                             </span>
 
                             <span class="seller-category-locked-badge">

@@ -606,6 +606,13 @@
 
         {{-- PAGE CONTENT --}}
         <main class="px-4 py-5 sm:px-6 lg:px-8 xl:px-10">
+            @if(session('is_courier'))
+                @include('components.platform-announcements', [
+                    'audienceRole' => 'rider',
+                    'identityType' => 'rider',
+                    'accountId' => (int) session('courier_account_id', 0),
+                ])
+            @endif
             @yield('content')
         </main>
     </div>

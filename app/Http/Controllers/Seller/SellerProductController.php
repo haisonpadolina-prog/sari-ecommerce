@@ -10,6 +10,7 @@ use App\Models\Catalog\SellerProductDraft;
 use App\Models\Catalog\SellerProductImage;
 use App\Models\Catalog\SellerProductVariant;
 use App\Models\Catalog\SellerProductVersion;
+use App\Models\Registration\RegistrationApplication;
 use App\Services\Products\ProductComplianceService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -69,6 +70,7 @@ class SellerProductController extends Controller
 
         return view('seller.products.create', [
             'sellerAccount' => $seller,
+            'sellerDefaultCategory' => $this->resolveSellerRegistrationCategory($seller),
         ]);
     }
 
@@ -95,6 +97,12 @@ class SellerProductController extends Controller
     {
         $seller = $this->resolveSeller($request);
         $this->ensureCanSell($seller);
+
+        $sellerCategory = $this->requireSellerRegistrationCategory($seller);
+        $request->merge([
+            'category' => $sellerCategory,
+            'custom_category' => null,
+        ]);
 
         $validated = $this->validateDraft($request);
         $draft = SellerProductDraft::firstOrNew([
@@ -217,6 +225,12 @@ class SellerProductController extends Controller
         $seller = $this->resolveSeller($request);
         $this->ensureCanSell($seller);
 
+        $sellerCategory = $this->requireSellerRegistrationCategory($seller);
+        $request->merge([
+            'category' => $sellerCategory,
+            'custom_category' => null,
+        ]);
+
         $validated = $this->validateProduct($request);
         $flashSaleEndsAt = $this->normalizeFlashSaleEndsAt(
             $validated['flash_sale_ends_at'] ?? null,
@@ -224,9 +238,7 @@ class SellerProductController extends Controller
         );
         $draft = $this->submittedDraft($request, $seller);
 
-        $category = $validated['category'] === 'Others' && trim((string) ($validated['custom_category'] ?? '')) !== ''
-            ? trim((string) $validated['custom_category'])
-            : $validated['category'];
+        $category = $sellerCategory;
 
         $specifications = $this->normalizeSpecifications($validated['specifications'] ?? []);
         $hasVariants = $request->boolean('has_variants');
@@ -375,6 +387,12 @@ class SellerProductController extends Controller
         $this->ensureOwnership($seller, $product);
         $this->ensureCanSell($seller);
 
+        $sellerCategory = $this->requireSellerRegistrationCategory($seller);
+        $request->merge([
+            'category' => $sellerCategory,
+            'custom_category' => null,
+        ]);
+
         if ($product->isArchived()) {
             return $this->actionError(
                 $request,
@@ -384,9 +402,7 @@ class SellerProductController extends Controller
         }
 
         $validated = $this->validateProduct($request);
-        $category = $validated['category'] === 'Others' && trim((string) ($validated['custom_category'] ?? '')) !== ''
-            ? trim((string) $validated['custom_category'])
-            : $validated['category'];
+        $category = $sellerCategory;
 
         $flashSaleEndsAt = $request->exists('flash_sale_ends_at')
             ? $this->normalizeFlashSaleEndsAt(
@@ -1725,6 +1741,70 @@ class SellerProductController extends Controller
         if ($path && Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }
+    }
+
+    /**
+     * Resolve the selling category the Seller chose during registration.
+     *
+     * seller_accounts.line_of_business is the normal source. Older/test
+     * accounts may predate the reliable approval copy, so recover the value
+     * from that same Seller's registration application and persist it once.
+     */
+    private function resolveSellerRegistrationCategory(SellerAccount $seller): string
+    {
+        $category = trim((string) $seller->line_of_business);
+
+        if ($category !== '') {
+            return $category;
+        }
+
+        $application = null;
+
+        if ($seller->registration_application_id) {
+            $application = RegistrationApplication::query()
+                ->whereKey($seller->registration_application_id)
+                ->where('role', 'seller')
+                ->first();
+        }
+
+        if (!$application && trim((string) $seller->email) !== '') {
+            $application = RegistrationApplication::query()
+                ->where('role', 'seller')
+                ->whereRaw('LOWER(email) = ?', [strtolower(trim((string) $seller->email))])
+                ->latest('id')
+                ->first();
+        }
+
+        $category = trim((string) ($application?->line_of_business ?? ''));
+
+        if ($category !== '') {
+            $updates = ['line_of_business' => $category];
+
+            if (!$seller->registration_application_id && $application) {
+                $updates['registration_application_id'] = $application->id;
+            }
+
+            $seller->forceFill($updates)->save();
+        }
+
+        return $category;
+    }
+
+    /**
+     * Add/Edit Product never accepts a Seller-selected category from the form.
+     * It must always use the category already chosen during Seller registration.
+     */
+    private function requireSellerRegistrationCategory(SellerAccount $seller): string
+    {
+        $category = $this->resolveSellerRegistrationCategory($seller);
+
+        if ($category === '') {
+            throw ValidationException::withMessages([
+                'category' => 'This Seller registration has no saved business category. Please verify the original Seller registration record.',
+            ]);
+        }
+
+        return $category;
     }
 
     private function resolveSeller(Request $request): SellerAccount

@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Application routes are registered from routes/web.php.
+        // Keeping route loading out of this provider prevents the entire
+        // application from failing to boot when an optional route file is
+        // missing during a partial deployment.
     }
 }

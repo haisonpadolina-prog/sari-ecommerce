@@ -107,6 +107,14 @@ class AdminPlatformSettingsController extends Controller
                 'required',
                 'boolean',
             ],
+            'seller_product_posting_enabled' => [
+                'required',
+                'boolean',
+            ],
+            'platform_campaigns_enabled' => [
+                'required',
+                'boolean',
+            ],
             'max_sellers_per_checkout' => [
                 'required',
                 'integer',

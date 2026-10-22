@@ -450,11 +450,11 @@
                         <div class="mt-6 grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label class="rider-label">Last Name *</label>
-                                <input name="last_name" value="{{ old('last_name') }}" required maxlength="100" placeholder="Dela Cruz" class="rider-control" data-person-name>
+                                <input name="last_name" value="{{ old('last_name') }}" required minlength="2" maxlength="50" placeholder="Dela Cruz" class="rider-control" data-person-name>
                             </div>
                             <div>
                                 <label class="rider-label">First Name *</label>
-                                <input name="first_name" value="{{ old('first_name') }}" required maxlength="100" placeholder="Juan" class="rider-control" data-person-name>
+                                <input name="first_name" value="{{ old('first_name') }}" required minlength="2" maxlength="50" placeholder="Juan" class="rider-control" data-person-name>
                             </div>
                             <div>
                                 <label class="rider-label">Middle Initial</label>
@@ -474,8 +474,8 @@
                             </div>
                             <div>
                                 <label class="rider-label">Contact No. *</label>
-                                <input id="contactNumber" type="tel" name="contact_no" value="{{ old('contact_no') }}" required inputmode="numeric" maxlength="11" pattern="09[0-9]{9}" placeholder="09XXXXXXXXX" class="rider-control">
-                                <p id="contactHint" class="rider-help">Exactly 11 digits beginning with 09.</p>
+                                <input id="contactNumber" type="tel" name="contact_no" value="{{ old('contact_no') }}" required inputmode="tel" maxlength="13" pattern="(?:09[0-9]{9}|\+639[0-9]{9})" autocomplete="tel" placeholder="09XXXXXXXXX or +639XXXXXXXXX" class="rider-control">
+                                <p id="contactHint" class="rider-help">Use 09XXXXXXXXX or +639XXXXXXXXX.</p>
                             </div>
                             <div>
                                 <label class="rider-label">Birthday *</label>
@@ -490,10 +490,10 @@
                         <div class="rider-profile-row">
                             <p class="rider-label !mb-0">
                                 Profile Photo
-                                <span class="font-medium text-[#999086]">(Optional)</span>
+                                <span class="font-medium text-[#999086]">(Required)</span>
                             </p>
                             <p class="sr-only">
-                                Optional Rider profile photo.
+                                A Rider profile photo is required. JPG, JPEG, PNG, or WEBP, up to 5 MB.
                             </p>
 
                             <div
@@ -549,7 +549,7 @@
                             <input
                                 id="riderProfileInput"
                                 type="file"
-                                name="profile_image"
+                                name="profile_image" required
                                 accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
                                 class="sr-only"
                             >
@@ -608,27 +608,37 @@
 
                         <div class="mt-6 grid gap-4 sm:grid-cols-2">
                             <div>
+                                <label class="rider-label">Driver's License No. *</label>
+                                <input id="licenseNumber" name="license_number" value="{{ old('license_number') }}" required maxlength="13" pattern="[A-Za-z][0-9]{2}-[0-9]{2}-[0-9]{6}" placeholder="A00-00-000000" class="rider-control uppercase">
+                                <p class="rider-help">Format: A00-00-000000.</p>
+                            </div>
+                            <div>
+                                <label class="rider-label">License Expiry *</label>
+                                <input type="date" name="license_expiry_date" value="{{ old('license_expiry_date') }}" required min="{{ now()->toDateString() }}" class="rider-control">
+                                <p class="rider-help">Expiry date must be today or later.</p>
+                            </div>
+                            <div>
                                 <label class="rider-label">Vehicle *</label>
                                 <select name="vehicle_type" required class="rider-control">
                                     <option value="">Choose vehicle</option>
-                                    @foreach(['Motorcycle','Bicycle','Car','Van','Truck'] as $vehicle)
+                                    @foreach(['Motorcycle','Car','Van'] as $vehicle)
                                         <option value="{{ $vehicle }}" {{ old('vehicle_type') === $vehicle ? 'selected' : '' }}>{{ $vehicle }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div>
                                 <label class="rider-label">Plate Number *</label>
-                                <input id="plateNumber" name="plate_number" value="{{ old('plate_number') }}" required maxlength="30" placeholder="ABC 1234" class="rider-control uppercase">
+                                <input id="plateNumber" name="plate_number" value="{{ old('plate_number') }}" required maxlength="20" placeholder="ABC 1234" class="rider-control uppercase">
                             </div>
                             <div>
-                                <label class="rider-label">Valid ID / Driver's License *</label>
-                                <input type="file" name="id_document" required accept=".jpg,.jpeg,.png,.webp,.pdf" class="block min-h-[50px] w-full rounded-[13px] border border-[#e2dbd1] bg-white px-3 py-3 text-[10px] text-[#484039]">
-                                <p class="rider-help">JPG, PNG, WEBP, or PDF. Maximum 5 MB.</p>
+                                <label class="rider-label">Driver's License Document *</label>
+                                <input type="file" name="id_document" required accept=".jpg,.jpeg,.png,.pdf" class="block min-h-[50px] w-full rounded-[13px] border border-[#e2dbd1] bg-white px-3 py-3 text-[10px] text-[#484039]">
+                                <p class="rider-help">JPG, PNG, or PDF. Maximum 5 MB.</p>
                             </div>
                             <div>
                                 <label class="rider-label">OR / CR *</label>
-                                <input type="file" name="orcr_document" required accept=".jpg,.jpeg,.png,.webp,.pdf" class="block min-h-[50px] w-full rounded-[13px] border border-[#e2dbd1] bg-white px-3 py-3 text-[10px] text-[#484039]">
-                                <p class="rider-help">JPG, PNG, WEBP, or PDF. Maximum 8 MB.</p>
+                                <input type="file" name="orcr_document" required accept=".jpg,.jpeg,.png,.pdf" class="block min-h-[50px] w-full rounded-[13px] border border-[#e2dbd1] bg-white px-3 py-3 text-[10px] text-[#484039]">
+                                <p class="rider-help">JPG, PNG, or PDF. Maximum 5 MB.</p>
                             </div>
                         </div>
                     </section>
@@ -642,6 +652,7 @@
                             <div>
                                 <label class="rider-label">Password *</label>
                                 <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="Minimum 8 characters" class="rider-control">
+                                <p class="rider-help">Use at least 8 characters with uppercase, lowercase, number, and special character.</p>
                             </div>
                             <div>
                                 <label class="rider-label">Confirm Password *</label>
@@ -676,6 +687,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const agePreview = document.getElementById('agePreview');
     const middleInitial = document.getElementById('middleInitial');
     const plateNumber = document.getElementById('plateNumber');
+    const licenseNumber = document.getElementById('licenseNumber');
 
     const riderProfileInput = document.getElementById('riderProfileInput');
     const riderProfileZone = document.getElementById('riderProfileZone');
@@ -716,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         riderProfileInput.value = '';
-        riderProfileInput.setCustomValidity('');
+        riderProfileInput.setCustomValidity('A profile photo is required.');
         setRiderProfileEmptyState();
         clearRiderProfileError();
     }
@@ -724,6 +736,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateRiderProfile(file) {
         if (!file) {
             resetRiderProfile();
+            riderProfileInput.setCustomValidity('A profile photo is required.');
+            showRiderProfileError('Upload your profile photo before submitting.');
             return false;
         }
 
@@ -811,6 +825,14 @@ document.addEventListener('DOMContentLoaded', function () {
         resetRiderProfile();
     });
 
+    form.addEventListener('formdata', function (event) {
+        const photo = riderProfileInput.files?.[0];
+        if (photo) event.formData.set('profile_image', photo, photo.name);
+    });
+    riderProfileInput.addEventListener('invalid', function () {
+        showRiderProfileError('Select a valid profile photo before submitting.');
+    });
+
     riderProfileInput.addEventListener('change', function () {
         validateRiderProfile(riderProfileInput.files?.[0] || null);
     });
@@ -864,17 +886,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     plateNumber.addEventListener('input', function () {
-        this.value = this.value.replace(/[^A-Za-z0-9 -]/g, '').toUpperCase();
+        this.value = this.value.replace(/[^A-Za-z0-9 -]/g, '').toUpperCase().slice(0, 20);
+    });
+
+    licenseNumber?.addEventListener('input', function () {
+        this.value = this.value.replace(/[^A-Za-z0-9-]/g, '').toUpperCase().slice(0, 13);
     });
 
     function syncPhone() {
-        contactNumber.value = contactNumber.value.replace(/\D/g, '').slice(0, 11);
-        const valid = !contactNumber.value || /^09\d{9}$/.test(contactNumber.value);
-        contactNumber.setCustomValidity(valid ? '' : 'Enter an 11-digit Philippine mobile number starting with 09.');
-        contactHint.textContent = contactNumber.value && valid
+        let value = contactNumber.value.replace(/\s+/g, '');
+
+        if (value.startsWith('+')) {
+            value = '+' + value.slice(1).replace(/\D/g, '').slice(0, 12);
+        } else {
+            value = value.replace(/\D/g, '').slice(0, 11);
+        }
+
+        contactNumber.value = value;
+
+        if (!value) {
+            contactNumber.setCustomValidity('');
+            contactHint.textContent = 'Use 09XXXXXXXXX or +639XXXXXXXXX.';
+            contactHint.style.color = '#989084';
+            return;
+        }
+
+        const valid = /^(?:09\d{9}|\+639\d{9})$/.test(value);
+        contactNumber.setCustomValidity(valid ? '' : 'Enter a Philippine mobile number as 09XXXXXXXXX or +639XXXXXXXXX.');
+        contactHint.textContent = valid
             ? 'Valid Philippine mobile number.'
-            : 'Exactly 11 digits beginning with 09.';
-        contactHint.style.color = contactNumber.value && valid ? '#56816a' : '#989084';
+            : 'Enter 09XXXXXXXXX or +639XXXXXXXXX.';
+        contactHint.style.color = valid ? '#56816a' : '#b25a5a';
     }
 
     function calculateAge() {
@@ -889,7 +931,22 @@ document.addEventListener('DOMContentLoaded', function () {
         agePreview.value = Math.max(0, age);
     }
 
+    contactNumber.addEventListener('beforeinput', function (event) {
+        if (!event.data || event.inputType.startsWith('delete')) return;
+        if (/^\d+$/.test(event.data)) return;
+
+        const canInsertPlus = event.data === '+'
+            && contactNumber.selectionStart === 0
+            && !contactNumber.value.includes('+');
+
+        if (canInsertPlus) return;
+        event.preventDefault();
+    });
+
     contactNumber.addEventListener('input', syncPhone);
+    contactNumber.addEventListener('paste', function () {
+        window.setTimeout(syncPhone, 0);
+    });
     birthday.addEventListener('change', calculateAge);
 
     const provinceSearch = document.getElementById('provinceSearch');

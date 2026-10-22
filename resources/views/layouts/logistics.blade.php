@@ -77,6 +77,13 @@
             @include('components.logistics.header')
 
             <main class="w-full px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7 xl:px-10">
+                @if(session('is_logistics'))
+                    @include('components.platform-announcements', [
+                        'audienceRole' => 'logistics',
+                        'identityType' => 'logistics',
+                        'accountId' => (int) session('logistics_account_id', 0),
+                    ])
+                @endif
                 @yield('content')
             </main>
         </div>

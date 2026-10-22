@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Middleware\Platform\EnforcePlatformOperationalRules;
+use App\Http\Middleware\Platform\RecordUserActivity;
+use App\Http\Middleware\Platform\RecordAdminActivity;
+use App\Http\Middleware\Platform\RecordSecurityEvents;
 use App\Http\Middleware\Shared\EnsureSessionAccountAccessible;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -32,6 +35,21 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup(
             'web',
             EnforcePlatformOperationalRules::class
+        );
+
+        $middleware->appendToGroup(
+            'web',
+            RecordUserActivity::class
+        );
+
+        $middleware->appendToGroup(
+            'web',
+            RecordAdminActivity::class
+        );
+
+        $middleware->appendToGroup(
+            'web',
+            RecordSecurityEvents::class
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Models\Accounts\AdminAccount;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,18 +16,30 @@ class AdminAccountController extends Controller
 {
     private function account(Request $request): AdminAccount
     {
-        abort_unless($request->session()->get('is_admin'), 403);
-
-        $id = (int) $request->session()->get('admin_account_id');
-
-        if ($id > 0 && ($account = AdminAccount::find($id))) {
-            return $account;
+        if (!$request->session()->get('is_admin')) {
+            throw new HttpResponseException(
+                redirect()->route('login')
+            );
         }
 
-        return AdminAccount::query()->firstOrCreate(
-            ['email' => 'admin@gmail.com'],
-            ['name' => 'SARI Administrator', 'password' => Hash::make('admin123')]
-        );
+        $id = (int) $request->session()->get('admin_account_id', 0);
+        $account = $id > 0
+            ? AdminAccount::query()->find($id)
+            : null;
+
+        if (!$account) {
+            $request->session()->forget(['is_admin', 'admin_account_id']);
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw new HttpResponseException(
+                redirect()
+                    ->route('login')
+                    ->with('error', 'Your administrator session expired. Please sign in again.')
+            );
+        }
+
+        return $account;
     }
 
     public function index(Request $request): View
@@ -141,6 +154,7 @@ class AdminAccountController extends Controller
 
         return back()->with('success', 'Administrator account updated successfully.');
     }
+
 
     private function sessionInfo(Request $request): array
     {

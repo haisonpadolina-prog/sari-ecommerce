@@ -46,7 +46,7 @@ class SellerSettlementService
                 ]);
             }
 
-            $merchandise = round(max(0, (float) $lockedOrder->subtotal), 2);
+            $merchandise = round(max(0, (float) ($lockedOrder->seller_receivable_subtotal ?? $lockedOrder->subtotal)), 2);
             $platformCommission = round(max(0, (float) $lockedCommission->net_commission), 2);
 
             /*
@@ -95,7 +95,7 @@ class SellerSettlementService
                     'policy_snapshot' => [
                         'source' => $source,
                         'financial_recognition' => 'delivered_and_paid',
-                        'merchandise_field' => 'marketplace_orders.subtotal',
+                        'merchandise_field' => 'marketplace_orders.seller_receivable_subtotal',
                         'delivery_fee_excluded_from_seller_merchandise_settlement' => true,
                         'free_shipping_promotion' => [
                             'funder' => $sellerShippingPromotion > 0 ? 'seller' : null,

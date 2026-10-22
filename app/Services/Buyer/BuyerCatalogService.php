@@ -7,6 +7,7 @@ use App\Models\Catalog\SellerProduct;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Promotions\SellerVoucher;
 use App\Services\Promotions\SellerFreeShippingPromotionService;
+use App\Services\Promotions\PlatformCampaignService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -18,6 +19,7 @@ class BuyerCatalogService
 {
     public function __construct(
         private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
+        private readonly PlatformCampaignService $platformCampaigns,
     ) {
     }
 
@@ -108,7 +110,7 @@ class BuyerCatalogService
     {
         $product = SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
+                'seller:id,store_name,email,profile_image_path,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
                 'seller.vouchers' => $this->activeVoucherConstraint(...),
                 'activeVariants',
                 'galleryImages',
@@ -348,7 +350,12 @@ class BuyerCatalogService
 
         $basePrice = max(0, (float) ($product->price ?? 0));
         $discountPercent = $this->effectiveDiscountPercent($product);
-        $sellingPrice = $this->discounted($basePrice, $discountPercent);
+        $sellerSellingPrice = $this->discounted($basePrice, $discountPercent);
+        $platformSale = $this->platformCampaigns->saleQuote($product, null, $sellerSellingPrice);
+        $sellingPrice = (float) $platformSale['buyer_price'];
+        $combinedDiscountPercent = $basePrice > 0
+            ? round(max(0, min(100, (($basePrice - $sellingPrice) / $basePrice) * 100)), 1)
+            : 0.0;
         $stock = $variants->isNotEmpty()
             ? (int) $variants->sum('stock')
             : (int) ($product->stock ?? 0);
@@ -365,31 +372,29 @@ class BuyerCatalogService
                 ? round((float) $product->reviews->avg('rating'), 1)
                 : 0.0);
 
-        $variantPayload = $variants->map(function ($variant) use ($discountPercent) {
+        $variantPayload = $variants->map(function ($variant) use ($discountPercent, $product) {
             $options = is_array($variant->option_values)
                 ? $variant->option_values
                 : (json_decode((string) $variant->option_values, true) ?: []);
 
             /*
-             * Buyer-facing labels should be clean and easy to scan.
-             * Example:
-             *   Variant: Green + Size: S  ->  Green • S
-             *
-             * Put the main visual/style option first, then size.
+             * Keep buyer-facing labels aligned with the product selector.
+             * Buyers choose Size first, then Color, then any remaining option
+             * groups. Example: Size: Small + Color: Green -> Small • Green.
              */
             $preferredOrder = [
-                'variant' => 10,
-                'color' => 20,
-                'colour' => 20,
-                'design' => 30,
-                'scent' => 40,
-                'storage' => 50,
-                'material' => 60,
-                'style' => 70,
-                'capacity' => 80,
-                'flavor' => 90,
-                'size' => 100,
-                'shoe size' => 110,
+                'size' => 10,
+                'shoe size' => 15,
+                'variant' => 20,
+                'color' => 30,
+                'colour' => 30,
+                'design' => 40,
+                'scent' => 50,
+                'storage' => 60,
+                'material' => 70,
+                'style' => 80,
+                'capacity' => 90,
+                'flavor' => 100,
             ];
 
             $cleanLabel = collect($options)
@@ -400,13 +405,25 @@ class BuyerCatalogService
                 ->map(fn ($value) => trim((string) $value))
                 ->implode(' • ');
 
+            $variantBasePrice = max(0, (float) $variant->price);
+            $sellerVariantPrice = $this->discounted($variantBasePrice, $discountPercent);
+            $variantPlatformSale = $this->platformCampaigns->saleQuote(
+                $product,
+                $variant,
+                $sellerVariantPrice
+            );
+            $variantBuyerPrice = (float) $variantPlatformSale['buyer_price'];
+
             return [
                 'id' => (int) $variant->id,
                 'sku' => (string) ($variant->sku ?? ''),
                 'options' => $options,
                 'label' => $cleanLabel !== '' ? $cleanLabel : 'Variant #' . $variant->id,
-                'price' => $this->discounted((float) $variant->price, $discountPercent),
-                'old_price' => $discountPercent > 0 ? (float) $variant->price : null,
+                'price' => $variantBuyerPrice,
+                'old_price' => (float) $variantPlatformSale['discount'] > 0
+                    ? $sellerVariantPrice
+                    : ($discountPercent > 0 ? $variantBasePrice : null),
+                'platform_campaign' => $variantPlatformSale['snapshot'],
                 'stock' => (int) $variant->stock,
                 'available' => (int) $variant->stock > 0,
                 'image' => $variant->image_path
@@ -431,13 +448,12 @@ class BuyerCatalogService
             $gallery->push('buyer/product-images/' . $image->id . '/image');
         }
 
-        // Variant-specific images also belong in the buyer gallery so buyers can
-        // browse every seller-supplied product image before choosing a variant.
-        foreach ($variantPayload as $variant) {
-            if (!empty($variant['image'])) {
-                $gallery->push($variant['image']);
-            }
-        }
+        /*
+         * The normal buyer gallery contains only the seller's Cover Image and
+         * Product Gallery uploads. Variant-specific images are intentionally
+         * excluded here: they are shown only after the buyer resolves an exact
+         * option combination (for example Size + Color).
+         */
 
         $gallery = $gallery
             ->filter()
@@ -459,8 +475,13 @@ class BuyerCatalogService
             'category' => (string) ($product->category ?: 'General'),
             'marketplace_category' => (string) ($product->category ?: 'General'),
             'price' => $sellingPrice,
-            'old_price' => $discountPercent > 0 ? $basePrice : null,
-            'discount_percent' => $discountPercent,
+            'old_price' => (float) $platformSale['discount'] > 0
+                ? $sellerSellingPrice
+                : ($discountPercent > 0 ? $basePrice : null),
+            'discount_percent' => $combinedDiscountPercent,
+            'seller_discount_percent' => $discountPercent,
+            'platform_campaign' => $platformSale['snapshot'],
+            'platform_voucher' => $this->platformCampaigns->voucherOfferForProduct($product),
             'flash_sale_active' => $this->isFlashSaleActive($product),
             'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
             'voucher' => $this->primaryVoucher($seller, (string) ($product->voucher_code ?? '')),
@@ -508,6 +529,9 @@ class BuyerCatalogService
             'shop_name' => $storeName,
             'store_name' => $storeName,
             'shop_logo' => $this->publicMediaUrl($seller?->store_logo_path),
+            // Use the seller's real account profile photo on buyer-facing seller identity.
+            // The Blade view falls back to the public store logo when no profile photo exists.
+            'seller_profile_image' => $this->publicMediaUrl($seller?->profile_image_path),
             'shop_description' => (string) ($seller?->store_description ?? ''),
             'seller_account_id' => (int) $product->seller_account_id,
             'shop_badge' => 'SARI Seller',
@@ -717,7 +741,7 @@ class BuyerCatalogService
     {
         return SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
+                'seller:id,store_name,email,profile_image_path,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
                 'activeVariants',
                 'galleryImages',
             ])

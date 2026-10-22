@@ -49,8 +49,28 @@
     $shopName = trim((string) ($product['shop_name'] ?? $product['store_name'] ?? 'SARI Seller Store'));
     $shopSlug = trim((string) ($product['shop_slug'] ?? ''));
     $sellerId = (int) ($product['seller_account_id'] ?? 0);
+    $sellerAvatarRaw = trim((string) ($product['seller_profile_image'] ?? $product['shop_logo'] ?? ''));
 
-    $freeShipping = (bool) ($product['free_shipping'] ?? false);
+    $freeShippingPromotion = is_array($product['free_shipping_promotion'] ?? null)
+        ? $product['free_shipping_promotion']
+        : null;
+
+    // Keep the detail-page promo badges aligned with the shared product card.
+    // Checkout remains authoritative for final promotion eligibility.
+    $freeShipping = $freeShippingPromotion !== null || (bool) ($product['free_shipping'] ?? false);
+    $freeShippingMinimum = max(
+        0,
+        (float) ($freeShippingPromotion['minimum_order_amount'] ?? 0)
+    );
+
+    $codAvailable = !empty($product['cod'])
+        || !empty($product['cash_on_delivery'])
+        || !empty($product['is_cod'])
+        || !empty($product['payment_cod'])
+        || strtolower((string) ($product['delivery_mode'] ?? '')) === 'cod';
+
+    $showOfferCluster = $discountPercent > 0 || $codAvailable || $freeShipping;
+
     $condition = trim((string) ($product['condition'] ?? ''));
     $preparationDays = $product['preparation_days'] ?? null;
     $package = is_array($product['package'] ?? null) ? $product['package'] : [];
@@ -69,6 +89,9 @@
         return asset(ltrim($path, '/'));
     };
 
+    $sellerAvatar = $sellerAvatarRaw !== '' ? $imageUrl($sellerAvatarRaw) : null;
+    $sellerInitial = strtoupper(mb_substr($shopName !== '' ? $shopName : 'S', 0, 1));
+
     $gallery = collect($product['images'] ?? [])
         ->filter(fn ($item) => trim((string) $item) !== '')
         ->map(fn ($item) => $imageUrl($item))
@@ -83,6 +106,147 @@
     }
 
     $mainImage = $gallery->first() ?: $mainImage;
+
+    /*
+     * Variant selector data is kept structured instead of rendering every
+     * Size × Color combination as one flat button. Size is intentionally
+     * first, Color second, while any additional seller option groups follow.
+     */
+    $variantGroupPosition = 0;
+    $variantOptionGroups = collect($optionGroups)
+        ->map(function ($values, $name) use (&$variantGroupPosition) {
+            $groupName = trim((string) $name);
+            $normalized = strtolower($groupName);
+            $position = $variantGroupPosition++;
+
+            $priority = match (true) {
+                $normalized === 'size' || str_contains($normalized, 'size') => 10,
+                $normalized === 'color' || $normalized === 'colour'
+                    || str_contains($normalized, 'color')
+                    || str_contains($normalized, 'colour') => 20,
+                default => 100 + $position,
+            };
+
+            return [
+                'name' => $groupName,
+                'values' => collect((array) $values)
+                    ->map(fn ($value) => trim((string) $value))
+                    ->filter()
+                    ->unique()
+                    ->values()
+                    ->all(),
+                'priority' => $priority,
+                'position' => $position,
+            ];
+        })
+        ->filter(fn (array $group) => $group['name'] !== '' && !empty($group['values']))
+        ->sortBy(fn (array $group) => sprintf('%04d-%04d', $group['priority'], $group['position']))
+        ->values();
+
+    $variantMatrix = $variants
+        ->map(function ($variant) use ($imageUrl) {
+            $options = is_array($variant['options'] ?? null)
+                ? $variant['options']
+                : [];
+
+            return [
+                'id' => (int) ($variant['id'] ?? 0),
+                'label' => trim((string) ($variant['label'] ?? '')),
+                'options' => collect($options)
+                    ->mapWithKeys(fn ($value, $key) => [
+                        trim((string) $key) => trim((string) $value),
+                    ])
+                    ->filter(fn ($value, $key) => $key !== '' && $value !== '')
+                    ->all(),
+                'price' => (float) ($variant['price'] ?? 0),
+                'old_price' => isset($variant['old_price']) && $variant['old_price'] !== null
+                    ? (float) $variant['old_price']
+                    : null,
+                'stock' => max(0, (int) ($variant['stock'] ?? 0)),
+                'available' => (bool) ($variant['available'] ?? false),
+                'image' => $imageUrl($variant['image'] ?? null),
+            ];
+        })
+        ->filter(fn (array $variant) => $variant['id'] > 0)
+        ->values();
+
+    $firstVariantGroupName = trim((string) ($variantOptionGroups->first()['name'] ?? 'option'));
+    $variantOptionGroupsPayload = $variantOptionGroups
+        ->map(fn (array $group) => [
+            'name' => $group['name'],
+            'values' => $group['values'],
+        ])
+        ->values()
+        ->all();
+
+    /*
+     * Buyer color options are rendered as real visual swatches. Values are
+     * resolved through a safe allow-list (plus HEX colors) so seller-entered
+     * option text never becomes arbitrary CSS.
+     */
+    $isColorOptionGroup = static function ($name): bool {
+        $normalized = strtolower(trim((string) $name));
+
+        return $normalized === 'color'
+            || $normalized === 'colour'
+            || str_contains($normalized, 'color')
+            || str_contains($normalized, 'colour');
+    };
+
+    $resolveColorSwatch = static function ($value): string {
+        $raw = trim((string) $value);
+
+        if (preg_match('/^#[0-9a-fA-F]{3,8}$/', $raw) === 1) {
+            return $raw;
+        }
+
+        $token = strtolower(preg_replace('/[^a-z0-9]+/i', '', $raw) ?? '');
+
+        $colors = [
+            'black' => '#111827',
+            'white' => '#ffffff',
+            'gray' => '#9ca3af',
+            'grey' => '#9ca3af',
+            'silver' => '#c0c0c0',
+            'red' => '#ef4444',
+            'maroon' => '#800000',
+            'orange' => '#f97316',
+            'yellow' => '#facc15',
+            'gold' => '#d4a017',
+            'green' => '#22c55e',
+            'darkgreen' => '#166534',
+            'lightgreen' => '#86efac',
+            'forestgreen' => '#228b22',
+            'mintgreen' => '#98ff98',
+            'lime' => '#84cc16',
+            'olive' => '#808000',
+            'blue' => '#2563eb',
+            'darkblue' => '#1e3a8a',
+            'lightblue' => '#60a5fa',
+            'skyblue' => '#38bdf8',
+            'royalblue' => '#4169e1',
+            'navy' => '#000080',
+            'teal' => '#0d9488',
+            'cyan' => '#06b6d4',
+            'aqua' => '#06b6d4',
+            'purple' => '#9333ea',
+            'violet' => '#8b5cf6',
+            'indigo' => '#4f46e5',
+            'pink' => '#ec4899',
+            'babypink' => '#f9a8d4',
+            'rose' => '#f43f5e',
+            'brown' => '#92400e',
+            'beige' => '#e8d8b0',
+            'tan' => '#d2b48c',
+            'cream' => '#fffdd0',
+            'khaki' => '#c3b091',
+            'multicolor' => 'conic-gradient(#ef4444, #facc15, #22c55e, #2563eb, #9333ea, #ef4444)',
+            'multicolour' => 'conic-gradient(#ef4444, #facc15, #22c55e, #2563eb, #9333ea, #ef4444)',
+            'rainbow' => 'conic-gradient(#ef4444, #facc15, #22c55e, #2563eb, #9333ea, #ef4444)',
+        ];
+
+        return $colors[$token] ?? '#d1d5db';
+    };
 
     $relatedProducts = collect($products)
         ->filter(fn ($item) => is_array($item) && (int) ($item['id'] ?? 0) !== $productId)
@@ -259,6 +423,35 @@
         gap: 7px;
     }
 
+    /* Gallery status + View image are intentionally plain text controls. */
+    .sari-v7-gallery-meta-right {
+        gap:12px;
+    }
+
+    .sari-v7-gallery-meta-right .sari-v7-gallery-count {
+        min-height:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        padding:0 !important;
+        color:#364152 !important;
+        box-shadow:none !important;
+        font-size:9.5px !important;
+        line-height:1.35 !important;
+        font-weight:650 !important;
+    }
+
+    #buyerProductZoomButton {
+        cursor:pointer;
+        transition:color 120ms ease !important;
+    }
+
+    #buyerProductZoomButton:hover {
+        color:#171f2b !important;
+        text-decoration:underline;
+        text-underline-offset:3px;
+    }
+
     .sari-v7-shipping-pill,
     .sari-v7-gallery-count,
     .sari-v7-gallery-discount {
@@ -418,6 +611,95 @@
         cursor: not-allowed;
         opacity: .42;
         background: #f7f5f2;
+    }
+
+    [data-buyer-option-group] + [data-buyer-option-group] {
+        padding-top: 2px;
+    }
+
+    [data-buyer-option-group-status].is-selected {
+        color: #9a6817;
+        font-weight: 700;
+    }
+
+    /* Color choices are bare circular swatches — no outer pill/card container. */
+    .buyer-product-page .buyer-color-swatch-button {
+        display: inline-grid !important;
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        padding: 0 !important;
+        place-items: center !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .buyer-product-page .buyer-color-swatch {
+        display: block;
+        width: 24px;
+        height: 24px;
+        border: 1px solid rgba(31,41,55,.22);
+        border-radius: 999px;
+        background: var(--buyer-color-swatch, #d1d5db);
+        box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.20),
+            0 1px 2px rgba(15,23,42,.10);
+        transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    }
+
+    .buyer-product-page .buyer-color-swatch-button:hover:not(:disabled) {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .buyer-product-page .buyer-color-swatch-button:hover:not(:disabled) .buyer-color-swatch {
+        transform: scale(1.08);
+    }
+
+    .buyer-product-page .buyer-color-swatch-button.is-selected {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .buyer-product-page .buyer-color-swatch-button.is-selected .buyer-color-swatch {
+        box-shadow:
+            0 0 0 2px #fff,
+            0 0 0 4px #c88912,
+            inset 0 0 0 1px rgba(255,255,255,.20) !important;
+    }
+
+    .buyer-product-page .buyer-color-swatch-button:disabled {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        opacity: .38 !important;
+    }
+
+    .buyer-product-page .buyer-color-swatch-button:disabled .buyer-color-swatch {
+        filter: saturate(.45);
+    }
+
+    .buyer-product-page .buyer-color-swatch-button:focus-visible {
+        outline: 2px solid rgba(200,137,18,.45) !important;
+        outline-offset: 3px !important;
+    }
+
+    [data-buyer-variant-hint].is-ready {
+        color: #4f8065;
+        font-weight: 600;
+    }
+
+    .sari-v7-qty button:disabled,
+    .sari-v7-qty input:disabled {
+        cursor: not-allowed;
+        opacity: .48;
+        background: #f4f6f8;
     }
 
     .sari-v7-availability {
@@ -1492,6 +1774,745 @@
         }
     }
 
+
+
+    /* ============================================================
+       PRODUCT MEDIA — COVER + PRODUCT GALLERY ONLY
+       - horizontal thumbnails below the main photo
+       - overlay previous/next arrows
+       - variant photos are preview-only after exact selection
+    ============================================================ */
+    .sari-v7-gallery-layout,
+    .sari-v7-gallery-layout.has-thumbnails {
+        display:block !important;
+        grid-template-columns:1fr !important;
+    }
+
+    .sari-v7-gallery-main {
+        display:flex !important;
+        width:100% !important;
+        flex-direction:column !important;
+        align-items:stretch !important;
+    }
+
+    .sari-product-gallery-stage {
+        position:relative;
+        width:100%;
+        min-width:0;
+    }
+
+    .sari-product-gallery-stage .sari-v7-main-photo,
+    .sari-product-gallery-stage .sari-v7-main-photo-placeholder {
+        width:100% !important;
+    }
+
+    .sari-product-gallery-nav {
+        position:absolute;
+        top:50%;
+        z-index:5;
+        display:grid;
+        width:42px;
+        height:42px;
+        place-items:center;
+        border:1px solid rgba(225,230,236,.95);
+        border-radius:999px;
+        background:rgba(255,255,255,.94);
+        color:#344050;
+        box-shadow:0 5px 18px rgba(23,32,51,.10);
+        transform:translateY(-50%);
+        transition:background-color 120ms ease,border-color 120ms ease,color 120ms ease,transform 120ms ease !important;
+    }
+
+    .sari-product-gallery-nav:hover {
+        border-color:#d7b46b;
+        background:#fffaf0;
+        color:#9a650d;
+        transform:translateY(-50%) scale(1.04);
+    }
+
+    .sari-product-gallery-nav:active {
+        transform:translateY(-50%) scale(.97);
+    }
+
+    .sari-product-gallery-nav--prev { left:14px; }
+    .sari-product-gallery-nav--next { right:14px; }
+
+    .sari-v7-gallery-thumbs,
+    .sari-v7-gallery-layout.has-thumbnails .sari-v7-gallery-thumbs {
+        order:initial !important;
+        display:flex !important;
+        width:100% !important;
+        max-width:100% !important;
+        max-height:none !important;
+        flex-direction:row !important;
+        gap:9px !important;
+        margin-top:12px !important;
+        padding:2px 1px 5px !important;
+        overflow-x:auto !important;
+        overflow-y:hidden !important;
+        scroll-behavior:smooth;
+        scrollbar-width:thin;
+        scrollbar-color:#cfd6de transparent !important;
+    }
+
+    .sari-v7-gallery-thumb {
+        flex:0 0 66px !important;
+        width:66px !important;
+        height:66px !important;
+    }
+
+    .sari-v7-gallery-thumb.is-active img {
+        opacity:1 !important;
+    }
+
+    #buyerGalleryCounter.is-variant-preview {
+        color:#364152 !important;
+    }
+
+    @media (max-width:767px) {
+        .sari-product-gallery-nav {
+            width:38px;
+            height:38px;
+        }
+
+        .sari-product-gallery-nav--prev { left:9px; }
+        .sari-product-gallery-nav--next { right:9px; }
+
+        .sari-v7-gallery-thumb {
+            flex-basis:58px !important;
+            width:58px !important;
+            height:58px !important;
+        }
+    }
+
+    /* ============================================================
+       MAIN PRODUCT PHOTO — FULL-BLEED COVER
+       Keeps one stable gallery frame regardless of source image ratio.
+       The lightbox remains object-contain so the original full image
+       is still available through View image.
+    ============================================================ */
+    .sari-product-gallery-stage {
+        aspect-ratio:3 / 2;
+        overflow:hidden;
+        border:1px solid #e5e9ee;
+        border-radius:18px;
+        background:#f7f8fa;
+        box-shadow:0 8px 24px rgba(23,32,51,.035);
+    }
+
+    .sari-product-gallery-stage .sari-v7-main-photo {
+        display:block !important;
+        width:100% !important;
+        height:100% !important;
+        min-height:0 !important;
+        max-height:none !important;
+        padding:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:#f7f8fa !important;
+        box-shadow:none !important;
+        object-fit:cover !important;
+        object-position:center center !important;
+    }
+
+    .sari-product-gallery-stage .sari-v7-main-photo-placeholder {
+        width:100% !important;
+        height:100% !important;
+        min-height:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+    }
+
+    @media (max-width:767px) {
+        .sari-product-gallery-stage {
+            aspect-ratio:4 / 3;
+            border-radius:14px;
+        }
+    }
+
+    /* ============================================================
+       PRODUCT-CARD OFFER BADGES — DETAIL PAGE
+       Reuses the same visual language as the shared buyer card:
+       MALL top-left, discount corner top-right, and MEGA/COD/XTRA
+       offer strip attached to the bottom edge of the main image.
+    ============================================================ */
+    .sari-detail-media-badges {
+        position:absolute;
+        top:14px;
+        left:14px;
+        z-index:7;
+        display:flex;
+        align-items:center;
+        gap:7px;
+        pointer-events:none;
+    }
+
+    .sari-detail-media-badge {
+        display:inline-flex;
+        min-height:28px;
+        align-items:center;
+        justify-content:center;
+        border:1px solid rgba(255,255,255,.07);
+        border-radius:999px;
+        background:#2b2a28;
+        padding:0 12px;
+        color:#e0a11a;
+        font-size:8px;
+        line-height:1;
+        font-weight:800;
+        letter-spacing:-.015em;
+        white-space:nowrap;
+        box-shadow:0 5px 14px rgba(28,25,22,.16);
+    }
+
+    .sari-detail-media-badge--out {
+        border-color:#f0c8c8;
+        background:rgba(255,255,255,.96);
+        color:#bf4d4d;
+    }
+
+    .sari-detail-discount-corner {
+        position:absolute;
+        top:-1px;
+        right:-1px;
+        z-index:8;
+        display:inline-flex;
+        min-width:76px;
+        height:42px;
+        align-items:center;
+        justify-content:center;
+        padding:0 14px 1px 15px;
+        border:0;
+        border-radius:0 18px 0 20px;
+        background:#dda00b;
+        color:#fff;
+        font-size:14px;
+        line-height:1;
+        font-weight:800;
+        letter-spacing:-.025em;
+        font-variant-numeric:tabular-nums;
+        white-space:nowrap;
+        box-shadow:0 5px 14px rgba(126,84,7,.18);
+        pointer-events:none;
+    }
+
+    .sari-detail-offer-cluster {
+        position:absolute;
+        left:0;
+        bottom:0;
+        z-index:7;
+        display:inline-flex;
+        width:auto;
+        max-width:calc(100% - 18px);
+        align-items:stretch;
+        gap:0;
+        filter:drop-shadow(0 6px 13px rgba(22,20,18,.18));
+        pointer-events:none;
+        isolation:isolate;
+    }
+
+    .sari-detail-offer-item {
+        --offer-bg:#333;
+        position:relative;
+        z-index:1;
+        display:inline-flex;
+        min-width:0;
+        height:44px;
+        align-items:center;
+        padding:0 15px;
+        color:#fff;
+        white-space:nowrap;
+        flex:0 0 auto;
+        background:transparent;
+    }
+
+    .sari-detail-offer-item + .sari-detail-offer-item {
+        margin-left:-13px;
+        padding-left:22px;
+    }
+
+    .sari-detail-offer-item::before {
+        content:'';
+        position:absolute;
+        inset:0 -2px;
+        z-index:-1;
+        background:var(--offer-bg);
+        transform:skewX(-20deg);
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.13);
+    }
+
+    .sari-detail-offer-item:first-child::before {
+        left:-8px;
+        border-radius:12px 0 0 0;
+    }
+
+    .sari-detail-offer-item:last-child::before {
+        right:-8px;
+        border-radius:0 12px 0 0;
+    }
+
+    .sari-detail-offer-item--discount {
+        --offer-bg:linear-gradient(135deg,#8f1730 0%,#b92f49 100%);
+        width:104px;
+        justify-content:center;
+    }
+
+    .sari-detail-offer-item--cod {
+        --offer-bg:linear-gradient(135deg,#f6cf66 0%,#e2a91d 100%);
+        width:154px;
+        padding-left:22px !important;
+        padding-right:15px;
+        color:#201b13;
+    }
+
+    .sari-detail-offer-item--shipping {
+        --offer-bg:linear-gradient(135deg,#16283b 0%,#24384d 100%);
+        width:174px;
+    }
+
+    .sari-detail-offer-stack {
+        display:flex;
+        min-width:0;
+        flex-direction:column;
+        justify-content:center;
+        line-height:1;
+    }
+
+    .sari-detail-offer-kicker {
+        display:block;
+        font-size:8px;
+        font-weight:800;
+        letter-spacing:.045em;
+        text-transform:uppercase;
+        opacity:.98;
+    }
+
+    .sari-detail-offer-main {
+        display:block;
+        margin-top:3px;
+        overflow:hidden;
+        font-size:9px;
+        font-weight:700;
+        letter-spacing:-.015em;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .sari-detail-offer-item--discount .sari-detail-offer-main {
+        margin-top:2px;
+        font-size:9px;
+        font-weight:750;
+    }
+
+    @media (max-width:767px) {
+        .sari-detail-media-badges {
+            top:10px;
+            left:10px;
+        }
+
+        .sari-detail-media-badge {
+            min-height:24px;
+            padding:0 9px;
+            font-size:7px;
+        }
+
+        .sari-detail-discount-corner {
+            min-width:62px;
+            height:34px;
+            padding-inline:11px;
+            border-radius:0 14px 0 16px;
+            font-size:11px;
+        }
+
+        .sari-detail-offer-cluster {
+            max-width:94%;
+            transform:scale(.82);
+            transform-origin:left bottom;
+        }
+    }
+
+
+
+    /* ============================================================
+       AVAILABILITY + QUANTITY — CLEAN, NO OUTER CARD
+       Variant stock stays hidden until an exact variant is selected.
+    ============================================================ */
+    .sari-v7-availability {
+        display:flex !important;
+        width:100% !important;
+        align-items:flex-end !important;
+        justify-content:space-between !important;
+        gap:28px !important;
+        margin-top:24px !important;
+        padding:0 !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    .sari-v7-stock-block,
+    .sari-v7-quantity-block {
+        min-width:0;
+        padding:0 !important;
+        border:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    .sari-v7-stock-block.hidden {
+        display:none !important;
+    }
+
+    .sari-v7-quantity-block {
+        width:190px;
+        margin-left:auto;
+    }
+
+    @media (max-width:767px) {
+        .sari-v7-availability {
+            align-items:stretch !important;
+            gap:16px !important;
+        }
+
+        .sari-v7-quantity-block {
+            width:100%;
+            max-width:190px;
+        }
+    }
+
+
+    /* ============================================================
+       FINAL RIGHT BUYING PANEL — CLEAN / COMPACT / PROFESSIONAL
+       Keeps all buying behavior while reducing visual noise.
+    ============================================================ */
+    .sari-v7-buying-panel,
+    .sari-v7-buying-panel * {
+        font-family:"Poppins",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    }
+
+    .sari-v7-buying-panel {
+        padding:26px 28px 24px !important;
+    }
+
+    .sari-v7-title {
+        margin:0 !important;
+        font-size:clamp(28px,2.35vw,36px) !important;
+        line-height:1.13 !important;
+        font-weight:700 !important;
+        letter-spacing:-.035em !important;
+        color:#182230 !important;
+    }
+
+    .sari-v7-title + .mt-2 {
+        margin-top:10px !important;
+        gap:7px 10px !important;
+        color:#7f8a98 !important;
+        font-size:11px !important;
+        line-height:1.45 !important;
+    }
+
+    .sari-v7-title + .mt-2 strong {
+        color:#465261 !important;
+        font-weight:650 !important;
+    }
+
+    .sari-v7-meta-row {
+        margin-top:14px !important;
+        padding:11px 0 14px !important;
+        gap:8px !important;
+        border-top:0 !important;
+        border-bottom:1px solid #e9edf1 !important;
+        color:#74808d !important;
+        font-size:11px !important;
+        line-height:1.35 !important;
+    }
+
+    .sari-v7-price-box {
+        margin:0 !important;
+        padding:20px 0 20px !important;
+        border:0 !important;
+        border-bottom:1px solid #e9edf1 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    .sari-v7-price {
+        color:#bb7600 !important;
+        font-size:clamp(36px,3vw,44px) !important;
+        line-height:1 !important;
+        font-weight:750 !important;
+        letter-spacing:-.045em !important;
+    }
+
+    #buyerProductOldPrice {
+        color:#a6afb9 !important;
+        font-size:11px !important;
+        font-weight:500 !important;
+    }
+
+    .sari-v7-section {
+        margin:0 !important;
+        padding-top:19px !important;
+        border-top:0 !important;
+    }
+
+    .sari-v7-section-title {
+        color:#263343 !important;
+        font-size:12px !important;
+        line-height:1.35 !important;
+        font-weight:700 !important;
+    }
+
+    .sari-v7-section-help {
+        margin-top:4px !important;
+        color:#8591a0 !important;
+        font-size:10.5px !important;
+        line-height:1.5 !important;
+        font-weight:450 !important;
+    }
+
+    [data-buyer-option-groups] {
+        margin-top:14px !important;
+    }
+
+    [data-buyer-option-group] > p {
+        color:#394654 !important;
+        font-size:11px !important;
+        font-weight:650 !important;
+    }
+
+    .buyer-variant-button:not(.buyer-color-swatch-button) {
+        min-height:40px !important;
+        padding:0 15px !important;
+        border-radius:9px !important;
+        font-size:11px !important;
+        font-weight:600 !important;
+    }
+
+    .sari-v7-availability {
+        margin-top:18px !important;
+        gap:22px !important;
+        padding-top:17px !important;
+        border-top:1px solid #edf0f3 !important;
+    }
+
+    .sari-v7-stock-block > p:first-child,
+    .sari-v7-quantity-block > p:first-child {
+        margin:0 0 6px !important;
+        color:#687483 !important;
+        font-size:10px !important;
+        line-height:1.3 !important;
+        font-weight:650 !important;
+    }
+
+    #buyerProductStock {
+        margin:0 !important;
+        font-size:13px !important;
+        line-height:1.35 !important;
+        font-weight:700 !important;
+    }
+
+    .sari-v7-quantity-block {
+        width:176px !important;
+    }
+
+    .sari-v7-qty {
+        height:42px !important;
+        border-radius:9px !important;
+    }
+
+    .sari-v7-qty button {
+        width:42px !important;
+        font-size:16px !important;
+    }
+
+    .sari-v7-qty input {
+        font-size:11.5px !important;
+        font-weight:650 !important;
+    }
+
+    #buyerAddToCartForm {
+        margin-top:15px !important;
+    }
+
+    #buyerAddToCartForm > .grid {
+        gap:10px !important;
+    }
+
+    .buyer-product-primary,
+    .buyer-product-secondary {
+        height:46px !important;
+        border-radius:10px !important;
+        font-size:11px !important;
+        font-weight:700 !important;
+    }
+
+    #buyerAddToCartForm > a {
+        margin-top:9px !important;
+        color:#7c8794 !important;
+        font-size:9.5px !important;
+        line-height:1.3 !important;
+        font-weight:600 !important;
+    }
+
+    /* Seller information stays visible, but no card/container. */
+    .sari-v7-seller-card {
+        display:none !important;
+    }
+
+    .sari-detail-seller-inline {
+        display:flex;
+        width:100%;
+        align-items:center;
+        justify-content:space-between;
+        gap:18px;
+        margin-top:18px;
+        padding-top:17px;
+        border-top:1px solid #e9edf1;
+        background:transparent;
+    }
+
+    .sari-detail-seller-identity {
+        display:flex;
+        min-width:0;
+        align-items:center;
+        gap:11px;
+    }
+
+    .sari-detail-seller-avatar {
+        display:grid;
+        width:40px;
+        height:40px;
+        flex:0 0 40px;
+        place-items:center;
+        overflow:hidden;
+        border:1px solid #e3e7eb;
+        border-radius:50%;
+        background:#f3f4f6;
+        color:#66717e;
+        font-size:13px;
+        line-height:1;
+        font-weight:750;
+        letter-spacing:-.02em;
+    }
+
+    .sari-detail-seller-avatar img {
+        display:block;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+    .sari-detail-seller-label {
+        margin:0;
+        color:#9b690f;
+        font-size:8px;
+        line-height:1.2;
+        font-weight:750;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+    }
+
+    .sari-detail-seller-name {
+        margin:3px 0 0;
+        overflow:hidden;
+        color:#273240;
+        font-size:12px;
+        line-height:1.35;
+        font-weight:700;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+    }
+
+    .sari-detail-seller-status {
+        margin:2px 0 0;
+        color:#87929e;
+        font-size:9px;
+        line-height:1.35;
+        font-weight:450;
+    }
+
+    .sari-detail-seller-actions {
+        display:flex;
+        flex:0 0 auto;
+        align-items:center;
+        gap:8px;
+    }
+
+    /* Both public seller actions stay inside SARI's gold palette. */
+    .sari-detail-seller-link {
+    display:inline-flex;
+    min-height:35px;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #d9dee5;
+    border-radius:9px;
+    background:#f3f4f6;
+    padding:0 12px;
+    color:#4b5563;
+    font-size:9.5px;
+    line-height:1;
+    font-weight:650;
+    text-decoration:none;
+    transition:border-color 120ms ease,background-color 120ms ease,color 120ms ease !important;
+}
+
+.sari-detail-seller-link:hover {
+    border-color:#cbd2da;
+    background:#e9ecef;
+    color:#374151;
+}
+
+    .sari-detail-seller-link:hover {
+        border-color:#c88912;
+        background:#fff1ce;
+        color:#7f5209;
+    }
+
+    .sari-detail-seller-link--accent {
+        border-color:#c88912;
+        background:#c88912;
+        color:#fff;
+    }
+
+    .sari-detail-seller-link--accent:hover {
+        border-color:#ad730f;
+        background:#ad730f;
+        color:#fff;
+    }
+
+    @media (max-width:767px) {
+        .sari-v7-buying-panel {
+            padding:20px !important;
+        }
+
+        .sari-v7-availability {
+            align-items:flex-end !important;
+            gap:14px !important;
+        }
+
+        .sari-v7-quantity-block {
+            width:150px !important;
+        }
+
+        .sari-detail-seller-inline {
+            align-items:flex-start;
+            flex-direction:column;
+            gap:11px;
+        }
+
+        .sari-detail-seller-actions {
+            width:100%;
+        }
+
+        .sari-detail-seller-link {
+            flex:1 1 0;
+        }
+    }
+
 </style>
 
 <!-- SARI_PRODUCT_DETAILS_V8_LIGHT_NEUMORPHISM -->
@@ -1527,93 +2548,131 @@
             {{-- LEFT: PRODUCT PHOTOS — NO MAIN IMAGE CONTAINER --}}
             <div class="sari-v7-gallery-area">
                 <div class="sari-v7-gallery-layout {{ $gallery->count() > 1 ? 'has-thumbnails' : '' }}">
-
-                    @if ($gallery->count() > 1)
-                        <div class="sari-v7-gallery-thumbs">
-                            @foreach ($gallery as $index => $galleryImage)
-                                <button
-                                    type="button"
-                                    class="sari-v7-gallery-thumb {{ $index === 0 ? 'is-active' : '' }}"
-                                    data-product-thumb
-                                    data-image="{{ $galleryImage }}"
-                                    data-image-index="{{ $index + 1 }}"
-                                    aria-label="View product image {{ $index + 1 }}"
-                                >
-                                    <img
-                                        src="{{ $galleryImage }}"
-                                        alt="{{ $productName }} image {{ $index + 1 }}"
-                                        loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
-                                        onerror="this.closest('button')?.classList.add('hidden')"
-                                    >
-                                </button>
-                            @endforeach
-                        </div>
-                    @endif
-
                     <div class="sari-v7-gallery-main">
-                        @if ($mainImage)
-                            <img
-                                id="buyerProductMainImage"
-                                src="{{ $mainImage }}"
-                                alt="{{ $productName }}"
-                                class="sari-v7-main-photo"
-                                title="Click to enlarge"
-                                onerror="this.classList.add('hidden'); document.getElementById('buyerProductImageFallback')?.classList.remove('hidden');"
-                            >
-                            <div id="buyerProductImageFallback" class="sari-v7-main-photo-placeholder hidden">
-                                <div class="text-center">
-                                    <svg viewBox="0 0 24 24" class="mx-auto h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="4" y="4" width="16" height="16" rx="3"></rect>
-                                        <circle cx="9" cy="9" r="1.5"></circle>
-                                        <path d="m5 17 5-5 4 4 2-2 3 3"></path>
-                                    </svg>
-                                    <p class="mt-2 text-[10px]">Image unavailable</p>
+                        <div class="sari-product-gallery-stage" data-product-gallery-stage>
+                            @if ($mainImage)
+                                <img
+                                    id="buyerProductMainImage"
+                                    src="{{ $mainImage }}"
+                                    alt="{{ $productName }}"
+                                    class="sari-v7-main-photo"
+                                    title="Click to enlarge"
+                                    onerror="this.classList.add('hidden'); document.getElementById('buyerProductImageFallback')?.classList.remove('hidden');"
+                                >
+                                <div id="buyerProductImageFallback" class="sari-v7-main-photo-placeholder hidden">
+                                    <div class="text-center">
+                                        <svg viewBox="0 0 24 24" class="mx-auto h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                                            <circle cx="9" cy="9" r="1.5"></circle>
+                                            <path d="m5 17 5-5 4 4 2-2 3 3"></path>
+                                        </svg>
+                                        <p class="mt-2 text-[10px]">Image unavailable</p>
+                                    </div>
                                 </div>
-                            </div>
-                        @else
-                            <img
-                                id="buyerProductMainImage"
-                                src=""
-                                alt="{{ $productName }}"
-                                class="sari-v7-main-photo hidden"
-                            >
+                            @else
+                                <img
+                                    id="buyerProductMainImage"
+                                    src=""
+                                    alt="{{ $productName }}"
+                                    class="sari-v7-main-photo hidden"
+                                >
 
-                            <div id="buyerProductImagePlaceholder" class="sari-v7-main-photo-placeholder">
-                                <div class="text-center">
-                                    <svg viewBox="0 0 24 24" class="mx-auto h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="4" y="4" width="16" height="16" rx="3"></rect>
-                                        <circle cx="9" cy="9" r="1.5"></circle>
-                                        <path d="m5 17 5-5 4 4 2-2 3 3"></path>
-                                    </svg>
-                                    <p class="mt-2 text-[10px]">No product image</p>
+                                <div id="buyerProductImagePlaceholder" class="sari-v7-main-photo-placeholder">
+                                    <div class="text-center">
+                                        <svg viewBox="0 0 24 24" class="mx-auto h-10 w-10" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                                            <circle cx="9" cy="9" r="1.5"></circle>
+                                            <path d="m5 17 5-5 4 4 2-2 3 3"></path>
+                                        </svg>
+                                        <p class="mt-2 text-[10px]">No product image</p>
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
 
+                            {{-- Product-card style marketplace badges. --}}
+                            <div class="sari-detail-media-badges" aria-hidden="true">
+                                @if ($stock > 0)
+                                    <span class="sari-detail-media-badge">MALL</span>
+                                @else
+                                    <span class="sari-detail-media-badge sari-detail-media-badge--out">Out of Stock</span>
+                                @endif
+                            </div>
+
+                            @if ($discountPercent > 0)
+                                <span
+                                    class="sari-detail-discount-corner"
+                                    aria-label="{{ rtrim(rtrim(number_format($discountPercent, 2, '.', ''), '0'), '.') }} percent discount"
+                                >
+                                    -{{ rtrim(rtrim(number_format($discountPercent, 2, '.', ''), '0'), '.') }}%
+                                </span>
+                            @endif
+
+                            @if ($showOfferCluster)
+                                <div class="sari-detail-offer-cluster" aria-label="Product offer badges">
+                                    @if ($discountPercent > 0)
+                                        <span class="sari-detail-offer-item sari-detail-offer-item--discount">
+                                            <span class="sari-detail-offer-stack">
+                                                <span class="sari-detail-offer-kicker">MEGA</span>
+                                                <span class="sari-detail-offer-main">Discount</span>
+                                            </span>
+                                        </span>
+                                    @endif
+
+                                    @if ($codAvailable)
+                                        <span class="sari-detail-offer-item sari-detail-offer-item--cod">
+                                            <span class="sari-detail-offer-stack">
+                                                <span class="sari-detail-offer-kicker">COD</span>
+                                                <span class="sari-detail-offer-main">Cash on Delivery</span>
+                                            </span>
+                                        </span>
+                                    @endif
+
+                                    @if ($freeShipping)
+                                        <span class="sari-detail-offer-item sari-detail-offer-item--shipping">
+                                            <span class="sari-detail-offer-stack">
+                                                <span class="sari-detail-offer-kicker">XTRA</span>
+                                                <span class="sari-detail-offer-main">
+                                                    {{ $freeShippingMinimum > 0
+                                                        ? 'Free Shipping ₱' . number_format($freeShippingMinimum, 0) . '+'
+                                                        : 'Free Shipping' }}
+                                                </span>
+                                            </span>
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
+
+                            @if ($gallery->count() > 1)
+                                <button
+                                    id="buyerGalleryPrev"
+                                    type="button"
+                                    class="sari-product-gallery-nav sari-product-gallery-nav--prev"
+                                    aria-label="Previous product image"
+                                >
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="m15 18-6-6 6-6"></path>
+                                    </svg>
+                                </button>
+
+                                <button
+                                    id="buyerGalleryNext"
+                                    type="button"
+                                    class="sari-product-gallery-nav sari-product-gallery-nav--next"
+                                    aria-label="Next product image"
+                                >
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="m9 18 6-6-6-6"></path>
+                                    </svg>
+                                </button>
+                            @endif
+                        </div>
 
                         <div class="sari-v7-gallery-meta">
-                            <div class="sari-v7-gallery-meta-left">
-                                @if ($freeShipping)
-                                    <span class="sari-v7-shipping-pill">
-                                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                                            <path d="M3 7h11v9H3z"></path>
-                                            <path d="M14 10h4l3 3v3h-7z"></path>
-                                            <circle cx="7" cy="18" r="1.25"></circle>
-                                            <circle cx="18" cy="18" r="1.25"></circle>
-                                        </svg>
-                                        Free Shipping
-                                    </span>
-                                @endif
-
-                                @if ($discountPercent > 0)
-                                    <span class="sari-v7-gallery-discount">
-                                        -{{ rtrim(rtrim(number_format($discountPercent, 2, '.', ''), '0'), '.') }}%
-                                    </span>
-                                @endif
-                            </div>
+                            {{-- Promo badges now live on the product image, matching the shared product card. --}}
+                            <div class="sari-v7-gallery-meta-left"></div>
 
                             <div class="sari-v7-gallery-meta-right">
-                                @if ($gallery->count() > 1)
+                                @if ($gallery->isNotEmpty())
                                     <span id="buyerGalleryCounter" class="sari-v7-gallery-count">
                                         1 / {{ $gallery->count() }}
                                     </span>
@@ -1630,6 +2689,29 @@
                                 @endif
                             </div>
                         </div>
+
+                        @if ($gallery->count() > 1)
+                            <div class="sari-v7-gallery-thumbs" aria-label="Product gallery">
+                                @foreach ($gallery as $index => $galleryImage)
+                                    <button
+                                        type="button"
+                                        class="sari-v7-gallery-thumb {{ $index === 0 ? 'is-active' : '' }}"
+                                        data-product-thumb
+                                        data-image="{{ $galleryImage }}"
+                                        data-image-index="{{ $index }}"
+                                        aria-label="View product image {{ $index + 1 }}"
+                                    >
+                                        <img
+                                            src="{{ $galleryImage }}"
+                                            alt="{{ $productName }} image {{ $index + 1 }}"
+                                            loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                                            onerror="this.closest('button')?.classList.add('hidden')"
+                                        >
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
                 </div>
 
@@ -1749,51 +2831,91 @@
                             </span>
                         </div>
 
-                        @if ($discountPercent > 0)
-                            <span class="rounded-full border border-[#ead09a] bg-[#fff4d7] px-3 py-1.5 text-[8px] font-bold text-[#9d650b]">
-                                Save {{ rtrim(rtrim(number_format($discountPercent, 2, '.', ''), '0'), '.') }}%
-                            </span>
-                        @endif
                     </div>
                 </div>
 
 @if ($hasVariants && $variants->isNotEmpty())
-                    <div class="sari-v7-section">
-                        <div class="flex items-center justify-between gap-3">
-                            <div>
-                                <p class="sari-v7-section-title">Choose an option</p>
-                                <p class="sari-v7-section-help">Select your preferred variant.</p>
+                    <div class="sari-v7-section" data-buyer-variant-selector>
+                        <div>
+                            <p class="sari-v7-section-title">Choose your variant</p>
+                            <p class="sari-v7-section-help">
+                                @if ($variantOptionGroups->isNotEmpty())
+                                    Select {{ $variantOptionGroups->pluck('name')->implode(' first, then ') }}.
+                                @else
+                                    Select your preferred variant.
+                                @endif
+                            </p>
+                        </div>
+
+                        @if ($variantOptionGroups->isNotEmpty())
+                            <div class="mt-4 space-y-4" data-buyer-option-groups>
+                                @foreach ($variantOptionGroups as $groupIndex => $group)
+                                    @php
+                                        $isColorGroup = $isColorOptionGroup($group['name']);
+                                    @endphp
+
+                                    <div
+                                        data-buyer-option-group
+                                        data-option-group-name="{{ $group['name'] }}"
+                                        data-option-group-index="{{ $groupIndex }}"
+                                        data-option-group-kind="{{ $isColorGroup ? 'color' : 'standard' }}"
+                                    >
+                                        <p class="text-[10px] font-semibold text-[#344050]">
+                                            {{ $group['name'] }}
+                                        </p>
+
+                                        <div class="mt-2 flex flex-wrap gap-2">
+                                            @foreach ((array) $group['values'] as $value)
+                                                @php
+                                                    $swatch = $isColorGroup ? $resolveColorSwatch($value) : null;
+                                                @endphp
+                                                <button
+                                                    type="button"
+                                                    class="buyer-variant-button {{ $isColorGroup ? 'buyer-color-swatch-button' : '' }} rounded-[9px] px-4 py-2.5 text-[9px] font-semibold"
+                                                    data-buyer-option
+                                                    data-option-group="{{ $group['name'] }}"
+                                                    data-option-value="{{ $value }}"
+                                                    data-option-index="{{ $groupIndex }}"
+                                                    aria-label="{{ $isColorGroup ? 'Color ' . $value : $group['name'] . ' ' . $value }}"
+                                                    title="{{ $value }}"
+                                                    aria-pressed="false"
+                                                    @disabled($groupIndex > 0)
+                                                >
+                                                    @if ($isColorGroup)
+                                                        <span
+                                                            class="buyer-color-swatch"
+                                                            style="--buyer-color-swatch: {{ $swatch }};"
+                                                            aria-hidden="true"
+                                                        ></span>
+                                                    @else
+                                                        {{ $value }}
+                                                    @endif
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            <span id="buyerSelectedVariantLabel" class="text-right text-[8px] font-semibold text-[#9a6817]">Not selected</span>
-                        </div>
 
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            @foreach ($variants as $variant)
-                                @php
-                                    $variantId = (int) ($variant['id'] ?? 0);
-                                    $variantAvailable = (bool) ($variant['available'] ?? false);
-                                    $variantImage = $imageUrl($variant['image'] ?? null);
-                                @endphp
-
-                                <button
-                                    type="button"
-                                    class="buyer-variant-button rounded-full px-4 py-2.5 text-[9px] font-semibold"
-                                    data-buyer-variant
-                                    data-id="{{ $variantId }}"
-                                    data-label="{{ $variant['label'] ?? ('Variant #' . $variantId) }}"
-                                    data-price="{{ (float) ($variant['price'] ?? 0) }}"
-                                    data-old-price="{{ $variant['old_price'] ?? '' }}"
-                                    data-stock="{{ (int) ($variant['stock'] ?? 0) }}"
-                                    data-image="{{ $variantImage ?? '' }}"
-                                    @disabled(!$variantAvailable)
-                                >
-                                    {{ $variant['label'] ?? ('Variant #' . $variantId) }}
-                                    @if (!$variantAvailable)
-                                        <span class="ml-1 text-[#aa7a7a]">· Out</span>
-                                    @endif
-                                </button>
-                            @endforeach
-                        </div>
+                        @else
+                            {{-- Legacy fallback for old variant rows that do not contain structured option values. --}}
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                @foreach ($variantMatrix as $variant)
+                                    <button
+                                        type="button"
+                                        class="buyer-variant-button rounded-[9px] px-4 py-2.5 text-[9px] font-semibold"
+                                        data-buyer-variant-direct
+                                        data-id="{{ $variant['id'] }}"
+                                        @disabled(!$variant['available'])
+                                    >
+                                        {{ $variant['label'] !== '' ? $variant['label'] : ('Variant #' . $variant['id']) }}
+                                        @if (!$variant['available'])
+                                            <span class="ml-1 text-[#aa7a7a]">· Out</span>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 @elseif (!empty($optionGroups))
                     <div class="mt-5 border-t border-[#eee8df] pt-4">
@@ -1813,19 +2935,22 @@
                 @endif
 
                 <div class="sari-v7-availability">
-                    <div>
+                    <div
+                        id="buyerAvailabilityBlock"
+                        class="sari-v7-stock-block {{ $hasVariants && $variants->isNotEmpty() ? 'hidden' : '' }}"
+                    >
                         <p class="text-[9px] font-semibold text-[#776e64]">Availability</p>
                         <p id="buyerProductStock" class="mt-1.5 text-[11px] font-bold {{ $stock > 0 ? 'text-[#4f8065]' : 'text-[#b65e5e]' }}">
                             {{ $stock > 0 ? number_format($stock) . ' in stock' : 'Out of stock' }}
                         </p>
                     </div>
 
-                    <div>
+                    <div class="sari-v7-quantity-block">
                         <p class="mb-1.5 text-[9px] font-semibold text-[#6a6259]">Quantity</p>
                         <div class="sari-v7-qty">
-                            <button id="buyerQtyMinus" type="button" aria-label="Decrease quantity">−</button>
-                            <input id="buyerQuantity" type="number" min="1" max="{{ max(1, $stock) }}" value="1">
-                            <button id="buyerQtyPlus" type="button" aria-label="Increase quantity">+</button>
+                            <button id="buyerQtyMinus" type="button" aria-label="Decrease quantity" @disabled($hasVariants && $variants->isNotEmpty())>−</button>
+                            <input id="buyerQuantity" type="number" min="1" max="{{ max(1, $stock) }}" value="1" @disabled($hasVariants && $variants->isNotEmpty())>
+                            <button id="buyerQtyPlus" type="button" aria-label="Increase quantity" @disabled($hasVariants && $variants->isNotEmpty())>+</button>
                         </div>
                     </div>
                 </div>
@@ -1841,21 +2966,21 @@
                             id="buyerAddToCartButton"
                             type="submit"
                             class="buyer-product-secondary inline-flex h-12 items-center justify-center gap-2 rounded-[11px] px-4 text-[10px] font-bold"
-                            @disabled($stock <= 0)
+                            @disabled($stock <= 0 || ($hasVariants && $variants->isNotEmpty()))
                         >
                             <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.9">
                                 <circle cx="9" cy="20" r="1"></circle>
                                 <circle cx="18" cy="20" r="1"></circle>
                                 <path d="M3 4h2l2 11h11l2-8H6"></path>
                             </svg>
-                            <span id="buyerAddToCartLabel">{{ $stock > 0 ? 'Add to Cart' : 'Out of Stock' }}</span>
+                            <span id="buyerAddToCartLabel">{{ $hasVariants && $variants->isNotEmpty() ? 'Select options' : ($stock > 0 ? 'Add to Cart' : 'Out of Stock') }}</span>
                         </button>
 
                         <button
                             id="buyerBuyNowButton"
                             type="button"
                             class="buyer-product-primary inline-flex h-12 items-center justify-center gap-2 rounded-[11px] px-5 text-[10px] font-bold"
-                            @disabled($stock <= 0)
+                            @disabled($stock <= 0 || ($hasVariants && $variants->isNotEmpty()))
                         >
                             <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.9">
                                 <path d="m13 2-7 12h6l-1 8 7-12h-6l1-8Z"></path>
@@ -1872,37 +2997,35 @@
                     </a>
                 </form>
 
-<div class="sari-v7-seller-card">
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-3">
-                            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] border border-[#ead9b8] bg-[#fff8e9] text-[#b97913]">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M4 10h16"></path>
-                                    <path d="M5 10 7 5h10l2 5"></path>
-                                    <path d="M6 10v9h12v-9"></path>
-                                </svg>
-                            </span>
-
-                            <div>
-                                <p class="text-[7px] font-bold uppercase tracking-[.11em] text-[#aa781d]">Sold by</p>
-                                <p class="mt-0.5 text-[10.5px] font-bold text-[#403930]">{{ $shopName }}</p>
-                                <p class="mt-0.5 text-[7.5px] text-[#91887d]">Approved SARI marketplace seller</p>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2">
-                            @if ($shopSlug !== '')
-                                <a href="{{ route('buyer.shop', ['shop' => $shopSlug]) }}" class="h-9 rounded-[9px] border border-[#d9d1c7] bg-white px-3 text-[8px] font-semibold leading-9 text-[#675f56] transition hover:bg-[#faf8f5]">
-                                    Visit Shop
-                                </a>
+<div class="sari-detail-seller-inline">
+                    <div class="sari-detail-seller-identity">
+                        <span class="sari-detail-seller-avatar" aria-hidden="true">
+                            @if ($sellerAvatar)
+                                <img src="{{ $sellerAvatar }}" alt="" loading="lazy">
+                            @else
+                                {{ $sellerInitial }}
                             @endif
+                        </span>
 
-                            @if ($sellerId > 0)
-                                <a href="{{ route('buyer.messages', ['seller' => $sellerId]) }}" class="h-9 rounded-[9px] border border-[#d7b876] bg-[#fffaf1] px-3 text-[8px] font-semibold leading-9 text-[#956415] transition hover:bg-[#fff5df]">
-                                    Message Seller
-                                </a>
-                            @endif
+                        <div class="min-w-0">
+                            <p class="sari-detail-seller-label">Sold by</p>
+                            <p class="sari-detail-seller-name">{{ $shopName }}</p>
+                            <p class="sari-detail-seller-status">Approved SARI marketplace seller</p>
                         </div>
+                    </div>
+
+                    <div class="sari-detail-seller-actions">
+                        @if ($shopSlug !== '')
+                            <a href="{{ route('buyer.shop', ['shop' => $shopSlug]) }}" class="sari-detail-seller-link sari-detail-seller-link--accent">
+                                Visit Shop
+                            </a>
+                        @endif
+
+                        @if ($sellerId > 0)
+                            <a href="{{ route('buyer.messages', ['seller' => $sellerId]) }}" class="sari-detail-seller-link">
+                                Message Seller
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1953,9 +3076,26 @@
                 @endforeach
             </div>
         @else
-            <div class="mt-4 rounded-[14px] border border-dashed border-[#ddd6cd] bg-[#fcfbf8] px-5 py-8 text-center">
-                <p class="text-[9px] font-semibold text-[#655d54]">No reviews yet</p>
-                <p class="mt-1 text-[8px] text-[#9a9187]">Buyer reviews will appear here after completed orders.</p>
+            <div
+                class="mt-4 rounded-[14px] px-5 py-8 text-center"
+                style="border:1px solid #e3e7eb; background:#f6f7f8; box-shadow:none;"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    class="mx-auto h-9 w-9"
+                    style="color:#a6adb5;"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+                    <path d="m12 7 .9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2L9.1 9.1l2-.3L12 7z"></path>
+                </svg>
+                <p class="mt-3 text-[10px] font-semibold text-[#46515d]">No reviews yet</p>
+                <p class="mt-1 text-[8.5px] text-[#7f8994]">Buyer reviews will appear here after completed orders.</p>
             </div>
         @endif
     </section>
@@ -2031,7 +3171,12 @@ document.addEventListener('livewire:navigated', function () {
 
     const hasVariants = @json($hasVariants && $variants->isNotEmpty());
     const initialProductStock = Number(@json($stock));
+    const initialProductPrice = Number(@json($price));
+    const initialOldPrice = Number(@json($oldPrice ?? 0));
     const defaultImage = @json($mainImage);
+    const galleryImages = @json($gallery->values()->all());
+    const variantMatrix = @json($variantMatrix->values()->all());
+    const variantOptionGroups = @json($variantOptionGroupsPayload);
     const cartUrl = @json(route('buyer.cart.items.store'));
     const checkoutUrl = @json(route('buyer.checkout'));
     const buyNowMode = new URLSearchParams(window.location.search).get('buy_now') === '1';
@@ -2039,8 +3184,14 @@ document.addEventListener('livewire:navigated', function () {
     const mainImage = document.getElementById('buyerProductMainImage');
     const imagePlaceholder = document.getElementById('buyerProductImagePlaceholder');
     const thumbButtons = Array.from(document.querySelectorAll('[data-product-thumb]'));
-    const variantButtons = Array.from(document.querySelectorAll('[data-buyer-variant]'));
+    const optionButtons = Array.from(document.querySelectorAll('[data-buyer-option]'));
+    const optionGroupElements = Array.from(document.querySelectorAll('[data-buyer-option-group]'));
+    const directVariantButtons = Array.from(document.querySelectorAll('[data-buyer-variant-direct]'));
+    const variantHint = document.querySelector('[data-buyer-variant-hint]');
     const galleryCounter = document.getElementById('buyerGalleryCounter');
+    const galleryPrev = document.getElementById('buyerGalleryPrev');
+    const galleryNext = document.getElementById('buyerGalleryNext');
+    const galleryStage = document.querySelector('[data-product-gallery-stage]');
     const zoomButton = document.getElementById('buyerProductZoomButton');
     const lightbox = document.getElementById('buyerProductLightbox');
     const lightboxImage = document.getElementById('buyerProductLightboxImage');
@@ -2052,6 +3203,7 @@ document.addEventListener('livewire:navigated', function () {
     const priceText = document.getElementById('buyerProductPrice');
     const oldPriceText = document.getElementById('buyerProductOldPrice');
     const stockText = document.getElementById('buyerProductStock');
+    const availabilityBlock = document.getElementById('buyerAvailabilityBlock');
 
     const qtyInput = document.getElementById('buyerQuantity');
     const qtyHidden = document.getElementById('buyerQuantityHidden');
@@ -2064,7 +3216,11 @@ document.addEventListener('livewire:navigated', function () {
     const buyNowButton = document.getElementById('buyerBuyNowButton');
     const notice = document.getElementById('buyerProductNotice');
 
-    let activeStock = initialProductStock;
+    let activeStock = hasVariants ? 0 : initialProductStock;
+    let activeGalleryIndex = 0;
+    let showingVariantImage = false;
+    let touchStartX = null;
+    const selectedOptions = {};
 
     function peso(value) {
         return '₱' + Number(value || 0).toLocaleString('en-PH', {
@@ -2088,7 +3244,7 @@ document.addEventListener('livewire:navigated', function () {
         notice.classList.remove('hidden');
     }
 
-    function setMainImage(src) {
+    function renderMainImage(src) {
         if (!mainImage || !src) return;
 
         mainImage.src = src;
@@ -2100,25 +3256,102 @@ document.addEventListener('livewire:navigated', function () {
 
         imagePlaceholder?.classList.add('hidden');
         imagePlaceholder?.classList.remove('grid');
+        document.getElementById('buyerProductImageFallback')?.classList.add('hidden');
+    }
 
-        let activeIndex = 0;
-
+    function updateGalleryUi() {
         thumbButtons.forEach((button, index) => {
-            const isActive = button.dataset.image === src;
+            const isActive = !showingVariantImage && index === activeGalleryIndex;
             button.classList.toggle('is-active', isActive);
-            if (isActive) activeIndex = index + 1;
+            button.setAttribute('aria-current', isActive ? 'true' : 'false');
         });
 
-        if (galleryCounter && thumbButtons.length) {
-            galleryCounter.textContent = `${activeIndex || 1} / ${thumbButtons.length}`;
+        if (galleryCounter) {
+            if (showingVariantImage) {
+                galleryCounter.textContent = 'Variant image';
+                galleryCounter.classList.add('is-variant-preview');
+            } else if (galleryImages.length > 0) {
+                galleryCounter.textContent = `${activeGalleryIndex + 1} / ${galleryImages.length}`;
+                galleryCounter.classList.remove('is-variant-preview');
+            }
         }
     }
 
-    thumbButtons.forEach((button) => {
+    function showGalleryImage(index, { scrollThumb = true } = {}) {
+        if (!galleryImages.length) return;
+
+        const length = galleryImages.length;
+        activeGalleryIndex = ((Number(index) % length) + length) % length;
+        showingVariantImage = false;
+
+        renderMainImage(galleryImages[activeGalleryIndex]);
+        updateGalleryUi();
+
+        if (scrollThumb) {
+            thumbButtons[activeGalleryIndex]?.scrollIntoView({
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                block: 'nearest',
+                inline: 'nearest',
+            });
+        }
+    }
+
+    function showVariantImage(src) {
+        if (!src) {
+            showGalleryImage(activeGalleryIndex, { scrollThumb: false });
+            return;
+        }
+
+        showingVariantImage = true;
+        renderMainImage(src);
+        updateGalleryUi();
+    }
+
+    function stepGallery(direction) {
+        if (!galleryImages.length) return;
+
+        // A resolved variant may temporarily replace the main photo. The
+        // gallery arrows always return to and navigate only the seller's
+        // Cover Image + Product Gallery collection.
+        const offset = showingVariantImage ? 0 : Number(direction || 0);
+        const nextIndex = showingVariantImage
+            ? activeGalleryIndex
+            : activeGalleryIndex + offset;
+
+        showGalleryImage(nextIndex);
+    }
+
+    thumbButtons.forEach((button, index) => {
         button.addEventListener('click', function () {
-            setMainImage(this.dataset.image || '');
+            const explicitIndex = Number(this.dataset.imageIndex);
+            showGalleryImage(Number.isFinite(explicitIndex) ? explicitIndex : index);
         }, { signal });
     });
+
+    galleryPrev?.addEventListener('click', function (event) {
+        event.stopPropagation();
+        stepGallery(-1);
+    }, { signal });
+
+    galleryNext?.addEventListener('click', function (event) {
+        event.stopPropagation();
+        stepGallery(1);
+    }, { signal });
+
+    galleryStage?.addEventListener('touchstart', function (event) {
+        touchStartX = event.touches?.[0]?.clientX ?? null;
+    }, { signal, passive: true });
+
+    galleryStage?.addEventListener('touchend', function (event) {
+        if (touchStartX === null) return;
+
+        const touchEndX = event.changedTouches?.[0]?.clientX ?? touchStartX;
+        const deltaX = touchEndX - touchStartX;
+        touchStartX = null;
+
+        if (Math.abs(deltaX) < 45 || galleryImages.length < 2) return;
+        stepGallery(deltaX > 0 ? -1 : 1);
+    }, { signal, passive: true });
 
     function openLightbox() {
         if (!lightbox || !mainImage?.src) return;
@@ -2144,7 +3377,20 @@ document.addEventListener('livewire:navigated', function () {
     }, { signal });
 
     document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') closeLightbox();
+        if (event.key === 'Escape') {
+            closeLightbox();
+            return;
+        }
+
+        if (lightbox?.classList.contains('is-open')) return;
+
+        if (event.key === 'ArrowLeft' && galleryImages.length > 1) {
+            stepGallery(-1);
+        }
+
+        if (event.key === 'ArrowRight' && galleryImages.length > 1) {
+            stepGallery(1);
+        }
     }, { signal });
 
     function syncQuantity() {
@@ -2175,67 +3421,328 @@ document.addEventListener('livewire:navigated', function () {
 
     qtyInput?.addEventListener('input', syncQuantity, { signal });
 
-    variantButtons.forEach((button) => {
+    function normalizeOptionToken(value) {
+        return String(value ?? '').trim().toLocaleLowerCase();
+    }
+
+    function variantOptionValue(variant, groupName) {
+        const options = variant && typeof variant.options === 'object' && variant.options !== null
+            ? variant.options
+            : {};
+        const wanted = normalizeOptionToken(groupName);
+
+        for (const [key, value] of Object.entries(options)) {
+            if (normalizeOptionToken(key) === wanted) {
+                return String(value ?? '').trim();
+            }
+        }
+
+        return '';
+    }
+
+    function variantMatchesSelections(variant, selections) {
+        return Object.entries(selections).every(([groupName, selectedValue]) => {
+            return normalizeOptionToken(variantOptionValue(variant, groupName))
+                === normalizeOptionToken(selectedValue);
+        });
+    }
+
+    function inStockVariant(variant) {
+        return Boolean(variant)
+            && Number(variant.stock || 0) > 0
+            && variant.available !== false;
+    }
+
+    function orderedSelectionValues() {
+        return variantOptionGroups
+            .map((group) => selectedOptions[group.name])
+            .filter((value) => String(value ?? '').trim() !== '');
+    }
+
+    function nextUnselectedGroup() {
+        return variantOptionGroups.find((group) => !selectedOptions[group.name]) || null;
+    }
+
+    function setQuantityEnabled(enabled) {
+        if (qtyInput) qtyInput.disabled = !enabled;
+        if (qtyMinus) qtyMinus.disabled = !enabled;
+        if (qtyPlus) qtyPlus.disabled = !enabled;
+    }
+
+    function setStockMessage(message, available = null) {
+        if (!stockText) return;
+
+        const cleanMessage = String(message || '').trim();
+        stockText.textContent = cleanMessage;
+        stockText.classList.toggle('text-[#4f8065]', available === true);
+        stockText.classList.toggle('text-[#b65e5e]', available === false);
+        stockText.classList.remove('text-[#7b8795]');
+
+        if (availabilityBlock) {
+            availabilityBlock.classList.toggle('hidden', cleanMessage === '');
+        }
+    }
+
+    function restoreBaseVariantDisplay(message = '') {
+        if (variantInput) variantInput.value = '';
+
+        activeStock = 0;
+
+        if (priceText) {
+            priceText.textContent = peso(initialProductPrice);
+        }
+
+        if (oldPriceText) {
+            oldPriceText.textContent = initialOldPrice > 0 ? peso(initialOldPrice) : '';
+            oldPriceText.classList.toggle('hidden', initialOldPrice <= 0);
+        }
+
+        if (qtyInput) {
+            qtyInput.max = '1';
+            qtyInput.value = '1';
+        }
+
+        if (qtyHidden) qtyHidden.value = '1';
+
+        setQuantityEnabled(false);
+
+        if (addToCartButton) addToCartButton.disabled = true;
+        if (buyNowButton) buyNowButton.disabled = true;
+        if (addToCartLabel) addToCartLabel.textContent = 'Select options';
+
+        // Do not show instructional stock text while options are incomplete.
+        // Availability appears only after an exact variant is resolved.
+        setStockMessage('', null);
+
+        if (defaultImage) {
+            showGalleryImage(0, { scrollThumb: false });
+        }
+    }
+
+    function applyResolvedVariant(variant) {
+        if (!variant) return;
+
+        const variantId = String(variant.id || '');
+        const price = Number(variant.price || 0);
+        const oldPrice = Number(variant.old_price || 0);
+        const stock = Math.max(0, Number(variant.stock || 0));
+        const image = String(variant.image || '');
+        const selectionValues = orderedSelectionValues();
+        const fallbackLabel = String(variant.label || 'Selected variant');
+        const label = selectionValues.length ? selectionValues.join(' • ') : fallbackLabel;
+
+        if (variantInput) variantInput.value = variantId;
+        if (selectedVariantLabel) selectedVariantLabel.textContent = label;
+
+        if (priceText) priceText.textContent = peso(price);
+
+        if (oldPriceText) {
+            oldPriceText.textContent = oldPrice > 0 ? peso(oldPrice) : '';
+            oldPriceText.classList.toggle('hidden', oldPrice <= 0);
+        }
+
+        activeStock = stock;
+        setStockMessage(
+            stock > 0 ? `${stock.toLocaleString('en-PH')} in stock` : 'Out of stock',
+            stock > 0
+        );
+
+        if (qtyInput) {
+            qtyInput.max = String(Math.max(1, stock));
+            qtyInput.value = '1';
+        }
+
+        if (qtyHidden) qtyHidden.value = '1';
+
+        const purchasable = stock > 0;
+        setQuantityEnabled(purchasable);
+
+        if (addToCartButton) addToCartButton.disabled = !purchasable;
+        if (buyNowButton) buyNowButton.disabled = !purchasable;
+        if (addToCartLabel) {
+            addToCartLabel.textContent = purchasable ? 'Add to Cart' : 'Out of Stock';
+        }
+
+        if (image) {
+            showVariantImage(image);
+        } else if (defaultImage) {
+            showGalleryImage(0, { scrollThumb: false });
+        }
+
+        if (variantHint) {
+            variantHint.textContent = purchasable
+                ? 'Variant selected. Price, image and stock are updated automatically.'
+                : 'The selected variant is currently out of stock.';
+            variantHint.classList.toggle('is-ready', purchasable);
+        }
+
+        syncQuantity();
+    }
+
+    function updateGroupStatuses() {
+        optionGroupElements.forEach((groupElement, groupIndex) => {
+            const groupName = String(groupElement.dataset.optionGroupName || '');
+            const status = groupElement.querySelector('[data-buyer-option-group-status]');
+            const selectedValue = selectedOptions[groupName];
+
+            if (!status) return;
+
+            if (selectedValue) {
+                status.textContent = String(selectedValue);
+                status.classList.add('is-selected');
+                return;
+            }
+
+            status.classList.remove('is-selected');
+
+            if (groupIndex === 0) {
+                status.textContent = 'Choose one';
+                return;
+            }
+
+            const previousGroup = variantOptionGroups[groupIndex - 1];
+            status.textContent = previousGroup && selectedOptions[previousGroup.name]
+                ? 'Choose one'
+                : `Select ${previousGroup?.name || 'previous option'} first`;
+        });
+    }
+
+    function refreshOptionAvailability() {
+        optionButtons.forEach((button) => {
+            const groupIndex = Number(button.dataset.optionIndex || 0);
+            const groupName = String(button.dataset.optionGroup || '');
+            const optionValue = String(button.dataset.optionValue || '');
+            const previousGroups = variantOptionGroups.slice(0, groupIndex);
+            const previousComplete = previousGroups.every((group) => Boolean(selectedOptions[group.name]));
+
+            const candidateSelections = {};
+            previousGroups.forEach((group) => {
+                if (selectedOptions[group.name]) {
+                    candidateSelections[group.name] = selectedOptions[group.name];
+                }
+            });
+            candidateSelections[groupName] = optionValue;
+
+            const available = previousComplete && variantMatrix.some((variant) => {
+                return inStockVariant(variant)
+                    && variantMatchesSelections(variant, candidateSelections);
+            });
+
+            button.disabled = !available;
+            button.setAttribute('aria-disabled', available ? 'false' : 'true');
+
+            const selected = normalizeOptionToken(selectedOptions[groupName])
+                === normalizeOptionToken(optionValue);
+            button.classList.toggle('is-selected', selected);
+            button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+
+        updateGroupStatuses();
+    }
+
+    function resolveSelectedVariant() {
+        const complete = variantOptionGroups.length > 0
+            && variantOptionGroups.every((group) => Boolean(selectedOptions[group.name]));
+
+        if (!complete) {
+            const nextGroup = nextUnselectedGroup();
+            const chosen = orderedSelectionValues();
+            const prompt = nextGroup ? `Select ${nextGroup.name}` : 'Select options';
+
+            if (selectedVariantLabel) {
+                selectedVariantLabel.textContent = chosen.length
+                    ? `${chosen.join(' • ')} · ${prompt}`
+                    : prompt;
+            }
+
+            restoreBaseVariantDisplay();
+
+            if (variantHint) {
+                variantHint.textContent = nextGroup
+                    ? `Choose ${nextGroup.name}. Only available combinations can be selected.`
+                    : 'Choose the required options.';
+                variantHint.classList.remove('is-ready');
+            }
+
+            return;
+        }
+
+        const variant = variantMatrix.find((item) => variantMatchesSelections(item, selectedOptions));
+
+        if (!variant) {
+            restoreBaseVariantDisplay('This combination is unavailable.');
+            if (selectedVariantLabel) selectedVariantLabel.textContent = 'Combination unavailable';
+            if (variantHint) {
+                variantHint.textContent = 'This option combination does not exist. Choose another combination.';
+                variantHint.classList.remove('is-ready');
+            }
+            return;
+        }
+
+        applyResolvedVariant(variant);
+    }
+
+    optionButtons.forEach((button) => {
         button.addEventListener('click', function () {
             if (this.disabled) return;
 
-            variantButtons.forEach((item) => item.classList.remove('is-selected'));
-            this.classList.add('is-selected');
+            const groupIndex = Number(this.dataset.optionIndex || 0);
+            const groupName = String(this.dataset.optionGroup || '');
+            const optionValue = String(this.dataset.optionValue || '');
 
-            const variantId = String(this.dataset.id || '');
-            const label = String(this.dataset.label || 'Selected variant');
-            const price = Number(this.dataset.price || 0);
-            const oldPrice = Number(this.dataset.oldPrice || 0);
-            const stock = Math.max(0, Number(this.dataset.stock || 0));
-            const image = String(this.dataset.image || '');
+            // Changing an earlier option invalidates every later choice. This
+            // keeps Size -> Color selection deterministic and prevents a stale
+            // color from silently selecting the wrong variant.
+            variantOptionGroups.slice(groupIndex).forEach((group) => {
+                delete selectedOptions[group.name];
+            });
 
-            if (variantInput) variantInput.value = variantId;
-            if (selectedVariantLabel) selectedVariantLabel.textContent = label;
+            selectedOptions[groupName] = optionValue;
 
-            if (priceText) priceText.textContent = peso(price);
-
-            if (oldPriceText) {
-                oldPriceText.textContent = oldPrice > 0 ? peso(oldPrice) : '';
-                oldPriceText.classList.toggle('hidden', oldPrice <= 0);
-            }
-
-            activeStock = stock;
-
-            if (stockText) {
-                stockText.textContent = stock > 0
-                    ? `${stock.toLocaleString('en-PH')} in stock`
-                    : 'Out of stock';
-
-                stockText.classList.toggle('text-[#4f8065]', stock > 0);
-                stockText.classList.toggle('text-[#b65e5e]', stock <= 0);
-            }
-
-            if (qtyInput) {
-                qtyInput.max = String(Math.max(1, stock));
-                qtyInput.value = '1';
-            }
-
-            if (addToCartButton) {
-                addToCartButton.disabled = stock <= 0;
-            }
-
-            if (buyNowButton) {
-                buyNowButton.disabled = stock <= 0;
-            }
-
-            if (addToCartLabel) {
-                addToCartLabel.textContent = stock > 0 ? 'Add to Cart' : 'Out of Stock';
-            }
-
-            if (image) {
-                setMainImage(image);
-            } else if (defaultImage) {
-                setMainImage(defaultImage);
-            }
-
-            syncQuantity();
+            refreshOptionAvailability();
+            resolveSelectedVariant();
         }, { signal });
     });
+
+    directVariantButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            if (this.disabled) return;
+
+            directVariantButtons.forEach((item) => {
+                item.classList.remove('is-selected');
+                item.setAttribute('aria-pressed', 'false');
+            });
+
+            this.classList.add('is-selected');
+            this.setAttribute('aria-pressed', 'true');
+
+            const variantId = Number(this.dataset.id || 0);
+            const variant = variantMatrix.find((item) => Number(item.id || 0) === variantId);
+
+            if (variant) {
+                applyResolvedVariant(variant);
+            }
+        }, { signal });
+    });
+
+    if (galleryImages.length > 0) {
+        showGalleryImage(0, { scrollThumb: false });
+    }
+
+    if (hasVariants) {
+        if (variantOptionGroups.length > 0) {
+            refreshOptionAvailability();
+            const firstGroup = variantOptionGroups[0];
+            restoreBaseVariantDisplay();
+            if (selectedVariantLabel) {
+                selectedVariantLabel.textContent = `Select ${firstGroup?.name || 'option'}`;
+            }
+        } else {
+            restoreBaseVariantDisplay();
+        }
+    } else {
+        setQuantityEnabled(initialProductStock > 0);
+    }
 
     async function submitCart({ buyNow = false } = {}) {
         if (hasVariants && !variantInput?.value) {

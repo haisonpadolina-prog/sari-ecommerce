@@ -29,20 +29,14 @@ class LogisticsRiderApplicationController extends Controller
         $applications = RegistrationApplication::query()
             ->with('logistics')
             ->where('role', 'rider')
-            ->where(function ($query) use ($logistics): void {
-                $query->where('logistics_account_id', $logistics->id)
-                    ->orWhereNull('logistics_account_id');
-            })
+            ->where('logistics_account_id', $logistics->id)
             ->where('status', $status)
             ->latest('created_at')
             ->get();
 
         $summary = RegistrationApplication::query()
             ->where('role', 'rider')
-            ->where(function ($query) use ($logistics): void {
-                $query->where('logistics_account_id', $logistics->id)
-                    ->orWhereNull('logistics_account_id');
-            })
+            ->where('logistics_account_id', $logistics->id)
             ->selectRaw('COUNT(*) AS total')
             ->selectRaw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending")
             ->selectRaw("SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved")
@@ -86,11 +80,6 @@ class LogisticsRiderApplicationController extends Controller
                 ]);
             }
 
-            if (!$locked->logistics_account_id) {
-                $locked->logistics_account_id = $logistics->id;
-                $locked->save();
-            }
-
             $rider = CourierAccount::query()->firstOrNew([
                 'email' => $locked->email,
             ]);
@@ -116,8 +105,11 @@ class LogisticsRiderApplicationController extends Controller
                     'profile_image_path' => $locked->profile_image_path,
                     'vehicle_type' => $locked->vehicle_type,
                     'plate_number' => $locked->plate_number,
+                    'license_number' => $locked->license_number,
+                    'license_expiry_date' => $locked->license_expiry_date?->toDateString(),
                     'orcr_path' => $locked->orcr_path,
                     'id_path' => $locked->id_path,
+                    'driver_license_path' => $locked->id_path,
                     'account_status' => 'active',
                     'approved_at' => now(),
                 ])->save();
@@ -162,10 +154,6 @@ class LogisticsRiderApplicationController extends Controller
                 throw ValidationException::withMessages([
                     'application' => 'Only pending Rider applications can be rejected.',
                 ]);
-            }
-
-            if (!$locked->logistics_account_id) {
-                $locked->logistics_account_id = $logistics->id;
             }
 
             $locked->forceFill([
@@ -214,10 +202,7 @@ class LogisticsRiderApplicationController extends Controller
     {
         abort_unless(
             $application->role === 'rider'
-            && (
-                !$application->logistics_account_id
-                || (int) $application->logistics_account_id === (int) $logistics->id
-            ),
+            && (int) $application->logistics_account_id === (int) $logistics->id,
             404
         );
     }

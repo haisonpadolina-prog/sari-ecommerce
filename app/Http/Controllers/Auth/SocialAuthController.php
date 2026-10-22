@@ -219,6 +219,14 @@ class SocialAuthController extends Controller
                     ]);
             }
 
+            if ($status === 'blocked') {
+                return redirect()
+                    ->route('login')
+                    ->withErrors([
+                        'social' => 'This SARI buyer account has been blocked by an administrator.',
+                    ]);
+            }
+
             $account->last_login_at = now();
             $account->save();
 

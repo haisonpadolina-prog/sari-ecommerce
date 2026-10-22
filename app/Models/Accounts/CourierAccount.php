@@ -4,6 +4,8 @@ namespace App\Models\Accounts;
 
 use App\Models\Finance\RiderEarning;
 use App\Models\Finance\RiderPayoutRequest;
+use App\Models\Orders\MarketplaceOrder;
+use App\Models\Registration\RegistrationApplication;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,20 +44,33 @@ class CourierAccount extends Authenticatable
         'approved_at',
         'rating',
         'license_number',
+        'license_expiry_date',
+        'driver_license_path',
+        'activation_token_hash',
+        'activation_expires_at',
+        'activated_at',
         'vehicle_model',
         'availability_status',
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'activation_token_hash'];
 
     protected $casts = [
         'birthday' => 'date',
         'approved_at' => 'datetime',
+        'license_expiry_date' => 'date',
+        'activation_expires_at' => 'datetime',
+        'activated_at' => 'datetime',
     ];
 
     public function logistics(): BelongsTo
     {
         return $this->belongsTo(LogisticsAccount::class, 'logistics_account_id');
+    }
+
+    public function registrationApplication(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationApplication::class, 'registration_application_id');
     }
 
     public function riderEarnings(): HasMany
@@ -66,5 +81,10 @@ class CourierAccount extends Authenticatable
     public function payoutRequests(): HasMany
     {
         return $this->hasMany(RiderPayoutRequest::class, 'courier_account_id');
+    }
+
+    public function marketplaceOrders(): HasMany
+    {
+        return $this->hasMany(MarketplaceOrder::class, 'courier_email', 'email');
     }
 }

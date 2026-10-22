@@ -8,20 +8,60 @@ use App\Models\Compliance\SellerWarning;
 use App\Models\Finance\OrderCommission;
 use App\Models\Finance\SellerSettlement;
 use App\Models\Messaging\ChatMessage;
+use App\Models\Orders\MarketplaceOrder;
 use App\Models\Orders\SellerReturnRequest;
 use App\Models\Platform\SellerNotification;
 use App\Models\Promotions\SellerVoucher;
 use App\Models\Promotions\SellerFreeShippingPromotion;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Registration\RegistrationApplication;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SellerAccount extends Model
 {
+    use SoftDeletes;
+    public function registrationApplication(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationApplication::class, 'registration_application_id');
+    }
+
     protected $fillable = [
+        'registration_application_id',
+        'last_name',
+        'first_name',
+        'middle_initial',
+        'sex',
         'email',
+        'contact_no',
+        'birthday',
+        'age',
+        'region_code',
+        'region_name',
+        'province_code',
+        'province_name',
+        'municipality_code',
+        'municipality_name',
+        'barangay_code',
+        'barangay_name',
+        'street_address',
+        'postal_code',
+        'password',
+        'profile_image_path',
         'store_name',
+        'seller_type',
+        'tin',
+        'sec_registration_no',
+        'line_of_business',
+        'id_path',
+        'business_permit_path',
+        'bir_path',
+        'sec_path',
+        'registration_status',
+        'approved_at',
         'store_description',
         'store_phone',
         'store_public_email',
@@ -38,9 +78,15 @@ class SellerAccount extends Model
         'realtime_token',
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     protected function casts(): array
     {
         return [
+            'birthday' => 'date',
+            'approved_at' => 'datetime',
             'suspended_at' => 'datetime',
             'suspended_until' => 'datetime',
         ];
@@ -49,6 +95,11 @@ class SellerAccount extends Model
     public function products(): HasMany
     {
         return $this->hasMany(SellerProduct::class);
+    }
+
+    public function marketplaceOrders(): HasMany
+    {
+        return $this->hasMany(MarketplaceOrder::class, 'seller_account_id');
     }
 
     /**
@@ -61,7 +112,7 @@ class SellerAccount extends Model
             ->where(function (Builder $statusQuery): void {
                 $statusQuery
                     ->whereNull('account_status')
-                    ->orWhereNotIn('account_status', ['banned', 'deactivated']);
+                    ->orWhereNotIn('account_status', ['banned', 'deactivated', 'blocked']);
             })
             ->where(function (Builder $restrictionQuery): void {
                 // Mirror SellerAccountStatusService::refresh() without mutating
@@ -94,7 +145,7 @@ class SellerAccount extends Model
 
     public function isBuyerAvailable(): bool
     {
-        if (in_array((string) $this->account_status, ['banned', 'deactivated'], true)) {
+        if (in_array((string) $this->account_status, ['banned', 'deactivated', 'blocked'], true)) {
             return false;
         }
 

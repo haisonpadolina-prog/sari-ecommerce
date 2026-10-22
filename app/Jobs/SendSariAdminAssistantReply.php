@@ -2,12 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Services\Messaging\SariAdminAssistantReplyService;
+use App\Events\PlatformMessageSent;
+use App\Models\Messaging\PlatformMessage;
+use App\Services\Messaging\SariAdminAssistantService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class SendSariAdminAssistantReply implements ShouldQueue
 {
@@ -16,17 +19,119 @@ class SendSariAdminAssistantReply implements ShouldQueue
     public int $tries = 2;
     public int $timeout = 45;
 
-    public function __construct(public int $triggerMessageId)
-    {
+    public function __construct(
+        public int $triggerMessageId,
+        public int $waitSeconds = 0
+    ) {
     }
 
-    public function handle(
-        SariAdminAssistantReplyService $replies
-    ): void {
+    public function handle(SariAdminAssistantService $assistant): void
+    {
         if (!(bool) config('sari.assistant.enabled', true)) {
             return;
         }
 
-        $replies->replyToTrigger($this->triggerMessageId);
+        $trigger = PlatformMessage::query()
+            ->with('conversation.participants')
+            ->find($this->triggerMessageId);
+
+        if (!$trigger || !$trigger->conversation || $trigger->sender_role === 'admin') {
+            return;
+        }
+
+        $conversation = $trigger->conversation;
+
+        if ($conversation->status !== 'active') {
+            return;
+        }
+
+        $adminParticipant = $conversation->participants
+            ->first(fn ($participant) =>
+                $participant->participant_role === 'admin'
+                && !$participant->left_at
+            );
+
+        if (!$adminParticipant) {
+            return;
+        }
+
+        // Only the latest unanswered user message is eligible for assistant cover.
+        $latestNonAdminId = PlatformMessage::query()
+            ->where('platform_conversation_id', $conversation->id)
+            ->where('sender_role', '!=', 'admin')
+            ->whereNull('deleted_at')
+            ->max('id');
+
+        if ((int) $latestNonAdminId !== (int) $trigger->id) {
+            return;
+        }
+
+        // A human Admin or a prior automated reply after this trigger cancels duplicates.
+        $adminMessageExists = PlatformMessage::query()
+            ->where('platform_conversation_id', $conversation->id)
+            ->where('sender_role', 'admin')
+            ->where('id', '>', $trigger->id)
+            ->whereNull('deleted_at')
+            ->exists();
+
+        if ($adminMessageExists) {
+            return;
+        }
+
+        $body = $assistant->replyFor($conversation, $trigger);
+
+        if (!$body) {
+            return;
+        }
+
+        $message = DB::transaction(function () use (
+            $conversation,
+            $adminParticipant,
+            $trigger,
+            $body
+        ): PlatformMessage {
+            // Re-check under the transaction so a human Admin reply wins the race.
+            $newerAdminMessageExists = PlatformMessage::query()
+                ->where('platform_conversation_id', $conversation->id)
+                ->where('sender_role', 'admin')
+                ->where('id', '>', $trigger->id)
+                ->whereNull('deleted_at')
+                ->exists();
+
+            if ($newerAdminMessageExists) {
+                return new PlatformMessage();
+            }
+
+            $message = PlatformMessage::query()->create([
+                'platform_conversation_id' => $conversation->id,
+                'sender_role' => 'admin',
+                'sender_id' => (int) $adminParticipant->participant_id,
+                'message_type' => 'text',
+                'body' => $body,
+                'metadata' => [
+                    'ai_assistant' => true,
+                    'automated' => true,
+                    'assistant_name' => 'SARI Assistant',
+                    'trigger_message_id' => $trigger->id,
+                    'provider' => trim((string) config('sari.assistant.api_key')) === ''
+                        ? 'local_fallback'
+                        : 'gemini',
+                ],
+            ]);
+
+            $conversation->forceFill([
+                'last_message_at' => $message->created_at,
+            ])->save();
+
+            return $message;
+        });
+
+        if (!$message->exists) {
+            return;
+        }
+
+        event(new PlatformMessageSent(
+            $message->fresh()->load('conversation.participants')
+        ));
     }
 }

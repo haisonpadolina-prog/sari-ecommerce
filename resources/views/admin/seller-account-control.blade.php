@@ -395,6 +395,726 @@
         }
     }
 
+
+    /* ============================================================
+       SELLER ACCOUNT CONTROL — FINAL SELLER VISUAL SYSTEM
+       Visual-only authority layer. Account actions and JS untouched.
+       ============================================================ */
+
+    .seller-account-control-page{
+        --sac-final-canvas:#F4F5F7;
+        --sac-final-surface:#FFFFFF;
+        --sac-final-surface-soft:#FAFBFC;
+        --sac-final-line:#E5E7EB;
+        --sac-final-line-soft:#ECEFF2;
+        --sac-final-line-strong:#D1D5DB;
+        --sac-final-gold:#D59617;
+        --sac-final-gold-strong:#B97805;
+        --sac-final-ink:#17130F;
+        --sac-final-text:#5F5A54;
+        --sac-final-muted:#8B837A;
+        --sac-final-main-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92);
+        --sac-final-soft-shadow:
+            0 1px 3px rgba(15,23,42,.035),
+            0 7px 18px rgba(15,23,42,.06),
+            0 15px 32px rgba(15,23,42,.065),
+            inset 0 1px 0 rgba(255,255,255,.90);
+        --sac-final-focal-shadow:
+            0 3px 7px rgba(15,23,42,.055),
+            0 14px 32px rgba(15,23,42,.095),
+            0 30px 68px rgba(15,23,42,.11);
+        width:100% !important;
+        max-width:1800px !important;
+        margin-inline:auto !important;
+        padding-bottom:34px !important;
+        color:var(--sac-final-ink) !important;
+    }
+
+    /* Open document-style page header */
+    .seller-account-control-page .sac-page-header{
+        display:flex !important;
+        align-items:flex-end !important;
+        justify-content:space-between !important;
+        gap:22px !important;
+        margin:0 0 18px !important;
+        padding:0 0 17px !important;
+        border-bottom:1px solid var(--sac-final-line) !important;
+        background:transparent !important;
+    }
+
+    .seller-account-control-page .sac-page-header-main{
+        display:block !important;
+        min-width:0 !important;
+    }
+
+    .seller-account-control-page .sac-page-header-icon{
+        display:none !important;
+    }
+
+    .seller-account-control-page .sac-page-eyebrow{
+        margin:0 !important;
+        color:#9A6F23 !important;
+        -webkit-text-fill-color:#9A6F23 !important;
+        font-size:8px !important;
+        font-weight:800 !important;
+        line-height:1.15 !important;
+        letter-spacing:.16em !important;
+        text-transform:uppercase !important;
+    }
+
+    .seller-account-control-page .sac-page-heading{
+        margin:6px 0 0 !important;
+        font-size:clamp(29px,2.2vw,36px) !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        letter-spacing:-.035em !important;
+    }
+
+    .seller-account-control-page .sac-page-heading-base{
+        color:var(--sac-final-ink) !important;
+        -webkit-text-fill-color:var(--sac-final-ink) !important;
+    }
+
+    .seller-account-control-page .sac-page-heading-accent{
+        color:var(--sac-final-gold) !important;
+        -webkit-text-fill-color:var(--sac-final-gold) !important;
+    }
+
+    .seller-account-control-page .sac-page-header-copy{
+        max-width:880px !important;
+        margin:8px 0 0 !important;
+        color:#7F756A !important;
+        -webkit-text-fill-color:#7F756A !important;
+        font-size:10px !important;
+        font-weight:400 !important;
+        line-height:1.6 !important;
+        letter-spacing:0 !important;
+    }
+
+    .seller-account-control-page .sac-header-back{
+        min-height:40px !important;
+        height:40px !important;
+        flex:0 0 auto !important;
+        gap:7px !important;
+        border:1px solid var(--sac-final-line-strong) !important;
+        border-radius:10px !important;
+        background:#fff !important;
+        padding:0 13px !important;
+        color:#725319 !important;
+        font-size:8.5px !important;
+        font-weight:700 !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page .sac-header-back:hover,
+    .seller-account-control-page .sac-header-back:focus-visible{
+        outline:none !important;
+        border-color:#D7B86F !important;
+        background:#FFF9EC !important;
+        color:#8E6418 !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+        transform:none !important;
+    }
+
+    /* Flash states remain informative, not elevated cards */
+    .seller-account-control-page > .mb-5{
+        margin-bottom:14px !important;
+        border-radius:12px !important;
+        padding:10px 12px !important;
+        box-shadow:none !important;
+    }
+
+    /* KPI cards: restrained top-level depth, no bounce */
+    .seller-account-control-page > section.grid{
+        gap:12px !important;
+    }
+
+    .seller-account-control-page .account-control-summary-card{
+        min-height:88px !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:14px !important;
+        background:#fff !important;
+        padding:15px 54px 14px 15px !important;
+        box-shadow:var(--sac-final-soft-shadow) !important;
+        transform:none !important;
+        transition:border-color .14s ease,box-shadow .14s ease,background-color .14s ease !important;
+    }
+
+    .seller-account-control-page .account-control-summary-card:hover{
+        border-color:#DDD5C8 !important;
+        background:#fff !important;
+        box-shadow:var(--sac-final-soft-shadow) !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page .account-control-summary-card > div{
+        min-height:58px !important;
+        align-items:center !important;
+    }
+
+    .seller-account-control-page .sac-summary-label{
+        color:#817A72 !important;
+        font-size:8.5px !important;
+        font-weight:600 !important;
+        line-height:1.3 !important;
+    }
+
+    .seller-account-control-page .sac-summary-value{
+        margin-top:7px !important;
+        color:#26211C !important;
+        font-size:24px !important;
+        font-weight:700 !important;
+        line-height:1 !important;
+        letter-spacing:-.035em !important;
+    }
+
+    .seller-account-control-page .account-control-summary-card > div > div:last-child{
+        top:15px !important;
+        right:15px !important;
+        width:36px !important;
+        height:36px !important;
+        border-radius:10px !important;
+        box-shadow:none !important;
+    }
+
+    /* Filter workspace */
+    .seller-account-control-page .sac-filter-surface{
+        position:relative !important;
+        z-index:20 !important;
+        margin-top:14px !important;
+        overflow:visible !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:14px !important;
+        background:#fff !important;
+        padding:12px !important;
+        box-shadow:var(--sac-final-main-shadow) !important;
+    }
+
+    .seller-account-control-page .sac-filter-grid{
+        grid-template-columns:minmax(360px,1fr) 190px 132px 90px !important;
+        gap:10px !important;
+    }
+
+    .seller-account-control-page .sac-filter-input,
+    .seller-account-control-page .sac-filter-select{
+        min-height:40px !important;
+        height:40px !important;
+        border:1px solid var(--sac-final-line-strong) !important;
+        border-radius:9px !important;
+        background:#fff !important;
+        color:#3E3934 !important;
+        font-size:9px !important;
+        box-shadow:none !important;
+    }
+
+    .seller-account-control-page .sac-filter-input:hover,
+    .seller-account-control-page .sac-filter-select:hover{
+        border-color:#C9C2B8 !important;
+    }
+
+    .seller-account-control-page .sac-filter-input:focus,
+    .seller-account-control-page .sac-filter-select:focus{
+        outline:none !important;
+        border-color:var(--sac-final-gold) !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.09) !important;
+    }
+
+    .seller-account-control-page .sac-filter-apply,
+    .seller-account-control-page .sac-filter-reset{
+        min-height:40px !important;
+        height:40px !important;
+        border-radius:9px !important;
+        font-size:8px !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page .sac-filter-apply{
+        border-color:var(--sac-final-gold) !important;
+        background:var(--sac-final-gold) !important;
+        box-shadow:none !important;
+    }
+
+    .seller-account-control-page .sac-filter-apply:hover,
+    .seller-account-control-page .sac-filter-apply:focus-visible{
+        border-color:var(--sac-final-gold-strong) !important;
+        background:var(--sac-final-gold-strong) !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page .sac-filter-reset{
+        border-color:var(--sac-final-line-strong) !important;
+        background:#fff !important;
+        color:#625C55 !important;
+    }
+
+    /* Main seller account workspace */
+    .seller-account-control-page .account-control-workspace{
+        margin-top:14px !important;
+        overflow:hidden !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:14px !important;
+        background:#fff !important;
+        box-shadow:var(--sac-final-main-shadow) !important;
+    }
+
+    .seller-account-control-page .sac-workspace-topbar{
+        min-height:58px !important;
+        padding:12px 16px !important;
+        border-bottom:1px solid var(--sac-final-line-soft) !important;
+        background:#fff !important;
+    }
+
+    .seller-account-control-page .sac-workspace-title{
+        color:#2B2723 !important;
+        font-size:11px !important;
+        font-weight:700 !important;
+    }
+
+    .seller-account-control-page .sac-workspace-copy,
+    .seller-account-control-page .sac-result-copy{
+        margin-top:3px !important;
+        color:#8A827A !important;
+        font-size:7.5px !important;
+        line-height:1.5 !important;
+    }
+
+    .seller-account-control-page .account-control-workspace > .hidden.border-b{
+        min-height:42px !important;
+        border-bottom:1px solid var(--sac-final-line-soft) !important;
+        background:#FAFBFC !important;
+        padding:10px 16px !important;
+    }
+
+    .seller-account-control-page .sac-column-label{
+        color:#77716B !important;
+        font-size:7.5px !important;
+        font-weight:800 !important;
+        letter-spacing:.07em !important;
+    }
+
+    .seller-account-control-page #sellerAccountList{
+        padding:0 !important;
+        background:#fff !important;
+    }
+
+    .seller-account-control-page .account-control-row{
+        margin:0 !important;
+        border:0 !important;
+        border-bottom:1px solid var(--sac-final-line-soft) !important;
+        border-radius:0 !important;
+        background:#fff !important;
+        box-shadow:none !important;
+        transform:none !important;
+        transition:background-color .13s ease,box-shadow .13s ease !important;
+    }
+
+    .seller-account-control-page .account-control-row:last-of-type{
+        border-bottom:0 !important;
+    }
+
+    .seller-account-control-page .account-control-row:hover{
+        background:#FFFCF5 !important;
+        box-shadow:inset 2px 0 0 var(--sac-final-gold) !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page .account-control-row-grid > div{
+        min-height:62px !important;
+        padding-top:10px !important;
+        padding-bottom:10px !important;
+    }
+
+    .seller-account-control-page .account-control-row .sac-modern-avatar{
+        width:34px !important;
+        height:34px !important;
+        flex:0 0 34px !important;
+        border:1px solid #E1E5E4 !important;
+        background:#F2F5F4 !important;
+        color:#5D726B !important;
+        font-size:8px !important;
+    }
+
+    .seller-account-control-page .sac-seller-name{
+        color:#2D2925 !important;
+        font-size:9px !important;
+        font-weight:700 !important;
+    }
+
+    .seller-account-control-page .sac-muted{
+        color:#918980 !important;
+    }
+
+    .seller-account-control-page .sac-badge{
+        min-height:22px !important;
+        display:inline-flex !important;
+        align-items:center !important;
+        padding:0 8px !important;
+        border-radius:999px !important;
+        font-size:7px !important;
+        font-weight:700 !important;
+    }
+
+    .seller-account-control-page [data-seller-control-open]{
+        width:30px !important;
+        min-width:30px !important;
+        height:30px !important;
+        min-height:30px !important;
+        border:1px solid transparent !important;
+        border-radius:8px !important;
+        background:transparent !important;
+        color:#5E5852 !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    .seller-account-control-page [data-seller-control-open]:hover,
+    .seller-account-control-page [data-seller-control-open]:focus-visible{
+        outline:none !important;
+        border-color:#E9D6A7 !important;
+        background:#FFF9EC !important;
+        color:#A06C14 !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    /* Seller detail modal: one focal elevated surface */
+    [data-seller-control-modal]{
+        background:rgba(17,24,39,.38) !important;
+        padding:18px !important;
+        backdrop-filter:blur(2px) !important;
+        -webkit-backdrop-filter:blur(2px) !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal{
+        width:min(920px,calc(100vw - 36px)) !important;
+        max-width:920px !important;
+        max-height:min(88vh,820px) !important;
+        overflow:hidden !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:18px !important;
+        background:#fff !important;
+        box-shadow:var(--sac-final-focal-shadow) !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal-header{
+        min-height:68px !important;
+        padding:14px 18px !important;
+        border-bottom:1px solid var(--sac-final-line-soft) !important;
+        background:#fff !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal-title{
+        color:#25211D !important;
+        font-size:15px !important;
+        font-weight:700 !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal-header .sac-muted{
+        margin-top:5px !important;
+        font-size:8px !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal-close{
+        width:34px !important;
+        height:34px !important;
+        min-height:34px !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:9px !important;
+        background:#fff !important;
+        color:#716A62 !important;
+        box-shadow:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-modal-body{
+        padding:16px 18px 18px !important;
+        background:#F7F8FA !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-kpis{
+        gap:9px !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-kpi{
+        min-height:62px !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:10px !important;
+        background:#fff !important;
+        padding:10px 11px !important;
+        box-shadow:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-kpi-label{
+        color:#888078 !important;
+        font-size:7px !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-kpi-value{
+        margin-top:5px !important;
+        font-size:10px !important;
+    }
+
+    [data-seller-control-modal] .sac-violations{
+        margin-top:11px !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:10px !important;
+        background:#fff !important;
+        box-shadow:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-status-reason{
+        box-shadow:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-actions{
+        border-top:1px solid var(--sac-final-line) !important;
+        background:transparent !important;
+        box-shadow:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-action{
+        min-height:38px !important;
+        height:38px !important;
+        border-radius:9px !important;
+        font-size:7.5px !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-action:hover,
+    [data-seller-control-modal] .sac-modern-action:focus-visible{
+        transform:none !important;
+    }
+
+    [data-seller-control-modal] .sac-modern-note{
+        box-shadow:none !important;
+    }
+
+    /* Ban / deactivate confirmation dialog */
+    #sellerAccountActionModal{
+        background:rgba(17,24,39,.42) !important;
+        backdrop-filter:blur(2px) !important;
+        -webkit-backdrop-filter:blur(2px) !important;
+    }
+
+    #sellerAccountActionModal > div{
+        width:min(520px,calc(100vw - 32px)) !important;
+        max-width:520px !important;
+        border:1px solid var(--sac-final-line) !important;
+        border-radius:18px !important;
+        background:#fff !important;
+        padding:20px !important;
+        box-shadow:var(--sac-final-focal-shadow) !important;
+    }
+
+    #sellerAccountActionModal .account-control-input{
+        border:1px solid var(--sac-final-line-strong) !important;
+        background:#fff !important;
+        box-shadow:none !important;
+    }
+
+    #sellerAccountActionModal .account-control-input:focus{
+        border-color:var(--sac-final-gold) !important;
+        box-shadow:0 0 0 3px rgba(213,150,23,.09) !important;
+    }
+
+    #sellerAccountActionCancel,
+    #sellerAccountActionSubmit,
+    #sellerAccountActionClose{
+        min-height:38px !important;
+        border-radius:9px !important;
+        font-size:8px !important;
+        box-shadow:none !important;
+        transform:none !important;
+    }
+
+    /* Empty states */
+    .seller-account-control-page #sellerAccountFilterEmpty > div,
+    .seller-account-control-page #sellerAccountList > .rounded-\[18px\]{
+        border-color:#DDD7CF !important;
+        border-radius:12px !important;
+        background:#FAFBFC !important;
+        box-shadow:none !important;
+    }
+
+    /* Tablet */
+    @media(max-width:1279px){
+        .seller-account-control-page{
+            max-width:100% !important;
+        }
+
+        .seller-account-control-page #sellerAccountList{
+            padding:10px !important;
+            background:#FAFBFC !important;
+        }
+
+        .seller-account-control-page .account-control-row{
+            margin-bottom:9px !important;
+            overflow:hidden !important;
+            border:1px solid var(--sac-final-line) !important;
+            border-radius:12px !important;
+            background:#fff !important;
+        }
+
+        .seller-account-control-page .account-control-row:hover{
+            box-shadow:inset 2px 0 0 var(--sac-final-gold) !important;
+        }
+    }
+
+    @media(max-width:1023px){
+        .seller-account-control-page .sac-filter-grid{
+            grid-template-columns:minmax(0,1fr) 180px 130px 90px !important;
+        }
+
+        .seller-account-control-page .sac-filter-search{
+            grid-column:1/-1 !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-modal{
+            width:min(880px,calc(100vw - 28px)) !important;
+        }
+    }
+
+    /* Mobile */
+    @media(max-width:639px){
+        .seller-account-control-page{
+            padding-bottom:18px !important;
+        }
+
+        .seller-account-control-page .sac-page-header{
+            align-items:stretch !important;
+            flex-direction:column !important;
+            gap:12px !important;
+            padding-bottom:15px !important;
+        }
+
+        .seller-account-control-page .sac-page-heading{
+            font-size:clamp(28px,8vw,34px) !important;
+        }
+
+        .seller-account-control-page .sac-page-header-copy{
+            font-size:10px !important;
+        }
+
+        .seller-account-control-page .sac-header-back{
+            width:100% !important;
+            min-height:42px !important;
+            height:42px !important;
+            justify-content:center !important;
+        }
+
+        .seller-account-control-page > section.grid{
+            grid-template-columns:1fr 1fr !important;
+            gap:9px !important;
+        }
+
+        .seller-account-control-page .account-control-summary-card{
+            min-height:84px !important;
+            padding:13px 44px 12px 13px !important;
+        }
+
+        .seller-account-control-page .sac-summary-value{
+            font-size:21px !important;
+        }
+
+        .seller-account-control-page .account-control-summary-card > div > div:last-child{
+            top:12px !important;
+            right:12px !important;
+            width:31px !important;
+            height:31px !important;
+        }
+
+        .seller-account-control-page .sac-filter-surface{
+            padding:10px !important;
+        }
+
+        .seller-account-control-page .sac-filter-grid{
+            grid-template-columns:1fr !important;
+            gap:8px !important;
+        }
+
+        .seller-account-control-page .sac-filter-search{
+            grid-column:auto !important;
+        }
+
+        .seller-account-control-page .sac-filter-input,
+        .seller-account-control-page .sac-filter-select,
+        .seller-account-control-page .sac-filter-apply,
+        .seller-account-control-page .sac-filter-reset{
+            min-height:42px !important;
+            height:42px !important;
+            font-size:9.5px !important;
+        }
+
+        .seller-account-control-page .sac-workspace-topbar{
+            align-items:flex-start !important;
+            flex-direction:column !important;
+            padding:12px !important;
+        }
+
+        [data-seller-control-modal]{
+            padding:7px !important;
+            backdrop-filter:none !important;
+            -webkit-backdrop-filter:none !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-modal{
+            width:calc(100vw - 14px) !important;
+            max-height:calc(100vh - 14px) !important;
+            border-radius:14px !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-modal-header{
+            padding:11px 12px !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-modal-body{
+            padding:10px !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-kpis{
+            grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-kpi:last-child{
+            grid-column:1/-1 !important;
+        }
+
+        [data-seller-control-modal] .sac-modern-actions-grid.is-three,
+        [data-seller-control-modal] .sac-modern-actions-grid.is-two,
+        [data-seller-control-modal] .sac-modern-actions-grid.is-one{
+            grid-template-columns:1fr !important;
+        }
+
+        #sellerAccountActionModal{
+            backdrop-filter:none !important;
+            -webkit-backdrop-filter:none !important;
+        }
+
+        #sellerAccountActionModal > div{
+            width:calc(100vw - 20px) !important;
+            padding:16px !important;
+            border-radius:14px !important;
+        }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+        .seller-account-control-page *,
+        [data-seller-control-modal],
+        .sac-modern-modal,
+        #sellerAccountActionModal *{
+            animation:none !important;
+            transition:none !important;
+            transform:none !important;
+            scroll-behavior:auto !important;
+        }
+    }
+
 </style>
 
 <div class="seller-account-control-page mx-auto w-full max-w-[1800px]">

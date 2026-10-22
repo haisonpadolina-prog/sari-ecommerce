@@ -4744,7 +4744,7 @@
         place-items: center;
         border: 1px solid #f0e5cd;
         border-radius: 13px;
-        background: linear-gradient(145deg, #fff9ed 0%, #fbf3e3 100%);
+        background: #1F9D55 !important;
         color: #bb841b;
     }
 
@@ -4832,7 +4832,7 @@
         inset: 31px;
         border: 1px solid rgba(233,224,211,.92);
         border-radius: inherit;
-        background: linear-gradient(145deg, #fff 0%, #fffdf9 100%);
+        background: #1F9D55 !important;
         box-shadow:
             0 6px 15px rgba(67,51,32,.055),
             inset 0 1px 0 rgba(255,255,255,.98);
@@ -5822,6 +5822,3316 @@
         }
     }
 
+
+    /* ============================================================
+       SARI ADMIN DASHBOARD — SELLER CONTAINER SYSTEM
+       Final visual authority for this first dashboard cleanup pass.
+       - Matches the approved Seller container language.
+       - White/light-gray surfaces only.
+       - 8px outer radius.
+       - Static elevation: no cursor lift, bounce, scale, or shadow jump.
+       - No backend/data/route/JS behavior changes.
+       ============================================================ */
+
+    .sari-admin-dashboard {
+        --seller-canvas: #F4F5F7;
+        --seller-surface: #FFFFFF;
+        --seller-border: #E5E7EB;
+        --seller-border-strong: #D1D5DB;
+        --seller-divider: #ECEFF2;
+        --seller-ink: #202124;
+        --seller-muted: #697481;
+        --seller-gold: #D59617;
+        --seller-gold-strong: #B97805;
+
+        --seller-shadow-main:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92);
+
+        --seller-shadow-soft:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .060),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+
+        color: var(--seller-ink) !important;
+    }
+
+    /* Major dashboard surfaces — exact Seller-style geometry. */
+    .admin-panel,
+    .admin-control-panel,
+    .sari-health-card,
+    .sari-ops-card,
+    .sari-monitor-card,
+    .sari-sales-card,
+    .sari-sales-clean-card,
+    .sari-reg-clean-card,
+    #adminCategoryBreakdown.sari-category-card {
+        border: 1px solid var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: var(--seller-surface) !important;
+        background-image: none !important;
+        box-shadow: var(--seller-shadow-main) !important;
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+        transition: none !important;
+        will-change: auto !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* KPI cards stay slightly lighter than major sections, but fully static. */
+    .admin-kpi {
+        border: 1px solid var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: var(--seller-surface) !important;
+        background-image: none !important;
+        box-shadow: var(--seller-shadow-soft) !important;
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+        transition: none !important;
+        will-change: auto !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* Absolute hover lock: containers must never move or deepen on pointer hover. */
+    .admin-panel:hover,
+    .admin-control-panel:hover,
+    .admin-kpi:hover,
+    .sari-health-card:hover,
+    .sari-ops-card:hover,
+    .sari-monitor-card:hover,
+    .sari-sales-card:hover,
+    .sari-sales-clean-card:hover,
+    .sari-reg-clean-card:hover,
+    #adminCategoryBreakdown.sari-category-card:hover {
+        border-color: var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: var(--seller-surface) !important;
+        background-image: none !important;
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+        transition: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    .admin-panel:hover,
+    .admin-control-panel:hover,
+    .sari-health-card:hover,
+    .sari-ops-card:hover,
+    .sari-monitor-card:hover,
+    .sari-sales-card:hover,
+    .sari-sales-clean-card:hover,
+    .sari-reg-clean-card:hover,
+    #adminCategoryBreakdown.sari-category-card:hover {
+        box-shadow: var(--seller-shadow-main) !important;
+    }
+
+    .admin-kpi:hover {
+        box-shadow: var(--seller-shadow-soft) !important;
+    }
+
+    /* Nested content is integrated into the parent instead of card-inside-card. */
+    .admin-control-subtle,
+    .admin-soft-card,
+    .admin-quick-action,
+    .admin-role-card,
+    .sari-health-score-card,
+    .sari-health-metric-v2,
+    .sari-health-summary-card,
+    .sari-risk-list,
+    .sari-risk-state,
+    .sari-rider-summary,
+    .sari-sales-clean-empty,
+    .sari-sales-chart-shell,
+    .admin-chart-premium,
+    .admin-chart-summary-card,
+    .sari-sales-clean-period,
+    .sari-chart-premium {
+        border-color: var(--seller-divider) !important;
+        border-radius: 7px !important;
+        background: #FFFFFF !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* Rows can remain clickable but must not physically move. */
+    .sari-role-row,
+    .sari-focus-row-v2,
+    .sari-risk-item,
+    .sari-reg-clean-row,
+    .admin-role-card {
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+    }
+
+    .sari-role-row:hover,
+    .sari-focus-row-v2:hover,
+    .sari-risk-item:hover,
+    .sari-reg-clean-row:hover,
+    .admin-role-card:hover {
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+    }
+
+    /* Keep interactive buttons visually responsive without moving their containers. */
+    .admin-view-button,
+    .admin-focus-chip,
+    .sari-health-action,
+    .sari-ops-action,
+    .sari-monitor-action,
+    .sari-category-action,
+    .sari-sales-clean-period {
+        transform: none !important;
+    }
+
+    .admin-view-button:hover,
+    .admin-focus-chip:hover,
+    .sari-health-action:hover,
+    .sari-ops-action:hover,
+    .sari-monitor-action:hover,
+    .sari-category-action:hover,
+    .sari-sales-clean-period:hover {
+        transform: none !important;
+    }
+
+    /* Mobile/tablet must use the exact same static container behavior. */
+    @media (max-width: 767px) {
+        .admin-panel:hover,
+        .admin-control-panel:hover,
+        .admin-kpi:hover,
+        .sari-health-card:hover,
+        .sari-ops-card:hover,
+        .sari-monitor-card:hover,
+        .sari-sales-card:hover,
+        .sari-sales-clean-card:hover,
+        .sari-reg-clean-card:hover,
+        #adminCategoryBreakdown.sari-category-card:hover {
+            transform: none !important;
+            translate: none !important;
+            scale: 1 !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       SARI ADMIN DASHBOARD — MODERN INFORMATION HIERARCHY V2
+       Sales leads the dashboard, followed by health and operations.
+       Layout-only: existing data, routes, async graph behavior and JS stay intact.
+       ============================================================ */
+
+    .sari-admin-dashboard {
+        max-width: 1640px !important;
+    }
+
+    #adminControlTower {
+        margin-top: 14px !important;
+    }
+
+    #adminControlTower > div:first-child {
+        margin-bottom: 11px !important;
+    }
+
+    .sari-dashboard-primary-grid,
+    .sari-dashboard-secondary-grid,
+    .sari-dashboard-bottom-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+    }
+
+    .sari-dashboard-secondary-grid,
+    .sari-dashboard-bottom-grid {
+        margin-top: 12px;
+    }
+
+    .sari-dashboard-primary-grid > *,
+    .sari-dashboard-secondary-grid > *,
+    .sari-dashboard-bottom-grid > * {
+        min-width: 0;
+        align-self: start;
+    }
+
+    /* ------------------------------------------------------------
+       SALES OVERVIEW — primary executive analytics.
+       ------------------------------------------------------------ */
+    #adminSalesOverview {
+        content-visibility: visible !important;
+        contain-intrinsic-size: auto !important;
+        padding: 15px 16px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-head {
+        align-items: center !important;
+        gap: 12px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-title {
+        font-size: 13px !important;
+        line-height: 1.25 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-subtitle {
+        margin-top: 2px !important;
+        font-size: 7.5px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-period {
+        min-height: 30px !important;
+        border-radius: 7px !important;
+        padding: 0 10px !important;
+        font-size: 7.5px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metrics {
+        margin-top: 10px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric {
+        padding-top: 3px !important;
+        padding-bottom: 8px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-label {
+        font-size: 7.8px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-value {
+        margin-top: 3px !important;
+        font-size: 19px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-note {
+        margin-top: 5px !important;
+        font-size: 7.3px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart-head {
+        padding: 9px 0 4px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart-title {
+        font-size: 9.5px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart-copy,
+    #adminSalesOverview .sari-sales-clean-legend-item {
+        font-size: 7.2px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart {
+        min-height: 178px !important;
+    }
+
+    /* Recent registrations is a supporting panel, not a stretched empty column. */
+    .sari-dashboard-primary-grid .sari-reg-clean-card {
+        content-visibility: visible !important;
+        contain-intrinsic-size: auto !important;
+        padding: 15px 16px !important;
+    }
+
+    .sari-dashboard-primary-grid .sari-reg-clean-head {
+        padding-bottom: 10px !important;
+    }
+
+    .sari-dashboard-primary-grid .sari-reg-clean-title {
+        font-size: 12.5px !important;
+    }
+
+    .sari-dashboard-primary-grid .sari-reg-clean-subtitle,
+    .sari-dashboard-primary-grid .sari-reg-clean-view-all {
+        font-size: 7.5px !important;
+    }
+
+    .sari-dashboard-primary-grid .sari-reg-clean-row {
+        min-height: 50px !important;
+    }
+
+    /* ------------------------------------------------------------
+       MARKETPLACE HEALTH — clean, flat, no cream icon boxes.
+       ------------------------------------------------------------ */
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth {
+        padding: 15px 16px !important;
+        background: #FFFFFF !important;
+    }
+
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-header {
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid var(--seller-divider) !important;
+    }
+
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-main {
+        margin-top: 11px !important;
+        gap: 14px !important;
+    }
+
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-metric-icon,
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-summary-icon {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-metric-v2,
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-score-card,
+    .sari-dashboard-secondary-grid #adminMarketplaceHealth .sari-health-summary-card {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* Today's Focus stays compact and action-oriented. */
+    .sari-dashboard-secondary-grid > .sari-health-card:not(#adminMarketplaceHealth) {
+        padding: 15px 16px !important;
+    }
+
+    .sari-dashboard-secondary-grid .sari-focus-list-v2 {
+        margin-top: 8px !important;
+    }
+
+    .sari-dashboard-secondary-grid .sari-focus-row-v2 {
+        padding: 8px 0 !important;
+    }
+
+    /* Remaining operations use one consistent rhythm. */
+    .sari-ops-pair,
+    .sari-monitor-grid {
+        gap: 12px !important;
+        margin-top: 12px !important;
+    }
+
+    /* Structural cards never lift or bounce on hover. */
+    .sari-dashboard-primary-grid > *:hover,
+    .sari-dashboard-secondary-grid > *:hover,
+    .sari-dashboard-bottom-grid > *:hover {
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+    }
+
+    @media (min-width: 1180px) {
+        .sari-dashboard-primary-grid {
+            grid-template-columns: minmax(0, 1.62fr) minmax(290px, .62fr);
+        }
+
+        .sari-dashboard-secondary-grid {
+            grid-template-columns: minmax(0, 1.34fr) minmax(310px, .66fr);
+        }
+
+        .sari-dashboard-bottom-grid {
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+        }
+    }
+
+    @media (max-height: 850px) and (min-width: 900px) {
+        #adminSalesOverview {
+            padding: 13px 14px !important;
+        }
+
+        #adminSalesOverview .sari-sales-clean-chart {
+            min-height: 162px !important;
+        }
+
+        .sari-dashboard-primary-grid .sari-reg-clean-card,
+        .sari-dashboard-secondary-grid #adminMarketplaceHealth,
+        .sari-dashboard-secondary-grid > .sari-health-card:not(#adminMarketplaceHealth) {
+            padding: 13px 14px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-dashboard-primary-grid,
+        .sari-dashboard-secondary-grid,
+        .sari-dashboard-bottom-grid {
+            gap: 10px;
+        }
+
+        .sari-dashboard-secondary-grid,
+        .sari-dashboard-bottom-grid {
+            margin-top: 10px;
+        }
+
+        #adminSalesOverview,
+        .sari-dashboard-primary-grid .sari-reg-clean-card,
+        .sari-dashboard-secondary-grid #adminMarketplaceHealth,
+        .sari-dashboard-secondary-grid > .sari-health-card:not(#adminMarketplaceHealth) {
+            padding: 14px !important;
+        }
+
+        #adminSalesOverview .sari-sales-clean-chart {
+            min-height: 180px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       ROLE CONTROL CENTER — APPROVED CLEAN ICON SYSTEM
+       Matches the approved mockup:
+       - no icon containers
+       - one consistent SARI gold icon color
+       - clean neutral table/dividers
+       - static rows and actions
+       ============================================================ */
+
+    #adminRoleControl {
+        overflow: hidden !important;
+        border: 1px solid var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: #FFFFFF !important;
+        box-shadow: var(--seller-shadow-main) !important;
+    }
+
+    #adminRoleControl .sari-ops-head {
+        align-items: center !important;
+        padding: 15px 16px 12px !important;
+    }
+
+    #adminRoleControl .sari-ops-title {
+        color: #202124 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.02em !important;
+    }
+
+    #adminRoleControl .sari-ops-subtitle {
+        margin-top: 2px !important;
+        color: #7B8490 !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    #adminRoleControl .sari-ops-action {
+        min-height: 30px !important;
+        gap: 6px !important;
+        border: 1px solid #DDE2E7 !important;
+        border-radius: 999px !important;
+        background: #FFFFFF !important;
+        padding: 0 11px !important;
+        color: #374151 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: border-color .14s ease, color .14s ease, background-color .14s ease !important;
+    }
+
+    #adminRoleControl .sari-ops-action:hover {
+        border-color: #C9D0D7 !important;
+        background: #F8F9FA !important;
+        color: #202124 !important;
+        transform: none !important;
+    }
+
+    #adminRoleControl .sari-ops-action svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    #adminRoleControl .sari-role-table {
+        margin: 0 16px 14px !important;
+        border-top: 1px solid #E8EBEE !important;
+    }
+
+    #adminRoleControl .sari-role-table-head,
+    #adminRoleControl .sari-role-row {
+        grid-template-columns: minmax(0, 1.45fr) .68fr .85fr 30px !important;
+        gap: 12px !important;
+    }
+
+    #adminRoleControl .sari-role-table-head {
+        min-height: 34px !important;
+        border-bottom: 1px solid #E8EBEE !important;
+        color: #7D8691 !important;
+        font-size: 7px !important;
+        font-weight: 700 !important;
+        letter-spacing: .07em !important;
+    }
+
+    #adminRoleControl .sari-role-row {
+        min-height: 52px !important;
+        border-bottom: 1px solid #ECEFF2 !important;
+        background: transparent !important;
+        color: #202124 !important;
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+        transition: none !important;
+    }
+
+    #adminRoleControl .sari-role-row:last-child {
+        border-bottom: 0 !important;
+    }
+
+    #adminRoleControl .sari-role-row:hover,
+    #adminRoleControl .sari-role-row:focus-visible {
+        background: transparent !important;
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+    }
+
+    #adminRoleControl .sari-role-name {
+        gap: 10px !important;
+        color: #202124 !important;
+        font-size: 9px !important;
+        font-weight: 650 !important;
+    }
+
+    /* Approved treatment: icon only, no square/circle/background container. */
+    #adminRoleControl .sari-role-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        flex: 0 0 22px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        color: #B97805 !important;
+        box-shadow: none !important;
+        filter: none !important;
+    }
+
+    #adminRoleControl .sari-role-icon svg {
+        display: block !important;
+        width: 18px !important;
+        height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        stroke: currentColor !important;
+    }
+
+    #adminRoleControl .sari-role-value {
+        color: #111827 !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    #adminRoleControl .sari-role-pending {
+        color: #A66D09 !important;
+        font-size: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    #adminRoleControl .sari-role-chevron {
+        width: 24px !important;
+        height: 24px !important;
+        justify-self: end !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #7D8691 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    #adminRoleControl .sari-role-chevron svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    #adminRoleControl .sari-role-row:hover .sari-role-chevron {
+        background: transparent !important;
+        color: #5F6873 !important;
+        transform: none !important;
+    }
+
+    @media (max-width: 639px) {
+        #adminRoleControl .sari-ops-head {
+            padding: 14px !important;
+        }
+
+        #adminRoleControl .sari-role-table {
+            margin: 0 14px 12px !important;
+        }
+
+        #adminRoleControl .sari-role-row {
+            min-height: 50px !important;
+            grid-template-columns: minmax(0, 1fr) auto 26px !important;
+        }
+
+        #adminRoleControl .sari-role-icon {
+            width: 21px !important;
+            height: 21px !important;
+            min-width: 21px !important;
+            flex-basis: 21px !important;
+        }
+
+        #adminRoleControl .sari-role-icon svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       LIVE ORDER JOURNEY — APPROVED CLEAN STATUS UI
+       - no icon containers
+       - explicit status colors per stage
+       - neutral connector line
+       - clean white card + compact status panel
+       ============================================================ */
+
+    #adminOrderJourney {
+        border: 1px solid var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: #FFFFFF !important;
+        box-shadow: var(--seller-shadow-main) !important;
+        overflow: hidden !important;
+    }
+
+    #adminOrderJourney .sari-ops-head {
+        align-items: center !important;
+        padding: 15px 16px 10px !important;
+    }
+
+    #adminOrderJourney .sari-ops-title {
+        color: #202124 !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.02em !important;
+    }
+
+    #adminOrderJourney .sari-ops-subtitle {
+        margin-top: 2px !important;
+        color: #7B8490 !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    #adminOrderJourney .sari-ops-action {
+        min-height: 30px !important;
+        gap: 6px !important;
+        border: 1px solid #DDE2E7 !important;
+        border-radius: 999px !important;
+        background: #FFFFFF !important;
+        padding: 0 11px !important;
+        color: #4B5563 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: border-color .14s ease, background-color .14s ease, color .14s ease !important;
+    }
+
+    #adminOrderJourney .sari-ops-action:hover {
+        border-color: #CBD5DF !important;
+        background: #F8F9FA !important;
+        color: #202124 !important;
+        transform: none !important;
+    }
+
+    #adminOrderJourney .sari-ops-action svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    #adminOrderJourney .sari-journey-body {
+        padding: 8px 16px 16px !important;
+    }
+
+    #adminOrderJourney .sari-journey-scroll {
+        overflow-x: auto !important;
+        padding-bottom: 2px !important;
+        scrollbar-width: thin;
+    }
+
+    #adminOrderJourney .sari-journey-track {
+        display: grid !important;
+        min-width: 680px !important;
+        grid-template-columns: repeat(6, minmax(86px, 1fr)) !important;
+        align-items: start !important;
+        gap: 0 !important;
+    }
+
+    #adminOrderJourney .sari-journey-step {
+        position: relative !important;
+        min-width: 0 !important;
+        text-align: center !important;
+        padding: 6px 4px 0 !important;
+    }
+
+    #adminOrderJourney .sari-journey-step:not(:last-child)::after {
+        content: "" !important;
+        position: absolute !important;
+        z-index: 0 !important;
+        top: 22px !important;
+        left: calc(50% + 24px) !important;
+        width: calc(100% - 48px) !important;
+        height: 2px !important;
+        border-radius: 999px !important;
+        background: #D5DDE5 !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon {
+        position: relative !important;
+        z-index: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 24px !important;
+        height: 24px !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        color: #6B7280 !important;
+        filter: none !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+        stroke: currentColor !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon.is-good {
+        color: #16A34A !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon.is-warn {
+        color: #D59617 !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon.is-hot {
+        color: #EF4444 !important;
+    }
+
+    #adminOrderJourney .sari-journey-name {
+        margin-top: 12px !important;
+        font-size: 8.5px !important;
+        font-weight: 500 !important;
+        color: #667085 !important;
+        white-space: nowrap !important;
+        line-height: 1.3 !important;
+    }
+
+    #adminOrderJourney .sari-journey-count {
+        margin-top: 5px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        letter-spacing: -.03em !important;
+        color: #111827 !important;
+        line-height: 1 !important;
+    }
+
+    #adminOrderJourney .sari-journey-status {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-top: 18px !important;
+        border: 1px solid #D6EAD9 !important;
+        border-radius: 12px !important;
+        background: #F5FAF6 !important;
+        padding: 12px 14px !important;
+        color: #21824A !important;
+    }
+
+    #adminOrderJourney .sari-journey-status.is-alert {
+        border-color: #E9D8AF !important;
+        background: #FFF9EC !important;
+        color: #A66D09 !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        flex: 0 0 34px !important;
+        border-radius: 999px !important;
+        background: #1F9D55 !important;
+        color: #FFFFFF !important;
+        box-shadow: none !important;
+    }
+
+    #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-icon {
+        background: #D59617 !important;
+        color: #FFFFFF !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-icon svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-title {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        color: currentColor !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-copy {
+        margin-top: 2px !important;
+        font-size: 8.2px !important;
+        line-height: 1.45 !important;
+        color: #6F7F77 !important;
+    }
+
+    #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-copy {
+        color: #8F774E !important;
+    }
+
+    @media (max-width: 639px) {
+        #adminOrderJourney .sari-ops-head {
+            padding: 14px !important;
+        }
+
+        #adminOrderJourney .sari-journey-body {
+            padding: 8px 14px 14px !important;
+        }
+
+        #adminOrderJourney .sari-journey-track {
+            min-width: 640px !important;
+            grid-template-columns: repeat(6, minmax(82px, 1fr)) !important;
+        }
+
+        #adminOrderJourney .sari-journey-step:not(:last-child)::after {
+            left: calc(50% + 22px) !important;
+            width: calc(100% - 44px) !important;
+        }
+
+        #adminOrderJourney .sari-journey-icon {
+            width: 22px !important;
+            height: 22px !important;
+        }
+
+        #adminOrderJourney .sari-journey-icon svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       LIVE ORDER JOURNEY — COMPACT FIT-TO-CARD FINAL AUTHORITY
+       Fixes desktop horizontal scrolling + grid stretch whitespace.
+       ============================================================ */
+
+    /* Keep Role Control and Order Journey at their own natural heights. */
+    .sari-ops-pair {
+        align-items: start !important;
+    }
+
+    #adminRoleControl,
+    #adminOrderJourney {
+        align-self: start !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    #adminOrderJourney {
+        overflow: hidden !important;
+    }
+
+    /* Compact header. */
+    #adminOrderJourney .sari-ops-head {
+        padding: 14px 16px 8px !important;
+    }
+
+    #adminOrderJourney .sari-journey-body {
+        padding: 5px 16px 14px !important;
+    }
+
+    /* Desktop/laptop: all six steps must fit inside the available card width. */
+    #adminOrderJourney .sari-journey-scroll {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        padding: 0 !important;
+        scrollbar-width: none !important;
+    }
+
+    #adminOrderJourney .sari-journey-scroll::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    #adminOrderJourney .sari-journey-track {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+        align-items: start !important;
+        gap: 0 !important;
+    }
+
+    #adminOrderJourney .sari-journey-step {
+        min-width: 0 !important;
+        padding: 4px 2px 0 !important;
+        overflow: visible !important;
+    }
+
+    /* Shorter connector so it never forces extra track width. */
+    #adminOrderJourney .sari-journey-step:not(:last-child)::after {
+        top: 17px !important;
+        left: calc(50% + 17px) !important;
+        width: calc(100% - 34px) !important;
+        height: 2px !important;
+        background: #D7DEE5 !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    #adminOrderJourney .sari-journey-icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    #adminOrderJourney .sari-journey-name {
+        margin-top: 9px !important;
+        font-size: 7.4px !important;
+        line-height: 1.25 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    #adminOrderJourney .sari-journey-count {
+        margin-top: 4px !important;
+        font-size: 13px !important;
+        line-height: 1 !important;
+    }
+
+    /* Pull the status box closer to the stages and reduce its footprint. */
+    #adminOrderJourney .sari-journey-status {
+        gap: 10px !important;
+        margin-top: 13px !important;
+        border-radius: 10px !important;
+        padding: 10px 12px !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-icon {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        flex-basis: 30px !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-title {
+        font-size: 9px !important;
+    }
+
+    #adminOrderJourney .sari-journey-status-copy {
+        margin-top: 1px !important;
+        font-size: 7.4px !important;
+    }
+
+    /* Only very narrow mobile screens may scroll horizontally for readability. */
+    @media (max-width: 560px) {
+        #adminOrderJourney .sari-journey-scroll {
+            overflow-x: auto !important;
+        }
+
+        #adminOrderJourney .sari-journey-track {
+            min-width: 520px !important;
+        }
+
+        #adminOrderJourney .sari-journey-name {
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+    }
+
+
+
+    /* ============================================================
+       ADMIN DASHBOARD — HEALTH/ROLE SWAP + CLEAN BOTTOM FEED
+       Final authority for this dashboard pass.
+       ============================================================ */
+
+    /* Marketplace Health + Role Control Center */
+    .sari-dashboard-health-role-grid {
+        align-items: start !important;
+    }
+
+    .sari-dashboard-health-role-grid > * {
+        align-self: start !important;
+        min-width: 0 !important;
+    }
+
+    /* Today's Focus + Live Order Journey */
+    .sari-dashboard-focus-journey-grid {
+        align-items: start !important;
+    }
+
+    .sari-dashboard-focus-journey-grid > * {
+        align-self: start !important;
+        min-width: 0 !important;
+        height: auto !important;
+    }
+
+    .sari-dashboard-focus-journey-grid > .sari-health-card {
+        padding: 14px 15px !important;
+    }
+
+    .sari-dashboard-focus-journey-grid .sari-focus-list-v2 {
+        margin-top: 8px !important;
+    }
+
+    .sari-dashboard-focus-journey-grid .sari-focus-row-v2 {
+        padding: 8px 0 !important;
+    }
+
+    /* Marketplace Health: compact enough to sit cleanly beside Role Control. */
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth {
+        padding: 14px 15px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-header {
+        padding-bottom: 9px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-main {
+        grid-template-columns: 132px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        margin-top: 10px !important;
+        align-items: center !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score {
+        width: 94px !important;
+        height: 94px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score::before {
+        inset: 9px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score-content > p:first-child {
+        font-size: 21px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-score-copy {
+        max-width: 126px !important;
+        margin-top: 7px !important;
+        font-size: 6.5px !important;
+        line-height: 1.45 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-v2 {
+        min-height: 60px !important;
+        padding: 8px 10px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-icon {
+        width: 20px !important;
+        height: 20px !important;
+        flex-basis: 20px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-icon svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-label {
+        font-size: 7.3px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-note {
+        font-size: 6.2px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-value {
+        font-size: 10px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-progress {
+        margin-top: 6px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary {
+        margin-top: 9px !important;
+        padding-top: 9px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-card {
+        min-height: 43px !important;
+        padding: 4px 10px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-icon {
+        width: 19px !important;
+        height: 19px !important;
+        flex-basis: 19px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-icon svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-label {
+        font-size: 5.7px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-value {
+        font-size: 9px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-note {
+        font-size: 5.8px !important;
+    }
+
+    /* Role Control Center remains content-height beside Marketplace Health. */
+    .sari-dashboard-health-role-grid #adminRoleControl {
+        align-self: start !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    /* Bottom pair: remove decorative heading icons and cream treatments. */
+    #adminCategoryBreakdown.sari-category-card,
+    .sari-platform-activity-card {
+        border: 1px solid var(--seller-border) !important;
+        border-radius: 8px !important;
+        background: #FFFFFF !important;
+        background-image: none !important;
+        box-shadow: var(--seller-shadow-main) !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    #adminCategoryBreakdown.sari-category-card {
+        padding: 17px !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-heading {
+        gap: 0 !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-head-icon {
+        display: none !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-title {
+        color: #202124 !important;
+        font-size: 13px !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-subtitle {
+        color: #7B8490 !important;
+        font-size: 8px !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-layout {
+        margin-top: 15px !important;
+        gap: 20px !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-donut {
+        box-shadow: none !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-donut::after {
+        display: none !important;
+    }
+
+    #adminCategoryBreakdown .sari-category-donut::before {
+        border-color: #E5E9ED !important;
+        background: #FFFFFF !important;
+        box-shadow: none !important;
+    }
+
+    .sari-category-empty {
+        border: 1px solid #E5E9ED !important;
+        border-radius: 9px !important;
+        background: #FFFFFF !important;
+        padding: 14px 16px !important;
+    }
+
+    .sari-category-empty-title {
+        color: #202124 !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-category-empty-copy {
+        margin-top: 4px !important;
+        color: #7B8490 !important;
+        font-size: 7.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Platform Activity: text-first professional activity feed. */
+    .sari-platform-activity-card {
+        padding: 17px !important;
+        align-self: start !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .sari-platform-activity-head {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        gap: 14px !important;
+        padding-bottom: 12px !important;
+        border-bottom: 1px solid #ECEFF2 !important;
+    }
+
+    .sari-platform-activity-title {
+        margin: 0 !important;
+        color: #202124 !important;
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+        letter-spacing: -.02em !important;
+    }
+
+    .sari-platform-activity-subtitle {
+        margin: 2px 0 0 !important;
+        color: #7B8490 !important;
+        font-size: 8px !important;
+        line-height: 1.45 !important;
+    }
+
+    .sari-platform-activity-list {
+        margin-top: 2px !important;
+    }
+
+    .sari-platform-activity-row {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: start !important;
+        gap: 18px !important;
+        min-height: 58px !important;
+        padding: 12px 0 !important;
+        border-bottom: 1px solid #ECEFF2 !important;
+        background: transparent !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .sari-platform-activity-row:last-child {
+        border-bottom: 0 !important;
+    }
+
+    .sari-platform-activity-row:hover {
+        background: transparent !important;
+        transform: none !important;
+    }
+
+    .sari-platform-activity-copy {
+        min-width: 0 !important;
+    }
+
+    .sari-platform-activity-name {
+        margin: 0 !important;
+        color: #202124 !important;
+        font-size: 9.5px !important;
+        line-height: 1.4 !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-platform-activity-body {
+        margin: 4px 0 0 !important;
+        color: #697481 !important;
+        font-size: 7.7px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-platform-activity-time {
+        padding-top: 1px !important;
+        color: #9AA3AD !important;
+        font-size: 7.2px !important;
+        line-height: 1.4 !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-platform-activity-empty {
+        padding: 16px 0 4px !important;
+    }
+
+    .sari-platform-activity-empty-title {
+        color: #4B5563 !important;
+        font-size: 9px !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-platform-activity-empty-copy {
+        margin-top: 4px !important;
+        color: #8A949F !important;
+        font-size: 7.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Balanced desktop ratios after the swap. */
+    @media (min-width: 1180px) {
+        .sari-dashboard-health-role-grid {
+            grid-template-columns: minmax(0, 1.22fr) minmax(360px, .78fr) !important;
+        }
+
+        .sari-dashboard-focus-journey-grid {
+            grid-template-columns: minmax(290px, .68fr) minmax(0, 1.32fr) !important;
+        }
+
+        .sari-dashboard-bottom-grid {
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) !important;
+        }
+    }
+
+    @media (max-width: 1179px) {
+        .sari-dashboard-health-role-grid,
+        .sari-dashboard-focus-journey-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-main {
+            grid-template-columns: 145px minmax(0, 1fr) !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-platform-activity-card,
+        #adminCategoryBreakdown.sari-category-card {
+            padding: 14px !important;
+        }
+
+        .sari-platform-activity-row {
+            grid-template-columns: minmax(0, 1fr) !important;
+            gap: 4px !important;
+        }
+
+        .sari-platform-activity-time {
+            grid-row: 1 !important;
+            justify-self: start !important;
+            order: -1 !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-main {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+
+
+
+
+    /* ============================================================
+       INTERVENTION RADAR — FINAL SOLID SHADED ICON AUTHORITY
+       Both empty/all-clear icons match the approved solid green reference.
+       ============================================================ */
+
+    #adminInterventionRadar .sari-risk-empty {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        border: 1px solid #E3E8EC !important;
+        border-radius: 10px !important;
+        background: #FFFFFF !important;
+        padding: 12px 14px !important;
+        box-shadow: none !important;
+    }
+
+    /* First empty-state icon */
+    #adminInterventionRadar .sari-risk-empty > .sari-risk-empty-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        flex: 0 0 38px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        background: #1F9D55 !important;
+        background-color: #1F9D55 !important;
+        color: #FFFFFF !important;
+        box-shadow:
+            0 2px 4px rgba(16, 24, 40, .08),
+            0 8px 18px rgba(31, 157, 85, .24) !important;
+        filter: none !important;
+    }
+
+    #adminInterventionRadar .sari-risk-empty > .sari-risk-empty-icon svg {
+        display: block !important;
+        width: 17px !important;
+        height: 17px !important;
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+
+    #adminInterventionRadar .sari-risk-empty p:first-child {
+        color: #24734A !important;
+        font-weight: 700 !important;
+    }
+
+    #adminInterventionRadar .sari-risk-empty p:last-child {
+        color: #7A8680 !important;
+    }
+
+    /* Second all-clear status row */
+    #adminInterventionRadar .sari-risk-state {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-top: 12px !important;
+        border: 1px solid #E3E8EC !important;
+        border-radius: 10px !important;
+        background: #FFFFFF !important;
+        padding: 12px 14px !important;
+        box-shadow: none !important;
+    }
+
+    #adminInterventionRadar .sari-risk-state > .sari-risk-state-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        flex: 0 0 38px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        background: #1F9D55 !important;
+        background-color: #1F9D55 !important;
+        color: #FFFFFF !important;
+        box-shadow:
+            0 2px 4px rgba(16, 24, 40, .08),
+            0 8px 18px rgba(31, 157, 85, .24) !important;
+        filter: none !important;
+    }
+
+    #adminInterventionRadar .sari-risk-state > .sari-risk-state-icon svg {
+        display: block !important;
+        width: 17px !important;
+        height: 17px !important;
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+
+    #adminInterventionRadar .sari-risk-state-title {
+        color: #24734A !important;
+        font-weight: 700 !important;
+    }
+
+    #adminInterventionRadar .sari-risk-state-copy {
+        color: #7A8680 !important;
+    }
+
+    /* Alert fallback */
+    #adminInterventionRadar .sari-risk-state.is-alert > .sari-risk-state-icon {
+        background: #D59617 !important;
+        background-color: #D59617 !important;
+        color: #FFFFFF !important;
+        box-shadow:
+            0 2px 4px rgba(16, 24, 40, .08),
+            0 8px 18px rgba(213, 150, 23, .24) !important;
+    }
+
+    #adminInterventionRadar .sari-risk-state.is-alert > .sari-risk-state-icon svg {
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }
+
+    @media (max-width: 639px) {
+        #adminInterventionRadar .sari-risk-empty > .sari-risk-empty-icon,
+        #adminInterventionRadar .sari-risk-state > .sari-risk-state-icon {
+            width: 35px !important;
+            height: 35px !important;
+            min-width: 35px !important;
+            min-height: 35px !important;
+            flex-basis: 35px !important;
+        }
+    }
+
+
+
+/* Dashboard summary icons: freestanding color accents, no icon tiles. */
+.sari-admin-dashboard .admin-kpi .admin-icon-box {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: flex-start;
+    flex: 0 0 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.sari-admin-dashboard .admin-kpi .admin-icon-box svg {
+    display: block;
+    width: 24px !important;
+    height: 24px !important;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.sari-admin-dashboard .admin-kpi .admin-icon-box > span {
+    font-size: 23px !important;
+    line-height: 24px !important;
+}
+
+
+    /* ============================================================
+       HERO TIME / DATE / WEATHER — READABLE FREESTANDING ICONS
+       Visual-only override. Keeps existing live time/date/weather JS.
+       ============================================================ */
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-label {
+        font-size: 9px !important;
+        font-weight: 700 !important;
+        letter-spacing: .12em !important;
+        color: rgba(255,255,255,.66) !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-row {
+        margin-top: 7px !important;
+        gap: 9px !important;
+        align-items: center !important;
+    }
+
+    /* Keep only the icon itself — no circle/tile/container appearance. */
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon,
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon.is-cloud {
+        display: inline-flex !important;
+        width: 27px !important;
+        height: 27px !important;
+        min-width: 27px !important;
+        min-height: 27px !important;
+        flex: 0 0 27px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        color: #F1C55F !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon.is-cloud {
+        color: rgba(255,255,255,.94) !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon svg {
+        display: block !important;
+        width: 22px !important;
+        height: 22px !important;
+        stroke: currentColor !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon .fi {
+        font-size: 22px !important;
+        line-height: 1 !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-value {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        line-height: 1.12 !important;
+        letter-spacing: -.02em !important;
+        color: #fff !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-admin-dashboard .sari-hero-side .sari-hero-stat-sub {
+        margin-top: 4px !important;
+        padding-left: 0 !important;
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        line-height: 1.35 !important;
+        color: rgba(255,255,255,.68) !important;
+        white-space: nowrap !important;
+    }
+
+    .sari-admin-dashboard #adminWeatherCondition {
+        max-width: 150px !important;
+        padding-left: 0 !important;
+    }
+
+    @media (min-width: 1280px) {
+        .sari-admin-dashboard .sari-hero-side {
+            grid-template-columns:
+                minmax(126px, 1fr)
+                minmax(132px, 1fr)
+                minmax(142px, 1fr)
+                auto !important;
+        }
+
+        .sari-admin-dashboard .sari-hero-stat {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-label {
+            font-size: 9px !important;
+        }
+
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-value {
+            font-size: 15px !important;
+        }
+
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-sub {
+            font-size: 8.5px !important;
+        }
+
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon,
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon.is-cloud {
+            width: 26px !important;
+            height: 26px !important;
+            min-width: 26px !important;
+            min-height: 26px !important;
+            flex-basis: 26px !important;
+        }
+
+        .sari-admin-dashboard .sari-hero-side .sari-hero-stat-icon svg {
+            width: 21px !important;
+            height: 21px !important;
+        }
+    }
+
+
+    /* ============================================================
+       KPI + CONTROL TOWER — READABILITY PASS
+       Visual-only: live values, links, routes, and JS stay unchanged.
+       ============================================================ */
+    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:first-child {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        color: #667085 !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:nth-child(2) {
+        margin-top: 5px !important;
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        line-height: 1.05 !important;
+        letter-spacing: -.035em !important;
+        color: #202124 !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi > div:last-child {
+        margin-top: 10px !important;
+        gap: 6px !important;
+        font-size: 9.5px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi > div:last-child > span:first-child {
+        font-size: 9.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi > div:last-child > span:last-child {
+        font-size: 9.5px !important;
+        font-weight: 500 !important;
+        color: #7B8490 !important;
+    }
+
+    /* Keep the freestanding KPI icons readable beside the larger text. */
+    .sari-admin-dashboard .admin-kpi .admin-icon-box,
+    .sari-admin-dashboard .admin-kpi .admin-icon-box svg {
+        width: 26px !important;
+        height: 26px !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi .admin-icon-box {
+        min-width: 26px !important;
+        min-height: 26px !important;
+        flex-basis: 26px !important;
+    }
+
+    .sari-admin-dashboard .admin-kpi .admin-icon-box > span {
+        font-size: 25px !important;
+        line-height: 26px !important;
+    }
+
+    #adminControlTower > div:first-child p:first-child {
+        font-size: 9.5px !important;
+        font-weight: 800 !important;
+        letter-spacing: .15em !important;
+        line-height: 1.3 !important;
+    }
+
+    #adminControlTower > div:first-child h3 {
+        margin-top: 4px !important;
+        font-size: 18.5px !important;
+        line-height: 1.25 !important;
+        font-weight: 700 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    @media (max-width: 767px) {
+        .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:first-child {
+            font-size: 10px !important;
+        }
+
+        .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:nth-child(2) {
+            font-size: 23px !important;
+        }
+
+        .sari-admin-dashboard .admin-kpi > div:last-child,
+        .sari-admin-dashboard .admin-kpi > div:last-child > span:first-child,
+        .sari-admin-dashboard .admin-kpi > div:last-child > span:last-child {
+            font-size: 9px !important;
+        }
+
+        #adminControlTower > div:first-child p:first-child {
+            font-size: 9px !important;
+        }
+
+        #adminControlTower > div:first-child h3 {
+            font-size: 17px !important;
+        }
+    }
+
+
+    /* ============================================================
+       SALES OVERVIEW + MARKETPLACE HEALTH — READABILITY PASS
+       Visual-only. Keeps live data, chart interactions, links, and JS.
+       ============================================================ */
+
+    /* ---------------- SALES OVERVIEW ---------------- */
+    #adminSalesOverview .sari-sales-clean-title {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-subtitle {
+        margin-top: 4px !important;
+        font-size: 9.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-period {
+        min-height: 34px !important;
+        padding: 0 11px !important;
+        font-size: 9px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-label {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-value {
+        margin-top: 5px !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-metric-note {
+        gap: 6px !important;
+        margin-top: 7px !important;
+        font-size: 9.25px !important;
+        line-height: 1.4 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart-title {
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-chart-copy {
+        margin-top: 4px !important;
+        font-size: 9px !important;
+        line-height: 1.5 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-legend {
+        gap: 13px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-legend-item {
+        gap: 6px !important;
+        font-size: 9.25px !important;
+        font-weight: 550 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-dot {
+        width: 7px !important;
+        height: 7px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-axis {
+        font-size: 9.5px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-tooltip {
+        min-width: 140px !important;
+        padding: 9px 10px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-tooltip-week {
+        font-size: 8.75px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-tooltip-row {
+        font-size: 8.75px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-tooltip-row strong {
+        font-size: 9.25px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-empty-title {
+        font-size: 10.5px !important;
+        line-height: 1.4 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-empty-copy {
+        margin-top: 4px !important;
+        font-size: 9px !important;
+        line-height: 1.55 !important;
+    }
+
+    /* ---------------- MARKETPLACE HEALTH ---------------- */
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-title {
+        font-size: 14.5px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-subtitle {
+        margin-top: 3px !important;
+        font-size: 9.25px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-stable,
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-action {
+        min-height: 31px !important;
+        padding: 0 10px !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-main {
+        grid-template-columns: 148px minmax(0, 1fr) !important;
+        gap: 14px !important;
+        margin-top: 12px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score {
+        width: 106px !important;
+        height: 106px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score::before {
+        inset: 10px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score-content > p:first-child {
+        font-size: 28px !important;
+        line-height: 1 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-score-content > p:nth-child(2) {
+        margin-top: 1px !important;
+        font-size: 8px !important;
+        line-height: 1.2 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .admin-health-grade {
+        margin-top: 5px !important;
+        padding: 3px 7px !important;
+        font-size: 7.5px !important;
+        line-height: 1.2 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-score-copy {
+        max-width: 142px !important;
+        margin-top: 8px !important;
+        font-size: 8.25px !important;
+        line-height: 1.55 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-v2 {
+        min-height: 68px !important;
+        padding: 9px 11px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-top {
+        gap: 9px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-label {
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-note {
+        margin-top: 2px !important;
+        font-size: 7.75px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-value {
+        font-size: 12.5px !important;
+        line-height: 1.1 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-progress {
+        height: 5px !important;
+        margin-top: 7px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary {
+        margin-top: 11px !important;
+        padding-top: 11px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-card {
+        min-height: 50px !important;
+        gap: 9px !important;
+        padding: 6px 10px !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-label {
+        font-size: 8px !important;
+        line-height: 1.3 !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-value {
+        margin-top: 2px !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-note {
+        margin-top: 2px !important;
+        font-size: 7.75px !important;
+        line-height: 1.4 !important;
+    }
+
+    @media (max-width: 1023px) {
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-main {
+            grid-template-columns: 1fr !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-score-copy {
+            max-width: 260px !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #adminSalesOverview .sari-sales-clean-title {
+            font-size: 15px !important;
+        }
+
+        #adminSalesOverview .sari-sales-clean-metric-value {
+            font-size: 22px !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-title {
+            font-size: 14px !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-subtitle {
+            font-size: 9px !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-label {
+            font-size: 8.75px !important;
+        }
+
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-metric-note,
+        .sari-dashboard-health-role-grid #adminMarketplaceHealth .sari-health-summary-note {
+            font-size: 7.5px !important;
+        }
+    }
+
+
+    /* ============================================================
+       SALES CHART — AXIS + EMPTY STATE READABILITY PASS
+       Visual-only. Keeps all existing data/chart logic intact.
+       ============================================================ */
+
+    /* Make the graph labels / axis values easier to read */
+    #adminSalesOverview .sari-sales-clean-axis {
+        font-size: 10.5px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Slightly improve week labels / point context readability */
+    #adminSalesOverview .sari-sales-clean-chart svg text {
+        letter-spacing: 0 !important;
+    }
+
+    /* Make points a bit easier to notice on the graph */
+    #adminSalesOverview .sari-sales-clean-point.is-sales {
+        stroke-width: 2.2 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-point.is-commission {
+        stroke-width: 1.8 !important;
+    }
+
+    /* Empty state: remove icon container, keep only the icon */
+    #adminSalesOverview .sari-sales-clean-empty {
+        gap: 10px !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-empty-icon {
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-empty-icon svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    /* Keep the empty state copy readable too */
+    #adminSalesOverview .sari-sales-clean-empty-title {
+        font-size: 10.75px !important;
+        font-weight: 700 !important;
+    }
+
+    #adminSalesOverview .sari-sales-clean-empty-copy {
+        font-size: 9px !important;
+        line-height: 1.55 !important;
+    }
+
+    @media (max-width: 767px) {
+        #adminSalesOverview .sari-sales-clean-axis {
+            font-size: 10px !important;
+        }
+
+        #adminSalesOverview .sari-sales-clean-empty-icon svg {
+            width: 17px !important;
+            height: 17px !important;
+        }
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH + ROLE CONTROL CENTER — LARGER TEXT PASS
+       Based on the user's latest dashboard code.
+       Text-size only: layout, live data, routes, and JS stay unchanged.
+       ============================================================ */
+
+    /* ---------------- MARKETPLACE HEALTH ---------------- */
+    #adminMarketplaceHealth .sari-health-title {
+        font-size: 17px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-subtitle {
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-stable,
+    #adminMarketplaceHealth .sari-health-action {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .admin-health-score-content > p:first-child {
+        font-size: 32px !important;
+        line-height: 1 !important;
+    }
+
+    #adminMarketplaceHealth .admin-health-score-content > p:nth-child(2) {
+        font-size: 9px !important;
+        line-height: 1.25 !important;
+    }
+
+    #adminMarketplaceHealth .admin-health-grade {
+        font-size: 8.75px !important;
+        line-height: 1.25 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-score-copy {
+        font-size: 9.5px !important;
+        line-height: 1.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-label {
+        font-size: 10.5px !important;
+        line-height: 1.35 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-note {
+        font-size: 9px !important;
+        line-height: 1.45 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-value {
+        font-size: 15.5px !important;
+        line-height: 1.15 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-label {
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-value {
+        font-size: 13.5px !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-note {
+        font-size: 8.75px !important;
+        line-height: 1.45 !important;
+    }
+
+    /* ---------------- ROLE CONTROL CENTER ---------------- */
+    #adminRoleControl .sari-ops-title {
+        font-size: 16.5px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminRoleControl .sari-ops-subtitle {
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    #adminRoleControl .sari-ops-action {
+        font-size: 9.75px !important;
+        font-weight: 700 !important;
+    }
+
+    #adminRoleControl .sari-role-table-head {
+        font-size: 8.75px !important;
+        font-weight: 800 !important;
+        line-height: 1.3 !important;
+    }
+
+    #adminRoleControl .sari-role-name {
+        font-size: 10.75px !important;
+        line-height: 1.35 !important;
+        font-weight: 650 !important;
+    }
+
+    #adminRoleControl .sari-role-value {
+        font-size: 15.5px !important;
+        line-height: 1.15 !important;
+        font-weight: 700 !important;
+    }
+
+    #adminRoleControl .sari-role-pending {
+        font-size: 9.5px !important;
+        line-height: 1.35 !important;
+        font-weight: 600 !important;
+    }
+
+    @media (max-width: 767px) {
+        #adminMarketplaceHealth .sari-health-title {
+            font-size: 16px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-subtitle {
+            font-size: 10px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-metric-label {
+            font-size: 10px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-metric-note {
+            font-size: 8.5px !important;
+        }
+
+        #adminRoleControl .sari-ops-title {
+            font-size: 15.5px !important;
+        }
+
+        #adminRoleControl .sari-ops-subtitle {
+            font-size: 9.5px !important;
+        }
+
+        #adminRoleControl .sari-role-name {
+            font-size: 10.25px !important;
+        }
+
+        #adminRoleControl .sari-role-pending {
+            font-size: 9px !important;
+        }
+    }
+
+
+    /* ============================================================
+       RECENT REGISTRATIONS — LARGER TEXT PASS
+       Text-size only: live data, links, routes, status logic, and layout stay intact.
+       ============================================================ */
+
+    .sari-reg-clean-card .sari-reg-clean-title {
+        font-size: 16.5px !important;
+        line-height: 1.3 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-subtitle {
+        margin-top: 4px !important;
+        font-size: 10px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-view-all {
+        font-size: 9.75px !important;
+        line-height: 1.35 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-name {
+        font-size: 11.5px !important;
+        line-height: 1.35 !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-role {
+        margin-top: 3px !important;
+        font-size: 9.5px !important;
+        line-height: 1.4 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-status {
+        font-size: 9.5px !important;
+        line-height: 1.35 !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-reg-clean-card .sari-reg-clean-time {
+        font-size: 9.25px !important;
+        line-height: 1.35 !important;
+    }
+
+    @media (max-width: 767px) {
+        .sari-reg-clean-card .sari-reg-clean-title {
+            font-size: 15.5px !important;
+        }
+
+        .sari-reg-clean-card .sari-reg-clean-subtitle {
+            font-size: 9.5px !important;
+        }
+
+        .sari-reg-clean-card .sari-reg-clean-name {
+            font-size: 11px !important;
+        }
+
+        .sari-reg-clean-card .sari-reg-clean-role,
+        .sari-reg-clean-card .sari-reg-clean-status {
+            font-size: 9px !important;
+        }
+    }
+#adminMarketplaceHealth .sari-health-header {
+            gap: 10px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-actions {
+            width: 100% !important;
+            justify-content: space-between !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-chart-stage {
+            min-height: 284px !important;
+            padding: 14px 10px 10px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-chart-floating-card {
+            top: 16px !important;
+            left: 16px !important;
+            min-width: 118px !important;
+            padding: 13px 13px 12px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-chart-floating-card strong {
+            font-size: 30px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-y-label,
+        #adminMarketplaceHealth .sari-health-graph-x-label {
+            font-size: 8.4px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-chart-copy {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-chart-copy-stat {
+            align-items: flex-start !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-metrics--light {
+            grid-template-columns: 1fr !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-summary {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH — FULL GRAPH REDESIGN
+       Replaces the old visual layout with a proper graph-first health section.
+       Light mode + SARI gold palette.
+       ============================================================ */
+    #adminMarketplaceHealth{
+        border:1px solid #eadfcb !important;
+        border-radius:26px !important;
+        background:
+            radial-gradient(circle at top right, rgba(240, 213, 153, 0.20), transparent 34%),
+            linear-gradient(180deg, #fffdfa 0%, #fffaf3 100%) !important;
+        box-shadow:
+            0 12px 32px rgba(23, 25, 31, 0.05),
+            0 28px 60px rgba(23, 25, 31, 0.04) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-header{
+        align-items:flex-start !important;
+        padding-bottom:14px !important;
+        border-bottom:1px solid #efe5d5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-title{
+        font-size:17px !important;
+        line-height:1.28 !important;
+        font-weight:700 !important;
+        color:#241d15 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-subtitle{
+        margin-top:4px !important;
+        font-size:10px !important;
+        line-height:1.5 !important;
+        color:#7c746a !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-stable{
+        min-height:34px !important;
+        border:1px solid #e8dcc3 !important;
+        background:#fffdfa !important;
+        color:#8f6716 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-action{
+        min-height:34px !important;
+        border:1px solid #e2d1ad !important;
+        background:linear-gradient(180deg, #fff5df 0%, #fdefcf 100%) !important;
+        color:#8a6214 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-action:hover{
+        border-color:#d3b97d !important;
+        background:linear-gradient(180deg, #ffefce 0%, #fbe5b8 100%) !important;
+        color:#78540f !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-main--chart-redesign{
+        display:flex !important;
+        flex-direction:column !important;
+        gap:16px !important;
+        margin-top:14px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-panel{
+        border:1px solid #ede2cf !important;
+        border-radius:26px !important;
+        background:
+            linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,248,236,.96) 100%),
+            radial-gradient(circle at 10% 10%, rgba(221,168,58,.12), transparent 28%) !important;
+        padding:16px !important;
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.9),
+            0 16px 34px rgba(34, 27, 17, 0.04) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-head{
+        display:flex !important;
+        align-items:flex-end !important;
+        justify-content:space-between !important;
+        gap:14px !important;
+        margin-bottom:12px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-kicker{
+        font-size:8px !important;
+        line-height:1.25 !important;
+        font-weight:800 !important;
+        letter-spacing:.14em !important;
+        text-transform:uppercase !important;
+        color:#9f7a2d !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line{
+        display:flex !important;
+        align-items:flex-end !important;
+        gap:10px !important;
+        margin-top:4px !important;
+        flex-wrap:wrap !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line strong{
+        font-size:34px !important;
+        line-height:1 !important;
+        font-weight:700 !important;
+        letter-spacing:-.05em !important;
+        color:#2a2219 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line span{
+        font-size:10px !important;
+        line-height:1.4 !important;
+        color:#84796c !important;
+        margin-bottom:5px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line em{
+        font-style:normal !important;
+        margin-bottom:5px !important;
+        display:inline-flex !important;
+        min-height:26px !important;
+        align-items:center !important;
+        border-radius:999px !important;
+        padding:0 10px !important;
+        background:#fff2cf !important;
+        color:#8b6110 !important;
+        font-size:9px !important;
+        font-weight:700 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-description{
+        margin-top:5px !important;
+        max-width:520px !important;
+        font-size:9.1px !important;
+        line-height:1.65 !important;
+        color:#7c746a !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-side{
+        display:flex !important;
+        min-width:112px !important;
+        flex-direction:column !important;
+        align-items:flex-end !important;
+        gap:2px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-side-label{
+        font-size:8px !important;
+        line-height:1.25 !important;
+        font-weight:700 !important;
+        letter-spacing:.12em !important;
+        text-transform:uppercase !important;
+        color:#9e9382 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-side strong{
+        font-size:16px !important;
+        line-height:1.1 !important;
+        font-weight:700 !important;
+        color:#8d6312 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-canvas{
+        border:1px solid #efdfbe !important;
+        border-radius:24px !important;
+        background:
+            linear-gradient(180deg, #fffdfa 0%, #fff3da 100%),
+            radial-gradient(circle at top right, rgba(224, 176, 74, 0.14), transparent 28%) !important;
+        padding:10px 10px 8px !important;
+        overflow:hidden !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-svg{
+        display:block !important;
+        width:100% !important;
+        height:auto !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-grid-line{
+        stroke:rgba(151, 130, 90, .22) !important;
+        stroke-width:1 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-y-label,
+    #adminMarketplaceHealth .sari-health-graph-x-label{
+        fill:#81776b !important;
+        font-family:"Poppins",sans-serif !important;
+        font-size:9.2px !important;
+        font-weight:600 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-x-label{
+        fill:#6f6559 !important;
+        font-size:9.6px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-area{
+        fill:url(#marketHealthAreaGradient) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-line{
+        fill:none !important;
+        stroke:url(#marketHealthLineGradient) !important;
+        stroke-width:5.2 !important;
+        stroke-linecap:round !important;
+        stroke-linejoin:round !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-point-shadow{
+        fill:#fff6e4 !important;
+        stroke:#fffefb !important;
+        stroke-width:5.2 !important;
+        filter:url(#marketHealthGlow) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-point-core{
+        fill:#d49e2c !important;
+        stroke:#bf8511 !important;
+        stroke-width:1.5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend{
+        display:grid !important;
+        grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+        gap:10px !important;
+        margin-top:12px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-item{
+        display:flex !important;
+        align-items:flex-start !important;
+        gap:8px !important;
+        border:1px solid #efe4d3 !important;
+        border-radius:16px !important;
+        background:#fffdfa !important;
+        padding:9px 10px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-dot{
+        width:8px !important;
+        height:8px !important;
+        margin-top:4px !important;
+        flex:0 0 8px !important;
+        border-radius:999px !important;
+        background:linear-gradient(180deg, #d8a23a 0%, #b47d0f 100%) !important;
+        box-shadow:0 0 0 4px rgba(222, 182, 94, 0.16) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-label{
+        font-size:8.5px !important;
+        line-height:1.35 !important;
+        font-weight:700 !important;
+        color:#73685c !important;
+        text-transform:uppercase !important;
+        letter-spacing:.04em !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-value{
+        margin-top:2px !important;
+        font-size:12px !important;
+        line-height:1.15 !important;
+        font-weight:700 !important;
+        color:#2d2419 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metrics--chart-redesign{
+        display:grid !important;
+        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+        gap:12px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-v2{
+        min-height:0 !important;
+        border:1px solid #eee3d2 !important;
+        border-radius:20px !important;
+        background:linear-gradient(180deg, #ffffff 0%, #fffaf1 100%) !important;
+        padding:12px 12px 11px !important;
+        box-shadow:0 10px 22px rgba(35, 28, 17, 0.03) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-icon{
+        border:1px solid #ecdcb5 !important;
+        background:linear-gradient(180deg, #fff4d9 0%, #fcebc4 100%) !important;
+        color:#b78314 !important;
+        box-shadow:0 8px 16px rgba(201, 147, 24, 0.08) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-label{
+        font-size:10px !important;
+        line-height:1.35 !important;
+        font-weight:700 !important;
+        color:#2a2217 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-note{
+        margin-top:2px !important;
+        font-size:8.4px !important;
+        line-height:1.45 !important;
+        color:#7e7367 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-metric-value{
+        font-size:14px !important;
+        line-height:1.1 !important;
+        font-weight:700 !important;
+        color:#8d6310 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-progress{
+        margin-top:9px !important;
+        height:6px !important;
+        border-radius:999px !important;
+        background:#f1e8d8 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-progress > span{
+        border-radius:999px !important;
+        background:linear-gradient(90deg, #ddb04c 0%, #c58e18 100%) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary{
+        gap:12px !important;
+        margin-top:14px !important;
+        padding-top:14px !important;
+        border-top:1px solid #efe5d5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-card{
+        min-height:0 !important;
+        border:1px solid #eee3d2 !important;
+        border-radius:18px !important;
+        background:linear-gradient(180deg, #ffffff 0%, #fffaf1 100%) !important;
+        padding:10px 12px !important;
+        box-shadow:0 8px 18px rgba(35, 28, 17, 0.03) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-label{
+        font-size:8.5px !important;
+        line-height:1.35 !important;
+        font-weight:700 !important;
+        color:#8a7b67 !important;
+        letter-spacing:.04em !important;
+        text-transform:uppercase !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-value{
+        margin-top:2px !important;
+        font-size:13px !important;
+        line-height:1.15 !important;
+        font-weight:700 !important;
+        color:#2c241b !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-summary-note{
+        margin-top:2px !important;
+        font-size:8.4px !important;
+        line-height:1.45 !important;
+        color:#7e7367 !important;
+    }
+
+    @media (max-width: 900px){
+        #adminMarketplaceHealth .sari-health-graph-head{
+            flex-direction:column !important;
+            align-items:flex-start !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-side{
+            align-items:flex-start !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend{
+            grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 767px){
+        #adminMarketplaceHealth{
+            border-radius:22px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-actions{
+            width:100% !important;
+            justify-content:space-between !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-panel{
+            padding:12px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-score-line strong{
+            font-size:29px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-y-label,
+        #adminMarketplaceHealth .sari-health-graph-x-label{
+            font-size:8.4px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend{
+            grid-template-columns:1fr !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-metrics--chart-redesign{
+            grid-template-columns:1fr !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-summary{
+            grid-template-columns:1fr !important;
+        }
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH — GRAPH ONLY / COMPACT
+       Removes old metric cards and bottom summary cards from the UI.
+       Uses only current live health values; no fake historical trend data.
+       ============================================================ */
+    #adminMarketplaceHealth {
+        padding: 15px 16px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-main--graph-only {
+        display: block !important;
+        margin-top: 13px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-panel--compact {
+        padding: 14px 14px 12px !important;
+        border-radius: 20px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-head--compact {
+        align-items: flex-end !important;
+        margin-bottom: 8px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line strong {
+        font-size: 30px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-score-line span,
+    #adminMarketplaceHealth .sari-health-graph-score-line em {
+        margin-bottom: 3px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-description {
+        max-width: 560px !important;
+        margin-top: 3px !important;
+        font-size: 8.8px !important;
+        line-height: 1.55 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-canvas--compact {
+        padding: 4px 8px 2px !important;
+        border-radius: 17px !important;
+        min-height: 0 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-grid-line {
+        stroke: rgba(144, 124, 87, .20) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-y-label {
+        font-size: 8.8px !important;
+        fill: #85796b !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-line {
+        fill: none !important;
+        stroke-linecap: round !important;
+        opacity: .96 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-line.is-order {
+        stroke: #C58E18 !important;
+        stroke-width: 4.5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-line.is-fulfillment {
+        stroke: #E0B454 !important;
+        stroke-width: 3.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-line.is-seller {
+        stroke: #9F741C !important;
+        stroke-width: 3.2 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-line.is-approval {
+        stroke: #E8CF98 !important;
+        stroke-width: 3.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-point {
+        stroke: #fffdf9 !important;
+        stroke-width: 3.5 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-point.is-order {
+        fill: #C58E18 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-point.is-fulfillment {
+        fill: #E0B454 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-point.is-seller {
+        fill: #9F741C !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-series-point.is-approval {
+        fill: #E8CF98 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend--compact {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        margin-top: 8px !important;
+        border-top: 1px solid #eee4d3 !important;
+        padding-top: 9px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-item--flat {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        min-width: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 3px 10px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-item--flat + .sari-health-graph-legend-item--flat {
+        border-left: 1px solid #eee4d3 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line {
+        width: 22px !important;
+        height: 3px !important;
+        flex: 0 0 22px !important;
+        border-radius: 999px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-order {
+        background: #C58E18 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-fulfillment {
+        background: #E0B454 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-seller {
+        background: #9F741C !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-approval {
+        background: #E8CF98 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-label {
+        font-size: 8px !important;
+        line-height: 1.25 !important;
+        letter-spacing: .03em !important;
+        white-space: nowrap !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-value {
+        margin-top: 1px !important;
+        font-size: 11.5px !important;
+        line-height: 1.15 !important;
+    }
+
+    /* Old cards are no longer rendered; this is defensive cleanup. */
+    #adminMarketplaceHealth .sari-health-metrics,
+    #adminMarketplaceHealth .sari-health-summary {
+        display: none !important;
+    }
+
+    @media (max-width: 900px) {
+        #adminMarketplaceHealth .sari-health-graph-legend--compact {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend-item--flat:nth-child(3) {
+            border-left: 0 !important;
+        }
+    }
+
+    @media (max-width: 639px) {
+        #adminMarketplaceHealth .sari-health-graph-head--compact {
+            align-items: flex-start !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-side {
+            display: none !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend--compact {
+            grid-template-columns: 1fr !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend-item--flat {
+            border-left: 0 !important;
+            border-top: 1px solid #f1e7d8 !important;
+            padding: 7px 2px !important;
+        }
+
+        #adminMarketplaceHealth .sari-health-graph-legend-item--flat:first-child {
+            border-top: 0 !important;
+        }
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH — WHITE MULTI-CURVE GRAPH
+       White surfaces only; gold-family colors are used only on graph lines/markers.
+       Curves are a current-state visual profile, not historical time-series data.
+       ============================================================ */
+    #adminMarketplaceHealth {
+        background: #FFFFFF !important;
+        background-image: none !important;
+        border-color: #E5E7EB !important;
+        box-shadow: 0 6px 18px rgba(17,24,39,.05) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-header {
+        border-bottom-color: #E5E7EB !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-panel--white {
+        background: #FFFFFF !important;
+        background-image: none !important;
+        border-color: #E5E7EB !important;
+        box-shadow: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-canvas--white {
+        background: #FFFFFF !important;
+        background-image: none !important;
+        border-color: #E5E7EB !important;
+        box-shadow: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-panel--white::before,
+    #adminMarketplaceHealth .sari-health-graph-panel--white::after,
+    #adminMarketplaceHealth .sari-health-graph-canvas--white::before,
+    #adminMarketplaceHealth .sari-health-graph-canvas--white::after {
+        display: none !important;
+        content: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-grid-line {
+        stroke: #E5E7EB !important;
+        stroke-width: 1 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-y-label {
+        fill: #7B8490 !important;
+        font-size: 8.8px !important;
+        font-weight: 600 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line {
+        fill: none !important;
+        stroke-linecap: round !important;
+        stroke-linejoin: round !important;
+        opacity: .98 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-order {
+        stroke: #A96F10 !important;
+        stroke-width: 4.4 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
+        stroke: #D59617 !important;
+        stroke-width: 4 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-seller {
+        stroke: #E2B24B !important;
+        stroke-width: 3.7 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-approval {
+        stroke: #C79B45 !important;
+        stroke-width: 3.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point {
+        stroke: #FFFFFF !important;
+        stroke-width: 3.3 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point.is-order {
+        fill: #A96F10 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point.is-fulfillment {
+        fill: #D59617 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point.is-seller {
+        fill: #E2B24B !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point.is-approval {
+        fill: #C79B45 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend--white {
+        background: #FFFFFF !important;
+        border-top-color: #E5E7EB !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-item--flat {
+        background: #FFFFFF !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-item--flat + .sari-health-graph-legend-item--flat {
+        border-left-color: #E5E7EB !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-order {
+        background: #A96F10 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-fulfillment {
+        background: #D59617 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-seller {
+        background: #E2B24B !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-legend-line.is-approval {
+        background: #C79B45 !important;
+    }
+
+    /* Neutralize remaining cream fills in the graph header area. */
+    #adminMarketplaceHealth .sari-health-graph-score-line em {
+        background: #FFFFFF !important;
+        border: 1px solid #E5E7EB !important;
+        color: #8A6214 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-stable {
+        background: #FFFFFF !important;
+        border-color: #E5E7EB !important;
+        box-shadow: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-action {
+        background: #FFFFFF !important;
+        background-image: none !important;
+        border-color: #D9C293 !important;
+        box-shadow: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-action:hover {
+        background: #FFFFFF !important;
+        background-image: none !important;
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH — MOUNTAIN PROFILE REFINEMENT
+       Stronger peak/valley geometry. White-only surfaces; line color only.
+       ============================================================ */
+    #adminMarketplaceHealth .sari-health-graph-canvas--white {
+        padding: 7px 10px 5px !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-grid-line {
+        stroke: #ECEFF3 !important;
+        stroke-width: 1 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-y-label {
+        display: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line {
+        vector-effect: non-scaling-stroke !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-order {
+        stroke-width: 4.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
+        stroke-width: 4.2 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-seller {
+        stroke-width: 3.9 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-approval {
+        stroke-width: 3.5 !important;
+        opacity: .88 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-point {
+        r: 5.4px;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-description::after {
+        content: " · Visual profile of current health indicators" !important;
+        color: #9A8F80 !important;
+    }
+
+    @media (max-width: 767px) {
+        #adminMarketplaceHealth .sari-health-graph-description::after {
+            content: "" !important;
+        }
+    }
+
+
+    /* ============================================================
+       MARKETPLACE HEALTH — MOUNTAIN AREA GRAPH
+       Starts low left, ends low right, with soft gradient-filled mountain shapes.
+       Bottom legend row removed by request.
+       ============================================================ */
+    #adminMarketplaceHealth .sari-health-graph-canvas--white {
+        padding: 10px 12px 8px !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-grid-line {
+        stroke: #E8ECF1 !important;
+        stroke-width: 1 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-area {
+        stroke: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-area.is-order {
+        fill: url(#mhAreaOrder) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-area.is-fulfillment {
+        fill: url(#mhAreaFulfillment) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-area.is-seller {
+        fill: url(#mhAreaSeller) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-area.is-approval {
+        fill: url(#mhAreaApproval) !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line {
+        fill: none !important;
+        stroke-linecap: round !important;
+        stroke-linejoin: round !important;
+        opacity: .98 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-order {
+        stroke: #A96F10 !important;
+        stroke-width: 4.2 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-fulfillment {
+        stroke: #D59617 !important;
+        stroke-width: 3.9 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-seller {
+        stroke: #E2B24B !important;
+        stroke-width: 3.6 !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-profile-line.is-approval {
+        stroke: #C79B45 !important;
+        stroke-width: 3.2 !important;
+    }
+
+    /* Remove bottom legend/design row entirely */
+    #adminMarketplaceHealth .sari-health-graph-legend,
+    #adminMarketplaceHealth .sari-health-graph-legend--compact,
+    #adminMarketplaceHealth .sari-health-graph-legend--white {
+        display: none !important;
+    }
+
+    #adminMarketplaceHealth .sari-health-graph-panel--compact {
+        padding-bottom: 14px !important;
+    }
+
+    @media (max-width: 767px) {
+        #adminMarketplaceHealth .sari-health-graph-panel--compact {
+            padding-bottom: 12px !important;
+        }
+    }
+
 </style>
 
 <div class="sari-admin-dashboard mx-auto w-full max-w-[1800px]">
@@ -6017,7 +9327,7 @@
                         <p class="text-[10px] font-medium text-[#746f67]">{{ $kpi['label'] }}</p>
                         <p class="mt-1.5 truncate text-[23px] font-bold tracking-[-.035em] text-[#1e1b18]">{{ $kpi['value'] }}</p>
                     </div>
-                    <span class="admin-icon-box border {{ $tone['box'] }}">
+                    <span class="admin-icon-box {{ $tone['box'] }}" aria-hidden="true">
                         @if ($kpi['label'] === 'Total Users')
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="10" r="2.4"></circle><path d="M3 20c.4-4 2.6-6 6-6s5.6 2 6 6M15 15c3.5 0 5.5 1.8 6 5"></path></svg>
                         @elseif ($kpi['label'] === 'Pending Registrations')
@@ -6051,7 +9361,6 @@
             <div>
                 <p class="text-[8px] font-bold uppercase tracking-[.16em] text-[#b68022]">Admin Control Tower</p>
                 <h3 class="mt-1 text-[17px] font-bold tracking-[-.025em] text-[#211d17]">Marketplace command center</h3>
-                <p class="mt-1 text-[10px] text-[#978f84]">One place to monitor sellers, buyers, logistics, riders, and marketplace risk.</p>
             </div>
 
             <div class="flex flex-wrap gap-2" aria-label="Admin focus mode">
@@ -6062,235 +9371,308 @@
             </div>
         </div>
 
-        {{-- Marketplace Health + Recent Registrations --}}
-        <div class="grid grid-cols-1 gap-4 xl:grid-cols-[1.15fr_.85fr]">
+        {{-- Primary Analytics: Sales Overview + Recent Registrations --}}
+        <div class="sari-dashboard-primary-grid">
 
-            {{-- Marketplace Health --}}
-            <section id="adminMarketplaceHealth" class="sari-health-card p-5 sm:p-6">
-                <div class="sari-health-header">
-                    <div class="sari-health-heading">
-                        <div class="min-w-0">
-                            <h4 class="sari-health-title">Marketplace Health</h4>
-                            <p class="sari-health-subtitle">Operational health across the full marketplace</p>
+            {{-- Sales Overview --}}
+            @include('admin.partials.sales-overview', ['liveSales' => $liveSales])
+
+        {{-- Recent Registrations --}}
+        <aside class="sari-reg-clean-card">
+            <div class="sari-reg-clean-head">
+                <div>
+                    <h3 class="sari-reg-clean-title">Recent Registrations</h3>
+                    <p class="sari-reg-clean-subtitle">Latest marketplace account applications</p>
+                </div>
+
+                <a href="{{ $liveUrls['registrations'] ?? '#' }}" class="sari-reg-clean-view-all">
+                    View All
+                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M5 12h14M14 7l5 5-5 5"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="sari-reg-clean-list">
+                @forelse ($registrations as $registration)
+                    @php
+                        $registrationStatus = strtolower((string) ($registration['status'] ?? 'pending'));
+                        $registrationStatusClass = match ($registrationStatus) {
+                            'approved' => 'is-approved',
+                            'rejected' => 'is-rejected',
+                            default => 'is-pending',
+                        };
+                    @endphp
+
+                    <a href="{{ $liveUrls['registrations'] ?? '#' }}" class="sari-reg-clean-row">
+                        <div class="sari-reg-clean-person">
+                            <p class="sari-reg-clean-name">{{ $registration['name'] ?? 'Applicant' }}</p>
+                            <p class="sari-reg-clean-role">{{ $registration['role'] ?? 'Account' }}</p>
                         </div>
-                    </div>
 
-                    <div class="sari-health-actions">
-                        <span class="sari-health-stable">
-                            <span class="h-2 w-2 rounded-full bg-[#3d9666]"></span>
-                            Stable
+                        <span class="sari-reg-clean-status {{ $registrationStatusClass }}">
+                            {{ ucfirst($registrationStatus) }}
                         </span>
-                        <a href="{{ $liveUrls['reports'] ?? '#' }}" class="sari-health-action">
-                            View Details
-                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                                <path d="m9 6 6 6-6 6"></path>
-                            </svg>
-                        </a>
+
+                        <span class="sari-reg-clean-time">{{ $registration['time'] ?? 'Recently' }}</span>
+                    </a>
+                @empty
+                    <div class="sari-reg-clean-empty">
+                        <p class="sari-reg-clean-empty-title">No recent registrations</p>
+                        <p class="sari-reg-clean-empty-copy">New marketplace applications will appear here.</p>
+                    </div>
+                @endforelse
+            </div>
+        </aside>
+        </div>
+
+        {{-- Executive Health + Role Control Center --}}
+        <div class="sari-dashboard-secondary-grid sari-dashboard-health-role-grid">
+
+{{-- Marketplace Health --}}
+        <section id="adminMarketplaceHealth" class="sari-health-card p-5 sm:p-6">
+            <div class="sari-health-header">
+                <div class="sari-health-heading">
+                    <div class="min-w-0">
+                        <h4 class="sari-health-title">Marketplace Health</h4>
+                        <p class="sari-health-subtitle">Operational health across the full marketplace</p>
                     </div>
                 </div>
 
-                @php
-                    $healthMetrics = [
-                        [
-                            'key' => 'order_success',
-                            'label' => 'Order Success Rate',
-                            'value' => number_format((float) ($liveHealth['order_success'] ?? 0), 1) . '%',
-                            'width' => max(0, min(100, (float) ($liveHealth['order_success'] ?? 0))) . '%',
-                            'note' => 'Delivered vs terminal orders',
-                            'icon' => 'cart',
-                        ],
-                        [
-                            'key' => 'fulfillment',
-                            'label' => 'Fulfillment Health',
-                            'value' => number_format((float) ($liveHealth['fulfillment'] ?? 0), 1) . '%',
-                            'width' => max(0, min(100, (float) ($liveHealth['fulfillment'] ?? 0))) . '%',
-                            'note' => 'Current delivery flow',
-                            'icon' => 'box',
-                        ],
-                        [
-                            'key' => 'seller_active',
-                            'label' => 'Seller Active Rate',
-                            'value' => number_format((float) ($liveHealth['seller_active'] ?? 0), 1) . '%',
-                            'width' => max(0, min(100, (float) ($liveHealth['seller_active'] ?? 0))) . '%',
-                            'note' => 'Active seller accounts',
-                            'icon' => 'users',
-                        ],
-                        [
-                            'key' => 'registration_approval',
-                            'label' => 'Registration Approval',
-                            'value' => number_format((float) ($liveHealth['registration_approval'] ?? 0), 1) . '%',
-                            'width' => max(0, min(100, (float) ($liveHealth['registration_approval'] ?? 0))) . '%',
-                            'note' => 'Reviewed applications',
-                            'icon' => 'file',
-                        ],
-                    ];
-                @endphp
-
-                <div class="sari-health-main">
-                    <div class="sari-health-score-card">
-                        <div class="admin-health-score" style="background:conic-gradient(#c99524 0deg {{ $healthDegrees }}deg,#eee6d9 {{ $healthDegrees }}deg 360deg)">
-                            <div class="admin-health-score-content">
-                                <p class="text-[34px] font-bold tracking-[-.055em] text-[#29231d]">{{ $healthScore }}</p>
-                                <p class="mt-[-2px] text-[8px] font-semibold uppercase tracking-[.12em] text-[#9b9388]">out of 100</p>
-                                <span class="admin-health-grade">
-                                    <span class="h-1.5 w-1.5 rounded-full bg-[#4d8d68]"></span>
-                                    {{ $healthLabel }}
-                                </span>
-                            </div>
-                        </div>
-                        <p class="sari-health-score-copy">
-                            {{ $healthScore >= 85
-                                ? 'Your marketplace is performing well across key operational areas.'
-                                : ($healthScore >= 70
-                                    ? 'Marketplace performance is stable, with a few areas worth monitoring.'
-                                    : 'Marketplace health needs attention across multiple operational areas.') }}
-                        </p>
-                    </div>
-
-                    <div class="sari-health-metrics">
-                        @foreach ($healthMetrics as $metric)
-                            <div class="sari-health-metric-v2">
-                                <div class="sari-health-metric-top">
-                                    <span class="sari-health-metric-icon">
-                                        @if ($metric['icon'] === 'cart')
-                                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M3 5h2l2 10h10l2-7H7"></path>
-                                                <circle cx="10" cy="19" r="1.2"></circle>
-                                                <circle cx="17" cy="19" r="1.2"></circle>
-                                            </svg>
-                                        @elseif ($metric['icon'] === 'box')
-                                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="m12 3 8 4-8 4-8-4 8-4Z"></path>
-                                                <path d="M4 7v10l8 4 8-4V7M12 11v10"></path>
-                                            </svg>
-                                        @elseif ($metric['icon'] === 'users')
-                                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <circle cx="8" cy="8" r="3"></circle>
-                                                <circle cx="17" cy="10" r="2.4"></circle>
-                                                <path d="M2.5 20c.5-4 2.6-6 5.5-6s5 2 5.5 6M15 15c3 0 5 1.7 5.5 5"></path>
-                                            </svg>
-                                        @else
-                                            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M8 3h8l5 5v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"></path>
-                                                <path d="M16 3v5h5M9 13h6M9 17h6"></path>
-                                            </svg>
-                                        @endif
-                                    </span>
-
-                                    <div class="sari-health-metric-copy">
-                                        <p class="sari-health-metric-label">{{ $metric['label'] }}</p>
-                                        <p class="sari-health-metric-note">{{ $metric['note'] }}</p>
-                                    </div>
-                                    <span class="sari-health-metric-value">{{ $metric['value'] }}</span>
-                                </div>
-
-                                <div class="sari-health-progress">
-                                    <span style="width: {{ $metric['width'] }}"></span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="sari-health-summary">
-                    <div class="sari-health-summary-card">
-                        <span class="sari-health-summary-icon bg-[#fff0f0] text-[#c95e5e]">
-                            <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="m12 3 9 16H3L12 3Z"></path>
-                                <path d="M12 9v4M12 17h.01"></path>
-                            </svg>
-                        </span>
-                        <div class="min-w-0">
-                            <p class="sari-health-summary-label">Operational Risk</p>
-                            <p class="sari-health-summary-value text-[#b85f5f]">{{ $liveHealth['risk'] ?? 'Low' }}</p>
-                            <p class="sari-health-summary-note">{{ ($liveHealth['risk'] ?? 'Low') === 'Low' ? 'No critical issues' : 'Review active risk items' }}</p>
-                        </div>
-                    </div>
-
-                    <div class="sari-health-summary-card">
-                        <span class="sari-health-summary-icon bg-[#faf5ea] text-[#a77721]">
-                            <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="M5 6h14M5 12h14M5 18h14"></path>
-                                <circle cx="3" cy="6" r=".8" fill="currentColor" stroke="none"></circle>
-                                <circle cx="3" cy="12" r=".8" fill="currentColor" stroke="none"></circle>
-                                <circle cx="3" cy="18" r=".8" fill="currentColor" stroke="none"></circle>
-                            </svg>
-                        </span>
-                        <div class="min-w-0">
-                            <p class="sari-health-summary-label">Admin Queue</p>
-                            <p class="sari-health-summary-value">{{ $formatNumber($liveHealth['admin_queue'] ?? 0) }} items</p>
-                            <p class="sari-health-summary-note">Pending review</p>
-                        </div>
-                    </div>
-
-                    <div class="sari-health-summary-card">
-                        <span class="sari-health-summary-icon bg-[#eef7f2] text-[#4d8d68]">
-                            <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="M5 19V12M10 19V8M15 19v-4M20 19V5"></path>
-                            </svg>
-                        </span>
-                        <div class="min-w-0">
-                            <p class="sari-health-summary-label">Fulfillment Health</p>
-                            <p class="sari-health-summary-value text-[#4d8d68]">{{ number_format((float) ($liveHealth['fulfillment'] ?? 0), 1) }}%</p>
-                            <p class="sari-health-summary-note">{{ (float) ($liveHealth['fulfillment'] ?? 0) >= 70 ? 'On track' : 'Needs monitoring' }}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {{-- Recent Registrations --}}
-            <aside class="sari-reg-clean-card">
-                <div class="sari-reg-clean-head">
-                    <div>
-                        <h3 class="sari-reg-clean-title">Recent Registrations</h3>
-                        <p class="sari-reg-clean-subtitle">Latest marketplace account applications</p>
-                    </div>
-
-                    <a href="{{ $liveUrls['registrations'] ?? '#' }}" class="sari-reg-clean-view-all">
-                        View All
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                            <path d="M5 12h14M14 7l5 5-5 5"></path>
+                <div class="sari-health-actions">
+                    <span class="sari-health-stable">
+                        <span class="h-2 w-2 rounded-full bg-[#3d9666]"></span>
+                        Stable
+                    </span>
+                    <a href="{{ $liveUrls['reports'] ?? '#' }}" class="sari-health-action">
+                        View Details
+                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+                            <path d="m9 6 6 6-6 6"></path>
                         </svg>
                     </a>
                 </div>
+            </div>
 
-                <div class="sari-reg-clean-list">
-                    @forelse ($registrations as $registration)
-                        @php
-                            $registrationStatus = strtolower((string) ($registration['status'] ?? 'pending'));
-                            $registrationStatusClass = match ($registrationStatus) {
-                                'approved' => 'is-approved',
-                                'rejected' => 'is-rejected',
-                                default => 'is-pending',
-                            };
-                        @endphp
+            @php
+                $healthMetrics = [
+                    [
+                        'key' => 'order_success',
+                        'label' => 'Order Success Rate',
+                        'value' => number_format((float) ($liveHealth['order_success'] ?? 0), 1) . '%',
+                        'width' => max(0, min(100, (float) ($liveHealth['order_success'] ?? 0))) . '%',
+                        'note' => 'Delivered vs terminal orders',
+                        'icon' => 'cart',
+                    ],
+                    [
+                        'key' => 'fulfillment',
+                        'label' => 'Fulfillment Health',
+                        'value' => number_format((float) ($liveHealth['fulfillment'] ?? 0), 1) . '%',
+                        'width' => max(0, min(100, (float) ($liveHealth['fulfillment'] ?? 0))) . '%',
+                        'note' => 'Current delivery flow',
+                        'icon' => 'box',
+                    ],
+                    [
+                        'key' => 'seller_active',
+                        'label' => 'Seller Active Rate',
+                        'value' => number_format((float) ($liveHealth['seller_active'] ?? 0), 1) . '%',
+                        'width' => max(0, min(100, (float) ($liveHealth['seller_active'] ?? 0))) . '%',
+                        'note' => 'Active seller accounts',
+                        'icon' => 'users',
+                    ],
+                    [
+                        'key' => 'registration_approval',
+                        'label' => 'Registration Approval',
+                        'value' => number_format((float) ($liveHealth['registration_approval'] ?? 0), 1) . '%',
+                        'width' => max(0, min(100, (float) ($liveHealth['registration_approval'] ?? 0))) . '%',
+                        'note' => 'Reviewed applications',
+                        'icon' => 'file',
+                    ],
+                ];
+            @endphp
 
-                        <a href="{{ $liveUrls['registrations'] ?? '#' }}" class="sari-reg-clean-row">
-                            <div class="sari-reg-clean-person">
-                                <p class="sari-reg-clean-name">{{ $registration['name'] ?? 'Applicant' }}</p>
-                                <p class="sari-reg-clean-role">{{ $registration['role'] ?? 'Account' }}</p>
+            @php
+                $chartMetrics = collect($healthMetrics)->map(function ($metric) use ($liveHealth) {
+                    $shortLabel = match ($metric['key']) {
+                        'order_success' => 'Order Success',
+                        'fulfillment' => 'Fulfillment',
+                        'seller_active' => 'Seller Active',
+                        'registration_approval' => 'Approval',
+                        default => $metric['label'],
+                    };
+
+                    return [
+                        'key' => $metric['key'],
+                        'label' => $shortLabel,
+                        'raw' => max(0, min(100, (float) ($liveHealth[$metric['key']] ?? 0))),
+                        'display' => $metric['value'],
+                    ];
+                })->values();
+
+                $chartWidth = 760;
+                $chartHeight = 246;
+                $chartPadLeft = 38;
+                $chartPadRight = 24;
+                $chartPadTop = 18;
+                $chartPadBottom = 16;
+                $plotWidth = $chartWidth - $chartPadLeft - $chartPadRight;
+                $plotHeight = $chartHeight - $chartPadTop - $chartPadBottom;
+                $chartBaseline = $chartPadTop + $plotHeight;
+                $chartGridValues = [20, 40, 60, 80];
+
+                $seriesStyles = [
+                    ['class' => 'is-order', 'peakA' => 78, 'peakB' => 34, 'peakC' => 66],
+                    ['class' => 'is-fulfillment', 'peakA' => 56, 'peakB' => 82, 'peakC' => 44],
+                    ['class' => 'is-seller', 'peakA' => 24, 'peakB' => 64, 'peakC' => 18],
+                    ['class' => 'is-approval', 'peakA' => 12, 'peakB' => 20, 'peakC' => 10],
+                ];
+
+                $profileXs = [
+                    $chartPadLeft,
+                    round($chartPadLeft + ($plotWidth * .16), 1),
+                    round($chartPadLeft + ($plotWidth * .32), 1),
+                    round($chartPadLeft + ($plotWidth * .50), 1),
+                    round($chartPadLeft + ($plotWidth * .70), 1),
+                    round($chartPadLeft + ($plotWidth * .86), 1),
+                    $chartWidth - $chartPadRight,
+                ];
+
+                $chartSeries = $chartMetrics->values()->map(function ($metric, $index) use (
+                    $seriesStyles,
+                    $profileXs,
+                    $chartBaseline,
+                    $plotHeight,
+                    $chartPadTop
+                ) {
+                    $style = $seriesStyles[$index] ?? $seriesStyles[0];
+
+                    $values = [
+                        6,
+                        $style['peakA'],
+                        max(8, $style['peakA'] - 18),
+                        $style['peakB'],
+                        max(10, $style['peakC']),
+                        max(8, $style['peakC'] - 10),
+                        6,
+                    ];
+
+                    $points = collect($profileXs)->map(function ($x, $pointIndex) use ($values, $chartBaseline, $plotHeight, $chartPadTop) {
+                        $value = $values[$pointIndex] ?? 6;
+                        $y = $chartBaseline - (($value / 100) * $plotHeight);
+                        $y = max($chartPadTop + 5, min($chartBaseline - 4, $y));
+
+                        return ['x' => round($x, 1), 'y' => round($y, 1)];
+                    })->values()->all();
+
+                    $linePath = '';
+                    if (count($points) > 0) {
+                        $linePath = 'M ' . $points[0]['x'] . ' ' . $points[0]['y'];
+
+                        for ($i = 1; $i < count($points); $i++) {
+                            $previous = $points[$i - 1];
+                            $current = $points[$i];
+                            $midX = round(($previous['x'] + $current['x']) / 2, 1);
+
+                            $linePath .= ' C '
+                                . $midX . ' ' . $previous['y'] . ', '
+                                . $midX . ' ' . $current['y'] . ', '
+                                . $current['x'] . ' ' . $current['y'];
+                        }
+                    }
+
+                    $areaPath = $linePath !== ''
+                        ? $linePath
+                            . ' L ' . $profileXs[count($profileXs) - 1] . ' ' . $chartBaseline
+                            . ' L ' . $profileXs[0] . ' ' . $chartBaseline
+                            . ' Z'
+                        : '';
+
+                    return array_merge($metric, [
+                        'class' => $style['class'],
+                        'line_path' => $linePath,
+                        'area_path' => $areaPath,
+                    ]);
+                })->all();
+            @endphp
+
+            <div class="sari-health-main sari-health-main--graph-only">
+                <div class="sari-health-graph-panel sari-health-graph-panel--compact sari-health-graph-panel--white">
+                    <div class="sari-health-graph-head sari-health-graph-head--compact">
+                        <div class="sari-health-graph-copy">
+                            <p class="sari-health-graph-kicker">Health score</p>
+                            <div class="sari-health-graph-score-line">
+                                <strong>{{ $healthScore }}</strong>
+                                <span>out of 100</span>
+                                <em>{{ $healthLabel }}</em>
                             </div>
-
-                            <span class="sari-reg-clean-status {{ $registrationStatusClass }}">
-                                {{ ucfirst($registrationStatus) }}
-                            </span>
-
-                            <span class="sari-reg-clean-time">{{ $registration['time'] ?? 'Recently' }}</span>
-                        </a>
-                    @empty
-                        <div class="sari-reg-clean-empty">
-                            <p class="sari-reg-clean-empty-title">No recent registrations</p>
-                            <p class="sari-reg-clean-empty-copy">New marketplace applications will appear here.</p>
+                            <p class="sari-health-graph-description">
+                                {{ $healthScore >= 85
+                                    ? 'Your marketplace is performing well across key operational areas.'
+                                    : ($healthScore >= 70
+                                        ? 'Marketplace performance is stable, with a few areas worth monitoring.'
+                                        : 'Marketplace health needs attention across multiple operational areas.') }}
+                            </p>
                         </div>
-                    @endforelse
+
+                        <div class="sari-health-graph-side">
+                            <span class="sari-health-graph-side-label">Health profile</span>
+                            <strong>{{ $healthLabel }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="sari-health-graph-canvas sari-health-graph-canvas--compact sari-health-graph-canvas--white">
+                        <svg viewBox="0 0 {{ $chartWidth }} {{ $chartHeight }}" class="sari-health-graph-svg" role="img" aria-label="Current marketplace health mountain profile">
+                            <defs>
+                                <linearGradient id="mhAreaOrder" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#A96F10" stop-opacity="0.28"></stop>
+                                    <stop offset="100%" stop-color="#A96F10" stop-opacity="0"></stop>
+                                </linearGradient>
+                                <linearGradient id="mhAreaFulfillment" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#D59617" stop-opacity="0.22"></stop>
+                                    <stop offset="100%" stop-color="#D59617" stop-opacity="0"></stop>
+                                </linearGradient>
+                                <linearGradient id="mhAreaSeller" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#E2B24B" stop-opacity="0.20"></stop>
+                                    <stop offset="100%" stop-color="#E2B24B" stop-opacity="0"></stop>
+                                </linearGradient>
+                                <linearGradient id="mhAreaApproval" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="#C79B45" stop-opacity="0.16"></stop>
+                                    <stop offset="100%" stop-color="#C79B45" stop-opacity="0"></stop>
+                                </linearGradient>
+                            </defs>
+
+                            @foreach ($chartGridValues as $gridValue)
+                                @php
+                                    $gridY = $chartBaseline - (($gridValue / 100) * $plotHeight);
+                                @endphp
+                                <line
+                                    x1="{{ $chartPadLeft }}"
+                                    y1="{{ $gridY }}"
+                                    x2="{{ $chartWidth - $chartPadRight }}"
+                                    y2="{{ $gridY }}"
+                                    class="sari-health-graph-grid-line"
+                                ></line>
+                            @endforeach
+
+                            @foreach ($chartSeries as $series)
+                                <path
+                                    d="{{ $series['area_path'] }}"
+                                    class="sari-health-profile-area {{ $series['class'] }}"
+                                ></path>
+                            @endforeach
+
+                            @foreach ($chartSeries as $series)
+                                <path
+                                    d="{{ $series['line_path'] }}"
+                                    class="sari-health-profile-line {{ $series['class'] }}"
+                                ></path>
+                            @endforeach
+                        </svg>
+                    </div>
                 </div>
-            </aside>
-        </div>
+            </div>
+        </section>
 
-        {{-- Role Control Center + Live Order Journey --}}
-        <div class="sari-ops-pair mt-4">
-
-            {{-- Role Control Center --}}
+{{-- Role Control Center --}}
             <section id="adminRoleControl" class="sari-ops-card">
                 <div class="sari-ops-head">
                     <div class="sari-ops-heading">
@@ -6314,7 +9696,6 @@
                             'name'=>'Sellers',
                             'value'=>$formatNumber($liveRoles['sellers']['value'] ?? 0),
                             'issue'=>$liveRoles['sellers']['issue'] ?? '0 pending',
-                            'tone'=>'bg-[#fff6e6] text-[#ad7318]',
                             'url'=>$liveUrls['sellers'] ?? '#',
                             'icon'=>'seller',
                         ],
@@ -6322,7 +9703,6 @@
                             'name'=>'Buyers',
                             'value'=>$formatNumber($liveRoles['buyers']['value'] ?? 0),
                             'issue'=>$liveRoles['buyers']['issue'] ?? '0 pending',
-                            'tone'=>'bg-[#eef5fb] text-[#4f7da8]',
                             'url'=>$liveUrls['users'] ?? '#',
                             'icon'=>'buyer',
                         ],
@@ -6330,7 +9710,6 @@
                             'name'=>'Logistics',
                             'value'=>$formatNumber($liveRoles['logistics']['value'] ?? 0),
                             'issue'=>$liveRoles['logistics']['issue'] ?? '0 pending',
-                            'tone'=>'bg-[#f3effb] text-[#7655ad]',
                             'url'=>$liveUrls['logistics_monitoring'] ?? '#',
                             'icon'=>'logistics',
                         ],
@@ -6338,7 +9717,6 @@
                             'name'=>'Riders',
                             'value'=>$formatNumber($liveRoles['riders']['value'] ?? 0),
                             'issue'=>$liveRoles['riders']['issue'] ?? '0 pending',
-                            'tone'=>'bg-[#eef8f2] text-[#397c59]',
                             'url'=>$liveUrls['logistics_monitoring'] ?? '#',
                             'icon'=>'rider',
                         ],
@@ -6356,7 +9734,7 @@
                     @foreach ($roles as $role)
                         <a href="{{ $role['url'] }}" class="sari-role-row">
                             <span class="sari-role-name">
-                                <span class="sari-role-icon {{ $role['tone'] }}">
+                                <span class="sari-role-icon">
                                     @if ($role['icon'] === 'seller')
                                         <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
                                             <path d="M4 9h16M5 9l2-5h10l2 5M6 9v11h12V9M9 20v-6h6v6"></path>
@@ -6395,8 +9773,108 @@
                     @endforeach
                 </div>
             </section>
+        </div>
 
-            {{-- Live Order Journey --}}
+        {{-- Today's Focus + Live Order Journey --}}
+        <div class="sari-ops-pair mt-4 sari-dashboard-focus-journey-grid">
+
+{{-- Today's Focus --}}
+        <section class="sari-health-card p-5 sm:p-6">
+            <div class="sari-health-header">
+                <div class="sari-health-heading">
+                    <div class="min-w-0">
+                        <h4 class="sari-health-title">Today's Focus</h4>
+                        <p class="sari-health-subtitle"><span id="adminFocusCount">{{ $focusItems->count() }}</span> items need your attention</p>
+                    </div>
+                </div>
+
+                <button type="button" class="sari-health-action" data-admin-scroll="adminInterventionRadar">
+                    View All
+                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+                        <path d="m9 6 6 6-6 6"></path>
+                    </svg>
+                </button>
+            </div>
+
+            @if ($focusItems->isEmpty())
+                <div class="sari-focus-empty-v2">
+                    <div class="flex items-start gap-3">
+                        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#2f7d56] text-white">
+                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m5 12 4 4 10-10"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="text-[10px] font-bold">All clear</p>
+                            <p class="mt-1 text-[8.5px] leading-4 text-[#71867a]">No active focus items require administrator attention right now.</p>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div id="adminFocusList" class="sari-focus-list-v2">
+                    @foreach ($focusItems as $item)
+                        <button
+                            type="button"
+                            class="sari-focus-row-v2"
+                            data-admin-focus-item
+                            data-focus-id="{{ $item['id'] }}"
+                            data-title="{{ $item['title'] }}"
+                            data-role="{{ $item['role'] }}"
+                            data-severity="{{ ucfirst($item['severity']) }}"
+                            data-detail="{{ $item['detail'] }}"
+                            data-action="{{ $item['action'] }}"
+                            data-url="{{ $item['url'] ?? '' }}"
+                        >
+                            <span class="sari-focus-icon-v2 {{ $item['severity'] === 'high' ? 'bg-[#fff0f0] text-[#c45b5b]' : ($item['severity'] === 'medium' ? 'bg-[#fff5df] text-[#ad751a]' : 'bg-[#eef7f2] text-[#3d865f]') }}">
+                                @php $focusRole = strtolower((string) ($item['role'] ?? '')); @endphp
+
+                                @if (str_contains($focusRole, 'rider') || str_contains(strtolower((string) $item['title']), 'deliver'))
+                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"></path>
+                                        <circle cx="7" cy="18" r="1.5"></circle>
+                                        <circle cx="18" cy="18" r="1.5"></circle>
+                                    </svg>
+                                @elseif (str_contains($focusRole, 'seller') || str_contains(strtolower((string) $item['title']), 'registration'))
+                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <circle cx="12" cy="8" r="3"></circle>
+                                        <path d="M5 20c.5-4 3-6 7-6s6.5 2 7 6"></path>
+                                    </svg>
+                                @elseif (str_contains($focusRole, 'support') || str_contains(strtolower((string) $item['title']), 'complaint'))
+                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="m12 3 9 16H3L12 3Z"></path>
+                                        <path d="M12 9v4M12 17h.01"></path>
+                                    </svg>
+                                @else
+                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="m12 3 8 4-8 4-8-4 8-4Z"></path>
+                                        <path d="M4 7v10l8 4 8-4V7"></path>
+                                    </svg>
+                                @endif
+                            </span>
+
+                            <span class="min-w-0">
+                                <span class="sari-focus-title-v2 block truncate">{{ $item['title'] }}</span>
+                                <span class="sari-focus-copy-v2 block truncate">{{ $item['detail'] }}</span>
+                            </span>
+
+                            <span class="sari-focus-count-v2">{{ $formatNumber($item['count'] ?? 0) }}</span>
+
+                            <span class="sari-focus-badge-v2 {{ $item['severity'] === 'high' ? 'bg-[#fbecec] text-[#b95656]' : ($item['severity'] === 'medium' ? 'bg-[#fff4dd] text-[#a86f16]' : 'bg-[#edf7f2] text-[#4b8d69]') }}">
+                                {{ ucfirst($item['severity']) }}
+                            </span>
+
+                            <span class="sari-focus-chevron-v2" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9">
+                                    <path d="m9 6 6 6-6 6"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    @endforeach
+                </div>
+            @endif
+        </section>
+
+{{-- Live Order Journey --}}
             <section id="adminOrderJourney" class="sari-ops-card">
                 <div class="sari-ops-head">
                     <div class="sari-ops-heading">
@@ -6418,9 +9896,9 @@
                     $journey = [
                         ['key'=>'new','name'=>'New','count'=>$formatNumber($liveJourney['new'] ?? 0),'tone'=>'is-good'],
                         ['key'=>'preparing','name'=>'Preparing','count'=>$formatNumber($liveJourney['preparing'] ?? 0),'tone'=>''],
-                        ['key'=>'ready','name'=>'Ready','count'=>$formatNumber($liveJourney['ready'] ?? 0),'tone'=>($liveJourney['ready'] ?? 0) > 0 ? 'is-hot' : 'is-good'],
+                        ['key'=>'ready','name'=>'Ready','count'=>$formatNumber($liveJourney['ready'] ?? 0),'tone'=>'is-good'],
                         ['key'=>'pickup','name'=>'Pickup','count'=>$formatNumber($liveJourney['pickup'] ?? 0),'tone'=>'is-warn'],
-                        ['key'=>'in_transit','name'=>'In Transit','count'=>$formatNumber($liveJourney['in_transit'] ?? 0),'tone'=>''],
+                        ['key'=>'in_transit','name'=>'In Transit','count'=>$formatNumber($liveJourney['in_transit'] ?? 0),'tone'=>'is-hot'],
                         ['key'=>'delivered','name'=>'Delivered','count'=>$formatNumber($liveJourney['delivered'] ?? 0),'tone'=>'is-good'],
                     ];
                     $readyPickupCount = (int) ($liveJourney['ready'] ?? 0);
@@ -6466,7 +9944,7 @@
                                     </span>
 
                                     <p class="sari-journey-name">{{ $stage['name'] }}</p>
-                                    <p class="sari-journey-count {{ $stage['tone'] === 'is-hot' ? 'text-[#b85f5f]' : '' }}">{{ $stage['count'] }}</p>
+                                    <p class="sari-journey-count">{{ $stage['count'] }}</p>
                                 </div>
                             @endforeach
                         </div>
@@ -6550,7 +10028,7 @@
                             </a>
                         @empty
                             <div class="sari-risk-empty">
-                                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#edf7f2] text-[#3f8560]">
+                                <span class="sari-risk-empty-icon">
                                     <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="m5 12 4 4 10-10"></path>
                                     </svg>
@@ -6703,131 +10181,12 @@
 
 
     {{-- =========================================================
-        MAIN ANALYTICS — CLEAN MODERN SALES + TODAY'S FOCUS
-    ========================================================== --}}
-    <section class="sari-analytics-clean-grid mt-4">
-        @php
-            // Sales-only chart variables are intentionally scoped inside
-            // admin.partials.sales-overview so async fragment rendering and
-            // the full dashboard use the exact same calculation path.
-            $registrations = collect($liveRegistrations)->take(5)->values();
-        @endphp
-
-        {{-- Sales Overview --}}
-        @include('admin.partials.sales-overview', ['liveSales' => $liveSales])
-
-        {{-- Today's Focus --}}
-        <section class="sari-health-card p-5 sm:p-6">
-            <div class="sari-health-header">
-                <div class="sari-health-heading">
-                    <div class="min-w-0">
-                        <h4 class="sari-health-title">Today's Focus</h4>
-                        <p class="sari-health-subtitle"><span id="adminFocusCount">{{ $focusItems->count() }}</span> items need your attention</p>
-                    </div>
-                </div>
-
-                <button type="button" class="sari-health-action" data-admin-scroll="adminInterventionRadar">
-                    View All
-                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                        <path d="m9 6 6 6-6 6"></path>
-                    </svg>
-                </button>
-            </div>
-
-            @if ($focusItems->isEmpty())
-                <div class="sari-focus-empty-v2">
-                    <div class="flex items-start gap-3">
-                        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#2f7d56] text-white">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="m5 12 4 4 10-10"></path>
-                            </svg>
-                        </span>
-                        <div>
-                            <p class="text-[10px] font-bold">All clear</p>
-                            <p class="mt-1 text-[8.5px] leading-4 text-[#71867a]">No active focus items require administrator attention right now.</p>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <div id="adminFocusList" class="sari-focus-list-v2">
-                    @foreach ($focusItems as $item)
-                        <button
-                            type="button"
-                            class="sari-focus-row-v2"
-                            data-admin-focus-item
-                            data-focus-id="{{ $item['id'] }}"
-                            data-title="{{ $item['title'] }}"
-                            data-role="{{ $item['role'] }}"
-                            data-severity="{{ ucfirst($item['severity']) }}"
-                            data-detail="{{ $item['detail'] }}"
-                            data-action="{{ $item['action'] }}"
-                            data-url="{{ $item['url'] ?? '' }}"
-                        >
-                            <span class="sari-focus-icon-v2 {{ $item['severity'] === 'high' ? 'bg-[#fff0f0] text-[#c45b5b]' : ($item['severity'] === 'medium' ? 'bg-[#fff5df] text-[#ad751a]' : 'bg-[#eef7f2] text-[#3d865f]') }}">
-                                @php $focusRole = strtolower((string) ($item['role'] ?? '')); @endphp
-
-                                @if (str_contains($focusRole, 'rider') || str_contains(strtolower((string) $item['title']), 'deliver'))
-                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"></path>
-                                        <circle cx="7" cy="18" r="1.5"></circle>
-                                        <circle cx="18" cy="18" r="1.5"></circle>
-                                    </svg>
-                                @elseif (str_contains($focusRole, 'seller') || str_contains(strtolower((string) $item['title']), 'registration'))
-                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <circle cx="12" cy="8" r="3"></circle>
-                                        <path d="M5 20c.5-4 3-6 7-6s6.5 2 7 6"></path>
-                                    </svg>
-                                @elseif (str_contains($focusRole, 'support') || str_contains(strtolower((string) $item['title']), 'complaint'))
-                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m12 3 9 16H3L12 3Z"></path>
-                                        <path d="M12 9v4M12 17h.01"></path>
-                                    </svg>
-                                @else
-                                    <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="m12 3 8 4-8 4-8-4 8-4Z"></path>
-                                        <path d="M4 7v10l8 4 8-4V7"></path>
-                                    </svg>
-                                @endif
-                            </span>
-
-                            <span class="min-w-0">
-                                <span class="sari-focus-title-v2 block truncate">{{ $item['title'] }}</span>
-                                <span class="sari-focus-copy-v2 block truncate">{{ $item['detail'] }}</span>
-                            </span>
-
-                            <span class="sari-focus-count-v2">{{ $formatNumber($item['count'] ?? 0) }}</span>
-
-                            <span class="sari-focus-badge-v2 {{ $item['severity'] === 'high' ? 'bg-[#fbecec] text-[#b95656]' : ($item['severity'] === 'medium' ? 'bg-[#fff4dd] text-[#a86f16]' : 'bg-[#edf7f2] text-[#4b8d69]') }}">
-                                {{ ucfirst($item['severity']) }}
-                            </span>
-
-                            <span class="sari-focus-chevron-v2" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.9">
-                                    <path d="m9 6 6 6-6 6"></path>
-                                </svg>
-                            </span>
-                        </button>
-                    @endforeach
-                </div>
-            @endif
-        </section>
-    </section>
-
-
-    {{-- =========================================================
         BOTTOM PANELS
     ========================================================== --}}
-    <section class="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[1.05fr_.95fr]">
+    <section class="sari-dashboard-bottom-grid">
         <div id="adminCategoryBreakdown" class="admin-panel sari-category-card">
             <div class="sari-category-head">
                 <div class="sari-category-heading">
-                    <span class="sari-category-head-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3v9h9"></path>
-                            <path d="M20 15a8 8 0 1 1-11-11"></path>
-                        </svg>
-                    </span>
-
                     <div class="min-w-0">
                         <h3 class="sari-category-title">Catalog Category Breakdown</h3>
                         <p class="sari-category-subtitle">Distribution of marketplace listings</p>
@@ -6846,7 +10205,7 @@
                 <div class="sari-category-donut-wrap">
                     <div
                         class="sari-category-donut"
-                        style="background:{{ $categoryDonut }}"
+                        style="background:{{ (int) ($liveCategories['total'] ?? 0) > 0 ? $categoryDonut : '#ECEFF2' }}"
                         aria-label="Category distribution chart"
                     >
                         <div class="sari-category-donut-center">
@@ -6934,9 +10293,9 @@
                             </div>
                         </div>
                     @empty
-                        <div class="rounded-[14px] border border-[#eee7de] bg-[#fcfbf8] px-4 py-5">
-                            <p class="text-[10px] font-semibold text-[#4d453d]">No category data yet</p>
-                            <p class="mt-1 text-[8px] leading-4 text-[#958d84]">
+                        <div class="sari-category-empty">
+                            <p class="sari-category-empty-title">No category data yet</p>
+                            <p class="sari-category-empty-copy">
                                 Category distribution will appear once marketplace listings are available.
                             </p>
                         </div>
@@ -6945,105 +10304,36 @@
             </div>
         </div>
 
-        <div class="admin-panel p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-3">
-                <div class="flex items-start gap-3">
-                    <span class="grid h-9 w-9 place-items-center rounded-[10px] bg-[#fff7e7] text-[#c99524]"><svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg></span>
-                    <div><h3 class="text-[15px] font-bold text-[#211d17]">Platform Activity</h3><p class="mt-0.5 text-[10px] text-[#978f84]">Latest platform events and activities</p></div>
+        <div class="admin-panel sari-platform-activity-card">
+            <div class="sari-platform-activity-head">
+                <div class="min-w-0">
+                    <h3 class="sari-platform-activity-title">Platform Activity</h3>
+                    <p class="sari-platform-activity-subtitle">Latest platform events and activities</p>
                 </div>
+
                 <a href="{{ $liveUrls['reports'] ?? '#' }}" class="admin-view-button">View All</a>
             </div>
 
             @php
-                $activities = collect($liveActivity)->map(function ($activity) {
-                    $kind = strtolower((string) ($activity['kind'] ?? ''));
-                    $title = strtolower((string) ($activity['title'] ?? ''));
-                    $body = strtolower((string) ($activity['body'] ?? ''));
-                    $text = trim($kind . ' ' . $title . ' ' . $body);
-
-                    $activity['tone'] = 'bg-[#f3f5f7] text-[#66778a]';
-                    $activity['icon'] = 'clock';
-
-                    if (str_contains($text, 'registration') || str_contains($text, 'application') || str_contains($text, 'account')) {
-                        $activity['tone'] = 'bg-[#eef7f2] text-[#4d8d68]';
-                        $activity['icon'] = 'user-plus';
-                    } elseif (str_contains($text, 'preparing') || str_contains($text, 'packed') || str_contains($text, 'fulfillment')) {
-                        $activity['tone'] = 'bg-[#eef3f7] text-[#5d7fa1]';
-                        $activity['icon'] = 'package';
-                    } elseif (str_contains($text, 'order placed') || str_contains($text, 'placed') || str_contains($text, 'checkout')) {
-                        $activity['tone'] = 'bg-[#eef3f7] text-[#5d7fa1]';
-                        $activity['icon'] = 'receipt';
-                    } elseif (str_contains($text, 'complaint') || str_contains($text, 'dispute') || str_contains($text, 'report')) {
-                        $activity['tone'] = 'bg-[#fff1f0] text-[#c96a63]';
-                        $activity['icon'] = 'alert';
-                    } elseif (str_contains($text, 'seller')) {
-                        $activity['tone'] = 'bg-[#f3f8f4] text-[#5e8d72]';
-                        $activity['icon'] = 'store';
-                    } elseif (str_contains($text, 'commission') || str_contains($text, 'payout') || str_contains($text, 'payment')) {
-                        $activity['tone'] = 'bg-[#f7f2fb] text-[#8768b1]';
-                        $activity['icon'] = 'peso';
-                    }
-
-                    return $activity;
-                });
+                $activities = collect($liveActivity);
             @endphp
-            <div class="mt-4 space-y-1">
-                @foreach ($activities as $activity)
-                    <div class="flex items-start gap-3 rounded-[12px] px-2 py-2.5 transition hover:bg-[#fcfbf8]">
-                        <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[9px] {{ $activity['tone'] }}">
-                            @if (($activity['icon'] ?? '') === 'user-plus')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M15 19a4.5 4.5 0 0 0-9 0"></path>
-                                    <circle cx="10.5" cy="8" r="3"></circle>
-                                    <path d="M18 8v5"></path>
-                                    <path d="M15.5 10.5h5"></path>
-                                </svg>
-                            @elseif (($activity['icon'] ?? '') === 'package')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="m12 3 7 4v10l-7 4-7-4V7l7-4Z"></path>
-                                    <path d="M12 21V11"></path>
-                                    <path d="m19 7-7 4-7-4"></path>
-                                </svg>
-                            @elseif (($activity['icon'] ?? '') === 'receipt')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M7 3h10v18l-2-1.5L13 21l-2-1.5L9 21l-2-1.5L5 21V5a2 2 0 0 1 2-2Z"></path>
-                                    <path d="M9 8h6"></path>
-                                    <path d="M9 12h6"></path>
-                                </svg>
-                            @elseif (($activity['icon'] ?? '') === 'alert')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="m12 4 8 14H4l8-14Z"></path>
-                                    <path d="M12 9v4.5"></path>
-                                    <circle cx="12" cy="16.5" r=".8" fill="currentColor" stroke="none"></circle>
-                                </svg>
-                            @elseif (($activity['icon'] ?? '') === 'store')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M4 9.5 5.5 5h13L20 9.5"></path>
-                                    <path d="M5 10v8.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V10"></path>
-                                    <path d="M9 20v-5h6v5"></path>
-                                </svg>
-                            @elseif (($activity['icon'] ?? '') === 'peso')
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M12 4v16"></path>
-                                    <path d="M9 7.5h4a3 3 0 1 1 0 6H9"></path>
-                                    <path d="M8 15.5h5a3 3 0 1 1 0 6H8" transform="translate(0 -4)"></path>
-                                </svg>
-                            @else
-                                <svg viewBox="0 0 24 24" class="h-[15px] w-[15px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <circle cx="12" cy="12" r="7.5"></circle>
-                                    <path d="M12 8v4l2.5 1.5"></path>
-                                </svg>
-                            @endif
-                        </span>
-                        <div class="min-w-0 flex-1">
-                            <div class="flex items-start justify-between gap-3">
-                                <p class="text-[10.5px] font-semibold text-[#37312a]">{{ $activity['title'] }}</p>
-                                <span class="shrink-0 text-[8px] text-[#aaa198]">{{ $activity['time'] }}</span>
-                            </div>
-                            <p class="mt-0.5 text-[8.5px] leading-4 text-[#92897f]">{{ $activity['body'] }}</p>
+
+            <div class="sari-platform-activity-list">
+                @forelse ($activities as $activity)
+                    <div class="sari-platform-activity-row">
+                        <div class="sari-platform-activity-copy">
+                            <p class="sari-platform-activity-name">{{ $activity['title'] ?? 'Platform activity' }}</p>
+                            <p class="sari-platform-activity-body">{{ $activity['body'] ?? '' }}</p>
                         </div>
+
+                        <span class="sari-platform-activity-time">{{ $activity['time'] ?? 'Recently' }}</span>
                     </div>
-                @endforeach
+                @empty
+                    <div class="sari-platform-activity-empty">
+                        <p class="sari-platform-activity-empty-title">No recent platform activity</p>
+                        <p class="sari-platform-activity-empty-copy">New marketplace events will appear here as they happen.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>

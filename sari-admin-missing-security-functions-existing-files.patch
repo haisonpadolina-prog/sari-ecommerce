@@ -1,0 +1,287 @@
+--- a/bootstrap/app.php
++++ b/bootstrap/app.php
+@@ -3,6 +3,7 @@
+ use App\Http\Middleware\Platform\EnforcePlatformOperationalRules;
+ use App\Http\Middleware\Platform\RecordUserActivity;
+ use App\Http\Middleware\Platform\RecordAdminActivity;
++use App\Http\Middleware\Platform\RecordSecurityEvents;
+ use App\Http\Middleware\Shared\EnsureSessionAccountAccessible;
+ use Illuminate\Foundation\Application;
+ use Illuminate\Foundation\Configuration\Exceptions;
+@@ -45,6 +46,11 @@
+             'web',
+             RecordAdminActivity::class
+         );
++
++        $middleware->appendToGroup(
++            'web',
++            RecordSecurityEvents::class
++        );
+     })
+     ->withExceptions(function (Exceptions $exceptions): void {
+         //
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -1060,6 +1060,10 @@
+ require __DIR__ . '/admin-monitoring.php';
+ 
+ 
++// Security Center: failed-login watch, risk review, session controls and critical alerts.
++require __DIR__ . '/admin-security.php';
++
++
+ /*
+ |--------------------------------------------------------------------------
+ | SELLER ROUTES
+--- a/resources/views/components/admin/sidebar.blade.php
++++ b/resources/views/components/admin/sidebar.blade.php
+@@ -483,6 +483,21 @@
+         <div class="admin-sidebar-section-divider"></div>
+         <p class="admin-sidebar-section-label">TRUST &amp; SAFETY</p>
+ 
++        {{-- Security Center --}}
++        <a
++            href="{{ route('admin.security') }}"
++            title="Security Center"
++            data-sidebar-item
++            data-sidebar-current="{{ request()->routeIs('admin.security*') ? 'true' : 'false' }}"
++            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.security*') ? 'bg-[#d9950b] text-white shadow-[0_5px_12px_rgba(194,132,10,0.12)]' : 'text-[#514b42] hover:bg-[#fff9ef] hover:text-[#94620a]' }}"
++        >
++            <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
++                <path d="M12 3 5 6v5c0 4.6 2.8 8.2 7 10 4.2-1.8 7-5.4 7-10V6l-7-3Z"></path>
++                <path d="M9 12l2 2 4-4"></path>
++            </svg>
++            <span class="sidebar-label whitespace-nowrap">Security Center</span>
++        </a>
++
+         {{-- Seller Compliance --}}
+         <a
+             href="{{ route('admin.seller-compliance') }}"
+--- a/resources/views/layouts/admin.blade.php
++++ b/resources/views/layouts/admin.blade.php
+@@ -313,6 +313,8 @@
+         </div>
+     @endpersist
+ 
++    @include('admin.partials.security-alert-overlay')
++
+     @stack('scripts')
+ 
+     @livewireScripts
+--- a/app/Http/Controllers/Admin/AdminUsersController.php
++++ b/app/Http/Controllers/Admin/AdminUsersController.php
+@@ -152,7 +152,7 @@
+             $account->id,
+             'suspended',
+             $validated['reason'],
+-            ['status' => 'deactivated']
++            ['reason' => $validated['reason'], 'before' => ['status' => $currentStatus], 'after' => ['status' => strtolower((string)($account->account_status ?? 'deactivated'))]]
+         );
+ 
+         return $this->respond(
+@@ -169,6 +169,7 @@
+ 
+         $account = $this->resolveAccount($role, $id);
+         $normalizedRole = $this->normalizeRole($role);
++        $status = strtolower((string) ($account->account_status ?? 'active'));
+ 
+         if ($normalizedRole === 'seller') {
+             /** @var SellerAccount $account */
+@@ -184,7 +185,7 @@
+             $account->id,
+             'restored',
+             'Admin restored account access.',
+-            ['status' => 'active']
++            ['before' => ['status' => $status], 'after' => ['status' => 'active']]
+         );
+ 
+         return $this->respond(
+@@ -227,7 +228,7 @@
+             (int) $account->getKey(),
+             'blocked',
+             $validated['reason'],
+-            ['status' => 'blocked']
++            ['reason' => $validated['reason'], 'before' => ['status' => $status], 'after' => ['status' => 'blocked']]
+         );
+ 
+         return $this->respond(
+@@ -266,7 +267,7 @@
+             (int) $account->getKey(),
+             'unblocked',
+             'Admin restored access to a blocked account.',
+-            ['status' => 'active']
++            ['before' => ['status' => $status], 'after' => ['status' => 'active']]
+         );
+ 
+         return $this->respond(
+@@ -288,8 +289,9 @@
+         $account = $this->resolveAccount($role, $id);
+         $normalizedRole = $this->normalizeRole($role);
+         $email = strtolower(trim((string) ($account->email ?? '')));
+-
+-        if (strtolower((string) ($account->account_status ?? 'active')) === 'banned') {
++        $status = strtolower((string) ($account->account_status ?? 'active'));
++
++        if ($status === 'banned') {
+             throw ValidationException::withMessages([
+                 'account' => 'This account is already banned.',
+             ]);
+@@ -320,7 +322,7 @@
+             $account->id,
+             'banned',
+             $validated['reason'],
+-            ['status' => 'banned']
++            ['reason' => $validated['reason'], 'before' => ['status' => $status], 'after' => ['status' => 'banned']]
+         );
+ 
+         return $this->respond(
+@@ -353,7 +355,11 @@
+                 (int) $account->getKey(),
+                 'ban_cancelled',
+                 'Admin cancelled the ban and released the email for a fresh registration.',
+-                ['released_email' => $email]
++                [
++                    'released_email' => $email,
++                    'before' => ['status' => 'banned', 'account' => 'registered'],
++                    'after' => ['status' => 'released', 'account' => 'available_for_reregistration'],
++                ]
+             );
+             $this->releaseAccountForReregistration($account, $normalizedRole);
+         });
+@@ -384,7 +390,14 @@
+                 (int) $account->getKey(),
+                 'deleted',
+                 'Admin deleted the account and released its email for future registration.',
+-                ['released_email' => $originalEmail]
++                [
++                    'released_email' => $originalEmail,
++                    'before' => [
++                        'status' => strtolower((string) ($account->account_status ?? 'active')),
++                        'account' => 'registered',
++                    ],
++                    'after' => ['status' => 'deleted', 'account' => 'available_for_reregistration'],
++                ]
+             );
+             $this->releaseAccountForReregistration($account, $normalizedRole);
+         });
+--- a/app/Services/Admin/AdminPlatformMonitoringService.php
++++ b/app/Services/Admin/AdminPlatformMonitoringService.php
+@@ -306,6 +306,7 @@
+             ->get();
+ 
+         $orders = MarketplaceOrder::query()
++            ->with('deliveryRouteStops')
+             ->where('logistics_account_id', $logistics->id)
+             ->whereIn('status', self::ACTIVE_DELIVERY_STATUSES)
+             ->latest('updated_at')
+--- a/resources/views/admin/monitoring/detail.blade.php
++++ b/resources/views/admin/monitoring/detail.blade.php
+@@ -39,6 +39,12 @@
+ 
+ @section('title', $displayName.' — Platform Monitoring')
+ @section('page-title', 'Platform Monitoring')
++
++@if($kind === 'logistics')
++    @push('styles')
++        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
++    @endpush
++@endif
+ 
+ @section('content')
+ <div class="pmd-page mx-auto w-full max-w-[1500px] pb-8">
+@@ -72,7 +78,8 @@
+         .pmd-activity{display:grid;gap:9px}.pmd-event{padding-left:10px;border-left:2px solid #E6D7B7}.pmd-event strong{display:block;color:#3C4650;font-size:8px}.pmd-event span{display:block;margin-top:2px;color:#7D8792;font-size:7px;line-height:1.5}
+         .pmd-empty{padding:22px 14px;color:#7D8792;font-size:8px;text-align:center}.pmd-pagination{padding:10px 14px;border-top:1px solid #ECEFF2;background:#FAFBFC}
+         .pmd-pill{display:inline-flex;min-height:21px;align-items:center;border:1px solid #E1E5EA;border-radius:999px;background:#F8F9FA;padding:0 7px;color:#65707B;font-size:6.5px;font-weight:700;white-space:nowrap}
+-        @media(max-width:1050px){.pmd-grid{grid-template-columns:1fr}.pmd-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
++        .pmd-ops-map{height:390px;border:1px solid #E1E5EA;border-radius:8px;background:#F5F7F8;overflow:hidden}.pmd-map-layout{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:12px}.pmd-map-side{display:grid;align-content:start;gap:8px}.pmd-map-stat{border:1px solid #E4E8EC;border-radius:8px;background:#FAFBFC;padding:9px 10px}.pmd-map-stat strong{display:block;color:#35404A;font-size:8px}.pmd-map-stat span{display:block;margin-top:3px;color:#7B8691;font-size:6.8px;line-height:1.5}.pmd-map-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}.pmd-map-key{display:inline-flex;align-items:center;gap:5px;color:#707B86;font-size:6.7px}.pmd-map-dot{width:8px;height:8px;border-radius:999px}.pmd-map-dot.hub{background:#D59617}.pmd-map-dot.route{background:#4F7EA8}.pmd-map-dot.done{background:#5B9270}.pmd-map-note{margin-top:8px;color:#7F8993;font-size:6.7px;line-height:1.55}.pmd-ops-map .leaflet-popup-content{font-family:'Poppins',sans-serif;font-size:9px;line-height:1.5}.pmd-ops-map .leaflet-control-attribution{font-size:7px}
++        @media(max-width:1050px){.pmd-grid{grid-template-columns:1fr}.pmd-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.pmd-map-layout{grid-template-columns:1fr}}
+         @media(max-width:639px){.pmd-top{align-items:stretch;flex-direction:column}.pmd-back{width:100%;justify-content:center}.pmd-identity{align-items:flex-start;flex-wrap:wrap}.pmd-status{margin-left:0}.pmd-metrics{grid-template-columns:1fr 1fr}.pmd-kv{grid-template-columns:1fr}.pmd-kv dd{margin-bottom:5px}}
+     </style>
+ 
+@@ -192,6 +199,50 @@
+                         <dt>Registered address</dt><dd>{{ $location ?: '—' }}</dd><dt>Service areas</dt><dd>{{ $account->service_areas ?: 'No service areas recorded.' }}</dd>
+                         <dt>TIN</dt><dd>{{ $account->tin ?: '—' }}</dd><dt>SEC registration</dt><dd>{{ $account->sec_registration_no ?: '—' }}</dd>
+                     </dl></div>
++                </section>
++
++                @php
++                    $opsMapPoints = collect();
++                    foreach($facilities as $facility) {
++                        if($facility->latitude !== null && $facility->longitude !== null) {
++                            $opsMapPoints->push([
++                                'type' => 'hub', 'name' => $facility->name, 'address' => $facility->address,
++                                'lat' => (float)$facility->latitude, 'lng' => (float)$facility->longitude,
++                                'status' => $facility->is_active ? 'Active hub' : 'Inactive hub', 'order' => null,
++                            ]);
++                        }
++                    }
++                    foreach($orders as $deliveryOrder) {
++                        foreach(($deliveryOrder->deliveryRouteStops ?? collect()) as $stop) {
++                            if($stop->latitude !== null && $stop->longitude !== null) {
++                                $opsMapPoints->push([
++                                    'type' => $stop->reached_at ? 'done' : 'route',
++                                    'name' => $stop->name ?: ucfirst(str_replace('_',' ',(string)$stop->type)),
++                                    'address' => $stop->address_snapshot,
++                                    'lat' => (float)$stop->latitude, 'lng' => (float)$stop->longitude,
++                                    'status' => $deliveryOrder->statusLabel(), 'order' => $deliveryOrder->order_number,
++                                ]);
++                            }
++                        }
++                    }
++                    $assignedRiders = $riders->filter(fn($rider) => (int)$rider->active_deliveries_count > 0);
++                @endphp
++                <section class="pmd-panel">
++                    <div class="pmd-panel-head"><div><h2>Logistics operations map</h2><p>Registered hubs plus route-stop coordinates for current delivery jobs. Rider locations are not represented as live GPS.</p></div><span class="pmd-pill">{{ number_format($orders->count()) }} active jobs</span></div>
++                    <div class="pmd-body">
++                        <div class="pmd-map-layout">
++                            <div>
++                                <div id="adminLogisticsOperationsMap" class="pmd-ops-map" data-map-points='@json($opsMapPoints->values())'></div>
++                                <div class="pmd-map-legend"><span class="pmd-map-key"><i class="pmd-map-dot hub"></i>Hub / facility</span><span class="pmd-map-key"><i class="pmd-map-dot route"></i>Pending/current route stop</span><span class="pmd-map-key"><i class="pmd-map-dot done"></i>Reached route stop</span></div>
++                                <div class="pmd-map-note">This map uses coordinates already stored by SARI. It does not claim real-time Rider GPS tracking.</div>
++                            </div>
++                            <div class="pmd-map-side">
++                                <div class="pmd-map-stat"><strong>{{ number_format($facilities->where('is_active',true)->count()) }} active hubs</strong><span>{{ $account->service_areas ?: 'No service areas recorded.' }}</span></div>
++                                <div class="pmd-map-stat"><strong>{{ number_format($assignedRiders->count()) }} Riders on active jobs</strong><span>@if($assignedRiders->count()){{ $assignedRiders->take(5)->map(fn($r) => trim($r->first_name.' '.$r->last_name).' ('.$r->active_deliveries_count.')')->implode(' · ') }}@elseNo Rider currently has an active delivery.@endif</span></div>
++                                <div class="pmd-map-stat"><strong>{{ number_format($orders->count()) }} current delivery assignments</strong><span>Destination/status pins appear only where the order route contains stored latitude/longitude.</span></div>
++                            </div>
++                        </div>
++                    </div>
+                 </section>
+ 
+                 <section class="pmd-panel">
+@@ -346,4 +397,34 @@
+     });
+ })();
+ </script>
++
++@if($kind === 'logistics')
++    @push('scripts')
++        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
++        <script>
++        (() => {
++            const node = document.getElementById('adminLogisticsOperationsMap');
++            if (!node || !window.L || node.dataset.mapReady === '1') return;
++            node.dataset.mapReady = '1';
++            let points = [];
++            try { points = JSON.parse(node.dataset.mapPoints || '[]'); } catch (_) {}
++            const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[char]));
++            const map = L.map(node, {scrollWheelZoom:false});
++            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
++            const bounds = [];
++            points.forEach((point) => {
++                if (!Number.isFinite(Number(point.lat)) || !Number.isFinite(Number(point.lng))) return;
++                const latlng = [Number(point.lat), Number(point.lng)];
++                bounds.push(latlng);
++                const color = point.type === 'hub' ? '#D59617' : (point.type === 'done' ? '#5B9270' : '#4F7EA8');
++                const marker = L.circleMarker(latlng, {radius:7, color:'#fff', weight:2, fillColor:color, fillOpacity:1}).addTo(map);
++                const orderLine = point.order ? `<br><strong>${escapeHtml(point.order)}</strong>` : '';
++                marker.bindPopup(`<strong>${escapeHtml(point.name || 'Location')}</strong>${orderLine}<br>${escapeHtml(point.status || '')}<br>${escapeHtml(point.address || '')}`);
++            });
++            if (bounds.length) map.fitBounds(bounds, {padding:[28,28], maxZoom:14}); else map.setView([12.8797,121.7740], 5);
++            setTimeout(() => map.invalidateSize(), 80);
++        })();
++        </script>
++    @endpush
++@endif
+ @endsection

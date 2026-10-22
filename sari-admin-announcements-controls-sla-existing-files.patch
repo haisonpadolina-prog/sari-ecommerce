@@ -1,0 +1,823 @@
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -1055,6 +1055,9 @@
+ // Admin Events & Promotions routes are isolated to avoid bloating this file.
+ require __DIR__ . '/admin-promotions.php';
+ 
++// Admin-created targeted marketplace announcements.
++require __DIR__ . '/admin-announcements.php';
++
+ 
+ // Admin Platform Monitoring routes are isolated to keep account monitoring cohesive.
+ require __DIR__ . '/admin-monitoring.php';
+--- a/resources/views/components/admin/sidebar.blade.php
++++ b/resources/views/components/admin/sidebar.blade.php
+@@ -586,6 +586,22 @@
+             <span class="sidebar-label whitespace-nowrap">Events &amp; Promotions</span>
+         </a>
+ 
++        {{-- Platform Announcements --}}
++        <a
++            href="{{ route('admin.announcements') }}"
++            title="Platform Announcements"
++            data-sidebar-item
++            data-sidebar-current="{{ request()->routeIs('admin.announcements*') ? 'true' : 'false' }}"
++            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
++        >
++            <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
++                <path d="M4 13V9l12-5v14L4 13Z"></path>
++                <path d="M8 14v5"></path>
++                <path d="M16 9h3a2 2 0 0 1 0 4h-3"></path>
++            </svg>
++            <span class="sidebar-label whitespace-nowrap">Announcements</span>
++        </a>
++
+         <div class="admin-sidebar-section-divider"></div>
+         <p class="admin-sidebar-section-label">PLATFORM</p>
+ 
+--- a/resources/views/layouts/buyer.blade.php
++++ b/resources/views/layouts/buyer.blade.php
+@@ -375,6 +375,15 @@
+             id="buyerMainContent"
+             class="min-h-screen"
+         >
++            @if(session('is_buyer'))
++                <div class="px-4 pt-4 sm:px-6 lg:px-8 xl:px-10">
++                    @include('components.platform-announcements', [
++                        'audienceRole' => 'buyer',
++                        'identityType' => session('buyer_account_id') ? 'buyer' : 'social_buyer',
++                        'accountId' => (int) (session('buyer_account_id') ?: session('buyer_social_account_id', 0)),
++                    ])
++                </div>
++            @endif
+             @yield('content')
+         </div>
+ 
+--- a/resources/views/layouts/seller.blade.php
++++ b/resources/views/layouts/seller.blade.php
+@@ -1289,6 +1289,13 @@
+ 
+         {{-- PAGE CONTENT --}}
+         <main class="w-full px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7 xl:px-10">
++            @if(session('is_seller'))
++                @include('components.platform-announcements', [
++                    'audienceRole' => 'seller',
++                    'identityType' => 'seller',
++                    'accountId' => (int) session('seller_account_id', 0),
++                ])
++            @endif
+             @yield('content')
+         </main>
+     </div>
+--- a/resources/views/layouts/logistics.blade.php
++++ b/resources/views/layouts/logistics.blade.php
+@@ -77,6 +77,13 @@
+             @include('components.logistics.header')
+ 
+             <main class="w-full px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7 xl:px-10">
++                @if(session('is_logistics'))
++                    @include('components.platform-announcements', [
++                        'audienceRole' => 'logistics',
++                        'identityType' => 'logistics',
++                        'accountId' => (int) session('logistics_account_id', 0),
++                    ])
++                @endif
+                 @yield('content')
+             </main>
+         </div>
+--- a/resources/views/layouts/courier.blade.php
++++ b/resources/views/layouts/courier.blade.php
+@@ -606,6 +606,13 @@
+ 
+         {{-- PAGE CONTENT --}}
+         <main class="px-4 py-5 sm:px-6 lg:px-8 xl:px-10">
++            @if(session('is_courier'))
++                @include('components.platform-announcements', [
++                    'audienceRole' => 'rider',
++                    'identityType' => 'rider',
++                    'accountId' => (int) session('courier_account_id', 0),
++                ])
++            @endif
+             @yield('content')
+         </main>
+     </div>
+--- a/app/Services/Platform/PlatformSettingsService.php
++++ b/app/Services/Platform/PlatformSettingsService.php
+@@ -46,6 +46,16 @@
+                 true
+             ),
+ 
++            'seller_product_posting_enabled' => PlatformSetting::valueOf(
++                'seller_product_posting_enabled',
++                true
++            ),
++
++            'platform_campaigns_enabled' => PlatformSetting::valueOf(
++                'platform_campaigns_enabled',
++                true
++            ),
++
+             'max_sellers_per_checkout' => PlatformSetting::valueOf(
+                 'max_sellers_per_checkout',
+                 0
+@@ -90,6 +100,8 @@
+             'delivery_fee_per_seller' => 'Delivery Fee / Seller',
+             'checkout_enabled' => 'Checkout Enabled',
+             'registrations_enabled' => 'Registrations Enabled',
++            'seller_product_posting_enabled' => 'Seller Product Posting',
++            'platform_campaigns_enabled' => 'Platform Campaigns',
+             'max_sellers_per_checkout' => 'Max Sellers / Checkout',
+             'buyer_cancellation_window_minutes' => 'Buyer Cancellation Window',
+             'seller_settlement_hold_days' => 'Seller Settlement Hold',
+@@ -337,6 +349,8 @@
+         if (in_array($key, [
+             'checkout_enabled',
+             'registrations_enabled',
++            'seller_product_posting_enabled',
++            'platform_campaigns_enabled',
+             'registration_decision_email_enabled',
+             'maintenance_mode',
+         ], true)) {
+@@ -468,6 +482,14 @@
+                 $settings['registrations_enabled'] ?? true
+             ),
+ 
++            'seller_product_posting_enabled' => $this->toBool(
++                $settings['seller_product_posting_enabled'] ?? true
++            ),
++
++            'platform_campaigns_enabled' => $this->toBool(
++                $settings['platform_campaigns_enabled'] ?? true
++            ),
++
+             'max_sellers_per_checkout' => max(
+                 0,
+                 (int) ($settings['max_sellers_per_checkout'] ?? 0)
+--- a/app/Http/Controllers/Admin/AdminPlatformSettingsController.php
++++ b/app/Http/Controllers/Admin/AdminPlatformSettingsController.php
+@@ -107,6 +107,14 @@
+                 'required',
+                 'boolean',
+             ],
++            'seller_product_posting_enabled' => [
++                'required',
++                'boolean',
++            ],
++            'platform_campaigns_enabled' => [
++                'required',
++                'boolean',
++            ],
+             'max_sellers_per_checkout' => [
+                 'required',
+                 'integer',
+--- a/resources/views/admin/platform-settings.blade.php
++++ b/resources/views/admin/platform-settings.blade.php
+@@ -14,6 +14,8 @@
+         if (in_array($key, [
+             'checkout_enabled',
+             'registrations_enabled',
++            'seller_product_posting_enabled',
++            'platform_campaigns_enabled',
+             'registration_decision_email_enabled',
+             'maintenance_mode',
+         ], true)) {
+@@ -1250,7 +1252,7 @@
+                         <div class="ps-section-head">
+                             <div>
+                                 <h2 class="ps-section-title">Commerce maintenance</h2>
+-                                <p class="ps-section-copy">Temporarily pause buyer checkout and new registrations without locking the Admin workspace.</p>
++                                <p class="ps-section-copy">Control commerce availability without shutting down the Admin workspace. Existing checkout and registration controls are preserved; Seller posting and platform-campaign delivery are managed here too.</p>
+                             </div>
+                             <div class="ps-head-actions">
+                                 <details class="ps-help-menu">
+@@ -1266,7 +1268,7 @@
+                                     <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Write the public message</strong><p>Enter a clear maintenance message explaining why the action is unavailable.</p></div></div>
+                                     <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Admin remains available</strong><p>The maintenance switch does not lock the Admin settings page, so an administrator can turn it off again.</p></div></div>
+                                         </div>
+-                                <div class="ps-help-note">Current implementation blocks checkout and new registration entry points; it does not shut down the entire Laravel application.</div>
++                                <div class="ps-help-note">Maintenance mode continues to pause checkout and registration entry points. The separate feature switches below let Admin pause Seller product posting or Buyer-facing platform campaigns without disabling the rest of SARI.</div>
+                                     </div>
+                                 </details>
+                             </div>
+@@ -1280,6 +1282,30 @@
+                             <label class="ps-switch">
+                                 <input type="hidden" name="maintenance_mode" value="0">
+                                 <input type="checkbox" name="maintenance_mode" value="1" @checked($boolValue('maintenance_mode',false))>
++                                <span></span>
++                            </label>
++                        </div>
++
++                        <div class="ps-toggle-row" style="margin-top:12px">
++                            <div>
++                                <div class="ps-toggle-title">Seller product posting</div>
++                                <div class="ps-toggle-copy">When disabled, Sellers can still manage existing products, but cannot open Add Product or save new product drafts/listings.</div>
++                            </div>
++                            <label class="ps-switch">
++                                <input type="hidden" name="seller_product_posting_enabled" value="0">
++                                <input type="checkbox" name="seller_product_posting_enabled" value="1" @checked($boolValue('seller_product_posting_enabled',true))>
++                                <span></span>
++                            </label>
++                        </div>
++
++                        <div class="ps-toggle-row" style="margin-top:12px">
++                            <div>
++                                <div class="ps-toggle-title">Platform campaigns</div>
++                                <div class="ps-toggle-copy">When disabled, Admin event discounts and SARI platform vouchers stop applying to Buyer quotes and checkout. Campaign records stay intact for later reactivation.</div>
++                            </div>
++                            <label class="ps-switch">
++                                <input type="hidden" name="platform_campaigns_enabled" value="0">
++                                <input type="checkbox" name="platform_campaigns_enabled" value="1" @checked($boolValue('platform_campaigns_enabled',true))>
+                                 <span></span>
+                             </label>
+                         </div>
+@@ -1566,13 +1592,17 @@
+         const delivery=form.querySelector('[name="delivery_fee_per_seller"]')?.value || '0';
+         const effective=form.querySelector('[name="effective_at"]')?.value || '';
+         const maintenance=form.querySelector('input[type="checkbox"][name="maintenance_mode"]')?.checked;
++        const sellerPosting=form.querySelector('input[type="checkbox"][name="seller_product_posting_enabled"]')?.checked;
++        const campaigns=form.querySelector('input[type="checkbox"][name="platform_campaigns_enabled"]')?.checked;
+ 
+         if(summary){
+             summary.innerHTML=
+                 `<div><strong>Commission:</strong> ${Number(commission).toFixed(2)}%</div>`+
+                 `<div><strong>Delivery fee / seller:</strong> ₱${Number(delivery).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>`+
+                 `<div><strong>Effective:</strong> ${effective || 'Now'}</div>`+
+-                `<div><strong>Maintenance mode:</strong> ${maintenance?'Enabled':'Disabled'}</div>`;
++                `<div><strong>Maintenance mode:</strong> ${maintenance?'Enabled':'Disabled'}</div>`+
++                `<div><strong>Seller product posting:</strong> ${sellerPosting?'Enabled':'Disabled'}</div>`+
++                `<div><strong>Platform campaigns:</strong> ${campaigns?'Enabled':'Disabled'}</div>`;
+         }
+ 
+         modal?.classList.add('show');
+--- a/app/Http/Middleware/Platform/EnforcePlatformOperationalRules.php
++++ b/app/Http/Middleware/Platform/EnforcePlatformOperationalRules.php
+@@ -8,6 +8,8 @@
+ use App\Http\Controllers\Auth\RegistrationController;
+ use App\Http\Controllers\Buyer\BuyerRegistrationController;
+ use App\Http\Controllers\Seller\SellerRegistrationController;
++use App\Http\Controllers\Seller\SellerProductController;
++use App\Http\Controllers\Seller\SellerProductDraftController;
+ use App\Http\Controllers\Logistics\LogisticsRegistrationController;
+ use App\Http\Controllers\Courier\RiderRegistrationController;
+ use App\Models\Accounts\CourierAccount;
+@@ -63,6 +65,17 @@
+         }
+ 
+         if (
++            ($class === SellerProductController::class
++                && in_array($method, ['create', 'store'], true))
++            || ($class === SellerProductDraftController::class
++                && $method === 'store')
++        ) {
++            if ($response = $this->sellerProductPostingGuard($request)) {
++                return $response;
++            }
++        }
++
++        if (
+             $class === BuyerCheckoutController::class
+             && in_array($method, ['index', 'store'], true)
+         ) {
+@@ -204,6 +217,24 @@
+         return null;
+     }
+ 
++    private function sellerProductPostingGuard(
++        Request $request
++    ): ?Response {
++        if (!$request->session()->get('is_seller')) {
++            return null;
++        }
++
++        if ($this->boolSetting('seller_product_posting_enabled', true)) {
++            return null;
++        }
++
++        return redirect()
++            ->route('seller.products.index')
++            ->withErrors([
++                'product' => 'New product posting is temporarily disabled by the administrator. Existing products remain available for management.',
++            ]);
++    }
++
+     private function buyerCancellationGuard(
+         Request $request
+     ): ?Response {
+--- a/app/Services/Promotions/PlatformCampaignService.php
++++ b/app/Services/Promotions/PlatformCampaignService.php
+@@ -5,6 +5,7 @@
+ use App\Models\Catalog\SellerProduct;
+ use App\Models\Catalog\SellerProductVariant;
+ use App\Models\Orders\BuyerCartItem;
++use App\Models\Platform\PlatformSetting;
+ use App\Models\Promotions\PlatformCampaign;
+ use App\Models\Promotions\PlatformCampaignRedemption;
+ use Illuminate\Support\Collection;
+@@ -202,6 +203,10 @@
+         $code = strtoupper(trim($code));
+ 
+         if ($code === '') {
++            return null;
++        }
++
++        if ($this->liveCampaigns()->isEmpty()) {
+             return null;
+         }
+ 
+@@ -357,6 +362,23 @@
+             return $this->liveCampaigns;
+         }
+ 
++        $enabled = PlatformSetting::valueOf(
++            'platform_campaigns_enabled',
++            true
++        );
++
++        $enabled = is_bool($enabled)
++            ? $enabled
++            : (filter_var(
++                $enabled,
++                FILTER_VALIDATE_BOOLEAN,
++                FILTER_NULL_ON_FAILURE
++            ) ?? false);
++
++        if (!$enabled) {
++            return $this->liveCampaigns = collect();
++        }
++
+         return $this->liveCampaigns = PlatformCampaign::query()
+             ->live()
+             ->with(['products:id', 'sellers:id', 'categories:id,platform_campaign_id,category'])
+--- a/app/Http/Controllers/Admin/AdminPlatformCampaignController.php
++++ b/app/Http/Controllers/Admin/AdminPlatformCampaignController.php
+@@ -6,6 +6,7 @@
+ use App\Models\Accounts\SellerAccount;
+ use App\Models\Catalog\SellerProduct;
+ use App\Models\Promotions\PlatformCampaign;
++use App\Models\Platform\PlatformSetting;
+ use Illuminate\Http\RedirectResponse;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\DB;
+@@ -60,12 +61,19 @@
+             ->unique(fn ($category) => strtolower($category))
+             ->values();
+ 
++        $campaignFeatureEnabled = filter_var(
++            PlatformSetting::valueOf('platform_campaigns_enabled', true),
++            FILTER_VALIDATE_BOOLEAN,
++            FILTER_NULL_ON_FAILURE
++        ) ?? false;
++
+         return view('admin.platform-campaigns', compact(
+             'campaigns',
+             'editing',
+             'sellers',
+             'products',
+-            'categories'
++            'categories',
++            'campaignFeatureEnabled'
+         ));
+     }
+ 
+--- a/resources/views/admin/platform-campaigns.blade.php
++++ b/resources/views/admin/platform-campaigns.blade.php
+@@ -59,6 +59,11 @@
+ 
+     @if(session('success'))<div class="cp-alert">{{ session('success') }}</div>@endif
+     @if($errors->any())<div class="cp-alert cp-error">{{ $errors->first() }}</div>@endif
++    @if(!$campaignFeatureEnabled)
++        <div class="cp-alert cp-error">
++            Platform campaigns are currently disabled in Platform Settings. Campaign records remain editable, but Buyer event discounts and SARI platform vouchers will not apply until the feature is enabled again.
++        </div>
++    @endif
+ 
+     <div class="cp-time-strip">
+         <strong>Philippine Standard Time (PHT · UTC+8)</strong>
+--- a/app/Services/Admin/AdminSecurityCenterService.php
++++ b/app/Services/Admin/AdminSecurityCenterService.php
+@@ -445,9 +445,9 @@
+         return $alerts;
+     }
+ 
+-    public function stuckOrders(): Collection
+-    {
+-        $thresholds = [
++    public function deliverySlaThresholds(): array
++    {
++        return [
+             'new' => 24,
+             'preparing' => 24,
+             'ready_for_pickup' => 12,
+@@ -457,31 +457,168 @@
+             'in_transit' => 24,
+             'arrived_buyer' => 12,
+         ];
++    }
++
++    public function deliverySlaOrders(string $search = ''): Collection
++    {
++        $thresholds = $this->deliverySlaThresholds();
++        $search = mb_strtolower(trim($search));
+ 
+         return MarketplaceOrder::query()
++            ->with([
++                'seller:id,store_name,email',
++                'logisticsAccount:id,business_name,first_name,last_name,email',
++                'events' => fn ($query) => $query
++                    ->latest('id')
++                    ->select([
++                        'id',
++                        'marketplace_order_id',
++                        'type',
++                        'status',
++                        'created_at',
++                    ]),
++            ])
+             ->whereIn('status', array_keys($thresholds))
+-            ->where('updated_at', '<=', now()->subHours(8))
+             ->latest('updated_at')
+-            ->limit(150)
++            ->limit(250)
+             ->get()
+-            ->map(function (MarketplaceOrder $order) use ($thresholds): ?array {
+-                $hours = max(0, (int) floor($order->updated_at?->diffInHours(now()) ?? 0));
+-                $limit = $thresholds[$order->status] ?? 24;
+-                if ($hours < $limit) {
+-                    return null;
+-                }
++            ->map(function (MarketplaceOrder $order) use ($thresholds): array {
++                $limit = (int) ($thresholds[$order->status] ?? 24);
++                $startedAt = $this->slaStageStartedAt($order);
++                $elapsedMinutes = max(
++                    0,
++                    (int) floor(
++                        ($startedAt?->diffInMinutes(now(), false) ?? 0)
++                    )
++                );
++                $elapsedHours = round($elapsedMinutes / 60, 1);
++                $overdueHours = round(
++                    max(0, $elapsedMinutes - ($limit * 60)) / 60,
++                    1
++                );
++                $ratio = $limit > 0
++                    ? $elapsedMinutes / ($limit * 60)
++                    : 0.0;
++                $breached = $elapsedMinutes >= ($limit * 60);
++
++                $severity = match (true) {
++                    $overdueHours >= max(24, $limit) => 'critical',
++                    $breached => 'high',
++                    $ratio >= .75 => 'warning',
++                    default => 'normal',
++                };
++
++                $logisticsName = $order->logisticsAccount?->business_name
++                    ?: trim(
++                        (string) ($order->logisticsAccount?->first_name ?? '')
++                        . ' '
++                        . (string) ($order->logisticsAccount?->last_name ?? '')
++                    );
++
+                 return [
++                    'order_id' => (int) $order->id,
+                     'order_number' => $order->order_number,
+                     'status' => $order->status,
+                     'status_label' => $order->statusLabel(),
+-                    'hours_stuck' => $hours,
++                    'stage_started_at' => $startedAt,
++                    'elapsed_hours' => $elapsedHours,
++                    'threshold_hours' => $limit,
++                    'overdue_hours' => $overdueHours,
++                    'hours_stuck' => (int) floor($elapsedHours),
++                    'is_breached' => $breached,
++                    'severity' => $severity,
+                     'seller_id' => (int) $order->seller_account_id,
+-                    'logistics_id' => $order->logistics_account_id ? (int) $order->logistics_account_id : null,
++                    'seller_name' => $order->seller?->store_name
++                        ?: $order->seller?->email
++                        ?: 'SARI Seller',
++                    'logistics_id' => $order->logistics_account_id
++                        ? (int) $order->logistics_account_id
++                        : null,
++                    'logistics_name' => $logisticsName ?: 'Unassigned',
++                    'rider_name' => trim((string) $order->courier_name)
++                        ?: 'Unassigned',
++                    'rider_email' => trim((string) $order->courier_email)
++                        ?: null,
++                    'last_updated_at' => $order->updated_at,
++                    'urgency_rank' => match ($severity) {
++                        'critical' => 4,
++                        'high' => 3,
++                        'warning' => 2,
++                        default => 1,
++                    },
+                 ];
+             })
+-            ->filter()
+-            ->sortByDesc('hours_stuck')
++            ->filter(function (array $row) use ($search): bool {
++                if ($search === '') {
++                    return true;
++                }
++
++                $haystack = mb_strtolower(implode(' ', [
++                    (string) ($row['order_number'] ?? ''),
++                    (string) ($row['status_label'] ?? ''),
++                    (string) ($row['seller_name'] ?? ''),
++                    (string) ($row['logistics_name'] ?? ''),
++                    (string) ($row['rider_name'] ?? ''),
++                    (string) ($row['rider_email'] ?? ''),
++                ]));
++
++                return str_contains($haystack, $search);
++            })
++            ->sortByDesc(fn (array $row) => sprintf(
++                '%d-%012.1f',
++                (int) $row['urgency_rank'],
++                (float) ($row['overdue_hours'] ?: $row['elapsed_hours'])
++            ))
+             ->values();
++    }
++
++    public function deliverySlaSummary(Collection $rows): array
++    {
++        return [
++            'active' => $rows->count(),
++            'breached' => $rows->where('is_breached', true)->count(),
++            'critical' => $rows->where('severity', 'critical')->count(),
++            'warning' => $rows->where('severity', 'warning')->count(),
++        ];
++    }
++
++    public function stuckOrders(): Collection
++    {
++        return $this->deliverySlaOrders()
++            ->where('is_breached', true)
++            ->values();
++    }
++
++    private function slaStageStartedAt(MarketplaceOrder $order): ?Carbon
++    {
++        $explicit = match ($order->status) {
++            'new' => $order->created_at,
++            'ready_for_pickup' => $order->ready_at,
++            'courier_accepted' => $order->accepted_at,
++            'heading_pickup' => $order->pickup_started_at,
++            'arrived_pickup' => $order->arrived_pickup_at,
++            'in_transit' => $order->picked_up_at,
++            'arrived_buyer' => $order->arrived_buyer_at,
++            default => null,
++        };
++
++        if ($explicit) {
++            return Carbon::instance($explicit);
++        }
++
++        $event = $order->events
++            ->first(fn ($candidate) =>
++                (string) $candidate->status === (string) $order->status
++                || (string) $candidate->type === (string) $order->status
++            );
++
++        if ($event?->created_at) {
++            return Carbon::instance($event->created_at);
++        }
++
++        return $order->updated_at
++            ? Carbon::instance($order->updated_at)
++            : ($order->created_at ? Carbon::instance($order->created_at) : null);
+     }
+ 
+     private function failedLoginEvents(int $limit): Collection
+--- a/app/Http/Controllers/Admin/AdminPlatformMonitoringController.php
++++ b/app/Http/Controllers/Admin/AdminPlatformMonitoringController.php
+@@ -7,6 +7,7 @@
+ use App\Models\Accounts\LogisticsAccount;
+ use App\Models\Accounts\SellerAccount;
+ use App\Services\Admin\AdminPlatformMonitoringService;
++use App\Services\Admin\AdminSecurityCenterService;
+ use Illuminate\Http\RedirectResponse;
+ use Illuminate\Http\Request;
+ use Illuminate\View\View;
+@@ -14,7 +15,8 @@
+ class AdminPlatformMonitoringController extends Controller
+ {
+     public function __construct(
+-        private readonly AdminPlatformMonitoringService $monitoring
++        private readonly AdminPlatformMonitoringService $monitoring,
++        private readonly AdminSecurityCenterService $security
+     ) {
+     }
+ 
+@@ -25,7 +27,7 @@
+         }
+ 
+         $section = strtolower((string) $request->query('section', 'sellers'));
+-        if (!in_array($section, ['sellers', 'logistics', 'buyers', 'riders'], true)) {
++        if (!in_array($section, ['sellers', 'logistics', 'buyers', 'riders', 'sla'], true)) {
+             $section = 'sellers';
+         }
+ 
+@@ -35,10 +37,16 @@
+             $status = 'all';
+         }
+ 
++        $slaRows = $this->security->deliverySlaOrders(
++            $section === 'sla' ? $search : ''
++        );
++        $slaSummary = $this->security->deliverySlaSummary($slaRows);
++
+         $records = match ($section) {
+             'logistics' => $this->monitoring->logisticsDirectory($search, $status),
+             'buyers' => $this->monitoring->buyerDirectory($search, $status),
+             'riders' => $this->monitoring->riderDirectory($search, $status),
++            'sla' => $slaRows,
+             default => $this->monitoring->sellerDirectory($search, $status),
+         };
+ 
+@@ -48,6 +56,7 @@
+             'status' => $status,
+             'records' => $records,
+             'overview' => $this->monitoring->overview(),
++            'slaSummary' => $slaSummary,
+         ]);
+     }
+ 
+--- a/resources/views/admin/monitoring/index.blade.php
++++ b/resources/views/admin/monitoring/index.blade.php
+@@ -10,6 +10,7 @@
+         'logistics' => ['label' => 'Logistics Providers', 'count' => $overview['logistics']],
+         'buyers' => ['label' => 'Buyers', 'count' => $overview['buyers']],
+         'riders' => ['label' => 'Riders', 'count' => $overview['riders']],
++        'sla' => ['label' => 'Delivery SLA', 'count' => $slaSummary['breached']],
+     ];
+ 
+     $statusLabel = static fn ($value) => match (strtolower((string) $value)) {
+@@ -30,7 +31,7 @@
+         .pm-title{margin:5px 0 0;font-size:clamp(29px,2.2vw,37px);font-weight:700;line-height:1.06;letter-spacing:-.045em}
+         .pm-title span{color:var(--pm-gold)}
+         .pm-copy{max-width:820px;margin:7px 0 0;color:var(--pm-muted);font-size:10px;line-height:1.65}
+-        .pm-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
++        .pm-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:14px}
+         .pm-metric{min-height:72px;border:1px solid var(--pm-line);border-radius:8px;background:#fff;padding:12px 13px;box-shadow:0 1px 3px rgba(15,23,42,.025),0 7px 18px rgba(15,23,42,.045)}
+         .pm-metric span{display:block;color:#74808D;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+         .pm-metric strong{display:block;margin-top:7px;color:#2D333B;font-size:20px;line-height:1;font-weight:700}
+@@ -64,6 +65,11 @@
+         .pm-status.deactivated,.pm-status.suspended{border-color:#E8DDC9;background:#FFF9EF;color:#8B6B32}
+         .pm-status.blocked{border-color:#EAD7CB;background:#FFF6F1;color:#9A5E42}
+         .pm-status.banned{border-color:#E7C9C9;background:#FFF3F3;color:#A24F4F}
++        .pm-sla{display:inline-flex;min-height:23px;align-items:center;border:1px solid #DDE3E8;border-radius:999px;background:#F7F9FA;padding:0 8px;color:#68737E;font-size:6.8px;font-weight:800;white-space:nowrap}
++        .pm-sla.warning{border-color:#E9D9AA;background:#FFFAEC;color:#8A6925}
++        .pm-sla.high{border-color:#E8CFBC;background:#FFF7F1;color:#965B38}
++        .pm-sla.critical{border-color:#E6C1C1;background:#FFF3F3;color:#A24747}
++        .pm-sla.normal{border-color:#D8E5DC;background:#F5FAF6;color:#567462}
+         .pm-view{display:inline-flex;height:31px;align-items:center;border:1px solid #DEC98E;border-radius:7px;background:#FFF9EC;padding:0 10px;color:#8D641C;font-size:7.5px;font-weight:750;text-decoration:none}
+         .pm-pagination{padding:10px 14px;border-top:1px solid #ECEFF2;background:#FAFBFC}
+         .pm-pagination nav{font-size:9px}
+@@ -75,7 +81,7 @@
+     <div class="pm-header">
+         <p class="pm-eyebrow">Operations &amp; Account Oversight</p>
+         <h1 class="pm-title">Platform <span>Monitoring</span></h1>
+-        <p class="pm-copy">Monitor SARI stores, Logistics providers and hubs, Buyers, Riders, delivery activity, and account access from one administrator workspace.</p>
++        <p class="pm-copy">Monitor SARI stores, Logistics providers and hubs, Buyers, Riders, account access, and delivery SLA breaches from one administrator workspace.</p>
+     </div>
+ 
+     @if(session('success'))
+@@ -91,6 +97,7 @@
+         <div class="pm-metric"><span>Buyers</span><strong>{{ number_format($overview['buyers']) }}</strong></div>
+         <div class="pm-metric"><span>Riders</span><strong>{{ number_format($overview['riders']) }}</strong></div>
+         <div class="pm-metric"><span>Active deliveries</span><strong>{{ number_format($overview['active_deliveries']) }}</strong></div>
++        <div class="pm-metric"><span>SLA breached</span><strong>{{ number_format($slaSummary['breached']) }}</strong></div>
+     </div>
+ 
+     <div class="pm-tabs" role="tablist" aria-label="Monitoring sections">
+@@ -105,18 +112,36 @@
+         <input type="hidden" name="section" value="{{ $section }}">
+         <div class="pm-field">
+             <label for="monitorSearch">Search</label>
+-            <input id="monitorSearch" class="pm-control" type="search" name="q" value="{{ $search }}" placeholder="Name, email, store, business, plate, location...">
++            <input
++                id="monitorSearch"
++                class="pm-control"
++                type="search"
++                name="q"
++                value="{{ $search }}"
++                placeholder="{{ $section === 'sla' ? 'Order, Seller, Logistics, Rider...' : 'Name, email, store, business, plate, location...' }}"
++            >
+         </div>
+-        <div class="pm-field">
+-            <label for="monitorStatus">Account status</label>
+-            <select id="monitorStatus" class="pm-control" name="status">
+-                <option value="all" @selected($status === 'all')>All statuses</option>
+-                <option value="active" @selected($status === 'active')>Active</option>
+-                <option value="deactivated" @selected($status === 'deactivated')>Suspended</option>
+-                <option value="blocked" @selected($status === 'blocked')>Blocked</option>
+-                <option value="banned" @selected($status === 'banned')>Banned</option>
+-            </select>
+-        </div>
++        @if($section !== 'sla')
++            <div class="pm-field">
++                <label for="monitorStatus">Account status</label>
++                <select id="monitorStatus" class="pm-control" name="status">
++                    <option value="all" @selected($status === 'all')>All statuses</option>
++                    <option value="active" @selected($status === 'active')>Active</option>
++                    <option value="deactivated" @selected($status === 'deactivated')>Suspended</option>
++                    <option value="blocked" @selected($status === 'blocked')>Blocked</option>
++                    <option value="banned" @selected($status === 'banned')>Banned</option>
++                </select>
++            </div>
++        @else
++            <div class="pm-field">
++                <label>SLA summary</label>
++                <div class="pm-control" style="display:flex;align-items:center;gap:8px">
++                    <span>{{ number_format($slaSummary['critical']) }} critical</span>
++                    <span>·</span>
++                    <span>{{ number_format($slaSummary['warning']) }} nearing breach</span>
++                </div>
++            </div>
++        @endif
+         <button class="pm-btn primary" type="submit">Apply</button>
+         <a class="pm-btn secondary" href="{{ route('admin.monitoring', ['section' => $section]) }}">Reset</a>
+     </form>
+@@ -125,15 +150,69 @@
+         <div class="pm-panel-head">
+             <div>
+                 <h2>{{ $sections[$section]['label'] }}</h2>
+-                <p>Open a record to review profile, operations, orders, delivery activity, products, hubs, and administrative controls.</p>
++                <p>
++                    {{ $section === 'sla'
++                        ? 'One SLA engine is shared with Security Center. Review active delivery stages, thresholds, elapsed time, and breaches here.'
++                        : 'Open a record to review profile, operations, orders, delivery activity, products, hubs, and administrative controls.' }}
++                </p>
+             </div>
+-            <span class="pm-count">{{ number_format($records->total()) }} records</span>
++            <span class="pm-count">
++                {{ number_format($section === 'sla' ? $records->count() : $records->total()) }}
++                {{ $section === 'sla' ? 'active orders' : 'records' }}
++            </span>
+         </div>
+ 
+         <div class="pm-table-wrap">
+             @if($records->count())
+                 <table class="pm-table">
+-                    @if($section === 'sellers')
++                    @if($section === 'sla')
++                        <thead><tr><th>Order</th><th>Stage</th><th>Elapsed</th><th>SLA</th><th>Seller</th><th>Logistics</th><th>Rider</th><th>Stage started</th></tr></thead>
++                        <tbody>
++                        @foreach($records as $record)
++                            <tr>
++                                <td>
++                                    <div class="pm-name">{{ $record['order_number'] }}</div>
++                                    <div class="pm-sub">Last update {{ $record['last_updated_at']?->diffForHumans() ?? '—' }}</div>
++                                </td>
++                                <td>
++                                    <div class="pm-name">{{ $record['status_label'] }}</div>
++                                    <div class="pm-sub">{{ $record['threshold_hours'] }}h expected window</div>
++                                </td>
++                                <td>
++                                    <div class="pm-name">{{ number_format((float)$record['elapsed_hours'],1) }}h</div>
++                                    <div class="pm-sub">
++                                        @if($record['is_breached'])
++                                            {{ number_format((float)$record['overdue_hours'],1) }}h overdue
++                                        @else
++                                            {{ number_format(max(0,(float)$record['threshold_hours']-(float)$record['elapsed_hours']),1) }}h remaining
++                                        @endif
++                                    </div>
++                                </td>
++                                <td>
++                                    <span class="pm-sla {{ $record['severity'] }}">
++                                        {{ $record['is_breached'] ? strtoupper($record['severity']).' BREACH' : ($record['severity']==='warning' ? 'WARNING' : 'ON TRACK') }}
++                                    </span>
++                                </td>
++                                <td>
++                                    @if($record['seller_id'])
++                                        <a class="pm-view" href="{{ route('admin.monitoring.sellers.show',$record['seller_id']) }}">{{ $record['seller_name'] }}</a>
++                                    @else
++                                        {{ $record['seller_name'] }}
++                                    @endif
++                                </td>
++                                <td>
++                                    @if($record['logistics_id'])
++                                        <a class="pm-view" href="{{ route('admin.monitoring.logistics.show',$record['logistics_id']) }}">{{ $record['logistics_name'] }}</a>
++                                    @else
++                                        {{ $record['logistics_name'] }}
++                                    @endif
++                                </td>
++                                <td><div>{{ $record['rider_name'] }}</div><div class="pm-sub">{{ $record['rider_email'] ?: 'No rider assigned' }}</div></td>
++                                <td>{{ $record['stage_started_at']?->timezone('Asia/Manila')->format('M j, h:i A') ?? '—' }} <span class="pm-sub">PHT</span></td>
++                            </tr>
++                        @endforeach
++                        </tbody>
++                    @elseif($section === 'sellers')
+                         <thead><tr><th>Store</th><th>Owner</th><th>Location</th><th>Products</th><th>Orders</th><th>Delivered</th><th>Status</th><th></th></tr></thead>
+                         <tbody>
+                         @foreach($records as $record)
+@@ -208,7 +287,7 @@
+             @endif
+         </div>
+ 
+-        @if($records->hasPages())
++        @if($section !== 'sla' && $records->hasPages())
+             <div class="pm-pagination">{{ $records->links() }}</div>
+         @endif
+     </section>

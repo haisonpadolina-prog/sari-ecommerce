@@ -6,6 +6,8 @@ use App\Models\Catalog\ProductReview;
 use App\Models\Messaging\BuyerSellerMessage;
 use App\Models\Orders\BuyerCartItem;
 use App\Models\Orders\MarketplaceOrder;
+use App\Models\Registration\RegistrationApplication;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,6 +19,7 @@ class BuyerAccount extends Authenticatable
     protected $table = 'buyer_accounts';
 
     protected $fillable = [
+        'profile_image_path',
         'registration_application_id',
         'last_name',
         'first_name',
@@ -46,6 +49,11 @@ class BuyerAccount extends Authenticatable
         'approved_at' => 'datetime',
     ];
 
+    public function registrationApplication(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationApplication::class, 'registration_application_id');
+    }
+
     public function cartItems(): HasMany
     {
         return $this->hasMany(BuyerCartItem::class, 'buyer_account_id');
@@ -65,4 +73,10 @@ class BuyerAccount extends Authenticatable
     {
         return $this->hasMany(ProductReview::class, 'buyer_account_id');
     }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(BuyerAddress::class, 'buyer_account_id');
+    }
+
 }

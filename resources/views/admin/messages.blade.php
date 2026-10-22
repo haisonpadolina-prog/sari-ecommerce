@@ -2858,6 +2858,695 @@
             }
         }
 
+        /* ============================================================
+           SELLER VISUAL SYSTEM — FINAL ADMIN MESSAGES OVERRIDE
+           Visual-only authority layer. Messaging contracts untouched.
+           ============================================================ */
+
+        #sariUniversalAdminMessages{
+            --seller-canvas:#F4F5F7;
+            --seller-surface:#FFFFFF;
+            --seller-surface-soft:#F9FAFB;
+            --seller-text:#111827;
+            --seller-text-secondary:#344054;
+            --seller-muted:#7C8592;
+            --seller-gold:#D59617;
+            --seller-gold-strong:#B97805;
+            --seller-border:#E5E7EB;
+            --seller-border-strong:#D1D5DB;
+            --seller-divider:#ECEFF2;
+            --seller-shadow-main:
+                0 2px 5px rgba(15,23,42,.045),
+                0 10px 24px rgba(15,23,42,.075),
+                0 24px 54px rgba(15,23,42,.095),
+                inset 0 1px 0 rgba(255,255,255,.92);
+            --seller-shadow-soft:
+                0 1px 3px rgba(15,23,42,.035),
+                0 7px 18px rgba(15,23,42,.06),
+                0 15px 32px rgba(15,23,42,.065),
+                inset 0 1px 0 rgba(255,255,255,.90);
+            --seller-shadow-focal:
+                0 3px 7px rgba(15,23,42,.055),
+                0 14px 32px rgba(15,23,42,.095),
+                0 30px 68px rgba(15,23,42,.11);
+
+            width:100% !important;
+            max-width:1600px !important;
+            margin-inline:auto !important;
+            padding-bottom:24px !important;
+            color:var(--seller-text) !important;
+        }
+
+        #adminMessagingNotice{
+            margin-bottom:12px !important;
+            border-radius:10px !important;
+            box-shadow:var(--seller-shadow-soft) !important;
+        }
+
+        /* The messenger is the focal Admin surface. */
+        #sariUniversalAdminMessages > section.sari-shadow{
+            overflow:hidden !important;
+            border:1px solid var(--seller-border) !important;
+            border-radius:18px !important;
+            background:var(--seller-surface) !important;
+            box-shadow:var(--seller-shadow-focal) !important;
+            transform:none !important;
+        }
+
+        #sariUniversalAdminMessages .sari-message-grid{
+            min-height:620px !important;
+            height:clamp(620px,calc(100vh - 176px),790px) !important;
+            grid-template-columns:310px minmax(0,1fr) 260px !important;
+            background:var(--seller-surface) !important;
+        }
+
+        /* ---------------- DIRECTORY ---------------- */
+        #sariUniversalAdminMessages .sari-inbox-panel{
+            border-right:1px solid var(--seller-divider) !important;
+            background:var(--seller-surface) !important;
+        }
+
+        #sariUniversalAdminMessages .sari-inbox-panel > div:first-child{
+            padding:16px 14px 14px !important;
+            border-bottom:1px solid var(--seller-divider) !important;
+            background:#fff !important;
+        }
+
+        #sariUniversalAdminMessages .sari-inbox-panel p.text-\[10px\].font-bold.uppercase{
+            color:var(--seller-gold-strong) !important;
+            font-size:8px !important;
+            font-weight:800 !important;
+            letter-spacing:.16em !important;
+        }
+
+        #sariUniversalAdminMessages .sari-inbox-panel h2{
+            margin-top:4px !important;
+            color:var(--seller-text) !important;
+            font-size:19px !important;
+            font-weight:700 !important;
+            line-height:1.08 !important;
+            letter-spacing:-.035em !important;
+        }
+
+        #sariUniversalAdminMessages .sari-inbox-panel h2 + p{
+            margin-top:5px !important;
+            max-width:255px !important;
+            color:var(--seller-muted) !important;
+            font-size:8.5px !important;
+            line-height:1.5 !important;
+        }
+
+        #adminConversationSearch{
+            height:40px !important;
+            border:1px solid var(--seller-border) !important;
+            border-radius:10px !important;
+            background:#fff !important;
+            color:var(--seller-text-secondary) !important;
+            font-size:9px !important;
+            box-shadow:none !important;
+        }
+
+        #adminConversationSearch:hover{
+            border-color:var(--seller-border-strong) !important;
+        }
+
+        #adminConversationSearch:focus{
+            border-color:var(--seller-gold) !important;
+            background:#fff !important;
+            box-shadow:0 0 0 3px rgba(213,150,23,.09) !important;
+        }
+
+        #adminConversationFilters{
+            margin-top:10px !important;
+            padding:3px !important;
+            border:1px solid var(--seller-border) !important;
+            border-radius:10px !important;
+            background:#F5F6F8 !important;
+            gap:3px !important;
+            box-shadow:none !important;
+        }
+
+        #adminConversationFilters [data-role-filter]{
+            height:29px !important;
+            min-height:29px !important;
+            border:0 !important;
+            border-radius:7px !important;
+            background:transparent !important;
+            color:#667085 !important;
+            padding:0 4px !important;
+            font-size:7px !important;
+            font-weight:650 !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        #adminConversationFilters [data-role-filter]:hover{
+            background:#fff !important;
+            color:var(--seller-text-secondary) !important;
+            transform:none !important;
+        }
+
+        #adminConversationFilters [data-role-filter].is-active{
+            background:#fff !important;
+            color:var(--seller-gold-strong) !important;
+            box-shadow:0 1px 3px rgba(15,23,42,.08) !important;
+        }
+
+        #adminConversationList{
+            padding:5px !important;
+            background:#F8F9FA !important;
+        }
+
+        #adminConversationList [data-contact-role]{
+            min-height:74px !important;
+            margin:0 0 3px !important;
+            border:1px solid transparent !important;
+            border-radius:10px !important;
+            background:transparent !important;
+            padding:10px !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        #adminConversationList [data-contact-role]:hover{
+            border-color:var(--seller-border) !important;
+            background:#fff !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        #adminConversationList [data-contact-role].is-selected{
+            border-color:#EAD7AB !important;
+            background:#FFFAF0 !important;
+            box-shadow:none !important;
+        }
+
+        #adminConversationList [data-contact-role].is-selected::before{
+            top:10px !important;
+            bottom:10px !important;
+            width:3px !important;
+            background:var(--seller-gold) !important;
+        }
+
+        #adminConversationList .account-directory-avatar{
+            width:38px !important;
+            height:38px !important;
+            flex-basis:38px !important;
+            border:1px solid var(--seller-border) !important;
+            background:#F3F5F6 !important;
+            color:#60746F !important;
+            font-size:8.5px !important;
+            box-shadow:none !important;
+        }
+
+        #adminConversationList .account-directory-name{
+            color:var(--seller-text-secondary) !important;
+            font-size:9px !important;
+        }
+
+        #adminConversationList .account-directory-meta,
+        #adminConversationList .account-directory-preview{
+            color:var(--seller-muted) !important;
+        }
+
+        #adminConversationList .account-directory-unread{
+            background:var(--seller-gold) !important;
+            box-shadow:none !important;
+        }
+
+        #sariUniversalAdminMessages .sari-inbox-panel > div:last-child{
+            border-top:1px solid var(--seller-divider) !important;
+            background:#fff !important;
+        }
+
+        #adminRefreshInbox{
+            color:var(--seller-gold-strong) !important;
+        }
+
+        /* ---------------- THREAD ---------------- */
+        #sariUniversalAdminMessages .sari-thread-panel{
+            background:#F7F8FA !important;
+        }
+
+        #sariUniversalAdminMessages .sari-thread-panel > header{
+            min-height:72px !important;
+            padding:11px 16px !important;
+            border-bottom:1px solid var(--seller-divider) !important;
+            background:#fff !important;
+            box-shadow:none !important;
+        }
+
+        #adminThreadAvatar{
+            width:42px !important;
+            height:42px !important;
+            flex-basis:42px !important;
+            border:1px solid var(--seller-border) !important;
+            background:#F1F5F3 !important;
+            color:#5E736D !important;
+            font-size:10px !important;
+            box-shadow:none !important;
+        }
+
+        #adminThreadTitle{
+            color:var(--seller-text) !important;
+            font-size:14px !important;
+            font-weight:700 !important;
+            line-height:1.15 !important;
+        }
+
+        #adminThreadSubtitle{
+            max-width:360px !important;
+            color:var(--seller-muted) !important;
+            font-size:9px !important;
+        }
+
+        #adminThreadTypeBadge,
+        #adminThreadStatus,
+        .sari-live-pill,
+        .sari-ai-pill{
+            min-height:23px !important;
+            height:23px !important;
+            border-radius:999px !important;
+            padding:0 8px !important;
+            font-size:7px !important;
+            box-shadow:none !important;
+        }
+
+        #adminThreadStatus{
+            border-color:#DCE7DF !important;
+            background:#F5F8F5 !important;
+            color:#617568 !important;
+        }
+
+        .sari-live-pill{
+            border-color:var(--seller-border) !important;
+            color:#667085 !important;
+        }
+
+        .sari-ai-pill{
+            border-color:#E9DDBD !important;
+            background:#FFFBF2 !important;
+            color:#8A641E !important;
+        }
+
+        #adminThreadMessages{
+            background:#F7F8FA !important;
+            background-image:none !important;
+            padding:22px 24px !important;
+        }
+
+        #adminThreadMessages [data-message-id]{
+            margin-top:16px !important;
+        }
+
+        #adminThreadMessages [data-message-id] > div:last-child{
+            max-width:66% !important;
+        }
+
+        #adminThreadMessages [data-message-id] > div:first-child.grid,
+        #adminThreadMessages .sari-admin-bot-avatar{
+            width:31px !important;
+            min-width:31px !important;
+            height:31px !important;
+            flex-basis:31px !important;
+            box-shadow:none !important;
+        }
+
+        #adminThreadMessages .sari-admin-message-label,
+        #adminThreadMessages .sari-ai-message-label{
+            margin-bottom:5px !important;
+            font-size:8px !important;
+        }
+
+        #adminThreadMessages [data-message-id] .sari-message-body{
+            border-radius:14px !important;
+            padding:11px 14px !important;
+            font-size:11.5px !important;
+            line-height:1.55 !important;
+            box-shadow:0 1px 3px rgba(15,23,42,.045) !important;
+        }
+
+        #adminThreadMessages .sari-message-incoming{
+            border:1px solid var(--seller-border) !important;
+            border-bottom-left-radius:5px !important;
+            background:#fff !important;
+            color:#475467 !important;
+        }
+
+        #adminThreadMessages .sari-message-outgoing{
+            border:1px solid #C9890B !important;
+            border-bottom-right-radius:5px !important;
+            background:var(--seller-gold) !important;
+            color:#fff !important;
+        }
+
+        #adminThreadMessages .sari-message-ai{
+            border:1px solid #DDE7EE !important;
+            border-bottom-left-radius:5px !important;
+            background:#F5F8FA !important;
+            color:#526A79 !important;
+        }
+
+        #adminThreadMessages .sari-message-image-link,
+        #adminThreadMessages .sari-message-file{
+            border-color:var(--seller-border) !important;
+            border-radius:13px !important;
+            box-shadow:0 1px 3px rgba(15,23,42,.035) !important;
+        }
+
+        #adminThreadMessages .sari-reaction-toggle,
+        #adminThreadMessages .sari-reaction-chip{
+            border-color:var(--seller-border) !important;
+            background:#fff !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        #adminThreadMessages .sari-reaction-toggle:hover{
+            background:#F9FAFB !important;
+            transform:none !important;
+        }
+
+        #adminThreadMessages .sari-reaction-picker{
+            border:1px solid var(--seller-border) !important;
+            background:#fff !important;
+            box-shadow:var(--seller-shadow-soft) !important;
+        }
+
+        #adminThreadMessages .sari-reaction-option:hover,
+        #adminThreadMessages .sari-reaction-option:focus-visible{
+            transform:none !important;
+        }
+
+        #adminThreadMessages .sari-message-time{
+            color:#98A2B3 !important;
+            font-size:9px !important;
+        }
+
+        /* ---------------- COMPOSER ---------------- */
+        #adminComposerWrap{
+            padding:10px 12px 12px !important;
+            border-top:1px solid var(--seller-divider) !important;
+            background:#fff !important;
+        }
+
+        #adminUniversalMessageForm{
+            border:1px solid var(--seller-border) !important;
+            border-radius:14px !important;
+            background:#fff !important;
+            padding:7px 8px !important;
+            box-shadow:none !important;
+        }
+
+        #adminUniversalMessageForm:focus-within{
+            border-color:var(--seller-gold) !important;
+            background:#fff !important;
+            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+        }
+
+        .sari-composer-row{
+            grid-template-columns:36px minmax(0,1fr) 36px !important;
+            gap:8px !important;
+        }
+
+        #adminAttachmentButton{
+            width:34px !important;
+            min-width:34px !important;
+            height:34px !important;
+            border:1px solid var(--seller-border) !important;
+            border-radius:10px !important;
+            background:#F8F9FA !important;
+            color:#667085 !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        #adminAttachmentButton:hover,
+        #adminAttachmentButton:focus-visible{
+            border-color:#E2C98F !important;
+            background:#FFFAF0 !important;
+            color:var(--seller-gold-strong) !important;
+            transform:none !important;
+        }
+
+        #adminUniversalMessageInput{
+            min-height:36px !important;
+            max-height:104px !important;
+            padding:7px 2px !important;
+            color:var(--seller-text-secondary) !important;
+            font-size:12px !important;
+        }
+
+        #adminUniversalMessageInput::placeholder{
+            color:#98A2B3 !important;
+        }
+
+        #adminUniversalSendButton{
+            width:36px !important;
+            min-width:36px !important;
+            height:36px !important;
+            border:1px solid var(--seller-gold) !important;
+            border-radius:10px !important;
+            background:var(--seller-gold) !important;
+            box-shadow:0 4px 10px rgba(194,132,10,.12) !important;
+            transform:none !important;
+        }
+
+        #adminUniversalSendButton:hover:not(:disabled){
+            border-color:var(--seller-gold-strong) !important;
+            background:var(--seller-gold-strong) !important;
+            transform:none !important;
+        }
+
+        #adminAttachmentPreview{
+            border-color:var(--seller-border) !important;
+            background:#F9FAFB !important;
+            box-shadow:none !important;
+        }
+
+        #adminComposerWrap.is-dragging{
+            background:#FFFCF5 !important;
+        }
+
+        #adminComposerWrap.is-dragging #adminUniversalMessageForm{
+            border-color:var(--seller-gold) !important;
+            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+        }
+
+        /* ---------------- CONTEXT RAIL ---------------- */
+        #sariUniversalAdminMessages .sari-context-panel{
+            border-left:1px solid var(--seller-divider) !important;
+            background:#F8F9FA !important;
+        }
+
+        #sariUniversalAdminMessages .sari-context-panel > div:first-child{
+            padding:14px !important;
+            border-bottom:1px solid var(--seller-divider) !important;
+            background:#fff !important;
+        }
+
+        #adminConversationContext{
+            padding:12px !important;
+        }
+
+        #adminConversationContext > div,
+        #adminConversationContext .rounded-\[16px\],
+        .sari-account-card{
+            border-color:var(--seller-border) !important;
+            border-radius:10px !important;
+            background:#fff !important;
+            box-shadow:none !important;
+        }
+
+        .sari-account-menu-trigger{
+            border-color:var(--seller-border) !important;
+            background:#fff !important;
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        .sari-account-menu-trigger:hover,
+        .sari-account-menu-trigger:focus-visible,
+        .sari-account-menu-trigger[aria-expanded="true"]{
+            border-color:#E2C98F !important;
+            background:#FFFAF0 !important;
+            color:var(--seller-gold-strong) !important;
+            transform:none !important;
+        }
+
+        .sari-account-action-menu{
+            border-color:var(--seller-border) !important;
+            border-radius:11px !important;
+            box-shadow:var(--seller-shadow-soft) !important;
+        }
+
+        .sari-account-action-menu .sari-admin-action{
+            box-shadow:none !important;
+            transform:none !important;
+        }
+
+        .sari-account-action-menu .sari-admin-action:hover,
+        .sari-account-action-menu .sari-admin-action:focus-visible{
+            background:#F8F9FA !important;
+            transform:none !important;
+        }
+
+        #sariUniversalAdminMessages .sari-context-panel > div:last-child{
+            border-top:1px solid var(--seller-divider) !important;
+            background:#F8F9FA !important;
+        }
+
+        .sari-ai-cover-card{
+            border-color:#E9DDBD !important;
+            border-radius:10px !important;
+            background:#FFFCF5 !important;
+            box-shadow:none !important;
+        }
+
+        /* ---------------- MODERATION MODAL ---------------- */
+        .sari-moderation-modal{
+            background:rgba(15,23,42,.48) !important;
+            backdrop-filter:none !important;
+        }
+
+        .sari-moderation-dialog{
+            width:min(440px,100%) !important;
+            border:1px solid var(--seller-border) !important;
+            border-radius:18px !important;
+            background:#fff !important;
+            box-shadow:var(--seller-shadow-focal) !important;
+        }
+
+        .sari-moderation-dialog__header{
+            border-bottom:1px solid var(--seller-divider) !important;
+            padding:16px 18px 14px !important;
+        }
+
+        .sari-moderation-dialog__eyebrow{
+            color:var(--seller-gold-strong) !important;
+            font-size:7.5px !important;
+            letter-spacing:.14em !important;
+        }
+
+        .sari-moderation-dialog__title{
+            color:var(--seller-text) !important;
+            font-size:15px !important;
+        }
+
+        #adminModerationReason{
+            border-color:var(--seller-border) !important;
+            background:#fff !important;
+            box-shadow:none !important;
+        }
+
+        #adminModerationReason:focus{
+            border-color:var(--seller-gold) !important;
+            box-shadow:0 0 0 3px rgba(213,150,23,.08) !important;
+        }
+
+        .sari-moderation-dialog__footer{
+            border-top:1px solid var(--seller-divider) !important;
+            background:#F9FAFB !important;
+        }
+
+        #adminModerationConfirm:not(.is-danger){
+            border-color:var(--seller-gold) !important;
+            background:var(--seller-gold) !important;
+            box-shadow:0 4px 10px rgba(194,132,10,.12) !important;
+        }
+
+        #adminModerationConfirm:not(.is-danger):hover{
+            border-color:var(--seller-gold-strong) !important;
+            background:var(--seller-gold-strong) !important;
+        }
+
+        /* ---------------- RESPONSIVE ---------------- */
+        @media(max-width:1350px){
+            #sariUniversalAdminMessages .sari-message-grid{
+                grid-template-columns:290px minmax(0,1fr) 235px !important;
+            }
+        }
+
+        @media(max-width:1279px){
+            #sariUniversalAdminMessages .sari-message-grid{
+                grid-template-columns:290px minmax(0,1fr) !important;
+            }
+        }
+
+        @media(max-width:1023px){
+            #sariUniversalAdminMessages{
+                max-width:100% !important;
+            }
+
+            #sariUniversalAdminMessages .sari-message-grid{
+                min-height:560px !important;
+                height:calc(100vh - 150px) !important;
+                grid-template-columns:1fr !important;
+            }
+
+            #adminThreadMessages [data-message-id] > div:last-child{
+                max-width:76% !important;
+            }
+        }
+
+        @media(max-width:639px){
+            #sariUniversalAdminMessages{
+                padding-bottom:14px !important;
+            }
+
+            #sariUniversalAdminMessages > section.sari-shadow{
+                border-radius:13px !important;
+                box-shadow:
+                    0 2px 5px rgba(15,23,42,.04),
+                    0 10px 24px rgba(15,23,42,.07) !important;
+            }
+
+            #sariUniversalAdminMessages .sari-thread-panel > header{
+                min-height:66px !important;
+                padding:9px 11px !important;
+            }
+
+            #adminThreadMessages{
+                padding:17px 13px !important;
+            }
+
+            #adminThreadMessages [data-message-id] > div:last-child{
+                max-width:84% !important;
+            }
+
+            #adminThreadMessages [data-message-id] .sari-message-body{
+                padding:10px 12px !important;
+                font-size:11px !important;
+            }
+
+            #adminComposerWrap{
+                padding:8px !important;
+            }
+
+            .sari-composer-row{
+                grid-template-columns:34px minmax(0,1fr) 34px !important;
+                gap:7px !important;
+            }
+
+            #adminAttachmentButton,
+            #adminUniversalSendButton{
+                width:34px !important;
+                min-width:34px !important;
+                height:34px !important;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #sariUniversalAdminMessages *,
+            .sari-moderation-modal *{
+                animation:none !important;
+                transition:none !important;
+                transform:none !important;
+                scroll-behavior:auto !important;
+            }
+        }
+
+
 </style>
 
     <div id="adminMessagingNotice" class="mb-4 hidden rounded-[16px] border px-4 py-3 text-[12px]"></div>

@@ -621,32 +621,22 @@
                 <h1 class="mt-1 text-[27px] font-bold tracking-[-.045em] text-[#241f1a] sm:text-[31px]">
                     Shopping <span class="text-[#c98d19]">Cart</span>
                 </h1>
-                <p class="mt-1.5 text-[9px] leading-5 text-[#8d8479]">
-                    Choose the products you want to checkout. Only checked items will continue.
-                </p>
             </div>
 
             <div class="flex flex-wrap items-center gap-2.5">
-                <span class="sari-cart-availability-text">
-                    {{ $selectableCount }} of {{ $items->count() }} item{{ $items->count() === 1 ? '' : 's' }} available for checkout
-                </span>
-
                 <a
                     href="{{ route('buyer.products') }}"
-                    class="sari-btn-secondary sari-btn-continue-shopping inline-flex h-10 items-center justify-center gap-2 rounded-[12px] px-4 text-[8px] font-semibold"
+                    class="sari-cart-continue-text"
                 >
-                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                        <path d="m14 7-5 5 5 5"></path>
-                    </svg>
-                    Continue Shopping
+                    Continue Shopping <span class="sari-cart-continue-arrow" aria-hidden="true">&gt;</span>
                 </a>
             </div>
         </div>
     </section>
 
     @if ($items->isEmpty())
-        <section class="mt-5 rounded-[20px] border border-dashed border-[#ded5c9] bg-white px-6 py-16 text-center">
-            <span class="mx-auto grid h-14 w-14 place-items-center rounded-[16px] border border-[#eadfc9] bg-[#fffaf1] text-[#b97812]">
+        <section class="sari-cart-empty-state mt-5 rounded-[20px] border border-dashed border-[#ded5c9] bg-white px-6 py-16 text-center">
+            <span class="sari-cart-empty-icon mx-auto grid h-14 w-14 place-items-center">
                 <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7">
                     <path d="M3 4h2l2 11h11l2-8H6"></path>
                     <circle cx="9" cy="19" r="1.4"></circle>
@@ -654,14 +644,14 @@
                 </svg>
             </span>
 
-            <h2 class="mt-4 text-[15px] font-bold text-[#403a33]">Your cart is empty</h2>
-            <p class="mt-1.5 text-[8.5px] text-[#91887d]">
+            <h2 class="sari-cart-empty-title mt-4">Your cart is empty</h2>
+            <p class="sari-cart-empty-copy mt-1.5">
                 Start exploring products from approved SARI sellers.
             </p>
 
             <a
                 href="{{ route('buyer.products') }}"
-                class="mt-5 inline-flex h-10 items-center rounded-xl bg-[#c98d19] px-5 text-[8px] font-semibold text-white shadow-[0_7px_16px_rgba(201,141,25,.14)] transition hover:bg-[#b77d10]"
+                class="sari-cart-empty-button mt-6 inline-flex items-center justify-center"
             >
                 Browse Products
             </a>
@@ -698,12 +688,6 @@
                     </label>
 
                     <div class="flex items-center gap-2.5">
-                        <span
-                            id="cartSelectedTopCount"
-                            class="rounded-full border border-[#eadfc9] bg-[#fffaf1] px-2.5 py-1 text-[7px] font-semibold text-[#9a6817]"
-                        >
-                            0 selected
-                        </span>
                         <span class="text-[7px] text-[#a29a90]">Click a product card to select</span>
                     </div>
                 </section>
@@ -732,8 +716,6 @@
                         $sellerShippingActive = (bool) ($sellerShippingOffer['active'] ?? false);
                         $sellerShippingMinimum = (float) ($sellerShippingOffer['minimum_order_amount'] ?? 0);
                         $sellerShippingMaximum = (float) ($sellerShippingOffer['maximum_shipping_discount'] ?? 0);
-                        $sellerShippingEligible = (bool) ($sellerShippingOffer['eligible'] ?? false);
-                        $sellerShippingRemaining = (float) ($sellerShippingOffer['remaining_to_qualify'] ?? 0);
                     @endphp
 
                     <section class="sari-seller-shell overflow-hidden rounded-[18px] border border-[#e8e0d6] bg-white">
@@ -787,23 +769,23 @@
                                     @else
                                         <h2 class="sari-store-name-link">{{ $storeName }}</h2>
                                     @endif
-                                    <span class="inline-flex items-center gap-1 rounded-full border border-[#cfe3d6] bg-[#f1f8f4] px-2 py-1 text-[6px] font-semibold text-[#4f7d63]">
-                                        <svg viewBox="0 0 24 24" class="h-2.5 w-2.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                                            <path d="M12 3l7 3v5c0 4.5-2.9 8.2-7 9-4.1-.8-7-4.5-7-9V6l7-3Z"></path>
-                                            <path d="m9 12 2 2 4-4"></path>
-                                        </svg>
-                                        Verified Seller
-                                    </span>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <span class="text-[7px] font-medium text-[#9b9287]">
+                                <span class="sari-seller-product-count font-medium text-[#9b9287]">
                                     {{ $sellerItems->count() }} product{{ $sellerItems->count() === 1 ? '' : 's' }}
                                 </span>
                                 @if ((int) $sellerId > 0)
-                                    <a href="{{ route('buyer.shop', ['shop' => 'seller-' . (int) $sellerId]) }}" class="rounded-lg border border-[#e3d7c7] bg-white px-2.5 py-1.5 text-[6.5px] font-semibold text-[#9b6817] transition hover:bg-[#fff7e8] hover:text-[#b67813]">
-                                        View Seller
+                                    <a
+                                        href="{{ route('buyer.shop', ['shop' => 'seller-' . (int) $sellerId]) }}"
+                                        class="sari-view-seller-link"
+                                    >
+                                        <span>View Seller</span>
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M7 17 17 7"></path>
+                                            <path d="M9 7h8v8"></path>
+                                        </svg>
                                     </a>
                                 @endif
                             </div>
@@ -811,35 +793,28 @@
 
                         @if ($sellerShippingActive)
                             <div
-                                class="border-b border-[#e5eee8] bg-[#f5faf7] px-4 py-3"
+                                class="sari-shipping-footer"
                                 data-shipping-offer-seller="{{ (int) $sellerId }}"
                                 data-shipping-offer-minimum="{{ number_format($sellerShippingMinimum, 2, '.', '') }}"
                             >
-                                <div class="flex flex-wrap items-center justify-between gap-2">
-                                    <div class="flex items-center gap-2">
-                                        <span class="grid h-7 w-7 place-items-center rounded-lg border border-[#cfe3d6] bg-white text-[#4f7d63]">
-                                            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.4"></circle><circle cx="18" cy="18" r="1.4"></circle>
-                                            </svg>
-                                        </span>
-                                        <div>
-                                            <p class="text-[8px] font-bold text-[#3f7453]">Free Shipping Promotion</p>
-                                            <p class="mt-0.5 text-[7px] text-[#718178]">
-                                                Spend ₱{{ number_format($sellerShippingMinimum, 2) }} from this seller · up to ₱{{ number_format($sellerShippingMaximum, 2) }} shipping off
-                                            </p>
-                                        </div>
+                                <div class="sari-shipping-footer-copy">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M3 7h11v9H3z"></path>
+                                        <path d="M14 10h4l3 3v3h-7z"></path>
+                                        <circle cx="7" cy="18" r="1.4"></circle>
+                                        <circle cx="18" cy="18" r="1.4"></circle>
+                                    </svg>
+                                    <div>
+                                        <p class="sari-shipping-footer-title">Free Shipping Promotion</p>
+                                        <p class="sari-shipping-footer-description">
+                                            Spend ₱{{ number_format($sellerShippingMinimum, 2) }} from this seller · up to ₱{{ number_format($sellerShippingMaximum, 2) }} shipping off
+                                        </p>
                                     </div>
-                                    <span
-                                        class="rounded-full px-2 py-1 text-[6.5px] font-semibold {{ $sellerShippingEligible ? 'bg-[#e9f7ee] text-[#397451]' : 'bg-white text-[#728078] border border-[#d8e6dc]' }}"
-                                        data-shipping-offer-status
-                                    >
-                                        {{ $sellerShippingEligible ? 'Qualified' : 'Add ₱' . number_format($sellerShippingRemaining, 2) . ' more' }}
-                                    </span>
                                 </div>
                             </div>
                         @endif
 
-                        <div class="space-y-2.5 bg-[#faf9f7] p-2.5">
+                        <div class="sari-seller-items space-y-2.5 bg-[#faf9f7] p-2.5">
                             @foreach ($sellerItems as $item)
                                 @php
                                     $unit = $cart->unitPrice($item);
@@ -887,68 +862,69 @@
                                             </label>
                                         </div>
 
-                                        {{-- IMAGE --}}
-                                        @if ($productVisible)
-                                            <a
-                                                href="{{ route('buyer.product.details', $item->product->id) }}"
-                                                class="flex h-[106px] w-[106px] items-center justify-center overflow-hidden rounded-[12px] border border-[#ebe3d8] bg-[#f8f5ef] p-2 sm:h-[120px] sm:w-[120px]"
-                                            >
-                                                <img
-                                                    src="{{ route('buyer.product.image', $item->product->id) }}"
-                                                    alt="{{ $item->product->name }}"
-                                                    class="sari-cart-img h-full w-full object-contain"
-                                                    onerror="this.style.display='none'"
+                                        {{-- IMAGE + STOCK --}}
+                                        <div class="sari-cart-media-column">
+                                            @if ($productVisible)
+                                                <a
+                                                    href="{{ route('buyer.product.details', $item->product->id) }}"
+                                                    class="sari-cart-media-link"
                                                 >
-                                            </a>
-                                        @else
-                                            <div class="grid h-[106px] w-[106px] place-items-center rounded-[12px] border border-[#ebe3d8] bg-[#f5f2ed] p-3 text-center text-[7px] font-semibold text-[#9a9187] sm:h-[120px] sm:w-[120px]">
-                                                Unavailable
-                                            </div>
-                                        @endif
+                                                    <img
+                                                        src="{{ route('buyer.product.image', $item->product->id) }}"
+                                                        alt="{{ $item->product->name }}"
+                                                        class="sari-cart-img h-full w-full object-cover"
+                                                        onerror="this.style.display='none'"
+                                                    >
+                                                </a>
+                                            @else
+                                                <div class="sari-cart-media-link sari-cart-media-unavailable">
+                                                    Unavailable
+                                                </div>
+                                            @endif
+
+                                            <p class="sari-cart-stock-text {{ $maxStock > 0 ? '' : 'is-out' }}">
+                                                <span class="sari-cart-stock-dot" aria-hidden="true"></span>
+                                                {{ max(0, $maxStock) }} in stock
+                                            </p>
+                                        </div>
 
                                         {{-- DETAILS --}}
                                         <div class="min-w-0">
                                             <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                                                 <div class="min-w-0">
-                                                    <div class="flex flex-wrap items-center gap-1.5">
-<span class="rounded-full bg-[#f6f3ef] px-2 py-1 text-[6px] font-semibold text-[#756c62]">
-                                                            {{ max(0, $maxStock) }} in stock
-                                                        </span>
-
-                                                        @if (!$selectable)
-                                                            <span class="rounded-full border border-[#efcece] bg-[#fff5f5] px-2 py-1 text-[6px] font-semibold text-[#a65353]">Unavailable</span>
-                                                        @endif
-                                                    </div>
+                                                    @if (!$selectable)
+                                                        <p class="sari-cart-unavailable-text">Unavailable</p>
+                                                    @endif
 
                                                     @if ($productVisible)
                                                         <a
                                                             href="{{ route('buyer.product.details', $item->product->id) }}"
-                                                            class="mt-2 block text-[12px] font-bold leading-5 text-[#2f2923] transition hover:text-[#a86e11]"
+                                                            class="sari-cart-product-name mt-2 block text-[12px] font-bold leading-5 text-[#2f2923] transition hover:text-[#a86e11]"
                                                         >
                                                             {{ $item->product->name }}
                                                         </a>
                                                     @else
-                                                        <p class="mt-2 block text-[12px] font-bold leading-5 text-[#746c64]">{{ $item->product->name }}</p>
+                                                        <p class="sari-cart-product-name mt-2 block text-[12px] font-bold leading-5 text-[#746c64]">{{ $item->product->name }}</p>
                                                     @endif
 
                                                     @if ($availabilityReason)
                                                         <p class="mt-1.5 text-[7px] font-medium leading-4 text-[#a65353]">{{ $availabilityReason }}</p>
                                                     @endif
 
-                                                    <p class="mt-1 text-[7.5px] leading-4 text-[#8f867a]">
+                                                    <p class="sari-cart-variant-text mt-1 text-[7.5px] leading-4 text-[#8f867a]">
                                                         {{ $cart->variantLabel($item) }}
                                                     </p>
 
-                                                    <p class="mt-2 text-[7px] text-[#a0968b]">
+                                                    <p class="sari-cart-unit-price mt-2 text-[7px] text-[#a0968b]">
                                                         ₱{{ number_format($unit, 2) }} each
                                                     </p>
                                                 </div>
 
                                                 <div class="shrink-0 lg:text-right">
-                                                    <p class="text-[17px] font-bold tracking-[-.035em] text-[#c17d0c]" data-line-total-text>
+                                                    <p class="sari-cart-line-total text-[17px] font-bold tracking-[-.035em] text-[#c17d0c]" data-line-total-text>
                                                         ₱{{ number_format($line, 2) }}
                                                     </p>
-                                                    <p class="mt-1 text-[6.5px] font-medium text-[#a1988e]">Item total</p>
+                                                    <p class="sari-cart-line-total-label mt-1 text-[6.5px] font-medium text-[#a1988e]">Item total</p>
                                                 </div>
                                             </div>
 
@@ -963,7 +939,7 @@
                                                     @method('PATCH')
 
                                                     <div>
-                                                        <label class="mb-1.5 block text-[6px] font-bold uppercase tracking-[.1em] text-[#91887d]">
+                                                        <label class="sari-cart-quantity-label mb-1.5 block text-[6px] font-bold uppercase tracking-[.1em] text-[#91887d]">
                                                             Quantity
                                                         </label>
 
@@ -997,12 +973,11 @@
                                                         </div>
                                                     </div>
 
-                                                    <button
-                                                        class="sari-btn-update sari-update-state h-9 rounded-[10px] px-3.5 text-[7px] font-semibold disabled:cursor-not-allowed disabled:opacity-45"
-                                                        @disabled(!$quantityEditable)
-                                                    >
-                                                        Update
-                                                    </button>
+                                                    <span
+                                                        class="sari-qty-save-status"
+                                                        data-qty-save-status
+                                                        aria-live="polite"
+                                                    ></span>
                                                 </form>
 
                                                 <form
@@ -1014,7 +989,7 @@
                                                     @method('DELETE')
 
                                                     <button
-                                                        class="sari-btn-remove inline-flex h-9 items-center gap-1.5 rounded-[10px] px-3 text-[7px] font-semibold"
+                                                        class="sari-btn-remove inline-flex h-9 items-center gap-1.5 rounded-[10px] px-3 font-semibold"
                                                     >
                                                         <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8">
                                                             <path d="M5 7h14"></path>
@@ -1030,6 +1005,7 @@
                                 </article>
                             @endforeach
                         </div>
+
                     </section>
                 @endforeach
             </div>
@@ -1046,7 +1022,7 @@
 
                         <span
                             id="cartSelectedSummaryCount"
-                            class="rounded-full border border-[#eadfc9] bg-[#fffaf1] px-2.5 py-1 text-[6.5px] font-semibold text-[#966719]"
+                            class="sari-summary-selected-count"
                         >
                             0 selected
                         </span>
@@ -1110,37 +1086,6 @@
                             </p>
                         </div>
                     </div>
-
-                    <div class="mt-4 grid grid-cols-3 gap-2 border-t border-[#eee8df] pt-4">
-                        <div class="text-center">
-                            <span class="mx-auto grid h-8 w-8 place-items-center rounded-[9px] bg-[#f2f8f4] text-[#4f8065]">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M12 3l7 3v5c0 4.5-2.9 8.2-7 9-4.1-.8-7-4.5-7-9V6l7-3Z"></path>
-                                    <path d="m9 12 2 2 4-4"></path>
-                                </svg>
-                            </span>
-                            <p class="mt-1.5 text-[5.8px] font-semibold text-[#756d63]">Buyer Protection</p>
-                        </div>
-
-                        <div class="text-center">
-                            <span class="mx-auto grid h-8 w-8 place-items-center rounded-[9px] bg-[#fff7e8] text-[#b87912]">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <rect x="4" y="6" width="16" height="12" rx="2"></rect>
-                                    <path d="M4 10h16"></path>
-                                </svg>
-                            </span>
-                            <p class="mt-1.5 text-[5.8px] font-semibold text-[#756d63]">Secure Checkout</p>
-                        </div>
-
-                        <div class="text-center">
-                            <span class="mx-auto grid h-8 w-8 place-items-center rounded-[9px] bg-[#f3f6fa] text-[#577899]">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path>
-                                </svg>
-                            </span>
-                            <p class="mt-1.5 text-[5.8px] font-semibold text-[#756d63]">Verified Sellers</p>
-                        </div>
-                    </div>
                 </div>
             </aside>
         </div>
@@ -1177,6 +1122,7 @@
         const checkoutButton = page.querySelector('#selectedCheckoutButton');
 
         let feedbackTimer = null;
+        const quantitySaveState = new WeakMap();
 
         function peso(value) {
             return '₱' + Number(value || 0).toLocaleString('en-PH', {
@@ -1195,44 +1141,6 @@
 
             window.clearTimeout(feedbackTimer);
             feedbackTimer = window.setTimeout(() => toast.remove(), 2200);
-        }
-
-        const shippingOfferRows = Array.from(document.querySelectorAll('[data-shipping-offer-seller]'));
-
-        function syncShippingOfferRows(entries) {
-            const sellerSubtotals = new Map();
-
-            entries.forEach((entry) => {
-                sellerSubtotals.set(
-                    entry.seller,
-                    (sellerSubtotals.get(entry.seller) || 0) + Number(entry.line || 0)
-                );
-            });
-
-            shippingOfferRows.forEach((row) => {
-                const sellerId = String(row.dataset.shippingOfferSeller || '');
-                const minimum = Number(row.dataset.shippingOfferMinimum || 0);
-                const selectedSubtotal = Number(sellerSubtotals.get(sellerId) || 0);
-                const status = row.querySelector('[data-shipping-offer-status]');
-
-                if (!status) return;
-
-                const qualified = selectedSubtotal >= minimum && selectedSubtotal > 0;
-                const remaining = Math.max(0, minimum - selectedSubtotal);
-
-                status.textContent = qualified
-                    ? 'Qualified'
-                    : (selectedSubtotal > 0
-                        ? `Add ${peso(remaining)} more`
-                        : `Spend ${peso(minimum)} to qualify`);
-
-                status.classList.toggle('bg-[#e9f7ee]', qualified);
-                status.classList.toggle('text-[#397451]', qualified);
-                status.classList.toggle('bg-white', !qualified);
-                status.classList.toggle('text-[#728078]', !qualified);
-                status.classList.toggle('border', !qualified);
-                status.classList.toggle('border-[#d8e6dc]', !qualified);
-            });
         }
 
         function selectedEntries() {
@@ -1285,7 +1193,7 @@
 
         function sync() {
             const entries = selectedEntries();
-            syncShippingOfferRows(entries);
+
             const selectedCount = entries.length;
             const subtotal = entries.reduce((sum, entry) => sum + entry.line, 0);
             const shipping = calculateShipping(entries);
@@ -1309,10 +1217,12 @@
             if (subtotalNode) subtotalNode.textContent = peso(subtotal);
             if (deliveryNode) deliveryNode.textContent = peso(delivery);
             if (shippingDiscountNode) shippingDiscountNode.textContent = '-' + peso(shipping.discount);
+
             if (shippingDiscountRow) {
                 shippingDiscountRow.classList.toggle('hidden', shipping.discount <= 0);
                 shippingDiscountRow.classList.toggle('flex', shipping.discount > 0);
             }
+
             if (totalNode) totalNode.textContent = peso(total);
 
             if (hintNode) {
@@ -1324,6 +1234,133 @@
             if (checkoutButton) {
                 checkoutButton.disabled = selectedCount === 0;
                 checkoutButton.classList.toggle('sari-summary-disabled', selectedCount === 0);
+            }
+        }
+
+        function getQuantitySaveState(form) {
+            if (!quantitySaveState.has(form)) {
+                const input = form.querySelector('[data-qty-input]');
+
+                quantitySaveState.set(form, {
+                    timer: null,
+                    saving: false,
+                    dirty: false,
+                    lastSaved: String(input?.value ?? ''),
+                    clearStatusTimer: null,
+                });
+            }
+
+            return quantitySaveState.get(form);
+        }
+
+        function setQuantitySaveStatus(form, text = '', tone = '') {
+            const status = form.querySelector('[data-qty-save-status]');
+            if (!status) return;
+
+            status.textContent = text;
+            status.dataset.tone = tone;
+        }
+
+        function clampQuantity(input) {
+            const min = Number(input.min || 1);
+            const max = Number(input.max || 999999);
+            const raw = Number(input.value || min);
+            const next = Math.min(max, Math.max(min, Number.isFinite(raw) ? raw : min));
+
+            input.value = String(Math.trunc(next));
+            return input.value;
+        }
+
+        function scheduleQuantitySave(form, delay = 320) {
+            const state = getQuantitySaveState(form);
+            state.dirty = true;
+
+            window.clearTimeout(state.timer);
+            state.timer = window.setTimeout(() => persistQuantity(form), delay);
+        }
+
+        async function persistQuantity(form) {
+            const state = getQuantitySaveState(form);
+            const card = form.closest('[data-selectable-card]');
+            const input = form.querySelector('[data-qty-input]');
+            const lineTotalText = card?.querySelector('[data-line-total-text]');
+
+            if (!input || !card) return;
+
+            const currentValue = clampQuantity(input);
+
+            if (state.saving) {
+                state.dirty = true;
+                return;
+            }
+
+            if (!state.dirty && state.lastSaved === currentValue) return;
+
+            state.saving = true;
+            state.dirty = false;
+            window.clearTimeout(state.clearStatusTimer);
+            setQuantitySaveStatus(form, 'Saving…', 'saving');
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    credentials: 'same-origin',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    signal,
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    const validationMessage = data?.errors
+                        ? Object.values(data.errors).flat().find(Boolean)
+                        : null;
+
+                    throw new Error(validationMessage || data?.message || 'Unable to update this cart item.');
+                }
+
+                const newLineTotal = Number(data?.line_total || 0);
+                card.dataset.lineTotal = newLineTotal.toFixed(2);
+                state.lastSaved = String(input.value);
+
+                if (lineTotalText) {
+                    lineTotalText.textContent = peso(newLineTotal);
+                }
+
+                document.dispatchEvent(new CustomEvent('sari:cart-updated', {
+                    detail: {
+                        count: Number(data?.cart_count || 0),
+                    },
+                }));
+
+                sync();
+                setQuantitySaveStatus(form, 'Saved', 'saved');
+
+                state.clearStatusTimer = window.setTimeout(() => {
+                    if (!state.saving && !state.dirty) {
+                        setQuantitySaveStatus(form, '', '');
+                    }
+                }, 1100);
+            } catch (error) {
+                if (error?.name === 'AbortError') return;
+
+                if (state.lastSaved !== '') {
+                    input.value = state.lastSaved;
+                }
+
+                setQuantitySaveStatus(form, 'Not saved', 'error');
+                showFeedback(error?.message || 'Unable to update this cart item.', true);
+            } finally {
+                state.saving = false;
+
+                if (state.dirty) {
+                    window.clearTimeout(state.timer);
+                    state.timer = window.setTimeout(() => persistQuantity(form), 120);
+                }
             }
         }
 
@@ -1353,88 +1390,57 @@
             const minus = card.querySelector('[data-qty-minus]');
             const plus = card.querySelector('[data-qty-plus]');
             const input = card.querySelector('[data-qty-input]');
+            const form = input?.closest('[data-cart-update-form]');
 
             minus?.addEventListener('click', function () {
-                if (!input) return;
+                if (!input || !form) return;
 
+                const before = String(input.value);
                 const min = Number(input.min || 1);
-                input.value = Math.max(min, Number(input.value || min) - 1);
+                input.value = String(Math.max(min, Number(input.value || min) - 1));
+
+                if (String(input.value) !== before) {
+                    scheduleQuantitySave(form, 220);
+                }
             }, { signal });
 
             plus?.addEventListener('click', function () {
-                if (!input) return;
+                if (!input || !form) return;
 
-                const max = Number(input.max || 999);
-                input.value = Math.min(max, Number(input.value || 1) + 1);
+                const before = String(input.value);
+                const max = Number(input.max || 999999);
+                input.value = String(Math.min(max, Number(input.value || 1) + 1));
+
+                if (String(input.value) !== before) {
+                    scheduleQuantitySave(form, 220);
+                }
+            }, { signal });
+
+            input?.addEventListener('input', function () {
+                if (!form) return;
+                scheduleQuantitySave(form, 500);
+            }, { signal });
+
+            input?.addEventListener('change', function () {
+                if (!form) return;
+                scheduleQuantitySave(form, 140);
+            }, { signal });
+
+            input?.addEventListener('blur', function () {
+                if (!form) return;
+                scheduleQuantitySave(form, 0);
             }, { signal });
         });
 
         updateForms.forEach((form) => {
-            form.addEventListener('submit', async function (event) {
+            getQuantitySaveState(form);
+
+            form.addEventListener('submit', function (event) {
                 event.preventDefault();
 
-                const card = form.closest('[data-selectable-card]');
-                const button = form.querySelector('.sari-btn-update');
-                const input = form.querySelector('[data-qty-input]');
-                const lineTotalText = card?.querySelector('[data-line-total-text]');
-
-                if (!button || !input || !card) return;
-
-                const oldText = button.textContent;
-                button.disabled = true;
-                button.textContent = 'Saving...';
-
-                try {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: new FormData(form),
-                        credentials: 'same-origin',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                        signal,
-                    });
-
-                    const data = await response.json().catch(() => ({}));
-
-                    if (!response.ok) {
-                        const validationMessage = data?.errors
-                            ? Object.values(data.errors).flat().find(Boolean)
-                            : null;
-
-                        throw new Error(validationMessage || data?.message || 'Unable to update this cart item.');
-                    }
-
-                    const newLineTotal = Number(data?.line_total || 0);
-                    card.dataset.lineTotal = newLineTotal.toFixed(2);
-
-                    if (lineTotalText) {
-                        lineTotalText.textContent = peso(newLineTotal);
-                    }
-
-                    document.dispatchEvent(new CustomEvent('sari:cart-updated', {
-                        detail: {
-                            count: Number(data?.cart_count || 0),
-                        },
-                    }));
-
-                    sync();
-
-                    button.textContent = 'Saved';
-                    showFeedback(data?.message || 'Cart updated.');
-
-                    window.setTimeout(() => {
-                        if (button.isConnected) button.textContent = oldText;
-                    }, 900);
-                } catch (error) {
-                    if (error?.name === 'AbortError') return;
-
-                    button.textContent = oldText;
-                    showFeedback(error?.message || 'Unable to update this cart item.', true);
-                } finally {
-                    if (button.isConnected) button.disabled = false;
-                }
+                const state = getQuantitySaveState(form);
+                state.dirty = true;
+                persistQuantity(form);
             }, { signal });
         });
 
@@ -2981,6 +2987,1304 @@ a.sari-store-name-link:focus-visible {
     -webkit-text-fill-color: #dc2626 !important;
 }
 
+
+
+/* ============================================================
+   EMPTY CART + HEADER ACTIONS — FINAL MINIMAL POLISH
+   Plain light-charcoal header actions and a softer empty state.
+============================================================ */
+
+/* Header helper sentence is intentionally removed in markup. */
+[data-sari-cart-page] > section:first-of-type > div > div:last-child {
+    gap: 18px !important;
+}
+
+/* Availability is plain text only — no dot/pill/container treatment. */
+.sari-cart-availability-text {
+    display: inline !important;
+    min-height: 0 !important;
+    color: #59636e !important;
+    font-size: 9px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+}
+
+.sari-cart-availability-text::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Continue Shopping — larger plain text link with gold-only hover. */
+.sari-cart-continue-text {
+    position: relative !important;
+    top: -12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: #59636e !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+    line-height: 1.35 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    transition: color .14s ease !important;
+}
+
+.sari-cart-continue-arrow {
+    display: inline-block;
+    margin-left: 0 !important;
+    color: currentColor;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    line-height: .8 !important;
+    transform: translateY(-1px);
+}
+
+.sari-cart-continue-text:hover,
+.sari-cart-continue-text:focus-visible {
+    color: #c88912 !important;
+    background: transparent !important;
+    outline: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+
+/* Empty cart: soft neutral presentation, no cream icon treatment. */
+.sari-cart-empty-state {
+    border: 1px solid #e3e7eb !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+    box-shadow: 0 10px 28px rgba(31,41,55,.045) !important;
+}
+
+.sari-cart-empty-icon {
+    width: 92px !important;
+    height: 92px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #b4bbc3 !important;
+    box-shadow: none !important;
+}
+
+.sari-cart-empty-icon svg {
+    width: 58px !important;
+    height: 58px !important;
+    color: #b4bbc3 !important;
+    stroke: currentColor !important;
+    stroke-width: 1.45 !important;
+}
+
+.sari-cart-empty-title {
+    margin-top: 18px !important;
+    color: #9ca4ad !important;
+    font-size: 22px !important;
+    font-weight: 750 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.025em !important;
+}
+
+.sari-cart-empty-copy {
+    margin-top: 7px !important;
+    color: #b0b7bf !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.55 !important;
+}
+
+.sari-cart-empty-button {
+    min-width: 170px !important;
+    height: 48px !important;
+    border: 1px solid #c88912 !important;
+    border-radius: 11px !important;
+    background: #c88912 !important;
+    padding: 0 26px !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    transition: background-color .14s ease, border-color .14s ease !important;
+}
+
+.sari-cart-empty-button:hover,
+.sari-cart-empty-button:focus-visible {
+    border-color: #ad760f !important;
+    background: #ad760f !important;
+    color: #ffffff !important;
+    outline: none !important;
+}
+
+/* Larger eyebrow label for cart page header. */
+[data-sari-cart-page] > section:first-of-type p:first-child {
+    color: #a87316 !important;
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: .14em !important;
+    line-height: 1.2 !important;
+}
+
+@media (max-width: 640px) {
+    [data-sari-cart-page] > section:first-of-type p:first-child {
+        font-size: 9.5px !important;
+    }
+
+    [data-sari-cart-page] > section:first-of-type > div > div:last-child {
+        gap: 12px !important;
+    }
+
+    .sari-cart-availability-text {
+        font-size: 8.5px !important;
+    }
+
+    .sari-cart-continue-text {
+        top: -8px !important;
+        font-size: 10.5px !important;
+    }
+
+    .sari-cart-continue-arrow {
+        font-size: 16px !important;
+    }
+
+    .sari-cart-empty-state {
+        padding: 56px 20px !important;
+    }
+
+    .sari-cart-empty-icon {
+        width: 64px !important;
+        height: 64px !important;
+    }
+
+    .sari-cart-empty-icon svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .sari-cart-empty-title {
+        font-size: 20px !important;
+    }
+
+    .sari-cart-empty-copy {
+        font-size: 11px !important;
+    }
+
+    .sari-cart-empty-button {
+        min-width: 160px !important;
+        height: 46px !important;
+        font-size: 10.5px !important;
+    }
+}
+
+
+/* ============================================================
+   CART SELLER / STOCK / SHIPPING / REALTIME QUANTITY — FINAL PASS
+============================================================ */
+.sari-seller-shell {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.sari-seller-shell > div:first-child {
+    order: 1;
+}
+
+.sari-seller-items {
+    order: 2;
+    background: #f8f9fb !important;
+    padding: 12px !important;
+}
+
+.sari-shipping-footer {
+    order: 3;
+}
+
+.sari-view-seller-link {
+    display: inline-flex !important;
+    min-height: 36px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    border: 1px solid #d8b66e !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    padding: 0 13px !important;
+    color: #8f5d0b !important;
+    font-size: 9.5px !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    transition: border-color .14s ease, background-color .14s ease, color .14s ease !important;
+}
+
+.sari-view-seller-link svg {
+    width: 13px !important;
+    height: 13px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.9 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+}
+
+.sari-view-seller-link:hover,
+.sari-view-seller-link:focus-visible {
+    border-color: #c88912 !important;
+    background: #c88912 !important;
+    color: #ffffff !important;
+    outline: none !important;
+}
+
+.sari-cart-media-column {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sari-cart-media-link {
+    display: flex !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    border: 1px solid #e5e9ed !important;
+    border-radius: 12px !important;
+    background: #f8f9fb !important;
+    padding: 8px !important;
+    box-shadow: none !important;
+}
+
+.sari-cart-media-unavailable {
+    color: #8c96a1 !important;
+    font-size: 9px !important;
+    font-weight: 650 !important;
+    text-align: center !important;
+}
+
+.sari-cart-stock-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0 0 2px;
+    color: #5d7d68;
+    font-size: 9px;
+    font-weight: 650;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.sari-cart-stock-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 999px;
+    background: #56a16f;
+}
+
+.sari-cart-stock-text.is-out {
+    color: #a76666;
+}
+
+.sari-cart-stock-text.is-out .sari-cart-stock-dot {
+    background: #d27b7b;
+}
+
+.sari-cart-unavailable-text {
+    margin-bottom: 6px;
+    color: #b25f5f;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.sari-shipping-footer {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-top: 1px solid #e7ece9;
+    border-bottom: 0 !important;
+    background: #f7faf8;
+    padding: 13px 16px;
+}
+
+.sari-shipping-footer-copy {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 11px;
+}
+
+.sari-shipping-footer-copy > svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    fill: none;
+    stroke: #4f8065;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sari-shipping-footer-title {
+    color: #334a3c;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.sari-shipping-footer-description {
+    margin-top: 3px;
+    color: #718078;
+    font-size: 8.5px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.sari-shipping-status {
+    display: inline-flex;
+    min-height: 32px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d7e3db;
+    border-radius: 999px;
+    background: #ffffff;
+    padding: 0 12px;
+    color: #68786f;
+    font-size: 8.5px;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.sari-shipping-status[data-qualified="true"] {
+    border-color: #cde2d3;
+    background: #eef8f1;
+    color: #397451;
+}
+
+.sari-qty-save-status {
+    display: inline-flex;
+    min-width: 48px;
+    min-height: 36px;
+    align-items: center;
+    color: #8b949e;
+    font-size: 8px;
+    font-weight: 650;
+    line-height: 1;
+}
+
+.sari-qty-save-status[data-tone="saving"] {
+    color: #8b949e;
+}
+
+.sari-qty-save-status[data-tone="saved"] {
+    color: #4f8065;
+}
+
+.sari-qty-save-status[data-tone="error"] {
+    color: #c45151;
+}
+
+/* The quantity is persisted automatically; no manual Update control remains. */
+.sari-btn-update {
+    display: none !important;
+}
+
+/* The media column now owns the product image dimensions. */
+.sari-cart-row > div > a {
+    width: auto !important;
+    height: auto !important;
+}
+
+@media (max-width: 767px) {
+    .sari-view-seller-link {
+        min-height: 34px !important;
+        padding-inline: 11px !important;
+        font-size: 9px !important;
+    }
+
+    .sari-cart-stock-text {
+        margin-top: 6px;
+        font-size: 8.2px;
+    }
+
+    .sari-shipping-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+        padding: 12px 13px;
+    }
+
+    .sari-shipping-footer-title {
+        font-size: 10px;
+    }
+
+    .sari-shipping-footer-description {
+        font-size: 8px;
+    }
+
+    .sari-shipping-status {
+        min-height: 30px;
+        font-size: 8px;
+    }
+}
+
+
+
+/* ============================================================
+   ORDER SUMMARY + SELECT TOOLBAR — FINAL READABILITY POLISH
+============================================================ */
+/* Top toolbar: selected count intentionally removed from markup. */
+.sari-cart-toolbar > div:last-child {
+    margin-left: auto !important;
+}
+
+.sari-cart-toolbar > div:last-child .text-\[7px\] {
+    color: #66717d !important;
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+}
+
+/* Order Summary selected count: text only, no pill/container. */
+.sari-summary-selected-count {
+    display: inline !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: #222831 !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    line-height: 1.35 !important;
+    box-shadow: none !important;
+    white-space: nowrap !important;
+}
+
+/* Bigger, clearer summary hierarchy. */
+.sari-cart-summary > div:first-child {
+    padding: 18px 20px !important;
+}
+
+.sari-cart-summary > div:first-child h2 {
+    color: #252c34 !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+}
+
+.sari-cart-summary > .p-5 {
+    padding: 20px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 {
+    gap: 14px !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:first-child {
+    color: #65707b !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+.sari-cart-summary .space-y-3\.5 > div span:last-child {
+    color: #2f3740 !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+}
+
+.sari-cart-summary .space-y-3\.5 .text-\[9px\] {
+    color: #343c45 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+}
+
+#cartSelectedTotal {
+    color: #b6760b !important;
+    font-size: 28px !important;
+    font-weight: 850 !important;
+}
+
+.sari-btn-checkout {
+    height: 48px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+#cartSelectionHint {
+    color: #687480 !important;
+    font-size: 9.5px !important;
+    line-height: 1.6 !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 p {
+    color: #66717d !important;
+    font-size: 8.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 > div > span {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.sari-cart-summary .grid.grid-cols-3 > div > span svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+@media (max-width: 640px) {
+    .sari-cart-toolbar > div:last-child .text-\[7px\] {
+        font-size: 9.5px !important;
+    }
+
+    .sari-summary-selected-count {
+        font-size: 10px !important;
+    }
+
+    .sari-cart-summary > div:first-child h2 {
+        font-size: 17px !important;
+    }
+
+    .sari-cart-summary .space-y-3\.5 > div span:first-child,
+    .sari-cart-summary .space-y-3\.5 > div span:last-child {
+        font-size: 10.5px !important;
+    }
+
+    #cartSelectedTotal {
+        font-size: 25px !important;
+    }
+}
+
+
+/* ============================================================
+   PRODUCT CARD TEXT + IMAGE FILL — FINAL POLISH
+   Larger product information and full-bleed product imagery.
+============================================================ */
+.sari-store-name-link,
+.sari-seller-shell > div:first-child h2 {
+    color: #202a35 !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.02em !important;
+}
+
+.sari-verified-seller-badge {
+    min-height: 27px !important;
+    padding: 0 10px !important;
+    font-size: 10px !important;
+    font-weight: 750 !important;
+}
+
+.sari-verified-seller-badge svg {
+    width: 13px !important;
+    height: 13px !important;
+}
+
+.sari-seller-product-count {
+    color: #68737f !important;
+    font-size: 10.5px !important;
+    font-weight: 650 !important;
+}
+
+.sari-view-seller-link {
+    min-height: 38px !important;
+    padding-inline: 14px !important;
+    font-size: 10.5px !important;
+    font-weight: 750 !important;
+}
+
+.sari-view-seller-link svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.sari-shipping-footer {
+    min-height: 72px !important;
+    padding: 15px 18px !important;
+}
+
+.sari-shipping-footer-title {
+    color: #2f4939 !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+}
+
+.sari-shipping-footer-description {
+    margin-top: 4px !important;
+    color: #65766c !important;
+    font-size: 10.5px !important;
+    font-weight: 550 !important;
+    line-height: 1.45 !important;
+}
+
+.sari-shipping-status {
+    min-height: 36px !important;
+    padding-inline: 14px !important;
+    font-size: 10.5px !important;
+    font-weight: 750 !important;
+}
+
+/* Image fills the full square regardless of source dimensions. */
+.sari-cart-media-link {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    border-radius: 13px !important;
+    background: #eef1f4 !important;
+    padding: 0 !important;
+}
+
+.sari-cart-media-link .sari-cart-img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+}
+
+.sari-cart-row:hover .sari-cart-img {
+    transform: scale(1.025) !important;
+}
+
+.sari-cart-stock-text {
+    margin-top: 9px !important;
+    color: #527460 !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+}
+
+.sari-cart-stock-dot {
+    width: 7px !important;
+    height: 7px !important;
+    flex-basis: 7px !important;
+}
+
+.sari-cart-product-name {
+    margin-top: 2px !important;
+    color: #202a35 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -.015em !important;
+}
+
+/* Variant details intentionally get stronger readability. */
+.sari-cart-variant-text {
+    margin-top: 7px !important;
+    color: #5d6976 !important;
+    font-size: 12.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.5 !important;
+}
+
+.sari-cart-unit-price {
+    margin-top: 5px !important;
+    color: #6f7a86 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-line-total {
+    color: #b6760b !important;
+    font-size: 22px !important;
+    font-weight: 850 !important;
+    line-height: 1.1 !important;
+}
+
+.sari-cart-line-total-label {
+    margin-top: 4px !important;
+    color: #7e8994 !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
+}
+
+.sari-cart-quantity-label {
+    margin-bottom: 8px !important;
+    color: #697581 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: .12em !important;
+}
+
+.sari-qty-control {
+    height: 42px !important;
+}
+
+.sari-qty-control button {
+    width: 40px !important;
+    font-size: 17px !important;
+}
+
+.sari-qty-control input {
+    width: 50px !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+}
+
+.sari-btn-remove {
+    min-height: 42px !important;
+    padding-inline: 14px !important;
+    font-size: 10.5px !important;
+    font-weight: 750 !important;
+}
+
+.sari-btn-remove svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.sari-qty-save-status {
+    min-height: 42px !important;
+    font-size: 9.5px !important;
+}
+
+@media (max-width: 767px) {
+    .sari-store-name-link,
+    .sari-seller-shell > div:first-child h2 {
+        font-size: 13.5px !important;
+    }
+
+    .sari-verified-seller-badge,
+    .sari-seller-product-count,
+    .sari-view-seller-link {
+        font-size: 9.5px !important;
+    }
+
+    .sari-shipping-footer-title {
+        font-size: 11.5px !important;
+    }
+
+    .sari-shipping-footer-description,
+    .sari-shipping-status {
+        font-size: 9.5px !important;
+    }
+
+    .sari-cart-stock-text {
+        font-size: 9.5px !important;
+    }
+
+    .sari-cart-product-name {
+        font-size: 14px !important;
+    }
+
+    .sari-cart-variant-text {
+        font-size: 11.5px !important;
+    }
+
+    .sari-cart-unit-price {
+        font-size: 11px !important;
+    }
+
+    .sari-cart-line-total {
+        font-size: 19px !important;
+    }
+
+    .sari-cart-line-total-label,
+    .sari-cart-quantity-label,
+    .sari-btn-remove {
+        font-size: 9.5px !important;
+    }
+}
+
+
+
+/* ============================================================
+   FINAL MICRO POLISH — PRODUCT READABILITY + SELECTED GLOW
+============================================================ */
+
+/* Selected product: stay white, glow only. */
+.sari-cart-row[data-selected="true"] {
+    border-color: #d7a53a !important;
+    background: #ffffff !important;
+    box-shadow:
+        0 0 0 2px rgba(200,137,18,.10),
+        0 10px 26px rgba(200,137,18,.12) !important;
+}
+
+/* Stronger product content hierarchy. */
+.sari-cart-product-name {
+    color: #18212b !important;
+    font-size: 18.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.32 !important;
+    letter-spacing: -.02em !important;
+}
+
+.sari-cart-variant-text {
+    margin-top: 8px !important;
+    color: #465361 !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+}
+
+.sari-cart-unit-price {
+    margin-top: 6px !important;
+    color: #596675 !important;
+    font-size: 13.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.45 !important;
+}
+
+.sari-cart-stock-text {
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+}
+
+/* Seller product count is easier to scan. */
+.sari-seller-product-count {
+    color: #4f5b67 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+}
+
+/* Full SARI-gold View Seller action. */
+.sari-view-seller-link,
+.sari-seller-shell > div:first-child a.sari-view-seller-link {
+    min-height: 40px !important;
+    border: 1px solid #c88912 !important;
+    border-radius: 11px !important;
+    background: #c88912 !important;
+    padding: 0 15px !important;
+    color: #ffffff !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 6px 14px rgba(200,137,18,.15) !important;
+}
+
+.sari-view-seller-link svg,
+.sari-seller-shell > div:first-child a.sari-view-seller-link svg {
+    width: 15px !important;
+    height: 15px !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+.sari-view-seller-link:hover,
+.sari-view-seller-link:focus-visible,
+.sari-seller-shell > div:first-child a.sari-view-seller-link:hover,
+.sari-seller-shell > div:first-child a.sari-view-seller-link:focus-visible {
+    border-color: #ad760f !important;
+    background: #ad760f !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 18px rgba(173,118,15,.18) !important;
+}
+
+/* Brighter verified seller badge. */
+.sari-verified-seller-badge,
+.sari-seller-shell > div:first-child .sari-verified-seller-badge {
+    min-height: 31px !important;
+    border: 1px solid #16a34a !important;
+    border-radius: 999px !important;
+    background: #22c55e !important;
+    padding: 0 12px !important;
+    color: #ffffff !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 5px 12px rgba(34,197,94,.16) !important;
+}
+
+.sari-verified-seller-badge svg {
+    width: 15px !important;
+    height: 15px !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+/* Legacy shipping status styling (unused after status UI removal). */
+.sari-shipping-status[data-qualified="true"] {
+    min-height: 38px !important;
+    border-color: #16a34a !important;
+    background: #22c55e !important;
+    padding-inline: 15px !important;
+    color: #ffffff !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 5px 12px rgba(34,197,94,.14) !important;
+}
+
+@media (max-width: 767px) {
+    .sari-cart-product-name {
+        font-size: 16px !important;
+    }
+
+    .sari-cart-variant-text {
+        font-size: 12.5px !important;
+    }
+
+    .sari-cart-unit-price {
+        font-size: 12px !important;
+    }
+
+    .sari-seller-product-count {
+        font-size: 11px !important;
+    }
+
+    .sari-view-seller-link,
+    .sari-seller-shell > div:first-child a.sari-view-seller-link,
+    .sari-verified-seller-badge,
+    .sari-seller-shell > div:first-child .sari-verified-seller-badge,
+    .sari-shipping-status[data-qualified="true"] {
+        font-size: 10.5px !important;
+    }
+}
+
+
+
+/* ============================================================
+   FINAL BADGE + SELLER ACTION POLISH
+   Outline-only green badges; larger seller actions/count.
+============================================================ */
+.sari-verified-seller-badge,
+.sari-seller-shell > div:first-child .sari-verified-seller-badge {
+    min-height: 34px !important;
+    border: 1.5px solid #16a34a !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    padding: 0 13px !important;
+    color: #16a34a !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    box-shadow: none !important;
+}
+
+.sari-verified-seller-badge svg {
+    width: 16px !important;
+    height: 16px !important;
+    color: #16a34a !important;
+    stroke: #16a34a !important;
+}
+
+.sari-shipping-status[data-qualified="true"] {
+    min-height: 38px !important;
+    gap: 7px !important;
+    border: 1.5px solid #16a34a !important;
+    background: transparent !important;
+    padding-inline: 15px !important;
+    color: #16a34a !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    box-shadow: none !important;
+}
+
+.sari-shipping-status-icon {
+    width: 16px !important;
+    height: 16px !important;
+    flex: 0 0 16px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+}
+
+.sari-shipping-status-icon[hidden] {
+    display: none !important;
+}
+
+.sari-seller-product-count {
+    color: #37424d !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.sari-view-seller-link,
+.sari-seller-shell > div:first-child a.sari-view-seller-link {
+    min-height: 42px !important;
+    padding-inline: 17px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.sari-view-seller-link svg,
+.sari-seller-shell > div:first-child a.sari-view-seller-link svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+@media (max-width: 767px) {
+    .sari-verified-seller-badge,
+    .sari-seller-shell > div:first-child .sari-verified-seller-badge,
+    .sari-shipping-status[data-qualified="true"] {
+        font-size: 11.5px !important;
+    }
+
+    .sari-seller-product-count {
+        font-size: 12.5px !important;
+    }
+
+    .sari-view-seller-link,
+    .sari-seller-shell > div:first-child a.sari-view-seller-link {
+        min-height: 38px !important;
+        padding-inline: 14px !important;
+        font-size: 11.5px !important;
+    }
+}
+
+
+/* ============================================================
+   FINAL CLEANUP — SELLER ACTIONS + REMOVE BUTTON
+   Verification/status/trust UI removed from markup.
+============================================================ */
+.sari-seller-product-count {
+    color: #303943 !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+}
+
+.sari-view-seller-link,
+.sari-seller-shell > div:first-child a.sari-view-seller-link {
+    min-height: 46px !important;
+    border-radius: 12px !important;
+    padding-inline: 20px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    gap: 8px !important;
+}
+
+.sari-view-seller-link svg,
+.sari-seller-shell > div:first-child a.sari-view-seller-link svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+.sari-btn-remove {
+    min-height: 44px !important;
+    padding-inline: 18px !important;
+    border-radius: 10px !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    gap: 7px !important;
+}
+
+.sari-btn-remove svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+/* With the qualification badge removed, keep shipping copy left aligned. */
+.sari-shipping-footer {
+    justify-content: flex-start !important;
+}
+
+@media (max-width: 767px) {
+    .sari-seller-product-count {
+        font-size: 13px !important;
+    }
+
+    .sari-view-seller-link,
+    .sari-seller-shell > div:first-child a.sari-view-seller-link {
+        min-height: 40px !important;
+        padding-inline: 15px !important;
+        font-size: 12px !important;
+    }
+
+    .sari-btn-remove {
+        min-height: 40px !important;
+        padding-inline: 14px !important;
+        font-size: 11.5px !important;
+    }
+}
+
+
+/* ============================================================
+   ABSOLUTE FINAL BUTTON TYPOGRAPHY FIX
+   Beats legacy high-specificity !important rules.
+============================================================ */
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child .sari-seller-product-count {
+    color: #303943 !important;
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+    line-height: 1.2 !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link {
+    min-height: 40px !important;
+    padding-inline: 16px !important;
+    gap: 7px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link > span {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link > svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex: 0 0 15px !important;
+}
+
+[data-sari-cart-page] .sari-cart-row .sari-btn-remove {
+    min-height: 40px !important;
+    padding-inline: 15px !important;
+    gap: 6px !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+[data-sari-cart-page] .sari-cart-row .sari-btn-remove .sari-remove-label {
+    color: #ef4444 !important;
+    -webkit-text-fill-color: #ef4444 !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+[data-sari-cart-page] .sari-cart-row .sari-btn-remove > svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex: 0 0 15px !important;
+}
+
+@media (max-width: 767px) {
+    [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child .sari-seller-product-count {
+        font-size: 11.5px !important;
+    }
+
+    [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link,
+    [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link > span {
+        font-size: 11px !important;
+    }
+
+    [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link {
+        min-height: 38px !important;
+        padding-inline: 14px !important;
+    }
+
+    [data-sari-cart-page] .sari-cart-row .sari-btn-remove,
+    [data-sari-cart-page] .sari-cart-row .sari-btn-remove .sari-remove-label {
+        font-size: 10.5px !important;
+    }
+
+    [data-sari-cart-page] .sari-cart-row .sari-btn-remove {
+        min-height: 38px !important;
+        padding-inline: 13px !important;
+    }
+}
+
+
+
+/* Balanced final sizes after button typography tuning. */
+[data-sari-cart-page] .sari-summary-selected-count {
+    color: #222831 !important;
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+}
+
+@media (max-width: 767px) {
+    [data-sari-cart-page] .sari-summary-selected-count {
+        font-size: 11.5px !important;
+    }
+}
+
+
+/* ============================================================
+   FINAL PRODUCT INFO + SELLER HEADER SPACING POLISH
+   Stronger readability without changing cart behavior.
+============================================================ */
+[data-sari-cart-page] .sari-cart-row .sari-cart-product-name {
+    color: #1f2933 !important;
+    font-size: 15.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.32 !important;
+    letter-spacing: -.018em !important;
+}
+
+[data-sari-cart-page] .sari-cart-row .sari-cart-variant-text {
+    margin-top: 8px !important;
+    color: #4d5a68 !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+}
+
+[data-sari-cart-page] .sari-cart-row .sari-cart-unit-price {
+    margin-top: 6px !important;
+    color: #687482 !important;
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.45 !important;
+}
+
+/* Cleaner seller identity: stronger name, neutral text, gold only on interaction. */
+[data-sari-cart-page] .sari-seller-shell > div:first-child .sari-store-name-link {
+    color: #27313b !important;
+    font-size: 14.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.018em !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child a.sari-store-name-link:hover,
+[data-sari-cart-page] .sari-seller-shell > div:first-child a.sari-store-name-link:focus-visible {
+    color: #a96f0e !important;
+}
+
+/* Give the product count and View Seller action deliberate breathing room. */
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child {
+    gap: 18px !important;
+    margin-left: 18px !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child .sari-seller-product-count {
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+
+[data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child a.sari-view-seller-link {
+    min-height: 40px !important;
+    padding-inline: 15px !important;
+}
+
+@media (max-width: 767px) {
+    [data-sari-cart-page] .sari-cart-row .sari-cart-product-name {
+        font-size: 14.5px !important;
+    }
+
+    [data-sari-cart-page] .sari-cart-row .sari-cart-variant-text {
+        font-size: 11.5px !important;
+    }
+
+    [data-sari-cart-page] .sari-cart-row .sari-cart-unit-price {
+        font-size: 10.8px !important;
+    }
+
+    [data-sari-cart-page] .sari-seller-shell > div:first-child .sari-store-name-link {
+        font-size: 13.5px !important;
+    }
+
+    [data-sari-cart-page] .sari-seller-shell > div:first-child > div:last-child {
+        gap: 11px !important;
+        margin-left: 0 !important;
+    }
+}
 </style>
 
 

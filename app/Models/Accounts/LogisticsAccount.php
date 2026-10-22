@@ -5,6 +5,7 @@ namespace App\Models\Accounts;
 use App\Models\Delivery\LogisticsFacility;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,8 @@ class LogisticsAccount extends Authenticatable
         'contact_no',
         'birthday',
         'age',
+        'region_code',
+        'region_name',
         'province_code',
         'province_name',
         'municipality_code',
@@ -33,6 +36,13 @@ class LogisticsAccount extends Authenticatable
         'barangay_name',
         'street_address',
         'business_name',
+        'tin',
+        'sec_registration_no',
+        'postal_code',
+        'position',
+        'service_areas',
+        'bir_path',
+        'sec_path',
         'password',
         'id_path',
         'business_permit_path',
@@ -48,6 +58,11 @@ class LogisticsAccount extends Authenticatable
         'birthday' => 'date',
         'approved_at' => 'datetime',
     ];
+
+    public function registrationApplication(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationApplication::class, 'registration_application_id');
+    }
 
     public function riderApplications(): HasMany
     {
