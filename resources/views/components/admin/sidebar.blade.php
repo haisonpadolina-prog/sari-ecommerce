@@ -534,6 +534,22 @@
         <div class="admin-sidebar-section-divider"></div>
         <p class="admin-sidebar-section-label">FINANCE &amp; INSIGHTS</p>
 
+        {{-- Finance Treasury --}}
+        <a
+            href="{{ route('admin.finance.index') }}"
+            title="Finance Treasury"
+            data-sidebar-item
+            data-sidebar-current="{{ request()->routeIs('admin.finance.*') ? 'true' : 'false' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.finance.*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+        >
+            <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 7h14a2 2 0 0 1 2 2v9H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"></path>
+                <path d="M16 11h5v4h-5a2 2 0 0 1 0-4Z"></path>
+                <path d="M6 7V5h10v2"></path>
+            </svg>
+            <span class="sidebar-label whitespace-nowrap">Finance Treasury</span>
+        </a>
+
         {{-- Commission --}}
         <a
             href="{{ route('admin.commissions') }}"

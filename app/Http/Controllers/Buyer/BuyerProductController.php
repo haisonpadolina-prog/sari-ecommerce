@@ -25,10 +25,52 @@ class BuyerProductController extends Controller
         }
 
         $searchQuery = trim((string) $request->query('search', ''));
+        $products = $this->catalog->catalog();
+        $productCollection = collect($products);
+
+        $trendingPool = $productCollection
+            ->filter(fn (array $product) => (int) ($product['stock'] ?? 0) > 0);
+
+        if ($trendingPool->isEmpty()) {
+            $trendingPool = $productCollection;
+        }
+
+        $trendingProducts = $trendingPool
+            ->sort(function (array $left, array $right): int {
+                foreach (['sold', 'rating_count', 'rating', 'id'] as $field) {
+                    $comparison = ((float) ($right[$field] ?? 0)) <=> ((float) ($left[$field] ?? 0));
+
+                    if ($comparison !== 0) {
+                        return $comparison;
+                    }
+                }
+
+                return 0;
+            })
+            ->take(3)
+            ->values()
+            ->all();
+
+        $popularCategories = $productCollection
+            ->groupBy(fn (array $product) => strtolower(trim((string) ($product['category'] ?? 'General'))))
+            ->map(function ($categoryProducts): array {
+                $first = $categoryProducts->first();
+
+                return [
+                    'name' => trim((string) ($first['category'] ?? 'General')) ?: 'General',
+                    'count' => $categoryProducts->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->take(5)
+            ->values()
+            ->all();
 
         return view('buyer.products', [
-            'products' => $this->catalog->catalog(),
+            'products' => $products,
             'categories' => $this->catalog->categories(),
+            'trendingProducts' => $trendingProducts,
+            'popularCategories' => $popularCategories,
             'searchQuery' => $searchQuery,
             'shopResults' => $this->catalog->shopResults($searchQuery),
         ]);

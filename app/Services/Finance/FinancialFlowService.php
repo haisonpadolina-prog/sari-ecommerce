@@ -12,27 +12,37 @@ class FinancialFlowService
         private readonly CommissionService $commissions,
         private readonly PaymentLedgerService $payments,
         private readonly SellerSettlementService $sellerSettlements,
-        private readonly RiderEarningService $riderEarnings,
+        private readonly ShippingEarningService $shippingEarnings,
+        private readonly FinanceReleaseService $release,
     ) {
     }
 
     /**
-     * Record the internal financial ledgers for a completed marketplace order.
+     * Record all internal obligations for a completed marketplace order.
      *
-     * This method recognizes obligations and earnings. It does not claim that
-     * seller or rider funds were externally transferred by a bank/e-wallet.
+     * COD is deliberately two-stage:
+     * 1. Delivery confirms Buyer payment and creates internal obligations.
+     * 2. Verified Rider remittance releases those obligations to wallets.
+     *
+     * Non-COD paid orders can release immediately because no Rider cash
+     * custody remains to reconcile.
      */
     public function recordCompletedOrder(
         MarketplaceOrder $order,
-        string $source = 'order_workflow_delivery'
+        string $source = 'order_workflow_delivery',
+        ?int $riderEarningCourierId = null
     ): array {
-        return DB::transaction(function () use ($order, $source): array {
+        return DB::transaction(function () use (
+            $order,
+            $source,
+            $riderEarningCourierId
+        ): array {
             $locked = MarketplaceOrder::query()
                 ->whereKey($order->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            if ($locked->status !== 'delivered' || !$locked->delivered_at) {
+            if ($locked->status !== 'delivered' || ! $locked->delivered_at) {
                 throw ValidationException::withMessages([
                     'order' => 'Financial completion requires a delivered order.',
                 ]);
@@ -51,13 +61,26 @@ class FinancialFlowService
                 $commission,
                 $source
             );
-            $riderEarning = $this->riderEarnings->recordForCompletedOrder($locked, $source);
+            $shipping = $this->shippingEarnings->recordForCompletedOrder(
+                $locked,
+                $source,
+                $riderEarningCourierId
+            );
+
+            $isCod = strtoupper((string) $locked->payment_method) === 'COD';
+
+            if (! $isCod) {
+                $this->release->releaseOrder($locked, 'non_cod_completed_payment');
+            }
 
             return [
                 'commission' => $commission,
                 'payment' => $payment,
                 'seller_settlement' => $sellerSettlement,
-                'rider_earning' => $riderEarning,
+                'rider_earning' => $shipping['primary_rider_earning'],
+                'rider_earnings' => $shipping['rider_earnings'],
+                'logistics_earning' => $shipping['logistics_earning'],
+                'wallet_release_status' => $isCod ? 'awaiting_cod_remittance' : 'released',
             ];
         });
     }

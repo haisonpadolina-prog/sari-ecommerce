@@ -74,7 +74,7 @@
 
             <form
                 method="POST"
-                action="{{ route('marketplace.login') }}"
+                action="{{ route('marketplace.login', [], false) }}"
                 class="sari-auth-modal__form"
             >
                 @csrf

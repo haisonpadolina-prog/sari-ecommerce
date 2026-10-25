@@ -9,6 +9,7 @@ use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Accounts\SellerAccount;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
 use App\Services\Delivery\DeliveryRouteService;
+use App\Support\ParcelQrCode;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class SellerOrderController extends Controller
     public function __construct(
         private MarketplaceOrderWorkflowService $workflow,
         private DeliveryRouteService $deliveryRoute,
+        private ParcelQrCode $parcelQrCode,
     ) {}
 
     private function seller(Request $request): SellerAccount
@@ -165,7 +167,9 @@ class SellerOrderController extends Controller
     {
         $order = $this->ownedOrder($request, $order);
 
-        return view('seller.orders.waybill', compact('order'));
+        $parcelQrPayload = $this->parcelQrCode->payload($order);
+
+        return view('seller.orders.waybill', compact('order', 'parcelQrPayload'));
     }
 
     public function liveState(Request $request)

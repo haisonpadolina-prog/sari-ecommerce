@@ -435,7 +435,7 @@
                 {{-- FORM --}}
                 <form
                     method="POST"
-                    action="{{ route('login.submit') }}"
+                    action="{{ route('login.submit', [], false) }}"
                     class="sari-login-form"
                 >
                     @csrf

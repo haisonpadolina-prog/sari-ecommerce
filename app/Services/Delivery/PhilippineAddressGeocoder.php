@@ -23,7 +23,7 @@ class PhilippineAddressGeocoder
         mixed $latitude,
         mixed $longitude
     ): bool {
-        if (!is_numeric($latitude) || !is_numeric($longitude)) {
+        if (! is_numeric($latitude) || ! is_numeric($longitude)) {
             return false;
         }
 
@@ -52,6 +52,11 @@ class PhilippineAddressGeocoder
 
         $candidates = [];
 
+        if (filled($order->buyer_address)) {
+            $candidates[] = trim((string) $order->buyer_address)
+                . ', Philippines';
+        }
+
         if ($order->buyer instanceof BuyerAccount) {
             $candidates = array_merge(
                 $candidates,
@@ -62,10 +67,6 @@ class PhilippineAddressGeocoder
                     $order->buyer->province_name
                 )
             );
-        }
-
-        if (filled($order->buyer_address)) {
-            $candidates[] = trim((string) $order->buyer_address) . ', Philippines';
         }
 
         return $this->resolveCandidates($candidates);
@@ -87,8 +88,16 @@ class PhilippineAddressGeocoder
 
         $candidates = [];
 
+        if (filled($order->pickup_address)) {
+            $candidates[] = trim((string) $order->pickup_address)
+                . ', Philippines';
+        }
+
         if ($order->seller instanceof SellerAccount) {
-            $pickup = trim((string) ($order->pickup_address ?: $order->seller->pickup_address));
+            $pickup = trim((string) (
+                $order->pickup_address
+                ?: $order->seller->pickup_address
+            ));
 
             $candidates = array_merge(
                 $candidates,
@@ -99,10 +108,6 @@ class PhilippineAddressGeocoder
                     $order->seller->province_name
                 )
             );
-        }
-
-        if (filled($order->pickup_address)) {
-            $candidates[] = trim((string) $order->pickup_address) . ', Philippines';
         }
 
         return $this->resolveCandidates($candidates);
@@ -118,14 +123,14 @@ class PhilippineAddressGeocoder
         string $role,
         mixed $email
     ): ?array {
-        if (!config('sari_demo_locations.enabled', true)) {
+        if (! config('sari_demo_locations.enabled', true)) {
             return null;
         }
 
         $demo = config("sari_demo_locations.accounts.{$role}");
 
         if (
-            !is_array($demo)
+            ! is_array($demo)
             || strtolower(trim((string) $email))
                 !== strtolower((string) ($demo['email'] ?? ''))
         ) {
@@ -135,14 +140,16 @@ class PhilippineAddressGeocoder
         $lat = $demo['latitude'] ?? null;
         $lng = $demo['longitude'] ?? null;
 
-        if (!$this->isPhilippineCoordinate($lat, $lng)) {
+        if (! $this->isPhilippineCoordinate($lat, $lng)) {
             return null;
         }
 
         return [
             'latitude' => (float) $lat,
             'longitude' => (float) $lng,
-            'resolved_query' => (string) ($demo['full_address'] ?? 'SARI demo location'),
+            'resolved_query' => (string) (
+                $demo['full_address'] ?? 'SARI demo location'
+            ),
         ];
     }
 
@@ -196,7 +203,7 @@ class PhilippineAddressGeocoder
     }
 
     /**
-     * @param array<int, string> $candidates
+     * @param  array<int, string>  $candidates
      * @return array{latitude: float, longitude: float, resolved_query: string}|null
      */
     private function resolveCandidates(array $candidates): ?array
@@ -221,7 +228,8 @@ class PhilippineAddressGeocoder
      */
     private function resolve(string $query): ?array
     {
-        $cacheKey = 'sari.geocode.ph.v1.' . sha1(mb_strtolower($query));
+        $cacheKey = 'sari.geocode.ph.v1.'
+            . sha1(mb_strtolower($query));
 
         return Cache::remember(
             $cacheKey,
@@ -244,20 +252,20 @@ class PhilippineAddressGeocoder
                             'addressdetails' => 0,
                         ]);
 
-                    if (!$response->successful()) {
+                    if (! $response->successful()) {
                         return null;
                     }
 
                     $item = collect($response->json())->first();
 
-                    if (!is_array($item)) {
+                    if (! is_array($item)) {
                         return null;
                     }
 
                     $lat = $item['lat'] ?? null;
                     $lng = $item['lon'] ?? null;
 
-                    if (!$this->isPhilippineCoordinate($lat, $lng)) {
+                    if (! $this->isPhilippineCoordinate($lat, $lng)) {
                         return null;
                     }
 
@@ -279,11 +287,13 @@ class PhilippineAddressGeocoder
     }
 
     /**
-     * @param array<int, string> $target
-     * @param array<int, mixed> $parts
+     * @param  array<int, string>  $target
+     * @param  array<int, mixed>  $parts
      */
-    private function pushCandidate(array &$target, array $parts): void
-    {
+    private function pushCandidate(
+        array &$target,
+        array $parts
+    ): void {
         $value = collect($parts)
             ->map(fn ($part) => trim((string) $part))
             ->filter()

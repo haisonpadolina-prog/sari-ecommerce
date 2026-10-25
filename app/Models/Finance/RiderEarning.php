@@ -14,10 +14,12 @@ class RiderEarning extends Model
     protected $fillable = [
         'marketplace_order_id',
         'courier_account_id',
+        'earning_type',
         'delivery_fee_amount',
         'currency',
         'status',
         'earned_at',
+        'released_at',
         'paid_at',
         'metadata',
     ];
@@ -25,6 +27,7 @@ class RiderEarning extends Model
     protected $casts = [
         'delivery_fee_amount' => 'decimal:2',
         'earned_at' => 'datetime',
+        'released_at' => 'datetime',
         'paid_at' => 'datetime',
         'metadata' => 'array',
     ];

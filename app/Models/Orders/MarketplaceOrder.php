@@ -12,6 +12,8 @@ use App\Models\Delivery\DeliveryRouteStop;
 use App\Models\Finance\OrderCommission;
 use App\Models\Finance\PaymentTransaction;
 use App\Models\Finance\RiderEarning;
+use App\Models\Finance\LogisticsEarning;
+use App\Models\Finance\CodRemittanceItem;
 use App\Models\Finance\SellerSettlement;
 
 use App\Events\SellerOrderUpdated;
@@ -202,6 +204,21 @@ class MarketplaceOrder extends Model
     public function riderEarning(): HasOne
     {
         return $this->hasOne(RiderEarning::class, 'marketplace_order_id');
+    }
+
+    public function riderEarnings(): HasMany
+    {
+        return $this->hasMany(RiderEarning::class, 'marketplace_order_id');
+    }
+
+    public function logisticsEarning(): HasOne
+    {
+        return $this->hasOne(LogisticsEarning::class, 'marketplace_order_id');
+    }
+
+    public function codRemittanceItem(): HasOne
+    {
+        return $this->hasOne(CodRemittanceItem::class, 'marketplace_order_id');
     }
 
     public function deliveryRouteStops(): HasMany

@@ -3,1049 +3,865 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Waybill {{ $order->order_number }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+
+    @php
+        $items = collect($order->items ?? []);
+        $itemCount = (int) $items->sum(fn ($item) => max(1, (int) ($item['qty'] ?? 1)));
+        $shortBuyerName = trim((string) ($order->buyer_name ?? 'Buyer'));
+        $serviceCode = 'COD';
+        $trackingNumber = preg_replace('/\s+/', '', (string) $order->order_number);
+        $safePickupAddress = trim((string) ($order->pickup_address ?? '-'));
+        $safeBuyerAddress = trim((string) ($order->buyer_address ?? '-'));
+        $safeBuyerPhone = trim((string) ($order->buyer_phone ?? ''));
+        $safePickupName = trim((string) ($order->pickup_name ?? 'Seller'));
+        $safePickupPhone = trim((string) ($order->pickup_phone ?? ''));
+        $codAmount = (float) ($order->total ?? 0);
+        $subtotal = (float) ($order->subtotal ?? 0);
+        $deliveryFee = (float) ($order->delivery_fee ?? 0);
+    @endphp
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         :root {
-            --black: #211d18;
-            --text: #3c3630;
-            --muted: #8c8379;
-            --border: #ddd5ca;
-            --light-border: #ebe5dd;
-            --surface: #fbfaf7;
-            --gold: #d39418;
-            --gold-dark: #9c6b14;
-            --gold-soft: #fff8e9;
-            --green: #4f7d63;
-            --green-soft: #f1f8f4;
+            --ink: #151515;
+            --muted: #5f6368;
+            --line: #1e1e1e;
+            --soft-line: #d8d8d8;
+            --panel: #ffffff;
+            --canvas: #f3f4f6;
+            --accent: #111827;
+            --accent-soft: #f3f4f6;
+            --success: #0f9d58;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--canvas);
+            color: var(--ink);
+            font-family: "Inter", Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 30px;
-            background: #f5f3ef;
-            color: var(--black);
-            font-family: "Poppins", Arial, sans-serif;
-            font-weight: 400;
+            padding: 20px;
         }
+
+        .no-print { display: block; }
 
         .waybill-toolbar {
             width: 100%;
-            max-width: 900px;
-            margin: 0 auto 16px;
+            max-width: 104mm;
+            margin: 0 auto 14px;
             display: flex;
             justify-content: flex-end;
         }
 
         .print-button {
-            height: 42px;
+            border: 0;
+            background: #111827;
+            color: #fff;
+            border-radius: 10px;
+            height: 40px;
+            padding: 0 18px;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-
-            border: 0;
-            border-radius: 10px;
-
-            padding: 0 18px;
-
-            background: var(--gold);
-            color: #fff;
-
-            font-family: inherit;
-            font-size: 11px;
-            font-weight: 500;
-
             cursor: pointer;
-            transition:
-                background .18s ease,
-                transform .18s ease;
-        }
-
-        .print-button:hover {
-            background: #c18410;
-            transform: translateY(-1px);
+            font: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 24px rgba(17,24,39,.18);
         }
 
         .waybill {
-            width: 100%;
-            max-width: 900px;
+            width: 100mm;
+            min-height: 150mm;
             margin: 0 auto;
-
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: 0 16px 42px rgba(0,0,0,.08);
             overflow: hidden;
-
-            border: 1px solid #d8d0c5;
-            border-radius: 4px;
-
-            background: white;
-
-            box-shadow: 0 20px 55px rgba(38, 29, 19, .08);
         }
 
-        .waybill-inner {
-            padding: 34px 38px;
-        }
-
-        /* =========================================================
-           HEADER
-        ========================================================== */
-
-        .waybill-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 30px;
-
-            padding-bottom: 28px;
-
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .brand-main-logo {
-            width: 74px;
-            height: 74px;
-
-            object-fit: contain;
-
-            border-radius: 16px;
-        }
-
-       .brand-wordmark {
-    max-width: 210px;
-    height: 58px;
-
-    object-fit: contain;
-    object-position: left center;
-
-   
-    filter: brightness(0) saturate(100%);
-    opacity: 1;
-}
-
-        .waybill-heading {
-            text-align: right;
-        }
-
-        .waybill-heading h1 {
-            margin: 0;
-
-            font-size: 22px;
-            line-height: 1.2;
-
-            font-weight: 500;
-            letter-spacing: .12em;
-
-            text-transform: uppercase;
-        }
-
-        .waybill-heading p {
-            margin: 7px 0 0;
-
-            font-size: 9px;
-            font-weight: 400;
-
-            color: var(--muted);
-
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-
-        .order-number-card {
-            margin-top: 18px;
-
-            min-width: 285px;
-
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            padding: 14px 16px;
-
-            text-align: left;
-        }
-
-        .label {
-            margin: 0;
-
-            color: var(--muted);
-
-            font-size: 8px;
-            font-weight: 500;
-
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-
-        .order-number {
-            margin: 6px 0 0;
-
-            color: var(--black);
-
-            font-size: 17px;
-            line-height: 1.3;
-
-            font-weight: 600;
-        }
-
-        .order-date {
-            margin: 6px 0 0;
-
-            color: var(--muted);
-
-            font-size: 8px;
-            font-weight: 400;
-        }
-
-        /* =========================================================
-           SHIPPING
-        ========================================================== */
-
-        .shipping-grid {
+        .label-shell {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            border-bottom: 1px solid var(--border);
+            grid-template-rows: auto auto auto auto auto 1fr auto;
+            min-height: 150mm;
         }
 
-        .shipping-section {
-            padding: 28px 26px 28px 0;
+        .blk {
+            border-bottom: 1px solid var(--line);
         }
 
-        .shipping-section + .shipping-section {
-            padding-left: 30px;
+        .pad-sm { padding: 6px 7px; }
+        .pad-md { padding: 8px 9px; }
+        .pad-lg { padding: 10px 11px; }
 
-            border-left: 1px solid var(--light-border);
+        .topbar {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            align-items: stretch;
         }
 
-        .section-heading {
+        .brand-wrap {
             display: flex;
             align-items: center;
-            gap: 10px;
-
-            margin-bottom: 16px;
+            gap: 8px;
+            min-height: 24mm;
         }
 
-        .section-icon {
-            width: 31px;
-            height: 31px;
-
-            display: inline-flex;
+        .brand-logo-box {
+            width: 18mm;
+            height: 18mm;
+            border: 1px solid var(--soft-line);
+            border-radius: 4px;
+            display: flex;
             align-items: center;
             justify-content: center;
-
-            border: 1px solid #ead9b5;
-            border-radius: 9px;
-
-            background: var(--gold-soft);
-            color: var(--gold-dark);
+            padding: 2px;
+            flex: 0 0 auto;
         }
 
-        .section-icon svg {
-            width: 15px;
-            height: 15px;
-        }
-
-        .section-heading h2 {
-            margin: 0;
-
-            font-size: 12px;
-            font-weight: 600;
-
-            letter-spacing: .03em;
-            text-transform: uppercase;
-        }
-
-        .person-name {
-            margin: 0;
-
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .person-detail {
-            margin: 7px 0 0;
-
-            color: #625a52;
-
-            font-size: 9px;
-            line-height: 1.7;
-
-            font-weight: 400;
-        }
-
-        /* =========================================================
-           ITEMS
-        ========================================================== */
-
-        .items-section {
-            padding: 26px 0;
-        }
-
-        .items-table {
+        .brand-logo-box img {
             width: 100%;
-
-            margin-top: 14px;
-
-            border-collapse: separate;
-            border-spacing: 0;
-
-            overflow: hidden;
-
-            border: 1px solid var(--light-border);
-            border-radius: 11px;
+            height: 100%;
+            object-fit: contain;
         }
 
-        .items-table thead {
-            background: #26221e;
-            color: white;
+        .brand-copy {
+            min-width: 0;
         }
 
-        .items-table th {
-            padding: 11px 12px;
-
-            text-align: left;
-
-            font-size: 7.5px;
-            font-weight: 500;
-
+        .brand-title {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.05;
+            font-weight: 800;
             letter-spacing: .04em;
             text-transform: uppercase;
         }
 
-        .items-table td {
-            padding: 12px;
-
-            border-bottom: 1px solid var(--light-border);
-
-            color: #4b443d;
-
+        .brand-subtitle {
+            margin: 4px 0 0;
             font-size: 8.5px;
-            font-weight: 400;
-
-            vertical-align: top;
-        }
-
-        .items-table tbody tr:last-child td {
-            border-bottom: 0;
-        }
-
-        .items-table th:nth-child(4),
-        .items-table th:nth-child(5),
-        .items-table td:nth-child(4),
-        .items-table td:nth-child(5) {
-            text-align: right;
-        }
-
-        .item-name {
-            color: var(--black);
-            font-weight: 500;
-        }
-
-        .item-variant {
-            display: block;
-
-            margin-top: 3px;
-
             color: var(--muted);
-
-            font-size: 7.5px;
-        }
-
-        /* =========================================================
-           PAYMENT + TOTAL
-        ========================================================== */
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            gap: 18px;
-
-            padding-top: 26px;
-
-            border-top: 1px solid var(--border);
-        }
-
-        .summary-card {
-            border: 1px solid var(--light-border);
-            border-radius: 13px;
-
-            padding: 17px;
-
-            background: #fff;
-        }
-
-        .payment-method {
-            margin-top: 15px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 12px;
-        }
-
-        .payment-method span:first-child {
-            color: #71685f;
-
-            font-size: 8.5px;
-        }
-
-        .cod-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-
-            border: 1px solid #ead19a;
-            border-radius: 999px;
-
-            padding: 6px 10px;
-
-            background: var(--gold-soft);
-            color: var(--gold-dark);
-
-            font-size: 8px;
-            font-weight: 500;
-        }
-
-        .payment-note {
-            margin: 12px 0 0;
-
-            color: var(--muted);
-
-            font-size: 7.5px;
-            line-height: 1.6;
-        }
-
-        .amount-line {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-
-            margin-bottom: 9px;
-
-            color: #746b62;
-
-            font-size: 8.5px;
-        }
-
-        .amount-line strong {
-            color: #4b443d;
-            font-weight: 500;
-        }
-
-        .total-line {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-
-            gap: 20px;
-
-            margin-top: 15px;
-            padding-top: 14px;
-
-            border-top: 1px solid #dec38b;
-        }
-
-        .total-label {
-            font-size: 10px;
-            font-weight: 600;
-
-            text-transform: uppercase;
-        }
-
-        .total-amount {
-            color: var(--black);
-
-            font-size: 24px;
-            line-height: 1;
-
-            font-weight: 600;
-        }
-
-        .collect-box {
-            margin-top: 13px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            border: 1px solid #d2e4d8;
-            border-radius: 10px;
-
-            padding: 10px 12px;
-
-            background: var(--green-soft);
-            color: var(--green);
-        }
-
-        .collect-box span {
-            font-size: 8px;
-            font-weight: 500;
-        }
-
-        .collect-box strong {
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        /* =========================================================
-           FOOTER
-        ========================================================== */
-
-        .waybill-footer {
-            display: flex;
-            justify-content: space-between;
-            gap: 25px;
-
-            margin-top: 30px;
-            padding-top: 20px;
-
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-note {
-            max-width: 480px;
-
-            color: var(--muted);
-
-            font-size: 7.5px;
-            line-height: 1.7;
-        }
-
-        .footer-brand {
-            text-align: right;
-
-            color: var(--gold-dark);
-
-            font-size: 8px;
-            font-weight: 500;
-
             letter-spacing: .08em;
             text-transform: uppercase;
         }
 
-        .bottom-bar {
-            height: 8px;
-
-            background: #28231e;
-
-            border-top: 2px solid var(--gold);
+        .service-pill,
+        .zone-pill {
+            min-width: 18mm;
+            border-left: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 6px;
+            text-align: center;
         }
 
-        /* =========================================================
-           PRINT
-        ========================================================== */
+        .service-pill strong,
+        .zone-pill strong {
+            font-size: 17px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: .04em;
+        }
+
+        .service-pill span,
+        .zone-pill span {
+            display: block;
+            font-size: 8px;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .barcode-section {
+            text-align: center;
+            padding: 7px 8px 5px;
+        }
+
+        .barcode-label {
+            margin: 0 0 4px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        #sariTrackingBarcode {
+            width: 100%;
+            max-width: 86mm;
+            height: 20mm;
+        }
+
+        .tracking-human {
+            margin-top: 4px;
+            font-size: 14px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            word-break: break-word;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 26mm;
+            min-height: 24mm;
+        }
+
+        .hero-left {
+            border-right: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .ship-to-title {
+            margin: 0;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .ship-to-name {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .ship-to-address {
+            margin: 0;
+            font-size: 9px;
+            line-height: 1.35;
+            font-weight: 500;
+        }
+
+        .dest-code {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .dest-code .big {
+            font-size: 26px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: .06em;
+        }
+
+        .dest-code .small {
+            margin-top: 4px;
+            font-size: 8px;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+
+        .party-grid {
+            display: grid;
+            grid-template-columns: 1fr 30mm;
+        }
+
+        .party-cells {
+            border-right: 1px solid var(--line);
+        }
+
+        .party-box + .party-box {
+            border-top: 1px solid var(--line);
+        }
+
+        .box-heading {
+            margin: 0 0 4px;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .box-name {
+            margin: 0 0 2px;
+            font-size: 11px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .box-meta {
+            margin: 0;
+            font-size: 8.2px;
+            line-height: 1.35;
+        }
+
+        .qr-side {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100%;
+        }
+
+        .qr-side-top {
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .qr-side-top .value {
+            font-size: 22px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .qr-side-top .label {
+            margin-top: 4px;
+            font-size: 8px;
+            color: var(--muted);
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .qr-box-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+        }
+
+        #sariParcelQr {
+            width: 24mm;
+            height: 24mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sariParcelQr img,
+        #sariParcelQr canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .qr-side-bottom {
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .qr-side-bottom .label {
+            font-size: 7.2px;
+            line-height: 1.3;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .spec-left {
+            border-right: 1px solid var(--line);
+        }
+
+        .spec-table {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 4px 7px;
+            align-items: start;
+        }
+
+        .spec-label,
+        .spec-value {
+            font-size: 9px;
+            line-height: 1.3;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .spec-value {
+            font-weight: 600;
+        }
+
+        .cod-card {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .cod-card .label {
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .cod-card .amount {
+            margin-top: 5px;
+            font-size: 16px;
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        .items-block {
+            display: grid;
+            grid-template-columns: 1fr 26mm;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .items-main {
+            border-right: 1px solid var(--line);
+        }
+
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .mini-table thead th {
+            font-size: 7.5px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            text-align: left;
+            padding: 0 0 5px;
+            font-weight: 800;
+            border-bottom: 1px solid var(--soft-line);
+        }
+
+        .mini-table tbody td {
+            padding: 5px 0 0;
+            font-size: 8.5px;
+            vertical-align: top;
+            line-height: 1.3;
+        }
+
+        .mini-table tbody tr:first-child td {
+            padding-top: 6px;
+        }
+
+        .item-main-name {
+            display: block;
+            font-weight: 700;
+        }
+
+        .item-main-variant {
+            display: block;
+            color: var(--muted);
+            font-size: 7.6px;
+            margin-top: 2px;
+        }
+
+        .items-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .items-side .big-number {
+            font-size: 24px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .items-side .helper {
+            font-size: 7.5px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            font-weight: 700;
+        }
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 18mm 18mm 18mm;
+            min-height: 14mm;
+        }
+
+        .remarks-cell {
+            border-right: 1px solid var(--line);
+        }
+
+        .remarks-title {
+            margin: 0 0 4px;
+            font-size: 8px;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .remarks-copy {
+            margin: 0;
+            font-size: 7.8px;
+            line-height: 1.3;
+            color: var(--ink);
+        }
+
+        .step-cell {
+            border-left: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 9px;
+            background: #111827;
+            color: white;
+        }
+
+        .status-left,
+        .status-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .status-kicker {
+            font-size: 7.5px;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            font-weight: 700;
+            color: rgba(255,255,255,.72);
+        }
+
+        .status-value {
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 22px;
+            padding: 0 9px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.14);
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .qr-status-inline {
+            margin: 0;
+            font-size: 7px;
+            line-height: 1.25;
+            color: var(--muted);
+            text-align: center;
+        }
 
         @media print {
             @page {
-                size: A4;
-                margin: 10mm;
+                size: 100mm 150mm;
+                margin: 0;
             }
 
-            body {
-                padding: 0;
-
-                background: white;
-
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            html, body {
+                width: 100mm;
+                height: 150mm;
+                background: #fff;
             }
 
-            .no-print {
-                display: none !important;
-            }
-
+            body { padding: 0; }
+            .no-print { display: none !important; }
             .waybill {
-                max-width: none;
-
-                border-color: #aaa;
                 box-shadow: none;
-            }
-
-            .waybill-inner {
-                padding: 24px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            body {
-                padding: 15px;
-            }
-
-            .waybill-inner {
-                padding: 22px;
-            }
-
-            .waybill-header {
-                flex-direction: column;
-            }
-
-            .waybill-heading {
-                width: 100%;
-                text-align: left;
-            }
-
-            .order-number-card {
-                min-width: 0;
-            }
-
-            .shipping-grid,
-            .summary-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .shipping-section + .shipping-section {
-                padding-left: 0;
-
-                border-left: 0;
-                border-top: 1px solid var(--light-border);
-            }
-
-            .brand-main-logo {
-                width: 58px;
-                height: 58px;
-            }
-
-            .brand-wordmark {
-                max-width: 160px;
-                height: 48px;
+                margin: 0;
+                width: 100mm;
+                min-height: 150mm;
+                border: 1px solid #000;
             }
         }
     </style>
 </head>
-
 <body>
-
-    {{-- ============================================================
-        PRINT BUTTON
-    ============================================================= --}}
     <div class="waybill-toolbar no-print">
-        <button
-            type="button"
-            onclick="window.print()"
-            class="print-button"
-        >
-            <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-            >
+        <button type="button" onclick="window.print()" class="print-button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M6 9V3h12v6"></path>
                 <path d="M6 18H4V9h16v9h-2"></path>
                 <path d="M7 14h10v7H7z"></path>
             </svg>
-
             Print Waybill
         </button>
     </div>
 
-
-    {{-- ============================================================
-        WAYBILL
-    ============================================================= --}}
     <main class="waybill">
-
-        <div class="waybill-inner">
-
-            {{-- ====================================================
-                HEADER
-            ===================================================== --}}
-            <header class="waybill-header">
-
-                <div class="brand">
-
-                    {{-- MAIN IMAGE LOGO --}}
-                    <img
-                        src="{{ asset('images/sari-main-logo.png') }}"
-                        alt="SARI Main Logo"
-                        class="brand-main-logo"
-                    >
-
-                    {{-- SARI WORD LOGO --}}
-                    <img
-                        src="{{ asset('images/sari-logo.png') }}"
-                        alt="SARI"
-                        class="brand-wordmark"
-                    >
-
-                </div>
-
-
-                <div class="waybill-heading">
-
-                    <h1>Delivery Waybill</h1>
-
-                    <p>SARI Marketplace</p>
-
-                    <div class="order-number-card">
-
-                        <p class="label">
-                            Order Number
-                        </p>
-
-                        <p class="order-number">
-                            {{ $order->order_number }}
-                        </p>
-
-                        <p class="order-date">
-                            Order Date:
-                            {{ $order->created_at?->format('M d, Y · h:i A') }}
-                        </p>
-
+        <div class="label-shell">
+            <section class="topbar blk">
+                <div class="brand-wrap pad-md">
+                    <div class="brand-logo-box">
+                        <img src="{{ asset('images/sari-main-logo.png') }}" alt="SARI logo">
                     </div>
-
-                </div>
-
-            </header>
-
-
-            {{-- ====================================================
-                SHIPPING INFORMATION
-            ===================================================== --}}
-            <section class="shipping-grid">
-
-                {{-- SELLER --}}
-                <div class="shipping-section">
-
-                    <div class="section-heading">
-
-                        <span class="section-icon">
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <circle cx="12" cy="8" r="3"></circle>
-                                <path d="M5 20a7 7 0 0 1 14 0"></path>
-                            </svg>
-                        </span>
-
-                        <h2>Pickup / Seller</h2>
-
+                    <div class="brand-copy">
+                        <p class="brand-title">SARI</p>
+                        <p class="brand-subtitle">Marketplace delivery label</p>
                     </div>
-
-
-                    <p class="person-name">
-                        {{ $order->pickup_name }}
-                    </p>
-
-                    <p class="person-detail">
-                        {{ $order->pickup_address }}
-                    </p>
-
                 </div>
-
-
-                {{-- BUYER --}}
-                <div class="shipping-section">
-
-                    <div class="section-heading">
-
-                        <span class="section-icon">
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <path d="M12 21s7-5.3 7-12a7 7 0 1 0-14 0c0 6.7 7 12 7 12Z"></path>
-                                <circle cx="12" cy="9" r="2"></circle>
-                            </svg>
-                        </span>
-
-                        <h2>Deliver To</h2>
-
+                <div class="service-pill">
+                    <div>
+                        <strong>{{ $serviceCode }}</strong>
+                        <span>Payment</span>
                     </div>
+                </div>
+                <div class="zone-pill">
+                    <div>
+                        <strong>EZ</strong>
+                        <span>Lane</span>
+                    </div>
+                </div>
+            </section>
 
+            <section class="barcode-section blk">
+                <p class="barcode-label">Tracking Number</p>
+                <svg id="sariTrackingBarcode"></svg>
+                <div class="tracking-human">{{ $trackingNumber }}</div>
+            </section>
 
-                    <p class="person-name">
-                        {{ $order->buyer_name }}
-                    </p>
-
-                    @if ($order->buyer_phone)
-                        <p class="person-detail">
-                            {{ $order->buyer_phone }}
-                        </p>
+            <section class="hero-grid blk">
+                <div class="hero-left pad-lg">
+                    <p class="ship-to-title">Ship To</p>
+                    <p class="ship-to-name">{{ $shortBuyerName }}</p>
+                    @if ($safeBuyerPhone)
+                        <p class="ship-to-address">{{ $safeBuyerPhone }}</p>
                     @endif
-
-                    <p class="person-detail">
-                        {{ $order->buyer_address }}
-                    </p>
-
+                    <p class="ship-to-address">{{ $safeBuyerAddress }}</p>
                 </div>
-
+                <div class="dest-code pad-sm">
+                    <div class="big">{{ str_pad((string) $itemCount, 2, '0', STR_PAD_LEFT) }}</div>
+                    <div class="small">Items</div>
+                </div>
             </section>
 
-
-            {{-- ====================================================
-                ITEMS
-            ===================================================== --}}
-            <section class="items-section">
-
-                <div class="section-heading">
-
-                    <span class="section-icon">
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                        >
-                            <path d="M4 7 12 3l8 4-8 4-8-4Z"></path>
-                            <path d="m4 7 8 4v10l-8-4V7Z"></path>
-                            <path d="m20 7-8 4v10l8-4V7Z"></path>
-                        </svg>
-                    </span>
-
-                    <h2>Order Items</h2>
-
+            <section class="party-grid blk">
+                <div class="party-cells">
+                    <div class="party-box pad-md">
+                        <p class="box-heading">Sender</p>
+                        <p class="box-name">{{ $safePickupName }}</p>
+                        @if ($safePickupPhone)
+                            <p class="box-meta">{{ $safePickupPhone }}</p>
+                        @endif
+                        <p class="box-meta">{{ $safePickupAddress }}</p>
+                    </div>
+                    <div class="party-box pad-md">
+                        <p class="box-heading">Receiver</p>
+                        <p class="box-name">{{ $shortBuyerName }}</p>
+                        @if ($safeBuyerPhone)
+                            <p class="box-meta">{{ $safeBuyerPhone }}</p>
+                        @endif
+                        <p class="box-meta">{{ $safeBuyerAddress }}</p>
+                    </div>
                 </div>
 
+                <div class="qr-side">
+                    <div class="qr-side-top pad-sm">
+                        <div class="value">{{ str_pad((string) $order->id, 3, '0', STR_PAD_LEFT) }}</div>
+                        <div class="label">Route Code</div>
+                    </div>
 
-                <table class="items-table">
+                    <div class="qr-box-wrap">
+                        <div id="sariParcelQr" data-payload="{{ $parcelQrPayload }}" aria-label="Parcel handoff QR code"></div>
+                    </div>
 
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item Details</th>
-                            <th>Qty</th>
-                            <th>Unit Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
+                    <div class="qr-side-bottom pad-sm">
+                        <div class="label">Secure parcel handoff QR</div>
+                        <p id="sariParcelQrStatus" class="qr-status-inline">Preparing secure QR…</p>
+                    </div>
+                </div>
+            </section>
 
-                    <tbody>
+            <section class="spec-grid blk">
+                <div class="spec-left pad-md">
+                    <div class="spec-table">
+                        <div class="spec-label">Order</div>
+                        <div class="spec-value">{{ $order->order_number }}</div>
 
-                        @forelse (($order->items ?? []) as $index => $item)
+                        <div class="spec-label">Date</div>
+                        <div class="spec-value">{{ $order->created_at?->format('M d, Y · h:i A') }}</div>
 
+                        <div class="spec-label">Subtotal</div>
+                        <div class="spec-value">₱{{ number_format($subtotal, 2) }}</div>
+
+                        <div class="spec-label">Shipping</div>
+                        <div class="spec-value">₱{{ number_format($deliveryFee, 2) }}</div>
+
+                        <div class="spec-label">Payment</div>
+                        <div class="spec-value">{{ strtoupper((string) ($order->payment_status ?? 'PENDING')) }}</div>
+                    </div>
+                </div>
+                <div class="cod-card pad-md">
+                    <div class="label">COD Collect</div>
+                    <div class="amount">₱{{ number_format($codAmount, 2) }}</div>
+                </div>
+            </section>
+
+            <section class="items-block">
+                <div class="items-main pad-md">
+                    <table class="mini-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 56%;">Item</th>
+                                <th style="width: 12%;">Qty</th>
+                                <th style="width: 15%;">Price</th>
+                                <th style="width: 17%;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($items as $item)
                             @php
-                                $quantity = max(
-                                    1,
-                                    (int) ($item['qty'] ?? 1)
-                                );
-
-                                $unitPrice = (float) (
-                                    $item['price'] ?? 0
-                                );
-
-                                $lineTotal = (float) (
-                                    $item['line_total']
-                                    ?? ($unitPrice * $quantity)
-                                );
+                                $quantity = max(1, (int) ($item['qty'] ?? 1));
+                                $unitPrice = (float) ($item['price'] ?? 0);
+                                $lineTotal = (float) ($item['line_total'] ?? ($unitPrice * $quantity));
                             @endphp
-
                             <tr>
-
                                 <td>
-                                    {{ $index + 1 }}
-                                </td>
-
-
-                                <td>
-
-                                    <span class="item-name">
-                                        {{ $item['name'] ?? 'Product' }}
-                                    </span>
-
+                                    <span class="item-main-name">{{ $item['name'] ?? 'Product' }}</span>
                                     @if (!empty($item['variant_label']))
-
-                                        <span class="item-variant">
-                                            {{ $item['variant_label'] }}
-                                        </span>
-
+                                        <span class="item-main-variant">{{ $item['variant_label'] }}</span>
                                     @endif
-
                                 </td>
-
-
-                                <td>
-                                    {{ $quantity }}
-                                </td>
-
-
-                                <td>
-                                    ₱{{ number_format($unitPrice, 2) }}
-                                </td>
-
-
-                                <td>
-                                    ₱{{ number_format($lineTotal, 2) }}
-                                </td>
-
+                                <td>{{ $quantity }}</td>
+                                <td>₱{{ number_format($unitPrice, 0) }}</td>
+                                <td>₱{{ number_format($lineTotal, 0) }}</td>
                             </tr>
-
                         @empty
-
                             <tr>
-                                <td colspan="5">
-                                    No item details available.
-                                </td>
+                                <td colspan="4">No item details available.</td>
                             </tr>
-
                         @endforelse
-
-                    </tbody>
-
-                </table>
-
+                        </tbody>
+                    </table>
+                </div>
+                <div class="items-side pad-sm">
+                    <div class="big-number">{{ str_pad((string) $items->count(), 2, '0', STR_PAD_LEFT) }}</div>
+                    <div class="helper">SKU lines</div>
+                </div>
             </section>
 
-
-            {{-- ====================================================
-                PAYMENT / TOTAL
-            ===================================================== --}}
-            <section class="summary-grid">
-
-                {{-- PAYMENT --}}
-                <div class="summary-card">
-
-                    <div class="section-heading">
-
-                        <span class="section-icon">
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <rect x="3" y="6" width="18" height="12" rx="2"></rect>
-                                <path d="M3 10h18"></path>
-                            </svg>
-                        </span>
-
-                        <h2>Payment Details</h2>
-
-                    </div>
-
-
-                    <div class="payment-method">
-
-                        <span>Payment Method</span>
-
-                        <span class="cod-badge">
-                            Cash on Delivery
-                        </span>
-
-                    </div>
-
-
-                    <div class="payment-method">
-
-                        <span>Payment Status</span>
-
-                        <strong>
-                            {{ strtoupper($order->payment_status ?? 'PENDING') }}
-                        </strong>
-
-                    </div>
-
-
-                    <p class="payment-note">
-                        Payment will be collected from the buyer upon successful delivery.
+            <section class="bottom-grid blk">
+                <div class="remarks-cell pad-md">
+                    <p class="remarks-title">Instructions</p>
+                    <p class="remarks-copy">
+                        Keep this label visible. Scan the QR at authorized SARI handoff checkpoints only.
+                        Verify package and recipient details before delivery.
                     </p>
-
                 </div>
-
-
-                {{-- TOTAL --}}
-                <div class="summary-card">
-
-                    <div class="amount-line">
-                        <span>Subtotal</span>
-
-                        <strong>
-                            ₱{{ number_format((float) $order->subtotal, 2) }}
-                        </strong>
-                    </div>
-
-
-                    <div class="amount-line">
-                        <span>Delivery Fee</span>
-
-                        <strong>
-                            ₱{{ number_format((float) $order->delivery_fee, 2) }}
-                        </strong>
-                    </div>
-
-
-                    <div class="total-line">
-
-                        <span class="total-label">
-                            Total Amount
-                        </span>
-
-                        <span class="total-amount">
-                            ₱{{ number_format((float) $order->total, 2) }}
-                        </span>
-
-                    </div>
-
-
-                    <div class="collect-box">
-
-                        <span>
-                            COD Amount to Collect
-                        </span>
-
-                        <strong>
-                            ₱{{ number_format((float) $order->total, 2) }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
+                <div class="step-cell">1</div>
+                <div class="step-cell">2</div>
+                <div class="step-cell">3</div>
             </section>
 
-
-            {{-- ====================================================
-                FOOTER
-            ===================================================== --}}
-            <footer class="waybill-footer">
-
-                <p class="footer-note">
-                    Please verify the package and recipient information before completing
-                    the delivery. This waybill is generated by the SARI Marketplace
-                    order management system.
-                </p>
-
-
-                <div class="footer-brand">
-
-                    SARI Marketplace
-
+            <section class="status-bar">
+                <div class="status-left">
+                    <span class="status-kicker">Current Status</span>
+                    <span class="status-value">{{ strtoupper(str_replace('_', ' ', (string) ($order->status ?? 'ready_for_pickup'))) }}</span>
                 </div>
-
-            </footer>
-
+                <div class="status-chip">SARI Marketplace</div>
+                <div class="status-right" style="text-align:right;">
+                    <span class="status-kicker">Label Type</span>
+                    <span class="status-value">4 × 6 Waybill</span>
+                </div>
+            </section>
         </div>
-
-
-        <div class="bottom-bar"></div>
-
     </main>
 
+    <script>
+    (() => {
+        const qrBox = document.getElementById('sariParcelQr');
+        const qrStatus = document.getElementById('sariParcelQrStatus');
+        const barcodeNode = document.getElementById('sariTrackingBarcode');
+        const trackingValue = @json($trackingNumber);
+
+        const renderQr = () => {
+            if (!qrBox || !qrStatus) return;
+            if (typeof QRCode === 'undefined') {
+                qrStatus.textContent = 'QR unavailable. Reload before printing.';
+                return;
+            }
+
+            qrBox.innerHTML = '';
+
+            new QRCode(qrBox, {
+                text: qrBox.dataset.payload,
+                width: 112,
+                height: 112,
+                colorDark: '#111111',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M,
+            });
+
+            qrStatus.textContent = 'Secure parcel QR ready for scanning';
+        };
+
+        const renderBarcode = () => {
+            if (!barcodeNode || typeof JsBarcode === 'undefined') {
+                return;
+            }
+
+            JsBarcode(barcodeNode, String(trackingValue || ''), {
+                format: 'CODE128',
+                lineColor: '#111111',
+                width: 1.65,
+                height: 56,
+                displayValue: false,
+                margin: 0,
+                background: '#ffffff',
+            });
+        };
+
+        const run = () => {
+            renderQr();
+            renderBarcode();
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', run, { once: true });
+        } else {
+            run();
+        }
+    })();
+    </script>
 </body>
 </html>

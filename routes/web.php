@@ -25,10 +25,13 @@ use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerProductDraftController;
 use App\Http\Controllers\Seller\SellerOrderController;
 use App\Http\Controllers\Courier\CourierDeliveryController;
+use App\Http\Controllers\Courier\CourierLastMileController;
+use App\Http\Middleware\Courier\CourierOnly;
 use App\Http\Middleware\Seller\EnsureSellerNotRestricted;
 use App\Http\Middleware\Seller\EnsureSellerAccountAccessible;
 use App\Http\Controllers\Admin\AdminSellerAccountStatusController;
 use App\Services\Seller\SellerAccountStatusService;
+use App\Services\Logistics\LogisticsActivityLogger;
 use App\Services\Accounts\AccountEmailBanService;
 use App\Http\Controllers\Shared\ChatMessageReactionController;
 use App\Http\Controllers\Admin\AdminSellerChatActionController;
@@ -48,6 +51,7 @@ use App\Http\Controllers\Logistics\LogisticsRegistrationController;
 use App\Http\Controllers\Admin\AdminRegistrationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Shared\PlatformComplaintController;
+use App\Http\Controllers\Shared\ParcelQrScannerController;
 use App\Http\Controllers\Admin\AdminComplaintsController;
 use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminActivityController;
@@ -64,7 +68,9 @@ use App\Models\Accounts\BuyerAccount;
 use App\Models\Accounts\CourierAccount;
 use App\Models\Accounts\LogisticsAccount;
 use App\Models\Registration\RegistrationApplication;
+use App\Models\Orders\MarketplaceOrder;
 use Illuminate\Support\Facades\Hash;
+use App\Support\LogisticsHubAuthentication;
 
 use App\Models\Accounts\SellerAccount;
 use Illuminate\Http\Request;
@@ -129,7 +135,7 @@ Route::post('/login', function (Request $request) {
     $adminEmail = strtolower(trim($request->email));
     $admin = AdminAccount::query()->where('email', $adminEmail)->first();
 
-    if (!$admin && $adminEmail === 'admin@gmail.com') {
+    if (app()->environment(['local', 'testing']) && !$admin && $adminEmail === 'admin@gmail.com') {
         $admin = AdminAccount::query()->firstOrCreate(
             ['email' => 'admin@gmail.com'],
             ['name' => 'SARI Administrator', 'password' => Hash::make('admin123')]
@@ -145,6 +151,9 @@ Route::post('/login', function (Request $request) {
             'is_courier', 'courier_account_id', 'courier_email', 'courier_name',
             'is_buyer', 'buyer_account_id', 'buyer_social_account_id',
             'is_logistics', 'logistics_account_id', 'logistics_email', 'logistics_name',
+            'is_logistics_hub_operator', 'logistics_hub_account_id',
+            'logistics_facility_id', 'logistics_hub_name', 'logistics_hub_email',
+            'logistics_role',
         ]);
         return redirect()->route('admin.dashboard');
     }
@@ -161,6 +170,21 @@ Route::post('/login', function (Request $request) {
         return back()->withErrors([
             'email' => 'This email address has been banned by SARI.',
         ])->onlyInput('email');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGISTICS HUB OPERATOR ACCOUNT
+    |--------------------------------------------------------------------------
+    |
+    | Hub Operators authenticate against their own database-backed account while
+    | retaining the parent Logistics provider id for network scoping.
+    |
+    */
+    $hubLogin = LogisticsHubAuthentication::attempt($request, $email);
+
+    if ($hubLogin) {
+        return $hubLogin;
     }
 
     $buyer = BuyerAccount::query()->where('email', $email)->first();
@@ -195,6 +219,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('buyer.dashboard');
@@ -254,6 +284,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('seller.dashboard');
@@ -287,6 +323,12 @@ Route::post('/login', function (Request $request) {
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
 
         return redirect()->route('courier.dashboard');
@@ -324,7 +366,26 @@ Route::post('/login', function (Request $request) {
             'courier_account_id',
             'courier_email',
             'courier_name',
+            'is_logistics_hub_operator',
+            'logistics_hub_account_id',
+            'logistics_facility_id',
+            'logistics_hub_name',
+            'logistics_hub_email',
+            'logistics_role',
         ]);
+
+        $request->session()->put('logistics_role', 'manager');
+
+        try {
+            app(LogisticsActivityLogger::class)->record(
+                $request,
+                'Authentication',
+                'login',
+                'Main Logistics signed in'
+            );
+        } catch (\Throwable $exception) {
+            report($exception);
+        }
 
         return redirect()->route('logistics.dashboard');
     }
@@ -1299,171 +1360,186 @@ Route::post('/seller/logout', function (Request $request) {
 |
 */
 
-
 /*
 |--------------------------------------------------------------------------
 | COURIER DASHBOARD
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/courier/dashboard',
-    [CourierDashboardController::class, 'index']
-)->name('courier.dashboard');
+Route::middleware(CourierOnly::class)->group(function (): void {
+
+    Route::get(
+        '/courier/dashboard',
+        [CourierDashboardController::class, 'index']
+    )->name('courier.dashboard');
+
+    Route::get(
+        '/courier/delivery/{order}',
+        [CourierDashboardController::class, 'show']
+    )->name('courier.delivery.show');
+
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER DELIVERY PROCESS
+    |--------------------------------------------------------------------------
+    |
+    | Added for the Courier Dashboard delivery workflow only.
+    | Existing Admin, Seller, Product, Compliance, and Chat backend routes
+    | above are left unchanged.
+    |
+    */
+
+    Route::get(
+        '/courier/requests',
+        [CourierDeliveryController::class, 'requests']
+    )->name('courier.requests');
+
+    Route::get(
+        '/courier/parcel-scanner',
+        [ParcelQrScannerController::class, 'courier']
+    )->name('courier.parcel-scanner');
+
+    Route::post(
+        '/courier/parcel-scanner/scan',
+        [ParcelQrScannerController::class, 'scanCourier']
+    )->name('courier.parcel-scanner.scan');
 
 
-/*
-|--------------------------------------------------------------------------
-| COURIER DELIVERY PROCESS
-|--------------------------------------------------------------------------
-|
-| Added for the Courier Dashboard delivery workflow only.
-| Existing Admin, Seller, Product, Compliance, and Chat backend routes
-| above are left unchanged.
-|
-*/
+    Route::post(
+        '/courier/orders/{order}/accept',
+        [CourierDeliveryController::class, 'accept']
+    )->name('courier.orders.accept');
 
-Route::get(
-    '/courier/requests',
-    [CourierDeliveryController::class, 'requests']
-)->name('courier.requests');
+    Route::post(
+        '/courier/orders/{order}/proceed-pickup',
+        [CourierDeliveryController::class, 'proceedToPickup']
+    )->name('courier.orders.proceed-pickup');
 
-Route::post(
-    '/courier/orders/{order}/accept',
-    [CourierDeliveryController::class, 'accept']
-)->name('courier.orders.accept');
+    Route::post(
+        '/courier/orders/{order}/arrived-pickup',
+        [CourierDeliveryController::class, 'arrivedAtPickup']
+    )->name('courier.orders.arrived-pickup');
 
-Route::post(
-    '/courier/orders/{order}/proceed-pickup',
-    [CourierDeliveryController::class, 'proceedToPickup']
-)->name('courier.orders.proceed-pickup');
+    Route::post(
+        '/courier/orders/{order}/confirm-pickup',
+        [CourierDeliveryController::class, 'confirmPickup']
+    )->name('courier.orders.confirm-pickup');
 
-Route::post(
-    '/courier/orders/{order}/arrived-pickup',
-    [CourierDeliveryController::class, 'arrivedAtPickup']
-)->name('courier.orders.arrived-pickup');
+    Route::post(
+        '/courier/orders/{order}/arrived-buyer',
+        [CourierDeliveryController::class, 'arrivedAtBuyer']
+    )->name('courier.orders.arrived-buyer');
 
-Route::post(
-    '/courier/orders/{order}/confirm-pickup',
-    [CourierDeliveryController::class, 'confirmPickup']
-)->name('courier.orders.confirm-pickup');
+    Route::post(
+        '/courier/orders/{order}/complete',
+        [CourierDeliveryController::class, 'complete']
+    )->name('courier.orders.complete');
 
-Route::post(
-    '/courier/orders/{order}/arrived-buyer',
-    [CourierDeliveryController::class, 'arrivedAtBuyer']
-)->name('courier.orders.arrived-buyer');
+    Route::get(
+        '/courier/orders-live-state',
+        [CourierDeliveryController::class, 'liveState']
+    )->name('courier.orders.live-state');
 
-Route::post(
-    '/courier/orders/{order}/complete',
-    [CourierDeliveryController::class, 'complete']
-)->name('courier.orders.complete');
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER LOGOUT
+    |--------------------------------------------------------------------------
+    */
 
-Route::get(
-    '/courier/orders-live-state',
-    [CourierDeliveryController::class, 'liveState']
-)->name('courier.orders.live-state');
+    Route::post('/courier/logout', function (Request $request) {
 
-
-/*
-|--------------------------------------------------------------------------
-| COURIER LOGOUT
-|--------------------------------------------------------------------------
-*/
-
-Route::post('/courier/logout', function (Request $request) {
-
-    $request->session()->forget([
-        'is_courier',
-        'courier_account_id',
-        'courier_email',
-        'courier_name',
+        $request->session()->forget([
+            'is_courier',
+            'courier_account_id',
+            'courier_email',
+            'courier_name',
             'is_logistics',
             'logistics_account_id',
             'logistics_email',
             'logistics_name',
-    ]);
+        ]);
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    return redirect()->route('login');
-
-})->name('courier.logout');
-
-
-/*
-|--------------------------------------------------------------------------
-| COURIER PAGES
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/courier/pickups', function (Request $request) {
-    if (!$request->session()->get('is_courier')) {
         return redirect()->route('login');
-    }
 
-    $orders = \App\Models\Orders\MarketplaceOrder::query()
-        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
-        ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
-        ->latest('updated_at')
-        ->get();
+    })->name('courier.logout');
 
-    return view('courier.pickups', compact('orders'));
-})->name('courier.pickups');
+    /*
+    |--------------------------------------------------------------------------
+    | COURIER PAGES
+    |--------------------------------------------------------------------------
+    */
 
-Route::get('/courier/deliveries', function (Request $request) {
-    if (!$request->session()->get('is_courier')) {
-        return redirect()->route('login');
-    }
+    Route::get('/courier/pickups', function (Request $request) {
+        if (! $request->session()->get('is_courier')) {
+            return redirect()->route('login');
+        }
 
-    $orders = \App\Models\Orders\MarketplaceOrder::query()
-        ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
-        ->whereIn('status', ['in_transit', 'arrived_buyer'])
-        ->latest('updated_at')
-        ->get();
+        $orders = MarketplaceOrder::query()
+            ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+            ->whereIn('status', ['courier_accepted', 'heading_pickup', 'arrived_pickup'])
+            ->latest('updated_at')
+            ->get();
 
-    return view('courier.deliveries', compact('orders'));
-})->name('courier.deliveries');
+        return view('courier.pickups', compact('orders'));
+    })->name('courier.pickups');
 
-Route::get(
-    '/courier/earnings',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'earnings']
-)->name('courier.earnings');
+    Route::get('/courier/deliveries', function (Request $request) {
+        if (! $request->session()->get('is_courier')) {
+            return redirect()->route('login');
+        }
 
-Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
-    ->name('courier.earnings.statement');
-Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestPayout'])
-    ->name('courier.earnings.payout');
+        $orders = MarketplaceOrder::query()
+            ->where('courier_email', $request->session()->get('courier_email', 'courier@gmail.com'))
+            ->whereDoesntHave('logisticsParcel')
+            ->whereIn('status', ['in_transit', 'arrived_buyer'])
+            ->latest('updated_at')
+            ->get();
 
+        return view('courier.deliveries', compact('orders'));
+    })->name('courier.deliveries');
 
-Route::get(
-    '/courier/history',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'history']
-)->name('courier.history');
+    Route::get(
+        '/courier/earnings',
+        [CourierPageController::class, 'earnings']
+    )->name('courier.earnings');
 
-Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
-    ->name('courier.history.export');
+    Route::get('/courier/earnings/statement', [CourierPageController::class, 'earningsStatement'])
+        ->name('courier.earnings.statement');
 
+    Route::post('/courier/earnings/payout', [CourierPageController::class, 'requestPayout'])
+        ->name('courier.earnings.payout');
 
-Route::get(
-    '/courier/messages',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'messages']
-)->name('courier.messages');
+    Route::get(
+        '/courier/history',
+        [CourierPageController::class, 'history']
+    )->name('courier.history');
 
-Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
-    ->name('courier.messages.send');
+    Route::get('/courier/history/export', [CourierPageController::class, 'historyExport'])
+        ->name('courier.history.export');
 
+    Route::get(
+        '/courier/messages',
+        [CourierPageController::class, 'messages']
+    )->name('courier.messages');
 
-Route::get(
-    '/courier/profile',
-    [\App\Http\Controllers\Courier\CourierPageController::class, 'profile']
-)->name('courier.profile');
+    Route::post('/courier/messages', [CourierPageController::class, 'sendMessage'])
+        ->name('courier.messages.send');
 
-Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
-    ->name('courier.profile.update');
+    Route::get(
+        '/courier/profile',
+        [CourierPageController::class, 'profile']
+    )->name('courier.profile');
 
-Route::patch('/courier/profile/availability', [CourierPageController::class, 'availability'])
-    ->name('courier.profile.availability');
+    Route::patch('/courier/profile', [CourierPageController::class, 'updateProfile'])
+        ->name('courier.profile.update');
+
+    Route::patch('/courier/profile/availability', [CourierPageController::class, 'availability'])
+        ->name('courier.profile.availability');
+
+});
 
 Route::post(
     '/admin/message-notifications/read-all',
@@ -1486,6 +1562,32 @@ Route::post(
         ]);
     }
 )->name('admin.message-notifications.read-all');
+
+Route::middleware(CourierOnly::class)->group(function (): void {
+
+    Route::get(
+        '/courier/last-mile',
+        [CourierLastMileController::class, 'index']
+    )->name('courier.last-mile');
+
+    Route::post(
+        '/courier/last-mile/{assignment}/start',
+        [CourierLastMileController::class, 'start']
+    )->name('courier.last-mile.start');
+
+    Route::post(
+        '/courier/last-mile/{assignment}/orders/{order}/arrived',
+        [CourierLastMileController::class, 'arrived']
+    )->name('courier.last-mile.arrived');
+
+    Route::post(
+        '/courier/last-mile/{assignment}/orders/{order}/delivered',
+        [CourierLastMileController::class, 'delivered']
+    )->name('courier.last-mile.delivered');
+
+});
+
+
 
 
 

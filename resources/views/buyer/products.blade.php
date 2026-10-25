@@ -2606,7 +2606,6 @@
             minmax(320px, 1.65fr)
             minmax(155px, .78fr)
             minmax(155px, .78fr)
-            minmax(155px, .78fr)
             auto
             auto !important;
         gap: 10px !important;
@@ -2703,6 +2702,280 @@
     @media (min-width: 1024px) {
         #mobileFilterDrawer {
             display: none !important;
+        }
+    }
+
+
+    /* ============================================================
+       ENTERPRISE CATALOG DISCOVERY RAIL
+       Real catalog data, restrained surfaces, no decorative clutter.
+    ============================================================ */
+    .sari-catalog-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
+        align-items: start;
+    }
+
+    .sari-catalog-primary {
+        min-width: 0;
+    }
+
+    .sari-catalog-rail {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .sari-insight-card {
+        overflow: hidden;
+        border: 1px solid #e2e5e9;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(31, 41, 55, .035);
+    }
+
+    .sari-insight-card-head {
+        display: flex;
+        min-height: 52px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 14px;
+        border-bottom: 1px solid #eceef1;
+    }
+
+    .sari-insight-heading {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sari-insight-heading-icon {
+        display: inline-grid;
+        width: 20px;
+        height: 20px;
+        flex: 0 0 auto;
+        place-items: center;
+        color: #c88912;
+    }
+
+    .sari-insight-heading-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .sari-insight-heading h2 {
+        margin: 0;
+        color: #20252b;
+        font-size: 11px;
+        font-weight: 750;
+        line-height: 1.2;
+        letter-spacing: -.015em;
+    }
+
+    .sari-insight-link {
+        display: inline-flex;
+        min-height: 32px;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 5px;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        color: #a96f0e;
+        font-size: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color .16s ease;
+    }
+
+    .sari-insight-link:hover,
+    .sari-insight-link:focus-visible {
+        color: #7d5007;
+        outline: none;
+    }
+
+    .sari-trending-list,
+    .sari-popular-category-list {
+        padding: 4px 14px 8px;
+    }
+
+    .sari-trending-item,
+    .sari-popular-category-item {
+        position: relative;
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        align-items: center;
+        gap: 10px;
+        border: 0;
+        border-bottom: 1px solid #eef0f2;
+        background: transparent;
+        padding: 10px 0;
+        color: inherit;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color .16s ease, color .16s ease;
+    }
+
+    .sari-trending-item:last-child,
+    .sari-popular-category-item:last-child {
+        border-bottom: 0;
+    }
+
+    .sari-trending-item:hover,
+    .sari-trending-item:focus-visible,
+    .sari-popular-category-item:hover,
+    .sari-popular-category-item:focus-visible {
+        outline: none;
+    }
+
+    .sari-trending-item:hover .sari-trending-copy strong,
+    .sari-trending-item:focus-visible .sari-trending-copy strong,
+    .sari-popular-category-item:hover .sari-popular-category-copy strong,
+    .sari-popular-category-item:focus-visible .sari-popular-category-copy strong {
+        color: #9d670c;
+    }
+
+    .sari-trending-thumb {
+        display: grid;
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        overflow: hidden;
+        place-items: center;
+        border: 1px solid #e7e9ec;
+        border-radius: 9px;
+        background: #f3f4f5;
+        color: #8c9299;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .sari-trending-thumb img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .sari-trending-copy,
+    .sari-popular-category-copy {
+        display: block;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    .sari-trending-copy strong,
+    .sari-popular-category-copy strong {
+        display: block;
+        overflow: hidden;
+        color: #2d3339;
+        font-size: 9px;
+        font-weight: 650;
+        line-height: 1.3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: color .16s ease;
+    }
+
+    .sari-trending-copy small,
+    .sari-popular-category-copy small {
+        display: block;
+        margin-top: 2px;
+        color: #8b939d;
+        font-size: 7.5px;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .sari-trending-copy b {
+        display: block;
+        margin-top: 4px;
+        color: #c17e08;
+        font-size: 9px;
+        font-weight: 750;
+        line-height: 1.2;
+    }
+
+    .sari-trending-arrow,
+    .sari-popular-category-arrow {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 auto;
+        color: #a6adb5;
+    }
+
+    .sari-popular-category-icon {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        place-items: center;
+        border: 1px solid #e7e9ec;
+        border-radius: 9px;
+        background: #f8f9fa;
+        color: #5f6872;
+    }
+
+    .sari-popular-category-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .sari-popular-category-item.is-active .sari-popular-category-icon {
+        border-color: #e2c98f;
+        background: #fff8e9;
+        color: #b87808;
+    }
+
+    .sari-popular-category-item.is-active .sari-popular-category-copy strong {
+        color: #9d670c;
+    }
+
+    .sari-insight-empty {
+        margin: 0;
+        padding: 14px 0;
+        color: #8b939d;
+        font-size: 8px;
+        line-height: 1.55;
+    }
+
+    @media (min-width: 1280px) {
+        .sari-catalog-layout {
+            grid-template-columns: minmax(0, 1fr) 286px;
+            gap: 22px;
+        }
+
+        .sari-catalog-rail {
+            position: sticky;
+            top: 92px;
+            grid-template-columns: minmax(0, 1fr);
+            align-self: start;
+        }
+
+        .sari-catalog-primary .sari-showcase-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (min-width: 1600px) {
+        .sari-catalog-primary .sari-showcase-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-catalog-rail {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .sari-insight-card-head {
+            min-height: 50px;
         }
     }
 
@@ -2882,6 +3155,9 @@
     <section>
         <input type="radio" name="ratingFilter" value="" checked class="hidden">
 
+        <div class="sari-catalog-layout">
+            <div class="sari-catalog-primary min-w-0">
+
         {{-- Desktop filter dock --}}
         <div class="sari-filter-dock hidden md:block">
             <div class="sari-filter-grid">
@@ -2956,33 +3232,6 @@
                     </details>
                 </div>
 
-
-                <div class="min-w-0">
-                    <span class="sari-filter-label">Availability</span>
-
-                    <select id="buyerAvailabilitySelect" class="sr-only" tabindex="-1" aria-hidden="true">
-                        <option value="">All Products</option>
-                        <option value="in-stock">In Stock Only</option>
-                    </select>
-
-                    <details id="buyerAvailabilityDetails" class="sari-formal-dropdown">
-                        <summary class="sari-filter-control sari-formal-trigger">
-                            <span id="buyerAvailabilityLabel">All Products</span>
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
-                        </summary>
-
-                        <div class="sari-formal-menu" role="listbox" aria-label="Availability">
-                            <button type="button" data-formal-select="buyerAvailabilitySelect" data-formal-value="" class="sari-formal-option is-selected">
-                                <span>All Products</span><span class="sari-formal-check">✓</span>
-                            </button>
-                            <button type="button" data-formal-select="buyerAvailabilitySelect" data-formal-value="in-stock" class="sari-formal-option">
-                                <span>In Stock Only</span><span class="sari-formal-check">✓</span>
-                            </button>
-                        </div>
-                    </details>
-
-                    <input id="inStockFilter" type="checkbox" class="hidden">
-                </div>
 
                 <div class="min-w-0">
                     <span class="sari-filter-label">Sort By</span>
@@ -3095,7 +3344,7 @@
                 </svg>
             </div>
             <p class="mt-4 text-[11px] font-semibold text-[#4f473e]">No products match your filters</p>
-            <p class="mt-1 text-[9px] text-[#958c80]">Try another category, price range, availability, or product option.</p>
+            <p class="mt-1 text-[9px] text-[#958c80]">Try another category, search term, sort option, or product selection.</p>
             <div id="buyerZeroResultSuggestions" class="mt-4 flex flex-wrap justify-center gap-2"></div>
             <button id="clearProductFilters" type="button" class="mt-4 inline-flex h-10 items-center justify-center rounded-[9px] bg-[#c9870e] px-4 text-[9px] font-semibold text-white transition hover:bg-[#ae7008]">
                 Clear Filters
@@ -3105,6 +3354,99 @@
         <div class="sr-only">
             Showing <span id="buyerResultCount">{{ count($products) }}</span> products
             <button id="showAllProductsBottom" type="button">Reset Filters</button>
+        </div>
+            </div>
+
+            <aside class="sari-catalog-rail" aria-label="Catalog discovery">
+                <section class="sari-insight-card" aria-labelledby="buyerTrendingTitle">
+                    <div class="sari-insight-card-head">
+                        <div class="sari-insight-heading">
+                            <span class="sari-insight-heading-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                    <path d="M4 19V10"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19V3"></path>
+                                </svg>
+                            </span>
+                            <h2 id="buyerTrendingTitle">Trending Now</h2>
+                        </div>
+                        <button id="buyerTrendingViewAll" type="button" class="sari-insight-link">
+                            View all <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+
+                    <div class="sari-trending-list">
+                        @forelse ($trendingProducts ?? [] as $trendingProduct)
+                            <a
+                                href="{{ route('buyer.product.details', ['product' => $trendingProduct['id']]) }}"
+                                class="sari-trending-item"
+                                aria-label="View {{ $trendingProduct['name'] }}"
+                            >
+                                <span class="sari-trending-thumb">
+                                    @if (!empty($trendingProduct['image']))
+                                        <img src="{{ asset($trendingProduct['image']) }}" alt="" loading="lazy" decoding="async">
+                                    @else
+                                        <span aria-hidden="true">S</span>
+                                    @endif
+                                </span>
+                                <span class="sari-trending-copy">
+                                    <strong>{{ $trendingProduct['name'] }}</strong>
+                                    <small>{{ $trendingProduct['category'] ?? 'General' }}</small>
+                                    <b>₱{{ number_format((float) ($trendingProduct['price'] ?? 0), 2) }}</b>
+                                </span>
+                                <svg class="sari-trending-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m9 18 6-6-6-6"></path>
+                                </svg>
+                            </a>
+                        @empty
+                            <p class="sari-insight-empty">Products will appear here as catalog activity grows.</p>
+                        @endforelse
+                    </div>
+                </section>
+
+                <section class="sari-insight-card" aria-labelledby="buyerPopularCategoriesTitle">
+                    <div class="sari-insight-card-head">
+                        <div class="sari-insight-heading">
+                            <span class="sari-insight-heading-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                                    <path d="M20 13 13 20 4 11V4h7l9 9Z"></path><circle cx="8.5" cy="8.5" r="1.2"></circle>
+                                </svg>
+                            </span>
+                            <h2 id="buyerPopularCategoriesTitle">Popular Categories</h2>
+                        </div>
+                        <button id="buyerPopularCategoriesViewAll" type="button" class="sari-insight-link">
+                            View all <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+
+                    <div class="sari-popular-category-list">
+                        @forelse ($popularCategories ?? [] as $popularCategory)
+                            <button
+                                type="button"
+                                class="sari-popular-category-item"
+                                data-popular-category="{{ $popularCategory['name'] }}"
+                                aria-label="Filter products by {{ $popularCategory['name'] }}"
+                            >
+                                <span class="sari-popular-category-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <rect x="4" y="4" width="6" height="6" rx="1.2"></rect>
+                                        <rect x="14" y="4" width="6" height="6" rx="1.2"></rect>
+                                        <rect x="4" y="14" width="6" height="6" rx="1.2"></rect>
+                                        <rect x="14" y="14" width="6" height="6" rx="1.2"></rect>
+                                    </svg>
+                                </span>
+                                <span class="sari-popular-category-copy">
+                                    <strong>{{ $popularCategory['name'] }}</strong>
+                                    <small>{{ $popularCategory['count'] }} {{ $popularCategory['count'] === 1 ? 'product' : 'products' }}</small>
+                                </span>
+                                <svg class="sari-popular-category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m9 18 6-6-6-6"></path>
+                                </svg>
+                            </button>
+                        @empty
+                            <p class="sari-insight-empty">Categories will appear when products are available.</p>
+                        @endforelse
+                    </div>
+                </section>
+            </aside>
         </div>
 
     </section>
@@ -3167,14 +3509,6 @@
                 </div>
             </div>
 
-            <div class="py-5">
-                <p class="text-[10px] font-semibold text-[#403930]">Availability</p>
-
-                <label class="mt-3 flex cursor-pointer items-center gap-2">
-                    <input id="mobileInStockFilter" type="checkbox" class="h-3.5 w-3.5 rounded accent-[#c99128]">
-                    <span class="text-[9px] text-[#665e54]">In Stock Only</span>
-                </label>
-            </div>
         </div>
 
         <div class="border-t border-[#eee4d3] bg-white p-4">
@@ -3257,11 +3591,9 @@
 (function () {
     function initSariFilterDock() {
         const categorySelect = document.getElementById('buyerCategorySelect');
-        const availabilitySelect = document.getElementById('buyerAvailabilitySelect');
-        const inStockFilter = document.getElementById('inStockFilter');
-
         const hiddenCategoryButtons = Array.from(document.querySelectorAll('[data-filter-category]'));
         const categoryChips = Array.from(document.querySelectorAll('[data-shop-category-chip]'));
+        const popularCategoryButtons = Array.from(document.querySelectorAll('[data-popular-category]'));
 
         const minPrice = document.getElementById('minPrice');
         const maxPrice = document.getElementById('maxPrice');
@@ -3277,7 +3609,6 @@
         const mobileFilterOverlay = document.getElementById('mobileFilterOverlay');
         const mobileClearFilters = document.getElementById('mobileClearFilters');
         const applyMobileFilters = document.getElementById('applyMobileFilters');
-        const mobileInStockFilter = document.getElementById('mobileInStockFilter');
         const mobileFilterSummary = document.getElementById('mobileFilterSummary');
         const mobileFilterCount = document.getElementById('mobileFilterCount');
         const mobileCategoryButtons = Array.from(document.querySelectorAll('[data-filter-category-mobile]'));
@@ -3330,7 +3661,7 @@
             syncFormalDropdown(selectId);
         }
 
-        ['buyerCategorySelect', 'buyerAvailabilitySelect', 'buyerSort'].forEach(bindFormalDropdown);
+        ['buyerCategorySelect', 'buyerSort'].forEach(bindFormalDropdown);
 
         formalDropdowns.forEach((details) => {
             if (details.dataset.toggleBound === '1') return;
@@ -3347,7 +3678,6 @@
 
         function syncMobileFilterUi() {
             const selectedCategory = String(categorySelect?.value || '');
-            const inStockOnly = availabilitySelect?.value === 'in-stock';
 
             mobileCategoryButtons.forEach((button) => {
                 const selected = String(button.dataset.filterCategoryMobile || '') === selectedCategory;
@@ -3358,24 +3688,14 @@
                 check?.classList.toggle('hidden', !selected);
             });
 
-            if (mobileInStockFilter) mobileInStockFilter.checked = inStockOnly;
-
-            const activeCount = Number(Boolean(selectedCategory)) + Number(inStockOnly);
+            const activeCount = Number(Boolean(selectedCategory));
             if (mobileFilterCount) {
                 mobileFilterCount.textContent = String(activeCount);
                 mobileFilterCount.classList.toggle('hidden', activeCount === 0);
             }
 
             if (mobileFilterSummary) {
-                if (selectedCategory && inStockOnly) {
-                    mobileFilterSummary.textContent = `${selectedCategory} · In Stock`;
-                } else if (selectedCategory) {
-                    mobileFilterSummary.textContent = selectedCategory;
-                } else if (inStockOnly) {
-                    mobileFilterSummary.textContent = 'In Stock Only';
-                } else {
-                    mobileFilterSummary.textContent = 'All Products';
-                }
+                mobileFilterSummary.textContent = selectedCategory || 'All Products';
             }
         }
 
@@ -3395,6 +3715,16 @@
             }
         }
 
+        function syncPopularCategoryUi() {
+            const selectedCategory = String(categorySelect?.value || '');
+
+            popularCategoryButtons.forEach((button) => {
+                const selected = String(button.dataset.popularCategory || '') === selectedCategory;
+                button.classList.toggle('is-active', selected);
+                button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+            });
+        }
+
         function chooseCategory(value) {
             const normalized = String(value || '');
 
@@ -3412,6 +3742,7 @@
             });
 
             syncMobileFilterUi();
+            syncPopularCategoryUi();
         }
 
         categorySelect?.addEventListener('change', function () {
@@ -3424,16 +3755,37 @@
             });
         });
 
-        availabilitySelect?.addEventListener('change', function () {
-            const shouldCheck = this.value === 'in-stock';
+        popularCategoryButtons.forEach((button) => {
+            if (button.dataset.bound === '1') return;
+            button.dataset.bound = '1';
 
-            if (inStockFilter && inStockFilter.checked !== shouldCheck) {
-                inStockFilter.checked = shouldCheck;
-                inStockFilter.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-
-            syncMobileFilterUi();
+            button.addEventListener('click', function () {
+                chooseCategory(this.dataset.popularCategory || '');
+                document.getElementById('buyerProductGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         });
+
+        const trendingViewAll = document.getElementById('buyerTrendingViewAll');
+        if (trendingViewAll && trendingViewAll.dataset.bound !== '1') {
+            trendingViewAll.dataset.bound = '1';
+            trendingViewAll.addEventListener('click', function () {
+                const sortSelect = document.getElementById('buyerSort');
+                if (sortSelect) {
+                    sortSelect.value = 'sold';
+                    sortSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                document.getElementById('buyerProductGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+
+        const popularCategoriesViewAll = document.getElementById('buyerPopularCategoriesViewAll');
+        if (popularCategoriesViewAll && popularCategoriesViewAll.dataset.bound !== '1') {
+            popularCategoriesViewAll.dataset.bound = '1';
+            popularCategoriesViewAll.addEventListener('click', function () {
+                chooseCategory('');
+                document.querySelector('.sari-reference-category-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        }
 
         if (mobileFilterDrawer && mobileFilterDrawer.dataset.bound !== '1') {
             mobileFilterDrawer.dataset.bound = '1';
@@ -3449,12 +3801,6 @@
                 });
             });
 
-            mobileInStockFilter?.addEventListener('change', function () {
-                if (!availabilitySelect) return;
-                availabilitySelect.value = this.checked ? 'in-stock' : '';
-                availabilitySelect.dispatchEvent(new Event('change', { bubbles: true }));
-            });
-
             mobileClearFilters?.addEventListener('click', () => {
                 clearAll?.click();
                 syncMobileFilterUi();
@@ -3466,17 +3812,13 @@
         }
 
         syncMobileFilterUi();
+        syncPopularCategoryUi();
 
 
         clearAll?.addEventListener('click', function () {
             if (categorySelect) {
                 categorySelect.value = '';
                 categorySelect.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-
-            if (availabilitySelect) {
-                availabilitySelect.value = '';
-                availabilitySelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             const sortSelect = document.getElementById('buyerSort');

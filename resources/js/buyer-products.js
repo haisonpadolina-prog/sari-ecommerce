@@ -56,7 +56,6 @@
         const sort = document.getElementById('buyerSort');
         const minPrice = document.getElementById('minPrice');
         const maxPrice = document.getElementById('maxPrice');
-        const inStock = document.getElementById('inStockFilter');
         const empty = document.getElementById('buyerProductEmpty');
         const resultIds = ['topResultCount', 'toolbarResultCount', 'buyerResultCount'];
         const resultLabel = document.getElementById('toolbarResultLabel');
@@ -115,14 +114,11 @@
             let visible = cards.filter((card) => {
                 const cardCategory = normalize(card.dataset.productCategory || '');
                 const price = Number(card.dataset.productPrice || 0);
-                const stock = Number(card.dataset.productStock || 0);
-
                 const matches =
                     cardMatchesSearch(card, query) &&
                     (!cat || cardCategory === cat) &&
                     price >= (Number.isFinite(min) ? min : 0) &&
-                    price <= (Number.isFinite(max) ? max : Number.POSITIVE_INFINITY) &&
-                    (!inStock?.checked || stock > 0);
+                    price <= (Number.isFinite(max) ? max : Number.POSITIVE_INFINITY);
 
                 card.classList.toggle('hidden', !matches);
                 return matches;
@@ -325,7 +321,6 @@
         sort?.addEventListener('change', applyFilters);
         minPrice?.addEventListener('input', applyFilters);
         maxPrice?.addEventListener('input', applyFilters);
-        inStock?.addEventListener('change', applyFilters);
 
         document.querySelectorAll('[data-filter-category]').forEach((button) => {
             button.addEventListener('click', () => {
@@ -346,7 +341,6 @@
             if (search) search.value = '';
             if (minPrice) minPrice.value = '';
             if (maxPrice) maxPrice.value = '';
-            if (inStock) inStock.checked = false;
             if (sort) sort.value = 'featured';
             applyFilters();
             hideLivePanel();

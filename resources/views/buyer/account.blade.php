@@ -2854,6 +2854,48 @@
             color: inherit !important;
         }
 
+
+        /* ============================================================
+           ACCOUNT HEADER — MATCH BUYER CART TITLE SCALE
+           Title-only visual override. No account functionality changed.
+        ============================================================ */
+        .sa-page-head {
+            padding: 2px 2px 14px !important;
+        }
+
+        .sa-eyebrow {
+            margin: 0 !important;
+            color: #a87316 !important;
+            font-size: 10.5px !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            letter-spacing: .14em !important;
+            text-transform: uppercase !important;
+        }
+
+        .sa-page-title {
+            margin: 5px 0 0 !important;
+            color: #2e343b !important;
+            font-size: clamp(27px, 2.25vw, 31px) !important;
+            font-weight: 760 !important;
+            line-height: 1.04 !important;
+            letter-spacing: -.035em !important;
+        }
+
+        .sa-page-title span {
+            color: #c88912 !important;
+        }
+
+        @media (max-width: 640px) {
+            .sa-eyebrow {
+                font-size: 9.5px !important;
+            }
+
+            .sa-page-title {
+                font-size: 25px !important;
+            }
+        }
+
 </style>
 
     @if (session('success'))
@@ -2866,7 +2908,7 @@
 
     <section class="sa-page-head">
         <p class="sa-eyebrow">Account Management</p>
-        <h1 class="sa-page-title">Buyer Profile</h1>
+        <h1 class="sa-page-title">Buyer <span>Profile</span></h1>
     </section>
 
     @if ($buyerAccount)

@@ -21,287 +21,636 @@
     };
 @endphp
 
-<style>
-    .sari-recent-page {
-        --gold: #c88912;
-        --gold-dark: #a96f0e;
-        --ink: #202832;
-        --muted: #7d8793;
-        --line: #e1e6ea;
-        --soft: #f6f8fa;
-        font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: var(--ink);
-    }
+<div
+    data-sari-recent-orders-page
+    class="mx-auto w-full"
+    style="font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
+>
+    <style>
+        [data-sari-recent-orders-page] {
+            --orders-panel:#ffffff;
+            --orders-border:#e2e6ea;
+            --orders-border-soft:#eceff2;
+            --orders-text:#303740;
+            --orders-muted:#7b8490;
+            --orders-gold:#c88912;
+            --orders-gold-dark:#a96f0e;
 
-    .sari-recent-shell {
-        width: min(1380px, calc(100% - 32px));
-        margin: 0 auto;
-        padding: 24px 0 42px;
-    }
+            width:100%;
+            max-width:1400px;
+            margin-inline:auto;
+            padding:22px 24px 42px;
+            background:transparent;
+            color:var(--orders-text);
+        }
 
-    .sari-recent-head {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 20px;
-        margin-bottom: 18px;
-    }
+        /* HEADER — MATCHES CURRENT CART */
+        .sari-recent-orders-header {
+            padding:2px 2px 14px;
+        }
 
-    .sari-recent-eyebrow {
-        margin: 0 0 5px;
-        color: #a87316;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: .13em;
-        text-transform: uppercase;
-    }
+        .sari-recent-orders-header-inner {
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            gap:16px;
+        }
 
-    .sari-recent-title {
-        margin: 0;
-        color: #202832;
-        font-size: clamp(30px, 3vw, 38px);
-        font-weight: 800;
-        line-height: 1.05;
-        letter-spacing: -.04em;
-    }
+        .sari-recent-orders-eyebrow {
+            margin:0;
+            color:#a87316;
+            font-size:10.5px;
+            font-weight:800;
+            letter-spacing:.14em;
+            line-height:1.2;
+            text-transform:uppercase;
+        }
 
-    .sari-recent-link {
-        display: inline-flex;
-        align-items: center;
-        min-height: 38px;
-        color: #333b45;
-        font-size: 11px;
-        font-weight: 650;
-        text-decoration: none;
-    }
+        .sari-recent-orders-title {
+            margin:5px 0 0;
+            color:#2e343b;
+            font-size:clamp(27px,2.25vw,31px);
+            font-weight:760;
+            line-height:1.04;
+            letter-spacing:-.035em;
+        }
 
-    .sari-recent-link:hover { color: var(--gold-dark); }
+        .sari-recent-orders-title span {
+            color:var(--orders-gold);
+        }
 
-    .sari-recent-stats {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        overflow: hidden;
-        margin-bottom: 16px;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: #fff;
-    }
+        .sari-recent-orders-link {
+            position:relative;
+            top:-12px;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            color:#59636e;
+            font-size:11.5px;
+            font-weight:750;
+            line-height:1.35;
+            text-decoration:none;
+            transition:color .14s ease;
+        }
 
-    .sari-recent-stat {
-        position: relative;
-        min-height: 78px;
-        padding: 15px 18px;
-    }
+        .sari-recent-orders-link .arrow {
+            color:currentColor;
+            font-size:18px;
+            font-weight:800;
+            line-height:.8;
+            transform:translateY(-1px);
+        }
 
-    .sari-recent-stat + .sari-recent-stat::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 16px;
-        bottom: 16px;
-        width: 1px;
-        background: #e8ecef;
-    }
+        .sari-recent-orders-link:hover,
+        .sari-recent-orders-link:focus-visible {
+            color:var(--orders-gold);
+            outline:none;
+        }
 
-    .sari-recent-stat span {
-        display: block;
-        color: #7b8692;
-        font-size: 9px;
-        font-weight: 750;
-        letter-spacing: .07em;
-        text-transform: uppercase;
-    }
+        /* SUMMARY — FLOATING CART SURFACES */
+        .sari-recent-orders-stats {
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            gap:12px;
+            margin-top:10px;
+        }
 
-    .sari-recent-stat strong {
-        display: block;
-        margin-top: 9px;
-        color: #1f2937;
-        font-size: 23px;
-        font-weight: 800;
-        line-height: 1;
-    }
+        .sari-recent-orders-stat {
+            border:1px solid var(--orders-border);
+            border-radius:13px;
+            background:#fff;
+            padding:14px 16px;
+            box-shadow:
+                0 8px 22px rgba(31,41,55,.042),
+                0 2px 6px rgba(31,41,55,.018);
+        }
 
-    .sari-recent-list {
-        overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: #fff;
-    }
+        .sari-recent-orders-stat span {
+            display:block;
+            color:#7d8690;
+            font-size:9px;
+            font-weight:700;
+            line-height:1.3;
+        }
 
-    .sari-recent-order {
-        display: grid;
-        grid-template-columns: minmax(210px, 1.2fr) minmax(250px, 1.7fr) 130px 130px 90px;
-        align-items: center;
-        gap: 18px;
-        min-height: 102px;
-        padding: 16px 18px;
-    }
+        .sari-recent-orders-stat strong {
+            display:block;
+            margin-top:7px;
+            color:#252c34;
+            font-size:24px;
+            font-weight:850;
+            line-height:1;
+            letter-spacing:-.035em;
+        }
 
-    .sari-recent-order + .sari-recent-order { border-top: 1px solid #edf0f3; }
+        .sari-recent-orders-stat.is-active strong { color:#a96f0e; }
+        .sari-recent-orders-stat.is-delivered strong { color:#4f8065; }
+        .sari-recent-orders-stat.is-cancelled strong { color:#dc4b4b; }
 
-    .sari-order-number {
-        color: #252e38;
-        font-size: 11.5px;
-        font-weight: 800;
-    }
+        /* ORDER LIST — SAME SELLER-SHELL / INNER-CARD LANGUAGE AS CART */
+        .sari-recent-orders-shell {
+            overflow:hidden;
+            margin-top:14px;
+            border:1px solid var(--orders-border);
+            border-radius:14px;
+            background:#fff;
+            box-shadow:
+                0 12px 30px rgba(31,41,55,.052),
+                0 2px 7px rgba(31,41,55,.022);
+        }
 
-    .sari-order-meta {
-        margin-top: 4px;
-        color: #87919c;
-        font-size: 9.5px;
-        line-height: 1.45;
-    }
+        .sari-recent-orders-toolbar {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            border-bottom:1px solid var(--orders-border-soft);
+            background:#fff;
+            padding:14px 16px;
+        }
 
-    .sari-order-product {
-        display: flex;
-        min-width: 0;
-        align-items: center;
-        gap: 12px;
-    }
+        .sari-recent-orders-toolbar h2 {
+            margin:0;
+            color:#303740;
+            font-size:16px;
+            font-weight:800;
+            line-height:1.2;
+        }
 
-    .sari-order-thumb {
-        width: 58px;
-        height: 58px;
-        flex: 0 0 58px;
-        overflow: hidden;
-        border: 1px solid #e2e7eb;
-        border-radius: 11px;
-        background: #f6f8fa;
-    }
+        .sari-recent-orders-count {
+            color:#59636e;
+            font-size:10.5px;
+            font-weight:650;
+            line-height:1.3;
+        }
 
-    .sari-order-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .sari-order-thumb-fallback { display: grid; width: 100%; height: 100%; place-items: center; color: #a0a8b1; font-size: 11px; font-weight: 800; }
+        .sari-recent-orders-list {
+            display:grid;
+            gap:10px;
+            background:#f8f9fb;
+            padding:12px;
+        }
 
-    .sari-order-product-name {
-        overflow: hidden;
-        color: #2a333d;
-        font-size: 11px;
-        font-weight: 700;
-        line-height: 1.35;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+        .sari-recent-order-card {
+            display:grid;
+            grid-template-columns:minmax(190px,1.1fr) minmax(300px,1.7fr) 130px 150px 100px;
+            align-items:center;
+            gap:16px;
+            min-height:104px;
+            border:1px solid #e4e8ec;
+            border-radius:12px;
+            background:#fff;
+            padding:14px 15px;
+            box-shadow:
+                0 5px 14px rgba(31,41,55,.032),
+                0 1px 4px rgba(31,41,55,.014);
+            transition:border-color .14s ease,box-shadow .14s ease;
+        }
 
-    .sari-order-product-meta { margin-top: 5px; color: #8a949f; font-size: 9px; }
-    .sari-order-total { color: var(--gold-dark); font-size: 12px; font-weight: 800; }
+        .sari-recent-order-card:hover {
+            border-color:#d8dde2;
+            box-shadow:
+                0 8px 18px rgba(31,41,55,.045),
+                0 2px 6px rgba(31,41,55,.018);
+        }
 
-    .sari-order-status {
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 1.35;
-    }
+        .sari-order-number {
+            color:#27313b;
+            font-size:13px;
+            font-weight:800;
+            line-height:1.35;
+        }
 
-    .sari-order-status.is-active { color: #9a6811; }
-    .sari-order-status.is-shipping { color: #3d6480; }
-    .sari-order-status.is-delivered { color: #3f7a57; }
-    .sari-order-status.is-cancelled { color: #df3434; }
+        .sari-order-meta {
+            margin-top:5px;
+            color:#7f8994;
+            font-size:10px;
+            font-weight:500;
+            line-height:1.5;
+        }
 
-    .sari-order-open {
-        color: #303943;
-        font-size: 10px;
-        font-weight: 700;
-        text-decoration: none;
-        text-align: right;
-    }
+        .sari-order-product {
+            display:flex;
+            min-width:0;
+            align-items:center;
+            gap:13px;
+        }
 
-    .sari-order-open:hover { color: var(--gold-dark); }
+        .sari-order-thumb {
+            width:72px;
+            height:72px;
+            flex:0 0 72px;
+            overflow:hidden;
+            border:1px solid #e5e9ed;
+            border-radius:11px;
+            background:#eef1f4;
+        }
 
-    .sari-recent-empty {
-        min-height: 380px;
-        display: grid;
-        place-items: center;
-        padding: 42px 20px;
-        text-align: center;
-    }
+        .sari-order-thumb img {
+            display:block;
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            object-position:center;
+        }
 
-    .sari-recent-empty h2 { margin: 0; color: #4f5964; font-size: 17px; font-weight: 750; }
-    .sari-recent-empty p { margin: 7px 0 20px; color: #98a0a9; font-size: 10px; }
-    .sari-recent-empty a { display: inline-flex; min-height: 40px; align-items: center; border-radius: 9px; background: var(--gold); padding: 0 16px; color: #fff; font-size: 10px; font-weight: 700; text-decoration: none; }
+        .sari-order-thumb-fallback {
+            display:grid;
+            width:100%;
+            height:100%;
+            place-items:center;
+            color:#9ba4ae;
+            font-size:10px;
+            font-weight:800;
+            letter-spacing:.05em;
+        }
 
-    @media (max-width: 1050px) {
-        .sari-recent-order { grid-template-columns: minmax(190px, 1fr) minmax(220px, 1.4fr) 110px 110px; }
-        .sari-order-open { grid-column: 4; text-align: left; }
-    }
+        .sari-order-product-name {
+            overflow:hidden;
+            color:#1f2933;
+            font-size:14px;
+            font-weight:700;
+            line-height:1.4;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
 
-    @media (max-width: 760px) {
-        .sari-recent-shell { width: min(100% - 24px, 1380px); padding-top: 18px; }
-        .sari-recent-head { align-items: flex-start; }
-        .sari-recent-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .sari-recent-stat:nth-child(3)::before { display: none; }
-        .sari-recent-stat:nth-child(n+3) { border-top: 1px solid #e8ecef; }
-        .sari-recent-order { grid-template-columns: 1fr; gap: 11px; padding: 16px; }
-        .sari-order-open { grid-column: auto; text-align: left; }
-    }
-</style>
+        .sari-order-product-meta {
+            margin-top:6px;
+            color:#66727f;
+            font-size:10.5px;
+            font-weight:500;
+            line-height:1.45;
+        }
 
-<div class="sari-recent-page">
-    <div class="sari-recent-shell">
-        <header class="sari-recent-head">
+        .sari-order-total {
+            color:#b6760b;
+            font-size:16px;
+            font-weight:850;
+            line-height:1.15;
+            white-space:nowrap;
+        }
+
+        .sari-order-status {
+            font-size:11px;
+            font-weight:750;
+            line-height:1.4;
+        }
+
+        .sari-order-status.is-active { color:#9a6811; }
+        .sari-order-status.is-shipping { color:#4f7189; }
+        .sari-order-status.is-delivered { color:#4f8065; }
+        .sari-order-status.is-cancelled { color:#dc4b4b; }
+
+        .sari-order-open {
+            display:inline-flex;
+            align-items:center;
+            justify-content:flex-end;
+            gap:6px;
+            color:#303943;
+            font-size:10.5px;
+            font-weight:750;
+            line-height:1.3;
+            text-decoration:none;
+            white-space:nowrap;
+            transition:color .14s ease;
+        }
+
+        .sari-order-open span {
+            color:currentColor;
+            font-size:15px;
+            line-height:.8;
+        }
+
+        .sari-order-open:hover,
+        .sari-order-open:focus-visible {
+            color:var(--orders-gold);
+            outline:none;
+        }
+
+        /* EMPTY STATE — MATCHES CART */
+        .sari-recent-orders-empty-state {
+            display:grid;
+            min-height:430px;
+            margin-top:10px;
+            place-items:center;
+            border:1px solid #e3e7eb;
+            border-radius:16px;
+            background:#fff;
+            padding:72px 24px;
+            text-align:center;
+            box-shadow:
+                0 10px 28px rgba(31,41,55,.045),
+                0 2px 7px rgba(31,41,55,.018);
+        }
+
+        .sari-recent-orders-empty-icon {
+            display:grid;
+            width:92px;
+            height:92px;
+            margin:0 auto;
+            place-items:center;
+            color:#b4bbc3;
+        }
+
+        .sari-recent-orders-empty-icon svg {
+            width:58px;
+            height:58px;
+            fill:none;
+            stroke:currentColor;
+            stroke-width:1.45;
+            stroke-linecap:round;
+            stroke-linejoin:round;
+        }
+
+        .sari-recent-orders-empty-title {
+            margin:18px 0 0;
+            color:#9ca4ad;
+            font-size:22px;
+            font-weight:750;
+            line-height:1.2;
+            letter-spacing:-.025em;
+        }
+
+        .sari-recent-orders-empty-copy {
+            max-width:520px;
+            margin:7px auto 0;
+            color:#b0b7bf;
+            font-size:12px;
+            font-weight:500;
+            line-height:1.55;
+        }
+
+        .sari-recent-orders-empty-button {
+            display:inline-flex;
+            min-width:170px;
+            height:48px;
+            align-items:center;
+            justify-content:center;
+            margin-top:24px;
+            border:1px solid var(--orders-gold);
+            border-radius:11px;
+            background:var(--orders-gold);
+            padding:0 26px;
+            color:#fff;
+            font-size:11px;
+            font-weight:800;
+            line-height:1;
+            text-decoration:none;
+            box-shadow:none;
+            transition:background-color .14s ease,border-color .14s ease;
+        }
+
+        .sari-recent-orders-empty-button:hover,
+        .sari-recent-orders-empty-button:focus-visible {
+            border-color:#ad760f;
+            background:#ad760f;
+            color:#fff;
+            outline:none;
+        }
+
+        @media (max-width:1120px) {
+            .sari-recent-order-card {
+                grid-template-columns:minmax(180px,1fr) minmax(260px,1.5fr) 120px 130px;
+            }
+
+            .sari-order-open {
+                grid-column:4;
+                justify-content:flex-start;
+            }
+        }
+
+        @media (max-width:820px) {
+            .sari-recent-orders-stats {
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+
+            .sari-recent-order-card {
+                grid-template-columns:1fr;
+                gap:12px;
+            }
+
+            .sari-order-open {
+                grid-column:auto;
+                justify-content:flex-start;
+            }
+        }
+
+        @media (max-width:640px) {
+            [data-sari-recent-orders-page] {
+                padding:16px 14px 28px;
+            }
+
+            .sari-recent-orders-header {
+                padding-bottom:12px;
+            }
+
+            .sari-recent-orders-header-inner {
+                align-items:flex-start;
+                flex-direction:column;
+                gap:12px;
+            }
+
+            .sari-recent-orders-eyebrow {
+                font-size:9.5px;
+            }
+
+            .sari-recent-orders-title {
+                font-size:25px;
+            }
+
+            .sari-recent-orders-link {
+                top:0;
+                font-size:10.5px;
+            }
+
+            .sari-recent-orders-stats {
+                gap:9px;
+            }
+
+            .sari-recent-orders-stat {
+                padding:12px 13px;
+            }
+
+            .sari-recent-orders-stat strong {
+                font-size:21px;
+            }
+
+            .sari-recent-orders-toolbar {
+                padding:13px 14px;
+            }
+
+            .sari-recent-orders-toolbar h2 {
+                font-size:15px;
+            }
+
+            .sari-recent-orders-list {
+                padding:10px;
+            }
+
+            .sari-recent-order-card {
+                padding:12px;
+            }
+
+            .sari-order-thumb {
+                width:64px;
+                height:64px;
+                flex-basis:64px;
+            }
+
+            .sari-order-product-name {
+                font-size:13px;
+            }
+
+            .sari-recent-orders-empty-state {
+                min-height:380px;
+                padding:56px 20px;
+            }
+
+            .sari-recent-orders-empty-icon {
+                width:64px;
+                height:64px;
+            }
+
+            .sari-recent-orders-empty-icon svg {
+                width:40px;
+                height:40px;
+            }
+
+            .sari-recent-orders-empty-title {
+                font-size:20px;
+            }
+
+            .sari-recent-orders-empty-copy {
+                font-size:11px;
+            }
+
+            .sari-recent-orders-empty-button {
+                min-width:160px;
+                height:46px;
+                font-size:10.5px;
+            }
+        }
+    </style>
+
+    <header class="sari-recent-orders-header">
+        <div class="sari-recent-orders-header-inner">
             <div>
-                <p class="sari-recent-eyebrow">Order history</p>
-                <h1 class="sari-recent-title">Recent Orders</h1>
+                <p class="sari-recent-orders-eyebrow">SARI Marketplace</p>
+                <h1 class="sari-recent-orders-title">Recent <span>Orders</span></h1>
             </div>
-            <a href="{{ route('buyer.orders') }}" class="sari-recent-link" wire:navigate.hover>View all orders →</a>
-        </header>
 
-        <section class="sari-recent-stats" aria-label="Recent order summary">
-            <div class="sari-recent-stat"><span>Recent</span><strong>{{ $recentOrders->count() }}</strong></div>
-            <div class="sari-recent-stat"><span>Active</span><strong>{{ $activeCount }}</strong></div>
-            <div class="sari-recent-stat"><span>Delivered</span><strong>{{ $deliveredCount }}</strong></div>
-            <div class="sari-recent-stat"><span>Cancelled</span><strong>{{ $cancelledCount }}</strong></div>
+            <a href="{{ route('buyer.orders') }}" class="sari-recent-orders-link" wire:navigate.hover>
+                View all orders <span class="arrow" aria-hidden="true">&gt;</span>
+            </a>
+        </div>
+    </header>
+
+    @if ($recentOrders->isEmpty())
+        <section class="sari-recent-orders-empty-state">
+            <div>
+                <span class="sari-recent-orders-empty-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 7h14"></path>
+                        <path d="M7 7l1 12h8l1-12"></path>
+                        <path d="M9 4h6l1 3H8z"></path>
+                        <path d="M9.5 11h5"></path>
+                        <path d="M9.5 14h5"></path>
+                    </svg>
+                </span>
+
+                <h2 class="sari-recent-orders-empty-title">No recent orders yet</h2>
+                <p class="sari-recent-orders-empty-copy">Your latest purchases will appear here after checkout.</p>
+
+                <a href="{{ route('buyer.products') }}" class="sari-recent-orders-empty-button" wire:navigate.hover>
+                    Browse Products
+                </a>
+            </div>
+        </section>
+    @else
+        <section class="sari-recent-orders-stats" aria-label="Recent order summary">
+            <div class="sari-recent-orders-stat">
+                <span>Recent</span>
+                <strong>{{ $recentOrders->count() }}</strong>
+            </div>
+            <div class="sari-recent-orders-stat is-active">
+                <span>Active</span>
+                <strong>{{ $activeCount }}</strong>
+            </div>
+            <div class="sari-recent-orders-stat is-delivered">
+                <span>Delivered</span>
+                <strong>{{ $deliveredCount }}</strong>
+            </div>
+            <div class="sari-recent-orders-stat is-cancelled">
+                <span>Cancelled</span>
+                <strong>{{ $cancelledCount }}</strong>
+            </div>
         </section>
 
-        <section class="sari-recent-list">
-            @forelse ($recentOrders as $order)
-                @php
-                    $items = collect($order->items ?? [])->values();
-                    $firstItem = $items->first() ?? [];
-                    $productId = (int) ($firstItem['product_id'] ?? 0);
-                    $productName = trim((string) ($firstItem['name'] ?? 'Ordered product')) ?: 'Ordered product';
-                    $productQty = max(1, (int) ($firstItem['qty'] ?? 1));
-                    $variantLabel = trim((string) ($firstItem['variant_label'] ?? ''));
-                    $moreItems = max(0, $items->count() - 1);
-                    $storeName = trim((string) ($order->seller?->store_name ?? 'SARI Seller')) ?: 'SARI Seller';
-                @endphp
+        <section class="sari-recent-orders-shell">
+            <header class="sari-recent-orders-toolbar">
+                <h2>Latest purchases</h2>
+                <span class="sari-recent-orders-count">{{ $recentOrders->count() }} order{{ $recentOrders->count() === 1 ? '' : 's' }}</span>
+            </header>
 
-                <article class="sari-recent-order">
-                    <div>
-                        <div class="sari-order-number">{{ $order->order_number }}</div>
-                        <div class="sari-order-meta">{{ $storeName }} · {{ optional($order->created_at)->format('M d, Y · h:i A') }}</div>
-                    </div>
+            <div class="sari-recent-orders-list">
+                @foreach ($recentOrders as $order)
+                    @php
+                        $items = collect($order->items ?? [])->values();
+                        $firstItem = $items->first() ?? [];
+                        $productId = (int) ($firstItem['product_id'] ?? 0);
+                        $productName = trim((string) ($firstItem['name'] ?? 'Ordered product')) ?: 'Ordered product';
+                        $productQty = max(1, (int) ($firstItem['qty'] ?? 1));
+                        $variantLabel = trim((string) ($firstItem['variant_label'] ?? ''));
+                        $moreItems = max(0, $items->count() - 1);
+                        $storeName = trim((string) ($order->seller?->store_name ?? 'SARI Seller')) ?: 'SARI Seller';
+                    @endphp
 
-                    <div class="sari-order-product">
-                        <div class="sari-order-thumb">
-                            @if ($productId > 0)
-                                <img src="{{ route('buyer.product.image', ['product' => $productId]) }}" alt="{{ $productName }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
-                                <span class="sari-order-thumb-fallback" style="display:none;">SARI</span>
-                            @else
-                                <span class="sari-order-thumb-fallback">SARI</span>
-                            @endif
-                        </div>
-                        <div class="min-w-0">
-                            <div class="sari-order-product-name">{{ $productName }}</div>
-                            <div class="sari-order-product-meta">
-                                Qty {{ $productQty }}@if ($variantLabel !== '') · {{ $variantLabel }}@endif
-                                @if ($moreItems > 0) · +{{ $moreItems }} more @endif
+                    <article class="sari-recent-order-card">
+                        <div>
+                            <div class="sari-order-number">{{ $order->order_number }}</div>
+                            <div class="sari-order-meta">
+                                {{ $storeName }} · {{ optional($order->created_at)->format('M d, Y · h:i A') }}
                             </div>
                         </div>
-                    </div>
 
-                    <div class="sari-order-total">₱{{ number_format((float) $order->total, 2) }}</div>
-                    <div class="sari-order-status {{ $statusClass($order->status) }}">{{ $order->statusLabel() }}</div>
-                    <a href="{{ route('buyer.orders.show', $order) }}" class="sari-order-open" wire:navigate.hover>View order</a>
-                </article>
-            @empty
-                <div class="sari-recent-empty">
-                    <div>
-                        <h2>No recent orders yet</h2>
-                        <p>Your latest purchases will appear here after checkout.</p>
-                        <a href="{{ route('buyer.products') }}" wire:navigate.hover>Browse Products</a>
-                    </div>
-                </div>
-            @endforelse
+                        <div class="sari-order-product">
+                            <div class="sari-order-thumb">
+                                @if ($productId > 0)
+                                    <img
+                                        src="{{ route('buyer.product.image', ['product' => $productId]) }}"
+                                        alt="{{ $productName }}"
+                                        loading="lazy"
+                                        onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"
+                                    >
+                                    <span class="sari-order-thumb-fallback" style="display:none;">SARI</span>
+                                @else
+                                    <span class="sari-order-thumb-fallback">SARI</span>
+                                @endif
+                            </div>
+
+                            <div class="min-w-0">
+                                <div class="sari-order-product-name">{{ $productName }}</div>
+                                <div class="sari-order-product-meta">
+                                    Qty {{ $productQty }}@if ($variantLabel !== '') · {{ $variantLabel }}@endif
+                                    @if ($moreItems > 0) · +{{ $moreItems }} more @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sari-order-total">₱{{ number_format((float) $order->total, 2) }}</div>
+
+                        <div class="sari-order-status {{ $statusClass($order->status) }}">
+                            {{ $order->statusLabel() }}
+                        </div>
+
+                        <a href="{{ route('buyer.orders.show', $order) }}" class="sari-order-open" wire:navigate.hover>
+                            View order <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </article>
+                @endforeach
+            </div>
         </section>
-    </div>
+    @endif
 </div>
 @endsection

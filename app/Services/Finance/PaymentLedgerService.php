@@ -54,8 +54,11 @@ class PaymentLedgerService
                         'order_number' => $locked->order_number,
                         'payment_status_snapshot' => $locked->payment_status,
                         'note' => strtoupper((string) $locked->payment_method) === 'COD'
-                            ? 'Internal COD collection confirmation from the delivery-completion workflow.'
+                            ? 'Buyer COD payment was collected by the delivery Rider. Cash remains in Rider custody until a Logistics remittance batch is verified.'
                             : 'Internal payment-status snapshot only. No external payment-provider reference was supplied.',
+                        'cash_custody' => strtoupper((string) $locked->payment_method) === 'COD'
+                            ? 'rider_pending_remittance'
+                            : null,
                     ],
                 ]
             );

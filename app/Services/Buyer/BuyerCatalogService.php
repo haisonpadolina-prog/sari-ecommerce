@@ -26,6 +26,37 @@ class BuyerCatalogService
     /** @var array<int, int>|null */
     private ?array $soldCounts = null;
 
+    /**
+     * Buyer-facing category catalog. Keep this aligned with the Seller product
+     * category choices so categories remain discoverable even before a Seller
+     * has uploaded a product into them.
+     *
+     * @var array<int, string>
+     */
+    private const BUYER_CATEGORIES = [
+        'Electronics',
+        'Fashion',
+        'Fashion & Apparel',
+        'Shoes & Footwear',
+        'Home & Living',
+        'Furniture & Office',
+        'Beauty',
+        'Beauty & Personal Care',
+        'Books',
+        'Books & Stationery',
+        'Food & Beverage',
+        'Food & Gourmet',
+        'Jewelry & Watches',
+        'Sports & Outdoors',
+        'Automotive & Motorcycle',
+        'Baby & Kids',
+        'Pet Supplies',
+        'Health & Wellness',
+        'Toys & Collectibles',
+        'Appliances',
+        'Others',
+    ];
+
     private const MARKETPLACE_CATEGORIES = [
         'fashion' => [
             'name' => 'Fashion',
@@ -110,7 +141,7 @@ class BuyerCatalogService
     {
         $product = SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,profile_image_path,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
+                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
                 'seller.vouchers' => $this->activeVoucherConstraint(...),
                 'activeVariants',
                 'galleryImages',
@@ -211,17 +242,13 @@ class BuyerCatalogService
             ->filter()
             ->map(fn ($category) => trim((string) $category))
             ->filter()
-            ->unique(fn ($category) => strtolower($category))
             ->values();
 
-        if ($discovered->isEmpty()) {
-            $discovered = collect([
-                'Food', 'Fashion', 'Beauty', 'Electronics',
-                'Home', 'Sports', 'Lifestyle', 'Accessories',
-            ]);
-        }
-
-        return $discovered
+        return collect(self::BUYER_CATEGORIES)
+            ->concat($discovered)
+            ->map(fn ($category) => trim((string) $category))
+            ->filter()
+            ->unique(fn ($category) => strtolower($category))
             ->map(fn (string $name) => [
                 'name' => $name,
                 'image' => $this->categoryImage($name),
@@ -232,7 +259,7 @@ class BuyerCatalogService
 
     public function homeCategories(): array
     {
-        return array_slice($this->categories(), 0, 8);
+        return $this->categories();
     }
 
     public function marketplaceCategories(): array
@@ -378,23 +405,25 @@ class BuyerCatalogService
                 : (json_decode((string) $variant->option_values, true) ?: []);
 
             /*
-             * Keep buyer-facing labels aligned with the product selector.
-             * Buyers choose Size first, then Color, then any remaining option
-             * groups. Example: Size: Small + Color: Green -> Small • Green.
+             * Buyer-facing labels should be clean and easy to scan.
+             * Example:
+             *   Variant: Green + Size: S  ->  Green • S
+             *
+             * Put the main visual/style option first, then size.
              */
             $preferredOrder = [
-                'size' => 10,
-                'shoe size' => 15,
-                'variant' => 20,
-                'color' => 30,
-                'colour' => 30,
-                'design' => 40,
-                'scent' => 50,
-                'storage' => 60,
-                'material' => 70,
-                'style' => 80,
-                'capacity' => 90,
-                'flavor' => 100,
+                'variant' => 10,
+                'color' => 20,
+                'colour' => 20,
+                'design' => 30,
+                'scent' => 40,
+                'storage' => 50,
+                'material' => 60,
+                'style' => 70,
+                'capacity' => 80,
+                'flavor' => 90,
+                'size' => 100,
+                'shoe size' => 110,
             ];
 
             $cleanLabel = collect($options)
@@ -448,12 +477,13 @@ class BuyerCatalogService
             $gallery->push('buyer/product-images/' . $image->id . '/image');
         }
 
-        /*
-         * The normal buyer gallery contains only the seller's Cover Image and
-         * Product Gallery uploads. Variant-specific images are intentionally
-         * excluded here: they are shown only after the buyer resolves an exact
-         * option combination (for example Size + Color).
-         */
+        // Variant-specific images also belong in the buyer gallery so buyers can
+        // browse every seller-supplied product image before choosing a variant.
+        foreach ($variantPayload as $variant) {
+            if (!empty($variant['image'])) {
+                $gallery->push($variant['image']);
+            }
+        }
 
         $gallery = $gallery
             ->filter()
@@ -529,9 +559,6 @@ class BuyerCatalogService
             'shop_name' => $storeName,
             'store_name' => $storeName,
             'shop_logo' => $this->publicMediaUrl($seller?->store_logo_path),
-            // Use the seller's real account profile photo on buyer-facing seller identity.
-            // The Blade view falls back to the public store logo when no profile photo exists.
-            'seller_profile_image' => $this->publicMediaUrl($seller?->profile_image_path),
             'shop_description' => (string) ($seller?->store_description ?? ''),
             'seller_account_id' => (int) $product->seller_account_id,
             'shop_badge' => 'SARI Seller',
@@ -741,7 +768,7 @@ class BuyerCatalogService
     {
         return SellerProduct::query()
             ->with([
-                'seller:id,store_name,email,profile_image_path,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
+                'seller:id,store_name,email,store_description,store_phone,store_public_email,store_status,store_logo_path,store_banner_path,account_status,warning_count,suspended_until,suspension_reason,created_at',
                 'activeVariants',
                 'galleryImages',
             ])

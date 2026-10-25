@@ -2,64 +2,163 @@
 
 namespace App\Services\Finance;
 
-use App\Models\Accounts\CourierAccount;
 use App\Models\Orders\MarketplaceOrder;
-use App\Models\Finance\RiderEarning;
+use App\Models\Finance\OrderCommission;
+use App\Models\Finance\SellerSettlement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-class RiderEarningService
+class SellerSettlementService
 {
+    public const WITHHOLDING_STATUS = 'not_evaluated';
+
     public function recordForCompletedOrder(
         MarketplaceOrder $order,
+        OrderCommission $commission,
         string $source = 'order_completion'
-    ): RiderEarning {
-        return DB::transaction(function () use ($order, $source): RiderEarning {
-            $locked = MarketplaceOrder::query()
+    ): SellerSettlement {
+        return DB::transaction(function () use ($order, $commission, $source): SellerSettlement {
+            $lockedOrder = MarketplaceOrder::query()
                 ->whereKey($order->getKey())
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            if ($locked->status !== 'delivered' || !$locked->delivered_at) {
+            $lockedCommission = OrderCommission::query()
+                ->whereKey($commission->getKey())
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($lockedOrder->status !== 'delivered' || !$lockedOrder->delivered_at) {
                 throw ValidationException::withMessages([
-                    'order' => 'Rider earnings can only be recognized after delivery.',
+                    'order' => 'Seller payable can only be recognized after delivery.',
                 ]);
             }
 
-            $email = strtolower(trim((string) $locked->courier_email));
-
-            if ($email === '') {
+            if (strtolower((string) $lockedOrder->payment_status) !== 'paid') {
                 throw ValidationException::withMessages([
-                    'courier' => 'Delivered order has no assigned courier email.',
+                    'payment' => 'Seller payable cannot be recognized until the order is paid.',
                 ]);
             }
 
-            $courier = CourierAccount::query()
-                ->whereRaw('LOWER(email) = ?', [$email])
-                ->first();
-
-            if (!$courier) {
+            if ((int) $lockedCommission->marketplace_order_id !== (int) $lockedOrder->id) {
                 throw ValidationException::withMessages([
-                    'courier' => 'Assigned courier account could not be resolved for rider earnings.',
+                    'commission' => 'Commission record does not belong to this order.',
                 ]);
             }
 
-            return RiderEarning::query()->firstOrCreate(
-                ['marketplace_order_id' => $locked->id],
+            $merchandise = round(max(0, (float) ($lockedOrder->seller_receivable_subtotal ?? $lockedOrder->subtotal)), 2);
+            $platformCommission = round(max(0, (float) $lockedCommission->net_commission), 2);
+
+            /*
+             * BIR RR 5-2025 prescribes 0.5% CWT on covered gross remittances by
+             * e-marketplace operators/DFSPs. SARI does NOT auto-apply it here
+             * because the current project has no verified seller tax profile,
+             * threshold/declaration status, exemption data, or real remittance
+             * provider. This keeps the ledger tax-aware without fabricating a
+             * tax deduction that the system cannot yet substantiate.
+             */
+            $withholdingRate = 0.0;
+            $withholdingTax = 0.0;
+            $sellerShippingPromotion = round(max(
+                0,
+                (float) ($lockedOrder->shipping_discount_amount ?? 0)
+            ), 2);
+
+            /*
+             * Free Shipping promotions are explicitly seller-funded. The Buyer
+             * pays the reduced delivery fee, the rider still earns the original
+             * courier fee, and this discount is funded by reducing the Seller's
+             * settlement. No platform shipping expense is invented here.
+             */
+            $sellerNet = round(max(
+                0,
+                $merchandise
+                    - $platformCommission
+                    - $withholdingTax
+                    - $sellerShippingPromotion
+            ), 2);
+
+            return SellerSettlement::query()->firstOrCreate(
+                ['marketplace_order_id' => $lockedOrder->id],
                 [
-                    'courier_account_id' => $courier->id,
-                    'delivery_fee_amount' => $locked->courierDeliveryFee(),
+                    'seller_account_id' => $lockedOrder->seller_account_id,
+                    'order_commission_id' => $lockedCommission->id,
+                    'merchandise_amount' => $merchandise,
+                    'platform_commission_amount' => $platformCommission,
+                    'withholding_rate' => $withholdingRate,
+                    'withholding_tax_amount' => $withholdingTax,
+                    'seller_net_amount' => $sellerNet,
                     'currency' => 'PHP',
-                    'status' => 'available',
-                    'earned_at' => $locked->delivered_at,
-                    'metadata' => [
+                    'status' => 'payable',
+                    'withholding_status' => self::WITHHOLDING_STATUS,
+                    'eligible_at' => $lockedOrder->delivered_at,
+                    'policy_snapshot' => [
                         'source' => $source,
-                        'order_number' => $locked->order_number,
-                        'delivery_fee_field' => 'marketplace_orders.original_delivery_fee (fallback: delivery_fee)',
-                        'important' => 'available means earned in the internal rider ledger; it is not yet an external payout.',
+                        'financial_recognition' => 'delivered_and_paid',
+                        'merchandise_field' => 'marketplace_orders.seller_receivable_subtotal',
+                        'delivery_fee_excluded_from_seller_merchandise_settlement' => true,
+                        'free_shipping_promotion' => [
+                            'funder' => $sellerShippingPromotion > 0 ? 'seller' : null,
+                            'seller_funded_discount' => $sellerShippingPromotion,
+                            'promotion_id' => $lockedOrder->seller_free_shipping_promotion_id,
+                            'original_delivery_fee' => $lockedOrder->courierDeliveryFee(),
+                            'buyer_delivery_fee' => (float) $lockedOrder->delivery_fee,
+                        ],
+                        'commission_record_id' => $lockedCommission->id,
+                        'commission_rate_percent' => (float) $lockedCommission->rate_percent,
+                        'withholding' => [
+                            'status' => self::WITHHOLDING_STATUS,
+                            'amount' => 0,
+                            'reason' => 'Seller tax applicability has not yet been verified by the application.',
+                            'reference' => 'BIR RR 5-2025 / RMC 8-2024',
+                        ],
+                        'important' => 'payable means an internal obligation is recognized; it does not prove an external bank/e-wallet transfer occurred.',
                     ],
                 ]
             );
+        });
+    }
+
+    public function syncFromCommission(OrderCommission $commission): ?SellerSettlement
+    {
+        return DB::transaction(function () use ($commission): ?SellerSettlement {
+            $lockedCommission = OrderCommission::query()
+                ->whereKey($commission->getKey())
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $settlement = SellerSettlement::query()
+                ->where('order_commission_id', $lockedCommission->id)
+                ->lockForUpdate()
+                ->first();
+
+            if (!$settlement) {
+                return null;
+            }
+
+            $platformCommission = round(max(0, (float) $lockedCommission->net_commission), 2);
+            $order = MarketplaceOrder::query()->find($settlement->marketplace_order_id);
+            $sellerShippingPromotion = round(max(
+                0,
+                (float) ($order?->shipping_discount_amount ?? 0)
+            ), 2);
+            $sellerNet = round(max(
+                0,
+                (float) $settlement->merchandise_amount
+                    - $platformCommission
+                    - (float) $settlement->withholding_tax_amount
+                    - $sellerShippingPromotion
+            ), 2);
+
+            $settlement->forceFill([
+                'platform_commission_amount' => $platformCommission,
+                'seller_net_amount' => $sellerNet,
+                'status' => $lockedCommission->status === 'reversed'
+                    ? 'payable'
+                    : $settlement->status,
+            ])->save();
+
+            return $settlement->fresh();
         });
     }
 }

@@ -21,12 +21,14 @@ class LogisticsFacility extends Model
         'latitude',
         'longitude',
         'is_active',
+        'is_main_branch',
     ];
 
     protected $casts = [
         'latitude' => 'float',
         'longitude' => 'float',
         'is_active' => 'boolean',
+        'is_main_branch' => 'boolean',
     ];
 
     public function logistics(): BelongsTo
@@ -58,5 +60,10 @@ class LogisticsFacility extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeMainBranch(Builder $query): Builder
+    {
+        return $query->where('is_main_branch', true);
     }
 }

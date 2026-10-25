@@ -2,9 +2,9 @@
 
 use App\Models\Accounts\BuyerAccount;
 use App\Models\Accounts\SellerAccount;
-use App\Models\Delivery\DeliveryRouteStop;
 use App\Models\Orders\MarketplaceOrder;
 use App\Services\Delivery\DeliveryRouteService;
+use App\Services\Delivery\PhilippineAddressGeocoder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 
@@ -69,13 +69,20 @@ test('buyer and seller route endpoints resolve from saved account locations', fu
         'total' => 111,
         'pickup_name' => 'SARI Seller Store',
         'pickup_address' => 'Ermita, Manila, Metro Manila',
-        'status' => 'delivered',
+        'status' => 'ready_for_pickup',
     ]);
 
     $stops = app(DeliveryRouteService::class)->ensureStops($order);
 
-    $sellerStop = $stops->firstWhere('stop_key', DeliveryRouteService::STOP_SELLER);
-    $buyerStop = $stops->firstWhere('stop_key', DeliveryRouteService::STOP_BUYER);
+    $sellerStop = $stops->firstWhere(
+        'stop_key',
+        DeliveryRouteService::STOP_SELLER
+    );
+
+    $buyerStop = $stops->firstWhere(
+        'stop_key',
+        DeliveryRouteService::STOP_BUYER
+    );
 
     expect($sellerStop->latitude)->toBe(14.5995)
         ->and($sellerStop->longitude)->toBe(120.9842)
@@ -88,21 +95,27 @@ test('bad endpoint coordinates outside the Philippines are discarded', function 
         'nominatim.openstreetmap.org/*' => Http::response([], 200),
     ]);
 
-    $service = app(\App\Services\Delivery\PhilippineAddressGeocoder::class);
+    $service = app(PhilippineAddressGeocoder::class);
 
     expect($service->isPhilippineCoordinate(0, 20))->toBeFalse()
-        ->and($service->isPhilippineCoordinate(14.5995, 120.9842))->toBeTrue();
+        ->and(
+            $service->isPhilippineCoordinate(14.5995, 120.9842)
+        )->toBeTrue();
 });
-
 
 test('sorting facility coordinates outside the Philippines are cleared from route stops', function (): void {
-    $service = app(\App\Services\Delivery\PhilippineAddressGeocoder::class);
+    $service = app(PhilippineAddressGeocoder::class);
 
-    expect($service->isPhilippineCoordinate(14.5995, 120.9842))->toBeTrue()
-        ->and($service->isPhilippineCoordinate(8.9806, 38.7578))->toBeFalse()
-        ->and($service->isPhilippineCoordinate(25.2048, 55.2708))->toBeFalse();
+    expect(
+        $service->isPhilippineCoordinate(14.5995, 120.9842)
+    )->toBeTrue()
+        ->and(
+            $service->isPhilippineCoordinate(8.9806, 38.7578)
+        )->toBeFalse()
+        ->and(
+            $service->isPhilippineCoordinate(25.2048, 55.2708)
+        )->toBeFalse();
 });
-
 
 test('hardcoded test buyer and seller use deterministic Philippine demo coordinates', function (): void {
     $buyerDemo = config('sari_demo_locations.accounts.buyer');
@@ -110,16 +123,22 @@ test('hardcoded test buyer and seller use deterministic Philippine demo coordina
 
     expect($buyerDemo['email'])->toBe('buyer@gmail.com')
         ->and($sellerDemo['email'])->toBe('seller@gmail.com')
-        ->and((float) $buyerDemo['latitude'])->toBeGreaterThanOrEqual(4.0)
-        ->and((float) $buyerDemo['longitude'])->toBeGreaterThanOrEqual(116.0)
-        ->and((float) $sellerDemo['latitude'])->toBeGreaterThanOrEqual(4.0)
-        ->and((float) $sellerDemo['longitude'])->toBeGreaterThanOrEqual(116.0);
+        ->and(
+            (float) $buyerDemo['latitude']
+        )->toBeGreaterThanOrEqual(4.0)
+        ->and(
+            (float) $buyerDemo['longitude']
+        )->toBeGreaterThanOrEqual(116.0)
+        ->and(
+            (float) $sellerDemo['latitude']
+        )->toBeGreaterThanOrEqual(4.0)
+        ->and(
+            (float) $sellerDemo['longitude']
+        )->toBeGreaterThanOrEqual(116.0);
 });
 
-
-
 test('demo logistics facilities are Philippine locations', function (): void {
-    $geocoder = app(\App\Services\Delivery\PhilippineAddressGeocoder::class);
+    $geocoder = app(PhilippineAddressGeocoder::class);
 
     $facilities = [
         [14.5614240, 121.0146940],
@@ -128,17 +147,19 @@ test('demo logistics facilities are Philippine locations', function (): void {
     ];
 
     foreach ($facilities as [$lat, $lng]) {
-        expect($geocoder->isPhilippineCoordinate($lat, $lng))->toBeTrue();
+        expect(
+            $geocoder->isPhilippineCoordinate($lat, $lng)
+        )->toBeTrue();
     }
 });
 
 test('delivery route uses four stops instead of three fixed hubs', function (): void {
-    expect(\App\Services\Delivery\DeliveryRouteService::STOP_SELLER)
+    expect(DeliveryRouteService::STOP_SELLER)
         ->toBe('seller')
-        ->and(\App\Services\Delivery\DeliveryRouteService::STOP_ORIGIN_FACILITY)
+        ->and(DeliveryRouteService::STOP_ORIGIN_FACILITY)
         ->toBe('origin_facility')
-        ->and(\App\Services\Delivery\DeliveryRouteService::STOP_DESTINATION_FACILITY)
+        ->and(DeliveryRouteService::STOP_DESTINATION_FACILITY)
         ->toBe('destination_facility')
-        ->and(\App\Services\Delivery\DeliveryRouteService::STOP_BUYER)
+        ->and(DeliveryRouteService::STOP_BUYER)
         ->toBe('buyer');
 });
