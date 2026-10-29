@@ -42,6 +42,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'sari-chat-session' => [
+            'driver' => 'sari-chat-session',
+        ],
     ],
 
     /*

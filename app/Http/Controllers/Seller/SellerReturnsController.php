@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Finance\PaymentTransaction;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Platform\SellerNotification;
+use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Orders\SellerReturnEvent;
 use App\Models\Orders\SellerReturnRequest;
 use Illuminate\Http\RedirectResponse;
@@ -95,6 +96,15 @@ class SellerReturnsController extends Controller
                 'title'=>$status==='approved'?'Return Approved':'Return Rejected',
                 'message'=>$validated['seller_response'],
             ]);
+            MarketplaceOrderEvent::create([
+                'marketplace_order_id'=>$returnRequest->marketplace_order_id,
+                'seller_account_id'=>$returnRequest->seller_account_id,
+                'audience'=>'buyer',
+                'type'=>$status==='approved'?'return_approved':'return_rejected',
+                'title'=>$status==='approved'?'Return / refund approved':'Return / refund rejected',
+                'message'=>$validated['seller_response'],
+                'status'=>$status,
+            ]);
         });
         return back()->with('success','Return request reviewed.');
     }
@@ -108,6 +118,15 @@ class SellerReturnsController extends Controller
         SellerReturnEvent::create([
             'seller_return_request_id'=>$returnRequest->id,'actor_role'=>'seller','actor_id'=>$seller->id,
             'status'=>'returned','title'=>'Returned Item Received','message'=>'Seller confirmed receipt of the returned item.',
+        ]);
+        MarketplaceOrderEvent::create([
+            'marketplace_order_id'=>$returnRequest->marketplace_order_id,
+            'seller_account_id'=>$returnRequest->seller_account_id,
+            'audience'=>'buyer',
+            'type'=>'return_received',
+            'title'=>'Returned item received',
+            'message'=>'The Seller confirmed receipt of the returned item.',
+            'status'=>'returned',
         ]);
         return back()->with('success','Returned item recorded.');
     }
@@ -192,6 +211,15 @@ class SellerReturnsController extends Controller
                 'seller_return_request_id'=>$locked->id,'actor_role'=>'seller','actor_id'=>$seller->id,
                 'status'=>'refunded','title'=>'Refund Recorded',
                 'message'=>'Refund was recorded in the internal payment ledger.',
+            ]);
+            MarketplaceOrderEvent::create([
+                'marketplace_order_id'=>$locked->marketplace_order_id,
+                'seller_account_id'=>$locked->seller_account_id,
+                'audience'=>'buyer',
+                'type'=>'refund_recorded',
+                'title'=>'Refund recorded',
+                'message'=>'The approved refund was recorded in SARI’s internal payment ledger.',
+                'status'=>'refunded',
             ]);
         });
 

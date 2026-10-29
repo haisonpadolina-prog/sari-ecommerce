@@ -1,0 +1,204 @@
+{
+  "info": {
+    "name": "SARI Flutter API v1 \u2014 Starter",
+    "_postman_id": "e78f089a-3871-4b61-ae0c-2d1e2f324a6c",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Early backend endpoints implemented in SARI starter. Do not expose credentials in shared collection."
+  },
+  "item": [
+    {
+      "name": "Health + Public Catalog",
+      "item": [
+        {
+          "name": "API Health",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/health",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Products (paged)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products?per_page=15&page=1",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Product Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/products/1",
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mobile Auth",
+      "item": [
+        {
+          "name": "Login (buyer example)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Set role=buyer/seller/rider/logistics. Password social accounts not supported.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"buyer\",\n  \"email\": \"buyer@example.org\",\n  \"password\": \"REPLACE_ME\",\n  \"device_name\": \"Android Test Device\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/me",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Logout this device",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/logout",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Logout mobile devices",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/logout-all",
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Buyer",
+      "item": [
+        {
+          "name": "My orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/buyer/orders?per_page=15&page=1",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "My order detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/buyer/orders/1",
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://preview.sariph.store/api/v1"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "secret"
+    }
+  ]
+}

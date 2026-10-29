@@ -243,7 +243,13 @@
         )
     ) ?: 'SS';
 
-    $sellerUnreadMessages = 0;
+    $sellerUnreadMessages = $sellerLayoutAccount
+        ? \App\Models\Messaging\BuyerSellerMessage::query()
+            ->where('seller_account_id', $sellerLayoutAccount->id)
+            ->where('sender_role', 'buyer')
+            ->whereNull('read_at')
+            ->count()
+        : 0;
     $sellerRecentAdminMessages = collect();
 
     $sellerActiveSuspension = false;
@@ -804,6 +810,7 @@
                 {{-- REAL-TIME SIDEBAR UNREAD BADGE --}}
                 <span
                     id="sellerSidebarMessageBadge"
+                    data-seller-id="{{ (int) ($sellerLayoutAccount?->id ?? 0) }}"
                     data-seller-unread-badge
                     data-has-unread="{{ $sellerUnreadMessages > 0 ? 'true' : 'false' }}"
                     class="
@@ -2114,6 +2121,7 @@
 
     {{-- PAGE-SPECIFIC SCRIPTS --}}
     @stack('scripts')
+    <script src="{{ asset('js/sari-seller-messaging-badge.js') }}?v=20261026-1" defer></script>
 
     {{-- Start Livewire after all navigation listeners are registered. --}}
     @livewireScripts

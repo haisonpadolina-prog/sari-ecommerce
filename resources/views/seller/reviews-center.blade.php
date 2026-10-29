@@ -395,6 +395,26 @@
 
                         </p>
 
+                        @if(!empty($review->image_paths))
+                            <div style="display:grid;grid-template-columns:repeat(5,minmax(0,72px));gap:8px;margin-top:12px;" aria-label="Buyer review photos">
+                                @foreach(array_slice((array) $review->image_paths, 0, 5) as $reviewImagePath)
+                                    <a
+                                        href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reviewImagePath) }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style="display:block;aspect-ratio:1;overflow:hidden;border:1px solid #e1e5e9;border-radius:10px;background:#f3f5f6;"
+                                    >
+                                        <img
+                                            src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reviewImagePath) }}"
+                                            alt="Buyer review photo"
+                                            loading="lazy"
+                                            style="width:100%;height:100%;object-fit:cover;"
+                                        >
+                                    </a>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
 
 

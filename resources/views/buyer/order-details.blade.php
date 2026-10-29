@@ -12,7 +12,7 @@
     $items = (array) $order->items;
     $primaryItem = $items[0] ?? null;
     $primaryItemName = trim((string) ($primaryItem['name'] ?? 'Order item'));
-    $primaryItemImage = $primaryItem['image'] ?? null;
+    $primaryItemImage = ($primaryItemImageUrl ?? null) ?: ($primaryItem['image'] ?? null);
     $primaryItemVariant = trim((string) ($primaryItem['variant_label'] ?? 'Standard'));
     $primaryItemQty = max(1, (int) ($primaryItem['qty'] ?? 1));
     $remainingItemCount = max(0, count($items) - 1);
@@ -1540,6 +1540,229 @@
         to { transform: rotate(360deg); }
     }
 
+
+    /* Order details road route: full unobstructed map, clear progress, compact legend. */
+    .sari-track-map-wrap { padding: 14px !important; }
+    .sari-track-map { min-height: 430px; border-color: #dfe5eb; border-radius: 16px; background: #edf2f5; }
+    #sariBuyerDeliveryMap { min-height: 430px; }
+    #sariBuyerDeliveryMap .maplibregl-ctrl-top-right { top: 10px; right: 10px; }
+    .sari-road-map-key { display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;min-height:40px;padding:11px 2px 1px;color:#64748b;font:500 10px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
+    .sari-road-map-key-item { display:inline-flex;align-items:center;gap:7px;white-space:nowrap; }
+    .sari-road-map-key-line { display:inline-block;width:20px;height:0;border-top:4px solid #64748b;border-radius:5px; }
+    .sari-road-map-key-line.is-complete { border-top-color:#c88912; }
+    .sari-road-map-key-line.is-next { border-top:3px dashed #c88912; }
+    .sari-road-map-key small { margin-left:auto;max-width:100%;color:#738193;font:500 9px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif; }
+    .sari-buyer-map-marker {width:34px;height:34px;font-size:10px;border-width:3px;cursor:pointer;}
+    .sari-buyer-map-marker.is-current { box-shadow:0 0 0 5px rgba(200,137,18,.20),0 4px 15px rgba(15,23,42,.23); }
+    .sari-map-loading { bottom: 14px; right: 14px; }
+    .sari-map-route-notice {position:absolute;z-index:13;left:15px;bottom:15px;max-width:min(410px,calc(100% - 30px));display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid #e2e8f0;border-radius:13px;background:rgba(255,255,255,.96);box-shadow:0 7px 24px rgba(15,23,42,.09);}
+    .sari-map-route-notice[hidden] {display:none !important;}
+    .sari-map-route-notice-icon {flex:0 0 19px;color:#b77911;}
+    .sari-map-route-notice-icon svg {width:19px;height:19px;}
+    .sari-map-route-notice strong {display:block;color:#334155;font-size:11px;font-weight:700;}
+    .sari-map-route-notice small {display:block;margin-top:4px;color:#64748b;font-size:10px;line-height:1.55;}
+    @media(max-width:560px){.sari-track-map,#sariBuyerDeliveryMap{min-height:345px}.sari-road-map-key{gap:7px 13px}.sari-road-map-key small{width:100%;margin-left:0}}
+    @media(prefers-reduced-motion:reduce){.sari-buyer-map-marker{transition:none}}
+
+    /* Buyer order details: actual purchased product photo and assigned rider profile. */
+    .sari-track-product-media { background:#fff; }
+    .sari-track-product-media img { width:100%;height:100%;object-fit:cover;object-position:center;display:block; }
+    .sari-track-product-fallback[hidden] { display:none !important; }
+    .sari-track-product-fallback { width:25px;height:25px; }
+
+    .sari-track-courier { padding:19px 20px; }
+    .sari-track-courier-profile { display:flex;align-items:center;gap:14px;min-width:0; }
+    .sari-track-courier-avatar { display:grid;place-items:center;width:66px;height:66px;flex:0 0 66px;overflow:hidden;border:1px solid #e5e9ef;border-radius:50%;background:#f6f7f9;box-shadow:0 4px 14px rgba(31,41,55,.06); }
+    .sari-track-courier-avatar img { width:100%;height:100%;display:block;object-fit:cover; }
+    .sari-track-courier-profile-copy { min-width:0; }
+    .sari-track-courier-profile-copy .sari-track-courier-label { color:#8893a2;font-size:10px;line-height:1.4;letter-spacing:.07em; }
+    .sari-track-courier-profile-copy .sari-track-courier-value { margin-top:5px;color:#202a38;font-size:15px;font-weight:750;line-height:1.4;overflow-wrap:anywhere; }
+    .sari-track-courier-role { display:inline-block;margin-top:5px;color:#a57424;font-size:9px;font-weight:650; }
+    .sari-track-courier-info { display:grid;gap:0;margin-top:17px;padding-top:3px;border-top:1px solid #edf0f3; }
+    .sari-track-courier-info-row { display:grid;grid-template-columns:102px minmax(0,1fr);gap:9px;align-items:start;padding:12px 0;border-bottom:1px solid #f1f3f5; }
+    .sari-track-courier-info-row:last-child { border-bottom:0;padding-bottom:0; }
+    .sari-track-courier-info-label { color:#8792a0;font-size:10px;font-weight:550;line-height:1.55; }
+    .sari-track-courier-info-value { color:#344051;font-size:10.5px;font-weight:650;line-height:1.55;text-align:right;text-decoration:none;overflow-wrap:anywhere; }
+    .sari-track-courier-info-value:hover { color:#a96f0e;text-decoration:underline;text-underline-offset:3px; }
+    .sari-track-courier-notice { margin:12px 0 0;color:#8591a0;font-size:10px;line-height:1.6; }
+    @media(max-width:560px) { .sari-track-courier{padding:16px}.sari-track-courier-avatar{width:56px;height:56px;flex-basis:56px}.sari-track-courier-info-row{grid-template-columns:92px minmax(0,1fr)} }
+
+    /* ============================================================
+       ORDER DETAILS — FINAL READABILITY & IMAGE-FIT POLISH
+       Balanced, accessible text with the existing SARI visual style.
+       Scoped overrides only: tracking, map, routes and actions are unchanged.
+    ============================================================ */
+    .sari-track-page .sari-track-action {
+        min-height: 40px;
+        padding-inline: 15px;
+        color: #596574;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .sari-track-page .sari-track-actions a.sari-track-action--primary {
+        border: 1px solid #dfe5ea;
+        background: #fff;
+        color: #596574;
+        box-shadow: none;
+    }
+    .sari-track-page .sari-track-actions a.sari-track-action--primary svg {
+        color: #596574;
+        stroke: currentColor;
+    }
+    .sari-track-page .sari-track-actions a.sari-track-action--primary:hover,
+    .sari-track-page .sari-track-actions a.sari-track-action--primary:focus-visible {
+        border-color: #cdd5de;
+        background: #f7f9fb;
+        color: #374151;
+        outline: none;
+    }
+    .sari-track-page .sari-track-actions a.sari-track-action--primary:hover svg,
+    .sari-track-page .sari-track-actions a.sari-track-action--primary:focus-visible svg {
+        color: #374151;
+    }
+
+    /* The full image stays visible: no crop for portrait, landscape, or square photos. */
+    .sari-track-page .sari-track-product-media {
+        min-width: 0;
+        min-height: 0;
+        padding: 0;
+        background: #fff;
+    }
+    .sari-track-page .sari-track-product-media img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        min-width: 0;
+        min-height: 0;
+        object-fit: cover;
+        object-position: center center;
+        background: transparent;
+    }
+    .sari-track-page .sari-track-product-media img[hidden] {
+        display: none !important;
+    }
+
+    /* Top order card. */
+    .sari-track-page .sari-track-product-label,
+    .sari-track-page .sari-track-product-side-label {
+        color: #687484;
+        font-size: 10.5px;
+        font-weight: 650;
+    }
+    .sari-track-page .sari-track-status {
+        min-height: 28px;
+        font-size: 10px;
+        line-height: 1.35;
+    }
+    .sari-track-page .sari-track-product-meta {
+        margin-top: 9px;
+        color: #667386;
+        font-size: 12px;
+        line-height: 1.55;
+    }
+    .sari-track-page .sari-track-product-order-meta {
+        margin-top: 11px;
+        color: #6b7787;
+        font-size: 11.5px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+    .sari-track-page .sari-track-product-side strong {
+        font-size: 13.5px;
+        line-height: 1.5;
+    }
+    .sari-track-page .sari-track-product-side small {
+        font-size: 11.5px;
+        line-height: 1.65;
+    }
+
+    /* Shipment journey and route information. */
+    .sari-track-page .sari-track-panel-head { padding: 18px 20px; }
+    .sari-track-page .sari-track-panel-eyebrow { font-size: 10px; }
+    .sari-track-page .sari-track-panel-title { font-size: 17px; }
+    .sari-track-page .sari-track-panel-note { color: #718095; font-size: 10.5px; }
+    .sari-track-page .sari-track-journey {
+        grid-template-columns: minmax(265px, 315px) minmax(0, 1fr);
+    }
+    .sari-track-page .sari-track-event-title {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+    .sari-track-page .sari-track-event-time {
+        margin-top: 5px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+    .sari-track-page .sari-track-event-copy {
+        margin-top: 5px;
+        color: #736b63;
+        font-size: 11px;
+        line-height: 1.6;
+    }
+    .sari-track-page .sari-road-map-key { font-size: 11px; }
+    .sari-track-page .sari-road-map-key small { font-size: 10px; }
+    .sari-track-page .sari-map-route-notice small { font-size: 11px; }
+
+    /* Order summary, delivery information, and totals. */
+    .sari-track-page .sari-track-summary-title { font-size: 16px; }
+    .sari-track-page .sari-track-chip { font-size: 10px; }
+    .sari-track-page .sari-track-summary-row { gap: 14px; padding-block: 10px; }
+    .sari-track-page .sari-track-summary-row dt,
+    .sari-track-page .sari-track-summary-row dd {
+        font-size: 11.5px;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+    }
+    .sari-track-page .sari-track-summary-row dt { color: #697586; }
+    .sari-track-page .sari-track-summary-address-label { color: #697586; font-size: 11px; }
+    .sari-track-page .sari-track-summary-address-name { font-size: 12.5px; }
+    .sari-track-page .sari-track-summary-address-copy {
+        color: #697586;
+        font-size: 11px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+    .sari-track-page .sari-track-total-row span:first-child,
+    .sari-track-page .sari-track-total-row span:last-child { font-size: 11.5px; }
+    .sari-track-page .sari-track-total-row--grand span:first-child { font-size: 12.5px; }
+    .sari-track-page .sari-track-total-row--grand span:last-child { font-size: 17px; }
+
+    /* Courier photo, name, phone, and email. */
+    .sari-track-page .sari-track-courier-profile-copy .sari-track-courier-label {
+        font-size: 11px;
+    }
+    .sari-track-page .sari-track-courier-profile-copy .sari-track-courier-value {
+        font-size: 16px;
+        line-height: 1.45;
+    }
+    .sari-track-page .sari-track-courier-role { font-size: 10.5px; }
+    .sari-track-page .sari-track-courier-info-label,
+    .sari-track-page .sari-track-courier-info-value {
+        font-size: 11.5px;
+        line-height: 1.6;
+    }
+    .sari-track-page .sari-track-courier-notice { font-size: 11px; }
+
+    /* Keep the established one-column layout and readable mobile sizing. */
+    @media (max-width: 840px) {
+        .sari-track-page .sari-track-journey { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+        .sari-track-page .sari-track-action { min-height: 42px; padding-inline: 10px; font-size: 11px; }
+        .sari-track-page .sari-track-product-meta { font-size: 11px; }
+        .sari-track-page .sari-track-product-order-meta { font-size: 10.5px; }
+        .sari-track-page .sari-track-product-side strong { font-size: 13px; }
+        .sari-track-page .sari-track-product-side small { font-size: 11px; }
+        .sari-track-page .sari-track-event-title { font-size: 11.5px; }
+        .sari-track-page .sari-track-event-copy { font-size: 10.5px; }
+        .sari-track-page .sari-track-summary-row dt,
+        .sari-track-page .sari-track-summary-row dd { font-size: 11px; }
+        .sari-track-page .sari-track-courier-info-label,
+        .sari-track-page .sari-track-courier-info-value { font-size: 11px; }
+    }
+
 </style>
 
 <div class="sari-track-page">
@@ -1601,16 +1824,16 @@
                     @if ($primaryItemImage)
                         <img
                             src="{{ $primaryItemImage }}"
-                            alt="{{ $primaryItemName }}"
+                            alt="Product image: {{ $primaryItemName }}"
                             loading="eager"
                             decoding="async"
+                            onerror="this.hidden=true;this.nextElementSibling.hidden=false;"
                         >
-                    @else
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-                            <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9z" stroke-linejoin="round"></path>
-                            <path d="M4.5 7.7 12 12l7.5-4.3M12 12v9" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
                     @endif
+                    <svg class="sari-track-product-fallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" @if ($primaryItemImage) hidden @endif>
+                        <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9z" stroke-linejoin="round"></path>
+                        <path d="M4.5 7.7 12 12l7.5-4.3M12 12v9" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
                 </div>
 
                 <div class="sari-track-product-copy">
@@ -1652,7 +1875,7 @@
                             <p class="sari-track-panel-eyebrow">Shipment progress</p>
                             <h2 class="sari-track-panel-title">Delivery journey</h2>
                         </div>
-                        <span class="sari-track-panel-note">Status-based preview</span>
+                        <span class="sari-track-panel-note">Logistics milestones</span>
                     </div>
 
                     <div class="sari-track-journey">
@@ -1695,18 +1918,6 @@
                                 class="sari-track-map"
                                 data-sari-delivery-route="{{ json_encode($trackingRoute, JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_TAG) }}"
                             >
-                                <div class="sari-track-map-bar">
-                                    <div>
-                                        <p class="sari-track-map-title">Delivery route</p>
-                                        <p class="sari-track-map-sub">
-                                            Seller → Origin facility → Destination facility → Buyer
-                                        </p>
-                                    </div>
-                                    <span class="sari-track-map-progress">
-                                        {{ (int) ($trackingRoute['progress'] ?? 0) }}%
-                                    </span>
-                                </div>
-
                                 <div
                                     id="sariBuyerDeliveryMap"
                                     data-sari-maplibre-map
@@ -1715,42 +1926,22 @@
                                 <span class="sari-map-loading" data-sari-map-loading>
                                     Loading street map
                                 </span>
-
-                                @if (empty($trackingRoute['ready']))
-                                    <div class="sari-map-route-notice" data-sari-route-notice>
-                                        <span class="sari-map-route-notice-icon" aria-hidden="true">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M12 21s7-6.2 7-12A7 7 0 1 0 5 9c0 5.8 7 12 7 12Z"></path>
-                                                <circle cx="12" cy="9" r="2.4"></circle>
-                                            </svg>
-                                        </span>
-
-                                        <span>
-                                            <strong>
-                                                {{ $order->status === 'delivered'
-                                                    ? 'Route history is not available for this order'
-                                                    : 'Delivery route is being prepared' }}
-                                            </strong>
-                                            <small>
-                                                {{ $order->status === 'delivered'
-                                                    ? 'This order was completed before its five map coordinates were saved. The real map remains available, and any saved route points will appear automatically.'
-                                                    : 'SARI Logistics is resolving the Seller, nearest origin facility, nearest destination facility, and Buyer coordinates. Saved stops will appear here automatically.' }}
-                                            </small>
-                                        </span>
-                                    </div>
-                                @endif
-
-                                <div class="sari-track-map-footer">
-                                    <div>
-                                        <p class="sari-track-courier-name">
-                                            {{ $order->courier_name ?: 'Courier not yet assigned' }}
-                                        </p>
-                                        <p class="sari-track-courier-note">
-                                            Real route stops · progress follows Logistics updates
-                                        </p>
-                                    </div>
-                                    <span class="sari-track-status">{{ $order->statusLabel() }}</span>
+                                <div class="sari-map-route-notice" data-sari-route-notice hidden>
+                                    <span class="sari-map-route-notice-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12A7 7 0 1 0 5 9c0 5.8 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.4"></circle></svg>
+                                    </span>
+                                    <span><strong>Route update</strong><small>Checking available coordinates.</small></span>
                                 </div>
+
+
+
+
+                            </div>
+                            <div class="sari-road-map-key" aria-live="polite" aria-atomic="true">
+                                <span class="sari-road-map-key-item"><i class="sari-road-map-key-line" aria-hidden="true"></i> Delivery route</span>
+                                <span class="sari-road-map-key-item"><i class="sari-road-map-key-line is-complete" aria-hidden="true"></i> Confirmed progress</span>
+                                <span class="sari-road-map-key-item"><i class="sari-road-map-key-line is-next" aria-hidden="true"></i> Next leg</span>
+                                <small data-sari-road-status>Preparing map…</small>
                             </div>
                         </div>
                     </div>
@@ -1827,30 +2018,45 @@
                         </div>
                     </section>
 
-                    <section class="sari-track-panel sari-track-courier">
-                        <div class="sari-track-courier-head">
-                            <span class="sari-track-courier-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                    <path d="M3 7h11v9H3z"></path>
-                                    <path d="M14 10h4l3 3v3h-7z"></path>
-                                    <circle cx="7" cy="18" r="1.5"></circle>
-                                    <circle cx="18" cy="18" r="1.5"></circle>
-                                </svg>
+                    <section class="sari-track-panel sari-track-courier" aria-label="Courier details">
+                        @php
+                            $riderFallbackAvatar = asset('images/sari-rider-default-avatar.png');
+                            $riderProfileImage = ($courierDetails['photo_url'] ?? null) ?: $riderFallbackAvatar;
+                        @endphp
+                        <div class="sari-track-courier-profile">
+                            <span class="sari-track-courier-avatar">
+                                <img
+                                    src="{{ $riderProfileImage }}"
+                                    alt="{{ ($courierDetails['photo_url'] ?? null) ? 'Profile photo of ' . $courierDetails['name'] : 'Default rider avatar' }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null;this.src='{{ $riderFallbackAvatar }}';"
+                                >
                             </span>
-
-                            <div>
+                            <div class="sari-track-courier-profile-copy">
                                 <p class="sari-track-courier-label">Courier details</p>
-                                <p class="sari-track-courier-value">
-                                    {{ $order->courier_name ?: 'Waiting for assignment' }}
-                                </p>
+                                <p class="sari-track-courier-value">{{ $courierDetails['name'] ?? 'Waiting for rider assignment' }}</p>
+                                <span class="sari-track-courier-role">{{ ($courierDetails['assigned'] ?? false) ? 'Assigned SARI rider' : 'Awaiting assignment' }}</span>
                             </div>
                         </div>
 
-                        @if ($order->courier_email)
-                            <div class="sari-track-courier-contact">
-                                {{ $order->courier_email }}
-                            </div>
-                        @endif
+                        <div class="sari-track-courier-info">
+                            @if (!empty($courierDetails['phone']))
+                                <div class="sari-track-courier-info-row">
+                                    <span class="sari-track-courier-info-label">Contact number</span>
+                                    <a href="tel:{{ preg_replace('/[^+0-9]/', '', $courierDetails['phone']) }}" class="sari-track-courier-info-value">{{ $courierDetails['phone'] }}</a>
+                                </div>
+                            @endif
+                            @if (!empty($courierDetails['email']))
+                                <div class="sari-track-courier-info-row">
+                                    <span class="sari-track-courier-info-label">Email</span>
+                                    <a href="mailto:{{ $courierDetails['email'] }}" class="sari-track-courier-info-value">{{ $courierDetails['email'] }}</a>
+                                </div>
+                            @endif
+                            @if (empty($courierDetails['phone']) && empty($courierDetails['email']))
+                                <p class="sari-track-courier-notice">Rider contact details will appear after assignment.</p>
+                            @endif
+                        </div>
                     </section>
                 </aside>
             </div>
@@ -1872,481 +2078,337 @@
 
     <script>
     (() => {
+        'use strict';
+
+        // OSRM-compatible road router. For production use an operator-controlled service.
+        const ROUTER_URL = @json(config('services.sari_road_router.url', 'https://router.project-osrm.org'));
+        const PHILIPPINES_CENTER = [121.774, 12.8797];
         const MAP_STYLE = {
             version: 8,
             name: 'SARI Street Map',
             sources: {
                 'osm-streets': {
                     type: 'raster',
-                    tiles: [
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-                    ],
+                    tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
                     tileSize: 256,
-                    minzoom: 0,
-                    maxzoom: 19,
                     attribution: '© OpenStreetMap contributors',
                 },
             },
-            layers: [
-                {
-                    id: 'sari-osm-background',
-                    type: 'raster',
-                    source: 'osm-streets',
-                    minzoom: 0,
-                    maxzoom: 19,
-                    paint: {
-                        'raster-opacity': 1,
-                        'raster-saturation': -0.12,
-                        'raster-contrast': 0.04,
-                    },
-                },
-            ],
+            layers: [{ id: 'sari-osm-background', type: 'raster', source: 'osm-streets' }],
         };
 
-        const PHILIPPINES_CENTER = [121.7740, 12.8797];
+        if (window.__sariOrderDetailsRoadMap) {
+            window.__sariOrderDetailsRoadMap.restart();
+            return;
+        }
 
-        let animationTimer = null;
         let activeMap = null;
+        let pendingRoute = null;
+        let renderGeneration = 0;
+        const legCache = new Map();
 
-        const parseRoute = (wrapper) => {
-            try {
-                return JSON.parse(wrapper?.dataset?.sariDeliveryRoute || '{}');
-            } catch (_) {
-                return {};
+        const point = (stop) => [Number(stop.lng), Number(stop.lat)];
+        const validPoint = (coordinates) => Array.isArray(coordinates)
+            && coordinates.length === 2
+            && Number.isFinite(Number(coordinates[0]))
+            && Number.isFinite(Number(coordinates[1]))
+            && Number(coordinates[0]) >= 116 && Number(coordinates[0]) <= 127.5
+            && Number(coordinates[1]) >= 4 && Number(coordinates[1]) <= 22.5;
+
+        function validStops(route) {
+            return (Array.isArray(route?.stops) ? route.stops : [])
+                .filter((stop) => stop && stop.lng != null && stop.lat != null && validPoint(point(stop)))
+                .sort((a, b) => Number(a.sequence) - Number(b.sequence));
+        }
+
+        function setStatus(text) {
+            const node = document.querySelector('[data-sari-road-status]');
+            if (node) node.textContent = text;
+        }
+
+        function setNotice(wrapper, title, copy) {
+            const notice = wrapper?.querySelector('[data-sari-route-notice]');
+            if (!notice) return;
+            if (!title) {
+                notice.hidden = true;
+                return;
             }
-        };
+            notice.querySelector('strong').textContent = title;
+            notice.querySelector('small').textContent = copy || '';
+            notice.hidden = false;
+        }
 
-        const validStops = (route) => {
-            return Array.isArray(route?.stops)
-                ? route.stops.filter((stop) => {
-                    const lat = Number(stop?.lat);
-                    const lng = Number(stop?.lng);
-
-                    return Number.isFinite(lat)
-                        && Number.isFinite(lng)
-                        && lat >= 4.0
-                        && lat <= 22.5
-                        && lng >= 116.0
-                        && lng <= 127.5;
-                })
-                : [];
-        };
-
-        const stopLabel = (stop) => {
+        function stopLetter(stop) {
             if (stop.type === 'seller') return 'S';
             if (stop.type === 'buyer') return 'B';
             if (stop.key === 'origin_facility') return 'O';
             if (stop.key === 'destination_facility') return 'D';
+            return String(stop.sequence || '•');
+        }
 
-            return String(stop.sequence || '');
-        };
-
-        const markerElement = (stop, route) => {
-            const el = document.createElement('div');
-            el.className = 'sari-buyer-map-marker';
-            el.textContent = stopLabel(stop);
-
-            if (stop.type === 'buyer') {
-                el.classList.add('is-buyer');
-            }
-
-            if (
-                !stop.reached
-                && Number(stop.sequence) > Number(route?.current_sequence || 1)
-            ) {
-                el.classList.add('is-future');
-            }
-
-            if (Number(stop.sequence) === Number(route?.current_sequence || 0)) {
-                el.classList.add('is-current');
-            }
-
-            return el;
-        };
-
-        const lineFeature = (coordinates) => ({
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates,
-            },
-        });
-
-        const addLine = (
-            map,
-            id,
-            coordinates,
-            {
-                color,
-                width,
-                opacity = 1,
-                dasharray = null,
-            }
-        ) => {
-            if (!Array.isArray(coordinates) || coordinates.length < 2) {
-                return false;
-            }
-
-            map.addSource(id, {
-                type: 'geojson',
-                data: lineFeature(coordinates),
-            });
-
-            const paint = {
-                'line-color': color,
-                'line-width': width,
-                'line-opacity': opacity,
-            };
-
-            if (dasharray) {
-                paint['line-dasharray'] = dasharray;
-            }
-
-            map.addLayer({
-                id,
-                type: 'line',
-                source: id,
-                layout: {
-                    'line-cap': 'round',
-                    'line-join': 'round',
-                },
-                paint,
-            });
-
-            return true;
-        };
-
-        const startCurrentLegAnimation = (map, layerId) => {
-            if (!map.getLayer(layerId)) return;
-
-            const patterns = [
-                [0.5, 2.1],
-                [0.8, 1.8],
-                [1.1, 1.5],
-                [1.4, 1.2],
-                [1.1, 1.5],
-                [0.8, 1.8],
-            ];
-
-            let index = 0;
-
-            if (animationTimer) {
-                window.clearInterval(animationTimer);
-            }
-
-            animationTimer = window.setInterval(() => {
-                if (!map.getLayer(layerId)) return;
-
-                index = (index + 1) % patterns.length;
-                map.setPaintProperty(
-                    layerId,
-                    'line-dasharray',
-                    patterns[index]
-                );
-            }, 160);
-        };
-
-        const fitRoute = (map, stops) => {
-            if (stops.length === 0) {
-                map.setCenter(PHILIPPINES_CENTER);
-                map.setZoom(5.2);
-                return;
-            }
-
-            if (stops.length === 1) {
-                map.setCenter([
-                    Number(stops[0].lng),
-                    Number(stops[0].lat),
-                ]);
-                map.setZoom(13);
-                return;
-            }
-
-            const bounds = new maplibregl.LngLatBounds();
-
+        function drawStopMarkers(map, route, stops) {
             stops.forEach((stop) => {
-                bounds.extend([
-                    Number(stop.lng),
-                    Number(stop.lat),
-                ]);
+                const badge = document.createElement('div');
+                badge.className = 'sari-buyer-map-marker';
+                badge.textContent = stopLetter(stop);
+                if (stop.type === 'buyer') badge.classList.add('is-buyer');
+                if (!stop.reached && Number(stop.sequence) > Number(route.current_sequence || 1)) {
+                    badge.classList.add('is-future');
+                }
+                if (Number(stop.sequence) === Number(route.current_sequence || 0)) {
+                    badge.classList.add('is-current');
+                }
+
+                // Use textContent, never HTML interpolation of seller/address content.
+                const popupBody = document.createElement('div');
+                popupBody.style.fontFamily = 'Poppins, sans-serif';
+                const name = document.createElement('strong');
+                name.style.cssText = 'display:block;font-size:12px;color:#1f2937';
+                name.textContent = String(stop.name || 'Delivery stop');
+                popupBody.appendChild(name);
+                if (stop.address) {
+                    const address = document.createElement('p');
+                    address.style.cssText = 'margin:6px 0 0;font-size:10px;line-height:1.5;color:#64748b';
+                    address.textContent = String(stop.address);
+                    popupBody.appendChild(address);
+                }
+                const reached = document.createElement('small');
+                reached.style.cssText = 'display:block;margin-top:6px;color:#9a6811;font-size:10px';
+                reached.textContent = stop.reached ? 'Reached (confirmed)' : 'Not yet confirmed reached';
+                popupBody.appendChild(reached);
+                const popup = new maplibregl.Popup({offset:18, maxWidth:'250px'}).setDOMContent(popupBody);
+                new maplibregl.Marker({element:badge, anchor:'center'})
+                    .setLngLat(point(stop)).setPopup(popup).addTo(map);
             });
+        }
 
-            map.fitBounds(bounds, {
-                padding: {
-                    top: 90,
-                    right: 70,
-                    bottom: 90,
-                    left: 70,
-                },
-                maxZoom: 14,
-                duration: 0,
-            });
-        };
-
-        const buildRouteLayers = (map, route, stops) => {
-            const coordinates = stops.map((stop) => [
-                Number(stop.lng),
-                Number(stop.lat),
-            ]);
-
+        function addLine(map, name, coordinates, {color, width = 5, dashed = false, opacity = 1}) {
             if (coordinates.length < 2) return;
-
-            addLine(map, 'sari-route-full', coordinates, {
-                color: '#d5d0c9',
-                width: 5,
-                opacity: .92,
+            map.addSource(name, {
+                type: 'geojson',
+                data: {type:'Feature',properties:{},geometry:{type:'LineString',coordinates}},
             });
-
-            const lastReached = Math.max(
-                0,
-                Math.min(
-                    stops.length,
-                    Number(route?.last_reached_sequence || 0)
-                )
-            );
-
-            const completedStops = stops.filter(
-                (stop) => Number(stop.sequence) <= lastReached
-            );
-
-            const completedCoordinates = completedStops.map((stop) => [
-                Number(stop.lng),
-                Number(stop.lat),
-            ]);
-
-            addLine(map, 'sari-route-completed', completedCoordinates, {
-                color: '#c98913',
-                width: 5.5,
-                opacity: 1,
+            const paint = {'line-color':color,'line-width':width,'line-opacity':opacity};
+            if (dashed) paint['line-dasharray'] = [1.1, 1.5];
+            map.addLayer({
+                id: name, type: 'line', source: name,
+                layout: {'line-cap':'round','line-join':'round'}, paint,
             });
+        }
 
-            const currentStop = stops.find(
-                (stop) => Number(stop.sequence) === lastReached
-            );
+        function showLegs(map, stops, legs, approximate) {
+            legs.forEach((leg, index) => {
+                const coords = leg.filter(validPoint);
+                if (coords.length < 2) return;
+                // Lighter outline keeps route legible over busy OSM streets.
+                addLine(map, `sari-leg-${index}-outline`, coords, {
+                    color: '#ffffff', width: 10, dashed: approximate, opacity: .92,
+                });
+                addLine(map, `sari-leg-${index}-path`, coords, {
+                    color: approximate ? '#728096' : '#64748b',
+                    width: approximate ? 4 : 5.5,
+                    dashed: approximate, opacity: approximate ? .77 : .95,
+                });
+                if (stops[index + 1]?.reached) {
+                    // Gold only means the destination stop was reached in persisted logistics data.
+                    addLine(map, `sari-leg-${index}-completed`, coords, {
+                        color: '#c88912', width: 6, dashed: approximate,
+                    });
+                } else if (
+                    stops[index] && stops[index + 1]
+                    && Number(stops[index + 1].sequence) === Number(stops[index].sequence) + 1
+                    && (index === 0 || stops.slice(0, index + 1).every(s => s.reached))
+                ) {
+                    // Planned NEXT leg. Does not indicate the rider's live GPS position.
+                    addLine(map, `sari-leg-${index}-next`, coords, {
+                        color: '#d89a19', width: 4, dashed: true, opacity: .95,
+                    });
+                }
+            });
+        }
 
-            const nextStop = stops.find(
-                (stop) => Number(stop.sequence) === lastReached + 1
-            );
+        function fitRoute(map, stops, legs) {
+            const all = legs.flat().filter(validPoint);
+            const points = all.length ? all : stops.map(point);
+            if (!points.length) {
+                map.jumpTo({center:PHILIPPINES_CENTER,zoom:5.2});
+                return;
+            }
+            if (points.length === 1) {
+                map.jumpTo({center:points[0],zoom:13});
+                return;
+            }
+            const bounds = new maplibregl.LngLatBounds();
+            points.forEach(p => bounds.extend(p));
+            map.fitBounds(bounds, {
+                padding:{top:46,right:48,bottom:46,left:48}, maxZoom:14, duration:350,
+            });
+        }
 
-            const currentLegStart = currentStop || stops.find(
-                (stop) => Number(stop.sequence) === 1
-            );
-
-            const currentLegEnd = nextStop || (
-                lastReached === 0
-                    ? stops.find((stop) => Number(stop.sequence) === 2)
-                    : null
-            );
-
-            if (currentLegStart && currentLegEnd) {
-                const added = addLine(
-                    map,
-                    'sari-route-current',
-                    [
-                        [
-                            Number(currentLegStart.lng),
-                            Number(currentLegStart.lat),
-                        ],
-                        [
-                            Number(currentLegEnd.lng),
-                            Number(currentLegEnd.lat),
-                        ],
-                    ],
-                    {
-                        color: '#d89513',
-                        width: 5.5,
-                        opacity: 1,
-                        dasharray: [0.8, 1.8],
+        function concatStepGeometries(steps) {
+            const leg = [];
+            for (const step of steps) {
+                const coords = step?.geometry?.coordinates;
+                if (!Array.isArray(coords)) continue;
+                for (const rawPoint of coords) {
+                    if (!validPoint(rawPoint)) return [];
+                    const p = [Number(rawPoint[0]), Number(rawPoint[1])];
+                    if (!leg.length || leg[leg.length - 1][0] !== p[0] || leg[leg.length - 1][1] !== p[1]) {
+                        leg.push(p);
                     }
-                );
-
-                if (added) {
-                    startCurrentLegAnimation(
-                        map,
-                        'sari-route-current'
-                    );
+                    if (leg.length > 12000) return [];
                 }
             }
-        };
+            return leg;
+        }
 
-        const addMarkers = (map, route, stops) => {
-            stops.forEach((stop) => {
-                const popup = new maplibregl.Popup({
-                    offset: 18,
-                    closeButton: false,
-                    maxWidth: '250px',
-                }).setHTML(`
-                    <div style="font-family:Poppins,system-ui,sans-serif;padding:2px 1px;">
-                        <strong style="display:block;font-size:11px;color:#3c3631;">
-                            ${String(stop.name || 'Route stop')}
-                        </strong>
-                        ${
-                            stop.address
-                                ? `<span style="display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#81776d;">
-                                    ${String(stop.address)}
-                                   </span>`
-                                : ''
-                        }
-                    </div>
-                `);
-
-                new maplibregl.Marker({
-                    element: markerElement(stop, route),
-                    anchor: 'center',
-                })
-                    .setLngLat([
-                        Number(stop.lng),
-                        Number(stop.lat),
-                    ])
-                    .setPopup(popup)
-                    .addTo(map);
-            });
-        };
-
-        const updateNotice = (wrapper, title, copy) => {
-            const notice = wrapper?.querySelector(
-                '[data-sari-route-notice]'
-            );
-
-            if (!notice) return;
-
-            const titleNode = notice.querySelector('strong');
-            const copyNode = notice.querySelector('small');
-
-            if (titleNode && title) titleNode.textContent = title;
-            if (copyNode && copy) copyNode.textContent = copy;
-        };
-
-        const destroyMap = () => {
-            if (animationTimer) {
-                window.clearInterval(animationTimer);
-                animationTimer = null;
+        async function requestRoadLegs(stops, signal) {
+            const baseUrl = String(ROUTER_URL || '').trim().replace(/\/+$/, '');
+            if (!/^https:\/\//i.test(baseUrl)) throw new Error('Road router must use HTTPS.');
+            const key = stops.map(stop => point(stop).map(n => n.toFixed(6)).join(',')).join(';');
+            if (legCache.has(key)) return legCache.get(key);
+            const url = `${baseUrl}/route/v1/driving/${key}?alternatives=false&steps=true&geometries=geojson&overview=full`;
+            const timeout = new AbortController();
+            const timeoutId = window.setTimeout(() => timeout.abort(), 12000);
+            const propagateAbort = () => timeout.abort();
+            signal?.addEventListener('abort', propagateAbort, {once:true});
+            try {
+                const response = await fetch(url, {signal:timeout.signal,mode:'cors',credentials:'omit'});
+                if (!response.ok) throw new Error(`Road router HTTP ${response.status}`);
+                const result = await response.json();
+                const itinerary = result?.routes?.[0];
+                if (result?.code !== 'Ok' || !Array.isArray(itinerary?.legs)
+                    || itinerary.legs.length !== stops.length - 1) {
+                    throw new Error('No connected driving route returned.');
+                }
+                if (Array.isArray(result.waypoints)
+                    && result.waypoints.some(waypoint => Number(waypoint?.distance || 0) > 2500)) {
+                    throw new Error('One or more saved locations are too far from routable roads.');
+                }
+                const legs = itinerary.legs.map((leg, i) => {
+                    const coords = concatStepGeometries(leg.steps || []);
+                    const p1 = point(stops[i]);
+                    const p2 = point(stops[i + 1]);
+                    if (coords.length < 2 && Math.abs(p1[0] - p2[0]) < .000001
+                        && Math.abs(p1[1] - p2[1]) < .000001) {
+                        return [p1, p2]; // Both facility stops can be the same physical hub.
+                    }
+                    return coords;
+                });
+                if (legs.some(leg => leg.length < 2)) throw new Error('Road route geometry incomplete.');
+                legCache.set(key, legs);
+                return legs;
+            } finally {
+                window.clearTimeout(timeoutId);
+                signal?.removeEventListener('abort', propagateAbort);
             }
+        }
 
+        // Only connect neighboring sequence numbers; never jump over an unresolved hub.
+        function approximateLegs(stops) {
+            const legs = [];
+            for (let i = 0; i < stops.length - 1; i++) {
+                const adjacent = Number(stops[i + 1].sequence) === Number(stops[i].sequence) + 1;
+                legs.push(adjacent ? [point(stops[i]),point(stops[i + 1])] : []);
+            }
+            return legs;
+        }
+
+        function destroy() {
+            renderGeneration++;
+            pendingRoute?.abort();
+            pendingRoute = null;
             if (activeMap) {
-                try {
-                    activeMap.remove();
-                } catch (_) {}
+                try { activeMap.remove(); } catch (_) {}
                 activeMap = null;
             }
+            document.querySelectorAll('[data-sari-maplibre-map]').forEach(el => delete el.dataset.ready);
+        }
 
-            const mapNode = document.querySelector(
-                '[data-sari-maplibre-map]'
-            );
-
-            if (mapNode) {
-                delete mapNode.dataset.ready;
-            }
-        };
-
-        const boot = () => {
-            const wrapper = document.querySelector(
-                '[data-sari-delivery-route]'
-            );
-
-            const mapNode = document.querySelector(
-                '[data-sari-maplibre-map]'
-            );
-
-            if (!wrapper || !mapNode || mapNode.dataset.ready === '1') {
-                return;
-            }
-
+        function boot() {
+            const wrapper = document.querySelector('[data-sari-delivery-route]');
+            const mapNode = document.querySelector('[data-sari-maplibre-map]');
+            if (!wrapper || !mapNode || mapNode.dataset.ready === '1') return;
             if (!window.maplibregl) {
-                updateNotice(
-                    wrapper,
-                    'Map library failed to load',
-                    'Refresh the page and check that unpkg.com is allowed by the browser or server network policy.'
-                );
+                setNotice(wrapper,'Map library unavailable','Check your connection to the MapLibre CDN.');
+                setStatus('Map could not load');
                 return;
             }
-
+            const generation = ++renderGeneration;
             mapNode.dataset.ready = '1';
-
-            const route = parseRoute(wrapper);
+            let route;
+            try { route = JSON.parse(wrapper.dataset.sariDeliveryRoute || '{}'); }
+            catch (_) { route = {}; }
             const stops = validStops(route);
-
             const map = new maplibregl.Map({
-                container: mapNode,
-                style: MAP_STYLE,
-                center: PHILIPPINES_CENTER,
-                zoom: 5.2,
-                attributionControl: true,
-                interactive: true,
-                dragRotate: false,
-                pitchWithRotate: false,
+                container:mapNode, style:MAP_STYLE,center:PHILIPPINES_CENTER,zoom:5.2,
+                attributionControl:true,dragRotate:false,pitchWithRotate:false,
             });
-
             activeMap = map;
-
-            map.addControl(
-                new maplibregl.NavigationControl({
-                    showCompass: false,
-                    visualizePitch: false,
-                }),
-                'top-right'
-            );
-
-            map.on('load', () => {
+            map.addControl(new maplibregl.NavigationControl({showCompass:false}), 'top-right');
+            map.on('load', async () => {
+                if (generation !== renderGeneration) return;
                 wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
-
-                fitRoute(map, stops);
-                addMarkers(map, route, stops);
-                buildRouteLayers(map, route, stops);
-
-                if (stops.length >= 2 && route?.ready) {
-                    wrapper
-                        .querySelector('[data-sari-route-notice]')
-                        ?.remove();
+                const ready = route.ready === true && stops.length === 4
+                    && stops.every((s,i)=>Number(s.sequence) === i + 1);
+                drawStopMarkers(map,route,stops);
+                fitRoute(map,stops,[]); // Show the actual saved area immediately while road geometry loads.
+                const abortController = new AbortController();
+                pendingRoute = abortController;
+                let legs = [];
+                let approximate = false;
+                if (ready) {
+                    setStatus('Finding roads between saved logistics stops…');
+                    try {
+                        legs = await requestRoadLegs(stops, abortController.signal);
+                        if (generation !== renderGeneration || abortController.signal.aborted) return;
+                        setNotice(wrapper,'','');
+                        setStatus('Road-following route · Milestones are confirmed by Logistics');
+                    } catch (error) {
+                        if (generation !== renderGeneration || abortController.signal.aborted) return;
+                        approximate = true;
+                        legs = approximateLegs(stops);
+                        setNotice(wrapper,'Road route temporarily unavailable',
+                            'Dashed links connect saved stops only; they are NOT the actual road route. Please try again later.');
+                        setStatus('Approximate stop connections · No verified road path');
+                    }
+                } else if (stops.length) {
+                    approximate = true;
+                    legs = approximateLegs(stops);
+                    setNotice(wrapper,'Waiting for full route coordinates',
+                        `${stops.length} saved stop${stops.length !== 1 ? 's' : ''} available. The road route needs confirmed seller, both hubs, and buyer coordinates.`);
+                    setStatus('Partial saved stops · Road route pending');
+                } else {
+                    setNotice(wrapper,'Route not yet available',
+                        'SARI Logistics has not saved route coordinates for this order.');
+                    setStatus('Waiting for saved route coordinates');
+                }
+                if (generation !== renderGeneration) return;
+                showLegs(map,stops,legs,approximate);
+                fitRoute(map,stops,legs);
+            });
+            map.on('error', event => {
+                if (generation !== renderGeneration) return;
+                const message = String(event?.error?.message || '').toLowerCase();
+                if (/style|tile|source|network|fetch/.test(message)) {
+                    wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
+                    setNotice(wrapper,'Map tiles unavailable',
+                        'The route data has not been changed. Check access to OpenStreetMap tile servers.');
                 }
             });
+            window.setTimeout(() => { if (generation === renderGeneration) map.resize(); }, 200);
+        }
 
-            map.on('error', (event) => {
-                wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
-
-                const message = String(
-                    event?.error?.message || ''
-                ).toLowerCase();
-
-                if (
-                    message.includes('style')
-                    || message.includes('source')
-                    || message.includes('tile')
-                    || message.includes('network')
-                    || message.includes('fetch')
-                ) {
-                    updateNotice(
-                        wrapper,
-                        'Map background could not load',
-                        'The tracking data is safe. Refresh the page or verify that tile.openstreetmap.org is allowed by your browser/server network policy.'
-                    );
-                }
-            });
-
-            window.setTimeout(() => {
-                map.resize();
-                fitRoute(map, stops);
-            }, 180);
-        };
-
+        const controller = {restart: () => { destroy(); boot(); }};
+        window.__sariOrderDetailsRoadMap = controller;
         if (document.readyState === 'loading') {
-            document.addEventListener(
-                'DOMContentLoaded',
-                boot,
-                { once: true }
-            );
+            document.addEventListener('DOMContentLoaded', boot, {once:true});
         } else {
             boot();
         }
-
-        document.addEventListener(
-            'livewire:navigated',
-            () => {
-                destroyMap();
-                boot();
-            }
-        );
+        document.addEventListener('livewire:navigating', destroy);
+        document.addEventListener('livewire:navigated', boot);
     })();
+
     </script>
 @endpush

@@ -1729,10 +1729,10 @@
        FLOATING EMPTY STATE / SHOPS
     ----------------------------- */
     #buyerProductEmpty {
-        border-color: var(--catalog-border) !important;
-        border-radius: 13px !important;
-        background: #fff !important;
-        box-shadow: 0 9px 24px rgba(31,41,55,.035) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     /* -----------------------------
@@ -2979,6 +2979,145 @@
         }
     }
 
+
+    /* ============================================================
+       BUYER CATALOG — READABLE DISCOVERY UI
+       Scoped visual changes only: no filter, product or route logic.
+    ============================================================ */
+
+    /* Pure white search: remove cream fill and warm-colored border. */
+    .sari-products-page .sari-live-search input.sari-filter-control,
+    .sari-products-page .sari-live-search input.sari-filter-control:hover {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border: 1px solid #dfe3e8 !important;
+        color: #29323b !important;
+        font-size: 12px !important;
+        font-weight: 550 !important;
+        box-shadow: none !important;
+    }
+
+    .sari-products-page .sari-live-search input.sari-filter-control:focus {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border-color: #9faab5 !important;
+        box-shadow: 0 0 0 3px rgba(75, 85, 99, .10) !important;
+    }
+
+    .sari-products-page .sari-live-search input.sari-filter-control::placeholder {
+        color: #79838e !important;
+        font-size: 11.5px !important;
+        font-weight: 450 !important;
+        opacity: 1 !important;
+    }
+
+    /* Search, Category and Sort By labels; selected dropdown values. */
+    .sari-products-page .sari-filter-label {
+        color: #4b5560 !important;
+        font-size: 11px !important;
+        font-weight: 750 !important;
+        letter-spacing: .045em !important;
+    }
+
+    .sari-products-page .sari-formal-trigger,
+    .sari-products-page .sari-formal-trigger > span {
+        color: #333d47 !important;
+        font-size: 12px !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-products-page .sari-formal-option {
+        min-height: 39px !important;
+        font-size: 11.5px !important;
+        font-weight: 550 !important;
+    }
+
+    .sari-products-page .sari-filter-reset,
+    .sari-products-page .sari-result-pill,
+    .sari-products-page .sari-result-pill #toolbarResultCount {
+        font-size: 11px !important;
+    }
+
+    /* More legible category names without changing category behavior. */
+    .sari-products-page .sari-reference-category-row .sari-inline-chip {
+        font-size: 11px !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-products-page .sari-reference-category-row {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: thin;
+    }
+
+    .sari-products-page .sari-reference-category-row .sari-category-chips {
+        width: max-content !important;
+        min-width: max-content !important;
+    }
+
+    /* Larger, clear text in Trending Now and Popular Categories. */
+    .sari-products-page .sari-insight-heading h2 {
+        font-size: 14px !important;
+        font-weight: 750 !important;
+        line-height: 1.35 !important;
+    }
+
+    .sari-products-page .sari-insight-link {
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+    }
+
+    .sari-products-page .sari-trending-copy strong,
+    .sari-products-page .sari-popular-category-copy strong {
+        color: #29323b !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        line-height: 1.45 !important;
+        white-space: normal !important;
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .sari-products-page .sari-trending-copy small,
+    .sari-products-page .sari-popular-category-copy small {
+        color: #707b86 !important;
+        font-size: 10.5px !important;
+        font-weight: 500 !important;
+    }
+
+    .sari-products-page .sari-trending-copy b {
+        color: #a96f0e !important;
+        font-size: 13px !important;
+        font-weight: 800 !important;
+    }
+
+    .sari-products-page .sari-insight-empty {
+        font-size: 11px !important;
+    }
+
+    /* Keep live-search suggestions legible at the same scale. */
+    .sari-products-page .sari-live-search-head strong,
+    .sari-products-page .sari-live-search-footer {
+        font-size: 10.5px !important;
+    }
+
+    .sari-products-page .sari-live-search-head span,
+    .sari-products-page .sari-live-result-meta {
+        font-size: 10px !important;
+    }
+
+    .sari-products-page .sari-live-result-name,
+    .sari-products-page .sari-live-result-price {
+        font-size: 11.5px !important;
+    }
+
+    .sari-products-page .sari-live-search-empty strong,
+    .sari-products-page .sari-live-search-empty p {
+        font-size: 11px !important;
+    }
+
 </style>
 @endpush
 
@@ -3337,12 +3476,10 @@
             @endforeach
         </div>
 
-        <div id="buyerProductEmpty" class="mt-5 hidden rounded-[16px] border border-[#ebe4da] bg-white px-6 py-14 text-center">
-            <div class="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#fbf5e9] text-[#a8731f]">
-                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path>
-                </svg>
-            </div>
+        <div id="buyerProductEmpty" class="mt-5 hidden px-6 py-14 text-center">
+            <svg viewBox="0 0 24 24" class="mx-auto block h-7 w-7 text-[#8f99a3]" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path>
+            </svg>
             <p class="mt-4 text-[11px] font-semibold text-[#4f473e]">No products match your filters</p>
             <p class="mt-1 text-[9px] text-[#958c80]">Try another category, search term, sort option, or product selection.</p>
             <div id="buyerZeroResultSuggestions" class="mt-4 flex flex-wrap justify-center gap-2"></div>
@@ -3568,16 +3705,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-{{-- =========================================================
-     TOAST
-========================================================= --}}
-<div id="buyerToast" class="sari-products-page pointer-events-none fixed right-4 top-24 z-[150] hidden w-[calc(100%-2rem)] max-w-[360px] translate-y-2 rounded-[16px] border border-[#e8ddca] bg-white p-4 opacity-0 shadow-[0_18px_45px_rgba(55,43,25,0.16)] transition-all duration-300 sm:right-6">
-    <div class="flex gap-3">
-        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#fbf5e9] text-[#a8731f]"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"></path></svg></div>
-        <div class="min-w-0"><p id="buyerToastTitle" class="text-[9px] font-semibold text-[#3d362d]">Cart Updated</p><p id="buyerToastText" class="mt-1 text-[8px] leading-4 text-[#7f766a]"></p></div>
     </div>
 </div>
 

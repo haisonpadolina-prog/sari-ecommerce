@@ -3829,14 +3829,14 @@
        Icons only; always visible even when a category has zero products.
     ============================================================ */
     #categories .sari-category-rail {
-        gap: 18px !important;
-        padding-top: 8px !important;
-        padding-bottom: 12px !important;
+        gap: 14px !important;
+        padding-top: 6px !important;
+        padding-bottom: 9px !important;
     }
 
     #categories .sari-category-card {
-        width: 132px !important;
-        flex: 0 0 132px !important;
+        width: 118px !important;
+        flex: 0 0 118px !important;
     }
 
     #categories .sari-category-icon {
@@ -3851,21 +3851,21 @@
     }
 
     #categories .sari-category-name {
-        max-width: 148px !important;
-        margin-top: 12px !important;
-        font-size: 14.5px !important;
+        max-width: 118px !important;
+        margin-top: 9px !important;
+        font-size: 13.5px !important;
         font-weight: 600 !important;
         line-height: 1.32 !important;
     }
 
     @media (max-width: 767px) {
         #categories .sari-category-rail {
-            gap: 13px !important;
+            gap: 11px !important;
         }
 
         #categories .sari-category-card {
-            width: 116px !important;
-            flex-basis: 116px !important;
+            width: 106px !important;
+            flex-basis: 106px !important;
         }
 
         #categories .sari-category-icon {
@@ -3880,8 +3880,8 @@
         }
 
         #categories .sari-category-name {
-            max-width: 124px !important;
-            font-size: 13px !important;
+            max-width: 106px !important;
+            font-size: 12.5px !important;
         }
     }
 
@@ -3892,9 +3892,9 @@
     ============================================================ */
     #categories .sari-category-photo {
         display: block;
-        width: 84px;
-        height: 84px;
-        flex: 0 0 84px;
+        width: 74px;
+        height: 74px;
+        flex: 0 0 74px;
         overflow: hidden;
         border: 1px solid #e1e5ea;
         border-radius: 999px;
@@ -3931,9 +3931,9 @@
 
     @media (max-width: 767px) {
         #categories .sari-category-photo {
-            width: 74px;
-            height: 74px;
-            flex-basis: 74px;
+            width: 66px;
+            height: 66px;
+            flex-basis: 66px;
         }
     }
 
@@ -4611,9 +4611,7 @@
 
             <div>
 
-                <p class="text-[7px] font-bold uppercase tracking-[.13em] text-[#aa7415]">Curated marketplace</p>
-
-                <h2 class="sari-section-title mt-1 text-[19px] font-bold text-[#201b17] sm:text-[22px]">Recommended for You</h2>
+                <h2 class="sari-section-title text-[19px] font-bold text-[#201b17] sm:text-[22px]">Recommended for You</h2>
 
             </div>
 

@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/seller.js',
 
                 // BUYER
+                'resources/js/buyer/sari-toast.js',
                 'resources/js/buyer.js',
                 'resources/js/buyer-products.js',
                 'resources/js/buyer-shop.js',

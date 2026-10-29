@@ -2,6 +2,8 @@
 
 namespace App\Models\Accounts;
 
+use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\Finance\RiderEarning;
 use App\Models\Finance\RiderPayoutRequest;
 use App\Models\Orders\MarketplaceOrder;
@@ -14,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class CourierAccount extends Authenticatable
 {
+    use HasApiTokens;
     use SoftDeletes;
     protected $table = 'courier_accounts';
 

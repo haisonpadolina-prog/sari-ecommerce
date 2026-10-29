@@ -632,6 +632,9 @@ Route::get('/buyer/orders', [BuyerOrderController::class, 'index'])
 Route::get('/buyer/orders/{order}', [BuyerOrderController::class, 'show'])
     ->name('buyer.orders.show');
 
+Route::get('/buyer/orders/{order}/tracking-state', [BuyerOrderController::class, 'trackingState'])
+    ->name('buyer.orders.tracking-state');
+
 Route::post('/buyer/orders/{order}/cancel', [BuyerOrderController::class, 'cancel'])
     ->name('buyer.orders.cancel');
 Route::get('/buyer/orders-live-state', [BuyerOrderController::class, 'liveState'])
@@ -644,6 +647,17 @@ Route::get('/buyer/recent-orders', [BuyerRecentController::class, 'orders'])
 
 Route::get('/buyer/recent-activity', [BuyerRecentController::class, 'activity'])
     ->name('buyer.recent-activity');
+// Buyer actions are sourced from admin_user_activities, never seller/order notifications.
+Route::post('/buyer/recent-activity/read-all', [\App\Http\Controllers\Buyer\BuyerAccountActivityActionController::class, 'readAll'])
+    ->name('buyer.recent-activity.read-all');
+Route::post('/buyer/recent-activity/{event}/read', [\App\Http\Controllers\Buyer\BuyerAccountActivityActionController::class, 'read'])
+    ->whereNumber('event')->name('buyer.recent-activity.read');
+Route::post('/buyer/recent-activity/{event}/archive', [\App\Http\Controllers\Buyer\BuyerAccountActivityActionController::class, 'archive'])
+    ->whereNumber('event')->name('buyer.recent-activity.archive');
+Route::patch('/buyer/recent-activity/{event}/restore', [\App\Http\Controllers\Buyer\BuyerAccountActivityActionController::class, 'restore'])
+    ->whereNumber('event')->name('buyer.recent-activity.restore');
+Route::delete('/buyer/recent-activity/{event}', [\App\Http\Controllers\Buyer\BuyerAccountActivityActionController::class, 'destroy'])
+    ->whereNumber('event')->name('buyer.recent-activity.destroy');
 Route::post('/buyer/orders/{order}/reviews', [BuyerReviewController::class, 'store'])
     ->name('buyer.orders.reviews.store');
 
@@ -662,9 +676,27 @@ Route::post('/buyer/notifications/{event}/read', [BuyerNotificationController::c
     ->whereNumber('event')
     ->name('buyer.notifications.read');
 
+
+/* Buyer notification actions — MarketplaceOrderEvent only (not recent user activity) */
+Route::post('/buyer/notifications/{event}/archive', [BuyerNotificationController::class, 'archive'])
+    ->whereNumber('event')
+    ->name('buyer.notifications.archive');
+Route::patch('/buyer/notifications/{event}/restore', [BuyerNotificationController::class, 'restore'])
+    ->whereNumber('event')
+    ->name('buyer.notifications.restore');
+Route::delete('/buyer/notifications/{event}', [BuyerNotificationController::class, 'destroy'])
+    ->whereNumber('event')
+    ->name('buyer.notifications.destroy');
+
 /* Buyer ↔ Seller direct messaging */
 Route::get('/buyer/messages', [BuyerSellerMessageController::class, 'buyerIndex'])
     ->name('buyer.messages');
+Route::get('/buyer/messages/unread', [BuyerSellerMessageController::class, 'unread'])
+    ->name('buyer.messages.unread');
+Route::post('/buyer/messages/orders/{order}/confirm-address', [BuyerSellerMessageController::class, 'confirmAddress'])
+    ->whereNumber('order')->name('buyer.messages.confirm-address');
+Route::get('/buyer/messages/{seller}/thread', [BuyerSellerMessageController::class, 'thread'])
+    ->name('buyer.messages.thread');
 Route::post('/buyer/messages/{seller}', [BuyerSellerMessageController::class, 'buyerSend'])
     ->name('buyer.messages.send');
 
@@ -1211,6 +1243,10 @@ Route::post(
 Route::get('/seller/buyer-messages', [SellerBuyerMessageController::class, 'index'])
     ->middleware(EnsureSellerNotRestricted::class)
     ->name('seller.buyer-messages');
+
+Route::get('/seller/buyer-messages/unread', [SellerBuyerMessageController::class, 'unread'])
+    ->middleware(EnsureSellerNotRestricted::class)
+    ->name('seller.buyer-messages.unread');
 
 Route::get('/seller/buyer-messages/{buyerKey}/thread', [SellerBuyerMessageController::class, 'thread'])
     ->middleware(EnsureSellerNotRestricted::class)

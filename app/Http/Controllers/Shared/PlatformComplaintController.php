@@ -8,6 +8,7 @@ use App\Models\Platform\PlatformComplaint;
 use App\Services\Messaging\PlatformMessagingService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PlatformComplaintController extends Controller
@@ -16,7 +17,7 @@ class PlatformComplaintController extends Controller
     {
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         $role = null;
         $identifier = null;
@@ -41,7 +42,7 @@ class PlatformComplaintController extends Controller
             'description' => ['required','string','min:10','max:3000'],
         ]);
 
-        $complaint = DB::transaction(function () use ($request, $role, $identifier, $validated): PlatformComplaint {
+        $result = DB::transaction(function () use ($request, $role, $identifier, $validated): array {
             $complaint = PlatformComplaint::create([
                 'reporter_role' => $role,
                 'reporter_identifier' => $identifier ?: null,
@@ -53,8 +54,25 @@ class PlatformComplaintController extends Controller
             $conversation = $this->messaging->openReportConversation($request, $complaint);
             $this->messaging->send($request, $conversation, (string) $complaint->description);
 
-            return $complaint;
+            return ['complaint' => $complaint, 'conversation' => $conversation];
         });
+
+        $complaint = $result['complaint'];
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Your report was submitted to SARI Admin.',
+                'complaint' => [
+                    'id' => $complaint->id,
+                    'subject' => $complaint->subject,
+                    'status' => $complaint->status,
+                ],
+                'conversation' => [
+                    'uuid' => $result['conversation']->uuid,
+                    'type' => $result['conversation']->conversation_type,
+                ],
+            ], 201);
+        }
 
         return back()
             ->with('success', 'Your issue was sent to SARI Admin and added to your support messages.')

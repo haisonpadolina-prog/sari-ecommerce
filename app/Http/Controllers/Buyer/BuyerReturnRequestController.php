@@ -1,72 +1,106 @@
 <?php
+
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Orders\MarketplaceOrder;
-use App\Models\Platform\SellerNotification;
+use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Orders\SellerReturnEvent;
 use App\Models\Orders\SellerReturnRequest;
+use App\Models\Platform\SellerNotification;
 use App\Services\Buyer\BuyerIdentityService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class BuyerReturnRequestController extends Controller
 {
-    public function __construct(private readonly BuyerIdentityService $identity) {}
+    public function __construct(private readonly BuyerIdentityService $identity)
+    {
+    }
 
     public function store(Request $request, MarketplaceOrder $order): RedirectResponse
     {
-        $this->guardOwned($request,$order);
-        abort_unless($order->status==='delivered',422,'Only delivered orders can be returned.');
+        $this->guardOwned($request, $order);
 
-        $validated=$request->validate([
-            'reason'=>['required','string','max:120'],
-            'details'=>['nullable','string','max:1200'],
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'max:120'],
+            'details' => ['nullable', 'string', 'max:1200'],
         ]);
 
-        DB::transaction(function() use($request,$order,$validated){
-            $return=SellerReturnRequest::firstOrCreate(
-                ['marketplace_order_id'=>$order->id],
-                [
-                    'seller_account_id'=>$order->seller_account_id,
-                    'buyer_account_id'=>$order->buyer_account_id,
-                    'buyer_social_account_id'=>$order->buyer_social_account_id,
-                    'reason'=>$validated['reason'],
-                    'details'=>$validated['details'] ?? null,
-                    'requested_amount'=>(float)$order->subtotal,
-                    'status'=>'requested',
-                ]
-            );
-            SellerReturnEvent::firstOrCreate(
-                ['seller_return_request_id'=>$return->id,'status'=>'requested'],
-                [
-                    'actor_role'=>'buyer',
-                    'actor_id'=>$order->buyer_account_id ?: $order->buyer_social_account_id,
-                    'title'=>'Return Requested',
-                    'message'=>$validated['details'] ?? $validated['reason'],
-                ]
-            );
-            SellerNotification::create([
-                'seller_account_id'=>$order->seller_account_id,
-                'type'=>'return_request',
-                'title'=>'New return request',
-                'message'=>"Buyer requested a return for {$order->order_number}.",
-                'action_url'=>route('seller.returns.index'),
-                'data'=>['order_id'=>$order->id,'return_request_id'=>$return->id],
-            ]);
-        });
+        DB::transaction(function () use ($order, $validated): void {
+            $lockedOrder = MarketplaceOrder::query()
+                ->whereKey($order->id)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        return back()->with('success','Return request submitted to the Seller.');
+            if ($lockedOrder->status !== 'delivered') {
+                throw ValidationException::withMessages([
+                    'return' => 'Only delivered orders can be submitted for return or refund review.',
+                ]);
+            }
+
+            if (SellerReturnRequest::query()->where('marketplace_order_id', $lockedOrder->id)->exists()) {
+                throw ValidationException::withMessages([
+                    'return' => 'A return or refund request already exists for this order.',
+                ]);
+            }
+
+            $returnRequest = SellerReturnRequest::query()->create([
+                'marketplace_order_id' => $lockedOrder->id,
+                'seller_account_id' => $lockedOrder->seller_account_id,
+                'buyer_account_id' => $lockedOrder->buyer_account_id,
+                'buyer_social_account_id' => $lockedOrder->buyer_social_account_id,
+                'reason' => $validated['reason'],
+                'details' => trim((string) ($validated['details'] ?? '')) ?: null,
+                'requested_amount' => (float) $lockedOrder->subtotal,
+                'status' => 'requested',
+            ]);
+
+            SellerReturnEvent::query()->create([
+                'seller_return_request_id' => $returnRequest->id,
+                'actor_role' => 'buyer',
+                'actor_id' => $lockedOrder->buyer_account_id ?: $lockedOrder->buyer_social_account_id,
+                'status' => 'requested',
+                'title' => 'Return Requested',
+                'message' => $returnRequest->details ?: $returnRequest->reason,
+            ]);
+
+            MarketplaceOrderEvent::query()->create([
+                'marketplace_order_id' => $lockedOrder->id,
+                'seller_account_id' => $lockedOrder->seller_account_id,
+                'audience' => 'buyer',
+                'type' => 'return_requested',
+                'title' => 'Return / refund request submitted',
+                'message' => "Your request for {$lockedOrder->order_number} is waiting for Seller review.",
+                'status' => 'return_requested',
+            ]);
+
+            SellerNotification::query()->create([
+                'seller_account_id' => $lockedOrder->seller_account_id,
+                'type' => 'return_request',
+                'title' => 'New return request',
+                'message' => "Buyer requested a return for {$lockedOrder->order_number}.",
+                'action_url' => route('seller.returns.index'),
+                'data' => [
+                    'order_id' => $lockedOrder->id,
+                    'return_request_id' => $returnRequest->id,
+                ],
+            ]);
+        }, 3);
+
+        return back()->with('success', 'Return / refund request submitted to the Seller.');
     }
 
     private function guardOwned(Request $request, MarketplaceOrder $order): void
     {
         $this->identity->guard($request);
-        $owned=$this->identity->accountId($request)
-            ? (int)$order->buyer_account_id===(int)$this->identity->accountId($request)
-            : (int)$order->buyer_social_account_id===(int)$this->identity->socialId($request);
-        abort_unless($owned,403);
+
+        $owned = $this->identity->accountId($request)
+            ? (int) $order->buyer_account_id === (int) $this->identity->accountId($request)
+            : (int) $order->buyer_social_account_id === (int) $this->identity->socialId($request);
+
+        abort_unless($owned, 403);
     }
 }

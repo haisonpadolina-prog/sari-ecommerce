@@ -1913,10 +1913,6 @@
             </span>
         </div>
 
-        @if ($errors->any())
-            <div class="sari-checkout-error">{{ $errors->first() }}</div>
-        @endif
-
         <form id="buyerCheckoutForm" method="POST" action="{{ route('buyer.checkout.store') }}" class="sari-checkout-grid">
             @csrf
 

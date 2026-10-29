@@ -337,6 +337,10 @@
 
     {{-- Buyer shell visual layer: UI-only, modeled after the Seller shell. --}}
     <link rel="stylesheet" href="{{ asset('css/buyer/shell.css') }}?v=20261008-3">
+    {{-- Compact Buyer toast design. No Vite manifest dependency. --}}
+    <link rel="stylesheet" href="{{ asset('css/buyer/sari-toast.css') }}?v=20261029-buyer-instant-sound-v4">
+    {{-- Load the notification engine during document parsing; defer executes after HTML is ready. --}}
+    <script defer src="{{ asset('js/buyer/sari-toast.js') }}?v=20261029-buyer-instant-sound-v4" data-sounds-base="{{ asset('sounds/buyer') }}"></script>
 </head>
 
 <body
@@ -375,6 +379,15 @@
             id="buyerMainContent"
             class="min-h-screen"
         >
+            {{-- Flash messages are rendered as nonblocking toasts; Blade escapes all text. --}}
+            <div
+                id="sariBuyerToastFlash"
+                hidden
+                data-success="{{ (string) session('success', '') }}"
+                data-error="{{ (string) (session('error') ?: ($errors->first() ?? '')) }}"
+                data-cancel-success="{{ (string) session('cancel_success', '') }}"
+                data-info="{{ (string) session('info', '') }}"
+            ></div>
             @if(session('is_buyer'))
                 {{--
                     Platform announcements render as a fixed overlay and must not

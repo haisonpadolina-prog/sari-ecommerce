@@ -145,7 +145,7 @@ class BuyerCatalogService
                 'seller.vouchers' => $this->activeVoucherConstraint(...),
                 'activeVariants',
                 'galleryImages',
-                'reviews:id,seller_product_id,rating,comment,created_at',
+                'reviews:id,seller_product_id,rating,comment,image_paths,created_at',
                 'reviews.sellerReply:id,product_review_id,seller_account_id,reply,created_at',
             ])
             ->withAvg('reviews', 'rating')
@@ -573,6 +573,11 @@ class BuyerCatalogService
                 ? $product->reviews->map(fn ($review) => [
                     'rating' => (int) $review->rating,
                     'comment' => (string) ($review->comment ?? ''),
+                    'image_urls' => collect((array) ($review->image_paths ?? []))
+                        ->filter(fn ($path) => is_string($path) && trim($path) !== '')
+                        ->map(fn (string $path) => Storage::disk('public')->url($path))
+                        ->values()
+                        ->all(),
                     'created_at' => $review->created_at?->format('M d, Y'),
                     'seller_reply' => $review->sellerReply ? [
                         'reply' => (string) $review->sellerReply->reply,

@@ -2,6 +2,8 @@
 
 namespace App\Models\Accounts;
 
+use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\Catalog\ProductReview;
 use App\Models\Messaging\BuyerSellerMessage;
 use App\Models\Orders\BuyerCartItem;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BuyerAccount extends Authenticatable
 {
+    use HasApiTokens;
     use SoftDeletes;
     protected $table = 'buyer_accounts';
 

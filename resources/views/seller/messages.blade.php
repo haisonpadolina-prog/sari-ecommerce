@@ -5,6 +5,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/seller/messages.css') }}?v=20261007-1">
+<link rel="stylesheet" href="{{ asset('css/buyer/order-confirmation-card.css') }}?v=20261026-1">
 @endpush
 
 @section('content')
@@ -204,6 +205,13 @@
                                         class="seller-message-surface"
                                     >{{ trim((string) ($message->body ?? '')) }}</span>
 
+                                    @if (($message->message_type ?? 'text') === 'order_confirmation')
+                                        <div class="seller-message-label">Automatic seller confirmation</div>
+                                    @endif
+                                    @if (($message->message_type ?? 'text') === 'order_confirmation' && $message->order)
+                                        @include('components.messaging.order-confirmation-card', ['order' => $message->order, 'forBuyer' => false])
+                                    @endif
+
                                     <p class="seller-message-time {{ $mine ? 'text-right' : '' }}">
                                         {{ $message->created_at?->format('h:i A') }}
                                     </p>
@@ -388,6 +396,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/sari-order-confirmation-card.js') }}?v=20261026-1"></script>
 <script>
 (function () {
     const buyerMode = @json($buyerMode);
@@ -506,6 +515,8 @@
                             data-chat-kind="${mine ? 'seller' : 'buyer'}"
                             class="seller-message-surface"
                         >${escapeHtml(String(message.body || '').trim())}</span>
+                        ${message.message_type === 'order_confirmation' ? '<span class="seller-message-label">Automatic seller confirmation</span>' : ''}
+                        ${window.SariOrderCard?.render(message.order_confirmation, false, null) || ''}
 
                         <p class="seller-message-time ${mine ? 'text-right' : ''}">
                             ${escapeHtml(formatTime(message.created_at))}
@@ -792,10 +803,22 @@
         scrollBottom('auto');
         loadThread(false);
 
-        pollTimer = window.setInterval(
-            () => loadThread(false),
-            3000
-        );
+        let sellerChatChannel = null;
+        const startBuyerPolling = () => {
+            if (!pollTimer) pollTimer = window.setInterval(() => loadThread(false), 3000);
+        };
+        const sellerChannel = `sari.buyer-seller.seller.${Number(@json($seller->id))}`;
+        if (window.Echo) {
+            try {
+                sellerChatChannel = window.Echo.private(sellerChannel)
+                    .listen('.buyer-seller.message', () => loadThread(false))
+                    .error(() => startBuyerPolling());
+            } catch (_) { startBuyerPolling(); }
+        } else {
+            startBuyerPolling();
+        }
+        // A low-frequency reconciliation fetch covers reconnects or missed events.
+        const reconcileTimer = window.setInterval(() => loadThread(false), 15000);
 
         document.addEventListener(
             'visibilitychange',
@@ -813,6 +836,9 @@
                 pollTimer = null;
             }
 
+            window.clearInterval(reconcileTimer);
+            // Seller shell's unread badge may share this private subscription.
+            // Keep it alive across Livewire navigation; listener is scoped to the page lifecycle.
             buyerThreadLifecycle.abort();
             root.dataset.initialized = '0';
         };

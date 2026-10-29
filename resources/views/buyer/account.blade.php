@@ -2898,14 +2898,6 @@
 
 </style>
 
-    @if (session('success'))
-        <div class="sa-alert sa-alert--success">{{ session('success') }}</div>
-    @endif
-
-    @if ($errors->any())
-        <div class="sa-alert sa-alert--error">{{ $errors->first() }}</div>
-    @endif
-
     <section class="sa-page-head">
         <p class="sa-eyebrow">Account Management</p>
         <h1 class="sa-page-title">Buyer <span>Profile</span></h1>
@@ -3735,7 +3727,7 @@
                         if (profileFileStatus) {
                             profileFileStatus.textContent = 'Use JPG, PNG, or WEBP only.';
                         }
-                        window.alert('Use a JPG, PNG, or WEBP profile image.');
+                        window.SariBuyerToast?.error('Use a JPG, PNG, or WEBP profile image.');
                         return;
                     }
 
@@ -3744,7 +3736,7 @@
                         if (profileFileStatus) {
                             profileFileStatus.textContent = 'Image must not be larger than 5 MB.';
                         }
-                        window.alert('Profile image must not be larger than 5 MB.');
+                        window.SariBuyerToast?.error('Profile image must not be larger than 5 MB.');
                         return;
                     }
 
@@ -3783,7 +3775,7 @@
             async function openSupportThread(button){if(!supportThreadModal||!button)return;showSupportThread();if(supportThreadMessages)supportThreadMessages.innerHTML='<p class="sa-support-thread-loading">Loading conversation...</p>';try{let uuid=String(button.dataset.conversation||'').trim();if(!uuid){const opened=await supportFetch(supportUrl(supportThreadModal.dataset.openTemplate,'__COMPLAINT__',button.dataset.complaintId),{method:'POST'});uuid=String(opened?.conversation?.uuid||'').trim();button.dataset.conversation=uuid;}if(!uuid)throw new Error('The support conversation could not be opened.');await loadSupportConversation(uuid);}catch(error){if(supportThreadMessages){supportThreadMessages.innerHTML='';const message=document.createElement('p');message.className='sa-support-thread-error';message.textContent=error?.message||'Unable to open this support conversation.';supportThreadMessages.appendChild(message);}}}
             document.querySelectorAll('[data-open-report-thread]').forEach(button=>button.addEventListener('click',()=>openSupportThread(button)));
             document.querySelectorAll('[data-close-support-thread]').forEach(button=>button.addEventListener('click',closeSupportThread));
-            supportThreadReply?.addEventListener('submit',async function(event){event.preventDefault();const uuid=String(this.dataset.conversation||'').trim();const body=String(supportThreadBody?.value||'').trim();if(!uuid||!body)return;const submitButton=this.querySelector('button[type="submit"]');if(submitButton){submitButton.disabled=true;submitButton.textContent='Sending...';}try{const formData=new FormData();formData.append('body',body);await supportFetch(supportUrl(supportThreadModal?.dataset.sendTemplate,'__CONVERSATION__',uuid),{method:'POST',body:formData});if(supportThreadBody)supportThreadBody.value='';await loadSupportConversation(uuid);}catch(error){window.alert(error?.message||'Your reply could not be sent.');}finally{if(submitButton){submitButton.disabled=false;submitButton.textContent='Send';}}});
+            supportThreadReply?.addEventListener('submit',async function(event){event.preventDefault();const uuid=String(this.dataset.conversation||'').trim();const body=String(supportThreadBody?.value||'').trim();if(!uuid||!body)return;const submitButton=this.querySelector('button[type="submit"]');if(submitButton){submitButton.disabled=true;submitButton.textContent='Sending...';}try{const formData=new FormData();formData.append('body',body);await supportFetch(supportUrl(supportThreadModal?.dataset.sendTemplate,'__CONVERSATION__',uuid),{method:'POST',body:formData});if(supportThreadBody)supportThreadBody.value='';await loadSupportConversation(uuid);window.SariBuyerToast?.success('Reply sent successfully.');}catch(error){window.SariBuyerToast?.error(error?.message||'Your reply could not be sent.');}finally{if(submitButton){submitButton.disabled=false;submitButton.textContent='Send';}}});
 
             const modal = document.getElementById('buyerAddressModal');
             const addressForm = document.getElementById('buyerAddressForm');

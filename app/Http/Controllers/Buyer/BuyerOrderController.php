@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Orders\MarketplaceOrderEvent;
+use App\Models\Accounts\CourierAccount;
 use App\Models\Catalog\SellerProduct;
+use App\Models\Catalog\SellerProductVariant;
 use App\Services\Buyer\BuyerIdentityService;
 use App\Services\Delivery\DeliveryRouteService;
 use App\Services\Products\ProductVariantInventoryService;
@@ -14,6 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -74,7 +77,78 @@ class BuyerOrderController extends Controller
 
         $trackingRoute = $this->deliveryRoute->buyerPayload($order);
 
-        return view('buyer.order-details', compact('order', 'trackingRoute'));
+        // Order snapshots store IDs, not image URLs. Resolve the purchased variant
+        // first, then the product photo, without requiring an active listing.
+        $primaryItem = (array) (collect($order->items ?? [])->first() ?? []);
+        $primaryProductId = (int) ($primaryItem['product_id'] ?? 0);
+        $primaryVariantId = (int) ($primaryItem['variant_id'] ?? 0);
+        $primaryItemImageUrl = null;
+
+        if ($primaryProductId > 0) {
+            $product = SellerProduct::query()
+                ->whereKey($primaryProductId)
+                ->where('seller_account_id', $order->seller_account_id)
+                ->first();
+
+            if ($product) {
+                $variantPath = $primaryVariantId > 0
+                    ? SellerProductVariant::query()
+                        ->whereKey($primaryVariantId)
+                        ->where('seller_product_id', $product->id)
+                        ->value('image_path')
+                    : null;
+
+                foreach ([$variantPath, $product->image_path] as $imagePath) {
+                    $imagePath = trim((string) $imagePath);
+
+                    if ($imagePath !== '' && Storage::disk('public')->exists($imagePath)) {
+                        $primaryItemImageUrl = Storage::disk('public')->url($imagePath);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // The order is buyer-owned (guardOwned above). Lookup is scoped to the
+        // courier email assigned on this order, not another rider's account.
+        $courier = null;
+        $courierEmail = trim((string) ($order->courier_email ?? ''));
+
+        if ($courierEmail !== '') {
+            $courier = CourierAccount::query()
+                ->where('email', $courierEmail)
+                ->first();
+        }
+
+        $courierName = $courier
+            ? trim(implode(' ', array_filter([
+                $courier->first_name,
+                $courier->middle_initial ? trim($courier->middle_initial, ' .') . '.' : null,
+                $courier->last_name,
+            ])))
+            : '';
+
+        $courierPhotoPath = trim((string) ($courier?->profile_image_path ?? ''));
+        $courierPhotoUrl = $courierPhotoPath !== '' && Storage::disk('public')->exists($courierPhotoPath)
+            ? Storage::disk('public')->url($courierPhotoPath)
+            : null;
+
+        $courierDetails = [
+            'name' => $courierName !== ''
+                ? $courierName
+                : (trim((string) ($order->courier_name ?? '')) ?: 'Waiting for rider assignment'),
+            'phone' => trim((string) ($courier?->contact_no ?? '')),
+            'email' => $courierEmail !== '' ? $courierEmail : trim((string) ($courier?->email ?? '')),
+            'photo_url' => $courierPhotoUrl,
+            'assigned' => $courierEmail !== '' || trim((string) ($order->courier_name ?? '')) !== '',
+        ];
+
+        return view('buyer.order-details', compact(
+            'order',
+            'trackingRoute',
+            'primaryItemImageUrl',
+            'courierDetails'
+        ));
     }
 
 
@@ -156,6 +230,30 @@ class BuyerOrderController extends Controller
 
         return back()
             ->with('success', 'Order cancelled and reserved stock was restored.');
+    }
+
+
+    /**
+     * Buyer-owned location snapshots and delivery milestones for My Orders.
+     * Route stops are real saved coordinates, NOT a rider GPS location or ETA.
+     */
+    public function trackingState(Request $request, MarketplaceOrder $order): JsonResponse
+    {
+        $this->guardOwned($request, $order);
+
+        $order->loadMissing(['seller', 'buyer', 'logisticsParcel']);
+
+        $route = $this->deliveryRoute->buyerPayload($order);
+
+        return response()->json([
+            'order_id' => $order->id,
+            'order_number' => $order->order_number,
+            'status' => $order->status,
+            'status_label' => $order->statusLabel(),
+            'courier_name' => $order->courier_name ?: null,
+            'updated_at' => $order->updated_at?->toIso8601String(),
+            'route' => $route,
+        ])->header('Cache-Control', 'private, no-store, max-age=0');
     }
 
 

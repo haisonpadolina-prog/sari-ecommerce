@@ -768,6 +768,114 @@
         transform: none !important;
     }
 
+
+    /* ============================================================
+       SARI PRODUCT CARDS — BALANCED TYPE READABILITY
+       Typography-only refinement; all Blade data and JS preserved.
+       ============================================================ */
+    .sari-product-card .sari-buyer-card-title {
+        font-size: 14.5px;
+        line-height: 1.34;
+    }
+
+    .sari-product-card .sari-buyer-card-meta {
+        font-size: 10.5px;
+        line-height: 1.45;
+        color: #75808b;
+    }
+
+    .sari-product-card .sari-buyer-card-price {
+        font-size: 16px;
+        line-height: 1.12;
+    }
+
+    .sari-product-card .sari-buyer-card-old-price {
+        font-size: 9.5px;
+    }
+
+    .sari-product-card .sari-buyer-card-stock {
+        font-size: 11px;
+    }
+
+    .sari-product-card .sari-buyer-card-secondary {
+        font-size: 9.5px;
+        color: #77818c;
+    }
+
+    .sari-product-card .sari-buyer-card-badge--active {
+        font-size: 8.5px;
+    }
+
+    .sari-product-card .sari-buyer-discount-corner {
+        font-size: 11px;
+    }
+
+    .sari-product-card .sari-buyer-card-offer-kicker {
+        font-size: 7.2px;
+    }
+
+    .sari-product-card .sari-buyer-card-offer-main,
+    .sari-product-card .sari-buyer-card-offer-item--discount .sari-buyer-card-offer-main,
+    .sari-product-card .sari-buyer-card-offer-item--cod .sari-buyer-card-offer-main {
+        font-size: 7.5px;
+    }
+
+    .sari-product-card .sari-buyer-card-promo-label {
+        font-size: 9.4px;
+    }
+
+    .sari-product-card .sari-buyer-card-promo-copy {
+        font-size: 8.9px;
+    }
+
+    .sari-product-card .sari-buyer-card-buy {
+        height: 34px;
+        min-width: 86px;
+        font-size: 10px;
+    }
+
+    .sari-product-card .sari-buyer-card-icon-action {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    .sari-product-card .sari-buyer-card-view-only {
+        font-size: 10px;
+    }
+
+    /* Small additional vertical space keeps two-line titles and promos visible. */
+    @media (min-width: 1024px) {
+        .sari-product-card {
+            height: 371px;
+            min-height: 371px;
+            max-height: 371px;
+        }
+    }
+
+    @media (min-width: 1024px) and (max-height: 820px) {
+        .sari-product-card {
+            height: 361px;
+            min-height: 361px;
+            max-height: 361px;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .sari-product-card .sari-buyer-card-title { font-size: 14px; }
+        .sari-product-card .sari-buyer-card-price { font-size: 15.5px; }
+        .sari-product-card .sari-buyer-card-meta { font-size: 10px; }
+        .sari-product-card .sari-buyer-card-stock { font-size: 10.5px; }
+        .sari-product-card .sari-buyer-card-secondary { font-size: 9px; }
+        .sari-product-card .sari-buyer-card-offer-kicker { font-size: 6.7px; }
+        .sari-product-card .sari-buyer-card-offer-main,
+        .sari-product-card .sari-buyer-card-offer-item--discount .sari-buyer-card-offer-main,
+        .sari-product-card .sari-buyer-card-offer-item--cod .sari-buyer-card-offer-main {
+            font-size: 7px;
+        }
+        .sari-product-card .sari-buyer-card-promo-label { font-size: 8.7px; }
+        .sari-product-card .sari-buyer-card-promo-copy { font-size: 8.5px; }
+    }
 </style>
 
 <article

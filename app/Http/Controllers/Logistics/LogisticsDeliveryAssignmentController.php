@@ -209,11 +209,14 @@ class LogisticsDeliveryAssignmentController extends Controller
             ->where('status', 'approved')
             ->select('id');
 
+        // Managers select an operating branch too. Only Hub Operators are
+        // restricted to riders located within their assigned municipality.
+        $isHubOperator = CurrentLogisticsHub::isHubOperator($request);
         $hubFacility = CurrentLogisticsHub::requireOperatingFacility($request);
 
         $riderQuery = CourierAccount::query();
 
-        if ($hubFacility) {
+        if ($isHubOperator && $hubFacility) {
 
             /*
              * Hub Operators may use only approved Riders belonging
@@ -251,7 +254,16 @@ class LogisticsDeliveryAssignmentController extends Controller
         $riders = $riderQuery
             ->where('account_status', 'active')
             ->where('availability_status', 'online')
-            ->whereIn('registration_application_id', $approvedIds)
+            ->where(function ($query) use ($approvedIds, $logistics): void {
+                // Same eligible pool as Rider Management: approved applicants,
+                // plus activated Riders invited directly by this provider.
+                $query->whereIn('registration_application_id', $approvedIds)
+                    ->orWhere(function ($invited) use ($logistics): void {
+                        $invited
+                            ->whereNull('registration_application_id')
+                            ->where('logistics_account_id', $logistics->id);
+                    });
+            })
             ->orderBy('first_name')
             ->orderBy('last_name')
             ->get();
@@ -397,7 +409,8 @@ class LogisticsDeliveryAssignmentController extends Controller
 
         $logistics = CurrentLogisticsAccount::resolve($request);
 
-        $hubAccount = CurrentLogisticsHub::isHubOperator($request)
+        $isHubOperator = CurrentLogisticsHub::isHubOperator($request);
+        $hubAccount = $isHubOperator
             ? CurrentLogisticsHub::requireAccount($request)
             : null;
 
@@ -423,7 +436,8 @@ class LogisticsDeliveryAssignmentController extends Controller
                 $validated,
                 $logistics,
                 $hubAccount,
-                $hubFacility
+                $hubFacility,
+                $isHubOperator
             ): int {
 
                 /*
@@ -580,7 +594,7 @@ class LogisticsDeliveryAssignmentController extends Controller
                 $riderQuery = CourierAccount::query()
                     ->whereKey((int) $validated['rider_id']);
 
-                if ($hubFacility) {
+                if ($isHubOperator && $hubFacility) {
 
                     /*
                      * Hub Operator:
@@ -624,21 +638,21 @@ class LogisticsDeliveryAssignmentController extends Controller
                     ]);
                 }
 
-                $approved = RegistrationApplication::query()
-                    ->whereKey(
-                        $rider->registration_application_id
-                    )
-                    ->where(function ($query) use ($logistics): void {
-                        $query
-                            ->where(
-                                'logistics_account_id',
-                                $logistics->id
-                            )
-                            ->orWhereNull('logistics_account_id');
-                    })
-                    ->where('role', 'rider')
-                    ->where('status', 'approved')
-                    ->exists();
+                // Match the Rider Management directory. Directly invited
+                // Riders have no registration application; provider ownership
+                // and active/online state are required instead.
+                $approved = $rider->registration_application_id
+                    ? RegistrationApplication::query()
+                        ->whereKey($rider->registration_application_id)
+                        ->where(function ($query) use ($logistics): void {
+                            $query
+                                ->where('logistics_account_id', $logistics->id)
+                                ->orWhereNull('logistics_account_id');
+                        })
+                        ->where('role', 'rider')
+                        ->where('status', 'approved')
+                        ->exists()
+                    : (int) $rider->logistics_account_id === (int) $logistics->id;
 
                 if (
                     ! $approved
@@ -660,7 +674,7 @@ class LogisticsDeliveryAssignmentController extends Controller
                  * Hub Operators cannot claim unowned Rider accounts.
                  */
 
-                if (! $hubFacility && ! $rider->logistics_account_id) {
+                if (! $isHubOperator && ! $rider->logistics_account_id) {
 
                     $rider->forceFill([
                         'logistics_account_id' => $logistics->id,

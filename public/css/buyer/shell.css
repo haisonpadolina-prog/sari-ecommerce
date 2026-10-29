@@ -89,12 +89,12 @@ body {
 }
 
 .buyer-sidebar-section-label {
-    margin: 10px 8px 7px !important;
-    color: #9B7A43 !important;
-    font-size: 7.5px !important;
-    line-height: 1 !important;
-    font-weight: 700 !important;
-    letter-spacing: .13em !important;
+    margin: 13px 9px 8px !important;
+    color: #94713C !important;
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 750 !important;
+    letter-spacing: .12em !important;
     text-transform: uppercase !important;
     white-space: nowrap !important;
     user-select: none;
@@ -111,15 +111,16 @@ body {
 }
 
 #buyerSidebarNav [data-buyer-sidebar-item] {
-    min-height: 39px !important;
+    min-height: 43px !important;
     width: 100% !important;
-    gap: 10px !important;
+    gap: 11px !important;
     border: 1px solid transparent !important;
     border-radius: 10px !important;
-    padding: 8px 10px !important;
-    font-size: 10.5px !important;
-    line-height: 1.15 !important;
-    font-weight: 500 !important;
+    padding: 9px 11px !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.008em !important;
     color: #514B42 !important;
     background: transparent !important;
     background-image: none !important;
@@ -139,14 +140,14 @@ body {
 }
 
 #buyerSidebarNav [data-buyer-sidebar-item] svg {
-    width: 16px !important;
-    height: 16px !important;
+    width: 18px !important;
+    height: 18px !important;
     flex: 0 0 auto;
-    stroke-width: 1.75 !important;
+    stroke-width: 1.8 !important;
 }
 
 #buyerSidebarNav [data-buyer-sidebar-item] > span:first-child {
-    gap: 10px !important;
+    gap: 11px !important;
 }
 
 #buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="true"] {
@@ -443,7 +444,7 @@ body {
     }
 
     html[data-buyer-sidebar-mini="1"] #buyerSidebarNav [data-buyer-sidebar-item] {
-        min-height: 40px !important;
+        min-height: 43px !important;
         justify-content: center !important;
         gap: 0 !important;
         padding-inline: 0 !important;
@@ -497,10 +498,10 @@ body {
     }
 
     #buyerSidebarNav [data-buyer-sidebar-item] {
-        min-height: 36px !important;
+        min-height: 40px !important;
         padding-top: 7px !important;
         padding-bottom: 7px !important;
-        font-size: 10px !important;
+        font-size: 12px !important;
     }
 }
 

@@ -60,7 +60,7 @@ class SellerAdminChatController extends Controller
                 $selectedBuyerKey
             );
 
-            $buyerMessages = $buyerMessagesQuery->get();
+            $buyerMessages = $buyerMessagesQuery->with('order')->get();
 
             $readQuery = BuyerSellerMessage::query()
                 ->where('seller_account_id', $seller->id)

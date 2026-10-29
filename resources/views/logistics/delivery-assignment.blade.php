@@ -4403,10 +4403,22 @@
                                         No Rider available
                                     </strong>
 
-                                    <p>
-                                        All online Riders currently have
-                                        active Logistics work.
-                                    </p>
+                                    @if($riders->isEmpty())
+                                        <p>
+                                            No approved, active and online Rider is available
+                                            for this Logistics account or hub. Check Rider
+                                            Management to review activation and availability.
+                                        </p>
+                                    @else
+                                        <p>
+                                            All eligible online Riders currently have
+                                            active pickup or last-mile assignments.
+                                        </p>
+                                    @endif
+
+                                    <a href="{{ route('logistics.rider-management') }}" class="pickup-text-link">
+                                        Review Rider Management →
+                                    </a>
 
                                 </div>
 

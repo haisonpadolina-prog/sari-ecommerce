@@ -39,6 +39,21 @@ class BuyerActivityService
             ->get();
     }
 
+    public function recentOrdersPaginated(Request $request, int $perPage = 8): LengthAwarePaginator
+    {
+        return $this->identity
+            ->apply(MarketplaceOrder::query(), $request)
+            ->with([
+                'seller:id,store_name,store_logo_path',
+                'reviews.sellerReply',
+                'returnRequest.events',
+                'logisticsParcel:id,marketplace_order_id,status',
+            ])
+            ->latest('created_at')
+            ->paginate(max(5, min(20, $perPage)))
+            ->withQueryString();
+    }
+
     public function activeShipments(Request $request, ?int $limit = null): Collection
     {
         $query = $this->identity
@@ -70,15 +85,16 @@ class BuyerActivityService
             ->paginate(max(5, min(50, $perPage)));
     }
 
-    public function notifications(Request $request, int $perPage = 20): LengthAwarePaginator
+    public function notifications(Request $request, int $perPage = 20, bool $archived = false): LengthAwarePaginator
     {
-        $notifications = $this->notificationQuery($request)
+        $notifications = $this->notificationQuery($request, $archived)
             ->with([
                 'order:id,order_number,seller_account_id,buyer_account_id,buyer_social_account_id,status,courier_name,created_at,updated_at',
                 'seller:id,store_name',
             ])
             ->latest('id')
-            ->paginate(max(5, min(50, $perPage)));
+            ->paginate(max(5, min(50, $perPage)))
+            ->withQueryString();
 
         $this->decorateReadState($request, collect($notifications->items()));
 
@@ -126,6 +142,57 @@ class BuyerActivityService
                 'marketplace_order_event_id' => $event->id,
             ],
             ['read_at' => now()]
+        );
+    }
+
+    /** Move an activity out of the inbox, without removing order history. */
+    public function archive(Request $request, MarketplaceOrderEvent $event): void
+    {
+        abort_unless($this->eventBelongsToBuyer($request, $event), 403);
+
+        $identity = [
+            'buyer_key' => $this->identity->key($request),
+            'marketplace_order_event_id' => $event->id,
+        ];
+
+        abort_if(BuyerNotificationRead::query()->where($identity)->whereNotNull('deleted_at')->exists(), 404);
+
+        BuyerNotificationRead::query()->updateOrCreate($identity, [
+            'archived_at' => now(),
+            'read_at' => now(),
+        ]);
+    }
+
+    /** Return an archived activity to the buyer's Recent Activity list. */
+    public function restore(Request $request, MarketplaceOrderEvent $event): void
+    {
+        abort_unless($this->eventBelongsToBuyer($request, $event), 403);
+
+        $readState = BuyerNotificationRead::query()
+            ->where('buyer_key', $this->identity->key($request))
+            ->where('marketplace_order_event_id', $event->id)
+            ->whereNotNull('archived_at')
+            ->whereNull('deleted_at')
+            ->firstOrFail();
+
+        $readState->update(['archived_at' => null]);
+    }
+
+    /** Buyer-only removal: retain marketplace event and other buyers' records. */
+    public function deleteForBuyer(Request $request, MarketplaceOrderEvent $event): void
+    {
+        abort_unless($this->eventBelongsToBuyer($request, $event), 403);
+
+        BuyerNotificationRead::query()->updateOrCreate(
+            [
+                'buyer_key' => $this->identity->key($request),
+                'marketplace_order_event_id' => $event->id,
+            ],
+            [
+                'read_at' => now(),
+                'archived_at' => null,
+                'deleted_at' => now(),
+            ]
         );
     }
 
@@ -204,11 +271,12 @@ class BuyerActivityService
         };
     }
 
-    private function notificationQuery(Request $request): Builder
+    private function notificationQuery(Request $request, bool $archived = false): Builder
     {
         $this->identity->guard($request);
+        $buyerKey = $this->identity->key($request);
 
-        return MarketplaceOrderEvent::query()
+        $query = MarketplaceOrderEvent::query()
             ->whereIn('audience', ['buyer', 'both'])
             ->whereHas('order', function (Builder $orderQuery) use ($request): void {
                 if ($accountId = $this->identity->accountId($request)) {
@@ -218,7 +286,26 @@ class BuyerActivityService
                 }
 
                 $orderQuery->where('buyer_social_account_id', $this->identity->socialId($request));
+            })
+            ->whereNotExists(function (\Illuminate\Database\Query\Builder $readQuery) use ($buyerKey): void {
+                $readQuery->selectRaw('1')
+                    ->from('buyer_notification_reads')
+                    ->whereColumn('buyer_notification_reads.marketplace_order_event_id', 'marketplace_order_events.id')
+                    ->where('buyer_notification_reads.buyer_key', $buyerKey)
+                    ->whereNotNull('buyer_notification_reads.deleted_at');
             });
+
+        $archiveFilter = function (\Illuminate\Database\Query\Builder $readQuery) use ($buyerKey): void {
+            $readQuery->selectRaw('1')
+                ->from('buyer_notification_reads')
+                ->whereColumn('buyer_notification_reads.marketplace_order_event_id', 'marketplace_order_events.id')
+                ->where('buyer_notification_reads.buyer_key', $buyerKey)
+                ->whereNotNull('buyer_notification_reads.archived_at');
+        };
+
+        return $archived
+            ? $query->whereExists($archiveFilter)
+            : $query->whereNotExists($archiveFilter);
     }
 
     private function decorateReadState(Request $request, Collection $notifications): void

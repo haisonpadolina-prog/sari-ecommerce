@@ -41,7 +41,7 @@ class BuyerPageController extends Controller
             'activeShipments' => $this->activity->activeShipments($request, 3),
             'recentNotifications' => $this->activity->latestNotifications($request, 4),
             'unreadNotificationCount' => $this->activity->unreadNotificationCount($request),
-            'cartItemCount' => $cartItems->sum('quantity'),
+            'cartItemCount' => $cartItems->unique('seller_product_id')->count(),
             'cartSubtotal' => $this->cart->subtotal($cartItems),
         ]);
     }

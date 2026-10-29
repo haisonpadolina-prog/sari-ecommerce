@@ -1,0 +1,93 @@
+/* SARI Buyer | Global compact action toast. Change toast UI HERE only.
+   Shared by product/cart/checkout/account/orders and AJAX actions. */
+:root {
+  --sari-toast-ink: #263241;
+  --sari-toast-border: #E5E9EF;
+  --sari-toast-success: #17865E;
+  --sari-toast-error: #DC3947;
+  --sari-toast-info: #BE8A29;
+  --sari-toast-shadow: 0 6px 22px rgba(25, 37, 54, .10), 0 1px 3px rgba(25, 37, 54, .035);
+}
+#sariBuyerToastStack {
+  position: fixed;
+  z-index: 11000;
+  top: 90px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  width: min(320px, calc(100vw - 24px));
+  pointer-events: none;
+  font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+.sari-modern-toast {
+  --toast-accent: var(--sari-toast-success);
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 11px;
+  border: 1px solid var(--sari-toast-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--sari-toast-ink);
+  box-shadow: var(--sari-toast-shadow);
+  pointer-events: auto;
+  animation: sariToastEnter .18s ease-out both;
+}
+.sari-modern-toast[data-tone="error"] { --toast-accent: var(--sari-toast-error); }
+.sari-modern-toast[data-tone="info"] { --toast-accent: var(--sari-toast-info); }
+.sari-modern-toast.is-leaving { animation: sariToastExit .16s ease-in both; }
+.sari-modern-toast-icon {
+  display: grid;
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
+  place-items: center;
+  color: var(--toast-accent);
+}
+.sari-modern-toast-icon svg { width: 19px; height: 19px; stroke-width: 2.15; }
+.sari-modern-toast-copy { flex: 1 1 auto; min-width: 0; }
+.sari-modern-toast-title { display: none !important; }
+.sari-modern-toast-message {
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--sari-toast-ink);
+  font-size: 11px;
+  line-height: 1.45;
+  font-weight: 500;
+}
+.sari-modern-toast-close {
+  display: grid;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #8995A6;
+  cursor: pointer;
+  transition: background-color .15s, color .15s;
+}
+.sari-modern-toast-close svg { width: 14px; height: 14px; }
+.sari-modern-toast-close:hover { background: #F3F5F8; color: #263241; }
+.sari-modern-toast-close:focus-visible { outline: 2px solid var(--toast-accent); outline-offset: 1px; }
+.sari-toast-inline-hidden { display: none !important; }
+@keyframes sariToastEnter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sariToastExit { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-5px); } }
+@media (max-width: 640px) {
+  #sariBuyerToastStack { top: 82px; right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sari-modern-toast, .sari-modern-toast.is-leaving { animation: none !important; }
+  .sari-modern-toast-close { transition: none !important; }
+}

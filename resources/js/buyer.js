@@ -1,27 +1,10 @@
+import './echo';
 function csrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 }
 
 function showBuyerToast(message, tone = 'success') {
-    let toast = document.getElementById('buyerGlobalToast');
-
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'buyerGlobalToast';
-        toast.className = 'fixed bottom-5 right-5 z-[300] max-w-[360px] rounded-2xl border bg-white px-4 py-3 text-[10px] font-medium shadow-[0_18px_55px_rgba(40,32,20,.18)] transition';
-        document.body.appendChild(toast);
-    }
-
-    toast.classList.remove('border-[#cfe4d7]', 'text-[#4F7D63]', 'border-[#efcece]', 'text-[#a65353]');
-    toast.classList.add(tone === 'error' ? 'border-[#efcece]' : 'border-[#cfe4d7]');
-    toast.classList.add(tone === 'error' ? 'text-[#a65353]' : 'text-[#4F7D63]');
-    toast.textContent = message;
-    toast.style.opacity = '1';
-
-    clearTimeout(window.__buyerToastTimer);
-    window.__buyerToastTimer = setTimeout(() => {
-        toast.style.opacity = '0';
-    }, 2600);
+    window.SariBuyerToast?.show(message, tone);
 }
 
 async function refreshCartCount() {

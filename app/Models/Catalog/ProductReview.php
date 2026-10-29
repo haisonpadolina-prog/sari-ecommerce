@@ -21,10 +21,12 @@ class ProductReview extends Model
         'buyer_social_account_id',
         'rating',
         'comment',
+        'image_paths',
     ];
 
     protected $casts = [
         'rating' => 'integer',
+        'image_paths' => 'array',
     ];
 
     public function product(): BelongsTo

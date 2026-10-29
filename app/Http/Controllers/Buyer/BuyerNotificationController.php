@@ -24,7 +24,8 @@ class BuyerNotificationController extends Controller
         }
 
         return view('buyer.notifications', [
-            'notifications' => $this->activity->notifications($request),
+            'notifications' => $this->activity->notifications($request, 10, $request->query('filter') === 'archived'),
+            'showArchived' => $request->query('filter') === 'archived',
             'unreadCount' => $this->activity->unreadNotificationCount($request),
         ]);
     }
@@ -50,5 +51,26 @@ class BuyerNotificationController extends Controller
         $this->activity->markAllRead($request);
 
         return back()->with('success', 'Notifications marked as read.');
+    }
+
+    public function archive(Request $request, MarketplaceOrderEvent $event): RedirectResponse
+    {
+        $this->activity->archive($request, $event);
+
+        return back()->with('success', 'Notification archived.');
+    }
+
+    public function restore(Request $request, MarketplaceOrderEvent $event): RedirectResponse
+    {
+        $this->activity->restore($request, $event);
+
+        return back()->with('success', 'Notification restored.');
+    }
+
+    public function destroy(Request $request, MarketplaceOrderEvent $event): RedirectResponse
+    {
+        $this->activity->deleteForBuyer($request, $event);
+
+        return back()->with('success', 'Notification removed from your list.');
     }
 }

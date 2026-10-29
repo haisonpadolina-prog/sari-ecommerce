@@ -35,6 +35,7 @@ class MarketplaceOrder extends Model
         'buyer_phone',
         'buyer_email',
         'buyer_address',
+        'delivery_address_confirmed_at',
         'payment_method',
         'payment_status',
         'items',
@@ -73,6 +74,7 @@ class MarketplaceOrder extends Model
 
     protected $casts = [
         'items' => 'array',
+        'delivery_address_confirmed_at' => 'datetime',
         'original_subtotal' => 'decimal:2',
         'discount_amount' => 'decimal:2',
         'seller_receivable_subtotal' => 'decimal:2',
@@ -117,6 +119,7 @@ class MarketplaceOrder extends Model
                 'buyer_email',
                 'buyer_phone',
                 'buyer_address',
+        'delivery_address_confirmed_at',
                 'payment_method',
                 'payment_status',
                 'courier_name',

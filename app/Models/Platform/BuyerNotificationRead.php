@@ -12,10 +12,14 @@ class BuyerNotificationRead extends Model
         'buyer_key',
         'marketplace_order_event_id',
         'read_at',
+        'archived_at',
+        'deleted_at',
     ];
 
     protected $casts = [
         'read_at' => 'datetime',
+        'archived_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function event(): BelongsTo

@@ -2513,6 +2513,105 @@
         }
     }
 
+
+    /* ============================================================
+       BUYER REVIEWS — READABLE TYPOGRAPHY + SOLID GOLD SIZE CHOICE
+       UI only; review data, image links, and variant logic unchanged.
+    ============================================================ */
+    .buyer-product-page .sari-buyer-reviews .sari-v7-section-kicker {
+        font-size: 11px !important;
+        font-weight: 750 !important;
+        color: #a36b0e !important;
+        line-height: 1.4 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-v7-section-heading {
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-overall {
+        font-size: 13px !important;
+        font-weight: 550 !important;
+        color: #596575 !important;
+        line-height: 1.5 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-overall > span {
+        font-size: 14.5px !important;
+        font-weight: 750 !important;
+        color: #c88912 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-stars {
+        font-size: 18px !important;
+        line-height: 1.25 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-date {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        line-height: 1.4 !important;
+        color: #798492 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-comment {
+        font-size: 14px !important;
+        font-weight: 450 !important;
+        line-height: 1.75 !important;
+        color: #475362 !important;
+        overflow-wrap: anywhere;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-seller-label {
+        font-size: 10.5px !important;
+        font-weight: 750 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-seller-date {
+        font-size: 10.5px !important;
+        color: #798492 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .sari-review-seller-comment {
+        font-size: 12.5px !important;
+        line-height: 1.7 !important;
+        color: #505c69 !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .text-center > p.mt-3 {
+        font-size: 13.5px !important;
+    }
+    .buyer-product-page .sari-buyer-reviews .text-center > p.mt-1 {
+        font-size: 11.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Solid SARI gold only for the selected Size option; color swatches untouched. */
+    .buyer-product-page .buyer-variant-button[data-buyer-option][data-option-group="Size" i].is-selected:not(.buyer-color-swatch-button),
+    .buyer-product-page .buyer-variant-button[data-buyer-option][data-option-group="Size" i].is-selected:not(.buyer-color-swatch-button):hover,
+    .buyer-product-page .buyer-variant-button[data-buyer-option][data-option-group="Size" i].is-selected:not(.buyer-color-swatch-button):focus-visible {
+        border-color: #c88912 !important;
+        background: #c88912 !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 7px rgba(200, 137, 18, .16) !important;
+    }
+
+    /* Product size options — readable, restrained typography only. */
+    .buyer-product-page [data-buyer-variant-selector] .sari-v7-section-title {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        line-height: 1.4 !important;
+    }
+    .buyer-product-page [data-buyer-variant-selector] .sari-v7-section-help {
+        font-size: 12px !important;
+        font-weight: 450 !important;
+        line-height: 1.55 !important;
+        color: #697686 !important;
+    }
+    .buyer-product-page [data-buyer-option-group][data-option-group-name="Size" i] > p {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        line-height: 1.45 !important;
+        color: #354253 !important;
+    }
+    .buyer-product-page .buyer-variant-button[data-buyer-option][data-option-group="Size" i]:not(.buyer-color-swatch-button) {
+        font-size: 13px !important;
+        font-weight: 650 !important;
+        line-height: 1.35 !important;
+    }
+
 </style>
 
 <!-- SARI_PRODUCT_DETAILS_V8_LIGHT_NEUMORPHISM -->
@@ -2527,19 +2626,6 @@
         <span class="font-semibold text-[#5c544c]">{{ $productName }}</span>
     </nav>
 
-    @if (session('success'))
-        <div class="mb-4 rounded-[14px] border border-[#d3e5d9] bg-[#f4faf6] px-4 py-3 text-[9px] font-semibold text-[#4f7d61]">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="mb-4 rounded-[14px] border border-[#efd3d3] bg-[#fff7f7] px-4 py-3 text-[9px] font-semibold text-[#a55b5b]">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
-    <div id="buyerProductNotice" class="mb-4 hidden rounded-[14px] border px-4 py-3 text-[9px] font-semibold"></div>
     {{-- PRODUCT HERO
          IMPORTANT: gallery and buying panel are direct siblings.
          Do not wrap both sides in one card/container. --}}
@@ -3032,14 +3118,14 @@
     </div>
 
     {{-- REVIEWS --}}
-    <section class="sari-v7-section-card mt-5">
+    <section class="sari-v7-section-card sari-buyer-reviews mt-5">
         <div class="flex flex-col gap-3 border-b border-[#f0ebe5] pb-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
                 <p class="sari-v7-section-kicker">Buyer feedback</p>
                 <h2 class="sari-v7-section-heading">Ratings & reviews</h2>
             </div>
 
-            <p class="text-[9px] text-[#81786f]">
+            <p class="sari-review-overall text-[9px] text-[#81786f]">
                 <span class="font-bold text-[#d89b11]">★ {{ $ratingCount > 0 ? number_format($rating, 1) : '—' }}</span>
                 · {{ number_format($ratingCount) }} review{{ $ratingCount === 1 ? '' : 's' }}
             </p>
@@ -3048,28 +3134,43 @@
         @if ($reviews->isNotEmpty())
             <div class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
                 @foreach ($reviews as $review)
-                    <article class="rounded-[14px] border border-[#ebe5dd] bg-white p-4">
+                    <article class="sari-review-entry rounded-[14px] border border-[#ebe5dd] bg-white p-4">
                         <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-1 text-[#e0a00e]">
+                            <div class="sari-review-stars flex items-center gap-1 text-[#e0a00e]">
                                 @for ($i = 1; $i <= 5; $i++)
                                     <span class="{{ $i <= (int) ($review['rating'] ?? 0) ? '' : 'opacity-25' }}">★</span>
                                 @endfor
                             </div>
 
-                            <span class="text-[7px] text-[#aaa198]">{{ $review['created_at'] ?? '' }}</span>
+                            <span class="sari-review-date text-[7px] text-[#aaa198]">{{ $review['created_at'] ?? '' }}</span>
                         </div>
 
-                        <p class="mt-3 text-[9px] leading-5 text-[#6f665d]">
+                        <p class="sari-review-comment mt-3 text-[9px] leading-5 text-[#6f665d]">
                             {{ trim((string) ($review['comment'] ?? '')) !== '' ? $review['comment'] : 'Rating submitted without a written comment.' }}
                         </p>
+
+                        @if (!empty($review['image_urls']))
+                            <div class="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5" aria-label="Review photos">
+                                @foreach (array_slice((array) $review['image_urls'], 0, 5) as $reviewImageUrl)
+                                    <a
+                                        href="{{ $reviewImageUrl }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="block aspect-square overflow-hidden rounded-[9px] border border-[#e5e8eb] bg-[#f4f5f6]"
+                                    >
+                                        <img src="{{ $reviewImageUrl }}" alt="Buyer review photo" class="h-full w-full object-cover" loading="lazy">
+                                    </a>
+                                @endforeach
+                            </div>
+                        @endif
 
                         @if (!empty($review['seller_reply']['reply']))
                             <div class="mt-3 rounded-[11px] border border-[#eadfcd] bg-[#fffbf3] px-3 py-2.5">
                                 <div class="flex items-center justify-between gap-3">
-                                    <span class="text-[7px] font-bold uppercase tracking-[.08em] text-[#a8731f]">Seller reply</span>
-                                    <span class="text-[7px] text-[#aaa198]">{{ $review['seller_reply']['created_at'] ?? '' }}</span>
+                                    <span class="sari-review-seller-label text-[7px] font-bold uppercase tracking-[.08em] text-[#a8731f]">Seller reply</span>
+                                    <span class="sari-review-seller-date text-[7px] text-[#aaa198]">{{ $review['seller_reply']['created_at'] ?? '' }}</span>
                                 </div>
-                                <p class="mt-1.5 text-[8px] leading-4 text-[#6f665d]">{{ $review['seller_reply']['reply'] }}</p>
+                                <p class="sari-review-seller-comment mt-1.5 text-[8px] leading-4 text-[#6f665d]">{{ $review['seller_reply']['reply'] }}</p>
                             </div>
                         @endif
                     </article>
@@ -3230,18 +3331,7 @@ document.addEventListener('livewire:navigated', function () {
     }
 
     function showNotice(message, danger = false) {
-        if (!notice) return;
-
-        notice.textContent = String(message || '');
-        notice.className = 'mb-4 rounded-[14px] border px-4 py-3 text-[9px] font-semibold';
-
-        if (danger) {
-            notice.classList.add('border-[#efd3d3]', 'bg-[#fff7f7]', 'text-[#a55b5b]');
-        } else {
-            notice.classList.add('border-[#d3e5d9]', 'bg-[#f4faf6]', 'text-[#4f7d61]');
-        }
-
-        notice.classList.remove('hidden');
+        window.SariBuyerToast?.show(String(message || ''), danger ? 'error' : 'success');
     }
 
     function renderMainImage(src) {

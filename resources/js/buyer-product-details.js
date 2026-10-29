@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await window.SariBuyerCart.add(productId, quantity, variantId);
             window.location.href = document.body.dataset.buyerCartUrl || '/buyer/cart';
         } catch (error) {
-            alert(error.message || 'Could not add this item to your cart.');
+            window.SariBuyerToast?.error(error.message || 'Could not add this item to your cart.');
             if (button) { button.disabled = false; button.textContent = 'Add to Cart'; }
         }
     });

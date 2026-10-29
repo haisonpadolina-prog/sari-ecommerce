@@ -7,6 +7,13 @@
 @section('content')
 
 @include('components.buyer.header')
+@if (session('order_confirmation_url'))
+<div role="status" style="margin:14px 24px 0;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border:1px solid #eeddbb;border-radius:13px;background:#fffbf2;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;">
+    <span style="font-size:12px;line-height:1.6;color:#78643e;">Order placed! Your seller's automatic address-confirmation message is ready.</span>
+    <a href="{{ session('order_confirmation_url') }}" style="display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:9px;background:#c99128;color:#fff;font-size:11px;font-weight:700;text-decoration:none;">Open seller chat →</a>
+</div>
+@endif
+
 
 @php
 
@@ -2116,7 +2123,7 @@
     }
 
     .sari-order-card .mt-1.text-\[13px\] {
-        font-size:8.8px !important;
+        font-size:11px !important;
     }
 
     .sari-order-card .text-sm.font-bold.uppercase {
@@ -2376,7 +2383,7 @@
 
     .sari-sidebar-card .mb-4.rounded-xl p:last-child {
         color:#172033 !important;
-        font-size:8.8px !important;
+        font-size:11px !important;
     }
 
     .sari-tracking-row {
@@ -3897,7 +3904,7 @@
 
     .sari-summary-item p:first-child {
         color:#6f7b88 !important;
-        font-size:8.8px !important;
+        font-size:11px !important;
         font-weight:800 !important;
         letter-spacing:.08em !important;
         line-height:1.2 !important;
@@ -4438,7 +4445,7 @@
         }
 
         .sari-order-detail-secondary {
-            font-size:8.8px !important;
+            font-size:11px !important;
         }
     }
 
@@ -5441,145 +5448,6 @@
 
 
     /* ============================================================
-       CANCEL SUCCESS TOAST — TOP CENTER
-    ============================================================ */
-    .sari-cancel-success-toast {
-        position:fixed;
-        top:24px;
-        left:50%;
-        z-index:10050;
-        display:grid;
-        grid-template-columns:auto minmax(0,1fr) auto;
-        align-items:center;
-        gap:12px;
-        width:min(460px,calc(100vw - 28px));
-        padding:14px 14px 14px 15px;
-
-        transform:translate(-50%,0);
-        border:1px solid #dce9df;
-        border-radius:14px;
-        background:#ffffff;
-        box-shadow:
-            0 18px 42px rgba(15,23,42,.12),
-            0 4px 12px rgba(15,23,42,.05);
-
-        animation:sariCancelSuccessIn .24s ease both;
-    }
-
-    .sari-cancel-success-toast.is-hiding {
-        animation:sariCancelSuccessOut .22s ease both;
-    }
-
-    .sari-cancel-success-icon {
-        display:grid;
-        width:34px;
-        height:34px;
-        place-items:center;
-        border-radius:999px;
-        background:#ecfdf3;
-        color:#16a34a;
-    }
-
-    .sari-cancel-success-icon .material-symbols-rounded {
-        font-size:20px !important;
-        font-weight:600;
-        line-height:1;
-    }
-
-    .sari-cancel-success-title {
-        margin:0;
-        color:#172033;
-        font-size:12.5px;
-        font-weight:700;
-        line-height:1.3;
-    }
-
-    .sari-cancel-success-message {
-        margin:3px 0 0;
-        color:#6f7b88;
-        font-size:10px;
-        font-weight:500;
-        line-height:1.45;
-    }
-
-    .sari-cancel-success-close {
-        display:grid;
-        width:30px;
-        height:30px;
-        place-items:center;
-        border:0;
-        border-radius:8px;
-        background:transparent;
-        color:#9aa3ad;
-        cursor:pointer;
-    }
-
-    .sari-cancel-success-close:hover,
-    .sari-cancel-success-close:focus-visible {
-        background:#f3f5f7;
-        color:#4b5563;
-        outline:none;
-    }
-
-    .sari-cancel-success-close .material-symbols-rounded {
-        font-size:18px !important;
-        line-height:1;
-    }
-
-    @keyframes sariCancelSuccessIn {
-        from {
-            opacity:0;
-            transform:translate(-50%,-12px) scale(.985);
-        }
-        to {
-            opacity:1;
-            transform:translate(-50%,0) scale(1);
-        }
-    }
-
-    @keyframes sariCancelSuccessOut {
-        from {
-            opacity:1;
-            transform:translate(-50%,0) scale(1);
-        }
-        to {
-            opacity:0;
-            transform:translate(-50%,-10px) scale(.985);
-        }
-    }
-
-    @media (max-width:640px) {
-        .sari-cancel-success-toast {
-            top:14px;
-            width:calc(100vw - 20px);
-            padding:12px;
-            gap:10px;
-            border-radius:12px;
-        }
-
-        .sari-cancel-success-title {
-            font-size:12px;
-        }
-
-        .sari-cancel-success-message {
-            font-size:9.5px;
-        }
-    }
-
-    @media (prefers-reduced-motion:reduce) {
-        .sari-cancel-success-toast,
-        .sari-cancel-success-toast.is-hiding {
-            animation:none !important;
-        }
-    }
-
-
-    .sari-cancel-success-toast[hidden] {
-        display:none !important;
-    }
-
-
-    /* ============================================================
        ORDER TRACKING — PRODUCT IDENTITY SUMMARY
        Image + product name + order number + qty/variant.
     ============================================================ */
@@ -5702,7 +5570,7 @@
         margin-top:5px !important;
 
         color:#818b97 !important;
-        font-size:8.8px !important;
+        font-size:11px !important;
         font-weight:500 !important;
         line-height:1.25 !important;
     }
@@ -6047,42 +5915,172 @@
         }
     }
 
+
+    /* Buyer delivery preview: map only, with road-following lines and clickable checkpoints. */
+    .sari-orders-reference .sari-real-delivery[hidden] {display:none !important;}
+    .sari-orders-reference .sari-real-delivery {
+        margin-top:16px;border:0 !important;border-radius:16px !important;background:transparent !important;
+        padding:0 !important;box-shadow:none !important;overflow:hidden;
+    }
+    .sari-real-delivery-map-wrap {
+        position:relative;overflow:hidden;width:100%;border:1px solid #e4dfd6;
+        border-radius:16px;background:#edf2f5;
+    }
+    .sari-real-delivery-map {height:360px;width:100%;background:#edf2f5;}
+    .sari-real-delivery-map .maplibregl-ctrl-attrib {font-size:9px;}
+    .sari-real-delivery-map .maplibregl-ctrl-top-right {top:8px;right:8px;}
+    .sari-real-delivery-map .maplibregl-ctrl-group {border:1px solid #e1e5e9;border-radius:10px;overflow:hidden;box-shadow:0 3px 13px rgba(36,44,56,.12);}
+    .sari-real-delivery-map .maplibregl-ctrl-group button {width:32px;height:32px;}
+    .sari-real-delivery-pin {
+        display:grid;place-items:center;width:37px;height:37px;border:3px solid #fff;border-radius:50%;
+        background:#c88912;color:#fff;font:750 12px/1 Poppins,ui-sans-serif,system-ui,sans-serif;
+        box-shadow:0 0 0 1px rgba(124,79,13,.35),0 5px 15px rgba(46,38,24,.23);cursor:pointer;
+    }
+    .sari-real-delivery-pin.is-future {background:#c88912;color:#fff;box-shadow:0 0 0 1px #a97411,0 5px 15px rgba(46,38,24,.19);}
+    .sari-real-delivery-pin.is-buyer {background:#a5a19b;box-shadow:0 0 0 1px #817d77,0 5px 15px rgba(46,38,24,.18);}
+    .sari-real-delivery-pin.is-reached {background:#c88912;box-shadow:0 0 0 1px #a97411,0 5px 15px rgba(46,38,24,.23);}
+    .sari-real-delivery-pin.is-current {background:#c88912;box-shadow:0 0 0 5px rgba(200,137,18,.18),0 5px 15px rgba(46,38,24,.23);}
+    .sari-real-delivery-info-button {
+        position:absolute;z-index:5;right:12px;bottom:12px;display:grid;place-items:center;
+        width:27px;height:27px;border:1px solid #e2e8ef;border-radius:7px;background:rgba(255,255,255,.96);
+        color:#38475b;font:750 16px/1 Poppins,ui-sans-serif,system-ui,sans-serif;cursor:pointer;
+        box-shadow:0 3px 11px rgba(31,41,55,.15);
+    }
+    .sari-real-delivery-info-button:hover,.sari-real-delivery-info-button[aria-expanded="true"] {background:#fff7e8;color:#a56f0c;}
+    .sari-real-delivery-info-button:focus-visible {outline:2px solid #b7821c;outline-offset:2px;}
+    .sari-real-delivery-notice {
+        position:absolute;z-index:5;left:12px;right:48px;bottom:12px;margin:0;
+        border:1px solid #e6e2d8;border-radius:11px;background:rgba(255,255,255,.97);padding:10px 12px;
+        color:#526171;font-size:10.5px;line-height:1.55;box-shadow:0 6px 18px rgba(31,41,55,.12);
+    }
+    .sari-real-delivery-notice[hidden] {display:none !important;}
+    .sari-real-delivery-sr-only {position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+    @media(max-width:640px) { .sari-real-delivery-map {height:300px;} }
+    @media(prefers-reduced-motion:reduce){.sari-return-request-summary::after{transition:none;}}
+    /* Readability & accessible help actions — scoped to My Orders. */
+    .sari-orders-reference .sari-order-detail-title,
+    .sari-orders-reference .sari-order-detail-secondary,
+    .sari-orders-reference .sari-order-product-meta,
+    .sari-orders-reference .sari-order-store-caption,
+    .sari-orders-reference .sari-sidebar-step-status,
+    .sari-orders-reference .sari-tracking-product-meta {font-size:11px !important;line-height:1.55 !important;}
+    .sari-orders-reference .sari-order-detail-primary,
+    .sari-orders-reference .sari-order-product-name,
+    .sari-orders-reference .sari-tracking-product-name {font-size:13px !important;line-height:1.55 !important;}
+    .sari-orders-reference .sari-order-more-summary,
+    .sari-orders-reference .sari-order-more-label,
+    .sari-orders-reference .sari-support-link {font-size:13px !important;line-height:1.55 !important;font-weight:600 !important;color:#4b5563 !important;text-decoration:none;}
+    .sari-orders-reference .sari-support-link:hover {color:#a97516 !important;}
+    .sari-orders-reference .sari-support-link .sari-support-icon {font-size:21px !important;color:#c88912;}
+    .sari-orders-reference .sari-support-link > .material-symbols-rounded {font-size:20px !important;color:#9ca3af;}
+    .sari-policy-disclosure {border:0;}
+    .sari-policy-trigger {cursor:pointer;list-style:none;outline-offset:3px;}
+    .sari-policy-trigger::-webkit-details-marker {display:none;}
+    .sari-policy-chevron {font-size:20px !important;color:#9ca3af !important;transition:transform .23s ease;}
+    .sari-policy-disclosure[open] .sari-policy-chevron {transform:rotate(180deg);}
+    .sari-policy-body {display:grid;gap:10px;overflow:hidden;padding:5px 8px 16px 29px;color:#64748b;font-size:12px;line-height:1.7;animation:sariPolicyExpand .25s ease-out both;}
+    .sari-policy-body p {margin:0;}
+    .sari-policy-body strong {color:#374151;font-weight:700;}
+    @keyframes sariPolicyExpand {from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:640px){.sari-orders-reference .sari-support-link {font-size:12.5px !important;}}
+    @media(prefers-reduced-motion:reduce){.sari-policy-chevron{transition:none}.sari-policy-body{animation:none}}
+
+    /* Buyer Orders help modals: scoped, accessible and independent from page navigation. */
+    .sari-orders-reference .sari-help-open-button {border:0;background:transparent;cursor:pointer;font-family:inherit;text-align:left;}
+    .sari-orders-reference .sari-help-open-button:focus-visible {outline:2px solid #c88912!important;outline-offset:3px!important;border-radius:7px;}
+    .sari-help-modal[hidden], .sari-help-form[hidden], .sari-help-feedback[hidden], .sari-help-success[hidden] {display:none!important;}
+    .sari-help-modal {position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:20px;isolation:isolate;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;}
+    .sari-help-modal-backdrop {position:absolute;inset:0;background:rgba(22,30,42,.27);backdrop-filter:blur(3px);animation:sariHelpFade .22s ease-out both;}
+    .sari-help-dialog {position:relative;z-index:1;width:min(100%,510px);max-height:min(90dvh,740px);overflow-y:auto;border:1px solid #e5e9ef;border-radius:22px;background:#fff;box-shadow:0 26px 90px rgba(21,32,48,.2);animation:sariHelpEnter .26s cubic-bezier(.2,.9,.3,1) both;outline:none;}
+    .sari-help-dialog-heading {display:flex;align-items:flex-start;gap:13px;padding:23px 23px 19px;border-bottom:1px solid #edf0f3;}
+    .sari-help-dialog-icon {flex:0 0 42px;height:42px;display:grid;place-items:center;border:1px solid #f1dfb9;border-radius:13px;background:#fff8ea;color:#b97f13;}
+    .sari-help-dialog-icon .material-symbols-rounded {font-size:23px;}
+    .sari-help-dialog-heading-copy {min-width:0;flex:1;}
+    .sari-help-dialog-eyebrow {color:#a87316;letter-spacing:.08em;font-size:10px;font-weight:750;text-transform:uppercase;}
+    .sari-help-dialog-heading h2 {margin:3px 0 4px;color:#253043;font-size:20px;font-weight:750;line-height:1.35;}
+    .sari-help-dialog-heading p {margin:0;color:#738093;font-size:12px;line-height:1.6;}
+    .sari-help-close {display:grid;place-items:center;flex:0 0 34px;height:34px;border:0;border-radius:50%;background:#f3f5f7;color:#637083;cursor:pointer;}
+    .sari-help-close:hover {background:#e8edf2;}
+    .sari-help-form {display:flex;flex-direction:column;gap:10px;padding:20px 23px 23px;}
+    .sari-help-form label {color:#39475b;font-size:12px;font-weight:700;}
+    .sari-help-form textarea,.sari-help-form input {display:block;width:100%;min-height:46px;padding:13px 14px;border:1px solid #dce2e9;border-radius:12px;background:#fbfcfe;color:#263447;font:500 12.5px/1.65 Poppins,ui-sans-serif,system-ui,sans-serif;resize:vertical;outline:none;}
+    .sari-help-form textarea {min-height:120px;max-height:250px;}
+    .sari-help-form textarea:focus,.sari-help-form input:focus {border-color:#d0a656;background:#fff;box-shadow:0 0 0 3px rgba(200,137,18,.1);}
+    .sari-help-helper {margin:2px 0 7px;color:#798698;font-size:11px;line-height:1.65;}
+    .sari-help-submit {display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:45px;border:0;border-radius:12px;background:#c88912;color:#fff;font:700 12.5px Poppins,ui-sans-serif,system-ui,sans-serif;cursor:pointer;}
+    .sari-help-submit:hover {background:#af750c;}
+    .sari-help-submit:disabled {opacity:.6;cursor:wait;}
+    .sari-help-submit .material-symbols-rounded {font-size:18px;}
+    .sari-help-feedback {margin:0 23px 23px;padding:12px 13px;border:1px solid #efc6c5;border-radius:11px;background:#fff7f6;color:#ae3939;font-size:12px;line-height:1.6;}
+    .sari-help-success {padding:26px 23px 23px;text-align:center;}
+    .sari-help-success>span {font-size:39px;color:#318453;}
+    .sari-help-success h3 {margin:6px 0;color:#243248;font-size:17px;font-weight:750;}
+    .sari-help-success p {margin:7px auto 22px;color:#66758a;font-size:12px;line-height:1.7;max-width:350px;}
+    .sari-help-success-actions {display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+    .sari-help-view,.sari-help-dismiss {display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:11px;font:700 12px Poppins,ui-sans-serif,system-ui,sans-serif;cursor:pointer;text-decoration:none;}
+    .sari-help-view {background:#c88912;color:#fff;}
+    .sari-help-view:hover {background:#aa710b;color:#fff;}
+    .sari-help-dismiss {border:1px solid #dce2e9;background:#fff;color:#526173;}
+    @keyframes sariHelpFade {from{opacity:0}to{opacity:1}}
+    @keyframes sariHelpEnter {from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @media(max-width:560px){.sari-help-modal{padding:12px}.sari-help-dialog{border-radius:18px}.sari-help-dialog-heading,.sari-help-form{padding-inline:17px}.sari-help-feedback{margin-inline:17px}.sari-help-dialog-heading h2{font-size:18px}}
+    @media(prefers-reduced-motion:reduce){.sari-help-dialog,.sari-help-modal-backdrop{animation:none}}
+
+
+    /* Final typography polish: readable labels and compact professional spacing. */
+    .sari-orders-reference .sari-kpi-bar {min-height:98px !important;}
+    .sari-orders-reference .sari-kpi-cell {min-height:98px !important;padding:16px 20px !important;}
+    .sari-orders-reference .sari-kpi-label {top:15px !important;left:20px !important;font-size:12px !important;line-height:1.4 !important;letter-spacing:.035em !important;font-weight:700 !important;color:#5c6877 !important;}
+    .sari-orders-reference .sari-kpi-value {top:66% !important;font-size:33px !important;line-height:1 !important;}
+    .sari-orders-reference #orderSearch {min-height:46px !important;height:46px !important;font-size:13.5px !important;color:#344052 !important;background:#fff !important;}
+    .sari-orders-reference #orderSearch::placeholder {font-size:13px !important;color:#84909d !important;opacity:1;}
+    .sari-orders-reference #orderFilters .sari-filter {min-height:38px !important;padding:9px 13px !important;font-size:12px !important;line-height:1.4 !important;font-weight:600 !important;}
+    .sari-orders-reference .sari-order-card h2 {font-size:16px !important;line-height:1.35 !important;letter-spacing:-.01em !important;}
+    .sari-orders-reference .sari-order-card .copy-order-number {font-size:11.5px !important;min-height:28px;}
+    .sari-orders-reference .sari-order-card .mt-1.text-\[11px\] {font-size:11.5px !important;line-height:1.55 !important;}
+    .sari-orders-reference .sari-order-card .text-\[10px\].font-bold.uppercase {font-size:11px !important;line-height:1.4 !important;letter-spacing:.045em !important;}
+    .sari-orders-reference .sari-order-card .mt-1.text-\[13px\],
+    .sari-orders-reference .sari-order-card .sari-order-delivery-status {font-size:12.5px !important;line-height:1.5 !important;}
+    .sari-orders-reference .sari-order-card .text-sm.font-bold.uppercase {font-size:12.5px !important;}
+    .sari-orders-reference .sari-order-card > div:first-child .text-\[11px\] {font-size:11.5px !important;line-height:1.55 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-product-name {font-size:13.5px !important;line-height:1.5 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-product-meta {font-size:11.5px !important;line-height:1.55 !important;}
+    .sari-orders-reference .sari-order-card .sari-price-box > p:first-child {font-size:10.5px !important;line-height:1.5 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-total-price {font-size:19px !important;line-height:1.4 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-detail-title {font-size:12px !important;line-height:1.45 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-detail-primary {font-size:12px !important;line-height:1.5 !important;}
+    .sari-orders-reference .sari-order-card .sari-order-detail-secondary {font-size:11.5px !important;line-height:1.6 !important;}
+    .sari-orders-reference .sari-order-card > .grid.gap-2\.5 > a,
+    .sari-orders-reference .sari-order-card > .grid.gap-2\.5 > button,
+    .sari-orders-reference .sari-order-card > .grid.gap-2\.5 > form > button {font-size:11.5px !important;line-height:1.45 !important;}
+    .sari-orders-reference .sari-sidebar .sari-tracking-row p.text-xs {font-size:12px !important;line-height:1.5 !important;}
+    .sari-orders-reference .sari-sidebar .sari-tracking-row .text-\[9px\] {font-size:10.5px !important;line-height:1.45 !important;}
+    .sari-orders-reference .sari-tracking-current-label {font-size:11.5px !important;line-height:1.45 !important;}
+    .sari-orders-reference .sari-tracking-product-name {font-size:14px !important;line-height:1.4 !important;}
+    .sari-orders-reference .sari-tracking-product-meta {font-size:12px !important;line-height:1.5 !important;}
+    @media(max-width:767px){
+        .sari-orders-reference .sari-kpi-cell {min-height:94px !important;padding:13px 15px !important;}
+        .sari-orders-reference .sari-kpi-label {top:14px !important;left:15px !important;font-size:11px !important;}
+        .sari-orders-reference .sari-kpi-value {font-size:29px !important;}
+        .sari-orders-reference #orderSearch {font-size:13px !important;}
+        .sari-orders-reference #orderFilters .sari-filter {font-size:11.5px !important;}
+        .sari-orders-reference .sari-order-card h2 {font-size:14.5px !important;}
+    }
+
+    /* Portal-mounted popup: full viewport behind the dialog, including sidebar and header. */
+    .sari-help-modal {z-index:2147483000;}
+    .sari-help-modal-backdrop {
+        background:rgba(247,249,252,.17);
+        -webkit-backdrop-filter:blur(5px);
+        backdrop-filter:blur(5px);
+    }
+    .sari-help-dialog {box-shadow:0 22px 70px rgba(20,27,40,.17);}
+
 </style>
 
 <div class="sari-orders-page sari-orders-reference min-h-full">
 
     <div class="sari-orders-shell mx-auto w-full max-w-[1400px] px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
-
-        <div
-            id="sariCancelSuccessToast"
-            class="sari-cancel-success-toast"
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            data-server-show="{{ session('cancel_success') ? '1' : '0' }}"
-            data-server-message="{{ session('cancel_success', '') }}"
-            hidden
-        >
-            <div class="sari-cancel-success-icon" aria-hidden="true">
-                <span class="material-symbols-rounded">check</span>
-            </div>
-
-            <div class="min-w-0">
-                <p class="sari-cancel-success-title">Order cancelled successfully</p>
-                <p class="sari-cancel-success-message" data-cancel-success-message>
-                    Your order has been cancelled successfully.
-                </p>
-            </div>
-
-            <button
-                type="button"
-                class="sari-cancel-success-close"
-                aria-label="Dismiss success message"
-                data-dismiss-cancel-success
-            >
-                <span class="material-symbols-rounded">close</span>
-            </button>
-        </div>
 
         {{-- PAGE HEADING — MATCHES BUYER CART SCALE / LAYOUT --}}
         <section class="sari-orders-page-header">
@@ -6271,6 +6269,9 @@
 
                                  data-tracking-selected="{{ $featuredOrder && (int) $featuredOrder->getKey() === (int) $order->getKey() ? 'true' : 'false' }}"
 
+                                 data-order-id="{{ $order->getKey() }}"
+                                 data-tracking-state-url="{{ route('buyer.orders.tracking-state', $order) }}"
+                                 data-tracking-url="{{ route('buyer.orders.show', $order) }}"
                                  data-order-number="{{ $order->order_number }}"
 
                                  data-product-name="{{ $firstProductName }}"
@@ -6706,58 +6707,6 @@
 
                             </div>
 
-                            @if($order->status === 'delivered')
-
-                                <div class="border-t border-[#eee8dc] bg-[#fffefa] px-4 pb-4 sm:px-5 sm:pb-5">
-
-                                    @if($order->returnRequest)
-
-                                        <div class="rounded-xl border border-[#eadfc9] bg-[#fffaf2] px-4 py-3">
-
-                                            <p class="text-[9px] font-bold text-[#9a680b]">Return request: {{ ucwords(str_replace('_',' ',$order->returnRequest->status)) }}</p>
-
-                                            <p class="mt-1 text-[8px] leading-4 text-[#7d7468]">{{ $order->returnRequest->seller_response ?: 'Waiting for Seller review.' }}</p>
-
-                                        </div>
-
-                                    @else
-
-                                        <details class="group rounded-xl border border-[#e8dfd0] bg-white">
-
-                                            <summary class="cursor-pointer list-none px-4 py-3 text-[9px] font-bold text-[#a96f06]">Request Return / Refund</summary>
-
-                                            <form method="POST" action="{{ route('buyer.orders.return-request',$order) }}" class="grid gap-2 border-t border-[#eee8dc] p-4 sm:grid-cols-[180px_1fr_auto]">
-
-                                                @csrf
-
-                                                <select name="reason" required class="h-10 rounded-xl border border-[#e4ddd3] px-3 text-[8px]">
-
-                                                    <option value="Damaged item">Damaged item</option>
-
-                                                    <option value="Wrong item">Wrong item</option>
-
-                                                    <option value="Missing item">Missing item</option>
-
-                                                    <option value="Item not as described">Item not as described</option>
-
-                                                    <option value="Other">Other</option>
-
-                                                </select>
-
-                                                <input name="details" maxlength="1200" placeholder="Describe the issue..." class="h-10 rounded-xl border border-[#e4ddd3] px-3 text-[8px]">
-
-                                                <button class="h-10 rounded-xl bg-[#202124] px-4 text-[8px] font-semibold text-white">Submit Request</button>
-
-                                            </form>
-
-                                        </details>
-
-                                    @endif
-
-                                </div>
-
-                            @endif
-
                         </article>
 
                     @empty
@@ -6911,9 +6860,9 @@
                                         style="
                                             margin-top:4px !important;
                                             color:#202936 !important;
-                                            font-size:12px !important;
+                                            font-size:14px !important;
                                             font-weight:650 !important;
-                                            line-height:1.3 !important;
+                                            line-height:1.4 !important;
                                         "
                                     >
                                         {{ $featuredProductName }}
@@ -6926,7 +6875,7 @@
                                              gap:5px !important;
                                              margin-top:5px !important;
                                              color:#818b97 !important;
-                                             font-size:8.8px !important;
+                                             font-size:12px !important;
                                              font-weight:500 !important;
                                          ">
                                         <span
@@ -6981,65 +6930,17 @@
 
                             </div>
 
-                            {{-- LIVE DELIVERY MAP --}}
-
-                            @if($featuredStep >= 2 && $featuredStep < 4)
-
-                                <div class="sari-live-panel mt-5 p-3">
-
-                                    <div class="mb-3 flex items-center justify-between">
-
-                                        <div class="flex items-center gap-2">
-
-                                            <span class="sari-live-dot"></span>
-
-                                            <span class="text-[10px] font-bold uppercase tracking-[.13em] text-[#5f5a51]">Live Delivery</span>
-
-                                        </div>
-
-                                        <span class="text-[9px] font-semibold text-[#9b958b]">Updated now</span>
-
-                                    </div>
-
-                                    <div class="sari-mini-map">
-
-                                        <div class="sari-route"></div>
-
-                                        <div class="sari-map-label courier">Courier</div>
-
-                                        <div class="sari-map-label home">Your location</div>
-
-                                        <div class="sari-map-pin courier">
-
-                                            <span class="material-symbols-rounded text-[16px]">two_wheeler</span>
-
-                                        </div>
-
-                                        <div class="sari-map-pin home">
-
-                                            <span class="material-symbols-rounded text-[16px]">home</span>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="mt-3 flex items-center justify-between">
-
-                                        <div>
-
-                                            <p class="text-xs font-bold text-[#34312d]">Juan is on the way</p>
-
-                                            <p class="mt-0.5 text-[10px] text-[#8e887f]">Estimated arrival today</p>
-
-                                        </div>
-
-                                        <a href="#" class="text-[10px] font-bold text-[#b87905] hover:underline">Full Tracking →</a>
-
-                                    </div>
-
+                            {{-- Map-only logistics preview: road route when available, saved-stop markers always. --}}
+                            <section id="sariBuyerRealDelivery" class="sari-real-delivery mt-5" aria-label="Delivery route map"
+                                data-road-router="{{ config('services.sari_road_router.url', 'https://router.project-osrm.org') }}"
+                                @unless($featuredStep >= 2 && $featuredStep < 4) hidden @endunless>
+                                <div class="sari-real-delivery-map-wrap">
+                                    <div id="sariRealDeliveryMap" class="sari-real-delivery-map" role="region" aria-label="Interactive delivery route showing the seller, origin hub, destination hub and buyer checkpoints"></div>
+                                    <button type="button" id="sariDeliveryMapInfo" class="sari-real-delivery-info-button" aria-label="About this delivery route" aria-controls="sariDeliveryMapNotice" aria-expanded="false" title="About this delivery route">i</button>
+                                    <p id="sariDeliveryMapNotice" class="sari-real-delivery-notice" role="status" hidden></p>
+                                    <span id="sariDeliveryMapStatus" class="sari-real-delivery-sr-only" role="status" aria-live="polite">Loading saved delivery stops</span>
                                 </div>
-
-                            @endif
+                            </section>
 
                         </div>
 
@@ -7083,8 +6984,8 @@
 
                         <div class="mt-4 divide-y divide-[#f0ebe2]">
 
-                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
-                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
+                            <button type="button" data-sari-help-open="support" aria-haspopup="dialog" class="sari-support-link sari-help-open-button flex w-full items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
+                               >
 
                                 <span class="flex items-center gap-2">
 
@@ -7096,25 +6997,27 @@
 
                                 <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
 
-                            </a>
+                            </button>
 
-                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
-                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
+                            <details class="sari-policy-disclosure" id="sariBuyerReturnPolicy">
+                                <summary class="sari-support-link sari-policy-trigger flex items-center justify-between py-3" aria-label="Expand return and refund policy">
+                                    <span class="flex items-center gap-2">
+                                        <span class="material-symbols-rounded sari-support-icon" aria-hidden="true">assignment_return</span>
+                                        Return &amp; Refund Policy
+                                    </span>
+                                    <span class="material-symbols-rounded sari-policy-chevron" aria-hidden="true">expand_more</span>
+                                </summary>
+                                <div class="sari-policy-body">
+                                    <p>Returns and refund requests are reviewed based on the order and the reported concern. This is an information guide, not an automatic approval.</p>
+                                    <p><strong>Eligibility.</strong> The current order-return workflow accepts requests for orders marked Delivered. A separate request for the same order cannot be submitted twice.</p>
+                                    <p><strong>Reasons for review.</strong> Damaged item, wrong item, missing item, item not as described, or another issue with an explanation.</p>
+                                    <p><strong>Review process.</strong> The seller reviews submitted requests. Approval, available remedies, and any refund depend on the verified case and applicable rules; no fixed approval timeframe is configured here.</p>
+                                    <p><strong>Need assistance?</strong> Choose Report an Issue to submit a complaint to SARI Admin and continue the conversation in Messages.</p>
+                                </div>
+                            </details>
 
-                                <span class="flex items-center gap-2">
-
-                                    <span class="material-symbols-rounded text-[17px] text-[#9a9489]" style="font-size:19px !important; color:#c88912 !important;">assignment_return</span>
-
-                                    Return & Refund Policy
-
-                                </span>
-
-                                <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
-
-                            </a>
-
-                            <a href="#" class="sari-support-link flex items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
-                               style="font-size:11.5px !important; font-weight:500 !important; line-height:1.3 !important;">
+                            <button type="button" data-sari-help-open="report" aria-haspopup="dialog" class="sari-support-link sari-help-open-button flex w-full items-center justify-between py-3 text-xs font-semibold text-[#555149] transition hover:text-[#b87905]"
+                               >
 
                                 <span class="flex items-center gap-2">
 
@@ -7126,7 +7029,7 @@
 
                                 <span class="material-symbols-rounded text-[17px] text-[#aaa49a]" style="font-size:19px !important; color:#9ca3af !important;">chevron_right</span>
 
-                            </a>
+                            </button>
 
                         </div>
 
@@ -7134,7 +7037,52 @@
 
                 </div>
 
-                {{-- VOUCHER --}}
+
+                {{-- Help actions stay on this page. Conversations are created only after submitting. --}}
+                <div id="sariBuyerHelpModal" class="sari-help-modal" hidden
+                     data-support-url="{{ route('messaging.api.support') }}"
+                     data-send-template="{{ route('messaging.api.send', ['conversation' => '__CONVERSATION__']) }}"
+                     data-complaint-url="{{ route('platform.complaints.store') }}"
+                     data-messages-url="{{ route('buyer.messages') }}">
+                    <div class="sari-help-modal-backdrop" data-sari-help-close aria-hidden="true"></div>
+                    <section class="sari-help-dialog" role="dialog" aria-modal="true" aria-labelledby="sariHelpTitle" aria-describedby="sariHelpDescription" tabindex="-1">
+                        <div class="sari-help-dialog-heading">
+                            <div class="sari-help-dialog-icon" aria-hidden="true"><span class="material-symbols-rounded" id="sariHelpModeIcon">support_agent</span></div>
+                            <div class="sari-help-dialog-heading-copy">
+                                <span class="sari-help-dialog-eyebrow">SARI Customer Care</span>
+                                <h2 id="sariHelpTitle">Chat with Support</h2>
+                                <p id="sariHelpDescription">Send a private message to the SARI Admin team.</p>
+                            </div>
+                            <button type="button" class="sari-help-close" data-sari-help-close aria-label="Close support window"><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
+                        </div>
+                        <form id="sariHelpSupportForm" class="sari-help-form">
+                            <label for="sariHelpSupportText">Your message</label>
+                            <textarea id="sariHelpSupportText" name="message" rows="5" minlength="1" maxlength="3000" required placeholder="How can SARI Support help you?"></textarea>
+                            <p class="sari-help-helper">Your message will appear in the Admin Support conversation under Buyer Messages.</p>
+                            <button type="submit" class="sari-help-submit">Send to SARI Support <span class="material-symbols-rounded" aria-hidden="true">send</span></button>
+                        </form>
+                        <form id="sariHelpReportForm" class="sari-help-form" hidden>
+                            <label for="sariHelpIssueSubject">Issue subject</label>
+                            <input id="sariHelpIssueSubject" name="subject" maxlength="150" required placeholder="What went wrong?" />
+                            <label for="sariHelpIssueDescription">Describe your concern</label>
+                            <textarea id="sariHelpIssueDescription" name="description" rows="5" minlength="10" maxlength="3000" required placeholder="Tell us what happened, including the order number if relevant."></textarea>
+                            <p class="sari-help-helper">Submitting creates a complaint for SARI Admin and a linked conversation in Messages.</p>
+                            <button type="submit" class="sari-help-submit">Submit report <span class="material-symbols-rounded" aria-hidden="true">send</span></button>
+                        </form>
+                        <div id="sariHelpFeedback" class="sari-help-feedback" role="alert" aria-live="polite" hidden></div>
+                        <div id="sariHelpSuccess" class="sari-help-success" role="status" hidden>
+                            <span class="material-symbols-rounded" aria-hidden="true">check_circle</span>
+                            <h3 id="sariHelpSuccessTitle">Message sent</h3>
+                            <p id="sariHelpSuccessText">Your conversation is saved in Buyer Messages.</p>
+                            <div class="sari-help-success-actions">
+                                <a id="sariHelpOpenConversation" class="sari-help-view" href="{{ route('buyer.messages') }}">View conversation</a>
+                                <button type="button" class="sari-help-dismiss" data-sari-help-close>Done</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                                {{-- VOUCHER --}}
 
                 <div class="relative overflow-hidden rounded-[20px] bg-[#191919] p-5 text-white shadow-[0_12px_30px_rgba(0,0,0,.10)]">
 
@@ -7255,6 +7203,12 @@
 
 @push('scripts')
 
+    {{-- Same map engine used by buyer/order-details.blade.php. --}}
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.css">
+    <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
+    <script src="{{ asset('js/sari-buyer-orders-delivery-map.js') }}?v=20261028-map-only-1" defer></script>
+    <script src="{{ asset('js/sari-buyer-orders-help-modal.js') }}?v=20261028-1" defer></script>
+
     @vite('resources/js/buyer-orders.js')
 
     <script>
@@ -7262,55 +7216,6 @@
         document.addEventListener('DOMContentLoaded', () => {
 
 
-
-            // Successful cancellation top-center toast.
-            const cancelSuccessToast = document.getElementById('sariCancelSuccessToast');
-            const cancelSuccessMessage = cancelSuccessToast?.querySelector('[data-cancel-success-message]');
-
-            let cancelSuccessTimer = null;
-
-            const dismissCancelSuccessToast = () => {
-                if (!cancelSuccessToast || cancelSuccessToast.hidden) return;
-
-                cancelSuccessToast.classList.add('is-hiding');
-
-                window.setTimeout(() => {
-                    cancelSuccessToast.hidden = true;
-                    cancelSuccessToast.classList.remove('is-hiding');
-                }, 240);
-            };
-
-            const showCancelSuccessToast = (message = 'Your order has been cancelled successfully.') => {
-                if (!cancelSuccessToast) return;
-
-                if (cancelSuccessTimer) {
-                    window.clearTimeout(cancelSuccessTimer);
-                }
-
-                if (cancelSuccessMessage) {
-                    cancelSuccessMessage.textContent = message;
-                }
-
-                cancelSuccessToast.classList.remove('is-hiding');
-                cancelSuccessToast.hidden = false;
-
-                cancelSuccessTimer = window.setTimeout(
-                    dismissCancelSuccessToast,
-                    4200
-                );
-            };
-
-            cancelSuccessToast
-                ?.querySelector('[data-dismiss-cancel-success]')
-                ?.addEventListener('click', dismissCancelSuccessToast);
-
-            // Fallback for a normal non-AJAX redirect.
-            if (cancelSuccessToast?.dataset.serverShow === '1') {
-                showCancelSuccessToast(
-                    cancelSuccessToast.dataset.serverMessage ||
-                    'Your order has been cancelled successfully.'
-                );
-            }
 
             // Cancel Order reason modal
             const cancelModal = document.getElementById('cancelOrderReasonModal');
@@ -7433,7 +7338,7 @@
 
                     closeCancelModal({ restoreFocus: false });
 
-                    showCancelSuccessToast(
+                    window.SariBuyerToast?.success(
                         payload.message ||
                         'Your order has been cancelled successfully.'
                     );
@@ -7449,7 +7354,7 @@
                     confirmCancelOrderButton.disabled = false;
                     confirmCancelOrderButton.removeAttribute('aria-busy');
 
-                    window.alert(
+                    window.SariBuyerToast?.error(
                         error instanceof Error
                             ? error.message
                             : 'Unable to cancel this order. Please try again.'
@@ -7480,6 +7385,7 @@
                     try {
 
                         await navigator.clipboard.writeText(number);
+                        window.SariBuyerToast?.success('Order number copied.');
 
                         const original = button.textContent;
 
@@ -7693,6 +7599,11 @@
                         trigger.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
                     });
                 });
+
+                // Route map follows the same selected card (no extra page navigation).
+                window.dispatchEvent(new CustomEvent('sari:buyer-order-selected', {
+                    detail: { orderId: Number(card.dataset.orderId || 0), step: currentStep }
+                }));
 
                 // On tablet/mobile the sidebar is below the order list,
                 // so bring the selected order tracking into view.

@@ -2,6 +2,8 @@
 
 namespace App\Models\Accounts;
 
+use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\Delivery\LogisticsFacility;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Registration\RegistrationApplication;
@@ -12,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class LogisticsAccount extends Authenticatable
 {
+    use HasApiTokens;
     use SoftDeletes;
 
     protected $table = 'logistics_accounts';

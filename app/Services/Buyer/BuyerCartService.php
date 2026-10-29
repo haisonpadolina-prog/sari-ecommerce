@@ -133,11 +133,13 @@ class BuyerCartService
             ->delete();
     }
 
+    /** Count distinct products for the buyer's cart badge, not total units. */
     public function count(Request $request): int
     {
         return (int) $this->identity
             ->apply(BuyerCartItem::query(), $request)
-            ->sum('quantity');
+            ->distinct()
+            ->count('seller_product_id');
     }
 
     public function unitPrice(BuyerCartItem $item): float

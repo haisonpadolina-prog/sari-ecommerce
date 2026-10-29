@@ -599,18 +599,6 @@
 
 </style>
 
-    @if (session('success'))
-        <div class="mb-4 rounded-[14px] border border-[#cfe4d7] bg-[#f1f8f4] px-4 py-3 text-[9px] font-medium text-[#4F7D63]">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="mb-4 rounded-[14px] border border-[#efcece] bg-[#fff5f5] px-4 py-3 text-[9px] font-medium text-[#a65353]">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
     {{-- =========================================================
          PAGE HEADER
     ========================================================== --}}
@@ -1121,7 +1109,6 @@
         const hintNode = page.querySelector('#cartSelectionHint');
         const checkoutButton = page.querySelector('#selectedCheckoutButton');
 
-        let feedbackTimer = null;
         const quantitySaveState = new WeakMap();
 
         function peso(value) {
@@ -1132,15 +1119,7 @@
         }
 
         function showFeedback(message, isError = false) {
-            document.querySelector('.sari-cart-feedback')?.remove();
-
-            const toast = document.createElement('div');
-            toast.className = `sari-cart-feedback${isError ? ' is-error' : ''}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            window.clearTimeout(feedbackTimer);
-            feedbackTimer = window.setTimeout(() => toast.remove(), 2200);
+            window.SariBuyerToast?.show(message, isError ? 'error' : 'success');
         }
 
         function selectedEntries() {
@@ -1338,7 +1317,8 @@
                 }));
 
                 sync();
-                setQuantitySaveStatus(form, 'Saved', 'saved');
+                setQuantitySaveStatus(form, '', '');
+                showFeedback('Cart quantity updated.');
 
                 state.clearStatusTimer = window.setTimeout(() => {
                     if (!state.saving && !state.dirty) {

@@ -2,6 +2,8 @@
 
 namespace App\Models\Accounts;
 
+use Laravel\Sanctum\HasApiTokens;
+
 use App\Models\Catalog\SellerProduct;
 use App\Models\Compliance\ComplianceMessage;
 use App\Models\Compliance\SellerWarning;
@@ -16,13 +18,14 @@ use App\Models\Promotions\SellerFreeShippingPromotion;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Registration\RegistrationApplication;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
-class SellerAccount extends Model
+class SellerAccount extends Authenticatable
 {
+    use HasApiTokens;
     use SoftDeletes;
     public function registrationApplication(): BelongsTo
     {

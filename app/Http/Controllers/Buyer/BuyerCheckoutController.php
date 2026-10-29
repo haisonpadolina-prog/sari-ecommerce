@@ -12,6 +12,7 @@ use App\Models\Orders\MarketplaceOrderEvent;
 use App\Models\Promotions\SellerVoucherRedemption;
 use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerIdentityService;
+use App\Services\Messaging\BuyerSellerOrderConfirmationService;
 use App\Services\Products\ProductVariantInventoryService;
 use App\Services\Promotions\PlatformCampaignService;
 use App\Services\Promotions\SellerFreeShippingPromotionService;
@@ -32,6 +33,7 @@ class BuyerCheckoutController extends Controller
         private readonly SellerVoucherService $vouchers,
         private readonly SellerFreeShippingPromotionService $freeShippingPromotions,
         private readonly PlatformCampaignService $platformCampaigns,
+        private readonly BuyerSellerOrderConfirmationService $orderConfirmation,
     ) {
     }
 
@@ -473,6 +475,9 @@ class BuyerCheckoutController extends Controller
                     'status' => 'new',
                 ]);
 
+                // Open the buyer–seller confirmation thread atomically with checkout.
+                $this->orderConfirmation->createForOrder($order);
+
                 $created->push($order);
             }
 
@@ -499,6 +504,9 @@ class BuyerCheckoutController extends Controller
 
         return redirect()
             ->route('buyer.orders')
+            ->with('order_confirmation_url', route('buyer.messages', [
+                'seller' => (int) $createdOrders->first()->seller_account_id,
+            ]))
             ->with('success', $createdOrders->count() === 1
                 ? 'Order placed successfully. The seller can now prepare it.'
                 : $createdOrders->count() . ' seller orders were created successfully.');

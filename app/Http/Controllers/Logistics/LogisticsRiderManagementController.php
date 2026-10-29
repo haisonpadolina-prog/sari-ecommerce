@@ -98,7 +98,9 @@ class LogisticsRiderManagementController extends Controller
 
         $riderQuery = CourierAccount::query();
 
-        if ($hubFacility) {
+        // Hub Operators see riders in their assigned municipality.
+        // Managers retain provider-wide visibility even with a selected operating branch.
+        if ($isHubOperator && $hubFacility) {
 
             /*
              * Municipality-wide local directory.

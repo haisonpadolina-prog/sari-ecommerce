@@ -8,20 +8,6 @@
     */
     $buyerSidebarLogoSrc = asset('images/sari-logo.png');
     $buyerSidebarCompactLogoSrc = asset('images/sari-main-logo.png');
-    $buyerSidebarEmail = (string) session('buyer_email', 'buyer@gmail.com');
-    $buyerSidebarHandle = trim((string) \Illuminate\Support\Str::before($buyerSidebarEmail, '@'));
-    $buyerSidebarName = trim((string) session('buyer_name', ''));
-
-    if ($buyerSidebarName === '') {
-        $buyerSidebarName = \Illuminate\Support\Str::of($buyerSidebarHandle ?: 'Buyer Account')
-            ->replace(['.', '_', '-'], ' ')
-            ->title()
-            ->toString();
-    }
-
-    $buyerSidebarInitials = strtoupper(
-        mb_substr(preg_replace('/[^A-Za-z0-9]/', '', $buyerSidebarName) ?: 'BU', 0, 2)
-    );
 @endphp
 
 <aside
@@ -203,23 +189,6 @@
             <span class="buyer-sidebar-label whitespace-nowrap">Recent Activity</span>
         </a>
 
-        <a
-            href="{{ route('buyer.shipping') }}"
-            wire:navigate.hover
-            title="Shipping"
-            data-buyer-sidebar-item
-            data-buyer-nav-active="{{ request()->routeIs('buyer.shipping') ? 'true' : 'false' }}"
-            class="buyer-sidebar-item flex items-center gap-3"
-        >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path d="M3 7h11v9H3z"></path>
-                <path d="M14 10h4l3 3v3h-7z"></path>
-                <circle cx="7" cy="18" r="1.5"></circle>
-                <circle cx="18" cy="18" r="1.5"></circle>
-            </svg>
-            <span class="buyer-sidebar-label whitespace-nowrap">Shipping</span>
-        </a>
-
         <div class="buyer-sidebar-section-divider"></div>
         <p class="buyer-sidebar-section-label">Support</p>
 
@@ -277,13 +246,39 @@
             <span class="buyer-sidebar-label whitespace-nowrap">Account Management</span>
         </a>
 
+        {{-- Logout stays red in its default, hover, and keyboard focus states. --}}
+        <style>
+            #buyerSidebar #buyerLogoutForm button {
+                color: #ef4444 !important;
+                background-color: transparent;
+                border-color: transparent;
+            }
+            #buyerSidebar #buyerLogoutForm button svg,
+            #buyerSidebar #buyerLogoutForm button .buyer-sidebar-label {
+                color: #ef4444 !important;
+                stroke: #ef4444;
+            }
+            #buyerSidebar #buyerLogoutForm button:hover,
+            #buyerSidebar #buyerLogoutForm button:focus-visible {
+                background-color: #fef2f2 !important;
+                color: #dc2626 !important;
+            }
+            #buyerSidebar #buyerLogoutForm button:hover svg,
+            #buyerSidebar #buyerLogoutForm button:hover .buyer-sidebar-label,
+            #buyerSidebar #buyerLogoutForm button:focus-visible svg,
+            #buyerSidebar #buyerLogoutForm button:focus-visible .buyer-sidebar-label {
+                color: #dc2626 !important;
+                stroke: #dc2626;
+            }
+        </style>
+
         <form id="buyerLogoutForm" method="POST" action="{{ route('buyer.logout') }}">
             @csrf
             <button
                 type="submit"
                 title="Logout"
                 data-buyer-sidebar-item
-                class="buyer-sidebar-item flex w-full items-center gap-3 text-left text-[#514b42] hover:border-red-100 hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-500/10"
+                class="buyer-sidebar-item flex w-full items-center gap-3 text-left focus:outline-none focus:ring-4 focus:ring-red-500/15"
             >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <path d="M10 17l5-5-5-5"></path>
@@ -295,26 +290,4 @@
         </form>
     </nav>
 
-    {{-- PROFILE --}}
-    <div id="buyerSidebarProfile" class="border-t border-[#eee7dc] bg-white">
-        <a
-            href="{{ route('buyer.account') }}"
-            wire:navigate.hover
-            title="{{ $buyerSidebarName }}"
-            class="buyer-sidebar-profile-card flex w-full items-center"
-        >
-            <span class="buyer-shell-avatar grid shrink-0 place-items-center rounded-full bg-[#d9950b] font-semibold text-white">
-                {{ $buyerSidebarInitials ?: 'BU' }}
-            </span>
-
-            <span class="buyer-sidebar-label min-w-0 flex-1">
-                <span class="block truncate font-semibold text-[#28231c]">{{ $buyerSidebarName ?: 'Buyer Account' }}</span>
-                <span class="mt-0.5 block truncate text-[#908779]">Buyer Account</span>
-            </span>
-
-            <svg viewBox="0 0 24 24" class="buyer-sidebar-extra shrink-0 text-[#82796b]" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <path d="m9 18 6-6-6-6"></path>
-            </svg>
-        </a>
-    </div>
 </aside>

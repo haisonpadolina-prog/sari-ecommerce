@@ -9,6 +9,8 @@ use App\Models\Messaging\BuyerSellerMessage;
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Accounts\SocialAccount;
+use App\Services\Messaging\BuyerSellerOrderConfirmationService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,6 +19,10 @@ use Illuminate\View\View;
 
 class SellerBuyerMessageController extends Controller
 {
+    public function __construct(private readonly BuyerSellerOrderConfirmationService $chat)
+    {
+    }
+
     private function seller(Request $request): SellerAccount
     {
         abort_unless($request->session()->get('is_seller'), 403);
@@ -50,6 +56,19 @@ class SellerBuyerMessageController extends Controller
         );
     }
 
+    public function unread(Request $request): JsonResponse
+    {
+        $seller = $this->seller($request);
+
+        return response()->json([
+            'unread_total' => BuyerSellerMessage::query()
+                ->where('seller_account_id', $seller->id)
+                ->where('sender_role', 'buyer')
+                ->whereNull('read_at')
+                ->count(),
+        ])->header('Cache-Control', 'no-store');
+    }
+
     public function thread(
         Request $request,
         string $buyerKey
@@ -77,15 +96,8 @@ class SellerBuyerMessageController extends Controller
         );
 
         $messages = $query
-            ->get()
-            ->map(fn (BuyerSellerMessage $message) => [
-                'id' => (int) $message->id,
-                'sender_role' =>
-                    (string) $message->sender_role,
-                'body' => (string) $message->body,
-                'created_at' =>
-                    $message->created_at?->toIso8601String(),
-            ])
+            ->with('order')->get()
+            ->map(fn (BuyerSellerMessage $message) => $this->chat->payload($message, 'seller'))
             ->values();
 
         $readQuery = BuyerSellerMessage::query()
@@ -135,30 +147,24 @@ class SellerBuyerMessageController extends Controller
         [$type, $id] =
             $this->parseBuyerKey($buyerKey);
 
-        $message = BuyerSellerMessage::create([
-            'seller_account_id' => $seller->id,
-            'buyer_account_id' =>
-                $type === 'account'
-                    ? $id
-                    : null,
-            'buyer_social_account_id' =>
-                $type === 'social'
-                    ? $id
-                    : null,
-            'sender_role' => 'seller',
-            'body' => trim($validated['body']),
-        ]);
+        abort_if(trim($validated['body']) === '', 422, 'Write a message before sending.');
+
+        $message = DB::transaction(function () use ($seller, $type, $id, $validated): BuyerSellerMessage {
+            $message = BuyerSellerMessage::create([
+                'seller_account_id' => $seller->id,
+                'buyer_account_id' => $type === 'account' ? $id : null,
+                'buyer_social_account_id' => $type === 'social' ? $id : null,
+                'sender_role' => 'seller',
+                'message_type' => 'text',
+                'body' => trim($validated['body']),
+            ]);
+            $this->chat->announce($message);
+            return $message;
+        });
 
         if ($request->expectsJson()) {
             return response()->json([
-                'message' => [
-                    'id' => (int) $message->id,
-                    'sender_role' =>
-                        (string) $message->sender_role,
-                    'body' => (string) $message->body,
-                    'created_at' =>
-                        $message->created_at?->toIso8601String(),
-                ],
+                'message' => $this->chat->payload($message),
             ], 201);
         }
 
