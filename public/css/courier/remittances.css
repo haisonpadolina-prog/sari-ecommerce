@@ -1,0 +1,867 @@
+/* Rider — COD Remittance */
+
+.courier-shell #courierPageContent:has(#riderRemittances) {
+    padding: 28px 40px;
+}
+
+#riderRemittances {
+    --cr-ink: #202733;
+    --cr-muted: #707b8d;
+    --cr-border: #e7ebf0;
+    --cr-gold: #d99a0b;
+    --cr-gold-text: #93640e;
+    --cr-shadow: 0 2px 4px rgb(20 30 50 / 2%),
+        0 10px 24px rgb(20 30 50 / 5%);
+
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    color: var(--cr-ink);
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+#riderRemittances,
+#riderRemittances * {
+    box-sizing: border-box;
+}
+
+#riderRemittances :is(p, h2, h3, h4, ol, dl, dd) {
+    margin: 0;
+}
+
+#riderRemittances > * + * {
+    margin-top: 20px;
+}
+
+#riderRemittances [hidden] {
+    display: none !important;
+}
+
+#riderRemittances :is(section, article, form, .cr-field) {
+    min-width: 0;
+}
+
+#riderRemittances .cr-muted {
+    color: var(--cr-muted);
+}
+
+#riderRemittances .cr-eyebrow {
+    margin-bottom: 6px;
+    color: var(--cr-gold-text);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+/* Page heading */
+
+#riderRemittances .cr-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+#courierPageContent #riderRemittances .cr-page-title {
+    color: var(--cr-ink);
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.04em;
+}
+
+#riderRemittances .cr-page-title span {
+    color: var(--cr-gold-text);
+}
+
+#riderRemittances .cr-description {
+    margin-top: 7px;
+    color: var(--cr-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+/* Buttons */
+
+#courierPageContent #riderRemittances .cr-button {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid #e2e6eb;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--cr-ink);
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease,
+        transform 160ms ease;
+}
+
+#courierPageContent #riderRemittances .cr-button-primary {
+    border-color: var(--cr-gold);
+    background: var(--cr-gold);
+    color: #251c09;
+}
+
+#riderRemittances .cr-button svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+#courierPageContent #riderRemittances .cr-button:disabled {
+    border-color: #e4e7ec;
+    background: #edf0f4;
+    color: #7b8493;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#riderRemittances :is(a, button, input, select, [tabindex]):focus-visible {
+    outline: 3px solid rgb(153 105 14 / 55%);
+    outline-offset: 3px;
+}
+
+/* Feedback */
+
+#riderRemittances .cr-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+#riderRemittances .cr-alert-success {
+    border-color: #cce5d6;
+    background: #f0f8f3;
+    color: #326348;
+}
+
+#riderRemittances .cr-alert-error {
+    border-color: #f1d3d8;
+    background: #fff3f5;
+    color: #a63c4b;
+}
+
+/* Summary cards */
+
+#riderRemittances .cr-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#riderRemittances .cr-stat {
+    padding: 16px 18px;
+    border: 1px solid var(--cr-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--cr-shadow);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+#riderRemittances .cr-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#riderRemittances .cr-stat-label {
+    color: #667183;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-stat-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 10px;
+    background: #fff5df;
+    color: var(--cr-gold-text);
+    font-size: 17px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-stat-icon-blue {
+    background: #eef4fb;
+    color: #426b98;
+}
+
+#riderRemittances .cr-stat-icon-green {
+    background: #edf6f0;
+    color: #467859;
+}
+
+#riderRemittances .cr-stat-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+#riderRemittances .cr-stat-value {
+    display: block;
+    margin-top: 9px;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -.035em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderRemittances .cr-stat-note {
+    margin-top: 5px;
+    color: var(--cr-muted);
+    font-size: 10px;
+}
+
+/* Instructions */
+
+#riderRemittances .cr-guidance {
+    overflow: hidden;
+    border: 1px solid var(--cr-border);
+    border-radius: 16px;
+    background: #fff;
+}
+
+#riderRemittances .cr-cash-notice {
+    padding: 15px 18px;
+    border-bottom: 1px solid #f0e5ce;
+    background: #fffbf2;
+    color: #7b602e;
+    font-size: 10.5px;
+    line-height: 1.8;
+}
+
+#riderRemittances .cr-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0;
+    list-style: none;
+}
+
+#riderRemittances .cr-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 18px;
+}
+
+#riderRemittances .cr-step + .cr-step {
+    border-left: 1px solid var(--cr-border);
+}
+
+#riderRemittances .cr-step-number {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 9px;
+    background: #f3f5f8;
+    color: #657083;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+#riderRemittances .cr-step strong {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-step p {
+    margin-top: 4px;
+    color: var(--cr-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Shared panels */
+
+#riderRemittances .cr-panel {
+    overflow: hidden;
+    border: 1px solid var(--cr-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--cr-shadow);
+}
+
+#riderRemittances .cr-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--cr-border);
+}
+
+#courierPageContent #riderRemittances .cr-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#riderRemittances .cr-panel-description {
+    margin-top: 4px;
+    color: var(--cr-muted);
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+#riderRemittances .cr-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: 1px solid #e6e9ee;
+    border-radius: 999px;
+    background: #f5f6f8;
+    color: #667183;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+#riderRemittances .cr-badge-gold {
+    border-color: #f0dfb7;
+    background: #fff7e6;
+    color: #8e641b;
+}
+
+#riderRemittances .cr-badge-green {
+    border-color: #d8e9de;
+    background: #eef7f1;
+    color: #396d51;
+}
+
+#riderRemittances .cr-badge-red {
+    border-color: #f1d8de;
+    background: #fff0f3;
+    color: #a34054;
+}
+
+/* Parcel table */
+
+#riderRemittances .cr-table-scroll {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d2d9e2 transparent;
+}
+
+#riderRemittances .cr-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    text-align: left;
+    font-variant-numeric: tabular-nums;
+}
+
+#courierPageContent #riderRemittances .cr-table th {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--cr-border);
+    background: #f7f8fa;
+    color: #7c8695;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#courierPageContent #riderRemittances .cr-table td {
+    padding: 15px 18px;
+    border-bottom: 1px solid #eef1f5;
+    color: #5c6778;
+    font-size: 10.5px;
+    line-height: 1.7;
+}
+
+#courierPageContent #riderRemittances .cr-table .cr-number {
+    text-align: right;
+    white-space: nowrap;
+}
+
+#riderRemittances .cr-order-number {
+    color: var(--cr-ink);
+    font-weight: 600;
+}
+
+#riderRemittances .cr-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#courierPageContent #riderRemittances .cr-checkbox {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: #a77310;
+    cursor: pointer;
+}
+
+/* Form and selection summary */
+
+#riderRemittances .cr-form-body {
+    display: grid;
+    grid-template-columns: minmax(240px, .85fr) minmax(0, 1.3fr);
+    align-items: start;
+    gap: 22px;
+    padding: 20px;
+}
+
+#riderRemittances .cr-selection {
+    padding: 18px;
+    border: 1px solid #eee1c6;
+    border-radius: 13px;
+    background: #fffbf3;
+}
+
+#riderRemittances .cr-selection-label {
+    color: #8a6c35;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+#riderRemittances .cr-selection-amount {
+    display: block;
+    margin-top: 8px;
+    color: var(--cr-ink);
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderRemittances .cr-selection-count {
+    margin-top: 6px;
+    color: #8a6c35;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+#riderRemittances .cr-selection-help {
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid #eee1c6;
+    color: #827561;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+#riderRemittances .cr-fields {
+    display: grid;
+    gap: 16px;
+}
+
+#riderRemittances .cr-field {
+    display: block;
+}
+
+#riderRemittances .cr-field-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #4f5b6b;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-optional {
+    color: var(--cr-muted);
+    font-weight: 400;
+}
+
+#courierPageContent #riderRemittances .cr-control {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    padding: 11px 12px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--cr-ink);
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+#riderRemittances .cr-field-error {
+    display: block;
+    margin-top: 7px;
+    color: #a63c4b;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#riderRemittances .cr-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--cr-border);
+    background: #fcfcfd;
+}
+
+#riderRemittances .cr-form-footer p {
+    max-width: 550px;
+    color: var(--cr-muted);
+    font-size: 10px;
+}
+
+/* Recent batches */
+
+#riderRemittances .cr-batch + .cr-batch {
+    border-top: 1px solid var(--cr-border);
+}
+
+#riderRemittances .cr-batch-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) auto;
+    align-items: start;
+    gap: 24px;
+    padding: 22px 20px 18px;
+}
+
+#riderRemittances .cr-batch-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+#courierPageContent #riderRemittances .cr-batch-code {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: -.015em;
+}
+
+#riderRemittances .cr-batch-meta {
+    margin-top: 7px;
+    color: var(--cr-muted);
+    font-size: 10px;
+}
+
+#riderRemittances .cr-detail-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #87909e;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+#riderRemittances .cr-hub {
+    padding-left: 22px;
+    border-left: 1px solid var(--cr-border);
+}
+
+#riderRemittances .cr-hub strong {
+    color: #495567;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-hub p {
+    margin-top: 5px;
+    color: var(--cr-muted);
+    font-size: 10px;
+}
+
+#riderRemittances .cr-batch-amount {
+    text-align: right;
+}
+
+#riderRemittances .cr-batch-amount strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -.025em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderRemittances .cr-batch-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0 20px 20px;
+}
+
+#riderRemittances .cr-batch-footer p {
+    color: var(--cr-muted);
+    font-size: 10px;
+}
+
+/* QR presentation */
+
+#riderRemittances .cr-qr-panel {
+    margin: 0 20px 20px;
+    padding: 22px;
+    border: 1px solid #ebd49e;
+    border-radius: 14px;
+    background: #fffcf6;
+    overflow-wrap: anywhere;
+}
+
+#riderRemittances .cr-qr-layout {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    align-items: center;
+    gap: 26px;
+}
+
+#riderRemittances .cr-qr-code {
+    display: grid;
+    width: 188px;
+    min-height: 188px;
+    place-items: center;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+}
+
+#riderRemittances .cr-qr-code :is(img, canvas) {
+    max-width: 100%;
+    height: auto;
+}
+
+#riderRemittances .cr-qr-error {
+    color: #a63c4b;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+#courierPageContent #riderRemittances .cr-qr-title {
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderRemittances .cr-qr-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 32px;
+    margin: 15px 0;
+}
+
+#riderRemittances .cr-qr-details dd {
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderRemittances .cr-qr-hub {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderRemittances .cr-qr-help {
+    margin-top: 7px;
+    color: var(--cr-muted);
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+#riderRemittances .cr-discrepancy {
+    margin-top: 13px;
+    padding: 10px 12px;
+    border: 1px solid #f0d4db;
+    border-radius: 9px;
+    background: #fff2f5;
+    color: #a34054;
+    font-size: 10px;
+    line-height: 1.75;
+}
+
+#courierPageContent #riderRemittances .cr-empty {
+    padding: 38px 20px;
+    color: var(--cr-muted);
+    font-size: 11px;
+    text-align: center;
+}
+
+#riderRemittances .cr-empty strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #4e5a6c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Interaction */
+
+@media (hover: hover) {
+    #courierPageContent #riderRemittances .cr-button:not(:disabled):hover {
+        border-color: #cbd2dc;
+        background: #f7f8fa;
+        transform: translateY(-1px);
+    }
+
+    #courierPageContent #riderRemittances .cr-button-primary:not(:disabled):hover {
+        border-color: #c88b08;
+        background: #c88b08;
+    }
+
+    #riderRemittances .cr-stat:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 26px rgb(20 30 50 / 8%);
+    }
+}
+
+/* Responsive */
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderRemittances) {
+        padding: 24px;
+    }
+
+    #riderRemittances .cr-batch-main {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    #riderRemittances .cr-steps {
+        grid-template-columns: 1fr;
+    }
+
+    #riderRemittances .cr-step + .cr-step {
+        border-top: 1px solid var(--cr-border);
+        border-left: 0;
+    }
+
+    #riderRemittances .cr-form-body {
+        grid-template-columns: 1fr;
+    }
+
+    #riderRemittances .cr-batch-main {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    #riderRemittances .cr-hub {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        padding: 14px 0 0;
+        border-top: 1px solid var(--cr-border);
+        border-left: 0;
+    }
+
+    #riderRemittances .cr-qr-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #riderRemittances .cr-qr-code {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderRemittances) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderRemittances > * + * {
+        margin-top: 16px;
+    }
+
+    #riderRemittances .cr-page-header,
+    #riderRemittances .cr-form-footer,
+    #riderRemittances .cr-batch-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #riderRemittances .cr-summary {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    #riderRemittances .cr-stat {
+        padding: 15px 16px;
+    }
+
+    #riderRemittances .cr-panel-header {
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    #riderRemittances .cr-form-body {
+        gap: 18px;
+        padding: 16px;
+    }
+
+    #riderRemittances .cr-form-footer {
+        padding: 14px 16px;
+    }
+
+    #riderRemittances .cr-batch-main {
+        padding: 18px 16px 16px;
+    }
+
+    #riderRemittances .cr-batch-footer {
+        padding: 0 16px 18px;
+    }
+
+    #riderRemittances .cr-batch-amount strong {
+        font-size: 15px;
+    }
+
+    #riderRemittances .cr-qr-panel {
+        margin: 0 16px 18px;
+        padding: 18px 14px;
+    }
+
+    #courierPageContent #riderRemittances .cr-button {
+        min-height: 44px;
+    }
+
+    #courierPageContent #riderRemittances .cr-control {
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderRemittances *,
+    #riderRemittances *::before,
+    #riderRemittances *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -4,613 +4,331 @@
 @section('header-title', 'Active Deliveries')
 @section('header-subtitle', 'Direct Delivery Operations')
 
-@section('content')
-
-<div class="mx-auto max-w-[1620px] space-y-4">
-
-    {{-- =====================================================
-        PAGE INTRO
-    ====================================================== --}}
-
-    <section
-        class="
-            flex flex-col
-            justify-between
-            gap-4
-            rounded-[20px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-            p-5
-            sm:p-6
-            lg:flex-row
-            lg:items-end
-        "
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/courier/deliveries.css') }}?v=20261029-2"
     >
+@endpush
 
-        <div>
+@section('content')
+@php
+    $activeDeliveryCount = $orders->count();
+    $inTransitCount = $orders->where('status', 'in_transit')->count();
+    $atBuyerCount = $orders->where('status', 'arrived_buyer')->count();
+@endphp
 
-            <span
-                class="
-                    inline-flex
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    uppercase
-                    tracking-[.13em]
-                    text-[#8a7f70]
-                "
-            >
-                Direct Delivery
-            </span>
+<div
+    id="riderActiveDeliveries"
+    class="courier-deliveries-page courier-workspace"
+>
+    <section class="ad-heading" aria-labelledby="activeDeliveriesTitle">
+        <div class="ad-heading-copy">
+            <span class="ad-eyebrow">Direct Delivery</span>
 
-
-            <h2
-                class="
-                    mt-3
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Active Deliveries
+            <h2 id="activeDeliveriesTitle" class="ad-title">
+                Active <span>Deliveries</span>
             </h2>
 
-
-            <p
-                class="
-                    mt-2
-                    max-w-[720px]
-                    text-[9px]
-                    leading-5
-                    text-[#817769]
-                "
-            >
-                Active Seller-to-Buyer direct deliveries appear here.
-
-                Logistics Seller pickup work is handled separately,
-                while destination-hub assignments are managed through
-                Last-Mile Deliveries.
+            <p class="ad-description">
+                Track Seller-to-Buyer direct deliveries through final handoff.
             </p>
-
         </div>
 
-
-        <div class="flex flex-wrap gap-2">
-
+        <div class="ad-heading-actions">
             <a
                 href="{{ route('courier.requests') }}"
-                class="
-                    inline-flex
-                    items-center
-                    justify-center
-                    rounded-xl
-                    border border-[#e5dac9]
-                    bg-white
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-[#665c4f]
-                    transition
-                    hover:border-[#d7bd8b]
-                    hover:text-[#a96e05]
-                "
+                class="ad-button"
             >
                 Pickup Assignments
             </a>
 
-
             <a
                 href="{{ route('courier.last-mile') }}"
-                class="
-                    inline-flex
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-[#D99600]
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-white
-                    shadow-[0_8px_20px_rgba(217,150,0,.14)]
-                "
+                class="ad-button ad-button-gold"
             >
-                Last-Mile Deliveries →
+                Last-Mile Deliveries
+                <span aria-hidden="true">→</span>
             </a>
-
         </div>
-
     </section>
 
+    <section class="ad-summary" aria-label="Active direct-delivery summary">
+        <div class="ad-stat">
+            <div class="ad-stat-copy">
+                <p class="ad-stat-label">Active Direct Deliveries</p>
 
-    {{-- =====================================================
-        ACTIVE DIRECT DELIVERY LIST
-    ====================================================== --}}
+                <p class="ad-stat-value">
+                    {{ $activeDeliveryCount }}
+                </p>
+
+                <p class="ad-stat-note">
+                    Seller-to-Buyer delivery jobs
+                </p>
+            </div>
+
+            <span class="ad-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="m12 3 9 5-9 5-9-5 9-5Z"></path>
+                    <path d="M3 8v9l9 5 9-5V8M12 13v9"></path>
+                </svg>
+            </span>
+        </div>
+
+        <div class="ad-stat ad-stat-blue">
+            <div class="ad-stat-copy">
+                <p class="ad-stat-label">In Transit</p>
+
+                <p class="ad-stat-value">
+                    {{ $inTransitCount }}
+                </p>
+
+                <p class="ad-stat-note">
+                    On the way to the Buyer
+                </p>
+            </div>
+
+            <span class="ad-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M3 6h11v11H3z"></path>
+                    <path d="M14 10h4l3 4v3h-7"></path>
+                    <circle cx="7" cy="18" r="2"></circle>
+                    <circle cx="18" cy="18" r="2"></circle>
+                </svg>
+            </span>
+        </div>
+
+        <div class="ad-stat ad-stat-green">
+            <div class="ad-stat-copy">
+                <p class="ad-stat-label">At Buyer</p>
+
+                <p class="ad-stat-value">
+                    {{ $atBuyerCount }}
+                </p>
+
+                <p class="ad-stat-note">
+                    Awaiting final handoff
+                </p>
+            </div>
+
+            <span class="ad-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M12 21s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Z"></path>
+                    <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+            </span>
+        </div>
+    </section>
 
     <section
-        class="
-            grid
-            gap-4
-            lg:grid-cols-2
-        "
+        class="ad-panel"
+        aria-labelledby="directDeliveryQueueTitle"
     >
-
-        @forelse($orders as $order)
-
-            <article
-                class="
-                    overflow-hidden
-                    rounded-[18px]
-                    border border-[#d2dfe9]
-                    bg-[#f6f9fb]
-                "
-            >
-
-                {{-- HEADER --}}
-
-                <div
-                    class="
-                        flex
-                        items-start
-                        justify-between
-                        gap-3
-                        border-b border-[#dfe8ee]
-                        px-5 py-4
-                    "
-                >
-
-                    <div class="min-w-0">
-
-                        <div
-                            class="
-                                flex flex-wrap
-                                items-center
-                                gap-2
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[12px]
-                                    font-bold
-                                    text-[#26333c]
-                                "
-                            >
-                                {{ $order->order_number }}
-                            </p>
-
-
-                            <span
-                                class="
-                                    rounded-full
-                                    border border-[#d8e3ea]
-                                    bg-white
-                                    px-2.5 py-1
-                                    text-[7px]
-                                    font-semibold
-                                    uppercase
-                                    text-[#657986]
-                                "
-                            >
-                                Direct Delivery
-                            </span>
-
-                        </div>
-
-
-                        <p
-                            class="
-                                mt-2
-                                text-[8px]
-                                leading-4
-                                text-[#72808c]
-                            "
-                        >
-                            {{
-                                $order->buyer_name
-                                ?: 'Buyer'
-                            }}
-                        </p>
-
-                    </div>
-
-
-                    <span
-                        class="
-                            shrink-0
-                            rounded-full
-                            bg-white
-                            px-2.5 py-1
-                            text-[7px]
-                            font-bold
-                            uppercase
-                            text-[#3C6E91]
-                        "
-                    >
-                        {{ $order->statusLabel() }}
-                    </span>
-
-                </div>
-
-
-                {{-- BODY --}}
-
-                <div class="p-5">
-
-                    <div
-                        class="
-                            grid
-                            gap-3
-                            sm:grid-cols-2
-                        "
-                    >
-
-                        {{-- ROUTE --}}
-
-                        <div
-                            class="
-                                rounded-xl
-                                border border-[#dfe8ee]
-                                bg-white
-                                p-3
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    font-semibold
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#899ba7]
-                                "
-                            >
-                                Route
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[8px]
-                                    font-semibold
-                                    text-[#3d515d]
-                                "
-                            >
-                                {{
-                                    $order->pickup_name
-                                    ?: 'Seller'
-                                }}
-                                →
-                                {{
-                                    $order->buyer_name
-                                    ?: 'Buyer'
-                                }}
-                            </p>
-
-                        </div>
-
-
-                        {{-- DELIVERY FEE --}}
-
-                        <div
-                            class="
-                                rounded-xl
-                                border border-[#dfe8ee]
-                                bg-white
-                                p-3
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    font-semibold
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#899ba7]
-                                "
-                            >
-                                Delivery Fee
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[10px]
-                                    font-bold
-                                    text-[#26333c]
-                                "
-                            >
-                                ₱{{
-                                    number_format(
-                                        $order->courierDeliveryFee(),
-                                        2
-                                    )
-                                }}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    {{-- BUYER ADDRESS --}}
-
-                    <div
-                        class="
-                            mt-3
-                            rounded-xl
-                            border border-[#dfe8ee]
-                            bg-white
-                            p-3
-                        "
-                    >
-
-                        <p
-                            class="
-                                text-[7px]
-                                font-semibold
-                                uppercase
-                                tracking-[.1em]
-                                text-[#899ba7]
-                            "
-                        >
-                            Buyer Destination
-                        </p>
-
-
-                        <p
-                            class="
-                                mt-1
-                                text-[8px]
-                                leading-4
-                                text-[#596c78]
-                            "
-                        >
-                            {{
-                                $order->buyer_address
-                                ?: 'Delivery address unavailable'
-                            }}
-                        </p>
-
-                    </div>
-
-
-                    {{-- CURRENT STAGE --}}
-
-                    <div
-                        class="
-                            mt-3
-                            flex
-                            items-center
-                            justify-between
-                            gap-3
-                            rounded-xl
-                            border border-[#dfe8ee]
-                            bg-[#eef5f9]
-                            px-4 py-3
-                        "
-                    >
-
-                        <div>
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    font-semibold
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#78909f]
-                                "
-                            >
-                                Current Stage
-                            </p>
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[9px]
-                                    font-bold
-                                    text-[#315f7c]
-                                "
-                            >
-                                {{ $order->statusLabel() }}
-                            </p>
-
-                        </div>
-
-
-                        <span
-                            class="
-                                grid
-                                h-9 w-9
-                                shrink-0
-                                place-items-center
-                                rounded-xl
-                                bg-white
-                                text-[#3C6E91]
-                            "
-                        >
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                class="h-[17px] w-[17px]"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <path d="M3 7h11v10H3z"></path>
-                                <path d="M14 10h4l3 3v4h-7z"></path>
-                                <circle cx="7" cy="18" r="2"></circle>
-                                <circle cx="18" cy="18" r="2"></circle>
-                            </svg>
-
-                        </span>
-
-                    </div>
-
-
-                    {{-- ACTION --}}
-
-                    <a
-                        href="{{
-                            route(
-                                'courier.delivery.show',
-                                [
-                                    'order' => $order->id,
-                                ]
-                            )
-                        }}"
-                        class="
-                            mt-4
-                            inline-flex
-                            w-full
-                            items-center
-                            justify-center
-                            rounded-xl
-                            bg-[#3C6E91]
-                            px-4 py-3
-                            text-[9px]
-                            font-semibold
-                            text-white
-                            shadow-[0_8px_20px_rgba(60,110,145,.12)]
-                        "
-                    >
-                        Continue Direct Delivery →
-                    </a>
-
-                </div>
-
-            </article>
-
-
-        @empty
-
-            {{-- =================================================
-                EMPTY STATE
-            ================================================== --}}
-
-            <div
-                class="
-                    lg:col-span-2
-                    rounded-[20px]
-                    border border-dashed
-                    border-[#ddd2c1]
-                    bg-[#fffdf8]
-                    p-12
-                    text-center
-                "
-            >
-
-                <div
-                    class="
-                        mx-auto
-                        grid
-                        h-12 w-12
-                        place-items-center
-                        rounded-2xl
-                        bg-[#eef5f9]
-                        text-[#3C6E91]
-                    "
-                >
-
+        <div class="ad-panel-head">
+            <div class="ad-panel-heading">
+                <span class="ad-heading-icon" aria-hidden="true">
                     <svg
                         viewBox="0 0 24 24"
-                        class="h-5 w-5"
                         fill="none"
                         stroke="currentColor"
-                        stroke-width="1.8"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                     >
-                        <path d="M3 7h11v10H3z"></path>
-                        <path d="M14 10h4l3 3v4h-7z"></path>
+                        <path d="M3 6h11v11H3z"></path>
+                        <path d="M14 10h4l3 4v3h-7"></path>
                         <circle cx="7" cy="18" r="2"></circle>
                         <circle cx="18" cy="18" r="2"></circle>
                     </svg>
+                </span>
 
-                </div>
-
-
-                <p
-                    class="
-                        mt-4
-                        text-[10px]
-                        font-semibold
-                        text-[#51483d]
-                    "
-                >
-                    No active direct delivery.
-                </p>
-
-
-                <p
-                    class="
-                        mx-auto
-                        mt-2
-                        max-w-[520px]
-                        text-[8px]
-                        leading-4
-                        text-[#918677]
-                    "
-                >
-                    Seller pickup jobs are available under
-                    Pickup Assignments.
-
-                    Logistics destination-hub deliveries are
-                    handled separately under Last-Mile Deliveries.
-                </p>
-
-
-                <div
-                    class="
-                        mt-5
-                        flex flex-wrap
-                        justify-center
-                        gap-2
-                    "
-                >
-
-                    <a
-                        href="{{ route('courier.requests') }}"
-                        class="
-                            rounded-xl
-                            border border-[#eadfc9]
-                            bg-white
-                            px-4 py-2.5
-                            text-[8px]
-                            font-semibold
-                            text-[#655b4e]
-                        "
+                <div>
+                    <h3
+                        id="directDeliveryQueueTitle"
+                        class="ad-panel-title"
                     >
-                        Pickup Assignments
-                    </a>
+                        Direct Delivery Queue
+                    </h3>
 
-
-                    <a
-                        href="{{ route('courier.last-mile') }}"
-                        class="
-                            rounded-xl
-                            bg-[#D99600]
-                            px-4 py-2.5
-                            text-[8px]
-                            font-semibold
-                            text-white
-                        "
-                    >
-                        Last-Mile Deliveries
-                    </a>
-
+                    <p class="ad-panel-description">
+                        Buyer destinations and current delivery stages.
+                    </p>
                 </div>
-
             </div>
 
-        @endforelse
+            <span class="ad-count">
+                <strong>{{ $activeDeliveryCount }}</strong>
+                {{ $activeDeliveryCount === 1 ? 'delivery' : 'deliveries' }}
+            </span>
+        </div>
 
+        <div class="ad-delivery-list">
+            @forelse($orders as $order)
+                <article
+                    class="ad-delivery"
+                    aria-labelledby="direct-delivery-{{ $order->id }}"
+                >
+                    <div class="ad-delivery-main">
+                        <div class="ad-identity">
+                            <h4
+                                id="direct-delivery-{{ $order->id }}"
+                                class="ad-order-number"
+                            >
+                                {{ $order->order_number }}
+                            </h4>
+
+                            <div class="ad-badges">
+                                <span class="ad-badge">
+                                    Direct Delivery
+                                </span>
+
+                                <span
+                                    class="ad-badge {{ $order->status === 'arrived_buyer' ? 'ad-badge-green' : 'ad-badge-blue' }}"
+                                >
+                                    {{ $order->statusLabel() }}
+                                </span>
+                            </div>
+
+                            <p class="ad-route">
+                                {{ $order->pickup_name ?: 'Seller' }}
+
+                                <span class="ad-route-arrow">→</span>
+
+                                {{ $order->buyer_name ?: 'Buyer' }}
+                            </p>
+                        </div>
+
+                        <dl class="ad-destination">
+                            <dt class="ad-field-label">
+                                Buyer Destination
+                            </dt>
+
+                            <dd class="ad-field-value">
+                                {{ $order->buyer_name ?: 'Buyer' }}
+
+                                <span class="ad-address">
+                                    {{
+                                        $order->buyer_address
+                                            ?: 'Delivery address unavailable'
+                                    }}
+                                </span>
+                            </dd>
+                        </dl>
+
+                        <dl class="ad-fee">
+                            <dt class="ad-field-label">
+                                Delivery Fee
+                            </dt>
+
+                            <dd class="ad-fee-value">
+                                ₱{{ number_format($order->courierDeliveryFee(), 2) }}
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="ad-delivery-footer">
+                        <div class="ad-current-stage">
+                            <span>Current stage</span>
+                            <strong>{{ $order->statusLabel() }}</strong>
+                        </div>
+
+                        <a
+                            href="{{ route('courier.delivery.show', ['order' => $order->id]) }}"
+                            class="ad-button ad-button-blue"
+                            aria-label="Continue direct delivery for {{ $order->order_number }}"
+                        >
+                            Continue Direct Delivery
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+            @empty
+                <div class="ad-empty">
+                    <span class="ad-empty-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M3 6h11v11H3z"></path>
+                            <path d="M14 10h4l3 4v3h-7"></path>
+                            <circle cx="7" cy="18" r="2"></circle>
+                            <circle cx="18" cy="18" r="2"></circle>
+                        </svg>
+                    </span>
+
+                    <h4 class="ad-empty-title">
+                        No active direct deliveries
+                    </h4>
+
+                    <p class="ad-empty-description">
+                        Check Pickup Assignments for Seller collections,
+                        or Last-Mile Deliveries for destination-hub batches.
+                    </p>
+
+                    <div class="ad-empty-links">
+                        <a
+                            href="{{ route('courier.requests') }}"
+                            class="ad-text-link"
+                        >
+                            Pickup assignments
+                            <span aria-hidden="true">→</span>
+                        </a>
+
+                        <a
+                            href="{{ route('courier.last-mile') }}"
+                            class="ad-text-link"
+                        >
+                            Last-mile deliveries
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="ad-panel-footer">
+            <p class="ad-footer-copy">
+                @if($activeDeliveryCount > 0)
+                    Showing {{ $activeDeliveryCount }}
+                    {{
+                        $activeDeliveryCount === 1
+                            ? 'active direct delivery.'
+                            : 'active direct deliveries.'
+                    }}
+                @else
+                    Seller-to-Buyer direct delivery workflow.
+                @endif
+            </p>
+
+            <span class="ad-footer-copy">
+                Logistics hub deliveries appear under Last-Mile.
+            </span>
+        </div>
     </section>
-
 </div>
-
 @endsection

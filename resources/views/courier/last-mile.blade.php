@@ -4,1143 +4,463 @@
 @section('header-title', 'Last-Mile Deliveries')
 @section('header-subtitle', 'Destination Hub → Buyer')
 
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/courier/last-mile.css') }}?v=20261029-2"
+    >
+@endpush
+
 @section('content')
-
 @php
-    $activeAssignments =
-        $assignments
-            ->whereIn(
-                'status',
-                [
-                    'assigned',
-                    'out_for_delivery',
-                ]
-            );
+    $activeAssignments = $assignments->whereIn(
+        'status',
+        ['assigned', 'out_for_delivery']
+    );
 
-    $completedAssignments =
-        $assignments
-            ->where(
-                'status',
-                'completed'
-            );
+    $completedAssignments = $assignments->where('status', 'completed');
 
-    $activeParcelCount =
-        $activeAssignments
-            ->sum(
-                fn ($assignment) =>
-                    $assignment->orders->count()
-            );
+    $activeParcelCount = $activeAssignments->sum(
+        fn ($assignment) => $assignment->orders->count()
+    );
 @endphp
 
-
-<div class="mx-auto max-w-[1620px] space-y-4">
-
+<div
+    id="riderLastMile"
+    class="courier-last-mile-page courier-workspace"
+>
     @if(session('success'))
-
-        <div
-            class="
-                rounded-2xl
-                border border-emerald-200
-                bg-emerald-50
-                px-5 py-4
-                text-[9px]
-                font-semibold
-                text-emerald-700
-            "
-        >
+        <div class="lm-alert lm-alert-success" role="status">
             {{ session('success') }}
         </div>
-
     @endif
-
 
     @if($errors->any())
-
-        <div
-            class="
-                rounded-2xl
-                border border-rose-200
-                bg-rose-50
-                px-5 py-4
-                text-[9px]
-                font-semibold
-                text-rose-700
-            "
-        >
+        <div class="lm-alert lm-alert-error" role="alert">
             {{ $errors->first() }}
         </div>
-
     @endif
 
+    <section class="lm-heading" aria-labelledby="lastMilePageTitle">
+        <div class="lm-heading-copy">
+            <span class="lm-eyebrow">Last-Mile Operations</span>
 
-    {{-- =====================================================
-        INTRO
-    ====================================================== --}}
-
-    <section
-        class="
-            flex flex-col
-            justify-between
-            gap-5
-            rounded-[22px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-            p-5
-            sm:p-6
-            lg:flex-row
-            lg:items-end
-        "
-    >
-
-        <div>
-
-            <span
-                class="
-                    inline-flex
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    uppercase
-                    tracking-[.13em]
-                    text-[#8a7f70]
-                "
-            >
-                Last-Mile Operations
-            </span>
-
-
-            <h2
-                class="
-                    mt-3
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Destination Hub Deliveries
+            <h2 id="lastMilePageTitle" class="lm-title">
+                Last-Mile <span>Deliveries</span>
             </h2>
 
-
-            <p
-                class="
-                    mt-2
-                    max-w-[720px]
-                    text-[9px]
-                    leading-5
-                    text-[#817769]
-                "
-            >
-                Collect assigned parcels from the destination
-                hub and complete final delivery inside your
-                assigned barangay.
+            <p class="lm-description">
+                Collect hub-assigned parcels and deliver within your assigned barangay.
             </p>
-
         </div>
 
-
-        <div class="flex flex-wrap gap-2">
-            <a
-                href="{{ route('courier.parcel-scanner') }}"
-                class="
-                    rounded-xl
-                    bg-[#D99600]
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-white
-                    transition
-                    hover:bg-[#c98708]
-                "
-            >
-                Scan Hub Parcel QR
-            </a>
-
+        <div class="lm-heading-actions">
             <a
                 href="{{ route('courier.dashboard') }}"
-                class="
-                    rounded-xl
-                    border border-[#e5dac9]
-                    bg-white
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-[#665c4f]
-                    transition
-                    hover:border-[#d7bd8b]
-                    hover:text-[#a96e05]
-                "
+                class="lm-button"
             >
                 Back to Dashboard
             </a>
+
+            <a
+                href="{{ route('courier.parcel-scanner') }}"
+                class="lm-button lm-button-gold"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"></path>
+                    <path d="M7 7h3v3H7zM14 7h3v3h-3z"></path>
+                    <path d="M7 14h3v3H7zM14 14h3v3h-3z"></path>
+                </svg>
+
+                Scan Hub Parcel QR
+            </a>
+        </div>
+    </section>
+
+    <section class="lm-summary" aria-label="Last-mile delivery summary">
+        <div class="lm-stat">
+            <div class="lm-stat-copy">
+                <p class="lm-stat-label">Active Batches</p>
+
+                <p class="lm-stat-value">
+                    {{ $activeAssignments->count() }}
+                </p>
+
+                <p class="lm-stat-note">
+                    Assigned or out for delivery
+                </p>
+            </div>
+
+            <span class="lm-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="m12 3 9 5-9 5-9-5 9-5Z"></path>
+                    <path d="M3 8v9l9 5 9-5V8M12 13v9"></path>
+                </svg>
+            </span>
         </div>
 
-    </section>
+        <div class="lm-stat lm-stat-blue">
+            <div class="lm-stat-copy">
+                <p class="lm-stat-label">Parcels in Active Batches</p>
 
+                <p class="lm-stat-value">
+                    {{ $activeParcelCount }}
+                </p>
 
-    {{-- =====================================================
-        SUMMARY
-    ====================================================== --}}
-
-    <section
-        class="
-            grid
-            gap-3
-            sm:grid-cols-3
-        "
-    >
-
-        <article
-            class="
-                rounded-2xl
-                border border-[#eadfc9]
-                bg-white
-                p-4
-            "
-        >
-
-            <p
-                class="
-                    text-[7px]
-                    uppercase
-                    tracking-[.11em]
-                    text-[#9a8f80]
-                "
-            >
-                Active Batches
-            </p>
-
-
-            <p
-                class="
-                    mt-2
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                {{ $activeAssignments->count() }}
-            </p>
-
-        </article>
-
-
-        <article
-            class="
-                rounded-2xl
-                border border-[#eadfc9]
-                bg-white
-                p-4
-            "
-        >
-
-            <p
-                class="
-                    text-[7px]
-                    uppercase
-                    tracking-[.11em]
-                    text-[#9a8f80]
-                "
-            >
-                Active Parcels
-            </p>
-
-
-            <p
-                class="
-                    mt-2
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                {{ $activeParcelCount }}
-            </p>
-
-        </article>
-
-
-        <article
-            class="
-                rounded-2xl
-                border border-[#eadfc9]
-                bg-white
-                p-4
-            "
-        >
-
-            <p
-                class="
-                    text-[7px]
-                    uppercase
-                    tracking-[.11em]
-                    text-[#9a8f80]
-                "
-            >
-                Completed Batches
-            </p>
-
-
-            <p
-                class="
-                    mt-2
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                {{ $completedAssignments->count() }}
-            </p>
-
-        </article>
-
-    </section>
-
-
-    {{-- =====================================================
-        WORKFLOW
-    ====================================================== --}}
-
-    <section
-        class="
-            rounded-[18px]
-            border border-[#eadfc9]
-            bg-white
-            px-4 py-3
-        "
-    >
-
-        <div
-            class="
-                grid
-                gap-2
-                sm:grid-cols-3
-            "
-        >
-
-            <div
-                class="
-                    flex items-center
-                    gap-3
-                    rounded-xl
-                    bg-[#fff8ea]
-                    px-4 py-3
-                "
-            >
-
-                <span
-                    class="
-                        grid h-7 w-7
-                        place-items-center
-                        rounded-full
-                        bg-[#D99600]
-                        text-[8px]
-                        font-bold
-                        text-white
-                    "
-                >
-                    1
-                </span>
-
-
-                <div>
-
-                    <p
-                        class="
-                            text-[8px]
-                            font-bold
-                            text-[#51483d]
-                        "
-                    >
-                        Destination Hub
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7px]
-                            text-[#918677]
-                        "
-                    >
-                        Collect assigned batch
-                    </p>
-
-                </div>
-
+                <p class="lm-stat-note">
+                    All parcels linked to active batches
+                </p>
             </div>
 
-
-            <div
-                class="
-                    flex items-center
-                    gap-3
-                    rounded-xl
-                    bg-[#eef5f9]
-                    px-4 py-3
-                "
-            >
-
-                <span
-                    class="
-                        grid h-7 w-7
-                        place-items-center
-                        rounded-full
-                        bg-[#3C6E91]
-                        text-[8px]
-                        font-bold
-                        text-white
-                    "
+            <span class="lm-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 >
-                    2
-                </span>
-
-
-                <div>
-
-                    <p
-                        class="
-                            text-[8px]
-                            font-bold
-                            text-[#51483d]
-                        "
-                    >
-                        Local Delivery
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7px]
-                            text-[#918677]
-                        "
-                    >
-                        Deliver within barangay
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="
-                    flex items-center
-                    gap-3
-                    rounded-xl
-                    bg-emerald-50
-                    px-4 py-3
-                "
-            >
-
-                <span
-                    class="
-                        grid h-7 w-7
-                        place-items-center
-                        rounded-full
-                        bg-emerald-600
-                        text-[8px]
-                        font-bold
-                        text-white
-                    "
-                >
-                    3
-                </span>
-
-
-                <div>
-
-                    <p
-                        class="
-                            text-[8px]
-                            font-bold
-                            text-[#51483d]
-                        "
-                    >
-                        Buyer Handoff
-                    </p>
-
-                    <p
-                        class="
-                            mt-0.5
-                            text-[7px]
-                            text-[#918677]
-                        "
-                    >
-                        Confirm final delivery
-                    </p>
-
-                </div>
-
-            </div>
-
+                    <path d="M3 6h11v11H3z"></path>
+                    <path d="M14 10h4l3 4v3h-7"></path>
+                    <circle cx="7" cy="18" r="2"></circle>
+                    <circle cx="18" cy="18" r="2"></circle>
+                </svg>
+            </span>
         </div>
 
+        <div class="lm-stat lm-stat-green">
+            <div class="lm-stat-copy">
+                <p class="lm-stat-label">Completed Batches</p>
+
+                <p class="lm-stat-value">
+                    {{ $completedAssignments->count() }}
+                </p>
+
+                <p class="lm-stat-note">
+                    Batches marked completed
+                </p>
+            </div>
+
+            <span class="lm-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="m8 12 3 3 5-6"></path>
+                </svg>
+            </span>
+        </div>
     </section>
 
+    <section class="lm-guide" aria-label="Last-mile workflow guide">
+        <ol class="lm-guide-list">
+            <li class="lm-guide-step">
+                <span class="lm-guide-number" aria-hidden="true">1</span>
 
-    {{-- =====================================================
-        ASSIGNMENTS
-    ====================================================== --}}
+                <div>
+                    <p class="lm-guide-title">Destination Hub</p>
+                    <p class="lm-guide-copy">Collect assigned parcels</p>
+                </div>
+            </li>
+
+            <li class="lm-guide-step">
+                <span class="lm-guide-number" aria-hidden="true">2</span>
+
+                <div>
+                    <p class="lm-guide-title">Local Delivery</p>
+                    <p class="lm-guide-copy">Reach the Buyer location</p>
+                </div>
+            </li>
+
+            <li class="lm-guide-step">
+                <span class="lm-guide-number" aria-hidden="true">3</span>
+
+                <div>
+                    <p class="lm-guide-title">Buyer Handoff</p>
+                    <p class="lm-guide-copy">Confirm final delivery</p>
+                </div>
+            </li>
+        </ol>
+    </section>
 
     @forelse($assignments as $assignment)
-
         @php
-            $isAssigned =
-                $assignment->status
-                === 'assigned';
+            $isAssigned = $assignment->status === 'assigned';
+            $isOut = $assignment->status === 'out_for_delivery';
+            $isCompleted = $assignment->status === 'completed';
 
-            $isOut =
-                $assignment->status
-                === 'out_for_delivery';
-
-            $isCompleted =
-                $assignment->status
-                === 'completed';
+            $batchStatusClass = $isCompleted
+                ? 'lm-badge-green'
+                : ($isOut ? 'lm-badge-blue' : 'lm-badge-gold');
         @endphp
 
-
         <article
-            class="
-                overflow-hidden
-                rounded-[22px]
-                border border-[#eadfc9]
-                bg-[#fffdf8]
-            "
+            class="lm-panel"
+            aria-labelledby="last-mile-batch-{{ $assignment->id }}"
         >
-
-            {{-- Header --}}
-            <div
-                class="
-                    flex flex-col
-                    justify-between
-                    gap-4
-                    border-b border-[#eadfc9]
-                    p-5
-                    sm:flex-row
-                    sm:items-start
-                "
-            >
-
-                <div>
-
-                    <p
-                        class="
-                            text-[8px]
-                            font-bold
-                            uppercase
-                            tracking-[.1em]
-                            text-[#b97805]
-                        "
-                    >
-                        {{
-                            $assignment
-                                ->assignment_code
-                        }}
+            <div class="lm-batch-head">
+                <div class="lm-batch-identity">
+                    <p class="lm-batch-code">
+                        {{ $assignment->assignment_code }}
                     </p>
-
 
                     <h3
-                        class="
-                            mt-2
-                            text-[15px]
-                            font-bold
-                            text-[#211d17]
-                        "
+                        id="last-mile-batch-{{ $assignment->id }}"
+                        class="lm-batch-title"
                     >
-                        {{
-                            $assignment
-                                ->facility_name
-                        }}
-                        →
-                        {{
-                            $assignment
-                                ->delivery_area
-                        }}
+                        {{ $assignment->facility_name }}
+                        <span class="lm-route-arrow">→</span>
+                        {{ $assignment->delivery_area }}
                     </h3>
 
-
-                    <p
-                        class="
-                            mt-1
-                            text-[8px]
-                            text-[#817769]
-                        "
-                    >
-                        {{
-                            $assignment
-                                ->orders
-                                ->count()
-                        }}
-                        {{
-                            $assignment
-                                ->orders
-                                ->count()
-                            === 1
-                                ? 'parcel'
-                                : 'parcels'
-                        }}
+                    <p class="lm-batch-copy">
+                        {{ $assignment->orders->count() }}
+                        {{ $assignment->orders->count() === 1 ? 'parcel' : 'parcels' }}
+                        in this batch
                     </p>
-
                 </div>
 
-
-                <span
-                    class="
-                        rounded-full
-                        border
-                        px-3 py-1.5
-                        text-[7px]
-                        font-bold
-                        uppercase
-
-                        {{
-                            $isCompleted
-                                ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                                : (
-                                    $isOut
-                                        ? 'border-blue-200 bg-blue-50 text-[#3C6E91]'
-                                        : 'border-amber-200 bg-[#fff2d8] text-[#a56b00]'
-                                )
-                        }}
-                    "
-                >
-                    {{
-                        str_replace(
-                            '_',
-                            ' ',
-                            $assignment->status
-                        )
-                    }}
+                <span class="lm-badge {{ $batchStatusClass }}">
+                    {{ str_replace('_', ' ', $assignment->status) }}
                 </span>
-
             </div>
 
+            <dl class="lm-details">
+                <div class="lm-detail">
+                    <dt>Destination Hub</dt>
 
-            {{-- Assignment details --}}
-            <div
-                class="
-                    grid
-                    gap-3
-                    border-b border-[#eadfc9]
-                    p-5
-                    md:grid-cols-2
-                "
-            >
+                    <dd>
+                        <span class="lm-detail-value">
+                            {{ $assignment->facility_name }}
+                        </span>
 
-                <div
-                    class="
-                        rounded-xl
-                        border border-[#eee5d6]
-                        bg-white
-                        p-4
-                    "
-                >
-
-                    <p
-                        class="
-                            text-[7px]
-                            uppercase
-                            tracking-[.1em]
-                            text-[#a09484]
-                        "
-                    >
-                        Destination Hub
-                    </p>
-
-
-                    <p
-                        class="
-                            mt-2
-                            text-[9px]
-                            font-semibold
-                            text-[#29241e]
-                        "
-                    >
-                        {{
-                            $assignment
-                                ->facility_name
-                        }}
-                    </p>
-
-
-                    <p
-                        class="
-                            mt-1
-                            text-[7px]
-                            leading-4
-                            text-[#918677]
-                        "
-                    >
-                        {{
-                            $assignment
-                                ->facility_address
-                            ?: 'Hub address unavailable'
-                        }}
-                    </p>
-
+                        <span class="lm-detail-copy">
+                            {{ $assignment->facility_address ?: 'Hub address unavailable' }}
+                        </span>
+                    </dd>
                 </div>
 
+                <div class="lm-detail">
+                    <dt>Delivery Area</dt>
 
-                <div
-                    class="
-                        rounded-xl
-                        border border-[#eee5d6]
-                        bg-white
-                        p-4
-                    "
-                >
+                    <dd>
+                        <span class="lm-detail-value">
+                            {{ $assignment->delivery_area }}
+                        </span>
 
-                    <p
-                        class="
-                            text-[7px]
-                            uppercase
-                            tracking-[.1em]
-                            text-[#a09484]
-                        "
-                    >
-                        Delivery Area
-                    </p>
-
-
-                    <p
-                        class="
-                            mt-2
-                            text-[9px]
-                            font-semibold
-                            text-[#29241e]
-                        "
-                    >
-                        {{
-                            $assignment
-                                ->delivery_area
-                        }}
-                    </p>
-
-
-                    <p
-                        class="
-                            mt-1
-                            text-[7px]
-                            leading-4
-                            text-[#918677]
-                        "
-                    >
-                        Assigned barangay for this batch.
-                    </p>
-
+                        <span class="lm-detail-copy">
+                            Assigned barangay for this batch.
+                        </span>
+                    </dd>
                 </div>
+            </dl>
 
-            </div>
-
-
-            {{-- Start --}}
             @if($isAssigned)
-
-                <div class="p-5">
-
-                    <div
-                        class="
-                            rounded-xl
-                            border border-amber-200
-                            bg-amber-50
-                            px-4 py-3
-                        "
-                    >
-
-                        <p
-                            class="
-                                text-[8px]
-                                font-semibold
-                                text-[#8b6200]
-                            "
-                        >
-                            This batch is ready for destination-hub pickup.
+                <div class="lm-start">
+                    <div class="lm-start-copy">
+                        <p class="lm-start-title">
+                            Ready for destination-hub pickup
                         </p>
 
-
-                        <p
-                            class="
-                                mt-1
-                                text-[7px]
-                                leading-4
-                                text-[#987a37]
-                            "
-                        >
+                        <p class="lm-start-description">
                             Start the route only after you physically receive
                             the assigned parcels from the destination hub.
                         </p>
-
                     </div>
-
 
                     <form
                         method="POST"
-                        action="{{
-                            route(
-                                'courier.last-mile.start',
-                                $assignment->id
-                            )
-                        }}"
-                        class="mt-4"
+                        action="{{ route('courier.last-mile.start', $assignment->id) }}"
                     >
                         @csrf
 
                         <button
-                            class="
-                                h-11
-                                w-full
-                                rounded-xl
-                                bg-[#D99600]
-                                px-6
-                                text-[9px]
-                                font-bold
-                                text-white
-                            "
+                            type="submit"
+                            class="lm-button lm-button-gold"
+                            aria-label="Start last-mile route for {{ $assignment->assignment_code }}"
                         >
-                            Start Last-Mile Route →
+                            Start Last-Mile Route
+                            <span aria-hidden="true">→</span>
                         </button>
-
                     </form>
-
                 </div>
-
             @endif
 
+            <div class="lm-parcels-heading">
+                <h4 class="lm-parcels-title">Batch Parcels</h4>
 
-            {{-- Parcels --}}
-            <div class="space-y-3 p-5">
+                <span class="lm-parcels-count">
+                    {{ $assignment->orders->count() }}
+                    {{ $assignment->orders->count() === 1 ? 'parcel' : 'parcels' }}
+                </span>
+            </div>
 
-                @foreach(
-                    $assignment->orders
-                    as $order
-                )
-
+            <div class="lm-parcel-list">
+                @forelse($assignment->orders as $order)
                     @php
-                        $parcelStatus =
-                            $order->parcel_status
-                            ?? $order->order_status;
+                        $parcelStatus = $order->parcel_status ?? $order->order_status;
+                        $isDelivered = $parcelStatus === 'delivered';
 
-                        $isDelivered =
-                            $parcelStatus
-                            === 'delivered';
+                        $parcelStatusClass = $isDelivered
+                            ? 'lm-badge-green'
+                            : ($parcelStatus === 'arrived_buyer' ? 'lm-badge-blue' : '');
                     @endphp
 
-
-                    <div
-                        class="
-                            rounded-[17px]
-                            border border-[#eee5d6]
-                            bg-white
-                            p-4
-                        "
-                    >
-
-                        <div
-                            class="
-                                flex flex-col
-                                justify-between
-                                gap-3
-                                sm:flex-row
-                                sm:items-start
-                            "
-                        >
-
-                            <div>
-
-                                <p
-                                    class="
-                                        text-[10px]
-                                        font-bold
-                                        text-[#29241e]
-                                    "
-                                >
+                    <div class="lm-parcel">
+                        <div class="lm-parcel-main">
+                            <div class="lm-parcel-identity">
+                                <p class="lm-order-number">
                                     {{ $order->order_number }}
                                 </p>
 
+                                <span class="lm-badge {{ $parcelStatusClass }}">
+                                    {{ str_replace('_', ' ', $parcelStatus) }}
+                                </span>
+                            </div>
 
-                                <p
-                                    class="
-                                        mt-1
-                                        text-[9px]
-                                        font-semibold
-                                        text-[#51483d]
-                                    "
-                                >
+                            <div class="lm-buyer">
+                                <p class="lm-buyer-label">Buyer & Delivery</p>
+
+                                <p class="lm-buyer-name">
                                     {{ $order->buyer_name }}
                                 </p>
 
-
-                                <p
-                                    class="
-                                        mt-1
-                                        text-[8px]
-                                        leading-4
-                                        text-[#817769]
-                                    "
-                                >
+                                <p class="lm-buyer-address">
                                     {{ $order->buyer_address }}
                                 </p>
 
-
                                 @if($order->buyer_phone)
-
-                                    <p
-                                        class="
-                                            mt-1
-                                            text-[8px]
-                                            text-[#817769]
-                                        "
-                                    >
+                                    <p class="lm-buyer-phone">
                                         {{ $order->buyer_phone }}
                                     </p>
-
                                 @endif
-
                             </div>
-
-
-                            <span
-                                class="
-                                    rounded-full
-                                    border
-                                    px-3 py-1.5
-                                    text-[7px]
-                                    font-bold
-                                    uppercase
-
-                                    {{
-                                        $isDelivered
-                                            ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                                            : (
-                                                $parcelStatus
-                                                === 'arrived_buyer'
-                                                    ? 'border-blue-200 bg-blue-50 text-[#3C6E91]'
-                                                    : 'border-[#eee5d6] bg-[#f7f3eb] text-[#6f6559]'
-                                            )
-                                    }}
-                                "
-                            >
-                                {{
-                                    str_replace(
-                                        '_',
-                                        ' ',
-                                        $parcelStatus
-                                    )
-                                }}
-                            </span>
-
                         </div>
 
-
-                        @if(
-                            $isOut
-                            &&
-                            $order->parcel_status
-                                === 'out_for_delivery'
-                        )
-
-                            <div
-                                class="
-                                    mt-4
-                                    rounded-xl
-                                    border border-blue-100
-                                    bg-blue-50
-                                    px-4 py-3
-                                "
-                            >
-
-                                <p
-                                    class="
-                                        text-[8px]
-                                        font-semibold
-                                        text-[#3C6E91]
-                                    "
-                                >
+                        @if($isOut && $order->parcel_status === 'out_for_delivery')
+                            <div class="lm-parcel-action">
+                                <p class="lm-action-note">
                                     Next step: reach the Buyer location.
                                 </p>
 
+                                <form
+                                    method="POST"
+                                    action="{{ route('courier.last-mile.arrived', [
+                                        'assignment' => $assignment->id,
+                                        'order' => $order->id,
+                                    ]) }}"
+                                >
+                                    @csrf
+
+                                    <button
+                                        type="submit"
+                                        class="lm-button lm-button-blue"
+                                        aria-label="Confirm arrived at Buyer for {{ $order->order_number }}"
+                                    >
+                                        Confirm Arrived at Buyer
+                                        <span aria-hidden="true">→</span>
+                                    </button>
+                                </form>
                             </div>
-
-
-                            <form
-                                method="POST"
-                                action="{{
-                                    route(
-                                        'courier.last-mile.arrived',
-                                        [
-                                            'assignment' =>
-                                                $assignment->id,
-
-                                            'order' =>
-                                                $order->id,
-                                        ]
-                                    )
-                                }}"
-                                class="mt-3"
-                            >
-                                @csrf
-
-                                <button
-                                    class="
-                                        h-10
-                                        w-full
-                                        rounded-xl
-                                        bg-[#3C6E91]
-                                        px-5
-                                        text-[8px]
-                                        font-bold
-                                        text-white
-                                    "
-                                >
-                                    Confirm Arrived at Buyer →
-                                </button>
-
-                            </form>
-
-
-                        @elseif(
-                            $isOut
-                            &&
-                            $order->parcel_status
-                                === 'arrived_buyer'
-                        )
-
-                            <div
-                                class="
-                                    mt-4
-                                    rounded-xl
-                                    border border-emerald-100
-                                    bg-emerald-50
-                                    px-4 py-3
-                                "
-                            >
-
-                                <p
-                                    class="
-                                        text-[8px]
-                                        font-semibold
-                                        text-emerald-700
-                                    "
-                                >
-                                    Buyer location confirmed.
-                                    Complete the final handoff.
+                        @elseif($isOut && $order->parcel_status === 'arrived_buyer')
+                            <div class="lm-parcel-action lm-action-success">
+                                <p class="lm-action-note">
+                                    Buyer location confirmed. Complete the final handoff.
                                 </p>
 
-                            </div>
-
-
-                            <form
-                                method="POST"
-                                action="{{
-                                    route(
-                                        'courier.last-mile.delivered',
-                                        [
-                                            'assignment' =>
-                                                $assignment->id,
-
-                                            'order' =>
-                                                $order->id,
-                                        ]
-                                    )
-                                }}"
-                                class="mt-3"
-                            >
-                                @csrf
-
-                                <button
-                                    class="
-                                        h-10
-                                        w-full
-                                        rounded-xl
-                                        bg-emerald-600
-                                        px-5
-                                        text-[8px]
-                                        font-bold
-                                        text-white
-                                    "
+                                <form
+                                    method="POST"
+                                    action="{{ route('courier.last-mile.delivered', [
+                                        'assignment' => $assignment->id,
+                                        'order' => $order->id,
+                                    ]) }}"
                                 >
-                                    Confirm Delivery Complete ✓
-                                </button>
+                                    @csrf
 
-                            </form>
-
-
+                                    <button
+                                        type="submit"
+                                        class="lm-button lm-button-green"
+                                        aria-label="Confirm delivery complete for {{ $order->order_number }}"
+                                    >
+                                        Confirm Delivery Complete
+                                        <span aria-hidden="true">✓</span>
+                                    </button>
+                                </form>
+                            </div>
                         @elseif($isDelivered)
-
-                            <div
-                                class="
-                                    mt-4
-                                    rounded-xl
-                                    border border-emerald-100
-                                    bg-emerald-50
-                                    px-4 py-3
-                                    text-center
-                                "
-                            >
-
-                                <p
-                                    class="
-                                        text-[8px]
-                                        font-bold
-                                        text-emerald-700
-                                    "
+                            <p class="lm-delivered">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
                                 >
-                                    Delivered Successfully
-                                </p>
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <path d="m8 12 3 3 5-6"></path>
+                                </svg>
 
-                            </div>
-
+                                Delivered Successfully
+                            </p>
                         @endif
-
                     </div>
-
-                @endforeach
-
+                @empty
+                    <p class="lm-empty-parcels">
+                        No parcels are listed in this batch.
+                    </p>
+                @endforelse
             </div>
-
         </article>
-
     @empty
+        <section class="lm-panel">
+            <div class="lm-empty">
+                <span class="lm-empty-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 21s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Z"></path>
+                        <circle cx="12" cy="9" r="2.5"></circle>
+                    </svg>
+                </span>
 
-        <section
-            class="
-                rounded-[22px]
-                border border-dashed
-                border-[#dcd2c3]
-                bg-[#fffdf8]
-                p-12
-                text-center
-            "
-        >
+                <h3 class="lm-empty-title">
+                    No last-mile assignments yet
+                </h3>
 
-            <p
-                class="
-                    text-[10px]
-                    font-semibold
-                    text-[#51483d]
-                "
-            >
-                No Last-Mile assignments.
-            </p>
-
-
-            <p
-                class="
-                    mt-2
-                    text-[8px]
-                    text-[#918677]
-                "
-            >
-                Destination-hub batches assigned by
-                SARI Logistics will appear here.
-            </p>
-
+                <p class="lm-empty-description">
+                    Destination-hub batches will appear here
+                    when SARI Logistics assigns them to you.
+                </p>
+            </div>
         </section>
-
     @endforelse
-
 </div>
-
 @endsection

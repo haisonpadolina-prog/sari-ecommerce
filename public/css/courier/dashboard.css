@@ -1,0 +1,1702 @@
+/* SARI Rider Dashboard */
+
+.courier-shell #courierPageContent:has(#riderDashboard) {
+    padding: 28px 40px;
+}
+
+#courierPageContent #riderDashboard {
+    --rd-ink: #211d17;
+    --rd-muted: #667085;
+    --rd-border: #e7e9ee;
+    --rd-gold: #a96f10;
+    width: 100%;
+    max-width: 1620px;
+    margin-inline: auto;
+    color: var(--rd-ink);
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+#riderDashboard,
+#riderDashboard * {
+    box-sizing: border-box;
+}
+
+#riderDashboard > * + * { margin-top: 16px; }
+#riderDashboard svg { flex-shrink: 0; }
+
+#riderDashboard a:focus-visible {
+    outline: 3px solid #a97819;
+    outline-offset: 4px;
+}
+
+/* Alerts */
+
+#riderDashboard .rd-alert {
+    padding: 14px 18px;
+    border: 1px solid;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#riderDashboard .rd-alert-success {
+    border-color: #bbdfc9;
+    background: #eef8f1;
+    color: #286744;
+}
+
+#riderDashboard .rd-alert-error {
+    border-color: #efc5ca;
+    background: #fff1f2;
+    color: #a33240;
+}
+
+/* Hero: inset shadow only, so it cannot spill onto the KPI row. */
+
+#riderDashboard .rd-hero {
+    position: relative;
+    container-type: inline-size;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 18px 24px;
+    border: 1px solid #31302e;
+    border-radius: 19px;
+    background: #20201f;
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 3.5%);
+}
+
+#riderDashboard .rd-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 5% 50%, rgb(220 158 23 / 5%), transparent 23%),
+        linear-gradient(90deg, rgb(255 255 255 / 1.8%), transparent 30%);
+}
+
+#riderDashboard .rd-hero-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, .82fr) 1px minmax(0, 1.18fr);
+    align-items: center;
+    width: 100%;
+    min-height: 102px;
+    gap: 22px;
+}
+
+#riderDashboard .rd-hero-copy { min-width: 0; }
+
+#courierPageContent #riderDashboard .rd-hero-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(23px, 1.42vw, 29px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -.045em;
+}
+
+#riderDashboard .rd-wave {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #e6a61e;
+    box-shadow: none;
+}
+
+#riderDashboard .rd-wave .fi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    font-size: 24px;
+    line-height: 1;
+}
+
+#courierPageContent #riderDashboard .rd-hero-subtitle {
+    margin: 8px 0 0;
+    color: rgb(255 255 255 / 74%);
+    font-size: 9.6px;
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+#riderDashboard .rd-hero-statuses {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin-top: 12px;
+}
+
+#riderDashboard .rd-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    color: rgb(255 255 255 / 72%);
+    font-size: 7.4px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: #a3a3a3;
+}
+
+#riderDashboard .rd-status[data-status="online"] .rd-status-dot {
+    background: #57c875;
+    box-shadow: 0 0 0 3px rgb(87 200 117 / 8%);
+}
+
+#riderDashboard .rd-status[data-status="offline"] .rd-status-dot {
+    background: #a3a3a3;
+    box-shadow: none;
+}
+
+#riderDashboard .rd-status[data-status="busy"] .rd-status-dot {
+    background: #e6a61e;
+    box-shadow: 0 0 0 3px rgb(230 166 30 / 8%);
+}
+
+#riderDashboard .rd-status-divider {
+    width: 1px;
+    height: 13px;
+    background: rgb(255 255 255 / 14%);
+}
+
+#riderDashboard .rd-status-caption {
+    color: rgb(255 255 255 / 56%);
+    font-size: 7.4px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-hero-divider {
+    width: 1px;
+    height: 76px;
+    align-self: center;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(255 255 255 / 13%) 18%,
+        rgb(255 255 255 / 13%) 82%,
+        transparent
+    );
+}
+
+/* Time, date and weather */
+
+#riderDashboard .rd-hero-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    min-width: 0;
+}
+
+#riderDashboard .rd-meta-item { min-width: 0; padding: 8px 22px; }
+#riderDashboard .rd-meta-item:first-child { padding-left: 0; }
+#riderDashboard .rd-meta-item:last-child { padding-right: 0; }
+
+#riderDashboard .rd-meta-item + .rd-meta-item {
+    border-left: 1px solid rgb(255 255 255 / 11%);
+}
+
+#riderDashboard .rd-meta-heading {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+#riderDashboard .rd-meta-heading svg {
+    width: 13px;
+    height: 13px;
+    flex: 0 0 13px;
+    color: #dca01c;
+}
+
+#riderDashboard .rd-meta-weather .rd-meta-heading svg { color: #9da9b4; }
+
+#courierPageContent #riderDashboard .rd-meta-label {
+    margin: 0;
+    color: rgb(255 255 255 / 43%);
+    font-size: 6.4px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+#riderDashboard .rd-meta-copy { margin-top: 7px; padding-left: 20px; }
+
+#courierPageContent #riderDashboard .rd-meta-value {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+#courierPageContent #riderDashboard .rd-meta-note {
+    margin: 5px 0 0;
+    color: rgb(255 255 255 / 50%);
+    font-size: 6.4px;
+    line-height: 1.25;
+}
+
+/* KPI cards */
+
+#riderDashboard .rd-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+#riderDashboard .rd-kpi {
+    min-width: 0;
+    padding: 16px 17px;
+    border: 1px solid #e7e9ee;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow:
+        0 1px 2px rgb(32 33 36 / 2%),
+        0 7px 17px rgb(32 33 36 / 4.8%),
+        0 15px 32px rgb(32 33 36 / 5.2%);
+    transition:
+        transform 140ms cubic-bezier(.22, 1, .36, 1),
+        box-shadow 140ms ease;
+}
+
+#riderDashboard .rd-kpi-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#riderDashboard .rd-kpi-copy { min-width: 0; flex: 1; }
+
+#courierPageContent #riderDashboard .rd-kpi-label {
+    margin: 0;
+    color: #6f675e;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#courierPageContent #riderDashboard .rd-kpi-value {
+    margin: 9px 0 0;
+    color: #211d18;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -.045em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#courierPageContent #riderDashboard .rd-kpi-note {
+    margin: 8px 0 0;
+    color: #767066;
+    font-size: 9.5px;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-kpi-icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 12px;
+}
+
+#riderDashboard .rd-kpi-icon svg { width: 18px; height: 18px; }
+#riderDashboard .rd-kpi-pickup .rd-kpi-icon { background: #fffaf1; color: #b97805; }
+#riderDashboard .rd-kpi-active .rd-kpi-icon { background: #f4f8fd; color: #3c6e91; }
+#riderDashboard .rd-kpi-lastmile .rd-kpi-icon { background: #f4faf7; color: #4b8666; }
+#riderDashboard .rd-kpi-earnings .rd-kpi-icon { background: #f5f0fa; color: #715a86; }
+
+/* Overview graphs */
+
+#riderDashboard .rd-overview {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: stretch;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+#riderDashboard .rd-overview-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e5e9ef;
+    border-radius: 19px;
+    background: #fff;
+    box-shadow:
+        0 1px 2px rgb(15 23 42 / 2.5%),
+        0 10px 28px rgb(15 23 42 / 5.5%);
+}
+
+#riderDashboard .rd-overview-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+#courierPageContent #riderDashboard .rd-overview-title {
+    margin: 0;
+    color: #172033;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.03em;
+}
+
+#courierPageContent #riderDashboard .rd-overview-subtitle {
+    margin: 6px 0 0;
+    color: #788291;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+#riderDashboard .rd-overview-tag {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: 25px;
+    padding: 4px 9px;
+    border: 1px solid #eee0c6;
+    border-radius: 999px;
+    background: #fffaf1;
+    color: #94620a;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+#riderDashboard .rd-donut-body {
+    display: grid;
+    grid-template-columns: minmax(150px, 1.2fr) minmax(135px, 1fr);
+    align-items: center;
+    flex: 1;
+    gap: 20px;
+    padding: 26px 22px;
+}
+
+#riderDashboard .rd-donut {
+    position: relative;
+    width: min(100%, 230px);
+    aspect-ratio: 1;
+    justify-self: center;
+}
+
+#riderDashboard .rd-donut svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+#riderDashboard .rd-donut-track {
+    fill: none;
+    stroke: #eef1f4;
+    stroke-width: 29;
+}
+
+#riderDashboard .rd-donut-segment {
+    fill: none;
+    stroke-width: 29;
+    stroke-linecap: butt;
+}
+
+#riderDashboard .rd-donut-waiting { stroke: #d3a125; }
+#riderDashboard .rd-donut-active { stroke: #4389bb; }
+
+#riderDashboard .rd-donut-center {
+    position: absolute;
+    inset: 27%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    text-align: center;
+    pointer-events: none;
+}
+
+#riderDashboard .rd-donut-center > span {
+    color: #8b929d;
+    font-size: 8px;
+    line-height: 1.4;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+#riderDashboard .rd-donut-center > strong {
+    color: #172033;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-donut-legend { min-width: 0; }
+
+#courierPageContent #riderDashboard .rd-legend-eyebrow {
+    margin: 0;
+    color: #a87822;
+    font-size: 8px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderDashboard .rd-legend-title {
+    margin: 6px 0 14px;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-legend-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #edf0f4;
+    color: #667085;
+    font-size: 11px;
+}
+
+#riderDashboard .rd-legend-row > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+#riderDashboard .rd-legend-row strong {
+    color: #293343;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderDashboard .rd-legend-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #d3a125;
+}
+
+#riderDashboard .rd-legend-dot-blue { background: #4389bb; }
+
+#courierPageContent #riderDashboard .rd-chart-note {
+    margin: 12px 0 0;
+    color: #8992a0;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+#riderDashboard .rd-overview-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+}
+
+#riderDashboard .rd-overview-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 14px 0;
+    border-top: 1px solid #edf0f4;
+    border-bottom: 1px solid #edf0f4;
+}
+
+#riderDashboard .rd-overview-metric { min-width: 0; padding-inline: 14px; }
+#riderDashboard .rd-overview-metric:first-child { padding-left: 0; }
+#riderDashboard .rd-overview-metric:last-child { padding-right: 0; }
+
+#riderDashboard .rd-overview-metric + .rd-overview-metric {
+    border-left: 1px solid #edf0f4;
+}
+
+#courierPageContent #riderDashboard .rd-overview-metric > p {
+    margin: 0;
+    color: #7b8593;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-overview-metric > strong {
+    display: block;
+    margin-top: 6px;
+    color: #172033;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -.035em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderDashboard .rd-bar-chart {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #edf0f4;
+    border-radius: 13px;
+    background: #fafbfc;
+}
+
+#riderDashboard .rd-bar-axis {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #8992a0;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+#riderDashboard .rd-bar-row + .rd-bar-row { margin-top: 20px; }
+
+#riderDashboard .rd-bar-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: #667085;
+    font-size: 11px;
+}
+
+#riderDashboard .rd-bar-label strong {
+    color: #344054;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderDashboard .rd-bar-track {
+    height: 11px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #edf0f4;
+}
+
+#riderDashboard .rd-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #d3a125;
+}
+
+#riderDashboard .rd-bar-fill-blue { background: #4389bb; }
+
+#riderDashboard .rd-overview-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding: 13px 20px;
+    border-top: 1px solid #edf0f4;
+    background: #fff;
+}
+
+#riderDashboard .rd-overview-footer > span {
+    color: #8992a0;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-overview-footer > a {
+    color: #94620a;
+    font-size: 10px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* Buttons */
+
+#riderDashboard .rd-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid #e2d9cb;
+    border-radius: 11px;
+    background: #fff;
+    color: #665b4c;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+#riderDashboard .rd-button-gold {
+    border-color: #d99a0b;
+    background: #d99a0b;
+    color: #211d17;
+}
+
+#riderDashboard .rd-button-blue {
+    border-color: #315f80;
+    background: #315f80;
+    color: #fff;
+}
+
+#riderDashboard .rd-button-purple { border-color: #e4d8eb; color: #715a86; }
+#riderDashboard .rd-button-block { width: 100%; margin-top: 18px; }
+
+/* Operational panels */
+
+#riderDashboard .rd-jobs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+#riderDashboard .rd-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
+    gap: 16px;
+}
+
+#riderDashboard .rd-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--rd-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(49 38 24 / 3.5%);
+}
+
+#riderDashboard .rd-panel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #eef0f3;
+}
+
+#courierPageContent #riderDashboard .rd-panel-title {
+    margin: 0;
+    color: var(--rd-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#courierPageContent #riderDashboard .rd-panel-description {
+    margin: 5px 0 0;
+    color: var(--rd-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+#riderDashboard .rd-text-link {
+    flex-shrink: 0;
+    color: #94620a;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#riderDashboard .rd-panel-body { padding: 20px; }
+
+#riderDashboard .rd-job-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+#riderDashboard .rd-job-copy { min-width: 0; flex: 1 1 220px; }
+
+#riderDashboard .rd-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+#courierPageContent #riderDashboard .rd-order-number {
+    margin: 0;
+    color: var(--rd-ink);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#riderDashboard .rd-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border: 1px solid #e7e9ee;
+    border-radius: 999px;
+    background: #fafbfc;
+    color: #706658;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-badge-blue {
+    border-color: #d2dfe9;
+    background: #f2f7fb;
+    color: #315f80;
+}
+
+#riderDashboard .rd-badge-gold {
+    border-color: #eee0c6;
+    background: #fff6e1;
+    color: #94620a;
+}
+
+#courierPageContent #riderDashboard .rd-route {
+    margin: 12px 0 0;
+    color: #4c443a;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#courierPageContent #riderDashboard .rd-copy {
+    margin: 8px 0 0;
+    color: var(--rd-muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+#riderDashboard .rd-detail {
+    padding: 12px 14px;
+    border: 1px solid var(--rd-border);
+    border-radius: 12px;
+    background: #fbfcfd;
+}
+
+#courierPageContent #riderDashboard .rd-detail-label {
+    margin: 0;
+    color: var(--rd-muted);
+    font-size: 10px;
+    line-height: 1.5;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderDashboard .rd-detail-value {
+    margin: 5px 0 0;
+    color: #29241e;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+#riderDashboard .rd-empty { padding: 32px 24px; text-align: center; }
+
+#riderDashboard .rd-empty-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    margin-inline: auto;
+    place-items: center;
+    border-radius: 14px;
+    background: #f6f1e8;
+    color: #a87b2a;
+}
+
+#riderDashboard .rd-empty-icon svg { width: 22px; height: 22px; }
+#riderDashboard .rd-empty-icon-green { background: #eef4ef; color: #4f7d63; }
+
+#courierPageContent #riderDashboard .rd-empty-title {
+    margin: 16px 0 0;
+    color: #51483d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#riderDashboard .rd-empty .rd-copy { max-width: 420px; margin-inline: auto; }
+#riderDashboard .rd-queue { display: grid; gap: 10px; }
+
+#riderDashboard .rd-queue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid var(--rd-border);
+    border-radius: 12px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+#riderDashboard .rd-queue-item > div { min-width: 0; }
+#riderDashboard .rd-queue-item .rd-badge { flex-shrink: 0; }
+
+#riderDashboard .rd-empty-queue {
+    padding: 26px 18px;
+    border: 1px dashed #ddd2c1;
+    border-radius: 12px;
+    color: var(--rd-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+#riderDashboard .rd-snapshot { display: grid; gap: 10px; }
+
+#riderDashboard .rd-snapshot-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 14px;
+    border: 1px solid var(--rd-border);
+    border-radius: 11px;
+    color: var(--rd-muted);
+    font-size: 12px;
+}
+
+#riderDashboard .rd-snapshot-row strong {
+    color: #29241e;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderDashboard .rd-snapshot-earnings {
+    border-color: #e3d9eb;
+    background: #faf7fc;
+    color: #756783;
+}
+
+#riderDashboard .rd-snapshot-earnings strong { color: #715a86; }
+
+/* Hover */
+
+@media (hover: hover) {
+    #riderDashboard .rd-kpi:hover {
+        transform: translateY(-4px);
+        box-shadow:
+            0 2px 4px rgb(32 33 36 / 2.5%),
+            0 11px 25px rgb(32 33 36 / 6%),
+            0 24px 48px rgb(32 33 36 / 7.5%);
+    }
+
+    #riderDashboard .rd-button:hover {
+        border-color: #cbb58f;
+        background: #fffaf1;
+    }
+
+    #riderDashboard .rd-button-gold:hover {
+        border-color: #c78906;
+        background: #c78906;
+    }
+
+    #riderDashboard .rd-button-blue:hover {
+        border-color: #254c68;
+        background: #254c68;
+    }
+
+    #riderDashboard .rd-text-link:hover,
+    #riderDashboard .rd-overview-footer > a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    #riderDashboard .rd-queue-item:hover {
+        border-color: #d8c39e;
+        background: #fffdf8;
+    }
+}
+
+/* Laptop proportions */
+
+@media (min-width: 1024px) and (max-height: 820px) {
+    #riderDashboard .rd-hero { padding-block: 15px; }
+    #riderDashboard .rd-hero-layout { min-height: 94px; }
+    #riderDashboard .rd-kpis { gap: 10px; }
+    #riderDashboard .rd-kpi { padding: 12px 13px; border-radius: 15px; }
+
+    #courierPageContent #riderDashboard .rd-kpi-label {
+        font-size: 9.5px;
+        line-height: 1.35;
+    }
+
+    #courierPageContent #riderDashboard .rd-kpi-value {
+        margin-top: 7px;
+        font-size: 20px;
+    }
+
+    #courierPageContent #riderDashboard .rd-kpi-note {
+        margin-top: 7px;
+        font-size: 8.5px;
+        line-height: 1.35;
+    }
+
+    #riderDashboard .rd-kpi-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        border-radius: 10px;
+    }
+
+    #riderDashboard .rd-kpi-icon svg { width: 16px; height: 16px; }
+}
+
+/* Hero responds to the available card width. */
+
+@container (max-width: 850px) {
+    #riderDashboard .rd-hero-layout {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+        gap: 16px;
+    }
+
+    #riderDashboard .rd-hero-divider { display: none; }
+
+    #riderDashboard .rd-hero-meta {
+        padding-top: 14px;
+        border-top: 1px solid rgb(255 255 255 / 9%);
+    }
+}
+
+@media (max-width: 1199px) {
+    #riderDashboard .rd-overview { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderDashboard) { padding: 22px; }
+    #riderDashboard .rd-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 899px) {
+    #riderDashboard .rd-jobs,
+    #riderDashboard .rd-bottom {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderDashboard) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderDashboard .rd-hero { padding: 17px 15px; border-radius: 17px; }
+    #courierPageContent #riderDashboard .rd-hero-title { font-size: 21px; }
+    #riderDashboard .rd-hero-meta { grid-template-columns: minmax(0, 1fr); }
+
+    #riderDashboard .rd-meta-item,
+    #riderDashboard .rd-meta-item:first-child,
+    #riderDashboard .rd-meta-item:last-child {
+        padding: 11px 0;
+    }
+
+    #riderDashboard .rd-meta-item + .rd-meta-item {
+        border-left: 0;
+        border-top: 1px solid rgb(255 255 255 / 8%);
+    }
+
+    #riderDashboard .rd-kpis { grid-template-columns: minmax(0, 1fr); }
+    #riderDashboard .rd-panel-head,
+    #riderDashboard .rd-panel-body { padding: 17px; }
+    #riderDashboard .rd-details { grid-template-columns: minmax(0, 1fr); }
+    #riderDashboard .rd-empty { padding: 28px 18px; }
+}
+
+@media (max-width: 479px) {
+    #riderDashboard .rd-donut-body {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        padding: 22px 18px;
+    }
+
+    #riderDashboard .rd-donut { width: 190px; }
+    #riderDashboard .rd-donut-legend { width: 100%; }
+    #riderDashboard .rd-overview-head,
+    #riderDashboard .rd-overview-body { padding: 17px; }
+    #riderDashboard .rd-overview-footer { padding: 13px 17px; }
+    #riderDashboard .rd-overview-metric { padding-inline: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderDashboard *,
+    #riderDashboard *::before,
+    #riderDashboard *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    #riderDashboard .rd-kpi:hover { transform: none; }
+}
+
+/* =========================================================
+   RIDER DASHBOARD — LOWER CARDS
+   Append at the end of the existing dashboard.css
+   ========================================================= */
+
+/* Matching columns and spacing across both rows */
+#riderDashboard .rd-jobs,
+#riderDashboard .rd-bottom {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 16px;
+}
+
+/* Shared card appearance */
+#riderDashboard :is(.rd-jobs, .rd-bottom) > .rd-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: auto;
+    overflow: hidden;
+    border: 1px solid #e5e9ef;
+    border-radius: 19px;
+    background: #fff;
+    box-shadow:
+        0 2px 4px rgb(24 32 48 / 2%),
+        0 10px 24px rgb(24 32 48 / 4%);
+}
+
+/* Shared header */
+#riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 14px;
+    padding: 18px 20px;
+    margin: 0;
+    border-bottom: 1px solid #edf0f4;
+    background: #fff;
+}
+
+#riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-head > div {
+    min-width: 0;
+}
+
+#riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-title {
+    margin: 0;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.025em;
+}
+
+#riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-description {
+    margin: 5px 0 0;
+    color: #748094;
+    font-size: 10.5px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/*
+ * Give BOTH assignment buttons their own row.
+ * This prevents only one header from wrapping.
+ */
+#riderDashboard .rd-jobs .rd-panel-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    justify-items: start;
+    gap: 12px;
+}
+
+#riderDashboard .rd-jobs .rd-panel-head > div {
+    min-height: 42px;
+}
+
+#riderDashboard .rd-jobs .rd-panel-head > .rd-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: auto;
+    min-width: 166px;
+    max-width: 100%;
+    min-height: 36px;
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid #eadfc9;
+    border-radius: 10px;
+    background: #fffaf0;
+    color: #805610;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+    box-shadow: none;
+    transform: none;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease;
+}
+
+#riderDashboard .rd-jobs .rd-panel-head > .rd-button:hover {
+    border-color: #d9bb7e;
+    background: #fff3d9;
+}
+
+#riderDashboard .rd-jobs .rd-panel-head > .rd-button > span {
+    flex: 0 0 auto;
+    font-size: 14px;
+}
+
+/* Assignment body and empty states */
+#riderDashboard .rd-jobs .rd-panel-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    padding: 20px;
+}
+
+#riderDashboard .rd-jobs .rd-empty {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-height: 190px;
+    margin: 0;
+    padding: 24px 20px;
+    text-align: center;
+}
+
+#riderDashboard .rd-jobs .rd-empty-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    margin: 0 0 14px;
+    border: 1px solid #f0e6d4;
+    border-radius: 13px;
+    background: #faf5eb;
+    color: #ad7b20;
+    box-shadow: none;
+}
+
+#riderDashboard .rd-jobs .rd-empty-icon-green {
+    border-color: #dfebe5;
+    background: #f0f7f3;
+    color: #52876d;
+}
+
+#riderDashboard .rd-jobs .rd-empty-icon svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+}
+
+#riderDashboard .rd-jobs .rd-empty-title {
+    max-width: 100%;
+    margin: 0;
+    color: #354155;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderDashboard .rd-jobs .rd-empty .rd-copy {
+    width: 100%;
+    max-width: 330px;
+    margin: 7px 0 0;
+    color: #748094;
+    font-size: 10.5px;
+    line-height: 1.8;
+}
+
+/* Populated assignment cards */
+#riderDashboard .rd-jobs .rd-job-top {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 0;
+}
+
+#riderDashboard .rd-jobs .rd-job-copy {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+#riderDashboard :is(.rd-jobs, .rd-bottom) .rd-order-number {
+    margin: 0;
+    color: #243047;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-jobs .rd-route {
+    margin: 10px 0 0;
+    color: #354155;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-jobs .rd-copy {
+    margin: 7px 0 0;
+    color: #748094;
+    font-size: 10.5px;
+    line-height: 1.8;
+}
+
+#riderDashboard .rd-jobs .rd-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+}
+
+#riderDashboard .rd-jobs .rd-detail {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #e8ecf2;
+    border-radius: 11px;
+    background: #f9fafc;
+    box-shadow: none;
+}
+
+#riderDashboard .rd-jobs .rd-detail-label {
+    margin: 0;
+    color: #748094;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-jobs .rd-detail-value {
+    margin: 5px 0 0;
+    color: #273449;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-jobs .rd-panel-body > .rd-button-block {
+    width: 100%;
+    min-height: 38px;
+    margin: auto 0 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* Lower row */
+#riderDashboard .rd-bottom .rd-panel-head {
+    min-height: 82px;
+}
+
+#riderDashboard .rd-bottom .rd-panel-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    padding: 18px 20px 20px;
+}
+
+#riderDashboard .rd-bottom .rd-text-link {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 8px 0;
+    color: #93630e;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#riderDashboard .rd-bottom .rd-text-link:hover {
+    color: #6d4707;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Up Next — compact list with subtle separators */
+#riderDashboard .rd-bottom .rd-queue {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-width: 0;
+    margin: 0;
+    padding: 14px 8px;
+    border: 0;
+    border-bottom: 1px solid #edf0f4;
+    border-radius: 0;
+    background: transparent;
+    text-decoration: none;
+    box-shadow: none;
+    transform: none;
+    transition: background-color 160ms ease;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item:last-child {
+    border-bottom: 0;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item:hover {
+    background: #fffbf3;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item > div {
+    flex: 1;
+    min-width: 0;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item .rd-copy {
+    margin: 5px 0 0;
+    color: #748094;
+    font-size: 10px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-bottom .rd-queue-item > .rd-badge {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+    border: 1px solid #f2e5c9;
+    border-radius: 8px;
+    background: #fff7e7;
+    color: #8b6119;
+    font-size: 8px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Fill the available space instead of a small dashed box */
+#riderDashboard .rd-bottom .rd-empty-queue {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid #e9edf3;
+    border-radius: 12px;
+    background: #fafbfc;
+    color: #748094;
+    font-size: 11px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* Today at a Glance — balanced 2 × 2 summary */
+#riderDashboard .rd-bottom .rd-snapshot {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+}
+
+#riderDashboard .rd-bottom .rd-snapshot-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 7px;
+    min-width: 0;
+    min-height: 78px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid #e7ebf2;
+    border-radius: 11px;
+    background: #fafbfc;
+    box-shadow: none;
+}
+
+#riderDashboard .rd-bottom .rd-snapshot-row > span {
+    color: #748094;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+#riderDashboard .rd-bottom .rd-snapshot-row > strong {
+    max-width: 100%;
+    color: #243047;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderDashboard .rd-bottom .rd-snapshot-earnings {
+    border-color: #efdfba;
+    background: #fffaef;
+}
+
+#riderDashboard .rd-bottom .rd-snapshot-earnings > strong {
+    color: #895d0b;
+}
+
+/* Match the Seller gold action style */
+#riderDashboard .rd-bottom .rd-panel-body > .rd-button-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    margin: auto 0 0;
+    padding: 10px 14px;
+    border: 1px solid #dda000;
+    border-radius: 10px;
+    background: #dda000;
+    color: #211a09;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+    box-shadow: none;
+    transform: none;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease;
+}
+
+#riderDashboard .rd-bottom .rd-panel-body > .rd-button-block:hover {
+    border-color: #cc9200;
+    background: #cc9200;
+}
+
+/* Keyboard focus */
+#riderDashboard :is(.rd-jobs, .rd-bottom)
+:is(.rd-button, .rd-text-link, .rd-queue-item):focus-visible {
+    outline: 2px solid #ad7919;
+    outline-offset: 3px;
+}
+
+/* Tablet and mobile */
+@media (max-width: 899px) {
+    #riderDashboard .rd-jobs,
+    #riderDashboard .rd-bottom {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    #riderDashboard .rd-jobs .rd-panel-head > div {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 479px) {
+    #riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-head {
+        padding: 16px;
+    }
+
+    #riderDashboard :is(.rd-jobs, .rd-bottom) .rd-panel-body {
+        padding: 16px;
+    }
+
+    #riderDashboard .rd-jobs .rd-panel-head > .rd-button {
+        width: 100%;
+        min-width: 0;
+        min-height: 40px;
+    }
+
+    #riderDashboard .rd-jobs .rd-empty {
+        min-height: 180px;
+        padding: 24px 16px;
+    }
+
+    #riderDashboard .rd-jobs .rd-details {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderDashboard .rd-bottom .rd-panel-head {
+        flex-wrap: wrap;
+    }
+
+    #riderDashboard .rd-bottom .rd-snapshot-row {
+        padding: 11px;
+    }
+
+    #riderDashboard .rd-bottom .rd-snapshot-row > strong {
+        font-size: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderDashboard :is(.rd-jobs, .rd-bottom)
+    :is(.rd-button, .rd-queue-item) {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* Match assignment actions to the overview footer links */
+
+#courierPageContent #riderDashboard .rd-jobs > .rd-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+}
+
+/* Allow the header's title and action to occupy separate rows */
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head {
+    display: contents;
+}
+
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head > div {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    min-height: 82px;
+    margin: 0;
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+/* Assignment content stays between the header and footer */
+#courierPageContent #riderDashboard .rd-jobs .rd-panel > .rd-panel-body,
+#courierPageContent #riderDashboard .rd-jobs .rd-panel > .rd-empty {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+}
+
+/* Full-width footer with a small action aligned right */
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: stretch;
+    justify-self: stretch;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    min-height: 43px;
+    margin: 0;
+    padding: 13px 20px;
+
+    border: 0;
+    border-top: 1px solid #edf0f4;
+    border-radius: 0;
+    background: #fff;
+    color: #a66b16;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: right;
+    text-decoration: none;
+
+    box-shadow: none;
+    transform: none;
+    transition: color 160ms ease;
+}
+
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button > span {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button:hover {
+    border-color: #edf0f4;
+    background: #fff;
+    color: #78500e;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    box-shadow: none;
+    transform: none;
+}
+
+#courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button:focus-visible {
+    outline: 2px solid #ad7919;
+    outline-offset: -4px;
+}
+
+@media (max-width: 479px) {
+    #courierPageContent #riderDashboard .rd-jobs .rd-panel-head > div {
+        padding: 16px;
+    }
+
+    #courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button {
+        min-height: 44px;
+        padding: 13px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #courierPageContent #riderDashboard .rd-jobs .rd-panel-head > .rd-button {
+        transition: none;
+    }
+}

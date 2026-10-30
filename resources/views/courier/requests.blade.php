@@ -4,808 +4,418 @@
 @section('header-title', 'Pickup Assignments')
 @section('header-subtitle', 'Dispatched by SARI Logistics')
 
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/courier/requests.css') }}?v=20261029-2"
+    >
+@endpush
+
 @section('content')
-
-<div class="mx-auto max-w-[1620px] space-y-4">
-
+<div
+    id="riderPickupAssignments"
+    class="courier-requests-page courier-workspace"
+>
     @if($errors->any())
-        <div
-            class="
-                rounded-2xl
-                border border-rose-200
-                bg-rose-50
-                px-5 py-4
-                text-[10px]
-                font-semibold
-                text-rose-700
-            "
-        >
+        <div class="rp-alert rp-alert-error" role="alert">
             {{ $errors->first() }}
         </div>
     @endif
 
-
     @if(session('success'))
-        <div
-            class="
-                rounded-2xl
-                border border-emerald-200
-                bg-emerald-50
-                px-5 py-4
-                text-[10px]
-                font-semibold
-                text-emerald-700
-            "
-        >
+        <div class="rp-alert rp-alert-success" role="status">
             {{ session('success') }}
         </div>
     @endif
 
+    <section class="rp-heading" aria-labelledby="pickupPageTitle">
+        <div class="rp-heading-copy">
+            <span class="rp-eyebrow">Seller Pickup Dispatch</span>
 
-    {{-- =====================================================
-        INTRO
-    ====================================================== --}}
-
-    <section
-        class="
-            flex flex-col
-            justify-between
-            gap-4
-            rounded-[20px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-            p-5
-            sm:p-6
-            lg:flex-row
-            lg:items-end
-        "
-    >
-
-        <div>
-
-            <span
-                class="
-                    inline-flex
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    uppercase
-                    tracking-[.13em]
-                    text-[#8a7f70]
-                "
-            >
-                Seller Pickup Dispatch
-            </span>
-
-
-            <h2
-                class="
-                    mt-3
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Pickup Assignments
+            <h2 id="pickupPageTitle" class="rp-title">
+                Pickup <span>Assignments</span>
             </h2>
 
-
-            <p
-                class="
-                    mt-2
-                    max-w-[700px]
-                    text-[9px]
-                    leading-5
-                    text-[#817769]
-                "
-            >
-                Orders assigned to you for collection from
-                Sellers appear here. Logistics-managed parcels
-                are handed over to the origin hub after pickup.
+            <p class="rp-description">
+                Collect assigned Seller orders and continue to the next handoff.
             </p>
-
         </div>
-
 
         <a
             href="{{ route('courier.last-mile') }}"
-            class="
-                inline-flex
-                items-center
-                justify-center
-                rounded-xl
-                border border-[#e5dac9]
-                bg-white
-                px-4 py-2.5
-                text-[9px]
-                font-semibold
-                text-[#665c4f]
-                transition
-                hover:border-[#d7bd8b]
-                hover:text-[#a96e05]
-            "
+            class="rp-button"
         >
-            Go to Last-Mile Deliveries →
-        </a>
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <path d="M3 6h11v11H3z"></path>
+                <path d="M14 10h4l3 4v3h-7"></path>
+                <circle cx="7" cy="18" r="2"></circle>
+                <circle cx="18" cy="18" r="2"></circle>
+            </svg>
 
+            Last-Mile Deliveries
+            <span aria-hidden="true">→</span>
+        </a>
     </section>
 
-
-    {{-- =====================================================
-        ACTIVE PICKUP
-    ====================================================== --}}
-
     @if($activeOrder)
-
         @php
-            $activeIsLogistics =
-                (bool) $activeOrder->logisticsParcel;
+            $activeIsLogistics = (bool) $activeOrder->logisticsParcel;
         @endphp
 
         <section
-            class="
-                overflow-hidden
-                rounded-[18px]
-                border border-[#d2dfe9]
-                bg-[#f5f9fc]
-            "
+            class="rp-panel rp-active"
+            aria-labelledby="currentPickupTitle"
         >
-
-            <div
-                class="
-                    flex flex-col
-                    justify-between
-                    gap-4
-                    p-5
-                    sm:flex-row
-                    sm:items-center
-                "
-            >
-
-                <div>
-
-                    <div
-                        class="
-                            flex flex-wrap
-                            items-center
-                            gap-2
-                        "
-                    >
-
-                        <span
-                            class="
-                                rounded-full
-                                bg-[#e7f0f6]
-                                px-2.5 py-1
-                                text-[7px]
-                                font-bold
-                                uppercase
-                                text-[#3C6E91]
-                            "
+            <div class="rp-panel-head">
+                <div class="rp-panel-heading">
+                    <span class="rp-heading-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                         >
-                            Active
-                        </span>
+                            <path d="M13 3 5 14h6l-1 7 9-12h-6l1-6"></path>
+                        </svg>
+                    </span>
 
+                    <div>
+                        <h3 id="currentPickupTitle" class="rp-panel-title">
+                            Current Assignment
+                        </h3>
 
-                        <span
-                            class="
-                                rounded-full
-                                border border-[#d8e3ea]
-                                bg-white
-                                px-2.5 py-1
-                                text-[7px]
-                                font-semibold
-                                uppercase
-                                text-[#657986]
-                            "
-                        >
-                            {{
-                                $activeIsLogistics
-                                    ? 'Seller Pickup'
-                                    : 'Direct Delivery'
-                            }}
-                        </span>
-
-                    </div>
-
-
-                    <h3
-                        class="
-                            mt-3
-                            text-[13px]
-                            font-bold
-                            text-[#25333c]
-                        "
-                    >
-                        {{ $activeOrder->order_number }}
-                    </h3>
-
-
-                    <p
-                        class="
-                            mt-1
-                            text-[8px]
-                            text-[#6f8190]
-                        "
-                    >
-                        {{ $activeOrder->statusLabel() }}
-                    </p>
-
-
-                    @if(
-                        $activeIsLogistics
-                        &&
-                        $activeOrder->status
-                            === 'in_transit'
-                    )
-
-                        <p
-                            class="
-                                mt-2
-                                max-w-[650px]
-                                text-[8px]
-                                leading-4
-                                text-[#607987]
-                            "
-                        >
-                            Pickup completed. Bring the parcel
-                            to the assigned origin hub for
-                            physical intake by SARI Logistics.
+                        <p class="rp-panel-description">
+                            Continue your assigned pickup workflow.
                         </p>
-
-                    @endif
-
+                    </div>
                 </div>
 
-
-                <a
-                    href="{{
-                        route(
-                            'courier.delivery.show',
-                            [
-                                'order' =>
-                                    $activeOrder->id,
-                            ]
-                        )
-                    }}"
-                    class="
-                        inline-flex
-                        items-center
-                        justify-center
-                        rounded-xl
-                        bg-[#3C6E91]
-                        px-5 py-3
-                        text-[9px]
-                        font-semibold
-                        text-white
-                    "
-                >
-                    Continue Pickup Workflow →
-                </a>
-
+                <span class="rp-badge rp-badge-blue">
+                    {{ $activeOrder->statusLabel() }}
+                </span>
             </div>
 
-        </section>
+            <div class="rp-active-main">
+                <div class="rp-active-copy">
+                    <p class="rp-order-number">
+                        {{ $activeOrder->order_number }}
+                    </p>
 
-    @endif
+                    <p class="rp-active-status">
+                        {{
+                            $activeIsLogistics
+                                ? 'Seller pickup · Handoff at origin hub'
+                                : 'Direct delivery · Handoff to Buyer'
+                        }}
+                    </p>
 
+                    @if($activeIsLogistics && $activeOrder->status === 'in_transit')
+                        <p class="rp-active-note">
+                            Pickup completed. Bring the parcel to the assigned
+                            origin hub for physical intake by SARI Logistics.
+                        </p>
+                    @endif
+                </div>
 
-    {{-- =====================================================
-        ASSIGNED QUEUE
-    ====================================================== --}}
+                <span class="rp-badge">
+                    {{ $activeIsLogistics ? 'Seller Pickup' : 'Direct Delivery' }}
+                </span>
+            </div>
 
-    <section
-        class="
-            overflow-hidden
-            rounded-[20px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-        "
-    >
-
-        <div
-            class="
-                flex flex-col
-                justify-between
-                gap-3
-                border-b border-[#eadfc9]
-                px-5 py-4
-                sm:flex-row
-                sm:items-center
-            "
-        >
-
-            <div>
-
-                <h3
-                    class="
-                        text-[12px]
-                        font-bold
-                        text-[#211d17]
-                    "
-                >
-                    Assigned Pickup Queue
-                </h3>
-
-                <p
-                    class="
-                        mt-1
-                        text-[8px]
-                        text-[#918677]
-                    "
-                >
-                    Start with the Seller pickup assigned
-                    by SARI Logistics.
+            <div class="rp-assignment-footer">
+                <p class="rp-footer-copy">
+                    Review the current stage before continuing.
                 </p>
 
+                <a
+                    href="{{ route('courier.delivery.show', ['order' => $activeOrder->id]) }}"
+                    class="rp-button rp-button-primary"
+                >
+                    Continue Pickup Workflow
+                    <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+    @endif
+
+    <section
+        class="rp-panel"
+        aria-labelledby="pickupQueueTitle"
+    >
+        <div class="rp-panel-head">
+            <div class="rp-panel-heading">
+                <span class="rp-heading-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M8 5H5v16h14V5h-3"></path>
+                        <path d="M9 3h6v4H9z"></path>
+                        <path d="M8 12h8M8 16h5"></path>
+                    </svg>
+                </span>
+
+                <div>
+                    <h3 id="pickupQueueTitle" class="rp-panel-title">
+                        Assigned Pickup Queue
+                    </h3>
+
+                    <p class="rp-panel-description">
+                        Seller pickups assigned by SARI Logistics.
+                    </p>
+                </div>
             </div>
 
-
-            <span
-                class="
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    text-[#756a5c]
-                "
-            >
-                {{ $orders->count() }}
-                {{
-                    $orders->count() === 1
-                        ? 'assignment'
-                        : 'assignments'
-                }}
+            <span class="rp-count">
+                <strong>{{ $orders->count() }}</strong>
+                {{ $orders->count() === 1 ? 'assignment' : 'assignments' }}
             </span>
-
         </div>
 
-
-        <div
-            class="
-                grid
-                gap-4
-                p-5
-                lg:grid-cols-2
-            "
-        >
-
+        <div class="rp-assignment-list">
             @forelse($orders as $order)
-
                 @php
-                    $isLogisticsPickup =
-                        (bool) $order
-                            ->logisticsParcel;
+                    $isLogisticsPickup = (bool) $order->logisticsParcel;
                 @endphp
 
                 <article
-                    class="
-                        rounded-[17px]
-                        border border-[#eadfc9]
-                        bg-white
-                        p-5
-                    "
+                    class="rp-assignment"
+                    aria-labelledby="pickup-order-{{ $order->id }}"
                 >
-
-                    <div
-                        class="
-                            flex
-                            items-start
-                            justify-between
-                            gap-4
-                        "
-                    >
-
-                        <div>
-
+                    <div class="rp-assignment-main">
+                        <div class="rp-order-identity">
                             <p
-                                class="
-                                    text-[11px]
-                                    font-bold
-                                    text-[#29241e]
-                                "
+                                id="pickup-order-{{ $order->id }}"
+                                class="rp-order-number"
                             >
                                 {{ $order->order_number }}
                             </p>
 
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[8px]
-                                    text-[#918677]
-                                "
-                            >
+                            <p class="rp-seller-name">
                                 {{
-                                    $order
-                                        ->seller
-                                        ?->store_name
-                                    ?: $order
-                                        ->pickup_name
-                                    ?: 'SARI Seller'
+                                    $order->seller?->store_name
+                                        ?: $order->pickup_name
+                                        ?: 'SARI Seller'
                                 }}
                             </p>
 
+                            <div class="rp-badges">
+                                <span class="rp-badge rp-badge-gold">
+                                    Pickup Assigned
+                                </span>
+
+                                <span class="rp-badge">
+                                    {{
+                                        $isLogisticsPickup
+                                            ? 'Seller Pickup'
+                                            : 'Direct Delivery'
+                                    }}
+                                </span>
+                            </div>
                         </div>
 
+                        <dl class="rp-locations">
+                            <div class="rp-location">
+                                <dt>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M3 10h18l-2-6H5l-2 6Z"></path>
+                                        <path d="M5 10v10h14V10"></path>
+                                        <path d="M9 20v-6h6v6"></path>
+                                    </svg>
 
-                        <span
-                            class="
-                                rounded-full
-                                border border-[#eadfc9]
-                                bg-[#fff6e1]
-                                px-2.5 py-1
-                                text-[7px]
-                                font-bold
-                                text-[#a56b00]
-                            "
-                        >
-                            PICKUP ASSIGNED
-                        </span>
+                                    Seller Pickup
+                                </dt>
 
+                                <dd>
+                                    <span class="rp-location-name">
+                                        {{ $order->pickup_name ?: 'Seller' }}
+                                    </span>
+
+                                    <span class="rp-location-address">
+                                        {{
+                                            $order->pickup_address
+                                                ?: 'Pickup address unavailable'
+                                        }}
+                                    </span>
+                                </dd>
+                            </div>
+
+                            <div class="rp-location">
+                                <dt>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M12 21s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Z"></path>
+                                        <circle cx="12" cy="9" r="2.5"></circle>
+                                    </svg>
+
+                                    Next Handoff
+                                </dt>
+
+                                <dd>
+                                    <span class="rp-location-name">
+                                        {{
+                                            $isLogisticsPickup
+                                                ? 'Origin Sorting Hub'
+                                                : ($order->buyer_name ?: 'Buyer')
+                                        }}
+                                    </span>
+
+                                    <span class="rp-location-address">
+                                        {{
+                                            $isLogisticsPickup
+                                                ? 'SARI Logistics intake'
+                                                : ($order->buyer_address ?: 'Buyer delivery')
+                                        }}
+                                    </span>
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
 
-
-                    <div
-                        class="
-                            mt-4
-                            grid
-                            gap-3
-                            sm:grid-cols-2
-                        "
-                    >
-
-                        <div
-                            class="
-                                rounded-xl
-                                border border-[#eee5d6]
-                                bg-[#fffdf9]
-                                p-3
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#a09484]
-                                "
-                            >
-                                Seller Pickup
+                    <div class="rp-assignment-footer">
+                        @if($isLogisticsPickup)
+                            <p class="rp-assignment-note">
+                                <strong>Pickup-only assignment</strong>
+                                The Marketplace delivery fee belongs to the
+                                final-mile Rider, not the Seller pickup Rider.
                             </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[9px]
-                                    font-semibold
-                                    text-[#2a251f]
-                                "
-                            >
-                                {{
-                                    $order->pickup_name
-                                    ?: 'Seller'
-                                }}
+                        @else
+                            <p class="rp-assignment-note">
+                                <strong>Direct-delivery assignment</strong>
+                                Collect from the Seller and continue to the Buyer.
                             </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[7px]
-                                    leading-4
-                                    text-[#8a8073]
-                                "
-                            >
-                                {{
-                                    $order->pickup_address
-                                    ?: 'Pickup address unavailable'
-                                }}
-                            </p>
-
-                        </div>
-
-
-                        <div
-                            class="
-                                rounded-xl
-                                border border-[#eee5d6]
-                                bg-[#fffdf9]
-                                p-3
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#a09484]
-                                "
-                            >
-                                Next Handoff
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[9px]
-                                    font-semibold
-                                    text-[#2a251f]
-                                "
-                            >
-                                {{
-                                    $isLogisticsPickup
-                                        ? 'Origin Sorting Hub'
-                                        : (
-                                            $order
-                                                ->buyer_name
-                                            ?: 'Buyer'
-                                        )
-                                }}
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[7px]
-                                    leading-4
-                                    text-[#8a8073]
-                                "
-                            >
-                                {{
-                                    $isLogisticsPickup
-                                        ? 'SARI Logistics intake'
-                                        : (
-                                            $order
-                                                ->buyer_address
-                                            ?: 'Buyer delivery'
-                                        )
-                                }}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    @if($isLogisticsPickup)
-
-                        <div
-                            class="
-                                mt-4
-                                rounded-xl
-                                border border-[#e1e8ed]
-                                bg-[#f5f9fc]
-                                px-4 py-3
-                            "
-                        >
-
-                            <p
-                                class="
-                                    text-[8px]
-                                    font-semibold
-                                    text-[#3C6E91]
-                                "
-                            >
-                                Pickup-only assignment
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[7px]
-                                    leading-4
-                                    text-[#708693]
-                                "
-                            >
-                                The Marketplace delivery fee
-                                belongs to the final-mile Rider,
-                                not the Seller pickup Rider.
-                            </p>
-
-                        </div>
-
-                    @endif
-
-
-                    <div
-                        class="
-                            mt-4
-                            flex
-                            justify-end
-                            border-t border-[#eee5d6]
-                            pt-4
-                        "
-                    >
+                        @endif
 
                         <a
-                            href="{{
-                                route(
-                                    'courier.delivery.show',
-                                    [
-                                        'order' =>
-                                            $order->id,
-                                    ]
-                                )
-                            }}"
-                            class="
-                                rounded-xl
-                                bg-[#D99600]
-                                px-5 py-3
-                                text-[9px]
-                                font-semibold
-                                text-white
-                            "
+                            href="{{ route('courier.delivery.show', ['order' => $order->id]) }}"
+                            class="rp-button rp-button-primary"
+                            aria-label="Start pickup workflow for {{ $order->order_number }}"
                         >
-                            Start Pickup Workflow →
+                            Start Pickup Workflow
+                            <span aria-hidden="true">→</span>
                         </a>
-
                     </div>
-
                 </article>
-
             @empty
+                <div class="rp-empty">
+                    <span class="rp-empty-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="m12 3 9 5-9 5-9-5 9-5Z"></path>
+                            <path d="M3 8v9l9 5 9-5V8"></path>
+                            <path d="M12 13v9M7.5 5.5l9 5"></path>
+                        </svg>
+                    </span>
 
-                <div
-                    class="
-                        lg:col-span-2
-                        rounded-[18px]
-                        border border-dashed
-                        border-[#ddd2c1]
-                        bg-white
-                        p-12
-                        text-center
-                    "
-                >
+                    <h4 class="rp-empty-title">
+                        No pickup assignments waiting
+                    </h4>
 
-                    <p
-                        class="
-                            text-[10px]
-                            font-semibold
-                            text-[#51483d]
-                        "
-                    >
-                        No Seller pickup assignments waiting.
+                    <p class="rp-empty-description">
+                        New Seller pickups will appear here when
+                        SARI Logistics assigns them to you.
                     </p>
-
-
-                    <p
-                        class="
-                            mt-2
-                            text-[8px]
-                            text-[#918677]
-                        "
-                    >
-                        New Seller pickup jobs dispatched by
-                        SARI Logistics will appear here.
-                    </p>
-
-
-                    <a
-                        href="{{ route('courier.last-mile') }}"
-                        class="
-                            mt-4
-                            inline-flex
-                            rounded-xl
-                            border border-[#eadfc9]
-                            bg-[#fffdf8]
-                            px-5 py-3
-                            text-[9px]
-                            font-semibold
-                            text-[#685e51]
-                        "
-                    >
-                        Check Last-Mile Deliveries
-                    </a>
-
                 </div>
-
             @endforelse
-
         </div>
 
+        <div class="rp-panel-footer">
+            <p class="rp-footer-copy">
+                @if($orders->count() > 0)
+                    Showing {{ $orders->count() }}
+                    {{ $orders->count() === 1 ? 'assigned pickup.' : 'assigned pickups.' }}
+                @else
+                    Assigned by SARI Logistics.
+                @endif
+            </p>
+
+            <a
+                href="{{ route('courier.last-mile') }}"
+                class="rp-text-link"
+            >
+                View last-mile deliveries
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
     </section>
-
 </div>
-
+@endsection
 
 @push('scripts')
-
 <script>
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
+document.addEventListener('DOMContentLoaded', function () {
+    let currentCount = {{ $orders->count() }};
 
-        let currentCount =
-            {{ $orders->count() }};
+    async function checkAssignments() {
+        if (document.hidden) {
+            return;
+        }
 
+        try {
+            const response = await fetch(
+                @json(route('courier.orders.live-state')),
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    credentials: 'same-origin',
+                    cache: 'no-store',
+                }
+            );
 
-        async function checkAssignments() {
-
-            if (document.hidden) {
+            if (!response.ok) {
                 return;
             }
 
+            const data = await response.json();
 
-            try {
-
-                const response =
-                    await fetch(
-                        @json(
-                            route(
-                                'courier.orders.live-state'
-                            )
-                        ),
-                        {
-                            headers: {
-                                'Accept':
-                                    'application/json',
-
-                                'X-Requested-With':
-                                    'XMLHttpRequest',
-                            },
-
-                            credentials:
-                                'same-origin',
-
-                            cache:
-                                'no-store',
-                        }
-                    );
-
-
-                if (! response.ok) {
-                    return;
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                if (
-                    Number(
-                        data.assigned_count
-                    )
-                    !==
-                    Number(
-                        currentCount
-                    )
-                ) {
-                    window.location.reload();
-                }
-
-            } catch (error) {
-
-                console.debug(
-                    'Rider assignment polling temporarily unavailable.'
-                );
-
+            if (Number(data.assigned_count) !== Number(currentCount)) {
+                window.location.reload();
             }
-
+        } catch (error) {
+            console.debug(
+                'Rider assignment polling temporarily unavailable.'
+            );
         }
-
-
-        window.setInterval(
-            checkAssignments,
-            3000
-        );
-
     }
-);
+
+    window.setInterval(checkAssignments, 3000);
+});
 </script>
-
 @endpush
-
-@endsection

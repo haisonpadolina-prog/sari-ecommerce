@@ -1,0 +1,610 @@
+/* Rider — Parcel QR Scanner */
+
+.courier-shell #courierPageContent:has(#riderScanner) {
+    padding: 28px 40px;
+}
+
+#riderScanner {
+    --qs-ink: #202733;
+    --qs-muted: #707b8d;
+    --qs-border: #e7ebf0;
+    --qs-gold: #d99a0b;
+    --qs-gold-text: #93640e;
+    --qs-shadow: 0 2px 4px rgb(20 30 50 / 2%),
+        0 10px 24px rgb(20 30 50 / 5%);
+
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    color: var(--qs-ink);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+#riderScanner,
+#riderScanner * {
+    box-sizing: border-box;
+}
+
+#riderScanner [data-sari-qr-scanner] {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+}
+
+#riderScanner [data-sari-qr-scanner] > section + section {
+    margin-top: 22px;
+}
+
+#riderScanner :is(section, form) {
+    min-width: 0;
+}
+
+#riderScanner :is(a, button, textarea):focus-visible {
+    outline: 3px solid rgb(153 105 14 / 55%);
+    outline-offset: 3px;
+}
+
+/* Page heading */
+
+#riderScanner [data-sari-qr-scanner] > section:first-child {
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#riderScanner [data-sari-qr-scanner] > section:first-child > div {
+    align-items: center;
+    gap: 22px;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:first-child > div > div {
+    min-width: 0;
+    flex: 1;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:first-child > div > div > span {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--qs-gold-text);
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: .14em;
+}
+
+#courierPageContent #riderScanner
+[data-sari-qr-scanner] > section:first-child h2 {
+    margin-top: 6px;
+    color: var(--qs-ink);
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.04em;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:first-child h2 + p {
+    max-width: 780px;
+    margin-top: 9px;
+    color: var(--qs-muted);
+    font-size: 11px;
+    line-height: 1.85;
+}
+
+#courierPageContent #riderScanner
+[data-sari-qr-scanner] > section:first-child a {
+    min-height: 42px;
+    flex-shrink: 0;
+    padding: 10px 15px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: #596679;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+/* Main camera / status layout */
+
+#riderScanner [data-sari-qr-scanner] > section:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    align-items: start;
+    gap: 20px;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2) > div {
+    min-width: 0;
+}
+
+/* Camera card */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2) > div:first-child {
+    overflow: hidden;
+    border: 1px solid #2d323b;
+    border-radius: 18px;
+    background: #20242c;
+    box-shadow: var(--qs-shadow);
+}
+
+/* Camera card header */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:first-child > div:first-child {
+    min-height: 76px;
+    align-items: center;
+    gap: 14px;
+    padding: 17px 20px;
+    border-bottom: 1px solid rgb(255 255 255 / 9%);
+    background: #20242c;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:first-child > div:first-child > div > p:first-child {
+    color: #e5b75b;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:first-child > div:first-child > div > p:last-child {
+    margin-top: 4px;
+    color: #aab3c0;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#riderScanner #sariQrCameraBadge {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+/* Camera viewport.
+   Reader width is limited without cropping the video or QR frame. */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:first-child > div:nth-child(2) {
+    min-height: 360px;
+    background: #161a21;
+}
+
+#riderScanner #sariQrReader {
+    width: 100%;
+    max-width: 400px;
+    min-height: 360px;
+    margin: 0 auto;
+}
+
+#riderScanner #sariQrReader video {
+    max-width: 100%;
+}
+
+#riderScanner #sariQrCameraPlaceholder {
+    padding: 28px;
+    background: #161a21;
+}
+
+#riderScanner #sariQrCameraPlaceholder > div {
+    width: 100%;
+    max-width: 310px;
+}
+
+#riderScanner #sariQrCameraPlaceholder > div > div {
+    width: 62px;
+    height: 62px;
+    border: 1px solid rgb(229 183 91 / 20%);
+    border-radius: 18px;
+    background: rgb(229 183 91 / 7%);
+    color: #e0ad4d;
+    font-size: 25px;
+}
+
+#riderScanner #sariQrCameraPlaceholder > div > p:first-of-type {
+    margin-top: 18px;
+    color: #f1f4f8;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderScanner #sariQrCameraPlaceholder > div > p:last-of-type {
+    margin-top: 8px;
+    color: #9da8b8;
+    font-size: 11px;
+    line-height: 1.85;
+}
+
+/* Camera controls */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:first-child > div:last-child {
+    align-items: center;
+    gap: 9px;
+    padding: 16px 18px;
+    border-top: 1px solid rgb(255 255 255 / 9%);
+    background: #20242c;
+}
+
+#courierPageContent #riderScanner
+:is(#sariQrStartButton, #sariQrStopButton, #sariQrScanAnotherButton) {
+    min-height: 42px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+#courierPageContent #riderScanner #sariQrStartButton {
+    border: 1px solid var(--qs-gold);
+    background: var(--qs-gold);
+    color: #251c09;
+}
+
+#courierPageContent #riderScanner #sariQrStopButton {
+    border: 1px solid #4a5361;
+    background: #2a303a;
+    color: #e0e6ee;
+}
+
+#courierPageContent #riderScanner #sariQrScanAnotherButton {
+    border: 1px solid #8a6b34;
+    background: #3a3224;
+    color: #f0ca81;
+}
+
+#courierPageContent #riderScanner
+:is(#sariQrStartButton, #sariQrStopButton, #sariQrScanAnotherButton):disabled {
+    border-color: #3c4450;
+    background: #282e37;
+    color: #8993a2;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Right column */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2) > div:last-child {
+    display: grid;
+    gap: 18px;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section {
+    margin: 0;
+    padding: 20px;
+    border: 1px solid var(--qs-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--qs-shadow);
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section > p:first-child {
+    color: #566275;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: .03em;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section > p:nth-child(2) {
+    margin-top: 8px;
+    color: var(--qs-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* Result states:
+   Preserve the shared script's success/error colors. */
+
+#riderScanner #sariQrResult {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+}
+
+#riderScanner #sariQrResult:not(.bg-emerald-50):not(.bg-rose-50) {
+    border-color: #e5e9ef;
+    background: #f7f9fb;
+}
+
+#riderScanner #sariQrResultTitle {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderScanner #sariQrResultMessage {
+    margin-top: 7px;
+    font-size: 11px;
+    line-height: 1.85;
+}
+
+#riderScanner #sariQrOrderBlock {
+    margin-top: 15px;
+    padding-top: 14px;
+}
+
+#riderScanner #sariQrOrderBlock > p:first-child {
+    color: #7c8797;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .08em;
+}
+
+#riderScanner #sariQrOrderNumber {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+#riderScanner #sariQrStage {
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+#courierPageContent #riderScanner #sariQrNextLink {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 15px;
+    padding: 10px 12px;
+    border: 1px solid #303945;
+    border-radius: 10px;
+    background: #303945;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Manual fallback */
+
+#riderScanner #sariQrManualForm {
+    margin-top: 14px;
+}
+
+#courierPageContent #riderScanner #sariQrManualPayload {
+    display: block;
+    width: 100%;
+    min-height: 112px;
+    padding: 12px 13px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--qs-ink);
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.8;
+    resize: vertical;
+}
+
+#courierPageContent #riderScanner #sariQrManualPayload:focus {
+    border-color: #bd964e;
+    box-shadow: 0 0 0 3px rgb(201 145 40 / 7%);
+}
+
+#courierPageContent #riderScanner #sariQrManualForm button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #e7d6ad;
+    border-radius: 10px;
+    background: #fff8e9;
+    color: #8b641d;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* Camera requirement note */
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section:last-child {
+    padding: 16px 18px;
+    border-color: #eee0bf;
+    border-radius: 14px;
+    background: #fffbf2;
+    box-shadow: none;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section:last-child > p:first-child {
+    color: #8b6827;
+    font-size: 10px;
+    letter-spacing: 0;
+}
+
+#riderScanner
+[data-sari-qr-scanner] > section:nth-of-type(2)
+> div:last-child > section:last-child > p:last-child {
+    margin-top: 6px;
+    color: #8c7b5b;
+    font-size: 10px;
+    line-height: 1.85;
+}
+
+/* Hover */
+
+@media (hover: hover) {
+    #courierPageContent #riderScanner #sariQrStartButton:not(:disabled):hover {
+        border-color: #c88b08;
+        background: #c88b08;
+    }
+
+    #courierPageContent #riderScanner #sariQrStopButton:not(:disabled):hover {
+        background: #353e4a;
+    }
+
+    #courierPageContent #riderScanner #sariQrScanAnotherButton:not(:disabled):hover {
+        background: #493c26;
+    }
+
+    #courierPageContent #riderScanner #sariQrManualForm button:hover {
+        border-color: #d9bd80;
+        background: #fff2d5;
+    }
+
+    #courierPageContent #riderScanner #sariQrNextLink:hover {
+        background: #242c36;
+    }
+}
+
+/* Responsive */
+
+@media (max-width: 1199px) {
+    #riderScanner [data-sari-qr-scanner] > section:nth-of-type(2) {
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 16px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2)
+    > div:last-child > section {
+        padding: 17px;
+    }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderScanner) {
+        padding: 24px;
+    }
+
+    #riderScanner [data-sari-qr-scanner] > section:nth-of-type(2) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2) > div:last-child {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 16px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2)
+    > div:last-child > section:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderScanner) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderScanner [data-sari-qr-scanner] > section + section {
+        margin-top: 18px;
+    }
+
+    #riderScanner [data-sari-qr-scanner] > section:first-child > div {
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    #courierPageContent #riderScanner
+    [data-sari-qr-scanner] > section:first-child a {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2)
+    > div:first-child > div:first-child {
+        padding: 15px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2)
+    > div:first-child > div:nth-child(2),
+    #riderScanner #sariQrReader {
+        min-height: 300px;
+    }
+
+    #riderScanner #sariQrCameraPlaceholder {
+        padding: 22px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2)
+    > div:first-child > div:last-child {
+        padding: 14px;
+        gap: 8px;
+    }
+
+    #courierPageContent #riderScanner
+    :is(#sariQrStartButton, #sariQrStopButton) {
+        min-height: 44px;
+        flex: 1;
+    }
+
+    #courierPageContent #riderScanner #sariQrScanAnotherButton {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    #riderScanner
+    [data-sari-qr-scanner] > section:nth-of-type(2) > div:last-child {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #courierPageContent #riderScanner #sariQrManualPayload {
+        font-size: 16px;
+    }
+
+    #courierPageContent #riderScanner
+    :is(#sariQrNextLink, #sariQrManualForm button) {
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderScanner *,
+    #riderScanner *::before,
+    #riderScanner *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

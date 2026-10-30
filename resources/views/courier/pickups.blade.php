@@ -4,440 +4,371 @@
 @section('header-title', 'Seller Pickups')
 @section('header-subtitle', 'Seller Collection Workflow')
 
-@section('content')
-
-<div class="mx-auto max-w-[1620px] space-y-4">
-
-    <section
-        class="
-            flex flex-col
-            justify-between
-            gap-4
-            rounded-[20px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-            p-5
-            sm:p-6
-            lg:flex-row
-            lg:items-end
-        "
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/courier/pickups.css') }}?v=20261029-2"
     >
+@endpush
 
-        <div>
+@section('content')
+@php
+    $pickupStages = [
+        'courier_accepted' => 'Assigned',
+        'heading_pickup' => 'Heading to Seller',
+        'arrived_pickup' => 'At Seller',
+    ];
 
-            <span
-                class="
-                    inline-flex
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    uppercase
-                    tracking-[.13em]
-                    text-[#8a7f70]
-                "
-            >
-                Pickup Operations
-            </span>
+    $pickupTotal = $orders->count();
+    $pickupAssigned = $orders->where('status', 'courier_accepted')->count();
+    $pickupHeading = $orders->where('status', 'heading_pickup')->count();
+    $pickupArrived = $orders->where('status', 'arrived_pickup')->count();
+@endphp
 
+<div
+    id="riderSellerPickups"
+    class="courier-pickups-page courier-workspace"
+>
+    <section class="sp-heading" aria-labelledby="sellerPickupsTitle">
+        <div class="sp-heading-copy">
+            <span class="sp-eyebrow">Pickup Operations</span>
 
-            <h2
-                class="
-                    mt-3
-                    text-[20px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Seller Pickups
+            <h2 id="sellerPickupsTitle" class="sp-title">
+                Seller <span>Pickups</span>
             </h2>
 
-
-            <p
-                class="
-                    mt-2
-                    max-w-[700px]
-                    text-[9px]
-                    leading-5
-                    text-[#817769]
-                "
-            >
-                Track jobs that are still at the Seller
-                collection stage. Logistics pickup work ends
-                after the parcel is physically accepted by
-                the origin hub.
+            <p class="sp-description">
+                Track Seller collections from assignment to pickup confirmation.
             </p>
-
         </div>
 
-
-        <div class="flex flex-wrap gap-2">
+        <div class="sp-heading-actions">
             <a
                 href="{{ route('courier.parcel-scanner') }}"
-                class="
-                    rounded-xl
-                    border border-[#d8bc82]
-                    bg-white
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-[#a66e08]
-                    transition
-                    hover:bg-[#fff8e9]
-                "
+                class="sp-button"
             >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"></path>
+                    <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>
+                    <path d="M14 14h3v3h-3z"></path>
+                </svg>
+
                 Scan Parcel QR
             </a>
 
             <a
                 href="{{ route('courier.requests') }}"
-                class="
-                    rounded-xl
-                    bg-[#D99600]
-                    px-4 py-2.5
-                    text-[9px]
-                    font-semibold
-                    text-white
-                "
+                class="sp-button sp-button-primary"
             >
-                View Pickup Assignments →
+                Pickup Assignments
+                <span aria-hidden="true">→</span>
             </a>
         </div>
-
     </section>
 
-
-    <section
-        class="
-            overflow-hidden
-            rounded-[20px]
-            border border-[#eadfc9]
-            bg-[#fffdf8]
-        "
-    >
-
-        <div
-            class="
-                flex
-                items-center
-                justify-between
-                gap-3
-                border-b border-[#eadfc9]
-                px-5 py-4
-            "
-        >
-
-            <div>
-
-                <h3
-                    class="
-                        text-[12px]
-                        font-bold
-                        text-[#211d17]
-                    "
-                >
-                    Pickup Stage
-                </h3>
-
-                <p
-                    class="
-                        mt-1
-                        text-[8px]
-                        text-[#918677]
-                    "
-                >
-                    Assigned, heading to Seller, or waiting
-                    for Seller handoff confirmation.
-                </p>
-
+    <section class="sp-summary" aria-label="Seller pickup summary">
+        <div class="sp-stat">
+            <div class="sp-stat-copy">
+                <p class="sp-stat-label">Total Pickups</p>
+                <p class="sp-stat-value">{{ $pickupTotal }}</p>
+                <p class="sp-stat-note">Jobs at collection stage</p>
             </div>
 
-
-            <span
-                class="
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    text-[#756a5c]
-                "
-            >
-                {{ $orders->count() }}
+            <span class="sp-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="m12 3 9 5-9 5-9-5 9-5Z"></path>
+                    <path d="M3 8v9l9 5 9-5V8M12 13v9"></path>
+                </svg>
             </span>
-
         </div>
 
+        <div class="sp-stat sp-stat-gold">
+            <div class="sp-stat-copy">
+                <p class="sp-stat-label">Assigned</p>
+                <p class="sp-stat-value">{{ $pickupAssigned }}</p>
+                <p class="sp-stat-note">Waiting to start pickup</p>
+            </div>
 
-        <div
-            class="
-                grid
-                gap-4
-                p-5
-                lg:grid-cols-2
-            "
-        >
+            <span class="sp-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M8 5H5v16h14V5h-3"></path>
+                    <path d="M9 3h6v4H9zM8 12h8M8 16h5"></path>
+                </svg>
+            </span>
+        </div>
 
+        <div class="sp-stat sp-stat-blue">
+            <div class="sp-stat-copy">
+                <p class="sp-stat-label">Heading to Seller</p>
+                <p class="sp-stat-value">{{ $pickupHeading }}</p>
+                <p class="sp-stat-note">On the way to collection</p>
+            </div>
+
+            <span class="sp-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="m21 3-6 18-4-8-8-4 18-6Z"></path>
+                    <path d="m11 13 5-5"></path>
+                </svg>
+            </span>
+        </div>
+
+        <div class="sp-stat sp-stat-green">
+            <div class="sp-stat-copy">
+                <p class="sp-stat-label">At Seller</p>
+                <p class="sp-stat-value">{{ $pickupArrived }}</p>
+                <p class="sp-stat-note">Awaiting pickup confirmation</p>
+            </div>
+
+            <span class="sp-stat-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M3 10h18l-2-6H5l-2 6Z"></path>
+                    <path d="M5 10v10h14V10M9 20v-6h6v6"></path>
+                </svg>
+            </span>
+        </div>
+    </section>
+
+    <section class="sp-panel" aria-labelledby="pickupStageTitle">
+        <div class="sp-panel-head">
+            <div class="sp-panel-heading">
+                <span class="sp-heading-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 8h16v12H4zM8 8V5h8v3"></path>
+                        <path d="M9 13h6"></path>
+                    </svg>
+                </span>
+
+                <div>
+                    <h3 id="pickupStageTitle" class="sp-panel-title">
+                        Pickup Stage
+                    </h3>
+
+                    <p class="sp-panel-description">
+                        Follow each collection through its current stage.
+                    </p>
+                </div>
+            </div>
+
+            <span class="sp-count">
+                <strong>{{ $pickupTotal }}</strong>
+                {{ $pickupTotal === 1 ? 'pickup' : 'pickups' }}
+            </span>
+        </div>
+
+        <div class="sp-pickup-list">
             @forelse($orders as $order)
-
                 @php
-                    $isLogisticsPickup =
-                        (bool) $order
-                            ->logisticsParcel;
+                    $isLogisticsPickup = (bool) $order->logisticsParcel;
+
+                    $currentStage = array_search(
+                        $order->status,
+                        array_keys($pickupStages),
+                        true
+                    );
+
+                    $statusClass = match ($order->status) {
+                        'heading_pickup' => 'sp-badge-blue',
+                        'arrived_pickup' => 'sp-badge-green',
+                        default => '',
+                    };
                 @endphp
 
                 <article
-                    class="
-                        rounded-[17px]
-                        border border-[#eadfc9]
-                        bg-white
-                        p-5
-                    "
+                    class="sp-pickup"
+                    aria-labelledby="seller-pickup-{{ $order->id }}"
                 >
+                    <div class="sp-pickup-main">
+                        <div class="sp-identity">
+                            <div class="sp-order-heading">
+                                <h4
+                                    id="seller-pickup-{{ $order->id }}"
+                                    class="sp-order-number"
+                                >
+                                    {{ $order->order_number }}
+                                </h4>
 
-                    <div
-                        class="
-                            flex
-                            items-start
-                            justify-between
-                            gap-3
-                        "
-                    >
+                                <span class="sp-badge {{ $statusClass }}">
+                                    {{ $order->statusLabel() }}
+                                </span>
+                            </div>
 
-                        <div>
-
-                            <p
-                                class="
-                                    text-[11px]
-                                    font-bold
-                                    text-[#29241e]
-                                "
-                            >
-                                {{ $order->order_number }}
+                            <p class="sp-seller-name">
+                                {{ $order->pickup_name ?: 'SARI Seller' }}
                             </p>
 
+                            @if($currentStage !== false)
+                                <ol
+                                    class="sp-stages"
+                                    aria-label="Pickup stages for {{ $order->order_number }}"
+                                >
+                                    @foreach($pickupStages as $stageStatus => $stageLabel)
+                                        <li
+                                            class="sp-stage {{ $loop->index < $currentStage ? 'is-complete' : '' }} {{ $loop->index === $currentStage ? 'is-current' : '' }}"
+                                            @if($order->status === $stageStatus)
+                                                aria-current="step"
+                                            @endif
+                                        >
+                                            <span
+                                                class="sp-stage-marker"
+                                                aria-hidden="true"
+                                            >
+                                                {{ $loop->iteration }}
+                                            </span>
 
-                            <p
-                                class="
-                                    mt-1
-                                    text-[8px]
-                                    text-[#918677]
-                                "
-                            >
-                                {{
-                                    $order->pickup_name
-                                    ?: 'SARI Seller'
-                                }}
-                            </p>
-
+                                            <span class="sp-stage-label">
+                                                {{ $stageLabel }}
+                                            </span>
+                                        </li>
+                                    @endforeach
+                                </ol>
+                            @endif
                         </div>
 
+                        <dl class="sp-details">
+                            <div class="sp-detail">
+                                <dt>Pickup Address</dt>
 
-                        <span
-                            class="
-                                rounded-full
-                                bg-[#fff2d8]
-                                px-2.5 py-1
-                                text-[7px]
-                                font-bold
-                                text-[#a56b00]
-                            "
-                        >
-                            {{
-                                strtoupper(
-                                    $order->statusLabel()
-                                )
-                            }}
-                        </span>
+                                <dd>
+                                    {{
+                                        $order->pickup_address
+                                            ?: 'Pickup address unavailable'
+                                    }}
+                                </dd>
+                            </div>
 
+                            <div class="sp-detail">
+                                <dt>After Pickup</dt>
+
+                                <dd>
+                                    <span class="sp-handoff-name">
+                                        {{
+                                            $isLogisticsPickup
+                                                ? 'Origin Hub Intake'
+                                                : 'Direct Buyer Delivery'
+                                        }}
+                                    </span>
+
+                                    <span
+                                        class="sp-badge {{ $isLogisticsPickup ? 'sp-badge-blue' : 'sp-badge-green' }}"
+                                    >
+                                        {{ $isLogisticsPickup ? 'Logistics' : 'Direct' }}
+                                    </span>
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
 
-
-                    <div
-                        class="
-                            mt-4
-                            rounded-xl
-                            border border-[#eee5d6]
-                            bg-[#fffdf9]
-                            p-4
-                        "
-                    >
-
-                        <p
-                            class="
-                                text-[7px]
-                                uppercase
-                                tracking-[.1em]
-                                text-[#a09484]
-                            "
-                        >
-                            Pickup Address
+                    <div class="sp-pickup-footer">
+                        <p class="sp-footer-note">
+                            @if($isLogisticsPickup)
+                                Pickup work ends after physical acceptance
+                                at the origin hub.
+                            @else
+                                Continue to Buyer delivery after
+                                Seller pickup confirmation.
+                            @endif
                         </p>
 
-
-                        <p
-                            class="
-                                mt-2
-                                text-[8px]
-                                leading-4
-                                text-[#817769]
-                            "
+                        <a
+                            href="{{ route('courier.delivery.show', ['order' => $order->id]) }}"
+                            class="sp-button sp-button-primary"
+                            aria-label="Open pickup workflow for {{ $order->order_number }}"
                         >
-                            {{
-                                $order->pickup_address
-                                ?: 'Pickup address unavailable'
-                            }}
-                        </p>
-
+                            Open Pickup Workflow
+                            <span aria-hidden="true">→</span>
+                        </a>
                     </div>
-
-
-                    <div
-                        class="
-                            mt-3
-                            flex
-                            items-center
-                            justify-between
-                            gap-3
-                            rounded-xl
-                            border border-[#eee5d6]
-                            bg-white
-                            px-4 py-3
-                        "
-                    >
-
-                        <div>
-
-                            <p
-                                class="
-                                    text-[7px]
-                                    uppercase
-                                    tracking-[.1em]
-                                    text-[#a09484]
-                                "
-                            >
-                                After Pickup
-                            </p>
-
-
-                            <p
-                                class="
-                                    mt-1
-                                    text-[8px]
-                                    font-semibold
-                                    text-[#51483d]
-                                "
-                            >
-                                {{
-                                    $isLogisticsPickup
-                                        ? 'Origin Hub Intake'
-                                        : 'Direct Buyer Delivery'
-                                }}
-                            </p>
-
-                        </div>
-
-
-                        <span
-                            class="
-                                rounded-full
-                                px-2.5 py-1
-                                text-[7px]
-                                font-bold
-
-                                {{
-                                    $isLogisticsPickup
-                                        ? 'bg-[#eaf2f7] text-[#3C6E91]'
-                                        : 'bg-[#eaf3ed] text-[#4F7D63]'
-                                }}
-                            "
-                        >
-                            {{
-                                $isLogisticsPickup
-                                    ? 'LOGISTICS'
-                                    : 'DIRECT'
-                            }}
-                        </span>
-
-                    </div>
-
-
-                    <a
-                        href="{{
-                            route(
-                                'courier.delivery.show',
-                                [
-                                    'order' =>
-                                        $order->id,
-                                ]
-                            )
-                        }}"
-                        class="
-                            mt-4
-                            inline-flex
-                            w-full
-                            items-center
-                            justify-center
-                            rounded-xl
-                            bg-[#D99600]
-                            px-4 py-3
-                            text-[9px]
-                            font-semibold
-                            text-white
-                        "
-                    >
-                        Open Pickup Workflow →
-                    </a>
-
                 </article>
-
             @empty
+                <div class="sp-empty">
+                    <span class="sp-empty-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M3 10h18l-2-6H5l-2 6Z"></path>
+                            <path d="M5 10v10h14V10"></path>
+                            <path d="M9 20v-6h6v6"></path>
+                        </svg>
+                    </span>
 
-                <div
-                    class="
-                        lg:col-span-2
-                        rounded-[18px]
-                        border border-dashed
-                        border-[#ddd2c1]
-                        bg-white
-                        p-12
-                        text-center
-                    "
-                >
+                    <h4 class="sp-empty-title">
+                        No Seller pickups in progress
+                    </h4>
 
-                    <p
-                        class="
-                            text-[10px]
-                            font-semibold
-                            text-[#51483d]
-                        "
-                    >
-                        No Seller pickup work in progress.
-                    </p>
-
-
-                    <p
-                        class="
-                            mt-2
-                            text-[8px]
-                            text-[#918677]
-                        "
-                    >
+                    <p class="sp-empty-description">
                         Check Pickup Assignments for newly
                         dispatched Seller collections.
                     </p>
-
                 </div>
-
             @endforelse
-
         </div>
 
+        <div class="sp-panel-footer">
+            <p class="sp-footer-copy">
+                @if($pickupTotal > 0)
+                    Showing {{ $pickupTotal }}
+                    {{ $pickupTotal === 1 ? 'pickup at collection stage.' : 'pickups at collection stage.' }}
+                @else
+                    Seller collection workflow.
+                @endif
+            </p>
+
+            <a
+                href="{{ route('courier.requests') }}"
+                class="sp-text-link"
+            >
+                View pickup assignments
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
     </section>
-
 </div>
-
 @endsection

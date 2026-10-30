@@ -1,0 +1,682 @@
+/*
+ * SARI Rider — Active Direct Deliveries
+ * Page-specific styles only.
+ */
+
+.courier-shell #courierPageContent:has(#riderActiveDeliveries) {
+    padding: 28px 40px;
+}
+
+#riderActiveDeliveries {
+    --ad-ink: #202733;
+    --ad-muted: #707b8d;
+    --ad-border: #e7ebf0;
+    --ad-gold: #d99a0b;
+    --ad-gold-text: #93640e;
+
+    width: 100%;
+    max-width: 1620px;
+    margin: 0 auto;
+    color: var(--ad-ink);
+}
+
+#riderActiveDeliveries,
+#riderActiveDeliveries * {
+    box-sizing: border-box;
+}
+
+#riderActiveDeliveries > * + * {
+    margin-top: 16px;
+}
+
+#riderActiveDeliveries svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Page heading */
+
+#riderActiveDeliveries .ad-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ad-border);
+}
+
+#riderActiveDeliveries .ad-heading-copy {
+    flex: 1 1 350px;
+    min-width: 0;
+}
+
+#riderActiveDeliveries .ad-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ad-gold-text);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderActiveDeliveries .ad-title {
+    margin: 0;
+    color: #171c26;
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+}
+
+#riderActiveDeliveries .ad-title > span {
+    color: #bf8b19;
+}
+
+#riderActiveDeliveries .ad-description {
+    max-width: 630px;
+    margin: 8px 0 0;
+    color: var(--ad-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+#riderActiveDeliveries .ad-heading-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Buttons and links */
+
+#courierPageContent #riderActiveDeliveries .ad-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 38px;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e6eb;
+    border-radius: 10px;
+    background: #fff;
+    color: #46505f;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgb(20 28 42 / 3%);
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+#riderActiveDeliveries .ad-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#courierPageContent #riderActiveDeliveries .ad-button-gold {
+    border-color: var(--ad-gold);
+    background: var(--ad-gold);
+    color: #251c09;
+    box-shadow: 0 3px 8px rgb(217 154 11 / 12%);
+}
+
+#courierPageContent #riderActiveDeliveries .ad-button-blue {
+    border-color: #356181;
+    background: #356181;
+    color: #fff;
+}
+
+#riderActiveDeliveries .ad-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    color: var(--ad-gold-text);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+#riderActiveDeliveries a:focus-visible {
+    outline: 2px solid #996b14;
+    outline-offset: 3px;
+}
+
+/* Summary cards */
+
+#riderActiveDeliveries .ad-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+#riderActiveDeliveries .ad-stat {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid var(--ad-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow:
+        0 1px 3px rgb(24 32 48 / 2%),
+        0 8px 18px rgb(24 32 48 / 5%);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+#riderActiveDeliveries .ad-stat-copy {
+    min-width: 0;
+}
+
+#riderActiveDeliveries .ad-stat-label {
+    margin: 0;
+    color: #566174;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderActiveDeliveries .ad-stat-value {
+    margin: 6px 0 0;
+    color: #1e2735;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderActiveDeliveries .ad-stat-note {
+    margin: 6px 0 0;
+    color: var(--ad-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+#riderActiveDeliveries .ad-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #f0e5cc;
+    border-radius: 11px;
+    background: #fff9ec;
+    color: #ac7a18;
+}
+
+#riderActiveDeliveries .ad-stat-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+#riderActiveDeliveries .ad-stat-blue .ad-stat-icon {
+    border-color: #e0eaf2;
+    background: #f0f6fb;
+    color: #507b9c;
+}
+
+#riderActiveDeliveries .ad-stat-green .ad-stat-icon {
+    border-color: #dfebe4;
+    background: #f0f7f3;
+    color: #55816a;
+}
+
+/* Delivery panel */
+
+#riderActiveDeliveries .ad-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--ad-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow:
+        0 2px 4px rgb(24 32 48 / 2%),
+        0 10px 24px rgb(24 32 48 / 5%);
+}
+
+#riderActiveDeliveries .ad-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--ad-border);
+}
+
+#riderActiveDeliveries .ad-panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+}
+
+#riderActiveDeliveries .ad-heading-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #dce8f0;
+    border-radius: 10px;
+    background: #f0f6fa;
+    color: #507b9c;
+}
+
+#riderActiveDeliveries .ad-heading-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+#courierPageContent #riderActiveDeliveries .ad-panel-title {
+    margin: 0;
+    color: var(--ad-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+}
+
+#riderActiveDeliveries .ad-panel-description {
+    margin: 3px 0 0;
+    color: var(--ad-muted);
+    font-size: 10.5px;
+    line-height: 1.65;
+}
+
+#riderActiveDeliveries .ad-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border: 1px solid #e8ebf0;
+    border-radius: 999px;
+    background: #fafbfc;
+    color: #657082;
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+#riderActiveDeliveries .ad-count strong {
+    color: #344054;
+    font-weight: 600;
+}
+
+/* Delivery rows */
+
+#riderActiveDeliveries .ad-delivery {
+    min-width: 0;
+    background: #fff;
+    transition: background-color 160ms ease;
+}
+
+#riderActiveDeliveries .ad-delivery + .ad-delivery {
+    border-top: 1px solid var(--ad-border);
+}
+
+#riderActiveDeliveries .ad-delivery-main {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.3fr)
+        minmax(115px, 0.45fr);
+    align-items: start;
+    gap: 22px;
+    padding: 20px;
+}
+
+#riderActiveDeliveries .ad-identity {
+    min-width: 0;
+}
+
+#courierPageContent #riderActiveDeliveries .ad-order-number {
+    margin: 0;
+    color: #273244;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+}
+
+#riderActiveDeliveries .ad-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 9px;
+}
+
+#riderActiveDeliveries .ad-badge {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 4px 8px;
+    border: 1px solid #e5e9ef;
+    border-radius: 999px;
+    background: #f8fafc;
+    color: #647084;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderActiveDeliveries .ad-badge-blue {
+    border-color: #dce8f0;
+    background: #f0f6fa;
+    color: #3b6988;
+}
+
+#riderActiveDeliveries .ad-badge-green {
+    border-color: #dce9e1;
+    background: #f0f7f3;
+    color: #4d775f;
+}
+
+#riderActiveDeliveries .ad-route {
+    margin: 12px 0 0;
+    color: #657286;
+    font-size: 10.5px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+#riderActiveDeliveries .ad-route-arrow {
+    margin-inline: 3px;
+    color: #a48340;
+}
+
+#riderActiveDeliveries .ad-destination,
+#riderActiveDeliveries .ad-fee {
+    min-width: 0;
+    margin: 0;
+    padding-left: 20px;
+    border-left: 1px solid #e9edf2;
+}
+
+#riderActiveDeliveries .ad-field-label {
+    margin: 0;
+    color: #748094;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#riderActiveDeliveries .ad-field-value {
+    margin: 8px 0 0;
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#riderActiveDeliveries .ad-address {
+    display: block;
+    margin-top: 5px;
+    color: var(--ad-muted);
+    font-size: 10.5px;
+    font-weight: 400;
+    line-height: 1.8;
+}
+
+#riderActiveDeliveries .ad-fee-value {
+    margin: 8px 0 0;
+    color: #344054;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+/* Footer actions */
+
+#riderActiveDeliveries .ad-delivery-footer,
+#riderActiveDeliveries .ad-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 20px;
+    border-top: 1px solid #edf0f4;
+}
+
+#riderActiveDeliveries .ad-delivery-footer {
+    background: #fdfefe;
+}
+
+#riderActiveDeliveries .ad-current-stage {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    color: var(--ad-muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+#riderActiveDeliveries .ad-current-stage strong {
+    color: #446b88;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+#riderActiveDeliveries .ad-delivery-footer > .ad-button {
+    margin-left: auto;
+}
+
+#riderActiveDeliveries .ad-footer-copy {
+    margin: 0;
+    color: var(--ad-muted);
+    font-size: 9.5px;
+    line-height: 1.65;
+}
+
+/* Empty state */
+
+#riderActiveDeliveries .ad-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 245px;
+    padding: 34px 24px;
+    text-align: center;
+}
+
+#riderActiveDeliveries .ad-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    border: 1px solid #dce8f0;
+    border-radius: 15px;
+    background: #f0f6fa;
+    color: #507b9c;
+}
+
+#riderActiveDeliveries .ad-empty-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+#courierPageContent #riderActiveDeliveries .ad-empty-title {
+    margin: 0;
+    color: #354155;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderActiveDeliveries .ad-empty-description {
+    max-width: 390px;
+    margin: 7px 0 0;
+    color: var(--ad-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+#riderActiveDeliveries .ad-empty-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: 14px;
+}
+
+/* Hover states */
+
+@media (hover: hover) {
+    #courierPageContent #riderActiveDeliveries .ad-button:hover {
+        border-color: #d8c397;
+        background: #fffbf3;
+        box-shadow: 0 3px 8px rgb(24 32 48 / 5%);
+    }
+
+    #courierPageContent #riderActiveDeliveries .ad-button-gold:hover {
+        border-color: #c88c08;
+        background: #c88c08;
+    }
+
+    #courierPageContent #riderActiveDeliveries .ad-button-blue:hover {
+        border-color: #294e69;
+        background: #294e69;
+    }
+
+    #riderActiveDeliveries .ad-text-link:hover {
+        color: #704b08;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    #riderActiveDeliveries .ad-delivery:hover {
+        background: #fdfcf9;
+    }
+
+    #riderActiveDeliveries .ad-stat:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 2px 5px rgb(24 32 48 / 3%),
+            0 12px 25px rgb(24 32 48 / 7%);
+    }
+}
+
+/* Responsive layout */
+
+@media (max-width: 1199px) {
+    #riderActiveDeliveries .ad-delivery-main {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    #riderActiveDeliveries .ad-identity {
+        grid-column: 1 / -1;
+    }
+
+    #riderActiveDeliveries .ad-destination {
+        padding-left: 0;
+        border-left: 0;
+    }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderActiveDeliveries) {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 719px) {
+    #riderActiveDeliveries .ad-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderActiveDeliveries) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderActiveDeliveries .ad-heading-actions {
+        width: 100%;
+    }
+
+    #riderActiveDeliveries .ad-heading-actions > .ad-button {
+        flex: 1 1 160px;
+    }
+
+    #riderActiveDeliveries .ad-panel-head,
+    #riderActiveDeliveries .ad-delivery-main {
+        padding: 16px;
+    }
+
+    #riderActiveDeliveries .ad-delivery-main {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderActiveDeliveries .ad-fee {
+        padding: 14px 0 0;
+        border-left: 0;
+        border-top: 1px solid #e9edf2;
+    }
+
+    #riderActiveDeliveries .ad-delivery-footer,
+    #riderActiveDeliveries .ad-panel-footer {
+        padding: 12px 16px;
+    }
+
+    #riderActiveDeliveries .ad-delivery-footer > .ad-button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #courierPageContent #riderActiveDeliveries .ad-button {
+        min-height: 44px;
+        font-size: 11px;
+    }
+
+    #riderActiveDeliveries .ad-text-link {
+        min-height: 44px;
+    }
+
+    #riderActiveDeliveries .ad-empty {
+        min-height: 225px;
+        padding: 28px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderActiveDeliveries *,
+    #riderActiveDeliveries *::before,
+    #riderActiveDeliveries *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    #riderActiveDeliveries .ad-stat:hover {
+        transform: none;
+    }
+}

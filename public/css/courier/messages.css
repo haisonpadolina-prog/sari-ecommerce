@@ -1,0 +1,773 @@
+/* Rider Messages — Seller-style workspace, designed for 100% zoom */
+
+.courier-shell #courierMain:has(#riderMessenger) {
+    display: flex;
+    height: 100dvh;
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.courier-shell #courierMain:has(#riderMessenger) > header {
+    flex-shrink: 0;
+}
+
+.courier-shell #courierPageContent:has(#riderMessenger) {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 0%;
+    padding: 0;
+    overflow: hidden;
+}
+
+#riderMessenger {
+    --rm-ink: #263242;
+    --rm-muted: #8490a2;
+    --rm-border: #e2e7ee;
+    --rm-gold: #d99a0b;
+    --rm-surface: #f7f9fb;
+
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    background: #fff;
+    color: var(--rm-ink);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+#riderMessenger,
+#riderMessenger * {
+    box-sizing: border-box;
+}
+
+#riderMessenger :is(h2, h3, p, ol, dl, dd) {
+    margin: 0;
+}
+
+#riderMessenger [hidden] {
+    display: none !important;
+}
+
+#riderMessenger .rm-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+#riderMessenger :is(a, button, input, textarea, [tabindex]):focus-visible {
+    outline: 3px solid rgb(153 105 14 / 50%);
+    outline-offset: 3px;
+}
+
+/* Feedback remains inside the workspace */
+
+#riderMessenger .rm-alert {
+    flex-shrink: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+#riderMessenger .rm-alert-success {
+    border-color: #d1e7d9;
+    background: #f1f8f4;
+    color: #39684d;
+}
+
+#riderMessenger .rm-alert-error {
+    border-color: #f0d6dd;
+    background: #fff3f5;
+    color: #a34054;
+}
+
+/* Three columns at normal desktop zoom */
+
+#riderMessenger .rm-workspace {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 0%;
+    grid-template-columns: 220px minmax(0, 1fr) 210px;
+}
+
+#riderMessenger .rm-conversations,
+#riderMessenger .rm-details {
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: #fff;
+}
+
+#riderMessenger .rm-conversations {
+    border-right: 1px solid var(--rm-border);
+}
+
+#riderMessenger .rm-details {
+    border-left: 1px solid var(--rm-border);
+}
+
+#riderMessenger .rm-pane-heading {
+    padding: 18px 16px;
+    border-bottom: 1px solid var(--rm-border);
+}
+
+#courierPageContent #riderMessenger .rm-pane-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#riderMessenger .rm-pane-description {
+    margin-top: 4px;
+    color: var(--rm-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Search */
+
+#riderMessenger .rm-search {
+    position: relative;
+    margin-top: 16px;
+}
+
+#riderMessenger .rm-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 11px;
+    width: 15px;
+    height: 15px;
+    color: #919cad;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+#courierPageContent #riderMessenger .rm-search-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    padding: 10px 10px 10px 33px;
+    border: 1px solid #d8e0ea;
+    border-radius: 10px;
+    background: #f9fafc;
+    color: var(--rm-ink);
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+#riderMessenger .rm-search-result {
+    margin-top: 8px;
+    color: #778497;
+    font-size: 10px;
+}
+
+/* Selected conversation */
+
+#riderMessenger .rm-conversation-list {
+    padding: 12px;
+}
+
+#riderMessenger .rm-conversation {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 10px;
+    border-left: 3px solid var(--rm-gold);
+    background: #f8fafc;
+    color: inherit;
+    text-decoration: none;
+}
+
+#riderMessenger .rm-brand {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #5d5546;
+    border-radius: 9px;
+    background: #1f211f;
+    box-shadow: 0 2px 5px rgb(20 30 50 / 8%);
+}
+
+#riderMessenger .rm-brand img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#riderMessenger .rm-conversation-copy {
+    min-width: 0;
+}
+
+#riderMessenger .rm-conversation-name {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderMessenger .rm-conversation-role {
+    margin-top: 2px;
+    color: var(--rm-muted);
+    font-size: 9px;
+}
+
+#riderMessenger .rm-preview {
+    display: -webkit-box;
+    margin-top: 7px;
+    overflow: hidden;
+    color: #6f7d90;
+    font-size: 10px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Center column */
+
+#riderMessenger .rm-center {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    background: var(--rm-surface);
+}
+
+#riderMessenger .rm-chat-header {
+    display: flex;
+    min-height: 70px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--rm-border);
+    background: #fff;
+}
+
+#riderMessenger .rm-contact {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+}
+
+#riderMessenger .rm-contact-copy {
+    min-width: 0;
+}
+
+#courierPageContent #riderMessenger .rm-contact-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#riderMessenger .rm-contact-description {
+    margin-top: 3px;
+    color: var(--rm-muted);
+    font-size: 10px;
+}
+
+#courierPageContent #riderMessenger .rm-icon-button {
+    display: inline-flex;
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    min-height: 36px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #dce3ec;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #75839a;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+#riderMessenger .rm-icon-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+#riderMessenger .rm-notice {
+    flex-shrink: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid #eee0bf;
+    background: #fffbf2;
+    color: #8a6c35;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* Thread */
+
+#riderMessenger .rm-thread {
+    min-height: 0;
+    flex: 1 1 0%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 24px 20px;
+    background: #f7f9fb;
+}
+
+#riderMessenger :is(.rm-thread, .rm-conversations, .rm-details) {
+    scrollbar-width: thin;
+    scrollbar-color: #d4dce7 transparent;
+}
+
+#riderMessenger .rm-message-list {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 18px;
+    padding: 0;
+    list-style: none;
+}
+
+#riderMessenger .rm-message {
+    display: flex;
+    min-width: 0;
+    align-items: flex-end;
+    gap: 9px;
+}
+
+#riderMessenger .rm-message-own {
+    justify-content: flex-end;
+}
+
+#riderMessenger .rm-message-avatar {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 19px;
+    border-radius: 7px;
+}
+
+#riderMessenger .rm-message-content {
+    display: flex;
+    min-width: 0;
+    max-width: min(78%, 560px);
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#riderMessenger .rm-message-own .rm-message-content {
+    align-items: flex-end;
+}
+
+#riderMessenger .rm-sender {
+    margin-bottom: 5px;
+    color: #7e899a;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+#riderMessenger .rm-bubble {
+    display: block;
+    width: fit-content;
+    min-width: 0;
+    max-width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #dfe4ea;
+    border-radius: 12px 12px 12px 4px;
+    background: #fff;
+    color: #3f4b5a;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 3%),
+        0 5px 14px rgb(15 23 42 / 5%);
+}
+
+#riderMessenger .rm-message-own .rm-bubble {
+    border-color: #dce4ed;
+    border-radius: 12px 12px 4px 12px;
+    background: #edf3f9;
+    color: #354b65;
+}
+
+#riderMessenger .rm-time {
+    display: block;
+    margin-top: 5px;
+    color: #98a2b3;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+/* Empty state */
+
+#riderMessenger .rm-empty {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 14px;
+    text-align: center;
+}
+
+#riderMessenger .rm-empty-icon {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    place-items: center;
+    margin-bottom: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #fff;
+    color: #8b98aa;
+}
+
+#riderMessenger .rm-empty-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+#riderMessenger .rm-empty strong {
+    color: #536174;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#riderMessenger .rm-empty p {
+    max-width: 300px;
+    margin-top: 7px;
+    color: var(--rm-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* Compact composer attached to the bottom */
+
+#riderMessenger .rm-composer {
+    flex-shrink: 0;
+    padding: 12px 14px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--rm-border);
+    background: #fff;
+}
+
+#riderMessenger .rm-composer-box {
+    display: flex;
+    min-width: 0;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 7px 8px;
+    border: 1px solid #d6deea;
+    border-radius: 14px;
+    background: #fff;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+#riderMessenger .rm-composer-box:focus-within {
+    border-color: #c5a365;
+    box-shadow: 0 0 0 3px rgb(201 145 40 / 7%);
+}
+
+#courierPageContent #riderMessenger .rm-textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    min-height: 42px;
+    max-height: 120px;
+    flex: 1;
+    padding: 11px 5px;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--rm-ink);
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 20px;
+    box-shadow: none;
+    resize: none;
+    overflow-y: auto;
+}
+
+#courierPageContent #riderMessenger .rm-textarea:disabled {
+    color: #9aa3b0;
+    cursor: not-allowed;
+}
+
+#courierPageContent #riderMessenger .rm-send {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-color: var(--rm-gold);
+    background: var(--rm-gold);
+    color: #fff;
+}
+
+#courierPageContent #riderMessenger .rm-send:disabled {
+    border-color: #e1e6ee;
+    background: #e9edf3;
+    color: #9aa5b5;
+    cursor: not-allowed;
+}
+
+#riderMessenger .rm-composer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 7px;
+    color: #8d98a9;
+    font-size: 9px;
+}
+
+#riderMessenger .rm-field-error {
+    margin-top: 8px;
+    color: #a34054;
+    font-size: 10px;
+}
+
+/* Account details */
+
+#riderMessenger .rm-profile {
+    padding: 22px 14px 18px;
+    text-align: center;
+}
+
+#riderMessenger .rm-profile-avatar {
+    display: grid;
+    width: 50px;
+    height: 50px;
+    place-items: center;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #607a96;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#riderMessenger .rm-profile-name {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderMessenger .rm-profile-email {
+    margin-top: 5px;
+    color: #8c97a8;
+    font-size: 9px;
+    overflow-wrap: anywhere;
+}
+
+#riderMessenger .rm-role {
+    display: inline-flex;
+    margin-top: 10px;
+    padding: 4px 10px;
+    border: 1px solid #dce5ef;
+    border-radius: 999px;
+    background: #f5f8fc;
+    color: #58718d;
+    font-size: 10px;
+}
+
+#riderMessenger .rm-detail-list {
+    display: grid;
+    gap: 12px;
+    padding: 0 14px 18px;
+}
+
+#riderMessenger .rm-detail-card {
+    padding: 13px;
+    border: 1px solid #e1e6ed;
+    border-radius: 12px;
+    background: #fafbfd;
+}
+
+#riderMessenger .rm-detail-card dt {
+    margin-bottom: 6px;
+    color: #8b96a6;
+    font-size: 10px;
+}
+
+#riderMessenger .rm-detail-card dd {
+    color: #506075;
+    font-size: 11px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+#riderMessenger .rm-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#riderMessenger .rm-status::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a0a9b5;
+    content: "";
+}
+
+#riderMessenger .rm-status-online {
+    color: #4c7a60;
+}
+
+#riderMessenger .rm-status-online::before {
+    background: #5c9873;
+}
+
+#riderMessenger .rm-details-note {
+    padding: 0 16px 20px;
+    color: #8c97a8;
+    font-size: 10px;
+    line-height: 1.85;
+}
+
+/* Interaction */
+
+@media (hover: hover) {
+    #courierPageContent #riderMessenger .rm-icon-button:hover {
+        border-color: #cbd5e2;
+        background: #eef2f7;
+    }
+
+    #courierPageContent #riderMessenger .rm-send:not(:disabled):hover {
+        border-color: #c88b08;
+        background: #c88b08;
+    }
+
+    #riderMessenger .rm-conversation:hover {
+        background: #f2f6fa;
+    }
+}
+
+/* Wider desktop */
+
+@media (min-width: 1600px) {
+    #riderMessenger .rm-workspace {
+        grid-template-columns: 250px minmax(0, 1fr) 240px;
+    }
+
+    #riderMessenger .rm-thread {
+        padding: 26px 28px;
+    }
+}
+
+/* Smaller laptops: preserve chat width */
+
+@media (max-width: 1199px) {
+    #riderMessenger .rm-workspace {
+        grid-template-columns: 205px minmax(0, 1fr);
+    }
+
+    #riderMessenger .rm-details {
+        display: none;
+    }
+}
+
+/* Mobile: search above the conversation */
+
+@media (max-width: 767px) {
+    #riderMessenger .rm-workspace {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    #riderMessenger .rm-conversations {
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--rm-border);
+    }
+
+    #riderMessenger .rm-conversations .rm-pane-heading {
+        padding: 10px 14px;
+        border-bottom: 0;
+    }
+
+    #riderMessenger .rm-conversations .rm-pane-title,
+    #riderMessenger .rm-conversations .rm-pane-description,
+    #riderMessenger .rm-conversation-list {
+        display: none;
+    }
+
+    #riderMessenger .rm-search {
+        margin-top: 0;
+    }
+
+    #courierPageContent #riderMessenger .rm-search-input {
+        min-height: 44px;
+        font-size: 16px;
+    }
+
+    #riderMessenger .rm-chat-header {
+        min-height: 66px;
+        padding: 12px 14px;
+    }
+
+    #riderMessenger .rm-thread {
+        padding: 18px 14px;
+    }
+
+    #riderMessenger .rm-message-content {
+        max-width: 86%;
+    }
+
+    #riderMessenger .rm-message-avatar {
+        display: none;
+    }
+
+    #riderMessenger .rm-bubble {
+        font-size: 12px;
+    }
+
+    #riderMessenger .rm-composer {
+        padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    }
+
+    #courierPageContent #riderMessenger .rm-textarea {
+        min-height: 44px;
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    #courierPageContent #riderMessenger .rm-icon-button {
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderMessenger *,
+    #riderMessenger *::before,
+    #riderMessenger *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}

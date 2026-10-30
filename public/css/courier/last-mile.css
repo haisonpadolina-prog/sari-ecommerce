@@ -1,0 +1,840 @@
+/*
+ * SARI Rider — Last-Mile Deliveries
+ * Page-specific styles only.
+ */
+
+.courier-shell #courierPageContent:has(#riderLastMile) {
+    padding: 28px 40px;
+}
+
+#riderLastMile {
+    --lm-ink: #202733;
+    --lm-muted: #707b8d;
+    --lm-border: #e7ebf0;
+    --lm-gold: #d99a0b;
+    --lm-gold-text: #93640e;
+
+    width: 100%;
+    max-width: 1620px;
+    margin: 0 auto;
+    color: var(--lm-ink);
+}
+
+#riderLastMile,
+#riderLastMile * {
+    box-sizing: border-box;
+}
+
+#riderLastMile > * + * {
+    margin-top: 16px;
+}
+
+#riderLastMile svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+#riderLastMile form {
+    min-width: 0;
+    margin: 0;
+}
+
+/* Page heading */
+
+#riderLastMile .lm-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--lm-border);
+}
+
+#riderLastMile .lm-heading-copy {
+    flex: 1 1 360px;
+    min-width: 0;
+}
+
+#riderLastMile .lm-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--lm-gold-text);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderLastMile .lm-title {
+    margin: 0;
+    color: #171c26;
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+}
+
+#riderLastMile .lm-title > span {
+    color: #bf8b19;
+}
+
+#riderLastMile .lm-description {
+    max-width: 630px;
+    margin: 8px 0 0;
+    color: var(--lm-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+#riderLastMile .lm-heading-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Buttons */
+
+#courierPageContent #riderLastMile .lm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 38px;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e6eb;
+    border-radius: 10px;
+    background: #fff;
+    color: #46505f;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgb(20 28 42 / 3%);
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+#riderLastMile .lm-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#courierPageContent #riderLastMile .lm-button-gold {
+    border-color: var(--lm-gold);
+    background: var(--lm-gold);
+    color: #251c09;
+    box-shadow: 0 3px 8px rgb(217 154 11 / 12%);
+}
+
+#courierPageContent #riderLastMile .lm-button-blue {
+    border-color: #356181;
+    background: #356181;
+    color: #fff;
+}
+
+#courierPageContent #riderLastMile .lm-button-green {
+    border-color: #396d51;
+    background: #396d51;
+    color: #fff;
+}
+
+#riderLastMile :is(a, button):focus-visible {
+    outline: 2px solid #996b14;
+    outline-offset: 3px;
+}
+
+/* Feedback */
+
+#riderLastMile .lm-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+#riderLastMile .lm-alert-success {
+    border-color: #bbdfca;
+    background: #f0f9f3;
+    color: #32684a;
+}
+
+#riderLastMile .lm-alert-error {
+    border-color: #fecdd3;
+    background: #fff1f2;
+    color: #9f1239;
+}
+
+/* Summary */
+
+#riderLastMile .lm-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+#riderLastMile .lm-stat {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid var(--lm-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow:
+        0 1px 3px rgb(24 32 48 / 2%),
+        0 8px 18px rgb(24 32 48 / 5%);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+#riderLastMile .lm-stat-copy {
+    min-width: 0;
+}
+
+#riderLastMile .lm-stat-label {
+    margin: 0;
+    color: #566174;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderLastMile .lm-stat-value {
+    margin: 6px 0 0;
+    color: #1e2735;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderLastMile .lm-stat-note {
+    margin: 6px 0 0;
+    color: var(--lm-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #f0e5cc;
+    border-radius: 11px;
+    background: #fff9ec;
+    color: #ac7a18;
+}
+
+#riderLastMile .lm-stat-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+#riderLastMile .lm-stat-blue .lm-stat-icon {
+    border-color: #e0eaf2;
+    background: #f0f6fb;
+    color: #507b9c;
+}
+
+#riderLastMile .lm-stat-green .lm-stat-icon {
+    border-color: #dfebe4;
+    background: #f0f7f3;
+    color: #55816a;
+}
+
+/* Workflow guide */
+
+#riderLastMile .lm-guide {
+    padding: 15px 18px;
+    border: 1px solid var(--lm-border);
+    border-radius: 15px;
+    background: #fff;
+}
+
+#riderLastMile .lm-guide-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#riderLastMile .lm-guide-step {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 2px 18px;
+}
+
+#riderLastMile .lm-guide-step:first-child {
+    padding-left: 0;
+}
+
+#riderLastMile .lm-guide-step + .lm-guide-step {
+    border-left: 1px solid #e9edf2;
+}
+
+#riderLastMile .lm-guide-step:last-child {
+    padding-right: 0;
+}
+
+#riderLastMile .lm-guide-number {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 29px;
+    height: 29px;
+    border: 1px solid #ece2cd;
+    border-radius: 10px;
+    background: #fff9ed;
+    color: #986e1d;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#riderLastMile .lm-guide-title {
+    margin: 0;
+    color: #3c4758;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+#riderLastMile .lm-guide-copy {
+    margin: 3px 0 0;
+    color: var(--lm-muted);
+    font-size: 9.5px;
+    line-height: 1.6;
+}
+
+/* Batch cards */
+
+#riderLastMile .lm-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--lm-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow:
+        0 2px 4px rgb(24 32 48 / 2%),
+        0 10px 24px rgb(24 32 48 / 5%);
+}
+
+#riderLastMile .lm-batch-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--lm-border);
+}
+
+#riderLastMile .lm-batch-identity {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+
+#riderLastMile .lm-batch-code {
+    margin: 0;
+    color: var(--lm-gold-text);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    overflow-wrap: anywhere;
+}
+
+#courierPageContent #riderLastMile .lm-batch-title {
+    margin: 6px 0 0;
+    color: var(--lm-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: -0.025em;
+}
+
+#riderLastMile .lm-route-arrow {
+    margin-inline: 4px;
+    color: #a48340;
+}
+
+#riderLastMile .lm-batch-copy {
+    margin: 4px 0 0;
+    color: var(--lm-muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+/* Status badges */
+
+#riderLastMile .lm-badge {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 5px 9px;
+    border: 1px solid #e4e9ef;
+    border-radius: 999px;
+    background: #f7f9fb;
+    color: #627084;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-transform: capitalize;
+}
+
+#riderLastMile .lm-badge-gold {
+    border-color: #efdfbb;
+    background: #fff8e9;
+    color: #8e6418;
+}
+
+#riderLastMile .lm-badge-blue {
+    border-color: #dce8f0;
+    background: #f0f6fa;
+    color: #3b6988;
+}
+
+#riderLastMile .lm-badge-green {
+    border-color: #dce9e1;
+    background: #f0f7f3;
+    color: #4d775f;
+}
+
+/* Open metadata columns */
+
+#riderLastMile .lm-details {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 0;
+    margin: 0;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--lm-border);
+}
+
+#riderLastMile .lm-detail {
+    min-width: 0;
+    padding-right: 22px;
+}
+
+#riderLastMile .lm-detail + .lm-detail {
+    padding-right: 0;
+    padding-left: 22px;
+    border-left: 1px solid #e9edf2;
+}
+
+#riderLastMile .lm-detail dt {
+    margin: 0;
+    color: #748094;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#riderLastMile .lm-detail dd {
+    margin: 7px 0 0;
+    overflow-wrap: anywhere;
+}
+
+#riderLastMile .lm-detail-value {
+    display: block;
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-detail-copy {
+    display: block;
+    margin-top: 4px;
+    color: var(--lm-muted);
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+/* Start route */
+
+#riderLastMile .lm-start {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee4cf;
+    background: #fffbf2;
+}
+
+#riderLastMile .lm-start-copy {
+    flex: 1 1 340px;
+    min-width: 0;
+}
+
+#riderLastMile .lm-start-title {
+    margin: 0;
+    color: #805d16;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-start-description {
+    max-width: 620px;
+    margin: 4px 0 0;
+    color: #85704a;
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+#riderLastMile .lm-start form {
+    margin-left: auto;
+}
+
+/* Parcel list */
+
+#riderLastMile .lm-parcels-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 20px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fafbfc;
+}
+
+#courierPageContent #riderLastMile .lm-parcels-title {
+    margin: 0;
+    color: #526074;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+#riderLastMile .lm-parcels-count {
+    color: var(--lm-muted);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+#riderLastMile .lm-parcel + .lm-parcel {
+    border-top: 1px solid var(--lm-border);
+}
+
+#riderLastMile .lm-parcel-main {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    align-items: start;
+    gap: 24px;
+    padding: 18px 20px;
+}
+
+#riderLastMile .lm-parcel-identity,
+#riderLastMile .lm-buyer {
+    min-width: 0;
+}
+
+#riderLastMile .lm-order-number {
+    margin: 0 0 8px;
+    color: #273244;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#riderLastMile .lm-buyer-label {
+    margin: 0 0 5px;
+    color: #748094;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#riderLastMile .lm-buyer-name {
+    margin: 0;
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-buyer-address,
+#riderLastMile .lm-buyer-phone {
+    margin: 5px 0 0;
+    color: var(--lm-muted);
+    font-size: 10.5px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+#riderLastMile .lm-parcel-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 12px 20px;
+    border-top: 1px solid #edf0f4;
+    background: #fdfefe;
+}
+
+#riderLastMile .lm-action-note {
+    flex: 1 1 230px;
+    min-width: 0;
+    margin: 0;
+    color: #58728a;
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+#riderLastMile .lm-parcel-action form {
+    margin-left: auto;
+}
+
+#riderLastMile .lm-action-success .lm-action-note {
+    color: #477158;
+}
+
+#riderLastMile .lm-delivered {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    padding: 12px 20px;
+    border-top: 1px solid #e5eee8;
+    background: #f7fbf8;
+    color: #4d775f;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-delivered svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* Empty states */
+
+#riderLastMile .lm-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 230px;
+    padding: 34px 24px;
+    text-align: center;
+}
+
+#riderLastMile .lm-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    border: 1px solid #efe5d0;
+    border-radius: 15px;
+    background: #fcf7eb;
+    color: #af8128;
+}
+
+#riderLastMile .lm-empty-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+#courierPageContent #riderLastMile .lm-empty-title {
+    margin: 0;
+    color: #354155;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderLastMile .lm-empty-description {
+    max-width: 380px;
+    margin: 7px 0 0;
+    color: var(--lm-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+#riderLastMile .lm-empty-parcels {
+    margin: 0;
+    padding: 28px 20px;
+    color: var(--lm-muted);
+    font-size: 11px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* Hover states */
+
+@media (hover: hover) {
+    #courierPageContent #riderLastMile .lm-button:hover {
+        border-color: #d8c397;
+        background: #fffbf3;
+        box-shadow: 0 3px 8px rgb(24 32 48 / 5%);
+    }
+
+    #courierPageContent #riderLastMile .lm-button-gold:hover {
+        border-color: #c88c08;
+        background: #c88c08;
+    }
+
+    #courierPageContent #riderLastMile .lm-button-blue:hover {
+        border-color: #294e69;
+        background: #294e69;
+    }
+
+    #courierPageContent #riderLastMile .lm-button-green:hover {
+        border-color: #2e5942;
+        background: #2e5942;
+    }
+
+    #riderLastMile .lm-stat:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 2px 5px rgb(24 32 48 / 3%),
+            0 12px 25px rgb(24 32 48 / 7%);
+    }
+}
+
+/* Responsive layout */
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderLastMile) {
+        padding: 24px;
+    }
+
+    #riderLastMile .lm-guide-step {
+        padding-inline: 12px;
+    }
+}
+
+@media (max-width: 719px) {
+    #riderLastMile .lm-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderLastMile .lm-guide-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderLastMile .lm-guide-step {
+        padding: 11px 0;
+    }
+
+    #riderLastMile .lm-guide-step:first-child {
+        padding-top: 0;
+    }
+
+    #riderLastMile .lm-guide-step:last-child {
+        padding-bottom: 0;
+    }
+
+    #riderLastMile .lm-guide-step + .lm-guide-step {
+        border-left: 0;
+        border-top: 1px solid #e9edf2;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderLastMile) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderLastMile .lm-heading-actions {
+        width: 100%;
+    }
+
+    #riderLastMile .lm-heading-actions > .lm-button {
+        flex: 1 1 160px;
+    }
+
+    #riderLastMile .lm-batch-head,
+    #riderLastMile .lm-details,
+    #riderLastMile .lm-start,
+    #riderLastMile .lm-parcel-main {
+        padding: 16px;
+    }
+
+    #riderLastMile .lm-details,
+    #riderLastMile .lm-parcel-main {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    #riderLastMile .lm-detail {
+        padding: 0;
+    }
+
+    #riderLastMile .lm-detail + .lm-detail {
+        padding: 14px 0 0;
+        border-left: 0;
+        border-top: 1px solid #e9edf2;
+    }
+
+    #riderLastMile .lm-parcels-heading,
+    #riderLastMile .lm-parcel-action,
+    #riderLastMile .lm-delivered {
+        padding: 12px 16px;
+    }
+
+    #riderLastMile .lm-start form,
+    #riderLastMile .lm-parcel-action form {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #riderLastMile form .lm-button {
+        width: 100%;
+    }
+
+    #courierPageContent #riderLastMile .lm-button {
+        min-height: 44px;
+        font-size: 11px;
+    }
+
+    #riderLastMile .lm-empty {
+        min-height: 215px;
+        padding: 28px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderLastMile *,
+    #riderLastMile *::before,
+    #riderLastMile *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    #riderLastMile .lm-stat:hover {
+        transform: none;
+    }
+}

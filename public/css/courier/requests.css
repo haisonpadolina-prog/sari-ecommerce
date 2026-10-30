@@ -1,0 +1,634 @@
+/*
+ * SARI Rider — Pickup Assignments
+ * Page-specific styles only.
+ */
+
+.courier-shell #courierPageContent:has(#riderPickupAssignments) {
+    padding: 28px 40px;
+}
+
+#riderPickupAssignments {
+    --rp-ink: #202733;
+    --rp-muted: #707b8d;
+    --rp-border: #e7ebf0;
+    --rp-gold: #d99a0b;
+    --rp-gold-text: #93640e;
+
+    width: 100%;
+    max-width: 1620px;
+    margin: 0 auto;
+    color: var(--rp-ink);
+}
+
+#riderPickupAssignments,
+#riderPickupAssignments * {
+    box-sizing: border-box;
+}
+
+#riderPickupAssignments > * + * {
+    margin-top: 16px;
+}
+
+#riderPickupAssignments svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Page heading */
+
+#riderPickupAssignments .rp-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rp-border);
+}
+
+#riderPickupAssignments .rp-heading-copy {
+    min-width: 0;
+}
+
+#riderPickupAssignments .rp-eyebrow {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--rp-gold-text);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderPickupAssignments .rp-title {
+    margin: 0;
+    color: #171c26;
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+}
+
+#riderPickupAssignments .rp-title > span {
+    color: #bf8b19;
+}
+
+#riderPickupAssignments .rp-description {
+    max-width: 680px;
+    margin: 8px 0 0;
+    color: var(--rp-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+/* Buttons and links */
+
+#courierPageContent #riderPickupAssignments .rp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    min-height: 38px;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e6eb;
+    border-radius: 10px;
+    background: #fff;
+    color: #46505f;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgb(20 28 42 / 3%);
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+#riderPickupAssignments .rp-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#courierPageContent #riderPickupAssignments .rp-button-primary {
+    border-color: var(--rp-gold);
+    background: var(--rp-gold);
+    color: #251c09;
+    box-shadow: 0 3px 8px rgb(217 154 11 / 12%);
+}
+
+#riderPickupAssignments .rp-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 28px;
+    color: var(--rp-gold-text);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+#riderPickupAssignments a:focus-visible {
+    outline: 2px solid #996b14;
+    outline-offset: 3px;
+}
+
+/* Feedback messages */
+
+#riderPickupAssignments .rp-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+#riderPickupAssignments .rp-alert-error {
+    border-color: #fecdd3;
+    background: #fff1f2;
+    color: #9f1239;
+}
+
+#riderPickupAssignments .rp-alert-success {
+    border-color: #bbdfca;
+    background: #f0f9f3;
+    color: #32684a;
+}
+
+/* Shared surfaces */
+
+#riderPickupAssignments .rp-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--rp-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow:
+        0 2px 4px rgb(24 32 48 / 2%),
+        0 10px 24px rgb(24 32 48 / 5%);
+}
+
+#riderPickupAssignments .rp-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--rp-border);
+}
+
+#riderPickupAssignments .rp-panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+}
+
+#courierPageContent #riderPickupAssignments .rp-panel-title {
+    margin: 0;
+    color: var(--rp-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+}
+
+#riderPickupAssignments .rp-panel-description {
+    margin: 3px 0 0;
+    color: var(--rp-muted);
+    font-size: 10.5px;
+    line-height: 1.65;
+}
+
+#riderPickupAssignments .rp-heading-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #eee6d6;
+    border-radius: 10px;
+    background: #fffbf2;
+    color: #ab7a18;
+}
+
+#riderPickupAssignments .rp-heading-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+#riderPickupAssignments .rp-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border: 1px solid #e8ebf0;
+    border-radius: 999px;
+    background: #fafbfc;
+    color: #657082;
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+#riderPickupAssignments .rp-count strong {
+    color: #344054;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Badges */
+
+#riderPickupAssignments .rp-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+#riderPickupAssignments .rp-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 4px 8px;
+    border: 1px solid #e7ebf0;
+    border-radius: 999px;
+    background: #f8fafc;
+    color: #647084;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderPickupAssignments .rp-badge-gold {
+    border-color: #efdfbb;
+    background: #fff8e9;
+    color: #8e6418;
+}
+
+#riderPickupAssignments .rp-badge-blue {
+    border-color: #dce8f0;
+    background: #f0f6fa;
+    color: #3b6988;
+}
+
+/* Current assignment */
+
+#riderPickupAssignments .rp-active {
+    border-color: #dce6ef;
+}
+
+#riderPickupAssignments .rp-active .rp-panel-head {
+    border-bottom-color: #e3ebf2;
+    background: #f8fbfd;
+}
+
+#riderPickupAssignments .rp-active .rp-heading-icon {
+    border-color: #dce8f0;
+    background: #eef5fa;
+    color: #426f8f;
+}
+
+#riderPickupAssignments .rp-active-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px 20px;
+}
+
+#riderPickupAssignments .rp-active-copy {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+
+#riderPickupAssignments .rp-order-number {
+    margin: 0;
+    color: #273244;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#riderPickupAssignments .rp-active-status {
+    margin: 5px 0 0;
+    color: #52728a;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+#riderPickupAssignments .rp-active-note {
+    max-width: 620px;
+    margin: 10px 0 0;
+    color: #677b8b;
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+/* Assignment list */
+
+#riderPickupAssignments .rp-assignment {
+    min-width: 0;
+    background: #fff;
+    transition: background-color 160ms ease;
+}
+
+#riderPickupAssignments .rp-assignment + .rp-assignment {
+    border-top: 1px solid var(--rp-border);
+}
+
+#riderPickupAssignments .rp-assignment-main {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.6fr);
+    align-items: start;
+    gap: 24px;
+    padding: 20px;
+}
+
+#riderPickupAssignments .rp-order-identity {
+    min-width: 0;
+}
+
+#riderPickupAssignments .rp-seller-name {
+    margin: 5px 0 10px;
+    color: var(--rp-muted);
+    font-size: 10.5px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+/* Open columns, matching Seller Shipping */
+
+#riderPickupAssignments .rp-locations {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    margin: 0;
+}
+
+#riderPickupAssignments .rp-location {
+    min-width: 0;
+    padding: 2px 18px;
+}
+
+#riderPickupAssignments .rp-location:first-child {
+    padding-left: 0;
+}
+
+#riderPickupAssignments .rp-location:last-child {
+    padding-right: 0;
+    border-left: 1px solid #e9edf2;
+}
+
+#riderPickupAssignments .rp-location dt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: #748094;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#riderPickupAssignments .rp-location dt svg {
+    width: 13px;
+    height: 13px;
+    color: #a58238;
+}
+
+#riderPickupAssignments .rp-location dd {
+    margin: 7px 0 0;
+    overflow-wrap: anywhere;
+}
+
+#riderPickupAssignments .rp-location-name {
+    display: block;
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderPickupAssignments .rp-location-address {
+    display: block;
+    margin-top: 4px;
+    color: var(--rp-muted);
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+/* Footers and actions */
+
+#riderPickupAssignments .rp-assignment-footer,
+#riderPickupAssignments .rp-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 20px;
+    border-top: 1px solid #edf0f4;
+}
+
+#riderPickupAssignments .rp-assignment-footer {
+    background: #fdfefe;
+}
+
+#riderPickupAssignments .rp-assignment-note {
+    flex: 1 1 280px;
+    min-width: 0;
+    margin: 0;
+    color: var(--rp-muted);
+    font-size: 10px;
+    line-height: 1.75;
+}
+
+#riderPickupAssignments .rp-assignment-note strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #526779;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#riderPickupAssignments .rp-assignment-footer > .rp-button {
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+#riderPickupAssignments .rp-panel-footer {
+    background: #fff;
+}
+
+#riderPickupAssignments .rp-footer-copy {
+    margin: 0;
+    color: var(--rp-muted);
+    font-size: 9.5px;
+    line-height: 1.65;
+}
+
+/* Empty state */
+
+#riderPickupAssignments .rp-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 230px;
+    padding: 34px 24px;
+    text-align: center;
+}
+
+#riderPickupAssignments .rp-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    border: 1px solid #efe5d0;
+    border-radius: 15px;
+    background: #fcf7eb;
+    color: #af8128;
+}
+
+#riderPickupAssignments .rp-empty-icon svg {
+    width: 23px;
+    height: 23px;
+}
+
+#courierPageContent #riderPickupAssignments .rp-empty-title {
+    margin: 0;
+    color: #354155;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderPickupAssignments .rp-empty-description {
+    max-width: 360px;
+    margin: 7px 0 0;
+    color: var(--rp-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* Hover treatment */
+
+@media (hover: hover) {
+    #courierPageContent #riderPickupAssignments .rp-button:hover {
+        border-color: #d8c397;
+        background: #fffbf3;
+        box-shadow: 0 3px 8px rgb(24 32 48 / 5%);
+    }
+
+    #courierPageContent #riderPickupAssignments .rp-button-primary:hover {
+        border-color: #c88c08;
+        background: #c88c08;
+    }
+
+    #riderPickupAssignments .rp-text-link:hover {
+        color: #704b08;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    #riderPickupAssignments .rp-assignment:hover {
+        background: #fdfcf9;
+    }
+}
+
+/* Responsive layout */
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderPickupAssignments) {
+        padding: 24px;
+    }
+
+    #riderPickupAssignments .rp-assignment-main {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+}
+
+@media (max-width: 719px) {
+    #riderPickupAssignments .rp-heading {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    #riderPickupAssignments .rp-heading > .rp-button {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderPickupAssignments) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderPickupAssignments .rp-panel-head,
+    #riderPickupAssignments .rp-active-main,
+    #riderPickupAssignments .rp-assignment-main {
+        padding: 16px;
+    }
+
+    #riderPickupAssignments .rp-locations {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderPickupAssignments .rp-location {
+        padding: 0;
+    }
+
+    #riderPickupAssignments .rp-location:last-child {
+        margin-top: 14px;
+        padding: 14px 0 0;
+        border-left: 0;
+        border-top: 1px solid #e9edf2;
+    }
+
+    #riderPickupAssignments .rp-assignment-footer,
+    #riderPickupAssignments .rp-panel-footer {
+        padding: 12px 16px;
+    }
+
+    #riderPickupAssignments .rp-assignment-footer > .rp-button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #courierPageContent #riderPickupAssignments .rp-button {
+        min-height: 44px;
+        font-size: 11px;
+    }
+
+    #riderPickupAssignments .rp-text-link {
+        min-height: 44px;
+    }
+
+    #riderPickupAssignments .rp-empty {
+        min-height: 215px;
+        padding: 28px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderPickupAssignments *,
+    #riderPickupAssignments *::before,
+    #riderPickupAssignments *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

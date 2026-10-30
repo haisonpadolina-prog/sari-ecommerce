@@ -1,0 +1,737 @@
+
+/* ==========================================================
+   SARI RIDER - HEADER NOTIFICATIONS
+   Dedicated Notification Dropdown Stylesheet
+
+   Design reference: Seller Notification Center
+   Scope: Header notification component only
+   ========================================================== */
+
+/* ==========================================================
+   NOTIFICATION CENTER
+   ========================================================== */
+
+.courier-notification-center {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    font-family: "Poppins", sans-serif;
+}
+
+.courier-notification-center *,
+.courier-notification-center *::before,
+.courier-notification-center *::after {
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   NOTIFICATION BELL
+   ========================================================== */
+
+.courier-notification-bell {
+    position: relative;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+
+    border: 1px solid #e8dfd0;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #443d33;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.courier-notification-bell:hover,
+.courier-notification-bell[aria-expanded="true"] {
+    border-color: #d9be8c;
+    background: #fff9ef;
+    color: #b97805;
+}
+
+.courier-notification-bell:active {
+    transform: scale(0.97);
+}
+
+.courier-notification-bell:focus-visible {
+    outline: 2px solid rgba(213, 150, 23, 0.3);
+    outline-offset: 3px;
+}
+
+.courier-notification-bell svg {
+    width: 17px;
+    height: 17px;
+    transition: transform 0.2s ease;
+}
+
+.courier-notification-bell:hover svg {
+    transform: rotate(8deg);
+}
+
+/* ==========================================================
+   UNREAD NOTIFICATION BADGE
+   ========================================================== */
+
+.courier-notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+
+    display: grid;
+    min-width: 19px;
+    height: 19px;
+    place-items: center;
+
+    padding: 0 4px;
+
+    border: 2px solid #fffdf9;
+    border-radius: 999px;
+
+    background: #3c6e91;
+    color: #ffffff;
+
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.courier-notification-badge[hidden] {
+    display: none !important;
+}
+
+/* ==========================================================
+   NOTIFICATION DROPDOWN
+   ========================================================== */
+
+.courier-notification-dropdown {
+    position: absolute;
+
+    top: calc(100% + 13px);
+    right: -10px;
+    z-index: 100;
+
+    width: min(430px, calc(100vw - 32px));
+
+    overflow: hidden;
+
+    border: 1px solid #e4e7ec;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.07),
+        0 24px 60px rgba(15, 23, 42, 0.14);
+
+    transform-origin: top right;
+}
+
+.courier-notification-dropdown[hidden] {
+    display: none !important;
+}
+
+.courier-notification-dropdown.is-open {
+    animation: courierNotificationDropdownOpen 0.22s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes courierNotificationDropdownOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-9px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Dropdown arrow */
+
+.courier-notification-dropdown::before {
+    content: "";
+
+    position: absolute;
+    top: -7px;
+    right: 22px;
+
+    width: 13px;
+    height: 13px;
+
+    border-top: 1px solid #e4e7ec;
+    border-left: 1px solid #e4e7ec;
+
+    background: #ffffff;
+
+    transform: rotate(45deg);
+}
+
+/* ==========================================================
+   DROPDOWN HEADER
+   ========================================================== */
+
+.courier-notification-heading {
+    display: flex;
+    min-height: 72px;
+
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 14px 17px;
+
+    border-bottom: 1px solid #eceff2;
+
+    background: #ffffff;
+}
+
+.courier-notification-heading-copy {
+    min-width: 0;
+    flex: 1;
+}
+
+.courier-notification-title {
+    margin: 0;
+
+    color: #101828;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+}
+
+.courier-notification-subtitle {
+    margin: 4px 0 0;
+
+    color: #98a2b3;
+
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Header actions */
+
+.courier-notification-heading-actions {
+    display: flex;
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+}
+
+/* Mark all read */
+
+.courier-notification-mark-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #475467;
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: color 0.18s ease;
+}
+
+.courier-notification-mark-all:hover {
+    color: #b97805;
+}
+
+.courier-notification-mark-all:disabled {
+    color: #b8bec8;
+    opacity: 0.65;
+    cursor: default;
+}
+
+.courier-notification-mark-all:focus-visible {
+    outline: 2px solid rgba(213, 150, 23, 0.25);
+    outline-offset: 3px;
+}
+
+/* View all */
+
+.courier-notification-view-all {
+    display: inline-flex;
+    align-items: center;
+
+    color: #a66f13;
+
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: color 0.18s ease;
+}
+
+.courier-notification-view-all:hover {
+    color: #7e5007;
+}
+
+/* ==========================================================
+   NOTIFICATION LIST
+   ========================================================== */
+
+.courier-notification-list {
+    width: 100%;
+
+    max-height: min(370px, calc(100dvh - 190px));
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d8dce2 transparent;
+}
+
+.courier-notification-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.courier-notification-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.courier-notification-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #d8dce2;
+}
+
+/* ==========================================================
+   NOTIFICATION ITEM
+   ========================================================== */
+
+.courier-notification-item {
+    display: block;
+
+    width: 100%;
+    min-height: 76px;
+
+    padding: 13px 17px;
+
+    border-bottom: 1px solid #eef1f4;
+
+    background: #ffffff;
+
+    box-shadow: none;
+
+    transition: background-color 0.18s ease;
+}
+
+.courier-notification-item:last-child {
+    border-bottom: 0;
+}
+
+.courier-notification-item:hover {
+    background: #f8fafc;
+}
+
+/* Unread notification */
+
+.courier-notification-item[data-unread="true"] {
+    background: #fffcf5;
+}
+
+.courier-notification-item[data-unread="true"]:hover {
+    background: #fff9ec;
+}
+
+/* Inner layout */
+
+.courier-notification-item-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+/* Notification icon */
+
+.courier-notification-item-icon {
+    display: grid;
+
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+
+    place-items: center;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+
+    background: #ffffff;
+    color: #b97805;
+}
+
+.courier-notification-item-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Content */
+
+.courier-notification-item-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.courier-notification-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.courier-notification-item-title {
+    margin: 0;
+
+    color: #344054;
+
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.courier-notification-item[data-unread="true"]
+.courier-notification-item-title {
+    color: #202124;
+    font-weight: 700;
+}
+
+/* Timestamp */
+
+.courier-notification-item-time {
+    flex: 0 0 auto;
+    margin-top: 2px;
+
+    color: #98a2b3;
+
+    font-size: 8px;
+    font-weight: 400;
+    line-height: 1.4;
+
+    white-space: nowrap;
+}
+
+/* Message */
+
+
+.courier-notification-item-message {
+    display: -webkit-box;
+
+    margin: 4px 0 0;
+
+    overflow: hidden;
+
+    color: #667085;
+
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Unread dot */
+
+.courier-notification-unread-dot {
+    width: 7px;
+    height: 7px;
+
+    flex: 0 0 7px;
+
+    margin-top: 5px;
+
+    border-radius: 999px;
+
+    background: #d9930a;
+}
+
+.courier-notification-item[data-unread="false"]
+.courier-notification-unread-dot {
+    display: none;
+}
+
+/* ==========================================================
+   EMPTY NOTIFICATION STATE
+   ========================================================== */
+
+.courier-notification-empty {
+    display: flex;
+
+    min-height: 205px;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px 22px;
+
+    background: #ffffff;
+
+    text-align: center;
+}
+
+.courier-notification-empty-icon {
+    display: grid;
+
+    width: 48px;
+    height: 48px;
+
+    place-items: center;
+
+    border: 1px solid #f0e5d0;
+    border-radius: 14px;
+
+    background: #fffaf0;
+    color: #b97805;
+}
+
+.courier-notification-empty-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.courier-notification-empty-title {
+    margin: 12px 0 0;
+
+    color: #475467;
+
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.courier-notification-empty-message {
+    max-width: 270px;
+
+    margin: 6px auto 0;
+
+    color: #98a2b3;
+
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+/* ==========================================================
+   NOTIFICATION FOOTER
+   ========================================================== */
+
+.courier-notification-footer {
+    display: flex;
+
+    min-height: 44px;
+
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 11px 16px;
+
+    border-top: 1px solid #eceff2;
+
+    background: #fafbfc;
+    color: #9a6817;
+
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    text-align: center;
+}
+
+.courier-notification-footer svg {
+    width: 13px;
+    height: 13px;
+}
+
+.courier-notification-footer-link {
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.courier-notification-footer-link:hover {
+    background: #f5f7fa;
+    color: #7e5007;
+}
+
+/* ==========================================================
+   RESPONSIVE - TABLET
+   ========================================================== */
+
+@media (max-width: 1023px) {
+    .courier-notification-dropdown {
+        width: min(410px, calc(100vw - 30px));
+    }
+}
+
+/* ==========================================================
+   RESPONSIVE - MOBILE
+   ========================================================== */
+
+@media (max-width: 639px) {
+    .courier-notification-dropdown {
+        top: calc(100% + 12px);
+        right: -7px;
+
+        width: calc(100vw - 28px);
+        max-width: 390px;
+
+        border-radius: 15px;
+
+        box-shadow:
+            0 8px 20px rgba(15, 23, 42, 0.08),
+            0 20px 48px rgba(15, 23, 42, 0.14);
+    }
+
+    .courier-notification-dropdown::before {
+        right: 18px;
+    }
+
+    .courier-notification-heading {
+        min-height: 67px;
+        gap: 9px;
+        padding: 12px 14px;
+    }
+
+    .courier-notification-title {
+        font-size: 13px;
+    }
+
+    .courier-notification-subtitle {
+        font-size: 9px;
+    }
+
+    .courier-notification-heading-actions {
+        gap: 9px;
+    }
+
+    .courier-notification-mark-all,
+    .courier-notification-view-all {
+        font-size: 8px;
+    }
+
+    .courier-notification-list {
+        max-height: calc(100dvh - 195px);
+    }
+
+    .courier-notification-item {
+        min-height: 70px;
+        padding: 12px 14px;
+    }
+
+    .courier-notification-item-inner {
+        gap: 10px;
+    }
+
+    .courier-notification-item-icon {
+        width: 35px;
+        height: 35px;
+        flex-basis: 35px;
+    }
+
+    .courier-notification-item-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .courier-notification-item-title {
+        font-size: 9.5px;
+    }
+
+    .courier-notification-item-message {
+        font-size: 8.5px;
+    }
+
+    .courier-notification-item-time {
+        font-size: 7.5px;
+    }
+
+    .courier-notification-empty {
+        min-height: 190px;
+        padding: 30px 16px;
+    }
+}
+
+/* ==========================================================
+   VERY SMALL SCREENS
+   ========================================================== */
+
+@media (max-width: 360px) {
+    .courier-notification-dropdown {
+        right: -5px;
+        width: calc(100vw - 24px);
+    }
+
+    .courier-notification-heading {
+        padding: 12px;
+    }
+
+    .courier-notification-heading-actions {
+        gap: 7px;
+    }
+
+    .courier-notification-item {
+        padding: 12px;
+    }
+}
+
+/* ==========================================================
+   REDUCED MOTION ACCESSIBILITY
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .courier-notification-bell,
+    .courier-notification-bell svg,
+    .courier-notification-dropdown,
+    .courier-notification-item,
+    .courier-notification-mark-all,
+    .courier-notification-view-all,
+    .courier-notification-footer-link {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}

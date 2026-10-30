@@ -1,0 +1,800 @@
+/*
+ * SARI Rider — Earnings
+ * Page-specific presentation only.
+ */
+
+.courier-shell #courierPageContent:has(#riderEarnings) {
+    padding: 28px 40px;
+}
+
+#riderEarnings {
+    --re-ink: #202733;
+    --re-muted: #707b8d;
+    --re-border: #e7ebf0;
+    --re-gold: #d99a0b;
+    --re-gold-text: #93640e;
+
+    width: 100%;
+    max-width: 1620px;
+    margin: 0 auto;
+    color: var(--re-ink);
+}
+
+#riderEarnings,
+#riderEarnings * {
+    box-sizing: border-box;
+}
+
+#riderEarnings > * + * {
+    margin-top: 16px;
+}
+
+#riderEarnings svg {
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Page heading */
+
+#riderEarnings .re-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--re-border);
+}
+
+#riderEarnings .re-heading-copy {
+    flex: 1 1 360px;
+    min-width: 0;
+}
+
+#riderEarnings .re-eyebrow {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--re-gold-text);
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderEarnings .re-title {
+    margin: 0;
+    color: #171c26;
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
+}
+
+#riderEarnings .re-title > span {
+    color: #bf8b19;
+}
+
+#riderEarnings .re-description {
+    max-width: 660px;
+    margin: 8px 0 0;
+    color: var(--re-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+#riderEarnings .re-heading-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Buttons */
+
+#courierPageContent #riderEarnings .re-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 38px;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e2e6eb;
+    border-radius: 10px;
+    background: #fff;
+    color: #46505f;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgb(20 28 42 / 3%);
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+#riderEarnings .re-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#courierPageContent #riderEarnings .re-button-gold {
+    border-color: var(--re-gold);
+    background: var(--re-gold);
+    color: #251c09;
+    box-shadow: 0 3px 8px rgb(217 154 11 / 12%);
+}
+
+#courierPageContent #riderEarnings .re-button:disabled {
+    border-color: #e4e7ec;
+    background: #edf0f4;
+    color: #667085;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+#riderEarnings :is(a, button, input, select, [tabindex]):focus-visible {
+    outline: 2px solid #996b14;
+    outline-offset: 3px;
+}
+
+/* Feedback */
+
+#riderEarnings .re-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+#riderEarnings .re-alert-success {
+    border-color: #bbdfca;
+    background: #f0f9f3;
+    color: #32684a;
+}
+
+#riderEarnings .re-alert-error {
+    border-color: #fecdd3;
+    background: #fff1f2;
+    color: #9f1239;
+}
+
+/* Summary cards */
+
+#riderEarnings .re-summary {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+#riderEarnings .re-stat {
+    position: relative;
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid var(--re-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow:
+        0 1px 3px rgb(24 32 48 / 2%),
+        0 8px 18px rgb(24 32 48 / 5%);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+#riderEarnings .re-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+#riderEarnings .re-stat-label {
+    margin: 0;
+    color: #566174;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderEarnings .re-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #f0e5cc;
+    border-radius: 9px;
+    background: #fff9ec;
+    color: #ac7a18;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#riderEarnings .re-stat-blue .re-stat-icon {
+    border-color: #e0eaf2;
+    background: #f0f6fb;
+    color: #507b9c;
+}
+
+#riderEarnings .re-stat-green .re-stat-icon {
+    border-color: #dfebe4;
+    background: #f0f7f3;
+    color: #55816a;
+}
+
+#riderEarnings .re-stat-neutral .re-stat-icon {
+    border-color: #e7e8ed;
+    background: #f5f6f9;
+    color: #757084;
+}
+
+#riderEarnings .re-stat-value {
+    margin: 9px 0 0;
+    color: #1e2735;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderEarnings .re-stat-note {
+    margin: 6px 0 0;
+    color: var(--re-muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+#riderEarnings .re-explainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 15px;
+    border: 1px solid #eee3cd;
+    border-radius: 12px;
+    background: #fffbf3;
+}
+
+#riderEarnings .re-explainer svg {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    color: #a47d30;
+}
+
+#riderEarnings .re-explainer p {
+    margin: 0;
+    color: #807153;
+    font-size: 10.5px;
+    line-height: 1.8;
+}
+
+#riderEarnings .re-wallet-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+#riderEarnings .re-wallet-card {
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid var(--re-border);
+    border-radius: 14px;
+    background: #fff;
+}
+
+#riderEarnings .re-wallet-value {
+    margin: 8px 0 0;
+    color: #344054;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+/* Main layout */
+
+#riderEarnings .re-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.8fr);
+    align-items: start;
+    gap: 16px;
+}
+
+#riderEarnings .re-main-column {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+}
+
+#riderEarnings .re-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--re-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow:
+        0 2px 4px rgb(24 32 48 / 2%),
+        0 10px 24px rgb(24 32 48 / 5%);
+}
+
+#riderEarnings .re-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--re-border);
+}
+
+#courierPageContent #riderEarnings .re-panel-title {
+    margin: 0;
+    color: var(--re-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+}
+
+#riderEarnings .re-panel-description {
+    margin: 4px 0 0;
+    color: var(--re-muted);
+    font-size: 10.5px;
+    line-height: 1.7;
+}
+
+#riderEarnings .re-panel-body {
+    padding: 18px 20px;
+}
+
+#riderEarnings .re-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid #edf0f4;
+    color: var(--re-muted);
+    font-size: 9.5px;
+    line-height: 1.7;
+}
+
+/* Badges */
+
+#riderEarnings .re-badge {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 4px 8px;
+    border: 1px solid #e5e9ef;
+    border-radius: 999px;
+    background: #f8fafc;
+    color: #647084;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+#riderEarnings .re-badge-gold {
+    border-color: #efdfbb;
+    background: #fff8e9;
+    color: #8e6418;
+}
+
+#riderEarnings .re-badge-blue {
+    border-color: #dce8f0;
+    background: #f0f6fa;
+    color: #3b6988;
+}
+
+#riderEarnings .re-badge-green {
+    border-color: #dce9e1;
+    background: #f0f7f3;
+    color: #4d775f;
+}
+
+#riderEarnings .re-badge-red {
+    border-color: #f0dce1;
+    background: #fff5f6;
+    color: #a35265;
+}
+
+/* Earnings chart */
+
+#riderEarnings .re-chart-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+#riderEarnings .re-chart {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 12px;
+    min-width: 490px;
+    padding: 24px 20px 20px;
+}
+
+#riderEarnings .re-chart-day {
+    min-width: 0;
+    text-align: center;
+}
+
+#riderEarnings .re-chart-amount {
+    margin: 0 0 10px;
+    color: #596579;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderEarnings .re-chart-track {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 180px;
+    border-bottom: 1px solid #e4e9ef;
+    background-image: repeating-linear-gradient(
+        to top,
+        transparent 0,
+        transparent 44px,
+        #f0f2f5 44px,
+        #f0f2f5 45px
+    );
+}
+
+#riderEarnings .re-chart-track svg {
+    width: 34px;
+    max-width: 100%;
+    height: 180px;
+    overflow: visible;
+}
+
+#riderEarnings .re-chart-track rect {
+    fill: #d2a12b;
+    transition: fill 160ms ease;
+}
+
+#riderEarnings .re-chart-label {
+    margin: 9px 0 0;
+    color: #748094;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+#riderEarnings .re-chart-note {
+    margin: 0;
+    padding: 0 20px 18px;
+    color: var(--re-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Earnings table */
+
+#riderEarnings .re-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+#courierPageContent #riderEarnings .re-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+#courierPageContent #riderEarnings .re-table thead {
+    background: #f8fafc;
+}
+
+#courierPageContent #riderEarnings .re-table th {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--re-border);
+    color: #6b7687;
+    font-size: 8.5px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.07em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderEarnings .re-table td {
+    padding: 15px 16px;
+    border-bottom: 1px solid #edf0f4;
+    color: #657286;
+    font-size: 10px;
+    line-height: 1.75;
+    vertical-align: middle;
+}
+
+#courierPageContent #riderEarnings .re-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+#courierPageContent #riderEarnings .re-table .re-order {
+    color: #344054;
+    font-weight: 600;
+}
+
+#courierPageContent #riderEarnings .re-table .re-money {
+    color: #477158;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#courierPageContent #riderEarnings .re-table th.re-money {
+    color: #6b7687;
+}
+
+#courierPageContent #riderEarnings .re-table .re-table-empty {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Payout form */
+
+#riderEarnings .re-balance {
+    padding: 17px;
+    border: 1px solid #efdfba;
+    border-radius: 13px;
+    background: #fffaef;
+}
+
+#riderEarnings .re-balance-label {
+    margin: 0;
+    color: #8a702f;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+#riderEarnings .re-balance-value {
+    margin: 8px 0 0;
+    color: #705018;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderEarnings .re-balance-note {
+    margin: 8px 0 0;
+    color: #827451;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+#riderEarnings .re-form {
+    display: grid;
+    gap: 13px;
+    min-width: 0;
+    margin: 18px 0 0;
+}
+
+#riderEarnings .re-field {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+#courierPageContent #riderEarnings .re-field label {
+    margin: 0;
+    color: #526074;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+#courierPageContent #riderEarnings .re-field :is(input, select) {
+    width: 100%;
+    min-width: 0;
+    min-height: 41px;
+    padding: 10px 12px;
+    border: 1px solid #dfe5ec;
+    border-radius: 10px;
+    background: #fff;
+    color: #344054;
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+#courierPageContent #riderEarnings .re-field input::placeholder {
+    color: #8490a0;
+}
+
+#riderEarnings .re-form > .re-button {
+    width: 100%;
+    margin-top: 2px;
+}
+
+#riderEarnings .re-form-note {
+    margin: 0;
+    color: var(--re-muted);
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Payout requests */
+
+#riderEarnings .re-requests {
+    margin-top: 20px;
+    padding-top: 17px;
+    border-top: 1px solid var(--re-border);
+}
+
+#courierPageContent #riderEarnings .re-requests-title {
+    margin: 0 0 10px;
+    color: #465366;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderEarnings .re-request {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+}
+
+#riderEarnings .re-request + .re-request {
+    border-top: 1px solid #edf0f4;
+}
+
+#riderEarnings .re-request-amount {
+    color: #344054;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+#riderEarnings .re-request-status {
+    text-transform: capitalize;
+}
+
+#riderEarnings .re-empty {
+    margin: 0;
+    padding: 18px 12px;
+    border: 1px solid #e8ecf2;
+    border-radius: 10px;
+    background: #fafbfc;
+    color: var(--re-muted);
+    font-size: 10.5px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* Hover states */
+
+@media (hover: hover) {
+    #courierPageContent #riderEarnings .re-button:not(:disabled):hover {
+        border-color: #d8c397;
+        background: #fffbf3;
+        box-shadow: 0 3px 8px rgb(24 32 48 / 5%);
+    }
+
+    #courierPageContent #riderEarnings .re-button-gold:not(:disabled):hover {
+        border-color: #c88c08;
+        background: #c88c08;
+    }
+
+    #riderEarnings .re-stat:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 2px 5px rgb(24 32 48 / 3%),
+            0 12px 25px rgb(24 32 48 / 7%);
+    }
+
+    #riderEarnings .re-chart-day:hover rect {
+        fill: #b68418;
+    }
+
+    #courierPageContent #riderEarnings .re-table tbody tr:hover {
+        background: #fffcf6;
+    }
+}
+
+/* Responsive layout */
+
+@media (max-width: 1199px) {
+    #riderEarnings .re-summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #riderEarnings .re-main {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderEarnings) {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 719px) {
+    #riderEarnings .re-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #riderEarnings .re-wallet-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderEarnings) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderEarnings .re-heading-actions {
+        width: 100%;
+    }
+
+    #riderEarnings .re-heading-actions > .re-button {
+        flex: 1 1 160px;
+    }
+
+    #riderEarnings .re-panel-head,
+    #riderEarnings .re-panel-body {
+        padding: 16px;
+    }
+
+    #riderEarnings .re-panel-footer {
+        padding: 12px 16px;
+    }
+
+    #courierPageContent #riderEarnings .re-button {
+        min-height: 44px;
+        font-size: 11px;
+    }
+
+    #courierPageContent #riderEarnings .re-field :is(input, select) {
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 399px) {
+    #riderEarnings .re-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderEarnings *,
+    #riderEarnings *::before,
+    #riderEarnings *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    #riderEarnings .re-stat:hover {
+        transform: none;
+    }
+}

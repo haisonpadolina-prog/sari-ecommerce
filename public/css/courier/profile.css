@@ -1,0 +1,664 @@
+/* Rider — Account Management */
+
+.courier-shell #courierPageContent:has(#riderProfile) {
+    padding: 28px 40px;
+}
+
+#riderProfile {
+    --pf-ink: #202733;
+    --pf-muted: #707b8d;
+    --pf-border: #e7ebf0;
+    --pf-gold: #d99a0b;
+    --pf-gold-text: #93640e;
+    --pf-shadow: 0 2px 4px rgb(20 30 50 / 2%),
+        0 10px 24px rgb(20 30 50 / 5%);
+
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    color: var(--pf-ink);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+#riderProfile,
+#riderProfile * {
+    box-sizing: border-box;
+}
+
+#riderProfile :is(h2, h3, h4, p, dl, dd) {
+    margin: 0;
+}
+
+#riderProfile > * + * {
+    margin-top: 20px;
+}
+
+#riderProfile [hidden] {
+    display: none !important;
+}
+
+#riderProfile :is(section, form, .pf-field) {
+    min-width: 0;
+}
+
+#riderProfile :is(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid rgb(153 105 14 / 50%);
+    outline-offset: 3px;
+}
+
+/* Page heading */
+
+#riderProfile .pf-eyebrow {
+    margin-bottom: 6px;
+    color: var(--pf-gold-text);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderProfile .pf-page-title {
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.04em;
+}
+
+#riderProfile .pf-page-title span {
+    color: var(--pf-gold-text);
+}
+
+#riderProfile .pf-page-description {
+    margin-top: 7px;
+    color: var(--pf-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* Alerts */
+
+#riderProfile .pf-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+#riderProfile .pf-alert-success {
+    border-color: #cce5d6;
+    background: #f0f8f3;
+    color: #326348;
+}
+
+#riderProfile .pf-alert-error {
+    border-color: #f1d3d8;
+    background: #fff3f5;
+    color: #a63c4b;
+}
+
+/* Shared panels */
+
+#riderProfile .pf-panel {
+    overflow: hidden;
+    border: 1px solid var(--pf-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--pf-shadow);
+}
+
+#riderProfile .pf-panel-header {
+    padding: 17px 22px;
+    border-bottom: 1px solid var(--pf-border);
+}
+
+#courierPageContent #riderProfile .pf-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#riderProfile .pf-panel-description {
+    margin-top: 4px;
+    color: var(--pf-muted);
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+/* Identity and availability */
+
+#riderProfile .pf-summary-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+}
+
+#riderProfile .pf-identity {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 16px;
+}
+
+#riderProfile .pf-avatar {
+    display: grid;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #eadfc7;
+    border-radius: 18px;
+    background: #fff5df;
+    color: #93640e;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#riderProfile .pf-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#riderProfile .pf-name-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+#courierPageContent #riderProfile .pf-name {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -.03em;
+}
+
+#riderProfile .pf-identity-meta {
+    margin-top: 6px;
+    color: #677487;
+    font-size: 11px;
+}
+
+#riderProfile .pf-joined {
+    margin-top: 4px;
+    color: #8a94a3;
+    font-size: 10px;
+}
+
+#riderProfile .pf-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border: 1px solid #e1e6ed;
+    border-radius: 999px;
+    background: #f5f7fa;
+    color: #758195;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+#riderProfile .pf-status::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #98a2b3;
+    content: "";
+}
+
+#riderProfile .pf-status-online {
+    border-color: #d6e8dc;
+    background: #eff7f2;
+    color: #417357;
+}
+
+#riderProfile .pf-status-online::before {
+    background: #5a9470;
+}
+
+#riderProfile .pf-availability {
+    display: flex;
+    flex-shrink: 0;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+#riderProfile .pf-availability .pf-field {
+    width: 150px;
+}
+
+/* Summary metrics */
+
+#riderProfile .pf-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--pf-border);
+    background: #fcfcfd;
+}
+
+#riderProfile .pf-metric {
+    min-width: 0;
+    padding: 18px 24px;
+}
+
+#riderProfile .pf-metric + .pf-metric {
+    border-left: 1px solid var(--pf-border);
+}
+
+#riderProfile .pf-metric dt {
+    color: #7f8999;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+#riderProfile .pf-metric dd {
+    margin-top: 7px;
+    color: var(--pf-ink);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -.025em;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderProfile .pf-rating {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+#riderProfile .pf-rating svg {
+    width: 18px;
+    height: 18px;
+    color: #c28a1a;
+}
+
+#riderProfile .pf-metric .pf-area {
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+#riderProfile .pf-area-note {
+    margin-top: 4px;
+    color: var(--pf-muted);
+    font-size: 10px;
+}
+
+/* Profile form */
+
+#riderProfile .pf-edit-form {
+    display: grid;
+    gap: 20px;
+}
+
+#riderProfile .pf-section-body {
+    padding: 22px;
+}
+
+#riderProfile .pf-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 19px 22px;
+}
+
+#riderProfile .pf-field-wide {
+    grid-column: 1 / -1;
+}
+
+#riderProfile .pf-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #566275;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderProfile .pf-optional {
+    color: #8a94a3;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+#courierPageContent #riderProfile .pf-control {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 11px 13px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--pf-ink);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.6;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+#courierPageContent #riderProfile .pf-control:focus {
+    border-color: #bd964e;
+    box-shadow: 0 0 0 3px rgb(201 145 40 / 7%);
+}
+
+#courierPageContent #riderProfile .pf-control[aria-invalid="true"] {
+    border-color: #c76575;
+}
+
+#riderProfile .pf-field-error {
+    margin-top: 6px;
+    color: #a63c4b;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* Existing photo component, scoped styling only */
+
+#riderProfile .pf-photo {
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--pf-border);
+    background: #fcfcfd;
+}
+
+#riderProfile .pf-photo > div {
+    max-width: 620px;
+}
+
+#riderProfile .pf-photo label {
+    color: #566275;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderProfile .pf-photo img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+#courierPageContent #riderProfile .pf-photo input[type="file"] {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 11px;
+}
+
+#riderProfile .pf-photo input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 7px 11px;
+    border: 0;
+    border-radius: 7px;
+    background: #f0f3f7;
+    color: #556579;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+#riderProfile .pf-photo p {
+    margin-top: 7px;
+    color: #8590a0;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* Password fields */
+
+#riderProfile .pf-password-wrap {
+    position: relative;
+}
+
+#courierPageContent #riderProfile .pf-password-control {
+    padding-right: 68px;
+}
+
+#courierPageContent #riderProfile .pf-password-toggle {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    display: inline-flex;
+    width: 60px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 0 9px 9px 0;
+    background: transparent;
+    color: #7a6b4c;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Buttons and save footer */
+
+#courierPageContent #riderProfile .pf-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: #526074;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+#courierPageContent #riderProfile .pf-button-primary {
+    border-color: var(--pf-gold);
+    background: var(--pf-gold);
+    color: #251c09;
+}
+
+#riderProfile .pf-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#riderProfile .pf-save-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 22px;
+    border: 1px solid var(--pf-border);
+    border-radius: 14px;
+    background: #fff;
+}
+
+#riderProfile .pf-save-bar p {
+    color: var(--pf-muted);
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* Existing complaint component */
+
+#courierPageContent #riderProfile .pf-complaint > section {
+    margin-top: 0;
+    padding: 22px;
+    border: 1px solid var(--pf-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--pf-shadow);
+}
+
+#courierPageContent #riderProfile .pf-complaint h3 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#courierPageContent #riderProfile .pf-complaint p {
+    margin-top: 5px;
+    color: var(--pf-muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+#courierPageContent #riderProfile .pf-complaint :is(input, textarea) {
+    min-height: 44px;
+    padding: 11px 13px;
+    border-color: #dce2ea;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+#courierPageContent #riderProfile .pf-complaint button {
+    min-height: 44px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Interaction */
+
+@media (hover: hover) {
+    #courierPageContent #riderProfile .pf-button:hover {
+        border-color: #cbd3df;
+        background: #f6f8fb;
+    }
+
+    #courierPageContent #riderProfile .pf-button-primary:hover {
+        border-color: #c88b08;
+        background: #c88b08;
+    }
+
+    #courierPageContent #riderProfile .pf-password-toggle:hover {
+        background: #f8f5ee;
+    }
+}
+
+/* Responsive */
+
+@media (max-width: 1199px) {
+    #riderProfile .pf-summary-main {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #riderProfile .pf-availability {
+        width: 100%;
+        padding-top: 18px;
+        border-top: 1px solid var(--pf-border);
+    }
+
+    #riderProfile .pf-availability .pf-field {
+        width: 200px;
+    }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderProfile) {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderProfile) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderProfile > * + * {
+        margin-top: 16px;
+    }
+
+    #riderProfile .pf-edit-form {
+        gap: 16px;
+    }
+
+    #riderProfile .pf-summary-main,
+    #riderProfile .pf-section-body,
+    #riderProfile .pf-photo {
+        padding: 18px 16px;
+    }
+
+    #riderProfile .pf-panel-header {
+        padding: 16px;
+    }
+
+    #riderProfile .pf-avatar {
+        width: 54px;
+        height: 54px;
+        border-radius: 15px;
+    }
+
+    #courierPageContent #riderProfile .pf-name {
+        font-size: 16px;
+    }
+
+    #riderProfile .pf-availability .pf-field {
+        width: auto;
+        flex: 1;
+    }
+
+    #riderProfile .pf-fields {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    #riderProfile .pf-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #riderProfile .pf-metric {
+        padding: 16px;
+    }
+
+    #riderProfile .pf-metric:last-child {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--pf-border);
+        border-left: 0;
+    }
+
+    #riderProfile .pf-save-bar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    #courierPageContent #riderProfile .pf-control,
+    #courierPageContent #riderProfile .pf-photo input[type="file"],
+    #courierPageContent #riderProfile .pf-complaint :is(input, textarea) {
+        font-size: 16px;
+    }
+
+    #courierPageContent #riderProfile .pf-complaint > section {
+        padding: 18px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderProfile *,
+    #riderProfile *::before,
+    #riderProfile *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -1,0 +1,627 @@
+/* Rider — Delivery Workflow */
+
+.courier-shell #courierPageContent:has(#riderWorkflow) {
+    padding: 28px 40px;
+}
+
+#riderWorkflow {
+    --dw-ink: #202733;
+    --dw-muted: #707b8d;
+    --dw-border: #e7ebf0;
+    --dw-gold: #d99a0b;
+    --dw-gold-text: #93640e;
+    --dw-shadow: 0 2px 4px rgb(20 30 50 / 2%),
+        0 10px 24px rgb(20 30 50 / 5%);
+
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    color: var(--dw-ink);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+#riderWorkflow,
+#riderWorkflow * {
+    box-sizing: border-box;
+}
+
+#riderWorkflow :is(h2, h3, h4, p, ol, dl, dd) {
+    margin: 0;
+}
+
+#riderWorkflow > * + * {
+    margin-top: 20px;
+}
+
+#riderWorkflow :is(section, article, aside, form) {
+    min-width: 0;
+}
+
+#riderWorkflow :is(a, button):focus-visible {
+    outline: 3px solid rgb(153 105 14 / 55%);
+    outline-offset: 3px;
+}
+
+/* Feedback */
+
+#riderWorkflow .dw-alert {
+    padding: 13px 16px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 11px;
+    line-height: 1.75;
+}
+
+#riderWorkflow .dw-alert-success {
+    border-color: #cce5d6;
+    background: #f0f8f3;
+    color: #326348;
+}
+
+#riderWorkflow .dw-alert-error {
+    border-color: #f1d3d8;
+    background: #fff3f5;
+    color: #a63c4b;
+}
+
+/* Header */
+
+#riderWorkflow .dw-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    color: #a0a8b4;
+    font-size: 10px;
+}
+
+#riderWorkflow .dw-breadcrumb a {
+    color: #778397;
+    text-decoration: none;
+}
+
+#riderWorkflow .dw-breadcrumb strong {
+    color: #526a85;
+    font-weight: 500;
+}
+
+#riderWorkflow .dw-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#riderWorkflow .dw-heading-copy {
+    min-width: 0;
+}
+
+#riderWorkflow .dw-eyebrow {
+    margin-bottom: 6px;
+    color: var(--dw-gold-text);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+#courierPageContent #riderWorkflow .dw-page-title {
+    font-size: clamp(25px, 2.1vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -.04em;
+}
+
+#riderWorkflow .dw-page-title span {
+    color: var(--dw-gold-text);
+}
+
+#riderWorkflow .dw-description {
+    max-width: 700px;
+    margin-top: 8px;
+    color: var(--dw-muted);
+    font-size: 11px;
+    line-height: 1.85;
+}
+
+#riderWorkflow .dw-header-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+/* Buttons */
+
+#courierPageContent #riderWorkflow .dw-button {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #dce2ea;
+    border-radius: 10px;
+    background: #fff;
+    color: #556275;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.6;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+#courierPageContent #riderWorkflow .dw-button-gold {
+    border-color: var(--dw-gold);
+    background: var(--dw-gold);
+    color: #251c09;
+}
+
+#courierPageContent #riderWorkflow .dw-button-blue {
+    border-color: #356181;
+    background: #356181;
+    color: #fff;
+}
+
+#courierPageContent #riderWorkflow .dw-button-green {
+    border-color: #396d51;
+    background: #396d51;
+    color: #fff;
+}
+
+#riderWorkflow .dw-button-full {
+    width: 100%;
+}
+
+/* Panels */
+
+#riderWorkflow .dw-panel {
+    overflow: hidden;
+    border: 1px solid var(--dw-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--dw-shadow);
+}
+
+#riderWorkflow .dw-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--dw-border);
+}
+
+#courierPageContent #riderWorkflow .dw-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+#riderWorkflow .dw-panel-subtitle {
+    margin-top: 4px;
+    color: var(--dw-muted);
+    font-size: 10.5px;
+    line-height: 1.75;
+}
+
+#riderWorkflow .dw-badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 9px;
+    border: 1px solid #e3e8ef;
+    border-radius: 999px;
+    background: #f5f7fa;
+    color: #69758a;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+}
+
+#riderWorkflow .dw-badge-blue {
+    border-color: #dce6f0;
+    background: #f0f5fb;
+    color: #4c7098;
+}
+
+/* Workflow steps */
+
+#riderWorkflow .dw-steps {
+    display: grid;
+    gap: 12px;
+    padding: 20px;
+    list-style: none;
+}
+
+#riderWorkflow .dw-steps-four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+#riderWorkflow .dw-steps-six {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+#riderWorkflow .dw-step {
+    min-width: 0;
+    padding: 14px 12px;
+    border: 1px solid #e8ecf1;
+    border-radius: 12px;
+    background: #fafbfd;
+}
+
+#riderWorkflow .dw-step-number {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border-radius: 9px;
+    background: #edf0f5;
+    color: #8893a4;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderWorkflow .dw-step-name {
+    display: block;
+    margin-top: 10px;
+    color: #5d697c;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.65;
+}
+
+#riderWorkflow .dw-step-note {
+    margin-top: 3px;
+    color: #8c96a5;
+    font-size: 9px;
+}
+
+#riderWorkflow .dw-step-current {
+    border-color: #ead49f;
+    background: #fffbf2;
+}
+
+#riderWorkflow .dw-step-current .dw-step-number {
+    background: var(--dw-gold);
+    color: #251c09;
+}
+
+#riderWorkflow .dw-step-current .dw-step-name {
+    color: #89651f;
+}
+
+#riderWorkflow .dw-step-done {
+    border-color: #dbe9e0;
+    background: #f5faf7;
+}
+
+#riderWorkflow .dw-step-done .dw-step-number {
+    background: #4e8061;
+    color: #fff;
+}
+
+/* Main workspace */
+
+#riderWorkflow .dw-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+    align-items: start;
+    gap: 20px;
+}
+
+#riderWorkflow .dw-sidebar {
+    display: grid;
+    gap: 18px;
+}
+
+/* Current action */
+
+#riderWorkflow .dw-action-body {
+    padding: 22px;
+}
+
+#riderWorkflow .dw-action-state {
+    padding: 20px;
+    border: 1px solid #e6eaf0;
+    border-radius: 13px;
+    background: #f8fafc;
+}
+
+#riderWorkflow .dw-action-gold {
+    border-color: #eee0bd;
+    background: #fffbf2;
+}
+
+#riderWorkflow .dw-action-blue {
+    border-color: #dce6ef;
+    background: #f4f8fc;
+}
+
+#riderWorkflow .dw-action-green {
+    border-color: #d8e8de;
+    background: #f3f9f5;
+}
+
+#courierPageContent #riderWorkflow .dw-action-title {
+    color: #455267;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+#riderWorkflow .dw-action-copy {
+    margin-top: 9px;
+    color: #748095;
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+#riderWorkflow .dw-action-form {
+    margin-top: 20px;
+}
+
+#riderWorkflow .dw-handoff {
+    margin-top: 17px;
+    padding: 14px;
+    border: 1px solid #dce9e1;
+    border-radius: 10px;
+    background: #fff;
+}
+
+#riderWorkflow .dw-handoff-label {
+    color: #7c9183;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+#riderWorkflow .dw-handoff strong {
+    display: block;
+    margin-top: 5px;
+    color: #467058;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+#riderWorkflow .dw-action-link {
+    margin-top: 18px;
+}
+
+/* Job details */
+
+#riderWorkflow .dw-details {
+    padding: 0 20px;
+}
+
+#riderWorkflow .dw-detail {
+    padding: 16px 0;
+}
+
+#riderWorkflow .dw-detail + .dw-detail {
+    border-top: 1px solid #edf0f4;
+}
+
+#riderWorkflow .dw-detail dt {
+    color: #8a94a3;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+#riderWorkflow .dw-detail dd {
+    margin-top: 6px;
+    color: #536074;
+    font-size: 11px;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+}
+
+#riderWorkflow .dw-detail .dw-detail-strong {
+    color: #344256;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#riderWorkflow .dw-detail .dw-fee {
+    color: #467358;
+    font-size: 19px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Workflow record */
+
+#riderWorkflow .dw-records {
+    padding: 4px 20px;
+    list-style: none;
+}
+
+#riderWorkflow .dw-record {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 13px 0;
+}
+
+#riderWorkflow .dw-record + .dw-record {
+    border-top: 1px solid #edf0f4;
+}
+
+#riderWorkflow .dw-record-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #657286;
+    font-size: 10.5px;
+}
+
+#riderWorkflow .dw-record-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #d8dee7;
+}
+
+#riderWorkflow .dw-record-done .dw-record-dot {
+    background: #5d9672;
+}
+
+#riderWorkflow .dw-record-time {
+    color: #8792a2;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+#riderWorkflow .dw-note {
+    padding: 16px 18px;
+    border: 1px solid #dce8df;
+    border-radius: 14px;
+    background: #f4f9f6;
+}
+
+#riderWorkflow .dw-note strong {
+    color: #52745f;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+#riderWorkflow .dw-note p {
+    margin-top: 6px;
+    color: #75877c;
+    font-size: 10.5px;
+    line-height: 1.85;
+}
+
+/* Interaction */
+
+@media (hover: hover) {
+    #courierPageContent #riderWorkflow .dw-button:hover {
+        border-color: #cbd3df;
+        background: #f5f7fa;
+    }
+
+    #courierPageContent #riderWorkflow .dw-button-gold:hover {
+        border-color: #c88b08;
+        background: #c88b08;
+    }
+
+    #courierPageContent #riderWorkflow .dw-button-blue:hover {
+        border-color: #294f6b;
+        background: #294f6b;
+    }
+
+    #courierPageContent #riderWorkflow .dw-button-green:hover {
+        border-color: #2d573f;
+        background: #2d573f;
+    }
+}
+
+/* Responsive */
+
+@media (max-width: 1199px) {
+    #riderWorkflow .dw-header-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    #riderWorkflow .dw-steps-six {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #riderWorkflow .dw-main {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderWorkflow .dw-sidebar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+
+    #riderWorkflow .dw-note {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 1099px) {
+    .courier-shell #courierPageContent:has(#riderWorkflow) {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 639px) {
+    .courier-shell #courierPageContent:has(#riderWorkflow) {
+        padding: 20px 14px calc(28px + env(safe-area-inset-bottom));
+    }
+
+    #riderWorkflow > * + * {
+        margin-top: 16px;
+    }
+
+    #riderWorkflow .dw-header-actions {
+        width: 100%;
+    }
+
+    #riderWorkflow .dw-header-actions .dw-button {
+        flex: 1;
+    }
+
+    #riderWorkflow .dw-panel-header {
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    #riderWorkflow .dw-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 16px;
+    }
+
+    #riderWorkflow .dw-action-body {
+        padding: 16px;
+    }
+
+    #riderWorkflow .dw-action-state {
+        padding: 17px;
+    }
+
+    #riderWorkflow .dw-sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #riderWorkflow .dw-details {
+        padding: 0 16px;
+    }
+
+    #riderWorkflow .dw-records {
+        padding: 4px 16px;
+    }
+
+    #courierPageContent #riderWorkflow .dw-button {
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #riderWorkflow *,
+    #riderWorkflow *::before,
+    #riderWorkflow *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -4,915 +4,537 @@
 @section('header-title', 'Rider Earnings')
 @section('header-subtitle', 'Delivery Fee Ledger')
 
-
 @push('styles')
-
-<style>
-    .rider-earning-card {
-        border: 1px solid #eee4d3;
-        background: #fffdf9;
-
-        box-shadow:
-            0 8px 24px
-            rgba(75, 59, 30, .035);
-    }
-
-    .rider-earning-hover {
-        transition:
-            transform .22s ease,
-            border-color .22s ease,
-            box-shadow .22s ease;
-    }
-
-    .rider-earning-hover:hover {
-        transform: translateY(-2px);
-        border-color: #dbc89f;
-
-        box-shadow:
-            0 14px 32px
-            rgba(75, 59, 30, .07);
-    }
-</style>
-
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/courier/earnings.css') }}?v=20261029-2"
+    >
 @endpush
 
-
 @section('content')
+@php
+    $maxAmount = max(1, ...array_column($daily, 'amount'));
 
-<div class="mx-auto max-w-[1620px]">
+    $hasChartEarnings = collect($daily)->contains(
+        fn ($day) => (float) $day['amount'] > 0
+    );
 
+    $weeklyChangeClass = $weeklyChange === null || $weeklyChange == 0
+        ? ''
+        : ($weeklyChange > 0 ? 're-badge-green' : 're-badge-red');
+
+    $summaryCards = [
+        [
+            'label' => 'Today',
+            'key' => 'today',
+            'note' => 'Recognized today',
+            'class' => '',
+        ],
+        [
+            'label' => 'This Week',
+            'key' => 'week',
+            'note' => 'Current week earnings',
+            'class' => 're-stat-blue',
+        ],
+        [
+            'label' => 'This Month',
+            'key' => 'month',
+            'note' => 'Current month earnings',
+            'class' => 're-stat-green',
+        ],
+        [
+            'label' => 'Potential',
+            'key' => 'pending',
+            'note' => 'Not yet recognized',
+            'class' => 're-stat-neutral',
+        ],
+        [
+            'label' => 'Available',
+            'key' => 'available',
+            'note' => 'Available wallet balance',
+            'class' => 're-stat-green',
+        ],
+    ];
+
+    $walletCards = [
+        [
+            'label' => 'Awaiting COD Remittance',
+            'key' => 'awaiting_remittance',
+            'note' => 'Earned but locked until cash remittance is verified.',
+        ],
+        [
+            'label' => 'Reserved for Payout',
+            'key' => 'reserved',
+            'note' => 'Already included in a withdrawal request.',
+        ],
+        [
+            'label' => 'Lifetime Paid Out',
+            'key' => 'paid',
+            'note' => 'Confirmed external payouts.',
+        ],
+    ];
+@endphp
+
+<div
+    id="riderEarnings"
+    class="courier-earnings-page courier-workspace"
+>
     @if(session('success'))
-
-        <div
-            class="
-                mb-4
-                rounded-2xl
-                border border-emerald-200
-                bg-emerald-50
-                px-5 py-4
-                text-[9px]
-                font-semibold
-                text-emerald-700
-            "
-        >
+        <div class="re-alert re-alert-success" role="status">
             {{ session('success') }}
         </div>
-
     @endif
-
 
     @if($errors->any())
-
-        <div
-            class="
-                mb-4
-                rounded-2xl
-                border border-rose-200
-                bg-rose-50
-                px-5 py-4
-                text-[9px]
-                font-semibold
-                text-rose-700
-            "
-        >
+        <div class="re-alert re-alert-error" role="alert">
             {{ $errors->first() }}
         </div>
-
     @endif
 
+    <section class="re-heading" aria-labelledby="riderEarningsTitle">
+        <div class="re-heading-copy">
+            <span class="re-eyebrow">Rider Ledger</span>
 
-    {{-- =====================================================
-        HEADER
-    ====================================================== --}}
-
-    <section
-        class="
-            reveal
-            mb-5
-            flex flex-col
-            justify-between
-            gap-4
-            border-b border-[#eee4d3]
-            pb-5
-            lg:flex-row
-            lg:items-end
-        "
-    >
-
-        <div>
-
-            <span
-                class="
-                    inline-flex
-                    rounded-full
-                    border border-[#eadfc9]
-                    bg-white
-                    px-3 py-1.5
-                    text-[8px]
-                    font-semibold
-                    uppercase
-                    tracking-[.13em]
-                    text-[#8a7f70]
-                "
-            >
-                Rider Ledger
-            </span>
-
-
-            <h2
-                class="
-                    mt-3
-                    text-[15px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Rider Earnings
+            <h2 id="riderEarningsTitle" class="re-title">
+                Rider <span>Earnings</span>
             </h2>
 
-
-            <p
-                class="
-                    mt-2
-                    max-w-[720px]
-                    text-[10px]
-                    leading-5
-                    text-[#817769]
-                "
-            >
-                Track your direct delivery, Seller-to-Hub pickup,
-                and Hub-to-Buyer last-mile earnings. Logistics-managed
-                shipping is split by the configured Rider shares.
+            <p class="re-description">
+                Track pickup, direct-delivery, and last-mile earnings in one place.
             </p>
-
         </div>
 
-
-        <a href="{{ route('courier.remittances.index') }}" class="rounded-xl border border-[#e6dccb] bg-[#fff8e9] px-4 py-2.5 text-[9px] font-semibold text-[#a96e05]">COD Remittance</a>
-
-        <a
-            href="{{
-                route(
-                    'courier.earnings.statement'
-                )
-            }}"
-            class="
-                rounded-xl
-                border border-[#e6dccb]
-                bg-white
-                px-4 py-2.5
-                text-[9px]
-                font-semibold
-                text-[#62594d]
-            "
-        >
-            Download Statement
-        </a>
-
-    </section>
-
-
-    {{-- =====================================================
-        SUMMARY
-    ====================================================== --}}
-
-    <section
-        class="
-            grid
-            gap-3
-            sm:grid-cols-2
-            xl:grid-cols-5
-        "
-    >
-
-        @foreach([
-            [
-                'Today',
-                '₱'.number_format(
-                    $earnings['today'],
-                    2
-                ),
-                '#fff2d8',
-                '#b77900',
-            ],
-            [
-                'This Week',
-                '₱'.number_format(
-                    $earnings['week'],
-                    2
-                ),
-                '#eaf2f7',
-                '#3C6E91',
-            ],
-            [
-                'This Month',
-                '₱'.number_format(
-                    $earnings['month'],
-                    2
-                ),
-                '#eaf3ed',
-                '#4F7D63',
-            ],
-            [
-                'Potential',
-                '₱'.number_format(
-                    $earnings['pending'],
-                    2
-                ),
-                '#f5f0e7',
-                '#8a6940',
-            ],
-            [
-                'Available',
-                '₱'.number_format(
-                    $earnings['available'],
-                    2
-                ),
-                '#ecf5ee',
-                '#437356',
-            ],
-        ] as [
-            $label,
-            $value,
-            $bg,
-            $color
-        ])
-
-            <article
-                class="
-                    reveal
-                    rider-earning-card
-                    rider-earning-hover
-                    rounded-2xl
-                    p-4
-                "
+        <div class="re-heading-actions">
+            <a
+                href="{{ route('courier.remittances.index') }}"
+                class="re-button"
             >
+                COD Remittance
+            </a>
 
-                <div
-                    class="
-                        mb-4
-                        h-2 w-2
-                        rounded-full
-                    "
-                    style="
-                        background:
-                        {{ $color }}
-                    "
-                ></div>
-
-
-                <p
-                    class="
-                        text-[8px]
-                        text-[#887e70]
-                    "
-                >
-                    {{ $label }}
-                </p>
-
-
-                <p
-                    class="
-                        mt-2
-                        text-[20px]
-                        font-bold
-                        tracking-[-.035em]
-                        text-[#211d17]
-                    "
-                >
-                    {{ $value }}
-                </p>
-
-            </article>
-
-        @endforeach
-
-    </section>
-
-
-    <div
-        class="
-            mt-3
-            rounded-xl
-            border border-[#e9dfcf]
-            bg-[#fffaf1]
-            px-4 py-3
-        "
-    >
-
-        <p
-            class="
-                text-[8px]
-                leading-4
-                text-[#887760]
-            "
-        >
-            <strong>
-                Potential earnings
-            </strong>
-            represent active direct-delivery or Last-Mile
-            work that has not yet completed. Earnings become
-            available only after successful delivery and
-            finance recognition.
-        </p>
-
-    </div>
-
-
-    <section class="mt-4 grid gap-3 sm:grid-cols-3">
-        <article class="rider-earning-card rounded-2xl p-4"><p class="text-[8px] text-[#887e70]">Awaiting COD Remittance</p><p class="mt-2 text-[18px] font-bold text-[#211d17]">₱{{ number_format($earnings['awaiting_remittance'],2) }}</p><p class="mt-1 text-[7px] text-[#918677]">Earned but locked until Rider cash remittance is verified.</p></article>
-        <article class="rider-earning-card rounded-2xl p-4"><p class="text-[8px] text-[#887e70]">Reserved for Payout</p><p class="mt-2 text-[18px] font-bold text-[#211d17]">₱{{ number_format($earnings['reserved'],2) }}</p><p class="mt-1 text-[7px] text-[#918677]">Already included in a withdrawal request.</p></article>
-        <article class="rider-earning-card rounded-2xl p-4"><p class="text-[8px] text-[#887e70]">Lifetime Paid Out</p><p class="mt-2 text-[18px] font-bold text-[#211d17]">₱{{ number_format($earnings['paid'],2) }}</p><p class="mt-1 text-[7px] text-[#918677]">Confirmed external payouts.</p></article>
-    </section>
-
-    {{-- =====================================================
-        PERFORMANCE / PAYOUT
-    ====================================================== --}}
-
-    <section
-        class="
-            mt-5
-            grid
-            gap-5
-            xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,.6fr)]
-        "
-    >
-
-        <div
-            class="
-                reveal
-                rider-earning-card
-                rounded-2xl
-                p-5
-            "
-        >
-
-            <div
-                class="
-                    flex
-                    items-center
-                    justify-between
-                    gap-3
-                "
+            <a
+                href="{{ route('courier.earnings.statement') }}"
+                class="re-button re-button-gold"
             >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M12 3v12m-4-4 4 4 4-4"></path>
+                    <path d="M5 16v5h14v-5"></path>
+                </svg>
 
-                <div>
+                Download Statement
+            </a>
+        </div>
+    </section>
 
-                    <h3
-                        class="
-                            text-[12px]
-                            font-bold
-                            text-[#211d17]
-                        "
-                    >
-                        Weekly Performance
-                    </h3>
-
-
-                    <p
-                        class="
-                            mt-1
-                            text-[8px]
-                            text-[#918677]
-                        "
-                    >
-                        Recognized Rider earnings for
-                        the current week.
+    <section class="re-summary" aria-label="Rider earnings summary">
+        @foreach($summaryCards as $card)
+            <div class="re-stat {{ $card['class'] }}">
+                <div class="re-stat-top">
+                    <p class="re-stat-label">
+                        {{ $card['label'] }}
                     </p>
 
+                    <span class="re-stat-icon" aria-hidden="true">₱</span>
                 </div>
 
+                <p class="re-stat-value">
+                    ₱{{ number_format($earnings[$card['key']], 2) }}
+                </p>
 
-                <span
-                    class="
-                        rounded-full
-                        border border-emerald-200
-                        bg-emerald-50
-                        px-2.5 py-1
-                        text-[7px]
-                        font-semibold
-                        text-emerald-700
-                    "
-                >
-                    {{
-                        $weeklyChange === null
-                            ? 'No prior week'
-                            : (
-                                (
-                                    $weeklyChange >= 0
-                                        ? '+'
-                                        : ''
-                                )
-                                .
-                                number_format(
-                                    $weeklyChange,
-                                    1
-                                )
-                                .
-                                '%'
-                            )
-                    }}
-                </span>
-
+                <p class="re-stat-note">
+                    {{ $card['note'] }}
+                </p>
             </div>
+        @endforeach
+    </section>
 
+    <div class="re-explainer">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 11v6M12 7h.01"></path>
+        </svg>
 
-            @php
-                $maxAmount =
-                    max(
-                        1,
-                        max(
-                            array_column(
-                                $daily,
-                                'amount'
-                            )
-                        )
-                    );
-            @endphp
+        <p>
+            <strong>Potential earnings</strong> are estimates for work not yet
+            recognized in the ledger. Logistics-managed shipping uses the
+            configured Rider shares. Availability depends on finance recognition
+            and any required COD remittance verification.
+        </p>
+    </div>
 
+    <section class="re-wallet-summary" aria-label="Wallet balance breakdown">
+        @foreach($walletCards as $card)
+            <div class="re-wallet-card">
+                <p class="re-stat-label">
+                    {{ $card['label'] }}
+                </p>
 
-            <div
-                class="
-                    mt-8
-                    grid h-[220px]
-                    grid-cols-7
-                    items-end
-                    gap-2
-                    sm:gap-4
-                "
-            >
+                <p class="re-wallet-value">
+                    ₱{{ number_format($earnings[$card['key']], 2) }}
+                </p>
 
-                @foreach($daily as $day)
+                <p class="re-stat-note">
+                    {{ $card['note'] }}
+                </p>
+            </div>
+        @endforeach
+    </section>
 
-                    @php
-                        $height =
-                            max(
-                                20,
-                                round(
-                                    (
-                                        $day['amount']
-                                        /
-                                        $maxAmount
-                                    )
-                                    *
-                                    180
-                                )
-                            );
-                    @endphp
+    <div class="re-main">
+        <div class="re-main-column">
+            <section class="re-panel" aria-labelledby="earningsTrendTitle">
+                <div class="re-panel-head">
+                    <div>
+                        <h3 id="earningsTrendTitle" class="re-panel-title">
+                            Earnings Trend
+                        </h3>
 
-
-                    <div
-                        class="
-                            flex h-full
-                            flex-col
-                            justify-end
-                        "
-                    >
-
-                        <div
-                            class="
-                                mb-2
-                                text-center
-                                text-[7px]
-                                font-semibold
-                                text-[#645b4f]
-                            "
-                        >
-                            ₱{{ number_format(
-                                $day['amount'],
-                                2
-                            ) }}
-                        </div>
-
-
-                        <div
-                            class="
-                                mx-auto
-                                w-full
-                                max-w-[42px]
-                                rounded-t-xl
-                                bg-[#3C6E91]/90
-                                transition
-                                hover:bg-[#d9930a]
-                            "
-                            style="
-                                height:
-                                {{ $height }}px
-                            "
-                        ></div>
-
-
-                        <p
-                            class="
-                                mt-2
-                                text-center
-                                text-[8px]
-                                font-semibold
-                                text-[#857b6d]
-                            "
-                        >
-                            {{ $day['day'] }}
+                        <p class="re-panel-description">
+                            Recognized Rider earnings for the last seven days.
                         </p>
-
                     </div>
 
-                @endforeach
+                    <span class="re-badge re-badge-gold">
+                        Last 7 Days
+                    </span>
+                </div>
 
-            </div>
-
-        </div>
-
-
-        <aside
-            class="
-                reveal
-                rider-earning-card
-                rounded-2xl
-                p-5
-            "
-        >
-
-            <h3
-                class="
-                    text-[12px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Payout Summary
-            </h3>
-
-
-            <p
-                class="
-                    mt-1
-                    text-[8px]
-                    text-[#918677]
-                "
-            >
-                Current Rider ledger balance.
-            </p>
-
-
-            <div
-                class="
-                    mt-5
-                    rounded-2xl
-                    bg-[#3C6E91]
-                    p-5
-                    text-white
-                "
-            >
-
-                <p
-                    class="
-                        text-[8px]
-                        uppercase
-                        tracking-[.12em]
-                        text-white/60
-                    "
+                <div
+                    class="re-chart-scroll"
+                    tabindex="0"
+                    role="region"
+                    aria-label="Scrollable earnings chart for the last seven days"
                 >
-                    Available Balance
-                </p>
-
-
-                <p
-                    class="
-                        mt-2
-                        text-[25px]
-                        font-bold
-                    "
-                >
-                    ₱{{
-                        number_format(
-                            $earnings['available'],
-                            2
-                        )
-                    }}
-                </p>
-
-
-                <p
-                    class="
-                        mt-2
-                        text-[8px]
-                        leading-4
-                        text-white/70
-                    "
-                >
-                    Available means earned in the internal
-                    Rider ledger. It does not yet indicate
-                    an external payout.
-                </p>
-
-            </div>
-
-
-            <form method="POST" action="{{ route('courier.earnings.payout') }}" class="mt-4 space-y-3">
-                @csrf
-                <input name="amount" type="number" min="1" step="0.01" max="{{ $earnings['available'] }}" required placeholder="Amount" class="w-full rounded-xl border border-[#e6dccb] bg-white px-3 py-3 text-[9px]">
-                <select name="payout_method" required class="w-full rounded-xl border border-[#e6dccb] bg-white px-3 py-3 text-[9px]"><option value="gcash">GCash</option><option value="maya">Maya</option><option value="bank">Bank Transfer</option><option value="manual_cash">Manual Cash Release</option></select>
-                <input name="account_name" required minlength="2" maxlength="120" placeholder="Account name" class="w-full rounded-xl border border-[#e6dccb] bg-white px-3 py-3 text-[9px]">
-                <input name="account_reference" required minlength="4" maxlength="120" placeholder="Mobile / bank account" class="w-full rounded-xl border border-[#e6dccb] bg-white px-3 py-3 text-[9px]">
-                <button class="w-full rounded-xl bg-[#d9930a] px-4 py-3 text-[9px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50" @disabled($earnings['available'] <= 0)>Request Withdrawal</button>
-            </form>
-
-
-            <div class="mt-3 space-y-2">
-
-                @forelse(
-                    $payoutRequests
-                    as $payout
-                )
-
-                    <div
-                        class="
-                            flex
-                            items-center
-                            justify-between
-                            rounded-xl
-                            border border-[#eee4d3]
-                            bg-white
-                            px-3 py-2
-                            text-[7px]
-                        "
-                    >
-
-                        <span>
-                            ₱{{
-                                number_format(
-                                    (float)
-                                    $payout->amount,
-                                    2
-                                )
-                            }}
-                        </span>
-
-
-                        <strong>
-                            {{
-                                strtoupper(
-                                    $payout->status
-                                )
-                            }}
-                        </strong>
-
-                    </div>
-
-                @empty
-
-                    <div
-                        class="
-                            rounded-xl
-                            border border-dashed
-                            border-[#e5dccf]
-                            px-3 py-4
-                            text-center
-                            text-[7px]
-                            text-[#918677]
-                        "
-                    >
-                        No payout requests yet.
-                    </div>
-
-                @endforelse
-
-            </div>
-
-        </aside>
-
-    </section>
-
-
-    {{-- =====================================================
-        RECENT EARNINGS
-    ====================================================== --}}
-
-    <section
-        class="
-            reveal
-            rider-earning-card
-            mt-5
-            overflow-hidden
-            rounded-2xl
-        "
-    >
-
-        <div
-            class="
-                border-b border-[#eee4d3]
-                px-5 py-4
-            "
-        >
-
-            <h3
-                class="
-                    text-[12px]
-                    font-bold
-                    text-[#211d17]
-                "
-            >
-                Recent Earnings
-            </h3>
-
-
-            <p
-                class="
-                    mt-1
-                    text-[8px]
-                    text-[#918677]
-                "
-            >
-                Delivery fees recognized for this Rider.
-            </p>
-
-        </div>
-
-
-        <div class="overflow-x-auto">
-
-            <table
-                class="
-                    w-full
-                    min-w-[680px]
-                "
-            >
-
-                <thead class="bg-[#fbf8f1]">
-
-                    <tr class="text-left">
-
-                        <th
-                            class="
-                                px-5 py-3
-                                text-[7px]
-                                uppercase
-                                tracking-[.11em]
-                                text-[#9c9182]
-                            "
-                        >
-                            Order
-                        </th>
-
-                        <th
-                            class="
-                                px-5 py-3
-                                text-[7px]
-                                uppercase
-                                tracking-[.11em]
-                                text-[#9c9182]
-                            "
-                        >
-                            Earned At
-                        </th>
-
-                        <th
-                            class="
-                                px-5 py-3
-                                text-[7px]
-                                uppercase
-                                tracking-[.11em]
-                                text-[#9c9182]
-                            "
-                        >
-                            Type
-                        </th>
-
-                        <th
-                            class="
-                                px-5 py-3
-                                text-[7px]
-                                uppercase
-                                tracking-[.11em]
-                                text-[#9c9182]
-                            "
-                        >
-                            Amount
-                        </th>
-
-                        <th
-                            class="
-                                px-5 py-3
-                                text-[7px]
-                                uppercase
-                                tracking-[.11em]
-                                text-[#9c9182]
-                            "
-                        >
-                            Status
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody class="divide-y divide-[#f0e8db]">
-
-                    @forelse(
-                        $transactions
-                        as $transaction
-                    )
-
-                        <tr class="hover:bg-[#fffaf1]">
-
-                            <td
-                                class="
-                                    px-5 py-3.5
-                                    text-[9px]
-                                    font-semibold
-                                    text-[#302a23]
-                                "
-                            >
-                                {{ $transaction['order'] }}
-                            </td>
-
-
-                            <td
-                                class="
-                                    px-5 py-3.5
-                                    text-[8px]
-                                    text-[#81776a]
-                                "
-                            >
-                                {{ $transaction['date'] }}
-                            </td>
-
-
-                            <td
-                                class="
-                                    px-5 py-3.5
-                                    text-[8px]
-                                    text-[#81776a]
-                                "
-                            >
-                                {{ $transaction['type'] }}
-                            </td>
-
-
-                            <td
-                                class="
-                                    px-5 py-3.5
-                                    text-[9px]
-                                    font-semibold
-                                    text-[#302a23]
-                                "
-                            >
-                                +₱{{
-                                    number_format(
-                                        $transaction['amount'],
-                                        2
+                    <div class="re-chart">
+                        @foreach($daily as $day)
+                            @php
+                                $barHeight = max(
+                                    0,
+                                    min(
+                                        180,
+                                        round(((float) $day['amount'] / $maxAmount) * 180)
                                     )
-                                }}
-                            </td>
+                                );
+                            @endphp
 
+                            <div class="re-chart-day">
+                                <p class="re-chart-amount">
+                                    ₱{{ number_format($day['amount'], 2) }}
+                                </p>
 
-                            <td class="px-5 py-3.5">
+                                <div class="re-chart-track">
+                                    <svg
+                                        viewBox="0 0 34 180"
+                                        aria-hidden="true"
+                                        focusable="false"
+                                    >
+                                        <rect
+                                            x="0"
+                                            y="{{ 180 - $barHeight }}"
+                                            width="34"
+                                            height="{{ $barHeight }}"
+                                            rx="4"
+                                        ></rect>
+                                    </svg>
+                                </div>
 
-                                <span
-                                    class="
-                                        rounded-full
-                                        border border-emerald-200
-                                        bg-emerald-50
-                                        px-2.5 py-1
-                                        text-[7px]
-                                        font-semibold
-                                        text-emerald-700
-                                    "
-                                >
-                                    {{ $transaction['status'] }}
-                                </span>
+                                <p class="re-chart-label">
+                                    {{ $day['day'] }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
 
-                            </td>
+                @if(!$hasChartEarnings)
+                    <p class="re-chart-note">
+                        No recognized earnings during the displayed seven days.
+                    </p>
+                @endif
 
-                        </tr>
+                <div class="re-panel-footer">
+                    <span>This week compared with last week</span>
 
-                    @empty
+                    <span class="re-badge {{ $weeklyChangeClass }}">
+                        {{
+                            $weeklyChange === null
+                                ? 'No prior week'
+                                : (
+                                    ($weeklyChange >= 0 ? '+' : '')
+                                    . number_format($weeklyChange, 1)
+                                    . '%'
+                                )
+                        }}
+                    </span>
+                </div>
+            </section>
 
-                        <tr>
-                            <td
-                                colspan="5"
-                                class="
-                                    px-5 py-12
-                                    text-center
-                                    text-[8px]
-                                    text-[#918677]
-                                "
-                            >
-                                No recognized Rider earnings yet.
-                            </td>
-                        </tr>
+            <section class="re-panel" aria-labelledby="recentEarningsTitle">
+                <div class="re-panel-head">
+                    <div>
+                        <h3 id="recentEarningsTitle" class="re-panel-title">
+                            Recent Earnings
+                        </h3>
 
-                    @endforelse
+                        <p class="re-panel-description">
+                            Recognized delivery fees and current ledger status.
+                        </p>
+                    </div>
 
-                </tbody>
+                    <span class="re-badge">
+                        {{ count($transactions) }}
+                        {{ count($transactions) === 1 ? 'record' : 'records' }}
+                    </span>
+                </div>
 
-            </table>
+                <div
+                    class="re-table-scroll"
+                    tabindex="0"
+                    role="region"
+                    aria-labelledby="recentEarningsTitle"
+                >
+                    <table class="re-table" aria-label="Recent Rider earnings">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order</th>
+                                <th scope="col">Earned At</th>
+                                <th scope="col">Type</th>
+                                <th scope="col" class="re-money">Amount</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            @forelse($transactions as $transaction)
+                                @php
+                                    $transactionStatusClass = match ($transaction['status']) {
+                                        'Awaiting COD remittance' => 're-badge-gold',
+                                        'Available in wallet', 'Paid' => 're-badge-green',
+                                        'Reserved for payout' => 're-badge-blue',
+                                        default => '',
+                                    };
+                                @endphp
+
+                                <tr>
+                                    <td class="re-order">
+                                        {{ $transaction['order'] }}
+                                    </td>
+
+                                    <td>
+                                        {{ $transaction['date'] }}
+                                    </td>
+
+                                    <td>
+                                        {{ $transaction['type'] }}
+                                    </td>
+
+                                    <td class="re-money">
+                                        +₱{{ number_format($transaction['amount'], 2) }}
+                                    </td>
+
+                                    <td>
+                                        <span class="re-badge {{ $transactionStatusClass }}">
+                                            {{ $transaction['status'] }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="re-table-empty">
+                                        No recognized Rider earnings yet.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="re-panel-footer">
+                    <span>Pickup, direct-delivery, and last-mile ledger entries.</span>
+                </div>
+            </section>
         </div>
 
-    </section>
+        <aside class="re-panel" aria-labelledby="payoutSummaryTitle">
+            <div class="re-panel-head">
+                <div>
+                    <h3 id="payoutSummaryTitle" class="re-panel-title">
+                        Payout Summary
+                    </h3>
 
+                    <p class="re-panel-description">
+                        Your available balance and withdrawal requests.
+                    </p>
+                </div>
+            </div>
+
+            <div class="re-panel-body">
+                <div class="re-balance">
+                    <p class="re-balance-label">Available Balance</p>
+
+                    <p class="re-balance-value">
+                        ₱{{ number_format($earnings['available'], 2) }}
+                    </p>
+
+                    <p class="re-balance-note">
+                        Available in your internal Rider wallet.
+                        This does not yet indicate an external payout.
+                    </p>
+                </div>
+
+                <form
+                    method="POST"
+                    action="{{ route('courier.earnings.payout') }}"
+                    class="re-form"
+                >
+                    @csrf
+
+                    <div class="re-field">
+                        <label for="riderWithdrawalAmount">
+                            Withdrawal amount (₱)
+                        </label>
+
+                        <input
+                            id="riderWithdrawalAmount"
+                            name="amount"
+                            type="number"
+                            min="1"
+                            step="0.01"
+                            max="{{ $earnings['available'] }}"
+                            value="{{ old('amount') }}"
+                            required
+                            placeholder="Enter amount"
+                        >
+                    </div>
+
+                    <div class="re-field">
+                        <label for="riderPayoutMethod">
+                            Payout method
+                        </label>
+
+                        <select
+                            id="riderPayoutMethod"
+                            name="payout_method"
+                            required
+                        >
+                            <option
+                                value="gcash"
+                                @selected(old('payout_method', 'gcash') === 'gcash')
+                            >
+                                GCash
+                            </option>
+
+                            <option
+                                value="maya"
+                                @selected(old('payout_method', 'gcash') === 'maya')
+                            >
+                                Maya
+                            </option>
+
+                            <option
+                                value="bank"
+                                @selected(old('payout_method', 'gcash') === 'bank')
+                            >
+                                Bank Transfer
+                            </option>
+
+                            <option
+                                value="manual_cash"
+                                @selected(old('payout_method', 'gcash') === 'manual_cash')
+                            >
+                                Manual Cash Release
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="re-field">
+                        <label for="riderPayoutAccountName">
+                            Account name
+                        </label>
+
+                        <input
+                            id="riderPayoutAccountName"
+                            name="account_name"
+                            type="text"
+                            value="{{ old('account_name') }}"
+                            required
+                            minlength="2"
+                            maxlength="120"
+                            placeholder="Account name"
+                        >
+                    </div>
+
+                    <div class="re-field">
+                        <label for="riderPayoutAccountReference">
+                            Mobile / bank account
+                        </label>
+
+                        <input
+                            id="riderPayoutAccountReference"
+                            name="account_reference"
+                            type="text"
+                            value="{{ old('account_reference') }}"
+                            required
+                            minlength="4"
+                            maxlength="120"
+                            placeholder="Mobile / bank account"
+                        >
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="re-button re-button-gold"
+                        @disabled($earnings['available'] <= 0)
+                    >
+                        Request Withdrawal
+                    </button>
+
+                    @if($earnings['available'] <= 0)
+                        <p class="re-form-note">
+                            Withdrawal is unavailable while your available balance is ₱0.
+                        </p>
+                    @endif
+                </form>
+
+                <section class="re-requests" aria-labelledby="payoutRequestsTitle">
+                    <h4 id="payoutRequestsTitle" class="re-requests-title">
+                        Recent Payout Requests
+                    </h4>
+
+                    @forelse($payoutRequests as $payout)
+                        <div class="re-request">
+                            <span class="re-request-amount">
+                                ₱{{ number_format((float) $payout->amount, 2) }}
+                            </span>
+
+                            <span class="re-badge re-request-status">
+                                {{ str_replace('_', ' ', $payout->status) }}
+                            </span>
+                        </div>
+                    @empty
+                        <p class="re-empty">
+                            No payout requests yet.
+                        </p>
+                    @endforelse
+                </section>
+            </div>
+        </aside>
+    </div>
 </div>
-
 @endsection
