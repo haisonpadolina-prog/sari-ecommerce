@@ -678,7 +678,7 @@
 
 <div
     id="lgIncomingParcels"
-    class="intake-page"
+    class="sari-logistics-ui intake-page"
     data-intake-workspace
 >
 

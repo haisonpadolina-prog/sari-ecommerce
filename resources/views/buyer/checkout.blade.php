@@ -1894,6 +1894,71 @@
         }
     }
 
+
+    /* ============================================================
+       BUYER CHECKOUT — SELLER-STYLE FLOATING SURFACES
+       Visual-only: major panels float, nested UI stays flat.
+       Deliberately scoped to checkout; no form/map/JS alterations.
+    ============================================================ */
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-panel,
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-summary {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #ffffff !important;
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+    }
+
+    /* Distinct cards have enough room for the external shadows. */
+    .sari-checkout.sari-checkout--tiktok .sari-checkout-shell {
+        padding: 24px 26px 52px;
+    }
+
+    .sari-checkout.sari-checkout--tiktok .sari-checkout-grid {
+        gap: 20px;
+    }
+
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-stack {
+        gap: 18px;
+    }
+
+    /* Nested controls are intentionally not raised. */
+    .sari-checkout.sari-checkout--tiktok .sari-map-card,
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-payment-row,
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-seller,
+    .sari-checkout.sari-checkout--tiktok .sari-tiktok-item,
+    .sari-checkout.sari-checkout--tiktok .sari-voucher-card {
+        box-shadow: none !important;
+    }
+
+    @media (max-width: 1023px) {
+        .sari-checkout.sari-checkout--tiktok .sari-checkout-grid {
+            gap: 18px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sari-checkout.sari-checkout--tiktok .sari-checkout-shell {
+            padding: 16px 14px 34px;
+        }
+
+        .sari-checkout.sari-checkout--tiktok .sari-tiktok-stack {
+            gap: 14px;
+        }
+
+        .sari-checkout.sari-checkout--tiktok .sari-tiktok-panel,
+        .sari-checkout.sari-checkout--tiktok .sari-tiktok-summary {
+            border-radius: 14px !important;
+            box-shadow:
+                0 2px 4px rgba(15, 23, 42, .035),
+                0 8px 18px rgba(15, 23, 42, .06),
+                0 18px 38px rgba(15, 23, 42, .07) !important;
+        }
+    }
+
 </style>
 @endpush
 

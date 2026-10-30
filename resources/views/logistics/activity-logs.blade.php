@@ -738,7 +738,7 @@
 @endpush
 
 @section('content')
-<div class="lg-activity">
+<div class="sari-logistics-ui lg-activity">
     <div class="la-head">
         <div>
             <span class="la-eyebrow">

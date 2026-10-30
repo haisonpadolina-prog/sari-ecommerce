@@ -26,6 +26,9 @@ class BuyerCatalogService
     /** @var array<int, int>|null */
     private ?array $soldCounts = null;
 
+    /** @var array<int, Collection<int, SellerProduct>> Request-local models reused by shop() and productsForShop(). */
+    private array $shopProducts = [];
+
     /**
      * Buyer-facing category catalog. Keep this aligned with the Seller product
      * category choices so categories remain discoverable even before a Seller
@@ -130,11 +133,185 @@ class BuyerCatalogService
         }
 
         $products = $query->get();
+        $this->primeFreeShippingOffers($products);
 
         return $products
             ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
             ->values()
             ->all();
+    }
+
+    /**
+     * A small, buyer-visible recommendation set for the AI assistant.
+     * Never exposes unpublished products or trusts an AI-generated product URL.
+     * Product/variant prices use the same promotion calculation as the catalog.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function assistantRecommendations(string $question, int $limit = 4): array
+    {
+        $question = mb_strtolower(trim($question));
+        $limit = max(1, min(6, $limit));
+
+        // Product retrieval is deterministic, uses real buyer-visible records,
+        // and never asks a language model to invent product IDs or images.
+        $groups = [
+            'books' => ['book', 'novel', 'reading', 'stationery', 'textbook', 'notebook'],
+            'fashion' => ['damit', 'outfit', 'clothes', 'clothing', 'fashion', 'shirt', 'dress', 'blouse', 'jacket', 'pants', 'jeans', 'skirt', 'suot', 'wear', 'bagay', 'ootd', 'casual', 'polo'],
+            'shoes' => ['sapatos', 'shoes', 'sneakers', 'sandals', 'footwear'],
+            'electronics' => ['gadget', 'phone', 'electronics', 'charger', 'laptop', 'headphone'],
+            'beauty' => ['makeup', 'beauty', 'skin', 'cosmetic', 'perfume'],
+            'home' => ['furniture', 'kitchen', 'home', 'bahay', 'decor'],
+            'sports' => ['sports', 'workout', 'gym', 'fitness'],
+            'food' => ['food', 'snack', 'pagkain', 'drink'],
+            'accessories' => ['accessory', 'accessories', 'watch', 'jewelry', 'bag'],
+        ];
+        $group = null;
+        foreach ($groups as $name => $terms) {
+            if (collect($terms)->contains(fn ($term) => str_contains($question, $term))) {
+                $group = $name;
+                break;
+            }
+        }
+        $categoryTerms = match ($group) {
+            'books' => ['book', 'stationery', 'novel', 'reading'],
+            'fashion' => ['fashion', 'apparel', 'shirt', 'dress', 'clothing', 'pants', 'jeans', 'casual', 'jacket', 'blouse'],
+            'shoes' => ['shoe', 'footwear', 'sneaker', 'sandal'],
+            'electronics' => ['electronic', 'appliance', 'gadget', 'phone'],
+            'beauty' => ['beauty', 'care', 'cosmetic', 'makeup'],
+            'home' => ['home', 'living', 'furniture', 'kitchen'],
+            'sports' => ['sport', 'outdoor', 'fitness'],
+            'food' => ['food', 'beverage', 'grocery', 'snack'],
+            'accessories' => ['accessor', 'watch', 'jewelry', 'bag'],
+            default => [],
+        };
+        $isBest = str_contains($question, 'best') || str_contains($question, 'top rated');
+        $isTrend = str_contains($question, 'trend') || str_contains($question, 'popular')
+            || str_contains($question, 'bestseller') || str_contains($question, 'best seller')
+            || str_contains($question, 'top selling') || str_contains($question, 'best-selling');
+
+        $query = $this->approvedProductsQuery();
+        if ($categoryTerms) {
+            $query->where(function (Builder $items) use ($categoryTerms): void {
+                foreach ($categoryTerms as $term) {
+                    $items->orWhere('category', 'like', '%' . $term . '%')
+                        ->orWhere('name', 'like', '%' . $term . '%');
+                }
+            });
+        } elseif (!$isTrend) {
+            // Generic prompts like "recommend products" or "show available items"
+            // should browse approved listings, not use filler words as keywords.
+            $tokens = collect(preg_split('/[^\pL\pN]+/u', $question) ?: [])
+                ->filter(fn ($term) => mb_strlen($term) >= 3)
+                ->reject(fn ($term) => in_array($term, [
+                    'the', 'what', 'about', 'please', 'can', 'you', 'show', 'find',
+                    'some', 'with', 'and', 'for', 'how', 'mga', 'ang', 'ako', 'may',
+                    'ano', 'recommend', 'suggest', 'product', 'products', 'item',
+                    'items', 'best', 'nice', 'available', 'categories', 'category',
+                    'right', 'now', 'latest', 'pictures', 'photos', 'images',
+                ], true))->take(4)->values();
+            if ($tokens->isNotEmpty()) {
+                $query->where(function (Builder $items) use ($tokens): void {
+                    foreach ($tokens as $token) {
+                        $like = '%' . $token . '%';
+                        $items->orWhere('name', 'like', $like)
+                            ->orWhere('category', 'like', $like)
+                            ->orWhere('brand', 'like', $like);
+                    }
+                });
+            }
+        }
+
+        $color = null;
+        if (preg_match('/\b(black|white|blue|red|green|pink|yellow|brown|gray|grey|purple|orange|beige|navy|violet)\b/u', $question, $match)) {
+            $color = $match[1];
+        }
+        $size = null;
+        if (preg_match('/\b(small|medium|large|xs|xl|xxl|2xl|3xl)\b/u', $question, $match)) {
+            $size = $match[1];
+        }
+        // Asking "what color suits me" is styling advice, not a request for
+        // a specific shade. Only constrain to explicit preferences.
+        if ($color !== null || $size !== null) {
+            $query->where(function (Builder $items) use ($color, $size): void {
+                if ($color !== null && $size === null) {
+                    $items->where('name', 'like', '%' . $color . '%')
+                        ->orWhereHas('activeVariants', fn (Builder $variant) => $variant->where('option_values', 'like', '%' . $color . '%'));
+                } else {
+                    // Both requested attributes must exist on the SAME active variant.
+                    $items->whereHas('activeVariants', function (Builder $variant) use ($color, $size): void {
+                        if ($color !== null) $variant->where('option_values', 'like', '%' . $color . '%');
+                        if ($size !== null) $variant->where('option_values', 'like', '%' . $size . '%');
+                    });
+                }
+            });
+        }
+
+        // Trend ranking considers only a bounded candidate pool; it uses the
+        // existing cached delivered-order counters, never global live metrics.
+        $candidateLimit = ($isTrend || $isBest) ? 100 : $limit;
+        $products = $query->orderByDesc('reviewed_at')->orderByDesc('id')
+            ->limit($candidateLimit)->get();
+        $basis = 'recent';
+        if ($isTrend && $products->isNotEmpty()) {
+            $counts = $this->soldCounts();
+            if ($products->contains(fn (SellerProduct $p) => ($counts[$p->id] ?? 0) > 0)) {
+                $basis = 'delivered_sales';
+                $products = $products->sort(function (SellerProduct $a, SellerProduct $b) use ($counts): int {
+                    return (($counts[$b->id] ?? 0) <=> ($counts[$a->id] ?? 0))
+                        ?: (($b->reviews_count ?? 0) <=> ($a->reviews_count ?? 0))
+                        ?: ($b->id <=> $a->id);
+                });
+            }
+            $products = $products->take($limit);
+        } elseif ($isBest && $products->isNotEmpty()) {
+            if ($products->contains(fn (SellerProduct $p) => (int) ($p->reviews_count ?? 0) > 0)) {
+                $basis = 'buyer_reviews';
+                $products = $products->sort(function (SellerProduct $a, SellerProduct $b): int {
+                    return ((float) ($b->reviews_avg_rating ?? 0) <=> (float) ($a->reviews_avg_rating ?? 0))
+                        ?: ((int) ($b->reviews_count ?? 0) <=> (int) ($a->reviews_count ?? 0))
+                        ?: ($b->id <=> $a->id);
+                });
+            }
+            $products = $products->take($limit);
+        }
+
+        return $products->map(function (SellerProduct $product) use ($basis): array {
+            $discount = $this->effectiveDiscountPercent($product);
+            $base = max(0, (float) $product->price);
+            $sellerPrice = $this->discounted($base, $discount);
+            $price = $this->platformCampaigns->saleQuote($product, null, $sellerPrice);
+            $variants = $product->activeVariants->take(12)->map(function ($variant) use ($product, $discount): array {
+                $options = is_array($variant->option_values) ? $variant->option_values : [];
+                $sellerVariantPrice = $this->discounted(max(0, (float) $variant->price), $discount);
+                $quote = $this->platformCampaigns->saleQuote($product, $variant, $sellerVariantPrice);
+                $optionLabel = collect($options)->map(fn ($value, $key) => ucfirst((string) $key) . ': ' . (string) $value)->implode(' • ');
+                return [
+                    'id' => (int) $variant->id,
+                    'label' => $optionLabel !== '' ? $optionLabel : 'Variant #' . $variant->id,
+                    'color' => collect($options)->first(fn ($value, $key) => in_array(mb_strtolower((string) $key), ['color', 'colour'], true)),
+                    'size' => collect($options)->first(fn ($value, $key) => in_array(mb_strtolower((string) $key), ['size', 'shoe size'], true)),
+                    'price' => (float) $quote['buyer_price'],
+                    'stock' => (int) $variant->stock,
+                    'image' => $variant->image_path ? route('buyer.product.variant-image', ['variant' => $variant->id]) : null,
+                ];
+            })->values()->all();
+            $firstImage = $product->galleryImages->first();
+            return [
+                'id' => (int) $product->id,
+                'name' => (string) $product->name,
+                'category' => (string) ($product->category ?: 'General'),
+                'seller' => (string) ($product->seller?->store_name ?: 'SARI Seller'),
+                'price' => (float) $price['buyer_price'],
+                'image' => $product->image_path
+                    ? route('buyer.product.image', ['product' => $product->id])
+                    : ($firstImage ? route('buyer.product.gallery-image', ['image' => $firstImage->id]) : asset($this->categoryImage((string) $product->category))),
+                'url' => route('buyer.product.details', ['product' => $product->id]),
+                'stock' => $product->activeVariants->isNotEmpty() ? (int) $product->activeVariants->sum('stock') : (int) $product->stock,
+                'variants' => $variants,
+                'recommendation_basis' => $basis,
+            ];
+        })->values()->all();
     }
 
     public function find(int $productId): ?array
@@ -165,11 +342,10 @@ class BuyerCatalogService
             return [];
         }
 
-        return $this->approvedProductsQuery()
-            ->where('seller_account_id', $sellerId)
-            ->orderByDesc('reviewed_at')
-            ->orderByDesc('id')
-            ->get()
+        $products = $this->productsForSeller($sellerId);
+        $this->primeFreeShippingOffers($products);
+
+        return $products
             ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
             ->values()
             ->all();
@@ -193,12 +369,7 @@ class BuyerCatalogService
             return null;
         }
 
-        $products = $this->approvedProductsQuery()
-            ->where('seller_account_id', $sellerId)
-            ->orderByDesc('reviewed_at')
-            ->orderByDesc('id')
-            ->get()
-            ->values();
+        $products = $this->productsForSeller($sellerId);
 
         return $this->toBuyerShop($seller, $products);
     }
@@ -341,12 +512,47 @@ class BuyerCatalogService
             ->paginate(max(8, min(48, $perPage)))
             ->withQueryString();
 
+        $this->primeFreeShippingOffers($paginator->getCollection());
+
         $paginator->setCollection(
             $paginator->getCollection()
                 ->map(fn (SellerProduct $product) => $this->toBuyerProduct($product))
         );
 
         return $paginator;
+    }
+
+    /**
+     * Reuse the same approved, ordered Eloquent records on the Seller Shop page.
+     * This cache is scoped to this service instance/request; it does not cache
+     * buyer-visible pricing or stock across HTTP requests.
+     *
+     * @return Collection<int, SellerProduct>
+     */
+    private function productsForSeller(int $sellerId): Collection
+    {
+        if (!isset($this->shopProducts[$sellerId])) {
+            $this->shopProducts[$sellerId] = $this->approvedProductsQuery()
+                ->where('seller_account_id', $sellerId)
+                ->orderByDesc('reviewed_at')
+                ->orderByDesc('id')
+                ->get()
+                ->values();
+        }
+
+        return $this->shopProducts[$sellerId];
+    }
+
+    /** Load the current live Free Shipping offers in batches, not one SQL query per seller. */
+    private function primeFreeShippingOffers(Collection $products): void
+    {
+        if ($products->isEmpty()) {
+            return;
+        }
+
+        $this->freeShippingPromotions->primeLiveOffersForSellers(
+            $products->pluck('seller_account_id')->all()
+        );
     }
 
     private function toBuyerProduct(SellerProduct $product): array
@@ -741,7 +947,11 @@ class BuyerCatalogService
             return $this->soldCounts;
         }
 
-        $this->soldCounts = Cache::remember('buyer.catalog.sold-counts.v1', now()->addMinute(), function (): array {
+        // Laravel 12 stale-while-revalidate: keep the existing 60-second fresh period.
+        // During the following 60 seconds, return the previous displayed count
+        // immediately and recompute after sending the response. Cold starts still
+        // compute synchronously; no pricing/inventory decision uses these counts.
+        $this->soldCounts = Cache::flexible('buyer.catalog.sold-counts.v1', [60, 120], function (): array {
             $counts = [];
 
             MarketplaceOrder::query()

@@ -113,8 +113,9 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/logistics/buyer-parity.css') }}?v=20261029-1">
 </head>
-<body class="min-h-screen antialiased">
+<body class="sari-logistics-branch-select min-h-screen antialiased">
     <div class="page-backdrop" aria-hidden="true"></div>
     <div class="page-overlay" aria-hidden="true"></div>
 

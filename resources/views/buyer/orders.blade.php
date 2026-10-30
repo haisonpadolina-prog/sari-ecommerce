@@ -6076,6 +6076,166 @@
     }
     .sari-help-dialog {box-shadow:0 22px 70px rgba(20,27,40,.17);}
 
+    /* ============================================================
+       BUYER MY ORDERS — SELLER-STYLE FLOATING PANELS + TEXT FILTERS
+       Visual only. Preserve all Blade/JS/data/filter/tracking behavior.
+       This final block intentionally wins over legacy page-local rules.
+    ============================================================ */
+
+    .sari-orders-page.sari-orders-reference {
+        background:#f4f5f7 !important;
+    }
+
+    /* Raised surfaces are limited to top-level panels. */
+    .sari-orders-page.sari-orders-reference .sari-kpi-bar {
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#ffffff !important;
+        box-shadow:
+            0 1px 3px rgba(15,23,42,.035),
+            0 7px 18px rgba(15,23,42,.06),
+            0 15px 32px rgba(15,23,42,.065),
+            inset 0 1px 0 rgba(255,255,255,.90) !important;
+    }
+
+    /* Search/filter bar becomes its own raised panel, not an edge-to-edge strip. */
+    .sari-orders-page.sari-orders-reference .sari-orders-filter-bar {
+        margin-bottom:18px !important;
+        padding:13px 16px !important;
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#ffffff !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+    }
+
+    /* Orders remain individually floated but never translate on hover. */
+    .sari-orders-page.sari-orders-reference .sari-order-card,
+    .sari-orders-page.sari-orders-reference .sari-order-card:hover,
+    .sari-orders-page.sari-orders-reference .sari-order-card.is-tracking-selected,
+    .sari-orders-page.sari-orders-reference .sari-order-card.is-tracking-selected:hover,
+    .sari-orders-page.sari-orders-reference .sari-order-card[data-tracking-selected="true"],
+    .sari-orders-page.sari-orders-reference .sari-order-card[data-tracking-selected="true"]:hover {
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#ffffff !important;
+        transform:none !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+    }
+
+    /* Right-column tracking and help are top-level floating panels. */
+    .sari-orders-page.sari-orders-reference .sari-sidebar-card {
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#ffffff !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+    }
+
+    .sari-orders-page.sari-orders-reference .sari-orders-empty-state {
+        border:1px solid #e5e7eb !important;
+        border-radius:18px !important;
+        background:#ffffff !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+    }
+
+    /* Inner rows, thumbnails, tracking steps and controls stay flat. */
+    .sari-orders-page.sari-orders-reference .sari-order-card .sari-order-more-content,
+    .sari-orders-page.sari-orders-reference .sari-order-card .sari-order-tracking-panel {
+        box-shadow:none !important;
+    }
+
+    /* FILTER TABS — text only; existing JS still toggles .is-active. */
+    .sari-orders-page.sari-orders-reference #orderFilters {
+        gap:6px 19px !important;
+        align-items:center !important;
+    }
+
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter,
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter:hover,
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter:focus-visible {
+        min-height:38px !important;
+        border:0 !important;
+        border-radius:0 !important;
+        background:transparent !important;
+        background-image:none !important;
+        padding:7px 0 !important;
+        color:#7b8491 !important;
+        font-size:12px !important;
+        font-weight:550 !important;
+        line-height:1.4 !important;
+        text-decoration:none !important;
+        box-shadow:none !important;
+        transform:none !important;
+        transition:color .15s ease !important;
+    }
+
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter:hover,
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter:focus-visible {
+        color:#a87512 !important;
+    }
+
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter.is-active,
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter.is-active:hover,
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter.is-active:focus-visible {
+        border:0 !important;
+        background:transparent !important;
+        color:#c88912 !important;
+        font-weight:700 !important;
+        box-shadow:none !important;
+    }
+
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter span {
+        color:inherit !important;
+        font-weight:inherit !important;
+    }
+
+    /* Keyboard navigation keeps an accessible focus indicator. */
+    .sari-orders-page.sari-orders-reference #orderFilters .sari-filter:focus-visible {
+        outline:2px solid rgba(200,137,18,.54) !important;
+        outline-offset:4px !important;
+    }
+
+    @media (max-width:767px) {
+        .sari-orders-page.sari-orders-reference .sari-kpi-bar,
+        .sari-orders-page.sari-orders-reference .sari-orders-filter-bar,
+        .sari-orders-page.sari-orders-reference .sari-order-card,
+        .sari-orders-page.sari-orders-reference .sari-order-card:hover,
+        .sari-orders-page.sari-orders-reference .sari-order-card.is-tracking-selected,
+        .sari-orders-page.sari-orders-reference .sari-order-card[data-tracking-selected="true"],
+        .sari-orders-page.sari-orders-reference .sari-sidebar-card,
+        .sari-orders-page.sari-orders-reference .sari-orders-empty-state {
+            border-radius:15px !important;
+            box-shadow:
+                0 1px 3px rgba(15,23,42,.035),
+                0 7px 18px rgba(15,23,42,.06),
+                0 15px 32px rgba(15,23,42,.065),
+                inset 0 1px 0 rgba(255,255,255,.90) !important;
+        }
+
+        .sari-orders-page.sari-orders-reference .sari-orders-filter-bar {
+            margin-bottom:14px !important;
+            padding:12px 14px !important;
+        }
+
+        .sari-orders-page.sari-orders-reference #orderFilters { gap:4px 14px !important; }
+        .sari-orders-page.sari-orders-reference #orderFilters .sari-filter { font-size:11.5px !important; }
+    }
+
 </style>
 
 <div class="sari-orders-page sari-orders-reference min-h-full">

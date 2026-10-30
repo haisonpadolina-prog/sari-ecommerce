@@ -14,25 +14,26 @@
             .then(data => {
                 if (!nav.isConnected) return;
                 const threads = (Array.isArray(data.conversations) ? data.conversations : [])
-                    .filter(item => ['admin_support','report_support'].includes(String(item.type)) && item.uuid);
+                    // Keep general Admin Support in the inbox; issue reports stay in the report workflow.
+                    .filter(item => String(item.type) === 'admin_support' && item.uuid);
                 nav.replaceChildren();
                 for (const thread of threads) {
                     const link = document.createElement('a');
                     link.className = 'sari-bm-seller';
                     const target = new URL(nav.dataset.messagesUrl, window.location.href);
-                    target.searchParams.set('channel', thread.type === 'report_support' ? 'report' : 'support');
+                    target.searchParams.set('channel', 'support');
                     target.searchParams.set('conversation', String(thread.uuid));
                     link.href = target.toString();
                     link.dataset.storeSearch = String(thread.subject || 'admin support').toLowerCase();
                     const avatar = document.createElement('span');
                     avatar.className = 'sari-bm-avatar';
-                    avatar.textContent = thread.type === 'report_support' ? '!' : 'A';
+                    avatar.textContent = 'A';
                     avatar.setAttribute('aria-hidden','true');
                     const copy = document.createElement('span');copy.className='sari-bm-seller-copy';
                     const title = document.createElement('strong');
-                    title.textContent = thread.type === 'report_support' ? 'Admin · '+String(thread.subject || 'Issue report').slice(0,70) : 'SARI Admin Support';
+                    title.textContent = 'SARI Admin Support';
                     const subtitle = document.createElement('small');
-                    subtitle.textContent = thread.last_message?.body || (thread.type === 'report_support' ? 'Issue report conversation' : 'Support conversation');
+                    subtitle.textContent = thread.last_message?.body || 'Support conversation';
                     copy.append(title,subtitle);
                     link.append(avatar,copy);
                     if (Number(thread.unread_count || 0) > 0) {

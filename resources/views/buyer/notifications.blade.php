@@ -121,17 +121,18 @@
             box-shadow:none;
         }
 
-        /* Reference-image notification list shell */
+        /* Seller Notifications reference: one elevated workspace, flat feed rows. */
         .sari-activity-shell {
             position:relative;
             overflow:visible;
             margin-top:0;
-            border:1px solid #dfe4e9;
+            border:1px solid #e5e7eb;
             border-radius:22px;
             background:#fff;
             box-shadow:
-                0 18px 46px rgba(31,41,55,.08),
-                0 3px 10px rgba(31,41,55,.035);
+                0 3px 7px rgba(15,23,42,.055),
+                0 14px 32px rgba(15,23,42,.095),
+                0 30px 68px rgba(15,23,42,.11);
         }
 
         .sari-activity-toolbar {
@@ -439,42 +440,41 @@
             display:flex;
             align-items:center;
             flex-wrap:wrap;
-            gap:8px;
+            gap:24px;
         }
-        /* Recent / Archived — selected state uses SARI gold, never an underline. */
+        /* Recent / Archived are text links only; active text uses the SARI gold palette. */
         .sari-activity-filter {
             display:inline-flex;
             align-items:center;
             justify-content:center;
             min-height:36px;
-            border:1px solid transparent;
-            border-radius:9px;
+            border:0;
+            border-radius:0;
             background:transparent;
-            padding:8px 13px;
+            padding:6px 0;
             color:#7f8995;
             font-size:12px;
             font-weight:650;
             line-height:1.25;
             text-decoration:none;
-            transition:background-color .16s ease,border-color .16s ease,color .16s ease;
+            box-shadow:none;
+            transition:color .16s ease;
         }
         .sari-activity-filter:hover,
         .sari-activity-filter:focus-visible {
-            background:#faf5eb;
-            color:#a96d07;
+            background:transparent;
+            color:#c88912;
+            text-decoration:none;
+            box-shadow:none;
         }
-        .sari-activity-filter[aria-current="page"] {
-            border-color:#b67a10;
-            background:#c88912;
-            color:#ffffff;
-            font-weight:750;
-            box-shadow:0 4px 12px rgba(200,137,18,.15);
-        }
+        .sari-activity-filter[aria-current="page"],
         .sari-activity-filter[aria-current="page"]:hover,
         .sari-activity-filter[aria-current="page"]:focus-visible {
-            border-color:#a66b0b;
-            background:#b9780d;
-            color:#ffffff;
+            border:0;
+            background:transparent;
+            color:#c88912;
+            font-weight:750;
+            box-shadow:none;
         }
         .sari-activity-filter::after { content:none !important; display:none !important; }
         .sari-activity-filter:focus-visible,
@@ -663,7 +663,7 @@
         @media (max-width:700px) {
             .sari-activity-toolbar { flex-wrap:wrap; padding-block:12px; }
             .sari-activity-actions { margin:8px 2px 12px; gap:8px 16px; }
-            .sari-activity-filters { gap:7px; }
+            .sari-activity-filters { gap:18px; }
             .sari-activity-read-all { font-size:11.5px; }
             .sari-activity-pagination { gap:5px; }
             .sari-activity-page-link,
@@ -682,20 +682,21 @@
             .sari-activity-page-arrow { transition:none; }
         }
 
-        /* Empty state kept compact and consistent with Buyer pages */
+        /* The empty state floats like the main notification workspace. */
         .sari-activity-empty-state {
             display:grid;
             min-height:430px;
             margin-top:0;
             place-items:center;
-            border:1px solid #e3e7eb;
+            border:1px solid #e5e7eb;
             border-radius:18px;
             background:#fff;
             padding:72px 24px;
             text-align:center;
             box-shadow:
-                0 10px 28px rgba(31,41,55,.045),
-                0 2px 7px rgba(31,41,55,.018);
+                0 3px 7px rgba(15,23,42,.055),
+                0 14px 32px rgba(15,23,42,.095),
+                0 30px 68px rgba(15,23,42,.11);
         }
 
         .sari-activity-empty-icon {
@@ -873,6 +874,17 @@
             .sari-activity-empty-state {
                 min-height:360px;
                 padding:56px 20px;
+            }
+        }
+
+        /* Match Seller Notifications' tighter, static elevation on smaller screens. */
+        @media (max-width:760px) {
+            .sari-activity-shell,
+            .sari-activity-empty-state {
+                box-shadow:
+                    0 2px 4px rgba(15,23,42,.035),
+                    0 8px 18px rgba(15,23,42,.06),
+                    0 18px 38px rgba(15,23,42,.07);
             }
         }
     </style>
@@ -1222,6 +1234,22 @@
 
         window.__SARI_RECENT_ACTIVITY_MENU_V1__ = true;
 
+        // The shared Buyer shell polls unread-count changes on every page.
+        // Refresh the Notifications list itself when a new unread event arrives,
+        // without a manual browser reload. Never interrupt a focused control.
+        let lastNotificationListRefresh = 0;
+        document.addEventListener('sari:buyer-notification-count-changed', (event) => {
+            if (!(Number(event.detail?.count) > Number(event.detail?.previous))) return;
+            if (document.visibilityState === 'hidden') return;
+            if (!document.querySelector('[data-sari-activity-page]')) return;
+            if (new URLSearchParams(window.location.search).get('filter') === 'archived') return;
+            if (document.activeElement?.closest?.('[data-sari-activity-page]')) return;
+            if (Date.now() - lastNotificationListRefresh < 12000) return;
+            if (typeof window.Livewire?.navigate !== 'function') return;
+            lastNotificationListRefresh = Date.now();
+            window.Livewire.navigate(window.location.href);
+        });
+
         const closeMenus = (except = null) => {
             document
                 .querySelectorAll('[data-activity-menu]')
@@ -1344,6 +1372,7 @@
 
                     markRead.remove();
                     closeMenus();
+                    document.dispatchEvent(new CustomEvent('sari:notification-updated'));
                     window.SariBuyerToast?.success('Notification marked as read.');
                 } catch (error) {
                     markRead.disabled = false;

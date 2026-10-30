@@ -9,6 +9,7 @@ use App\Services\Buyer\BuyerActivityService;
 use App\Services\Buyer\BuyerCartService;
 use App\Services\Buyer\BuyerCatalogService;
 use App\Services\Buyer\BuyerIdentityService;
+use App\Services\Buyer\BuyerHomepageBannerService;
 use App\Services\Promotions\PlatformCampaignService;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class BuyerPageController extends Controller
         private readonly BuyerActivityService $activity,
         private readonly BuyerCartService $cart,
         private readonly BuyerIdentityService $identity,
+        private readonly BuyerHomepageBannerService $homepageBanners,
         private readonly PlatformCampaignService $platformCampaigns,
     ) {
     }
@@ -31,18 +33,13 @@ class BuyerPageController extends Controller
 
         $buyerAccount = $this->syncBuyerSession($request);
 
-        $cartItems = $this->cart->items($request);
-
+        // Home currently renders banners and featured products only. The other
+        // projections belong to dedicated pages / summary endpoints and must
+        // not add unnecessary order, cart, and notification reads here.
         return view('buyer.home', [
-            'categories' => $this->catalog->homeCategories(),
+            'homepageBanners' => $this->homepageBanners->banners(),
             'featuredProducts' => $this->catalog->catalog(8),
             'buyerAccount' => $buyerAccount,
-            'recentOrders' => $this->activity->recentOrders($request, 4),
-            'activeShipments' => $this->activity->activeShipments($request, 3),
-            'recentNotifications' => $this->activity->latestNotifications($request, 4),
-            'unreadNotificationCount' => $this->activity->unreadNotificationCount($request),
-            'cartItemCount' => $cartItems->unique('seller_product_id')->count(),
-            'cartSubtotal' => $this->cart->subtotal($cartItems),
         ]);
     }
 
@@ -132,6 +129,10 @@ class BuyerPageController extends Controller
         if (!$buyer || $buyer->account_status !== 'active') {
             return null;
         }
+
+        // Header can reuse this same authenticated record during the request,
+        // avoiding a second SELECT without caching any buyer data across requests.
+        $request->attributes->set('sari.buyer.active_account', $buyer);
 
         $buyerName = trim($buyer->first_name . ' ' . $buyer->last_name);
 

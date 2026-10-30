@@ -36,9 +36,9 @@ class BuyerSellerMessageController extends Controller
 
         $this->identity->guard($request);
         $sellerIds = $this->identity->apply(MarketplaceOrder::query(), $request)
-            ->pluck('seller_account_id')
+            ->distinct()->pluck('seller_account_id')
             ->merge($this->identity->apply(BuyerSellerMessage::query(), $request)
-                ->pluck('seller_account_id'))
+                ->distinct()->pluck('seller_account_id'))
             ->merge(SellerProduct::query()->buyerVisible()->distinct()
                 ->pluck('seller_account_id'))
             ->filter()->unique()->values();

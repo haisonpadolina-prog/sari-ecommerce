@@ -912,7 +912,7 @@
 
 <div
     id="lgParcelSorting"
-    class="sorting-page"
+    class="sari-logistics-ui sorting-page"
     data-sorting-workspace
 >
 

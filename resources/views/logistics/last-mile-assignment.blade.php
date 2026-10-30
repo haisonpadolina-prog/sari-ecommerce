@@ -1158,7 +1158,7 @@
 
 <div
     id="lgLastMile"
-    class="lastmile-page"
+    class="sari-logistics-ui lastmile-page"
     data-lastmile-workspace
 >
     {{-- PAGE HEADING --}}

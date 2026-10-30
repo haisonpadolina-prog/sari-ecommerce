@@ -1965,7 +1965,7 @@
 
 <div
     id="logisticsMessagesPage"
-    class="logistics-messages-page"
+    class="sari-logistics-ui logistics-messages-page"
     data-logistics-messages
 >
 

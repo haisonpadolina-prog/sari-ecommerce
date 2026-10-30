@@ -1077,7 +1077,7 @@
 
 @section('content')
 
-<div class="account-page">
+<div class="sari-logistics-ui account-page">
 
     {{-- =====================================================
         PAGE INTRO

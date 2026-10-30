@@ -9,6 +9,11 @@
 
 
 @push('styles')
+    {{-- Load the published banner fonts, including admin-entered Google Fonts families. --}}
+    @foreach (array_unique(array_filter(array_column($homepageBanners ?? [], 'font_url'))) as $bannerFontUrl)
+        <link rel="stylesheet" href="{{ $bannerFontUrl }}">
+    @endforeach
+
 
     <link
 
@@ -3937,6 +3942,219 @@
         }
     }
 
+
+    /* Editable content overlays only: image cards and grid geometry are unchanged. */
+    .sari-promo-slide-copy--managed {
+        transform: translateY(-50%) !important;
+        max-width: min(50%, 430px) !important;
+        /* Text appears directly over the banner photo, without a card or white panel. */
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+    }
+    .sari-promo-slide-copy--managed.sari-promo-slide-copy--dark {
+        background: transparent !important;
+    }
+    .sari-promo-cta--managed {
+        position: absolute !important; z-index: 3 !important; margin: 0 !important;
+        transform: translateY(-50%) !important; max-width: 70%;
+        line-height: 1.25 !important; text-decoration: none !important;
+    }
+    .sari-promo-slide:hover .sari-promo-cta--managed,
+    .sari-promo-slide:focus-visible .sari-promo-cta--managed { filter: brightness(.93); }
+    .sari-promo-side-copy--managed { max-width: 82% !important; }
+    .sari-promo-side-copy--managed .sari-promo-side-kicker { font-size: 10px !important; font-weight: 700; }
+    .sari-promo-side-cta { padding: 6px 10px !important; min-height: 28px !important; }
+    @media (max-width: 767px) {
+        .sari-promo-slide-copy--managed { max-width: 62% !important; padding: 0 !important; }
+        .sari-promo-side-copy--managed { max-width: 75% !important; }
+        .sari-promo-cta--managed { min-height: 29px !important; padding: 5px 10px !important; }
+    }
+
+
+    /* ============================================================
+       SARI BUYER HOME — FLOATING PANELS + LEGIBLE TYPOGRAPHY V1
+       Scoped to the Home content area. Existing banner geometry,
+       admin-managed text positions/sizes/colors/fonts, carousel
+       behavior, sidebar, header, and shared product component stay intact.
+       ============================================================ */
+    .sari-home {
+        background: #f4f5f7 !important;
+        color: #253040;
+    }
+
+    /* Elevate only outer surfaces, not text overlays or inner rows. */
+    .sari-home .sari-home-hero,
+    .sari-home .sari-benefit-strip,
+    .sari-home .sari-promo-carousel,
+    .sari-home .sari-promo-side-card {
+        border-color: #e3e7ec !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.72) !important;
+    }
+
+    /* The hero stays image-backed. No opaque panel behind any banner text. */
+    .sari-home .sari-home-hero {
+        border-radius: 18px !important;
+    }
+    .sari-home .sari-hero-description {
+        font-size: 13.5px !important;
+        line-height: 1.72 !important;
+        font-weight: 400 !important;
+        color: #343a40 !important;
+    }
+    .sari-home .sari-primary-btn,
+    .sari-home .sari-secondary-btn {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Benefit copy should no longer be 10px on a desktop monitor. */
+    .sari-home .sari-benefit-item h3 {
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        font-weight: 650 !important;
+    }
+    .sari-home .sari-benefit-item p {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+        font-weight: 400 !important;
+    }
+    .sari-home .sari-benefit-item {
+        min-height: 90px !important;
+    }
+
+    /* Admin-managed promo graphics and text are deliberately excluded.
+       In particular, DO NOT target .sari-promo-slide-copy--managed,
+       .sari-promo-side-copy--managed or .sari-promo-cta--managed. */
+    .sari-home .sari-promo-slide-copy--managed,
+    .sari-home .sari-promo-slide-copy--managed.sari-promo-slide-copy--dark,
+    .sari-home .sari-promo-slide-copy--managed.sari-promo-slide-copy--light {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* Section headings and category labels stay open, with no white wrapper. */
+    .sari-home #categories .sari-section-title,
+    .sari-home .sari-product-grid ~ .sari-section-title {
+        font-size: 25px !important;
+        font-weight: 650 !important;
+        line-height: 1.28 !important;
+    }
+    .sari-home #categories .sari-category-name {
+        font-size: 14px !important;
+        font-weight: 550 !important;
+        line-height: 1.45 !important;
+    }
+    .sari-home #categories .sari-category-card {
+        box-shadow: none !important;
+        background: transparent !important;
+        border: 0 !important;
+    }
+
+    /* Shared product cards: apply page-specific outer shadow and type only.
+       The reusable Blade component, cards' data, buttons and JS are unchanged. */
+    .sari-home .sari-product-grid .sari-product-card {
+        border: 1px solid #e3e7ec !important;
+        border-radius: 18px !important;
+        background: #fff !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 9px 23px rgba(15,23,42,.07),
+            0 20px 42px rgba(15,23,42,.08),
+            inset 0 1px 0 rgba(255,255,255,.9) !important;
+    }
+    .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-title {
+        font-size: 15px !important;
+        line-height: 1.48 !important;
+        font-weight: 600 !important;
+    }
+    .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-meta,
+    .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-stock {
+        font-size: 11px !important;
+        line-height: 1.45 !important;
+    }
+    .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-price {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+    }
+    .sari-home .sari-product-grid .sari-product-card .sari-buyer-card-buy {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Only the existing empty-state panel, not entire product/category rails. */
+    .sari-home .sari-product-grid > .sari-card {
+        border-color: #e3e7ec !important;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.04),
+            0 12px 28px rgba(15,23,42,.075) !important;
+    }
+    .sari-home .sari-product-grid > .sari-card p:first-child {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+    }
+    .sari-home .sari-product-grid > .sari-card p + p {
+        font-size: 12px !important;
+        line-height: 1.6 !important;
+    }
+
+    @media (max-width: 1023px) {
+        .sari-home .sari-benefit-item {
+            min-height: 84px !important;
+        }
+    }
+    @media (max-width: 767px) {
+        .sari-home .sari-home-hero,
+        .sari-home .sari-benefit-strip,
+        .sari-home .sari-promo-carousel,
+        .sari-home .sari-promo-side-card {
+            box-shadow:
+                0 2px 4px rgba(15,23,42,.04),
+                0 8px 20px rgba(15,23,42,.065),
+                0 16px 34px rgba(15,23,42,.065) !important;
+        }
+        .sari-home .sari-product-grid .sari-product-card {
+            box-shadow:
+                0 2px 4px rgba(15,23,42,.035),
+                0 8px 18px rgba(15,23,42,.06),
+                0 15px 30px rgba(15,23,42,.07) !important;
+        }
+        .sari-home .sari-hero-description {
+            font-size: 12.5px !important;
+            line-height: 1.65 !important;
+        }
+        .sari-home .sari-benefit-item h3 {
+            font-size: 13.5px !important;
+        }
+        .sari-home .sari-benefit-item p {
+            font-size: 11.5px !important;
+        }
+        .sari-home #categories .sari-section-title {
+            font-size: 22px !important;
+        }
+        .sari-home #categories .sari-category-name {
+            font-size: 13px !important;
+        }
+    }
+    @media (max-width: 639px) {
+        .sari-home .sari-benefit-item {
+            min-height: 78px !important;
+        }
+        .sari-home .sari-primary-btn,
+        .sari-home .sari-secondary-btn {
+            font-size: 12.5px !important;
+        }
+    }
+
 </style>
 
 
@@ -4181,364 +4399,78 @@
 
 
         {{-- ============================================================
-
-            PROMOTIONS — AUTO-SWIPING MARKETPLACE BANNERS
-
-            Existing public assets only; no backend dependency.
-
+            PROMOTIONS — FIXED LAYOUT, ADMIN-EDITABLE CONTENT
+            Four carousel positions and two stacked side cards are preserved.
         ============================================================ --}}
-
-        <section
-
-            id="buyerPromoShowcase"
-
-            class="sari-promo-showcase"
-
-            aria-label="Featured promotions"
-
-            data-promo-carousel
-
-        >
-
+        <section id="buyerPromoShowcase" class="sari-promo-showcase" aria-label="Featured promotions" data-promo-carousel>
             <div class="sari-promo-carousel">
-
-                <a
-
-                    href="{{ route('buyer.products') }}"
-
-                    class="sari-promo-slide is-active"
-
-                    data-promo-slide
-
-                    data-promo-style="soft"
-
-                    aria-label="Shop the SARI featured collection"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/hero.jpg') }}"
-
-                        alt="SARI featured collection"
-
-                        width="1600"
-
-                        height="900"
-
-                        loading="eager"
-
-                        decoding="async"
-
+                @foreach (array_slice($homepageBanners, 0, 4, true) as $banner)
+                    <a
+                        href="{{ $banner['button_url'] }}"
+                        class="sari-promo-slide {{ $loop->first ? 'is-active' : '' }}"
+                        data-promo-slide
+                        data-promo-style="soft"
+                        aria-label="{{ $banner['title'] }}"
                     >
-
-                    <span class="sari-promo-slide-copy sari-promo-slide-copy--light">
-
-                        <span class="sari-promo-kicker">Featured collection</span>
-
-                        <strong class="sari-promo-heading">Modern picks for everyday living.</strong>
-
-                        <span class="sari-promo-copy">Curated essentials from trusted SARI sellers.</span>
-
-                        <span class="sari-promo-cta">Shop collection <span aria-hidden="true">→</span></span>
-
-                    </span>
-
-                </a>
-
-
-
-                <a
-
-                    href="{{ route('buyer.products') }}"
-
-                    class="sari-promo-slide"
-
-                    data-promo-slide
-
-                    data-promo-style="soft"
-
-                    aria-label="Shop beauty essentials"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/beauty-bestsellers.png') }}"
-
-                        alt="Beauty bestsellers"
-
-                        width="1884"
-
-                        height="835"
-
-                        loading="lazy"
-
-                        decoding="async"
-
-                    >
-
-                    <span class="sari-promo-slide-copy sari-promo-slide-copy--dark">
-
-                        <span class="sari-promo-kicker">Beauty edit</span>
-
-                        <strong class="sari-promo-heading">Everyday beauty, elevated.</strong>
-
-                        <span class="sari-promo-copy">Polished essentials from trusted SARI sellers.</span>
-
-                        <span class="sari-promo-cta">Shop beauty <span aria-hidden="true">→</span></span>
-
-                    </span>
-
-                </a>
-
-
-
-                <a
-
-                    href="{{ route('buyer.products') }}"
-
-                    class="sari-promo-slide"
-
-                    data-promo-slide
-
-                    data-promo-style="soft"
-
-                    aria-label="Shop home essentials"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/home-essentials.png') }}"
-
-                        alt="Home essentials"
-
-                        width="1774"
-
-                        height="887"
-
-                        loading="lazy"
-
-                        decoding="async"
-
-                    >
-
-                    <span class="sari-promo-slide-copy sari-promo-slide-copy--dark">
-
-                        <span class="sari-promo-kicker">Home refresh</span>
-
-                        <strong class="sari-promo-heading">Comfort for every corner.</strong>
-
-                        <span class="sari-promo-copy">Simple finds for a calmer everyday space.</span>
-
-                        <span class="sari-promo-cta">Explore home <span aria-hidden="true">→</span></span>
-
-                    </span>
-
-                </a>
-
-
-
-                <a
-
-                    href="{{ route('buyer.products') }}"
-
-                    class="sari-promo-slide"
-
-                    data-promo-slide
-
-                    data-promo-style="soft"
-
-                    aria-label="Shop watch essentials"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/weekend-watch.png') }}"
-
-                        alt="SARI watch essentials"
-
-                        width="1254"
-
-                        height="1254"
-
-                        loading="lazy"
-
-                        decoding="async"
-
-                    >
-
-                    <span class="sari-promo-slide-copy sari-promo-slide-copy--dark">
-
-                        <span class="sari-promo-kicker">Style spotlight</span>
-
-                        <strong class="sari-promo-heading">Timeless details, modern style.</strong>
-
-                        <span class="sari-promo-copy">Refined accessories from trusted SARI sellers.</span>
-
-                        <span class="sari-promo-cta">Discover more <span aria-hidden="true">→</span></span>
-
-                    </span>
-
-                </a>
-
-
-
+                        <img src="{{ $banner['image_url'] }}" alt="{{ $banner['title'] }}" width="1600" height="900"
+                            loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async">
+                        <span class="sari-promo-slide-copy sari-promo-slide-copy--managed {{ $banner['dark_copy'] ? 'sari-promo-slide-copy--dark' : 'sari-promo-slide-copy--light' }}"
+                            style="left: {{ $banner['text_x'] }}% !important; top: {{ $banner['text_y'] }}% !important; color: {{ $banner['text_color'] }} !important; font-family: {{ $banner['font_css'] }} !important;">
+                            @if ($banner['kicker'] !== '')
+                                <span class="sari-promo-kicker">{{ $banner['kicker'] }}</span>
+                            @endif
+                            <strong class="sari-promo-heading" style="font-size: {{ $banner['title_size'] }}px !important;">{{ $banner['title'] }}</strong>
+                            @if ($banner['description'] !== '')
+                                <span class="sari-promo-copy" style="font-size: {{ $banner['description_size'] }}px !important;">{{ $banner['description'] }}</span>
+                            @endif
+                        </span>
+                        @if ($banner['button_text'] !== '')
+                            <span class="sari-promo-cta sari-promo-cta--managed"
+                                style="left: {{ $banner['button_x'] }}% !important; top: {{ $banner['button_y'] }}% !important; background: {{ $banner['button_bg'] }} !important; color: {{ $banner['button_color'] }} !important; font-size: {{ $banner['button_size'] }}px !important; font-family: {{ $banner['font_css'] }} !important;">
+                                {{ $banner['button_text'] }} <span aria-hidden="true">→</span>
+                            </span>
+                        @endif
+                    </a>
+                @endforeach
                 <div class="sari-promo-carousel-controls" aria-hidden="false">
-
-                    <button
-
-                        type="button"
-
-                        class="sari-promo-arrow sari-promo-arrow--prev"
-
-                        data-promo-prev
-
-                        aria-label="Previous promotion"
-
-                    >
-
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-
-                            <path d="m15 18-6-6 6-6"></path>
-
-                        </svg>
-
+                    <button type="button" class="sari-promo-arrow sari-promo-arrow--prev" data-promo-prev aria-label="Previous promotion">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"></path></svg>
                     </button>
-
-                    <button
-
-                        type="button"
-
-                        class="sari-promo-arrow sari-promo-arrow--next"
-
-                        data-promo-next
-
-                        aria-label="Next promotion"
-
-                    >
-
-                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-
-                            <path d="m9 18 6-6-6-6"></path>
-
-                        </svg>
-
+                    <button type="button" class="sari-promo-arrow sari-promo-arrow--next" data-promo-next aria-label="Next promotion">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"></path></svg>
                     </button>
-
                 </div>
-
-
-
                 <div class="sari-promo-dots" role="tablist" aria-label="Promotion slides">
-
                     @for ($promoIndex = 0; $promoIndex < 4; $promoIndex++)
-
-                        <button
-
-                            type="button"
-
-                            class="sari-promo-dot {{ $promoIndex === 0 ? 'is-active' : '' }}"
-
-                            data-promo-dot="{{ $promoIndex }}"
-
-                            aria-label="Show promotion {{ $promoIndex + 1 }}"
-
-                            aria-selected="{{ $promoIndex === 0 ? 'true' : 'false' }}"
-
-                        ></button>
-
+                        <button type="button" class="sari-promo-dot {{ $promoIndex === 0 ? 'is-active' : '' }}"
+                            data-promo-dot="{{ $promoIndex }}" aria-label="Show promotion {{ $promoIndex + 1 }}"
+                            aria-selected="{{ $promoIndex === 0 ? 'true' : 'false' }}"></button>
                     @endfor
-
                 </div>
-
             </div>
-
-
-
             <div class="sari-promo-side-stack">
-
-                <a
-
-                    href="{{ route('buyer.products') }}"
-
-                    class="sari-promo-side-card"
-
-                    aria-label="Shop SARI beauty bestsellers"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/cat-beauty.jpg') }}"
-
-                        alt="SARI beauty bestsellers"
-
-                        width="800"
-
-                        height="1067"
-
-                        loading="lazy"
-
-                        decoding="async"
-
-                    >
-
-                    <span class="sari-promo-side-copy">
-
-                        <strong>Beauty bestsellers</strong>
-
-                        <span>Everyday favorites from trusted sellers.</span>
-
-                    </span>
-
-                </a>
-
-
-
-                <a
-
-                    href="{{ route('buyer.products', ['discounted' => 1]) }}"
-
-                    class="sari-promo-side-card sari-promo-side-card--flash"
-
-                    aria-label="Shop flash sale electronics"
-
-                >
-
-                    <img
-
-                        src="{{ asset('images/sari-ticket-08-product-camera.jpg') }}"
-
-                        alt="SARI flash sale electronics"
-
-                        width="832"
-
-                        height="832"
-
-                        loading="lazy"
-
-                        decoding="async"
-
-                    >
-
-                    <span class="sari-promo-side-copy">
-
-                        <strong>Flash sale</strong>
-
-                        <span>Limited-time tech and lifestyle deals.</span>
-
-                    </span>
-
-                </a>
-
+                @foreach (['side_beauty', 'side_flash'] as $slot)
+                    @php($banner = $homepageBanners[$slot])
+                    <a href="{{ $banner['button_url'] }}"
+                        class="sari-promo-side-card {{ $slot === 'side_flash' ? 'sari-promo-side-card--flash' : '' }}"
+                        aria-label="{{ $banner['title'] }}">
+                        <img src="{{ $banner['image_url'] }}" alt="{{ $banner['title'] }}" width="800" height="800" loading="lazy" decoding="async">
+                        <span class="sari-promo-side-copy sari-promo-side-copy--managed"
+                            style="left: {{ $banner['text_x'] }}% !important; top: {{ $banner['text_y'] }}% !important; bottom: auto !important; transform: translateY(-50%) !important; color: {{ $banner['text_color'] }} !important; font-family: {{ $banner['font_css'] }} !important;">
+                            @if ($banner['kicker'] !== '')<span class="sari-promo-side-kicker">{{ $banner['kicker'] }}</span>@endif
+                            <strong style="font-size: {{ $banner['title_size'] }}px !important;">{{ $banner['title'] }}</strong>
+                            @if ($banner['description'] !== '')<span style="font-size: {{ $banner['description_size'] }}px !important;">{{ $banner['description'] }}</span>@endif
+                        </span>
+                        @if ($banner['button_text'] !== '')
+                            <span class="sari-promo-cta sari-promo-cta--managed sari-promo-side-cta"
+                                style="left: {{ $banner['button_x'] }}% !important; top: {{ $banner['button_y'] }}% !important; background: {{ $banner['button_bg'] }} !important; color: {{ $banner['button_color'] }} !important; font-size: {{ $banner['button_size'] }}px !important; font-family: {{ $banner['font_css'] }} !important;">
+                                {{ $banner['button_text'] }} <span aria-hidden="true">→</span>
+                            </span>
+                        @endif
+                    </a>
+                @endforeach
             </div>
-
         </section>
-
-
 
         {{-- ============================================================
 
@@ -4625,7 +4557,7 @@
 
                         :product="$product"
 
-                        :priority="true"
+                        :priority="$loop->index < 4"
 
                         :show-promotions="true"
 

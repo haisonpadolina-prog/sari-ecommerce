@@ -132,16 +132,21 @@
         }
         .sari-orders-list { display:grid; gap:14px; }
 
+        /* Seller-inspired floating surface: top-level order cards only. */
         .sari-order-card {
             position:relative;
             overflow:hidden;
-            border:1px solid #e0e4e8;
+            border:1px solid #e5e7eb;
             border-radius:17px;
             background:#fff;
-            box-shadow:0 7px 20px rgba(31,41,55,.035);
-            transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+            box-shadow:
+                0 2px 5px rgba(15,23,42,.045),
+                0 10px 24px rgba(15,23,42,.075),
+                0 24px 54px rgba(15,23,42,.095),
+                inset 0 1px 0 rgba(255,255,255,.92);
+            transition:border-color .16s ease;
         }
-        .sari-order-card:hover { border-color:#d5dbe0; box-shadow:0 11px 26px rgba(31,41,55,.055); }
+        .sari-order-card:hover { border-color:#d5dbe0; }
 
         .sari-order-card-head {
             display:flex;
@@ -225,7 +230,22 @@
         .sari-page-link.is-disabled { color:#a9afb6; cursor:not-allowed; opacity:.7; }
         .sari-page-link svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; }
 
-        .sari-empty { display:grid; min-height:390px; place-items:center; padding:60px 24px; text-align:center; }
+        /* The empty list is a standalone floating surface, not a nested card. */
+        .sari-empty {
+            display:grid;
+            min-height:390px;
+            place-items:center;
+            border:1px solid #e5e7eb;
+            border-radius:17px;
+            background:#fff;
+            padding:60px 24px;
+            text-align:center;
+            box-shadow:
+                0 2px 5px rgba(15,23,42,.045),
+                0 10px 24px rgba(15,23,42,.075),
+                0 24px 54px rgba(15,23,42,.095),
+                inset 0 1px 0 rgba(255,255,255,.92);
+        }
         .sari-empty h2 { margin:0; color:#8f98a1; font-size:20px; }
         .sari-empty p { margin:7px 0 0; color:#abb2b9; font-size:11px; }
         .sari-empty a { display:inline-flex; height:44px; align-items:center; margin-top:20px; border-radius:11px; background:var(--sari-gold); padding:0 22px; color:#fff; font-size:10.5px; font-weight:800; text-decoration:none; }
@@ -671,7 +691,15 @@
             }
             .sari-orders-toolbar { padding:2px 2px 4px; }
             .sari-orders-list { gap:11px; }
-            .sari-order-card { border-radius:14px; }
+            .sari-order-card,
+            .sari-empty {
+                border-radius:14px;
+                box-shadow:
+                    0 1px 3px rgba(15,23,42,.035),
+                    0 7px 18px rgba(15,23,42,.06),
+                    0 15px 32px rgba(15,23,42,.065),
+                    inset 0 1px 0 rgba(255,255,255,.90);
+            }
             .sari-order-card-head { min-height:46px; padding:0 13px; }
             .sari-order-store-badge { display:none; }
             .sari-order-status { font-size:11px; }

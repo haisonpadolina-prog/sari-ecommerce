@@ -1690,6 +1690,74 @@
     }
 }
 
+
+
+/* ============================================================
+   SARI BUYER REWARDS — SELLER-STYLE FLOATING CONTAINERS
+   Presentation-only override. Main sections float; nested rows,
+   voucher tiles, links, and controls retain their existing UI.
+   ============================================================ */
+.sari-rewards-page {
+    --sari-rewards-float-border: #e5e7eb;
+    --sari-rewards-float-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    --sari-rewards-float-shadow-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+}
+
+/* Reward Points and Delivered Spend form one elevated KPI surface. */
+.sari-rewards-page .sari-rewards-summary-card {
+    border: 1px solid var(--sari-rewards-float-border) !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: var(--sari-rewards-float-shadow-soft) !important;
+}
+
+/* Main promotion workspace floats; individual voucher tiles stay flat. */
+.sari-rewards-page .sari-voucher-section {
+    border: 1px solid var(--sari-rewards-float-border) !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: var(--sari-rewards-float-shadow) !important;
+}
+
+/* Reward Activity is one floating workspace rather than raised rows. */
+.sari-rewards-page .sari-rewards-activity {
+    border: 1px solid var(--sari-rewards-float-border) !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: var(--sari-rewards-float-shadow) !important;
+}
+
+/* Keep nested items visually quiet; preserve their original hover colors. */
+.sari-rewards-page .sari-voucher-card,
+.sari-rewards-page .sari-reward-row,
+.sari-rewards-page .sari-reward-row:hover,
+.sari-rewards-page .sari-voucher-empty,
+.sari-rewards-page .sari-rewards-empty {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+@media (max-width: 680px) {
+    .sari-rewards-page .sari-rewards-summary-card,
+    .sari-rewards-page .sari-voucher-section,
+    .sari-rewards-page .sari-rewards-activity {
+        border-radius: 16px !important;
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 8px 19px rgba(15, 23, 42, .065),
+            0 16px 33px rgba(15, 23, 42, .07),
+            inset 0 1px 0 rgba(255, 255, 255, .9) !important;
+    }
+}
+
 </style>
 
 

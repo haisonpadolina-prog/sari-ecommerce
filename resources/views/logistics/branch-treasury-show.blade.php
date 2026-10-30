@@ -4,7 +4,7 @@
 @section('page-title', 'Central Cash Reconciliation')
 
 @section('content')
-<div class="mx-auto max-w-5xl space-y-5">
+<div class="sari-logistics-ui sari-logistics-cash-detail mx-auto max-w-5xl space-y-5">
     @if($errors->any())
         <div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-[10px] font-semibold text-rose-700">{{ $errors->first() }}</div>
     @endif

@@ -22,6 +22,13 @@
             --sa-panel: #ffffff;
             --sa-soft: #f7f9fb;
             --sa-danger: #c75a5a;
+            /* Seller Account floating-surface design tokens. */
+            --sa-float-border: #e5e7eb;
+            --sa-float-divider: #eceff2;
+            --sa-float-main:
+                0 3px 7px rgba(15, 23, 42, .055),
+                0 14px 32px rgba(15, 23, 42, .095),
+                0 30px 68px rgba(15, 23, 42, .11);
             color: var(--sa-ink);
         }
 
@@ -93,13 +100,14 @@
             align-items: start;
         }
 
+        /* Seller-style elevation is reserved for top-level account panels.
+           Inner form sections, address rows, and controls stay flat. */
         .sa-card {
-            border: 1px solid var(--sa-line);
+            border: 1px solid var(--sa-float-border);
             border-radius: 17px;
             background: var(--sa-panel);
-            box-shadow:
-                0 10px 28px rgba(31, 41, 55, .05),
-                0 2px 7px rgba(31, 41, 55, .018);
+            box-shadow: var(--sa-float-main);
+            transform: none;
         }
 
         /* ============================================================
@@ -750,6 +758,10 @@
 
             .sa-card {
                 border-radius: 14px;
+                box-shadow:
+                    0 2px 4px rgba(15, 23, 42, .035),
+                    0 8px 18px rgba(15, 23, 42, .06),
+                    0 18px 38px rgba(15, 23, 42, .07);
             }
 
             .sa-profile-card-head,

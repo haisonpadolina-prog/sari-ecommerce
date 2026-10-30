@@ -1,0 +1,138 @@
+    /**
+     * A small, buyer-visible recommendation set for the AI assistant.
+     * Never exposes unpublished products or trusts an AI-generated product URL.
+     * Product/variant prices use the same promotion calculation as the catalog.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function assistantRecommendations(string $question, int $limit = 4): array
+    {
+        $question = mb_strtolower(trim($question));
+        $limit = max(1, min(6, $limit));
+
+        $groups = [
+            'fashion' => ['damit', 'outfit', 'clothes', 'clothing', 'fashion', 'shirt', 'dress', 'blouse', 'jacket', 'pants', 'skirt', 'suot', 'wear', 'bagay', 'ootd'],
+            'shoes' => ['sapatos', 'shoes', 'sneakers', 'sandals', 'footwear'],
+            'electronics' => ['gadget', 'phone', 'electronics', 'charger', 'laptop', 'headphone'],
+            'beauty' => ['makeup', 'beauty', 'skin', 'cosmetic', 'perfume'],
+            'home' => ['furniture', 'kitchen', 'home', 'bahay', 'decor'],
+            'sports' => ['sports', 'workout', 'gym', 'fitness'],
+            'food' => ['food', 'snack', 'pagkain', 'drink'],
+        ];
+
+        $group = null;
+        foreach ($groups as $name => $terms) {
+            foreach ($terms as $term) {
+                if (str_contains($question, $term)) {
+                    $group = $name;
+                    break 2;
+                }
+            }
+        }
+
+        $categoryTerms = match ($group) {
+            'fashion' => ['fashion', 'apparel', 'shirt', 'dress', 'clothing'],
+            'shoes' => ['shoe', 'footwear', 'sneaker'],
+            'electronics' => ['electronic', 'appliance', 'gadget'],
+            'beauty' => ['beauty', 'care', 'cosmetic'],
+            'home' => ['home', 'living', 'furniture'],
+            'sports' => ['sport', 'outdoor'],
+            'food' => ['food', 'beverage', 'grocery'],
+            default => [],
+        };
+
+        $query = $this->approvedProductsQuery();
+        if ($categoryTerms) {
+            $query->where(function (Builder $items) use ($categoryTerms): void {
+                foreach ($categoryTerms as $term) {
+                    $like = '%' . $term . '%';
+                    $items->orWhere('category', 'like', $like)
+                        ->orWhere('name', 'like', $like);
+                }
+            });
+        } else {
+            $tokens = collect(preg_split('/[^\pL\pN]+/u', $question) ?: [])
+                ->filter(fn ($term) => mb_strlen($term) >= 3)
+                ->reject(fn ($term) => in_array($term, [
+                    'the', 'what', 'about', 'please', 'can', 'you', 'show', 'find',
+                    'some', 'with', 'and', 'for', 'how', 'mga', 'ang', 'ako', 'may',
+                    'ano', 'recommend', 'suggest', 'product', 'products', 'item',
+                ], true))
+                ->take(5)->values();
+
+            if ($tokens->isNotEmpty()) {
+                $query->where(function (Builder $items) use ($tokens): void {
+                    foreach ($tokens as $token) {
+                        $like = '%' . $token . '%';
+                        $items->orWhere('name', 'like', $like)
+                            ->orWhere('category', 'like', $like)
+                            ->orWhere('brand', 'like', $like)
+                            ->orWhereHas('activeVariants', function (Builder $variants) use ($like): void {
+                                $variants->where('option_values', 'like', $like);
+                            });
+                    }
+                });
+            }
+        }
+
+        // Respect explicitly requested colors/sizes rather than recommending a
+        // misleading variant. Match approved product names or active options.
+        if (preg_match('/\b(black|white|blue|red|green|pink|yellow|brown|gray|grey|purple|orange|beige|navy|violet)\b/u', $question, $color)) {
+            $like = '%' . $color[1] . '%';
+            $query->where(function (Builder $items) use ($like): void {
+                $items->where('name', 'like', $like)
+                    ->orWhereHas('activeVariants', fn (Builder $variants) => $variants->where('option_values', 'like', $like));
+            });
+        }
+        if (preg_match('/\b(small|medium|large|xs|xl|xxl|2xl|3xl)\b/u', $question, $size)) {
+            $like = '%' . $size[1] . '%';
+            $query->where(function (Builder $items) use ($like): void {
+                $items->whereHas('activeVariants', fn (Builder $variants) => $variants->where('option_values', 'like', $like));
+            });
+        }
+
+        // For focused questions, do not silently suggest unrelated products.
+        $products = $query->orderByDesc('reviewed_at')->orderByDesc('id')
+            ->limit($limit)->get();
+
+        return $products->map(function (SellerProduct $product): array {
+            $discount = $this->effectiveDiscountPercent($product);
+            $base = max(0, (float) $product->price);
+            $sellerPrice = $this->discounted($base, $discount);
+            $price = $this->platformCampaigns->saleQuote($product, null, $sellerPrice);
+            $variants = $product->activeVariants->take(12)->map(function ($variant) use ($product, $discount): array {
+                $options = is_array($variant->option_values) ? $variant->option_values : [];
+                $sellerVariantPrice = $this->discounted(max(0, (float) $variant->price), $discount);
+                $quote = $this->platformCampaigns->saleQuote($product, $variant, $sellerVariantPrice);
+                $optionLabel = collect($options)->map(fn ($value, $key) => ucfirst((string) $key) . ': ' . (string) $value)->implode(' • ');
+
+                return [
+                    'id' => (int) $variant->id,
+                    'label' => $optionLabel !== '' ? $optionLabel : 'Variant #' . $variant->id,
+                    'color' => collect($options)->first(fn ($value, $key) => in_array(mb_strtolower((string) $key), ['color', 'colour'], true)),
+                    'size' => collect($options)->first(fn ($value, $key) => in_array(mb_strtolower((string) $key), ['size', 'shoe size'], true)),
+                    'price' => (float) $quote['buyer_price'],
+                    'stock' => (int) $variant->stock,
+                    'image' => $variant->image_path ? route('buyer.product.variant-image', ['variant' => $variant->id]) : null,
+                ];
+            })->values()->all();
+
+            $firstImage = $product->galleryImages->first();
+            return [
+                'id' => (int) $product->id,
+                'name' => (string) $product->name,
+                'category' => (string) ($product->category ?: 'General'),
+                'seller' => (string) ($product->seller?->store_name ?: 'SARI Seller'),
+                'price' => (float) $price['buyer_price'],
+                'image' => $product->image_path
+                    ? route('buyer.product.image', ['product' => $product->id])
+                    : ($firstImage ? route('buyer.product.gallery-image', ['image' => $firstImage->id]) : asset($this->categoryImage((string) $product->category))),
+                'url' => route('buyer.product.details', ['product' => $product->id]),
+                'stock' => $product->activeVariants->isNotEmpty()
+                    ? (int) $product->activeVariants->sum('stock')
+                    : (int) $product->stock,
+                'variants' => $variants,
+            ];
+        })->values()->all();
+    }
+

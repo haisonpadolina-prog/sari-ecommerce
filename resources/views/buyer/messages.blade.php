@@ -468,7 +468,7 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/sari-buyer-admin-support.js') }}?v=20261028-1" defer></script>
+<script src="{{ asset('js/sari-buyer-admin-support.js') }}?v=20261029-hide-report-1009b07e" defer></script>
 <script src="{{ asset('js/sari-order-confirmation-card.js') }}?v=20261026-1"></script>
 <script src="{{ asset('js/sari-buyer-seller-messages.js') }}?v=20261029-unified-toast"></script>
 <script>

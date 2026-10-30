@@ -3387,7 +3387,7 @@
 
 <div
     id="lgPickupAssignment"
-    class="pickup-page"
+    class="sari-logistics-ui pickup-page"
     data-pickup-workspace="assignment"
     data-focus-order="{{ (int) request('order', 0) }}"
 >

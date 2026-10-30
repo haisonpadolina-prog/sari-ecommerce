@@ -82,38 +82,55 @@
         box-shadow: var(--ld-card-shadow);
     }
 
+    /* Clean KPI surfaces: keep the existing links and SVG icons, without icon tiles. */
     .ld-kpi {
         position: relative;
         min-height: 106px;
         overflow: hidden;
         border: 1px solid var(--ld-line);
-        border-radius: 20px;
+        border-radius: 17px;
         background: #fff;
         padding: 16px 17px;
-        box-shadow: 0 10px 26px rgba(25, 31, 38, .045);
-        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+        box-shadow: 0 6px 18px rgba(25, 31, 38, .035);
+        transition: border-color .16s ease, box-shadow .16s ease;
     }
 
     .ld-kpi:hover {
-        transform: translateY(-2px);
-        border-color: #d8dce2;
-        box-shadow: 0 16px 32px rgba(25, 31, 38, .075);
+        border-color: #d7dce2;
+        box-shadow: 0 8px 20px rgba(25, 31, 38, .05);
     }
 
-    .ld-kpi-icon {
-        display: grid;
-        place-items: center;
-        width: 42px;
-        height: 42px;
-        border-radius: 13px;
-        background: #f7f7f7;
-        color: #59616c;
+    .ld-kpi:focus-visible {
+        outline: 2px solid #bf8c28;
+        outline-offset: 3px;
     }
 
-    .ld-kpi-icon.gold { background: #fff8e9; color: #b67b0e; }
-    .ld-kpi-icon.blue { background: #f0f6fb; color: #4b7ba7; }
-    .ld-kpi-icon.green { background: #f0f7f3; color: #4c8465; }
-    .ld-kpi-icon.red { background: #fbf2f0; color: #b65e4e; }
+    /* Larger SVG icons in the original compact icon slot, with no tiles. */
+    .logistics-dashboard-shell .ld-kpi-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 22px;
+        width: 22px;
+        height: 22px;
+        margin-top: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #647080;
+    }
+
+    .logistics-dashboard-shell .ld-kpi-icon > svg {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    .ld-kpi-icon.gold { color: #ad7b1e; }
+    .ld-kpi-icon.blue { color: #61819f; }
+    .ld-kpi-icon.green { color: #4f846a; }
+    .ld-kpi-icon.red { color: #a97566; }
 
     .ld-chart-empty {
         display: grid;
@@ -155,25 +172,63 @@
     }
 
 
-    /* Admin-matched compact executive hero */
-    .ld-exec-hero {
+    /* Dashboard-only charcoal hero.
+       The shared buyer-parity.css loads after @stack('styles') and forces a
+       white background with #logisticsContent specificity + !important.
+       Include that scope and an extra class here so these declarations win,
+       regardless of load order, without changing any shared logistics styles. */
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-hero {
         position: relative;
         overflow: hidden;
-        border: 1px solid #3f3a2c;
+        border: 1px solid #101317;
         border-radius: 18px;
-        background: linear-gradient(112deg, #161913 0%, #202318 42%, #403a2a 74%, #756c51 100%);
-        box-shadow: 0 12px 30px rgba(31, 29, 23, .10);
         padding: 18px 22px;
+        background: #15181c !important;
+        background-image: none !important;
+        border-color: #101317 !important;
+        color: #f9fafb !important;
+        box-shadow: 0 10px 24px rgba(14, 17, 22, .17) !important;
     }
 
-    .ld-exec-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(circle at 88% 16%, rgba(231, 209, 163, .20), transparent 22%),
-            radial-gradient(circle at 14% 85%, rgba(176, 142, 49, .10), transparent 24%);
-        pointer-events: none;
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-hero::before,
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-hero::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    /* Keep text, status and numbers legible on the dark hero. */
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-title,
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat-value {
+        color: #f9fafb !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-kicker {
+        color: #e8bd61 !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-main-badge {
+        color: #e8bd61 !important;
+        border-color: rgba(232, 189, 97, .3) !important;
+        background: rgba(232, 189, 97, .09) !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell :is(.ld-exec-status, .ld-exec-stat-sub),
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-rider-value small {
+        color: #afb9c4 !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat-label {
+        color: #9ea9b5 !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-online {
+        color: #7adba5 !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat + .ld-exec-stat {
+        border-left-color: rgba(255, 255, 255, .13) !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat-icon {
+        background: rgba(232, 189, 97, .11) !important;
+        color: #e8bd61 !important;
+    }
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat-icon.is-rider {
+        background: rgba(122, 178, 220, .11) !important;
+        color: #a2c7e7 !important;
     }
 
     .ld-exec-grid {
@@ -192,11 +247,11 @@
     }
 
     .ld-exec-kicker {
-        font-size: 7.5px;
+        font-size: 10px;
         font-weight: 700;
-        letter-spacing: .20em;
+        letter-spacing: .14em;
         text-transform: uppercase;
-        color: #e5bf62;
+        color: #e4bb62;
     }
 
     .ld-exec-main-badge {
@@ -207,11 +262,11 @@
         border-radius: 999px;
         background: rgba(229,191,98,.08);
         padding: 0 8px;
-        font-size: 6.5px;
+        font-size: 9px;
         font-weight: 700;
-        letter-spacing: .11em;
+        letter-spacing: .08em;
         text-transform: uppercase;
-        color: #e5bf62;
+        color: #e4bb62;
     }
 
     .ld-exec-title {
@@ -277,9 +332,9 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 11px;
-        font-size: 8px;
-        line-height: 1.45;
-        color: rgba(255,255,255,.64);
+        font-size: 10.5px;
+        line-height: 1.5;
+        color: rgba(255,255,255,.74);
     }
 
     .ld-exec-status-item {
@@ -315,11 +370,11 @@
     .ld-exec-stat + .ld-exec-stat { border-left: 1px solid rgba(255,255,255,.12); }
 
     .ld-exec-stat-label {
-        font-size: 7px;
+        font-size: 9px;
         font-weight: 700;
-        letter-spacing: .11em;
+        letter-spacing: .09em;
         text-transform: uppercase;
-        color: rgba(255,255,255,.50);
+        color: rgba(255,255,255,.62);
     }
 
     .ld-exec-stat-row {
@@ -330,38 +385,46 @@
         min-width: 0;
     }
 
+    /* Header stat icons remain, but no longer sit inside decorative circles. */
     .ld-exec-stat-icon {
         display: inline-grid;
-        width: 24px;
-        height: 24px;
-        flex: 0 0 24px;
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
         place-items: center;
-        border-radius: 999px;
-        background: rgba(201,149,36,.14);
-        color: #ebc35d;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        color: #e1bb6a;
     }
 
-    .ld-exec-stat-icon.is-rider {
-        background: rgba(89,149,202,.12);
-        color: #80b9e8;
-    }
+    .ld-exec-stat-icon.is-rider { color: #8ab3d5; }
 
-    .ld-exec-stat-icon svg { width: 11px; height: 11px; }
+    /* Larger glyphs only — preserve the original icon slots and hero dimensions. */
+    #logisticsContent .sari-logistics-ui.logistics-dashboard-shell .ld-exec-stat-icon > svg {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px;
+        max-width: none;
+        overflow: visible;
+    }
+    .ld-exec-stat-row { gap: 10px; }
 
     .ld-exec-stat-value {
         min-width: 0;
-        font-size: 12.5px;
+        font-size: 15px;
         font-weight: 700;
-        line-height: 1.1;
+        line-height: 1.15;
         color: #fff;
         white-space: nowrap;
     }
 
     .ld-exec-stat-sub {
         margin-top: 2px;
-        font-size: 7px;
-        line-height: 1.35;
-        color: rgba(255,255,255,.52);
+        font-size: 9.5px;
+        line-height: 1.4;
+        color: rgba(255,255,255,.68);
         white-space: nowrap;
     }
 
@@ -373,9 +436,9 @@
     }
 
     .ld-exec-rider-value small {
-        font-size: 7px;
+        font-size: 9.5px;
         font-weight: 500;
-        color: rgba(255,255,255,.50);
+        color: rgba(255,255,255,.65);
     }
 
     .ld-exec-online { color: #80d2a2; }
@@ -403,11 +466,303 @@
         .ld-exec-stat + .ld-exec-stat { border-left: 0; border-top: 1px solid rgba(255,255,255,.10); }
         .ld-exec-stat-row { margin-top: 4px; }
     }
+
+    /* Compact pipeline + capacity visuals — source: existing dashboard data, no chart library. */
+    .ld-insight-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+        gap: 16px;
+        align-items: stretch;
+    }
+    .ld-insight-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid #edf0f2;
+        padding: 16px 20px;
+    }
+    .ld-insight-title {
+        color: #20242b;
+        font-size: 15px;
+        font-weight: 750;
+        line-height: 1.3;
+        letter-spacing: -.025em;
+    }
+    .ld-insight-subtitle { margin-top: 3px; color: #89929f; font-size: 10.5px; line-height: 1.5; }
+    .ld-insight-badge {
+        flex: 0 0 auto;
+        border-radius: 99px;
+        background: #f4f6f8;
+        color: #6e7886;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        white-space: nowrap;
+    }
+    .ld-flow-track { overflow-x: auto; padding: 17px 14px 13px; scrollbar-width: thin; scrollbar-color: #d7dce2 transparent; }
+    .ld-flow-stages { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; min-width: 600px; }
+    .ld-flow-stage {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 7px;
+        padding: 3px 1px 4px;
+        border-radius: 10px;
+        color: #536174;
+        text-decoration: none;
+        outline-offset: 2px;
+    }
+    .ld-flow-stage:not(:last-child)::after {
+        content: '›';
+        position: absolute;
+        top: 12px;
+        right: -7px;
+        color: #c4ccd5;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1;
+        pointer-events: none;
+    }
+    .ld-flow-count {
+        display: grid;
+        width: 43px;
+        height: 43px;
+        flex: 0 0 43px;
+        place-items: center;
+        border: 1px solid #e6ebef;
+        border-radius: 50%;
+        background: #f4f6f8;
+        color: #435064;
+        font-size: 15px;
+        font-weight: 750;
+        font-variant-numeric: tabular-nums;
+    }
+    .ld-flow-stage.has-work .ld-flow-count {
+        border-color: #f4c76e;
+        background: #f9e8bd;
+        color: #9b670b;
+    }
+    .ld-flow-stage.has-work .ld-flow-label { color: #332919; font-weight: 700; }
+    .ld-flow-label {
+        display: block;
+        max-width: 85px;
+        min-height: 29px;
+        text-align: center;
+        color: #697586;
+        font-size: 10px;
+        font-weight: 550;
+        line-height: 1.4;
+    }
+    .ld-flow-stage:hover { background: #faf7ef; }
+    .ld-flow-stage:focus-visible { outline: 2px solid #c58d25; }
+    .ld-stage-chart-card { margin: 0 17px 17px; padding: 14px 15px 10px; border: 1px solid #e9edf1; border-radius: 15px; background: #fff; }
+    .ld-stage-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .ld-stage-chart-head h4 { color: #29313b; font-size: 12px; font-weight: 750; }
+    .ld-stage-chart-head span { color: #8c96a1; font-size: 9px; }
+    .ld-stage-chart { display: flex; gap: 8px; height: 162px; margin-top: 12px; }
+    .ld-stage-chart-scale { display: flex; flex: 0 0 21px; flex-direction: column; justify-content: space-between; height: 123px; padding: 0 0 2px; color: #9ca5b0; font-size: 9px; text-align: right; font-variant-numeric: tabular-nums; }
+    .ld-stage-chart-plot { position: relative; flex: 1; min-width: 0; }
+    .ld-stage-chart-grid {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 123px;
+        border-bottom: 1px solid #dce2e8;
+        background: linear-gradient(to bottom,
+            #edf0f2 0, #edf0f2 1px,
+            transparent 1px, transparent calc(50% - 1px),
+            #edf0f2 calc(50% - 1px), #edf0f2 50%,
+            transparent 50%);
+        pointer-events: none;
+    }
+    .ld-stage-chart-columns { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); height: 100%; }
+    .ld-stage-chart-column { display: flex; min-width: 0; flex-direction: column; align-items: center; text-decoration: none; outline-offset: 1px; }
+    .ld-stage-chart-column:focus-visible { outline: 2px solid #c58d25; border-radius: 4px; }
+    .ld-stage-chart-barbox { position: relative; display: block; width: 100%; height: 123px; }
+    .ld-stage-chart-bar {
+        position: absolute;
+        bottom: 1px;
+        left: 50%;
+        width: min(45%, 34px);
+        transform: translateX(-50%);
+        border-radius: 6px 6px 0 0;
+        background: #e2b051;
+    }
+    .ld-stage-chart-column:nth-child(3) .ld-stage-chart-bar { background: #d99513; }
+    .ld-stage-chart-column:hover .ld-stage-chart-bar { filter: brightness(.92); }
+    .ld-stage-chart-value {
+        position: absolute;
+        bottom: calc(100% + 3px);
+        left: 50%;
+        transform: translateX(-50%);
+        color: #354054;
+        font-size: 10px;
+        font-weight: 750;
+        font-variant-numeric: tabular-nums;
+    }
+    .ld-stage-chart-zero { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); color: #a9b0b9; font-size: 10px; }
+    .ld-stage-chart-x { margin-top: 6px; color: #7e8997; font-size: 10px; font-weight: 600; }
+    .ld-stage-chart-column:hover .ld-stage-chart-x { color: #ad730e; }
+    .ld-capacity-gauges { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 11px; padding: 17px 17px 12px; }
+    .ld-capacity-gauge { display: flex; flex-direction: column; align-items: center; border: 1px solid #e9edf1; border-radius: 15px; background: #fff; padding: 13px 8px; text-align: center; }
+    .ld-capacity-gauge h4 { min-height: 18px; color: #2b3440; font-size: 11px; font-weight: 750; }
+    .ld-donut { display: grid; width: 100px; height: 100px; flex: 0 0 100px; place-items: center; margin-top: 11px; border-radius: 50%; }
+    .ld-donut-inner { display: flex; width: 75px; height: 75px; align-items: center; justify-content: center; flex-direction: column; gap: 2px; border-radius: 50%; background: #fff; }
+    .ld-donut-value { color: #232d3b; font-size: 20px; font-weight: 760; line-height: 1.1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    .ld-donut-detail { color: #9ca4ae; font-size: 9px; line-height: 1.2; }
+    .ld-capacity-footnote { margin-top: 8px; color: #82909e; font-size: 10px; line-height: 1.4; }
+    .ld-capacity-transfers { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); padding: 12px 4px; margin: 0 17px; border: 1px solid #e9edf1; border-radius: 15px; text-align: center; }
+    .ld-capacity-transfers > div { min-width: 0; padding: 3px 5px; }
+    .ld-capacity-transfers > div + div { border-left: 1px solid #edf0f2; }
+    .ld-capacity-transfer-number { color: #222d3a; font-size: 19px; font-weight: 750; font-variant-numeric: tabular-nums; }
+    .ld-capacity-transfer-number.is-gold { color: #bc7f13; }
+    .ld-capacity-transfer-number.is-green { color: #448766; }
+    .ld-capacity-transfer-label { margin-top: 2px; color: #8d98a5; font-size: 9px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; }
+    .ld-capacity-footer { margin: 13px 17px 17px; }
+    .ld-capacity-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #f0e4c8; border-radius: 12px; background: #fffcf6; padding: 12px 14px; color: #8d620e; font-size: 11px; font-weight: 700; text-decoration: none; }
+    .ld-capacity-action:hover { border-color: #d9b76e; background: #fff7e6; }
+    .ld-capacity-action:focus-visible { outline: 2px solid #bd8b28; outline-offset: 2px; }
+    @media (max-width: 1279px) { .ld-insight-layout { grid-template-columns: minmax(0,1fr); } }
+    @media (max-width: 640px) {
+        .ld-insight-head { padding: 14px 15px; }
+        .ld-flow-track { padding: 14px 11px 10px; }
+        .ld-stage-chart-card { margin: 0 11px 12px; padding: 12px 11px 9px; }
+        .ld-capacity-gauges { padding: 12px 11px; gap: 8px; }
+        .ld-capacity-gauge { padding: 10px 5px; }
+        .ld-donut { width: 84px; height: 84px; flex-basis: 84px; }
+        .ld-donut-inner { width: 63px; height: 63px; }
+        .ld-donut-value { font-size: 17px; }
+        .ld-capacity-transfers { margin: 0 11px; }
+        .ld-capacity-footer { margin: 11px; }
+    }
+
+
+    /* Compact recent panels: link looks like text, never like a button. */
+    .logistics-dashboard-shell .ld-recent-view-all {
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 5px;
+        width: auto;
+        min-height: 0;
+        height: auto;
+        margin: 0;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #aa720d !important;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.5;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color .15s ease;
+    }
+    .logistics-dashboard-shell .ld-recent-view-all:hover {
+        color: #7e5308 !important;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .logistics-dashboard-shell .ld-recent-view-all:focus-visible {
+        outline: 2px solid #c18b22;
+        outline-offset: 4px;
+    }
+
+    /* Recent activity: layout adapts to its actual panel width, never scrolls sideways. */
+    .ld-recent-activity { container-type: inline-size; }
+    .ld-activity-gridhead,
+    .ld-activity-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, .95fr) minmax(0, 1.05fr) minmax(0, .7fr);
+        gap: 11px;
+        align-items: center;
+    }
+    .ld-activity-gridhead {
+        padding: 12px 18px;
+        background: #fafbfc;
+        border-bottom: 1px solid #edf0f2;
+        color: #9098a2;
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: .055em;
+        text-transform: uppercase;
+    }
+    .ld-activity-row {
+        min-width: 0;
+        padding: 14px 18px;
+        border-bottom: 1px solid #edf0f2;
+        color: #616871;
+        font-size: 10.5px;
+        line-height: 1.55;
+        transition: background-color .15s ease;
+    }
+    .ld-activity-row:last-child { border-bottom: 0; }
+    .ld-activity-row:hover { background: #fafbfc; }
+    .ld-activity-row > * { min-width: 0; }
+    .ld-activity-order-code {
+        display: block;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #30353a;
+        overflow-wrap: anywhere;
+    }
+    .ld-activity-small { display: block; margin-top: 2px; font-size: 10px; color: #8f97a1; overflow-wrap: anywhere; }
+    .ld-activity-primary { display: block; font-weight: 550; color: #505861; overflow-wrap: anywhere; }
+    .ld-activity-status {
+        display: inline-flex;
+        max-width: 100%;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    .ld-activity-stage { display: block; font-size: 10px; font-weight: 600; color: #505861; overflow-wrap: anywhere; }
+    .ld-activity-updated { display: block; color: #8f97a1; overflow-wrap: anywhere; }
+    .ld-activity-mobile-label { display: none; }
+    @container (max-width: 740px) {
+        .ld-activity-gridhead { display: none; }
+        .ld-activity-list { padding: 10px; }
+        .ld-activity-row {
+            grid-template-columns: minmax(0, 1fr) minmax(115px, .85fr);
+            gap: 9px 12px;
+            align-items: start;
+            border: 1px solid #eaedf1;
+            border-radius: 13px;
+            padding: 12px 14px;
+            margin-bottom: 9px;
+            background: #fff;
+        }
+        .ld-activity-row:last-child { margin-bottom: 0; border-bottom: 1px solid #eaedf1; }
+        .ld-activity-order { grid-column: 1; grid-row: 1; }
+        .ld-activity-status-wrap { grid-column: 2; grid-row: 1; justify-self: end; }
+        .ld-activity-people { grid-column: 1; grid-row: 2; }
+        .ld-activity-parcel { grid-column: 2; grid-row: 2; }
+        .ld-activity-time { grid-column: 1 / -1; grid-row: 3; }
+        .ld-activity-mobile-label {
+            display: block;
+            font-size: 9px;
+            color: #9aa1a9;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-weight: 650;
+            margin-bottom: 3px;
+        }
+        .ld-activity-time .ld-activity-mobile-label { display: inline; margin: 0 7px 0 0; }
+        .ld-activity-time .ld-activity-updated { display: inline; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ld-activity-row { transition: none; }
+    }
 </style>
 @endpush
 
 @section('content')
-<div class="logistics-dashboard-shell mx-auto w-full max-w-[1900px] space-y-4 sm:space-y-5">
+<div class="sari-logistics-ui logistics-dashboard-shell mx-auto w-full max-w-[1900px] space-y-4 sm:space-y-5">
 
     {{-- EXECUTIVE HEADER — ADMIN-MATCHED COMPACT DESIGN --}}
     <section class="ld-exec-hero text-white">
@@ -687,199 +1042,255 @@
         </article>
     </section>
 
-    {{-- SECONDARY ANALYTICS --}}
-    <section class="grid gap-4 xl:grid-cols-[1.08fr_.92fr]">
-        {{-- PIPELINE --}}
+    {{-- SECONDARY ANALYTICS — COMPACT PIPELINE CHART + CAPACITY DONUTS --}}
+    <section class="ld-insight-layout">
+        {{-- OPERATIONAL PIPELINE: actual stage values and routes supplied by the controller. --}}
         <article class="ld-panel overflow-hidden">
-            <header class="border-b border-[#eceef1] px-5 py-4 sm:px-6">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Operational Pipeline</h3>
-                        <p class="mt-1 text-[11px] text-[#8b929b]">Live workload from Seller pickup to last-mile staging.</p>
+            <header class="ld-insight-head">
+                <div class="min-w-0">
+                    <h3 class="ld-insight-title">Operational Pipeline</h3>
+                    <p class="ld-insight-subtitle">Live workload from Seller pickup to last-mile staging.</p>
+                </div>
+                <span class="ld-insight-badge">{{ count($pipeline) }} STAGES</span>
+            </header>
+
+            {{-- All stage links are retained; scrollable only when the viewport is narrow. --}}
+            <nav class="ld-flow-track" aria-label="Logistics pipeline stages">
+                <div class="ld-flow-stages">
+                    @foreach($pipeline as $stage)
+                        @php $stageValue = max(0, (int) ($stage['value'] ?? 0)); @endphp
+                        <a href="{{ route($stage['route']) }}"
+                           class="ld-flow-stage {{ $stageValue > 0 ? 'has-work' : '' }}"
+                           title="{{ $stage['description'] }}"
+                           aria-label="{{ $stage['label'] }}: {{ number_format($stageValue) }}. {{ $stage['description'] }}">
+                            <span class="ld-flow-count">{{ number_format($stageValue) }}</span>
+                            <span class="ld-flow-label">{{ $stage['label'] }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </nav>
+
+            {{-- Lightweight CSS bar chart: snapshot, not fabricated history or growth. --}}
+            <div class="ld-stage-chart-card">
+                <div class="ld-stage-chart-head">
+                    <h4>Workload by Stage</h4>
+                    <span>Current snapshot</span>
+                </div>
+                <div class="ld-stage-chart" role="group" aria-label="Current workload by logistics stage">
+                    <div class="ld-stage-chart-scale" aria-hidden="true">
+                        <span>{{ number_format($maxPipeline) }}</span>
+                        <span>{{ number_format((int) ceil($maxPipeline / 2)) }}</span>
+                        <span>0</span>
                     </div>
-                    <span class="rounded-full bg-[#f6f7f8] px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[.08em] text-[#737b84]">8 stages</span>
+                    <div class="ld-stage-chart-plot">
+                        <div class="ld-stage-chart-grid" aria-hidden="true"></div>
+                        <div class="ld-stage-chart-columns">
+                            @foreach($pipeline as $stage)
+                                @php
+                                    $stageValue = max(0, (int) ($stage['value'] ?? 0));
+                                    $barHeight = min(100, ($stageValue / $maxPipeline) * 100);
+                                @endphp
+                                <a href="{{ route($stage['route']) }}"
+                                   class="ld-stage-chart-column"
+                                   title="{{ $stage['label'] }}: {{ number_format($stageValue) }}"
+                                   aria-label="{{ $stage['label'] }}: {{ number_format($stageValue) }}; open stage">
+                                    <span class="ld-stage-chart-barbox" aria-hidden="true">
+                                        @if($stageValue > 0)
+                                            <span class="ld-stage-chart-bar" style="height: {{ $barHeight }}%">
+                                                <span class="ld-stage-chart-value">{{ number_format($stageValue) }}</span>
+                                            </span>
+                                        @else
+                                            <span class="ld-stage-chart-zero">0</span>
+                                        @endif
+                                    </span>
+                                    <span class="ld-stage-chart-x">{{ $stage['step'] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        {{-- BRANCH CAPACITY: percentage rings use the existing backend statistics. --}}
+        @php
+            $onlineRate = min(100, max(0, (float) ($stats['online_rate'] ?? 0)));
+            $utilizationRate = min(100, max(0, (float) ($stats['rider_utilization'] ?? 0)));
+        @endphp
+        <article class="ld-panel overflow-hidden">
+            <header class="ld-insight-head">
+                <div class="min-w-0">
+                    <h3 class="ld-insight-title">Branch Capacity</h3>
+                    <p class="ld-insight-subtitle">Rider availability and current linehaul health.</p>
                 </div>
             </header>
 
-            <div class="grid gap-x-5 gap-y-4 px-5 py-5 sm:grid-cols-2 sm:px-6">
-                @foreach($pipeline as $stage)
+            <div class="ld-capacity-gauges">
+                <div class="ld-capacity-gauge">
+                    <h4>Riders Online</h4>
+                    <div class="ld-donut"
+                         role="img"
+                         aria-label="{{ $onlineRate }} percent of active riders online"
+                         style="background: conic-gradient(#51a37d 0 {{ $onlineRate }}%, #edf0f2 {{ $onlineRate }}% 100%)">
+                        <div class="ld-donut-inner">
+                            <span class="ld-donut-value">{{ $onlineRate }}%</span>
+                            <span class="ld-donut-detail">Online</span>
+                        </div>
+                    </div>
+                    <p class="ld-capacity-footnote">{{ number_format($stats['online_riders'] ?? 0) }} of {{ number_format($stats['active_riders'] ?? 0) }} active riders</p>
+                </div>
+                <div class="ld-capacity-gauge">
+                    <h4>Rider Utilization</h4>
+                    <div class="ld-donut"
+                         role="img"
+                         aria-label="{{ $utilizationRate }} percent rider utilization"
+                         style="background: conic-gradient(#6091c7 0 {{ $utilizationRate }}%, #edf0f2 {{ $utilizationRate }}% 100%)">
+                        <div class="ld-donut-inner">
+                            <span class="ld-donut-value">{{ $utilizationRate }}%</span>
+                            <span class="ld-donut-detail">Assigned</span>
+                        </div>
+                    </div>
+                    <p class="ld-capacity-footnote">{{ number_format($stats['busy_riders'] ?? 0) }} rider(s) on last-mile work</p>
+                </div>
+            </div>
+
+            <div class="ld-capacity-transfers" aria-label="Hub transfer statuses">
+                <div>
+                    <p class="ld-capacity-transfer-number">{{ number_format($stats['hub_transfer_preparing'] ?? 0) }}</p>
+                    <p class="ld-capacity-transfer-label">Preparing</p>
+                </div>
+                <div>
+                    <p class="ld-capacity-transfer-number is-gold">{{ number_format($stats['hub_transfer_in_transit'] ?? 0) }}</p>
+                    <p class="ld-capacity-transfer-label">In Transit</p>
+                </div>
+                <div>
+                    <p class="ld-capacity-transfer-number is-green">{{ number_format($stats['hub_transfer_received_today'] ?? 0) }}</p>
+                    <p class="ld-capacity-transfer-label">Received Today</p>
+                </div>
+            </div>
+
+            <div class="ld-capacity-footer">
+                <a href="{{ route('logistics.hub-transfers') }}" class="ld-capacity-action">
+                    <span>Open Hub Transfers</span><span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </article>
+    </section>
+
+    {{-- RECENT OPERATIONS --}}
+    <section class="grid items-stretch gap-4 xl:grid-cols-[.92fr_1.08fr]">
+        <article class="ld-panel overflow-hidden flex h-full flex-col">
+            <header class="flex flex-col gap-3 border-b border-[#eceef1] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div>
+                    <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Recent Hub Transfers</h3>
+                    <p class="mt-1 text-[11px] text-[#8b929b]">Latest linehaul manifests related to {{ $branchName }}.</p>
+                </div>
+                <a href="{{ route('logistics.hub-transfers') }}" class="ld-recent-view-all">View all <span aria-hidden="true">→</span></a>
+            </header>
+
+            <div class="flex-1 space-y-2.5 p-3 sm:p-4">
+                @forelse(collect($recentTransfers)->take(3) as $transfer)
                     @php
-                        $stageValue = (int) ($stage['value'] ?? 0);
-                        $barWidth = ($stageValue / $maxPipeline) * 100;
+                        $isOutgoing = $hubFacility && (int) $transfer->origin_facility_id === (int) $hubFacility->id;
+                        $transferStatus = strtolower((string) $transfer->status);
+                        $statusClass = match($transferStatus) {
+                            'received' => 'bg-[#edf7f1] text-[#4e8063]',
+                            'in_transit' => 'bg-[#fff5df] text-[#9b680d]',
+                            default => 'bg-[#f2f4f6] text-[#68707a]',
+                        };
                     @endphp
-                    <a href="{{ route($stage['route']) }}" class="group rounded-[14px] border border-[#edf0f2] p-3.5 transition hover:border-[#e1c98f] hover:bg-[#fffdf8]">
-                        <div class="flex items-start gap-3">
-                            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-[10px] bg-[#f6f7f8] text-[10px] font-bold text-[#7d848d] group-hover:bg-[#fff3d9] group-hover:text-[#a96f08]">{{ $stage['step'] }}</span>
-                            <div class="min-w-0 flex-1">
-                                <div class="flex items-center justify-between gap-3">
-                                    <p class="truncate text-[11px] font-bold text-[#34393f]">{{ $stage['label'] }}</p>
-                                    <p class="text-[15px] font-bold text-[#1c2025]">{{ number_format($stageValue) }}</p>
+                    <article class="rounded-[13px] border border-[#e9ecef] bg-[#fcfcfd] px-3.5 py-3 transition hover:border-[#dfe4ea] hover:bg-white">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                    <p class="truncate text-[11px] font-bold text-[#262b30]">{{ $transfer->transfer_code }}</p>
+                                    <span class="text-[10px] text-[#949aa2]">{{ $transfer->parcel_count }} parcel(s)</span>
                                 </div>
-                                <div class="mt-2 h-[4px] overflow-hidden rounded-full bg-[#eef0f2]">
-                                    <div class="h-full rounded-full bg-[#d79a18] transition-all" style="width: {{ $stageValue > 0 ? max(4, $barWidth) : 0 }}%"></div>
-                                </div>
-                                <p class="mt-2 line-clamp-2 text-[10.5px] leading-4 text-[#9298a0]">{{ $stage['description'] }}</p>
                             </div>
+                            <span class="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.07em] {{ $statusClass }}">{{ str_replace('_', ' ', $transferStatus) }}</span>
                         </div>
-                    </a>
-                @endforeach
+
+                        <div class="mt-2 grid gap-x-3 gap-y-1.5 text-[10.5px] text-[#616871] sm:grid-cols-[84px_1fr] sm:items-start">
+                            <span class="font-semibold uppercase tracking-[.08em] text-[#9aa0a8]">Route</span>
+                            <div class="min-w-0">
+                                <p class="truncate font-semibold text-[#49515a]">{{ $transfer->origin_name }}</p>
+                                <p class="truncate text-[#8f96a0]">to {{ $transfer->destination_name }}</p>
+                            </div>
+
+                            <span class="font-semibold uppercase tracking-[.08em] text-[#9aa0a8]">Perspective</span>
+                            <p class="font-semibold {{ $isOutgoing ? 'text-[#a86e05]' : 'text-[#4f7fa8]' }}">{{ $isOutgoing ? 'Outbound' : 'Inbound' }}</p>
+                        </div>
+                    </article>
+                @empty
+                    <div class="grid min-h-[130px] place-items-center rounded-[16px] border border-dashed border-[#dfe3e7] px-5 py-8 text-center">
+                        <div>
+                            <p class="text-[11px] font-semibold text-[#717983]">No branch transfer activity yet.</p>
+                            <p class="mt-1 text-[10px] text-[#9aa0a8]">Transfers will appear after sorted parcels are grouped into linehaul manifests.</p>
+                        </div>
+                    </div>
+                @endforelse
             </div>
         </article>
 
-        {{-- RIDER + TRANSFER HEALTH --}}
-        <article class="ld-panel overflow-hidden">
-            <header class="border-b border-[#eceef1] px-5 py-4 sm:px-6">
-                <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Branch Capacity</h3>
-                <p class="mt-1 text-[11px] text-[#8b929b]">Rider availability and current linehaul health.</p>
+        <article class="ld-panel overflow-hidden flex h-full flex-col">
+            <header class="flex flex-col gap-3 border-b border-[#eceef1] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div>
+                    <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Recent Logistics Activity</h3>
+                    <p class="mt-1 text-[11px] text-[#8b929b]">Latest marketplace orders moving through the selected branch.</p>
+                </div>
+                <a href="{{ route('logistics.delivery-monitoring') }}" class="ld-recent-view-all">View all <span aria-hidden="true">→</span></a>
             </header>
 
-            <div class="grid gap-3 p-5 sm:grid-cols-2 sm:p-6">
-                <div class="rounded-[16px] border border-[#edf0f2] bg-[#fbfcfc] p-4">
-                    <div class="flex items-center justify-between gap-3">
-                        <p class="text-[10px] font-semibold uppercase tracking-[.08em] text-[#818892]">Riders Online</p>
-                        <span class="text-[13px] font-bold text-[#4d8b6a]">{{ $stats['online_rate'] ?? 0 }}%</span>
-                    </div>
-                    <div class="mt-3 h-[7px] overflow-hidden rounded-full bg-[#e8ece9]">
-                        <div class="h-full rounded-full bg-[#5a9674]" style="width: {{ min(100, max(0, $stats['online_rate'] ?? 0)) }}%"></div>
-                    </div>
-                    <p class="mt-3 text-[10px] leading-4 text-[#8b929b]">{{ $stats['online_riders'] ?? 0 }} online from {{ $stats['active_riders'] ?? 0 }} active Rider accounts.</p>
+            <div class="ld-recent-activity flex-1 min-w-0">
+                <div class="ld-activity-gridhead" aria-hidden="true">
+                    <span>Order</span>
+                    <span>Buyer / Rider</span>
+                    <span>Order Status</span>
+                    <span>Parcel Stage</span>
+                    <span>Updated</span>
                 </div>
-
-                <div class="rounded-[16px] border border-[#edf0f2] bg-[#fbfcfc] p-4">
-                    <div class="flex items-center justify-between gap-3">
-                        <p class="text-[10px] font-semibold uppercase tracking-[.08em] text-[#818892]">Rider Utilization</p>
-                        <span class="text-[13px] font-bold text-[#4f82b6]">{{ $stats['rider_utilization'] ?? 0 }}%</span>
-                    </div>
-                    <div class="mt-3 h-[7px] overflow-hidden rounded-full bg-[#e7edf2]">
-                        <div class="h-full rounded-full bg-[#5b88b4]" style="width: {{ min(100, max(0, $stats['rider_utilization'] ?? 0)) }}%"></div>
-                    </div>
-                    <p class="mt-3 text-[10px] leading-4 text-[#8b929b]">{{ $stats['busy_riders'] ?? 0 }} Rider(s) currently assigned to last-mile work.</p>
+                <div class="ld-activity-list" role="list" aria-label="Recent logistics orders">
+                    @forelse(collect($recentOrders)->take(3) as $order)
+                        @php
+                            $orderStatusText = strtolower((string) $order->statusLabel());
+                            $orderStatusClass = match(true) {
+                                str_contains($orderStatusText, 'deliver') => 'bg-[#edf7f1] text-[#4e8063]',
+                                str_contains($orderStatusText, 'transit') => 'bg-[#fff6e5] text-[#a56b06]',
+                                default => 'bg-[#f3f5f7] text-[#68717b]',
+                            };
+                            $parcelStage = $order->logisticsParcel ? strtoupper(str_replace('_', ' ', $order->logisticsParcel->status)) : '—';
+                        @endphp
+                        <article class="ld-activity-row" role="listitem">
+                            <div class="ld-activity-order">
+                                <span class="ld-activity-order-code">{{ $order->order_number }}</span>
+                                <span class="ld-activity-small">{{ $order->seller?->store_name ?: 'SARI Seller' }}</span>
+                            </div>
+                            <div class="ld-activity-people">
+                                <span class="ld-activity-mobile-label">Buyer / Rider</span>
+                                <span class="ld-activity-primary">{{ $order->buyer_name }}</span>
+                                <span class="ld-activity-small">{{ $order->courier_name ?: 'Unassigned' }}</span>
+                            </div>
+                            <div class="ld-activity-status-wrap">
+                                <span class="ld-activity-status {{ $orderStatusClass }}">{{ $order->statusLabel() }}</span>
+                            </div>
+                            <div class="ld-activity-parcel">
+                                <span class="ld-activity-mobile-label">Parcel Stage</span>
+                                <span class="ld-activity-stage">{{ $parcelStage }}</span>
+                            </div>
+                            <div class="ld-activity-time">
+                                <span class="ld-activity-mobile-label">Updated</span>
+                                <span class="ld-activity-updated">{{ $order->updated_at?->diffForHumans() }}</span>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="px-5 py-10 text-center">
+                            <p class="text-[11px] font-semibold text-[#737b84]">No logistics orders yet.</p>
+                            <p class="mt-1 text-[10px] text-[#9ba1a9]">Orders assigned to this branch will appear here.</p>
+                        </div>
+                    @endforelse
                 </div>
-
-                <div class="rounded-[16px] border border-[#edf0f2] p-4 sm:col-span-2">
-                    <div class="grid grid-cols-3 divide-x divide-[#edf0f2] text-center">
-                        <div class="px-2">
-                            <p class="text-[20px] font-bold tracking-[-.04em] text-[#22262b]">{{ $stats['hub_transfer_preparing'] ?? 0 }}</p>
-                            <p class="mt-1 text-[10px] uppercase tracking-[.08em] text-[#949aa2]">Preparing</p>
-                        </div>
-                        <div class="px-2">
-                            <p class="text-[20px] font-bold tracking-[-.04em] text-[#c17f0b]">{{ $stats['hub_transfer_in_transit'] ?? 0 }}</p>
-                            <p class="mt-1 text-[10px] uppercase tracking-[.08em] text-[#949aa2]">In Transit</p>
-                        </div>
-                        <div class="px-2">
-                            <p class="text-[20px] font-bold tracking-[-.04em] text-[#4f8b69]">{{ $stats['hub_transfer_received_today'] ?? 0 }}</p>
-                            <p class="mt-1 text-[10px] uppercase tracking-[.08em] text-[#949aa2]">Received Today</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-[#edf0f2] px-5 py-3 sm:px-6">
-                <a href="{{ route('logistics.hub-transfers') }}" class="text-[10px] font-semibold text-[#9a680d] hover:text-[#7f5205]">Open Hub Transfers →</a>
             </div>
         </article>
-    </section>
-
-    {{-- RECENT TRANSFERS --}}
-    <section class="ld-panel overflow-hidden">
-        <header class="flex flex-col gap-3 border-b border-[#eceef1] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-            <div>
-                <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Recent Hub Transfers</h3>
-                <p class="mt-1 text-[11px] text-[#8b929b]">Latest linehaul manifests related to {{ $branchName }}.</p>
-            </div>
-            <a href="{{ route('logistics.hub-transfers') }}" class="inline-flex h-8 items-center rounded-[9px] border border-[#e4e7eb] px-3 text-[10px] font-semibold text-[#59616a] transition hover:border-[#d7aa4d] hover:text-[#98660b]">View all transfers</a>
-        </header>
-
-        <div class="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-4 sm:p-5">
-            @forelse($recentTransfers as $transfer)
-                @php
-                    $isOutgoing = $hubFacility && (int) $transfer->origin_facility_id === (int) $hubFacility->id;
-                    $transferStatus = strtolower((string) $transfer->status);
-                    $statusClass = match($transferStatus) {
-                        'received' => 'bg-[#edf7f1] text-[#4e8063]',
-                        'in_transit' => 'bg-[#fff5df] text-[#9b680d]',
-                        default => 'bg-[#f2f4f6] text-[#68707a]',
-                    };
-                @endphp
-                <article class="rounded-[16px] border border-[#e9ecef] bg-[#fcfcfd] p-4">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="min-w-0">
-                            <p class="truncate text-[11px] font-bold text-[#262b30]">{{ $transfer->transfer_code }}</p>
-                            <p class="mt-1 text-[10.5px] text-[#949aa2]">{{ $transfer->parcel_count }} parcel(s)</p>
-                        </div>
-                        <span class="rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[.07em] {{ $statusClass }}">{{ str_replace('_', ' ', $transferStatus) }}</span>
-                    </div>
-                    <div class="mt-4 space-y-2 text-[10px]">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="text-[#9aa0a8]">Origin</span>
-                            <span class="truncate font-semibold text-[#555d66]">{{ $transfer->origin_name }}</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="text-[#9aa0a8]">Destination</span>
-                            <span class="truncate font-semibold text-[#555d66]">{{ $transfer->destination_name }}</span>
-                        </div>
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="text-[#9aa0a8]">Perspective</span>
-                            <span class="font-semibold {{ $isOutgoing ? 'text-[#a86e05]' : 'text-[#4f7fa8]' }}">{{ $isOutgoing ? 'Outbound' : 'Inbound' }}</span>
-                        </div>
-                    </div>
-                </article>
-            @empty
-                <div class="col-span-full rounded-[16px] border border-dashed border-[#dfe3e7] px-5 py-8 text-center">
-                    <p class="text-[11px] font-semibold text-[#717983]">No branch transfer activity yet.</p>
-                    <p class="mt-1 text-[10px] text-[#9aa0a8]">Transfers will appear after sorted parcels are grouped into linehaul manifests.</p>
-                </div>
-            @endforelse
-        </div>
-    </section>
-
-    {{-- RECENT ACTIVITY TABLE --}}
-    <section class="ld-panel overflow-hidden">
-        <header class="flex flex-col gap-3 border-b border-[#eceef1] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-            <div>
-                <h3 class="text-[15px] font-bold tracking-[-.02em] text-[#202328]">Recent Logistics Activity</h3>
-                <p class="mt-1 text-[11px] text-[#8b929b]">Latest marketplace orders moving through the selected branch.</p>
-            </div>
-            <a href="{{ route('logistics.delivery-monitoring') }}" class="text-[10px] font-semibold text-[#9a680d] hover:text-[#7f5205]">View monitoring →</a>
-        </header>
-
-        <div class="overflow-x-auto">
-            <table class="w-full min-w-[980px] text-left">
-                <thead class="bg-[#fafbfc] text-[10.5px] uppercase tracking-[.08em] text-[#9198a1]">
-                    <tr>
-                        <th class="px-5 py-3 font-semibold">Order</th>
-                        <th class="px-5 py-3 font-semibold">Seller</th>
-                        <th class="px-5 py-3 font-semibold">Buyer</th>
-                        <th class="px-5 py-3 font-semibold">Rider</th>
-                        <th class="px-5 py-3 font-semibold">Order Status</th>
-                        <th class="px-5 py-3 font-semibold">Parcel Stage</th>
-                        <th class="px-5 py-3 font-semibold">Updated</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-[#eef0f2]">
-                    @forelse($recentOrders as $order)
-                        <tr class="ld-table-row text-[10.5px] text-[#616871]">
-                            <td class="px-5 py-3.5 font-bold text-[#30353a]">{{ $order->order_number }}</td>
-                            <td class="px-5 py-3.5">{{ $order->seller?->store_name ?: 'SARI Seller' }}</td>
-                            <td class="px-5 py-3.5">{{ $order->buyer_name }}</td>
-                            <td class="px-5 py-3.5">{{ $order->courier_name ?: 'Unassigned' }}</td>
-                            <td class="px-5 py-3.5">
-                                <span class="rounded-full bg-[#fff6e5] px-2.5 py-1 text-[10px] font-semibold text-[#a56b06]">{{ $order->statusLabel() }}</span>
-                            </td>
-                            <td class="px-5 py-3.5 font-medium text-[#505861]">{{ $order->logisticsParcel ? strtoupper(str_replace('_', ' ', $order->logisticsParcel->status)) : '—' }}</td>
-                            <td class="px-5 py-3.5 text-[#9399a1]">{{ $order->updated_at?->diffForHumans() }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="px-5 py-10 text-center">
-                                <p class="text-[11px] font-semibold text-[#737b84]">No logistics orders yet.</p>
-                                <p class="mt-1 text-[10px] text-[#9ba1a9]">Orders assigned to this branch will appear here.</p>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
     </section>
 </div>
 @endsection

@@ -1222,7 +1222,7 @@
 
 <div
     id="lgHubTransfers"
-    class="transfer-page"
+    class="sari-logistics-ui transfer-page"
     data-transfer-workspace
 >
 

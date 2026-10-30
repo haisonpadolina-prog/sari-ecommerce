@@ -3118,6 +3118,121 @@
         font-size: 11px !important;
     }
 
+
+
+    /* ============================================================
+       BUYER SHOP PRODUCTS — SELLER-STYLE FLOATING SURFACES
+       Only catalog cards and standalone results panels are raised.
+       Keep the header, filter controls, category navigation and any
+       campaign/banner artwork open; no JS / Blade / backend changes.
+    ============================================================ */
+
+    /* Product component already has its own subtle surface. Use one
+       consistent shadow instead of stacking a CSS drop-shadow on top. */
+    .sari-products-page .sari-showcase-grid > article.sari-product-card {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #ffffff !important;
+        filter: none !important;
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+        transform: none !important;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .sari-products-page .sari-showcase-grid > article.sari-product-card:hover {
+            border-color: #d5dbe0 !important;
+            box-shadow:
+                0 2px 5px rgba(15, 23, 42, .045),
+                0 10px 24px rgba(15, 23, 42, .075),
+                0 24px 54px rgba(15, 23, 42, .095),
+                inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+            transform: none !important;
+        }
+    }
+
+    /* The two insight workspaces float as top-level cards. */
+    .sari-products-page .sari-insight-card {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #ffffff !important;
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+    }
+
+    /* Related shops and the search-results notice are standalone
+       containers; shop entries inside the related-shops panel stay flat. */
+    .sari-products-page .sari-products-main > .sari-products-hero + section.mb-4,
+    .sari-products-page .sari-products-main > section.mb-5,
+    .sari-products-page .sari-products-main > section.lg\:hidden > div {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #ffffff !important;
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .06),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+    }
+
+    .sari-products-page .sari-products-main > section.mb-5 > div:last-child > a {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Only visible empty results need a standalone floating surface. */
+    .sari-products-page #buyerProductEmpty:not(.hidden) {
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #ffffff !important;
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .06),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+    }
+
+    /* Preserve all existing grid columns, card sizes, banners and
+       discovery-rail sticky behavior; allow shadows breathing room. */
+    .sari-products-page .sari-showcase-grid {
+        gap: 18px !important;
+        margin-top: 16px !important;
+    }
+
+    .sari-products-page .sari-catalog-rail {
+        gap: 18px;
+    }
+
+    @media (max-width: 767px) {
+        .sari-products-page .sari-showcase-grid {
+            gap: 14px !important;
+            margin-top: 13px !important;
+        }
+
+        .sari-products-page .sari-catalog-rail {
+            gap: 14px;
+        }
+
+        .sari-products-page .sari-showcase-grid > article.sari-product-card,
+        .sari-products-page .sari-insight-card,
+        .sari-products-page .sari-products-main > .sari-products-hero + section.mb-4,
+        .sari-products-page .sari-products-main > section.mb-5,
+        .sari-products-page .sari-products-main > section.lg\:hidden > div,
+        .sari-products-page #buyerProductEmpty:not(.hidden) {
+            border-radius: 14px !important;
+            box-shadow:
+                0 2px 4px rgba(15, 23, 42, .035),
+                0 8px 18px rgba(15, 23, 42, .06),
+                0 18px 38px rgba(15, 23, 42, .07) !important;
+        }
+    }
+
 </style>
 @endpush
 
@@ -3467,7 +3582,7 @@
             @foreach ($products as $product)
                 <x-buyer.product-card
                     :product="$product"
-                    :priority="$loop->index < 6"
+                    :priority="$loop->index < 4"
                     :interactive="true"
                     :show-promotions="true"
                     :show-stock="true"

@@ -1763,6 +1763,74 @@
         .sari-track-page .sari-track-courier-info-value { font-size: 11px; }
     }
 
+
+
+    /* ============================================================
+       SARI BUYER ORDER TRACKING — SELLER-STYLE FLOATING PANELS
+       Visual-only: existing Blade markup, map, actions and JS stay intact.
+       Elevate top-level cards only; nested route, row and form UI stays flat.
+    ============================================================ */
+    .sari-track-page {
+        --sari-floating-border: #e5e7eb;
+        --sari-floating-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92);
+        --sari-floating-shadow-soft:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .06),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+        background: #f4f5f7;
+    }
+
+    /* Product being tracked and the delivery journey are main surfaces. */
+    .sari-track-page .sari-track-product-hero,
+    .sari-track-page .sari-track-grid > .sari-track-panel {
+        border: 1px solid var(--sari-floating-border);
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: var(--sari-floating-shadow);
+    }
+
+    /* Right-column order summary and courier details float as separate cards. */
+    .sari-track-page .sari-track-side > .sari-track-panel {
+        border: 1px solid var(--sari-floating-border);
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: var(--sari-floating-shadow-soft);
+    }
+
+    /* Keep cancellation warning coloring while lifting its outer card. */
+    .sari-track-page .sari-track-cancelled {
+        border-radius: 18px;
+        box-shadow: var(--sari-floating-shadow-soft);
+    }
+
+    /* If the legacy tracking/other-items panels render, use the same top-level elevation. */
+    .sari-track-page .sari-track-hero,
+    .sari-track-page .sari-track-items {
+        border-color: var(--sari-floating-border);
+        box-shadow: var(--sari-floating-shadow-soft);
+    }
+
+    /* Static elevation: no floating-on-hover motion or child-card stacking. */
+    @media (max-width: 700px) {
+        .sari-track-page .sari-track-product-hero,
+        .sari-track-page .sari-track-grid > .sari-track-panel,
+        .sari-track-page .sari-track-side > .sari-track-panel,
+        .sari-track-page .sari-track-cancelled,
+        .sari-track-page .sari-track-hero,
+        .sari-track-page .sari-track-items {
+            border-radius: 15px;
+            box-shadow:
+                0 2px 5px rgba(15, 23, 42, .035),
+                0 8px 20px rgba(15, 23, 42, .06),
+                0 14px 30px rgba(15, 23, 42, .055),
+                inset 0 1px 0 rgba(255, 255, 255, .90);
+        }
+    }
 </style>
 
 <div class="sari-track-page">
@@ -2074,7 +2142,9 @@
         href="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.css"
     >
 
-    <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
+    <script data-navigate-once defer src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"
+        onload="document.dispatchEvent(new Event('sari:maplibre-ready'))"
+        onerror="window.__sariMaplibreFailed = true; document.dispatchEvent(new Event('sari:maplibre-ready'))"></script>
 
     <script>
     (() => {
@@ -2103,6 +2173,7 @@
         }
 
         let activeMap = null;
+        let mapResizeObserver = null;
         let pendingRoute = null;
         let renderGeneration = 0;
         const legCache = new Map();
@@ -2318,6 +2389,8 @@
             renderGeneration++;
             pendingRoute?.abort();
             pendingRoute = null;
+            mapResizeObserver?.disconnect();
+            mapResizeObserver = null;
             if (activeMap) {
                 try { activeMap.remove(); } catch (_) {}
                 activeMap = null;
@@ -2330,8 +2403,14 @@
             const mapNode = document.querySelector('[data-sari-maplibre-map]');
             if (!wrapper || !mapNode || mapNode.dataset.ready === '1') return;
             if (!window.maplibregl) {
-                setNotice(wrapper,'Map library unavailable','Check your connection to the MapLibre CDN.');
-                setStatus('Map could not load');
+                // External MapLibre can finish loading after a Livewire page swap.
+                // The sari:maplibre-ready event calls boot again when it is ready.
+                if (window.__sariMaplibreFailed) {
+                    setNotice(wrapper,'Map library unavailable','Check your connection to the MapLibre CDN.');
+                    setStatus('Map could not load');
+                } else {
+                    setStatus('Preparing interactive map…');
+                }
                 return;
             }
             const generation = ++renderGeneration;
@@ -2340,32 +2419,52 @@
             try { route = JSON.parse(wrapper.dataset.sariDeliveryRoute || '{}'); }
             catch (_) { route = {}; }
             const stops = validStops(route);
+            const ready = route.ready === true && stops.length === 4
+                && stops.every((stop, index) => Number(stop.sequence) === index + 1);
+
+            // Road geometry and map tiles are independent network requests.
+            // Start routing now instead of waiting for the map's initial tiles.
+            // Catch immediately so routing failures never become unhandled promises.
+            const abortController = new AbortController();
+            pendingRoute = abortController;
+            const roadLegsResult = ready
+                ? requestRoadLegs(stops, abortController.signal)
+                    .then(legs => ({legs, error: null}), error => ({legs: [], error}))
+                : null;
+
             const map = new maplibregl.Map({
                 container:mapNode, style:MAP_STYLE,center:PHILIPPINES_CENTER,zoom:5.2,
                 attributionControl:true,dragRotate:false,pitchWithRotate:false,
             });
             activeMap = map;
+            if (typeof ResizeObserver !== 'undefined') {
+                mapResizeObserver = new ResizeObserver(() => {
+                    if (generation !== renderGeneration || !mapNode.isConnected) return;
+                    window.requestAnimationFrame(() => {
+                        if (generation === renderGeneration) map.resize();
+                    });
+                });
+                mapResizeObserver.observe(mapNode);
+            }
             map.addControl(new maplibregl.NavigationControl({showCompass:false}), 'top-right');
-            map.on('load', async () => {
+            // Style loading is sufficient for adding our sources and layers.
+            // Waiting for all OSM tiles can unnecessarily delay route rendering.
+            map.once('style.load', async () => {
                 if (generation !== renderGeneration) return;
                 wrapper.querySelector('[data-sari-map-loading]')?.classList.add('is-hidden');
-                const ready = route.ready === true && stops.length === 4
-                    && stops.every((s,i)=>Number(s.sequence) === i + 1);
                 drawStopMarkers(map,route,stops);
                 fitRoute(map,stops,[]); // Show the actual saved area immediately while road geometry loads.
-                const abortController = new AbortController();
-                pendingRoute = abortController;
                 let legs = [];
                 let approximate = false;
                 if (ready) {
                     setStatus('Finding roads between saved logistics stops…');
-                    try {
-                        legs = await requestRoadLegs(stops, abortController.signal);
-                        if (generation !== renderGeneration || abortController.signal.aborted) return;
+                    const result = await roadLegsResult;
+                    if (generation !== renderGeneration || abortController.signal.aborted) return;
+                    if (!result.error) {
+                        legs = result.legs;
                         setNotice(wrapper,'','');
                         setStatus('Road-following route · Milestones are confirmed by Logistics');
-                    } catch (error) {
-                        if (generation !== renderGeneration || abortController.signal.aborted) return;
+                    } else {
                         approximate = true;
                         legs = approximateLegs(stops);
                         setNotice(wrapper,'Road route temporarily unavailable',
@@ -2386,6 +2485,7 @@
                 if (generation !== renderGeneration) return;
                 showLegs(map,stops,legs,approximate);
                 fitRoute(map,stops,legs);
+                map.triggerRepaint();
             });
             map.on('error', event => {
                 if (generation !== renderGeneration) return;
@@ -2406,8 +2506,12 @@
         } else {
             boot();
         }
+        document.addEventListener('sari:maplibre-ready', boot);
         document.addEventListener('livewire:navigating', destroy);
-        document.addEventListener('livewire:navigated', boot);
+        document.addEventListener('livewire:navigated', () => {
+            // Wait for the replacement map container to have a measured size.
+            window.requestAnimationFrame(boot);
+        });
     })();
 
     </script>

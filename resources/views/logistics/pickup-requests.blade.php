@@ -2979,7 +2979,7 @@
 
 <div
     id="lgPickupRequests"
-    class="pickup-page"
+    class="sari-logistics-ui pickup-page"
     data-pickup-workspace="requests"
     data-old-ids="{{ json_encode(array_map('intval', (array) old('order_ids', []))) }}"
 >

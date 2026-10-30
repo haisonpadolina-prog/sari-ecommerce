@@ -427,166 +427,371 @@
     </div>
 
 
-    {{-- ============================================================
-         BUYER AI ASSISTANT — UI PREVIEW ONLY
-         Visual shell only. No API call, route, event, or backend behavior.
-    ============================================================ --}}
-    @persist('buyer-ai-preview')
-        <div id="buyerAiPreview" class="buyer-ai-preview" aria-label="SARI AI preview">
-            <div class="buyer-ai-preview-card" role="status" aria-live="polite">
-                <span class="buyer-ai-preview-eyebrow">SARI AI</span>
-                <strong>Shopping assistant</strong>
-                <span>Coming soon</span>
-            </div>
-
-            <button
-                type="button"
-                class="buyer-ai-preview-button"
-                aria-label="SARI AI shopping assistant — coming soon"
-                aria-disabled="true"
-                title="SARI AI — Coming soon"
-            >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 3 13.6 8.4 19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6L12 3Z"></path>
-                    <path d="m18.5 16 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7.7-2.3Z"></path>
-                </svg>
-                <span class="buyer-ai-preview-dot"></span>
-            </button>
-        </div>
-    @endpersist
+    {{-- Always show the Buyer AI launcher for signed-in Buyers.
+         Missing backend route must not hide the floating robot or cause a 500. --}}
+    @if(session('is_buyer'))
+        @persist('buyer-ai-assistant')
+            @if(view()->exists('buyer.partials.ai-assistant'))
+                @include('buyer.partials.ai-assistant')
+            @else
+                {{-- Deployment-safe fallback: visible launcher, honest setup status. --}}
+                <details id="sariBuyerAiInstallationNotice" style="position:fixed;right:24px;bottom:22px;z-index:8500;font-family:Poppins,system-ui,sans-serif">
+                    <summary aria-label="Open SARI Buyer AI status" style="display:block;list-style:none;cursor:pointer;width:76px;height:76px">
+                        <img src="{{ asset('images/sari-seller-ai-assistant.png') }}"
+                             alt="SARI AI" style="display:block;width:76px;height:76px;object-fit:contain" draggable="false">
+                    </summary>
+                    <div role="status" style="position:absolute;bottom:88px;right:0;width:min(320px,calc(100vw - 40px));border:1px solid #e9dfcf;border-radius:16px;padding:16px;background:white;box-shadow:0 12px 42px rgba(0,0,0,.15);font-size:12px;line-height:1.6;color:#302b24">
+                        <strong>SARI Buyer AI needs setup</strong>
+                        <p style="margin:6px 0 0">The chatbot view <code>buyer.partials.ai-assistant</code> is missing. Install the Buyer AI partial to enable chatting.</p>
+                    </div>
+                </details>
+            @endif
+        @endpersist
+    @endif
 
 
     {{-- ============================================================
-         PERSISTENT LOGOUT CONFIRMATION MODAL
+         BUYER LOGOUT MODAL — SELLER DESIGN, BRIGHT RED
+         Keeps the existing buyerLogoutForm, POST URL, and CSRF flow.
     ============================================================ --}}
     @persist('buyer-logout-modal')
-        <div
-            id="buyerLogoutModal"
-            class="
-                fixed
-                inset-0
-                z-[200]
+        <div id="buyerLogoutModal" class="hidden" data-buyer-logout-root>
+            <div class="buyer-logout-modal-backdrop" data-buyer-logout-backdrop aria-hidden="true"></div>
 
-                hidden
-
-                items-center
-                justify-center
-
-                bg-black/30
-
-                p-4
-            "
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="buyerLogoutModalTitle"
-        >
-            <div
-                class="
-                    w-full
-                    max-w-[390px]
-
-                    rounded-[24px]
-
-                    border
-                    border-[#e9dfcf]
-
-                    bg-white
-
-                    p-6
-
-                    shadow-[0_30px_90px_rgba(38,30,18,0.20)]
-                "
+            <section
+                class="buyer-logout-modal-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="buyerLogoutModalTitle"
+                aria-describedby="buyerLogoutModalDescription"
             >
-                <div
-                    class="
-                        mx-auto
+                <div class="buyer-logout-modal-body">
+                    <div class="buyer-logout-modal-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M10 17l5-5-5-5"></path>
+                            <path d="M15 12H3"></path>
+                            <path d="M14 3h7v18h-7"></path>
+                        </svg>
+                    </div>
 
-                        grid
-                        h-14
-                        w-14
-
-                        place-items-center
-
-                        rounded-2xl
-
-                        bg-[#fbf5e9]
-
-                        text-[#a8731f]
-                    "
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        class="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        aria-hidden="true"
-                    >
-                        <path d="M10 17l5-5-5-5"></path>
-                        <path d="M15 12H3"></path>
-                        <path d="M14 3h7v18h-7"></path>
-                    </svg>
-                </div>
-
-                <div class="mt-5 text-center">
-                    <h2
-                        id="buyerLogoutModalTitle"
-                        class="text-[16px] font-semibold text-[#312b25]"
-                    >
-                        Log out?
-                    </h2>
-
-                    <p
-                        class="mt-2 text-[9px] leading-5 text-[#91887d]"
-                    >
-                        Are you sure you want to log out of your account?
+                    <h2 id="buyerLogoutModalTitle" class="buyer-logout-modal-title">Log out of SARI?</h2>
+                    <p id="buyerLogoutModalDescription" class="buyer-logout-modal-copy">
+                        Are you sure you want to end your Buyer session?
+                        You will need to sign in again to access your Buyer account.
                     </p>
                 </div>
 
-                <div class="mt-6 grid grid-cols-2 gap-2">
-                    <button
-                        id="buyerCancelLogout"
-                        type="button"
-                        class="
-                            h-11
-                            rounded-xl
-                            border border-[#e1d6c6]
-                            bg-[#fcf8f1]
-                            text-[9px] font-medium text-[#62594e]
-                            transition-colors duration-150
-                            hover:border-[#d8c39d]
-                            hover:bg-[#f7eddd]
-                            hover:text-[#9a6717]
-                            focus:outline-none
-                            focus:ring-4
-                            focus:ring-[#d89a25]/10
-                        "
-                    >
-                        Cancel
-                    </button>
+                <div class="buyer-logout-modal-footer">
+                    <button id="buyerCancelLogout" type="button"
+                        class="buyer-logout-modal-btn buyer-logout-modal-btn-cancel">Cancel</button>
 
-                    <button
-                        id="buyerConfirmLogout"
-                        type="button"
-                        class="
-                            h-11
-                            rounded-xl
-                            bg-[#c99128]
-                            text-[9px] font-medium text-white
-                            shadow-[0_8px_20px_rgba(201,145,40,0.18)]
-                            transition-colors duration-150
-                            hover:bg-[#b47e1e]
-                            focus:outline-none
-                            focus:ring-4
-                            focus:ring-[#d89a25]/15
-                        "
-                    >
-                        Log Out
+                    <button id="buyerConfirmLogout" type="button"
+                        class="buyer-logout-modal-btn buyer-logout-modal-btn-danger">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M10 17l5-5-5-5"></path>
+                            <path d="M15 12H3"></path>
+                            <path d="M14 3h7v18h-7"></path>
+                        </svg>
+                        <span>Logout</span>
                     </button>
                 </div>
-            </div>
+            </section>
         </div>
     @endpersist
+
+    {{-- Shared Seller modal styles, safely scoped to Buyer logout only. --}}
+    <style id="sariBuyerSellerStyleLogoutModal">
+/* ============================================================
+           BUYER LOGOUT CONFIRMATION MODAL — SAME SELLER DESIGN
+           ============================================================ */
+        #buyerLogoutModal.hidden,
+        #buyerLogoutModal[hidden] {
+            display: none !important;
+        }
+
+        #buyerLogoutModal {
+            position: fixed;
+            inset: 0;
+            z-index: 11000;
+            display: grid;
+            place-items: center;
+            padding: 22px;
+        }
+
+        .buyer-logout-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(24, 28, 34, .54);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            opacity: 0;
+            transition: opacity 150ms ease;
+        }
+
+        .buyer-logout-modal-dialog {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 390px);
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: #FFFFFF;
+            box-shadow:
+                0 30px 80px rgba(15, 23, 42, .24),
+                0 8px 24px rgba(15, 23, 42, .08);
+            opacity: 0;
+            transform: translateY(10px) scale(.985);
+            transition:
+                opacity 160ms ease,
+                transform 160ms cubic-bezier(.22, 1, .36, 1);
+        }
+
+        #buyerLogoutModal:not(.hidden) .buyer-logout-modal-backdrop {
+            opacity: 1;
+        }
+
+        #buyerLogoutModal:not(.hidden) .buyer-logout-modal-dialog {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .buyer-logout-modal-body {
+            padding: 21px 21px 18px;
+        }
+
+        .buyer-logout-modal-icon {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid #FFB7BE;
+            border-radius: 8px;
+            background: #FFF0F2;
+            color: #F04438;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.8);
+        }
+
+        .buyer-logout-modal-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .buyer-logout-modal-title {
+            margin: 14px 0 0;
+            color: #1F2937;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.28;
+            letter-spacing: -.035em;
+        }
+
+        .buyer-logout-modal-copy {
+            margin: 6px 0 0;
+            max-width: 410px;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .buyer-logout-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #EEF0F3;
+            background: #FAFBFC;
+            padding: 10px 12px;
+        }
+
+        .buyer-logout-modal-btn {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 8px;
+            padding: 0 13px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background-color 120ms ease,
+                border-color 120ms ease,
+                color 120ms ease,
+                box-shadow 120ms ease,
+                transform 120ms ease;
+        }
+
+        .buyer-logout-modal-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .buyer-logout-modal-btn-cancel {
+            min-width: 84px;
+            border: 1px solid #D8DEE6;
+            background: #FFFFFF;
+            color: #475467;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, .03);
+        }
+
+        .buyer-logout-modal-btn-cancel:hover {
+            border-color: #C7CED8;
+            background: #F7F8FA;
+            color: #253142;
+        }
+
+        .buyer-logout-modal-btn-danger {
+            min-width: 96px;
+            border: 1px solid #ff0b0b;
+            background: #ff0b0b;
+            color: #FFFFFF;
+            box-shadow:
+                0 6px 14px rgba(127, 29, 45, .20),
+                inset 0 1px 0 rgba(255,255,255,.12);
+        }
+
+        .buyer-logout-modal-btn-danger:hover {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 8px 18px rgba(107, 23, 38, .25),
+                inset 0 1px 0 rgba(255,255,255,.10);
+            transform: translateY(-1px);
+        }
+
+        .buyer-logout-modal-btn-danger:active {
+            border-color: #ff0b0b;
+            background: #ff0b0b;
+            box-shadow:
+                0 4px 10px rgba(86, 17, 31, .22),
+                inset 0 1px 0 rgba(255,255,255,.08);
+            transform: translateY(0);
+        }
+
+        .buyer-logout-modal-btn-danger:disabled {
+            border-color: #9B5360;
+            background: #9B5360;
+            box-shadow: none;
+            opacity: .78;
+            cursor: wait;
+            transform: none;
+        }
+
+        .buyer-logout-modal-btn:focus-visible {
+            outline: 3px solid rgba(127, 29, 45, .18);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 520px) {
+            #buyerLogoutModal {
+                align-items: end;
+                padding: 10px;
+            }
+
+            .buyer-logout-modal-dialog {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            .buyer-logout-modal-body {
+                padding: 20px 18px 17px;
+            }
+
+            .buyer-logout-modal-title {
+                font-size: 17px;
+            }
+
+            .buyer-logout-modal-copy {
+                font-size: 12px;
+            }
+
+            .buyer-logout-modal-footer {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding: 10px;
+            }
+
+            .buyer-logout-modal-btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .buyer-logout-modal-backdrop,
+            .buyer-logout-modal-dialog,
+            .buyer-logout-modal-btn {
+                transition: none !important;
+            }
+        }
+    </style>
+
+    {{-- The existing buyer.js owns open, cancel and confirm. This adds only
+         backdrop, Escape, and keyboard-focus support without duplicate submit handlers. --}}
+    <script data-navigate-once>
+        (function () {
+            if (window.__SARI_BUYER_LOGOUT_MODAL_UI_V1__) return;
+            window.__SARI_BUYER_LOGOUT_MODAL_UI_V1__ = true;
+
+            const findModal = () => document.getElementById('buyerLogoutModal');
+            const isOpen = () => {
+                const node = findModal();
+                return Boolean(node && !node.classList.contains('hidden'));
+            };
+            const dismiss = () => {
+                const node = findModal();
+                if (!node || node.classList.contains('hidden')) return;
+                const cancel = document.getElementById('buyerCancelLogout');
+                if (cancel) cancel.click();
+                else { node.classList.add('hidden'); node.classList.remove('flex'); }
+            };
+
+            document.addEventListener('click', function (event) {
+                if (event.target.closest?.('[data-buyer-logout-backdrop]')) {
+                    dismiss();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (!isOpen()) return;
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    dismiss();
+                    return;
+                }
+                if (event.key !== 'Tab') return;
+                const focusable = Array.from(findModal().querySelectorAll('button:not(:disabled)'));
+                if (!focusable.length) return;
+                if (event.shiftKey && document.activeElement === focusable[0]) {
+                    event.preventDefault();
+                    focusable[focusable.length - 1].focus();
+                } else if (!event.shiftKey && document.activeElement === focusable[focusable.length - 1]) {
+                    event.preventDefault();
+                    focusable[0].focus();
+                }
+            });
+
+            // The persistent modal remains in the DOM across Livewire navigation.
+            document.addEventListener('livewire:navigating', function () {
+                const node = findModal();
+                if (!node) return;
+                node.classList.add('hidden');
+                node.classList.remove('flex');
+            });
+        })();
+    </script>
 
 
     {{-- ============================================================
@@ -934,6 +1139,16 @@
                     return false;
                 }
 
+                // Livewire owns its wire:navigate(.hover) links and prefetch cache.
+                // Intercepting them a second time can bypass native navigation.
+                if (anchor.hasAttribute('wire:navigate') || anchor.hasAttribute('wire:navigate.hover')
+                    || anchor.hasAttribute('data-no-livewire')) {
+                    return false;
+                }
+
+                const rawHref = (anchor.getAttribute('href') || '').trim();
+                if (!rawHref || rawHref.startsWith('#')) return false;
+
                 if (
                     anchor.hasAttribute(
                         'download'
@@ -969,22 +1184,13 @@
                         window.location.origin
                     );
 
-                return (
-                    url.origin ===
-                        window.location.origin &&
-                    url.pathname.startsWith(
-                        '/buyer'
-                    ) &&
-                    !url.pathname.includes(
-                        '/image'
-                    ) &&
-                    !url.pathname.includes(
-                        '/attachment'
-                    ) &&
-                    !url.pathname.includes(
-                        '/document'
-                    )
-                );
+                if (url.origin !== window.location.origin) return false;
+                if (url.pathname === window.location.pathname &&
+                    url.search === window.location.search && url.hash) return false;
+
+                // HTML pages only: never prefetch or navigate media, JSON,
+                // tracking, documents or mutation URLs as page content.
+                return /^\/buyer\/(?:dashboard|home|products|cart|checkout|orders|recent-orders|recent-activity|shipping|notifications|messages|account|rewards|shop\/[^/]+|products\/\d+|orders\/\d+)$/.test(url.pathname);
             }
 
 

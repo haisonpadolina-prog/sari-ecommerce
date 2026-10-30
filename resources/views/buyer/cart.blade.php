@@ -4265,6 +4265,69 @@ a.sari-store-name-link:focus-visible {
         margin-left: 0 !important;
     }
 }
+
+
+/* ============================================================
+   SARI BUYER CART — SELLER-ALIGNED FLOATING CONTAINERS
+   Visual-only enhancement: no changes to checkout or cart logic.
+   Elevation is reserved for top-level surfaces; inner items stay flat.
+============================================================ */
+[data-sari-cart-page] {
+    --cart-float-border: #e5e7eb;
+    --cart-float-strong:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    --cart-float-soft:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 7px 18px rgba(15, 23, 42, .06),
+        0 15px 32px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+}
+
+/* Select All: a lighter floating control panel. */
+[data-sari-cart-page] .sari-cart-toolbar {
+    border-color: var(--cart-float-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--cart-float-soft) !important;
+}
+
+/* Seller grouping and checkout totals are the main elevated surfaces. */
+[data-sari-cart-page] .sari-seller-shell,
+[data-sari-cart-page] .sari-cart-summary {
+    border-color: var(--cart-float-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--cart-float-strong) !important;
+}
+
+/* Empty cart shares the same elevation without lifting inner content. */
+[data-sari-cart-page] .sari-cart-empty-state {
+    border-color: var(--cart-float-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--cart-float-strong) !important;
+}
+
+/* Preserve the selected-item gold indication; unselected rows stay flat. */
+[data-sari-cart-page] .sari-cart-row:not([data-selected="true"]),
+[data-sari-cart-page] .sari-cart-row:not([data-selected="true"]):hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* The compact layout retains the floating look without heavy mobile shadows. */
+@media (max-width: 767px) {
+    [data-sari-cart-page] .sari-cart-toolbar,
+    [data-sari-cart-page] .sari-seller-shell,
+    [data-sari-cart-page] .sari-cart-summary,
+    [data-sari-cart-page] .sari-cart-empty-state {
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+    }
+}
 </style>
 
 

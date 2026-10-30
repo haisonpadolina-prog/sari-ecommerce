@@ -133,13 +133,15 @@ class BuyerCartService
             ->delete();
     }
 
-    /** Count distinct products for the buyer's cart badge, not total units. */
+    /**
+     * Count cart lines, not total quantity or distinct parent products.
+     * Each row represents one product + variant combination.
+     */
     public function count(Request $request): int
     {
         return (int) $this->identity
             ->apply(BuyerCartItem::query(), $request)
-            ->distinct()
-            ->count('seller_product_id');
+            ->count();
     }
 
     public function unitPrice(BuyerCartItem $item): float

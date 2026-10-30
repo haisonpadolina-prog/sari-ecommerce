@@ -7,9 +7,15 @@
     $buyerHeaderPhotoUrl = null;
 
     if ((bool) session('is_buyer') && $buyerHeaderAccountId > 0) {
-        $buyerHeaderAccount = \App\Models\Accounts\BuyerAccount::query()
-            ->select(['id', 'first_name', 'last_name', 'email', 'profile_image_path'])
-            ->find($buyerHeaderAccountId);
+        // Reuse the authenticated account loaded by BuyerPageController, when
+        // available for this request. All other controllers keep the old query.
+        $buyerHeaderAccount = request()->attributes->get('sari.buyer.active_account');
+        if (!($buyerHeaderAccount instanceof \App\Models\Accounts\BuyerAccount)
+            || (int) $buyerHeaderAccount->getKey() !== $buyerHeaderAccountId) {
+            $buyerHeaderAccount = \App\Models\Accounts\BuyerAccount::query()
+                ->select(['id', 'first_name', 'last_name', 'email', 'profile_image_path'])
+                ->find($buyerHeaderAccountId);
+        }
 
         if ($buyerHeaderAccount) {
             $buyerHeaderName = trim((string) $buyerHeaderAccount->first_name . ' ' . (string) $buyerHeaderAccount->last_name);

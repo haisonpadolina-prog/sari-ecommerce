@@ -106,17 +106,18 @@
             box-shadow:none !important;
         }
 
-        /* Reference-image notification list shell */
+        /* Seller-style floating activity panel; individual activity rows stay flat. */
         .sari-activity-shell {
             position:relative;
             overflow:visible;
             margin-top:0;
-            border:1px solid #dfe4e9;
+            border:1px solid #e5e7eb;
             border-radius:22px;
             background:#fff;
             box-shadow:
-                0 18px 46px rgba(31,41,55,.08),
-                0 3px 10px rgba(31,41,55,.035);
+                0 3px 7px rgba(15,23,42,.055),
+                0 14px 32px rgba(15,23,42,.095),
+                0 30px 68px rgba(15,23,42,.11);
         }
 
         .sari-activity-toolbar {
@@ -428,41 +429,41 @@
             display:flex;
             align-items:center;
             flex-wrap:wrap;
-            gap:8px;
+            gap:24px;
         }
+        /* Recent / Archived are text-only links: gold denotes the selected page. */
         .sari-activity-filter {
             display:inline-flex;
             align-items:center;
             justify-content:center;
             min-height:36px;
-            border:1px solid transparent;
-            border-radius:9px;
+            border:0;
+            border-radius:0;
             background:transparent;
-            padding:8px 13px;
+            padding:6px 0;
             color:#7f8995;
             font-size:12px;
             font-weight:650;
             line-height:1.25;
             text-decoration:none;
-            transition:background-color .16s ease,border-color .16s ease,color .16s ease;
+            box-shadow:none;
+            transition:color .16s ease;
         }
         .sari-activity-filter:hover,
         .sari-activity-filter:focus-visible {
-            background:#faf5eb;
-            color:#a96d07;
+            background:transparent;
+            color:#c88912;
+            text-decoration:none;
+            box-shadow:none;
         }
-        .sari-activity-filter[aria-current="page"] {
-            border-color:#b67a10;
-            background:#c88912;
-            color:#ffffff;
-            font-weight:750;
-            box-shadow:0 4px 12px rgba(200,137,18,.15);
-        }
+        .sari-activity-filter[aria-current="page"],
         .sari-activity-filter[aria-current="page"]:hover,
         .sari-activity-filter[aria-current="page"]:focus-visible {
-            border-color:#a66b0b;
-            background:#b9780d;
-            color:#ffffff;
+            border:0;
+            background:transparent;
+            color:#c88912;
+            font-weight:750;
+            box-shadow:none;
         }
         .sari-activity-filter::after { content:none !important; display:none !important; }
         .sari-activity-filter:focus-visible,
@@ -651,7 +652,7 @@
         @media (max-width:700px) {
             .sari-activity-toolbar { flex-wrap:wrap; padding-block:12px; }
             .sari-activity-actions { margin:8px 2px 12px; gap:8px 16px; }
-            .sari-activity-filters { gap:7px; }
+            .sari-activity-filters { gap:18px; }
             .sari-activity-read-all { font-size:11px; }
             .sari-activity-pagination { gap:5px; }
             .sari-activity-page-link,
@@ -670,20 +671,21 @@
             .sari-activity-page-arrow { transition:none; }
         }
 
-        /* Empty state kept compact and consistent with Buyer pages */
+        /* The empty state uses the same floating elevation as the activity panel. */
         .sari-activity-empty-state {
             display:grid;
             min-height:430px;
             margin-top:0;
             place-items:center;
-            border:1px solid #e3e7eb;
+            border:1px solid #e5e7eb;
             border-radius:18px;
             background:#fff;
             padding:72px 24px;
             text-align:center;
             box-shadow:
-                0 10px 28px rgba(31,41,55,.045),
-                0 2px 7px rgba(31,41,55,.018);
+                0 3px 7px rgba(15,23,42,.055),
+                0 14px 32px rgba(15,23,42,.095),
+                0 30px 68px rgba(15,23,42,.11);
         }
 
         .sari-activity-empty-icon {
@@ -861,6 +863,17 @@
             .sari-activity-empty-state {
                 min-height:360px;
                 padding:56px 20px;
+            }
+        }
+
+        /* Subtle elevation on mobile; preserve the panel's original dimensions. */
+        @media (max-width:760px) {
+            .sari-activity-shell,
+            .sari-activity-empty-state {
+                box-shadow:
+                    0 2px 4px rgba(15,23,42,.035),
+                    0 8px 18px rgba(15,23,42,.06),
+                    0 18px 38px rgba(15,23,42,.07);
             }
         }
     </style>

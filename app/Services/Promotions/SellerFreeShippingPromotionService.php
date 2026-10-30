@@ -87,17 +87,59 @@ class SellerFreeShippingPromotionService
             return $this->offerCache[$cacheKey] = null;
         }
 
-        return $this->offerCache[$cacheKey] = [
+        return $this->offerCache[$cacheKey] = $this->liveOfferPayload($promotion);
+    }
+
+    /**
+     * Prefetch live catalog badges in batches. The original liveOfferForSeller()
+     * remains the authority and still works unchanged for a single seller.
+     * Only this service's in-request cache is populated; checkout is untouched.
+     *
+     * @param iterable<int|string> $sellerIds
+     */
+    public function primeLiveOffersForSellers(iterable $sellerIds): void
+    {
+        $uncached = [];
+        foreach ($sellerIds as $sellerId) {
+            $sellerId = (int) $sellerId;
+            if ($sellerId > 0 && !array_key_exists('live:' . $sellerId, $this->offerCache)) {
+                $uncached[$sellerId] = $sellerId;
+            }
+        }
+
+        if ($uncached === []) {
+            return;
+        }
+
+        $now = now();
+        foreach (array_chunk(array_values($uncached), 200) as $batch) {
+            $promotions = SellerFreeShippingPromotion::query()
+                ->whereIn('seller_account_id', $batch)
+                ->where('status', SellerFreeShippingPromotion::STATUS_ACTIVE)
+                ->where('starts_at', '<=', $now)
+                ->where('ends_at', '>', $now)
+                ->orderByDesc('maximum_shipping_discount')
+                ->orderBy('id')
+                ->get()
+                ->groupBy('seller_account_id');
+
+            foreach ($batch as $sellerId) {
+                $promotion = $promotions->get($sellerId)?->first();
+                $this->offerCache['live:' . $sellerId] = $promotion
+                    ? $this->liveOfferPayload($promotion)
+                    : null;
+            }
+        }
+    }
+
+    /** The same payload for single-seller and bulk lookups. */
+    private function liveOfferPayload(SellerFreeShippingPromotion $promotion): array
+    {
+        return [
             'promotion_id' => (int) $promotion->id,
             'active' => true,
-            'minimum_order_amount' => round(
-                max(0, (float) $promotion->minimum_order_amount),
-                2
-            ),
-            'maximum_shipping_discount' => round(
-                max(0, (float) $promotion->maximum_shipping_discount),
-                2
-            ),
+            'minimum_order_amount' => round(max(0, (float) $promotion->minimum_order_amount), 2),
+            'maximum_shipping_discount' => round(max(0, (float) $promotion->maximum_shipping_discount), 2),
             'starts_at' => $promotion->starts_at,
             'ends_at' => $promotion->ends_at,
             'starts_at_manila' => $promotion->startsAtManila(),

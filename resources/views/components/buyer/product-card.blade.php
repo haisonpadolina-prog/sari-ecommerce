@@ -922,6 +922,8 @@
                 <img
                     src="{{ asset($image) }}"
                     alt="{{ $productName }}"
+                    width="325"
+                    height="196"
                     loading="{{ $priority ? 'eager' : 'lazy' }}"
                     fetchpriority="{{ $priority ? 'high' : 'auto' }}"
                     decoding="{{ $priority ? 'sync' : 'async' }}"

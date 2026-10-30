@@ -55,14 +55,19 @@ class DeliveryRouteService
         }
 
         DB::transaction(function () use ($order): void {
-            DeliveryRouteStop::query()
+            // One read replaces four firstOrNew() lookups and also lets us
+            // avoid issuing an unnecessary DELETE on every tracking poll.
+            $existingStops = DeliveryRouteStop::query()
                 ->where('marketplace_order_id', $order->id)
-                ->whereIn('stop_key', [
-                    'hub_1',
-                    'hub_2',
-                    'hub_3',
-                ])
-                ->delete();
+                ->get()
+                ->keyBy('stop_key');
+
+            if ($existingStops->has('hub_1') || $existingStops->has('hub_2') || $existingStops->has('hub_3')) {
+                DeliveryRouteStop::query()
+                    ->where('marketplace_order_id', $order->id)
+                    ->whereIn('stop_key', ['hub_1', 'hub_2', 'hub_3'])
+                    ->delete();
+            }
 
             $definitions = [
                 [
@@ -104,7 +109,7 @@ class DeliveryRouteService
                     $address
                 ]
             ) {
-                $stop = DeliveryRouteStop::query()->firstOrNew([
+                $stop = $existingStops->get($key) ?? new DeliveryRouteStop([
                     'marketplace_order_id' => $order->id,
                     'stop_key' => $key,
                 ]);
@@ -126,7 +131,9 @@ class DeliveryRouteService
                     $stop->address_snapshot = $address;
                 }
 
-                $stop->save();
+                if (!$stop->exists || $stop->isDirty()) {
+                    $stop->save();
+                }
             }
         });
 
@@ -283,7 +290,10 @@ class DeliveryRouteService
                         'latitude' => null,
                         'longitude' => null,
                         'reached_at' => null,
-                    ])->save();
+                    ]);
+                    if ($stop->isDirty()) {
+                        $stop->save();
+                    }
                 }
             });
     }
@@ -367,7 +377,10 @@ class DeliveryRouteService
                 $stop->forceFill([
                     'latitude' => null,
                     'longitude' => null,
-                ])->save();
+                ]);
+                if ($stop->isDirty()) {
+                    $stop->save();
+                }
             }
 
             return;
@@ -376,7 +389,10 @@ class DeliveryRouteService
         $stop->forceFill([
             'latitude' => $resolved['latitude'],
             'longitude' => $resolved['longitude'],
-        ])->save();
+        ]);
+        if ($stop->isDirty()) {
+            $stop->save();
+        }
     }
 
     /*
@@ -933,7 +949,10 @@ class DeliveryRouteService
             'address_snapshot' => $facility->address,
             'latitude' => $facility->latitude,
             'longitude' => $facility->longitude,
-        ])->save();
+        ]);
+        if ($stop->isDirty()) {
+            $stop->save();
+        }
     }
 
     private function distanceKm(

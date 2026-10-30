@@ -418,6 +418,374 @@
         }
     }
 
+
+    /* ==============================================================
+       SARI BUYER SELLER SHOP — FLOATING WORKSPACE + READABLE TYPE
+       Major surfaces float; nested content stays light and flat.
+       Scoped entirely inside the buyer's shop content area.
+       Existing product grid, Blade data, actions and JS unchanged.
+       ============================================================== */
+    .sari-shop-page {
+        --shop-bg: #f4f5f7;
+        --shop-line: #e5e7eb;
+        --shop-text: #3d4856;
+        --shop-muted: #75808d;
+        background: var(--shop-bg);
+        color: var(--shop-text);
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .sari-shop-page .sari-shop-shell {
+        max-width: 1480px;
+        box-sizing: border-box;
+        padding: 30px 32px 50px;
+    }
+
+    /* Keep only the two top-level sections elevated. */
+    .sari-shop-page .sari-shop-card,
+    .sari-shop-page .sari-shop-products-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 19px;
+        background: #fff;
+        box-shadow:
+            0 2px 5px rgba(15,23,42,.045),
+            0 10px 24px rgba(15,23,42,.075),
+            0 24px 54px rgba(15,23,42,.095),
+            inset 0 1px 0 rgba(255,255,255,.92);
+        transform: none;
+    }
+
+    .sari-shop-page .sari-shop-card {
+        overflow: hidden; /* Keeps the full-width seller banner clipped to the panel. */
+    }
+
+    .sari-shop-page .sari-shop-profile {
+        padding: 26px 30px 28px;
+    }
+
+    .sari-shop-page .sari-shop-profile-top {
+        gap: 22px;
+    }
+
+    .sari-shop-page .sari-shop-identity {
+        gap: 17px;
+    }
+
+    .sari-shop-page .sari-shop-logo {
+        width: 74px;
+        height: 74px;
+        flex-basis: 74px;
+        border-color: #e3e7eb;
+    }
+
+    .sari-shop-page .sari-shop-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: .095em;
+    }
+
+    .sari-shop-page .sari-shop-name {
+        margin-top: 5px;
+        font-size: clamp(28px, 2.35vw, 36px);
+        font-weight: 700;
+        line-height: 1.17;
+        letter-spacing: -.027em;
+        overflow-wrap: anywhere;
+    }
+
+    .sari-shop-page .sari-shop-meta {
+        margin-top: 9px;
+        color: #707b88;
+        font-size: 13px;
+        font-weight: 450;
+        line-height: 1.6;
+    }
+
+    .sari-shop-page .sari-shop-message {
+        height: 46px;
+        padding-inline: 20px;
+        border-radius: 10px;
+        font-size: 12.5px;
+        font-weight: 650;
+        line-height: 1;
+        transform: none;
+    }
+
+    .sari-shop-page .sari-shop-message:hover,
+    .sari-shop-page .sari-shop-message:focus-visible {
+        transform: none;
+    }
+
+    /* Profile details remain a single panel; inner groups are dividers. */
+    .sari-shop-page .sari-shop-section-line {
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top-color: #eceff2;
+    }
+
+    .sari-shop-page .sari-shop-info-grid {
+        gap: 26px;
+    }
+
+    .sari-shop-page .sari-shop-section-label {
+        color: #586475;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: .065em;
+    }
+
+    .sari-shop-page .sari-shop-description {
+        margin-top: 10px;
+        max-width: 920px;
+        color: #667383;
+        font-size: 13.5px;
+        font-weight: 400;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    .sari-shop-page .sari-shop-contact {
+        min-width: 270px;
+        border-color: #e6e9ed;
+        border-radius: 11px;
+        background: #fbfcfd;
+        box-shadow: none;
+    }
+
+    .sari-shop-page .sari-shop-contact-row {
+        gap: 14px;
+        padding: 13px 15px;
+    }
+
+    .sari-shop-page .sari-shop-contact dt {
+        color: #7b8794;
+        font-size: 11.5px;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+
+    .sari-shop-page .sari-shop-contact dd {
+        color: #354151;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.45;
+    }
+
+    /* Voucher options are subtle outlined controls, not nested floating cards. */
+    .sari-shop-page .sari-shop-vouchers {
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .sari-shop-page .sari-shop-voucher {
+        min-width: 190px;
+        border-color: #e6ded0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        box-shadow: none;
+    }
+
+    .sari-shop-page .sari-shop-voucher-code {
+        font-size: 12.5px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .sari-shop-page .sari-shop-voucher-meta {
+        margin-top: 5px;
+        color: #77828e;
+        font-size: 11.5px;
+        font-weight: 450;
+        line-height: 1.55;
+    }
+
+    .sari-shop-page #shopVoucherFeedback {
+        font-size: 12px !important;
+        font-weight: 550 !important;
+        line-height: 1.45;
+    }
+
+    .sari-shop-page .sari-shop-products-card {
+        margin-top: 24px;
+        padding: 25px 28px 30px;
+        overflow: visible;
+    }
+
+    .sari-shop-page .sari-shop-products-head {
+        gap: 18px;
+    }
+
+    .sari-shop-page .sari-shop-products-title {
+        color: #26313f;
+        font-size: 23px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -.025em;
+    }
+
+    .sari-shop-page .sari-shop-products-subtitle {
+        margin-top: 5px;
+        color: #798491;
+        font-size: 12px;
+        font-weight: 450;
+        line-height: 1.55;
+    }
+
+    .sari-shop-page .sari-shop-search {
+        width: 318px;
+        height: 46px;
+        border-color: #dfe4e9;
+        border-radius: 10px;
+        background: #fff;
+        padding-inline: 15px;
+        color: #344054;
+        font-size: 13px;
+        font-weight: 450;
+    }
+
+    .sari-shop-page .sari-shop-search::placeholder {
+        color: #8b96a4;
+        opacity: 1;
+    }
+
+    .sari-shop-page .sari-shop-product-grid {
+        gap: 17px;
+        margin-top: 21px;
+    }
+
+    /* Shared product component stays unchanged. Only this shop's
+       card typography and mild inner elevation are refined. */
+    .sari-shop-page .sari-shop-product-grid > .sari-product-card,
+    .sari-shop-page .sari-shop-product-grid > .sari-product-card:hover,
+    .sari-shop-page .sari-shop-product-grid > .sari-product-card:focus-within {
+        border-color: #e4e8ec !important;
+        box-shadow:
+            0 1px 3px rgba(15,23,42,.035),
+            0 7px 18px rgba(15,23,42,.06),
+            inset 0 1px 0 rgba(255,255,255,.92) !important;
+        transform: none !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-title {
+        font-size: 15px !important;
+        font-weight: 650 !important;
+        line-height: 1.45 !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-meta {
+        font-size: 11.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-price {
+        font-size: 17px !important;
+        font-weight: 750 !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-old-price,
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-secondary {
+        font-size: 10.5px !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-stock {
+        font-size: 11.5px !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-buy,
+    .sari-shop-page .sari-shop-product-grid .sari-product-card .sari-buyer-card-view-only {
+        font-size: 11px !important;
+        font-weight: 650 !important;
+    }
+
+    .sari-shop-page .sari-shop-empty {
+        border-color: #e3e7eb;
+        background: #fafbfc;
+        color: #6d7886;
+        font-size: 13px;
+        font-weight: 450;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+        .sari-shop-page .sari-shop-shell {
+            padding: 24px 24px 42px;
+        }
+
+        .sari-shop-page .sari-shop-contact {
+            min-width: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .sari-shop-page .sari-shop-shell {
+            padding: 16px 14px 34px;
+        }
+
+        .sari-shop-page .sari-shop-card,
+        .sari-shop-page .sari-shop-products-card {
+            border-radius: 16px;
+            box-shadow:
+                0 1px 3px rgba(15,23,42,.035),
+                0 7px 18px rgba(15,23,42,.06),
+                0 15px 32px rgba(15,23,42,.065),
+                inset 0 1px 0 rgba(255,255,255,.90);
+        }
+
+        .sari-shop-page .sari-shop-profile {
+            padding: 19px 18px 22px;
+        }
+
+        .sari-shop-page .sari-shop-logo {
+            width: 60px;
+            height: 60px;
+            flex-basis: 60px;
+        }
+
+        .sari-shop-page .sari-shop-name {
+            font-size: clamp(25px, 6.5vw, 30px);
+        }
+
+        .sari-shop-page .sari-shop-meta {
+            font-size: 12px;
+        }
+
+        .sari-shop-page .sari-shop-section-line {
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .sari-shop-page .sari-shop-description {
+            font-size: 12.5px;
+        }
+
+        .sari-shop-page .sari-shop-message,
+        .sari-shop-page .sari-shop-search {
+            width: 100%;
+        }
+
+        .sari-shop-page .sari-shop-products-card {
+            margin-top: 18px;
+            padding: 20px 17px 24px;
+        }
+
+        .sari-shop-page .sari-shop-products-title {
+            font-size: 21px;
+        }
+
+        .sari-shop-page .sari-shop-product-grid {
+            margin-top: 17px;
+            gap: 14px;
+        }
+
+        .sari-shop-page .sari-shop-voucher {
+            min-width: 0;
+            width: 100%;
+        }
+    }
+
 </style>
 
 <div class="sari-shop-page">

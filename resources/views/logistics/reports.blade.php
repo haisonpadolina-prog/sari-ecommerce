@@ -4,7 +4,12 @@
 @section('page-title', 'Reports')
 
 @section('content')
-<section class="space-y-4">
+<section class="sari-logistics-ui sari-logistics-reports space-y-4">
+    <header class="sari-logistics-intro">
+        <p class="sari-logistics-eyebrow">LOGISTICS INSIGHTS</p>
+        <h1>Delivery <span>Reports</span></h1>
+        <p>Review fulfillment activity and delivery outcomes across your logistics network.</p>
+    </header>
     <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-7">
         @foreach([
             ['Waiting Assignment', $stats['waiting_assignment']],

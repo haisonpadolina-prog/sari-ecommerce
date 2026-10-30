@@ -1,5 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('buyerProductCartForm');
+function initBuyerProductDetails() {
+    const pageForm = document.getElementById('buyerProductCartForm');
+    if (!pageForm || pageForm.dataset.sariProductCartBound === '1') return;
+    pageForm.dataset.sariProductCartBound = '1';
+    const form = pageForm;
     const variant = document.getElementById('buyerVariantSelect');
     const qty = document.getElementById('buyerProductQty');
     const price = document.getElementById('buyerProductPrice');
@@ -27,10 +30,22 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (button) { button.disabled = true; button.textContent = 'Adding...'; }
             await window.SariBuyerCart.add(productId, quantity, variantId);
-            window.location.href = document.body.dataset.buyerCartUrl || '/buyer/cart';
+            const cartUrl = document.body.dataset.buyerCartUrl || '/buyer/cart';
+            if (typeof window.Livewire?.navigate === 'function') {
+                window.Livewire.navigate(cartUrl);
+            } else {
+                window.location.assign(cartUrl);
+            }
         } catch (error) {
             window.SariBuyerToast?.error(error.message || 'Could not add this item to your cart.');
             if (button) { button.disabled = false; button.textContent = 'Add to Cart'; }
         }
     });
-});
+ }
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBuyerProductDetails, { once: true });
+} else {
+    initBuyerProductDetails();
+}
+document.addEventListener('livewire:navigated', initBuyerProductDetails);

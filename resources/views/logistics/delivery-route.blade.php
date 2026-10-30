@@ -76,7 +76,7 @@
     $routeStops = $stops->sortBy('sequence')->values();
 @endphp
 
-<div class="mx-auto max-w-[1500px] space-y-4">
+<div class="sari-logistics-ui sari-logistics-route mx-auto max-w-[1500px] space-y-4">
     <div class="rounded-[20px] border border-[#ebe4da] bg-white p-5">
         <a
             href="{{ route('logistics.delivery-monitoring') }}"

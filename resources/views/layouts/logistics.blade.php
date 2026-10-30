@@ -733,6 +733,8 @@ body {
 </style>
 
     @stack('styles')
+    {{-- Buyer-inspired visual system: loaded last, presentation only. --}}
+    <link rel="stylesheet" href="{{ asset('css/logistics/buyer-parity.css') }}?v=20261029-1">
 </head>
 
 <body

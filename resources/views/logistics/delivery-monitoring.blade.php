@@ -2643,7 +2643,7 @@ button[aria-pressed="true"] {
 
 <div
     id="lgDeliveryMonitoring"
-    class="monitor-page"
+    class="sari-logistics-ui monitor-page"
     data-monitor-workspace
 >
     {{-- PAGE HEADING --}}

@@ -2612,6 +2612,110 @@
         line-height: 1.35 !important;
     }
 
+
+    /* ============================================================
+       SARI BUYER PRODUCT DETAILS — SELLER-STYLE FLOATING SURFACES
+       Visual-only override. The buyer header/sidebar, gallery behavior,
+       checkout controls, variants, reviews and routes remain untouched.
+       Only top-level panels float; nested components remain flat.
+       ============================================================ */
+    .buyer-product-page {
+        --sari-detail-floating-border: #E5E7EB;
+        --sari-detail-floating-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92);
+        --sari-detail-floating-shadow-mobile:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 7px 18px rgba(15, 23, 42, .06),
+            0 15px 32px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+        /* Existing #buyerMainContent supplies the gray page canvas. */
+        background: transparent !important;
+        padding-bottom: 54px !important;
+    }
+
+    /* The gallery image itself is the surface, never another outer wrapper. */
+    .buyer-product-page .sari-product-gallery-stage,
+    .buyer-product-page .sari-v7-buying-panel,
+    .buyer-product-page .sari-product-info-combined,
+    .buyer-product-page .sari-v7-section-card {
+        border: 1px solid var(--sari-detail-floating-border) !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow: var(--sari-detail-floating-shadow) !important;
+        transform: none !important;
+    }
+
+    /* Stable floating elevation, without a card-lift hover effect. */
+    .buyer-product-page .sari-v7-buying-panel:hover,
+    .buyer-product-page .sari-v7-section-card:hover,
+    .buyer-product-page .sari-product-info-combined:hover {
+        box-shadow: var(--sari-detail-floating-shadow) !important;
+        transform: none !important;
+    }
+
+    /* Keep visual layers separated by a clear gray-space gutter. */
+    .buyer-product-page .sari-v7-hero-grid {
+        row-gap: 24px !important;
+    }
+    .buyer-product-page .sari-product-info-combined {
+        margin-top: 22px !important;
+    }
+    .buyer-product-page .sari-buyer-reviews {
+        margin-top: 24px !important;
+    }
+
+    /* Never stack shadows on content within the main buying surface. */
+    .buyer-product-page .sari-v7-price-box,
+    .buyer-product-page .sari-v7-availability,
+    .buyer-product-page .sari-v7-qty,
+    .buyer-product-page .sari-v7-seller-card,
+    .buyer-product-page .sari-v7-trust-item,
+    .buyer-product-page .sari-review-entry,
+    .buyer-product-page .sari-review-entry > div,
+    .buyer-product-page .sari-detail-seller-inline {
+        box-shadow: none !important;
+    }
+
+    /* Related products already use the shared buyer card; unify its depth. */
+    .buyer-product-page [data-related-products-shared-card] .sari-product-card,
+    .buyer-product-page [data-related-products-shared-card] .sari-product-card:hover,
+    .buyer-product-page [data-related-products-shared-card] .sari-product-card:focus-within {
+        border-color: var(--sari-detail-floating-border) !important;
+        box-shadow: var(--sari-detail-floating-shadow) !important;
+        transform: none !important;
+    }
+
+    @media (max-width: 767px) {
+        .buyer-product-page {
+            padding-top: 14px !important;
+            padding-bottom: 34px !important;
+        }
+        .buyer-product-page .sari-product-gallery-stage,
+        .buyer-product-page .sari-v7-buying-panel,
+        .buyer-product-page .sari-product-info-combined,
+        .buyer-product-page .sari-v7-section-card,
+        .buyer-product-page [data-related-products-shared-card] .sari-product-card,
+        .buyer-product-page [data-related-products-shared-card] .sari-product-card:hover,
+        .buyer-product-page [data-related-products-shared-card] .sari-product-card:focus-within {
+            border-radius: 15px !important;
+            box-shadow: var(--sari-detail-floating-shadow-mobile) !important;
+        }
+        .buyer-product-page .sari-v7-buying-panel:hover,
+        .buyer-product-page .sari-v7-section-card:hover,
+        .buyer-product-page .sari-product-info-combined:hover {
+            box-shadow: var(--sari-detail-floating-shadow-mobile) !important;
+        }
+        .buyer-product-page .sari-product-info-combined {
+            margin-top: 17px !important;
+        }
+        .buyer-product-page .sari-buyer-reviews {
+            margin-top: 20px !important;
+        }
+    }
+
 </style>
 
 <!-- SARI_PRODUCT_DETAILS_V8_LIGHT_NEUMORPHISM -->
@@ -2641,6 +2745,11 @@
                                     id="buyerProductMainImage"
                                     src="{{ $mainImage }}"
                                     alt="{{ $productName }}"
+                                    width="900"
+                                    height="900"
+                                    loading="eager"
+                                    fetchpriority="high"
+                                    decoding="async"
                                     class="sari-v7-main-photo"
                                     title="Click to enlarge"
                                     onerror="this.classList.add('hidden'); document.getElementById('buyerProductImageFallback')?.classList.remove('hidden');"
@@ -2790,6 +2899,8 @@
                                         <img
                                             src="{{ $galleryImage }}"
                                             alt="{{ $productName }} image {{ $index + 1 }}"
+                                            width="88"
+                                            height="88"
                                             loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
                                             onerror="this.closest('button')?.classList.add('hidden')"
                                         >

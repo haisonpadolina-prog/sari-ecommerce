@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\Buyer\BuyerPageController;
+use App\Http\Controllers\Buyer\BuyerAiAssistantController;
 use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerCartController;
 use App\Http\Controllers\Buyer\BuyerCheckoutController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\Seller\SellerRegistrationController;
 use App\Http\Controllers\Logistics\LogisticsRegistrationController;
 use App\Http\Controllers\Admin\AdminRegistrationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminBuyerHomepageController;
 use App\Http\Controllers\Shared\PlatformComplaintController;
 use App\Http\Controllers\Shared\ParcelQrScannerController;
 use App\Http\Controllers\Admin\AdminComplaintsController;
@@ -585,6 +587,11 @@ Route::get('/buyer/dashboard', [BuyerPageController::class, 'home'])
 Route::get('/buyer/home', [BuyerPageController::class, 'home'])
     ->name('buyer.home');
 
+// Buyer-only, read-only AI questions; session guard and per-minute rate limit.
+Route::post('/buyer/ai-assistant/message', [BuyerAiAssistantController::class, 'message'])
+    ->middleware('throttle:20,1')
+    ->name('buyer.ai-assistant.message');
+
 Route::get('/buyer/products', [BuyerProductController::class, 'index'])
     ->name('buyer.products');
 
@@ -736,6 +743,12 @@ Route::post('/buyer/logout', [BuyerPageController::class, 'logout'])
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
     ->name('admin.dashboard');
+
+// Fixed-grid buyer promotional banners: admin-only editor and publisher.
+Route::get('/admin/buyer-homepage', [AdminBuyerHomepageController::class, 'index'])
+    ->name('admin.buyer-homepage');
+Route::post('/admin/buyer-homepage', [AdminBuyerHomepageController::class, 'update'])
+    ->name('admin.buyer-homepage.update');
 
 
 Route::get(

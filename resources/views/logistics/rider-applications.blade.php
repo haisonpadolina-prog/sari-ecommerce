@@ -299,11 +299,83 @@
         .ra-filter-bar button,
         .ra-filter-bar a { height: 42px !important; font-size: 10px !important; }
     }
+
+    /* Do not force a wide empty table: center the empty state on mobile too. */
+    .rider-applications-page .ra-queue-card table.ra-table-empty {
+        min-width: 0 !important;
+        table-layout: auto;
+    }
+
+    .rider-applications-page .ra-queue-card table.ra-table-empty thead {
+        display: none;
+    }
+
+    /* Buyer Cart empty-state sizing parity (cart.blade.php), scoped to this queue only. */
+    .rider-applications-page .ra-queue-card td.ra-empty-cell {
+        padding: 72px 24px !important;
+    }
+
+    .rider-applications-page .ra-queue-card .ra-empty-icon {
+        display: grid;
+        width: 92px;
+        height: 92px;
+        margin-inline: auto;
+        place-items: center;
+        color: #b4bbc3;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .rider-applications-page .ra-queue-card .ra-empty-icon svg {
+        width: 58px;
+        height: 58px;
+        stroke: currentColor;
+        stroke-width: 1.45;
+    }
+
+    .rider-applications-page .ra-queue-card tbody td .ra-empty-title {
+        margin-top: 18px !important;
+        color: #9ca4ad !important;
+        font-size: 22px !important;
+        font-weight: 750 !important;
+        line-height: 1.2 !important;
+        letter-spacing: -.025em !important;
+    }
+
+    .rider-applications-page .ra-queue-card tbody td .ra-empty-copy {
+        max-width: 520px;
+        margin: 7px auto 0 !important;
+        color: #b0b7bf !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        line-height: 1.55 !important;
+    }
+
+    @media (max-width: 640px) {
+        .rider-applications-page .ra-queue-card td.ra-empty-cell {
+            padding: 56px 18px !important;
+        }
+        .rider-applications-page .ra-queue-card .ra-empty-icon {
+            width: 64px;
+            height: 64px;
+        }
+        .rider-applications-page .ra-queue-card .ra-empty-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+        .rider-applications-page .ra-queue-card tbody td .ra-empty-title {
+            font-size: 20px !important;
+        }
+        .rider-applications-page .ra-queue-card tbody td .ra-empty-copy {
+            font-size: 11px !important;
+        }
+    }
 </style>
 @endpush
 
 @section('content')
-<div class="rider-applications-page mx-auto w-full max-w-[1900px] text-[#171b20]">
+<div class="sari-logistics-ui rider-applications-page mx-auto w-full max-w-[1900px] text-[#171b20]">
 
     @if (session('success'))
         <div class="mb-4 rounded-[14px] border border-[#cfe3d6] bg-[#f4faf6] px-4 py-3 text-[12px] font-medium text-[#4f725d]" role="status">
@@ -323,9 +395,6 @@
         <h1 class="mt-1 text-[30px] font-semibold tracking-[-.035em] text-[#14181d] sm:text-[38px]">
             Review Rider <span class="text-[#d79612]">applications</span>
         </h1>
-        <p class="mt-2 max-w-[820px] text-[13px] font-normal leading-6 text-[#7a828d]">
-            Verify applicant information, inspect Rider documents, then approve or reject registrations submitted to {{ $logistics->displayName() }}.
-        </p>
     </section>
 
     {{-- KPI SUMMARY --}}
@@ -451,7 +520,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[1120px] table-fixed text-left">
+            <table class="w-full min-w-[1120px] table-fixed text-left {{ $applications->isEmpty() ? 'ra-table-empty' : '' }}">
                 <thead class="border-b border-[#dde2e7] bg-[#f7f8f9]">
                     <tr class="text-[9px] font-semibold uppercase tracking-[.08em] text-[#657080]">
                         <th class="w-[23%] px-5 py-3.5">Applicant</th>
@@ -538,9 +607,17 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-5 py-14 text-center">
-                                <p class="text-[12px] font-medium text-[#56606c]">No {{ $status }} Rider applications</p>
-                                <p class="mt-1 text-[10px] font-normal text-[#929aa4]">New Rider applications submitted to {{ $logistics->displayName() }} will appear here.</p>
+                            <td colspan="7" class="ra-empty-cell text-center">
+                                <div class="flex flex-col items-center justify-center">
+                                    <span class="ra-empty-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M8 4h8a2 2 0 0 1 2 2v14H6V6a2 2 0 0 1 2-2Z" />
+                                            <path d="M9 9h6M9 13h6M9 17h3" />
+                                        </svg>
+                                    </span>
+                                    <p class="ra-empty-title">No {{ $status }} Rider applications</p>
+                                    <p class="ra-empty-copy">New Rider applications submitted to {{ $logistics->displayName() }} will appear here.</p>
+                                </div>
                             </td>
                         </tr>
                     @endforelse

@@ -1,0 +1,4 @@
+// SARI Buyer AI — authenticated, read-only message endpoint.
+Route::post('/buyer/ai-assistant/message', [\App\Http\Controllers\Buyer\BuyerAiAssistantController::class, 'message'])
+    ->middleware('throttle:20,1')
+    ->name('buyer.ai-assistant.message');
