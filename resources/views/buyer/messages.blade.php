@@ -243,7 +243,10 @@
 
 @section('content')
 @include('components.buyer.header')
-@if (in_array(request()->query('channel'), ['support', 'report'], true))
+{{-- SARI_RIDER_FOUR_ROLE_BUYER_BRIDGE_V2: Incoming Rider-initiated conversations --}}
+@if (request()->query('channel') === 'rider')
+    @include('buyer.partials.rider-conversations')
+@elseif (in_array(request()->query('channel'), ['support', 'report'], true))
     @include('buyer.partials.admin-support-messages')
 @else
 <div class="sari-bm-page">
@@ -259,6 +262,10 @@
         <aside class="sari-bm-sidebar" aria-label="Seller conversations">
             <div class="sari-bm-side-header">
                 <h2>Messages</h2>
+                {{-- SARI_RIDER_FOUR_ROLE_BUYER_BRIDGE_V2 --}}
+                <a href="{{ route('buyer.messages', ['channel' => 'rider']) }}" class="sari-bm-rider-message-link"
+                   style="display:inline-flex;margin-top:10px;align-items:center;gap:6px;color:#a2721d;font-size:10.5px;font-weight:750;text-decoration:none;">
+                   Rider conversations <span aria-hidden="true">›</span></a>
                 <p>Your conversations with SARI stores</p>
                 <label class="sari-bm-search-wrap">
                     <span class="sr-only">Search stores</span>

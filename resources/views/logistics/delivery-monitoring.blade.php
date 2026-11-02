@@ -5,3722 +5,458 @@
 
 @push('styles')
 <style>
-/* =========================================================
-   MERGED FROM public/css/logistics/delivery-monitoring.css
-   Kept page-scoped/shared exactly as the original stylesheet.
-========================================================= */
-/*
-|--------------------------------------------------------------------------
-| SARI LOGISTICS — DELIVERY MONITORING
-|--------------------------------------------------------------------------
-|
-| Seller-inspired end-to-end parcel operations dashboard.
-|
-*/
-
-
-/* ==========================================================================
-   TOKENS
-   ========================================================================== */
-
-.monitor-page {
-    --monitor-ink: #302a23;
-    --monitor-soft: #51483d;
-
-    --monitor-muted: #8f877d;
-    --monitor-muted-light: #aaa198;
-
-    --monitor-line: #e8e2da;
-    --monitor-line-soft: #f0ebe4;
-
-    --monitor-gold: #d89b10;
-    --monitor-gold-dark: #b97805;
-
-    --monitor-green: #327a53;
-    --monitor-green-soft: #f1faf5;
-
-    --monitor-blue: #4f7899;
-    --monitor-blue-soft: #f1f6fb;
-
-    --monitor-red: #b75b55;
-    --monitor-red-soft: #fff5f4;
-
-    width: 100%;
-    max-width: 1800px;
-
-    margin-inline: auto;
-    padding-bottom: 26px;
-
-    color: var(--monitor-ink);
-
-    font-family:
-        "Poppins",
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 11px;
-    line-height: 1.55;
-}
-
-
-.monitor-page *,
-.monitor-page *::before,
-.monitor-page *::after {
-    box-sizing: border-box;
-}
-
-
-.monitor-page [hidden] {
-    display: none !important;
-}
-
-
-.monitor-page button,
-.monitor-page input {
-    font: inherit;
-}
-
-
-.monitor-page button {
-    cursor: pointer;
-}
-
-
-.monitor-page :is(
-    button,
-    a,
-    input
-):focus-visible {
-    outline:
-        2px solid rgba(216, 155, 16, .72);
-
-    outline-offset: 2px;
-}
-
-
-/* ==========================================================================
-   HERO
-   ========================================================================== */
-
-.monitor-page-header {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    min-height: 116px;
-
-    gap: 24px;
-
-    margin-bottom: 14px;
-    padding: 17px 20px;
-
-    overflow: hidden;
-
-    border: 1px solid #2f2a23;
-    border-radius: 19px;
-
-    background:
-        radial-gradient(
-            circle at 100% 50%,
-            rgba(216, 155, 16, .13) 0,
-            rgba(216, 155, 16, .06) 21%,
-            transparent 42%
-        ),
-        linear-gradient(
-            135deg,
-            #211f1c 0%,
-            #25231f 48%,
-            #1b1917 100%
-        );
-
-    box-shadow:
-        0 8px 22px
-        rgba(20, 17, 13, .08);
-}
-
-
-.monitor-page-header::after {
-    content: "";
-
-    position: absolute;
-
-    width: 190px;
-    height: 190px;
-
-    right: -72px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    border:
-        1px solid rgba(216, 155, 16, .12);
-
-    border-radius: 999px;
-
-    box-shadow:
-        0 0 0 24px rgba(216, 155, 16, .035),
-        0 0 0 50px rgba(216, 155, 16, .018);
-
-    pointer-events: none;
-}
-
-
-.monitor-page-header > * {
-    position: relative;
-    z-index: 1;
-}
-
-
-.monitor-eyebrow {
-    margin: 0 0 5px;
-
-    color: #ab8950;
-
-    font-size: 7px;
-    line-height: 1.2;
-    font-weight: 600;
-
-    letter-spacing: .15em;
-    text-transform: uppercase;
-}
-
-
-.monitor-page-header
-.monitor-eyebrow {
-    color:
-        rgba(226, 161, 15, .92);
-}
-
-
-.monitor-page-header h1 {
-    margin: 0;
-
-    color: #ffffff;
-
-    font-size:
-        clamp(19px, 1.55vw, 23px);
-
-    line-height: 1.12;
-    font-weight: 600;
-
-    letter-spacing: -.038em;
-}
-
-
-.monitor-page-header h1 span {
-    color: #e2a10f;
-}
-
-
-.monitor-subtitle {
-    max-width: 720px;
-
-    margin: 6px 0 0;
-
-    color:
-        rgba(255, 255, 255, .57);
-
-    font-size: 8.5px;
-    line-height: 1.65;
-}
-
-
-.monitor-header-actions {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-}
-
-
-/* ==========================================================================
-   BUTTONS
-   ========================================================================== */
-
-.monitor-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 38px;
-
-    gap: 8px;
-
-    padding: 8px 14px;
-
-    border: 1px solid #dfd7cc;
-    border-radius: 10px;
-
-    background: #ffffff;
-
-    color: #62594f;
-
-    font-size: 8px;
-    line-height: 1;
-    font-weight: 600;
-
-    text-decoration: none;
-    white-space: nowrap;
-
-    transition:
-        background-color .16s ease,
-        border-color .16s ease,
-        color .16s ease,
-        transform .16s ease;
-}
-
-
-.monitor-button:hover {
-    transform: translateY(-1px);
-
-    border-color: #d7c49c;
-
-    background: #fffaf1;
-
-    color: #946611;
-}
-
-
-.monitor-button-primary {
-    border-color:
-        var(--monitor-gold);
-
-    background:
-        var(--monitor-gold);
-
-    color: #ffffff;
-
-    box-shadow:
-        0 5px 13px
-        rgba(215, 144, 4, .14);
-}
-
-
-.monitor-button-primary:hover {
-    border-color: #c68908;
-
-    background: #c68908;
-
-    color: #ffffff;
-}
-
-
-.monitor-page-header
-.monitor-button:not(
-    .monitor-button-primary
-) {
-    border-color:
-        rgba(255, 255, 255, .13);
-
-    background:
-        rgba(255, 255, 255, .055);
-
-    color:
-        rgba(255, 255, 255, .82);
-}
-
-
-/* ==========================================================================
-   STATS
-   ========================================================================== */
-
-.monitor-stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, minmax(0, 1fr));
-
-    gap: 10px;
-}
-
-
-.monitor-stat {
-    position: relative;
-
-    min-width: 0;
-
-    padding: 14px 15px 13px;
-
-    border:
-        1px solid var(--monitor-line);
-
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 5px 16px
-        rgba(39, 31, 22, .025);
-}
-
-
-.monitor-stat::after {
-    content: "";
-
-    position: absolute;
-
-    right: 13px;
-    top: 13px;
-
-    width: 6px;
-    height: 6px;
-
-    border-radius: 999px;
-
-    background: #a79e93;
-}
-
-
-.monitor-stat p {
-    margin: 0;
-
-    color: #81786e;
-
-    font-size: 7px;
-    font-weight: 600;
-
-    letter-spacing: .085em;
-    text-transform: uppercase;
-}
-
-
-.monitor-stat strong {
-    display: block;
-
-    margin: 5px 0 2px;
-
-    color: #302a23;
-
-    font-size: 23px;
-    line-height: 1.12;
-    font-weight: 600;
-
-    letter-spacing: -.035em;
-}
-
-
-.monitor-stat span {
-    display: block;
-
-    color: #978f85;
-
-    font-size: 7px;
-}
-
-
-.monitor-stat-amber {
-    border-color: #eadfc9;
-}
-
-
-.monitor-stat-amber::after {
-    background: #d89b10;
-}
-
-
-.monitor-stat-amber strong {
-    color: #ad7713;
-}
-
-
-.monitor-stat-blue {
-    border-color: #d7e3ed;
-}
-
-
-.monitor-stat-blue::after {
-    background: #6c8fb5;
-}
-
-
-.monitor-stat-blue strong {
-    color: #587b99;
-}
-
-
-.monitor-stat-green {
-    border-color: #d5e5da;
-}
-
-
-.monitor-stat-green::after {
-    background: #63a375;
-}
-
-
-.monitor-stat-green strong {
-    color: #4f7c5b;
-}
-
-
-/* ==========================================================================
-   FLOW
-   ========================================================================== */
-
-.monitor-flow {
-    display: flex;
-    align-items: center;
-
-    width: fit-content;
-    max-width: 100%;
-
-    gap: 4px;
-
-    margin: 13px 0;
-    padding: 5px;
-
-    border:
-        1px solid var(--monitor-line);
-
-    border-radius: 11px;
-
-    background: #ffffff;
-}
-
-
-.monitor-flow :is(a, span) {
-    display: inline-flex;
-    align-items: center;
-
-    min-height: 31px;
-
-    gap: 7px;
-
-    padding: 4px 9px;
-
-    border-radius: 8px;
-
-    color: #938a80;
-
-    font-size: 7.5px;
-    font-weight: 500;
-
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-
-.monitor-flow a:hover {
-    background: #faf7f1;
-
-    color: #796647;
-}
-
-
-.monitor-flow b {
-    display: grid;
-
-    width: 20px;
-    height: 20px;
-
-    place-items: center;
-
-    border: 1px solid #e5ded5;
-    border-radius: 999px;
-
-    background: #ffffff;
-
-    color: #948a7f;
-
-    font-size: 6.5px;
-}
-
-
-.monitor-flow .is-current {
-    background: #fff6df;
-
-    color: #9c6a0e;
-
-    font-weight: 600;
-}
-
-
-.monitor-flow .is-current b {
-    border-color: #e4c681;
-
-    background: #e3a41a;
-
-    color: #ffffff;
-}
-
-
-/* ==========================================================================
-   WORKSPACE
-   ========================================================================== */
-
-.monitor-workspace {
-    overflow: hidden;
-
-    border:
-        1px solid var(--monitor-line);
-
-    border-radius: 19px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 6px 18px
-        rgba(33, 24, 14, .03);
-}
-
-
-.monitor-delivered-workspace {
-    margin-top: 14px;
-}
-
-
-/* ==========================================================================
-   TOOLBAR
-   ========================================================================== */
-
-.monitor-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 18px;
-
-    padding: 16px 18px 13px;
-}
-
-
-.monitor-toolbar h2 {
-    margin: 0;
-
-    color: #302a23;
-
-    font-size: 13px;
-    font-weight: 600;
-}
-
-
-.monitor-toolbar p {
-    margin: 3px 0 0;
-
-    color: var(--monitor-muted);
-
-    font-size: 7.5px;
-}
-
-
-.monitor-search {
-    width: min(310px, 100%);
-
-    flex-shrink: 0;
-}
-
-
-.monitor-search input {
-    width: 100%;
-    height: 36px;
-
-    padding: 8px 11px;
-
-    border: 1px solid #e5ded5;
-    border-radius: 9px;
-
-    background: #ffffff;
-
-    color: var(--monitor-ink);
-
-    font-size: 7.5px;
-
-    outline: none;
-}
-
-
-.monitor-search input::placeholder {
-    color: #aaa198;
-}
-
-
-.monitor-search input:focus {
-    border-color: #d6b46d;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(216, 155, 16, .075);
-}
-
-
-/* ==========================================================================
-   FILTERS
-   ========================================================================== */
-
-.monitor-filter-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding:
-        0
-        18px
-        13px;
-
-    border-bottom:
-        1px solid var(--monitor-line);
-}
-
-
-.monitor-tabs {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 5px;
-}
-
-
-.monitor-tabs button {
-    display: inline-flex;
-    align-items: center;
-
-    min-height: 30px;
-
-    gap: 6px;
-
-    padding: 6px 9px;
-
-    border: 1px solid transparent;
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: #887f75;
-
-    font-size: 7.5px;
-}
-
-
-.monitor-tabs button:hover {
-    background: #faf7f1;
-}
-
-
-.monitor-tabs
-button[aria-pressed="true"] {
-    border-color: #ead7b3;
-
-    background: #fff6e5;
-
-    color: #a07121;
-
-    font-weight: 600;
-}
-
-
-.monitor-tabs span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 21px;
-    height: 18px;
-
-    padding-inline: 5px;
-
-    border-radius: 6px;
-
-    background: #f0ece6;
-
-    font-size: 6.5px;
-}
-
-
-.monitor-text-link {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #b2770f;
-
-    font-size: 7.5px;
-    font-weight: 600;
-
-    text-decoration: none;
-}
-
-
-.monitor-text-link:hover {
-    color: #84580a;
-
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
-
-
-/* ==========================================================================
-   ORDER LIST
-   ========================================================================== */
-
-.monitor-order-list {
-    display: grid;
-
-    gap: 12px;
-
-    padding: 14px;
-
-    background: #f7f7f6;
-}
-
-
-.monitor-order-card {
-    overflow: hidden;
-
-    border:
-        1px solid var(--monitor-line);
-
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(43, 33, 21, .022);
-
-    transition:
-        border-color .16s ease,
-        box-shadow .16s ease;
-}
-
-
-.monitor-order-card:hover {
-    border-color: #d8ccb9;
-
-    box-shadow:
-        0 10px 26px
-        rgba(43, 33, 21, .045);
-}
-
-
-/* ==========================================================================
-   ORDER HEADER
-   ========================================================================== */
-
-.monitor-order-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 14px;
-
-    padding: 13px 16px;
-
-    border-bottom:
-        1px solid var(--monitor-line);
-}
-
-
-.monitor-order-identity {
-    display: flex;
-    align-items: center;
-
-    min-width: 0;
-
-    gap: 11px;
-}
-
-
-.monitor-order-icon {
-    display: grid;
-
-    width: 36px;
-    height: 36px;
-
-    flex: 0 0 36px;
-
-    place-items: center;
-
-    border: 1px solid #ead8b4;
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #fff7e9,
-            #fff2d5
-        );
-
-    color: #ad781b;
-
-    font-size: 8px;
-    font-weight: 600;
-}
-
-
-.monitor-order-identity
-.monitor-eyebrow {
-    margin-bottom: 2px;
-
-    font-size: 5.8px;
-}
-
-
-.monitor-order-identity h3 {
-    margin: 0;
-
-    color: #373029;
-
-    font-size: 10px;
-    font-weight: 600;
-}
-
-
-.monitor-order-identity p {
-    margin: 2px 0 0;
-
-    color: #8f8579;
-
-    font-size: 6.5px;
-}
-
-
-.monitor-order-status {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-
-    gap: 4px;
-}
-
-
-.monitor-order-status small {
-    color: #a0978d;
-
-    font-size: 6px;
-}
-
-
-/* ==========================================================================
-   STATUS BADGES
-   ========================================================================== */
-
-.monitor-status {
-    display: inline-flex;
-    align-items: center;
-
-    min-height: 24px;
-
-    padding: 4px 8px;
-
-    border: 1px solid;
-    border-radius: 999px;
-
-    font-size: 6.5px;
-    font-weight: 600;
-}
-
-
-.monitor-status-amber {
-    border-color: #ead9b2;
-
-    background: #fff8e8;
-
-    color: #9a6b16;
-}
-
-
-.monitor-status-green {
-    border-color: #d4e4d8;
-
-    background: #f0f8f2;
-
-    color: #4e7a59;
-}
-
-
-.monitor-status-blue {
-    border-color: #d7e3ed;
-
-    background: #f1f6fa;
-
-    color: #587892;
-}
-
-
-.monitor-status-neutral {
-    border-color: #e4ded6;
-
-    background: #f8f6f3;
-
-    color: #71685f;
-}
-
-
-/* ==========================================================================
-   CURRENT STATE
-   ========================================================================== */
-
-.monitor-current-state {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        240px;
-
-    gap: 16px;
-
-    padding: 14px 16px;
-
-    border-bottom:
-        1px solid var(--monitor-line-soft);
-
-    background: #fffdf9;
-}
-
-
-.monitor-current-state strong {
-    display: block;
-
-    color: #443c33;
-
-    font-size: 8.5px;
-    font-weight: 600;
-}
-
-
-.monitor-current-state p {
-    margin: 3px 0 0;
-
-    color: #8e8479;
-
-    font-size: 7px;
-}
-
-
-.monitor-current-handler {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-}
-
-
-.monitor-handler-avatar {
-    display: grid;
-
-    width: 31px;
-    height: 31px;
-
-    flex: 0 0 31px;
-
-    place-items: center;
-
-    border: 1px solid #d7e3ed;
-    border-radius: 9px;
-
-    background: #f1f6fb;
-
-    color: #587b99;
-
-    font-size: 7px;
-    font-weight: 600;
-}
-
-
-/* ==========================================================================
-   LABELS
-   ========================================================================== */
-
-.monitor-label {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: #a08e75;
-
-    font-size: 6px;
-    font-weight: 600;
-
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-
-/* ==========================================================================
-   JOURNEY
-   ========================================================================== */
-
-.monitor-journey-scroll {
-    overflow-x: auto;
-
-    padding: 16px;
-}
-
-
-.monitor-journey {
-    display: grid;
-
-    grid-template-columns:
-        repeat(7, minmax(100px, 1fr));
-
-    min-width: 780px;
-}
-
-
-.monitor-journey-step {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    min-width: 0;
-
-    gap: 8px;
-}
-
-
-.monitor-journey-step::after {
-    content: "";
-
-    position: absolute;
-
-    left: 35px;
-    right: 7px;
-    top: 13px;
-
-    height: 1px;
-
-    background: #e5dfd6;
-}
-
-
-.monitor-journey-step:last-child::after {
-    display: none;
-}
-
-
-.monitor-step-marker {
-    position: relative;
-    z-index: 1;
-
-    display: grid;
-
-    width: 27px;
-    height: 27px;
-
-    flex: 0 0 27px;
-
-    place-items: center;
-
-    border: 1px solid #e1dbd3;
-    border-radius: 999px;
-
-    background: #ffffff;
-
-    color: #9b9288;
-
-    font-size: 6.5px;
-    font-weight: 600;
-}
-
-
-.monitor-journey-step > div:last-child {
-    position: relative;
-    z-index: 1;
-
-    min-width: 0;
-
-    padding-right: 6px;
-
-    background: #ffffff;
-}
-
-
-.monitor-journey-step strong {
-    display: block;
-
-    overflow: hidden;
-
-    color: #756c62;
-
-    font-size: 6.5px;
-    font-weight: 600;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-
-.monitor-journey-step span {
-    display: block;
-
-    margin-top: 1px;
-
-    color: #a1988e;
-
-    font-size: 5.5px;
-}
-
-
-.monitor-journey-step.is-complete
-.monitor-step-marker {
-    border-color: #d4e4d8;
-
-    background: #f0f8f2;
-
-    color: #4e7a59;
-}
-
-
-.monitor-journey-step.is-complete::after {
-    background: #cfe0d3;
-}
-
-
-.monitor-journey-step.is-current
-.monitor-step-marker {
-    border-color: #d79b13;
-
-    background: #d89b10;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(216, 155, 16, .09);
-}
-
-
-.monitor-journey-step.is-current strong {
-    color: #9c6a0e;
-}
-
-
-/* ==========================================================================
-   DETAIL GRID
-   ========================================================================== */
-
-.monitor-detail-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 0;
-
-    border-top:
-        1px solid var(--monitor-line-soft);
-}
-
-
-.monitor-detail {
-    min-width: 0;
-
-    padding: 13px 16px;
-
-    border-right:
-        1px solid var(--monitor-line-soft);
-
-    border-bottom:
-        1px solid var(--monitor-line-soft);
-}
-
-
-.monitor-detail:nth-child(3n) {
-    border-right: 0;
-}
-
-
-.monitor-detail:nth-last-child(-n + 3) {
-    border-bottom: 0;
-}
-
-
-.monitor-detail strong {
-    display: block;
-
-    color: #4c443b;
-
-    font-size: 7.5px;
-    font-weight: 600;
-
-    overflow-wrap: anywhere;
-}
-
-
-.monitor-detail p {
-    margin: 3px 0 0;
-
-    color: #91877b;
-
-    font-size: 6.5px;
-    line-height: 1.5;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* ==========================================================================
-   ORDER FOOTER
-   ========================================================================== */
-
-.monitor-order-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 10px 16px;
-
-    background: #fcfbf9;
-
-    color: #938b82;
-
-    font-size: 6.5px;
-}
-
-
-.monitor-order-footer strong {
-    color: #61584f;
-
-    font-weight: 600;
-}
-
-
-/* ==========================================================================
-   DELIVERED TODAY
-   ========================================================================== */
-
-.monitor-delivered-total {
-    display: inline-flex;
-    align-items: center;
-
-    min-height: 27px;
-
-    padding: 5px 9px;
-
-    border: 1px solid #d4e4d8;
-    border-radius: 999px;
-
-    background: #f0f8f2;
-
-    color: #4e7a59;
-
-    font-size: 6.5px;
-    font-weight: 600;
-}
-
-
-.monitor-delivered-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 9px;
-
-    padding: 0 14px 14px;
-}
-
-
-.monitor-delivered-card {
-    padding: 12px;
-
-    border: 1px solid #dce9df;
-    border-radius: 12px;
-
-    background: #f9fcfa;
-}
-
-
-.monitor-delivered-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 10px;
-
-    padding-bottom: 9px;
-
-    border-bottom: 1px solid #e5eee7;
-}
-
-
-.monitor-delivered-header strong {
-    display: block;
-
-    color: #3f5846;
-
-    font-size: 8px;
-}
-
-
-.monitor-delivered-check {
-    display: grid;
-
-    width: 26px;
-    height: 26px;
-
-    place-items: center;
-
-    border-radius: 999px;
-
-    background: #e9f5ec;
-
-    color: #4f795a;
-
-    font-size: 8px;
-    font-weight: 700;
-}
-
-
-.monitor-delivered-body {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 8px;
-
-    margin: 10px 0;
-}
-
-
-.monitor-delivered-body strong {
-    color: #55665a;
-
-    font-size: 7px;
-    font-weight: 600;
-}
-
-
-/* ==========================================================================
-   EMPTY
-   ========================================================================== */
-
-.monitor-empty {
-    padding: 42px 20px;
-
-    text-align: center;
-}
-
-
-.monitor-empty-small {
-    grid-column: 1 / -1;
-
-    padding: 30px 20px;
-}
-
-
-.monitor-empty-icon {
-    display: grid;
-
-    width: 40px;
-    height: 40px;
-
-    place-items: center;
-
-    margin: 0 auto 12px;
-
-    border: 1px solid #ead9b8;
-    border-radius: 12px;
-
-    background: #fff6e3;
-
-    color: #b78327;
-
-    font-size: 14px;
-}
-
-
-.monitor-empty h3 {
-    margin: 0 0 6px;
-
-    color: #5e554b;
-
-    font-size: 11px;
-    font-weight: 600;
-}
-
-
-.monitor-empty p {
-    max-width: 430px;
-
-    margin: 0 auto 14px;
-
-    color: #999086;
-
-    font-size: 7.5px;
-}
-
-
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
-
-.monitor-list-footer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    padding: 10px 18px;
-
-    border-top:
-        1px solid var(--monitor-line);
-
-    background: #fcfbf9;
-
-    color: #9a9288;
-
-    font-size: 6.5px;
-}
-
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-
-@media (max-width: 1200px) {
-
-    .monitor-stats {
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-    }
-
-
-    .monitor-delivered-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-@media (max-width: 900px) {
-
-    .monitor-page-header {
-        align-items: flex-start;
-
-        min-height: 0;
-    }
-
-
-    .monitor-current-state {
-        grid-template-columns: 1fr 1fr;
-    }
-
-
-    .monitor-detail-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-
-    .monitor-detail:nth-child(3n) {
-        border-right:
-            1px solid var(--monitor-line-soft);
-    }
-
-
-    .monitor-detail:nth-child(2n) {
-        border-right: 0;
-    }
-
-
-    .monitor-detail:nth-last-child(-n + 3) {
-        border-bottom:
-            1px solid var(--monitor-line-soft);
-    }
-
-
-    .monitor-detail:nth-last-child(-n + 2) {
-        border-bottom: 0;
-    }
-}
-
-
-@media (max-width: 767px) {
-
-    .monitor-page-header,
-    .monitor-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-
-        gap: 13px;
-    }
-
-
-    .monitor-page-header {
-        border-radius: 17px;
-    }
-
-
-    .monitor-header-actions {
-        flex-wrap: wrap;
-    }
-
-
-    .monitor-header-actions
-    .monitor-button {
-        flex: 1;
-    }
-
-
-    .monitor-stats {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 8px;
-    }
-
-
-    .monitor-stat {
-        padding: 12px;
-    }
-
-
-    .monitor-stat strong {
-        font-size: 20px;
-    }
-
-
-    .monitor-flow {
-        width: 100%;
-
-        overflow-x: auto;
-    }
-
-
-    .monitor-flow :is(a, span) {
-        flex-shrink: 0;
-
-        font-size: 7px;
-    }
-
-
-    .monitor-toolbar {
-        padding: 14px;
-    }
-
-
-    .monitor-search {
-        width: 100%;
-    }
-
-
-    .monitor-filter-row {
-        align-items: flex-start;
-
-        padding:
-            0
-            14px
-            12px;
-    }
-
-
-    .monitor-order-list {
-        padding: 9px;
-    }
-
-
-    .monitor-order-header {
-        align-items: flex-start;
-    }
-
-
-    .monitor-current-state {
-        grid-template-columns: 1fr;
-    }
-
-
-    .monitor-delivered-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .monitor-list-footer {
-        padding-inline: 14px;
-    }
-}
-
-
-@media (max-width: 520px) {
-
-    .monitor-page-header {
-        padding: 15px 14px;
-    }
-
-
-    .monitor-header-actions {
-        flex-direction: column;
-    }
-
-
-    .monitor-header-actions
-    .monitor-button {
-        width: 100%;
-    }
-
-
-    .monitor-filter-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-
-    .monitor-order-header {
-        flex-direction: column;
-    }
-
-
-    .monitor-order-status {
-        align-items: flex-start;
-    }
-
-
-    .monitor-detail-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .monitor-detail,
-    .monitor-detail:nth-child(3n),
-    .monitor-detail:nth-child(2n),
-    .monitor-detail:nth-last-child(-n + 3),
-    .monitor-detail:nth-last-child(-n + 2) {
-        border-right: 0;
-        border-bottom:
-            1px solid var(--monitor-line-soft);
-    }
-
-
-    .monitor-detail:last-child {
-        border-bottom: 0;
-    }
-
-
-    .monitor-delivered-body {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ==========================================================================
-   REDUCED MOTION
-   ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .monitor-page *,
-    .monitor-page *::before,
-    .monitor-page *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
-    }
-}
-</style>
-
-<style>
-#lgDeliveryMonitoring {
-    --monitor-ink: #25211c;
-    --monitor-muted: #8a8177;
-    --monitor-line: #e8e2d9;
-    --monitor-line-soft: #f0ebe5;
-    --monitor-gold: #d9950b;
-    width: 100%;
-    max-width: 1620px;
-    margin-inline: auto;
-    font-size: 10px;
-}
-
-#lgDeliveryMonitoring [hidden] {
-    display: none !important;
-}
-
-#lgDeliveryMonitoring :is(a, button, input):focus-visible {
-    outline: 2px solid rgba(217,149,11,.65);
-    outline-offset: 2px;
-}
-
-/* PAGE HEADING */
-
-#lgDeliveryMonitoring .monitor-page-header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    min-height: 0;
-    gap: 16px;
-    padding: 5px 2px 17px;
-    margin-bottom: 14px;
-    overflow: visible;
-    border: 0;
-    border-bottom: 1px solid #e4e1dc;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-#lgDeliveryMonitoring .monitor-page-header::after {
-    display: none;
-}
-
-#lgDeliveryMonitoring .monitor-eyebrow,
-#lgDeliveryMonitoring .monitor-page-header .monitor-eyebrow {
-    margin-bottom: 5px;
-    color: #a76f11;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    line-height: 1.4;
-}
-
-#lgDeliveryMonitoring .monitor-page-header h1 {
-    color: #24201b;
-    font-size: clamp(23px, 2.15vw, 30px);
-    font-weight: 750;
-    line-height: 1.2;
-    letter-spacing: -.045em;
-}
-
-#lgDeliveryMonitoring .monitor-page-header h1 span {
-    color: var(--monitor-gold);
-}
-
-#lgDeliveryMonitoring .monitor-subtitle {
-    max-width: 740px;
-    margin-top: 6px;
-    color: #897f75;
-    font-size: 10px;
-    line-height: 1.7;
-}
-
-#lgDeliveryMonitoring .monitor-header-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-/* BUTTONS */
-
-#lgDeliveryMonitoring .monitor-button {
-    min-height: 39px;
-    padding: 9px 14px;
-    border: 1px solid #e4d8c6;
-    border-radius: 10px;
-    background: #fff;
-    color: #776a5a;
-    font-size: 10px;
-    font-weight: 650;
-    box-shadow: none;
-}
-
-#lgDeliveryMonitoring .monitor-page-header
-.monitor-button:not(.monitor-button-primary) {
-    border-color: #e4d8c6;
-    background: #fff;
-    color: #776a5a;
-}
-
-#lgDeliveryMonitoring .monitor-page-header
-.monitor-button:not(.monitor-button-primary):hover {
-    border-color: #d5bb87;
-    background: #fff9ed;
-    color: #a36c0a;
-}
-
-#lgDeliveryMonitoring .monitor-button-primary,
-#lgDeliveryMonitoring .monitor-page-header .monitor-button-primary {
-    background: var(--monitor-gold);
-    border-color: var(--monitor-gold);
-    color: #fff;
-}
-
-#lgDeliveryMonitoring .monitor-button-primary:hover,
-#lgDeliveryMonitoring .monitor-page-header .monitor-button-primary:hover {
-    background: #c88708;
-    border-color: #c88708;
-    color: #fff;
-}
-
-/* KPI CARDS */
-
-#lgDeliveryMonitoring .monitor-stats {
-    display: grid;
-    grid-template-columns: repeat(5,minmax(0,1fr));
-    gap: 12px;
-}
-
-#lgDeliveryMonitoring .monitor-stat {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    min-width: 0;
-    min-height: 99px;
-    gap: 10px;
-    padding: 14px;
-    border: 1px solid #e8e2d9;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 6px 18px rgba(33,24,14,.035);
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgDeliveryMonitoring .monitor-stat::after {
-    display: none;
-}
-
-#lgDeliveryMonitoring .monitor-stat p {
-    color: #756b60;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: normal;
-    text-transform: none;
-}
-
-#lgDeliveryMonitoring .monitor-stat strong,
-#lgDeliveryMonitoring .monitor-stat-amber strong,
-#lgDeliveryMonitoring .monitor-stat-blue strong,
-#lgDeliveryMonitoring .monitor-stat-green strong {
-    display: block;
-    margin: 8px 0 5px;
-    color: #211d18;
-    font-size: 25px;
-    font-weight: 750;
-    line-height: 1.1;
-}
-
-#lgDeliveryMonitoring .monitor-stat span:not(.dm-stat-icon) {
-    color: #8d8378;
-    font-size: 9px;
-    line-height: 1.5;
-}
-
-#lgDeliveryMonitoring .dm-stat-icon {
-    display: grid;
-    place-items: center;
-    flex: 0 0 41px;
-    width: 41px;
-    height: 41px;
-    border-radius: 11px;
-    background: #f2f1ef;
-    color: #80776d;
-}
-
-#lgDeliveryMonitoring .dm-stat-icon svg {
-    width: 18px;
-    height: 18px;
-}
-
-#lgDeliveryMonitoring .monitor-stat-amber .dm-stat-icon {
-    background: #fff7e9;
-    color: #bc8420;
-}
-
-#lgDeliveryMonitoring .monitor-stat-blue .dm-stat-icon {
-    background: #eff5fa;
-    color: #587ead;
-}
-
-#lgDeliveryMonitoring .monitor-stat-green .dm-stat-icon {
-    background: #eef8f2;
-    color: #4c8663;
-}
-
-/* WORKFLOW AND WORKSPACE */
-
-#lgDeliveryMonitoring .monitor-flow {
-    max-width: 100%;
-    gap: 4px;
-    margin: 14px 0;
-    padding: 4px;
-    border-radius: 10px;
-}
-
-#lgDeliveryMonitoring .monitor-flow :is(a,span) {
-    min-height: 32px;
-    padding: 5px 10px;
-    border-radius: 7px;
-    font-size: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-flow b {
-    width: 21px;
-    height: 21px;
-    font-size: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-workspace {
-    min-width: 0;
-    border-color: #e8e2d9;
-    border-radius: 17px;
-    background: #fff;
-    box-shadow: 0 6px 18px rgba(33,24,14,.035);
-}
-
-#lgDeliveryMonitoring .monitor-delivered-workspace {
-    margin-top: 14px;
-}
-
-#lgDeliveryMonitoring .monitor-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 15px 17px;
-}
-
-#lgDeliveryMonitoring .monitor-toolbar h2 {
-    margin-top: 4px;
-    color: #29231d;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -.035em;
-}
-
-#lgDeliveryMonitoring .monitor-toolbar p:not(.monitor-eyebrow) {
-    margin-top: 4px;
-    color: #93897e;
-    font-size: 9px;
-    line-height: 1.55;
-}
-
-/* SEARCH AND FILTERS */
-
-#lgDeliveryMonitoring .monitor-search {
-    width: min(315px,100%);
-}
-
-#lgDeliveryMonitoring .monitor-search input {
-    height: 39px;
-    padding: 0 12px;
-    border: 1px solid #dfe2e6;
-    border-radius: 10px;
-    font-size: 10px;
-}
-
-#lgDeliveryMonitoring .monitor-search input:focus {
-    border-color: var(--monitor-gold);
-    box-shadow: 0 0 0 3px rgba(217,149,11,.09);
-}
-
-#lgDeliveryMonitoring .monitor-filter-row {
-    gap: 10px;
-    padding: 0 17px 13px;
-    border-color: #eee8df;
-}
-
-#lgDeliveryMonitoring .monitor-tabs {
-    gap: 4px;
-    padding: 4px;
-    border: 1px solid #e6e1d9;
-    border-radius: 10px;
-    background: #f7f8fa;
-}
-
-#lgDeliveryMonitoring .monitor-tabs button {
-    min-height: 30px;
-    padding: 5px 10px;
-    border-radius: 7px;
-    font-size: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-tabs button[aria-pressed="true"] {
-    border-color: #e9dfce;
-    background: #fff;
-    color: #a36c0a;
-    font-weight: 700;
-    box-shadow: 0 2px 5px rgba(35,29,22,.035);
-}
-
-#lgDeliveryMonitoring .monitor-tabs span {
-    min-width: 21px;
-    height: 19px;
-    font-size: 8px;
-}
-
-#lgDeliveryMonitoring .monitor-text-link {
-    color: #a66d0b;
-    font-size: 9px;
-    font-weight: 650;
-    line-height: 1.5;
-}
-
-/* ACTIVE ORDER CARDS */
-
-#lgDeliveryMonitoring .monitor-order-list {
-    gap: 12px;
-    padding: 14px;
-    background: #fff;
-}
-
-#lgDeliveryMonitoring .monitor-order-card {
-    min-width: 0;
-    border: 1px solid #e8e2d9;
-    border-radius: 13px;
-    background: #fff;
-    box-shadow: 0 3px 12px rgba(35,27,18,.025);
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgDeliveryMonitoring .monitor-order-header {
-    gap: 12px;
-    padding: 14px 15px;
-    border-bottom-color: #eee8df;
-}
-
-#lgDeliveryMonitoring .monitor-order-identity {
-    min-width: 0;
-    gap: 11px;
-}
-
-#lgDeliveryMonitoring .monitor-order-identity > div {
-    min-width: 0;
-}
-
-#lgDeliveryMonitoring .monitor-order-icon {
-    flex: 0 0 41px;
-    width: 41px;
-    height: 41px;
-    border: 1px solid #eee3ce;
-    border-radius: 11px;
-    background: #fff5e1;
-    color: #a97312;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-order-identity .monitor-eyebrow {
-    margin: 0 0 3px;
-    color: #a68c61;
-    font-size: 8px;
-}
-
-#lgDeliveryMonitoring .monitor-order-identity h3 {
-    color: #383027;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgDeliveryMonitoring .monitor-order-identity p:not(.monitor-eyebrow) {
-    margin-top: 4px;
-    color: #8f8579;
-    font-size: 9px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgDeliveryMonitoring .monitor-order-status {
-    gap: 6px;
-    text-align: right;
-}
-
-#lgDeliveryMonitoring .monitor-order-status small {
-    color: #92887e;
-    font-size: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-status {
-    min-height: 25px;
-    padding: 5px 9px;
-    border-radius: 999px;
-    font-size: 8.5px;
-    font-weight: 700;
-    line-height: 1.35;
-}
-
-/* CURRENT OPERATION / HANDLER */
-
-#lgDeliveryMonitoring .monitor-current-state {
-    display: grid;
-    grid-template-columns: minmax(0,1fr) minmax(230px,.52fr);
-    gap: 10px;
-    padding: 13px 15px;
-    border-bottom: 1px solid #eee8df;
-    background: #fff;
-}
-
-#lgDeliveryMonitoring .dm-operation-cell {
-    min-width: 0;
-    min-height: 83px;
-    padding: 12px;
-    border: 1px solid #e9e5df;
-    border-radius: 10px;
-    background: #fbfbfc;
-}
-
-#lgDeliveryMonitoring .monitor-current-handler {
-    align-items: center;
-    gap: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-handler-avatar {
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    border-color: #e4daca;
-    background: #f6f2e9;
-    color: #8c7856;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-label {
-    margin-bottom: 5px;
-    color: #958879;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: .065em;
-}
-
-#lgDeliveryMonitoring .monitor-current-state strong {
-    color: #443c33;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgDeliveryMonitoring .monitor-current-state p {
-    margin-top: 4px;
-    color: #908679;
-    font-size: 9px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-/* SEVEN-STEP PARCEL JOURNEY */
-
-#lgDeliveryMonitoring .monitor-journey-scroll {
-    padding: 16px 15px;
-    overflow-x: auto;
-}
-
-#lgDeliveryMonitoring .monitor-journey {
-    display: grid;
-    grid-template-columns: repeat(7,minmax(118px,1fr));
-    min-width: 875px;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step {
-    align-items: center;
-    gap: 7px;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step::after {
-    top: 15px;
-    left: 38px;
-    right: 8px;
-}
-
-#lgDeliveryMonitoring .monitor-step-marker {
-    flex: 0 0 30px;
-    width: 30px;
-    height: 30px;
-    color: #9b9288;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step > div:last-child {
-    padding-right: 5px;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step strong {
-    color: #756c62;
-    font-size: 9px;
-    font-weight: 650;
-    line-height: 1.45;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step span {
-    margin-top: 3px;
-    color: #a1988e;
-    font-size: 8px;
-    line-height: 1.35;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step.is-current .monitor-step-marker {
-    background: #d9950b;
-    border-color: #d9950b;
-}
-
-#lgDeliveryMonitoring .monitor-journey-step.is-current strong {
-    color: #9c6a0e;
-}
-
-/* OPERATIONAL DETAILS */
-
-#lgDeliveryMonitoring .monitor-detail-grid {
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    border-top-color: #eee8df;
-}
-
-#lgDeliveryMonitoring .monitor-detail {
-    min-width: 0;
-    padding: 13px 15px;
-    border-color: #f0ebe5;
-}
-
-#lgDeliveryMonitoring .monitor-detail strong {
-    color: #4c443b;
-    font-size: 10px;
-    font-weight: 650;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgDeliveryMonitoring .monitor-detail p {
-    margin-top: 4px;
-    color: #91877b;
-    font-size: 9px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-#lgDeliveryMonitoring .monitor-order-footer {
-    gap: 12px;
-    padding: 12px 15px;
-    background: #fcfcfd;
-    color: #938b82;
-    font-size: 9px;
-}
-
-#lgDeliveryMonitoring .monitor-order-footer strong {
-    color: #51473d;
-    font-weight: 700;
-}
-
-/* DELIVERED TODAY */
-
-#lgDeliveryMonitoring .monitor-delivered-total {
-    min-height: 25px;
-    padding: 5px 9px;
-    font-size: 9px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-grid {
-    grid-template-columns: repeat(3,minmax(0,1fr));
-    gap: 12px;
-    padding: 0 14px 14px;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-card {
-    min-width: 0;
-    padding: 13px;
-    border: 1px solid #e8e2d9;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 3px 12px rgba(35,27,18,.025);
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-header {
-    padding-bottom: 10px;
-    border-bottom-color: #eee8df;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-header strong {
-    color: #443c33;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-check {
-    flex: 0 0 29px;
-    width: 29px;
-    height: 29px;
-    background: #edf7ef;
-    color: #4f795a;
-    font-size: 12px;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-body {
-    gap: 9px;
-    margin: 12px 0;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-body > div {
-    min-width: 0;
-}
-
-#lgDeliveryMonitoring .monitor-delivered-body strong {
-    display: block;
-    color: #51483e;
-    font-size: 10px;
-    font-weight: 650;
-    overflow-wrap: anywhere;
-}
-
-/* EMPTY STATES AND FOOTERS */
-
-#lgDeliveryMonitoring .monitor-empty {
-    padding: 40px 20px;
-}
-
-#lgDeliveryMonitoring .monitor-empty-icon {
-    width: 43px;
-    height: 43px;
-    border-radius: 12px;
-    background: #fff7e8;
-}
-
-#lgDeliveryMonitoring .monitor-empty h3 {
-    color: #51483e;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-empty p {
-    color: #948a7e;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgDeliveryMonitoring .monitor-list-footer {
-    padding: 12px 16px;
-    background: #fff;
-    border-top-color: #eee8df;
-    font-size: 9px;
-}
-
-/* HOVER */
-
-@media (hover:hover) and (pointer:fine) {
-    #lgDeliveryMonitoring .monitor-stat:hover,
-    #lgDeliveryMonitoring .monitor-order-card:hover,
-    #lgDeliveryMonitoring .monitor-delivered-card:hover {
-        transform: translateY(-2px);
-        border-color: #d8c9b2;
-        box-shadow: 0 13px 28px rgba(43,33,21,.055);
-    }
-}
-
-/* RESPONSIVE */
-
-@media (max-width:1200px) {
-    #lgDeliveryMonitoring .monitor-stats {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-
-    #lgDeliveryMonitoring .monitor-delivered-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-}
-
-@media (max-width:900px) {
-    #lgDeliveryMonitoring .monitor-current-state {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
-    #lgDeliveryMonitoring .monitor-detail-grid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
-    #lgDeliveryMonitoring .monitor-detail:nth-child(3n) {
-        border-right: 1px solid #f0ebe5;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail:nth-child(2n) {
-        border-right: 0;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+3) {
-        border-bottom: 1px solid #f0ebe5;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+2) {
-        border-bottom: 0;
-    }
-}
-
-@media (max-width:767px) {
-    #lgDeliveryMonitoring .monitor-page-header,
-    #lgDeliveryMonitoring .monitor-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    #lgDeliveryMonitoring .monitor-header-actions {
-        width: 100%;
-    }
-
-    #lgDeliveryMonitoring .monitor-header-actions .monitor-button {
-        flex: 1;
-    }
-
-    #lgDeliveryMonitoring .monitor-stats {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-
-    #lgDeliveryMonitoring .monitor-search {
-        width: 100%;
-    }
-
-    #lgDeliveryMonitoring .monitor-filter-row {
-        padding-inline: 14px;
-    }
-
-    #lgDeliveryMonitoring .monitor-order-list {
-        padding: 10px;
-    }
-
-    #lgDeliveryMonitoring .monitor-current-state {
-        grid-template-columns: 1fr;
-    }
-
-    #lgDeliveryMonitoring .monitor-delivered-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width:520px) {
-    #lgDeliveryMonitoring .monitor-page-header {
-        padding: 5px 2px 17px;
-    }
-
-    #lgDeliveryMonitoring .monitor-header-actions {
-        flex-direction: column;
-    }
-
-    #lgDeliveryMonitoring .monitor-header-actions .monitor-button {
-        width: 100%;
-    }
-
-    #lgDeliveryMonitoring .monitor-stat {
-        padding: 12px;
-    }
-
-    #lgDeliveryMonitoring .monitor-stat strong {
-        font-size: 22px;
-    }
-
-    #lgDeliveryMonitoring .dm-stat-icon {
-        flex-basis: 34px;
-        width: 34px;
-        height: 34px;
-    }
-
-    #lgDeliveryMonitoring .monitor-filter-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    #lgDeliveryMonitoring .monitor-order-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    #lgDeliveryMonitoring .monitor-order-status {
-        align-items: flex-start;
-        text-align: left;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail-grid {
-        grid-template-columns: 1fr;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail,
-    #lgDeliveryMonitoring .monitor-detail:nth-child(2n),
-    #lgDeliveryMonitoring .monitor-detail:nth-child(3n),
-    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+3),
-    #lgDeliveryMonitoring .monitor-detail:nth-last-child(-n+2) {
-        border-right: 0;
-        border-bottom: 1px solid #f0ebe5;
-    }
-
-    #lgDeliveryMonitoring .monitor-detail:last-child {
-        border-bottom: 0;
-    }
-
-    #lgDeliveryMonitoring .monitor-delivered-body {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (prefers-reduced-motion:reduce) {
-    #lgDeliveryMonitoring *,
-    #lgDeliveryMonitoring *::before,
-    #lgDeliveryMonitoring *::after {
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-    }
-
-    #lgDeliveryMonitoring .monitor-stat:hover,
-    #lgDeliveryMonitoring .monitor-order-card:hover,
-    #lgDeliveryMonitoring .monitor-delivered-card:hover {
-        transform: none !important;
-    }
-}
-
-/* HUB OPERATOR SCOPE */
-
-#lgDeliveryMonitoring .monitor-hub-banner {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin: 0 0 14px;
-    padding: 12px 14px;
-    border: 1px solid #e8dfd0;
-    border-radius: 11px;
-    background: #fffaf1;
-    color: #6f604c;
-}
-
-#lgDeliveryMonitoring .monitor-hub-banner svg {
-    flex: 0 0 17px;
-    width: 17px;
-    height: 17px;
-    margin-top: 2px;
-    color: #a97312;
-}
-
-#lgDeliveryMonitoring .monitor-hub-banner strong {
-    display: block;
-    color: #5b4525;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgDeliveryMonitoring .monitor-hub-banner p {
-    margin: 4px 0 0;
-    color: #817260;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgDeliveryMonitoring .monitor-readonly-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    color: #8b8276;
-    font-size: 9px;
-    font-weight: 600;
-    line-height: 1.5;
-}
-
-#lgDeliveryMonitoring .monitor-readonly-indicator svg {
-    width: 13px;
-    height: 13px;
-}
-
-@media (max-width: 520px) {
-    #lgDeliveryMonitoring .monitor-hub-banner {
-        padding: 11px;
-    }
-}
+/* Logistics Delivery Monitoring — page-scoped. No external page CSS dependency. */
+#lgDeliveryMonitoring { --dm-gold:#d9950b;--dm-ink:#233044;--dm-muted:#8490a2;--dm-border:#e5eaf0;--dm-shadow:0 10px 30px rgba(25,38,55,.065);max-width:1620px;width:100%;margin-inline:auto;color:var(--dm-ink);font-size:13px; }
+#lgDeliveryMonitoring *,#lgDeliveryMonitoring *::before,#lgDeliveryMonitoring *::after {box-sizing:border-box}
+#lgDeliveryMonitoring [hidden] {display:none!important}
+#lgDeliveryMonitoring button,#lgDeliveryMonitoring input,#lgDeliveryMonitoring select {font:inherit}
+#lgDeliveryMonitoring button {cursor:pointer}
+#lgDeliveryMonitoring :is(button,input,select,a):focus-visible{outline:2px solid #7e91aa;outline-offset:3px}
+#lgDeliveryMonitoring .dm-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin:0 0 20px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
+#lgDeliveryMonitoring .dm-head::before,#lgDeliveryMonitoring .dm-head::after{display:none!important}
+#lgDeliveryMonitoring .dm-eyebrow{font-size:11px;letter-spacing:.13em;font-weight:750;color:#ac7516;margin:0 0 5px;text-transform:uppercase}
+#lgDeliveryMonitoring .dm-head h1{margin:0;font-size:clamp(25px,2.15vw,34px);font-weight:760;letter-spacing:-.045em;line-height:1.18;color:#1e293b}
+#lgDeliveryMonitoring .dm-head h1 span{color:var(--dm-gold)}
+#lgDeliveryMonitoring .dm-head-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#lgDeliveryMonitoring .dm-btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;padding:10px 15px;min-height:41px;border-radius:11px;border:1px solid #dfe6ee;background:#fff;color:#46576c;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:none;transition:background .15s,border-color .15s}
+#lgDeliveryMonitoring .dm-btn:hover{background:#f3f5f7;border-color:#cbd5e1}
+#lgDeliveryMonitoring .dm-btn-gold,#lgDeliveryMonitoring .dm-btn-gold:hover{border-color:#d9950b;background:#d9950b;color:white;box-shadow:0 5px 12px rgba(217,149,11,.14)}
+#lgDeliveryMonitoring .dm-scope{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:11px 13px;background:#f7f9fb;border:1px solid var(--dm-border);border-radius:11px;color:#637287;font-size:12px;line-height:1.55}
+#lgDeliveryMonitoring .dm-scope svg{width:18px;height:18px;flex:none;color:#8c9aab}
+#lgDeliveryMonitoring .dm-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin-bottom:20px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
+#lgDeliveryMonitoring .dm-kpi{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;min-width:0;min-height:119px;padding:17px 18px;background:#fff;border:1px solid var(--dm-border);border-radius:17px;box-shadow:var(--dm-shadow)}
+#lgDeliveryMonitoring .dm-kpi-label{font-weight:650;color:#65748a;font-size:12px;line-height:1.4;margin:0}
+#lgDeliveryMonitoring .dm-kpi strong{display:block;font-size:27px;letter-spacing:-.045em;line-height:1.2;margin:7px 0 3px;color:#1f2937}
+#lgDeliveryMonitoring .dm-kpi small{font-size:10px;color:#95a1b1;line-height:1.5;display:block}
+#lgDeliveryMonitoring .dm-kpi-icon{display:block;flex:none;width:30px;height:30px;background:transparent!important;border:0!important;padding:0!important;border-radius:0!important}
+#lgDeliveryMonitoring .dm-kpi-icon svg{display:block;width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#lgDeliveryMonitoring .dm-ink-slate{color:#8b9baa}#lgDeliveryMonitoring .dm-ink-gold{color:#ca901b}#lgDeliveryMonitoring .dm-ink-blue{color:#4c8abc}#lgDeliveryMonitoring .dm-ink-violet{color:#8471b6}#lgDeliveryMonitoring .dm-ink-green{color:#3c9966}
+#logisticsContent #lgDeliveryMonitoring > section[data-dm-panel]{display:block;padding:0!important;margin:0!important;border:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+#logisticsContent #lgDeliveryMonitoring > section[data-dm-panel][hidden]{display:none!important}
+#lgDeliveryMonitoring .dm-filters{display:flex;gap:12px;align-items:center;margin:0 0 15px;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;min-width:0}
+#lgDeliveryMonitoring .dm-search-wrap{display:flex;align-items:center;gap:10px;flex:1;min-width:0;height:48px;padding:0 15px;background:#fff;border:1px solid #dfe6ed;border-radius:12px}
+#lgDeliveryMonitoring .dm-search-wrap:focus-within{border-color:#aab6c4;box-shadow:0 0 0 3px rgba(112,130,151,.08)}
+#lgDeliveryMonitoring .dm-search-wrap svg{width:18px;height:18px;color:#92a0b0;flex:none;stroke:currentColor;fill:none;stroke-width:1.8}
+#lgDeliveryMonitoring .dm-search-wrap input{min-width:0;width:100%;background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important;padding:0!important;color:#283549;font-size:12px}
+#lgDeliveryMonitoring .dm-search-wrap input::placeholder{color:#99a5b5}
+#lgDeliveryMonitoring .dm-filter-select{min-width:175px;max-width:210px;width:19%;height:48px;border:1px solid #dfe6ed;border-radius:12px;background:#fff;padding:0 13px;font-size:12px;color:#334155;box-shadow:none}
+#lgDeliveryMonitoring .dm-apply{min-width:135px;height:48px;border:1px solid #d9950b;border-radius:12px;background:#d9950b;color:white;font-size:12px;font-weight:750;box-shadow:0 5px 12px rgba(217,149,11,.13)}
+#lgDeliveryMonitoring .dm-reset{min-width:87px;height:48px;border:1px solid #dfe6ed;border-radius:12px;background:#fff;color:#52637a;font-size:12px;font-weight:700}
+#lgDeliveryMonitoring .dm-table-card{overflow:hidden;border:1px solid var(--dm-border);border-radius:18px;background:white;box-shadow:var(--dm-shadow)}
+#lgDeliveryMonitoring .dm-table-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 21px;border-bottom:1px solid #edf0f4}
+#lgDeliveryMonitoring .dm-table-head h2{margin:0;font-size:16px;font-weight:750;letter-spacing:-.025em;color:#223047}
+#lgDeliveryMonitoring .dm-count{display:inline-flex;align-items:center;padding:6px 10px;white-space:nowrap;border:1px solid #e4e9ef;border-radius:9px;color:#687b94;background:#f9fafb;font-size:10px;font-weight:750}
+#lgDeliveryMonitoring .dm-table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:12px}
+#lgDeliveryMonitoring .dm-table thead{background:#f8fafc}
+#lgDeliveryMonitoring .dm-table th{padding:14px 15px;text-align:left;color:#7b889c;font-size:10px;font-weight:750;text-transform:uppercase;letter-spacing:.045em;line-height:1.4}
+#lgDeliveryMonitoring .dm-table td{padding:16px 15px;border-top:1px solid #edf0f4;vertical-align:middle;min-width:0;overflow-wrap:anywhere;color:#42536a}
+#lgDeliveryMonitoring .dm-table tbody tr:hover{background:#f2f4f6!important;box-shadow:none!important}
+#lgDeliveryMonitoring .dm-primary{display:block;font-size:12px;line-height:1.4;font-weight:750;color:#253246}
+#lgDeliveryMonitoring .dm-secondary{display:block;margin-top:5px;color:#92a0b0;font-size:10px;line-height:1.5}
+#lgDeliveryMonitoring .dm-status{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid #e4e9ef;border-radius:999px;background:#f8fafc;color:#66758a;font-size:10px;font-weight:750}
+#lgDeliveryMonitoring .dm-status-amber{background:#fff8eb;border-color:#f1dfbd;color:#a36d12}
+#lgDeliveryMonitoring .dm-status-blue{background:#eff6ff;border-color:#d4e5f7;color:#407aab}
+#lgDeliveryMonitoring .dm-status-green{background:#edf9f1;border-color:#d4ebdc;color:#348255}
+#lgDeliveryMonitoring .dm-status-neutral{background:#f3f5f7;border-color:#e1e6ec;color:#6b7788}
+#lgDeliveryMonitoring .dm-status-red{background:#fff1ef;border-color:#f4d7d3;color:#b95a54}
+#lgDeliveryMonitoring .dm-progress{display:flex;align-items:center;gap:4px;max-width:190px;margin-top:8px}
+#lgDeliveryMonitoring .dm-progress span{flex:1;height:5px;border-radius:6px;background:#e9eef3}
+#lgDeliveryMonitoring .dm-progress span.is-done{background:#70b792}
+#lgDeliveryMonitoring .dm-progress span.is-current{background:#d9950b}
+#lgDeliveryMonitoring .dm-eye{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:0!important;box-shadow:none!important;border-radius:9px;background:transparent!important;color:#64758b}
+#lgDeliveryMonitoring .dm-eye:hover{background:#e8ecf0!important;color:#223047}
+#lgDeliveryMonitoring .dm-eye svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+#lgDeliveryMonitoring .dm-table-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid #edf0f4;color:#8693a5;font-size:11px}
+#lgDeliveryMonitoring .dm-per-page{display:flex;align-items:center;gap:9px}
+#lgDeliveryMonitoring .dm-per-page select{height:35px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;padding:0 9px;color:#475569}
+#lgDeliveryMonitoring .dm-pager{display:flex;justify-content:center;align-items:center;gap:6px;margin:17px auto 4px}
+#lgDeliveryMonitoring .dm-pager button{min-width:35px;height:35px;padding:0 9px;border:0;border-radius:9px;background:#f3f5f8;color:#68798d;font-size:12px;font-weight:750}
+#lgDeliveryMonitoring .dm-pager button.is-active{background:#d9950b;color:white;box-shadow:0 5px 12px rgba(217,149,11,.18)}
+#lgDeliveryMonitoring .dm-pager button:disabled{opacity:.4;cursor:default}
+#lgDeliveryMonitoring .dm-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:255px;padding:35px 15px;text-align:center}
+#lgDeliveryMonitoring .dm-empty-icon{width:58px;height:58px;color:#b8c0ca;background:none!important;border:0!important;margin:0 0 18px}
+#lgDeliveryMonitoring .dm-empty-icon svg{width:58px;height:58px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#lgDeliveryMonitoring .dm-empty h3{margin:0 0 7px;font-size:22px;letter-spacing:-.025em;font-weight:750;color:#8492a5}
+#lgDeliveryMonitoring .dm-empty p{margin:0;max-width:470px;font-size:12px;line-height:1.65;color:#9ba8b8}
+#lgDeliveryMonitoring .dm-modal{position:fixed;inset:0;z-index:1500;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(25,37,52,.55);backdrop-filter:blur(2px)}
+#lgDeliveryMonitoring .dm-modal-dialog{width:min(760px,100%);max-height:min(87vh,850px);display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #e1e7ef;border-radius:20px;box-shadow:0 24px 75px rgba(8,24,42,.28)}
+#lgDeliveryMonitoring .dm-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:19px 23px;border-bottom:1px solid #edf0f4}
+#lgDeliveryMonitoring .dm-modal-head p{margin:0 0 6px;color:#b77a16;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+#lgDeliveryMonitoring .dm-modal-head h2{margin:0;color:#202e41;font-size:21px;letter-spacing:-.03em;font-weight:750}
+#lgDeliveryMonitoring .dm-close{display:grid;place-items:center;flex:none;width:35px;height:35px;background:#fff;border:1px solid #e1e7ef;border-radius:10px;color:#617189;font-size:22px}
+#lgDeliveryMonitoring .dm-modal-body{padding:21px 23px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+#lgDeliveryMonitoring .dm-modal-status{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+#lgDeliveryMonitoring .dm-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#lgDeliveryMonitoring .dm-detail-box{padding:13px 14px;border:1px solid #e7ecf1;border-radius:11px;background:#fafbfc;min-width:0}
+#lgDeliveryMonitoring .dm-detail-box small{display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.055em;color:#91a0b1;font-size:9px;font-weight:750}
+#lgDeliveryMonitoring .dm-detail-box strong{font-size:12px;line-height:1.55;color:#344357;overflow-wrap:anywhere}
+#lgDeliveryMonitoring .dm-detail-box p{font-size:11px;line-height:1.6;color:#8492a4;margin:5px 0 0;overflow-wrap:anywhere}
+#lgDeliveryMonitoring .dm-modal-footer{display:flex;justify-content:flex-end;gap:9px;padding:14px 23px;border-top:1px solid #edf0f4}
+#lgDeliveryMonitoring .dm-modal[hidden]{display:none!important}
+@media(max-width:1200px){#lgDeliveryMonitoring .dm-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:920px){#lgDeliveryMonitoring .dm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#lgDeliveryMonitoring .dm-filters{flex-wrap:wrap}#lgDeliveryMonitoring .dm-search-wrap{flex:1 1 100%}#lgDeliveryMonitoring .dm-filter-select{width:auto;max-width:none;flex:1}#lgDeliveryMonitoring .dm-table{table-layout:auto}}
+@media(max-width:750px){#lgDeliveryMonitoring .dm-head{align-items:flex-start}#lgDeliveryMonitoring .dm-head-actions{width:100%}#lgDeliveryMonitoring .dm-head-actions .dm-btn{flex:1}#lgDeliveryMonitoring .dm-table thead{display:none}#lgDeliveryMonitoring .dm-table tbody{display:block;padding:10px}#lgDeliveryMonitoring .dm-table tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-bottom:10px;border:1px solid #e5eaf0;border-radius:12px;overflow:hidden;background:white}#lgDeliveryMonitoring .dm-table td{display:block;min-width:0;border:0;padding:12px 13px}#lgDeliveryMonitoring .dm-table td::before{display:block;content:attr(data-label);font-size:9px;letter-spacing:.055em;font-weight:750;color:#9aa5b5;text-transform:uppercase;margin-bottom:7px}#lgDeliveryMonitoring .dm-table td:first-child{grid-column:1/-1}#lgDeliveryMonitoring .dm-table td:last-child{grid-column:1/-1;border-top:1px solid #edf0f4;text-align:right;padding:6px 10px}#lgDeliveryMonitoring .dm-table-head{padding:15px}#lgDeliveryMonitoring .dm-journey{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:16px}#lgDeliveryMonitoring .dm-detail-grid{grid-template-columns:1fr}#lgDeliveryMonitoring .dm-modal-dialog{max-height:92vh}}
+@media(max-width:480px){#lgDeliveryMonitoring .dm-kpis{gap:9px}#lgDeliveryMonitoring .dm-kpi{padding:13px;min-height:112px}#lgDeliveryMonitoring .dm-kpi strong{font-size:23px}#lgDeliveryMonitoring .dm-kpi-icon,#lgDeliveryMonitoring .dm-kpi-icon svg{width:26px;height:26px}#lgDeliveryMonitoring .dm-tab{font-size:12px}#lgDeliveryMonitoring .dm-tabs{gap:15px}#lgDeliveryMonitoring .dm-filter-select{flex:1 1 100%}#lgDeliveryMonitoring .dm-apply,#lgDeliveryMonitoring .dm-reset{flex:1;min-width:0}#lgDeliveryMonitoring .dm-empty h3{font-size:20px}#lgDeliveryMonitoring .dm-table-foot{padding:12px 14px}#lgDeliveryMonitoring .dm-modal-head,#lgDeliveryMonitoring .dm-modal-body,#lgDeliveryMonitoring .dm-modal-footer{padding-left:15px;padding-right:15px}}
+@media(prefers-reduced-motion:reduce){#lgDeliveryMonitoring *{scroll-behavior:auto!important;transition:none!important}}
+
+/* V2: Unified list selector inside the filters, quiet stage colors, progress-first modal */
+#lgDeliveryMonitoring .dm-filters-unified{margin:0 0 15px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#lgDeliveryMonitoring .dm-filters-unified .dm-view-select{flex:0 0 210px;width:210px;max-width:210px}
+#lgDeliveryMonitoring .dm-filters-unified .dm-stage-select{flex:0 0 155px;width:155px;max-width:155px}
+#lgDeliveryMonitoring .dm-filters-unified .dm-stage-select[hidden]{display:none!important}
+#lgDeliveryMonitoring .dm-status-current{border:1px solid #dfe5eb!important;background:#f4f6f8!important;color:#536173!important;box-shadow:none!important}
+#lgDeliveryMonitoring .dm-progress span.is-done{background:#aab5c2!important}
+#lgDeliveryMonitoring .dm-progress span.is-current{background:#56677b!important}
+#lgDeliveryMonitoring .dm-journey-panel{padding:17px 18px 9px;margin:0 0 19px;border:1px solid #e4e9ef;border-radius:13px;background:#fbfcfd}
+#lgDeliveryMonitoring .dm-journey-overview{display:flex;justify-content:space-between;align-items:start;gap:15px}
+#lgDeliveryMonitoring .dm-journey-overview>div{min-width:0;flex:1}
+#lgDeliveryMonitoring .dm-journey-kicker,#lgDeliveryMonitoring .dm-detail-heading{display:block;margin:0 0 6px;color:#8290a2;font-size:10px;font-weight:750;letter-spacing:.085em}
+#lgDeliveryMonitoring .dm-journey-overview strong{display:block;color:#29384b;font-size:16px;letter-spacing:-.025em;font-weight:750}
+#lgDeliveryMonitoring .dm-journey-overview p{margin:4px 0 0;color:#8290a2;font-size:11px;line-height:1.65}
+#lgDeliveryMonitoring .dm-step-counter{white-space:nowrap;border-radius:9px;background:#eef1f5;color:#526176;padding:6px 10px;font-size:11px;font-weight:750}
+#lgDeliveryMonitoring .dm-progress-track{height:7px;overflow:hidden;background:#e7ebef;border-radius:999px;margin:17px 0 19px}
+#lgDeliveryMonitoring .dm-progress-track>span{display:block;height:100%;border-radius:999px;background:#52647b}
+#lgDeliveryMonitoring .dm-journey{display:block;margin:0;padding:0 0 0 1px;list-style:none}
+#lgDeliveryMonitoring .dm-journey li{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:start;text-align:left;gap:12px;min-height:52px;padding:0 0 15px}
+#lgDeliveryMonitoring .dm-journey li:not(:last-child)::after{content:'';position:absolute;top:29px;bottom:0;left:14px;width:2px;background:#e4e9ee}
+#lgDeliveryMonitoring .dm-journey li.is-complete:not(:last-child)::after{background:#aebac8}
+#lgDeliveryMonitoring .dm-journey-mark{position:relative;z-index:1;width:29px;height:29px;background:#fff;border:1px solid #dbe2e9;border-radius:50%;display:grid;place-items:center;color:#9ba7b4;font-size:11px;font-weight:750}
+#lgDeliveryMonitoring .dm-journey li.is-complete .dm-journey-mark{background:#e9edf2;border-color:#c5cdd7;color:#526377}
+#lgDeliveryMonitoring .dm-journey li.is-current .dm-journey-mark{background:#263548;border-color:#263548;color:white;box-shadow:0 0 0 4px #e9edf2}
+#lgDeliveryMonitoring .dm-journey-copy{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:3px;padding-top:2px}
+#lgDeliveryMonitoring .dm-journey li strong{font-size:12px;line-height:1.4;color:#344256;font-weight:700}
+#lgDeliveryMonitoring .dm-journey li.is-pending strong{color:#8e9bad}
+#lgDeliveryMonitoring .dm-journey-copy small{font-size:10px;color:#96a2b2}
+#lgDeliveryMonitoring .dm-journey-state{margin-top:6px;color:#93a0af;font-size:10px;font-weight:650;white-space:nowrap}
+#lgDeliveryMonitoring .dm-journey li.is-current .dm-journey-state{color:#344357}
+#lgDeliveryMonitoring .dm-detail-heading{margin:0 0 10px}
+#lgDeliveryMonitoring .dm-journey-panel-complete{padding-bottom:1px}
+#lgDeliveryMonitoring .dm-modal-dialog{width:min(720px,100%)}
+@media(max-width:1080px){#lgDeliveryMonitoring .dm-filters-unified{flex-wrap:wrap}#lgDeliveryMonitoring .dm-filters-unified .dm-search-wrap{flex:1 1 100%}}
+@media(max-width:640px){#lgDeliveryMonitoring .dm-filters-unified .dm-view-select{flex:1 1 100%;width:100%;max-width:none}#lgDeliveryMonitoring .dm-filters-unified .dm-stage-select{flex:1 1 100%;width:100%;max-width:none}#lgDeliveryMonitoring .dm-journey-panel{padding:14px 13px 4px}#lgDeliveryMonitoring .dm-journey-overview strong{font-size:14px}#lgDeliveryMonitoring .dm-journey li{grid-template-columns:32px minmax(0,1fr);gap:9px}#lgDeliveryMonitoring .dm-journey-state{grid-column:2;justify-self:start;margin:-10px 0 8px}}
 </style>
 @endpush
 
 @section('content')
-
 @php
-    // Authorization is enforced by the Controller.
+    // The controller remains responsible for authorizing branch visibility and route editing.
     $isHubOperator = (bool) ($isHubOperator ?? false);
     $hubFacility = $hubFacility ?? null;
+    $summaryCards = [
+        ['Active Deliveries', $stats['active'], $isHubOperator ? 'Journeys involving this hub' : 'Across all delivery legs', 'slate'],
+        ['At Hubs', $stats['at_hub'], 'Sorting or dispatch', 'gold'],
+        ['In Linehaul', $stats['linehaul'], 'Moving between hubs', 'blue'],
+        ['Out for Delivery', $stats['out_for_delivery'], 'With local Riders', 'violet'],
+        ['Delivered Today', $stats['delivered_today'], 'Completed handoffs', 'green'],
+    ];
+    $activeCount = $activeOrders->count();
+    $deliveredCount = $deliveredToday->count();
+    $initialTab = ($activeCount === 0 && $deliveredCount > 0) ? 'delivered' : 'active';
 @endphp
-
-<div
-    id="lgDeliveryMonitoring"
-    class="sari-logistics-ui monitor-page"
-    data-monitor-workspace
->
-    {{-- PAGE HEADING --}}
-
-    <header class="monitor-page-header">
-        <div class="min-w-0">
-            <p class="monitor-eyebrow">
-                {{ $isHubOperator ? 'ASSIGNED HUB · READ-ONLY JOURNEYS' : 'END-TO-END OPERATIONS' }}
-            </p>
-
-            <h1>
-                Delivery <span>Monitoring</span>
-            </h1>
-
-            <p class="monitor-subtitle">
-                @if($isHubOperator)
-                    Follow parcels originating from or destined for your assigned hub,
-                    including their full Seller-to-Buyer journey. Monitoring is read-only.
-                @else
-                    Follow every active parcel from Seller pickup through
-                    origin hub processing, linehaul, destination hub dispatch,
-                    Last-Mile delivery, and final Buyer handoff.
-                @endif
-            </p>
+<div id="lgDeliveryMonitoring" class="sari-logistics-ui monitor-page" data-monitor-workspace>
+    <header class="dm-head">
+        <div>
+            <p class="dm-eyebrow">{{ $isHubOperator ? 'ASSIGNED HUB · READ-ONLY' : 'DELIVERY OPERATIONS' }}</p>
+            <h1>Delivery <span>Monitoring</span></h1>
         </div>
-
-        <div class="monitor-header-actions">
-            <a
-                href="{{ route('logistics.last-mile-assignment') }}"
-                class="monitor-button"
-            >
-                <span aria-hidden="true">←</span>
-                Last Mile
-            </a>
-
-            <a
-                href="{{ route('logistics.dashboard') }}"
-                class="monitor-button monitor-button-primary"
-            >
-                Dashboard
-            </a>
+        <div class="dm-head-actions">
+            <a class="dm-btn" href="{{ route('logistics.last-mile-assignment') }}">&lt; Last Mile</a>
+            <a class="dm-btn dm-btn-gold" href="{{ route('logistics.dashboard') }}">Dashboard</a>
         </div>
     </header>
 
     @if($isHubOperator)
-        <aside
-            class="monitor-hub-banner"
-            role="note"
-            aria-label="Monitoring visibility"
-        >
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-            >
-                <path d="M3 10.5 12 4l9 6.5V21H3zM9 21v-7h6v7"/>
-            </svg>
-
-            <div>
-                <strong>
-                    {{ $hubFacility?->name ?: 'Assigned Municipal Hub' }}
-                    @if($hubFacility?->municipality_name)
-                        · {{ $hubFacility->municipality_name }}
-                    @endif
-                </strong>
-
-                <p>
-                    Only parcels whose origin or destination route stop belongs to this hub are included.
-                    You can track the complete journey here, but delivery-route editing remains a Main Logistics action.
-                </p>
-            </div>
-        </aside>
+        <div class="dm-scope" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <span><strong>{{ $hubFacility?->name ?: 'Assigned Municipal Hub' }}</strong> — You can view journeys routed through your assigned hub. Route editing is restricted to Main Logistics.</span>
+        </div>
     @endif
 
-    {{-- KPI SUMMARY --}}
-
-    @php
-        $summaryCards = [
-            [
-                'Active Deliveries',
-                $stats['active'],
-                $isHubOperator ? 'Journeys involving this hub' : 'Across all delivery legs',
-                'neutral',
-            ],
-            [
-                'At Hubs',
-                $stats['at_hub'],
-                'Sorting or dispatch operations',
-                'amber',
-            ],
-            [
-                'In Linehaul',
-                $stats['linehaul'],
-                'Moving between hubs',
-                'blue',
-            ],
-            [
-                'Out for Delivery',
-                $stats['out_for_delivery'],
-                'With local Riders',
-                'green',
-            ],
-            [
-                'Delivered Today',
-                $stats['delivered_today'],
-                'Completed Buyer handoffs',
-                'green',
-            ],
-        ];
-    @endphp
-
-    <section
-        class="monitor-stats"
-        aria-label="Delivery Monitoring overview"
-    >
-        @foreach($summaryCards as $index => [$label, $value, $note, $tone])
-            <article class="monitor-stat monitor-stat-{{ $tone }}">
-                <div class="min-w-0">
-                    <p>{{ $label }}</p>
-
-                    <strong>
-                        {{ number_format($value) }}
-                    </strong>
-
-                    <span>{{ $note }}</span>
-                </div>
-
-                <span class="dm-stat-icon" aria-hidden="true">
+    <div class="dm-kpis" aria-label="Delivery Monitoring overview">
+        @foreach($summaryCards as $index => [$label,$value,$note,$tone])
+            <article class="dm-kpi">
+                <div><p class="dm-kpi-label">{{ $label }}</p><strong>{{ number_format($value) }}</strong><small>{{ $note }}</small></div>
+                <span class="dm-kpi-icon dm-ink-{{ $tone }}" aria-hidden="true">
                     @switch($index)
-                        @case(0)
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <path d="M4 5h16v14H4zM8 9h8M8 13h8"/>
-                            </svg>
-                            @break
-
-                        @case(1)
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <rect x="3" y="5" width="8" height="7" rx="1"/>
-                                <rect x="13" y="5" width="8" height="7" rx="1"/>
-                                <rect x="8" y="14" width="8" height="7" rx="1"/>
-                            </svg>
-                            @break
-
-                        @case(2)
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <path d="M3 7h12v10H3z"/>
-                                <path d="M15 10h3l3 3v4h-6"/>
-                                <circle cx="7" cy="18" r="1.5"/>
-                                <circle cx="18" cy="18" r="1.5"/>
-                            </svg>
-                            @break
-
-                        @case(3)
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <circle cx="12" cy="12" r="9"/>
-                                <path d="M12 7v5l3 2"/>
-                            </svg>
-                            @break
-
-                        @default
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <circle cx="12" cy="12" r="9"/>
-                                <path d="m8 12 2.5 2.5L16 9"/>
-                            </svg>
+                        @case(0)<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h7"/></svg>@break
+                        @case(1)<svg viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5V21H3zM9 21v-7h6v7"/></svg>@break
+                        @case(2)<svg viewBox="0 0 24 24"><path d="M3 7h12v11H3zM15 10h3l3 3v5h-6"/><circle cx="7" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>@break
+                        @case(3)<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>@break
+                        @default<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16.5 9"/></svg>
                     @endswitch
                 </span>
             </article>
         @endforeach
-    </section>
+    </div>
 
-    {{-- DELIVERY WORKFLOW --}}
+    {{-- One shared filter toolbar. Switch delivery lists without extra navigation tabs. --}}
+    <div class="dm-filters dm-filters-unified" aria-label="Delivery monitoring filters">
+        <label class="dm-search-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+            <span class="sr-only">Search delivery records</span>
+            <input type="search" data-dm-search-common autocomplete="off" value="{{ request()->query('q','') }}" placeholder="Search order, Buyer, Seller, Rider, or hub...">
+        </label>
+        <select class="dm-filter-select dm-view-select" data-dm-view aria-label="Select delivery records">
+            <option value="active" @selected($initialTab === 'active')>Active Deliveries ({{ $activeCount }})</option>
+            <option value="delivered" @selected($initialTab === 'delivered')>Delivered Today ({{ $deliveredCount }})</option>
+        </select>
+        <select class="dm-filter-select dm-stage-select" data-dm-status-common aria-label="Filter current delivery stage">
+            <option value="all">All Stages</option>
+            <option value="pickup">Pickup</option>
+            <option value="hub">At Hub</option>
+            <option value="linehaul">Linehaul</option>
+            <option value="last_mile">Last Mile</option>
+        </select>
+        <button type="button" class="dm-apply" data-dm-apply-common>Apply Filter</button>
+        <button type="button" class="dm-reset" data-dm-reset-common>Reset</button>
+    </div>
 
-    <nav
-        class="monitor-flow"
-        aria-label="Delivery operations workflow"
-    >
-        <a href="{{ route('logistics.pickup-requests') }}">
-            <b>1</b>
-            Seller Pickup
-        </a>
-
-        <a href="{{ route('logistics.incoming-parcels') }}">
-            <b>2</b>
-            Origin Hub
-        </a>
-
-        <a href="{{ route('logistics.parcel-sorting') }}">
-            <b>3</b>
-            Sorting
-        </a>
-
-        <a href="{{ route('logistics.hub-transfers') }}">
-            <b>4</b>
-            Linehaul
-        </a>
-
-        <a href="{{ route('logistics.last-mile-assignment') }}">
-            <b>5</b>
-            Last Mile
-        </a>
-
-        <span class="is-current" aria-current="step">
-            <b>6</b>
-            Monitoring
-        </span>
-    </nav>
-
-    {{-- ACTIVE PARCEL JOURNEYS --}}
-
-    <section
-        class="monitor-workspace"
-        aria-labelledby="active-deliveries-title"
-    >
-        <header class="monitor-toolbar">
-            <div>
-                <p class="monitor-eyebrow">
-                    PARCEL JOURNEYS
-                </p>
-
-                <h2 id="active-deliveries-title">
-                    Active Parcel Journeys
-                </h2>
-
-                <p>
-                    Current stage is derived from Marketplace Order and Logistics Parcel states.
-                    @if($isHubOperator)
-                        Only your hub's permitted journeys appear here.
-                    @endif
-                </p>
-            </div>
-
-            <label class="monitor-search">
-                <span class="sr-only">
-                    Search active deliveries
-                </span>
-
-                <input
-                    type="search"
-                    data-monitor-search
-                    value="{{ request()->query('q', '') }}"
-                    autocomplete="off"
-                    placeholder="Search order, Buyer, Seller, Rider, hub…"
-                >
-            </label>
-        </header>
-
-        {{-- STAGE FILTERS --}}
-
-        @php
-            $pickupCount = $activeOrders
-                ->where('monitor_stage_group', 'pickup')
-                ->count();
-
-            $hubCount = $activeOrders
-                ->where('monitor_stage_group', 'hub')
-                ->count();
-
-            $linehaulCount = $activeOrders
-                ->where('monitor_stage_group', 'linehaul')
-                ->count();
-
-            $lastMileCount = $activeOrders
-                ->where('monitor_stage_group', 'last_mile')
-                ->count();
-
-            $filters = [
-                'all' => ['All', $activeOrders->count()],
-                'pickup' => ['Pickup', $pickupCount],
-                'hub' => ['At Hub', $hubCount],
-                'linehaul' => ['Linehaul', $linehaulCount],
-                'last_mile' => ['Last Mile', $lastMileCount],
-            ];
-        @endphp
-
-        <div class="monitor-filter-row">
-            <div
-                class="monitor-tabs"
-                role="group"
-                aria-label="Filter delivery stage"
-            >
-                @foreach($filters as $filter => [$label, $count])
-                    <button
-                        type="button"
-                        data-monitor-filter="{{ $filter }}"
-                        aria-pressed="{{ $filter === 'all' ? 'true' : 'false' }}"
-                    >
-                        {{ $label }}
-                        <span>{{ $count }}</span>
-                    </button>
+    <section id="dmActivePanel" role="region" aria-label="Active Deliveries" data-dm-panel="active" @if($initialTab !== 'active') hidden @endif>
+        <div class="dm-table-card">
+            <div class="dm-table-head"><h2>Active Parcel Journeys</h2><span class="dm-count">{{ $activeCount }} ORDERS</span></div>
+            <table class="dm-table" aria-label="Active parcel journey table">
+                <colgroup><col style="width:25%"><col style="width:23%"><col style="width:21%"><col style="width:20%"><col style="width:11%"></colgroup>
+                <thead><tr><th>Order / Buyer</th><th>Current Stage</th><th>Current Handler</th><th>Updated</th><th style="text-align:center">View</th></tr></thead>
+                <tbody>
+                @foreach($activeOrders as $order)
+                    @php
+                        $routeStops = $order->deliveryRouteStops->keyBy('stop_key');
+                        $originStop = $routeStops->get('origin_facility');
+                        $destinationStop = $routeStops->get('destination_facility');
+                        $originName = $originStop?->facility?->name ?: $originStop?->name ?: 'Origin hub pending';
+                        $destinationName = $destinationStop?->facility?->name ?: $destinationStop?->name ?: 'Destination hub pending';
+                        $lastMile = $order->getAttribute('monitor_last_mile');
+                        $transfer = $order->getAttribute('monitor_transfer');
+                        $currentStep = (int) $order->getAttribute('monitor_stage_step');
+                        $stageGroup = $order->getAttribute('monitor_stage_group');
+                        $stageLabel = $order->getAttribute('monitor_stage_label');
+                        $stageNote = $order->getAttribute('monitor_stage_note');
+                        $handlerName = $order->getAttribute('monitor_handler_name');
+                        $handlerRole = $order->getAttribute('monitor_handler_role');
+                        $localRiderName = $lastMile ? trim($lastMile->first_name.' '.$lastMile->last_name) : null;
+                        $searchText = implode(' ',array_filter([$order->order_number,$order->buyer_name,$order->buyer_address,$order->seller?->store_name,$order->pickup_name,$order->courier_name,$order->courier_email,$localRiderName,$lastMile?->delivery_area,$originName,$destinationName,$transfer?->transfer_code,$transfer?->driver_name,$stageLabel]));
+                        $journeySteps = [['Seller Pickup','Pickup Rider'],['Origin Hub','Hub Intake'],['Sorting','Sort Zone'],['Hub Transfer','Linehaul'],['Destination Hub','Hub Receipt'],['Local Rider','Last Mile'],['Buyer','Delivery']];
+                        $progressStep = max(1, min(7, $currentStep));
+                    @endphp
+                    <tr data-dm-row="active" data-stage="{{ $stageGroup }}" data-search="{{ $searchText }}">
+                        <td data-label="Order / Buyer"><strong class="dm-primary">{{ $order->order_number }}</strong><span class="dm-secondary">{{ $order->seller?->store_name ?: 'SARI Seller' }} · {{ $order->buyer_name }}</span></td>
+                        <td data-label="Current Stage"><span class="dm-status dm-status-current">{{ $stageLabel }}</span><div class="dm-progress" aria-label="Step {{ $currentStep }} of 7"><span class="{{ $currentStep > 1 ? 'is-done' : ($currentStep === 1 ? 'is-current' : '') }}"></span><span class="{{ $currentStep > 2 ? 'is-done' : ($currentStep === 2 ? 'is-current' : '') }}"></span><span class="{{ $currentStep > 3 ? 'is-done' : ($currentStep === 3 ? 'is-current' : '') }}"></span><span class="{{ $currentStep > 4 ? 'is-done' : ($currentStep === 4 ? 'is-current' : '') }}"></span><span class="{{ $currentStep > 5 ? 'is-done' : ($currentStep === 5 ? 'is-current' : '') }}"></span><span class="{{ $currentStep > 6 ? 'is-done' : ($currentStep === 6 ? 'is-current' : '') }}"></span><span class="{{ $currentStep >= 7 ? 'is-current' : '' }}"></span></div></td>
+                        <td data-label="Handler"><strong class="dm-primary">{{ $handlerName }}</strong><span class="dm-secondary">{{ $handlerRole }}</span></td>
+                        <td data-label="Updated"><strong class="dm-primary">{{ $order->updated_at?->diffForHumans() ?: '—' }}</strong><span class="dm-secondary">{{ $order->updated_at?->timezone('Asia/Manila')->format('M d, Y') ?: '' }}</span></td>
+                        <td data-label="View" style="text-align:center"><button type="button" class="dm-eye" aria-label="View details for {{ $order->order_number }}" data-dm-open="dmOrder{{ $loop->index }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+                    </tr>
+                    <template id="dmOrder{{ $loop->index }}" data-dm-title="{{ $order->order_number }}">
+                        <div class="dm-modal-status"><span class="dm-status dm-status-current">{{ $stageLabel }}</span><span class="dm-secondary">Updated {{ $order->updated_at?->diffForHumans() }}</span></div>
+                        <div class="dm-journey-panel" aria-label="Parcel journey progress">
+                            <div class="dm-journey-overview">
+                                <div><span class="dm-journey-kicker">DELIVERY PROGRESS</span><strong>{{ $stageLabel }}</strong><p>{{ $stageNote }}</p></div>
+                                <span class="dm-step-counter">Step {{ $progressStep }} / 7</span>
+                            </div>
+                            <div class="dm-progress-track" role="progressbar" aria-label="Parcel progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="{{ $progressStep }}"><span style="width:{{ ($progressStep / 7) * 100 }}%"></span></div>
+                            <ol class="dm-journey">
+                                @foreach($journeySteps as $stepIndex => [$stepName,$stepDetail])
+                                    @php $stepNumber = $stepIndex + 1; $stepState = $stepNumber < $progressStep ? 'complete' : ($stepNumber === $progressStep ? 'current' : 'pending'); @endphp
+                                    <li class="is-{{ $stepState }}"><span class="dm-journey-mark">{{ $stepState === 'complete' ? '✓' : $stepNumber }}</span><div class="dm-journey-copy"><strong>{{ $stepName }}</strong><small>{{ $stepDetail }}</small></div><span class="dm-journey-state">{{ $stepState === 'complete' ? 'Completed' : ($stepState === 'current' ? 'Current' : 'Upcoming') }}</span></li>
+                                @endforeach
+                            </ol>
+                        </div>
+                        <div class="dm-detail-heading">OPERATIONAL DETAILS</div>
+                        <div class="dm-detail-grid">
+                            <div class="dm-detail-box"><small>Buyer / Seller</small><strong>{{ $order->buyer_name }} · {{ $order->seller?->store_name ?: 'SARI Seller' }}</strong><p>{{ $order->buyer_address }}</p></div>
+                            <div class="dm-detail-box"><small>Current Handler</small><strong>{{ $handlerName }}</strong><p>{{ $handlerRole }}</p></div>
+                            <div class="dm-detail-box"><small>Pickup Rider</small><strong>{{ $order->courier_name ?: 'Not assigned' }}</strong><p>{{ $order->courier_email ?: 'No pickup Rider email' }}</p></div>
+                            <div class="dm-detail-box"><small>Origin Hub</small><strong>{{ $originName }}</strong><p>{{ $order->logisticsParcel?->sorting_zone ? 'Zone '.$order->logisticsParcel->sorting_zone : 'Sorting zone not assigned' }}</p></div>
+                            <div class="dm-detail-box"><small>Hub Transfer</small><strong>{{ $transfer?->transfer_code ?: 'Not yet assigned' }}</strong><p>@if($transfer){{ $transfer->vehicle_type }} {{ $transfer->vehicle_plate ? '· '.$transfer->vehicle_plate : '' }} · Driver: {{ $transfer->driver_name }}@else Awaiting linehaul stage @endif</p></div>
+                            <div class="dm-detail-box"><small>Destination Hub</small><strong>{{ $destinationName }}</strong><p>{{ $lastMile?->delivery_area ? 'Barangay '.$lastMile->delivery_area : 'Last-mile area pending' }}</p></div>
+                            <div class="dm-detail-box"><small>Local Rider</small><strong>{{ $localRiderName ?: 'Not yet assigned' }}</strong><p>@if($lastMile){{ $lastMile->vehicle_type ?: 'Vehicle not recorded' }} {{ $lastMile->plate_number ? '· '.$lastMile->plate_number : '' }} · {{ $lastMile->assignment_code }}@else Destination dispatch pending @endif</p></div>
+                            <div class="dm-detail-box"><small>Parcel State</small><strong>{{ ucwords(str_replace('_',' ',$order->logisticsParcel?->status ?: $order->status)) }}</strong><p>{{ $isHubOperator ? 'Journey details · Read-only' : 'Full delivery route available' }}</p></div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;margin-top:16px">
+                            @if(!$isHubOperator)<a class="dm-btn dm-btn-gold" href="{{ route('logistics.delivery-routes.edit', $order) }}">View Delivery Route &gt;</a>@else<span class="dm-secondary">Read-only hub access</span>@endif
+                        </div>
+                    </template>
                 @endforeach
+                </tbody>
+            </table>
+            <div class="dm-empty" data-dm-empty="active" hidden>
+                <span class="dm-empty-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="14" width="40" height="38" rx="5"/><path d="M20 24h24M20 32h17M20 40h12"/><path d="m40 43 5 5 9-11"/></svg></span>
+                <h3 data-dm-empty-title="active">No active deliveries</h3><p data-dm-empty-note="active">Active Seller pickup, hub, linehaul and last-mile operations will appear here.</p>
             </div>
-
-            <button
-                type="button"
-                class="monitor-text-link"
-                data-monitor-clear
-            >
-                Clear filters
-            </button>
+            <div class="dm-table-foot"><span data-dm-range="active">Showing 0–0 of {{ $activeCount }} orders</span><label class="dm-per-page">Rows per page <select aria-label="Active deliveries per page" data-dm-page-size="active"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></div>
         </div>
-
-        {{-- ACTIVE ORDER CARDS --}}
-
-        <div class="monitor-order-list">
-            @forelse($activeOrders as $order)
-                @php
-                    $routeStops = $order
-                        ->deliveryRouteStops
-                        ->keyBy('stop_key');
-
-                    $originStop = $routeStops->get('origin_facility');
-
-                    $destinationStop = $routeStops->get(
-                        'destination_facility'
-                    );
-
-                    $originName = $originStop?->facility?->name
-                        ?: $originStop?->name
-                        ?: 'Origin hub pending';
-
-                    $destinationName = $destinationStop?->facility?->name
-                        ?: $destinationStop?->name
-                        ?: 'Destination hub pending';
-
-                    $lastMile = $order->getAttribute(
-                        'monitor_last_mile'
-                    );
-
-                    $transfer = $order->getAttribute(
-                        'monitor_transfer'
-                    );
-
-                    $currentStep = (int) $order->getAttribute(
-                        'monitor_stage_step'
-                    );
-
-                    $stageGroup = $order->getAttribute(
-                        'monitor_stage_group'
-                    );
-
-                    $stageTone = $order->getAttribute(
-                        'monitor_stage_tone'
-                    );
-
-                    $stageLabel = $order->getAttribute(
-                        'monitor_stage_label'
-                    );
-
-                    $stageNote = $order->getAttribute(
-                        'monitor_stage_note'
-                    );
-
-                    $handlerName = $order->getAttribute(
-                        'monitor_handler_name'
-                    );
-
-                    $handlerRole = $order->getAttribute(
-                        'monitor_handler_role'
-                    );
-
-                    $localRiderName = $lastMile
-                        ? trim(
-                            $lastMile->first_name
-                            . ' '
-                            . $lastMile->last_name
-                        )
-                        : null;
-
-                    $searchText = implode(' ', array_filter([
-                        $order->order_number,
-                        $order->buyer_name,
-                        $order->buyer_address,
-                        $order->seller?->store_name,
-                        $order->pickup_name,
-                        $order->courier_name,
-                        $order->courier_email,
-                        $localRiderName,
-                        $lastMile?->delivery_area,
-                        $originName,
-                        $destinationName,
-                        $transfer?->transfer_code,
-                        $transfer?->driver_name,
-                        $stageLabel,
-                    ]));
-
-                    $journeySteps = [
-                        ['Seller Pickup', 'Pickup Rider'],
-                        ['Origin Hub', 'Hub Intake'],
-                        ['Sorting', 'Sort Zone'],
-                        ['Hub Transfer', 'Linehaul'],
-                        ['Destination Hub', 'Hub Receipt'],
-                        ['Local Rider', 'Last Mile'],
-                        ['Buyer', 'Delivery'],
-                    ];
-                @endphp
-
-                <article
-                    class="monitor-order-card"
-                    data-monitor-order
-                    data-stage-group="{{ $stageGroup }}"
-                    data-search="{{ $searchText }}"
-                >
-                    <header class="monitor-order-header">
-                        <div class="monitor-order-identity">
-                            <span
-                                class="monitor-order-icon"
-                                aria-hidden="true"
-                            >
-                                {{
-                                    mb_strtoupper(
-                                        mb_substr(
-                                            trim(
-                                                (string) (
-                                                    $order->buyer_name ?: 'O'
-                                                )
-                                            ),
-                                            0,
-                                            1
-                                        )
-                                    )
-                                }}
-                            </span>
-
-                            <div>
-                                <p class="monitor-eyebrow">
-                                    MARKETPLACE ORDER
-                                </p>
-
-                                <h3>
-                                    {{ $order->order_number }}
-                                </h3>
-
-                                <p>
-                                    {{ $order->seller?->store_name ?: 'SARI Seller' }}
-                                    ·
-                                    {{ $order->buyer_name }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="monitor-order-status">
-                            <span class="monitor-status monitor-status-{{ $stageTone }}">
-                                {{ $stageLabel }}
-                            </span>
-
-                            <small>
-                                Updated {{ $order->updated_at?->diffForHumans() }}
-                            </small>
-                        </div>
-                    </header>
-
-                    {{-- CURRENT OPERATION / HANDLER --}}
-
-                    <div class="monitor-current-state">
-                        <div class="dm-operation-cell">
-                            <span class="monitor-label">
-                                Current Operation
-                            </span>
-
-                            <strong>
-                                {{ $stageLabel }}
-                            </strong>
-
-                            <p>
-                                {{ $stageNote }}
-                            </p>
-                        </div>
-
-                        <div class="dm-operation-cell monitor-current-handler">
-                            <span
-                                class="monitor-handler-avatar"
-                                aria-hidden="true"
-                            >
-                                {{
-                                    mb_strtoupper(
-                                        mb_substr(
-                                            trim((string) $handlerName),
-                                            0,
-                                            1
-                                        )
-                                    ) ?: '—'
-                                }}
-                            </span>
-
-                            <div class="min-w-0">
-                                <span class="monitor-label">
-                                    Current Handler
-                                </span>
-
-                                <strong>
-                                    {{ $handlerName }}
-                                </strong>
-
-                                <p>
-                                    {{ $handlerRole }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- SEVEN-STEP JOURNEY --}}
-
-                    <div
-                        class="monitor-journey-scroll"
-                        aria-label="Parcel journey progress"
-                    >
-                        <div class="monitor-journey">
-                            @foreach($journeySteps as $stepIndex => [$stepName, $stepNote])
-                                @php
-                                    $stepNumber = $stepIndex + 1;
-
-                                    $stepState = $stepNumber < $currentStep
-                                        ? 'complete'
-                                        : (
-                                            $stepNumber === $currentStep
-                                                ? 'current'
-                                                : 'pending'
-                                        );
-                                @endphp
-
-                                <div class="monitor-journey-step is-{{ $stepState }}">
-                                    <div class="monitor-step-marker">
-                                        {{ $stepState === 'complete' ? '✓' : $stepNumber }}
-                                    </div>
-
-                                    <div>
-                                        <strong>
-                                            {{ $stepName }}
-                                        </strong>
-
-                                        <span>
-                                            {{ $stepNote }}
-                                        </span>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    {{-- OPERATION DETAILS --}}
-
-                    <div class="monitor-detail-grid">
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Pickup Rider
-                            </span>
-
-                            <strong>
-                                {{ $order->courier_name ?: 'Not assigned' }}
-                            </strong>
-
-                            <p>
-                                {{ $order->courier_email ?: 'No pickup Rider email' }}
-                            </p>
-                        </div>
-
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Origin Hub
-                            </span>
-
-                            <strong>
-                                {{ $originName }}
-                            </strong>
-
-                            <p>
-                                {{
-                                    $order->logisticsParcel?->sorting_zone
-                                        ? 'Zone ' . $order->logisticsParcel->sorting_zone
-                                        : 'Sorting zone not assigned'
-                                }}
-                            </p>
-                        </div>
-
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Hub Transfer
-                            </span>
-
-                            @if($transfer)
-                                <strong>
-                                    {{ $transfer->transfer_code }}
-                                </strong>
-
-                                <p>
-                                    {{ $transfer->vehicle_type }}
-
-                                    @if($transfer->vehicle_plate)
-                                        · {{ $transfer->vehicle_plate }}
-                                    @endif
-                                </p>
-
-                                <p>
-                                    Driver: {{ $transfer->driver_name }}
-                                </p>
-                            @else
-                                <strong>
-                                    Not yet assigned
-                                </strong>
-
-                                <p>
-                                    Awaiting linehaul stage
-                                </p>
-                            @endif
-                        </div>
-
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Destination Hub
-                            </span>
-
-                            <strong>
-                                {{ $destinationName }}
-                            </strong>
-
-                            <p>
-                                {{
-                                    $lastMile?->delivery_area
-                                        ? 'Delivery area: Barangay ' . $lastMile->delivery_area
-                                        : 'Last-mile area pending'
-                                }}
-                            </p>
-                        </div>
-
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Local Rider
-                            </span>
-
-                            @if($lastMile)
-                                <strong>
-                                    {{ $localRiderName }}
-                                </strong>
-
-                                <p>
-                                    {{ $lastMile->vehicle_type ?: 'Vehicle not recorded' }}
-
-                                    @if($lastMile->plate_number)
-                                        · {{ $lastMile->plate_number }}
-                                    @endif
-                                </p>
-
-                                <p>
-                                    {{ $lastMile->assignment_code }}
-                                </p>
-                            @else
-                                <strong>
-                                    Not yet assigned
-                                </strong>
-
-                                <p>
-                                    Destination dispatch pending
-                                </p>
-                            @endif
-                        </div>
-
-                        <div class="monitor-detail">
-                            <span class="monitor-label">
-                                Buyer Destination
-                            </span>
-
-                            <strong>
-                                {{ $order->buyer_name }}
-                            </strong>
-
-                            <p>
-                                {{ $order->buyer_address }}
-                            </p>
-                        </div>
-                    </div>
-
-                    {{-- ORDER FOOTER --}}
-
-                    <footer class="monitor-order-footer">
-                        <div>
-                            <span>
-                                Parcel state:
-                            </span>
-
-                            <strong>
-                                {{
-                                    ucwords(
-                                        str_replace(
-                                            '_',
-                                            ' ',
-                                            $order->logisticsParcel?->status
-                                                ?: $order->status
-                                        )
-                                    )
-                                }}
-                            </strong>
-                        </div>
-
-                        @if($isHubOperator)
-                            <span
-                                class="monitor-readonly-indicator"
-                                title="Journey shown above; route editing is restricted to Main Logistics"
-                            >
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    aria-hidden="true"
-                                >
-                                    <rect x="5" y="10" width="14" height="11" rx="2"/>
-                                    <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-                                </svg>
-                                Journey details · Read-only
-                            </span>
-                        @else
-                            <a
-                                href="{{ route('logistics.delivery-routes.edit', $order) }}"
-                                class="monitor-text-link"
-                            >
-                                View Delivery Route →
-                            </a>
-                        @endif
-                    </footer>
-                </article>
-            @empty
-                <div class="monitor-empty">
-                    <span
-                        class="monitor-empty-icon"
-                        aria-hidden="true"
-                    >
-                        ✓
-                    </span>
-
-                    <h3>
-                        No active deliveries
-                    </h3>
-
-                    <p>
-                        Active Seller pickup, hub, linehaul, and
-                        Last-Mile operations will appear here.
-                    </p>
-                </div>
-            @endforelse
-
-            <div
-                class="monitor-empty"
-                data-monitor-empty
-                hidden
-            >
-                <h3>
-                    No matching active deliveries
-                </h3>
-
-                <p>
-                    Try another order, Buyer, Seller, Rider,
-                    hub, or delivery stage.
-                </p>
-
-                <button
-                    type="button"
-                    class="monitor-text-link"
-                    data-monitor-clear
-                >
-                    Clear filters
-                </button>
-            </div>
-        </div>
-
-        <footer class="monitor-list-footer">
-            <span
-                data-monitor-visible-count
-                aria-live="polite"
-            >
-                {{ $activeOrders->count() }}
-                active deliveries shown
-            </span>
-
-            <span>
-                Seller → Pickup → Hubs → Last Mile → Buyer
-            </span>
-        </footer>
+        <div class="dm-pager" aria-label="Active deliveries pagination" data-dm-pager="active" hidden></div>
     </section>
 
-    {{-- DELIVERED TODAY --}}
-
-    <section
-        class="monitor-workspace monitor-delivered-workspace"
-        aria-labelledby="monitor-delivered-heading"
-    >
-        <header class="monitor-toolbar">
-            <div>
-                <p class="monitor-eyebrow">
-                    COMPLETED HANDOFFS
-                </p>
-
-                <h2 id="monitor-delivered-heading">
-                    Delivered Today
-                </h2>
-
-                <p>
-                    Completed Buyer handoffs for the current day.
-                    Showing the latest {{ $deliveredToday->count() }} {{ $deliveredToday->count() === 1 ? 'record' : 'records' }}.
-                </p>
-            </div>
-
-            <span class="monitor-delivered-total">
-                {{ $stats['delivered_today'] }}
-                completed today
-            </span>
-        </header>
-
-        <div class="monitor-delivered-grid">
-            @forelse($deliveredToday as $order)
-                @php
-                    $lastMile = $order->getAttribute(
-                        'monitor_last_mile'
-                    );
-
-                    $localRiderName = $lastMile
-                        ? trim(
-                            $lastMile->first_name
-                            . ' '
-                            . $lastMile->last_name
-                        )
-                        : null;
-                @endphp
-
-                <article class="monitor-delivered-card">
-                    <header class="monitor-delivered-header">
-                        <div>
-                            <span class="monitor-label">
-                                Delivered Order
-                            </span>
-
-                            <strong>
-                                {{ $order->order_number }}
-                            </strong>
+    <section id="dmDeliveredPanel" role="region" aria-label="Delivered Today" data-dm-panel="delivered" @if($initialTab !== 'delivered') hidden @endif>
+        <div class="dm-table-card">
+            <div class="dm-table-head"><h2>Delivered Today</h2><span class="dm-count">{{ $deliveredCount }} RECORDS</span></div>
+            <table class="dm-table" aria-label="Delivered today table">
+                <colgroup><col style="width:29%"><col style="width:23%"><col style="width:24%"><col style="width:16%"><col style="width:8%"></colgroup>
+                <thead><tr><th>Order</th><th>Buyer</th><th>Local Rider</th><th>Completed</th><th style="text-align:center">View</th></tr></thead>
+                <tbody>
+                @foreach($deliveredToday as $order)
+                    @php
+                        $lastMile = $order->getAttribute('monitor_last_mile');
+                        $localRiderName = $lastMile ? trim($lastMile->first_name.' '.$lastMile->last_name) : null;
+                        $deliveredSearch = implode(' ',array_filter([$order->order_number,$order->buyer_name,$localRiderName,$order->courier_name]));
+                    @endphp
+                    <tr data-dm-row="delivered" data-search="{{ $deliveredSearch }}">
+                        <td data-label="Order"><strong class="dm-primary">{{ $order->order_number }}</strong><span class="dm-secondary">Delivered parcel</span></td>
+                        <td data-label="Buyer"><strong class="dm-primary">{{ $order->buyer_name }}</strong></td>
+                        <td data-label="Local Rider"><strong class="dm-primary">{{ $localRiderName ?: $order->courier_name ?: 'Rider' }}</strong></td>
+                        <td data-label="Completed"><span class="dm-status dm-status-current">Delivered</span><span class="dm-secondary">{{ $order->delivered_at?->timezone('Asia/Manila')->format('M d · g:i A') ?: 'Completed' }}</span></td>
+                        <td data-label="View" style="text-align:center"><button type="button" class="dm-eye" aria-label="View completed order {{ $order->order_number }}" data-dm-open="dmDelivered{{ $loop->index }}"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></td>
+                    </tr>
+                    <template id="dmDelivered{{ $loop->index }}" data-dm-title="{{ $order->order_number }}">
+                        <div class="dm-modal-status"><span class="dm-status dm-status-current">Delivered</span><span class="dm-secondary">Buyer handoff completed</span></div>
+                        <div class="dm-journey-panel dm-journey-panel-complete" aria-label="Completed delivery progress">
+                            <div class="dm-journey-overview"><div><span class="dm-journey-kicker">DELIVERY PROGRESS</span><strong>Delivered to Buyer</strong><p>All seven parcel checkpoints completed.</p></div><span class="dm-step-counter">Step 7 / 7</span></div>
+                            <div class="dm-progress-track" role="progressbar" aria-label="Parcel progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="7"><span style="width:100%"></span></div>
                         </div>
-
-                        <span
-                            class="monitor-delivered-check"
-                            aria-hidden="true"
-                        >
-                            ✓
-                        </span>
-                    </header>
-
-                    <div class="monitor-delivered-body">
-                        <div>
-                            <span class="monitor-label">
-                                Buyer
-                            </span>
-
-                            <strong>
-                                {{ $order->buyer_name }}
-                            </strong>
+                        <div class="dm-detail-heading">DELIVERY DETAILS</div>
+                        <div class="dm-detail-grid">
+                            <div class="dm-detail-box"><small>Buyer</small><strong>{{ $order->buyer_name }}</strong></div>
+                            <div class="dm-detail-box"><small>Local Rider</small><strong>{{ $localRiderName ?: $order->courier_name ?: 'Rider' }}</strong></div>
+                            <div class="dm-detail-box"><small>Completed</small><strong>{{ $order->delivered_at?->timezone('Asia/Manila')->format('M d, Y · g:i A') ?: 'Delivered' }}</strong></div>
+                            <div class="dm-detail-box"><small>Journey Access</small><strong>{{ $isHubOperator ? 'Read-only' : 'Delivery route available' }}</strong></div>
                         </div>
-
-                        <div>
-                            <span class="monitor-label">
-                                Local Rider
-                            </span>
-
-                            <strong>
-                                {{
-                                    $localRiderName
-                                        ?: $order->courier_name
-                                        ?: 'Rider'
-                                }}
-                            </strong>
+                        <div style="display:flex;justify-content:flex-end;margin-top:16px">
+                            @if(!$isHubOperator)<a href="{{ route('logistics.delivery-routes.edit', $order) }}" class="dm-btn dm-btn-gold">View completed journey &gt;</a>@else<span class="dm-secondary">Completed journey · Read-only</span>@endif
                         </div>
-
-                        <div>
-                            <span class="monitor-label">
-                                Completed
-                            </span>
-
-                            <strong>
-                                {{
-                                    $order->delivered_at
-                                        ?->timezone('Asia/Manila')
-                                        ->format('g:i A')
-                                        ?: 'Delivered'
-                                }}
-                            </strong>
-                        </div>
-                    </div>
-
-                    @if($isHubOperator)
-                        <span
-                            class="monitor-readonly-indicator"
-                            title="Completed journey details are read-only"
-                        >
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                aria-hidden="true"
-                            >
-                                <rect x="5" y="10" width="14" height="11" rx="2"/>
-                                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
-                            </svg>
-                            Completed journey · Read-only
-                        </span>
-                    @else
-                        <a
-                            href="{{ route('logistics.delivery-routes.edit', $order) }}"
-                            class="monitor-text-link"
-                        >
-                            View completed journey →
-                        </a>
-                    @endif
-                </article>
-            @empty
-                <div class="monitor-empty monitor-empty-small">
-                    <h3>
-                        No completed deliveries today
-                    </h3>
-
-                    <p>
-                        Completed Last-Mile deliveries will appear here.
-                    </p>
-                </div>
-            @endforelse
+                    </template>
+                @endforeach
+                </tbody>
+            </table>
+            <div class="dm-empty" data-dm-empty="delivered" hidden><span class="dm-empty-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22"/><path d="m21 32 8 8 15-17"/></svg></span><h3 data-dm-empty-title="delivered">No completed deliveries today</h3><p data-dm-empty-note="delivered">Completed Last-Mile deliveries will appear here.</p></div>
+            <div class="dm-table-foot"><span data-dm-range="delivered">Showing 0–0 of {{ $deliveredCount }} deliveries</span><label class="dm-per-page">Rows per page <select data-dm-page-size="delivered" aria-label="Delivered orders per page"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></div>
         </div>
+        <div class="dm-pager" aria-label="Delivered today pagination" data-dm-pager="delivered" hidden></div>
     </section>
+
+    <div class="dm-modal" id="dmDetailsModal" role="dialog" aria-modal="true" aria-labelledby="dmDetailsTitle" hidden>
+        <div class="dm-modal-dialog">
+            <header class="dm-modal-head"><div><p>PARCEL INFORMATION</p><h2 id="dmDetailsTitle">Parcel Details</h2></div><button type="button" class="dm-close" data-dm-close aria-label="Close parcel details">×</button></header>
+            <div class="dm-modal-body" id="dmDetailsBody"></div>
+            <footer class="dm-modal-footer"><button type="button" class="dm-btn" data-dm-close>Close</button></footer>
+        </div>
+    </div>
 </div>
-
 @endsection
 
 @push('scripts')
 <script>
 (() => {
     'use strict';
-
-    function initializeDeliveryMonitoring() {
-        const root = document.querySelector(
-            '[data-monitor-workspace]'
-        );
-
-        if (!root || root.dataset.initialized) {
-            return;
-        }
-
+    const init = () => {
+        const root = document.querySelector('[data-monitor-workspace]');
+        if (!root || root.dataset.initialized) return;
         root.dataset.initialized = 'true';
-
-        const cards = [
-            ...root.querySelectorAll('[data-monitor-order]')
-        ];
-
-        const search = root.querySelector(
-            '[data-monitor-search]'
-        );
-
-        const tabs = [
-            ...root.querySelectorAll('[data-monitor-filter]')
-        ];
-
-        const empty = root.querySelector(
-            '[data-monitor-empty]'
-        );
-
-        const visibleCount = root.querySelector(
-            '[data-monitor-visible-count]'
-        );
-
-        let filter = 'all';
-
-        const normalize = value =>
-            String(value || '')
-                .toLocaleLowerCase()
-                .trim();
-
-        function applyFilters() {
-            const keyword = normalize(search?.value);
-            let shown = 0;
-
-            cards.forEach(card => {
-                const matchesStage =
-                    filter === 'all'
-                    || card.dataset.stageGroup === filter;
-
-                const matchesSearch =
-                    normalize(card.dataset.search).includes(keyword);
-
-                card.hidden = !matchesStage || !matchesSearch;
-
-                if (!card.hidden) {
-                    shown++;
+        const normalize = v => String(v || '').toLocaleLowerCase().trim();
+        const state = {};
+        const viewSelect = root.querySelector('[data-dm-view]');
+        const commonSearch = root.querySelector('[data-dm-search-common]');
+        const commonStatus = root.querySelector('[data-dm-status-common]');
+        const viewTypes = ['active','delivered'];
+        viewTypes.forEach(type => {
+            const panel = root.querySelector(`[data-dm-panel="${type}"]`);
+            const rows = [...panel.querySelectorAll(`[data-dm-row="${type}"]`)];
+            const size = panel.querySelector(`[data-dm-page-size="${type}"]`);
+            const pager = panel.querySelector(`[data-dm-pager="${type}"]`);
+            const range = panel.querySelector(`[data-dm-range="${type}"]`);
+            const empty = panel.querySelector(`[data-dm-empty="${type}"]`);
+            const emptyTitle = panel.querySelector(`[data-dm-empty-title="${type}"]`);
+            const emptyNote = panel.querySelector(`[data-dm-empty-note="${type}"]`);
+            const data = state[type] = {rows,size,pager,range,empty,emptyTitle,emptyNote,page:1,keyword:'',filter:'all'};
+            data.render = () => {
+                const matched = data.rows.filter(row => normalize(row.dataset.search).includes(data.keyword) && (data.filter === 'all' || row.dataset.stage === data.filter));
+                const per = Number(data.size.value) || 10;
+                const totalPages = Math.max(1,Math.ceil(matched.length/per));
+                data.page = Math.min(data.page,totalPages);
+                const from = (data.page-1)*per;
+                const visible = new Set(matched.slice(from,from+per));
+                data.rows.forEach(row => {row.hidden = !visible.has(row)});
+                data.empty.hidden = matched.length > 0;
+                if (!matched.length) {
+                    const filtered = !!data.keyword || data.filter !== 'all';
+                    data.emptyTitle.textContent = filtered ? (type === 'active' ? 'No matching active deliveries' : 'No matching deliveries') : (type === 'active' ? 'No active deliveries' : 'No completed deliveries today');
+                    data.emptyNote.textContent = filtered ? 'Try a different search or reset the filters.' : (type === 'active' ? 'Active Seller pickup, hub, linehaul and last-mile operations will appear here.' : 'Completed Last-Mile deliveries will appear here.');
                 }
-            });
-
-            tabs.forEach(tab => {
-                tab.setAttribute(
-                    'aria-pressed',
-                    String(
-                        tab.dataset.monitorFilter === filter
-                    )
-                );
-            });
-
-            if (empty) {
-                empty.hidden = cards.length === 0 || shown > 0;
-            }
-
-            if (visibleCount) {
-                visibleCount.textContent =
-                    `${shown} of ${cards.length} `
-                    + `${
-                        cards.length === 1
-                            ? 'active delivery'
-                            : 'active deliveries'
-                    } shown`;
-            }
-        }
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                filter = tab.dataset.monitorFilter || 'all';
-                applyFilters();
-            });
-        });
-
-        search?.addEventListener(
-            'input',
-            applyFilters
-        );
-
-        root.querySelectorAll(
-            '[data-monitor-clear]'
-        ).forEach(button => {
-            button.addEventListener('click', () => {
-                filter = 'all';
-
-                if (search) {
-                    search.value = '';
+                data.range.textContent = `Showing ${matched.length ? from+1 : 0}–${Math.min(from+per,matched.length)} of ${matched.length} ${type === 'active' ? 'orders' : 'deliveries'}`;
+                data.pager.replaceChildren();
+                data.pager.hidden = totalPages <= 1;
+                if (totalPages > 1) {
+                    const add = (label,target,disabled,active=false) => {
+                        const button = document.createElement('button');
+                        button.type = 'button';button.textContent = label;button.disabled = disabled;
+                        if (active) {button.classList.add('is-active');button.setAttribute('aria-current','page')}
+                        button.addEventListener('click',() => {data.page=target;data.render()});
+                        data.pager.appendChild(button);
+                    };
+                    add('<',data.page-1,data.page===1);
+                    const first=Math.max(1,Math.min(data.page-2,totalPages-4));
+                    for(let p=first;p<=Math.min(totalPages,first+4);p++) add(String(p),p,false,p===data.page);
+                    add('>',data.page+1,data.page===totalPages);
                 }
-
-                applyFilters();
-            });
+            };
+            data.size.addEventListener('change',() => {data.page=1;data.render()});
+            data.render();
         });
-
-        applyFilters();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            initializeDeliveryMonitoring
-        );
-    } else {
-        initializeDeliveryMonitoring();
-    }
+        const selectView = (type, resetControls = false) => {
+            if (!viewTypes.includes(type)) return;
+            viewSelect.value = type;
+            root.querySelectorAll('[data-dm-panel]').forEach(panel => {panel.hidden=panel.dataset.dmPanel!==type});
+            commonStatus.hidden = type !== 'active';
+            if (resetControls) {
+                commonSearch.value = '';
+                commonStatus.value = 'all';
+                state[type].keyword = '';
+                state[type].filter = 'all';
+                state[type].page = 1;
+            }
+            // Mirror the current view's applied search, without affecting the other list.
+            else {
+                commonSearch.value = state[type].keyword;
+                commonStatus.value = state[type].filter;
+            }
+            state[type].render();
+        };
+        viewSelect.addEventListener('change', () => selectView(viewSelect.value, true));
+        const apply = () => {
+            const data = state[viewSelect.value];
+            data.keyword = normalize(commonSearch.value);
+            data.filter = viewSelect.value === 'active' ? commonStatus.value : 'all';
+            data.page = 1;
+            data.render();
+        };
+        root.querySelector('[data-dm-apply-common]').addEventListener('click', apply);
+        commonSearch.addEventListener('keydown', event => {if(event.key==='Enter'){event.preventDefault();apply()}});
+        root.querySelector('[data-dm-reset-common]').addEventListener('click', () => selectView(viewSelect.value, true));
+        const initialView = viewSelect.value;
+        state[initialView].keyword = normalize(commonSearch.value);
+        selectView(initialView);
+        const modal=root.querySelector('#dmDetailsModal');
+        const modalBody=root.querySelector('#dmDetailsBody');
+        const modalTitle=root.querySelector('#dmDetailsTitle');
+        let previousFocus=null;
+        const closeModal=() => {modal.hidden=true;modalBody.replaceChildren();document.body.style.overflow='';previousFocus?.focus?.();previousFocus=null};
+        root.addEventListener('click',event => {
+            const trigger=event.target.closest('[data-dm-open]');
+            if (trigger) {
+                const template=document.getElementById(trigger.dataset.dmOpen);
+                if(!template) return;
+                previousFocus=trigger;
+                modalBody.replaceChildren(template.content.cloneNode(true));
+                modalTitle.textContent=template.dataset.dmTitle || 'Parcel Details';
+                modal.hidden=false;
+                document.body.style.overflow='hidden';
+                modal.querySelector('.dm-close').focus();
+                return;
+            }
+            if(event.target.closest('[data-dm-close]') || event.target===modal) closeModal();
+        });
+        document.addEventListener('keydown',e => {if(modal.hidden)return;if(e.key==='Escape'){e.preventDefault();closeModal()} else if(e.key==='Tab'){const focusable=[...modal.querySelectorAll('a[href],button:not([disabled])')];if(!focusable.length)return;const first=focusable[0],last=focusable[focusable.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+    };
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 @endpush

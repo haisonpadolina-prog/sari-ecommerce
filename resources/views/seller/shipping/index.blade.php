@@ -2567,6 +2567,737 @@
 .seller-shipping-page .seller-shipping-meta-item p:nth-child(3) {
     color: #7C8592 !important;
 }
+
+/* ======================================================================
+   SHIPPING TRACKING — PICKUP REQUESTS UI PARITY / MILESTONE PROGRESS
+   Scoped to the Shipping page. Backend routes, filters, state data,
+   paginated results and existing waybill/tracking actions are unchanged.
+   ====================================================================== */
+.seller-shipping-page {
+    --ship-gold: #C88912;
+    --ship-gold-hover: #B47B0E;
+    --ship-ink: #2F3742;
+    --ship-text: #475569;
+    --ship-muted: #667085;
+    --ship-line: #E5E7EB;
+    width: 100% !important;
+    max-width: 1520px !important;
+    padding-bottom: 28px !important;
+    color: var(--ship-ink) !important;
+    font-family: Poppins, ui-sans-serif, system-ui, sans-serif !important;
+}
+.seller-shipping-page .seller-shipping-header {
+    align-items: flex-end !important;
+    min-height: 0 !important;
+    margin-bottom: 20px !important;
+    padding: 0 2px 14px !important;
+    border-bottom: 1px solid #E5E7EB !important;
+}
+.seller-shipping-page .seller-shipping-eyebrow {
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: .12em !important;
+    color: #A87316 !important;
+}
+.seller-shipping-page .seller-shipping-title {
+    margin-top: 7px !important;
+    font-size: clamp(27px,2.25vw,31px) !important;
+    font-weight: 760 !important;
+    color: #2E343B !important;
+    line-height: 1.1 !important;
+}
+.seller-shipping-page .seller-shipping-title span { color: #C88912 !important; }
+.seller-shipping-page .seller-shipping-subtitle {
+    max-width: 680px !important;
+    margin-top: 7px !important;
+    font-size: 11.5px !important;
+    line-height: 1.55 !important;
+    color: #667085 !important;
+}
+/* Four balanced KPI cards; bare outline icons, no colored icon boxes. */
+.seller-shipping-page .seller-shipping-summary {
+    grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+    gap: 14px !important;
+}
+.seller-shipping-page .seller-shipping-stat,
+.seller-shipping-page .seller-shipping-stat:hover {
+    min-height: 110px !important;
+    padding: 18px 19px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 3px 8px rgba(15,23,42,.035),0 15px 32px rgba(15,23,42,.065) !important;
+    transform: none !important;
+}
+.seller-shipping-page .seller-shipping-stat p:first-child {
+    color: #59636E !important;
+    font-size: 13px !important;
+    font-weight: 650 !important;
+}
+.seller-shipping-page .seller-shipping-stat p:nth-child(2) {
+    margin-top: 8px !important;
+    color: #293440 !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+}
+.seller-shipping-page .seller-shipping-stat p:nth-child(3) {
+    margin-top: 8px !important;
+    color: #8591A0 !important;
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+}
+.seller-shipping-page .seller-shipping-stat-icon {
+    display: grid !important;
+    width: 27px !important;
+    height: 27px !important;
+    flex: 0 0 27px !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-stat-icon svg { width: 27px !important; height: 27px !important; }
+/* Search/filter matches 48px Pickup Requests controls, no enclosing cream card. */
+.seller-shipping-page .seller-shipping-filter-panel,
+.seller-shipping-page .seller-shipping-filter-panel:hover {
+    margin-top: 24px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-filter-form {
+    grid-template-columns: minmax(280px,1fr) minmax(185px,210px) 150px 90px !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+.seller-shipping-page .seller-shipping-search-input,
+.seller-shipping-page .seller-shipping-status-button,
+.seller-shipping-page .seller-shipping-apply-filter,
+.seller-shipping-page .seller-shipping-reset-filter {
+    height: 48px !important;
+    min-height: 48px !important;
+    border-radius: 14px !important;
+    font-size: 11.5px !important;
+}
+.seller-shipping-page .seller-shipping-search-input,
+.seller-shipping-page .seller-shipping-status-button,
+.seller-shipping-page .seller-shipping-search-input:hover,
+.seller-shipping-page .seller-shipping-status-button:hover {
+    border: 1px solid #DCE2E8 !important;
+    background: #fff !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-search-field svg {
+    left: 16px !important;
+    width: 21px !important;
+    height: 21px !important;
+}
+.seller-shipping-page .seller-shipping-search-input {
+    padding: 0 16px 0 46px !important;
+    font-weight: 600 !important;
+}
+.seller-shipping-page .seller-shipping-search-input::placeholder {
+    color: #94A3B8 !important;
+    font-weight: 500 !important;
+}
+.seller-shipping-page .seller-shipping-search-input:focus,
+.seller-shipping-page .seller-shipping-status-button:focus-visible,
+.seller-shipping-page .seller-shipping-status-button[aria-expanded="true"] {
+    outline: none !important;
+    border-color: #C88912 !important;
+    box-shadow: 0 0 0 2px rgba(200,137,18,.10) !important;
+}
+.seller-shipping-page .seller-shipping-status-button {
+    padding: 0 16px !important;
+    font-weight: 600 !important;
+}
+.seller-shipping-page .seller-shipping-status-button-main { gap: 0 !important; }
+.seller-shipping-page .seller-shipping-status-button-icon,
+.seller-shipping-page .seller-shipping-status-check { display: none !important; }
+.seller-shipping-page .seller-shipping-status-chevron { width: 17px !important; height: 17px !important; color: #64748B !important; }
+.seller-shipping-page .seller-shipping-status-menu {
+    top: calc(100% + 8px) !important;
+    min-width: 100% !important;
+    max-width: 300px;
+    padding: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05) !important;
+    overflow: auto !important;
+}
+.seller-shipping-page .seller-shipping-status-option {
+    min-height: 43px !important;
+    padding: 8px 12px !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    color: #475569 !important;
+}
+.seller-shipping-page .seller-shipping-status-option:hover,
+.seller-shipping-page .seller-shipping-status-option:focus-visible,
+.seller-shipping-page .seller-shipping-status-option.is-selected {
+    background: #F8FAFC !important;
+}
+.seller-shipping-page .seller-shipping-status-option-copy strong,
+.seller-shipping-page .seller-shipping-status-option.is-selected .seller-shipping-status-option-copy strong {
+    color: #334155 !important;
+    font-size: 11.5px !important;
+    font-weight: 650 !important;
+}
+.seller-shipping-page .seller-shipping-status-option-copy small {
+    margin-top: 2px !important;
+    color: #94A3B8 !important;
+    font-size: 10px !important;
+}
+.seller-shipping-page .seller-shipping-apply-filter {
+    border: 1px solid #C88912 !important;
+    background: #C88912 !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-apply-filter:hover { border-color: #B47B0E !important; background: #B47B0E !important; }
+.seller-shipping-page .seller-shipping-apply-filter svg { width: 15px !important; height: 15px !important; }
+.seller-shipping-page .seller-shipping-reset-filter,
+.seller-shipping-page .seller-shipping-reset-filter:hover {
+    border: 1px solid #DCE2E8 !important;
+    background: #fff !important;
+    color: #64748B !important;
+    font-size: 11.5px !important;
+    font-weight: 650 !important;
+    box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-reset-filter:hover { background: #F8FAFC !important; }
+/* One elevated shipment list, clean table-like rows. */
+.seller-shipping-page .seller-shipping-workspace,
+.seller-shipping-page .seller-shipping-workspace:hover {
+    margin-top: 24px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 3px 9px rgba(15,23,42,.04),0 17px 36px rgba(15,23,42,.08) !important;
+}
+.seller-shipping-page .seller-shipping-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 23px;
+    border-bottom: 1px solid #E9EDF1;
+}
+.seller-shipping-page .seller-shipping-list-heading h2 {
+    color: #293440;
+    font-size: 18px;
+    font-weight: 780;
+    letter-spacing: -.02em;
+}
+.seller-shipping-page .seller-shipping-list-heading p {
+    margin-top: 5px;
+    color: #8591A0;
+    font-size: 11.5px;
+}
+.seller-shipping-page .seller-shipping-list-heading > span {
+    flex: 0 0 auto;
+    color: #8591A0;
+    font-size: 12px;
+    font-weight: 600;
+}
+.seller-shipping-page .seller-shipping-card {
+    padding: 20px 23px !important;
+    background: #fff !important;
+    border-bottom: 1px solid #EDF0F3 !important;
+}
+.seller-shipping-page .seller-shipping-card:hover { background: #F8FAFC !important; }
+.seller-shipping-page .seller-shipping-card > .flex {
+    display: grid !important;
+    grid-template-columns: minmax(0,1.05fr) minmax(0,1fr) !important;
+    align-items: start !important;
+    gap: 24px !important;
+}
+.seller-shipping-page .seller-shipping-order-number {
+    color: #293440 !important;
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+}
+.seller-shipping-page .seller-shipping-state-detail {
+    margin-top: 7px !important;
+    color: #64748B !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+}
+.seller-shipping-page .seller-shipping-status {
+    display: inline-flex;
+    align-items: center;
+    min-height: 27px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+.seller-shipping-page .seller-shipping-status--delivered { background: #ECFDF3; border-color: #BBF7D0; color: #166534; }
+.seller-shipping-page .seller-shipping-status--transit { background: #E8F4FF; border-color: #BAE0FF; color: #075985; }
+.seller-shipping-page .seller-shipping-status--hub { background: #F5F3FF; border-color: #DDD6FE; color: #6D28D9; }
+.seller-shipping-page .seller-shipping-status--awaiting { background: #F8FAFC; border-color: #E2E8F0; color: #A56D0A; }
+/* Segmented, static shipment progress — not an indeterminate loading line. */
+.seller-shipping-page .seller-shipping-progress { margin-top: 15px; }
+.seller-shipping-page .seller-shipping-progress-heading {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.seller-shipping-page .seller-shipping-progress-label {
+    color: #475569 !important; font-size: 11px !important; font-weight: 650 !important;
+}
+.seller-shipping-page .seller-shipping-progress-percent {
+    color: #A56D0A; font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.seller-shipping-page .seller-shipping-progress-track {
+    display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 5px;
+    margin-top: 10px;
+}
+.seller-shipping-page .seller-shipping-progress-segment {
+    display: block; height: 8px; overflow: hidden;
+    border-radius: 999px; background: #E9EDF2;
+}
+.seller-shipping-page .seller-shipping-progress-fill {
+    display: block; height: 100%; background: #C88912; border-radius: inherit;
+    transition: none !important;
+}
+.seller-shipping-page .seller-shipping-progress-milestones {
+    display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 5px;
+    list-style: none; margin: 9px 0 0; padding: 0;
+}
+.seller-shipping-page .seller-shipping-progress-milestones li {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    min-width: 0; color: #98A2B3; text-align: center;
+    font-size: 9.5px; font-weight: 550; line-height: 1.3;
+}
+.seller-shipping-page .seller-shipping-progress-milestones li.is-complete { color: #475569; font-weight: 650; }
+.seller-shipping-page .seller-shipping-progress-milestones li.is-current { color: #A56D0A; font-weight: 700; }
+.seller-shipping-page .seller-shipping-milestone-number {
+    display: grid; width: 21px; height: 21px; place-items: center;
+    border: 1px solid #E2E8F0; border-radius: 50%; background: #fff;
+    color: #94A3B8; font-size: 9px; font-weight: 700;
+}
+.seller-shipping-page .seller-shipping-progress-milestones .is-complete .seller-shipping-milestone-number {
+    border-color: #C88912; background: #C88912; color: #fff;
+}
+.seller-shipping-page .seller-shipping-progress-milestones .is-current .seller-shipping-milestone-number {
+    border-color: #C88912; background: #fff; color: #A56D0A;
+}
+/* Shipment metadata: open columns, no nested containers. */
+.seller-shipping-page .seller-shipping-card > .flex > .grid { width: 100% !important; gap: 0 !important; }
+.seller-shipping-page .seller-shipping-meta-item {
+    padding: 4px 13px !important; border: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-meta-item:first-child { padding-left: 0 !important; }
+.seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 1px solid #EDF0F3 !important; }
+.seller-shipping-page .seller-shipping-meta-item p:first-child {
+    color: #8591A0 !important; font-size: 10px !important; font-weight: 700 !important;
+}
+.seller-shipping-page .seller-shipping-meta-item p:nth-child(2) {
+    margin-top: 7px !important; color: #293440 !important;
+    font-size: 11.5px !important; font-weight: 650 !important;
+}
+.seller-shipping-page .seller-shipping-meta-item p:nth-child(3) {
+    margin-top: 5px !important; color: #8591A0 !important;
+    font-size: 10px !important; line-height: 1.5 !important;
+}
+.seller-shipping-page .seller-shipping-card-footer {
+    margin-top: 16px !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #EDF0F3 !important;
+}
+.seller-shipping-page .seller-shipping-card-footer > div:first-child,
+.seller-shipping-page .seller-shipping-card-footer > div:first-child strong {
+    font-size: 10.5px !important;
+}
+.seller-shipping-page .seller-shipping-waybill-button,
+.seller-shipping-page .seller-shipping-track-button {
+    height: 38px !important; min-height: 38px !important; padding: 0 13px !important;
+    border-radius: 10px !important; font-size: 11px !important; font-weight: 700 !important;
+}
+.seller-shipping-page .seller-shipping-track-button {
+    border: 1px solid #C88912 !important; background: #C88912 !important; color: #fff !important;
+}
+.seller-shipping-page .seller-shipping-track-button:hover {
+    border-color: #B47B0E !important; background: #B47B0E !important;
+}
+.seller-shipping-page .seller-shipping-waybill-button:hover {
+    border-color: #D1D5DB !important; background: #F8FAFC !important;
+}
+.seller-shipping-page .seller-shipping-empty { padding: 56px 24px !important; }
+.seller-shipping-page .seller-shipping-empty-icon {
+    width: 68px !important; height: 68px !important;
+    border: 0 !important; border-radius: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+}
+.seller-shipping-page .seller-shipping-empty-icon svg { width: 54px !important; height: 54px !important; }
+.seller-shipping-page .seller-shipping-empty h3 { color: #475569 !important; font-size: 20px !important; font-weight: 700 !important; }
+.seller-shipping-page .seller-shipping-empty p { color: #94A3B8 !important; font-size: 11.5px !important; }
+.seller-shipping-page .seller-shipping-workspace nav a,
+.seller-shipping-page .seller-shipping-workspace nav span {
+    border-radius: 9px !important; font-size: 11px !important;
+}
+/* Compact and predictable responsive layout, without squashed metadata. */
+@media (max-width: 1220px) {
+    .seller-shipping-page .seller-shipping-card > .flex { grid-template-columns: 1fr !important; gap: 17px !important; }
+}
+@media (max-width: 1100px) {
+    .seller-shipping-page .seller-shipping-summary { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-shipping-page .seller-shipping-filter-form { grid-template-columns: minmax(0,1fr) minmax(185px,220px) !important; }
+    .seller-shipping-page .seller-shipping-apply-filter,
+    .seller-shipping-page .seller-shipping-reset-filter { width: 100% !important; }
+}
+@media (max-width: 640px) {
+    .seller-shipping-page .seller-shipping-header { padding-bottom: 12px !important; }
+    .seller-shipping-page .seller-shipping-eyebrow { font-size: 9.5px !important; }
+    .seller-shipping-page .seller-shipping-title { font-size: 25px !important; }
+    .seller-shipping-page .seller-shipping-subtitle { font-size: 11px !important; }
+    .seller-shipping-page .seller-shipping-summary { grid-template-columns: 1fr !important; gap: 10px !important; }
+    .seller-shipping-page .seller-shipping-stat { min-height: 104px !important; }
+    .seller-shipping-page .seller-shipping-filter-form { grid-template-columns: 1fr !important; gap: 9px !important; }
+    .seller-shipping-page .seller-shipping-filter-panel { margin-top: 18px !important; }
+    .seller-shipping-page .seller-shipping-workspace { margin-top: 18px !important; }
+    .seller-shipping-page .seller-shipping-list-heading { align-items: flex-start; flex-direction: column; gap: 8px; padding: 16px !important; }
+    .seller-shipping-page .seller-shipping-list-heading h2 { font-size: 17px; }
+    .seller-shipping-page .seller-shipping-card { padding: 16px !important; }
+    .seller-shipping-page .seller-shipping-card > .flex > .grid { grid-template-columns: 1fr !important; }
+    .seller-shipping-page .seller-shipping-meta-item { padding: 10px 0 !important; }
+    .seller-shipping-page .seller-shipping-meta-item:first-child { padding-top: 0 !important; }
+    .seller-shipping-page .seller-shipping-meta-item + .seller-shipping-meta-item { border-left: 0 !important; border-top: 1px solid #EDF0F3 !important; }
+    .seller-shipping-page .seller-shipping-progress-milestones li { font-size: 8.5px !important; }
+    .seller-shipping-page .seller-shipping-milestone-number { width: 19px; height: 19px; }
+    .seller-shipping-page .seller-shipping-card-footer > div:last-child { width: 100%; flex-wrap: wrap; }
+    .seller-shipping-page .seller-shipping-waybill-button,
+    .seller-shipping-page .seller-shipping-track-button { flex: 1 1 130px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .seller-shipping-page .seller-shipping-progress-fill { transition: none !important; }
+}
+
+
+/* ===========================================================
+   SHIPPING TRACKING — CLEAN OPERATIONAL REFINEMENT
+   Scope: page presentation and shipment row composition only.
+   Original route/form/status values and progress data are reused.
+   =========================================================== */
+.seller-shipping-page {
+    --ship-clean-line: #E8ECF1;
+    --ship-clean-muted: #8591A0;
+    --ship-clean-text: #293440;
+    --ship-clean-gold: #C88912;
+    --ship-clean-hover: #B47B0E;
+}
+.seller-shipping-page .seller-shipping-header { margin-bottom: 21px !important; }
+.seller-shipping-page .seller-shipping-subtitle { max-width: 600px !important; }
+/* Calm, light-elevation KPI cards; no badge containers around icons. */
+.seller-shipping-page .seller-shipping-summary { gap: 13px !important; }
+.seller-shipping-page .seller-shipping-stat,
+.seller-shipping-page .seller-shipping-stat:hover {
+    min-height: 106px !important;
+    padding: 17px 18px !important;
+    border-color: #E7EAF0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 4px rgba(15,23,42,.02), 0 9px 23px rgba(15,23,42,.045) !important;
+}
+.seller-shipping-page .seller-shipping-stat p:nth-child(2) { margin-top: 6px !important; font-size: 27px !important; }
+.seller-shipping-page .seller-shipping-stat p:nth-child(3) { margin-top: 6px !important; font-size: 10.5px !important; }
+/* Leave search/filter directly on the page rather than adding another wrapper. */
+.seller-shipping-page .seller-shipping-filter-panel { margin-top: 19px !important; }
+.seller-shipping-page .seller-shipping-status-menu { overflow: visible !important; }
+.seller-shipping-page .seller-shipping-status-option {
+    min-height: 39px !important; padding: 8px 12px !important;
+}
+.seller-shipping-page .seller-shipping-status-option.is-selected { background: #F8FAFC !important; }
+/* One workspace with flat readable rows and neutral dividers. */
+.seller-shipping-page .seller-shipping-workspace,
+.seller-shipping-page .seller-shipping-workspace:hover {
+    margin-top: 20px !important;
+    border-color: #E7EAF0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 4px rgba(15,23,42,.025),0 12px 28px rgba(15,23,42,.055) !important;
+}
+.seller-shipping-page .seller-shipping-list-heading { padding: 18px 22px !important; }
+.seller-shipping-page .seller-shipping-card { padding: 19px 22px 15px !important; }
+.seller-shipping-page .seller-shipping-card:hover { background: #FBFCFE !important; }
+.seller-shipping-page .seller-ship-order-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.seller-shipping-page .seller-ship-order-identity {
+    min-width: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.seller-shipping-page .seller-shipping-order-number { font-size: 12.5px !important; line-height: 1.5; }
+.seller-shipping-page .seller-shipping-status {
+    padding: 5px 10px !important; min-height: 26px !important;
+    font-size: 10px !important; font-weight: 650 !important;
+}
+.seller-shipping-page .seller-ship-last-update {
+    flex: 0 0 auto; color: var(--ship-clean-muted); font-size: 10.5px; line-height: 1.4;
+}
+.seller-shipping-page .seller-shipping-state-detail {
+    margin: 7px 0 0 !important; font-size: 11px !important;
+    line-height: 1.55 !important; color: #64748B !important;
+}
+/* 3-column fact strip, no nested boxes or tinted cards. */
+.seller-shipping-page .seller-ship-meta-grid {
+    display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
+    align-items: start; gap: 18px; margin-top: 17px;
+}
+.seller-shipping-page .seller-shipping-meta-item,
+.seller-shipping-page .seller-shipping-meta-item:first-child,
+.seller-shipping-page .seller-shipping-meta-item:last-child,
+.seller-shipping-page .seller-shipping-card:hover .seller-shipping-meta-item {
+    min-width: 0 !important; padding: 0 !important; border: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+}
+.seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item {
+    border-left: 1px solid var(--ship-clean-line) !important;
+    padding-left: 18px !important;
+}
+.seller-shipping-page .seller-shipping-meta-item p:first-child {
+    color: #8B97A6 !important; font-size: 9.5px !important; font-weight: 700 !important;
+    letter-spacing: .05em !important; text-transform: uppercase !important;
+}
+.seller-shipping-page .seller-shipping-meta-item p:nth-child(2) {
+    margin-top: 6px !important; color: var(--ship-clean-text) !important;
+    font-size: 11.5px !important; font-weight: 650 !important;
+    line-height: 1.5 !important; white-space: normal !important;
+    overflow-wrap: anywhere;
+}
+.seller-shipping-page .seller-shipping-meta-item p:nth-child(3) {
+    margin-top: 2px !important; color: var(--ship-clean-muted) !important;
+    font-size: 10px !important; line-height: 1.45 !important;
+    overflow-wrap: anywhere;
+}
+/* A clear five-stage determinate progress line: no numbered icon circles. */
+.seller-shipping-page .seller-shipping-progress {
+    margin-top: 17px !important; padding-top: 15px;
+    border-top: 1px solid #F0F2F5;
+}
+.seller-shipping-page .seller-shipping-progress-heading { gap: 8px !important; }
+.seller-shipping-page .seller-shipping-progress-label {
+    font-size: 10.5px !important; font-weight: 650 !important; color: #475569 !important;
+}
+.seller-shipping-page .seller-shipping-progress-percent {
+    color: #A56D0A !important; font-size: 11px !important; font-weight: 750 !important;
+    font-variant-numeric: tabular-nums;
+}
+.seller-shipping-page .seller-shipping-progress-track {
+    margin-top: 9px !important; gap: 5px !important;
+}
+.seller-shipping-page .seller-shipping-progress-segment {
+    height: 6px !important; border-radius: 999px !important;
+    background: #E9EDF2 !important;
+}
+.seller-shipping-page .seller-shipping-progress-milestones {
+    margin-top: 8px !important; gap: 5px !important;
+}
+.seller-shipping-page .seller-shipping-progress-milestones li {
+    align-items: flex-start !important; text-align: left !important;
+    gap: 0 !important; color: #9AA5B3 !important;
+    font-size: 9.5px !important; font-weight: 500 !important;
+}
+.seller-shipping-page .seller-shipping-progress-milestones li.is-complete {
+    color: #475569 !important; font-weight: 600 !important;
+}
+.seller-shipping-page .seller-shipping-progress-milestones li.is-current {
+    color: #A56D0A !important; font-weight: 700 !important;
+}
+/* Quiet footer, actions are the last thing in each shipment row. */
+.seller-shipping-page .seller-shipping-card-footer {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 12px;
+    margin-top: 16px !important; padding-top: 12px !important;
+    border-top: 1px solid var(--ship-clean-line) !important;
+}
+.seller-shipping-page .seller-ship-dates {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px 18px;
+    color: var(--ship-clean-muted); font-size: 10px;
+}
+.seller-shipping-page .seller-ship-dates strong {
+    color: #59636E; margin-left: 3px; font-size: 10px; font-weight: 600;
+}
+.seller-shipping-page .seller-ship-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
+.seller-shipping-page .seller-shipping-waybill-button,
+.seller-shipping-page .seller-shipping-track-button {
+    height: 36px !important; min-height: 36px !important;
+    border-radius: 9px !important; padding: 0 13px !important;
+    font-size: 10.5px !important; font-weight: 650 !important;
+}
+.seller-shipping-page .seller-shipping-waybill-button { color: #475569 !important; background: #fff !important; border-color: #DCE2E8 !important; }
+.seller-shipping-page .seller-shipping-track-button { background: #C88912 !important; color: #fff !important; border-color: #C88912 !important; }
+.seller-shipping-page .seller-shipping-track-button span { display: inline-block; padding-left: 3px; font-size: 15px; line-height: 1; }
+.seller-shipping-page .seller-shipping-track-button:hover { background: #B47B0E !important; border-color: #B47B0E !important; }
+.seller-shipping-page .seller-shipping-waybill-button:focus-visible,
+.seller-shipping-page .seller-shipping-track-button:focus-visible {
+    outline: 2px solid #C88912 !important; outline-offset: 2px !important;
+}
+.seller-shipping-page .seller-shipping-workspace nav a:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+@media (max-width: 800px) {
+    .seller-shipping-page .seller-ship-meta-grid { gap: 12px; }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item { padding-left: 12px !important; }
+}
+@media (max-width: 640px) {
+    .seller-shipping-page .seller-shipping-card { padding: 17px 16px 14px !important; }
+    .seller-shipping-page .seller-ship-order-head { align-items: flex-start; flex-direction: column; gap: 7px; }
+    .seller-shipping-page .seller-ship-last-update { font-size: 10px; }
+    .seller-shipping-page .seller-ship-meta-grid { grid-template-columns: 1fr !important; margin-top: 14px; gap: 0; }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item,
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item {
+        border: 0 !important; padding: 9px 0 !important;
+    }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item {
+        border-top: 1px solid #F0F2F5 !important;
+    }
+    .seller-shipping-page .seller-shipping-meta-item p:nth-child(2) { margin-top: 3px !important; }
+    .seller-shipping-page .seller-shipping-progress { margin-top: 10px !important; }
+    .seller-shipping-page .seller-shipping-progress-milestones li { font-size: 8px !important; }
+    .seller-shipping-page .seller-shipping-card-footer { align-items: stretch; }
+    .seller-shipping-page .seller-ship-actions { width: 100%; margin-left: 0; }
+    .seller-shipping-page .seller-ship-actions > a { flex: 1 1 auto; }
+}
+
+
+/* Mobile density: two KPI columns and a compact two-row metadata strip. */
+@media (max-width: 640px) {
+    .seller-shipping-page .seller-shipping-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+    .seller-shipping-page .seller-shipping-stat,
+    .seller-shipping-page .seller-shipping-stat:hover {
+        min-height: 104px !important;
+        padding: 13px !important;
+    }
+    .seller-shipping-page .seller-shipping-stat p:first-child { font-size: 10.5px !important; }
+    .seller-shipping-page .seller-shipping-stat p:nth-child(2) { font-size: 24px !important; }
+    .seller-shipping-page .seller-shipping-stat p:nth-child(3) { font-size: 9px !important; }
+    .seller-shipping-page .seller-shipping-stat-icon,
+    .seller-shipping-page .seller-shipping-stat-icon svg { width: 23px !important; height: 23px !important; }
+    .seller-shipping-page .seller-ship-meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0 12px !important;
+    }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item,
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item + .seller-shipping-meta-item {
+        padding: 8px 0 !important; border: 0 !important;
+    }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item:nth-child(3) {
+        grid-column: 1 / -1;
+        border-top: 1px solid #F0F2F5 !important;
+        margin-top: 4px;
+    }
+    .seller-shipping-page .seller-ship-meta-grid .seller-shipping-meta-item:nth-child(2) {
+        border-left: 1px solid #F0F2F5 !important;
+        padding-left: 12px !important;
+    }
+}
+
+
+/* Shipment pagination — inside the bottom of the single shipment workspace. */
+.seller-shipping-page .seller-shipping-pagination-footer {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    padding: 14px 22px;
+    border-top: 1px solid #E9EDF1;
+    background: #FFFFFF;
+}
+.seller-shipping-page .seller-shipping-pagination-count {
+    margin: 0;
+    color: #8591A0;
+    font-size: 11px;
+    font-weight: 550;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+}
+.seller-shipping-page .seller-shipping-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-arrow,
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-number {
+    display: inline-flex;
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px !important;
+    background: #FFFFFF;
+    color: #64748B;
+    font-size: 11.5px !important;
+    font-weight: 700;
+    text-decoration: none;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-arrow svg {
+    width: 15px;
+    height: 15px;
+}
+.seller-shipping-page .seller-shipping-pagination a:hover {
+    border-color: #CBD5E1;
+    background: #F8FAFC;
+    color: #293440;
+}
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-number.is-current {
+    border-color: #C88912;
+    background: #C88912;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(200,137,18,.14);
+}
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-arrow.is-disabled {
+    border-color: #F1F5F9;
+    background: #F8FAFC;
+    color: #CBD5E1;
+    cursor: default;
+}
+.seller-shipping-page .seller-shipping-pagination .seller-shipping-page-ellipsis {
+    min-width: 15px;
+    color: #94A3B8;
+    text-align: center;
+    font-size: 12px;
+}
+.seller-shipping-page .seller-shipping-pagination a:focus-visible {
+    outline: 2px solid #C88912 !important;
+    outline-offset: 2px !important;
+}
+@media (max-width: 640px) {
+    .seller-shipping-page .seller-shipping-pagination-footer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 12px;
+    }
+    .seller-shipping-page .seller-shipping-pagination { justify-content: center; }
+    .seller-shipping-page .seller-shipping-pagination .seller-shipping-page-arrow,
+    .seller-shipping-page .seller-shipping-pagination .seller-shipping-page-number {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+    }
+}
+
 @endverbatim
 </style>
 
@@ -2580,13 +3311,13 @@
 
     $toneClasses = [
 
-        'success' => 'border-[#cfe4d7] bg-[#f1f8f4] text-[#4f7d63]',
+        'success' => 'seller-shipping-status--delivered',
 
-        'info' => 'border-[#cfdeea] bg-[#f1f7fb] text-[#3c6e91]',
+        'info' => 'seller-shipping-status--transit',
 
-        'hub' => 'border-[#d8d8ea] bg-[#f5f5fb] text-[#63638d]',
+        'hub' => 'seller-shipping-status--hub',
 
-        'warning' => 'border-[#eadfc9] bg-[#fff9ef] text-[#a8731f]',
+        'warning' => 'seller-shipping-status--awaiting',
 
     ];
 
@@ -2785,24 +3516,11 @@
                     aria-expanded="false"
 
                     data-shipping-status-button
+                    aria-label="Filter shipments by status"
 
                 >
 
                     <span class="seller-shipping-status-button-main">
-
-                        <span class="seller-shipping-status-button-icon" aria-hidden="true">
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                                <path d="M4 7h16"></path>
-
-                                <path d="M7 12h10"></path>
-
-                                <path d="M10 17h4"></path>
-
-                            </svg>
-
-                        </span>
 
                         <span data-shipping-status-label>All Status</span>
 
@@ -2828,75 +3546,47 @@
 
                 >
 
-                    <button type="button" class="seller-shipping-status-option" data-shipping-status-value="all">
+                    <button type="button" class="seller-shipping-status-option" role="option" data-shipping-status-value="all">
 
                         <span class="seller-shipping-status-option-copy">
 
                             <strong>All Status</strong>
 
-                            <small>Show every shipment</small>
 
                         </span>
 
-                        <svg class="seller-shipping-status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-
-                            <path d="m6 12 4 4 8-8"></path>
-
-                        </svg>
-
                     </button>
 
-                    <button type="button" class="seller-shipping-status-option" data-shipping-status-value="awaiting_pickup">
+                    <button type="button" class="seller-shipping-status-option" role="option" data-shipping-status-value="awaiting_pickup">
 
                         <span class="seller-shipping-status-option-copy">
 
                             <strong>Awaiting Pickup</strong>
 
-                            <small>Seller and rider handoff</small>
 
                         </span>
 
-                        <svg class="seller-shipping-status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-
-                            <path d="m6 12 4 4 8-8"></path>
-
-                        </svg>
-
                     </button>
 
-                    <button type="button" class="seller-shipping-status-option" data-shipping-status-value="in_transit">
+                    <button type="button" class="seller-shipping-status-option" role="option" data-shipping-status-value="in_transit">
 
                         <span class="seller-shipping-status-option-copy">
 
                             <strong>In Transit</strong>
 
-                            <small>Moving through delivery</small>
 
                         </span>
 
-                        <svg class="seller-shipping-status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-
-                            <path d="m6 12 4 4 8-8"></path>
-
-                        </svg>
-
                     </button>
 
-                    <button type="button" class="seller-shipping-status-option" data-shipping-status-value="delivered">
+                    <button type="button" class="seller-shipping-status-option" role="option" data-shipping-status-value="delivered">
 
                         <span class="seller-shipping-status-option-copy">
 
                             <strong>Delivered</strong>
 
-                            <small>Completed shipments</small>
 
                         </span>
-
-                        <svg class="seller-shipping-status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-
-                            <path d="m6 12 4 4 8-8"></path>
-
-                        </svg>
 
                     </button>
 
@@ -2930,7 +3620,14 @@
 
     </section>
 
-    <section class="seller-shipping-workspace">
+    <section class="seller-shipping-workspace" aria-labelledby="sellerShippingListHeading">
+        <div class="seller-shipping-list-heading">
+            <div>
+                <h2 id="sellerShippingListHeading">Shipment Tracking</h2>
+                <p>Parcel status, assigned riders, and fulfillment details.</p>
+            </div>
+            <span>{{ number_format($orders->total()) }} total shipment{{ $orders->total() === 1 ? '' : 's' }}</span>
+        </div>
 
         <div class="seller-shipping-list">
 
@@ -2949,213 +3646,54 @@
                 @endphp
 
                 <article class="seller-shipping-card">
-
-                    <div class="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-
-                        <div class="min-w-0 flex-1">
-
-                            <div class="flex flex-wrap items-center gap-2">
-
-                                <a
-
-                                    href="{{ route('seller.shipping.show', $order) }}"
-
-                                    class="seller-shipping-order-number"
-
-                                >
-
-                                    {{ $order->order_number }}
-
-                                </a>
-
-                                <span class="inline-flex rounded-full border px-2.5 py-1 text-[7px] font-bold uppercase tracking-[.08em] {{ $tone }}">
-
-                                    {{ $state['label'] }}
-
-                                </span>
-
-                            </div>
-
-                            <p class="mt-2 max-w-[760px] text-[9px] leading-5 text-[#7b8089]">
-
-                                {{ $state['detail'] }}
-
-                            </p>
-
-                            <div class="mt-4">
-
-                                <div class="flex items-center justify-between gap-4">
-
-                                    <span class="seller-shipping-progress-label">Shipment progress</span>
-
-                                    <span class="text-[8px] font-bold text-[#b97805]">{{ $state['progress'] }}%</span>
-
-                                </div>
-
-                                <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-[#eceff2]">
-
-                                    <div
-
-                                        class="h-full rounded-full bg-[#d89b10] transition-all duration-300"
-
-                                        style="width: {{ $state['progress'] }}%"
-
-                                    ></div>
-
-                                </div>
-
-                                <div class="mt-2 grid grid-cols-5 gap-1 text-center text-[7px] text-[#9aa0a6]">
-
-                                    <span>Ready</span>
-
-                                    <span>Pickup</span>
-
-                                    <span>Hub</span>
-
-                                    <span>Final Mile</span>
-
-                                    <span>Delivered</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="grid min-w-0 gap-3 sm:grid-cols-3 xl:w-[560px]">
-
-                            <div class="seller-shipping-meta-item">
-
-                                <p class="text-[7px] font-bold uppercase tracking-[.1em] text-[#a2a7ae]">Buyer</p>
-
-                                <p class="mt-1.5 truncate text-[9px] font-semibold text-[#374151]">
-
-                                    {{ $order->buyer_name ?: 'SARI Buyer' }}
-
-                                </p>
-
-                                <p class="mt-1 text-[8px] text-[#8a919b]">
-
-                                    {{ $itemCount }} item{{ $itemCount === 1 ? '' : 's' }}
-
-                                </p>
-
-                            </div>
-
-                            <div class="seller-shipping-meta-item">
-
-                                <p class="text-[7px] font-bold uppercase tracking-[.1em] text-[#a2a7ae]">Assigned Rider</p>
-
-                                <p class="mt-1.5 truncate text-[9px] font-semibold text-[#374151]">
-
-                                    {{ $order->courier_name ?: 'Not assigned yet' }}
-
-                                </p>
-
-                                <p class="mt-1 truncate text-[8px] text-[#8a919b]">
-
-                                    {{ $order->courier_email ?: 'Waiting for Logistics' }}
-
-                                </p>
-
-                            </div>
-
-                            <div class="seller-shipping-meta-item">
-
-                                <p class="text-[7px] font-bold uppercase tracking-[.1em] text-[#a2a7ae]">Logistics Hub</p>
-
-                                <p class="mt-1.5 truncate text-[9px] font-semibold text-[#374151]">
-
-                                    {{ $parcel ? ucwords(str_replace('_', ' ', $parcel->status)) : 'Not received yet' }}
-
-                                </p>
-
-                                <p class="mt-1 truncate text-[8px] text-[#8a919b]">
-
-                                    {{ $parcel?->sorting_zone ?: 'No sorting zone yet' }}
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="seller-shipping-card-footer flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-
-                        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[8px] text-[#8a919b]">
-
-                            <span>
-
-                                Updated
-
-                                <strong class="font-semibold text-[#606771]">{{ $order->updated_at?->diffForHumans() }}</strong>
-
-                            </span>
-
-                            @if($order->picked_up_at)
-
-                                <span>
-
-                                    Picked up
-
-                                    <strong class="font-semibold text-[#606771]">{{ $order->picked_up_at->format('M d, h:i A') }}</strong>
-
-                                </span>
-
-                            @endif
-
-                            @if($order->delivered_at)
-
-                                <span>
-
-                                    Delivered
-
-                                    <strong class="font-semibold text-[#606771]">{{ $order->delivered_at->format('M d, h:i A') }}</strong>
-
-                                </span>
-
-                            @endif
-
-                        </div>
-
-                        <div class="flex items-center gap-2">
-
-                            @if(Route::has('seller.orders.waybill'))
-
-                                <a
-
-                                    href="{{ route('seller.orders.waybill', $order) }}"
-
-                                    class="seller-shipping-waybill-button"
-
-                                >
-
-                                    Waybill
-
-                                </a>
-
-                            @endif
-
-                            <a
-
-                                href="{{ route('seller.shipping.show', $order) }}"
-
-                                class="seller-shipping-track-button"
-
-                            >
-
-                                Track Shipment
-
-                                <span>→</span>
-
+                    <header class="seller-ship-order-head">
+                        <div class="seller-ship-order-identity">
+                            <a href="{{ route('seller.shipping.show', $order) }}" class="seller-shipping-order-number">
+                                {{ $order->order_number }}
                             </a>
-
+                            <span class="seller-shipping-status {{ $tone }}">{{ $state['label'] }}</span>
                         </div>
+                        <span class="seller-ship-last-update">Updated {{ $order->updated_at?->diffForHumans() }}</span>
+                    </header>
 
+                    <p class="seller-shipping-state-detail">{{ $state['detail'] }}</p>
+
+                    <div class="seller-ship-meta-grid" aria-label="Shipment parties and logistics information">
+                        <div class="seller-shipping-meta-item">
+                            <p>Buyer</p>
+                            <p>{{ $order->buyer_name ?: 'SARI Buyer' }}</p>
+                            <p>{{ $itemCount }} item{{ $itemCount === 1 ? '' : 's' }}</p>
+                        </div>
+                        <div class="seller-shipping-meta-item">
+                            <p>Assigned rider</p>
+                            <p>{{ $order->courier_name ?: 'Not assigned yet' }}</p>
+                            <p>{{ $order->courier_email ?: 'Waiting for Logistics' }}</p>
+                        </div>
+                        <div class="seller-shipping-meta-item">
+                            <p>Logistics hub</p>
+                            <p>{{ $parcel ? ucwords(str_replace('_', ' ', $parcel->status)) : 'Not received yet' }}</p>
+                            <p>{{ $parcel?->sorting_zone ?: 'No sorting zone yet' }}</p>
+                        </div>
                     </div>
 
+                    <footer class="seller-shipping-card-footer">
+                        <div class="seller-ship-dates">
+                            @if($order->picked_up_at)
+                                <span>Picked up <strong>{{ $order->picked_up_at->format('M d, h:i A') }}</strong></span>
+                            @endif
+                            @if($order->delivered_at)
+                                <span>Delivered <strong>{{ $order->delivered_at->format('M d, h:i A') }}</strong></span>
+                            @endif
+                        </div>
+                        <div class="seller-ship-actions">
+                            @if(Route::has('seller.orders.waybill'))
+                                <a href="{{ route('seller.orders.waybill', $order) }}" class="seller-shipping-waybill-button">Waybill</a>
+                            @endif
+                            <a href="{{ route('seller.shipping.show', $order) }}" class="seller-shipping-track-button">
+                                Track Shipment <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </div>
+                    </footer>
                 </article>
 
             @empty
@@ -3192,15 +3730,62 @@
 
         </div>
 
-        @if($orders->hasPages())
-
-            <div class="border-t border-[#eceef1] bg-white px-4 py-4 sm:px-5">
-
-                {{ $orders->links() }}
-
-            </div>
-
-        @endif
+        @php
+            $shipmentCurrentPage = (int) $orders->currentPage();
+            $shipmentLastPage = (int) $orders->lastPage();
+            $shipmentStartPage = max(1, min($shipmentCurrentPage - 2, $shipmentLastPage - 4));
+            $shipmentEndPage = min($shipmentLastPage, $shipmentStartPage + 4);
+        @endphp
+        <div class="seller-shipping-pagination-footer">
+            <p class="seller-shipping-pagination-count" aria-live="polite">
+                @if($orders->total() > 0)
+                    Showing {{ number_format($orders->firstItem()) }}–{{ number_format($orders->lastItem()) }} of {{ number_format($orders->total()) }} shipments
+                @else
+                    Showing 0 of 0 shipments
+                @endif
+            </p>
+            @if($orders->total() > 0)
+                <nav class="seller-shipping-pagination" aria-label="Shipment pages">
+                    @if($orders->onFirstPage())
+                        <span class="seller-shipping-page-arrow is-disabled" aria-label="Previous page unavailable" aria-disabled="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                        </span>
+                    @else
+                        <a class="seller-shipping-page-arrow" href="{{ $orders->previousPageUrl() }}" rel="prev" aria-label="Previous page">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                        </a>
+                    @endif
+                    @if($shipmentStartPage > 1)
+                        <a class="seller-shipping-page-number" href="{{ $orders->url(1) }}" aria-label="Page 1">1</a>
+                        @if($shipmentStartPage > 2)
+                            <span class="seller-shipping-page-ellipsis" aria-hidden="true">…</span>
+                        @endif
+                    @endif
+                    @for($page = $shipmentStartPage; $page <= $shipmentEndPage; $page++)
+                        @if($page === $shipmentCurrentPage)
+                            <span class="seller-shipping-page-number is-current" aria-current="page" aria-label="Current page, {{ $page }}">{{ $page }}</span>
+                        @else
+                            <a class="seller-shipping-page-number" href="{{ $orders->url($page) }}" aria-label="Page {{ $page }}">{{ $page }}</a>
+                        @endif
+                    @endfor
+                    @if($shipmentEndPage < $shipmentLastPage)
+                        @if($shipmentEndPage < $shipmentLastPage - 1)
+                            <span class="seller-shipping-page-ellipsis" aria-hidden="true">…</span>
+                        @endif
+                        <a class="seller-shipping-page-number" href="{{ $orders->url($shipmentLastPage) }}" aria-label="Page {{ $shipmentLastPage }}">{{ $shipmentLastPage }}</a>
+                    @endif
+                    @if($orders->hasMorePages())
+                        <a class="seller-shipping-page-arrow" href="{{ $orders->nextPageUrl() }}" rel="next" aria-label="Next page">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @else
+                        <span class="seller-shipping-page-arrow is-disabled" aria-label="Next page unavailable" aria-disabled="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </span>
+                    @endif
+                </nav>
+            @endif
+        </div>
 
     </section>
 

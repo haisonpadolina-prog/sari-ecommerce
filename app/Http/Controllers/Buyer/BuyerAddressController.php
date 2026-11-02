@@ -22,17 +22,20 @@ class BuyerAddressController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $buyer = $this->buyer($request);
-
-        if ($buyer->addresses()->count() >= self::MAX_ADDRESSES) {
-            throw ValidationException::withMessages([
-                'address' => 'You can save up to 5 delivery addresses.',
-            ]);
-        }
-
         $validated = $this->validateAddress($request);
-        $makeDefault = $request->boolean('is_default') || !$buyer->addresses()->exists();
 
-        DB::transaction(function () use ($buyer, $validated, $makeDefault): void {
+        DB::transaction(function () use ($request, $buyer, $validated): void {
+            // Serialize concurrent saves for this buyer, so two fast requests
+            // cannot slip past the five-address limit.
+            BuyerAccount::query()->whereKey($buyer->getKey())->lockForUpdate()->firstOrFail();
+
+            if ($buyer->addresses()->count() >= self::MAX_ADDRESSES) {
+                throw ValidationException::withMessages([
+                    'address' => 'You can save up to 5 delivery addresses.',
+                ]);
+            }
+
+            $makeDefault = $request->boolean('is_default') || !$buyer->addresses()->exists();
             if ($makeDefault) {
                 $buyer->addresses()->update(['is_default' => false]);
             }
@@ -100,17 +103,29 @@ class BuyerAddressController extends Controller
     ): RedirectResponse {
         $buyer = $this->buyer($request);
         $this->guardOwnership($buyer, $address);
-
         $wasActive = (bool) $address->is_default;
 
-        DB::transaction(function () use ($address): void {
+        $hasReplacement = DB::transaction(function () use ($buyer, $address, $wasActive): bool {
             $address->delete();
+
+            if (!$wasActive) {
+                return false;
+            }
+
+            $replacement = $buyer->addresses()->orderByDesc('updated_at')->orderByDesc('id')->first();
+            if ($replacement) {
+                $replacement->update(['is_default' => true]);
+            }
+
+            return $replacement !== null;
         });
 
         return back()->with(
             'success',
             $wasActive
-                ? 'Delivery address removed. Registered address is now active.'
+                ? ($hasReplacement
+                    ? 'Delivery address removed. Another saved address is now active.'
+                    : 'Delivery address removed. Registered address is now active.')
                 : 'Delivery address removed.'
         );
     }
@@ -139,13 +154,12 @@ class BuyerAddressController extends Controller
     private function validateAddress(Request $request): array
     {
         $validated = $request->validateWithBag('address', [
-            'label' => ['required', 'string', 'max:50'],
+            'label' => ['required', 'string', 'max:50', 'regex:/^\pL[\pL\s.\'\-]*$/u'],
             'recipient_name' => [
                 'required',
                 'string',
-                'min:2',
                 'max:150',
-                'regex:/^[\pL\s.\'\-]+$/u',
+                'regex:/^\pL[\pL\s.\'\-]*$/u',
             ],
             'contact_no' => ['required', 'string', 'regex:/^(?:09\d{9}|\+639\d{9})$/'],
             'street_address' => ['required', 'string', 'max:500'],
@@ -155,6 +169,7 @@ class BuyerAddressController extends Controller
             'postal_code' => ['nullable', 'regex:/^\d{4}$/'],
             'is_default' => ['nullable', 'boolean'],
         ], [
+            'label.regex' => 'Address label must start with a letter and contain letters only.',
             'recipient_name.regex' => 'Recipient name may only contain letters, spaces, apostrophes, periods, and hyphens.',
             'contact_no.regex' => 'Enter a Philippine mobile number as 09XXXXXXXXX or +639XXXXXXXXX.',
             'postal_code.regex' => 'Postal code must contain exactly four digits.',

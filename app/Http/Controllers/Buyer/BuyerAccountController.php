@@ -73,9 +73,9 @@ class BuyerAccountController extends Controller
         if ($buyer = $this->identity->account($request)) {
             $validated = $request->validate([
                 'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-                'first_name' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s.\'\-]+$/u'],
+                'first_name' => ['required', 'string', 'max:50', 'regex:/^\pL[\pL\s.\'\-]*$/u'],
                 'middle_initial' => ['nullable', 'string', 'max:2', 'regex:/^\pL{1,2}$/u'],
-                'last_name' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s.\'\-]+$/u'],
+                'last_name' => ['required', 'string', 'max:50', 'regex:/^\pL[\pL\s.\'\-]*$/u'],
                 'sex' => ['nullable', Rule::in(['Male', 'Female'])],
                 'birthday' => [
                     'required',
@@ -102,12 +102,11 @@ class BuyerAccountController extends Controller
                 ? mb_strtoupper(trim((string) $validated['middle_initial']))
                 : null;
 
-            // Registration currently allows Sex to be optional. If the user leaves
-            // it blank, preserve the existing database value rather than trying to
-            // write NULL into older buyer_accounts schemas where sex is required.
-            if (blank($validated['sex'] ?? null)) {
-                unset($validated['sex']);
-            }
+            // "Not set" clears the saved value. The project's
+            // 2026_10_16_091500 migration makes buyer_accounts.sex nullable.
+            $validated['sex'] = blank($validated['sex'] ?? null)
+                ? null
+                : $validated['sex'];
 
             $birthday = Carbon::parse($validated['birthday'])->startOfDay();
             $validated['birthday'] = $birthday->toDateString();
@@ -133,7 +132,7 @@ class BuyerAccountController extends Controller
             'name' => ['required', 'string', 'max:150'],
         ]);
 
-        $social->update(['name' => $validated['name']]);
+        $social->update(['name' => trim((string) $validated['name'])]);
         $request->session()->put('buyer_name', $social->name);
 
         return back()->with('success', 'Social buyer display name updated. Shipping details are entered during checkout.');

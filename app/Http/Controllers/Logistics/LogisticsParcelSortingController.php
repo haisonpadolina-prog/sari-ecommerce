@@ -10,6 +10,7 @@ use App\Services\Orders\MarketplaceOrderWorkflowService;
 use App\Support\CurrentLogisticsAccount;
 use App\Support\CurrentLogisticsHub;
 use App\Support\LogisticsOrderAccess;
+use App\Support\ParcelSortingLocator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -149,31 +150,20 @@ class LogisticsParcelSortingController extends Controller
         }
 
         /*
-         * Preserve the existing Sorting form fields.
+         * The normal workflow does not require typing a Zone / Rack.
+         * If a physical shelf has actually been assigned, staff may enter
+         * that location as an override. Otherwise the server creates a
+         * unique LOGICAL staging reference inside the locked transaction.
+         * A generated reference must never be represented as a verified
+         * physical shelf location.
          */
 
         $validated = $request->validate([
-            'sorting_zone' => [
-                'required',
-                'string',
-                'max:80',
-            ],
-
-            'notes' => [
-                'nullable',
-                'string',
-                'max:1000',
-            ],
+            'sorting_zone' => ['nullable', 'string', 'max:80'],
+            'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        $zone = trim($validated['sorting_zone']);
-
-        if ($zone === '') {
-            throw ValidationException::withMessages([
-                'sorting_zone' =>
-                    'Enter a valid sorting zone or rack.',
-            ]);
-        }
+        $manualRack = trim((string) ($validated['sorting_zone'] ?? ''));
 
         /*
         |--------------------------------------------------------------------------
@@ -191,7 +181,7 @@ class LogisticsParcelSortingController extends Controller
                 $ownedOrder,
                 $logistics,
                 $hubFacility,
-                $zone,
+                $manualRack,
                 $validated
             ): array {
 
@@ -296,12 +286,12 @@ class LogisticsParcelSortingController extends Controller
 
                 /*
                 |--------------------------------------------------------------------------
-                | Hub Operator Authorization
+                | Active Operating-Hub Authorization (Manager or Hub Operator)
                 |--------------------------------------------------------------------------
                 */
 
                 if ($hubFacility) {
-                    $currentHubFacility = CurrentLogisticsHub::requireFacility(
+                    $currentHubFacility = CurrentLogisticsHub::requireOperatingFacility(
                         $request
                     );
 
@@ -324,6 +314,17 @@ class LogisticsParcelSortingController extends Controller
                 $isLocalHandoff =
                     (int) $originFacility->id
                     === (int) $destinationFacility->id;
+
+                // Generate from VERIFIED, locked parcel + facility IDs.
+                // Never trust an auto-generated value supplied by the browser.
+                $isManualRack = $manualRack !== '';
+                $zone = $isManualRack
+                    ? $manualRack
+                    : ParcelSortingLocator::forParcel(
+                        (int) $lockedParcel->id,
+                        (int) $originFacility->id,
+                        (int) $destinationFacility->id
+                    );
 
                 $sortedAt = now();
 
@@ -390,7 +391,7 @@ class LogisticsParcelSortingController extends Controller
                         . $order->order_number
                         . ' was sorted at '
                         . $originFacility->name
-                        . ' in zone/rack '
+                        . ($isManualRack ? ' at physical zone/rack ' : ' with system staging reference ')
                         . $zone
                         . '.'
                 );
@@ -458,11 +459,11 @@ class LogisticsParcelSortingController extends Controller
                 $notificationMessage = $isLocalHandoff
                     ? 'Parcel for order '.$order->order_number
                         .' was sorted at '.$originFacility->name
-                        .' in zone/rack '.$zone
+                        .($isManualRack ? ' at physical zone/rack ' : ' with system staging reference ').$zone
                         .'. The local hub handoff is complete; assign a Last-Mile Rider.'
                     : 'Parcel for order '.$order->order_number
                         .' was sorted at '.$originFacility->name
-                        .' in zone/rack '.$zone
+                        .($isManualRack ? ' at physical zone/rack ' : ' with system staging reference ').$zone
                         .'. It is ready for an inter-hub transfer.';
 
                 $notificationData = [
@@ -472,6 +473,7 @@ class LogisticsParcelSortingController extends Controller
                     'origin_facility_id' => (int) $originFacility->id,
                     'destination_facility_id' => (int) $destinationFacility->id,
                     'sorting_zone' => $zone,
+                    'sorting_reference_type' => $isManualRack ? 'physical_rack' : 'logical_auto',
                     'local_handoff' => $isLocalHandoff,
                 ];
 

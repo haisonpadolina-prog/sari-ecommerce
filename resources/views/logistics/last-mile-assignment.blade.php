@@ -4,2539 +4,454 @@
 @section('page-title', 'Last Mile Assignment')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/logistics/last-mile-assignment.css') }}?v=20261015-1">
-
 <style>
+/* SARI Logistics — Last Mile. Self-contained, scoped UI; no legacy CSS required. */
+#lgLastMile, #lgLastMile * { box-sizing: border-box; }
 #lgLastMile {
-    --lm-gold: #d9950b;
-    --lm-ink: #25211c;
-    --lm-line: #e8e2d9;
-    --lm-muted: #8a8177;
-    --lm-shadow: 0 6px 18px rgba(33,24,14,.035);
-    width: 100%;
-    max-width: 1620px;
-    margin-inline: auto;
-    font-size: 10px;
-}
-
-#lgLastMile [hidden] {
-    display: none !important;
-}
-
-#lgLastMile :is(button,input,select,a,summary):focus-visible {
-    outline: 2px solid rgba(217,149,11,.65);
-    outline-offset: 2px;
-}
-
-/* PAGE HEADING */
-
-#lgLastMile .lastmile-page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    min-height: 0;
-    margin-bottom: 14px;
-    padding: 5px 2px 17px;
-    overflow: visible;
-    border: 0;
-    border-bottom: 1px solid #e4e1dc;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-#lgLastMile .lastmile-page-header::before,
-#lgLastMile .lastmile-page-header::after {
-    display: none;
-}
-
-#lgLastMile .lastmile-eyebrow {
-    margin: 0 0 5px;
-    color: #a76f11;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    line-height: 1.4;
-    text-transform: uppercase;
-}
-
-#lgLastMile .lastmile-page-header .lastmile-eyebrow {
-    color: #a76f11;
-}
-
-#lgLastMile .lastmile-page-header h1 {
-    color: #24201b;
-    font-size: clamp(23px,2.15vw,30px);
-    font-weight: 750;
-    line-height: 1.2;
-    letter-spacing: -.045em;
-}
-
-#lgLastMile .lastmile-page-header h1 span {
-    color: var(--lm-gold);
-}
-
-#lgLastMile .lastmile-subtitle {
-    max-width: 740px;
-    margin-top: 6px;
-    color: #897f75;
-    font-size: 10px;
-    line-height: 1.7;
-}
-
-#lgLastMile .lastmile-header-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-/* BUTTONS */
-
-#lgLastMile .lastmile-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    min-height: 39px;
-    padding: 9px 14px;
-    border: 1px solid #e4d8c6;
-    border-radius: 10px;
-    background: #fff;
-    color: #776a5a;
-    font-size: 10px;
-    font-weight: 650;
-    line-height: 1.4;
-    text-decoration: none;
-    transition:
-        background-color .16s ease,
-        border-color .16s ease,
-        color .16s ease,
-        box-shadow .16s ease;
-}
-
-#lgLastMile .lastmile-button:hover {
-    transform: none;
-    background: #fff9ed;
-    border-color: #d5bb87;
-    color: #a36c0a;
-}
-
-#lgLastMile .lastmile-button-primary,
-#lgLastMile .lastmile-page-header .lastmile-button-primary {
-    border-color: #d9950b;
-    background: #d9950b;
-    color: white;
-    box-shadow: none;
-}
-
-#lgLastMile .lastmile-button-primary:hover,
-#lgLastMile .lastmile-page-header .lastmile-button-primary:hover {
-    border-color: #c88708;
-    background: #c88708;
-    color: white;
-}
-
-#lgLastMile .lastmile-page-header
-.lastmile-button:not(.lastmile-button-primary) {
-    border-color: #e4d8c6;
-    background: white;
-    color: #776a5a;
-}
-
-#lgLastMile .lastmile-page-header
-.lastmile-button:not(.lastmile-button-primary):hover {
-    border-color: #d5bb87;
-    background: #fff9ed;
-    color: #a36c0a;
-}
-
-#lgLastMile .lastmile-button:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-}
-
-/* ALERTS */
-
-#lgLastMile .lastmile-alert {
-    padding: 13px 16px;
-    margin-bottom: 14px;
-    border-radius: 12px;
-}
-
-#lgLastMile .lastmile-alert strong {
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-alert p,
-#lgLastMile .lastmile-alert li {
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-/* KPI CARDS */
-
-#lgLastMile .lastmile-stats {
-    grid-template-columns: repeat(4,minmax(0,1fr));
-    gap: 12px;
-}
-
-#lgLastMile .lastmile-stat {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    min-width: 0;
-    min-height: 98px;
-    padding: 14px;
-    border: 1px solid var(--lm-line);
-    border-radius: 16px;
-    background: white;
-    box-shadow: var(--lm-shadow);
-    transition:
-        transform .18s cubic-bezier(.22,1,.36,1),
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgLastMile .lastmile-stat::after {
-    display: none;
-}
-
-#lgLastMile .lastmile-stat p {
-    margin: 0;
-    color: #756b60;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: normal;
-    text-transform: none;
-}
-
-#lgLastMile .lastmile-stat strong,
-#lgLastMile .lastmile-stat-amber strong,
-#lgLastMile .lastmile-stat-blue strong,
-#lgLastMile .lastmile-stat-green strong {
-    display: block;
-    margin: 8px 0 5px;
-    color: #211d18;
-    font-size: 25px;
-    font-weight: 750;
-    line-height: 1.1;
-    letter-spacing: -.045em;
-}
-
-#lgLastMile .lastmile-stat span:not(.lm-stat-icon) {
-    color: #8d8378;
-    font-size: 9px;
-    line-height: 1.5;
-}
-
-#lgLastMile .lm-stat-icon {
-    display: grid;
-    place-items: center;
-    flex: 0 0 41px;
-    width: 41px;
-    height: 41px;
-    border-radius: 11px;
-    background: #f1f6fd;
-    color: #587ead;
-}
-
-#lgLastMile .lm-stat-icon svg {
-    width: 18px;
-    height: 18px;
-}
-
-#lgLastMile .lastmile-stat-amber .lm-stat-icon {
-    background: #fff7e9;
-    color: #bc8420;
-}
-
-#lgLastMile .lastmile-stat-neutral .lm-stat-icon {
-    background: #f2f1ef;
-    color: #80776d;
-}
-
-#lgLastMile .lastmile-stat-blue .lm-stat-icon {
-    background: #eff5fa;
-    color: #587ead;
-}
-
-#lgLastMile .lastmile-stat-green .lm-stat-icon {
-    background: #eef8f2;
-    color: #4c8663;
-}
-
-/* WORKFLOW STEPPER */
-
-#lgLastMile .lastmile-flow {
-    display: flex;
-    max-width: 100%;
-    gap: 4px;
-    margin: 14px 0;
-    padding: 4px;
-    border: 1px solid var(--lm-line);
-    border-radius: 10px;
-    background: white;
-}
-
-#lgLastMile .lastmile-flow :is(a,span) {
-    min-height: 32px;
-    padding: 5px 10px;
-    border-radius: 7px;
-    font-size: 9px;
-}
-
-#lgLastMile .lastmile-flow b {
-    display: grid;
-    place-items: center;
-    flex: 0 0 21px;
-    width: 21px;
-    height: 21px;
-    font-size: 9px;
-}
-
-/* WORKSPACES */
-
-#lgLastMile .lastmile-workspace {
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid var(--lm-line);
-    border-radius: 17px;
-    background: white;
-    box-shadow: var(--lm-shadow);
-}
-
-#lgLastMile .lastmile-assignment-history {
-    margin-top: 14px;
-}
-
-#lgLastMile .lastmile-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 15px 17px;
-}
-
-#lgLastMile .lastmile-toolbar h2 {
-    margin: 4px 0 0;
-    color: #29231d;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -.035em;
-}
-
-#lgLastMile .lastmile-toolbar p:not(.lastmile-eyebrow) {
-    margin-top: 4px;
-    color: #93897e;
-    font-size: 9px;
-    line-height: 1.55;
-}
-
-/* SEARCH AND FILTERS */
-
-#lgLastMile .lastmile-search {
-    width: min(315px,100%);
-    flex-shrink: 0;
-}
-
-#lgLastMile .lastmile-search input {
-    height: 39px;
-    padding: 0 12px;
-    border: 1px solid #dfe2e6;
-    border-radius: 10px;
-    background: white;
-    color: #50483e;
-    font-size: 10px;
-}
-
-#lgLastMile .lastmile-search input:focus,
-#lgLastMile .lastmile-dispatch-panel select:focus {
-    border-color: #d9950b;
-    box-shadow: 0 0 0 3px rgba(217,149,11,.09);
-}
-
-#lgLastMile .lastmile-filter-row {
-    gap: 10px;
-    padding: 0 17px 13px;
-    border-bottom: 1px solid #eee8df;
-}
-
-#lgLastMile .lastmile-tabs {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 4px;
-    border: 1px solid #e6e1d9;
-    border-radius: 10px;
-    background: #f7f8fa;
-}
-
-#lgLastMile .lastmile-tabs button {
-    min-height: 30px;
-    padding: 5px 10px;
-    border: 1px solid transparent;
-    border-radius: 7px;
-    background: transparent;
-    color: #756d63;
-    font-size: 9px;
-    font-weight: 550;
-}
-
-#lgLastMile .lastmile-tabs button:hover {
-    background: #fff9ee;
-    color: #a36c0a;
-}
-
-#lgLastMile .lastmile-tabs button[aria-pressed="true"] {
-    border-color: #e9dfce;
-    background: white;
-    color: #a36c0a;
-    font-weight: 700;
-    box-shadow: 0 2px 5px rgba(35,29,22,.035);
-}
-
-#lgLastMile .lastmile-tabs span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 21px;
-    height: 19px;
-    padding: 0 5px;
-    border-radius: 6px;
-    background: #f0ece6;
-    font-size: 8px;
-}
-
-#lgLastMile .lastmile-text-link {
-    color: #a66d0b;
-    font-size: 9px;
-    font-weight: 650;
-}
-
-/* DELIVERY AREA CARDS */
-
-#lgLastMile .lastmile-area-list,
-#lgLastMile .lastmile-assignment-list {
-    display: grid;
-    gap: 12px;
-    padding: 14px;
-    background: white;
-}
-
-#lgLastMile .lastmile-area-card {
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid var(--lm-line);
-    border-radius: 13px;
-    background: white;
-    box-shadow: 0 3px 12px rgba(35,27,18,.025);
-    transition:
-        transform .18s cubic-bezier(.22,1,.36,1),
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgLastMile .lastmile-area-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    min-height: 0;
-    padding: 14px 15px;
-    border-bottom: 1px solid #eee8df;
-    background: white;
-}
-
-#lgLastMile .lastmile-area-title {
-    min-width: 0;
-    gap: 11px;
-}
-
-#lgLastMile .lastmile-area-icon {
-    display: grid;
-    place-items: center;
-    flex: 0 0 41px;
-    width: 41px;
-    height: 41px;
-    border: 1px solid #eee3ce;
-    border-radius: 11px;
-    background: #fff5e1;
-    color: #a97312;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-area-title h3 {
-    color: #383027;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-area-title .lastmile-eyebrow {
-    margin-bottom: 3px;
-    color: #a68c61;
-    font-size: 8px;
-}
-
-#lgLastMile .lastmile-area-title p:not(.lastmile-eyebrow) {
-    margin-top: 4px;
-    color: #8f8579;
-    font-size: 9px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-area-tags {
-    gap: 6px;
-}
-
-#lgLastMile .lastmile-area-tags span {
-    min-height: 25px;
-    padding: 5px 9px;
-    border: 1px solid #e8e2da;
-    border-radius: 999px;
-    background: #fbfbfc;
-    color: #756b60;
-    font-size: 8.5px;
-    font-weight: 650;
-}
-
-#lgLastMile .lastmile-area-tags .is-serviceable {
-    border-color: #d5e5da;
-    background: #f0f8f2;
-    color: #4f7c5b;
-}
-
-#lgLastMile .lastmile-area-tags .is-unserved {
-    border-color: #ecd5cf;
-    background: #fff4f2;
-    color: #a85f58;
-}
-
-/* UNIFIED AREA LAYOUT */
-
-#lgLastMile .lastmile-area-layout {
-    display: grid;
-    grid-template-columns: minmax(0,1fr) 294px;
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-area-main {
-    min-width: 0;
-    padding: 16px;
-}
-
-#lgLastMile .lastmile-dispatch-panel {
-    min-width: 0;
-    padding: 16px;
-    border-left: 1px solid #eee8df;
-    background: #fcfcfd;
-}
-
-/* ROUTE SUMMARY */
-
-#lgLastMile .lastmile-route-summary {
-    display: grid;
-    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
-    align-items: start;
-    gap: 13px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #eee8df;
-}
-
-#lgLastMile .lastmile-route-summary > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #958879;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: .065em;
-    line-height: 1.5;
-    text-transform: uppercase;
-}
-
-#lgLastMile .lastmile-route-summary strong {
-    color: #443c33;
-    font-size: 10px;
-    font-weight: 650;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-route-summary p {
-    margin-top: 4px;
-    color: #91877b;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgLastMile .lastmile-route-arrow {
-    display: grid;
-    place-items: center;
-    align-self: center;
-    width: 28px;
-    height: 28px;
-    margin: 0;
-    border: 1px solid #eddec4;
-    border-radius: 9px;
-    background: #fff7e9;
-    color: #ae7819;
-    font-size: 15px;
-}
-
-/* PARCELS */
-
-#lgLastMile .lastmile-parcel-heading {
-    margin: 15px 0 10px;
-}
-
-#lgLastMile .lastmile-parcel-heading h4 {
-    color: #403930;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-parcel-heading p {
-    margin-top: 4px;
-    color: #968b7f;
-    font-size: 9px;
-    line-height: 1.5;
-}
-
-#lgLastMile .lastmile-parcel-heading > span {
-    min-width: 24px;
-    padding: 5px 8px;
-    border-radius: 7px;
-    font-size: 8.5px;
-}
-
-#lgLastMile .lastmile-parcel-list {
-    gap: 8px;
-}
-
-#lgLastMile .lastmile-parcel {
-    min-width: 0;
-    gap: 8px 12px;
-    padding: 11px 12px;
-    border: 1px solid #e9e4dd;
-    border-radius: 10px;
-    background: #fbfbfc;
-}
-
-#lgLastMile .lastmile-parcel-main {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-parcel-main strong {
-    color: #4b433a;
-    font-size: 10px;
-    font-weight: 650;
-}
-
-#lgLastMile .lastmile-parcel-main p {
-    margin-top: 4px;
-    color: #8f8579;
-    font-size: 9px;
-}
-
-#lgLastMile .lastmile-parcel-status {
-    padding: 5px 9px;
-    font-size: 8px;
-    line-height: 1.4;
-    white-space: normal;
-}
-
-#lgLastMile .lastmile-parcel-address {
-    padding-top: 8px;
-    border-top-color: #eee8df;
-}
-
-#lgLastMile .lastmile-parcel-address p {
-    color: #81786d;
-    font-size: 9px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-/* EXPANDABLE DETAILS */
-
-#lgLastMile .lastmile-details summary {
-    gap: 7px;
-    color: #a47118;
-    font-size: 9px;
-    font-weight: 650;
-}
-
-#lgLastMile .lastmile-detail-body {
-    min-width: 0;
-    padding: 12px;
-    border: 1px solid #e8e2d9;
-    border-radius: 9px;
-    background: white;
-}
-
-#lgLastMile .lastmile-detail-grid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 12px;
-}
-
-#lgLastMile .lastmile-detail-grid > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-detail-grid strong {
-    color: #50473d;
-    font-size: 9px;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-detail-grid p {
-    margin-top: 4px;
-    color: #8f8276;
-    font-size: 9px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-/* RIDER DISPATCH PANEL */
-
-#lgLastMile .lastmile-dispatch-panel h4 {
-    color: #37312a;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-dispatch-note {
-    margin: 7px 0 15px;
-    color: #908679;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgLastMile .lastmile-dispatch-panel select {
-    width: 100%;
-    min-height: 40px;
-    padding: 8px 11px;
-    border: 1px solid #dfe2e6;
-    border-radius: 10px;
-    background: white;
-    color: #50483e;
-    font-size: 10px;
-}
-
-#lgLastMile .lastmile-rider-preview {
-    min-width: 0;
-    gap: 10px;
-    margin-top: 12px;
-    padding: 12px;
-    border: 1px solid #e8e2d9;
-    border-radius: 10px;
-    background: white;
-}
-
-#lgLastMile .lastmile-rider-preview > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-rider-avatar {
-    display: grid;
-    place-items: center;
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
-    border: 1px solid #eee3ce;
-    border-radius: 10px;
-    background: #fff5e1;
-    color: #a97312;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-rider-preview strong {
-    color: #443c33;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-rider-preview p {
-    margin-top: 4px;
-    color: #897f74;
-    font-size: 9px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-dispatch-total {
-    margin-top: 15px;
-    padding: 13px 0;
-    border-top: 1px solid #eee8df;
-    color: #807669;
-    font-size: 9px;
-}
-
-#lgLastMile .lastmile-dispatch-total strong {
-    color: #30271d;
-    font-size: 19px;
-    font-weight: 750;
-}
-
-#lgLastMile .lastmile-dispatch-panel .lastmile-button {
-    width: 100%;
-    min-height: 40px;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-dispatch-footnote {
-    margin-top: 9px;
-    color: #958a7e;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgLastMile .lastmile-rider-warning {
-    margin-top: 12px;
-    padding: 12px;
-    border: 1px solid #ecd5cf;
-    border-radius: 10px;
-    background: #fff7f4;
-    color: #96625d;
-}
-
-#lgLastMile .lastmile-rider-warning strong {
-    font-size: 10px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-rider-warning p {
-    margin-top: 6px;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-/* ASSIGNMENT HISTORY */
-
-#lgLastMile .lastmile-assignment-card {
-    display: grid;
-    grid-template-columns:
-        minmax(0,.8fr)
-        minmax(0,1.45fr)
-        minmax(0,1fr)
-        minmax(65px,.45fr)
-        minmax(105px,.7fr);
-    align-items: center;
-    gap: 13px;
-    min-width: 0;
-    padding: 14px 15px;
-    border: 1px solid #e8e2d9;
-    border-radius: 12px;
-    background: white;
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-#lgLastMile .lastmile-assignment-card > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-assignment-card strong {
-    color: #443c33;
-    font-size: 10px;
-    font-weight: 650;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-assignment-card p {
-    margin-top: 4px;
-    color: #91877b;
-    font-size: 9px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-#lgLastMile .lastmile-assignment-route {
-    grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
-    gap: 8px;
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-assignment-route > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-mini-arrow {
-    color: #be8b30;
-    font-size: 14px;
-}
-
-#lgLastMile .lastmile-assignment-rider {
-    min-width: 0;
-    gap: 9px;
-}
-
-#lgLastMile .lastmile-assignment-rider > div {
-    min-width: 0;
-}
-
-#lgLastMile .lastmile-assignment-load strong {
-    color: #30271d;
-    font-size: 18px;
-    font-weight: 750;
-}
-
-#lgLastMile .lastmile-status {
-    min-height: 25px;
-    padding: 5px 9px;
-    border-radius: 999px;
-    font-size: 8.5px;
-    font-weight: 700;
-    line-height: 1.4;
-}
-
-/* EMPTY STATES / FOOTER */
-
-#lgLastMile .lastmile-empty {
-    padding: 40px 20px;
-}
-
-#lgLastMile .lastmile-empty-icon {
-    width: 43px;
-    height: 43px;
-    border-radius: 12px;
-    background: #fff7e8;
-}
-
-#lgLastMile .lastmile-empty h3 {
-    color: #51483e;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-#lgLastMile .lastmile-empty p {
-    color: #948a7e;
-    font-size: 9px;
-    line-height: 1.6;
-}
-
-#lgLastMile .lastmile-list-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 9px;
-    padding: 12px 16px;
-    border-top: 1px solid #eee8df;
-    background: white;
-    color: #978d80;
-    font-size: 9px;
-}
-
-/* HOVER */
-
-@media (hover:hover) and (pointer:fine) {
-    #lgLastMile .lastmile-stat:hover,
-    #lgLastMile .lastmile-area-card:hover,
-    #lgLastMile .lastmile-assignment-card:hover {
-        transform: translateY(-2px);
-        border-color: #d8c9b2;
-        box-shadow: 0 13px 28px rgba(43,33,21,.055);
-    }
-}
-
-/* RESPONSIVE */
-
-@media (max-width:1200px) {
-    #lgLastMile .lastmile-area-layout {
-        grid-template-columns: minmax(0,1fr) 270px;
-    }
-}
-
-@media (max-width:1050px) {
-    #lgLastMile .lastmile-area-layout {
-        grid-template-columns: 1fr;
-    }
-
-    #lgLastMile .lastmile-dispatch-panel {
-        border-left: 0;
-        border-top: 1px solid #eee8df;
-    }
-
-    #lgLastMile .lastmile-assignment-card {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-        gap: 15px;
-    }
-}
-
-@media (max-width:900px) {
-    #lgLastMile .lastmile-stats {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-}
-
-@media (max-width:767px) {
-    #lgLastMile .lastmile-page-header,
-    #lgLastMile .lastmile-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    #lgLastMile .lastmile-header-actions,
-    #lgLastMile .lastmile-search {
-        width: 100%;
-    }
-
-    #lgLastMile .lastmile-header-actions .lastmile-button {
-        flex: 1;
-    }
-
-    #lgLastMile .lastmile-filter-row {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0 14px 13px;
-    }
-
-    #lgLastMile .lastmile-area-list,
-    #lgLastMile .lastmile-assignment-list {
-        padding: 10px;
-    }
-
-    #lgLastMile .lastmile-area-main,
-    #lgLastMile .lastmile-dispatch-panel {
-        padding: 13px;
-    }
-
-    #lgLastMile .lastmile-flow {
-        overflow-x: auto;
-    }
-
-    #lgLastMile .lastmile-flow :is(a,span) {
-        flex-shrink: 0;
-    }
-}
-
-@media (max-width:520px) {
-    #lgLastMile .lastmile-header-actions {
-        flex-direction: column;
-    }
-
-    #lgLastMile .lastmile-header-actions .lastmile-button {
-        width: 100%;
-    }
-
-    #lgLastMile .lastmile-stat {
-        padding: 12px;
-    }
-
-    #lgLastMile .lastmile-stat strong {
-        font-size: 22px;
-    }
-
-    #lgLastMile .lm-stat-icon {
-        flex-basis: 34px;
-        width: 34px;
-        height: 34px;
-    }
-
-    #lgLastMile .lastmile-route-summary {
-        grid-template-columns: 1fr;
-    }
-
-    #lgLastMile .lastmile-route-arrow {
-        transform: rotate(90deg);
-        justify-self: start;
-    }
-
-    #lgLastMile .lastmile-detail-grid,
-    #lgLastMile .lastmile-assignment-card {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (prefers-reduced-motion:reduce) {
-    #lgLastMile *,
-    #lgLastMile *::before,
-    #lgLastMile *::after {
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-    }
-
-    #lgLastMile .lastmile-stat:hover,
-    #lgLastMile .lastmile-area-card:hover,
-    #lgLastMile .lastmile-assignment-card:hover {
-        transform: none !important;
-    }
-}
+    --lm-gold:#d9950b; --lm-gold-hover:#c5880a; --lm-ink:#202b3b;
+    --lm-muted:#78869b; --lm-border:#e4eaf0; --lm-surface:#fff;
+    --lm-shadow:0 11px 26px rgba(29,43,60,.065),0 2px 7px rgba(29,43,60,.025);
+    width:100%;max-width:1620px;margin:0 auto;color:var(--lm-ink);font-size:13px;
+}
+#lgLastMile [hidden] { display:none !important; }
+#lgLastMile button,#lgLastMile select,#lgLastMile input {font:inherit;}
+#lgLastMile button {cursor:pointer;}
+#lgLastMile a {text-decoration:none;}
+#lgLastMile :is(button,input,select,a):focus-visible {outline:2px solid #9baabb;outline-offset:3px;}
+#lgLastMile :is(input,select):focus {border-color:#9baabb;box-shadow:0 0 0 3px rgba(133,151,173,.12);outline:none;}
+#lgLastMile .lm2-page-header {display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 22px;padding:4px 0 17px;border:0;border-bottom:1px solid #e2e7ec;border-radius:0;background:transparent;box-shadow:none;}
+#lgLastMile .lm2-eyebrow {margin:0 0 6px;color:#aa7317;letter-spacing:.13em;font-size:10px;font-weight:750;text-transform:uppercase;}
+#lgLastMile .lm2-page-title {margin:0;color:#1e2c40;font-size:clamp(25px,2.4vw,32px);font-weight:800;letter-spacing:-.045em;line-height:1.17;}
+#lgLastMile .lm2-page-title span {color:var(--lm-gold);}
+#lgLastMile .lm2-header-actions {display:flex;align-items:center;flex-wrap:wrap;gap:9px;}
+#lgLastMile .lm2-btn {display:inline-flex;justify-content:center;align-items:center;gap:6px;min-height:40px;padding:10px 15px;border:1px solid #dce4ed;border-radius:11px;background:#fff;color:#526176;font-weight:700;font-size:12px;line-height:1.3;transition:background .16s,border-color .16s,box-shadow .16s;}
+#lgLastMile .lm2-btn:hover {background:#f3f6f9;border-color:#cbd6e2;}
+#lgLastMile .lm2-btn-gold {background:var(--lm-gold)!important;color:white!important;border-color:var(--lm-gold)!important;box-shadow:0 5px 13px rgba(217,149,11,.14);}
+#lgLastMile .lm2-btn-gold:hover {background:var(--lm-gold-hover)!important;border-color:var(--lm-gold-hover)!important;}
+#lgLastMile .lm2-btn:disabled {opacity:.5;cursor:not-allowed;box-shadow:none;}
+#lgLastMile .lm2-alert {padding:14px 16px;margin:0 0 14px;border-radius:12px;border:1px solid #d9e5e0;background:#f3fbf6;color:#276448;}
+#lgLastMile .lm2-alert-error {background:#fff4f3;border-color:#f3d8d5;color:#ab514c;}
+#lgLastMile .lm2-alert ul {padding-left:18px;margin:6px 0 0;}
+#lgLastMile .lm2-stats {display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;margin:0 0 22px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;}
+#lgLastMile .lm2-stat {display:flex!important;justify-content:space-between;align-items:flex-start;min-width:0;gap:10px;padding:17px 18px;min-height:116px;border:1px solid var(--lm-border);border-radius:18px;background:#fff;box-shadow:var(--lm-shadow);}
+#lgLastMile .lm2-stat-label {margin:0 0 6px;color:#52647b;font-size:12px;font-weight:650;line-height:1.45;}
+#lgLastMile .lm2-stat-value {display:block;color:#19283b;font-size:28px;font-weight:800;line-height:1.08;letter-spacing:-.04em;}
+#lgLastMile .lm2-stat-note {display:block;margin-top:6px;color:#8b99aa;font-size:11px;line-height:1.45;}
+#lgLastMile .lm2-stat-icon {display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:0;border:0;border-radius:0;background:transparent!important;box-shadow:none!important;}
+#lgLastMile .lm2-stat-icon svg {display:block;width:31px;height:31px;stroke:currentColor;}
+#lgLastMile .lm2-stat-icon.gold {color:#c58a19;} #lgLastMile .lm2-stat-icon.purple {color:#8875b5;} #lgLastMile .lm2-stat-icon.blue {color:#4b86b5;} #lgLastMile .lm2-stat-icon.green {color:#3e916e;}
+#lgLastMile .lm2-tabs {display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin:0 0 16px;padding:2px 0 13px;border-bottom:1px solid #dde5ed;background:transparent!important;box-shadow:none!important;}
+#lgLastMile .lm2-tab {display:inline-flex;align-items:center;gap:7px;margin:0;padding:6px 0;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#7b8a9e!important;font-size:14px;font-weight:700;line-height:1.4;white-space:nowrap;}
+#lgLastMile .lm2-tab:hover {color:#37475c!important;}
+#lgLastMile .lm2-tab[aria-selected="true"] {color:#c48612!important;}
+#lgLastMile .lm2-tab-count {font-weight:800;color:inherit;}
+#lgLastMile .lm2-pane {min-width:0;}
+#lgLastMile .lm2-filterbar {display:grid!important;grid-template-columns:minmax(160px,1fr) minmax(170px,210px) auto auto;align-items:center;gap:12px!important;margin:0 0 16px;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;}
+#lgLastMile .lm2-search-field {display:flex;align-items:center;gap:10px;min-width:0;height:46px;padding:0 14px;border:1px solid #dbe4ed;border-radius:12px;background:#fff;color:#8492a6;}
+#lgLastMile .lm2-search-field svg {width:17px;height:17px;flex-shrink:0;}
+#lgLastMile .lm2-search-input {width:100%;min-width:0;height:100%;margin:0;padding:0;border:0!important;background:transparent!important;box-shadow:none!important;color:#263448;font-size:12px;outline:0!important;}
+#lgLastMile .lm2-search-field:focus-within {border-color:#9caabd;box-shadow:0 0 0 3px rgba(133,151,173,.10);}
+#lgLastMile .lm2-select {display:block;width:100%;height:46px;padding:0 13px;border:1px solid #dbe4ed;border-radius:12px;background:white;color:#394a60;font-size:12px;}
+#lgLastMile .lm2-filterbar .lm2-btn {min-height:46px;white-space:nowrap;}
+#lgLastMile .lm2-card {min-width:0;overflow:hidden;border:1px solid var(--lm-border);border-radius:19px;background:#fff;box-shadow:var(--lm-shadow);}
+#lgLastMile .lm2-card-head {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:17px 21px;border-bottom:1px solid #e9eef3;}
+#lgLastMile .lm2-card-title {margin:0;color:#1f2d42;font-size:16px;font-weight:750;letter-spacing:-.02em;}
+#lgLastMile .lm2-count {display:inline-flex;align-items:center;min-height:29px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:9px;color:#6c7d93;background:#f8fafc;font-size:10px;font-weight:750;white-space:nowrap;}
+#lgLastMile .lm2-table-wrap {overflow-x:auto;max-width:100%;}
+#lgLastMile .lm2-table {width:100%;border-collapse:collapse;table-layout:fixed;text-align:left;}
+#lgLastMile .lm2-table th {padding:13px 16px;border-bottom:1px solid #e2e8ee;background:#f7f9fb;color:#6e7d91;font-size:10px;font-weight:800;letter-spacing:.065em;text-transform:uppercase;}
+#lgLastMile .lm2-table td {padding:16px;border-bottom:1px solid #edf0f3;vertical-align:middle;font-size:12px;line-height:1.5;overflow-wrap:anywhere;}
+#lgLastMile .lm2-table tbody tr:last-child td {border-bottom:0;}
+#lgLastMile .lm2-table tbody tr:hover {background:#f2f4f6!important;box-shadow:none!important;}
+#lgLastMile .lm2-strong {font-size:12px;color:#24334a;font-weight:750;}
+#lgLastMile .lm2-sub {font-size:11px;margin-top:3px;color:#8493a7;line-height:1.5;overflow-wrap:anywhere;}
+#lgLastMile .lm2-status {display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border:1px solid #e0e7ed;border-radius:999px;background:#f7f9fb;color:#64768b;font-size:10px;font-weight:700;white-space:nowrap;}
+#lgLastMile .lm2-status.success {border-color:#cbe8d7;background:#eef9f2;color:#287a53;}
+#lgLastMile .lm2-status.warn {border-color:#f0dfbd;background:#fff9ee;color:#a2751d;}
+#lgLastMile .lm2-status.info {border-color:#d4e4f5;background:#f0f7fe;color:#4079b4;}
+#lgLastMile .lm2-status.danger {border-color:#efd9d5;background:#fdf3f2;color:#a95550;}
+#lgLastMile .lm2-row-actions {display:flex;align-items:center;justify-content:flex-end;gap:12px;}
+#lgLastMile .lm2-eye {display:inline-flex;align-items:center;justify-content:center;width:31px;height:34px;padding:0;border:0;background:transparent;color:#687b92;}
+#lgLastMile .lm2-eye:hover {color:#25364b;} #lgLastMile .lm2-eye svg {width:19px;height:19px;}
+#lgLastMile .lm2-btn-small {min-height:34px;padding:7px 12px;font-size:11px;border-radius:9px;white-space:nowrap;}
+#lgLastMile .lm2-mobile-list {display:none;}
+#lgLastMile .lm2-mobile-card {padding:16px;border-bottom:1px solid #edf0f3;}
+#lgLastMile .lm2-mobile-card:last-child {border-bottom:0;}
+#lgLastMile .lm2-mobile-top {display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+#lgLastMile .lm2-mobile-details {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:13px 0;}
+#lgLastMile .lm2-mobile-actions {display:flex;justify-content:flex-end;align-items:center;gap:13px;}
+#lgLastMile .lm2-mobile-label {font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#8b99ab;margin-bottom:3px;}
+#lgLastMile .lm2-empty {display:flex;flex-direction:column;justify-content:center;align-items:center;gap:9px;min-height:260px;padding:40px 22px;text-align:center;background:white;}
+#lgLastMile .lm2-empty-icon {width:58px;height:58px;color:#b6c0cb;stroke:currentColor;background:transparent!important;border:0!important;border-radius:0!important;}
+#lgLastMile .lm2-empty-title {margin:3px 0 0;color:#9cabbc;font-size:21px;font-weight:750;line-height:1.35;}
+#lgLastMile .lm2-empty-desc {max-width:480px;color:#9ba9ba;font-size:12px;line-height:1.65;}
+#lgLastMile .lm2-empty .lm2-btn {margin-top:8px;}
+#lgLastMile .lm2-table-footer {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:11px;padding:13px 18px;border-top:1px solid #e9eef3;color:#8493a7;font-size:11px;}
+#lgLastMile .lm2-rows-control {display:flex;align-items:center;gap:10px;}
+#lgLastMile .lm2-rows-control select {min-width:63px;min-height:34px;padding:5px 10px;border:1px solid #dfe6ee;border-radius:10px;background:#fff;color:#45556a;}
+#lgLastMile .lm2-pager {display:flex;align-items:center;justify-content:center;gap:7px;margin:16px 0 22px;}
+#lgLastMile .lm2-page-btn {display:inline-flex;justify-content:center;align-items:center;width:35px;height:35px;border:0;border-radius:10px;background:transparent;color:#7d90a6;font-size:12px;font-weight:750;}
+#lgLastMile .lm2-page-btn:hover:not(:disabled) {background:#eef2f6;}
+#lgLastMile .lm2-page-btn.is-active {background:#d9950b;color:white;box-shadow:0 5px 12px rgba(217,149,11,.16);}
+#lgLastMile .lm2-page-btn:disabled {opacity:.35;cursor:default;}
+#lgLastMile .lm2-modal {position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(18,28,41,.52);backdrop-filter:blur(3px);}
+#lgLastMile .lm2-dialog {width:min(600px,100%);max-height:min(760px,calc(100dvh - 35px));overflow:auto;border:1px solid #e4eaf0;border-radius:21px;background:#fff;box-shadow:0 25px 80px rgba(16,27,41,.26);overscroll-behavior:contain;}
+#lgLastMile .lm2-dialog-head {display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:22px 24px 17px;border-bottom:1px solid #e9eef3;}
+#lgLastMile .lm2-dialog-title {font-size:22px;letter-spacing:-.03em;margin:0;color:#203047;font-weight:800;line-height:1.2;}
+#lgLastMile .lm2-dialog-subtitle {margin:6px 0 0;color:#8291a4;font-size:12px;overflow-wrap:anywhere;}
+#lgLastMile .lm2-close {display:inline-grid;place-items:center;flex:0 0 35px;width:35px;height:35px;padding:0;border:1px solid #e2e8ee;border-radius:10px;background:white;color:#627489;font-size:21px;}
+#lgLastMile .lm2-close:hover {background:#f3f5f8;}
+#lgLastMile .lm2-dialog-body {display:grid;gap:12px;padding:20px 24px 24px;}
+#lgLastMile .lm2-info {padding:13px 15px;border:1px solid #e8ecf2;border-radius:12px;background:#f8fafc;}
+#lgLastMile .lm2-info-label {display:block;margin-bottom:5px;color:#8997aa;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.055em;}
+#lgLastMile .lm2-info-value {color:#29394e;font-size:13px;font-weight:650;overflow-wrap:anywhere;line-height:1.55;}
+#lgLastMile .lm2-info-desc {margin-top:5px;color:#8796a7;font-size:11px;line-height:1.6;overflow-wrap:anywhere;}
+#lgLastMile .lm2-info-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+#lgLastMile .lm2-dialog-section {margin:10px 0 3px;color:#34455a;font-size:13px;font-weight:800;}
+#lgLastMile .lm2-parcel-list {display:grid;gap:8px;max-height:220px;overflow:auto;}
+#lgLastMile .lm2-parcel {padding:12px 14px;border:1px solid #e8edf2;border-radius:10px;background:#fff;}
+#lgLastMile .lm2-form-label {display:block;margin:5px 0 7px;color:#53647c;font-size:12px;font-weight:700;}
+#lgLastMile .lm2-form-select {display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid #dce4ed;border-radius:11px;background:#fff;color:#30415a;font-size:13px;}
+#lgLastMile .lm2-dialog-actions {display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:8px;padding-top:16px;border-top:1px solid #e8edf2;}
+#lgLastMile .lm2-modal-warning {padding:12px;border:1px solid #f0dfce;border-radius:11px;color:#9b672c;background:#fff9f1;font-size:12px;line-height:1.6;}
+#lgLastMile .lm2-rider-preview {display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #deebe2;border-radius:12px;background:#f4faf6;}
+#lgLastMile .lm2-rider-preview-icon {display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:10px;background:#e3f1e9;color:#36805b;font-weight:800;}
+#lgLastMile .lm2-rider-preview strong {font-size:12px;color:#28513b;} #lgLastMile .lm2-rider-preview p {font-size:11px;color:#668976;margin:3px 0 0;}
+body.lm2-modal-open {overflow:hidden;}
+@media(max-width:1060px) {#lgLastMile .lm2-stats {grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:850px) {#lgLastMile .lm2-filterbar {grid-template-columns:minmax(0,1fr) minmax(145px,190px)!important;} #lgLastMile .lm2-filterbar .lm2-btn{width:100%;} #lgLastMile .lm2-table-wrap{display:none;} #lgLastMile .lm2-mobile-list{display:block;}}
+@media(max-width:560px) {#lgLastMile .lm2-page-header{gap:15px;} #lgLastMile .lm2-page-title{font-size:25px;} #lgLastMile .lm2-header-actions{width:100%;} #lgLastMile .lm2-header-actions .lm2-btn{flex:1;} #lgLastMile .lm2-stats{gap:10px!important;} #lgLastMile .lm2-stat{padding:13px;min-height:111px;border-radius:14px;} #lgLastMile .lm2-stat-label{font-size:11px;} #lgLastMile .lm2-stat-value{font-size:24px;} #lgLastMile .lm2-stat-icon svg{width:27px;height:27px;} #lgLastMile .lm2-filterbar{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;} #lgLastMile .lm2-search-field{grid-column:1/-1;} #lgLastMile .lm2-filterbar>.lm2-select{grid-column:1/-1;} #lgLastMile .lm2-tab{font-size:12px;} #lgLastMile .lm2-tabs{gap:17px;} #lgLastMile .lm2-card-head{padding:15px 16px;} #lgLastMile .lm2-empty-title{font-size:20px;} #lgLastMile .lm2-table-footer{padding:12px 15px;} #lgLastMile .lm2-dialog{border-radius:17px;} #lgLastMile .lm2-dialog-head{padding:17px;} #lgLastMile .lm2-dialog-body{padding:16px;} #lgLastMile .lm2-info-grid{grid-template-columns:1fr;} #lgLastMile .lm2-dialog-actions .lm2-btn{flex:1;} }
+@media(prefers-reduced-motion:reduce){#lgLastMile *{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
 </style>
 @endpush
 
 @section('content')
-
 @php
-    $readyParcelCount = $deliveryGroups->sum(
-        fn ($group) => $group->count()
-    );
-
+    // SARI-MULTIPARCEL-DISPATCH-UI-V2: strict service-area matching + unstarted same-area batch top-up.
+    $readyParcelCount = $deliveryGroups->sum(fn ($group) => $group->count());
     $deliveryAreaCount = $deliveryGroups->count();
-
-    $availableRiderCount = $riders
-        ->reject(
-            fn ($rider) => $busyRiderIds->contains((int) $rider->id)
-        )
-        ->count();
-
-    $activeAssignmentCount = $assignments
-        ->whereIn('status', ['assigned', 'out_for_delivery'])
-        ->count();
-
-    $completedAssignmentCount = $assignments
-        ->where('status', 'completed')
-        ->count();
-
-    $summaryCards = [
-        [
-            'Ready Parcels',
-            $readyParcelCount,
-            'At destination hubs',
-            'amber',
-        ],
-        [
-            'Delivery Areas',
-            $deliveryAreaCount,
-            'Barangay dispatch groups',
-            'neutral',
-        ],
-        [
-            'Available Riders',
-            $availableRiderCount,
-            'Online and without active batch',
-            'blue',
-        ],
-        [
-            'Active Batches',
-            $activeAssignmentCount,
-            'Assigned or out for delivery',
-            'green',
-        ],
-    ];
-
-    $serviceableGroupCount = 0;
-    $unservedGroupCount = 0;
-
-    foreach ($deliveryGroups as $group) {
+    $availableRiderCount = $riders->reject(fn ($rider) => $busyRiderIds->contains((int) $rider->id))->count();
+    $activeAssignmentCount = $assignments->whereIn('status', ['assigned', 'out_for_delivery'])->count();
+    $assignmentCount = $assignments->count();
+    $areas = collect();
+    foreach ($deliveryGroups as $groupKey => $group) {
         $first = $group->first();
-
-        $groupEligibleRiders = $riders->filter(
-            function ($rider) use ($first, $busyRiderIds) {
-                return \App\Support\LogisticsServiceArea::matchesRider($rider, $first)
-                    && ! $busyRiderIds->contains((int) $rider->id);
-            }
-        );
-
-        if ($groupEligibleRiders->isNotEmpty()) {
-            $serviceableGroupCount++;
-        } else {
-            $unservedGroupCount++;
+        if (!$first) { continue; }
+        $sameAreaBatchKey = (int) $first->destination_facility_id.'|'.\App\Support\LogisticsServiceArea::barangay($first->barangay_name);
+        $eligibleRiders = $riders->filter(function ($rider) use ($first, $busyRiderIds, $mergeableRiderAreaKeys, $sameAreaBatchKey) {
+            return \App\Support\LogisticsServiceArea::matchesRider($rider, $first)
+                && (! $busyRiderIds->contains((int) $rider->id)
+                    || $mergeableRiderAreaKeys->get((int) $rider->id) === $sameAreaBatchKey);
+        })->values();
+        $allAreaRiders = $riders->filter(fn ($rider) => \App\Support\LogisticsServiceArea::matchesRider($rider, $first));
+        $busyAreaRiderCount = $allAreaRiders->filter(fn ($rider) => $busyRiderIds->contains((int) $rider->id))->count();
+        $searchValues = [$first->barangay_name, $first->destination_facility_name, $first->destination_municipality];
+        foreach ($group as $parcel) {
+            array_push($searchValues, $parcel->order_number, $parcel->buyer_name, $parcel->buyer_address, $parcel->pickup_rider_name);
         }
+        $areas->push([
+            'key' => md5((string) $groupKey), 'first' => $first, 'parcels' => $group,
+            'riders' => $eligibleRiders, 'busy_rider_count' => $busyAreaRiderCount,
+            'state' => $eligibleRiders->isNotEmpty() ? 'serviceable' : 'unserved',
+            'search' => implode(' ', array_filter($searchValues)),
+        ]);
     }
 @endphp
-
-<div
-    id="lgLastMile"
-    class="sari-logistics-ui lastmile-page"
-    data-lastmile-workspace
->
-    {{-- PAGE HEADING --}}
-
-    <header class="lastmile-page-header">
-        <div class="min-w-0">
-            <p class="lastmile-eyebrow">
-                DESTINATION HUB DISPATCH
-            </p>
-
-            <h1>
-                Last Mile <span>Assignment</span>
-            </h1>
-
-            <p class="lastmile-subtitle">
-                Dispatch destination-hub parcels to local Riders by
-                municipality and barangay. Orders within the same delivery
-                area can be assigned together as one Rider batch.
-            </p>
+<div id="lgLastMile" class="sari-logistics-ui" data-lastmile-workspace data-default-tab="{{ $areas->isEmpty() && $assignmentCount > 0 ? 'history' : 'ready' }}">
+    <header class="lm2-page-header">
+        <div>
+            <p class="lm2-eyebrow">Destination Hub Dispatch</p>
+            <h1 class="lm2-page-title">Last Mile <span>Assignment</span></h1>
         </div>
-
-        <div class="lastmile-header-actions">
-            <a
-                href="{{ route('logistics.hub-transfers') }}"
-                class="lastmile-button"
-            >
-                <span aria-hidden="true">←</span>
-                Hub Transfers
-            </a>
-
-            <a
-                href="{{ route('logistics.delivery-monitoring') }}"
-                class="lastmile-button lastmile-button-primary"
-            >
-                Delivery Monitoring
-                <span aria-hidden="true">→</span>
-            </a>
+        <div class="lm2-header-actions">
+            <a class="lm2-btn" href="{{ route('logistics.hub-transfers') }}"><span aria-hidden="true">&lt;</span> Hub Transfers</a>
+            <a class="lm2-btn lm2-btn-gold" href="{{ route('logistics.delivery-monitoring') }}">Delivery Monitoring <span aria-hidden="true">&gt;</span></a>
         </div>
     </header>
 
-    {{-- FLASH MESSAGES --}}
-
     @if(session('success'))
-        <div
-            class="lastmile-alert lastmile-alert-success"
-            role="status"
-        >
-            <strong>Last-mile assignment updated</strong>
-            <p>{{ session('success') }}</p>
-        </div>
+        <div class="lm2-alert" role="status">{{ session('success') }}</div>
     @endif
-
     @if($errors->any())
-        <div
-            class="lastmile-alert lastmile-alert-danger"
-            role="alert"
-        >
-            <strong>Could not assign Last-Mile Rider</strong>
-
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        <div class="lm2-alert lm2-alert-error" role="alert"><strong>Could not assign Last-Mile Rider</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
     @endif
 
-    {{-- KPI CARDS --}}
-
-    <section
-        class="lastmile-stats"
-        aria-label="Last-mile assignment overview"
-    >
-        @foreach($summaryCards as [$label, $value, $note, $tone])
-            <article class="lastmile-stat lastmile-stat-{{ $tone }}">
-                <div class="min-w-0">
-                    <p>{{ $label }}</p>
-
-                    <strong>
-                        {{ number_format($value) }}
-                    </strong>
-
-                    <span>{{ $note }}</span>
-                </div>
-
-                <span
-                    class="lm-stat-icon"
-                    aria-hidden="true"
-                >
+    <div class="lm2-stats" aria-label="Last-mile overview">
+        @foreach([
+            ['Ready Parcels', $readyParcelCount, 'At destination hubs', 'gold'],
+            ['Delivery Areas', $deliveryAreaCount, 'Barangay dispatch groups', 'purple'],
+            ['Available Riders', $availableRiderCount, 'Online without active batch', 'blue'],
+            ['Active Batches', $activeAssignmentCount, 'Assigned or on delivery', 'green'],
+        ] as [$label, $value, $note, $tone])
+            <div class="lm2-stat">
+                <div><p class="lm2-stat-label">{{ $label }}</p><strong class="lm2-stat-value">{{ number_format($value) }}</strong><span class="lm2-stat-note">{{ $note }}</span></div>
+                <span class="lm2-stat-icon {{ $tone }}" aria-hidden="true">
                     @switch($tone)
-                        @case('amber')
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <path d="M4 5h16v14H4zM8 9h8M8 13h8"/>
-                            </svg>
-                            @break
-
-                        @case('blue')
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <circle cx="8" cy="8" r="3"/>
-                                <circle cx="17" cy="9" r="2.5"/>
-                                <path d="M2.5 20c.5-4 2.5-6 5.5-6M13 15c3.2 0 5.2 1.7 5.7 5"/>
-                            </svg>
-                            @break
-
-                        @case('green')
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <circle cx="12" cy="12" r="9"/>
-                                <path d="m8 12 2.5 2.5L16 9"/>
-                            </svg>
-                            @break
-
-                        @default
-                            <svg
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                            >
-                                <rect x="3" y="5" width="8" height="7" rx="1"/>
-                                <rect x="13" y="5" width="8" height="7" rx="1"/>
-                                <rect x="8" y="14" width="8" height="7" rx="1"/>
-                            </svg>
+                        @case('gold')<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h7M7 17h5"/></svg>@break
+                        @case('blue')<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="8" r="2.5"/><path d="M2 21v-2a6 6 0 0 1 12 0v2M15 15a5 5 0 0 1 7 5"/></svg>@break
+                        @case('green')<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>@break
+                        @default<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="7" rx="1"/><rect x="13" y="4" width="8" height="7" rx="1"/><rect x="8" y="13" width="8" height="7" rx="1"/></svg>
                     @endswitch
                 </span>
-            </article>
+            </div>
         @endforeach
-    </section>
+    </div>
 
-    {{-- WORKFLOW STEPPER --}}
+    <div class="lm2-tabs" role="tablist" aria-label="Last mile workspaces">
+        <button type="button" class="lm2-tab" id="lmTabReady" data-lm-tab="ready" role="tab" aria-controls="lmPaneReady" aria-selected="true">Dispatch Queue <span class="lm2-tab-count">{{ $areas->count() }}</span></button>
+        <button type="button" class="lm2-tab" id="lmTabHistory" data-lm-tab="history" role="tab" aria-controls="lmPaneHistory" aria-selected="false">Last-Mile Assignments <span class="lm2-tab-count">{{ $assignmentCount }}</span></button>
+    </div>
 
-    <nav
-        class="lastmile-flow"
-        aria-label="Destination hub workflow"
-    >
-        <a href="{{ route('logistics.parcel-sorting') }}">
-            <b>1</b>
-            Origin Sorting
-        </a>
-
-        <a href="{{ route('logistics.hub-transfers') }}">
-            <b>2</b>
-            Hub Transfer
-        </a>
-
-        <span class="is-current" aria-current="step">
-            <b>3</b>
-            Last-Mile Assignment
-        </span>
-
-        <a href="{{ route('logistics.delivery-monitoring') }}">
-            <b>4</b>
-            Delivery Monitoring
-        </a>
-    </nav>
-
-    {{-- BARANGAY DISPATCH QUEUE --}}
-
-    <section
-        class="lastmile-workspace"
-        aria-labelledby="lastmile-queue-heading"
-    >
-        <header class="lastmile-toolbar">
-            <div>
-                <p class="lastmile-eyebrow">
-                    DESTINATION DISPATCH
-                </p>
-
-                <h2 id="lastmile-queue-heading">
-                    Barangay Dispatch Queue
-                </h2>
-
-                <p>
-                    Destination-hub parcels are grouped by their
-                    local service area before Rider assignment.
-                </p>
-            </div>
-
-            <label class="lastmile-search">
-                <span class="sr-only">
-                    Search Last-Mile dispatch queue
-                </span>
-
-                <input
-                    type="search"
-                    data-area-search
-                    autocomplete="off"
-                    placeholder="Search barangay, hub, order, or Buyer…"
-                >
+    <div class="lm2-pane" id="lmPaneReady" data-lm-pane="ready" role="tabpanel" aria-labelledby="lmTabReady">
+        @if($areas->isNotEmpty())
+        <div class="lm2-filterbar" data-lm-controls="ready">
+            <label class="lm2-search-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+                <input class="lm2-search-input" type="search" data-lm-search="ready" placeholder="Search barangay, hub, order, Buyer..." autocomplete="off" aria-label="Search dispatch queue">
             </label>
-        </header>
-
-        {{-- FILTERS --}}
-
-        <div class="lastmile-filter-row">
-            <div
-                class="lastmile-tabs"
-                role="group"
-                aria-label="Filter delivery areas"
-            >
-                <button
-                    type="button"
-                    data-area-filter="all"
-                    aria-pressed="true"
-                >
-                    All Areas
-                    <span>{{ $deliveryAreaCount }}</span>
-                </button>
-
-                <button
-                    type="button"
-                    data-area-filter="serviceable"
-                    aria-pressed="false"
-                >
-                    Rider Available
-                    <span>{{ $serviceableGroupCount }}</span>
-                </button>
-
-                <button
-                    type="button"
-                    data-area-filter="unserved"
-                    aria-pressed="false"
-                >
-                    Needs Rider
-                    <span>{{ $unservedGroupCount }}</span>
-                </button>
-            </div>
-
-            <button
-                type="button"
-                class="lastmile-text-link"
-                data-area-clear
-            >
-                Clear filters
-            </button>
+            <select class="lm2-select" data-lm-select="ready" aria-label="Filter Rider availability"><option value="all">All Areas</option><option value="serviceable">Rider Available</option><option value="unserved">Needs Rider</option></select>
+            <button class="lm2-btn lm2-btn-gold" type="button" data-lm-apply="ready">Apply Filter</button>
+            <button class="lm2-btn" type="button" data-lm-reset="ready">Reset</button>
         </div>
+        @endif
+        <div class="lm2-card">
+            <div class="lm2-card-head"><h2 class="lm2-card-title">Barangay Dispatch Queue</h2><span class="lm2-count">{{ $areas->count() }} {{ $areas->count() === 1 ? 'AREA' : 'AREAS' }}</span></div>
+            @if($areas->isNotEmpty())
+            <div class="lm2-table-wrap">
+                <table class="lm2-table"><thead><tr><th style="width:29%">Delivery Area</th><th style="width:28%">Destination Hub</th><th style="width:12%">Parcels</th><th style="width:17%">Rider Availability</th><th style="width:14%;text-align:right">Action</th></tr></thead>
+                <tbody>
+                    @foreach($areas as $area)
+                        <tr data-lm-item="ready" data-lm-key="{{ $area['key'] }}" data-lm-state="{{ $area['state'] }}" data-lm-search-text="{{ $area['search'] }}">
+                            <td><div class="lm2-strong">Barangay {{ $area['first']->barangay_name }}</div><div class="lm2-sub">{{ $area['first']->destination_municipality }}</div></td>
+                            <td><div class="lm2-strong">{{ $area['first']->destination_facility_name }}</div><div class="lm2-sub">Destination hub</div></td>
+                            <td><span class="lm2-strong">{{ $area['parcels']->count() }}</span><div class="lm2-sub">parcel(s)</div></td>
+                            <td>@if($area['riders']->isNotEmpty())<span class="lm2-status success">{{ $area['riders']->count() }} available</span>@else<span class="lm2-status danger">Needs Rider</span>@endif</td>
+                            <td><div class="lm2-row-actions"><button type="button" class="lm2-eye" data-lm-open="lmDetail{{ $area['key'] }}" aria-label="View delivery area details" title="View details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><button type="button" class="lm2-btn lm2-btn-small {{ $area['riders']->isNotEmpty() ? 'lm2-btn-gold' : '' }}" data-lm-open="lmAssign{{ $area['key'] }}" @disabled($area['riders']->isEmpty())>Assign</button></div></td>
+                        </tr>
+                    @endforeach
+                </tbody></table>
+            </div>
+            <div class="lm2-mobile-list">
+                @foreach($areas as $area)
+                    <div class="lm2-mobile-card" data-lm-mirror="ready" data-lm-key="{{ $area['key'] }}">
+                        <div class="lm2-mobile-top"><div><div class="lm2-strong">Barangay {{ $area['first']->barangay_name }}</div><div class="lm2-sub">{{ $area['first']->destination_municipality }}</div></div>@if($area['riders']->isNotEmpty())<span class="lm2-status success">Rider Available</span>@else<span class="lm2-status danger">Needs Rider</span>@endif</div>
+                        <div class="lm2-mobile-details"><div><div class="lm2-mobile-label">Hub</div><div class="lm2-strong">{{ $area['first']->destination_facility_name }}</div></div><div><div class="lm2-mobile-label">Parcels</div><div class="lm2-strong">{{ $area['parcels']->count() }}</div></div></div>
+                        <div class="lm2-mobile-actions"><button type="button" class="lm2-eye" data-lm-open="lmDetail{{ $area['key'] }}" aria-label="View delivery area details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><button type="button" class="lm2-btn lm2-btn-small {{ $area['riders']->isNotEmpty() ? 'lm2-btn-gold' : '' }}" data-lm-open="lmAssign{{ $area['key'] }}" @disabled($area['riders']->isEmpty())>Assign Batch</button></div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="lm2-empty" data-lm-no-match="ready" hidden>
+                <svg class="lm2-empty-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+                <h3 class="lm2-empty-title">No matching delivery areas</h3><p class="lm2-empty-desc">Try another barangay, order, hub or Rider availability filter.</p>
+            </div>
+            <div class="lm2-table-footer"><span data-lm-count="ready">Showing 1–{{ min(10, $areas->count()) }} of {{ $areas->count() }} areas</span><label class="lm2-rows-control">Rows per page <select data-lm-size="ready" aria-label="Dispatch queue rows per page"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></div>
+            @else
+            <div class="lm2-empty">
+                <svg class="lm2-empty-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16v12H4zM4 8l3-4h10l3 4M9 13h6M12 10v6"/></svg>
+                <h3 class="lm2-empty-title">Last-Mile Dispatch Queue Is Clear</h3><p class="lm2-empty-desc">Parcels appear here after a hub transfer reaches the destination facility.</p>
+                <a href="{{ route('logistics.hub-transfers') }}" class="lm2-btn lm2-btn-gold">View Hub Transfers</a>
+            </div>
+            @endif
+        </div>
+        <div class="lm2-pager" data-lm-pager="ready" aria-label="Dispatch queue pagination" hidden></div>
+    </div>
 
-        {{-- DELIVERY AREA GROUPS --}}
-
-        <div class="lastmile-area-list">
-            @forelse($deliveryGroups as $groupKey => $group)
+    <div class="lm2-pane" id="lmPaneHistory" data-lm-pane="history" role="tabpanel" aria-labelledby="lmTabHistory" hidden>
+        @if($assignmentCount > 0)
+        <div class="lm2-filterbar" data-lm-controls="history">
+            <label class="lm2-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input class="lm2-search-input" type="search" data-lm-search="history" placeholder="Search assignment, Rider, area..." autocomplete="off" aria-label="Search last mile assignments"></label>
+            <select class="lm2-select" data-lm-select="history" aria-label="Filter assignment status"><option value="all">All Status</option><option value="assigned">Assigned</option><option value="out_for_delivery">Out for Delivery</option><option value="completed">Completed</option></select>
+            <button type="button" class="lm2-btn lm2-btn-gold" data-lm-apply="history">Apply Filter</button>
+            <button type="button" class="lm2-btn" data-lm-reset="history">Reset</button>
+        </div>
+        @endif
+        <div class="lm2-card">
+            <div class="lm2-card-head"><h2 class="lm2-card-title">Last-Mile Assignments</h2><span class="lm2-count">{{ $assignmentCount }} {{ $assignmentCount === 1 ? 'BATCH' : 'BATCHES' }}</span></div>
+            @if($assignmentCount > 0)
+            <div class="lm2-table-wrap"><table class="lm2-table"><thead><tr><th style="width:23%">Assignment</th><th style="width:27%">Delivery Area</th><th style="width:23%">Rider</th><th style="width:10%">Parcels</th><th style="width:12%">Status</th><th style="width:5%;text-align:right">View</th></tr></thead><tbody>
+            @foreach($assignments as $assignment)
                 @php
-                    $first = $group->first();
-
-                    $eligibleRiders = $riders
-                        ->filter(
-                            function ($rider) use ($first, $busyRiderIds) {
-                                return \App\Support\LogisticsServiceArea::matchesRider($rider, $first)
-                                    && ! $busyRiderIds->contains((int) $rider->id);
-                            }
-                        )
-                        ->values();
-
-                    $allAreaRiders = $riders->filter(
-                        fn ($rider) => \App\Support\LogisticsServiceArea::matchesRider($rider, $first)
-                    );
-
-                    $busyAreaRiderCount = $allAreaRiders
-                        ->filter(
-                            fn ($rider) => $busyRiderIds->contains(
-                                (int) $rider->id
-                            )
-                        )
-                        ->count();
-
-                    $areaState = $eligibleRiders->isNotEmpty()
-                        ? 'serviceable'
-                        : 'unserved';
-
-                    $searchValues = [
-                        $first->barangay_name,
-                        $first->destination_facility_name,
-                        $first->destination_municipality,
-                    ];
-
-                    foreach($group as $parcel) {
-                        $searchValues[] = $parcel->order_number;
-                        $searchValues[] = $parcel->buyer_name;
-                        $searchValues[] = $parcel->buyer_address;
-                        $searchValues[] = $parcel->pickup_rider_name;
-                    }
-
-                    $searchText = implode(
-                        ' ',
-                        array_filter($searchValues)
-                    );
-
-                    $formId = 'lastmile-form-' . md5($groupKey);
+                    $assignmentSearch = implode(' ', array_filter([$assignment->assignment_code, $assignment->facility_name, $assignment->delivery_area, $assignment->first_name, $assignment->last_name, $assignment->vehicle_type, $assignment->status]));
+                    $assignmentStatusLabel = ucwords(str_replace('_', ' ', $assignment->status));
+                    $statusTone = $assignment->status === 'completed' ? 'success' : ($assignment->status === 'out_for_delivery' ? 'info' : 'warn');
                 @endphp
+                <tr data-lm-item="history" data-lm-key="{{ $assignment->id }}" data-lm-state="{{ $assignment->status }}" data-lm-search-text="{{ $assignmentSearch }}">
+                    <td><div class="lm2-strong">{{ $assignment->assignment_code }}</div><div class="lm2-sub">Last-mile batch</div></td>
+                    <td><div class="lm2-strong">Barangay {{ $assignment->delivery_area }}</div><div class="lm2-sub">{{ $assignment->facility_name }}</div></td>
+                    <td><div class="lm2-strong">{{ trim($assignment->first_name.' '.$assignment->last_name) }}</div><div class="lm2-sub">{{ $assignment->vehicle_type ?: 'Vehicle not recorded' }}</div></td>
+                    <td><span class="lm2-strong">{{ $assignment->order_count }}</span></td>
+                    <td><span class="lm2-status {{ $statusTone }}">{{ $assignmentStatusLabel }}</span></td>
+                    <td><div class="lm2-row-actions"><button type="button" class="lm2-eye" data-lm-open="lmHistory{{ $assignment->id }}" aria-label="View assignment details" title="View details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>
+                </tr>
+            @endforeach
+            </tbody></table></div>
+            <div class="lm2-mobile-list">
+            @foreach($assignments as $assignment)
+                @php $statusTone = $assignment->status === 'completed' ? 'success' : ($assignment->status === 'out_for_delivery' ? 'info' : 'warn'); @endphp
+                <div class="lm2-mobile-card" data-lm-mirror="history" data-lm-key="{{ $assignment->id }}"><div class="lm2-mobile-top"><div><div class="lm2-strong">{{ $assignment->assignment_code }}</div><div class="lm2-sub">{{ $assignment->facility_name }}</div></div><span class="lm2-status {{ $statusTone }}">{{ ucwords(str_replace('_', ' ', $assignment->status)) }}</span></div><div class="lm2-mobile-details"><div><div class="lm2-mobile-label">Delivery Area</div><div class="lm2-strong">{{ $assignment->delivery_area }}</div></div><div><div class="lm2-mobile-label">Rider</div><div class="lm2-strong">{{ trim($assignment->first_name.' '.$assignment->last_name) }}</div></div><div><div class="lm2-mobile-label">Parcels</div><div class="lm2-strong">{{ $assignment->order_count }}</div></div><div><div class="lm2-mobile-label">Vehicle</div><div class="lm2-strong">{{ $assignment->vehicle_type ?: '—' }}</div></div></div><div class="lm2-mobile-actions"><button type="button" class="lm2-eye" data-lm-open="lmHistory{{ $assignment->id }}" aria-label="View assignment details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+            @endforeach
+            </div>
+            <div class="lm2-empty" data-lm-no-match="history" hidden><svg class="lm2-empty-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><h3 class="lm2-empty-title">No matching assignments</h3><p class="lm2-empty-desc">Try another assignment code, Rider, hub or status.</p></div>
+            <div class="lm2-table-footer"><span data-lm-count="history">Showing 1–{{ min(10, $assignmentCount) }} of {{ $assignmentCount }} assignments</span><label class="lm2-rows-control">Rows per page <select data-lm-size="history" aria-label="Assignment rows per page"><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></label></div>
+            @else
+            <div class="lm2-empty"><svg class="lm2-empty-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 10h8M8 14h5"/></svg><h3 class="lm2-empty-title">No Last-Mile Assignments Yet</h3><p class="lm2-empty-desc">Assigned Rider batches will appear here when local delivery begins.</p></div>
+            @endif
+        </div>
+        <div class="lm2-pager" data-lm-pager="history" aria-label="Last mile assignment pagination" hidden></div>
+    </div>
 
-                <article
-                    class="lastmile-area-card"
-                    data-area-card
-                    data-area-state="{{ $areaState }}"
-                    data-search="{{ $searchText }}"
-                >
-                    {{-- AREA HEADER --}}
-
-                    <header class="lastmile-area-header">
-                        <div class="lastmile-area-title">
-                            <span
-                                class="lastmile-area-icon"
-                                aria-hidden="true"
-                            >
-                                {{
-                                    mb_strtoupper(
-                                        mb_substr(
-                                            trim((string) $first->barangay_name),
-                                            0,
-                                            1
-                                        )
-                                    )
-                                }}
-                            </span>
-
-                            <div class="min-w-0">
-                                <p class="lastmile-eyebrow">
-                                    LOCAL DELIVERY AREA
-                                </p>
-
-                                <h3>
-                                    {{ $first->barangay_name }}
-                                </h3>
-
-                                <p>
-                                    {{ $first->destination_facility_name }}
-                                    <span aria-hidden="true">·</span>
-                                    {{ $first->destination_municipality }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="lastmile-area-tags">
-                            <span>
-                                {{ $group->count() }}
-                                {{ $group->count() === 1 ? 'parcel' : 'parcels' }}
-                            </span>
-
-                            @if($eligibleRiders->isNotEmpty())
-                                <span class="is-serviceable">
-                                    {{ $eligibleRiders->count() }}
-                                    {{
-                                        $eligibleRiders->count() === 1
-                                            ? 'Rider'
-                                            : 'Riders'
-                                    }}
-                                    available
-                                </span>
-                            @else
-                                <span class="is-unserved">
-                                    No Rider available
-                                </span>
-                            @endif
-                        </div>
-                    </header>
-
-                    {{-- AREA CONTENT --}}
-
-                    <div class="lastmile-area-layout">
-                        {{-- LEFT: PARCELS --}}
-
-                        <div class="lastmile-area-main">
-                            <div class="lastmile-route-summary">
-                                <div>
-                                    <span class="lastmile-label">
-                                        Destination Hub
-                                    </span>
-
-                                    <strong>
-                                        {{ $first->destination_facility_name }}
-                                    </strong>
-
-                                    <p>
-                                        {{ $first->destination_municipality }}
-                                    </p>
-                                </div>
-
-                                <span
-                                    class="lastmile-route-arrow"
-                                    aria-hidden="true"
-                                >
-                                    →
-                                </span>
-
-                                <div>
-                                    <span class="lastmile-label">
-                                        Local Delivery Area
-                                    </span>
-
-                                    <strong>
-                                        Barangay {{ $first->barangay_name }}
-                                    </strong>
-
-                                    <p>
-                                        One local Rider may deliver the entire batch.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="lastmile-parcel-heading">
-                                <div>
-                                    <h4>
-                                        Parcels in This Delivery Batch
-                                    </h4>
-
-                                    <p>
-                                        Different Buyers can share the same local
-                                        Rider when the barangay matches.
-                                    </p>
-                                </div>
-
-                                <span>
-                                    {{ $group->count() }}
-                                </span>
-                            </div>
-
-                            {{-- PARCEL LIST --}}
-
-                            <div class="lastmile-parcel-list">
-                                @foreach($group as $parcel)
-                                    <input
-                                        form="{{ $formId }}"
-                                        type="hidden"
-                                        name="order_ids[]"
-                                        value="{{ $parcel->order_id }}"
-                                    >
-
-                                    <article class="lastmile-parcel">
-                                        <div class="lastmile-parcel-main">
-                                            <strong>
-                                                {{ $parcel->order_number }}
-                                            </strong>
-
-                                            <p>
-                                                {{ $parcel->buyer_name }}
-                                            </p>
-                                        </div>
-
-                                        <span class="lastmile-parcel-status">
-                                            DESTINATION RECEIVED
-                                        </span>
-
-                                        <div class="lastmile-parcel-address">
-                                            <span class="lastmile-label">
-                                                Delivery Address
-                                            </span>
-
-                                            <p>
-                                                {{ $parcel->buyer_address }}
-                                            </p>
-                                        </div>
-
-                                        <details class="lastmile-details">
-                                            <summary>
-                                                Handoff Details
-                                                <span aria-hidden="true">+</span>
-                                            </summary>
-
-                                            <div class="lastmile-detail-body">
-                                                <div class="lastmile-detail-grid">
-                                                    <div>
-                                                        <span class="lastmile-label">
-                                                            Buyer
-                                                        </span>
-
-                                                        <strong>
-                                                            {{ $parcel->buyer_name }}
-                                                        </strong>
-
-                                                        <p>
-                                                            {{ $parcel->buyer_address }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div>
-                                                        <span class="lastmile-label">
-                                                            Pickup Rider Snapshot
-                                                        </span>
-
-                                                        <strong>
-                                                            {{
-                                                                $parcel->pickup_rider_name
-                                                                ?: 'Pickup Rider'
-                                                            }}
-                                                        </strong>
-
-                                                        <p>
-                                                            {{
-                                                                $parcel->pickup_rider_email
-                                                                ?: 'No pickup Rider email'
-                                                            }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div>
-                                                        <span class="lastmile-label">
-                                                            Destination Hub
-                                                        </span>
-
-                                                        <strong>
-                                                            {{ $parcel->destination_facility_name }}
-                                                        </strong>
-
-                                                        <p>
-                                                            {{ $parcel->destination_municipality }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div>
-                                                        <span class="lastmile-label">
-                                                            Last-Mile Area
-                                                        </span>
-
-                                                        <strong>
-                                                            Barangay {{ $parcel->barangay_name }}
-                                                        </strong>
-
-                                                        <p>
-                                                            Local Rider service area
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </details>
-                                    </article>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        {{-- RIGHT: RIDER DISPATCH --}}
-
-                        <aside class="lastmile-dispatch-panel">
-                            <h4>
-                                Assign Local Rider
-                            </h4>
-
-                            <p class="lastmile-dispatch-note">
-                                Only Riders assigned to
-                                {{ $first->barangay_name }},
-                                {{ $first->destination_municipality }}
-                                can receive this batch.
-                            </p>
-
-                            <form
-                                id="{{ $formId }}"
-                                method="POST"
-                                action="{{ route('logistics.last-mile-assignment.batch-assign') }}"
-                                data-lastmile-form
-                                data-area-name="{{ $first->barangay_name }}"
-                            >
-                                @csrf
-
-                                <label>
-                                    <span class="lastmile-label">
-                                        Local Rider
-                                    </span>
-
-                                    <select
-                                        name="rider_id"
-                                        required
-                                        data-lastmile-rider
-                                        @disabled($eligibleRiders->isEmpty())
-                                    >
-                                        <option value="">
-                                            Select local Rider
-                                        </option>
-
-                                        @foreach($eligibleRiders as $rider)
-                                            @php
-                                                $riderName = trim(
-                                                    $rider->first_name
-                                                    . ' '
-                                                    . $rider->last_name
-                                                );
-                                            @endphp
-
-                                            <option
-                                                value="{{ $rider->id }}"
-                                                data-rider-name="{{ $riderName }}"
-                                                data-rider-area="{{ $rider->barangay_name }}, {{ $rider->municipality_name }}"
-                                                data-rider-vehicle="{{ $rider->vehicle_type }}"
-                                            >
-                                                {{ $riderName }}
-
-                                                @if($rider->vehicle_type)
-                                                    — {{ $rider->vehicle_type }}
-                                                @endif
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </label>
-
-                                {{-- RIDER PREVIEW --}}
-
-                                <div
-                                    class="lastmile-rider-preview"
-                                    data-rider-preview
-                                    hidden
-                                >
-                                    <span
-                                        class="lastmile-rider-avatar"
-                                        data-rider-initial
-                                        aria-hidden="true"
-                                    >
-                                        R
-                                    </span>
-
-                                    <div class="min-w-0">
-                                        <strong data-rider-preview-name></strong>
-                                        <p data-rider-preview-area></p>
-                                        <p data-rider-preview-vehicle></p>
-                                    </div>
-                                </div>
-
-                                <div class="lastmile-dispatch-total">
-                                    <span>
-                                        Delivery Batch
-                                    </span>
-
-                                    <strong>
-                                        {{ $group->count() }}
-                                    </strong>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    class="lastmile-button lastmile-button-primary"
-                                    @disabled($eligibleRiders->isEmpty())
-                                >
-                                    Assign {{ $group->count() }}
-                                    {{
-                                        $group->count() === 1
-                                            ? 'Parcel'
-                                            : 'Parcels'
-                                    }}
-                                </button>
-
-                                <p class="lastmile-dispatch-footnote">
-                                    This creates one Last-Mile Assignment
-                                    for the selected local Rider.
-                                </p>
-                            </form>
-
-                            {{-- NO RIDER AVAILABLE --}}
-
-                            @if($eligibleRiders->isEmpty())
-                                <div class="lastmile-rider-warning">
-                                    <strong>
-                                        No Available Rider
-                                    </strong>
-
-                                    <p>
-                                        No free, online Rider is currently
-                                        available for
-                                        {{ $first->barangay_name }}.
-                                    </p>
-
-                                    @if($busyAreaRiderCount > 0)
-                                        <p>
-                                            {{ $busyAreaRiderCount }}
-                                            local
-                                            {{
-                                                $busyAreaRiderCount === 1
-                                                    ? 'Rider is'
-                                                    : 'Riders are'
-                                            }}
-                                            currently handling another
-                                            Last-Mile batch.
-                                        </p>
-                                    @endif
-                                </div>
-                            @endif
-                        </aside>
-                    </div>
-                </article>
-            @empty
-                <div class="lastmile-empty">
-                    <span
-                        class="lastmile-empty-icon"
-                        aria-hidden="true"
-                    >
-                        ✓
-                    </span>
-
-                    <h3>
-                        Last-Mile Dispatch Queue Is Clear
-                    </h3>
-
-                    <p>
-                        Parcels appear here after a Hub Transfer is
-                        physically received at its destination facility.
-                    </p>
-
-                    <a
-                        href="{{ route('logistics.hub-transfers') }}"
-                        class="lastmile-button lastmile-button-primary"
-                    >
-                        View Hub Transfers
-                    </a>
+    {{-- Delivery-area details and assignment forms, rendered separately from compact rows. --}}
+    @foreach($areas as $area)
+        <div id="lmDetail{{ $area['key'] }}" class="lm2-modal" role="dialog" aria-modal="true" aria-label="Delivery area details" hidden>
+            <div class="lm2-dialog" role="document"><div class="lm2-dialog-head"><div><p class="lm2-eyebrow">Delivery Area Details</p><h3 class="lm2-dialog-title">Barangay {{ $area['first']->barangay_name }}</h3><p class="lm2-dialog-subtitle">{{ $area['first']->destination_municipality }}</p></div><button type="button" class="lm2-close" data-lm-close aria-label="Close details">×</button></div>
+                <div class="lm2-dialog-body"><div class="lm2-info"><span class="lm2-info-label">Destination Hub</span><div class="lm2-info-value">{{ $area['first']->destination_facility_name }}</div><div class="lm2-info-desc">{{ $area['first']->destination_municipality }}</div></div><div class="lm2-info-grid"><div class="lm2-info"><span class="lm2-info-label">Parcels</span><div class="lm2-info-value">{{ $area['parcels']->count() }}</div></div><div class="lm2-info"><span class="lm2-info-label">Available Local Riders</span><div class="lm2-info-value">{{ $area['riders']->count() }}</div>@if($area['busy_rider_count'] > 0)<div class="lm2-info-desc">{{ $area['busy_rider_count'] }} busy Rider(s)</div>@endif</div></div>
+                    <h4 class="lm2-dialog-section">Parcels for Delivery</h4><div class="lm2-parcel-list">@foreach($area['parcels'] as $parcel)<div class="lm2-parcel"><div class="lm2-strong">{{ $parcel->order_number }}</div><div class="lm2-sub">{{ $parcel->buyer_name }} · {{ $parcel->buyer_address }}</div><div class="lm2-sub">Pickup Rider: {{ $parcel->pickup_rider_name ?: 'Not recorded' }}{{ $parcel->pickup_rider_email ? ' · '.$parcel->pickup_rider_email : '' }}</div></div>@endforeach</div>
+                    <div class="lm2-dialog-actions"><button type="button" class="lm2-btn" data-lm-close>Close</button>@if($area['riders']->isNotEmpty())<button type="button" class="lm2-btn lm2-btn-gold" data-lm-switch="lmAssign{{ $area['key'] }}">Assign Rider</button>@endif</div>
                 </div>
-            @endforelse
-
-            <div
-                class="lastmile-empty"
-                data-area-empty
-                hidden
-            >
-                <h3>
-                    No Matching Delivery Areas
-                </h3>
-
-                <p>
-                    Try another barangay, destination hub,
-                    order number, or Buyer.
-                </p>
-
-                <button
-                    type="button"
-                    class="lastmile-text-link"
-                    data-area-clear
-                >
-                    Clear filters
-                </button>
             </div>
         </div>
-
-        <footer class="lastmile-list-footer">
-            <span
-                data-area-visible-count
-                aria-live="polite"
-            >
-                {{ $deliveryAreaCount }} delivery areas shown
-            </span>
-
-            <span>
-                Exact municipality + barangay Rider matching
-            </span>
-        </footer>
-    </section>
-
-    {{-- EXISTING LAST-MILE ASSIGNMENTS --}}
-
-    <section
-        class="lastmile-workspace lastmile-assignment-history"
-        aria-labelledby="lastmileHistoryHeading"
-    >
-        <header class="lastmile-toolbar">
-            <div>
-                <p class="lastmile-eyebrow">
-                    ASSIGNMENT TRACKING
-                </p>
-
-                <h2 id="lastmileHistoryHeading">
-                    Last-Mile Assignments
-                </h2>
-
-                <p>
-                    Track Rider batches after destination-hub dispatch.
-                </p>
-            </div>
-
-            <label class="lastmile-search">
-                <span class="sr-only">
-                    Search Last-Mile assignments
-                </span>
-
-                <input
-                    type="search"
-                    data-assignment-search
-                    autocomplete="off"
-                    placeholder="Search assignment, Rider, or area…"
-                >
-            </label>
-        </header>
-
-        @php
-            $assignedCount = $assignments
-                ->where('status', 'assigned')
-                ->count();
-
-            $outForDeliveryCount = $assignments
-                ->where('status', 'out_for_delivery')
-                ->count();
-        @endphp
-
-        <div class="lastmile-filter-row">
-            <div
-                class="lastmile-tabs"
-                role="group"
-                aria-label="Filter Last-Mile assignments"
-            >
-                <button
-                    type="button"
-                    data-assignment-filter="all"
-                    aria-pressed="true"
-                >
-                    All
-                    <span>{{ $assignments->count() }}</span>
-                </button>
-
-                <button
-                    type="button"
-                    data-assignment-filter="assigned"
-                    aria-pressed="false"
-                >
-                    Assigned
-                    <span>{{ $assignedCount }}</span>
-                </button>
-
-                <button
-                    type="button"
-                    data-assignment-filter="out_for_delivery"
-                    aria-pressed="false"
-                >
-                    Out for Delivery
-                    <span>{{ $outForDeliveryCount }}</span>
-                </button>
-
-                <button
-                    type="button"
-                    data-assignment-filter="completed"
-                    aria-pressed="false"
-                >
-                    Completed
-                    <span>{{ $completedAssignmentCount }}</span>
-                </button>
-            </div>
-
-            <button
-                type="button"
-                class="lastmile-text-link"
-                data-assignment-clear
-            >
-                Clear filters
-            </button>
-        </div>
-
-        {{-- ASSIGNMENT LIST --}}
-
-        <div class="lastmile-assignment-list">
-            @forelse($assignments as $assignment)
-                @php
-                    $assignmentSearch = implode(
-                        ' ',
-                        array_filter([
-                            $assignment->assignment_code,
-                            $assignment->facility_name,
-                            $assignment->delivery_area,
-                            $assignment->first_name,
-                            $assignment->last_name,
-                            $assignment->vehicle_type,
-                            $assignment->status,
-                        ])
-                    );
-
-                    $assignmentStatusLabel = ucwords(
-                        str_replace('_', ' ', $assignment->status)
-                    );
-                @endphp
-
-                <article
-                    class="lastmile-assignment-card"
-                    data-assignment-card
-                    data-assignment-state="{{ $assignment->status }}"
-                    data-search="{{ $assignmentSearch }}"
-                >
-                    <div class="lastmile-assignment-code">
-                        <span class="lastmile-label">
-                            Assignment
-                        </span>
-
-                        <strong>
-                            {{ $assignment->assignment_code }}
-                        </strong>
+        <div id="lmAssign{{ $area['key'] }}" class="lm2-modal" role="dialog" aria-modal="true" aria-label="Assign local Rider" hidden>
+            <div class="lm2-dialog" role="document"><div class="lm2-dialog-head"><div><p class="lm2-eyebrow">Confirm Last-Mile Dispatch</p><h3 class="lm2-dialog-title">Assign Local Rider</h3><p class="lm2-dialog-subtitle">Barangay {{ $area['first']->barangay_name }} · {{ $area['parcels']->count() }} parcel(s)</p></div><button type="button" class="lm2-close" data-lm-close aria-label="Close assignment">×</button></div>
+                <form method="POST" action="{{ route('logistics.last-mile-assignment.batch-assign') }}" data-lastmile-form data-area-name="{{ $area['first']->barangay_name }}">
+                    @csrf
+                    @foreach($area['parcels'] as $parcel)<input type="hidden" name="order_ids[]" value="{{ $parcel->order_id }}">@endforeach
+                    <div class="lm2-dialog-body"><div class="lm2-info"><span class="lm2-info-label">Destination Hub</span><div class="lm2-info-value">{{ $area['first']->destination_facility_name }}</div><div class="lm2-info-desc">{{ $area['first']->destination_municipality }}</div></div>
+                        <div class="lm2-info-grid"><div class="lm2-info"><span class="lm2-info-label">Local Delivery Area</span><div class="lm2-info-value">{{ $area['first']->barangay_name }}</div></div><div class="lm2-info"><span class="lm2-info-label">Delivery Batch</span><div class="lm2-info-value">{{ $area['parcels']->count() }} parcel(s)</div></div></div>
+                        <div><label class="lm2-form-label" for="rider{{ $area['key'] }}">Local Rider *</label><select id="rider{{ $area['key'] }}" class="lm2-form-select" name="rider_id" required data-lastmile-rider @disabled($area['riders']->isEmpty())><option value="">Select local Rider / add to unstarted batch</option>@foreach($area['riders'] as $rider)@php $riderName = trim($rider->first_name.' '.$rider->last_name); @endphp<option value="{{ $rider->id }}" data-rider-name="{{ $riderName }}" data-rider-area="{{ $rider->barangay_name }}, {{ $rider->municipality_name }}" data-rider-vehicle="{{ $rider->vehicle_type }}">{{ $riderName }}{{ $rider->vehicle_type ? ' — '.$rider->vehicle_type : '' }}</option>@endforeach</select></div>
+                        <div class="lm2-rider-preview" data-rider-preview hidden><span class="lm2-rider-preview-icon" data-rider-initial>R</span><div><strong data-rider-preview-name></strong><p data-rider-preview-area></p><p data-rider-preview-vehicle></p></div></div>
+                        @if($area['riders']->isEmpty())<div class="lm2-modal-warning">No eligible online Rider currently serves {{ $area['first']->barangay_name }}. @if($area['busy_rider_count'] > 0){{ $area['busy_rider_count'] }} local Rider(s) currently handling another or already-started batch.@endif</div>@else<div class="lm2-modal-warning">Confirm the parcel count. A Rider with an unstarted batch for this same hub and barangay will receive these parcels in that existing batch. Otherwise a new batch is created.</div>@endif
+                        <div class="lm2-dialog-actions"><button type="button" class="lm2-btn" data-lm-close>Cancel</button><button type="submit" class="lm2-btn lm2-btn-gold" @disabled($area['riders']->isEmpty())>Confirm Assignment</button></div>
                     </div>
-
-                    <div class="lastmile-assignment-route">
-                        <div>
-                            <span class="lastmile-label">
-                                Destination Hub
-                            </span>
-
-                            <strong>
-                                {{ $assignment->facility_name }}
-                            </strong>
-                        </div>
-
-                        <span
-                            class="lastmile-mini-arrow"
-                            aria-hidden="true"
-                        >
-                            →
-                        </span>
-
-                        <div>
-                            <span class="lastmile-label">
-                                Delivery Area
-                            </span>
-
-                            <strong>
-                                Barangay {{ $assignment->delivery_area }}
-                            </strong>
-                        </div>
-                    </div>
-
-                    <div class="lastmile-assignment-rider">
-                        <span
-                            class="lastmile-rider-avatar"
-                            aria-hidden="true"
-                        >
-                            {{
-                                mb_strtoupper(
-                                    mb_substr(
-                                        trim((string) $assignment->first_name),
-                                        0,
-                                        1
-                                    )
-                                )
-                            }}
-                        </span>
-
-                        <div class="min-w-0">
-                            <span class="lastmile-label">
-                                Local Rider
-                            </span>
-
-                            <strong>
-                                {{ $assignment->first_name }}
-                                {{ $assignment->last_name }}
-                            </strong>
-
-                            <p>
-                                {{
-                                    $assignment->vehicle_type
-                                    ?: 'Vehicle not recorded'
-                                }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="lastmile-assignment-load">
-                        <span class="lastmile-label">
-                            Batch Load
-                        </span>
-
-                        <strong>
-                            {{ $assignment->order_count }}
-                        </strong>
-
-                        <p>
-                            {{
-                                $assignment->order_count === 1
-                                    ? 'parcel'
-                                    : 'parcels'
-                            }}
-                        </p>
-                    </div>
-
-                    <div class="lastmile-assignment-status">
-                        <span
-                            class="lastmile-status lastmile-status-{{ $assignment->status }}"
-                        >
-                            {{ $assignmentStatusLabel }}
-                        </span>
-                    </div>
-                </article>
-            @empty
-                <div class="lastmile-empty">
-                    <h3>
-                        No Last-Mile Assignments Yet
-                    </h3>
-
-                    <p>
-                        Assigned Rider batches will appear here.
-                    </p>
-                </div>
-            @endforelse
-
-            <div
-                class="lastmile-empty"
-                data-assignment-empty
-                hidden
-            >
-                <h3>
-                    No Matching Last-Mile Assignments
-                </h3>
-
-                <p>
-                    Try another assignment code, Rider,
-                    hub, or delivery area.
-                </p>
-
-                <button
-                    type="button"
-                    class="lastmile-text-link"
-                    data-assignment-clear
-                >
-                    Clear filters
-                </button>
+                </form>
             </div>
         </div>
+    @endforeach
 
-        <footer class="lastmile-list-footer">
-            <span
-                data-assignment-visible-count
-                aria-live="polite"
-            >
-                {{ $assignments->count() }} assignments shown
-            </span>
-
-            <a
-                href="{{ route('logistics.delivery-monitoring') }}"
-                class="lastmile-text-link"
-            >
-                Open Delivery Monitoring →
-            </a>
-        </footer>
-    </section>
+    {{-- History details modal: assignment operations remain with their existing backend. --}}
+    @foreach($assignments as $assignment)
+        @php $statusTone = $assignment->status === 'completed' ? 'success' : ($assignment->status === 'out_for_delivery' ? 'info' : 'warn'); @endphp
+        <div id="lmHistory{{ $assignment->id }}" class="lm2-modal" role="dialog" aria-modal="true" aria-label="Last mile assignment details" hidden>
+            <div class="lm2-dialog" role="document"><div class="lm2-dialog-head"><div><p class="lm2-eyebrow">Assignment Details</p><h3 class="lm2-dialog-title">{{ $assignment->assignment_code }}</h3><p class="lm2-dialog-subtitle">{{ $assignment->facility_name }}</p></div><button type="button" class="lm2-close" data-lm-close aria-label="Close details">×</button></div>
+                <div class="lm2-dialog-body"><div class="lm2-info"><span class="lm2-info-label">Status</span><span class="lm2-status {{ $statusTone }}">{{ ucwords(str_replace('_', ' ', $assignment->status)) }}</span></div><div class="lm2-info-grid"><div class="lm2-info"><span class="lm2-info-label">Delivery Area</span><div class="lm2-info-value">Barangay {{ $assignment->delivery_area }}</div></div><div class="lm2-info"><span class="lm2-info-label">Batch Load</span><div class="lm2-info-value">{{ $assignment->order_count }} parcel(s)</div></div></div><div class="lm2-info"><span class="lm2-info-label">Assigned Local Rider</span><div class="lm2-info-value">{{ trim($assignment->first_name.' '.$assignment->last_name) }}</div><div class="lm2-info-desc">{{ $assignment->vehicle_type ?: 'Vehicle not recorded' }}</div></div><div class="lm2-dialog-actions"><button type="button" class="lm2-btn" data-lm-close>Close</button><a class="lm2-btn lm2-btn-gold" href="{{ route('logistics.delivery-monitoring') }}">Delivery Monitoring &gt;</a></div></div>
+            </div>
+        </div>
+    @endforeach
 </div>
-
 @endsection
 
 @push('scripts')
 <script>
 (() => {
     'use strict';
-
-    function initializeLastMileAssignment() {
-        const root = document.querySelector(
-            '[data-lastmile-workspace]'
-        );
-
-        if (!root || root.dataset.initialized) {
-            return;
-        }
-
+    const init = () => {
+        const root = document.querySelector('#lgLastMile[data-lastmile-workspace]');
+        if (!root || root.dataset.initialized === 'true') return;
         root.dataset.initialized = 'true';
-
-        const normalize = value =>
-            String(value || '').toLocaleLowerCase().trim();
-
-        /*
-        |--------------------------------------------------------------------------
-        | DELIVERY AREA SEARCH + FILTER
-        |--------------------------------------------------------------------------
-        */
-
-        const areaCards = [
-            ...root.querySelectorAll('[data-area-card]')
-        ];
-
-        const areaSearch = root.querySelector(
-            '[data-area-search]'
-        );
-
-        const areaTabs = [
-            ...root.querySelectorAll('[data-area-filter]')
-        ];
-
-        const areaEmpty = root.querySelector(
-            '[data-area-empty]'
-        );
-
-        const areaVisibleCount = root.querySelector(
-            '[data-area-visible-count]'
-        );
-
-        let areaFilter = 'all';
-
-        function applyAreaFilters() {
-            const keyword = normalize(areaSearch?.value);
-            let shown = 0;
-
-            areaCards.forEach(card => {
-                const matchesState =
-                    areaFilter === 'all'
-                    || card.dataset.areaState === areaFilter;
-
-                const matchesSearch =
-                    normalize(card.dataset.search).includes(keyword);
-
-                card.hidden = !matchesState || !matchesSearch;
-
-                if (!card.hidden) {
-                    shown++;
-                }
-            });
-
-            areaTabs.forEach(tab => {
-                tab.setAttribute(
-                    'aria-pressed',
-                    String(tab.dataset.areaFilter === areaFilter)
-                );
-            });
-
-            if (areaEmpty) {
-                areaEmpty.hidden = areaCards.length === 0 || shown > 0;
-            }
-
-            if (areaVisibleCount) {
-                areaVisibleCount.textContent =
-                    `${shown} of ${areaCards.length} `
-                    + `${areaCards.length === 1 ? 'delivery area' : 'delivery areas'} shown`;
-            }
+        const $ = (selector, parent = root) => parent.querySelector(selector);
+        const $$ = (selector, parent = root) => Array.from(parent.querySelectorAll(selector));
+        const normalize = v => String(v ?? '').toLocaleLowerCase().trim();
+        const tabs = $$('[data-lm-tab]');
+        function setTab(tabName, focus = false) {
+            tabs.forEach(tab => { const selected = tab.dataset.lmTab === tabName; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; if (focus && selected) tab.focus(); });
+            $$('[data-lm-pane]').forEach(pane => { pane.hidden = pane.dataset.lmPane !== tabName; });
         }
-
-        areaTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                areaFilter = tab.dataset.areaFilter || 'all';
-                applyAreaFilters();
-            });
-        });
-
-        areaSearch?.addEventListener('input', applyAreaFilters);
-
-        root.querySelectorAll('[data-area-clear]').forEach(button => {
-            button.addEventListener('click', () => {
-                areaFilter = 'all';
-
-                if (areaSearch) {
-                    areaSearch.value = '';
-                }
-
-                applyAreaFilters();
-            });
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | RIDER PREVIEW
-        |--------------------------------------------------------------------------
-        */
-
-        root.querySelectorAll('[data-lastmile-rider]').forEach(select => {
-            const form = select.closest('[data-lastmile-form]');
-
-            const preview = form?.querySelector(
-                '[data-rider-preview]'
-            );
-
-            const initial = form?.querySelector(
-                '[data-rider-initial]'
-            );
-
-            const name = form?.querySelector(
-                '[data-rider-preview-name]'
-            );
-
-            const area = form?.querySelector(
-                '[data-rider-preview-area]'
-            );
-
-            const vehicle = form?.querySelector(
-                '[data-rider-preview-vehicle]'
-            );
-
-            function renderRider() {
-                const option = select.options[select.selectedIndex];
-
-                if (!option || !option.value) {
-                    if (preview) {
-                        preview.hidden = true;
+        tabs.forEach(tab => tab.addEventListener('click', () => setTab(tab.dataset.lmTab)));
+        setTab(root.dataset.defaultTab || 'ready');
+        const pageState = {};
+        for (const kind of ['ready','history']) {
+            const rows = $$(`[data-lm-item="${kind}"]`);
+            const mirrors = $$(`[data-lm-mirror="${kind}"]`);
+            const search = $(`[data-lm-search="${kind}"]`);
+            const select = $(`[data-lm-select="${kind}"]`);
+            const size = $(`[data-lm-size="${kind}"]`);
+            const count = $(`[data-lm-count="${kind}"]`);
+            const pager = $(`[data-lm-pager="${kind}"]`);
+            const noMatch = $(`[data-lm-no-match="${kind}"]`);
+            const state = pageState[kind] = { page:1, keyword:'', filter:'all' };
+            const perPage = () => Number(size?.value || 10);
+            const render = () => {
+                const matched = rows.filter(row => (state.filter === 'all' || row.dataset.lmState === state.filter) && normalize(row.dataset.lmSearchText).includes(state.keyword));
+                const totalPages = Math.max(1, Math.ceil(matched.length/perPage()));
+                state.page = Math.max(1, Math.min(totalPages,state.page));
+                const start = (state.page-1)*perPage();
+                const visible = new Set(matched.slice(start,start+perPage()).map(row => row.dataset.lmKey));
+                rows.forEach(row => { row.hidden = !visible.has(row.dataset.lmKey); });
+                mirrors.forEach(card => { card.hidden = !visible.has(card.dataset.lmKey); });
+                if (noMatch) noMatch.hidden = matched.length !== 0;
+                if (count) count.textContent = matched.length ? `Showing ${start+1}–${Math.min(start+perPage(),matched.length)} of ${matched.length} ${kind === 'ready' ? 'areas' : 'assignments'}` : `Showing 0 of 0 ${kind === 'ready' ? 'areas' : 'assignments'}`;
+                if (pager) {
+                    pager.replaceChildren(); pager.hidden = totalPages <= 1 || matched.length === 0;
+                    if (!pager.hidden) {
+                        const add = (label, page, disabled, active = false) => {
+                            const btn = document.createElement('button'); btn.type='button'; btn.className='lm2-page-btn'+(active?' is-active':''); btn.textContent=label; btn.disabled=disabled; btn.setAttribute('aria-label',label === '<'?'Previous page':label === '>'?'Next page':`Page ${label}`); if (active) btn.setAttribute('aria-current','page'); btn.addEventListener('click',() => {state.page=page;render();}); pager.append(btn);
+                        };
+                        add('<',state.page-1,state.page===1);
+                        const from = Math.max(1,Math.min(state.page-2,totalPages-4));
+                        for(let p=from;p<=Math.min(totalPages,from+4);p++) add(String(p),p,false,p===state.page);
+                        add('>',state.page+1,state.page===totalPages);
                     }
-
-                    return;
                 }
-
-                const riderName =
-                    option.dataset.riderName
-                    || option.textContent.trim();
-
-                if (name) {
-                    name.textContent = riderName;
-                }
-
-                if (area) {
-                    area.textContent =
-                        option.dataset.riderArea
-                        || 'Local delivery area';
-                }
-
-                if (vehicle) {
-                    vehicle.textContent =
-                        option.dataset.riderVehicle
-                        || 'Vehicle not recorded';
-                }
-
-                if (initial) {
-                    initial.textContent =
-                        riderName.trim().charAt(0).toUpperCase()
-                        || 'R';
-                }
-
-                if (preview) {
-                    preview.hidden = false;
-                }
-            }
-
-            select.addEventListener('change', renderRider);
-            renderRider();
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | WHOLE-BATCH ASSIGNMENT CONFIRMATION
-        |--------------------------------------------------------------------------
-        */
-
-        root.querySelectorAll('[data-lastmile-form]').forEach(form => {
-            form.addEventListener('submit', event => {
-                const select = form.querySelector(
-                    '[data-lastmile-rider]'
-                );
-
-                if (!select || !select.value) {
-                    return;
-                }
-
-                const option = select.options[select.selectedIndex];
-
-                const riderName =
-                    option.dataset.riderName
-                    || 'this Rider';
-
-                const area =
-                    form.dataset.areaName
-                    || 'this delivery area';
-
-                const parcelCount = form.querySelectorAll(
-                    'input[name="order_ids[]"]'
-                ).length || root.querySelectorAll(
-                    `input[name="order_ids[]"][form="${form.id}"]`
-                ).length;
-
-                const confirmed = window.confirm(
-                    `Assign ${parcelCount} `
-                    + `${parcelCount === 1 ? 'parcel' : 'parcels'} `
-                    + `in ${area} to ${riderName}?`
-                );
-
-                if (!confirmed) {
-                    event.preventDefault();
-                    return;
-                }
-
-                const button = form.querySelector(
-                    'button[type="submit"]'
-                );
-
-                if (button) {
-                    button.disabled = true;
-                    button.textContent = 'Assigning Rider…';
-                }
-            });
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | ASSIGNMENT HISTORY SEARCH + FILTER
-        |--------------------------------------------------------------------------
-        */
-
-        const assignmentCards = [
-            ...root.querySelectorAll('[data-assignment-card]')
-        ];
-
-        const assignmentSearch = root.querySelector(
-            '[data-assignment-search]'
-        );
-
-        const assignmentTabs = [
-            ...root.querySelectorAll('[data-assignment-filter]')
-        ];
-
-        const assignmentEmpty = root.querySelector(
-            '[data-assignment-empty]'
-        );
-
-        const assignmentVisibleCount = root.querySelector(
-            '[data-assignment-visible-count]'
-        );
-
-        let assignmentFilter = 'all';
-
-        function applyAssignmentFilters() {
-            const keyword = normalize(assignmentSearch?.value);
-            let shown = 0;
-
-            assignmentCards.forEach(card => {
-                const matchesState =
-                    assignmentFilter === 'all'
-                    || card.dataset.assignmentState === assignmentFilter;
-
-                const matchesSearch =
-                    normalize(card.dataset.search).includes(keyword);
-
-                card.hidden = !matchesState || !matchesSearch;
-
-                if (!card.hidden) {
-                    shown++;
-                }
-            });
-
-            assignmentTabs.forEach(tab => {
-                tab.setAttribute(
-                    'aria-pressed',
-                    String(
-                        tab.dataset.assignmentFilter === assignmentFilter
-                    )
-                );
-            });
-
-            if (assignmentEmpty) {
-                assignmentEmpty.hidden =
-                    assignmentCards.length === 0 || shown > 0;
-            }
-
-            if (assignmentVisibleCount) {
-                assignmentVisibleCount.textContent =
-                    `${shown} of ${assignmentCards.length} `
-                    + `${assignmentCards.length === 1 ? 'assignment' : 'assignments'} shown`;
-            }
+            };
+            $(`[data-lm-apply="${kind}"]`)?.addEventListener('click',() => {state.keyword=normalize(search?.value);state.filter=select?.value||'all';state.page=1;render();});
+            $(`[data-lm-reset="${kind}"]`)?.addEventListener('click',() => {if(search) search.value='';if(select)select.value='all';state.keyword='';state.filter='all';state.page=1;render();});
+            search?.addEventListener('keydown',event => {if(event.key==='Enter'){event.preventDefault();$(`[data-lm-apply="${kind}"]`)?.click();}});
+            size?.addEventListener('change',()=>{state.page=1;render();});
+            render();
         }
-
-        assignmentTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                assignmentFilter =
-                    tab.dataset.assignmentFilter || 'all';
-
-                applyAssignmentFilters();
+        let activeModal = null;
+        let priorFocus = null;
+        const closeModal = (restore = true) => {
+            if (!activeModal) return;
+            activeModal.hidden=true; activeModal=null;document.body.classList.remove('lm2-modal-open');
+            if(restore && priorFocus?.isConnected) priorFocus.focus({preventScroll:true});
+        };
+        const openModal = (id) => {
+            const modal = document.getElementById(id);
+            if(!modal || !root.contains(modal))return;
+            if(activeModal) closeModal(false);
+            priorFocus=document.activeElement; activeModal=modal; modal.hidden=false;
+            document.body.classList.add('lm2-modal-open');
+            modal.querySelector('[data-lm-close]')?.focus({preventScroll:true});
+        };
+        root.addEventListener('click',event => {
+            const opener = event.target.closest('[data-lm-open]');
+            if(opener && root.contains(opener)) {openModal(opener.dataset.lmOpen);return;}
+            const swap = event.target.closest('[data-lm-switch]');
+            if(swap && root.contains(swap)){openModal(swap.dataset.lmSwitch);return;}
+            if(activeModal && (event.target === activeModal || event.target.closest('[data-lm-close]')))closeModal();
+        });
+        document.addEventListener('keydown',event => {
+            if(!activeModal)return;
+            if(event.key==='Escape'){event.preventDefault();closeModal();return;}
+            if(event.key==='Tab'){
+                const focusables = $$('button:not(:disabled),select:not(:disabled),a[href],input:not([type="hidden"]):not(:disabled)',activeModal).filter(el=>!el.hidden);
+                if(!focusables.length)return;
+                const first=focusables[0],last=focusables[focusables.length-1];
+                if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
+                else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first.focus();}
+            }
+        });
+        $$('[data-lastmile-form]').forEach(form => {
+            const select = $('[data-lastmile-rider]',form);
+            const preview = $('[data-rider-preview]',form);
+            const render = () => {
+                const opt=select?.selectedOptions?.[0];
+                if(!opt?.value){if(preview)preview.hidden=true;return;}
+                $('[data-rider-preview-name]',preview).textContent=opt.dataset.riderName||opt.textContent.trim();
+                $('[data-rider-preview-area]',preview).textContent=opt.dataset.riderArea||'Local delivery area';
+                $('[data-rider-preview-vehicle]',preview).textContent=opt.dataset.riderVehicle||'Vehicle not recorded';
+                $('[data-rider-initial]',preview).textContent=(opt.dataset.riderName||'R').charAt(0).toUpperCase();
+                preview.hidden=false;
+            };
+            select?.addEventListener('change',render);render();
+            form.addEventListener('submit',event=>{
+                if(!select?.value){event.preventDefault();select?.focus();return;}
+                const btn=$('button[type="submit"]',form);
+                if(btn){btn.disabled=true;btn.textContent='Assigning Rider…';}
             });
         });
-
-        assignmentSearch?.addEventListener(
-            'input',
-            applyAssignmentFilters
-        );
-
-        root.querySelectorAll(
-            '[data-assignment-clear]'
-        ).forEach(button => {
-            button.addEventListener('click', () => {
-                assignmentFilter = 'all';
-
-                if (assignmentSearch) {
-                    assignmentSearch.value = '';
-                }
-
-                applyAssignmentFilters();
-            });
-        });
-
-        applyAreaFilters();
-        applyAssignmentFilters();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            initializeLastMileAssignment
-        );
-    } else {
-        initializeLastMileAssignment();
-    }
+    };
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 @endpush

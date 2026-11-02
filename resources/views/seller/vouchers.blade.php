@@ -5,1289 +5,197 @@
 @section('page-title', 'Promotions & Vouchers')
 
 @push('styles')
-<style id="sariSellerEmbeddedCss-vouchers" data-sari-inline-css="vouchers">
+<style id="sariSellerVouchersCleanUi">
 @verbatim
-/* Extracted from resources/views/seller/vouchers.blade.php — original style block 1. */
+/* SARI SELLER — PROMOTIONS & VOUCHERS | Unified clean layout */
 .seller-vouchers-page {
-
-        --voucher-gold: #d59617;
-
-        --voucher-gold-hover: #c9890f;
-
-        --voucher-gold-soft: #fffaf0;
-
-        --voucher-ink: #111827;
-
-        --voucher-text: #344054;
-
-        --voucher-muted: #7c8592;
-
-        --voucher-soft-muted: #98a2b3;
-
-        --voucher-line: #e5e7eb;
-
-        width: 100%;
-
-        max-width: 1440px;
-
-        margin-inline: auto;
-
-        padding-bottom: 24px;
-
-        color: var(--voucher-ink);
-
-        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-
-    }
-
-    .seller-vouchers-page *,
-
-    .seller-vouchers-page *::before,
-
-    .seller-vouchers-page *::after {
-
-        box-sizing: border-box;
-
-    }
-
-    .seller-vouchers-page button,
-
-    .seller-vouchers-page input,
-
-    .seller-vouchers-page select,
-
-    .seller-vouchers-page a {
-
-        font-family: inherit;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Feedback
-
-       ------------------------------------------------------------ */
-
-    .seller-voucher-alert {
-
-        display: flex;
-
-        align-items: flex-start;
-
-        gap: 9px;
-
-        margin-bottom: 10px;
-
-        border: 1px solid;
-
-        border-radius: 12px;
-
-        padding: 9px 11px;
-
-        font-size: 9px;
-
-        font-weight: 500;
-
-        line-height: 1.5;
-
-    }
-
-    .seller-voucher-alert--success {
-
-        border-color: #d5e7dc;
-
-        background: #f5faf7;
-
-        color: #4f7d63;
-
-    }
-
-    .seller-voucher-alert--error {
-
-        border-color: #efdada;
-
-        background: #fff7f7;
-
-        color: #a65353;
-
-    }
-
-    .seller-voucher-alert-icon {
-
-        display: grid;
-
-        width: 27px;
-
-        height: 27px;
-
-        flex: 0 0 27px;
-
-        place-items: center;
-
-        border: 1px solid currentColor;
-
-        border-radius: 8px;
-
-        background: #fff;
-
-        opacity: .82;
-
-    }
-
-    .seller-voucher-alert-icon svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Header — same family as recent Seller pages
-
-       ------------------------------------------------------------ */
-
-    .seller-vouchers-header {
-
-        min-height: 66px;
-
-        padding: 2px 2px 13px;
-
-        border-bottom: 1px solid #e7ebf0;
-
-    }
-
-    .seller-vouchers-eyebrow {
-
-        margin: 0;
-
-        color: #b87605;
-
-        font-size: 8px;
-
-        font-weight: 800;
-
-        line-height: 1;
-
-        letter-spacing: .16em;
-
-        text-transform: uppercase;
-
-    }
-
-    .seller-vouchers-title {
-
-        margin: 5px 0 0;
-
-        color: var(--voucher-ink);
-
-        font-size: clamp(29px, 2.2vw, 36px);
-
-        font-weight: 650;
-
-        line-height: 1;
-
-        letter-spacing: -.035em;
-
-    }
-
-    .seller-vouchers-title span:last-child {
-
-        margin-left: .18em;
-
-        color: #C9890B;
-
-    }
-
-    .seller-vouchers-subtitle {
-
-        max-width: 760px;
-
-        margin: 7px 0 0;
-
-        color: var(--voucher-muted);
-
-        font-size: 10px;
-
-        line-height: 1.5;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Main layout
-
-       ------------------------------------------------------------ */
-
-    .seller-vouchers-layout {
-
-        display: grid;
-
-        grid-template-columns: minmax(330px, 380px) minmax(0, 1fr);
-
-        gap: 10px;
-
-        align-items: start;
-
-        margin-top: 12px;
-
-    }
-
-    .seller-voucher-panel {
-
-        overflow: hidden;
-
-        border: 1px solid var(--voucher-line);
-
-        border-radius: 13px;
-
-        background: #fff;
-
-        box-shadow: 0 5px 16px rgba(15, 23, 42, .028);
-
-    }
-
-    .seller-voucher-panel-head {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 12px;
-
-        border-bottom: 1px solid #edf0f3;
-
-        padding: 11px 13px;
-
-        background: #fff;
-
-    }
-
-    .seller-voucher-panel-title-group {
-
-        display: flex;
-
-        min-width: 0;
-
-        align-items: center;
-
-        gap: 8px;
-
-    }
-
-    .seller-voucher-panel-icon {
-
-        display: grid;
-
-        width: 28px;
-
-        height: 28px;
-
-        flex: 0 0 28px;
-
-        place-items: center;
-
-        border: 1px solid #efe3c7;
-
-        border-radius: 8px;
-
-        background: var(--voucher-gold-soft);
-
-        color: #b97805;
-
-    }
-
-    .seller-voucher-panel-icon svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-    .seller-voucher-panel-title {
-
-        margin: 0;
-
-        color: #1f2937;
-
-        font-size: 11px;
-
-        font-weight: 700;
-
-        line-height: 1.3;
-
-    }
-
-    .seller-voucher-panel-subtitle {
-
-        margin: 2px 0 0;
-
-        color: var(--voucher-soft-muted);
-
-        font-size: 8px;
-
-        line-height: 1.35;
-
-    }
-
-    .seller-voucher-count {
-
-        display: inline-flex;
-
-        min-height: 23px;
-
-        align-items: center;
-
-        border: 1px solid #e5e7eb;
-
-        border-radius: 999px;
-
-        background: #fafbfc;
-
-        padding: 0 8px;
-
-        color: #667085;
-
-        font-size: 8px;
-
-        font-weight: 700;
-
-        white-space: nowrap;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Create form
-
-       ------------------------------------------------------------ */
-
-    .seller-voucher-form {
-
-        padding: 12px 13px 13px;
-
-    }
-
-    .seller-voucher-form-grid {
-
-        display: grid;
-
-        gap: 9px;
-
-    }
-
-    .seller-voucher-field-grid {
-
-        display: grid;
-
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 8px;
-
-    }
-
-    .seller-voucher-field {
-
-        min-width: 0;
-
-    }
-
-    .seller-voucher-label {
-
-        display: block;
-
-        margin: 0 0 5px;
-
-        color: #475467;
-
-        font-size: 8.8px;
-
-        font-weight: 650;
-
-        line-height: 1.3;
-
-    }
-
-    .seller-voucher-label small {
-
-        color: var(--voucher-soft-muted);
-
-        font-size: 7.5px;
-
-        font-weight: 400;
-
-    }
-
-    .seller-voucher-input,
-
-    .seller-voucher-select {
-
-        width: 100%;
-
-        height: 40px;
-
-        min-height: 40px;
-
-        border: 1px solid #d8dee6;
-
-        border-radius: 9px;
-
-        background: #fff;
-
-        padding: 0 10px;
-
-        color: #344054;
-
-        font-family: inherit;
-
-        font-size: 9.5px;
-
-        outline: none;
-
-        box-shadow: 0 1px 2px rgba(15, 23, 42, .015);
-
-        transition: border-color .14s ease, box-shadow .14s ease;
-
-    }
-
-    .seller-voucher-input::placeholder {
-
-        color: #98a2b3;
-
-    }
-
-    .seller-voucher-input:focus,
-
-    .seller-voucher-select:focus {
-
-        border-color: var(--voucher-gold);
-
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08);
-
-    }
-
-    .seller-voucher-code {
-
-        text-transform: uppercase;
-
-        letter-spacing: .04em;
-
-        font-weight: 700;
-
-    }
-
-    .seller-voucher-form-divider {
-
-        height: 1px;
-
-        margin-block: 2px;
-
-        background: #edf0f3;
-
-    }
-
-    .seller-voucher-section-label {
-
-        color: #98a2b3;
-
-        font-size: 7.6px;
-
-        font-weight: 700;
-
-        letter-spacing: .08em;
-
-        text-transform: uppercase;
-
-    }
-
-    .seller-voucher-submit {
-
-        display: inline-flex;
-
-        width: 100%;
-
-        height: 40px;
-
-        min-height: 40px;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 7px;
-
-        border: 1px solid var(--voucher-gold);
-
-        border-radius: 9px;
-
-        background: var(--voucher-gold);
-
-        padding: 0 13px;
-
-        color: #fff;
-
-        font-size: 9.5px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        box-shadow: 0 6px 14px rgba(213, 150, 23, .14);
-
-        transition: border-color .14s ease, background-color .14s ease;
-
-    }
-
-    .seller-voucher-submit:hover,
-
-    .seller-voucher-submit:focus-visible {
-
-        outline: none;
-
-        border-color: var(--voucher-gold-hover);
-
-        background: var(--voucher-gold-hover);
-
-    }
-
-    .seller-voucher-submit svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-    .seller-voucher-form-note {
-
-        margin: 0;
-
-        color: var(--voucher-soft-muted);
-
-        font-size: 7.8px;
-
-        line-height: 1.45;
-
-        text-align: center;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Voucher list
-
-       ------------------------------------------------------------ */
-
-    .seller-voucher-list {
-
-        display: grid;
-
-    }
-
-    .seller-voucher-row {
-
-        display: grid;
-
-        grid-template-columns: minmax(0, 1fr) auto;
-
-        gap: 14px;
-
-        align-items: center;
-
-        border-bottom: 1px solid #edf0f3;
-
-        padding: 11px 13px;
-
-        background: #fff;
-
-        transition: background-color .14s ease;
-
-    }
-
-    .seller-voucher-row:last-child {
-
-        border-bottom: 0;
-
-    }
-
-    .seller-voucher-row:hover {
-
-        background: #fffdf8;
-
-    }
-
-    .seller-voucher-main {
-
-        min-width: 0;
-
-    }
-
-    .seller-voucher-heading {
-
-        display: flex;
-
-        min-width: 0;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 7px;
-
-    }
-
-    .seller-voucher-code-badge {
-
-        display: inline-flex;
-
-        min-height: 25px;
-
-        align-items: center;
-
-        border: 1px solid #f0dbad;
-
-        border-radius: 8px;
-
-        background: #fff8e8;
-
-        padding: 0 8px;
-
-        color: #a96f06;
-
-        font-size: 8.8px;
-
-        font-weight: 800;
-
-        letter-spacing: .035em;
-
-    }
-
-    .seller-voucher-name {
-
-        overflow: hidden;
-
-        color: #1f2937;
-
-        font-size: 9.8px;
-
-        font-weight: 700;
-
-        line-height: 1.35;
-
-        text-overflow: ellipsis;
-
-        white-space: nowrap;
-
-    }
-
-    .seller-voucher-status {
-
-        display: inline-flex;
-
-        min-height: 22px;
-
-        align-items: center;
-
-        gap: 5px;
-
-        border: 1px solid;
-
-        border-radius: 999px;
-
-        padding: 0 7px;
-
-        font-size: 7.5px;
-
-        font-weight: 700;
-
-        white-space: nowrap;
-
-    }
-
-    .seller-voucher-status::before {
-
-        content: "";
-
-        width: 5px;
-
-        height: 5px;
-
-        border-radius: 999px;
-
-        background: currentColor;
-
-    }
-
-    .seller-voucher-status--active {
-
-        border-color: #cfe4d7;
-
-        background: #f1f8f4;
-
-        color: #4f7d63;
-
-    }
-
-    .seller-voucher-status--inactive {
-
-        border-color: #e1e4e8;
-
-        background: #f8fafc;
-
-        color: #7c8592;
-
-    }
-
-    .seller-voucher-meta {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 4px 8px;
-
-        margin-top: 6px;
-
-        color: #7c8592;
-
-        font-size: 8.4px;
-
-        line-height: 1.4;
-
-    }
-
-    .seller-voucher-meta strong {
-
-        color: #475467;
-
-        font-weight: 650;
-
-    }
-
-    .seller-voucher-meta-separator {
-
-        color: #d4d8de;
-
-    }
-
-    .seller-voucher-actions {
-
-        display: flex;
-
-        flex: 0 0 auto;
-
-        align-items: center;
-
-        gap: 6px;
-
-    }
-
-    .seller-voucher-action-button {
-
-        display: inline-flex;
-
-        height: 34px;
-
-        min-height: 34px;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 5px;
-
-        border: 1px solid;
-
-        border-radius: 8px;
-
-        background: #fff;
-
-        padding: 0 9px;
-
-        font-size: 8.3px;
-
-        font-weight: 650;
-
-        cursor: pointer;
-
-        transition: border-color .14s ease, background-color .14s ease, color .14s ease;
-
-    }
-
-    .seller-voucher-action-button svg {
-
-        width: 12px;
-
-        height: 12px;
-
-    }
-
-    .seller-voucher-action-button--toggle {
-
-        border-color: #dfe3e8;
-
-        color: #667085;
-
-    }
-
-    .seller-voucher-action-button--toggle:hover,
-
-    .seller-voucher-action-button--toggle:focus-visible {
-
-        outline: none;
-
-        border-color: #efd9a7;
-
-        background: #fffaf0;
-
-        color: #9b6505;
-
-    }
-
-    .seller-voucher-action-button--delete {
-
-        border-color: #efcece;
-
-        color: #a65353;
-
-    }
-
-    .seller-voucher-action-button--delete:hover,
-
-    .seller-voucher-action-button--delete:focus-visible {
-
-        outline: none;
-
-        border-color: #e7bcbc;
-
-        background: #fff7f7;
-
-        color: #944646;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Empty + pagination
-
-       ------------------------------------------------------------ */
-
-    .seller-voucher-empty {
-
-        display: grid;
-
-        min-height: 170px;
-
-        place-items: center;
-
-        padding: 28px 18px;
-
-        text-align: center;
-
-    }
-
-    .seller-voucher-empty-icon {
-
-        display: grid;
-
-        width: 38px;
-
-        height: 38px;
-
-        margin-inline: auto;
-
-        place-items: center;
-
-        border: 1px solid #e5e7eb;
-
-        border-radius: 10px;
-
-        background: #fafbfc;
-
-        color: #98a2b3;
-
-    }
-
-    .seller-voucher-empty-icon svg {
-
-        width: 17px;
-
-        height: 17px;
-
-    }
-
-    .seller-voucher-empty-title {
-
-        margin-top: 9px;
-
-        color: #344054;
-
-        font-size: 10.5px;
-
-        font-weight: 650;
-
-    }
-
-    .seller-voucher-empty-copy {
-
-        margin-top: 4px;
-
-        color: var(--voucher-soft-muted);
-
-        font-size: 8.8px;
-
-        line-height: 1.5;
-
-    }
-
-    .seller-voucher-pagination {
-
-        border-top: 1px solid #edf0f3;
-
-        padding: 10px 13px;
-
-        background: #fff;
-
-    }
-
-    /* ------------------------------------------------------------
-
-       Responsive
-
-       ------------------------------------------------------------ */
-
-    @media (max-width: 1100px) {
-
-        .seller-vouchers-layout {
-
-            grid-template-columns: 340px minmax(0, 1fr);
-
-        }
-
-        .seller-voucher-row {
-
-            grid-template-columns: 1fr;
-
-        }
-
-        .seller-voucher-actions {
-
-            justify-content: flex-start;
-
-        }
-
-    }
-
-    @media (max-width: 820px) {
-
-        .seller-vouchers-layout {
-
-            grid-template-columns: 1fr;
-
-        }
-
-    }
-
-    @media (max-width: 640px) {
-
-        .seller-vouchers-title {
-
-            font-size: clamp(28px, 8vw, 34px);
-
-        }
-
-        .seller-voucher-field-grid {
-
-            grid-template-columns: 1fr;
-
-        }
-
-        .seller-voucher-input,
-
-        .seller-voucher-select,
-
-        .seller-voucher-submit {
-
-            height: 42px;
-
-            min-height: 42px;
-
-            font-size: 10px;
-
-        }
-
-        .seller-voucher-row {
-
-            padding: 10px;
-
-        }
-
-        .seller-voucher-actions {
-
-            display: grid;
-
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        }
-
-        .seller-voucher-action-button {
-
-            width: 100%;
-
-            height: 36px;
-
-            min-height: 36px;
-
-        }
-
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-        .seller-vouchers-page * {
-
-            transition-duration: .01ms !important;
-
-            scroll-behavior: auto !important;
-
-        }
-
-    }
-
-/* ======================================================================
-   PROMOTIONS & VOUCHERS — DASHBOARD FLOATING CONTAINERS FINAL PASS
-   Front-end/CSS only. Voucher create/toggle/delete routes, CSRF,
-   validation, pagination, and backend behavior remain unchanged.
-   ====================================================================== */
-
-.seller-vouchers-page {
-    --voucher-dashboard-border: #E5E7EB;
-    --voucher-dashboard-border-strong: #D1D5DB;
-    --voucher-dashboard-divider: #ECEFF2;
-
-    /* Same layered depth language used on the Seller dashboard:
-       contact shadow + middle separation + broad ambient float. */
-    --voucher-dashboard-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
-
-    --voucher-dashboard-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
-
-    --voucher-dashboard-shadow-inner:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 14px rgba(15, 23, 42, .045);
+    --voucher-gold:#C88912;
+    --voucher-gold-hover:#AD730F;
+    --voucher-ink:#293440;
+    --voucher-text:#475569;
+    --voucher-muted:#8190A1;
+    --voucher-line:#E5E9EE;
+    --voucher-soft:#F8FAFC;
+    width:100%; max-width:1520px; margin-inline:auto; padding-bottom:36px;
+    font-family:"Poppins",ui-sans-serif,system-ui,sans-serif;
+    color:var(--voucher-ink);
+}
+.seller-vouchers-page *, .seller-vouchers-page *::before, .seller-vouchers-page *::after {box-sizing:border-box}
+.seller-vouchers-page :is(button,input,select,summary,a) {font-family:inherit}
+.seller-vouchers-page :is(button,input,select,summary,a):focus-visible {outline:2px solid rgba(200,137,18,.46);outline-offset:2px}
+.seller-vouchers-page :is(button,a,summary) {transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.seller-vouchers-header {padding:0 2px 17px;border-bottom:1px solid var(--voucher-line)}
+.seller-vouchers-eyebrow {margin:0;color:#A87316;font-size:10.5px;font-weight:800;line-height:1.35;letter-spacing:.11em;text-transform:uppercase}
+.seller-vouchers-title {margin:5px 0 0;color:#2E343B;font-size:clamp(27px,2.3vw,31px);font-weight:760;line-height:1.14;letter-spacing:-.03em}
+.seller-vouchers-title span:last-child {margin-left:.2em;color:var(--voucher-gold)}
+.seller-vouchers-subtitle {max-width:810px;margin:8px 0 0;color:#7B8897;font-size:11.5px;line-height:1.65}
+/* Consistent white/gray notification treatment */
+.seller-voucher-alert {display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;padding:12px 14px;border:1px solid;border-radius:13px;font-size:11.5px;line-height:1.55;font-weight:500}
+.seller-voucher-alert--success {border-color:#BFE7CA;background:#F0FDF4;color:#166534}
+.seller-voucher-alert--error {border-color:#FECACA;background:#FEF2F2;color:#B91C1C}
+.seller-voucher-alert-icon {display:grid;flex:0 0 22px;width:22px;height:22px;place-items:center;border:0;background:transparent}
+.seller-voucher-alert-icon svg {width:19px;height:19px}
+/* Major headings and floating work surfaces */
+.seller-shipping-promo-section {margin:24px 0 22px}
+.seller-shipping-promo-head {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:13px}
+.seller-shipping-promo-head h2 {margin:0;color:#293440;font-size:18px;font-weight:750;letter-spacing:-.025em;line-height:1.35}
+.seller-shipping-promo-head p {margin:5px 0 0;color:#8190A1;font-size:11px;line-height:1.6}
+.seller-shipping-promo-tz {color:#A56D0A;font-weight:650}
+.seller-shipping-promo-grid {display:grid;grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr);gap:16px;align-items:stretch}
+.seller-shipping-promo-card, .seller-voucher-panel {
+    min-width:0;border:1px solid #E5E7EB;border-radius:18px;background:#FFF;
+    box-shadow:0 2px 5px rgba(15,23,42,.025),0 10px 24px rgba(15,23,42,.07);
+}
+.seller-shipping-promo-card {padding:21px 22px}
+.seller-shipping-promo-card h3 {margin:0;color:#293440;font-size:16px;font-weight:750;line-height:1.4}
+.seller-shipping-promo-note {margin:6px 0 0;color:#8491A0;font-size:11px;line-height:1.6}
+.seller-shipping-promo-fields {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:18px}
+.seller-shipping-promo-field {min-width:0}
+.seller-shipping-promo-field label, .seller-voucher-label {display:block;margin:0 0 7px;color:#586473;font-size:11px;line-height:1.4;font-weight:650}
+.seller-voucher-label small {color:#94A3B8;font-size:10px;font-weight:500}
+.seller-shipping-promo-field input, .seller-voucher-input, .seller-voucher-select {
+    display:block;width:100%;height:48px;min-height:48px;min-width:0;border:1px solid #DCE2E8;
+    border-radius:12px;background:#FFF;padding:0 14px;color:#344054;font-size:11.5px;font-weight:550;
+    box-shadow:none;outline:0;transition:border-color .15s ease,box-shadow .15s ease;
+}
+.seller-shipping-promo-field input::placeholder, .seller-voucher-input::placeholder {color:#9BA6B3;font-weight:400}
+.seller-shipping-promo-field input:hover, .seller-voucher-input:hover, .seller-voucher-select:hover {border-color:#C9D1DB}
+.seller-shipping-promo-field input:focus, .seller-voucher-input:focus, .seller-voucher-select:focus {
+    border-color:var(--voucher-gold);box-shadow:0 0 0 3px rgba(200,137,18,.09);outline:0;
+}
+.seller-shipping-promo-submit, .seller-voucher-submit {
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;
+    border:1px solid var(--voucher-gold);border-radius:12px;background:var(--voucher-gold);
+    padding:0 18px;color:#FFF;font-size:12px;font-weight:700;cursor:pointer;box-shadow:none;
+}
+.seller-shipping-promo-submit:hover, .seller-voucher-submit:hover {background:var(--voucher-gold-hover);border-color:var(--voucher-gold-hover)}
+.seller-shipping-promo-submit {margin-top:16px;max-width:100%}
+.seller-shipping-promo-funder {margin-top:17px;padding:12px 14px;border:1px solid var(--voucher-line);border-radius:12px;background:var(--voucher-soft);color:#6D7988;font-size:10.5px;line-height:1.65}
+.seller-shipping-promo-funder strong {color:#455261;font-weight:750}
+.seller-shipping-promo-list {display:grid;gap:0;margin-top:17px}
+.seller-shipping-promo-item {padding:15px 0;border:0;border-bottom:1px solid #EDF0F3;border-radius:0;background:transparent}
+.seller-shipping-promo-item:first-child {padding-top:0}
+.seller-shipping-promo-item:last-child {border-bottom:0;padding-bottom:0}
+.seller-shipping-promo-item-head {display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.seller-shipping-promo-terms {color:#303D4C;font-size:12px;font-weight:700;line-height:1.5}
+.seller-shipping-promo-meta {margin-top:5px;color:#8794A2;font-size:10.5px;line-height:1.6}
+.seller-shipping-promo-status, .seller-voucher-status {display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;min-height:27px;border:1px solid;border-radius:999px;padding:3px 11px;font-size:10px;font-weight:700;line-height:1.3;white-space:nowrap}
+.seller-shipping-promo-status.is-active, .seller-voucher-status--active {border-color:#BBF7D0;background:#ECFDF3;color:#166534}
+.seller-shipping-promo-status.is-scheduled {border-color:#BFDBFE;background:#EFF6FF;color:#1D4ED8}
+.seller-shipping-promo-status.is-paused, .seller-voucher-status--inactive {border-color:#E2E8F0;background:#F8FAFC;color:#64748B}
+.seller-shipping-promo-status.is-ended {border-color:#FECACA;background:#FEF2F2;color:#B91C1C}
+.seller-shipping-promo-actions {display:flex;flex-wrap:wrap;gap:9px;margin-top:11px}
+.seller-shipping-promo-actions form {margin:0}
+.seller-shipping-promo-action, .seller-shipping-promo-edit summary, .seller-voucher-action-button {
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;
+    border:1px solid #DCE2E8;border-radius:10px;background:#FFF;padding:0 13px;
+    color:#526071;font-size:11px;font-weight:650;line-height:1.3;cursor:pointer;text-decoration:none;list-style:none;
+}
+.seller-shipping-promo-action:hover, .seller-shipping-promo-edit summary:hover, .seller-voucher-action-button--toggle:hover {border-color:#C9D1DB;background:#F8FAFC;color:#344054}
+.seller-shipping-promo-action.is-danger, .seller-voucher-action-button--delete {border-color:#FECACA;color:#B91C1C;background:#FFF}
+.seller-shipping-promo-action.is-danger:hover, .seller-voucher-action-button--delete:hover {background:#FEF2F2;border-color:#FCA5A5;color:#991B1B}
+.seller-shipping-promo-edit {margin-top:10px}
+.seller-shipping-promo-edit summary::-webkit-details-marker {display:none}
+.seller-shipping-promo-edit[open] summary {border-color:#D1A24E;color:#A56D0A}
+.seller-shipping-promo-edit-form {margin-top:13px;border-top:1px solid var(--voucher-line);padding-top:2px}
+.seller-shipping-promo-empty {display:grid;min-height:190px;place-items:center;margin-top:16px;padding:24px;text-align:center;border:1px dashed #DCE2E8;border-radius:12px;background:#FAFBFC;color:#8491A0;font-size:12px;line-height:1.6}
+/* Voucher create and listing panels */
+.seller-vouchers-layout {display:grid;grid-template-columns:minmax(360px,420px) minmax(0,1fr);align-items:start;gap:16px;margin-top:23px}
+.seller-voucher-panel {overflow:hidden}
+.seller-voucher-panel-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 22px 17px;border-bottom:1px solid var(--voucher-line);background:#FFF}
+.seller-voucher-panel-title-group {display:flex;align-items:center;min-width:0;gap:11px}
+.seller-voucher-panel-icon {display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border:0;border-radius:0;background:transparent;color:var(--voucher-gold);box-shadow:none}
+.seller-voucher-panel-icon svg {width:27px;height:27px}
+.seller-voucher-panel-title {margin:0;color:#293440;font-size:18px;font-weight:750;line-height:1.3;letter-spacing:-.025em}
+.seller-voucher-panel-subtitle {margin:5px 0 0;color:#8491A0;font-size:11px;line-height:1.55}
+.seller-voucher-count {display:inline-flex;align-items:center;min-height:28px;padding:3px 10px;border:1px solid #E2E8F0;border-radius:999px;background:#F8FAFC;color:#64748B;font-size:10.5px;font-weight:700;white-space:nowrap}
+.seller-voucher-form {padding:21px 22px 22px}
+.seller-voucher-form-grid {display:grid;gap:16px}
+.seller-voucher-field-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.seller-voucher-field {min-width:0}
+.seller-voucher-code {font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.seller-voucher-form-divider {height:1px;margin:2px 0 0;background:var(--voucher-line)}
+.seller-voucher-section-label {color:#A56D0A;font-size:10px;font-weight:800;line-height:1.35;letter-spacing:.09em;text-transform:uppercase}
+.seller-voucher-submit {width:100%;margin-top:3px}
+.seller-voucher-submit svg {width:16px;height:16px}
+.seller-voucher-form-note {margin:0;color:#8A96A4;font-size:10px;line-height:1.6;text-align:center}
+.seller-voucher-select {appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:17px}
+/* The enhancement leaves native select functional when JS is unavailable. */
+.seller-voucher-discount-dropdown {position:relative}
+.seller-voucher-discount-dropdown.is-enhanced .seller-voucher-select {display:none}
+.seller-voucher-discount-trigger {display:flex;width:100%;min-height:48px;align-items:center;justify-content:space-between;gap:9px;padding:0 14px;border:1px solid #DCE2E8;border-radius:12px;background:#FFF;color:#344054;font-size:11.5px;font-weight:600;cursor:pointer;text-align:left}
+.seller-voucher-discount-trigger:hover {border-color:#C9D1DB;background:#F8FAFC}
+.seller-voucher-discount-trigger[aria-expanded="true"] {border-color:var(--voucher-gold);box-shadow:0 0 0 2px rgba(200,137,18,.10)}
+.seller-voucher-discount-trigger svg {width:17px;height:17px;flex-shrink:0;color:#64748B}
+.seller-voucher-discount-menu {position:absolute;top:calc(100% + 7px);left:0;right:0;z-index:120;padding:7px;border:1px solid #E2E8F0;border-radius:13px;background:#FFF;box-shadow:0 15px 34px rgba(15,23,42,.12),0 3px 8px rgba(15,23,42,.04)}
+.seller-voucher-discount-menu[hidden], .seller-voucher-discount-trigger[hidden] {display:none!important}
+.seller-voucher-discount-option {display:block;width:100%;min-height:39px;padding:9px 11px;border:0;border-radius:9px;background:transparent;color:#475569;text-align:left;font-size:11.5px;font-weight:600;cursor:pointer}
+.seller-voucher-discount-option:hover, .seller-voucher-discount-option:focus-visible {outline:0;background:#F8FAFC;color:#A56D0A}
+.seller-voucher-discount-option.is-selected {background:#F8FAFC;color:#293440;font-weight:750}
+/* Flat, scannable voucher records */
+.seller-voucher-list {display:grid;background:#FFF}
+.seller-voucher-row {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;padding:19px 22px;border-bottom:1px solid #EDF0F3;background:#FFF}
+.seller-voucher-row:last-child {border-bottom:0}
+.seller-voucher-row:hover {background:#F8FAFC}
+.seller-voucher-main {min-width:0}
+.seller-voucher-heading {display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.seller-voucher-code-badge {display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid #E5E7EB;border-radius:9px;background:#F8FAFC;color:#A56D0A;font-size:11px;font-weight:800;letter-spacing:.035em}
+.seller-voucher-name {color:#293440;font-size:12.5px;font-weight:750;line-height:1.4;overflow-wrap:anywhere}
+.seller-voucher-meta {display:flex;flex-wrap:wrap;align-items:center;gap:5px 9px;margin-top:9px;color:#8491A0;font-size:11px;line-height:1.5}
+.seller-voucher-meta strong {color:#475569;font-weight:700}
+.seller-voucher-meta-separator {color:#CBD5E1}
+.seller-voucher-actions {display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
+.seller-voucher-actions form {margin:0}
+.seller-voucher-action-button svg {width:15px;height:15px}
+.seller-voucher-action-button--toggle {color:#526071}
+.seller-voucher-empty {display:grid;min-height:230px;place-items:center;padding:38px 22px;text-align:center;background:#FFF}
+.seller-voucher-empty-icon {display:grid;place-items:center;width:74px;height:74px;margin-inline:auto;color:#94A3B8;background:transparent;border:0;border-radius:0}
+.seller-voucher-empty-icon svg {width:48px;height:48px}
+.seller-voucher-empty-title {margin-top:12px;color:#344054;font-size:17px;font-weight:750}
+.seller-voucher-empty-copy {max-width:320px;margin:7px auto 0;color:#8A96A4;font-size:11.5px;line-height:1.65}
+/* Paginator remains inside the primary white panel */
+.seller-voucher-pagination {padding:14px 20px;border-top:1px solid var(--voucher-line);background:#FFF}
+.seller-voucher-pagination nav {font-family:inherit;font-size:11px}
+.seller-voucher-pagination nav :is(a,span) {border-color:#E2E8F0}
+.seller-voucher-pagination nav [aria-current="page"] span {border-color:var(--voucher-gold)!important;background:var(--voucher-gold)!important;color:#FFF!important}
+@media(max-width:1140px) {
+    .seller-shipping-promo-grid {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .seller-vouchers-layout {grid-template-columns:minmax(300px,380px) minmax(0,1fr)}
+    .seller-voucher-row {grid-template-columns:1fr;gap:12px}
+    .seller-voucher-actions {justify-content:flex-start}
+}
+@media(max-width:900px) {
+    .seller-shipping-promo-grid, .seller-vouchers-layout {grid-template-columns:1fr}
+    .seller-voucher-row {grid-template-columns:minmax(0,1fr) auto}
+    .seller-voucher-actions {justify-content:flex-end}
+}
+@media(max-width:640px) {
+    .seller-vouchers-page {padding-bottom:24px}
+    .seller-vouchers-eyebrow {font-size:9.5px}
+    .seller-vouchers-title {font-size:27px}
+    .seller-vouchers-subtitle {font-size:11px}
+    .seller-shipping-promo-section {margin:18px 0}
+    .seller-shipping-promo-head h2 {font-size:17px}
+    .seller-shipping-promo-grid, .seller-vouchers-layout {gap:12px}
+    .seller-shipping-promo-card {padding:17px}
+    .seller-shipping-promo-fields {grid-template-columns:1fr;gap:12px}
+    .seller-shipping-promo-item-head {flex-direction:column;gap:7px}
+    .seller-voucher-panel-head {padding:17px;align-items:flex-start}
+    .seller-voucher-panel-title {font-size:17px}
+    .seller-voucher-form {padding:17px}
+    .seller-voucher-field-grid {grid-template-columns:1fr}
+    .seller-voucher-row {grid-template-columns:1fr;padding:17px;gap:12px}
+    .seller-voucher-actions {justify-content:flex-start}
+    .seller-voucher-action-button {min-height:40px}
+    .seller-shipping-promo-submit {width:100%}
+    .seller-voucher-pagination {padding:12px 14px}
+}
+@media(prefers-reduced-motion:reduce) {
+    .seller-vouchers-page :is(button,input,select,a,summary) {transition:none}
 }
 
-/* Header remains flat; only its divider is neutral. */
-.seller-vouchers-page .seller-vouchers-header {
-    border-bottom-color: var(--voucher-dashboard-divider) !important;
-}
-
-/* ------------------------------------------------------------------
-   PRIMARY PANELS
-   Both Create Voucher and Seller Vouchers become true floating surfaces.
-   ------------------------------------------------------------------ */
-.seller-vouchers-page .seller-voucher-panel {
-    border: 1px solid var(--voucher-dashboard-border) !important;
-    border-radius: 14px !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--voucher-dashboard-shadow) !important;
-    transform: none !important;
-    overflow: hidden !important;
-}
-
-.seller-vouchers-page .seller-voucher-panel:hover {
-    border-color: var(--voucher-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--voucher-dashboard-shadow) !important;
-    transform: none !important;
-}
-
-/* Panel headers stay visually attached to the floating shell. */
-.seller-vouchers-page .seller-voucher-panel-head {
-    border-bottom-color: var(--voucher-dashboard-divider) !important;
-    background: #FFFFFF !important;
-}
-
-/* Icon shells use neutral structure; gold is kept only as icon accent. */
-.seller-vouchers-page .seller-voucher-panel-icon {
-    border-color: var(--voucher-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
-}
-
-/* Count chip is a quiet secondary surface. */
-.seller-vouchers-page .seller-voucher-count {
-    border-color: var(--voucher-dashboard-border) !important;
-    background: #F8FAFC !important;
-    box-shadow: 0 2px 7px rgba(15, 23, 42, .025) !important;
-}
-
-/* ------------------------------------------------------------------
-   FORM SURFACES
-   Controls receive restrained depth only; parent panel remains dominant.
-   ------------------------------------------------------------------ */
-.seller-vouchers-page .seller-voucher-input,
-.seller-vouchers-page .seller-voucher-select {
-    border-color: var(--voucher-dashboard-border-strong) !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 1px 2px rgba(15, 23, 42, .02),
-        0 4px 10px rgba(15, 23, 42, .03) !important;
-    transform: none !important;
-}
-
-.seller-vouchers-page .seller-voucher-input:hover,
-.seller-vouchers-page .seller-voucher-select:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
-}
-
-.seller-vouchers-page .seller-voucher-input:focus,
-.seller-vouchers-page .seller-voucher-select:focus {
-    border-color: #BFC5CC !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 0 0 3px rgba(15, 23, 42, .045),
-        0 5px 12px rgba(15, 23, 42, .035) !important;
-}
-
-.seller-vouchers-page .seller-voucher-form-divider {
-    background: var(--voucher-dashboard-divider) !important;
-}
-
-/* Primary CTA keeps gold semantics but does not physically move. */
-.seller-vouchers-page .seller-voucher-submit,
-.seller-vouchers-page .seller-voucher-submit:hover,
-.seller-vouchers-page .seller-voucher-submit:focus-visible {
-    transform: none !important;
-}
-
-/* ------------------------------------------------------------------
-   VOUCHER LIST
-   Rows stay flat inside one floating parent, improving scanability.
-   ------------------------------------------------------------------ */
-.seller-vouchers-page .seller-voucher-list {
-    background: #FFFFFF !important;
-}
-
-.seller-vouchers-page .seller-voucher-row {
-    border-bottom-color: var(--voucher-dashboard-divider) !important;
-    background: #FFFFFF !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-/* Replace old cream hover with neutral light gray. */
-.seller-vouchers-page .seller-voucher-row:hover {
-    background: #F8FAFC !important;
-    border-bottom-color: var(--voucher-dashboard-divider) !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-/* Voucher code keeps gold as semantic campaign accent, not structural border. */
-.seller-vouchers-page .seller-voucher-code-badge {
-    box-shadow: 0 2px 7px rgba(15, 23, 42, .025) !important;
-}
-
-/* Action buttons stay still; only normal color feedback is allowed. */
-.seller-vouchers-page .seller-voucher-action-button,
-.seller-vouchers-page .seller-voucher-action-button:hover,
-.seller-vouchers-page .seller-voucher-action-button:focus-visible {
-    transform: none !important;
-}
-
-/* Toggle action uses neutral structure instead of cream structural hover. */
-.seller-vouchers-page .seller-voucher-action-button--toggle {
-    border-color: var(--voucher-dashboard-border) !important;
-    background: #FFFFFF !important;
-}
-
-.seller-vouchers-page .seller-voucher-action-button--toggle:hover,
-.seller-vouchers-page .seller-voucher-action-button--toggle:focus-visible {
-    border-color: var(--voucher-dashboard-border-strong) !important;
-    background: #F8FAFC !important;
-    color: #7A5A18 !important;
-}
-
-/* Delete retains its semantic red treatment. */
-.seller-vouchers-page .seller-voucher-action-button--delete {
-    box-shadow: 0 2px 7px rgba(15, 23, 42, .02) !important;
-}
-
-/* ------------------------------------------------------------------
-   ALERTS / EMPTY / PAGINATION
-   ------------------------------------------------------------------ */
-.seller-vouchers-page .seller-voucher-alert {
-    box-shadow: var(--voucher-dashboard-shadow-soft) !important;
-    transform: none !important;
-}
-
-.seller-vouchers-page .seller-voucher-empty {
-    background: #FFFFFF !important;
-}
-
-.seller-vouchers-page .seller-voucher-empty-icon {
-    border-color: var(--voucher-dashboard-border) !important;
-    background: #F8FAFC !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
-}
-
-.seller-vouchers-page .seller-voucher-pagination {
-    border-top-color: var(--voucher-dashboard-divider) !important;
-    background: #FFFFFF !important;
-}
-
-.seller-vouchers-page .seller-voucher-pagination nav a,
-.seller-vouchers-page .seller-voucher-pagination nav span {
-    border-color: var(--voucher-dashboard-border) !important;
-}
-
-/* Main structural surfaces never get colored outlines. */
-.seller-vouchers-page .seller-voucher-panel,
-.seller-vouchers-page .seller-voucher-alert,
-.seller-vouchers-page .seller-voucher-input,
-.seller-vouchers-page .seller-voucher-select {
-    outline-color: transparent !important;
-}
-
-/* Mobile: retain the float while reducing ambient spread. */
-@media (max-width: 640px) {
-    .seller-vouchers-page .seller-voucher-panel {
-        box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
-    }
-
-    .seller-vouchers-page .seller-voucher-alert {
-        box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
-    }
-}
 @endverbatim
 </style>
-
-
-<style>
-.seller-shipping-promo-section{margin:0 0 22px}.seller-shipping-promo-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px}.seller-shipping-promo-head h2{margin:0;color:#252a31;font-size:15px;font-weight:700}.seller-shipping-promo-head p{margin:4px 0 0;color:#858d97;font-size:8px;line-height:1.5}.seller-shipping-promo-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px}.seller-shipping-promo-card{border:1px solid #e5e8ec;border-radius:14px;background:#fff;padding:16px;box-shadow:0 5px 16px rgba(26,34,44,.035)}.seller-shipping-promo-card h3{margin:0;color:#303740;font-size:11px;font-weight:700}.seller-shipping-promo-note{margin-top:5px;color:#8b939d;font-size:7.5px;line-height:1.5}.seller-shipping-promo-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.seller-shipping-promo-field{min-width:0}.seller-shipping-promo-field label{display:block;margin-bottom:5px;color:#58616c;font-size:7.5px;font-weight:650}.seller-shipping-promo-field input{width:100%;height:38px;border:1px solid #dfe4e9;border-radius:9px;background:#fff;padding:0 10px;color:#343b44;font-size:8.5px;outline:none}.seller-shipping-promo-field input:focus{border-color:#c88912;box-shadow:0 0 0 3px rgba(200,137,18,.07)}.seller-shipping-promo-submit{display:inline-flex;height:38px;align-items:center;justify-content:center;margin-top:12px;border:0;border-radius:9px;background:#c88912;padding:0 14px;color:#fff;font-size:8.5px;font-weight:700;cursor:pointer}.seller-shipping-promo-funder{margin-top:10px;padding:9px 10px;border:1px solid #e5e8ec;border-radius:9px;background:#f8f9fa;color:#6f7883;font-size:7.4px;line-height:1.5}.seller-shipping-promo-list{display:grid;gap:9px;margin-top:13px}.seller-shipping-promo-item{border:1px solid #e5e8ec;border-radius:11px;background:#fafbfc;padding:12px}.seller-shipping-promo-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.seller-shipping-promo-terms{color:#343b44;font-size:9px;font-weight:700}.seller-shipping-promo-meta{margin-top:4px;color:#89929d;font-size:7.2px;line-height:1.5}.seller-shipping-promo-status{display:inline-flex;min-height:23px;align-items:center;border-radius:999px;padding:0 8px;font-size:6.8px;font-weight:750}.seller-shipping-promo-status.is-active{background:#edf8f1;color:#3f7e5a}.seller-shipping-promo-status.is-scheduled{background:#fff7e8;color:#9a6815}.seller-shipping-promo-status.is-paused{background:#f2f3f5;color:#727b86}.seller-shipping-promo-status.is-ended{background:#fff1f1;color:#a65a5a}.seller-shipping-promo-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.seller-shipping-promo-actions form{margin:0}.seller-shipping-promo-action,.seller-shipping-promo-edit summary{display:inline-flex;min-height:30px;align-items:center;justify-content:center;border:1px solid #dfe4e9;border-radius:8px;background:#fff;padding:0 9px;color:#5e6874;font-size:7.2px;font-weight:650;cursor:pointer;list-style:none}.seller-shipping-promo-action.is-danger{border-color:#efcece;color:#a65353}.seller-shipping-promo-edit{margin-top:9px}.seller-shipping-promo-edit summary::-webkit-details-marker{display:none}.seller-shipping-promo-edit[open] summary{border-color:#d6af62;color:#97630e}.seller-shipping-promo-edit-form{margin-top:9px;padding-top:10px;border-top:1px solid #e8ebef}.seller-shipping-promo-empty{margin-top:13px;border:1px dashed #d9dee5;border-radius:10px;padding:18px;text-align:center;color:#8b939d;font-size:8px}.seller-shipping-promo-tz{color:#a06b12;font-weight:650}@media(max-width:900px){.seller-shipping-promo-grid{grid-template-columns:1fr}}@media(max-width:600px){.seller-shipping-promo-fields{grid-template-columns:1fr}}
-</style>
-
 @endpush
 
 @section('content')
@@ -1350,11 +258,6 @@
 
         </h1>
 
-        <p class="seller-vouchers-subtitle">
-
-            Create server-validated Seller vouchers that Buyers can apply during checkout.
-
-        </p>
 
     </header>
 
@@ -1585,7 +488,9 @@
 
                             <label class="seller-voucher-label" for="voucher-discount-type">Discount type</label>
 
-                            <select
+                            
+                            <div class="seller-voucher-discount-dropdown" data-voucher-discount>
+                                <select
 
                                 id="voucher-discount-type"
 
@@ -1608,6 +513,15 @@
                                 </option>
 
                             </select>
+                                <button type="button" class="seller-voucher-discount-trigger" data-voucher-discount-trigger aria-label="Discount type" aria-haspopup="listbox" aria-expanded="false" hidden>
+                                    <span data-voucher-discount-label>Percentage</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+                                </button>
+                                <div class="seller-voucher-discount-menu" role="listbox" aria-label="Discount type" data-voucher-discount-menu hidden>
+                                    <button type="button" class="seller-voucher-discount-option" role="option" aria-selected="false" data-voucher-discount-option="percentage">Percentage</button>
+                                    <button type="button" class="seller-voucher-discount-option" role="option" aria-selected="false" data-voucher-discount-option="fixed">Fixed Amount</button>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -2038,3 +952,66 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+(() => {
+    const root = document.querySelector('[data-voucher-discount]');
+    if (!root || root.dataset.initialized === '1') return;
+    const native = root.querySelector('select[name="discount_type"]');
+    const trigger = root.querySelector('[data-voucher-discount-trigger]');
+    const label = root.querySelector('[data-voucher-discount-label]');
+    const menu = root.querySelector('[data-voucher-discount-menu]');
+    const options = Array.from(root.querySelectorAll('[data-voucher-discount-option]'));
+    if (!native || !trigger || !label || !menu || !options.length) return;
+    const controller = new AbortController();
+    const {signal} = controller;
+    const sync = () => {
+        label.textContent = native.selectedOptions[0]?.textContent?.trim() || 'Percentage';
+        options.forEach(opt => {
+            const selected = opt.dataset.voucherDiscountOption === native.value;
+            opt.classList.toggle('is-selected', selected);
+            opt.setAttribute('aria-selected', String(selected));
+        });
+    };
+    const close = () => {
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+    };
+    const open = () => {
+        menu.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+    };
+    root.dataset.initialized = '1';
+    sync();
+    trigger.hidden = false;
+    root.classList.add('is-enhanced');
+    trigger.addEventListener('click', () => menu.hidden ? open() : close(), {signal});
+    options.forEach(option => option.addEventListener('click', () => {
+        native.value = option.dataset.voucherDiscountOption;
+        native.dispatchEvent(new Event('change', {bubbles:true}));
+        sync();
+        close();
+        trigger.focus();
+    }, {signal}));
+    native.addEventListener('change', sync, {signal});
+    document.addEventListener('pointerdown', event => {
+        if (!root.contains(event.target)) close();
+    }, {signal});
+    root.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !menu.hidden) {
+            close();
+            trigger.focus();
+        } else if (!menu.hidden && ['ArrowDown','ArrowUp'].includes(event.key)) {
+            event.preventDefault();
+            const focused = options.indexOf(document.activeElement);
+            options[(focused + (event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length].focus();
+        } else if (!menu.hidden && event.key === 'Tab') {
+            close();
+        }
+    }, {signal});
+    window.addEventListener('beforeunload', () => controller.abort(), {once:true,signal});
+    document.addEventListener('livewire:navigating', () => controller.abort(), {once:true,signal});
+})();
+</script>
+@endpush

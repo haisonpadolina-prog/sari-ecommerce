@@ -2591,6 +2591,8 @@
 }
 @endverbatim
 </style>
+@includeIf('seller.shipping.partials.route-map-styles')
+@includeIf('seller.shipping.partials.shipment-ui')
 
 
 
@@ -2611,6 +2613,16 @@
 
 
     $parcel = $order->logisticsParcel;
+
+    // The Blade can be deployed independently from the optional route service.
+    // Missing route payload must never crash the entire shipment details page.
+    $trackingRouteUnavailable = !is_array($trackingRoute ?? null);
+    $trackingRoute = is_array($trackingRoute ?? null) ? $trackingRoute : [
+        'ready' => false,
+        'progress' => 0,
+        'current_sequence' => 1,
+        'stops' => [],
+    ];
 
 
 
@@ -2679,6 +2691,11 @@
 
 
 <div class="seller-shipping-detail-page">
+    @if ($trackingRouteUnavailable || !empty($trackingRouteFailed))
+        <p role="status" style="margin:0 0 14px; padding:11px 14px; border:1px solid #e2e8f0; border-radius:12px; background:#f8fafc; color:#64748b; font:500 11.5px/1.5 Poppins,sans-serif">
+            Delivery route data is temporarily unavailable. You can still view shipment details and tracking activity below.
+        </p>
+    @endif
 
 
 
@@ -2702,31 +2719,11 @@
 
 
 
-                <a href="{{ route('seller.shipping.index') }}" class="seller-shipping-back">
-
-
-
-                    <span aria-hidden="true">←</span>
-
-
-
-                    Back to Shipping
-
-
-
-                </a>
-
-
-
-                <span class="text-[#d0d5dd]" aria-hidden="true">•</span>
-
-
-
                 <strong class="seller-shipping-order-id">{{ $order->order_number }}</strong>
 
 
 
-                <span class="inline-flex rounded-full border px-2.5 py-1 text-[7.5px] font-bold uppercase tracking-[.08em] {{ $tone }}">
+                <span class="seller-shipping-header-status inline-flex rounded-full border px-2.5 py-1 text-[7.5px] font-bold uppercase tracking-[.08em] {{ $tone }}">
 
 
 
@@ -2752,6 +2749,10 @@
 
         <div class="seller-shipping-detail-actions">
 
+            <a href="{{ route('seller.shipping.index') }}" class="seller-shipping-back">
+                Back to Shipping <span aria-hidden="true">&gt;</span>
+            </a>
+
 
 
             <span id="sellerShippingLiveIndicator" class="seller-shipping-live">
@@ -2762,7 +2763,7 @@
 
 
 
-                Live tracking
+                Tracking updates
 
 
 
@@ -2983,6 +2984,17 @@
     </section>
 
 
+
+    @if (view()->exists('seller.shipping.partials.route-map'))
+        @include('seller.shipping.partials.route-map')
+    @else
+        <section class="seller-shipping-detail-card" role="status" style="margin-top:16px">
+            <h2 class="seller-shipping-section-title">Delivery route unavailable</h2>
+            <p class="seller-shipping-detail-secondary" style="font-size:12px; margin-top:6px">
+                The route-map component is not installed. Shipment status and tracking activity are still available below.
+            </p>
+        </section>
+    @endif
 
     <div class="seller-shipping-detail-grid">
 
@@ -3657,6 +3669,7 @@
 
 
 @push('scripts')
+@includeIf('seller.shipping.partials.route-map-script')
 
 
 

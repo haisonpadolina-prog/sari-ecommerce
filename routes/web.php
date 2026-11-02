@@ -1306,6 +1306,12 @@ Route::post(
   ->name('seller.orders.prepare');
 
 Route::post(
+    '/seller/orders/prepare-selected',
+    [SellerOrderController::class, 'prepareSelected']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders.prepare-selected');
+
+Route::post(
     '/seller/orders/{order}/ready-pickup',
     [SellerOrderController::class, 'readyForPickup']
 )->middleware(EnsureSellerNotRestricted::class)
@@ -1421,6 +1427,19 @@ Route::middleware(CourierOnly::class)->group(function (): void {
         '/courier/dashboard',
         [CourierDashboardController::class, 'index']
     )->name('courier.dashboard');
+
+    // Rider notification routes, scoped to existing CourierOnly middleware.
+    Route::get('/courier/notifications', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'index'])->name('courier.notifications');
+    Route::get('/courier/notifications/summary', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'summary'])->name('courier.notifications.summary');
+    Route::post('/courier/notifications/read-all', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'readAll'])->name('courier.notifications.read-all');
+    Route::post('/courier/notifications/{notification}/read', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'read'])->whereNumber('notification')->name('courier.notifications.read');
+
+    // Buyer-style Rider Notifications: archive, restore and soft delete.
+    Route::patch('/courier/notifications/{notification}/archive', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'archive'])->whereNumber('notification')->name('courier.notifications.archive');
+    Route::patch('/courier/notifications/{notification}/restore', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'restore'])->whereNumber('notification')->name('courier.notifications.restore');
+    Route::delete('/courier/notifications/{notification}', [\App\Http\Controllers\Courier\CourierNotificationController::class, 'destroy'])->whereNumber('notification')->name('courier.notifications.destroy');
+
+
 
     Route::get(
         '/courier/delivery/{order}',

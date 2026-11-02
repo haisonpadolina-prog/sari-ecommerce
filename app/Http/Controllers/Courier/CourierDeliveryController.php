@@ -330,6 +330,14 @@ class CourierDeliveryController extends Controller
                 $order
             );
 
+        // A logistics parcel must be scanned at the Seller handoff.
+        // The scanner records custody and advances this status itself.
+        if ($order->logisticsParcel()->exists()) {
+            throw ValidationException::withMessages([
+                'pickup' => 'Scan the SARI parcel QR at the Seller. Manual pickup confirmation is disabled for Logistics parcels.',
+            ]);
+        }
+
         $this->workflow->transition(
             $order,
             'arrived_pickup',
@@ -396,9 +404,9 @@ class CourierDeliveryController extends Controller
             ]
         );
 
-        return back()->with(
+        return redirect()->route('courier.parcel-scanner')->with(
             'success',
-            'Buyer arrival confirmed.'
+            'Buyer arrival recorded. After the Buyer physically receives the parcel, scan the matching SARI parcel QR to complete this delivery.'
         );
     }
 
@@ -412,6 +420,12 @@ class CourierDeliveryController extends Controller
         Request $request,
         MarketplaceOrder $order
     ): RedirectResponse {
+        abort_unless(
+            $request->attributes->get('sari_verified_qr_stage') === 'direct_final_handoff',
+            403,
+            'Scan the parcel QR after confirming arrival at the Buyer to complete delivery.'
+        );
+
         $order =
             $this->assignedOrder(
                 $request,

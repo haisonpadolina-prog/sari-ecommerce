@@ -1067,88 +1067,68 @@ class CourierPageController extends Controller
                 $request
             );
 
-        $validated =
-            $request->validate([
-                'profile_image' => [
-                    'nullable',
-                    'image',
-                    'mimes:jpg,jpeg,png,webp',
-                    'max:5120',
-                ],
+        // Normalize human-readable fields, but never change passwords.
+        // Validation below is authoritative even if browser JavaScript is disabled.
+        foreach (['first_name', 'last_name', 'middle_initial', 'email', 'contact_no',
+                  'street_address', 'vehicle_type', 'vehicle_model', 'plate_number',
+                  'license_number'] as $field) {
+            $value = $request->input($field);
+            if (is_string($value)) {
+                $request->merge([$field => trim($value)]);
+            }
+        }
 
-                'first_name' => [
-                    'required',
-                    'string',
-                    'max:120',
-                ],
-
-                'last_name' => [
-                    'required',
-                    'string',
-                    'max:120',
-                ],
-
-                'contact_no' => [
-                    'required',
-                    'string',
-                    'max:30',
-                ],
-
-                'email' => [
-                    'required',
-                    'email',
-                    'max:255',
-
-                    Rule::unique(
-                        'courier_accounts',
-                        'email'
-                    )->ignore(
-                        $account->id
-                    ),
-                ],
-
-                'street_address' => [
-                    'required',
-                    'string',
-                    'max:1000',
-                ],
-
-                'vehicle_type' => [
-                    'required',
-                    'string',
-                    'max:120',
-                ],
-
-                'vehicle_model' => [
-                    'nullable',
-                    'string',
-                    'max:120',
-                ],
-
-                'plate_number' => [
-                    'required',
-                    'string',
-                    'max:120',
-                ],
-
-                'license_number' => [
-                    'nullable',
-                    'string',
-                    'max:120',
-                ],
-
-                'current_password' => [
-                    'nullable',
-                    'string',
-                ],
-
-                'password' => [
-                    'nullable',
-                    'string',
-                    'min:8',
-                    'confirmed',
-                ],
-            ]);
+        $validated = $request->validate([
+            'profile_image' => [
+                'nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',
+            ],
+            'first_name' => [
+                'required', 'string', 'max:50',
+                'regex:' . '/^[\p{L}\p{M}]+(?:[ \'\x{2019}.-][\p{L}\p{M}]+)*\.?$/u',
+            ],
+            'last_name' => [
+                'required', 'string', 'max:50',
+                'regex:' . '/^[\p{L}\p{M}]+(?:[ \'\x{2019}.-][\p{L}\p{M}]+)*\.?$/u',
+            ],
+            'middle_initial' => [
+                'nullable', 'string', 'max:2',
+                'regex:' . '/^\p{L}{1,2}$/u',
+            ],
+            'contact_no' => [
+                'required', 'string', 'max:13',
+                'regex:' . '/^(?:09[0-9]{9}|\+639[0-9]{9})$/',
+            ],
+            'email' => [
+                'required', 'email', 'max:255',
+                Rule::unique('courier_accounts', 'email')->ignore($account->id),
+            ],
+            'street_address' => ['required', 'string', 'max:500'],
+            // Vehicle types/models and registration identifiers may legitimately contain digits.
+            'vehicle_type' => [
+                'required', 'string', 'max:80',
+                'regex:' . '/^[\p{L}\p{M}0-9][\p{L}\p{M}0-9 \/()-]*$/u',
+            ],
+            'vehicle_model' => ['nullable', 'string', 'max:120'],
+            'plate_number' => [
+                'required', 'string', 'max:25',
+                'regex:' . '/^[A-Za-z0-9][A-Za-z0-9 \/-]*$/',
+            ],
+            'license_number' => [
+                'nullable', 'string', 'max:35',
+                'regex:' . '/^[A-Za-z0-9][A-Za-z0-9 \/-]*$/',
+            ],
+            'current_password' => ['nullable', 'string', 'max:255', 'required_with:password'],
+            'password' => ['nullable', 'string', 'min:8', 'max:255', 'confirmed'],
+        ], [
+            'first_name.regex' => 'First Name may contain letters, spaces, hyphens, apostrophes and periods only.',
+            'last_name.regex' => 'Last Name may contain letters, spaces, hyphens, apostrophes and periods only.',
+            'middle_initial.regex' => 'Middle Initial must have 1 or 2 letters only.',
+            'contact_no.regex' => 'Use 09XXXXXXXXX or +639XXXXXXXXX for your Philippine mobile number.',
+            'vehicle_type.regex' => 'Vehicle Type may contain letters, numbers, spaces, hyphens and parentheses only.',
+            'plate_number.regex' => 'Plate Number may contain letters, numbers, spaces, hyphens and slashes only.',
+            'license_number.regex' => 'License Number may contain letters, numbers, spaces, hyphens and slashes only.',
+            'current_password.required_with' => 'Enter your current password to change your password.',
+        ]);
 
         if (
             ! empty(
@@ -1190,6 +1170,11 @@ class CourierPageController extends Controller
                     $validated[
                         'last_name'
                     ],
+
+                'middle_initial' =>
+                    ! empty($validated['middle_initial'])
+                        ? mb_strtoupper($validated['middle_initial'])
+                        : null,
 
                 'contact_no' =>
                     $validated[

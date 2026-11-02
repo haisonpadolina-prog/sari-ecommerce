@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Courier\CourierLastMileController;
+use App\Http\Controllers\Courier\CourierDeliveryController;
 use App\Http\Controllers\Logistics\LogisticsHubTransferController;
 use App\Http\Controllers\Logistics\LogisticsIncomingParcelController;
 use App\Models\Accounts\CourierAccount;
@@ -17,6 +18,7 @@ use App\Support\ParcelQrCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -29,6 +31,7 @@ class ParcelQrScannerController extends Controller
         private readonly LogisticsIncomingParcelController $incomingParcels,
         private readonly LogisticsHubTransferController $hubTransfers,
         private readonly CourierLastMileController $lastMile,
+        private readonly CourierDeliveryController $directDelivery,
     ) {
     }
 
@@ -50,6 +53,12 @@ class ParcelQrScannerController extends Controller
     public function scanCourier(Request $request): JsonResponse
     {
         abort_unless($request->session()->get('is_courier'), 403);
+
+        // Same existing CSRF-protected rider endpoint, with a separate confirmed-cash action.
+        // Payment cannot be confirmed without a preceding signed QR scan in this session.
+        if ($request->input('action') === 'confirm_cod_payment') {
+            return $this->confirmCourierCodPayment($request);
+        }
 
         $validated = $request->validate([
             'payload' => ['required', 'string', 'max:1000'],
@@ -93,6 +102,12 @@ class ParcelQrScannerController extends Controller
                 $assignment,
                 $parcel
             );
+        }
+
+        // Direct deliveries have no LogisticsParcel. They still have a signed
+        // SARI waybill QR and must be at arrived_buyer before the final scan.
+        if (! $parcel && $this->isPickupRiderFor($rider, $order)) {
+            return $this->handleDirectDeliveryRiderScan($request, $order, $rider);
         }
 
         if ($this->isPickupRiderFor($rider, $order)) {
@@ -219,6 +234,74 @@ class ParcelQrScannerController extends Controller
             === strtolower(trim((string) $rider->email));
     }
 
+    /**
+     * Direct delivery: arrival is confirmed with the Rider's button; ONLY
+     * a verified, assigned SARI parcel QR scan can complete the Buyer handoff.
+     */
+    private function handleDirectDeliveryRiderScan(
+        Request $request,
+        MarketplaceOrder $order,
+        CourierAccount $rider
+    ): JsonResponse {
+        $order->refresh();
+
+        if ($order->status === 'delivered') {
+            return response()->json([
+                'ok' => true,
+                'order_number' => $order->order_number,
+                'stage' => 'Already Delivered',
+                'message' => 'This direct-delivery order is already completed. A second scan will not create another delivery.',
+                'next_url' => route('courier.history'),
+                'next_label' => 'Open Delivery History',
+            ]);
+        }
+
+        if ($order->status !== 'arrived_buyer') {
+            throw ValidationException::withMessages([
+                'payload' => 'Confirm Arrived at Buyer on the assigned delivery job before scanning the parcel QR. The QR cannot mark arrival for you.',
+            ]);
+        }
+
+        if ($this->isCod($order)) {
+            return $this->prepareBuyerCodCollection($request, $order, $rider, null);
+        }
+
+        // Complete + record as one transaction. A checkpoint write failure
+        // must not leave the order delivered with no scan audit record.
+        DB::transaction(function () use ($request, $order, $rider): void {
+            // Cannot be set by a normal browser POST to courier.orders.complete.
+            $request->attributes->set('sari_verified_qr_stage', 'direct_final_handoff');
+            $this->directDelivery->complete($request, $order);
+
+            $order->refresh();
+            if ($order->status !== 'delivered') {
+                throw ValidationException::withMessages([
+                    'payload' => 'Delivery has not completed. Refresh the job and try scanning again.',
+                ]);
+            }
+
+            $this->scanRecorder->record(
+                $order,
+                'direct-final-delivery:order:'.$order->id,
+                'final_delivery_scan',
+                'rider',
+                (int) $rider->id,
+                null,
+                'order',
+                (int) $order->id
+            );
+        });
+
+        return response()->json([
+            'ok' => true,
+            'order_number' => $order->order_number,
+            'stage' => 'Delivery Successful',
+            'message' => 'The parcel QR was verified after Buyer arrival. Direct delivery is now complete and the checkpoint is recorded.',
+            'next_url' => route('courier.history'),
+            'next_label' => 'Open Delivery History',
+        ]);
+    }
+
     private function handlePickupRiderScan(
         MarketplaceOrder $order,
         CourierAccount $rider
@@ -235,32 +318,12 @@ class ParcelQrScannerController extends Controller
 
         $order->refresh();
 
-        if ($order->status === 'courier_accepted') {
-            $order = $this->workflow->transition(
-                $order,
-                'courier_accepted',
-                'heading_pickup',
-                'Rider Is Heading to Pickup',
-                ($order->courier_name ?: 'Rider')
-                    .' started the Seller pickup trip after scanning the SARI parcel QR for order '
-                    .$order->order_number.'.',
-                'both',
-                ['pickup_started_at' => now()]
-            );
-        }
-
-        if ($order->status === 'heading_pickup') {
-            $order = $this->workflow->transition(
-                $order,
-                'heading_pickup',
-                'arrived_pickup',
-                'Rider Arrived at Seller',
-                ($order->courier_name ?: 'Rider')
-                    .' verified the physical parcel at the Seller using its SARI QR for order '
-                    .$order->order_number.'.',
-                'both',
-                ['arrived_pickup_at' => now()]
-            );
+        // The rider must first start the trip and confirm arrival at the Seller.
+        // A single QR scan must never silently complete those physical milestones.
+        if (! in_array($order->status, ['arrived_pickup', 'in_transit'], true)) {
+            throw ValidationException::withMessages([
+                'payload' => 'Start the pickup trip and mark arrival at the Seller before scanning the parcel QR at the handoff.',
+            ]);
         }
 
         if ($order->status === 'arrived_pickup') {
@@ -605,6 +668,7 @@ class ParcelQrScannerController extends Controller
             );
 
             if ($scanned >= $total && $total > 0) {
+                $request->attributes->set('sari_verified_qr_stage', 'start_last_mile');
                 $this->lastMile->start($request, (int) $assignment->id);
 
                 return response()->json([
@@ -628,50 +692,55 @@ class ParcelQrScannerController extends Controller
         }
 
         if ($assignment->status === 'out_for_delivery') {
-            if ($parcel->status === 'out_for_delivery') {
-                $this->lastMile->arrived(
-                    $request,
-                    (int) $assignment->id,
-                    (int) $order->id
+            // NEVER auto-confirm Buyer arrival during QR scanning. The Rider
+            // must explicitly confirm arrival first on the last-mile job page.
+            if ($parcel->status !== 'arrived_buyer' || $order->status !== 'arrived_buyer') {
+                throw ValidationException::withMessages([
+                    'payload' => 'Confirm Arrived at Buyer on your last-mile job before scanning the final parcel QR. Scanning early will not advance the delivery.',
+                ]);
+            }
+
+            if ($this->isCod($order)) {
+                return $this->prepareBuyerCodCollection(
+                    $request, $order, $rider, (int) $assignment->id
                 );
             }
 
-            $parcel->refresh();
-            $order->refresh();
-
-            if ($parcel->status === 'arrived_buyer' && $order->status === 'arrived_buyer') {
+            // Completion and the matching QR audit event must commit together.
+            DB::transaction(function () use ($request, $assignment, $order, $parcel, $rider): void {
+                $request->attributes->set('sari_verified_qr_stage', 'final_handoff');
                 $this->lastMile->delivered(
                     $request,
                     (int) $assignment->id,
                     (int) $order->id
                 );
-            }
 
-            $order->refresh();
-            $parcel->refresh();
+                $order->refresh();
+                $parcel->refresh();
 
-            if ($parcel->status !== 'delivered' || $order->status !== 'delivered') {
-                throw ValidationException::withMessages([
-                    'payload' => 'The final delivery scan could not complete this parcel. Refresh your delivery assignment and try again.',
-                ]);
-            }
+                if ($parcel->status !== 'delivered' || $order->status !== 'delivered') {
+                    throw ValidationException::withMessages([
+                        'payload' => 'The final delivery scan could not complete this parcel. Refresh your delivery assignment and try again.',
+                    ]);
+                }
 
-            $this->scanRecorder->record(
-                $order,
-                'final-delivery:'.$assignment->id.':order:'.$order->id,
-                'final_delivery_scan',
-                'rider',
-                (int) $rider->id,
-                null,
-                'last_mile_assignment',
-                (int) $assignment->id
-            );
+                $this->scanRecorder->record(
+                    $order,
+                    'final-delivery:'.$assignment->id.':order:'.$order->id,
+                    'final_delivery_scan',
+                    'rider',
+                    (int) $rider->id,
+                    null,
+                    'last_mile_assignment',
+                    (int) $assignment->id
+                );
+            });
 
             return response()->json([
                 'ok' => true,
                 'order_number' => $order->order_number,
                 'stage' => 'Delivery Successful',
-                'message' => 'Final parcel QR scan recorded. The Buyer delivery is complete and COD collection is now recorded as paid for this order.',
+                'message' => 'Final parcel QR scan recorded. The Buyer delivery is complete. No cash collection is required for this payment method.',
                 'next_url' => route('courier.history'),
                 'next_label' => 'Open Delivery History',
             ]);
@@ -679,6 +748,182 @@ class ParcelQrScannerController extends Controller
 
         throw ValidationException::withMessages([
             'payload' => 'This last-mile parcel is not ready for a Rider QR checkpoint.',
+        ]);
+    }
+
+    /**
+     * A COD final scan only unlocks the server-recorded amount. It must not
+     * complete delivery or mark cash paid until the rider explicitly confirms
+     * receiving physical payment. The token is short-lived and session-bound.
+     */
+    private function prepareBuyerCodCollection(
+        Request $request,
+        MarketplaceOrder $order,
+        CourierAccount $rider,
+        ?int $lastMileAssignmentId
+    ): JsonResponse {
+        $token = Str::random(48);
+        $pending = [
+            'order_id' => (int) $order->id,
+            'rider_id' => (int) $rider->id,
+            'last_mile_assignment_id' => $lastMileAssignmentId,
+            'verified_at' => now()->timestamp,
+            'token_hash' => hash('sha256', $token),
+        ];
+
+        // This checkpoint represents QR verification, NOT delivery or payment.
+        // firstOrCreate makes repeated scans idempotent in the event log.
+        $this->scanRecorder->record(
+            $order,
+            'buyer-cod-qr:order:'.$order->id,
+            'buyer_cod_qr_verified',
+            'rider',
+            (int) $rider->id,
+            null,
+            $lastMileAssignmentId !== null ? 'last_mile_assignment' : 'order',
+            $lastMileAssignmentId ?? (int) $order->id
+        );
+
+        $request->session()->put('sari_buyer_cod_pending', $pending);
+
+        return response()->json([
+            'ok' => true,
+            'order_number' => $order->order_number,
+            'stage' => 'QR Verified — Collect COD',
+            'message' => 'Parcel QR verified at Buyer arrival. Collect the exact cash amount shown and only then confirm payment. The order is NOT delivered or paid yet.',
+            'requires_payment' => true,
+            'payment_method' => 'COD',
+            'amount_due' => number_format((float) $order->total, 2, '.', ''),
+            'currency' => 'PHP',
+            'order_id' => (int) $order->id,
+            'payment_token' => $token,
+        ]);
+    }
+
+    private function isCod(MarketplaceOrder $order): bool
+    {
+        return strtoupper(trim((string) $order->payment_method)) === 'COD';
+    }
+
+    /**
+     * Confirm physical cash receipt after a signed QR scan.
+     * A copied order ID or a regular manual POST cannot unlock this action.
+     */
+    private function confirmCourierCodPayment(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'action' => ['required', 'in:confirm_cod_payment'],
+            'order_id' => ['required', 'integer', 'min:1'],
+            'payment_token' => ['required', 'string', 'max:128'],
+            'cash_received' => ['required', 'accepted'],
+        ]);
+
+        $rider = $this->currentRider($request);
+        $pending = $request->session()->get('sari_buyer_cod_pending');
+
+        if (
+            ! is_array($pending)
+            || (int) ($pending['order_id'] ?? 0) !== (int) $validated['order_id']
+            || (int) ($pending['rider_id'] ?? 0) !== (int) $rider->id
+            || (int) ($pending['verified_at'] ?? 0) < now()->subMinutes(10)->timestamp
+            || ! is_string($pending['token_hash'] ?? null)
+            || ! hash_equals(
+                $pending['token_hash'],
+                hash('sha256', $validated['payment_token'])
+            )
+        ) {
+            throw ValidationException::withMessages([
+                'payment_token' => 'COD confirmation requires a recent verified parcel QR scan by this Rider. Scan the parcel again.',
+            ]);
+        }
+
+        // All state changes, financial transition, and final QR checkpoint
+        // commit atomically; keep the order locked for concurrent submissions.
+        DB::transaction(function () use ($request, $validated, $pending, $rider): void {
+            $assignmentId = $pending['last_mile_assignment_id'];
+            // Keep lock order consistent with CourierLastMileController::delivered():
+            // assignment first, then order, then parcel.
+            $assignment = $assignmentId !== null
+                ? DB::table('last_mile_assignments')
+                    ->where('id', (int) $assignmentId)
+                    ->where('courier_account_id', (int) $rider->id)
+                    ->where('status', 'out_for_delivery')
+                    ->lockForUpdate()
+                    ->first()
+                : null;
+
+            $order = MarketplaceOrder::query()
+                ->whereKey((int) $validated['order_id'])
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if (! $this->isCod($order) || $order->status !== 'arrived_buyer') {
+                throw ValidationException::withMessages([
+                    'order_id' => 'This COD order is no longer awaiting final Buyer handoff.',
+                ]);
+            }
+
+            if ($assignmentId !== null) {
+                $linked = DB::table('last_mile_assignment_orders')
+                    ->where('last_mile_assignment_id', (int) $assignmentId)
+                    ->where('marketplace_order_id', (int) $order->id)
+                    ->exists();
+
+                $parcel = LogisticsParcel::query()
+                    ->where('marketplace_order_id', (int) $order->id)
+                    ->first();
+
+                if (! $assignment || ! $linked || ! $parcel || $parcel->status !== 'arrived_buyer') {
+                    throw ValidationException::withMessages([
+                        'order_id' => 'The last-mile Rider assignment or parcel state changed. Scan again.',
+                    ]);
+                }
+
+                $request->attributes->set('sari_verified_qr_stage', 'final_handoff');
+                $this->lastMile->delivered($request, (int) $assignmentId, (int) $order->id);
+            } else {
+                if (LogisticsParcel::query()->where('marketplace_order_id', $order->id)->exists()
+                    || ! $this->isPickupRiderFor($rider, $order)) {
+                    throw ValidationException::withMessages([
+                        'order_id' => 'This direct-delivery order is not assigned to your Rider account.',
+                    ]);
+                }
+
+                $request->attributes->set('sari_verified_qr_stage', 'direct_final_handoff');
+                $this->directDelivery->complete($request, $order);
+            }
+
+            $order->refresh();
+            if ($order->status !== 'delivered' || $order->payment_status !== 'paid') {
+                throw ValidationException::withMessages([
+                    'order_id' => 'Delivery or COD recording did not complete. Please retry.',
+                ]);
+            }
+
+            $this->scanRecorder->record(
+                $order,
+                ($assignmentId === null
+                    ? 'direct-final-delivery:order:'
+                    : 'final-delivery:'.$assignmentId.':order:').$order->id,
+                'final_delivery_scan',
+                'rider',
+                (int) $rider->id,
+                null,
+                $assignmentId === null ? 'order' : 'last_mile_assignment',
+                $assignmentId ?? (int) $order->id
+            );
+        });
+
+        // Only consume the pending proof after the transaction succeeded.
+        $request->session()->forget('sari_buyer_cod_pending');
+
+        return response()->json([
+            'ok' => true,
+            'order_number' => MarketplaceOrder::query()->whereKey((int) $validated['order_id'])->value('order_number'),
+            'stage' => 'Delivery Successful',
+            'message' => 'Parcel QR verified and cash receipt confirmed by the Rider. COD is recorded as paid; physical cash remittance must still be verified separately.',
+            'next_url' => route('courier.history'),
+            'next_label' => 'Open Delivery History',
         ]);
     }
 

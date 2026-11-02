@@ -1212,7 +1212,8 @@ class PlatformMessagingService
                                     $account->last_name
                                 ),
                                 $account->email,
-                                strtolower((string) ($account->account_status ?: 'active'))
+                                strtolower((string) ($account->account_status ?: 'active')),
+                                $this->profileAvatarUrl('buyer', $account)
                             )
                     )
             )
@@ -1227,7 +1228,8 @@ class PlatformMessagingService
                                 $account->id,
                                 $account->name ?: 'Social Buyer',
                                 $account->email,
-                                strtolower((string) ($account->account_status ?: 'active'))
+                                strtolower((string) ($account->account_status ?: 'active')),
+                                $this->profileAvatarUrl('social_buyer', $account)
                             )
                     )
             )
@@ -1243,7 +1245,8 @@ class PlatformMessagingService
                                 $account->store_name
                                     ?: $account->email,
                                 $account->email,
-                                strtolower((string) ($account->account_status ?: 'active'))
+                                strtolower((string) ($account->account_status ?: 'active')),
+                                $this->profileAvatarUrl('seller', $account)
                             )
                     )
             )
@@ -1262,7 +1265,8 @@ class PlatformMessagingService
                                     $account->last_name
                                 ),
                                 $account->email,
-                                strtolower((string) ($account->account_status ?: 'active'))
+                                strtolower((string) ($account->account_status ?: 'active')),
+                                $this->profileAvatarUrl('rider', $account)
                             )
                     )
             )
@@ -1277,7 +1281,8 @@ class PlatformMessagingService
                                 $account->id,
                                 $this->logisticsName($account),
                                 $account->email,
-                                strtolower((string) ($account->account_status ?: 'active'))
+                                strtolower((string) ($account->account_status ?: 'active')),
+                                $this->profileAvatarUrl('logistics', $account)
                             )
                     )
             )
@@ -1305,7 +1310,9 @@ class PlatformMessagingService
                             ' ' .
                             $account->last_name
                         ),
-                        $account->email
+                        $account->email,
+                        'active',
+                        $this->profileAvatarUrl('buyer', $account)
                     )
             );
 
@@ -1319,7 +1326,9 @@ class PlatformMessagingService
                         'social_buyer',
                         $account->id,
                         $account->name ?: 'Social Buyer',
-                        $account->email
+                        $account->email,
+                        'active',
+                        $this->profileAvatarUrl('social_buyer', $account)
                     )
             );
 
@@ -1354,7 +1363,9 @@ class PlatformMessagingService
                         'seller',
                         $account->id,
                         $account->store_name ?: $account->email,
-                        $account->email
+                        $account->email,
+                        'active',
+                        $this->profileAvatarUrl('seller', $account)
                     )
             )
             ->reject(
@@ -1383,7 +1394,9 @@ class PlatformMessagingService
                         'logistics',
                         $account->id,
                         $this->logisticsName($account),
-                        $account->email
+                        $account->email,
+                        'active',
+                        $this->profileAvatarUrl('logistics', $account)
                     )
             )
             ->reject(
@@ -1419,7 +1432,9 @@ class PlatformMessagingService
                             ' ' .
                             $account->last_name
                         ),
-                        $account->email
+                        $account->email,
+                        'active',
+                        $this->profileAvatarUrl('rider', $account)
                     )
             )
             ->values();
@@ -1453,7 +1468,9 @@ class PlatformMessagingService
                 'logistics',
                 $logistics->id,
                 $this->logisticsName($logistics),
-                $logistics->email
+                $logistics->email,
+                'active',
+                $this->profileAvatarUrl('logistics', $logistics)
             ),
         ]);
     }
@@ -1709,6 +1726,7 @@ class PlatformMessagingService
             'name' => $name ?: ucfirst($role) . ' #' . $model->getKey(),
             'email' => $model->email ?? null,
             'status' => $status,
+            'avatar_url' => $this->profileAvatarUrl($role, $model),
             'model' => $model,
         ];
     }
@@ -1761,7 +1779,42 @@ class PlatformMessagingService
             'name' => $actor['name'],
             'email' => $actor['email'],
             'status' => $actor['status'],
+            'avatar_url' => $actor['avatar_url'] ?? null,
         ];
+    }
+
+    /**
+     * Public-facing profile image for an authenticated messaging contact.
+     * Use only already-authorized contacts / conversation participants.
+     * Never expose registration IDs, documents, or private storage paths.
+     */
+    private function profileAvatarUrl(string $role, object $model): ?string
+    {
+        if ($role === 'admin') {
+            return null; // Admin Support uses official SARI branding, not a private employee photo.
+        }
+
+        if ($role === 'social_buyer') {
+            $url = trim((string) ($model->avatar_url ?? ''));
+            $parts = $url !== '' ? parse_url($url) : false;
+            return is_array($parts)
+                && strtolower((string) ($parts['scheme'] ?? '')) === 'https'
+                && !empty($parts['host'])
+                && filter_var($url, FILTER_VALIDATE_URL)
+                ? $url : null;
+        }
+
+        $path = $role === 'seller'
+            ? (string) (($model->profile_image_path ?? null) ?: ($model->store_logo_path ?? ''))
+            : (string) ($model->profile_image_path ?? '');
+        $path = trim($path);
+        // Laravel public-disk relative paths only; exclude URLs/traversal and query strings.
+        if ($path === '' || str_starts_with($path, '/') || str_contains($path, '..')
+            || !preg_match('~^[a-zA-Z0-9_./-]+$~D', $path)) {
+            return null;
+        }
+
+        return Storage::disk('public')->url($path);
     }
 
     /**
@@ -1772,7 +1825,8 @@ class PlatformMessagingService
         int $id,
         string $name,
         ?string $email,
-        string $status = 'active'
+        string $status = 'active',
+        ?string $avatarUrl = null
     ): array {
         return [
             'role' => $role,
@@ -1780,6 +1834,7 @@ class PlatformMessagingService
             'name' => $name ?: ucfirst($role) . ' #' . $id,
             'email' => $email,
             'status' => strtolower($status ?: 'active'),
+            'avatar_url' => $avatarUrl,
         ];
     }
 
@@ -1866,17 +1921,22 @@ class PlatformMessagingService
     private function participantPayload(
         PlatformConversationParticipant $participant
     ): array {
+        try {
+            $identity = $this->resolveIdentity(
+                $participant->participant_role,
+                (int) $participant->participant_id
+            );
+        } catch (\Throwable) {
+            $identity = null;
+        }
+
         return [
             'role' => $participant->participant_role,
             'id' => $participant->participant_id,
-            'label' => $this->identityLabel(
-                $participant->participant_role,
-                (int) $participant->participant_id
-            ),
-            'joined_at' =>
-                $participant->joined_at?->toIso8601String(),
-            'last_read_message_id' =>
-                $participant->last_read_message_id,
+            'label' => $identity['name'] ?? ucfirst(str_replace('_', ' ', $participant->participant_role)) . ' #' . $participant->participant_id,
+            'avatar_url' => $identity['avatar_url'] ?? null,
+            'joined_at' => $participant->joined_at?->toIso8601String(),
+            'last_read_message_id' => $participant->last_read_message_id,
         ];
     }
 

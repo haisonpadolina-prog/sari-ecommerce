@@ -12,6 +12,7 @@ use App\Services\Logistics\LogisticsNotificationService;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
 use App\Support\CurrentLogisticsAccount;
 use App\Support\CurrentLogisticsHub;
+use App\Support\LogisticsServiceArea;
 use App\Support\LogisticsOrderAccess;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -217,26 +218,11 @@ class LogisticsDeliveryAssignmentController extends Controller
         $riderQuery = CourierAccount::query();
 
         if ($isHubOperator && $hubFacility) {
-
-            /*
-             * Hub Operators may use only approved Riders belonging
-             * to their provider and local municipality/province.
-             *
-             * They cannot claim unowned legacy Rider accounts.
-             */
-
-            $riderQuery
-                ->where('logistics_account_id', $logistics->id)
-                ->whereRaw('LOWER(TRIM(municipality_name)) = ?', [
-                    mb_strtolower(
-                        trim((string) $hubFacility->municipality_name)
-                    ),
-                ])
-                ->whereRaw('LOWER(TRIM(province_name)) = ?', [
-                    mb_strtolower(
-                        trim((string) $hubFacility->province_name)
-                    ),
-                ]);
+            // Hub staff can dispatch this provider's riders serving the SELLER pickup
+            // barangay, even if the origin hub is located in another municipality.
+            // Scope the *orders* to the operator's facility, and validate the
+            // rider's specific service area inside assignBatch() below.
+            $riderQuery->where('logistics_account_id', $logistics->id);
 
         } else {
 
@@ -595,24 +581,9 @@ class LogisticsDeliveryAssignmentController extends Controller
                     ->whereKey((int) $validated['rider_id']);
 
                 if ($isHubOperator && $hubFacility) {
-
-                    /*
-                     * Hub Operator:
-                     * Provider + municipality + province must match.
-                     */
-
-                    $riderQuery
-                        ->where('logistics_account_id', $logistics->id)
-                        ->whereRaw('LOWER(TRIM(municipality_name)) = ?', [
-                            mb_strtolower(
-                                trim((string) $hubFacility->municipality_name)
-                            ),
-                        ])
-                        ->whereRaw('LOWER(TRIM(province_name)) = ?', [
-                            mb_strtolower(
-                                trim((string) $hubFacility->province_name)
-                            ),
-                        ]);
+                    // Provider ownership and seller pickup barangay are authoritative;
+                    // the hub municipality is not necessarily the Seller municipality.
+                    $riderQuery->where('logistics_account_id', $logistics->id);
 
                 } else {
 
@@ -666,6 +637,23 @@ class LogisticsDeliveryAssignmentController extends Controller
                 ) {
                     throw ValidationException::withMessages([
                         'rider_id' => 'Select an approved, active, online Rider from your Logistics network.',
+                    ]);
+                }
+
+                /*
+                |-------------------------------------------------------------
+                | Enforce pickup duty barangay on the SERVER, not just in UI.
+                | The verified complete batch shares pickup address + hub.
+                |-------------------------------------------------------------
+                */
+                $pickupOrder = $selected->first();
+
+                if (! $pickupOrder || ! LogisticsServiceArea::matchesPickupRider(
+                    $rider,
+                    $pickupOrder->pickup_address
+                )) {
+                    throw ValidationException::withMessages([
+                        'rider_id' => 'This Rider is outside the Seller pickup barangay, or the pickup address does not identify a valid barangay. Verify the Seller pickup address and Rider duty area.',
                     ]);
                 }
 

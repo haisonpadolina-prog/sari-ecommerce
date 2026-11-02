@@ -212,6 +212,11 @@ final class ParcelQrScanNotificationService
                 'message' => 'the assigned local Rider QR-verified custody of the parcel before leaving the destination hub.',
                 'logistics_route' => 'logistics.delivery-monitoring',
             ],
+            'buyer_cod_qr_verified' => [
+                'title' => 'Buyer parcel QR verified — awaiting COD',
+                'message' => 'the assigned Rider QR-verified the parcel at Buyer arrival. Cash receipt is still pending; this scan alone does not complete delivery.',
+                'logistics_route' => 'logistics.delivery-monitoring',
+            ],
             'final_delivery_scan' => [
                 'title' => 'Delivery completed by Rider QR scan',
                 'message' => 'the assigned Rider QR-verified the parcel at the final Buyer handoff and delivery was completed.',

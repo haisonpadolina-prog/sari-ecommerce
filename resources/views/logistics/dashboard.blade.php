@@ -763,6 +763,8 @@
 
 @section('content')
 <div class="sari-logistics-ui logistics-dashboard-shell mx-auto w-full max-w-[1900px] space-y-4 sm:space-y-5">
+    {{-- SARI_COD_CUSTODY_POLICY_V1 --}}
+    @include('finance.partials.cod-overdue-banner')
 
     {{-- EXECUTIVE HEADER — ADMIN-MATCHED COMPACT DESIGN --}}
     <section class="ld-exec-hero text-white">

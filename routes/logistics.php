@@ -188,13 +188,15 @@ Route::prefix('logistics')
         Route::post(
             '/delivery-assignment/batch/assign',
             [LogisticsDeliveryAssignmentController::class, 'assignBatch']
-        )->name('delivery-assignment.batch-assign');
+        )->middleware(\App\Http\Middleware\Finance\EnsureRiderCodAssignmentAllowed::class)
+            ->name('delivery-assignment.batch-assign');
 
         Route::post(
             '/delivery-assignment/{order}/assign',
             [LogisticsDeliveryAssignmentController::class, 'assign']
         )
             ->whereNumber('order')
+            ->middleware(\App\Http\Middleware\Finance\EnsureRiderCodAssignmentAllowed::class)
             ->name('delivery-assignment.assign');
 
         /*
@@ -299,7 +301,8 @@ Route::prefix('logistics')
         Route::post(
             '/last-mile-assignment/batch/assign',
             [LogisticsLastMileAssignmentController::class, 'assignBatch']
-        )->name('last-mile-assignment.batch-assign');
+        )->middleware(\App\Http\Middleware\Finance\EnsureRiderCodAssignmentAllowed::class)
+            ->name('last-mile-assignment.batch-assign');
 
         /*
         |--------------------------------------------------------------------------

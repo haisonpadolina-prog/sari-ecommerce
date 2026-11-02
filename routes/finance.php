@@ -42,6 +42,15 @@ Route::middleware(['web'])->group(function (): void {
         ->name('logistics.')
         ->group(function (): void {
             // Company-wide finance remains independent from the selected branch.
+            // SARI_COD_CUSTODY_POLICY_V1 — manager-only case review
+            Route::get('/cod-compliance', [\App\Http\Controllers\Finance\LogisticsCodComplianceController::class, 'index'])
+                ->name('cod-compliance.index');
+            Route::get('/cod-compliance/status', [\App\Http\Controllers\Finance\LogisticsCodComplianceController::class, 'status'])
+                ->middleware('throttle:30,1')->name('cod-compliance.status');
+            Route::post('/cod-compliance/{rider}/action', [\App\Http\Controllers\Finance\LogisticsCodComplianceController::class, 'action'])
+                ->whereNumber('rider')->middleware('throttle:12,1')
+                ->name('cod-compliance.action');
+
             Route::get('/finance', [LogisticsFinanceController::class, 'index'])
                 ->name('finance.index');
             Route::post('/finance/payout', [FinancePayoutController::class, 'logisticsStore'])

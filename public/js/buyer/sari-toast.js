@@ -1,6 +1,7 @@
-/** SARI Buyer centralized action toasts.
- * Deployed as public/js/buyer/sari-toast.js (without a Vite build dependency).
- * Preloads original WAV sounds and plays at toast time without waiting for resume/decode.
+/** SARI Buyer centralized action toasts — unified notification sound v8.
+ * Normal notifications use the user's selected MP3, unchanged.
+ * Invalid inputs and failed actions retain the distinct Buyer error WAV.
+ * This file is served directly from public/ (no Vite build required).
  */
 (function () {
     'use strict';
@@ -16,10 +17,11 @@
     // The buyer layout passes Laravel's asset base, so installations in a
     // subdirectory or on an asset domain still load the correct sound files.
     const soundsBase = String(document.currentScript?.dataset.soundsBase || '/sounds/buyer').replace(/\/+$/, '');
+    // Success, Info and New Notification alerts share ONE decoded MP3/player.
+    // Only validation/errors use the separate warning sound.
     const soundUrls = {
-        success: `${soundsBase}/notification-success.wav`,
+        notification: `${soundsBase}/notification-alert.mp3`,
         error: `${soundsBase}/notification-error.wav`,
-        info: `${soundsBase}/notification-info.wav`,
     };
     const soundBuffers = new Map();
     const fallbackPlayers = new Map();
@@ -28,6 +30,7 @@
     let soundEnabled = true;
     let soundVolume = 0.45;
     let lastSoundTime = 0;
+    let lastSoundCategory = '';
     let context = null;
     let preloading = false;
 
@@ -45,7 +48,7 @@
         return soundVolume;
     }
 
-    // Fetch and decode all three small WAVs as soon as the app JavaScript loads.
+    // Preload the selected MP3 and the distinct error WAV as soon as the page loads.
     // This removes the first-toast request/decode bottleneck in normal conditions.
     function warmAudio() {
         if (preloading) return;
@@ -86,7 +89,7 @@
     document.addEventListener('click', unlockAudio, { capture: true });
     document.addEventListener('touchstart', unlockAudio, { capture: true, passive: true });
 
-    // Start an already-decoded SARI WAV in the *same call* as the toast.
+    // Start an already-decoded SARI sound in the *same call* as the toast.
     // No Promise/microtask or AudioContext.resume() is in the hot path.
     function startBufferedSound(type) {
         const buffer = soundBuffers.get(type);
@@ -103,14 +106,13 @@
         } catch (_) { return false; }
     }
 
-    // If an action arrives before a WAV is ready, use an immediate local chime
-    // rather than queue the sound and play it after the popup has appeared.
+    // The synthesized fallback is reserved for errors only; positive/info
+    // alerts must never use a DIFFERENT tone from the selected MP3.
     function startInstantChime(type) {
-        if (context?.state !== 'running') return false;
+        if (type !== 'error' || context?.state !== 'running') return false;
         try {
             const at = context.currentTime;
-            const pitches = type === 'error' ? [400, 300] :
-                type === 'info' ? [520, 660] : [660, 880];
+            const pitches = [440, 350];
             pitches.forEach((frequency, index) => {
                 const start = at + index * 0.095;
                 const oscillator = context.createOscillator();
@@ -133,12 +135,17 @@
         if (!soundEnabled || soundVolume <= 0) return false;
         if (!force && document.visibilityState === 'hidden') return false;
         const now = Date.now();
-        if (!force && now - lastSoundTime < 250) return false;
-        const type = Object.prototype.hasOwnProperty.call(soundUrls, tone) ? tone : 'info';
+        // All non-error toasts use the SAME buffered source and HTMLAudio player.
+        const type = tone === 'error' ? 'error' : 'notification';
+        const category = type;
+        // Chosen MP3 lasts about 2.4 s. Avoid overlapping normal alerts.
+        // A new warning can still play regardless of prior notification sound.
+        if (!force && category === lastSoundCategory && now - lastSoundTime < (category === 'notification' ? 2400 : 1200)) return false;
 
         // Usually this is the path after a buyer has clicked/tapped once.
         if (startBufferedSound(type)) {
             lastSoundTime = now;
+            lastSoundCategory = category;
             return true;
         }
 
@@ -155,16 +162,19 @@
                     if (Date.now() - now > 200) player.pause();
                 }).catch(() => {
                     // If a gesture has just unlocked Web Audio, use it immediately.
-                    if (Date.now() - now < 200 && !startBufferedSound(type)) startInstantChime(type);
+                    if (type === 'error' && Date.now() - now < 200 && !startBufferedSound(type)) startInstantChime(type);
                 });
                 lastSoundTime = now;
+                lastSoundCategory = category;
                 return true;
             } catch (_) { /* Try instant Web Audio below. */ }
         }
 
-        // WAV not decoded yet: play a short chime now rather than sound late.
-        if (startInstantChime(type)) {
+        // Errors may use a backup chime. Success/info never synthesize a
+        // different sound; they will play only the selected alert MP3.
+        if (type === 'error' && startInstantChime(type)) {
             lastSoundTime = now;
+            lastSoundCategory = category;
             return true;
         }
         // No playback is guaranteed before browser user activation. A click/
@@ -280,6 +290,66 @@
         previewSound(tone = 'success') { return playSound(tone, true); },
     };
 
+    // Native invalid forms do not trigger submit or a Laravel error response.
+    // Only surface the FIRST invalid field after a deliberate submit action.
+    // This preserves the browser's validation bubble, blocks no form submissions,
+    // and avoids noise from programmatic checkValidity() or typing.
+    let intendedForm = null;
+    let intendedAt = 0;
+    const formErrorTimes = new WeakMap();
+
+    function rememberSubmitIntent(element) {
+        const form = element?.form || element?.closest?.('form');
+        if (!form || form.noValidate) return;
+        intendedForm = form;
+        intendedAt = Date.now();
+    }
+    document.addEventListener('pointerdown', (event) => {
+        const button = event.target?.closest?.('button, input[type="submit"], input[type="image"]');
+        if (!button || button.matches?.('[disabled]')) return;
+        if (button.matches('button:not([type]), button[type="submit"], input[type="submit"], input[type="image"]') && !button.formNoValidate) {
+            rememberSubmitIntent(button);
+        }
+    }, { capture: true, passive: true });
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' || event.isComposing || event.defaultPrevented) return;
+        const element = event.target;
+        if (!element || !element.closest?.('form')) return;
+        // Enter in a textarea is a newline, not a form submission.
+        if (element.matches?.('textarea, [contenteditable="true"]')) return;
+        rememberSubmitIntent(element);
+    }, { capture: true });
+
+    function fieldLabel(field) {
+        const raw = field?.labels?.[0]?.textContent || field?.getAttribute?.('aria-label')
+            || field?.getAttribute?.('placeholder') || field?.name || 'this field';
+        return String(raw).replace(/\s+/g, ' ').replace(/[*:]+$/g, '').trim().slice(0, 65) || 'this field';
+    }
+    document.addEventListener('invalid', (event) => {
+        const field = event.target;
+        if (!field || !field.form || !field.validity) return;
+        if (field.form !== intendedForm || Date.now() - intendedAt > 1800) return;
+        if (!field.closest?.('#buyerMainContent')) return;
+        const form = field.form;
+        const now = Date.now();
+        if (now - (formErrorTimes.get(form) || 0) < 1600) return;
+        formErrorTimes.set(form, now);
+        // Only one toast and warning sound, even if several fields are invalid.
+        intendedForm = null;
+        const label = fieldLabel(field);
+        const v = field.validity;
+        const message = v.valueMissing ? `Please fill in ${label}.`
+            : v.typeMismatch && field.type === 'email' ? `Enter a valid email address in ${label}.`
+            : v.typeMismatch ? `Enter a valid value for ${label}.`
+            : v.tooShort ? `${label} is too short.`
+            : v.tooLong ? `${label} is too long.`
+            : v.patternMismatch ? `Please check the format of ${label}.`
+            : v.rangeUnderflow || v.rangeOverflow || v.stepMismatch || v.badInput
+                ? `Please check the value entered for ${label}.`
+            : `Please correct ${label} before continuing.`;
+        show(message, 'error');
+    }, true);
+
     function consumeFlash() {
         const node = document.getElementById('sariBuyerToastFlash');
         if (!node || node.dataset.toastConsumed === '1') return;
@@ -305,6 +375,17 @@
     }
     document.addEventListener('sari:toast', onToast);
     window.addEventListener('sari:toast', onToast);
+    // Buyer-wide notification counter is updated by resources/js/buyer.js.
+    // Announce only an INCREASE after the initial count is known; never
+    // replay old unread notifications on page load or read/decrement events.
+    document.addEventListener('sari:buyer-notification-count-changed', (event) => {
+        const previous = Number(event.detail?.previous);
+        const current = Number(event.detail?.count);
+        if (!Number.isFinite(previous) || !Number.isFinite(current) || current <= previous) return;
+        const newlyUnread = Math.max(1, Math.floor(current - previous));
+        show(newlyUnread === 1 ? 'You have a new notification.'
+            : `You have ${newlyUnread} new notifications.`, 'info');
+    });
     document.addEventListener('livewire:navigated', consumeFlash);
     // Pre-create the players before a server-side flash toast is rendered.
     warmAudio();

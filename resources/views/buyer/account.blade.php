@@ -2746,6 +2746,8 @@
             stroke-linejoin: round;
         }
 
+        .sa-simple-select-menu[hidden] { display: none !important; }
+
         .sa-simple-select-menu {
             position: absolute;
             left: 0;
@@ -2915,6 +2917,10 @@
         <h1 class="sa-page-title">Buyer <span>Profile</span></h1>
     </section>
 
+    @if ($errors->any())
+        <div class="sa-alert sa-alert--error" role="alert">{{ $errors->first() }}</div>
+    @endif
+
     @if ($buyerAccount)
         @php
             $buyerInitials = mb_strtoupper(
@@ -2923,6 +2929,7 @@
             );
 
             $buyerFullName = trim((string) $buyerAccount->first_name . ' ' . (string) $buyerAccount->last_name);
+            $sexValue = (string) old('sex', $buyerAccount->sex ?? '');
 
             $buyerPhotoUrl = filled($buyerAccount->profile_image_path)
                 ? \Illuminate\Support\Facades\Storage::disk('public')->url($buyerAccount->profile_image_path)
@@ -3082,17 +3089,17 @@
                                 </div>
 
                                 <div>
-                                    <label for="buyerSexValue" class="sa-label">Sex</label>
+                                    <span id="buyerSexFieldLabel" class="sa-label">Sex</span>
                                     <div class="sa-simple-select" data-simple-select>
-                                        <input type="hidden" id="buyerSexValue" name="sex" value="{{ old('sex', $buyerAccount->sex) }}">
-                                        <button type="button" class="sa-simple-select-trigger" data-simple-select-trigger aria-haspopup="listbox" aria-expanded="false">
-                                            <span data-simple-select-label>{{ old('sex', $buyerAccount->sex) ?: 'Not set' }}</span>
+                                        <input type="hidden" id="buyerSexValue" name="sex" value="{{ $sexValue }}">
+                                        <button type="button" class="sa-simple-select-trigger" data-simple-select-trigger aria-haspopup="listbox" aria-expanded="false" aria-controls="buyerSexOptions" aria-labelledby="buyerSexFieldLabel buyerSexSelected">
+                                            <span id="buyerSexSelected" data-simple-select-label>{{ $sexValue ?: 'Not set' }}</span>
                                             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                                         </button>
-                                        <div class="sa-simple-select-menu" data-simple-select-menu hidden>
-                                            <button type="button" class="sa-simple-select-option {{ old('sex', $buyerAccount->sex) === '' ? 'is-selected' : '' }}" data-value="">Not set</button>
-                                            <button type="button" class="sa-simple-select-option {{ old('sex', $buyerAccount->sex) === 'Male' ? 'is-selected' : '' }}" data-value="Male">Male</button>
-                                            <button type="button" class="sa-simple-select-option {{ old('sex', $buyerAccount->sex) === 'Female' ? 'is-selected' : '' }}" data-value="Female">Female</button>
+                                        <div id="buyerSexOptions" class="sa-simple-select-menu" data-simple-select-menu role="listbox" aria-label="Sex" hidden>
+                                            <button type="button" role="option" tabindex="-1" aria-selected="{{ $sexValue === '' ? 'true' : 'false' }}" class="sa-simple-select-option {{ $sexValue === '' ? 'is-selected' : '' }}" data-value="">Not set</button>
+                                            <button type="button" role="option" tabindex="-1" aria-selected="{{ $sexValue === 'Male' ? 'true' : 'false' }}" class="sa-simple-select-option {{ $sexValue === 'Male' ? 'is-selected' : '' }}" data-value="Male">Male</button>
+                                            <button type="button" role="option" tabindex="-1" aria-selected="{{ $sexValue === 'Female' ? 'true' : 'false' }}" class="sa-simple-select-option {{ $sexValue === 'Female' ? 'is-selected' : '' }}" data-value="Female">Female</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3603,6 +3610,7 @@
                     name="name"
                     value="{{ old('name', $socialAccount?->name) }}"
                     required
+                    maxlength="150"
                     class="sa-control"
                 >
                 <p class="sa-help">Signed in with {{ ucfirst($socialAccount?->provider ?? 'social login') }}.</p>
@@ -3623,16 +3631,54 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const NAME_OK = /^\p{L}[\p{L}\s.'-]*$/u;
+            const PH_MOBILE = /^(?:09\d{9}|\+639\d{9})$/;
+
             function sanitizePhilippineMobile(value) {
-                const raw = String(value || '');
-                const wantsPlus = raw.trim().startsWith('+');
+                const raw = String(value || '').trim();
                 const digits = raw.replace(/\D/g, '');
-
-                if (wantsPlus) {
-                    return '+' + digits.slice(0, 12);
+                const international = raw.startsWith('+') || digits.startsWith('63');
+                if (international) {
+                    const cleaned = digits.slice(0, 12);
+                    // Allow incremental +6 / +63 / +639 while typing.
+                    if (!('639'.startsWith(cleaned) || cleaned.startsWith('639'))) return '+';
+                    return '+' + cleaned;
                 }
+                const cleaned = digits.slice(0, 11);
+                if (!('09'.startsWith(cleaned) || cleaned.startsWith('09'))) {
+                    return cleaned.startsWith('0') ? '0' : '';
+                }
+                return cleaned;
+            }
 
-                return digits.slice(0, 11);
+            function notifyBuyer(message) {
+                if (window.SariBuyerToast?.error) window.SariBuyerToast.error(message);
+                else window.alert(message);
+            }
+
+            function sanitizeName(value, limit) {
+                return String(value || '')
+                    .replace(/[^\p{L}\s.'-]/gu, '')
+                    .replace(/\s{2,}/g, ' ')
+                    .replace(/^[\s.'-]+/, '')
+                    .slice(0, limit);
+            }
+
+            function sanitizeMiddleInitial(value) {
+                return String(value || '').replace(/[^\p{L}]/gu, '').slice(0, 2).toUpperCase();
+            }
+
+            function bindCleanPaste(field, cleaner) {
+                if (!field) return;
+                field.addEventListener('paste', function (event) {
+                    const pasted = event.clipboardData?.getData('text');
+                    if (pasted === undefined) return;
+                    event.preventDefault();
+                    const start = this.selectionStart ?? this.value.length;
+                    const end = this.selectionEnd ?? start;
+                    this.value = cleaner(this.value.slice(0, start) + pasted + this.value.slice(end));
+                    this.dispatchEvent(new Event('input', { bubbles: true }));
+                });
             }
 
             const profileForm = document.getElementById('buyerAccountForm');
@@ -3705,24 +3751,41 @@
 
                 nameFields.forEach((field) => {
                     field.addEventListener('input', function () {
-                        this.value = this.value
-                            .replace(/[^\p{L}\s.'-]/gu, '')
-                            .replace(/\s{2,}/g, ' ');
-
+                        this.value = sanitizeName(this.value, 50);
                         syncProfileText();
                     });
                 });
 
                 middleInitial?.addEventListener('input', function () {
-                    this.value = this.value
-                        .replace(/[^\p{L}]/gu, '')
-                        .slice(0, 2)
-                        .toUpperCase();
+                    this.value = sanitizeMiddleInitial(this.value);
                 });
 
                 contact?.addEventListener('input', function () {
                     this.value = sanitizePhilippineMobile(this.value);
                     syncProfileText();
+                });
+
+                nameFields.forEach(field => bindCleanPaste(field, value => sanitizeName(value, 50)));
+                bindCleanPaste(middleInitial, sanitizeMiddleInitial);
+                bindCleanPaste(contact, sanitizePhilippineMobile);
+
+                profileForm.addEventListener('submit', function (event) {
+                    if (firstName) firstName.value = firstName.value.trim();
+                    if (lastName) lastName.value = lastName.value.trim();
+                    if (!NAME_OK.test(firstName?.value || '') || !NAME_OK.test(lastName?.value || '')) {
+                        event.preventDefault();
+                        window.SariBuyerToast?.error?.('First and last names must begin with a letter and contain letters only.');
+                        return;
+                    }
+                    if (middleInitial?.value && !/^\p{L}{1,2}$/u.test(middleInitial.value)) {
+                        event.preventDefault();
+                        window.SariBuyerToast?.error?.('Middle initial must be one or two letters.');
+                        return;
+                    }
+                    if (!PH_MOBILE.test(contact?.value || '')) {
+                        event.preventDefault();
+                        window.SariBuyerToast?.error?.('Contact must be 09XXXXXXXXX or +639XXXXXXXXX.');
+                    }
                 });
 
                 syncProfileText();
@@ -3734,8 +3797,19 @@
 
                     if (!file) return;
 
+                    const restorePhoto = () => {
+                        clearObjectUrl();
+                        const original = profilePreview?.dataset.originalSrc || '';
+                        if (profilePreview) {
+                            profilePreview.src = original;
+                            profilePreview.hidden = !original;
+                        }
+                        if (profileFallback) profileFallback.hidden = Boolean(original);
+                    };
+
                     if (!allowedTypes.includes(file.type)) {
                         this.value = '';
+                        restorePhoto();
                         if (profileFileStatus) {
                             profileFileStatus.textContent = 'Use JPG, PNG, or WEBP only.';
                         }
@@ -3745,6 +3819,7 @@
 
                     if (file.size > maxBytes) {
                         this.value = '';
+                        restorePhoto();
                         if (profileFileStatus) {
                             profileFileStatus.textContent = 'Image must not be larger than 5 MB.';
                         }
@@ -4007,54 +4082,82 @@
                 });
             });
 
+            // Each request has a generation number. A stale API response cannot
+            // overwrite the latest province / city / barangay selection.
+            const locationRequest = { province: 0, city: 0, barangay: 0 };
+
+            function clearLocationSelect(input, placeholder) {
+                if (!input) return;
+                renderAddressOptions(input, [], placeholder, '');
+            }
+
             async function loadProvinceOptions(selectedName = '') {
-                if (!provinceInput) return;
-                smartSelectParts(provinceInput).trigger.disabled = true;
-                renderAddressOptions(provinceInput, [], 'Loading provinces...', selectedName);
-                const items = await fetchAddressList(provincesUrl);
-                renderAddressOptions(provinceInput, items, 'Select province / area', selectedName);
+                const version = ++locationRequest.province;
+                clearLocationSelect(provinceInput, 'Loading provinces...');
+                try {
+                    const items = await fetchAddressList(provincesUrl);
+                    if (version !== locationRequest.province) return false;
+                    renderAddressOptions(provinceInput, items, 'Select province / area', selectedName);
+                    return true;
+                } catch (error) {
+                    if (version === locationRequest.province) {
+                        clearLocationSelect(provinceInput, 'Select province / area');
+                        notifyBuyer('Unable to load provinces. Check your connection and try again.');
+                    }
+                    return false;
+                }
             }
 
             async function loadCityOptions(provinceCode, selectedName = '') {
-                if (!cityInput) return;
+                const version = ++locationRequest.city;
+                ++locationRequest.barangay; // invalidates any pending barangay request
+                clearLocationSelect(barangayInput, 'Select barangay');
                 if (!provinceCode) {
-                    renderAddressOptions(cityInput, [], 'Select city / municipality', selectedName);
-                    smartSelectParts(cityInput).trigger.disabled = true;
-                    renderAddressOptions(barangayInput, [], 'Select barangay', '');
-                    if (barangayInput) smartSelectParts(barangayInput).trigger.disabled = true;
-                    return;
+                    clearLocationSelect(cityInput, 'Select city / municipality');
+                    return false;
                 }
-
-                smartSelectParts(cityInput).trigger.disabled = true;
-                renderAddressOptions(cityInput, [], 'Loading cities / municipalities...', selectedName);
-                const items = await fetchAddressList(municipalitiesUrlTemplate.replace('__PROVINCE__', encodeURIComponent(provinceCode)));
-                renderAddressOptions(cityInput, items, 'Select city / municipality', selectedName);
+                clearLocationSelect(cityInput, 'Loading cities / municipalities...');
+                try {
+                    const url = municipalitiesUrlTemplate.replace('__PROVINCE__', encodeURIComponent(provinceCode));
+                    const items = await fetchAddressList(url);
+                    if (version !== locationRequest.city) return false;
+                    renderAddressOptions(cityInput, items, 'Select city / municipality', selectedName);
+                    return true;
+                } catch (error) {
+                    if (version === locationRequest.city) {
+                        clearLocationSelect(cityInput, 'Select city / municipality');
+                        notifyBuyer('Unable to load cities / municipalities. Please try again.');
+                    }
+                    return false;
+                }
             }
 
             async function loadBarangayOptions(cityCode, selectedName = '') {
-                if (!barangayInput) return;
+                const version = ++locationRequest.barangay;
                 if (!cityCode) {
-                    renderAddressOptions(barangayInput, [], 'Select barangay', selectedName);
-                    smartSelectParts(barangayInput).trigger.disabled = true;
-                    return;
+                    clearLocationSelect(barangayInput, 'Select barangay');
+                    return false;
                 }
-
-                smartSelectParts(barangayInput).trigger.disabled = true;
-                renderAddressOptions(barangayInput, [], 'Loading barangays...', selectedName);
-                const items = await fetchAddressList(barangaysUrlTemplate.replace('__CITY__', encodeURIComponent(cityCode)));
-                renderAddressOptions(barangayInput, items, 'Select barangay', selectedName);
+                clearLocationSelect(barangayInput, 'Loading barangays...');
+                try {
+                    const url = barangaysUrlTemplate.replace('__CITY__', encodeURIComponent(cityCode));
+                    const items = await fetchAddressList(url);
+                    if (version !== locationRequest.barangay) return false;
+                    renderAddressOptions(barangayInput, items, 'Select barangay', selectedName);
+                    return true;
+                } catch (error) {
+                    if (version === locationRequest.barangay) {
+                        clearLocationSelect(barangayInput, 'Select barangay');
+                        notifyBuyer('Unable to load barangays. Please try again.');
+                    }
+                    return false;
+                }
             }
 
             async function populateAddressSelectors(values = {}) {
-                try {
-                    await loadProvinceOptions(values.province || '');
-                    const provinceCode = selectedCode(provinceInput);
-                    await loadCityOptions(provinceCode, values.city || '');
-                    const cityCode = selectedCode(cityInput);
-                    await loadBarangayOptions(cityCode, values.barangay || '');
-                } catch (error) {
-                    console.error(error);
-                }
+                if (!(await loadProvinceOptions(values.province || ''))) return false;
+                if (!(await loadCityOptions(selectedCode(provinceInput), values.city || ''))) return false;
+                return loadBarangayOptions(selectedCode(cityInput), values.barangay || '');
             }
 
             const registrationAddress = {
@@ -4099,9 +4202,13 @@
             }
 
             function closeAddressModal() {
+                ++locationRequest.province;
+                ++locationRequest.city;
+                ++locationRequest.barangay;
                 modal.hidden = true;
                 modal.setAttribute('aria-hidden', 'true');
                 document.body.classList.remove('sa-address-modal-open');
+                [provinceInput, cityInput, barangayInput].forEach(closeSmartSelect);
             }
 
             function openAddAddress() {
@@ -4153,8 +4260,8 @@
                 };
 
                 fillAddressForm(values);
-                await populateAddressSelectors(values);
                 showAddressModal();
+                await populateAddressSelectors(values);
             }
 
             provinceInput?.addEventListener('change', async function () {
@@ -4193,22 +4300,52 @@
             addressContact?.addEventListener('input', function () {
                 this.value = sanitizePhilippineMobile(this.value);
             });
-
             postalInput?.addEventListener('input', function () {
                 this.value = this.value.replace(/\D/g, '').slice(0, 4);
             });
-
             labelInput?.addEventListener('input', function () {
-                this.value = this.value
-                    .replace(/[^\p{L}\s.'-]/gu, '')
-                    .replace(/\s{2,}/g, ' ')
-                    .slice(0, 50);
+                this.value = sanitizeName(this.value, 50);
             });
-
             recipientInput?.addEventListener('input', function () {
-                this.value = this.value
-                    .replace(/[^\p{L}\s.'-]/gu, '')
-                    .replace(/\s{2,}/g, ' ');
+                this.value = sanitizeName(this.value, 150);
+            });
+            bindCleanPaste(addressContact, sanitizePhilippineMobile);
+            bindCleanPaste(postalInput, value => String(value || '').replace(/\D/g, '').slice(0, 4));
+            bindCleanPaste(labelInput, value => sanitizeName(value, 50));
+            bindCleanPaste(recipientInput, value => sanitizeName(value, 150));
+
+            addressForm.addEventListener('submit', function (event) {
+                if (labelInput) labelInput.value = labelInput.value.trim();
+                if (recipientInput) recipientInput.value = recipientInput.value.trim();
+                if (streetInput) streetInput.value = streetInput.value.trim();
+
+                let error = null;
+                if (!NAME_OK.test(labelInput?.value || '')) {
+                    error = 'Label must begin with a letter and contain letters only.';
+                } else if (!NAME_OK.test(recipientInput?.value || '')) {
+                    error = 'Recipient must begin with a letter and contain letters only.';
+                } else if (!PH_MOBILE.test(addressContact?.value || '')) {
+                    error = 'Contact must be 09XXXXXXXXX or +639XXXXXXXXX.';
+                } else if (postalInput?.value && !/^\d{4}$/.test(postalInput.value)) {
+                    error = 'Postal code must be exactly 4 digits.';
+                } else if (!streetInput?.value) {
+                    error = 'Street / Unit address is required.';
+                } else if (!provinceInput?.value) {
+                    error = 'Select a province / area.';
+                } else if (!cityInput?.value) {
+                    error = 'Select a city / municipality.';
+                } else if (!barangayInput?.value) {
+                    error = 'Select a barangay.';
+                }
+                if (error) {
+                    event.preventDefault();
+                    notifyBuyer(error);
+                    return;
+                }
+                if (submitButton) submitButton.disabled = true;
+            });
+            window.addEventListener('pageshow', () => {
+                if (submitButton) submitButton.disabled = false;
             });
 
             document.addEventListener('keydown', function (event) {
@@ -4251,8 +4388,18 @@
                 if (simpleSexInput) simpleSexInput.value = value;
                 if (simpleSexLabel) simpleSexLabel.textContent = label;
                 simpleSexOptions.forEach((option) => {
-                    option.classList.toggle('is-selected', option.dataset.value === value);
+                    const active = option.dataset.value === value;
+                    option.classList.toggle('is-selected', active);
+                    option.setAttribute('aria-selected', String(active));
                 });
+            }
+
+            function focusSexOption(offset = 0) {
+                if (simpleSexMenu?.hidden) openSimpleSexSelect();
+                const current = simpleSexOptions.indexOf(document.activeElement);
+                const selected = simpleSexOptions.findIndex(option => option.dataset.value === simpleSexInput?.value);
+                const index = current >= 0 ? current : selected >= 0 ? selected : 0;
+                simpleSexOptions[(index + offset + simpleSexOptions.length) % simpleSexOptions.length]?.focus();
             }
 
             simpleSexTrigger?.addEventListener('click', function () {
@@ -4260,10 +4407,31 @@
                 else closeSimpleSexSelect();
             });
 
+            simpleSexTrigger?.addEventListener('keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    focusSexOption(event.key === 'ArrowDown' ? 1 : -1);
+                }
+            });
+
+            simpleSexMenu?.addEventListener('keydown', event => {
+                if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    focusSexOption(event.key === 'ArrowDown' ? 1 : -1);
+                } else if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeSimpleSexSelect();
+                    simpleSexTrigger?.focus();
+                } else if (event.key === 'Tab') {
+                    closeSimpleSexSelect();
+                }
+            });
+
             simpleSexOptions.forEach((option) => {
                 option.addEventListener('click', function () {
                     setSimpleSexValue(option.dataset.value || '', option.textContent.trim());
                     closeSimpleSexSelect();
+                    simpleSexTrigger?.focus();
                 });
             });
 
@@ -4274,7 +4442,8 @@
                 if (submitButton) submitButton.textContent = 'Save Address';
                 if (defaultInput) defaultInput.disabled = false;
                 fillAddressForm(oldAddressValues);
-                populateAddressSelectors(oldAddressValues).then(showAddressModal);
+                showAddressModal();
+                populateAddressSelectors(oldAddressValues);
             }
         });
     </script>

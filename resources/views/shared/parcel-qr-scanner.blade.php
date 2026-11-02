@@ -4,6 +4,7 @@
     $backLabel = $backLabel ?? 'Back';
     $roleLabel = $roleLabel ?? 'Operations';
     $description = $description ?? 'Scan a SARI parcel QR code.';
+    $compactHeader = $compactHeader ?? false;
 @endphp
 
 <div
@@ -11,6 +12,24 @@
     data-sari-qr-scanner
     data-scan-endpoint="{{ $scanEndpoint }}"
 >
+    @if($compactHeader)
+    {{-- Compact logistics header; original header below remains the default for other roles. --}}
+    <section class="qr-compact-header" aria-labelledby="qrLogisticsHeading">
+        <div class="qr-compact-heading flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class="min-w-0">
+                <span class="qr-compact-eyebrow">PARCEL OPERATIONS</span>
+                <h2 id="qrLogisticsHeading" class="qr-compact-title">Scan Parcel QR</h2>
+                <p class="qr-compact-summary">Scan a parcel QR to verify its next Logistics checkpoint.</p>
+            </div>
+            <a href="{{ $backUrl }}" class="qr-compact-back" aria-label="Back to {{ $backLabel }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m14 6-6 6 6 6"/>
+                </svg>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+    </section>
+    @else
     <section class="rounded-[22px] border border-[#eadfc9] bg-white p-5 shadow-[0_8px_24px_rgba(41,31,18,.05)] sm:p-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -35,6 +54,8 @@
             </a>
         </div>
     </section>
+
+    @endif
 
     <section class="grid gap-4 lg:grid-cols-[1.35fr_.65fr]">
         <div class="overflow-hidden rounded-[22px] border border-[#e6ded2] bg-[#171512] shadow-[0_12px_30px_rgba(26,20,13,.08)]">
@@ -115,6 +136,27 @@
                         <p id="sariQrStage" class="mt-1 text-[10px] font-semibold text-[#a8700c]"></p>
                     </div>
 
+                    @if($roleLabel === 'Rider')
+                    {{-- Never render COD totals until the Rider's signed QR passed server validation. --}}
+                    <div id="sariQrCodPayment" class="mt-4 hidden rounded-xl border border-emerald-200 bg-white p-4" aria-live="polite">
+                        <div class="flex items-center gap-2 text-[10px] font-semibold text-emerald-800">
+                            <span aria-hidden="true">✓</span> Parcel QR verified
+                        </div>
+                        <p class="mt-2 text-[10px] text-slate-600">Cash on Delivery · Amount to collect</p>
+                        <p id="sariQrCodAmount" class="mt-1 text-[26px] font-semibold tracking-tight text-slate-900" aria-label="COD amount due"></p>
+                        <p class="mt-2 text-[10px] leading-5 text-slate-600">Collect this exact cash amount from the Buyer. The order stays undelivered until cash receipt is confirmed. QR verification expires after 10 minutes; rescanning refreshes it. Cash remittance to Logistics is separate.</p>
+                        <label class="mt-4 flex cursor-pointer items-start gap-2 text-[10px] leading-5 text-slate-700">
+                            <input id="sariQrCashReceivedCheck" type="checkbox" class="mt-1 h-4 w-4 accent-emerald-700">
+                            <span>I have physically received the full COD cash amount from the Buyer.</span>
+                        </label>
+                        <button id="sariQrConfirmCashButton" type="button" disabled
+                            class="mt-3 min-h-11 w-full rounded-xl bg-emerald-700 px-4 text-[11px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40">
+                            Confirm Payment Received &amp; Complete Delivery
+                        </button>
+                        <p id="sariQrPaymentError" class="mt-2 hidden text-[10px] leading-5 text-rose-700" role="alert"></p>
+                    </div>
+                    @endif
+
                     <a
                         id="sariQrNextLink"
                         href="#"
@@ -181,6 +223,12 @@
     const nextLink = document.getElementById('sariQrNextLink');
     const manualForm = document.getElementById('sariQrManualForm');
     const manualPayload = document.getElementById('sariQrManualPayload');
+    const paymentPanel = document.getElementById('sariQrCodPayment');
+    const codAmount = document.getElementById('sariQrCodAmount');
+    const cashReceivedCheck = document.getElementById('sariQrCashReceivedCheck');
+    const confirmCashButton = document.getElementById('sariQrConfirmCashButton');
+    const paymentError = document.getElementById('sariQrPaymentError');
+    let pendingPayment = null;
 
     let scanner = null;
     let cameraRunning = false;
@@ -245,11 +293,15 @@
     };
 
     const submitPayload = async (payload) => {
-        if (processing || !payload) {
+        if (processing || !payload || pendingPayment) {
             return;
         }
 
         processing = true;
+        pendingPayment = null;
+        paymentPanel?.classList.add('hidden');
+        if (cashReceivedCheck) cashReceivedCheck.checked = false;
+        if (confirmCashButton) confirmCashButton.disabled = true;
         setResult('neutral', 'Validating parcel…', 'Checking QR signature, assignment, role and current parcel status.');
 
         try {
@@ -273,12 +325,19 @@
 
             setResult(
                 'success',
-                'Parcel scan accepted',
+                data.requires_payment === true ? 'QR verified — collect COD payment' : 'Parcel scan accepted',
                 data.message ?? 'Parcel QR verified successfully.',
                 data
             );
 
-            scanAnotherButton.classList.remove('hidden');
+            if (data.requires_payment === true && paymentPanel && data.payment_token && data.order_id) {
+                pendingPayment = { order_id: data.order_id, payment_token: data.payment_token };
+                codAmount.textContent = '₱' + Number(data.amount_due).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                paymentPanel.classList.remove('hidden');
+                scanAnotherButton.classList.add('hidden');
+            } else {
+                scanAnotherButton.classList.remove('hidden');
+            }
         } catch (error) {
             setResult(
                 'error',
@@ -335,7 +394,7 @@
     };
 
     const startCamera = async () => {
-        if (cameraRunning || processing) {
+        if (cameraRunning || processing || pendingPayment) {
             return;
         }
 
@@ -391,6 +450,47 @@
             }
         }
     };
+
+    cashReceivedCheck?.addEventListener('change', () => {
+        if (confirmCashButton) confirmCashButton.disabled = !cashReceivedCheck.checked || !pendingPayment || processing;
+    });
+
+    confirmCashButton?.addEventListener('click', async () => {
+        if (!pendingPayment || !cashReceivedCheck?.checked || processing) return;
+        processing = true;
+        confirmCashButton.disabled = true;
+        paymentError.classList.add('hidden');
+        const proof = pendingPayment;
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    action: 'confirm_cod_payment', order_id: proof.order_id,
+                    payment_token: proof.payment_token, cash_received: true,
+                }),
+            });
+            if (!response.ok) throw new Error(await extractError(response));
+            const data = await response.json();
+            pendingPayment = null;
+            paymentPanel.classList.add('hidden');
+            cashReceivedCheck.checked = false;
+            setResult('success', 'Payment received — delivery complete', data.message, data);
+            scanAnotherButton.classList.remove('hidden');
+        } catch (error) {
+            paymentError.textContent = error?.message ?? 'Unable to record COD payment.';
+            paymentError.classList.remove('hidden');
+            confirmCashButton.disabled = false;
+        } finally {
+            processing = false;
+        }
+    });
 
     startButton.addEventListener('click', startCamera);
     stopButton.addEventListener('click', stopCamera);

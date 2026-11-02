@@ -63,6 +63,8 @@ class CourierLastMileController extends Controller
 
                     'facility.name as facility_name',
                     'facility.address as facility_address',
+                    'facility.latitude as facility_latitude',
+                    'facility.longitude as facility_longitude',
 
                     'facility.municipality_name as facility_municipality',
                 ])
@@ -92,6 +94,10 @@ class CourierLastMileController extends Controller
                         '=',
                         'link.marketplace_order_id'
                     )
+                    ->leftJoin('delivery_route_stops as buyer_stop', function ($join) {
+                        $join->on('buyer_stop.marketplace_order_id', '=', 'orders.id')
+                             ->where('buyer_stop.stop_key', '=', 'buyer');
+                    })
                     ->leftJoin(
                         'logistics_parcels as parcel',
                         'parcel.marketplace_order_id',
@@ -108,6 +114,8 @@ class CourierLastMileController extends Controller
                         'orders.buyer_name',
                         'orders.buyer_phone',
                         'orders.buyer_address',
+                        'buyer_stop.latitude as buyer_latitude',
+                        'buyer_stop.longitude as buyer_longitude',
 
                         'orders.status as order_status',
 
@@ -138,6 +146,12 @@ class CourierLastMileController extends Controller
         Request $request,
         int $assignment
     ): RedirectResponse {
+        abort_unless(
+            $request->attributes->get('sari_verified_qr_stage') === 'start_last_mile',
+            403,
+            'A verified parcel QR scan is required for this last-mile checkpoint.'
+        );
+
         $rider =
             $this->currentRider(
                 $request
@@ -330,6 +344,8 @@ class CourierLastMileController extends Controller
         int $assignment,
         int $order
     ): RedirectResponse {
+        // Arrival is rider-confirmed, but delivery completion requires a QR scan.
+        // Ownership, assignment, and the out_for_delivery status are checked below.
         $rider =
             $this->currentRider(
                 $request
@@ -502,9 +518,9 @@ class CourierLastMileController extends Controller
             }
         );
 
-        return back()->with(
+        return redirect()->route('courier.parcel-scanner')->with(
             'success',
-            'Arrival at Buyer confirmed.'
+            'Buyer arrival recorded. After the Buyer physically receives the parcel, scan the matching SARI parcel QR to complete this delivery.'
         );
     }
 
@@ -519,6 +535,12 @@ class CourierLastMileController extends Controller
         int $assignment,
         int $order
     ): RedirectResponse {
+        abort_unless(
+            $request->attributes->get('sari_verified_qr_stage') === 'final_handoff',
+            403,
+            'A verified parcel QR scan is required for this last-mile checkpoint.'
+        );
+
         $rider =
             $this->currentRider(
                 $request

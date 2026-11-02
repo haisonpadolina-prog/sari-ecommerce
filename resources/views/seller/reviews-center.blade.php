@@ -11,1493 +11,115 @@
 @push('styles')
 <style id="sariSellerEmbeddedCss-reviews-center" data-sari-inline-css="reviews-center">
 @verbatim
-/* Extracted from resources/views/seller/reviews-center.blade.php — original style block 1. */
-.seller-reviews-page {
+/* SARI Seller Reviews & Ratings — clean design system, scoped to the page. */
+.seller-reviews-page{--reviews-gold:#C88912;--reviews-gold-hover:#B47B0E;--reviews-ink:#2F3742;--reviews-text:#475569;--reviews-muted:#8390A0;--reviews-line:#E5E7EB;--reviews-soft:#F8FAFC;width:100%;max-width:1520px;margin-inline:auto;padding-bottom:32px;color:var(--reviews-ink);font-family:'Poppins',ui-sans-serif,system-ui,sans-serif}
+.seller-reviews-page *, .seller-reviews-page *::before,.seller-reviews-page *::after{box-sizing:border-box}
+.seller-reviews-page :is(button,input,select,textarea,a){font-family:inherit}
+.seller-reviews-page [hidden]{display:none!important}
+.seller-reviews-header{min-height:0;margin:0;padding:2px 2px 17px;border:0;border-bottom:1px solid #E6EAF0;border-radius:0;background:transparent;box-shadow:none}
+.seller-reviews-eyebrow{margin:0;color:#A87316;font-size:10.5px;line-height:1.4;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.seller-reviews-title{margin:5px 0 0;color:var(--reviews-ink);font-size:clamp(27px,2.2vw,31px);font-weight:760;line-height:1.2;letter-spacing:-.04em}
+.seller-reviews-title span:last-child{margin-left:.17em;color:var(--reviews-gold)}
+.seller-reviews-subtitle{max-width:790px;margin:8px 0 0;color:#768397;font-size:11.5px;line-height:1.6}
+.seller-reviews-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
+.seller-reviews-stat{min-width:0;min-height:110px;border:1px solid var(--reviews-line);border-radius:18px;background:#fff;padding:17px 18px;box-shadow:0 2px 6px rgba(15,23,42,.035),0 10px 24px rgba(15,23,42,.07)}
+.seller-reviews-stat-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.seller-reviews-stat-inner .min-w-0{min-width:0}
+.seller-reviews-stat-label{color:#5A6879;font-size:13px;font-weight:650;line-height:1.4}
+.seller-reviews-stat-value{margin-top:8px;color:var(--reviews-ink);font-size:28px;font-weight:750;line-height:1.1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.seller-reviews-stat-note{margin-top:8px;color:#8390A0;font-size:11.5px;line-height:1.45}
+.seller-reviews-stat-icon{display:inline-flex;width:27px;height:27px;flex:0 0 27px;align-items:center;justify-content:center;border:0;border-radius:0;background:transparent;box-shadow:none;color:#98A2B3}
+.seller-reviews-stat-icon svg{width:27px;height:27px;stroke-width:1.65}
+.seller-reviews-stat-icon--average{color:#C88912}.seller-reviews-stat-icon--total{color:#94A3B8}.seller-reviews-stat-icon--five{color:#0E9F78}.seller-reviews-stat-icon--low{color:#E34C3B}
+/* Unboxed search toolbar, same 48px controls as Pickup Requests. */
+.seller-reviews-filter-form{display:grid;grid-template-columns:minmax(0,1fr) 190px 168px auto auto;gap:12px;align-items:center;margin-top:24px}
+.seller-reviews-search-wrap{position:relative;min-width:0}
+.seller-reviews-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:19px;height:19px;stroke:#94A3B8;pointer-events:none}
+.seller-reviews-search,.seller-reviews-native,.seller-reviews-dropdown-trigger,.seller-reviews-filter-button,.seller-reviews-reset{display:inline-flex;width:100%;height:48px;min-height:48px;align-items:center;border:1px solid #DCE3EA;border-radius:14px;background:#fff;color:#465262;font-size:11.5px;font-weight:600;line-height:1.4}
+.seller-reviews-search{display:block;padding:0 16px 0 45px;outline:0;min-width:0}
+.seller-reviews-search::placeholder{color:#95A1B0;font-weight:500}
+.seller-reviews-search:focus-visible,.seller-reviews-native:focus-visible,.seller-reviews-dropdown-trigger:focus-visible,.seller-reviews-dropdown-trigger[aria-expanded="true"]{border-color:#C88912;outline:0;box-shadow:0 0 0 3px rgba(200,137,18,.09)}
+.seller-reviews-dropdown{position:relative;min-width:0}
+.seller-reviews-native{padding:0 13px;appearance:auto}
+.seller-reviews-dropdown-trigger{justify-content:space-between;gap:12px;padding:0 15px;text-align:left;cursor:pointer}
+.seller-reviews-dropdown-trigger svg{width:16px;height:16px;flex:0 0 16px;stroke:#64748B}
+.seller-reviews-dropdown[data-enhanced="true"] .seller-reviews-native{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;opacity:0!important;pointer-events:none!important}
+.seller-reviews-dropdown-trigger[hidden]{display:none!important}
+.seller-reviews-dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;right:0;min-width:180px;max-height:265px;overflow-y:auto;z-index:60;padding:7px;border:1px solid #E2E8F0;border-radius:14px;background:white;box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05)}
+.seller-reviews-dropdown-option{display:flex;width:100%;min-height:38px;align-items:center;border:0;border-radius:10px;background:transparent;padding:8px 11px;color:#475569;font-size:11.5px;font-weight:600;text-align:left;cursor:pointer}
+.seller-reviews-dropdown-option:hover,.seller-reviews-dropdown-option:focus-visible{background:#F8FAFC;color:#A56D0A;outline:0}
+.seller-reviews-dropdown-option[aria-selected="true"]{background:#F8FAFC;color:#2F3742;font-weight:750}
+.seller-reviews-filter-button{width:auto;min-width:128px;justify-content:center;gap:8px;border-color:var(--reviews-gold);background:var(--reviews-gold);padding:0 17px;color:#fff;font-size:12px;font-weight:750;cursor:pointer}
+.seller-reviews-filter-button svg{width:15px;height:15px;stroke:#fff}
+.seller-reviews-filter-button:hover,.seller-reviews-filter-button:focus-visible{border-color:var(--reviews-gold-hover);background:var(--reviews-gold-hover);outline:0}
+.seller-reviews-reset{width:auto;min-width:96px;justify-content:center;padding:0 20px;text-decoration:none;white-space:nowrap}
+.seller-reviews-reset:hover,.seller-reviews-reset:focus-visible{background:#F8FAFC;color:#A56D0A}
+/* Main feed */
+.seller-reviews-feed{margin-top:24px;overflow:hidden;border:1px solid var(--reviews-line);border-radius:18px;background:#fff;box-shadow:0 2px 6px rgba(15,23,42,.035),0 14px 32px rgba(15,23,42,.08)}
+.seller-reviews-feed-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 26px;border-bottom:1px solid #E9EDF2;background:white}
+.seller-reviews-feed-title-group{display:flex;align-items:flex-start;gap:12px}
+.seller-reviews-feed-icon{display:flex;width:27px;height:27px;align-items:center;justify-content:center;color:var(--reviews-gold);background:transparent;border:0;flex:0 0 27px}
+.seller-reviews-feed-icon svg{width:24px;height:24px}
+.seller-reviews-feed-title{margin:0;font-size:18px;font-weight:770;line-height:1.4;color:var(--reviews-ink);letter-spacing:-.025em}
+.seller-reviews-feed-subtitle{margin:4px 0 0;font-size:11.5px;line-height:1.5;color:#8592A3}
+.seller-reviews-results{color:#8592A3;font-size:11px;font-weight:600;white-space:nowrap}
+.seller-review-row{border-bottom:1px solid #EBEEF2;background:#fff;transition:background-color .14s ease}
+.seller-review-row:last-child{border-bottom:0}
+.seller-review-row:hover{background:#FBFCFD}
+.seller-review-main{padding:20px 26px 18px}
+.seller-review-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.seller-review-product{min-width:0}
+.seller-review-product-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.seller-review-product-name{margin:0;color:#27323F;font-size:13px;font-weight:750;line-height:1.45;overflow-wrap:anywhere}
+.seller-review-reply-state{display:inline-flex;min-height:25px;align-items:center;border-radius:999px;border:1px solid;padding:3px 10px;font-size:10.5px;line-height:1.2;font-weight:700;white-space:nowrap}
+.seller-review-reply-state--replied{border-color:#BFE7D0;background:#EFFCF4;color:#167D4B}
+.seller-review-reply-state--pending{border-color:#E7D6B9;background:#F8FAFC;color:#A56D0A}
+.seller-review-stars-row{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:10px}
+.seller-review-stars{display:inline-flex;align-items:center;gap:2px;color:#C88912}
+.seller-review-stars svg{width:17px;height:17px}
+.seller-review-stars svg[fill="none"]{color:#CBD5E1}
+.seller-review-rating-value{font-size:11px;font-weight:650;color:#69778B}
+.seller-review-meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px 10px;margin-top:10px;font-size:11px;line-height:1.5;color:#8491A1}
+.seller-review-meta strong{color:#536173;font-weight:700}
+.seller-review-meta-separator{color:#CBD5E1}
+.seller-review-date{color:#8491A1;font-size:11px;font-weight:550;white-space:nowrap}
+.seller-review-comment{margin:15px 0 0;max-width:100%;font-size:12px;line-height:1.8;color:#465262;white-space:pre-line;overflow-wrap:anywhere}
+.seller-review-photos{display:grid;grid-template-columns:repeat(5,minmax(0,76px));gap:9px;margin-top:15px}
+.seller-review-photo{display:block;aspect-ratio:1;overflow:hidden;border:1px solid #DFE5EB;border-radius:11px;background:#F8FAFC}
+.seller-review-photo img{width:100%;height:100%;object-fit:cover}
+.seller-review-photo:focus-visible{outline:3px solid rgba(200,137,18,.25);outline-offset:3px}
+.seller-review-reply-area{padding:16px 26px 18px;border-top:1px solid #EFF2F5;background:#FAFBFC}
+.seller-review-reply-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.seller-review-reply-label{font-size:11.5px;font-weight:750;color:#344054}
+.seller-review-reply-help{font-size:10.5px;color:#8A96A6;line-height:1.5}
+.seller-review-reply-form{display:grid;grid-template-columns:minmax(0,1fr) 145px;gap:12px;align-items:stretch}
+.seller-review-reply-input{display:block;width:100%;min-height:66px;max-height:170px;resize:vertical;padding:12px 14px;border:1px solid #DCE3EA;border-radius:12px;background:#fff;color:#344054;font-size:11.5px;line-height:1.6;outline:0}
+.seller-review-reply-input::placeholder{color:#A0AAB9}
+.seller-review-reply-input:focus-visible{border-color:#C88912;box-shadow:0 0 0 3px rgba(200,137,18,.09)}
+.seller-review-reply-button{display:inline-flex;align-items:center;justify-content:center;align-self:end;gap:8px;min-height:48px;border:1px solid #C88912;border-radius:12px;background:#C88912;padding:0 15px;color:white;font-size:11.5px;font-weight:750;cursor:pointer}
+.seller-review-reply-button svg{width:15px;height:15px}
+.seller-review-reply-button:hover,.seller-review-reply-button:focus-visible{background:#B47B0E;border-color:#B47B0E;outline:0}
+/* Empty state + Laravel pagination */
+.seller-reviews-empty{display:grid;min-height:260px;place-items:center;padding:35px 22px;text-align:center}
+.seller-reviews-empty-icon{display:grid;width:72px;height:72px;place-items:center;margin-inline:auto;color:#94A3B8;border-radius:20px;background:#F8FAFC}
+.seller-reviews-empty-icon svg{width:37px;height:37px}
+.seller-reviews-empty-title{margin-top:16px;color:#344054;font-size:17px;font-weight:750}
+.seller-reviews-empty-copy{margin:7px auto 0;max-width:410px;color:#8794A4;font-size:11.5px;line-height:1.65}
+.seller-reviews-pagination{padding:15px 24px;border-top:1px solid #E9EDF2;background:white}
+.seller-reviews-pagination nav{font-family:inherit;font-size:11px}
+.seller-reviews-pagination nav a,.seller-reviews-pagination nav span{border-color:#E2E8F0!important}
+.seller-reviews-pagination nav [aria-current="page"] span{background:#C88912!important;color:#fff!important;border-color:#C88912!important}
+.seller-reviews-page :is(button,input,textarea,a):focus-visible{outline-offset:2px}
+.seller-reviews-alert{display:flex;gap:12px;margin-bottom:14px;padding:12px 16px;border:1px solid;border-radius:13px;font-size:11.5px;line-height:1.6}
+.seller-reviews-alert--success{border-color:#BFE7D0;background:#F0FCF5;color:#166534}
+.seller-reviews-alert--error{border-color:#FBC5C5;background:#FEF3F3;color:#B91C1C}
+.seller-reviews-alert-icon{display:grid;width:25px;height:25px;place-items:center;flex:0 0 25px}
+.seller-reviews-alert-icon svg{width:19px;height:19px}
+@media(max-width:1080px){.seller-reviews-filter-form{grid-template-columns:minmax(0,1fr) minmax(155px,190px) minmax(150px,175px)}.seller-reviews-filter-button,.seller-reviews-reset{width:100%}.seller-reviews-filter-button{grid-column:2}.seller-reviews-reset{grid-column:3}}
+@media(max-width:900px){.seller-reviews-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.seller-reviews-filter-form{grid-template-columns:repeat(2,minmax(0,1fr))}.seller-reviews-search-wrap{grid-column:1/-1}.seller-reviews-filter-button{grid-column:auto}}
+@media(max-width:640px){.seller-reviews-title{font-size:25px}.seller-reviews-eyebrow{font-size:9.5px}.seller-reviews-summary{gap:10px;margin-top:18px}.seller-reviews-stat{min-height:105px;padding:14px}.seller-reviews-stat-label{font-size:11.5px}.seller-reviews-stat-value{font-size:23px}.seller-reviews-stat-note{font-size:10px}.seller-reviews-stat-icon,.seller-reviews-stat-icon svg{width:23px;height:23px;flex-basis:23px}.seller-reviews-filter-form{gap:9px;margin-top:18px}.seller-reviews-search-wrap{grid-column:1/-1}.seller-reviews-search,.seller-reviews-native,.seller-reviews-dropdown-trigger,.seller-reviews-filter-button,.seller-reviews-reset{height:46px;min-height:46px;font-size:11px}.seller-reviews-feed{margin-top:18px}.seller-reviews-feed-head{padding:18px 16px;align-items:flex-start;flex-direction:column}.seller-reviews-feed-title{font-size:17px}.seller-review-main{padding:17px 16px}.seller-review-top{flex-direction:column;gap:7px}.seller-review-product-name{font-size:12.5px}.seller-review-date{font-size:10.5px}.seller-review-reply-area{padding:14px 16px}.seller-review-reply-head{flex-direction:column;align-items:flex-start;gap:3px}.seller-review-reply-form{grid-template-columns:1fr}.seller-review-reply-button{min-height:44px;width:100%}.seller-review-photos{grid-template-columns:repeat(auto-fill,minmax(55px,1fr))}.seller-reviews-pagination{padding:14px 12px}}
+@media(prefers-reduced-motion:reduce){.seller-reviews-page *{transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
-        --reviews-gold: #d59617;
-
-        --reviews-gold-hover: #c9890f;
-
-        --reviews-gold-soft: #fffaf0;
-
-        --reviews-ink: #111827;
-
-        --reviews-text: #344054;
-
-        --reviews-muted: #7c8592;
-
-        --reviews-soft-muted: #98a2b3;
-
-        --reviews-line: #e5e7eb;
-
-
-
-        width: 100%;
-
-        max-width: 1440px;
-
-        margin-inline: auto;
-
-        padding-bottom: 24px;
-
-        color: var(--reviews-ink);
-
-        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-
-    }
-
-
-
-    .seller-reviews-page *,
-
-    .seller-reviews-page *::before,
-
-    .seller-reviews-page *::after {
-
-        box-sizing: border-box;
-
-    }
-
-
-
-    .seller-reviews-page button,
-
-    .seller-reviews-page input,
-
-    .seller-reviews-page textarea,
-
-    .seller-reviews-page a {
-
-        font-family: inherit;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Feedback
-
-       ------------------------------------------------------------ */
-
-    .seller-reviews-alert {
-
-        display: flex;
-
-        align-items: flex-start;
-
-        gap: 9px;
-
-        margin-bottom: 10px;
-
-        border: 1px solid;
-
-        border-radius: 12px;
-
-        padding: 9px 11px;
-
-        font-size: 9px;
-
-        font-weight: 500;
-
-        line-height: 1.5;
-
-    }
-
-
-
-    .seller-reviews-alert--success {
-
-        border-color: #d5e7dc;
-
-        background: #f5faf7;
-
-        color: #4f7d63;
-
-    }
-
-
-
-    .seller-reviews-alert--error {
-
-        border-color: #efdada;
-
-        background: #fff7f7;
-
-        color: #a65353;
-
-    }
-
-
-
-    .seller-reviews-alert-icon {
-
-        display: grid;
-
-        width: 27px;
-
-        height: 27px;
-
-        flex: 0 0 27px;
-
-        place-items: center;
-
-        border: 1px solid currentColor;
-
-        border-radius: 8px;
-
-        background: #fff;
-
-        opacity: .82;
-
-    }
-
-
-
-    .seller-reviews-alert-icon svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Header
-
-       ------------------------------------------------------------ */
-
-    .seller-reviews-header {
-
-        min-height: 66px;
-
-        padding: 2px 2px 13px;
-
-        border-bottom: 1px solid #e7ebf0;
-
-    }
-
-
-
-    .seller-reviews-eyebrow {
-
-        margin: 0;
-
-        color: #b87605;
-
-        font-size: 8px;
-
-        font-weight: 800;
-
-        line-height: 1;
-
-        letter-spacing: .16em;
-
-        text-transform: uppercase;
-
-    }
-
-
-
-    .seller-reviews-title {
-
-        margin: 5px 0 0;
-
-        color: var(--reviews-ink);
-
-        font-size: clamp(29px, 2.2vw, 36px);
-
-        font-weight: 650;
-
-        line-height: 1;
-
-        letter-spacing: -.035em;
-
-    }
-
-
-
-    .seller-reviews-title span:last-child {
-
-        margin-left: .18em;
-
-        color: #C9890B;
-
-    }
-
-
-
-    .seller-reviews-subtitle {
-
-        max-width: 760px;
-
-        margin: 7px 0 0;
-
-        color: var(--reviews-muted);
-
-        font-size: 10px;
-
-        line-height: 1.5;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Summary cards
-
-       ------------------------------------------------------------ */
-
-    .seller-reviews-summary {
-
-        display: grid;
-
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-
-        gap: 9px;
-
-        margin-top: 12px;
-
-    }
-
-
-
-    .seller-reviews-stat {
-
-        min-width: 0;
-
-        min-height: 78px;
-
-        border: 1px solid var(--reviews-line);
-
-        border-radius: 13px;
-
-        background: #fff;
-
-        padding: 10px 12px;
-
-        box-shadow: 0 5px 16px rgba(15, 23, 42, .028);
-
-    }
-
-
-
-    .seller-reviews-stat-inner {
-
-        display: flex;
-
-        height: 100%;
-
-        align-items: flex-start;
-
-        justify-content: space-between;
-
-        gap: 9px;
-
-    }
-
-
-
-    .seller-reviews-stat-label {
-
-        color: #667085;
-
-        font-size: 9.5px;
-
-        font-weight: 600;
-
-        line-height: 1.3;
-
-    }
-
-
-
-    .seller-reviews-stat-value {
-
-        margin-top: 3px;
-
-        color: var(--reviews-ink);
-
-        font-size: 21px;
-
-        font-weight: 720;
-
-        line-height: 1;
-
-        letter-spacing: -.035em;
-
-    }
-
-
-
-    .seller-reviews-stat-note {
-
-        margin-top: 5px;
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 8.3px;
-
-        line-height: 1.35;
-
-    }
-
-
-
-    .seller-reviews-stat-icon {
-
-        display: grid;
-
-        width: 32px;
-
-        height: 32px;
-
-        flex: 0 0 32px;
-
-        place-items: center;
-
-        border: 1px solid rgba(17, 24, 39, .05);
-
-        border-radius: 9px;
-
-    }
-
-
-
-    .seller-reviews-stat-icon svg {
-
-        width: 14px;
-
-        height: 14px;
-
-    }
-
-
-
-    .seller-reviews-stat-icon--average {
-
-        background: #fff8e9;
-
-        color: #b97805;
-
-    }
-
-
-
-    .seller-reviews-stat-icon--total {
-
-        background: #f3f7fb;
-
-        color: #52789b;
-
-    }
-
-
-
-    .seller-reviews-stat-icon--five {
-
-        background: #f1f8f4;
-
-        color: #4f7d63;
-
-    }
-
-
-
-    .seller-reviews-stat-icon--low {
-
-        background: #fff6f2;
-
-        color: #b66745;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Review feed panel
-
-       ------------------------------------------------------------ */
-
-    .seller-reviews-feed {
-
-        margin-top: 10px;
-
-        overflow: hidden;
-
-        border: 1px solid var(--reviews-line);
-
-        border-radius: 13px;
-
-        background: #fff;
-
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .03);
-
-    }
-
-
-
-    .seller-reviews-feed-head {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 12px;
-
-        border-bottom: 1px solid #edf0f3;
-
-        padding: 11px 13px;
-
-        background: #fff;
-
-    }
-
-
-
-    .seller-reviews-feed-title-group {
-
-        display: flex;
-
-        min-width: 0;
-
-        align-items: center;
-
-        gap: 8px;
-
-    }
-
-
-
-    .seller-reviews-feed-icon {
-
-        display: grid;
-
-        width: 28px;
-
-        height: 28px;
-
-        flex: 0 0 28px;
-
-        place-items: center;
-
-        border: 1px solid #efe3c7;
-
-        border-radius: 8px;
-
-        background: var(--reviews-gold-soft);
-
-        color: #b97805;
-
-    }
-
-
-
-    .seller-reviews-feed-icon svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    .seller-reviews-feed-title {
-
-        margin: 0;
-
-        color: #1f2937;
-
-        font-size: 11px;
-
-        font-weight: 700;
-
-        line-height: 1.3;
-
-    }
-
-
-
-    .seller-reviews-feed-subtitle {
-
-        margin: 2px 0 0;
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 8px;
-
-        line-height: 1.35;
-
-    }
-
-
-
-    .seller-reviews-count {
-
-        display: inline-flex;
-
-        min-height: 23px;
-
-        align-items: center;
-
-        border: 1px solid #e5e7eb;
-
-        border-radius: 999px;
-
-        background: #fafbfc;
-
-        padding: 0 8px;
-
-        color: #667085;
-
-        font-size: 8px;
-
-        font-weight: 700;
-
-        white-space: nowrap;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Review row
-
-       ------------------------------------------------------------ */
-
-    .seller-review-row {
-
-        border-bottom: 1px solid #edf0f3;
-
-        background: #fff;
-
-        transition: background-color .14s ease;
-
-    }
-
-
-
-    .seller-review-row:last-child {
-
-        border-bottom: 0;
-
-    }
-
-
-
-    .seller-review-row:hover {
-
-        background: #fffdf9;
-
-    }
-
-
-
-    .seller-review-main {
-
-        padding: 12px 13px 10px;
-
-    }
-
-
-
-    .seller-review-top {
-
-        display: grid;
-
-        grid-template-columns: minmax(0, 1fr) auto;
-
-        gap: 14px;
-
-        align-items: start;
-
-    }
-
-
-
-    .seller-review-product {
-
-        min-width: 0;
-
-    }
-
-
-
-    .seller-review-product-row {
-
-        display: flex;
-
-        min-width: 0;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 7px;
-
-    }
-
-
-
-    .seller-review-product-name {
-
-        overflow: hidden;
-
-        margin: 0;
-
-        color: #1f2937;
-
-        font-size: 10.5px;
-
-        font-weight: 700;
-
-        line-height: 1.35;
-
-        text-overflow: ellipsis;
-
-        white-space: nowrap;
-
-    }
-
-
-
-    .seller-review-reply-state {
-
-        display: inline-flex;
-
-        min-height: 22px;
-
-        align-items: center;
-
-        gap: 5px;
-
-        border: 1px solid;
-
-        border-radius: 999px;
-
-        padding: 0 7px;
-
-        font-size: 7.5px;
-
-        font-weight: 700;
-
-        white-space: nowrap;
-
-    }
-
-
-
-    .seller-review-reply-state::before {
-
-        content: "";
-
-        width: 5px;
-
-        height: 5px;
-
-        border-radius: 999px;
-
-        background: currentColor;
-
-    }
-
-
-
-    .seller-review-reply-state--replied {
-
-        border-color: #cfe4d7;
-
-        background: #f1f8f4;
-
-        color: #4f7d63;
-
-    }
-
-
-
-    .seller-review-reply-state--pending {
-
-        border-color: #eadfc9;
-
-        background: #fff9ef;
-
-        color: #a8731f;
-
-    }
-
-
-
-    .seller-review-stars-row {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 7px;
-
-        margin-top: 5px;
-
-    }
-
-
-
-    .seller-review-stars {
-
-        display: inline-flex;
-
-        align-items: center;
-
-        gap: 2px;
-
-        color: var(--reviews-gold);
-
-    }
-
-
-
-    .seller-review-stars svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    .seller-review-rating-value {
-
-        color: #667085;
-
-        font-size: 8.5px;
-
-        font-weight: 650;
-
-    }
-
-
-
-    .seller-review-meta {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 4px 7px;
-
-        margin-top: 5px;
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 8px;
-
-        line-height: 1.4;
-
-    }
-
-
-
-    .seller-review-meta strong {
-
-        color: #667085;
-
-        font-weight: 600;
-
-    }
-
-
-
-    .seller-review-meta-separator {
-
-        color: #d4d8de;
-
-    }
-
-
-
-    .seller-review-date {
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 8px;
-
-        font-weight: 500;
-
-        white-space: nowrap;
-
-    }
-
-
-
-    .seller-review-comment {
-
-        margin: 9px 0 0;
-
-        max-width: 980px;
-
-        color: #475467;
-
-        font-size: 9.2px;
-
-        line-height: 1.55;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Seller reply composer
-
-       ------------------------------------------------------------ */
-
-    .seller-review-reply-area {
-
-        border-top: 1px solid #edf0f3;
-
-        background: #fcfcfd;
-
-        padding: 9px 13px 10px;
-
-    }
-
-
-
-    .seller-review-reply-head {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 12px;
-
-        margin-bottom: 6px;
-
-    }
-
-
-
-    .seller-review-reply-label {
-
-        color: #475467;
-
-        font-size: 8.6px;
-
-        font-weight: 700;
-
-    }
-
-
-
-    .seller-review-reply-help {
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 7.7px;
-
-        line-height: 1.35;
-
-    }
-
-
-
-    .seller-review-reply-form {
-
-        display: grid;
-
-        grid-template-columns: minmax(0, 1fr) auto;
-
-        gap: 7px;
-
-        align-items: stretch;
-
-    }
-
-
-
-    .seller-review-reply-input {
-
-        width: 100%;
-
-        min-height: 48px;
-
-        max-height: 112px;
-
-        resize: vertical;
-
-        border: 1px solid #d8dee6;
-
-        border-radius: 9px;
-
-        background: #fff;
-
-        padding: 8px 10px;
-
-        color: #344054;
-
-        font-size: 9.3px;
-
-        line-height: 1.45;
-
-        outline: none;
-
-        box-shadow: 0 1px 2px rgba(15, 23, 42, .015);
-
-        transition: border-color .14s ease, box-shadow .14s ease;
-
-    }
-
-
-
-    .seller-review-reply-input::placeholder {
-
-        color: #98a2b3;
-
-    }
-
-
-
-    .seller-review-reply-input:focus {
-
-        border-color: var(--reviews-gold);
-
-        box-shadow: 0 0 0 3px rgba(213, 150, 23, .08);
-
-    }
-
-
-
-    .seller-review-reply-button {
-
-        display: inline-flex;
-
-        min-width: 106px;
-
-        min-height: 48px;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 6px;
-
-        border: 1px solid var(--reviews-gold);
-
-        border-radius: 9px;
-
-        background: var(--reviews-gold);
-
-        padding: 0 12px;
-
-        color: #fff;
-
-        font-size: 9px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        box-shadow: 0 6px 14px rgba(213, 150, 23, .13);
-
-        transition: border-color .14s ease, background-color .14s ease;
-
-    }
-
-
-
-    .seller-review-reply-button:hover,
-
-    .seller-review-reply-button:focus-visible {
-
-        outline: none;
-
-        border-color: var(--reviews-gold-hover);
-
-        background: var(--reviews-gold-hover);
-
-    }
-
-
-
-    .seller-review-reply-button svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Empty + pagination
-
-       ------------------------------------------------------------ */
-
-    .seller-reviews-empty {
-
-        display: grid;
-
-        min-height: 170px;
-
-        place-items: center;
-
-        padding: 28px 18px;
-
-        text-align: center;
-
-    }
-
-
-
-    .seller-reviews-empty-icon {
-
-        display: grid;
-
-        width: 38px;
-
-        height: 38px;
-
-        margin-inline: auto;
-
-        place-items: center;
-
-        border: 1px solid #e5e7eb;
-
-        border-radius: 10px;
-
-        background: #fafbfc;
-
-        color: #98a2b3;
-
-    }
-
-
-
-    .seller-reviews-empty-icon svg {
-
-        width: 17px;
-
-        height: 17px;
-
-    }
-
-
-
-    .seller-reviews-empty-title {
-
-        margin-top: 9px;
-
-        color: #344054;
-
-        font-size: 10.5px;
-
-        font-weight: 650;
-
-    }
-
-
-
-    .seller-reviews-empty-copy {
-
-        margin-top: 4px;
-
-        color: var(--reviews-soft-muted);
-
-        font-size: 8.8px;
-
-        line-height: 1.5;
-
-    }
-
-
-
-    .seller-reviews-pagination {
-
-        border-top: 1px solid #edf0f3;
-
-        padding: 10px 13px;
-
-        background: #fff;
-
-    }
-
-
-
-    /* ------------------------------------------------------------
-
-       Responsive
-
-       ------------------------------------------------------------ */
-
-    @media (max-width: 900px) {
-
-        .seller-reviews-summary {
-
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        }
-
-    }
-
-
-
-    @media (max-width: 700px) {
-
-        .seller-reviews-title {
-
-            font-size: clamp(28px, 8vw, 34px);
-
-        }
-
-
-
-        .seller-review-top {
-
-            grid-template-columns: 1fr;
-
-            gap: 7px;
-
-        }
-
-
-
-        .seller-review-date {
-
-            white-space: normal;
-
-        }
-
-
-
-        .seller-review-reply-form {
-
-            grid-template-columns: 1fr;
-
-        }
-
-
-
-        .seller-review-reply-button {
-
-            min-height: 40px;
-
-        }
-
-    }
-
-
-
-    @media (max-width: 520px) {
-
-        .seller-reviews-summary {
-
-            grid-template-columns: 1fr;
-
-        }
-
-
-
-        .seller-reviews-stat {
-
-            min-height: 74px;
-
-        }
-
-
-
-        .seller-review-main,
-
-        .seller-review-reply-area {
-
-            padding-left: 10px;
-
-            padding-right: 10px;
-
-        }
-
-
-
-        .seller-review-reply-head {
-
-            align-items: flex-start;
-
-            flex-direction: column;
-
-            gap: 2px;
-
-        }
-
-
-
-        .seller-review-reply-input {
-
-            min-height: 54px;
-
-            font-size: 9.8px;
-
-        }
-
-
-
-        .seller-review-reply-button {
-
-            height: 42px;
-
-            min-height: 42px;
-
-            font-size: 9.8px;
-
-        }
-
-    }
-
-
-
-    @media (prefers-reduced-motion: reduce) {
-
-        .seller-reviews-page * {
-
-            transition-duration: .01ms !important;
-
-            scroll-behavior: auto !important;
-
-        }
-
-    }
-
-
-
-/* ======================================================================
-   REVIEWS & RATINGS — MAIN CONTAINERS ONLY FLOATING
-   Visual-only final pass.
-   Top-level surfaces float; content nested inside them remains flat.
-   Review data, reply route/forms, CSRF and pagination remain unchanged.
-   ====================================================================== */
-
-.seller-reviews-page {
-    --reviews-main-border: #E5E7EB;
-    --reviews-main-divider: #ECEFF2;
-
-    --reviews-main-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
-
-    --reviews-main-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
-}
-
-/* ------------------------------------------------------------
-   TOP-LEVEL MAIN SURFACES — THESE FLOAT
-   ------------------------------------------------------------ */
-.seller-reviews-page .seller-reviews-header,
-.seller-reviews-page .seller-reviews-stat,
-.seller-reviews-page .seller-reviews-feed {
-    border: 1px solid var(--reviews-main-border) !important;
-    background: #FFFFFF !important;
-    transform: none !important;
-    outline: 0 !important;
-}
-
-.seller-reviews-page .seller-reviews-header {
-    min-height: 0 !important;
-    border-radius: 16px !important;
-    padding: 16px 18px !important;
-    box-shadow: var(--reviews-main-shadow) !important;
-}
-
-.seller-reviews-page .seller-reviews-stat {
-    box-shadow: var(--reviews-main-shadow-soft) !important;
-}
-
-.seller-reviews-page .seller-reviews-feed {
-    box-shadow: var(--reviews-main-shadow) !important;
-}
-
-/* Structural hover stays static. */
-.seller-reviews-page .seller-reviews-header:hover,
-.seller-reviews-page .seller-reviews-stat:hover,
-.seller-reviews-page .seller-reviews-feed:hover {
-    border-color: var(--reviews-main-border) !important;
-    background: #FFFFFF !important;
-    transform: none !important;
-}
-
-/* Alerts are standalone feedback surfaces, so only a light float. */
-.seller-reviews-page .seller-reviews-alert {
-    box-shadow: var(--reviews-main-shadow-soft) !important;
-    transform: none !important;
-}
-
-/* ------------------------------------------------------------
-   EVERYTHING NESTED INSIDE THE MAIN FEED STAYS FLAT
-   ------------------------------------------------------------ */
-.seller-reviews-page .seller-reviews-feed-head,
-.seller-reviews-page .seller-review-row,
-.seller-reviews-page .seller-review-main,
-.seller-reviews-page .seller-review-reply-area,
-.seller-reviews-page .seller-reviews-empty,
-.seller-reviews-page .seller-reviews-pagination {
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-/* Review rows are content rows, not cards. */
-.seller-reviews-page .seller-review-row,
-.seller-reviews-page .seller-review-row:hover {
-    border-bottom-color: var(--reviews-main-divider) !important;
-    background: #FFFFFF !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-/* Neutral row hover only. */
-.seller-reviews-page .seller-review-row:hover {
-    background: #F8FAFC !important;
-}
-
-/* Reply area is a flat subsection inside the floating feed. */
-.seller-reviews-page .seller-review-reply-area {
-    border-top-color: var(--reviews-main-divider) !important;
-    background: #FAFBFC !important;
-}
-
-/* Feed header and pagination are attached to the same parent shell. */
-.seller-reviews-page .seller-reviews-feed-head,
-.seller-reviews-page .seller-reviews-pagination {
-    border-color: var(--reviews-main-divider) !important;
-    background: #FFFFFF !important;
-}
-
-/* Empty state belongs to the feed — never an independent floating card. */
-.seller-reviews-page .seller-reviews-empty {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-.seller-reviews-page .seller-reviews-empty-icon,
-.seller-reviews-page .seller-reviews-feed-icon,
-.seller-reviews-page .seller-reviews-stat-icon,
-.seller-reviews-page .seller-reviews-alert-icon {
-    box-shadow: none !important;
-}
-
-/* ------------------------------------------------------------
-   CONTROLS / BADGES — FLAT, NOT FLOATING CONTAINERS
-   ------------------------------------------------------------ */
-.seller-reviews-page .seller-review-reply-input {
-    box-shadow: none !important;
-}
-
-.seller-reviews-page .seller-review-reply-input:focus {
-    box-shadow: 0 0 0 3px rgba(213, 150, 23, .08) !important;
-}
-
-.seller-reviews-page .seller-review-reply-button,
-.seller-reviews-page .seller-review-reply-button:hover,
-.seller-reviews-page .seller-review-reply-button:focus-visible {
-    box-shadow: none !important;
-    transform: none !important;
-}
-
-.seller-reviews-page .seller-review-reply-state,
-.seller-reviews-page .seller-reviews-count {
-    box-shadow: none !important;
-}
-
-/* Keep inner stats/content visually flat. */
-.seller-reviews-page .seller-reviews-stat-inner,
-.seller-reviews-page .seller-review-top,
-.seller-reviews-page .seller-review-stars-row,
-.seller-reviews-page .seller-review-meta,
-.seller-reviews-page .seller-review-reply-head,
-.seller-reviews-page .seller-review-reply-form {
-    box-shadow: none !important;
-}
-
-/* Mobile: retain top-level hierarchy only. */
-@media (max-width: 700px) {
-    .seller-reviews-page .seller-reviews-header,
-    .seller-reviews-page .seller-reviews-feed {
-        box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
-    }
-
-    .seller-reviews-page .seller-reviews-stat,
-    .seller-reviews-page .seller-reviews-alert {
-        box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
-    }
-
-    .seller-reviews-page .seller-review-row,
-    .seller-reviews-page .seller-review-reply-area,
-    .seller-reviews-page .seller-reviews-empty {
-        box-shadow: none !important;
-    }
-}
-
-
-/* ======================================================================
-   REVIEWS & RATINGS — OPEN HEADER FINAL FIX
-   Business Reputation / Reviews & Ratings / subtitle are no longer inside
-   a floating card. Summary cards + Buyer Review Feed remain floating.
-   ====================================================================== */
-
-.seller-reviews-page .seller-reviews-header,
-.seller-reviews-page .seller-reviews-header:hover,
-.seller-reviews-page .seller-reviews-header:focus-within {
-    min-height: 0 !important;
-    border: 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    background-image: none !important;
-    padding: 2px 2px 13px !important;
-    box-shadow: none !important;
-    outline: 0 !important;
-    transform: none !important;
-}
-
-/* Header content stays completely flat/open. */
-.seller-reviews-page .seller-reviews-header > *,
-.seller-reviews-page .seller-reviews-header * {
-    box-shadow: none !important;
-}
-
-/* Mobile stays open as well. */
-@media (max-width: 700px) {
-    .seller-reviews-page .seller-reviews-header,
-    .seller-reviews-page .seller-reviews-header:hover {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        background: transparent !important;
-    }
-}
 @endverbatim
 </style>
 
@@ -1717,6 +339,39 @@
 
 
 
+    <form method="GET" action="{{ route('seller.reviews-center.index') }}" class="seller-reviews-filter-form" aria-label="Filter buyer reviews">
+        <label class="seller-reviews-search-wrap">
+            <span class="sr-only">Search reviews</span>
+            <svg class="seller-reviews-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input class="seller-reviews-search" type="search" name="q" value="{{ $search ?? '' }}" placeholder="Search product, order, buyer, or comment..." autocomplete="off">
+        </label>
+        <div class="seller-reviews-dropdown" data-sari-review-dropdown>
+            <select class="seller-reviews-native" name="rating" aria-label="Filter by star rating" data-sari-review-native>
+                <option value="all" @selected(($ratingFilter ?? 'all') === 'all')>All Ratings</option>
+                @for($r = 5; $r >= 1; $r--)
+                    <option value="{{ $r }}" @selected((string)($ratingFilter ?? 'all') === (string)$r)>{{ $r }} Star{{ $r === 1 ? '' : 's' }}</option>
+                @endfor
+            </select>
+            <button type="button" class="seller-reviews-dropdown-trigger" data-sari-review-trigger aria-haspopup="listbox" aria-expanded="false" hidden>
+                <span data-sari-review-label>All Ratings</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="seller-reviews-dropdown-menu" role="listbox" aria-label="Star rating" data-sari-review-menu hidden></div>
+        </div>
+        <div class="seller-reviews-dropdown" data-sari-review-dropdown>
+            <select class="seller-reviews-native" name="reply" aria-label="Filter by reply status" data-sari-review-native>
+                <option value="all" @selected(($replyFilter ?? 'all') === 'all')>All Replies</option>
+                <option value="pending" @selected(($replyFilter ?? 'all') === 'pending')>Needs Reply</option>
+                <option value="replied" @selected(($replyFilter ?? 'all') === 'replied')>Replied</option>
+            </select>
+            <button type="button" class="seller-reviews-dropdown-trigger" data-sari-review-trigger aria-haspopup="listbox" aria-expanded="false" hidden>
+                <span data-sari-review-label>All Replies</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="seller-reviews-dropdown-menu" role="listbox" aria-label="Reply status" data-sari-review-menu hidden></div>
+        </div>
+        <button type="submit" class="seller-reviews-filter-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>Apply Filter</button>
+        <a class="seller-reviews-reset" href="{{ route('seller.reviews-center.index') }}">Reset</a>
+    </form>
+
     <section class="seller-reviews-feed">
 
         <div class="seller-reviews-feed-head">
@@ -1746,14 +401,7 @@
                 </div>
 
             </div>
-
-
-
-            <span class="seller-reviews-count">
-
-                {{ number_format($reviews->total()) }} reviews
-
-            </span>
+            <span class="seller-reviews-results">{{ number_format($reviews->total()) }} {{ $reviews->total() === 1 ? 'review' : 'reviews' }}</span>
 
         </div>
 
@@ -1886,19 +534,19 @@
                         </p>
 
                         @if(!empty($review->image_paths))
-                            <div style="display:grid;grid-template-columns:repeat(5,minmax(0,72px));gap:8px;margin-top:12px;" aria-label="Buyer review photos">
+                            <div class="seller-review-photos" aria-label="Buyer review photos">
                                 @foreach(array_slice((array) $review->image_paths, 0, 5) as $reviewImagePath)
                                     <a
                                         href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reviewImagePath) }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        style="display:block;aspect-ratio:1;overflow:hidden;border:1px solid #e1e5e9;border-radius:10px;background:#f3f5f6;"
+                                        class="seller-review-photo"
                                     >
                                         <img
                                             src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($reviewImagePath) }}"
                                             alt="Buyer review photo"
                                             loading="lazy"
-                                            style="width:100%;height:100%;object-fit:cover;"
+                                            
                                         >
                                     </a>
                                 @endforeach
@@ -2013,11 +661,11 @@
 
 
 
-                        <div class="seller-reviews-empty-title">No Buyer reviews yet</div>
+                        <div class="seller-reviews-empty-title">{{ ($search ?? '') !== '' || ($ratingFilter ?? 'all') !== 'all' || ($replyFilter ?? 'all') !== 'all' ? 'No matching reviews' : 'No Buyer reviews yet' }}</div>
 
                         <div class="seller-reviews-empty-copy">
 
-                            Verified product feedback will appear here after Buyers submit reviews.
+                            {{ ($search ?? '') !== '' || ($ratingFilter ?? 'all') !== 'all' || ($replyFilter ?? 'all') !== 'all' ? 'Try a different search or reset the filters.' : 'Verified product feedback will appear here after Buyers submit reviews.' }}
 
                         </div>
 
@@ -2031,18 +679,105 @@
 
 
 
-        @if($reviews->hasPages())
-
+        @if($reviews->total() > 0)
             <div class="seller-reviews-pagination">
-
-                {{ $reviews->links() }}
-
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+                    <span class="seller-reviews-results">Showing {{ $reviews->firstItem() }}–{{ $reviews->lastItem() }} of {{ $reviews->total() }} reviews</span>
+                    @if($reviews->hasPages())
+                        {{ $reviews->links() }}
+                    @endif
+                </div>
             </div>
-
         @endif
+
 
     </section>
 
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+(() => {
+    const root = document.querySelector('.seller-reviews-page');
+    if (!root) return;
+    // Self-contained enhancement: native selects remain functional without JS.
+    const menus = [...root.querySelectorAll('[data-sari-review-dropdown]')];
+    if (root.dataset.sariReviewsFiltersReady === '1') return;
+    root.dataset.sariReviewsFiltersReady = '1';
+    const closeAll = (except = null) => menus.forEach(el => {
+        if (el === except) return;
+        const menu = el.querySelector('[data-sari-review-menu]');
+        const trigger = el.querySelector('[data-sari-review-trigger]');
+        if (menu) menu.hidden = true;
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+    menus.forEach(el => {
+        const select = el.querySelector('[data-sari-review-native]');
+        const trigger = el.querySelector('[data-sari-review-trigger]');
+        const menu = el.querySelector('[data-sari-review-menu]');
+        const label = el.querySelector('[data-sari-review-label]');
+        if (!select || !trigger || !menu || !label) return;
+        const options = [...select.options];
+        const sync = () => {
+            label.textContent = select.selectedOptions[0]?.textContent?.trim() || '';
+            menu.querySelectorAll('[data-review-value]').forEach(button => {
+                button.setAttribute('aria-selected', String(button.dataset.reviewValue === select.value));
+            });
+        };
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'seller-reviews-dropdown-option';
+            btn.setAttribute('role', 'option');
+            btn.dataset.reviewValue = option.value;
+            btn.textContent = option.textContent.trim();
+            btn.addEventListener('click', () => {
+                select.value = option.value;
+                sync();
+                menu.hidden = true;
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+            });
+            menu.appendChild(btn);
+        });
+        trigger.hidden = false;
+        el.dataset.enhanced = 'true';
+        sync();
+        trigger.addEventListener('click', () => {
+            const open = menu.hidden;
+            closeAll(el);
+            menu.hidden = !open;
+            trigger.setAttribute('aria-expanded', String(open));
+        });
+        trigger.addEventListener('keydown', event => {
+            if (!['ArrowDown','ArrowUp'].includes(event.key)) return;
+            event.preventDefault();
+            menu.hidden = false;
+            trigger.setAttribute('aria-expanded', 'true');
+            const items = [...menu.querySelectorAll('button')];
+            const current = Math.max(0,items.findIndex(x => x.dataset.reviewValue === select.value));
+            items[event.key === 'ArrowDown' ? Math.min(items.length - 1,current + 1) : Math.max(0,current - 1)]?.focus();
+        });
+        menu.addEventListener('keydown', event => {
+            const items = [...menu.querySelectorAll('button')];
+            const index = items.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                items[(index + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length]?.focus();
+            }
+        });
+    });
+    document.addEventListener('pointerdown', event => {
+        if (!menus.some(el => el.contains(event.target))) closeAll();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        const opened = menus.find(el => !el.querySelector('[data-sari-review-menu]')?.hidden);
+        if (opened) { closeAll(); opened.querySelector('[data-sari-review-trigger]')?.focus(); }
+    });
+})();
+</script>
+@endpush
+

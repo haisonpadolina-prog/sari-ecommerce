@@ -638,6 +638,8 @@
 
 @section('content')
 <div class="rm-page sari-logistics-ui">
+    {{-- SARI_COD_CUSTODY_POLICY_V1 --}}
+    @include('finance.partials.cod-overdue-banner')
     <section class="rm-header">
         <p class="rm-eyebrow">Rider Operations</p>
         <h1 class="rm-title">Manage <span class="rm-title-accent">Riders</span></h1>

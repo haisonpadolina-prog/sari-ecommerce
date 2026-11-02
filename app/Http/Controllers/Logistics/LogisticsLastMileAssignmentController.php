@@ -268,6 +268,29 @@ class LogisticsLastMileAssignmentController extends Controller
                 )
             );
 
+        /*
+        | SARI-MULTIPARCEL-BARANGAY-V2
+        | Riders with exactly one NOT-STARTED batch may receive extra parcels
+        | for that batch's existing destination hub + barangay. A Rider on
+        | the road, on pickup, or with conflicting assignments stays busy.
+        | The actual POST authorization is rechecked under transaction locks.
+        */
+        $allActiveBatchRows = DB::table('last_mile_assignments')
+            ->whereIn('status', ['assigned', 'out_for_delivery'])
+            ->whereIn('courier_account_id', $riders->modelKeys())
+            ->get(['courier_account_id', 'destination_facility_id', 'delivery_area', 'status']);
+        $mergeableRiderAreaKeys = $allActiveBatchRows
+            ->groupBy('courier_account_id')
+            ->filter(fn ($rows) => $rows->count() === 1 && $rows->first()->status === 'assigned')
+            ->mapWithKeys(function ($rows, $riderId) use ($riders, $busyPickupEmails) {
+                $rider = $riders->firstWhere('id', (int) $riderId);
+                if (! $rider || $busyPickupEmails->contains(strtolower(trim((string) $rider->email)))) {
+                    return [];
+                }
+                $row = $rows->first();
+                return [(int) $riderId => (int) $row->destination_facility_id.'|'.LogisticsServiceArea::barangay($row->delivery_area)];
+            });
+
         $busyRiderIds = DB::table('last_mile_assignments')
             ->whereIn('status', [
                 'assigned',
@@ -298,7 +321,8 @@ class LogisticsLastMileAssignmentController extends Controller
                 'assignments',
                 'hubFacility',
                 'isHubOperator',
-                'busyRiderIds'
+                'busyRiderIds',
+                'mergeableRiderAreaKeys'
             )
         );
     }
@@ -667,23 +691,25 @@ class LogisticsLastMileAssignmentController extends Controller
                     ]);
                 }
 
-                $riderBusy =
-                    DB::table('last_mile_assignments')
-                        ->where(
-                            'courier_account_id',
-                            $rider->id
-                        )
-                        ->whereIn('status', [
-                            'assigned',
-                            'out_for_delivery',
-                        ])
-                        ->exists();
+                $activeBatches = DB::table('last_mile_assignments')
+                    ->where('courier_account_id', $rider->id)
+                    ->whereIn('status', ['assigned', 'out_for_delivery'])
+                    ->lockForUpdate()
+                    ->get(['id', 'assignment_code', 'status', 'destination_facility_id', 'delivery_area']);
 
-                if ($riderBusy) {
-                    throw ValidationException::withMessages([
-                        'rider_id' =>
-                            'This Rider already has an active last-mile batch.',
-                    ]);
+                $existingBatch = null;
+                if ($activeBatches->isNotEmpty()) {
+                    // Do not put parcels into a route that already left the hub.
+                    if ($activeBatches->count() !== 1
+                        || $activeBatches->first()->status !== 'assigned'
+                        || (int) $activeBatches->first()->destination_facility_id !== (int) $destinationFacility->id
+                        || LogisticsServiceArea::barangay($activeBatches->first()->delivery_area)
+                            !== LogisticsServiceArea::barangay($deliveryArea)) {
+                        throw ValidationException::withMessages([
+                            'rider_id' => 'This Rider has an active route or a batch for another hub/barangay. Choose a free local Rider.',
+                        ]);
+                    }
+                    $existingBatch = $activeBatches->first();
                 }
 
                 /*
@@ -692,34 +718,29 @@ class LogisticsLastMileAssignmentController extends Controller
                 |--------------------------------------------------------------------------
                 */
 
-                $assignmentCode =
-                    'LM-'
-                    .now()->format('Ymd-His')
-                    .'-'
-                    .strtoupper(bin2hex(random_bytes(3)));
-
-                $assignmentId =
+                if ($existingBatch) {
+                    // One Rider / one same-area batch: append new unique orders.
+                    // The already-assigned parcels are never overwritten.
+                    $assignmentId = (int) $existingBatch->id;
+                    $assignmentCode = (string) $existingBatch->assignment_code;
                     DB::table('last_mile_assignments')
+                        ->where('id', $assignmentId)
+                        ->update(['updated_at' => now()]);
+                } else {
+                    $assignmentCode = 'LM-'.now()->format('Ymd-His').'-'.strtoupper(bin2hex(random_bytes(3)));
+                    $assignmentId = DB::table('last_mile_assignments')
                         ->insertGetId([
                             'logistics_account_id' => $logistics->id,
-
-                            'destination_facility_id' =>
-                                $firstOrder->destination_facility_id,
-
+                            'destination_facility_id' => $firstOrder->destination_facility_id,
                             'courier_account_id' => $rider->id,
-
                             'assignment_code' => $assignmentCode,
-
                             'delivery_area' => $deliveryArea,
-
                             'status' => 'assigned',
-
                             'assigned_at' => now(),
-
                             'created_at' => now(),
-
                             'updated_at' => now(),
                         ]);
+                }
 
                 /*
                 |--------------------------------------------------------------------------
@@ -785,16 +806,17 @@ class LogisticsLastMileAssignmentController extends Controller
                     .(string) $rider->last_name
                 ) ?: 'SARI Rider';
 
-                $eventKey =
-                    'last_mile_assigned:assignment:'
-                    .$assignmentId;
+                // Newly appended parcels get a distinct event key; a repeated
+                // assignment-id event would otherwise be notification-deduped.
+                $eventKey = 'last_mile_assigned:assignment:'.$assignmentId
+                    .($existingBatch ? ':added:'.hash('sha256', $orderIds->implode(',')) : '');
 
                 $message =
                     'Last-Mile batch '
                     .$assignmentCode
                     .' containing '
                     .$orderIds->count()
-                    .' parcel(s) for '
+                    .' newly assigned parcel(s) for '
                     .$deliveryArea
                     .', '
                     .$firstOrder->destination_municipality
@@ -902,9 +924,9 @@ class LogisticsLastMileAssignmentController extends Controller
 
         return back()->with(
             'success',
-            'Last-mile Rider assigned successfully from '
+            'Last-mile parcels assigned to the local Rider successfully from '
                 .$location
-                .'.'
+                .'. The Rider can deliver all parcels in the same barangay batch.'
         );
     }
 

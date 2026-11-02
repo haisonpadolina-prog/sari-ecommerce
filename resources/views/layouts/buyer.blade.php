@@ -338,9 +338,9 @@
     {{-- Buyer shell visual layer: UI-only, modeled after the Seller shell. --}}
     <link rel="stylesheet" href="{{ asset('css/buyer/shell.css') }}?v=20261008-3">
     {{-- Compact Buyer toast design. No Vite manifest dependency. --}}
-    <link rel="stylesheet" href="{{ asset('css/buyer/sari-toast.css') }}?v=20261029-buyer-instant-sound-v4">
+    <link rel="stylesheet" href="{{ asset('css/buyer/sari-toast.css') }}?v=20261101-buyer-unified-alert-v8">
     {{-- Load the notification engine during document parsing; defer executes after HTML is ready. --}}
-    <script defer src="{{ asset('js/buyer/sari-toast.js') }}?v=20261029-buyer-instant-sound-v4" data-sounds-base="{{ asset('sounds/buyer') }}"></script>
+    <script defer src="{{ asset('js/buyer/sari-toast.js') }}?v=20261101-buyer-unified-alert-v8" data-sounds-base="{{ asset('sounds/buyer') }}"></script>
 </head>
 
 <body

@@ -11,6 +11,8 @@ use App\Services\Orders\MarketplaceOrderWorkflowService;
 use App\Services\Delivery\DeliveryRouteService;
 use App\Support\ParcelQrCode;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Illuminate\Http\Request;
 
@@ -125,6 +127,52 @@ class SellerOrderController extends Controller
         );
 
         return back()->with('success', 'Order is now being prepared.');
+    }
+
+    /**
+     * Prepare only a seller-owned set of New orders. The action is atomic:
+     * if any selected order is ineligible or changes concurrently, none are prepared.
+     */
+    public function prepareSelected(Request $request)
+    {
+        $seller = $this->seller($request);
+        $validated = $request->validate([
+            'order_ids' => ['required', 'array', 'min:1', 'max:100'],
+            'order_ids.*' => ['required', 'integer', 'min:1', 'distinct'],
+        ]);
+        $ids = array_map('intval', $validated['order_ids']);
+
+        DB::transaction(function () use ($seller, $ids) {
+            $orders = MarketplaceOrder::query()
+                ->where('seller_account_id', $seller->id)
+                ->whereIn('id', $ids)
+                ->orderBy('id')
+                ->lockForUpdate()
+                ->get();
+
+            // Do not expose or mutate another seller's orders, even when IDs were forged.
+            abort_unless($orders->count() === count($ids), 403);
+
+            if ($orders->contains(fn (MarketplaceOrder $order) => $order->status !== 'new')) {
+                throw ValidationException::withMessages([
+                    'order_ids' => 'All selected orders must have New status. Refresh and choose only New orders.',
+                ]);
+            }
+
+            foreach ($orders as $order) {
+                $this->workflow->transition(
+                    $order,
+                    'new',
+                    'preparing',
+                    'Order Preparation Started',
+                    'The Seller started preparing order ' . $order->order_number . '.',
+                    'both'
+                );
+            }
+        }, 3);
+
+        $count = count($ids);
+        return back()->with('success', $count . ' selected ' . ($count === 1 ? 'order is' : 'orders are') . ' now being prepared.');
     }
 
     public function readyForPickup(Request $request, MarketplaceOrder $order)

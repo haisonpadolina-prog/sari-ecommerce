@@ -96,17 +96,62 @@ final class LogisticsServiceArea
         CourierAccount $rider,
         object $destination
     ): bool {
-        return self::municipality($rider->municipality_name)
-                === self::municipality(
-                    $destination->destination_municipality
-                )
-            && self::normalize($rider->province_name)
-                === self::normalize(
-                    $destination->destination_province
-                )
-            && self::barangay($rider->barangay_name)
-                === self::barangay(
-                    $destination->barangay_name
-                );
+        $province = (string) ($rider->duty_province_name ?: $rider->province_name);
+        $municipality = (string) ($rider->duty_municipality_name ?: $rider->municipality_name);
+        $barangay = (string) ($rider->duty_barangay_name ?: $rider->barangay_name);
+
+        if (self::normalize($province) === '' || self::municipality($municipality) === '' || self::barangay($barangay) === '') {
+            return false;
+        }
+
+        return self::municipality($municipality)
+                === self::municipality($destination->destination_municipality ?? null)
+            && self::normalize($province)
+                === self::normalize($destination->destination_province ?? null)
+            && self::barangay($barangay)
+                === self::barangay($destination->barangay_name ?? null);
     }
+    /**
+     * Match the Seller's pickup barangay, city and province -- NOT the hub's.
+     * Hubs may serve neighboring cities, so hub coordinates cannot define pickup duty.
+     * Accept only parseable comma-delimited PH addresses; never invent a barangay.
+     */
+    public static function matchesPickupRider(
+        CourierAccount $rider,
+        ?string $pickupAddress
+    ): bool {
+        if (blank($pickupAddress)) {
+            return false;
+        }
+
+        $parts = array_values(array_filter(array_map('trim', explode(',', $pickupAddress)), fn ($part) => $part !== ''));
+        if ($parts && self::normalize(end($parts)) === 'philippines') {
+            array_pop($parts);
+        }
+        // Minimum: Barangay, municipality, province.
+        if (count($parts) < 3) {
+            return false;
+        }
+        $province = array_pop($parts);
+        $municipality = array_pop($parts);
+        $barangay = null;
+        foreach ($parts as $part) {
+            if (preg_match('/^(?:barangay|brgy\.?)\s+(.+)$/iu', $part, $matches)) {
+                $barangay = trim($matches[1]);
+                break;
+            }
+        }
+        // Standard PH address format: landmark, street, barangay, city, province.
+        $barangay ??= end($parts) ?: null;
+        if (self::barangay($barangay) === '' || self::municipality($municipality) === '' || self::normalize($province) === '') {
+            return false;
+        }
+
+        return self::matchesRider($rider, (object) [
+            'destination_province' => $province,
+            'destination_municipality' => $municipality,
+            'barangay_name' => $barangay,
+        ]);
+    }
+
 }

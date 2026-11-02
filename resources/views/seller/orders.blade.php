@@ -13,9 +13,9 @@
     }
 
     .seller-orders-page button,
-    .seller-orders-page input,
-    .seller-orders-page select,
-    .seller-orders-page a {
+.seller-orders-page input,
+.seller-orders-page select,
+.seller-orders-page a {
         font-family: inherit;
     }
 
@@ -34,39 +34,17 @@
         box-shadow: 0 12px 26px rgba(48, 37, 24, .045);
     }
 
-    .seller-order-modal-panel {
-        animation: sellerOrderModalIn .14s ease-out both;
-    }
+    
 
-    @keyframes sellerOrderModalIn {
-        from {
-            opacity: 0;
-            transform: translateY(5px) scale(.995);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-    }
+    
 
-    .seller-order-progress {
-        background: linear-gradient(90deg, #d59618, #e4ae3f);
-    }
+    
 
-    .seller-order-scrollbar {
-        scrollbar-width: thin;
-        scrollbar-color: #d8cdbf transparent;
-    }
+    
 
-    .seller-order-scrollbar::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
+    
 
-    .seller-order-scrollbar::-webkit-scrollbar-thumb {
-        background: #d8cdbf;
-        border-radius: 999px;
-    }
+    
 
 
     .seller-order-image-frame {
@@ -86,8 +64,7 @@
 .seller-orders-content {
     display: block !important;
 }
-@media (prefers-reduced-motion: reduce) {
-    .seller-order-modal-panel,
+@media (prefers-reduced-motion: reduce)  {
     .seller-order-row {
         animation: none !important;
         transition: none !important;
@@ -285,115 +262,50 @@
 }
 
 /* Order detail modal: full two-row workspace fits a normal laptop viewport. */
-#sellerOrderDetailModal {
-    padding: 10px !important;
-}
 
-.seller-order-modal-panel {
-    width: min(1040px, calc(100vw - 20px)) !important;
-    max-width: 1040px !important;
-    height: min(720px, calc(100vh - 20px));
-    max-height: calc(100vh - 20px) !important;
-    display: flex;
-    flex-direction: column;
-    border-radius: 17px !important;
-}
 
-.seller-order-modal-panel > div:first-child {
-    flex: 0 0 auto;
-    padding: 11px 14px !important;
-}
 
-.seller-order-modal-panel > div:first-child > div > span {
-    width: 37px !important;
-    height: 37px !important;
-    border-radius: 10px !important;
-}
 
-.seller-order-modal-panel > div:first-child h3 {
-    font-size: 15px !important;
-}
 
-.seller-order-modal-panel > div:first-child [data-close-order-modal] {
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 9px !important;
-}
 
-.seller-order-modal-scroll {
-    flex: 1 1 auto;
-    min-height: 0;
-    max-height: none !important;
-    overflow: hidden !important;
-}
 
-.seller-order-modal-grid {
-    height: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: 9px !important;
-    padding: 10px !important;
-}
 
-.seller-order-modal-card {
-    min-height: 0 !important;
-    overflow: hidden;
-    border-radius: 13px !important;
-    padding: 11px !important;
-}
 
-.seller-order-modal-card > div:first-child span.grid {
-    width: 31px !important;
-    height: 31px !important;
-    border-radius: 9px !important;
-}
 
-.seller-order-modal-card h4 {
-    font-size: 9.5px !important;
-}
 
-.seller-order-modal-card .mt-4 {
-    margin-top: 10px !important;
-}
 
-.seller-order-modal-card .space-y-4 > :not([hidden]) ~ :not([hidden]) {
-    margin-top: 10px !important;
-}
 
-.seller-order-modal-card .space-y-3 > :not([hidden]) ~ :not([hidden]) {
-    margin-top: 8px !important;
-}
 
-.seller-order-modal-card:first-child .seller-order-scrollbar {
-    max-height: none !important;
-    min-height: 0;
-    overflow-y: auto !important;
-}
 
-.seller-order-modal-card:first-child .seller-order-image-frame {
-    width: 48px !important;
-    height: 48px !important;
-}
 
-.seller-order-modal-panel > div:last-child {
-    flex: 0 0 auto;
-    padding: 9px 14px !important;
-}
 
-.seller-order-modal-panel > div:last-child [data-close-order-modal] {
-    height: 36px !important;
-    min-width: 104px !important;
-    border-radius: 9px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Mid-size desktop: keep the table dense enough to avoid horizontal overflow. */
-@media (min-width: 1024px) and (max-width: 1279px) {
+@media (min-width: 1024px) and (max-width: 1279px)  {
     .seller-orders-page {
         max-width: 100% !important;
     }
 
     .seller-orders-table-head,
-    .seller-order-grid {
+.seller-order-grid {
         grid-template-columns: minmax(185px, 1.4fr) minmax(115px, .8fr) 102px 82px 104px 40px !important;
         gap: 7px !important;
     }
@@ -403,13 +315,11 @@
         height: 52px !important;
     }
 
-    .seller-order-modal-panel {
-        width: calc(100vw - 18px) !important;
-    }
+    
 }
 
 /* Smaller heights: shave vertical chrome before allowing any modal scroll. */
-@media (min-width: 1024px) and (max-height: 760px) {
+@media (min-width: 1024px) and (max-height: 760px)  {
     .seller-orders-header-icon {
         width: 38px !important;
         height: 38px !important;
@@ -429,23 +339,15 @@
         font-size: 22px !important;
     }
 
-    .seller-order-modal-panel {
-        height: calc(100vh - 14px);
-        max-height: calc(100vh - 14px) !important;
-    }
+    
 
-    .seller-order-modal-grid {
-        gap: 7px !important;
-        padding: 8px !important;
-    }
+    
 
-    .seller-order-modal-card {
-        padding: 9px !important;
-    }
+    
 }
 
 /* Tablet/mobile remains naturally scrollable and stacked. */
-@media (max-width: 1023px) {
+@media (max-width: 1023px)  {
     .seller-orders-title {
         font-size: clamp(22px, 5vw, 28px) !important;
     }
@@ -464,28 +366,16 @@
         padding: 12px !important;
     }
 
-    .seller-order-modal-panel {
-        height: auto;
-        max-height: calc(100vh - 16px) !important;
-    }
+    
 
-    .seller-order-modal-scroll {
-        overflow-y: auto !important;
-    }
+    
 
-    .seller-order-modal-grid {
-        height: auto;
-        grid-template-columns: 1fr !important;
-        grid-template-rows: none;
-        padding: 10px !important;
-    }
+    
 
-    .seller-order-modal-card {
-        overflow: visible;
-    }
+    
 }
 
-@media (max-width: 639px) {
+@media (max-width: 639px)  {
     .seller-orders-header {
         align-items: stretch !important;
     }
@@ -514,7 +404,7 @@
     }
 
     #sellerOrderSearch,
-    #sellerOrderStatusFilter {
+#sellerOrderStatusFilter {
         width: 100% !important;
         min-width: 0 !important;
     }
@@ -966,18 +856,16 @@
     height: 15px !important;
 }
 
-.seller-order-progress {
-    background: #d99400 !important;
-}
+
 
 #sellerOrderNoResults {
     border-top: 0 !important;
     padding: 34px 20px !important;
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
+@media (min-width: 1024px) and (max-width: 1279px)  {
     .seller-orders-table-head,
-    .seller-order-grid {
+.seller-order-grid {
         grid-template-columns: 28px minmax(185px, 1.35fr) minmax(120px, .82fr) 98px 78px 96px 40px !important;
         gap: 7px !important;
         padding-left: 11px !important;
@@ -990,7 +878,7 @@
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px)  {
     .seller-orders-header {
         align-items: flex-start;
     }
@@ -1032,7 +920,7 @@
     }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 639px)  {
     .seller-orders-header {
         flex-direction: column;
         gap: 14px !important;
@@ -1600,7 +1488,7 @@
 }
 
 /* Laptop parity with the reference's compact height tuning. */
-@media (max-height: 850px) and (min-width: 900px) {
+@media (max-height: 850px) and (min-width: 900px)  {
     .seller-orders-header {
         margin-bottom: 14px !important;
     }
@@ -1630,9 +1518,9 @@
     }
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
+@media (min-width: 1024px) and (max-width: 1279px)  {
     .seller-orders-table-head,
-    .seller-order-grid {
+.seller-order-grid {
         grid-template-columns: 30px minmax(185px, 1.3fr) minmax(118px, .78fr) 96px 76px 94px 36px !important;
         gap: 6px !important;
         padding-left: 10px !important;
@@ -1645,7 +1533,7 @@
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px)  {
     .seller-orders-header {
         align-items: flex-start !important;
     }
@@ -1687,7 +1575,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px)  {
     .seller-orders-header {
         flex-direction: column !important;
         gap: 12px !important;
@@ -1735,9 +1623,9 @@
     }
 
     #sellerOrderSearch,
-    #sellerOrderStatusFilter,
-    .seller-orders-apply-filter,
-    .seller-orders-reset-filter {
+#sellerOrderStatusFilter,
+.seller-orders-apply-filter,
+.seller-orders-reset-filter {
         height: 42px !important;
         min-height: 42px !important;
         font-size: 10px !important;
@@ -1758,715 +1646,159 @@
    Clean marketplace-inspired hierarchy: products + buyer data on
    the left, summary + fulfillment + next action on the right.
    ============================================================ */
-#sellerOrderDetailModal {
-    padding: 14px !important;
-}
-
-.seller-order-workflow-panel {
-    width: min(1120px, calc(100vw - 28px)) !important;
-    max-width: 1120px !important;
-    max-height: calc(100vh - 28px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    border: 1px solid #e6ded3 !important;
-    border-radius: 16px !important;
-    background: #fff !important;
-    box-shadow: 0 24px 70px rgba(35, 27, 19, .18) !important;
-}
-
-.seller-order-workflow-header {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    min-height: 68px;
-    border-bottom: 1px solid #ece6de;
-    background: #fff;
-    padding: 11px 14px;
-}
-
-.seller-order-workflow-header-main {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    gap: 11px;
-}
-
-.seller-order-workflow-header-icon,
-.seller-order-workflow-section-icon {
-    display: grid;
-    place-items: center;
-    border: 1px solid #eadfc9;
-    background: #fff8eb;
-    color: #b77c18;
-}
-
-.seller-order-workflow-header-icon {
-    width: 38px;
-    height: 38px;
-    flex: 0 0 38px;
-    border-radius: 10px;
-}
-
-.seller-order-workflow-header-icon svg {
-    width: 16px;
-    height: 16px;
-}
-
-.seller-order-workflow-title-row {
-    display: flex;
-    min-width: 0;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-}
-
-.seller-order-workflow-title-row h3 {
-    margin: 0;
-    color: #211c17;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -.025em;
-}
-
-.seller-order-workflow-status {
-    display: inline-flex;
-    min-height: 23px;
-    align-items: center;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 999px;
-    padding: 0 8px;
-    font-size: 7.5px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.seller-order-workflow-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    margin-top: 5px;
-    color: #8c8378;
-    font-size: 7.5px;
-    line-height: 1.45;
-}
-
-.seller-order-workflow-meta strong {
-    color: #b77911;
-    font-weight: 700;
-}
-
-.seller-order-workflow-close {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    flex: 0 0 34px;
-    place-items: center;
-    border: 1px solid #e5ddd2;
-    border-radius: 9px;
-    background: #fff;
-    color: #71685f;
-    transition: border-color .14s ease, background-color .14s ease, color .14s ease;
-}
-
-.seller-order-workflow-close:hover,
-.seller-order-workflow-close:focus-visible {
-    outline: none;
-    border-color: #d6c7b4;
-    background: #faf8f4;
-    color: #2f2923;
-}
-
-.seller-order-workflow-close svg {
-    width: 14px;
-    height: 14px;
-}
-
-.seller-order-workflow-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
-    flex: 1 1 auto;
-    min-height: 0;
-    gap: 11px;
-    overflow: hidden;
-    background: #f8f7f4;
-    padding: 11px;
-}
-
-.seller-order-workflow-main {
-    display: flex;
-    min-width: 0;
-    min-height: 0;
-    flex-direction: column;
-    gap: 11px;
-}
-
-.seller-order-workflow-card {
-    min-width: 0;
-    border: 1px solid #e7e1d9;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(61, 43, 22, .025);
-}
-
-.seller-order-workflow-products {
-    display: flex;
-    min-height: 0;
-    flex: 1 1 auto;
-    flex-direction: column;
-    padding: 12px;
-}
-
-.seller-order-workflow-section-head,
-.seller-order-workflow-action-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.seller-order-workflow-section-title {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    gap: 9px;
-}
-
-.seller-order-workflow-section-icon {
-    width: 29px;
-    height: 29px;
-    flex: 0 0 29px;
-    border-radius: 8px;
-}
-
-.seller-order-workflow-section-icon svg {
-    width: 13px;
-    height: 13px;
-}
-
-.seller-order-workflow-section-title h4,
-.seller-order-workflow-action-heading h4 {
-    margin: 0;
-    color: #342e28;
-    font-size: 9.5px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.seller-order-workflow-section-title p {
-    margin: 2px 0 0;
-    color: #978e83;
-    font-size: 6.8px;
-    line-height: 1.35;
-}
-
-.seller-order-workflow-product-list {
-    display: grid;
-    min-height: 0;
-    max-height: 300px;
-    gap: 7px;
-    margin-top: 10px;
-    overflow-y: auto;
-    padding-right: 3px;
-}
-
-.seller-order-workflow-product-row {
-    display: grid;
-    grid-template-columns: 54px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 10px;
-    min-height: 68px;
-    border: 1px solid #ece5dd;
-    border-radius: 10px;
-    background: #fdfcf9;
-    padding: 7px 9px 7px 7px;
-}
-
-.seller-order-workflow-product-image {
-    position: relative;
-    width: 54px;
-    height: 54px;
-    overflow: hidden;
-    border: 1px solid #e8e1d8;
-    border-radius: 9px;
-    background: #f4f1ec;
-}
-
-.seller-order-workflow-image-fallback {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    place-items: center;
-    color: #aaa197;
-}
-
-.seller-order-workflow-image-fallback svg {
-    width: 16px;
-    height: 16px;
-}
-
-.seller-order-workflow-product-copy {
-    min-width: 0;
-}
-
-.seller-order-workflow-product-name {
-    overflow: hidden;
-    margin: 0;
-    color: #3b342e;
-    font-size: 8.5px;
-    font-weight: 650;
-    line-height: 1.35;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.seller-order-workflow-product-meta {
-    overflow: hidden;
-    margin: 4px 0 0;
-    color: #968d82;
-    font-size: 7px;
-    line-height: 1.35;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.seller-order-workflow-product-price {
-    margin: 0;
-    color: #ad7410;
-    font-size: 8px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.seller-order-workflow-empty {
-    border: 1px dashed #ded6cc;
-    border-radius: 10px;
-    background: #fcfbf8;
-    padding: 22px;
-    color: #91887d;
-    font-size: 8px;
-    text-align: center;
-}
-
-.seller-order-workflow-info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 11px;
-}
-
-.seller-order-workflow-info-card {
-    padding: 12px;
-}
-
-.seller-order-workflow-details {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 12px;
-    margin: 12px 0 0;
-}
-
-.seller-order-workflow-details div {
-    min-width: 0;
-}
-
-.seller-order-workflow-detail-wide {
-    grid-column: 1 / -1;
-}
-
-.seller-order-workflow-details dt {
-    margin: 0;
-    color: #a0978d;
-    font-size: 6.2px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    line-height: 1.3;
-    text-transform: uppercase;
-}
-
-.seller-order-workflow-details dd {
-    margin: 4px 0 0;
-    color: #514a42;
-    font-size: 7.8px;
-    font-weight: 500;
-    line-height: 1.5;
-}
-
-.seller-order-workflow-sidebar {
-    display: grid;
-    min-width: 0;
-    min-height: 0;
-    align-content: start;
-    gap: 11px;
-    overflow-y: auto;
-    padding-right: 2px;
-}
-
-.seller-order-workflow-summary,
-.seller-order-workflow-progress-card,
-.seller-order-workflow-actions {
-    padding: 12px;
-}
-
-.seller-order-workflow-money-lines {
-    display: grid;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.seller-order-workflow-money-lines div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    color: #837a70;
-    font-size: 7.5px;
-}
-
-.seller-order-workflow-money-lines strong {
-    color: #4a433c;
-    font-size: 7.8px;
-    font-weight: 650;
-}
-
-.seller-order-workflow-total {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 10px;
-    border-top: 1px solid #eee8df;
-    padding-top: 10px;
-}
-
-.seller-order-workflow-total span {
-    color: #3d3731;
-    font-size: 8.5px;
-    font-weight: 700;
-}
-
-.seller-order-workflow-total strong {
-    color: #d48e05;
-    font-size: 17px;
-    font-weight: 750;
-    line-height: 1;
-    letter-spacing: -.035em;
-}
-
-.seller-order-workflow-progress-percent {
-    color: #a66f10;
-    font-size: 8px;
-    font-weight: 700;
-}
-
-.seller-order-workflow-progress-bar {
-    height: 5px;
-    overflow: hidden;
-    margin-top: 11px;
-    border-radius: 999px;
-    background: #ece7df;
-}
-
-.seller-order-workflow-progress-bar span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: #d99500;
-}
-
-.seller-order-workflow-timeline {
-    display: grid;
-    gap: 0;
-    margin: 11px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.seller-order-workflow-timeline li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
-    min-height: 31px;
-    align-items: start;
-    gap: 7px;
-    color: #9b9288;
-    font-size: 7.2px;
-    font-weight: 500;
-}
-
-.seller-order-workflow-timeline li:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: 10px;
-    top: 18px;
-    bottom: -2px;
-    width: 1px;
-    background: #e4ddd5;
-}
-
-.seller-order-workflow-timeline li.is-complete {
-    color: #62584d;
-}
-
-.seller-order-workflow-timeline li.is-complete:not(:last-child)::after {
-    background: #e1bd6b;
-}
-
-.seller-order-workflow-timeline-dot {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    width: 21px;
-    height: 21px;
-    place-items: center;
-    border: 1px solid #e4ddd5;
-    border-radius: 999px;
-    background: #faf8f5;
-    color: #aaa198;
-}
-
-.seller-order-workflow-timeline li.is-complete .seller-order-workflow-timeline-dot {
-    border-color: #e1bd6b;
-    background: #fff8e9;
-    color: #a97416;
-}
-
-.seller-order-workflow-timeline-dot svg {
-    width: 10px;
-    height: 10px;
-}
-
-.seller-order-workflow-timeline-dot > span {
-    width: 4px;
-    height: 4px;
-    border-radius: 999px;
-    background: currentColor;
-}
-
-.seller-order-workflow-action-heading {
-    align-items: flex-start;
-}
-
-.seller-order-workflow-action-heading > div > p {
-    margin: 0;
-    color: #9a7b43;
-    font-size: 6.2px;
-    font-weight: 700;
-    letter-spacing: .1em;
-    line-height: 1.2;
-    text-transform: uppercase;
-}
-
-.seller-order-workflow-action-heading h4 {
-    margin-top: 4px;
-    font-size: 10px;
-}
-
-.seller-order-workflow-primary-action {
-    display: inline-flex;
-    width: 100%;
-    min-height: 39px;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    margin-top: 11px;
-    border: 1px solid #d99500;
-    border-radius: 9px;
-    background: #d99500;
-    padding: 0 12px;
-    color: #fff;
-    font-size: 8px;
-    font-weight: 700;
-    box-shadow: 0 6px 16px rgba(217, 149, 0, .14);
-    transition: background-color .14s ease, border-color .14s ease, transform .14s ease;
-}
-
-.seller-order-workflow-primary-action:hover,
-.seller-order-workflow-primary-action:focus-visible {
-    outline: none;
-    transform: translateY(-1px);
-    border-color: #bd8205;
-    background: #bd8205;
-}
-
-.seller-order-workflow-primary-action--success {
-    border-color: #56856a;
-    background: #56856a;
-    box-shadow: 0 6px 16px rgba(86, 133, 106, .13);
-}
-
-.seller-order-workflow-primary-action--success:hover,
-.seller-order-workflow-primary-action--success:focus-visible {
-    border-color: #467257;
-    background: #467257;
-}
-
-.seller-order-workflow-primary-action svg,
-.seller-order-workflow-secondary-actions svg {
-    width: 13px;
-    height: 13px;
-}
-
-.seller-order-workflow-passive-action {
-    margin-top: 11px;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 9px;
-    padding: 10px 12px;
-    font-size: 7.8px;
-    font-weight: 700;
-    text-align: center;
-}
-
-.seller-order-workflow-secondary-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 7px;
-}
-
-.seller-order-workflow-secondary-actions a {
-    display: inline-flex;
-    min-height: 35px;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    border: 1px solid #e3dbd0;
-    border-radius: 8px;
-    background: #fff;
-    padding: 0 9px;
-    color: #675f56;
-    font-size: 7.2px;
-    font-weight: 650;
-    text-decoration: none;
-    transition: border-color .14s ease, background-color .14s ease, color .14s ease;
-}
-
-.seller-order-workflow-secondary-actions a:hover,
-.seller-order-workflow-secondary-actions a:focus-visible {
-    outline: none;
-    border-color: #d6bf95;
-    background: #fffaf1;
-    color: #9a6812;
-}
-
-@media (max-height: 760px) and (min-width: 1024px) {
-    .seller-order-workflow-header {
-        min-height: 60px;
-        padding-top: 9px;
-        padding-bottom: 9px;
-    }
-
-    .seller-order-workflow-body {
-        gap: 8px;
-        padding: 8px;
-    }
-
-    .seller-order-workflow-main,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-info-grid {
-        gap: 8px;
-    }
-
-    .seller-order-workflow-product-list {
-        max-height: 222px;
-    }
-
-    .seller-order-workflow-product-row {
-        min-height: 60px;
-    }
-
-    .seller-order-workflow-product-image {
-        width: 46px;
-        height: 46px;
-    }
-
-    .seller-order-workflow-product-row {
-        grid-template-columns: 46px minmax(0, 1fr) auto;
-    }
-
-    .seller-order-workflow-products,
-    .seller-order-workflow-info-card,
-    .seller-order-workflow-summary,
-    .seller-order-workflow-progress-card,
-    .seller-order-workflow-actions {
-        padding: 10px;
-    }
-
-    .seller-order-workflow-timeline li {
-        min-height: 27px;
-    }
-}
-
-@media (max-width: 1023px) {
-    #sellerOrderDetailModal {
-        align-items: flex-start !important;
-        overflow-y: auto;
-        padding: 8px !important;
-    }
-
-    .seller-order-workflow-panel {
-        width: 100% !important;
-        max-height: none !important;
-        overflow: visible !important;
-    }
-
-    .seller-order-workflow-body {
-        grid-template-columns: 1fr;
-        overflow: visible;
-    }
-
-    .seller-order-workflow-main,
-    .seller-order-workflow-sidebar {
-        overflow: visible;
-    }
-
-    .seller-order-workflow-product-list {
-        max-height: 300px;
-    }
-
-    .seller-order-workflow-sidebar {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .seller-order-workflow-actions {
-        grid-column: 1 / -1;
-    }
-}
-
-@media (max-width: 639px) {
-    .seller-order-workflow-header {
-        align-items: flex-start;
-    }
-
-    .seller-order-workflow-info-grid,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-secondary-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .seller-order-workflow-product-row {
-        grid-template-columns: 48px minmax(0, 1fr);
-    }
-
-    .seller-order-workflow-product-image {
-        width: 48px;
-        height: 48px;
-    }
-
-    .seller-order-workflow-product-price {
-        grid-column: 2;
-        margin-top: -2px;
-    }
-
-    .seller-order-workflow-meta {
-        gap: 4px;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ============================================================
@@ -2487,521 +1819,133 @@
     --sari-order-canvas: #faf8f4;
 }
 
-#sellerOrderDetailModal {
-    padding: 12px !important;
-    background: rgba(27, 22, 16, .34) !important;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-}
-
-.seller-order-workflow-panel {
-    width: min(1216px, calc(100vw - 24px)) !important;
-    max-width: 1216px !important;
-    height: min(804px, calc(100vh - 24px)) !important;
-    max-height: calc(100vh - 24px) !important;
-    border: 1px solid var(--sari-order-border) !important;
-    border-radius: 17px !important;
-    background: var(--sari-order-surface) !important;
-    box-shadow: 0 30px 90px rgba(31, 24, 17, .20) !important;
-}
-
-.seller-order-workflow-header {
-    min-height: 88px !important;
-    gap: 18px !important;
-    border-bottom-color: #eee7de !important;
-    padding: 15px 22px !important;
-}
-
-.seller-order-workflow-header-main {
-    gap: 16px !important;
-}
-
-.seller-order-workflow-header-icon {
-    width: 48px !important;
-    height: 48px !important;
-    flex-basis: 48px !important;
-    border-color: var(--sari-order-gold-border) !important;
-    border-radius: 12px !important;
-    background: var(--sari-order-gold-soft) !important;
-    color: var(--sari-order-gold) !important;
-}
-
-.seller-order-workflow-header-icon svg {
-    width: 19px !important;
-    height: 19px !important;
-}
-
-.seller-order-workflow-title-row {
-    gap: 10px !important;
-}
-
-.seller-order-workflow-title-row h3 {
-    color: #201b17 !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
-    letter-spacing: -.035em !important;
-}
-
-.seller-order-workflow-status {
-    min-height: 27px !important;
-    padding-inline: 10px !important;
-    font-size: 9px !important;
-}
-
-.seller-order-workflow-meta {
-    gap: 8px !important;
-    margin-top: 7px !important;
-    color: #8b8278 !important;
-    font-size: 9px !important;
-}
-
-.seller-order-workflow-meta strong {
-    color: var(--sari-order-gold) !important;
-    font-weight: 700 !important;
-}
-
-.seller-order-workflow-close {
-    width: 42px !important;
-    height: 42px !important;
-    flex-basis: 42px !important;
-    border-color: #e5ddd2 !important;
-    border-radius: 11px !important;
-    color: #655d54 !important;
-}
-
-.seller-order-workflow-close svg {
-    width: 17px !important;
-    height: 17px !important;
-}
-
-.seller-order-workflow-body {
-    grid-template-columns: minmax(0, 1.72fr) minmax(320px, .78fr) !important;
-    gap: 13px !important;
-    background: var(--sari-order-canvas) !important;
-    padding: 13px !important;
-}
-
-.seller-order-workflow-main,
-.seller-order-workflow-sidebar,
-.seller-order-workflow-info-grid {
-    gap: 13px !important;
-}
-
-.seller-order-workflow-card {
-    border-color: var(--sari-order-border) !important;
-    border-radius: 13px !important;
-    box-shadow: 0 3px 11px rgba(56, 42, 27, .035) !important;
-}
-
-.seller-order-workflow-products {
-    padding: 15px !important;
-}
-
-.seller-order-workflow-info-card,
-.seller-order-workflow-summary,
-.seller-order-workflow-progress-card,
-.seller-order-workflow-actions {
-    padding: 14px !important;
-}
-
-.seller-order-workflow-section-title {
-    gap: 10px !important;
-}
-
-.seller-order-workflow-section-icon,
-.seller-order-workflow-action-icon {
-    display: grid;
-    width: 34px !important;
-    height: 34px !important;
-    flex: 0 0 34px !important;
-    place-items: center;
-    border: 1px solid var(--sari-order-gold-border) !important;
-    border-radius: 9px !important;
-    background: var(--sari-order-gold-soft) !important;
-    color: var(--sari-order-gold) !important;
-}
-
-.seller-order-workflow-section-icon svg,
-.seller-order-workflow-action-icon svg {
-    width: 15px !important;
-    height: 15px !important;
-}
-
-.seller-order-workflow-section-title h4,
-.seller-order-workflow-action-heading h4 {
-    color: #37302a !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-}
-
-.seller-order-workflow-section-title p {
-    margin-top: 2px !important;
-    font-size: 7.5px !important;
-}
-
-.seller-order-workflow-product-list {
-    max-height: 325px !important;
-    gap: 9px !important;
-    margin-top: 13px !important;
-}
-
-.seller-order-workflow-product-row {
-    grid-template-columns: 64px minmax(0, 1fr) auto !important;
-    min-height: 84px !important;
-    gap: 13px !important;
-    border-color: #ebe1d4 !important;
-    border-radius: 12px !important;
-    background: #fffdfa !important;
-    padding: 9px 13px 9px 9px !important;
-}
-
-.seller-order-workflow-product-image {
-    width: 64px !important;
-    height: 64px !important;
-    border-radius: 10px !important;
-}
-
-.seller-order-workflow-product-name {
-    color: #332d27 !important;
-    font-size: 10px !important;
-    font-weight: 700 !important;
-}
-
-.seller-order-workflow-product-meta {
-    margin-top: 5px !important;
-    font-size: 8px !important;
-}
-
-.seller-order-workflow-product-price {
-    color: var(--sari-order-gold) !important;
-    font-size: 10px !important;
-    font-weight: 750 !important;
-}
-
-.seller-order-workflow-info-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-}
-
-.seller-order-workflow-details {
-    gap: 13px 16px !important;
-    margin-top: 14px !important;
-}
-
-.seller-order-workflow-details dt {
-    color: #9b9186 !important;
-    font-size: 6.9px !important;
-}
-
-.seller-order-workflow-details dd {
-    margin-top: 5px !important;
-    color: #4a433c !important;
-    font-size: 8.7px !important;
-    line-height: 1.55 !important;
-}
-
-.seller-order-workflow-sidebar {
-    gap: 11px !important;
-    padding-right: 0 !important;
-}
-
-.seller-order-workflow-money-lines {
-    gap: 9px !important;
-    margin-top: 13px !important;
-}
-
-.seller-order-workflow-money-lines div {
-    font-size: 8.5px !important;
-}
-
-.seller-order-workflow-money-lines strong {
-    font-size: 9px !important;
-}
-
-.seller-order-workflow-total {
-    margin-top: 12px !important;
-    padding-top: 12px !important;
-}
-
-.seller-order-workflow-total span {
-    font-size: 10px !important;
-}
-
-.seller-order-workflow-total strong {
-    color: var(--sari-order-gold) !important;
-    font-size: 22px !important;
-    font-weight: 800 !important;
-}
-
-.seller-order-workflow-progress-percent {
-    color: var(--sari-order-gold) !important;
-    font-size: 9.5px !important;
-}
-
-.seller-order-workflow-progress-bar {
-    height: 6px !important;
-    margin-top: 13px !important;
-    background: #ebe6de !important;
-}
-
-.seller-order-workflow-progress-bar span {
-    background: var(--sari-order-gold) !important;
-}
-
-.seller-order-workflow-timeline {
-    margin-top: 14px !important;
-}
-
-.seller-order-workflow-timeline li {
-    grid-template-columns: 29px minmax(0, 1fr) !important;
-    min-height: 35px !important;
-    gap: 9px !important;
-    font-size: 8.5px !important;
-}
-
-.seller-order-workflow-timeline li:not(:last-child)::after {
-    left: 12px !important;
-    top: 22px !important;
-    bottom: -1px !important;
-}
-
-.seller-order-workflow-timeline-dot {
-    width: 26px !important;
-    height: 26px !important;
-}
-
-.seller-order-workflow-timeline li.is-complete .seller-order-workflow-timeline-dot {
-    border-color: #e1b451 !important;
-    background: var(--sari-order-gold-soft) !important;
-    color: var(--sari-order-gold) !important;
-}
-
-.seller-order-workflow-action-heading {
-    display: grid !important;
-    grid-template-columns: 34px minmax(0, 1fr) !important;
-    align-items: start !important;
-    justify-content: initial !important;
-    gap: 10px !important;
-}
-
-.seller-order-workflow-action-heading > div > p {
-    color: #a26d0e !important;
-    font-size: 6.8px !important;
-    letter-spacing: .11em !important;
-}
-
-.seller-order-workflow-action-heading h4 {
-    margin-top: 4px !important;
-    font-size: 13px !important;
-    letter-spacing: -.02em !important;
-}
-
-.seller-order-workflow-action-heading small {
-    display: block;
-    margin-top: 4px;
-    color: #948a7e;
-    font-size: 7.6px;
-    font-weight: 400;
-    line-height: 1.45;
-}
-
-.seller-order-workflow-primary-action {
-    min-height: 46px !important;
-    gap: 8px !important;
-    margin-top: 14px !important;
-    border-color: var(--sari-order-gold) !important;
-    border-radius: 10px !important;
-    background: var(--sari-order-gold) !important;
-    padding: 0 16px !important;
-    font-size: 9.5px !important;
-    box-shadow: 0 8px 20px rgba(216, 146, 8, .17) !important;
-}
-
-.seller-order-workflow-primary-action:hover,
-.seller-order-workflow-primary-action:focus-visible {
-    border-color: var(--sari-order-gold-hover) !important;
-    background: var(--sari-order-gold-hover) !important;
-}
-
-.seller-order-workflow-primary-action--success {
-    border-color: #56856a !important;
-    background: #56856a !important;
-    box-shadow: 0 8px 20px rgba(86, 133, 106, .14) !important;
-}
-
-.seller-order-workflow-primary-action--success:hover,
-.seller-order-workflow-primary-action--success:focus-visible {
-    border-color: #467257 !important;
-    background: #467257 !important;
-}
-
-.seller-order-workflow-primary-action svg,
-.seller-order-workflow-secondary-actions svg {
-    width: 15px !important;
-    height: 15px !important;
-}
-
-.seller-order-workflow-secondary-actions {
-    gap: 8px !important;
-    margin-top: 9px !important;
-}
-
-.seller-order-workflow-secondary-actions a {
-    min-height: 42px !important;
-    gap: 7px !important;
-    border-color: #e2d8cb !important;
-    border-radius: 10px !important;
-    padding: 0 12px !important;
-    color: #625a51 !important;
-    font-size: 8.6px !important;
-    font-weight: 650 !important;
-}
-
-.seller-order-workflow-secondary-actions a:hover,
-.seller-order-workflow-secondary-actions a:focus-visible {
-    border-color: #d9bd83 !important;
-    background: var(--sari-order-gold-soft) !important;
-    color: #9a650b !important;
-}
-
-.seller-order-workflow-passive-action {
-    margin-top: 14px !important;
-    border-radius: 10px !important;
-    padding: 12px 14px !important;
-    font-size: 8.8px !important;
-}
-
-@media (max-height: 820px) and (min-width: 1024px) {
-    .seller-order-workflow-panel {
-        height: calc(100vh - 20px) !important;
-        max-height: calc(100vh - 20px) !important;
-    }
-
-    .seller-order-workflow-header {
-        min-height: 74px !important;
-        padding: 11px 17px !important;
-    }
-
-    .seller-order-workflow-header-icon {
-        width: 42px !important;
-        height: 42px !important;
-        flex-basis: 42px !important;
-    }
-
-    .seller-order-workflow-title-row h3 {
-        font-size: 20px !important;
-    }
-
-    .seller-order-workflow-body {
-        gap: 9px !important;
-        padding: 9px !important;
-    }
-
-    .seller-order-workflow-main,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-info-grid {
-        gap: 9px !important;
-    }
-
-    .seller-order-workflow-products,
-    .seller-order-workflow-info-card,
-    .seller-order-workflow-summary,
-    .seller-order-workflow-progress-card,
-    .seller-order-workflow-actions {
-        padding: 10px !important;
-    }
-
-    .seller-order-workflow-product-list {
-        max-height: 250px !important;
-        margin-top: 9px !important;
-    }
-
-    .seller-order-workflow-product-row {
-        grid-template-columns: 50px minmax(0, 1fr) auto !important;
-        min-height: 64px !important;
-        padding: 6px 9px 6px 6px !important;
-    }
-
-    .seller-order-workflow-product-image {
-        width: 50px !important;
-        height: 50px !important;
-    }
-
-    .seller-order-workflow-details {
-        gap: 8px 10px !important;
-        margin-top: 9px !important;
-    }
-
-    .seller-order-workflow-timeline {
-        margin-top: 8px !important;
-    }
-
-    .seller-order-workflow-timeline li {
-        min-height: 28px !important;
-    }
-
-    .seller-order-workflow-primary-action {
-        min-height: 40px !important;
-        margin-top: 9px !important;
-    }
-
-    .seller-order-workflow-secondary-actions a {
-        min-height: 37px !important;
-    }
-}
-
-@media (max-width: 1023px) {
-    .seller-order-workflow-panel {
-        height: auto !important;
-    }
-
-    .seller-order-workflow-body {
-        grid-template-columns: 1fr !important;
-    }
-
-    .seller-order-workflow-sidebar {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    .seller-order-workflow-actions {
-        grid-column: 1 / -1 !important;
-    }
-}
-
-@media (max-width: 639px) {
-    .seller-order-workflow-header {
-        min-height: 72px !important;
-        padding: 11px 12px !important;
-    }
-
-    .seller-order-workflow-header-icon {
-        width: 40px !important;
-        height: 40px !important;
-        flex-basis: 40px !important;
-    }
-
-    .seller-order-workflow-title-row h3 {
-        font-size: 18px !important;
-    }
-
-    .seller-order-workflow-info-grid,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-secondary-actions {
-        grid-template-columns: 1fr !important;
-    }
-
-    .seller-order-workflow-product-row {
-        grid-template-columns: 50px minmax(0, 1fr) !important;
-    }
-
-    .seller-order-workflow-product-image {
-        width: 50px !important;
-        height: 50px !important;
-    }
-
-    .seller-order-workflow-product-price {
-        grid-column: 2 !important;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ============================================================
    ORDER MANAGEMENT — COMPACT A4-LIKE FINAL PASS
@@ -3093,400 +2037,127 @@
 }
 
 /* Compact, document-like modal proportions. */
-#sellerOrderDetailModal {
-    padding: 10px !important;
-}
 
-.seller-order-workflow-panel {
-    width: min(1000px, calc(100vw - 20px)) !important;
-    max-width: 1000px !important;
-    height: auto !important;
-    max-height: calc(100vh - 20px) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 24px 72px rgba(31, 24, 17, .18) !important;
-}
 
-.seller-order-workflow-header {
-    min-height: 70px !important;
-    gap: 12px !important;
-    padding: 10px 16px !important;
-}
 
-.seller-order-workflow-header-main {
-    gap: 11px !important;
-}
 
-.seller-order-workflow-header-icon {
-    width: 40px !important;
-    height: 40px !important;
-    flex-basis: 40px !important;
-    border-radius: 10px !important;
-}
 
-.seller-order-workflow-header-icon svg {
-    width: 16px !important;
-    height: 16px !important;
-}
 
-.seller-order-workflow-title-row {
-    gap: 8px !important;
-}
 
-.seller-order-workflow-title-row h3 {
-    font-size: 20px !important;
-    line-height: 1.1 !important;
-}
 
-.seller-order-workflow-status {
-    min-height: 24px !important;
-    padding-inline: 9px !important;
-    font-size: 8px !important;
-}
 
-.seller-order-workflow-meta {
-    gap: 6px !important;
-    margin-top: 5px !important;
-    font-size: 8px !important;
-}
 
-.seller-order-workflow-close {
-    width: 38px !important;
-    height: 38px !important;
-    flex-basis: 38px !important;
-    border-radius: 10px !important;
-}
 
-.seller-order-workflow-close svg {
-    width: 15px !important;
-    height: 15px !important;
-}
 
-.seller-order-workflow-body {
-    grid-template-columns: minmax(0, 1.62fr) minmax(285px, .78fr) !important;
-    align-items: start !important;
-    gap: 10px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 10px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* LEFT: visually merge Products + Buyer/Delivery + Delivery/Payment into one surface. */
-.seller-order-workflow-main {
-    display: block !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    border: 1px solid var(--sari-order-border) !important;
-    border-radius: 13px !important;
-    background: #fff !important;
-    box-shadow: 0 3px 11px rgba(56, 42, 27, .035) !important;
-}
 
-.seller-order-workflow-main > .seller-order-workflow-products,
-.seller-order-workflow-main .seller-order-workflow-info-card {
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
 
-.seller-order-workflow-main > .seller-order-workflow-products {
-    display: block !important;
-    padding: 12px !important;
-}
 
-.seller-order-workflow-info-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 0 !important;
-    border-top: 1px solid #eee7de !important;
-}
 
-.seller-order-workflow-info-card {
-    padding: 12px !important;
-}
 
-.seller-order-workflow-info-card + .seller-order-workflow-info-card {
-    border-left: 1px solid #eee7de !important;
-}
 
-.seller-order-workflow-section-title {
-    gap: 8px !important;
-}
 
-.seller-order-workflow-section-icon,
-.seller-order-workflow-action-icon {
-    width: 30px !important;
-    height: 30px !important;
-    flex-basis: 30px !important;
-    border-radius: 8px !important;
-}
 
-.seller-order-workflow-section-icon svg,
-.seller-order-workflow-action-icon svg {
-    width: 13px !important;
-    height: 13px !important;
-}
 
-.seller-order-workflow-section-title h4,
-.seller-order-workflow-action-heading h4 {
-    font-size: 10.5px !important;
-}
 
-.seller-order-workflow-section-title p {
-    font-size: 7px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 /* Product list: show the full image, not a cropped thumbnail, and avoid internal clipping. */
-.seller-order-workflow-product-list {
-    max-height: none !important;
-    gap: 7px !important;
-    margin-top: 10px !important;
-    overflow: visible !important;
-    padding-right: 0 !important;
-}
 
-.seller-order-workflow-product-row {
-    grid-template-columns: 50px minmax(0, 1fr) auto !important;
-    min-height: 62px !important;
-    gap: 10px !important;
-    border-radius: 10px !important;
-    padding: 6px 10px 6px 6px !important;
-}
 
-.seller-order-workflow-product-image {
-    display: grid !important;
-    width: 50px !important;
-    height: 50px !important;
-    place-items: center !important;
-    overflow: hidden !important;
-    border-radius: 9px !important;
-    background: #fff !important;
-    padding: 2px !important;
-}
 
-.seller-order-workflow-product-image > img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    border-radius: 7px !important;
-}
 
-.seller-order-workflow-product-name {
-    font-size: 9.5px !important;
-}
 
-.seller-order-workflow-product-meta {
-    margin-top: 3px !important;
-    font-size: 7.7px !important;
-}
 
-.seller-order-workflow-product-price {
-    font-size: 9.5px !important;
-}
 
-.seller-order-workflow-details {
-    gap: 9px 12px !important;
-    margin-top: 10px !important;
-}
 
-.seller-order-workflow-details dt {
-    font-size: 6.8px !important;
-}
 
-.seller-order-workflow-details dd {
-    margin-top: 3px !important;
-    font-size: 8.3px !important;
-    line-height: 1.45 !important;
-}
+
+
+
+
+
+
+
+
+
+
 
 /* RIGHT: compact operational cards. */
-.seller-order-workflow-sidebar {
-    gap: 9px !important;
-    overflow: visible !important;
-}
 
-.seller-order-workflow-summary,
-.seller-order-workflow-progress-card,
-.seller-order-workflow-actions {
-    padding: 11px !important;
-}
 
-.seller-order-workflow-money-lines {
-    gap: 6px !important;
-    margin-top: 9px !important;
-}
 
-.seller-order-workflow-money-lines div {
-    font-size: 8px !important;
-}
 
-.seller-order-workflow-money-lines strong {
-    font-size: 8.5px !important;
-}
 
-.seller-order-workflow-total {
-    margin-top: 9px !important;
-    padding-top: 9px !important;
-}
 
-.seller-order-workflow-total span {
-    font-size: 9px !important;
-}
 
-.seller-order-workflow-total strong {
-    font-size: 19px !important;
-}
 
-.seller-order-workflow-progress-bar {
-    height: 5px !important;
-    margin-top: 9px !important;
-}
 
-.seller-order-workflow-timeline {
-    margin-top: 9px !important;
-}
 
-.seller-order-workflow-timeline li {
-    grid-template-columns: 25px minmax(0, 1fr) !important;
-    min-height: 29px !important;
-    gap: 8px !important;
-    font-size: 8px !important;
-}
 
-.seller-order-workflow-timeline-dot {
-    width: 23px !important;
-    height: 23px !important;
-}
 
-.seller-order-workflow-timeline li:not(:last-child)::after {
-    left: 10px !important;
-    top: 20px !important;
-    bottom: -1px !important;
-}
 
-.seller-order-workflow-action-heading {
-    grid-template-columns: 30px minmax(0, 1fr) !important;
-    gap: 8px !important;
-}
 
-.seller-order-workflow-action-heading > div > p {
-    font-size: 6.5px !important;
-}
 
-.seller-order-workflow-action-heading h4 {
-    margin-top: 2px !important;
-    font-size: 11.5px !important;
-}
 
-.seller-order-workflow-action-heading small {
-    margin-top: 2px !important;
-    font-size: 7px !important;
-}
 
-.seller-order-workflow-primary-action,
-.seller-order-workflow-primary-action--success {
-    min-height: 40px !important;
-    margin-top: 10px !important;
-    border-color: var(--sari-order-gold) !important;
-    background: var(--sari-order-gold) !important;
-    color: #fff !important;
-    font-size: 8.7px !important;
-    box-shadow: 0 6px 15px rgba(216, 146, 8, .15) !important;
-}
 
-.seller-order-workflow-primary-action:hover,
-.seller-order-workflow-primary-action:focus-visible,
-.seller-order-workflow-primary-action--success:hover,
-.seller-order-workflow-primary-action--success:focus-visible {
-    border-color: var(--sari-order-gold-hover) !important;
-    background: var(--sari-order-gold-hover) !important;
-}
 
-.seller-order-workflow-secondary-actions {
-    gap: 7px !important;
-    margin-top: 7px !important;
-}
 
-.seller-order-workflow-secondary-actions a {
-    min-height: 36px !important;
-    border-radius: 9px !important;
-    padding-inline: 9px !important;
-    font-size: 7.8px !important;
-}
 
-.seller-order-workflow-primary-action svg,
-.seller-order-workflow-secondary-actions svg {
-    width: 13px !important;
-    height: 13px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* On short laptop screens the whole body scrolls once; product cards themselves do not clip. */
-@media (max-height: 760px) and (min-width: 1024px) {
-    .seller-order-workflow-panel {
-        max-height: calc(100vh - 12px) !important;
-    }
 
-    .seller-order-workflow-header {
-        min-height: 62px !important;
-        padding-block: 8px !important;
-    }
 
-    .seller-order-workflow-body {
-        padding: 8px !important;
-        gap: 8px !important;
-    }
 
-    .seller-order-workflow-product-row {
-        min-height: 58px !important;
-    }
 
-    .seller-order-workflow-product-image {
-        width: 46px !important;
-        height: 46px !important;
-    }
-}
 
-@media (max-width: 1023px) {
-    .seller-order-workflow-panel {
-        width: calc(100vw - 14px) !important;
-        max-height: calc(100vh - 14px) !important;
-    }
-
-    .seller-order-workflow-body {
-        grid-template-columns: 1fr !important;
-    }
-
-    .seller-order-workflow-sidebar {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    .seller-order-workflow-actions {
-        grid-column: 1 / -1 !important;
-    }
-}
-
-@media (max-width: 639px) {
-    .seller-order-workflow-header {
-        min-height: 62px !important;
-        padding: 9px 10px !important;
-    }
-
-    .seller-order-workflow-title-row h3 {
-        font-size: 17px !important;
-    }
-
-    .seller-order-workflow-info-grid,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-secondary-actions {
-        grid-template-columns: 1fr !important;
-    }
-
-    .seller-order-workflow-info-card + .seller-order-workflow-info-card {
-        border-top: 1px solid #eee7de !important;
-        border-left: 0 !important;
-    }
-}
 
 /* ============================================================
    SELLER ORDERS — ADD PRODUCT VISUAL PARITY / PROFESSIONAL FINAL
@@ -3999,13 +2670,11 @@
 }
 
 /* Keep the current order-detail modal workflow untouched; only align its font family. */
-#sellerOrderDetailModal {
-    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-}
 
-@media (min-width: 1024px) and (max-width: 1279px) {
+
+@media (min-width: 1024px) and (max-width: 1279px)  {
     .seller-orders-table-head,
-    .seller-order-grid {
+.seller-order-grid {
         grid-template-columns: 30px minmax(200px, 1.35fr) minmax(120px, .78fr) 98px 82px 96px 40px !important;
         gap: 7px !important;
         padding-left: 11px !important;
@@ -4022,7 +2691,7 @@
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px)  {
     .seller-orders-header {
         align-items: flex-start !important;
     }
@@ -4064,7 +2733,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px)  {
     .seller-orders-header {
         flex-direction: column !important;
         gap: 13px !important;
@@ -4101,9 +2770,9 @@
     }
 
     #sellerOrderSearch,
-    #sellerOrderStatusFilter,
-    .seller-orders-apply-filter,
-    .seller-orders-reset-filter {
+#sellerOrderStatusFilter,
+.seller-orders-apply-filter,
+.seller-orders-reset-filter {
         height: 44px !important;
         min-height: 44px !important;
         font-size: 10px !important;
@@ -4119,7 +2788,7 @@
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 520px)  {
     .seller-orders-summary {
         grid-template-columns: 1fr !important;
     }
@@ -4399,277 +3068,109 @@
    ORDER DETAIL MODAL — COMPACT BUT LEGIBLE
    ============================================================ */
 
-#sellerOrderDetailModal {
-    padding: 8px !important;
-}
 
-.seller-order-workflow-panel {
-    width: min(980px, calc(100vw - 16px)) !important;
-    max-width: 980px !important;
-    max-height: calc(100vh - 16px) !important;
-    border-radius: 14px !important;
-}
 
-.seller-order-workflow-header {
-    min-height: 62px !important;
-    gap: 10px !important;
-    padding: 9px 13px !important;
-}
 
-.seller-order-workflow-header-main {
-    gap: 10px !important;
-}
 
-.seller-order-workflow-header-icon {
-    width: 36px !important;
-    height: 36px !important;
-    flex-basis: 36px !important;
-    border-radius: 9px !important;
-}
 
-.seller-order-workflow-header-icon svg {
-    width: 15px !important;
-    height: 15px !important;
-}
 
-.seller-order-workflow-title-row h3 {
-    font-size: 18px !important;
-    line-height: 1.1 !important;
-}
 
-.seller-order-workflow-status {
-    min-height: 23px !important;
-    padding-inline: 8px !important;
-    font-size: 8.2px !important;
-}
 
-.seller-order-workflow-meta {
-    gap: 5px !important;
-    margin-top: 4px !important;
-    font-size: 8.5px !important;
-}
 
-.seller-order-workflow-close {
-    width: 34px !important;
-    height: 34px !important;
-    flex-basis: 34px !important;
-    border-radius: 9px !important;
-}
 
-.seller-order-workflow-body {
-    grid-template-columns: minmax(0, 1.58fr) minmax(285px, .76fr) !important;
-    gap: 8px !important;
-    padding: 8px !important;
-}
 
-.seller-order-workflow-main,
-.seller-order-workflow-sidebar {
-    gap: 8px !important;
-}
 
-.seller-order-workflow-main {
-    border-radius: 11px !important;
-}
 
-.seller-order-workflow-main > .seller-order-workflow-products,
-.seller-order-workflow-main .seller-order-workflow-info-card,
-.seller-order-workflow-summary,
-.seller-order-workflow-progress-card,
-.seller-order-workflow-actions {
-    padding: 10px !important;
-}
 
-.seller-order-workflow-info-grid {
-    gap: 0 !important;
-}
 
-.seller-order-workflow-section-title {
-    gap: 7px !important;
-}
 
-.seller-order-workflow-section-icon,
-.seller-order-workflow-action-icon {
-    width: 28px !important;
-    height: 28px !important;
-    flex-basis: 28px !important;
-    border-radius: 7px !important;
-}
 
-.seller-order-workflow-section-icon svg,
-.seller-order-workflow-action-icon svg {
-    width: 12px !important;
-    height: 12px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Raise previously tiny modal typography. */
-.seller-order-workflow-section-title h4,
-.seller-order-workflow-action-heading h4 {
-    font-size: 10.8px !important;
-    line-height: 1.3 !important;
-}
 
-.seller-order-workflow-section-title p {
-    margin-top: 2px !important;
-    font-size: 8.3px !important;
-    line-height: 1.4 !important;
-}
 
-.seller-order-workflow-product-list {
-    gap: 6px !important;
-    margin-top: 8px !important;
-}
 
-.seller-order-workflow-product-row {
-    grid-template-columns: 46px minmax(0, 1fr) auto !important;
-    min-height: 56px !important;
-    gap: 9px !important;
-    border-radius: 9px !important;
-    padding: 5px 9px 5px 5px !important;
-}
 
-.seller-order-workflow-product-image {
-    width: 46px !important;
-    height: 46px !important;
-    border-radius: 8px !important;
-}
 
-.seller-order-workflow-product-name {
-    font-size: 9.5px !important;
-    line-height: 1.35 !important;
-}
 
-.seller-order-workflow-product-meta {
-    margin-top: 3px !important;
-    font-size: 8.2px !important;
-}
 
-.seller-order-workflow-product-price {
-    font-size: 9.5px !important;
-}
 
-.seller-order-workflow-details {
-    gap: 8px 10px !important;
-    margin-top: 9px !important;
-}
 
-.seller-order-workflow-details dt {
-    font-size: 7.8px !important;
-    letter-spacing: .06em !important;
-}
 
-.seller-order-workflow-details dd {
-    margin-top: 3px !important;
-    font-size: 9px !important;
-    line-height: 1.45 !important;
-}
 
-.seller-order-workflow-money-lines {
-    gap: 5px !important;
-    margin-top: 8px !important;
-}
 
-.seller-order-workflow-money-lines div {
-    font-size: 8.8px !important;
-}
 
-.seller-order-workflow-money-lines strong {
-    font-size: 9px !important;
-}
 
-.seller-order-workflow-total {
-    margin-top: 8px !important;
-    padding-top: 8px !important;
-}
 
-.seller-order-workflow-total span {
-    font-size: 9.5px !important;
-}
 
-.seller-order-workflow-total strong {
-    font-size: 18px !important;
-}
 
-.seller-order-workflow-progress-percent {
-    font-size: 9px !important;
-}
 
-.seller-order-workflow-progress-bar {
-    height: 5px !important;
-    margin-top: 8px !important;
-}
 
-.seller-order-workflow-timeline {
-    margin-top: 8px !important;
-}
 
-.seller-order-workflow-timeline li {
-    grid-template-columns: 24px minmax(0, 1fr) !important;
-    min-height: 28px !important;
-    gap: 7px !important;
-    font-size: 8.8px !important;
-    line-height: 1.35 !important;
-}
 
-.seller-order-workflow-timeline-dot {
-    width: 22px !important;
-    height: 22px !important;
-}
 
-.seller-order-workflow-timeline li:not(:last-child)::after {
-    left: 10px !important;
-    top: 19px !important;
-}
 
-.seller-order-workflow-action-heading {
-    grid-template-columns: 28px minmax(0, 1fr) !important;
-    gap: 7px !important;
-}
 
-.seller-order-workflow-action-heading > div > p {
-    font-size: 7.5px !important;
-}
 
-.seller-order-workflow-action-heading h4 {
-    margin-top: 2px !important;
-    font-size: 11.5px !important;
-}
 
-.seller-order-workflow-action-heading small {
-    margin-top: 3px !important;
-    font-size: 8px !important;
-    line-height: 1.4 !important;
-}
 
-.seller-order-workflow-primary-action,
-.seller-order-workflow-primary-action--success {
-    min-height: 38px !important;
-    margin-top: 9px !important;
-    border-radius: 9px !important;
-    font-size: 9px !important;
-}
 
-.seller-order-workflow-secondary-actions {
-    gap: 6px !important;
-    margin-top: 6px !important;
-}
 
-.seller-order-workflow-secondary-actions a {
-    min-height: 34px !important;
-    border-radius: 8px !important;
-    padding-inline: 8px !important;
-    font-size: 8.3px !important;
-}
 
-.seller-order-workflow-passive-action {
-    margin-top: 9px !important;
-    padding: 9px 10px !important;
-    font-size: 8.5px !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Laptop / tablet refinements. */
-@media (min-width: 1024px) and (max-width: 1279px) {
+@media (min-width: 1024px) and (max-width: 1279px)  {
     .seller-orders-table-head,
-    .seller-order-grid {
+.seller-order-grid {
         grid-template-columns: 28px minmax(190px, 1.32fr) minmax(118px, .78fr) 96px 78px 94px 36px !important;
         gap: 6px !important;
         padding-left: 10px !important;
@@ -4682,7 +3183,7 @@
     }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023px)  {
     .seller-orders-summary {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
@@ -4695,20 +3196,14 @@
         grid-column: 1 / -1 !important;
     }
 
-    .seller-order-workflow-body {
-        grid-template-columns: 1fr !important;
-    }
+    
 
-    .seller-order-workflow-sidebar {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
+    
 
-    .seller-order-workflow-actions {
-        grid-column: 1 / -1 !important;
-    }
+    
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px)  {
     .seller-orders-header {
         gap: 10px !important;
     }
@@ -4731,22 +3226,18 @@
     }
 
     #sellerOrderSearch,
-    #sellerOrderStatusFilter,
-    .seller-orders-apply-filter,
-    .seller-orders-reset-filter {
+#sellerOrderStatusFilter,
+.seller-orders-apply-filter,
+.seller-orders-reset-filter {
         height: 42px !important;
         min-height: 42px !important;
         font-size: 10px !important;
     }
 
-    .seller-order-workflow-info-grid,
-    .seller-order-workflow-sidebar,
-    .seller-order-workflow-secondary-actions {
-        grid-template-columns: 1fr !important;
-    }
+    
 }
 
-@media (max-width: 520px) {
+@media (max-width: 520px)  {
     .seller-orders-summary {
         grid-template-columns: 1fr !important;
     }
@@ -4804,27 +3295,12 @@
 }
 
 /* Order-detail modal + internal cards use the same neutral elevation family. */
-#sellerOrderDetailModal .seller-order-workflow-panel {
-    border-color: var(--orders-float-border) !important;
-    box-shadow:
-        0 30px 82px rgba(15, 23, 42, .20),
-        0 8px 24px rgba(15, 23, 42, .07) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-card,
-#sellerOrderDetailModal .seller-order-workflow-main {
-    border-color: var(--orders-float-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--orders-float-shadow-soft) !important;
-    transform: none !important;
-}
+
+
 
 /* Product rows inside the modal stay secondary to their parent card. */
-#sellerOrderDetailModal .seller-order-workflow-product-row {
-    border-color: #E7EBF0 !important;
-    background: #FCFDFE !important;
-    box-shadow: 0 3px 10px rgba(15, 23, 42, .025) !important;
-}
+
 
 /* ------------------------------------------------------------------
    STATUS DROPDOWN — enterprise button-like select
@@ -4971,17 +3447,14 @@
 /* Neutral structural borders only; status colors remain semantic. */
 .seller-orders-page .seller-orders-summary-card,
 .seller-orders-page .seller-orders-filter-panel,
-.seller-orders-page .seller-orders-workspace,
-#sellerOrderDetailModal .seller-order-workflow-panel,
-#sellerOrderDetailModal .seller-order-workflow-card,
-#sellerOrderDetailModal .seller-order-workflow-main {
+.seller-orders-page .seller-orders-workspace {
     outline: 0 !important;
 }
 
 /* Responsive parity with existing filter grid. */
-@media (max-width: 767px) {
+@media (max-width: 767px)  {
     .seller-orders-status-field,
-    .seller-orders-page #sellerOrderStatusFilter {
+.seller-orders-page #sellerOrderStatusFilter {
         height: 42px !important;
         min-height: 42px !important;
     }
@@ -4993,10 +3466,10 @@
 }
 
 /* Lighter floating depth on small screens. */
-@media (max-width: 640px) {
+@media (max-width: 640px)  {
     .seller-orders-page .seller-orders-summary-card,
-    .seller-orders-page .seller-orders-filter-panel,
-    .seller-orders-page .seller-orders-workspace {
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-workspace {
         box-shadow:
             0 1px 2px rgba(15, 23, 42, .03),
             0 7px 18px rgba(15, 23, 42, .06),
@@ -5214,138 +3687,50 @@
 /* -------------------------
    Order Details: white-only
    ------------------------- */
-#sellerOrderDetailModal {
-    background: rgba(17, 24, 39, .42) !important;
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-panel {
-    width: min(1080px, calc(100vw - 24px)) !important;
-    max-width: 1080px !important;
-    border: 1px solid #DDE3EA !important;
-    border-radius: 18px !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 34px 88px rgba(15, 23, 42, .22),
-        0 8px 24px rgba(15, 23, 42, .07) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-header {
-    min-height: 76px !important;
-    border-bottom: 1px solid #E8ECF1 !important;
-    background: #FFFFFF !important;
-    padding: 12px 16px !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-header-icon,
-#sellerOrderDetailModal .seller-order-workflow-section-icon,
-#sellerOrderDetailModal .seller-order-workflow-action-icon {
-    border-color: #E2E7ED !important;
-    background: #FFFFFF !important;
-    color: #C68107 !important;
-    box-shadow: 0 3px 10px rgba(15, 23, 42, .035) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-close {
-    border-color: #DDE3EA !important;
-    background: #FFFFFF !important;
-    color: #475467 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-close:hover,
-#sellerOrderDetailModal .seller-order-workflow-close:focus-visible {
-    border-color: #C8D0DA !important;
-    background: #F8FAFC !important;
-    color: #111827 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-body {
-    grid-template-columns: minmax(0, 1.62fr) minmax(300px, .78fr) !important;
-    gap: 12px !important;
-    background: #FFFFFF !important;
-    padding: 12px !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-main,
-#sellerOrderDetailModal .seller-order-workflow-card,
-#sellerOrderDetailModal .seller-order-workflow-summary,
-#sellerOrderDetailModal .seller-order-workflow-progress-card,
-#sellerOrderDetailModal .seller-order-workflow-actions {
-    border-color: #E2E7ED !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .04) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-main {
-    border-radius: 14px !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-info-grid {
-    border-top-color: #E8ECF1 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
-    border-left-color: #E8ECF1 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-product-row {
-    border-color: #E4E9EF !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 3px 10px rgba(15, 23, 42, .025) !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-product-image {
-    border-color: #E4E9EF !important;
-    background: #FFFFFF !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-total {
-    border-top-color: #E8ECF1 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-progress-bar {
-    background: #EAECF0 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-timeline li:not(:last-child)::after {
-    background: #E4E7EC !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-timeline-dot {
-    border-color: #DDE3EA !important;
-    background: #FFFFFF !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-timeline li.is-complete .seller-order-workflow-timeline-dot {
-    border-color: #E2B85B !important;
-    background: #FFFFFF !important;
-    color: #B97805 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a {
-    border-color: #DDE3EA !important;
-    background: #FFFFFF !important;
-    color: #475467 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible {
-    border-color: #C8D0DA !important;
-    background: #F8FAFC !important;
-    color: #1F2937 !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* No physical hover movement. */
-#sellerOrderDetailModal .seller-order-workflow-primary-action,
-#sellerOrderDetailModal .seller-order-workflow-primary-action:hover,
-#sellerOrderDetailModal .seller-order-workflow-primary-action:focus-visible,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover {
-    transform: none !important;
-}
 
-@media (max-width: 767px) {
+
+@media (max-width: 767px)  {
     .seller-orders-status-trigger {
         height: 42px !important;
         min-height: 42px !important;
@@ -5545,74 +3930,34 @@
 /* ------------------------------------------------------------
    ORDER DETAIL MODAL — strongest overlay elevation
    ------------------------------------------------------------ */
-#sellerOrderDetailModal .seller-order-workflow-panel {
-    border-color: var(--orders-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 8px 22px rgba(15, 23, 42, .08),
-        0 28px 68px rgba(15, 23, 42, .18),
-        0 50px 110px rgba(15, 23, 42, .10) !important;
-}
+
 
 /* Modal body stays white; no cream canvas. */
-#sellerOrderDetailModal .seller-order-workflow-body {
-    background: #FFFFFF !important;
-}
+
 
 /* Primary modal information surfaces use medium floating depth. */
-#sellerOrderDetailModal .seller-order-workflow-main,
-#sellerOrderDetailModal .seller-order-workflow-card,
-#sellerOrderDetailModal .seller-order-workflow-summary,
-#sellerOrderDetailModal .seller-order-workflow-progress-card,
-#sellerOrderDetailModal .seller-order-workflow-actions {
-    border-color: var(--orders-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--orders-dashboard-shadow-soft) !important;
-    transform: none !important;
-}
+
 
 /* Product rows remain subordinate to their parent surfaces. */
-#sellerOrderDetailModal .seller-order-workflow-product-row {
-    border-color: #E7EAEE !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--orders-dashboard-shadow-inner) !important;
-    transform: none !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-product-image {
-    border-color: var(--orders-dashboard-border) !important;
-    background: #FFFFFF !important;
-}
+
+
 
 /* Modal structural dividers stay neutral. */
-#sellerOrderDetailModal .seller-order-workflow-header,
-#sellerOrderDetailModal .seller-order-workflow-info-grid,
-#sellerOrderDetailModal .seller-order-workflow-total {
-    border-color: var(--orders-dashboard-divider) !important;
-}
+
 
 /* Secondary modal actions: light gray, never cream. */
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible,
-#sellerOrderDetailModal .seller-order-workflow-close:hover,
-#sellerOrderDetailModal .seller-order-workflow-close:focus-visible {
-    background: #F8FAFC !important;
-    border-color: var(--orders-dashboard-border-strong) !important;
-    transform: none !important;
-}
+
 
 /* All structural surfaces remain static. */
 .seller-orders-page .seller-orders-summary-card,
 .seller-orders-page .seller-orders-filter-panel,
-.seller-orders-page .seller-orders-workspace,
-#sellerOrderDetailModal .seller-order-workflow-panel,
-#sellerOrderDetailModal .seller-order-workflow-main,
-#sellerOrderDetailModal .seller-order-workflow-card {
+.seller-orders-page .seller-orders-workspace {
     outline: 0 !important;
 }
 
 /* Mobile: reduce ambient spread while preserving the floating hierarchy. */
-@media (max-width: 640px) {
+@media (max-width: 640px)  {
     .seller-orders-page .seller-orders-summary-card {
         box-shadow:
             0 1px 3px rgba(15, 23, 42, .03),
@@ -5621,22 +3966,14 @@
     }
 
     .seller-orders-page .seller-orders-filter-panel,
-    .seller-orders-page .seller-orders-workspace {
+.seller-orders-page .seller-orders-workspace {
         box-shadow:
             0 2px 4px rgba(15, 23, 42, .035),
             0 8px 18px rgba(15, 23, 42, .06),
             0 18px 38px rgba(15, 23, 42, .07) !important;
     }
 
-    #sellerOrderDetailModal .seller-order-workflow-main,
-    #sellerOrderDetailModal .seller-order-workflow-card,
-    #sellerOrderDetailModal .seller-order-workflow-summary,
-    #sellerOrderDetailModal .seller-order-workflow-progress-card,
-    #sellerOrderDetailModal .seller-order-workflow-actions {
-        box-shadow:
-            0 1px 2px rgba(15, 23, 42, .02),
-            0 5px 13px rgba(15, 23, 42, .045) !important;
-    }
+    
 }
 
 
@@ -5647,99 +3984,38 @@
    ====================================================================== */
 
 /* Outer modal shell: keep elevation, remove the dark outline completely. */
-#sellerOrderDetailModal .seller-order-workflow-panel {
-    border: 0 !important;
-    outline: 0 !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 8px 22px rgba(15, 23, 42, .08),
-        0 28px 68px rgba(15, 23, 42, .18),
-        0 50px 110px rgba(15, 23, 42, .10) !important;
-}
+
 
 /* Header divider becomes a very light neutral gray instead of a dark line. */
-#sellerOrderDetailModal .seller-order-workflow-header {
-    border: 0 !important;
-    border-bottom: 1px solid #ECEFF2 !important;
-    background: #FFFFFF !important;
-}
+
 
 /* Main left surface and right-side operational cards:
    explicit neutral borders prevent older dark-border layers from winning. */
-#sellerOrderDetailModal .seller-order-workflow-main,
-#sellerOrderDetailModal .seller-order-workflow-card,
-#sellerOrderDetailModal .seller-order-workflow-summary,
-#sellerOrderDetailModal .seller-order-workflow-progress-card,
-#sellerOrderDetailModal .seller-order-workflow-actions {
-    border: 1px solid #E5E7EB !important;
-    outline: 0 !important;
-    background: #FFFFFF !important;
-}
+
 
 /* The two Buyer/Delivery sections use only subtle dividers. */
-#sellerOrderDetailModal .seller-order-workflow-info-grid {
-    border: 0 !important;
-    border-top: 1px solid #ECEFF2 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-info-card {
-    border: 0 !important;
-    outline: 0 !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
-    border: 0 !important;
-    border-left: 1px solid #ECEFF2 !important;
-}
+
+
+
 
 /* Product row: light neutral edge only. */
-#sellerOrderDetailModal .seller-order-workflow-product-row {
-    border: 1px solid #E7EAEE !important;
-    outline: 0 !important;
-}
+
 
 /* Total divider should never render as a dark rule. */
-#sellerOrderDetailModal .seller-order-workflow-total {
-    border: 0 !important;
-    border-top: 1px solid #ECEFF2 !important;
-}
+
 
 /* Icon/control shells also stay neutral. */
-#sellerOrderDetailModal .seller-order-workflow-header-icon,
-#sellerOrderDetailModal .seller-order-workflow-section-icon,
-#sellerOrderDetailModal .seller-order-workflow-action-icon,
-#sellerOrderDetailModal .seller-order-workflow-close,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a,
-#sellerOrderDetailModal .seller-order-workflow-product-image {
-    border-color: #E5E7EB !important;
-    outline: 0 !important;
-}
+
 
 /* Timeline keeps only its intentional light connector. */
-#sellerOrderDetailModal .seller-order-workflow-timeline li:not(:last-child)::after {
-    background: #E4E7EC !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-timeline-dot {
-    border-color: #DDE3EA !important;
-}
+
+
 
 /* Mobile keeps the same neutral border treatment. */
-@media (max-width: 639px) {
-    #sellerOrderDetailModal .seller-order-workflow-panel {
-        border: 0 !important;
-    }
 
-    #sellerOrderDetailModal .seller-order-workflow-main,
-    #sellerOrderDetailModal .seller-order-workflow-card {
-        border-color: #E5E7EB !important;
-    }
-
-    #sellerOrderDetailModal .seller-order-workflow-info-card + .seller-order-workflow-info-card {
-        border-left: 0 !important;
-        border-top: 1px solid #ECEFF2 !important;
-    }
-}
 
 
 /* ======================================================================
@@ -5748,42 +4024,729 @@
    Only hover/focus palette changes; no movement.
    ====================================================================== */
 
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a {
-    border-color: #DDE3EA !important;
-    background: #FFFFFF !important;
-    color: #475467 !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible {
-    outline: none !important;
-    border-color: #D59617 !important;
-    background: #FFF8E8 !important;
-    color: #A66F10 !important;
-    box-shadow: none !important;
-    transform: none !important;
-}
 
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:hover svg,
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:focus-visible svg {
-    color: #C9890B !important;
-    stroke: currentColor !important;
-}
+
+
+
 
 /* Pressed state: slightly deeper gold, still static. */
-#sellerOrderDetailModal .seller-order-workflow-secondary-actions a:active {
-    border-color: #C9890B !important;
-    background: #FFF3D6 !important;
-    color: #955F07 !important;
+
+
+/* ======================================================================
+   SELLER ORDER MANAGEMENT — PICKUP REQUESTS UI PARITY (MAIN PAGE ONLY)
+   Does not override #sellerOrderDetailModal or its workflow components.
+   Consistent Poppins typography, cool gray/white/gold and table density.
+   ====================================================================== */
+.seller-orders-page {
+    --sop-gold: #C88912;
+    --sop-gold-hover: #B47B0E;
+    --sop-charcoal: #2F3742;
+    --sop-muted: #667383;
+    --sop-border: #E5E7EB;
+    --sop-soft: #F8FAFC;
+    max-width: 1520px !important;
+    margin: 0 auto !important;
+    padding-bottom: 28px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    color: var(--sop-charcoal) !important;
+}
+/* Header: text-based hierarchy and cart-style navigation actions. */
+.seller-orders-page .seller-orders-header {
+    min-height: 0 !important;
+    align-items: flex-end !important;
+    gap: 14px 24px !important;
+    margin: 0 0 20px !important;
+    padding: 0 0 14px !important;
+    border-bottom: 1px solid #E9EDF1 !important;
+}
+.seller-orders-page .seller-orders-heading-group { display: block !important; }
+.seller-orders-page .seller-orders-eyebrow {
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+    letter-spacing: .14em !important;
+    color: #A87316 !important;
+}
+.seller-orders-page .seller-orders-title {
+    margin-top: 6px !important;
+    font-size: clamp(27px, 2.3vw, 31px) !important;
+    font-weight: 760 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.04em !important;
+    color: #2E343B !important;
+}
+.seller-orders-page .seller-orders-title-accent {
+    margin-left: .18em !important;
+    color: #C88912 !important;
+}
+.seller-orders-page .seller-orders-subtitle {
+    margin-top: 6px !important;
+    max-width: 780px !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    color: #8793A1 !important;
+}
+.seller-orders-page .seller-orders-header-actions {
+    display: flex !important;
+    width: auto !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    gap: 10px 24px !important;
+    padding: 0 2px 0 0 !important;
+}
+.seller-orders-page .seller-orders-header-action {
+    position: relative;
+    top: -4px;
+    display: inline-flex !important;
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #59636E !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+    line-height: 1.35 !important;
+    text-decoration: none !important;
+    transform: none !important;
+}
+.seller-orders-page .seller-orders-header-action:hover,
+.seller-orders-page .seller-orders-header-action:focus-visible {
+    background: transparent !important;
+    color: #C88912 !important;
+}
+.seller-orders-page .seller-orders-header-action:focus-visible {
+    outline: 2px solid #C88912 !important;
+    outline-offset: 4px !important;
+}
+.seller-orders-page .seller-orders-header-arrow {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: .8;
+    transform: translateY(-1px);
+}
+/* Five cards preserve all five metrics, matching the Pickup Requests family. */
+.seller-orders-page .seller-orders-summary {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    margin: 0 !important;
+}
+.seller-orders-page .seller-orders-summary-card,
+.seller-orders-page .seller-orders-summary-card:hover {
+    min-height: 110px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 18px !important;
+    background: #FFF !important;
+    padding: 14px 16px !important;
+    box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+    contain: none !important;
+    transform: none !important;
+}
+.seller-orders-page .seller-orders-summary-card > div { align-items: flex-start !important; gap: 12px !important; }
+.seller-orders-page .seller-orders-summary-card p:first-child {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    font-weight: 650 !important;
+    color: #637081 !important;
+}
+.seller-orders-page .seller-orders-summary-card p:nth-child(2) {
+    margin-top: 7px !important;
+    font-size: clamp(25px, 1.9vw, 30px) !important;
+    line-height: 1.12 !important;
+    font-weight: 650 !important;
+    font-variant-numeric: tabular-nums;
+    color: #1F2937 !important;
+}
+.seller-orders-page .seller-orders-summary-card p:nth-child(3) {
+    margin-top: 6px !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    color: #8995A3 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+.seller-orders-page .seller-orders-summary-icon {
+    display: grid !important;
+    width: 27px !important;
+    min-width: 27px !important;
+    height: 27px !important;
+    flex: 0 0 27px !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-orders-page .seller-orders-summary-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+    stroke-width: 1.8;
+}
+/* Flat four-control toolbar: standalone search / dropdown / actions. */
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-filter-panel:hover {
+    position: relative;
+    z-index: 15;
+    grid-template-columns: minmax(0, 1fr) minmax(185px, 210px) auto auto !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 20px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-orders-page #sellerOrderSearch,
+.seller-orders-page .seller-orders-status-trigger,
+.seller-orders-page .seller-orders-apply-filter,
+.seller-orders-page .seller-orders-reset-filter {
+    height: 48px !important;
+    min-height: 48px !important;
+    border-radius: 14px !important;
+}
+.seller-orders-page #sellerOrderSearch,
+.seller-orders-page .seller-orders-status-trigger {
+    border: 1px solid #DCE2E8 !important;
+    background: #FFF !important;
+    box-shadow: none !important;
+    color: #3F4B59 !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+}
+.seller-orders-page .seller-orders-search-field > span { left: 16px !important; width: 21px !important; height: 21px !important; color: #97A3B2 !important; }
+.seller-orders-page .seller-orders-search-field svg { width: 21px !important; height: 21px !important; }
+.seller-orders-page #sellerOrderSearch { padding: 0 14px 0 46px !important; }
+.seller-orders-page #sellerOrderSearch::placeholder { font-size: 11.5px !important; color: #A0AAB6 !important; }
+.seller-orders-page .seller-orders-status-dropdown { position: relative; z-index: 50; }
+.seller-orders-page .seller-orders-status-trigger {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 0 16px !important;
+    text-align: left !important;
+}
+.seller-orders-page .seller-orders-status-trigger-label { color: #3F4B59 !important; }
+.seller-orders-page .seller-orders-status-trigger-chevron svg { width: 17px !important; height: 17px !important; }
+.seller-orders-page #sellerOrderSearch:hover,
+.seller-orders-page .seller-orders-status-trigger:hover {
+    border-color: #CFD6DE !important;
+    background: #F8FAFC !important;
+    box-shadow: none !important;
+}
+.seller-orders-page #sellerOrderSearch:focus,
+.seller-orders-page .seller-orders-status-trigger:focus-visible,
+.seller-orders-page .seller-orders-status-trigger[aria-expanded="true"] {
+    border-color: #C88912 !important;
+    background: #FFF !important;
+    box-shadow: 0 0 0 1px rgba(200,137,18,.12) !important;
+    outline: none !important;
+}
+.seller-orders-page .seller-orders-status-menu {
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 100 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    background: #FFF !important;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05) !important;
+}
+.seller-orders-page .seller-orders-status-option {
+    display: flex !important;
+    min-height: 38px !important;
+    width: 100% !important;
+    gap: 0 !important;
+    align-items: center !important;
+    padding: 0 12px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    color: #475569 !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+}
+.seller-orders-page .seller-orders-status-option:hover,
+.seller-orders-page .seller-orders-status-option:focus-visible {
+    outline: none !important;
+    background: #F8FAFC !important;
+    color: #A56D0A !important;
+}
+.seller-orders-page .seller-orders-status-option[aria-selected="true"] {
+    background: #F8FAFC !important;
+    color: #2F3742 !important;
+    font-weight: 700 !important;
+}
+.seller-orders-page .seller-orders-apply-filter {
+    gap: 8px !important;
+    padding: 0 18px !important;
+    border: 1px solid #C88912 !important;
+    background: #C88912 !important;
+    box-shadow: none !important;
+    color: #FFF !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    white-space: nowrap;
+}
+.seller-orders-page .seller-orders-apply-filter svg { width: 15px !important; height: 15px !important; }
+.seller-orders-page .seller-orders-apply-filter:hover,
+.seller-orders-page .seller-orders-apply-filter:focus-visible {
+    border-color: #B47B0E !important;
+    background: #B47B0E !important;
+    box-shadow: none !important;
+    outline-offset: 2px;
+}
+.seller-orders-page .seller-orders-reset-filter {
+    min-width: 86px !important;
+    padding: 0 18px !important;
+    border: 1px solid #DCE2E8 !important;
+    background: #FFF !important;
+    color: #5F6D7C !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+}
+.seller-orders-page .seller-orders-reset-filter:hover { border-color: #CFD6DE !important; background: #F8FAFC !important; }
+/* Large, unified order table with fixed-height controls and readable text. */
+.seller-orders-page .seller-orders-workspace,
+.seller-orders-page .seller-orders-workspace:hover {
+    position: relative;
+    z-index: 1;
+    margin-top: 20px !important;
+    overflow: hidden !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 18px !important;
+    background: #FFF !important;
+    box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+    contain: none !important;
+}
+.seller-orders-page .seller-orders-table-titlebar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    padding: 21px 23px !important;
+    border-bottom: 1px solid #E9EDF1 !important;
+    background: #FFF !important;
+}
+.seller-orders-page .seller-orders-table-titlebar h2 {
+    margin: 0 !important;
+    font-size: 18px !important;
+    font-weight: 780 !important;
+    color: #2F3742 !important;
+}
+.seller-orders-page .seller-orders-table-titlebar p {
+    margin: 4px 0 0 !important;
+    font-size: 11.5px !important;
+    color: #8B96A4 !important;
+}
+.seller-orders-page .seller-orders-table-counter {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7B8794;
+}
+.seller-orders-page .seller-orders-table-scroll { width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.seller-orders-page .seller-orders-table-scroll:focus-visible { outline: 2px solid #C88912; outline-offset: -2px; }
+.seller-orders-page .seller-orders-table-head,
+.seller-orders-page .seller-order-grid {
+    grid-template-columns: 36px minmax(250px,1.45fr) minmax(155px,.9fr) minmax(125px,.65fr) minmax(94px,.55fr) minmax(120px,.65fr) 52px !important;
+    gap: 12px !important;
+    min-width: 1060px !important;
+    align-items: center !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+.seller-orders-page .seller-orders-table-head {
+    display: grid !important;
+    min-height: 48px !important;
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+    border-bottom: 1px solid #E9EDF1 !important;
+    background: #F8FAFC !important;
+}
+.seller-orders-page .seller-orders-table-head > span {
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+    letter-spacing: .075em !important;
+    color: #8591A0 !important;
+    text-transform: uppercase !important;
+}
+.seller-orders-page .seller-order-row,
+.seller-orders-page .seller-order-row:hover {
+    border-bottom: 1px solid #EDF0F3 !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
     transform: none !important;
 }
+.seller-orders-page .seller-order-row { background: #FFF !important; }
+.seller-orders-page .seller-order-row:hover { background: #F8FAFC !important; }
+.seller-orders-page .seller-order-grid { padding-top: 17px !important; padding-bottom: 17px !important; }
+.seller-orders-page .seller-order-index { font-size: 11.5px !important; color: #8793A1 !important; }
+.seller-orders-page .seller-order-grid .seller-order-image-frame {
+    width: 44px !important; height: 44px !important; flex: 0 0 44px !important;
+    border: 1px solid #E5E7EB !important; border-radius: 9px !important;
+    background: #F8FAFC !important;
+}
+.seller-orders-page .seller-order-grid .seller-order-image-frame + div p:first-child {
+    color: #293440 !important; font-size: 12.5px !important; font-weight: 750 !important;
+    line-height: 1.5 !important;
+}
+.seller-orders-page .seller-order-grid .seller-order-image-frame + div p:nth-child(2) {
+    margin-top: 3px !important; font-size: 11.5px !important; line-height: 1.5 !important; color: #667383 !important;
+}
+.seller-orders-page .seller-order-grid .seller-order-image-frame + div p:nth-child(3) {
+    margin-top: 3px !important; font-size: 11px !important; line-height: 1.5 !important; color: #8793A1 !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(3) p:first-of-type:not(.lg\:hidden) {
+    font-size: 12px !important; font-weight: 650 !important; color: #293440 !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(3) p:last-child {
+    margin-top: 4px !important; font-size: 11px !important; color: #8793A1 !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(4) span {
+    padding: 4px 9px !important;
+    border-radius: 999px !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="new"],
+.seller-orders-page .seller-order-grid [data-order-status-code="ready_for_pickup"] {
+    background: #F8FAFC !important;
+    border-color: #E9DFCD !important;
+    color: #A56D0A !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(5) p:last-child {
+    font-size: 12.5px !important; color: #293440 !important; font-weight: 750 !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(6) p:first-of-type:not(.lg\:hidden) {
+    font-size: 11.5px !important; color: #293440 !important; font-weight: 650 !important;
+}
+.seller-orders-page .seller-order-grid > div:nth-child(6) p:last-child {
+    margin-top: 4px !important; font-size: 11px !important; color: #8793A1 !important;
+}
+.seller-orders-page .seller-order-view-button {
+    display: grid !important;
+    width: 32px !important; height: 32px !important; min-width: 32px !important;
+    place-items: center !important;
+    border: 1px solid #DCE2E8 !important; border-radius: 10px !important;
+    background: #FFF !important; color: #59636E !important; box-shadow: none !important;
+    cursor: pointer !important;
+}
+.seller-orders-page .seller-order-view-button:hover,
+.seller-orders-page .seller-order-view-button:focus-visible {
+    border-color: #C88912 !important; background: #F8FAFC !important;
+    color: #C88912 !important; transform: none !important;
+    outline-offset: 2px !important;
+}
+.seller-orders-page .seller-order-view-button svg { width: 17px !important; height: 17px !important; }
+/* Empty states and pagination echo the reference without fake actions. */
+.seller-orders-page .seller-orders-empty-state,
+.seller-orders-page .seller-orders-no-results {
+    padding: 72px 20px !important;
+    background: #FFF !important;
+    text-align: center !important;
+    color: #8793A1 !important;
+}
+.seller-orders-page .seller-orders-empty-icon {
+    display: grid; width: 92px !important; height: 92px !important;
+    margin: 0 auto !important; place-items: center;
+    padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+    background: transparent !important; color: #A0AAB6 !important;
+}
+.seller-orders-page .seller-orders-empty-icon svg,
+.seller-orders-page .seller-orders-no-results > svg {
+    width: 58px !important; height: 58px !important; margin: 0 auto;
+    stroke-width: 1.6;
+}
+.seller-orders-page .seller-orders-empty-state > p:nth-of-type(1),
+.seller-orders-page .seller-orders-no-results > p:nth-of-type(1) {
+    margin-top: 10px !important; font-size: 22px !important; font-weight: 700 !important;
+    color: #59636E !important;
+}
+.seller-orders-page .seller-orders-empty-state > p:nth-of-type(2),
+.seller-orders-page .seller-orders-no-results > p:nth-of-type(2) {
+    margin: 8px auto 0 !important; max-width: 480px !important;
+    font-size: 12px !important; font-weight: 400 !important;
+    color: #8793A1 !important; line-height: 1.6 !important;
+}
+.seller-orders-page .seller-orders-no-results > svg { display: block; color: #A0AAB6; }
+.seller-orders-page .seller-orders-table-footer {
+    display: flex !important; min-height: 64px !important;
+    flex-direction: row !important; align-items: center !important;
+    justify-content: space-between !important;
+    padding: 13px 20px !important; border-top: 1px solid #E9EDF1 !important;
+    background: #FFF !important;
+}
+.seller-orders-page #sellerOrderResultCount {
+    font-size: 11px !important; font-weight: 550 !important; color: #7B8794 !important;
+}
+.seller-orders-page .seller-orders-pagination { gap: 6px !important; }
+.seller-orders-page .seller-orders-pagination button,
+.seller-orders-page .seller-orders-pagination span {
+    width: 34px !important; min-width: 34px !important; height: 34px !important;
+    border-radius: 10px !important;
+}
+.seller-orders-page .seller-orders-pagination button {
+    border: 1px solid #E5E7EB !important; background: #FFF !important; color: #A0AAB6 !important;
+}
+.seller-orders-page .seller-orders-pagination span {
+    background: #C88912 !important; color: #FFF !important;
+    font-size: 11.5px !important; font-weight: 700 !important;
+    box-shadow: none !important;
+}
+/* Responsive cards and horizontally scrolling data table, never compressed columns. */
+@media (max-width: 1180px)  {
+    .seller-orders-page .seller-orders-summary { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media (max-width: 1023px)  {
+    .seller-orders-page .seller-orders-table-head { display: grid !important; }
+    .seller-orders-page .seller-order-grid { grid-template-columns: 36px minmax(250px,1.45fr) minmax(155px,.9fr) minmax(125px,.65fr) minmax(94px,.55fr) minmax(120px,.65fr) 52px !important; }
+    .seller-orders-page .seller-order-grid > div:not(.seller-order-index) { grid-column: auto !important; }
+    .seller-orders-page .seller-order-index { grid-row: auto !important; padding-top: 0 !important; }
+    .seller-orders-page .seller-order-grid p.lg\:hidden { display: none !important; }
+}
+@media (max-width: 900px)  {
+    .seller-orders-page .seller-orders-filter-panel { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-orders-page .seller-orders-search-field,
+.seller-orders-page .seller-orders-status-dropdown { grid-column: 1 / -1 !important; }
+    .seller-orders-page .seller-orders-apply-filter,
+.seller-orders-page .seller-orders-reset-filter { width: 100% !important; }
+}
+@media (max-width: 767px)  {
+    .seller-orders-page .seller-orders-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+    .seller-orders-page .seller-orders-title { font-size: 25px !important; }
+    .seller-orders-page .seller-orders-eyebrow { font-size: 9.5px !important; }
+    .seller-orders-page .seller-orders-header-actions { display: flex !important; justify-content: flex-start !important; width: auto !important; }
+    .seller-orders-page .seller-orders-header-action { top: 0 !important; font-size: 10.5px !important; }
+    .seller-orders-page .seller-orders-header-arrow { font-size: 16px; }
+    .seller-orders-page .seller-orders-summary-card p:first-child { font-size: 12.5px !important; }
+    .seller-orders-page .seller-orders-summary-card p:nth-child(3) { font-size: 11px !important; }
+    .seller-orders-page .seller-orders-empty-state,
+.seller-orders-page .seller-orders-no-results { padding: 56px 16px !important; }
+    .seller-orders-page .seller-orders-empty-icon { width: 64px !important; height: 64px !important; }
+    .seller-orders-page .seller-orders-empty-icon svg,
+.seller-orders-page .seller-orders-no-results > svg { width: 40px !important; height: 40px !important; }
+    .seller-orders-page .seller-orders-empty-state > p:nth-of-type(1),
+.seller-orders-page .seller-orders-no-results > p:nth-of-type(1) { font-size: 20px !important; }
+    .seller-orders-page .seller-orders-empty-state > p:nth-of-type(2),
+.seller-orders-page .seller-orders-no-results > p:nth-of-type(2) { font-size: 11px !important; }
+}
+@media (max-width: 540px)  {
+    .seller-orders-page .seller-orders-summary { grid-template-columns: 1fr !important; gap: 11px !important; }
+    .seller-orders-page .seller-orders-summary-card { min-height: 100px !important; }
+    .seller-orders-page .seller-orders-table-titlebar { align-items: flex-start !important; flex-direction: column !important; padding: 17px 16px !important; gap: 6px !important; }
+    .seller-orders-page .seller-orders-table-footer { gap: 12px !important; flex-direction: column !important; align-items: flex-start !important; }
+    .seller-orders-page .seller-orders-pagination { align-self: flex-end !important; }
+}
+@media (prefers-reduced-motion: reduce)  {
+    .seller-orders-page * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+
+/* Final seller orders list: actual selection and 10-row pagination */
+.seller-orders-page .seller-orders-table-head,
+.seller-orders-page .seller-order-grid { grid-template-columns: 42px minmax(250px,1.4fr) minmax(150px,.8fr) 112px 96px 112px 48px !important; }
+.seller-orders-page .seller-orders-check-wrap { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; min-height: 32px; cursor: pointer; }
+.seller-orders-page .seller-orders-check-wrap input { width: 17px; height: 17px; margin: 0; cursor: pointer; accent-color: #C88912; }
+.seller-orders-page .seller-orders-check-wrap input:focus-visible { outline: 2px solid #C88912; outline-offset: 3px; }
+.seller-orders-page .seller-order-row.is-selected { background: #F8FAFC !important; }
+.seller-orders-page .seller-orders-selection { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #E5E7EB; padding: 10px 19px; background: #F8FAFC; color: #465362; font-size: 11.5px; font-weight: 600; }
+.seller-orders-page .seller-orders-selection[hidden],
+.seller-orders-page [data-order-pagination][hidden] { display: none !important; }
+.seller-orders-page .seller-orders-selection-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.seller-orders-page .seller-orders-selection-actions button { min-height: 32px; border-radius: 9px; border: 1px solid #DCE2E8; background: #FFFFFF; color: #465362; padding: 0 12px; font-size: 11px; font-weight: 650; cursor: pointer; }
+.seller-orders-page .seller-orders-selection-actions [data-order-review-selected] { background: #C88912; border-color: #C88912; color: #FFFFFF; }
+.seller-orders-page .seller-orders-selection-actions button:hover { border-color: #C88912; }
+.seller-orders-page .seller-orders-selection-actions [data-order-review-selected]:hover { background: #B47B0E; }
+.seller-orders-page .seller-orders-selection-actions button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+.seller-orders-page .seller-orders-page-numbers { display: flex; gap: 6px; align-items: center; }
+.seller-orders-page .seller-orders-pagination button.is-current { color: #FFFFFF !important; background: #C88912 !important; border-color: #C88912 !important; box-shadow: 0 5px 12px rgba(200,137,18,.14); }
+.seller-orders-page .seller-orders-pagination button:disabled { opacity: .42 !important; cursor: not-allowed; }
+.seller-orders-page .seller-order-grid [data-order-status-code="ready_for_pickup"] { color: #92600B !important; background: #F2F6FA !important; border-color: #D7DFE7 !important; }
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .seller-orders-page .seller-orders-table-head, .seller-orders-page .seller-order-grid { grid-template-columns: 38px minmax(200px,1.35fr) minmax(120px,.78fr) 98px 82px 96px 40px !important; }
+}
+@media (max-width: 1023px) {
+    .seller-orders-page .seller-orders-table-head { display: grid !important; }
+    .seller-orders-page .seller-orders-table-head, .seller-orders-page .seller-order-grid { grid-template-columns: 42px minmax(250px,1.4fr) minmax(150px,.8fr) 112px 96px 112px 48px !important; min-width: 950px; }
+    .seller-orders-page .seller-order-grid > div:not(.seller-order-index) { grid-column: auto !important; }
+}
+@media (max-width: 640px) {
+    .seller-orders-page .seller-orders-selection { padding: 10px 13px; }
+    .seller-orders-page .seller-orders-selection-actions { width: 100%; }
+}
+
+
+/* V3 — accessible selected rows and semantic order-status colors. */
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 5px !important;
+    background: #FFFFFF !important;
+    cursor: pointer !important;
+    vertical-align: middle !important;
+    transition: background-color .12s ease, border-color .12s ease !important;
+}
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]::after {
+    content: "";
+    box-sizing: content-box;
+    width: 4px;
+    height: 8px;
+    border: solid #FFFFFF;
+    border-width: 0 2px 2px 0;
+    transform: translateY(-1px) rotate(45deg);
+    opacity: 0;
+}
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:checked,
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:indeterminate {
+    border-color: #C88912 !important;
+    background: #C88912 !important;
+}
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:checked::after { opacity: 1; }
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:indeterminate::after {
+    opacity: 1;
+    width: 9px;
+    height: 2px;
+    border: 0;
+    border-radius: 999px;
+    background: #FFFFFF;
+    transform: none;
+}
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:focus-visible {
+    outline: 2px solid #C88912 !important;
+    outline-offset: 3px !important;
+}
+.seller-orders-page .seller-orders-check-wrap input[type="checkbox"]:disabled { opacity: .5; cursor: not-allowed !important; }
+
+/* Explicit status tones override legacy cream and tiny-label rules. */
+.seller-orders-page .seller-order-grid [data-order-status-code] {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 27px;
+    max-width: 100%;
+    padding: 5px 10px !important;
+    border: 1px solid #DBE2EA !important;
+    border-radius: 999px !important;
+    background: #F1F5F9 !important;
+    color: #475569 !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    text-align: center;
+    white-space: normal;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="new"] {
+    background: #F1F5F9 !important;
+    border-color: #DCE3EC !important;
+    color: #475569 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="preparing"] {
+    background: #EFF6FF !important;
+    border-color: #BFDBFE !important;
+    color: #1D4ED8 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="ready_for_pickup"] {
+    background: #F8FAFC !important;
+    border-color: #E2D3B1 !important;
+    color: #A56D0A !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="courier_accepted"],
+.seller-orders-page .seller-order-grid [data-order-status-code="heading_pickup"],
+.seller-orders-page .seller-order-grid [data-order-status-code="arrived_pickup"] {
+    background: #F5F3FF !important;
+    border-color: #DDD6FE !important;
+    color: #6D28D9 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="in_transit"] {
+    background: #E8F4FF !important;
+    border-color: #BAE0FF !important;
+    color: #075985 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="arrived_buyer"] {
+    background: #ECFEFF !important;
+    border-color: #A5F3FC !important;
+    color: #0E7490 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="delivered"] {
+    background: #ECFDF3 !important;
+    border-color: #BBF7D0 !important;
+    color: #166534 !important;
+}
+.seller-orders-page .seller-order-grid [data-order-status-code="cancelled"] {
+    background: #FEF2F2 !important;
+    border-color: #FECACA !important;
+    color: #B91C1C !important;
+}
+/* Bulk preparation action appears only once at least one row is selected. */
+.seller-orders-page .seller-orders-selection-actions .seller-orders-bulk-form { display: inline-flex; align-items: center; margin: 0; }
+.seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected] {
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    min-height: 36px;
+    padding: 0 14px;
+    border: 1px solid #C88912;
+    border-radius: 9px;
+    background: #C88912;
+    color: #FFFFFF;
+    font: 700 11px/1.3 Poppins,sans-serif;
+    cursor: pointer;
+}
+.seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected]:hover:not(:disabled) {
+    background: #B47B0E;
+    border-color: #B47B0E;
+}
+.seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected]:disabled {
+    border-color: #CBD5E1;
+    background: #E2E8F0;
+    color: #64748B;
+    cursor: not-allowed;
+}
+.seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected]:focus-visible {
+    outline: 2px solid #C88912 !important;
+    outline-offset: 3px;
+}
+.seller-orders-page .seller-orders-selection-hint {
+    color: #64748B;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+@media (max-width: 640px) {
+    .seller-orders-page .seller-orders-selection-actions .seller-orders-bulk-form { flex: 1 1 100%; }
+    .seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected] { width: 100%; justify-content: center; }
+}
+
 @endverbatim
 </style>
-{{-- Cacheable order-management stylesheet; backend/JS/routes preserved. --}}
-
+{{-- Dedicated dialog design is maintained separately from the orders table. --}}
+@include('seller.order-partials.order-detail-modal-styles')
 @endpush
 
 @section('content')
@@ -5879,17 +4842,10 @@
 
         <div class="seller-orders-header-actions">
             <a href="{{ route('seller.messages') }}" class="seller-orders-header-action">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 2v-4A7.5 7.5 0 1 1 21 11.5Z"></path>
-                </svg>
-                Buyer Inbox
+                Buyer Inbox <span class="seller-orders-header-arrow" aria-hidden="true">&gt;</span>
             </a>
-
             <a href="{{ route('seller.reviews') }}" wire:navigate class="seller-orders-header-action">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 5.9L12 16.7 6.6 19.5l1-5.9-4.3-4.2 6-.9L12 3Z"></path>
-                </svg>
-                Product Reviews
+                Product Reviews <span class="seller-orders-header-arrow" aria-hidden="true">&gt;</span>
             </a>
         </div>
     </section>
@@ -5962,7 +4918,7 @@
                         <p class="mt-3 truncate text-[9.5px] font-normal text-[#8f867c]">{{ $card['sub'] }}</p>
                     </div>
 
-                    <span class="seller-orders-summary-icon {{ $card['iconBg'] }} {{ $card['iconText'] }}">
+                    <span class="seller-orders-summary-icon {{ $card['iconText'] }}">
                         @if ($card['icon'] === 'history')
                             <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <circle cx="12" cy="12" r="8"></circle><path d="M12 8v5l3 2"></path>
@@ -6035,14 +4991,6 @@
                 aria-expanded="false"
                 aria-controls="sellerOrderStatusMenu"
             >
-                <span class="seller-orders-status-trigger-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 6h16"></path>
-                        <path d="M7 12h10"></path>
-                        <path d="M10 18h4"></path>
-                    </svg>
-                </span>
-
                 <span class="seller-orders-status-trigger-label" data-order-status-label>All Status</span>
 
                 <span class="seller-orders-status-trigger-chevron" aria-hidden="true">
@@ -6077,13 +5025,7 @@
                         role="option"
                         aria-selected="{{ $statusValue === 'all' ? 'true' : 'false' }}"
                     >
-                        <span class="seller-orders-status-option-dot" aria-hidden="true"></span>
                         <span class="seller-orders-status-option-label">{{ $statusLabel }}</span>
-                        <span class="seller-orders-status-option-check" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="m7 12 3 3 7-7"></path>
-                            </svg>
-                        </span>
                     </button>
                 @endforeach
             </div>
@@ -6102,10 +5044,32 @@
     </section>
 
     <section class="seller-orders-workspace">
+        <div class="seller-orders-table-titlebar">
+            <div>
+                <h2>Seller Order Records</h2>
+                <p>Most recent buyer orders and fulfillment activity.</p>
+            </div>
+            <span class="seller-orders-table-counter" data-order-table-counter>Showing {{ $orders->count() }} of {{ $orders->count() }}</span>
+        </div>
+        <div class="seller-orders-selection" data-order-selection-bar hidden aria-live="polite">
+            <span><strong data-order-selected-count>0</strong> selected <span class="seller-orders-selection-hint" data-order-selection-hint></span></span>
+            <div class="seller-orders-selection-actions">
+                <form method="POST" action="{{ route('seller.orders.prepare-selected') }}" id="sellerOrdersBulkPrepareForm" class="seller-orders-bulk-form" data-order-bulk-prepare-form>
+                    @csrf
+                    <button type="submit" data-order-prepare-selected disabled title="Only New orders can be prepared together.">Prepare selected orders</button>
+                </form>
+                <button type="button" data-order-review-selected>Review selected</button>
+                <button type="button" data-order-show-selected aria-pressed="false">Show selected only</button>
+                <button type="button" data-order-clear-selection>Clear selection</button>
+            </div>
+        </div>
+        <div class="seller-orders-table-scroll" tabindex="0" aria-label="Orders table, scroll horizontally to see all columns">
         {{-- DESKTOP TABLE HEADER --}}
         <div class="seller-orders-table-head">
-            <span>#</span>
-            <span>Order</span>
+            <label class="seller-orders-check-wrap" title="Select all visible orders">
+                <input type="checkbox" data-order-select-all aria-label="Select all orders on this page">
+            </label>
+            <span>Order / Product</span>
             <span>Buyer</span>
             <span>Status</span>
             <span>Total</span>
@@ -6147,11 +5111,15 @@
                 <article
                     class="seller-order-row"
                     data-order-row
+                    data-order-id="{{ $order->id }}"
+                    data-order-current-status="{{ $order->status }}"
                     data-search="{{ $searchText }}"
                     data-status="{{ $filterStatus }}"
                 >
                     <div class="seller-order-grid">
-                        <div class="seller-order-index">{{ $loop->iteration }}</div>
+                        <label class="seller-orders-check-wrap" title="Select order {{ $order->order_number }}">
+                            <input type="checkbox" data-order-select aria-label="Select order {{ $order->order_number }}" value="{{ $order->id }}">
+                        </label>
 
                         {{-- ORDER / PRODUCT --}}
                         <div class="flex min-w-0 items-center gap-3">
@@ -6206,7 +5174,7 @@
                         {{-- STATUS --}}
                         <div>
                             <p class="mb-1 text-[8.8px] font-medium uppercase tracking-[.08em] text-[#91887e] lg:hidden">Status</p>
-                            <span class="inline-flex rounded-full border px-2.5 py-1.5 text-[9px] font-medium {{ $statusTone($order->status) }}">
+                            <span data-order-status-code="{{ $order->status }}" class="inline-flex rounded-full border px-2.5 py-1.5 text-[9px] font-medium {{ $statusTone($order->status) }}">
                                 {{ $order->statusLabel() }}
                             </span>
                         </div>
@@ -6242,345 +5210,7 @@
                     </div>
                 </article>
 
-                {{-- =====================================================
-                    PRE-RENDERED ORDER DETAIL TEMPLATE
-                    Modal opens instantly: no fetch / no API delay.
-                ====================================================== --}}
-                <template id="sellerOrderTemplate-{{ $order->id }}">
-                    @php
-                        $progress = $progressValue($order->status);
-                        $workflowSteps = [
-                            ['Order placed', 10],
-                            ['Preparing', 25],
-                            ['Ready for pickup', 40],
-                            ['In transit', 80],
-                            ['Delivered', 100],
-                        ];
-                        $nextActionLabel = match ($order->status) {
-                            'new' => 'Prepare this order',
-                            'preparing' => 'Mark ready for pickup',
-                            'ready_for_pickup' => 'Waiting for courier',
-                            'courier_accepted', 'heading_pickup', 'arrived_pickup' => 'Courier pickup in progress',
-                            'in_transit', 'arrived_buyer' => 'Delivery in progress',
-                            'delivered' => 'Order completed',
-                            'cancelled' => 'Order cancelled',
-                            default => $order->statusLabel(),
-                        };
-                    @endphp
-
-                    <div class="seller-order-modal-panel seller-order-workflow-panel">
-                        <header class="seller-order-workflow-header">
-                            <div class="seller-order-workflow-header-main">
-                                <span class="seller-order-workflow-header-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M6 5h12v15H6z"></path>
-                                        <path d="M9 5V3h6v2"></path>
-                                        <path d="M9 10h6"></path>
-                                        <path d="M9 14h6"></path>
-                                    </svg>
-                                </span>
-
-                                <div class="min-w-0">
-                                    <div class="seller-order-workflow-title-row">
-                                        <h3>Order Details</h3>
-                                        <span class="seller-order-workflow-status {{ $statusTone($order->status) }}">
-                                            {{ $order->statusLabel() }}
-                                        </span>
-                                    </div>
-
-                                    <div class="seller-order-workflow-meta">
-                                        <span>{{ $order->order_number }}</span>
-                                        <span aria-hidden="true">•</span>
-                                        <span>{{ $order->created_at?->format('M d, Y · h:i A') }}</span>
-                                        <span aria-hidden="true">•</span>
-                                        <strong>₱{{ number_format((float) $order->total, 2) }}</strong>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="button" data-close-order-modal class="seller-order-workflow-close" aria-label="Close order details">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                    <path d="m7 7 10 10"></path>
-                                    <path d="M17 7 7 17"></path>
-                                </svg>
-                            </button>
-                        </header>
-
-                        <div class="seller-order-workflow-body">
-                            <div class="seller-order-workflow-main">
-                                <section class="seller-order-workflow-card seller-order-workflow-products">
-                                    <div class="seller-order-workflow-section-head">
-                                        <div class="seller-order-workflow-section-title">
-                                            <span class="seller-order-workflow-section-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <path d="M5 7h14l-1 13H6L5 7Z"></path>
-                                                    <path d="M9 7a3 3 0 0 1 6 0"></path>
-                                                </svg>
-                                            </span>
-                                            <div>
-                                                <h4>Ordered Products</h4>
-                                                <p>{{ count($items) }} {{ count($items) === 1 ? 'item' : 'items' }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="seller-order-workflow-product-list seller-order-scrollbar">
-                                        @forelse ($items as $item)
-                                            @php
-                                                $itemProductId = (int) ($item['product_id'] ?? 0);
-                                                $itemImage = $itemProductId > 0
-                                                    ? route('seller.products.image', $itemProductId)
-                                                    : null;
-                                                $itemQty = max(1, (int) ($item['qty'] ?? 1));
-                                                $itemPrice = (float) ($item['price'] ?? 0);
-                                                $itemLineTotal = (float) ($item['line_total'] ?? ($itemPrice * $itemQty));
-                                            @endphp
-
-                                            <div class="seller-order-workflow-product-row">
-                                                <div class="seller-order-workflow-product-image seller-order-image-frame {{ $itemImage ? '' : 'is-loaded' }}">
-                                                    @if ($itemImage)
-                                                        <img
-                                                            src="{{ $itemImage }}"
-                                                            alt="{{ $item['name'] ?? 'Ordered product' }}"
-                                                            width="54"
-                                                            height="54"
-                                                            loading="lazy"
-                                                            fetchpriority="low"
-                                                            decoding="async"
-                                                            class="h-full w-full object-contain"
-                                                            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
-                                                        >
-                                                    @endif
-
-                                                    <div class="{{ $itemImage ? 'hidden' : '' }} seller-order-workflow-image-fallback">
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                                            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
-                                                            <path d="m5 17 5-5 4 4 2-2 3 3"></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-
-                                                <div class="seller-order-workflow-product-copy">
-                                                    <p class="seller-order-workflow-product-name">{{ $item['name'] ?? 'Product' }}</p>
-                                                    <p class="seller-order-workflow-product-meta">
-                                                        Qty {{ $itemQty }}
-                                                        @if (!empty($item['variant_label']))
-                                                            · {{ $item['variant_label'] }}
-                                                        @endif
-                                                    </p>
-                                                </div>
-
-                                                <p class="seller-order-workflow-product-price">₱{{ number_format($itemLineTotal, 2) }}</p>
-                                            </div>
-                                        @empty
-                                            <div class="seller-order-workflow-empty">No item detail available.</div>
-                                        @endforelse
-                                    </div>
-                                </section>
-
-                                <div class="seller-order-workflow-info-grid">
-                                    <section class="seller-order-workflow-card seller-order-workflow-info-card">
-                                        <div class="seller-order-workflow-section-title">
-                                            <span class="seller-order-workflow-section-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <circle cx="12" cy="8" r="3"></circle>
-                                                    <path d="M5 20a7 7 0 0 1 14 0"></path>
-                                                </svg>
-                                            </span>
-                                            <div>
-                                                <h4>Buyer & Delivery</h4>
-                                                <p>Customer and shipping details</p>
-                                            </div>
-                                        </div>
-
-                                        <dl class="seller-order-workflow-details">
-                                            <div>
-                                                <dt>Buyer</dt>
-                                                <dd>{{ $order->buyer_name }}</dd>
-                                            </div>
-                                            <div>
-                                                <dt>Email</dt>
-                                                <dd class="break-all">{{ $order->buyer_email ?: 'Buyer account' }}</dd>
-                                            </div>
-                                            <div class="seller-order-workflow-detail-wide">
-                                                <dt>Shipping address</dt>
-                                                <dd>{{ $order->buyer_address }}</dd>
-                                            </div>
-                                        </dl>
-                                    </section>
-
-                                    <section class="seller-order-workflow-card seller-order-workflow-info-card">
-                                        <div class="seller-order-workflow-section-title">
-                                            <span class="seller-order-workflow-section-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <path d="M3 7h11v9H3z"></path>
-                                                    <path d="M14 10h4l3 3v3h-7z"></path>
-                                                    <circle cx="7" cy="18" r="1.5"></circle>
-                                                    <circle cx="18" cy="18" r="1.5"></circle>
-                                                </svg>
-                                            </span>
-                                            <div>
-                                                <h4>Delivery & Payment</h4>
-                                                <p>Courier and transaction method</p>
-                                            </div>
-                                        </div>
-
-                                        <dl class="seller-order-workflow-details">
-                                            <div>
-                                                <dt>Courier</dt>
-                                                <dd>{{ $order->courier_name ?: 'Waiting for courier' }}</dd>
-                                            </div>
-                                            <div>
-                                                <dt>Payment</dt>
-                                                <dd>{{ $order->payment_method }}</dd>
-                                            </div>
-                                            <div class="seller-order-workflow-detail-wide">
-                                                <dt>Order date</dt>
-                                                <dd>{{ $order->created_at?->format('M d, Y · h:i A') }}</dd>
-                                            </div>
-                                        </dl>
-                                    </section>
-                                </div>
-                            </div>
-
-                            <aside class="seller-order-workflow-sidebar seller-order-scrollbar">
-                                <section class="seller-order-workflow-card seller-order-workflow-summary">
-                                    <div class="seller-order-workflow-section-title">
-                                        <span class="seller-order-workflow-section-icon" aria-hidden="true">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M6 3h12v18H6z"></path>
-                                                <path d="M9 8h6"></path>
-                                                <path d="M9 12h6"></path>
-                                            </svg>
-                                        </span>
-                                        <div>
-                                            <h4>Order Summary</h4>
-                                            <p>Payment breakdown</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="seller-order-workflow-money-lines">
-                                        <div><span>Subtotal</span><strong>₱{{ number_format((float) $order->subtotal, 2) }}</strong></div>
-                                        <div><span>Delivery fee</span><strong>₱{{ number_format((float) $order->delivery_fee, 2) }}</strong></div>
-                                    </div>
-
-                                    <div class="seller-order-workflow-total">
-                                        <span>Total</span>
-                                        <strong>₱{{ number_format((float) $order->total, 2) }}</strong>
-                                    </div>
-                                </section>
-
-                                <section class="seller-order-workflow-card seller-order-workflow-progress-card">
-                                    <div class="seller-order-workflow-section-head">
-                                        <div class="seller-order-workflow-section-title">
-                                            <span class="seller-order-workflow-section-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <circle cx="12" cy="12" r="8"></circle>
-                                                    <path d="M12 8v4l3 2"></path>
-                                                </svg>
-                                            </span>
-                                            <div>
-                                                <h4>Fulfillment</h4>
-                                                <p>Order progress</p>
-                                            </div>
-                                        </div>
-                                        <strong class="seller-order-workflow-progress-percent">{{ $progress }}%</strong>
-                                    </div>
-
-                                    <div class="seller-order-workflow-progress-bar" aria-hidden="true">
-                                        <span style="width: {{ $progress }}%"></span>
-                                    </div>
-
-                                    <ol class="seller-order-workflow-timeline">
-                                        @foreach ($workflowSteps as [$step, $stepProgress])
-                                            @php $complete = $progress >= $stepProgress; @endphp
-                                            <li class="{{ $complete ? 'is-complete' : '' }}">
-                                                <span class="seller-order-workflow-timeline-dot">
-                                                    @if ($complete)
-                                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                            <path d="m7 12 3 3 7-7"></path>
-                                                        </svg>
-                                                    @else
-                                                        <span></span>
-                                                    @endif
-                                                </span>
-                                                <span>{{ $step }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ol>
-                                </section>
-
-                                <section class="seller-order-workflow-card seller-order-workflow-actions">
-                                    <div class="seller-order-workflow-action-heading">
-                                        <span class="seller-order-workflow-action-icon" aria-hidden="true">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-                                                <path d="m13 2-8 11h6l-1 9 9-12h-6l0-8Z"></path>
-                                            </svg>
-                                        </span>
-                                        <div>
-                                            <p>Next Action</p>
-                                            <h4>{{ $nextActionLabel }}</h4>
-                                            <small>{{ $order->status === 'new' ? 'Start preparing the items for pickup.' : ($order->status === 'preparing' ? 'Finish packing and hand the order to the courier.' : 'Continue with the current fulfillment stage.') }}</small>
-                                        </div>
-                                    </div>
-
-                                    @if ($order->status === 'new')
-                                        <form method="POST" action="{{ route('seller.orders.prepare', $order) }}">
-                                            @csrf
-                                            <button class="seller-order-workflow-primary-action">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <path d="M4 6h16v13H4z"></path>
-                                                    <path d="M8 6V4h8v2"></path>
-                                                    <path d="M8 11h8"></path>
-                                                </svg>
-                                                Prepare Order
-                                            </button>
-                                        </form>
-                                    @elseif ($order->status === 'preparing')
-                                        <form method="POST" action="{{ route('seller.orders.ready-pickup', $order) }}">
-                                            @csrf
-                                            <button class="seller-order-workflow-primary-action seller-order-workflow-primary-action--success">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <path d="M4 6h16v12H4z"></path>
-                                                    <path d="m8 12 2.5 2.5L16 9"></path>
-                                                </svg>
-                                                Mark Ready for Pickup
-                                            </button>
-                                        </form>
-                                    @else
-                                        <div class="seller-order-workflow-passive-action {{ $statusTone($order->status) }}">
-                                            {{ $order->statusLabel() }}
-                                        </div>
-                                    @endif
-
-                                    <div class="seller-order-workflow-secondary-actions">
-                                        @if ($order->buyer_account_id || $order->buyer_social_account_id)
-                                            <a
-                                                href="{{ route('seller.messages', ['buyer' => $order->buyer_account_id ? 'account-' . $order->buyer_account_id : 'social-' . $order->buyer_social_account_id]) }}"
-                                                data-message-buyer
-                                                aria-label="Message buyer for order {{ $order->order_number }}"
-                                            >
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                    <path d="M21 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 2v-4A7.5 7.5 0 1 1 21 11.5Z"></path>
-                                                </svg>
-                                                Message Buyer
-                                            </a>
-                                        @endif
-
-                                        <a href="{{ route('seller.orders.waybill', $order) }}" target="_blank">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                                <path d="M6 9V3h12v6"></path>
-                                                <path d="M6 18H4V9h16v9h-2"></path>
-                                                <path d="M7 14h10v7H7z"></path>
-                                            </svg>
-                                            Print Waybill
-                                        </a>
-                                    </div>
-                                </section>
-                            </aside>
-                        </div>
-                    </div>
-                </template>
+                @include('seller.order-partials.order-detail-modal', ['order' => $order, 'items' => $items, 'statusTone' => $statusTone, 'progressValue' => $progressValue])
             @empty
                 <div class="seller-orders-empty-state">
                     <div class="seller-orders-empty-icon">
@@ -6595,23 +5225,27 @@
         </div>
 
         @if ($orders->isNotEmpty())
-            <div id="sellerOrderNoResults" class="hidden border-t border-[#eee8df] px-6 py-10 text-center">
-                <p class="text-[10px] font-medium text-[#595149]">No matching orders.</p>
-                <p class="mt-1 text-[8.5px] font-normal text-[#958c82]">Try another search or status filter.</p>
+            <div id="sellerOrderNoResults" class="seller-orders-no-results hidden">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <circle cx="10.8" cy="10.8" r="7"></circle><path d="m16 16 5 5"></path>
+                </svg>
+                <p>No matching orders</p>
+                <p>Try another order ID, buyer name, or status filter.</p>
             </div>
         @endif
 
+        </div>{{-- /seller-orders-table-scroll --}}
         <div class="seller-orders-table-footer">
             <p id="sellerOrderResultCount">Showing {{ $orders->count() }} of {{ $orders->count() }} orders</p>
-            <div class="seller-orders-pagination" aria-label="Current order page">
-                <button type="button" disabled aria-label="Previous page">
+            <nav class="seller-orders-pagination" aria-label="Order pagination" data-order-pagination>
+                <button type="button" data-order-page-prev disabled aria-label="Previous page">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
-                <span>1</span>
-                <button type="button" disabled aria-label="Next page">
+                <div data-order-page-numbers class="seller-orders-page-numbers"></div>
+                <button type="button" data-order-page-next disabled aria-label="Next page">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 18 6-6-6-6"></path></svg>
                 </button>
-            </div>
+            </nav>
         </div>
     </section>
     </div>
@@ -6620,23 +5254,7 @@
 </div>
 
 
-{{-- =============================================================
-    SHARED CENTER MODAL
-============================================================= --}}
-<div
-    id="sellerOrderDetailModal"
-    class="fixed inset-0 z-[120] hidden items-center justify-center bg-[#211b14]/35 p-3 backdrop-blur-[2px] sm:p-5"
-    aria-hidden="true"
->
-    <button
-        type="button"
-        data-close-order-modal
-        class="absolute inset-0 cursor-default"
-        aria-label="Close order modal backdrop"
-    ></button>
-
-    <div id="sellerOrderDetailModalContent" class="relative z-[1] flex w-full justify-center"></div>
-</div>
+@include('seller.order-partials.order-detail-modal-shell')
 
 @push('scripts')
 <script>
@@ -6655,6 +5273,8 @@ function resetSellerOrderManagementPage() {
     window.__SARI_SELLER_ORDER_ABORT__ = new AbortController();
 }
 
+@include('seller.order-partials.order-detail-modal-script')
+
 function initSellerOrderManagementPage() {
     const signal = window.__SARI_SELLER_ORDER_ABORT__?.signal;
 
@@ -6668,6 +5288,10 @@ function initSellerOrderManagementPage() {
     let refreshBusy = false;
     let refreshQueued = false;
     let subscribedChannel = null;
+    const ORDER_PAGE_SIZE = 10;
+    const selectedOrderIds = new Set();
+    let currentOrderPage = 1;
+    let onlySelectedOrders = false;
 
     function getStatusDropdownElements() {
         const root = document.querySelector('[data-order-status-dropdown]');
@@ -6736,66 +5360,106 @@ function initSellerOrderManagementPage() {
     }
 
 
-    function closeOrderModal() {
-        if (!modal || !modalContent) return;
+    const { closeOrderModal, openOrderModal, trapModalFocus } = createSellerOrderModalController(modal, modalContent);
 
-        modal.dataset.openTemplate = '';
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        modal.setAttribute('aria-hidden', 'true');
-        modalContent.innerHTML = '';
-        document.documentElement.classList.remove('overflow-hidden');
+    function orderRows() {
+        return [...document.querySelectorAll('[data-order-row]')];
     }
 
-    function openOrderModal(templateId, preserveFocus = false) {
-        if (!modal || !modalContent) return;
-
-        const template = document.getElementById(templateId);
-        if (!(template instanceof HTMLTemplateElement)) return;
-
-        modal.dataset.openTemplate = templateId;
-        modalContent.innerHTML = '';
-        modalContent.appendChild(template.content.cloneNode(true));
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        modal.setAttribute('aria-hidden', 'false');
-        document.documentElement.classList.add('overflow-hidden');
-
-        if (!preserveFocus) {
-            window.requestAnimationFrame(() => {
-                modalContent.querySelector('[data-close-order-modal]')?.focus({ preventScroll: true });
-            });
+    function updateSelectionUi() {
+        const rows = orderRows();
+        const visibleRows = rows.filter((row) => !row.classList.contains('hidden'));
+        const selectAll = document.querySelector('[data-order-select-all]');
+        const selectedVisible = visibleRows.filter((row) => selectedOrderIds.has(row.dataset.orderId));
+        rows.forEach((row) => {
+            const selected = selectedOrderIds.has(row.dataset.orderId);
+            const checkbox = row.querySelector('[data-order-select]');
+            if (checkbox) checkbox.checked = selected;
+            row.classList.toggle('is-selected', selected);
+        });
+        if (selectAll) {
+            selectAll.checked = visibleRows.length > 0 && selectedVisible.length === visibleRows.length;
+            selectAll.indeterminate = selectedVisible.length > 0 && selectedVisible.length < visibleRows.length;
+            selectAll.disabled = visibleRows.length === 0;
+        }
+        const toolbar = document.querySelector('[data-order-selection-bar]');
+        if (toolbar) toolbar.hidden = selectedOrderIds.size === 0;
+        const count = document.querySelector('[data-order-selected-count]');
+        if (count) count.textContent = String(selectedOrderIds.size);
+        const selectedRows = rows.filter((row) => selectedOrderIds.has(row.dataset.orderId));
+        const prepareEligible = selectedRows.length > 0 && selectedRows.every((row) => row.dataset.orderCurrentStatus === 'new');
+        const prepareButton = document.querySelector('[data-order-prepare-selected]');
+        const selectedHint = document.querySelector('[data-order-selection-hint]');
+        if (prepareButton) {
+            prepareButton.disabled = !prepareEligible || selectedRows.length > 100;
+            prepareButton.textContent = `Prepare selected orders (${selectedRows.length})`;
+            prepareButton.title = selectedRows.length > 100
+                ? 'Maximum 100 orders per bulk preparation.'
+                : prepareEligible ? 'Prepare all selected New orders' : 'Select only New orders to prepare together.';
+        }
+        if (selectedHint) {
+            selectedHint.textContent = selectedRows.length > 100
+                ? '· Select up to 100 orders at a time'
+                : (!prepareEligible && selectedRows.length > 0 ? '· Only New orders can be prepared' : '');
+        }
+        const showSelected = document.querySelector('[data-order-show-selected]');
+        if (showSelected) {
+            showSelected.setAttribute('aria-pressed', String(onlySelectedOrders));
+            showSelected.textContent = onlySelectedOrders ? 'Show all orders' : 'Show selected only';
         }
     }
 
-    function applyOrderFilters() {
+    function renderOrderPagination(pageCount) {
+        const pageNumbers = document.querySelector('[data-order-page-numbers]');
+        const prev = document.querySelector('[data-order-page-prev]');
+        const next = document.querySelector('[data-order-page-next]');
+        const nav = document.querySelector('[data-order-pagination]');
+        if (prev) prev.disabled = currentOrderPage <= 1;
+        if (next) next.disabled = currentOrderPage >= pageCount;
+        if (nav) nav.hidden = pageCount <= 1;
+        if (!pageNumbers) return;
+        pageNumbers.replaceChildren();
+        const start = Math.max(1, Math.min(currentOrderPage - 2, pageCount - 4));
+        const end = Math.min(pageCount, start + 4);
+        for (let i = start; i <= end; i++) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.dataset.orderPage = String(i);
+            button.textContent = String(i);
+            button.className = 'seller-orders-page-button' + (i === currentOrderPage ? ' is-current' : '');
+            if (i === currentOrderPage) button.setAttribute('aria-current', 'page');
+            button.setAttribute('aria-label', 'Page ' + i);
+            pageNumbers.append(button);
+        }
+    }
+
+    function applyOrderFilters({ resetPage = false } = {}) {
         const searchInput = document.getElementById('sellerOrderSearch');
         const statusFilter = document.getElementById('sellerOrderStatusFilter');
         const resultCount = document.getElementById('sellerOrderResultCount');
         const noResults = document.getElementById('sellerOrderNoResults');
-        const rows = Array.from(document.querySelectorAll('[data-order-row]'));
-
+        const rows = orderRows();
         const query = (searchInput?.value || '').trim().toLowerCase();
         const selectedStatus = statusFilter?.value || 'all';
-        let visibleCount = 0;
-
-        rows.forEach((row) => {
-            const matchesSearch = !query || (row.dataset.search || '').includes(query);
-            const matchesStatus = selectedStatus === 'all' || row.dataset.status === selectedStatus;
-            const visible = matchesSearch && matchesStatus;
-
-            row.classList.toggle('hidden', !visible);
-            if (visible) visibleCount++;
-        });
-
-        if (resultCount) {
-            resultCount.textContent = `Showing ${visibleCount} of ${rows.length} orders`;
-        }
-
-        const hasOrderRows = rows.length > 0;
-        noResults?.classList.toggle('hidden', !hasOrderRows || visibleCount !== 0);
-
+        const matches = rows.filter((row) =>
+            (!query || (row.dataset.search || '').includes(query)) &&
+            (selectedStatus === 'all' || row.dataset.status === selectedStatus) &&
+            (!onlySelectedOrders || selectedOrderIds.has(row.dataset.orderId))
+        );
+        const pageCount = Math.max(1, Math.ceil(matches.length / ORDER_PAGE_SIZE));
+        if (resetPage) currentOrderPage = 1;
+        currentOrderPage = Math.min(Math.max(1, currentOrderPage), pageCount);
+        const offset = (currentOrderPage - 1) * ORDER_PAGE_SIZE;
+        rows.forEach((row) => row.classList.add('hidden'));
+        matches.slice(offset, offset + ORDER_PAGE_SIZE).forEach((row) => row.classList.remove('hidden'));
+        const from = matches.length ? offset + 1 : 0;
+        const to = Math.min(offset + ORDER_PAGE_SIZE, matches.length);
+        if (resultCount) resultCount.textContent = `Showing ${from}–${to} of ${matches.length} orders`;
+        const counter = document.querySelector('[data-order-table-counter]');
+        if (counter) counter.textContent = `Showing ${matches.length} of ${rows.length}`;
+        noResults?.classList.toggle('hidden', rows.length === 0 || matches.length !== 0);
+        renderOrderPagination(pageCount);
+        updateSelectionUi();
         syncStatusDropdownUi();
     }
 
@@ -6803,21 +5467,24 @@ function initSellerOrderManagementPage() {
         return {
             search: document.getElementById('sellerOrderSearch')?.value || '',
             status: document.getElementById('sellerOrderStatusFilter')?.value || 'all',
-            openTemplate: modal && !modal.classList.contains('hidden')
-                ? (modal.dataset.openTemplate || '')
-                : '',
+            openTemplate: modal && !modal.classList.contains('hidden') ? (modal.dataset.openTemplate || '') : '',
+            selected: [...selectedOrderIds],
+            page: currentOrderPage,
+            onlySelected: onlySelectedOrders,
         };
     }
 
     function restoreUiState(state) {
         const searchInput = document.getElementById('sellerOrderSearch');
         const statusFilter = document.getElementById('sellerOrderStatusFilter');
-
         if (searchInput) searchInput.value = state.search;
         if (statusFilter) statusFilter.value = state.status;
-
+        selectedOrderIds.clear();
+        const availableIds = new Set(orderRows().map((row) => row.dataset.orderId));
+        (state.selected || []).forEach((id) => { if (availableIds.has(String(id))) selectedOrderIds.add(String(id)); });
+        onlySelectedOrders = Boolean(state.onlySelected && selectedOrderIds.size);
+        currentOrderPage = Math.max(1, Number(state.page) || 1);
         applyOrderFilters();
-
         if (state.openTemplate && document.getElementById(state.openTemplate)) {
             openOrderModal(state.openTemplate, true);
         } else if (state.openTemplate) {
@@ -6986,9 +5653,43 @@ function initSellerOrderManagementPage() {
             closeStatusDropdown();
         }
 
+        const pageButton = event.target.closest('[data-order-page]');
+        if (pageButton) {
+            currentOrderPage = Number(pageButton.dataset.orderPage) || 1;
+            applyOrderFilters();
+            return;
+        }
+        if (event.target.closest('[data-order-page-prev]')) {
+            currentOrderPage = Math.max(1, currentOrderPage - 1);
+            applyOrderFilters();
+            return;
+        }
+        if (event.target.closest('[data-order-page-next]')) {
+            currentOrderPage += 1;
+            applyOrderFilters();
+            return;
+        }
+        if (event.target.closest('[data-order-show-selected]')) {
+            onlySelectedOrders = !onlySelectedOrders;
+            applyOrderFilters({ resetPage: true });
+            return;
+        }
+        if (event.target.closest('[data-order-clear-selection]')) {
+            selectedOrderIds.clear();
+            onlySelectedOrders = false;
+            applyOrderFilters({ resetPage: true });
+            return;
+        }
+        if (event.target.closest('[data-order-review-selected]')) {
+            const target = orderRows().find((row) => selectedOrderIds.has(row.dataset.orderId));
+            const templateId = target?.querySelector('[data-order-template]')?.dataset.orderTemplate;
+            if (templateId) openOrderModal(templateId, false, target.querySelector('[data-order-template]'));
+            return;
+        }
+
         const viewButton = event.target.closest('.seller-order-view-button');
         if (viewButton) {
-            openOrderModal(viewButton.dataset.orderTemplate || '');
+            openOrderModal(viewButton.dataset.orderTemplate || '', false, viewButton);
             return;
         }
 
@@ -6997,21 +5698,72 @@ function initSellerOrderManagementPage() {
         }
     }, { signal });
 
+    document.addEventListener('submit', function (event) {
+        const form = event.target.closest?.('[data-order-bulk-prepare-form]');
+        if (!form) return;
+        const selectedRows = orderRows().filter((row) => selectedOrderIds.has(row.dataset.orderId));
+        const validSelection = selectedRows.length > 0 && selectedRows.length <= 100 &&
+            selectedRows.every((row) => row.dataset.orderCurrentStatus === 'new');
+        if (!validSelection) {
+            event.preventDefault();
+            updateSelectionUi();
+            return;
+        }
+        if (!window.confirm(`Prepare all ${selectedRows.length} selected order${selectedRows.length === 1 ? '' : 's'}?`)) {
+            event.preventDefault();
+            return;
+        }
+        form.querySelectorAll('input[name="order_ids[]"]').forEach((element) => element.remove());
+        selectedRows.forEach((row) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'order_ids[]';
+            input.value = row.dataset.orderId;
+            form.appendChild(input);
+        });
+        const submit = form.querySelector('[data-order-prepare-selected]');
+        if (submit) {
+            submit.disabled = true;
+            submit.textContent = 'Preparing orders...';
+        }
+    }, { signal });
+
     document.addEventListener('input', function (event) {
         if (event.target?.id === 'sellerOrderSearch') {
-            applyOrderFilters();
+            applyOrderFilters({ resetPage: true });
         }
     }, { signal });
 
     document.addEventListener('change', function (event) {
+        if (event.target?.matches('[data-order-select]')) {
+            const row = event.target.closest('[data-order-row]');
+            if (row?.dataset.orderId) {
+                if (event.target.checked) selectedOrderIds.add(row.dataset.orderId);
+                else selectedOrderIds.delete(row.dataset.orderId);
+                if (selectedOrderIds.size === 0) onlySelectedOrders = false;
+                applyOrderFilters();
+            }
+            return;
+        }
+        if (event.target?.matches('[data-order-select-all]')) {
+            const checked = event.target.checked;
+            orderRows().filter((row) => !row.classList.contains('hidden')).forEach((row) => {
+                if (checked) selectedOrderIds.add(row.dataset.orderId);
+                else selectedOrderIds.delete(row.dataset.orderId);
+            });
+            if (selectedOrderIds.size === 0) onlySelectedOrders = false;
+            applyOrderFilters();
+            return;
+        }
+
         if (event.target?.id === 'sellerOrderStatusFilter') {
             syncStatusDropdownUi();
-            applyOrderFilters();
+            applyOrderFilters({ resetPage: true });
         }
     }, { signal });
 
     document.getElementById('sellerOrderApplyFilter')?.addEventListener('click', function () {
-        applyOrderFilters();
+        applyOrderFilters({ resetPage: true });
     }, { signal });
 
     document.getElementById('sellerOrderResetFilter')?.addEventListener('click', function () {
@@ -7021,11 +5773,16 @@ function initSellerOrderManagementPage() {
         if (statusFilter) statusFilter.value = 'all';
         syncStatusDropdownUi();
         closeStatusDropdown();
-        applyOrderFilters();
+        onlySelectedOrders = false;
+        applyOrderFilters({ resetPage: true });
         searchInput?.focus({ preventScroll: true });
     }, { signal });
 
     document.addEventListener('keydown', function (event) {
+        if (modal && !modal.classList.contains('hidden')) {
+            if (event.key === 'Tab') { trapModalFocus(event); return; }
+        }
+
         const { trigger, menu, options } = getStatusDropdownElements();
         const dropdownOpen = Boolean(menu && !menu.hidden);
         const targetIsTrigger = event.target === trigger;

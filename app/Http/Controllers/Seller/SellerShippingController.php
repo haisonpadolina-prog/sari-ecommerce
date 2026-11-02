@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Orders\MarketplaceOrder;
 use App\Models\Accounts\SellerAccount;
+use App\Services\Delivery\DeliveryRouteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SellerShippingController extends Controller
 {
+    public function __construct(private readonly DeliveryRouteService $deliveryRoutes) {}
+
     private const SHIPPING_STATUSES = [
         'ready_for_pickup',
         'courier_accepted',
@@ -137,6 +140,9 @@ class SellerShippingController extends Controller
                 ->oldest('created_at'),
         ]);
 
+        // Reuse the exact persisted stop payload used by the Buyer tracking map.
+        // No rider GPS coordinates are fabricated here.
+        $trackingRoute = $this->deliveryRoutes->buyerPayload($order);
         $shippingState = $this->shippingState($order);
         $timeline = $this->timeline($order);
         $revision = $this->revision($order);
@@ -146,7 +152,8 @@ class SellerShippingController extends Controller
             'order',
             'shippingState',
             'timeline',
-            'revision'
+            'revision',
+            'trackingRoute'
         ));
     }
 
@@ -430,11 +437,14 @@ class SellerShippingController extends Controller
     {
         $eventUpdated = $order->events
             ->max(fn ($event) => $event->updated_at?->timestamp ?? 0);
+        // A route stop may be confirmed without an order event/status update.
+        $routeUpdated = $order->deliveryRouteStops()->max('updated_at');
 
         return implode('|', [
             (string) ($order->updated_at?->timestamp ?? 0),
             (string) ($order->logisticsParcel?->updated_at?->timestamp ?? 0),
             (string) ($eventUpdated ?: 0),
+            (string) ($routeUpdated ?: ''),
             (string) $order->status,
             (string) ($order->logisticsParcel?->status ?? ''),
         ]);

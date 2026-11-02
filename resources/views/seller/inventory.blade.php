@@ -2862,6 +2862,955 @@
         box-shadow: none !important;
     }
 }
+
+
+/* ========================================================================
+   SELLER INVENTORY — SARI PICKUP REQUESTS DESIGN PARITY (FINAL LAYER)
+   Visual overhaul; keeps inventory computations, endpoints, forms and data.
+   Poppins / white / neutral gray / gold, no cream surfaces or icon tiles.
+   ======================================================================== */
+.inventory-shell {
+    --inv-bg: #f4f5f7;
+    --inv-surface: #fff;
+    --inv-surface-soft: #f8fafc;
+    --inv-border: #e5e7eb;
+    --inv-border-soft: #e9edf1;
+    --inv-text: #2f3742;
+    --inv-text-2: #59636e;
+    --inv-muted: #8793a1;
+    --inv-gold: #c88912;
+    --inv-green: #18794e;
+    --inv-green-soft: #effcf3;
+    --inv-amber: #c88912;
+    --inv-amber-soft: #f8fafc;
+    --inv-red: #cc4b37;
+    --inv-red-soft: #fff4f2;
+    width: 100%;
+    max-width: 1520px !important;
+    margin-inline: auto;
+    padding-bottom: 28px !important;
+    color: var(--inv-text);
+    font: 400 13px/1.65 Poppins, ui-sans-serif, system-ui, sans-serif;
+}
+.inventory-shell input,
+.inventory-shell button,
+.inventory-shell select { font-family: inherit; }
+.inventory-shell :is(input,select,button,a):focus-visible {
+    outline: 2px solid #c88912;
+    outline-offset: 3px;
+}
+.inventory-shell .inventory-head,
+.inventory-shell .inventory-head--single {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    max-width: none !important;
+    min-height: 0;
+    margin: 0;
+    padding: 0 0 14px;
+    gap: 14px 24px !important;
+    border: 0;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+.inventory-shell .inventory-eyebrow {
+    margin: 0 0 6px;
+    color: #a87316 !important;
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: .14em !important;
+    line-height: 1.4;
+}
+.inventory-shell .inventory-title {
+    margin: 0 !important;
+    color: #2e343b;
+    font-size: clamp(27px, 2.3vw, 31px) !important;
+    font-weight: 760 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.04em !important;
+}
+.inventory-shell .inventory-subtitle {
+    margin: 8px 0 0 !important;
+    max-width: 780px !important;
+    color: #8793a1 !important;
+    font-size: 11.5px !important;
+    line-height: 1.6 !important;
+    font-weight: 400;
+}
+/* KPI typography and unboxed outline icons */
+.inventory-shell .inventory-stat-grid {
+    grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+    gap: 14px !important;
+    margin-top: 20px !important;
+}
+.inventory-shell .inventory-stat-card,
+.inventory-shell .inventory-stat-card:hover {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 110px !important;
+    padding: 14px 16px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+    transform: none !important;
+}
+.inventory-shell .inventory-stat-card > div { flex: 1; min-width: 0; }
+.inventory-shell .inventory-stat-label {
+    color: #637081 !important;
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+}
+.inventory-shell .inventory-stat-value {
+    margin: 7px 0 5px !important;
+    color: #1f2937 !important;
+    font-size: clamp(25px, 1.9vw, 30px) !important;
+    font-weight: 650 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.045em !important;
+    font-variant-numeric: tabular-nums;
+}
+.inventory-shell .inventory-stat-note {
+    margin: 0 !important;
+    color: #8995a3 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    font-weight: 400;
+}
+.inventory-shell .inventory-stat-icon,
+.inventory-shell .inventory-stat-icon--products,
+.inventory-shell .inventory-stat-icon--units,
+.inventory-shell .inventory-stat-icon--low,
+.inventory-shell .inventory-stat-icon--out {
+    position: static !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 27px;
+    width: 27px !important;
+    height: 27px !important;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #9aa5b1;
+}
+.inventory-shell .inventory-stat-icon--products { color: #9aa5b1 !important; }
+.inventory-shell .inventory-stat-icon--units { color: #0f8a6b !important; }
+.inventory-shell .inventory-stat-icon--low { color: #c88912 !important; }
+.inventory-shell .inventory-stat-icon--out { color: #cc4b37 !important; }
+.inventory-shell .inventory-stat-icon svg {
+    display: block;
+    width: 27px !important;
+    height: 27px !important;
+    stroke-width: 1.8;
+}
+/* Main floating panels only. Secondary cards stay flat. */
+.inventory-shell .inventory-insight-grid {
+    grid-template-columns: minmax(0,1.65fr) minmax(330px,.95fr) !important;
+    gap: 14px !important;
+    margin-top: 20px !important;
+}
+.inventory-shell .inventory-panel,
+.inventory-shell .inventory-activity-panel,
+.inventory-shell .inventory-table-panel,
+.inventory-shell .inventory-search-panel {
+    border: 1px solid #e5e7eb !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+    transform: none !important;
+}
+.inventory-shell .inventory-panel-head {
+    gap: 10px !important;
+    padding: 21px 23px 0 !important;
+}
+.inventory-shell .inventory-panel-icon,
+.inventory-shell .inventory-table-head-icon,
+.inventory-shell .inventory-activity-head > svg {
+    flex: 0 0 22px !important;
+    width: 22px !important;
+    height: 22px !important;
+    display: grid;
+    place-items: center;
+    color: #7f8c9b !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.inventory-shell .inventory-panel-icon svg,
+.inventory-shell .inventory-table-head-icon svg,
+.inventory-shell .inventory-activity-head > svg {
+    width: 21px !important;
+    height: 21px !important;
+    stroke-width: 1.7;
+}
+.inventory-shell .inventory-panel-title,
+.inventory-shell .inventory-table-title,
+.inventory-shell .inventory-activity-title {
+    color: #2f3742 !important;
+    font-size: 18px !important;
+    font-weight: 780 !important;
+    line-height: 1.4 !important;
+    letter-spacing: -.03em !important;
+}
+.inventory-shell .inventory-panel-subtitle,
+.inventory-shell .inventory-table-subtitle,
+.inventory-shell .inventory-activity-subtitle {
+    margin-top: 4px !important;
+    color: #8b96a4 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    font-weight: 400;
+}
+.inventory-shell .inventory-health-cards {
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+    gap: 12px !important;
+    padding: 20px 23px 22px !important;
+}
+.inventory-shell .inventory-health-card,
+.inventory-shell .inventory-health-card:hover {
+    border: 1px solid #e9edf1 !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.inventory-shell .inventory-health-label {
+    color: #566375 !important;
+    font-size: 11.5px !important;
+    font-weight: 650 !important;
+}
+.inventory-shell .inventory-health-value { margin-top: 10px !important; }
+.inventory-shell .inventory-health-value strong {
+    color: #293440 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+}
+.inventory-shell .inventory-health-value span,
+.inventory-shell .inventory-progress-percent { font-size: 11px !important; color: #7b8794; }
+.inventory-shell .inventory-progress-row { margin-top: 14px !important; }
+.inventory-shell .inventory-progress { height: 7px !important; background: #edf0f4 !important; }
+.inventory-shell .inventory-donut-body {
+    grid-template-columns: 147px minmax(0,1fr) !important;
+    gap: 16px !important;
+    padding: 16px 23px 22px !important;
+}
+.inventory-shell .inventory-donut { width: 132px !important; height: 132px !important; }
+.inventory-shell .inventory-donut::after { inset: 19px !important; }
+.inventory-shell .inventory-donut-center strong { font-size: 26px !important; color: #293440 !important; }
+.inventory-shell .inventory-donut-center span { font-size: 10.5px !important; color: #8b96a4 !important; }
+.inventory-shell .inventory-legend { gap: 5px !important; }
+.inventory-shell .inventory-legend-row {
+    grid-template-columns: 8px minmax(0,1fr) 34px 40px !important;
+    gap: 8px !important;
+    min-height: 32px !important;
+    border-bottom-color: #edf0f3 !important;
+    font-size: 11px !important;
+    color: #667383 !important;
+}
+.inventory-shell .inventory-legend-row strong,
+.inventory-shell .inventory-legend-row em { font-size: 11px !important; }
+/* Separate full-width search / stock status dropdown toolbar. */
+.inventory-shell .inventory-admin-filters {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(185px,210px) auto auto;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 0;
+    min-width: 0;
+}
+.inventory-shell .inventory-filter-search,
+.inventory-shell .inventory-filter-dropdown { position: relative; display: block; min-width: 0; }
+.inventory-shell .inventory-filter-search > svg {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    width: 21px;
+    height: 21px;
+    pointer-events: none;
+    color: #97a3b2;
+}
+.inventory-shell .inventory-filter-search input,
+.inventory-shell .inventory-filter-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #dce2e8;
+    border-radius: 14px;
+    outline: 0;
+    background: #fff;
+    box-shadow: none;
+    color: #3f4b59;
+    font: 600 11.5px/1.4 Poppins, sans-serif;
+    transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.inventory-shell .inventory-filter-search input { padding-left: 46px; }
+.inventory-shell .inventory-filter-search input::placeholder { color: #a0aab6; opacity: 1; }
+.inventory-shell .inventory-filter-trigger { cursor: pointer; }
+.inventory-shell .inventory-filter-trigger > svg { width: 17px; height: 17px; flex: 0 0 17px; color: #6b7280; }
+.inventory-shell .inventory-filter-search input:hover,
+.inventory-shell .inventory-filter-trigger:hover { border-color: #cfd6de; background: #f8fafc; }
+.inventory-shell .inventory-filter-search input:focus,
+.inventory-shell .inventory-filter-trigger[aria-expanded="true"],
+.inventory-shell .inventory-filter-trigger:focus-visible {
+    outline: 0;
+    border-color: #c88912;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(200,137,18,.12);
+}
+.inventory-shell .inventory-filter-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 70;
+    padding: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05);
+}
+.inventory-shell .inventory-filter-panel[hidden] { display: none !important; }
+.inventory-shell .inventory-filter-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 38px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #475569;
+    font: 600 11.5px/1.4 Poppins, sans-serif;
+    text-align: left;
+    cursor: pointer;
+}
+.inventory-shell .inventory-filter-option:hover,
+.inventory-shell .inventory-filter-option:focus-visible { outline: 0; background: #f8fafc; color: #a56d0a; }
+.inventory-shell .inventory-filter-option.is-active { background: #f8fafc; color: #2f3742; font-weight: 700; }
+.inventory-shell .inventory-filter-apply,
+.inventory-shell .inventory-filter-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    min-width: 94px;
+    height: 48px;
+    padding: 0 18px;
+    border: 1px solid #dce2e8;
+    border-radius: 14px;
+    background: #fff;
+    color: #5f6d7c;
+    font: 700 12px/1.2 Poppins, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.inventory-shell .inventory-filter-apply { border-color: #c88912; background: #c88912; color: #fff; }
+.inventory-shell .inventory-filter-apply:hover { border-color: #b47b0e; background: #b47b0e; }
+.inventory-shell .inventory-filter-apply svg { width: 15px; height: 15px; }
+.inventory-shell .inventory-filter-reset:hover { border-color: #cfd6de; background: #f8fafc; }
+/* Table: align with Pickup Requests text hierarchy while keeping stock input widths. */
+.inventory-shell .inventory-table-panel { margin-top: 20px !important; overflow: hidden !important; }
+.inventory-shell .inventory-table-head {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px !important;
+    padding: 21px 23px !important;
+    border-bottom: 1px solid #e9edf1 !important;
+    background: #fff !important;
+}
+.inventory-shell .inventory-table-head-copy { gap: 10px !important; }
+.inventory-shell .inventory-table-counter {
+    margin-left: auto;
+    color: #7b8794;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.inventory-shell .inventory-table-scroller { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.inventory-shell .inventory-grid-head,
+.inventory-shell .inventory-row {
+    grid-template-columns:
+        minmax(235px,1.75fr)
+        minmax(95px,.65fr)
+        minmax(105px,.7fr)
+        minmax(95px,.6fr)
+        minmax(210px,1.2fr)
+        minmax(130px,.8fr)
+        minmax(100px,.6fr) !important;
+    min-width: 1180px !important;
+    gap: 12px !important;
+    padding-left: 23px !important;
+    padding-right: 23px !important;
+}
+.inventory-shell .inventory-grid-head {
+    min-height: 48px !important;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e9edf1 !important;
+    color: #8591a0 !important;
+    font-size: 11px !important;
+    font-weight: 750 !important;
+    line-height: 1.5;
+    letter-spacing: .075em;
+    text-transform: uppercase;
+}
+.inventory-shell .inventory-row {
+    min-height: 84px !important;
+    padding-top: 17px !important;
+    padding-bottom: 17px !important;
+    border-top: 1px solid #edf0f3 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+.inventory-shell .inventory-row:hover { background: #f8fafc !important; }
+.inventory-shell .inventory-product-cell { gap: 12px !important; }
+.inventory-shell .inventory-product-thumb {
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 10px !important;
+    background: #f8fafc !important;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+}
+.inventory-shell .inventory-product-thumb svg { width: 23px !important; height: 23px !important; }
+.inventory-shell .inventory-product-name {
+    color: #293440 !important;
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+    line-height: 1.5 !important;
+}
+.inventory-shell .inventory-product-category {
+    margin-top: 4px !important;
+    color: #8793a1 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+.inventory-shell .inventory-sku { color: #667383 !important; font-size: 12px !important; line-height: 1.5; }
+.inventory-shell .inventory-stock-number {
+    color: #293440 !important;
+    font-size: 12.5px !important;
+    font-weight: 750 !important;
+    font-variant-numeric: tabular-nums;
+}
+.inventory-shell .inventory-badge {
+    min-height: 25px !important;
+    padding: 5px 11px !important;
+    gap: 7px !important;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.3;
+}
+.inventory-shell .inventory-badge::before { flex: 0 0 6px; width: 6px !important; height: 6px !important; }
+.inventory-shell .inventory-badge.healthy { border-color: #bde7c9; color: #18794e; background: #effcf3; }
+.inventory-shell .inventory-badge.low { border-color: #e9dfcd; color: #a56d0a; background: #f8fafc; }
+.inventory-shell .inventory-badge.out { border-color: #f0cfcb; color: #a84e46; background: #fff4f2; }
+.inventory-shell .inventory-variant-control { position: relative; min-width: 0; }
+.inventory-shell .inventory-variant-native-chevron {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 17px;
+    height: 17px;
+    color: #6b7280;
+}
+.inventory-shell .inventory-select,
+.inventory-shell .inventory-qty,
+.inventory-shell .inventory-update-btn,
+.inventory-shell .inventory-variant-trigger {
+    height: 48px !important;
+    min-width: 0;
+    width: 100%;
+    border-radius: 14px !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+}
+.inventory-shell .inventory-select,
+.inventory-shell .inventory-qty,
+.inventory-shell .inventory-variant-trigger {
+    border: 1px solid #dce2e8 !important;
+    padding: 0 14px !important;
+    color: #3f4b59 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+.inventory-shell .inventory-select { appearance: none; padding-right: 36px !important; }
+.inventory-shell .inventory-select:disabled { background: #f8fafc !important; color: #94a3b8 !important; }
+.inventory-shell .inventory-qty:focus,
+.inventory-shell .inventory-select:focus,
+.inventory-shell .inventory-variant-trigger:focus-visible {
+    outline: 0;
+    border-color: #c88912 !important;
+    box-shadow: 0 0 0 1px rgba(200,137,18,.16) !important;
+}
+.inventory-shell .inventory-update-btn,
+.inventory-shell .inventory-update-btn:hover {
+    border: 1px solid #c88912 !important;
+    background: #c88912 !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.inventory-shell .inventory-update-btn:not(:disabled):hover { background: #b47b0e !important; border-color: #b47b0e !important; }
+.inventory-shell .inventory-update-btn:disabled { opacity: .45 !important; cursor: not-allowed; }
+/* Reusable 3-dot-reference-style custom dropdown for per-product variants.
+   The real select is retained for form validation and submission. */
+.inventory-shell .inventory-variant-control.is-enhanced .inventory-select[data-inventory-variant-select] {
+    position: absolute;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+.inventory-shell .inventory-variant-control.is-enhanced .inventory-variant-native-chevron { display: none; }
+.inventory-shell .inventory-variant-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600 !important;
+}
+.inventory-shell .inventory-variant-trigger span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.inventory-shell .inventory-variant-trigger svg { flex: 0 0 17px; width: 17px; height: 17px; color: #6b7280; }
+.inventory-variant-popup {
+    position: fixed !important;
+    /* Do not mark inset !important: JS sets viewport-relative top/left inline. */
+    inset: auto;
+    display: none;
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding: 8px;
+    max-height: min(310px, calc(100vh - 24px));
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    color: #475569;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05);
+    font-family: Poppins,ui-sans-serif,system-ui,sans-serif;
+    z-index: 1000;
+}
+.inventory-variant-popup:popover-open { display: block; }
+.inventory-variant-popup .inventory-variant-option {
+    display: block;
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #475569;
+    font: 600 11.5px/1.4 Poppins,ui-sans-serif,sans-serif;
+    text-align: left;
+    cursor: pointer;
+}
+.inventory-variant-popup .inventory-variant-option:hover,
+.inventory-variant-popup .inventory-variant-option:focus-visible { outline: 0; background: #f8fafc; color: #a56d0a; }
+.inventory-variant-popup .inventory-variant-option.is-active { background: #f8fafc; color: #2f3742; font-weight: 700; }
+/* Variant menu uses a fixed, viewport-anchored top-layer panel (never the sidebar). */
+.inventory-variant-popup {
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+.inventory-variant-popup .inventory-variant-popup-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 2px 5px;
+    padding: 8px 10px 10px;
+    border-bottom: 1px solid #edf0f4;
+    color: #8190a0;
+    font: 700 10px/1.4 Poppins, ui-sans-serif, sans-serif;
+    letter-spacing: .035em;
+}
+.inventory-variant-popup .inventory-variant-popup-count {
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+.inventory-variant-popup .inventory-variant-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 58px;
+    gap: 5px;
+    padding: 10px 12px;
+    border-radius: 9px;
+}
+.inventory-variant-popup .inventory-variant-option + .inventory-variant-option {
+    margin-top: 2px;
+}
+.inventory-variant-popup .inventory-variant-option-title {
+    color: #293440;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.inventory-variant-popup .inventory-variant-option-detail {
+    margin-top: 0;
+    color: #8a96a6;
+    font-size: 10.5px;
+}
+.inventory-variant-popup .inventory-variant-option-stock {
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 7px;
+    padding: 3px 7px;
+}
+.inventory-variant-popup .inventory-variant-option.is-active,
+.inventory-variant-popup .inventory-variant-option:hover,
+.inventory-variant-popup .inventory-variant-option:focus-visible {
+    background: #f8fafc;
+}
+.inventory-variant-popup .inventory-variant-option.is-active .inventory-variant-option-title {
+    color: #a56d0a;
+}
+.inventory-variant-popup .inventory-variant-option.is-active .inventory-variant-option-stock {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+/* Full-width empty-state treatment borrowed from Buyer Cart. */
+.inventory-shell .inventory-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 270px;
+    padding: 72px 20px !important;
+    background: #fff !important;
+    color: #9ca4ad;
+    text-align: center;
+}
+.inventory-shell .inventory-empty.inventory-hidden { display: none !important; }
+.inventory-shell .inventory-empty-icon,
+.inventory-shell .inventory-activity-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 92px !important;
+    height: 92px !important;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #b4bbc3 !important;
+}
+.inventory-shell .inventory-empty-icon svg,
+.inventory-shell .inventory-activity-empty-icon svg {
+    display: block;
+    width: 58px !important;
+    height: 58px !important;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.inventory-shell .inventory-empty h3,
+.inventory-shell .inventory-activity-empty strong {
+    display: block;
+    margin: 12px 0 0 !important;
+    color: #9ca4ad !important;
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+    font-weight: 750 !important;
+    letter-spacing: -.025em;
+}
+.inventory-shell .inventory-empty p,
+.inventory-shell .inventory-activity-empty span:not(.inventory-activity-empty-icon) {
+    display: block;
+    max-width: 520px;
+    margin: 7px auto 0 !important;
+    color: #a2acb8 !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    font-weight: 500 !important;
+}
+.inventory-shell .inventory-empty-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 170px;
+    min-height: 48px;
+    margin-top: 22px;
+    padding: 0 20px;
+    border: 1px solid #c88912;
+    border-radius: 11px;
+    background: #c88912;
+    color: #fff;
+    font: 700 12px/1.3 Poppins, sans-serif;
+    cursor: pointer;
+}
+.inventory-shell .inventory-empty-action:hover { border-color: #b47b0e; background: #b47b0e; }
+.inventory-shell .inventory-activity-panel { margin-top: 20px !important; padding: 0 !important; }
+.inventory-shell .inventory-activity-head {
+    gap: 10px !important;
+    padding: 21px 23px 0 !important;
+}
+.inventory-shell .inventory-activity-list { gap: 0 !important; margin: 16px 23px 20px !important; }
+.inventory-shell .inventory-activity-item,
+.inventory-shell .inventory-activity-item:hover {
+    padding: 14px 0 !important;
+    gap: 16px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #edf0f3 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+.inventory-shell .inventory-activity-item:last-child { border-bottom: 0 !important; }
+.inventory-shell .inventory-activity-name,
+.inventory-shell .inventory-activity-value {
+    color: #293440 !important;
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    font-weight: 700 !important;
+}
+.inventory-shell .inventory-activity-meta {
+    margin-top: 5px !important;
+    color: #8793a1 !important;
+    font-size: 11.5px !important;
+}
+.inventory-shell .inventory-activity-empty { min-height: 0 !important; padding: 42px 20px 60px; }
+/* Keep server-side Laravel pagination under the main table card. */
+.inventory-shell .inventory-pagination-footer {
+    display: block;
+    padding: 13px 20px;
+    border-top: 1px solid #edf0f4;
+    background: #fff;
+    color: #8a96a6;
+    font-size: 11px;
+}
+.inventory-shell .inventory-pagination-footer nav { color: #8a96a6; font-family: Poppins,sans-serif; }
+.inventory-shell .inventory-pagination-footer nav a,
+.inventory-shell .inventory-pagination-footer nav span {
+    border-radius: 9px;
+    border-color: #e5e7eb !important;
+    font-size: 11px;
+}
+.inventory-shell .inventory-pagination-footer nav span[aria-current="page"] > span {
+    background: #c88912 !important;
+    border-color: #c88912 !important;
+    color: #fff !important;
+}
+@media (max-width: 1280px) {
+    .inventory-shell .inventory-insight-grid { grid-template-columns: 1fr !important; }
+    .inventory-shell .inventory-donut-body { grid-template-columns: 147px minmax(0,1fr) !important; }
+}
+@media (max-width: 1180px) {
+    .inventory-shell .inventory-stat-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media (max-width: 900px) {
+    .inventory-shell .inventory-admin-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .inventory-shell .inventory-filter-search,
+    .inventory-shell .inventory-filter-dropdown { grid-column: 1/-1; }
+    .inventory-shell .inventory-filter-apply,
+    .inventory-shell .inventory-filter-reset { width: 100%; }
+    .inventory-shell .inventory-health-cards { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+}
+@media (max-width: 767px) {
+    .inventory-shell .inventory-head { flex-direction: column; align-items: stretch; }
+    .inventory-shell .inventory-title { font-size: 25px !important; }
+    .inventory-shell .inventory-eyebrow { font-size: 9.5px !important; }
+    .inventory-shell .inventory-stat-label { font-size: 12.5px !important; }
+    .inventory-shell .inventory-stat-card { min-height: 106px !important; padding: 13px 14px !important; }
+    .inventory-shell .inventory-panel-head,
+    .inventory-shell .inventory-table-head,
+    .inventory-shell .inventory-activity-head { padding: 18px !important; }
+    .inventory-shell .inventory-health-cards,
+    .inventory-shell .inventory-donut-body { padding: 16px 18px 18px !important; }
+}
+@media (max-width: 640px) {
+    .inventory-shell .inventory-health-cards { grid-template-columns: 1fr !important; }
+    .inventory-shell .inventory-donut-body { grid-template-columns: 1fr !important; }
+    .inventory-shell .inventory-table-head { flex-direction: row !important; align-items: center !important; }
+    .inventory-shell .inventory-table-counter { margin: 0; }
+}
+@media (max-width: 540px) {
+    .inventory-shell { padding-bottom: 20px !important; }
+    .inventory-shell .inventory-stat-grid { grid-template-columns: 1fr !important; gap: 11px !important; }
+    .inventory-shell .inventory-stat-label { font-size: 12px !important; }
+    .inventory-shell .inventory-admin-filters { gap: 9px; }
+    .inventory-shell .inventory-empty { padding: 56px 16px !important; min-height: 220px; }
+    .inventory-shell .inventory-empty-icon,
+    .inventory-shell .inventory-activity-empty-icon { width: 64px !important; height: 64px !important; }
+    .inventory-shell .inventory-empty-icon svg,
+    .inventory-shell .inventory-activity-empty-icon svg { width: 40px !important; height: 40px !important; }
+    .inventory-shell .inventory-empty h3,
+    .inventory-shell .inventory-activity-empty strong { font-size: 20px !important; }
+    .inventory-shell .inventory-empty p,
+    .inventory-shell .inventory-activity-empty span:not(.inventory-activity-empty-icon) { font-size: 11px !important; }
+    .inventory-shell .inventory-empty-action { min-width: 160px; min-height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .inventory-shell *, .inventory-shell *::before, .inventory-shell *::after,
+    .inventory-variant-popup * { transition: none !important; animation: none !important; }
+}
+
+
+/* INVENTORY — refined variant choices & on-demand history (UI only). */
+.inventory-shell .inventory-variant-trigger.is-placeholder { color: #8290a0 !important; }
+.inventory-shell .inventory-variant-trigger:not(.is-placeholder) { color: #293440 !important; }
+.inventory-shell .inventory-variant-trigger:hover { background: #f8fafc !important; border-color: #cfd6de !important; }
+.inventory-variant-popup { padding: 7px !important; }
+.inventory-variant-popup .inventory-variant-option {
+    min-height: 44px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    white-space: normal;
+}
+.inventory-variant-popup .inventory-variant-option-title {
+    display: block;
+    color: inherit;
+    font-size: 11.5px;
+    font-weight: 650;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+.inventory-variant-popup .inventory-variant-option-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-top: 4px;
+    color: #8492a3;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+.inventory-variant-popup .inventory-variant-option-stock {
+    color: #64748b;
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 650;
+}
+.inventory-variant-popup .inventory-variant-option--placeholder .inventory-variant-option-title {
+    color: #64748b;
+    font-weight: 500;
+}
+.inventory-variant-popup .inventory-variant-option.is-active .inventory-variant-option-stock {
+    color: #a56d0a;
+    background: #fff8e9;
+}
+.inventory-shell .inventory-activity-disclosure {
+    display: block;
+    margin-top: 16px;
+}
+.inventory-shell .inventory-activity-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: fit-content;
+    margin: 0 0 0 auto;
+    padding: 8px 1px;
+    gap: 8px;
+    border: 0;
+    background: transparent;
+    color: #59636e;
+    cursor: pointer;
+    font: 750 11.5px/1.35 Poppins, ui-sans-serif, sans-serif;
+    list-style: none;
+    transition: color .16s ease;
+}
+.inventory-shell .inventory-activity-toggle::-webkit-details-marker { display: none; }
+.inventory-shell .inventory-activity-toggle::marker { content: ''; }
+.inventory-shell .inventory-activity-toggle svg {
+    width: 17px;
+    height: 17px;
+    color: inherit;
+    transition: transform .16s ease;
+}
+.inventory-shell .inventory-activity-toggle:hover,
+.inventory-shell .inventory-activity-toggle:focus-visible { color: #c88912; }
+.inventory-shell .inventory-activity-toggle:focus-visible {
+    outline: 2px solid #c88912;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+.inventory-shell .inventory-activity-toggle .inventory-toggle-open { display: none; }
+.inventory-shell .inventory-activity-disclosure[open] .inventory-toggle-closed { display: none; }
+.inventory-shell .inventory-activity-disclosure[open] .inventory-toggle-open { display: inline; }
+.inventory-shell .inventory-activity-disclosure[open] .inventory-activity-toggle svg { transform: rotate(180deg); }
+.inventory-shell .inventory-activity-disclosure .inventory-activity-panel {
+    margin-top: 10px !important;
+}
+@media (max-width: 640px) {
+    .inventory-shell .inventory-activity-disclosure { margin-top: 12px; }
+    .inventory-shell .inventory-activity-toggle { font-size: 10.5px; }
+    .inventory-shell .inventory-activity-toggle svg { width: 16px; height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .inventory-shell .inventory-activity-toggle,
+    .inventory-shell .inventory-activity-toggle svg { transition: none !important; }
+}
+
+
+.inventory-shell .inventory-activity-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+}
+.inventory-shell .inventory-activity-reason {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 10px;
+    line-height: 1.45;
+    font-weight: 600;
+}
+.inventory-shell .inventory-activity-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+.inventory-shell .inventory-activity-value > span:first-child { color: #8a96a6; font-weight: 550; }
+.inventory-shell .inventory-activity-value .inventory-activity-arrow { color: #c88912; font-size: 15px; }
+.inventory-shell .inventory-activity-value strong { color: #293440; font-size: 12.5px; font-weight: 750; }
+@media (max-width: 540px) {
+    .inventory-shell .inventory-activity-item { flex-wrap: wrap; }
+    .inventory-shell .inventory-activity-value { margin-left: auto; }
+}
+
 @endverbatim
 </style>
 @endpush
@@ -2939,8 +3888,6 @@
             <p class="inventory-subtitle">
 
                 Monitor product stock, update quantities, and manage inventory across your catalog.
-
-                Track product images, variants, and adjustment history all in one place.
 
             </p>
 
@@ -3216,6 +4163,32 @@
 
 
 
+    {{-- Pickup Requests visual system: standalone search, custom status dropdown and actions. --}}
+    <section class="inventory-admin-filters" aria-label="Search and filter inventory">
+        <label class="inventory-filter-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
+            <span class="sr-only">Search inventory products</span>
+            <input id="inventoryTableSearch" type="search" autocomplete="off" placeholder="Search products, SKU, category or variant...">
+        </label>
+        <div class="inventory-filter-dropdown" data-inventory-filter-menu>
+            <button type="button" class="inventory-filter-trigger" data-inventory-filter-trigger aria-haspopup="listbox" aria-expanded="false" aria-label="Filter by stock status">
+                <span data-inventory-filter-label>All Status</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="inventory-filter-panel" data-inventory-filter-panel role="listbox" aria-label="Stock status" hidden>
+                <button type="button" class="inventory-filter-option is-active" data-inventory-filter-option data-value="all" role="option" aria-selected="true">All Status</button>
+                <button type="button" class="inventory-filter-option" data-inventory-filter-option data-value="healthy" role="option" aria-selected="false">Healthy</button>
+                <button type="button" class="inventory-filter-option" data-inventory-filter-option data-value="low" role="option" aria-selected="false">Low Stock</button>
+                <button type="button" class="inventory-filter-option" data-inventory-filter-option data-value="out" role="option" aria-selected="false">Out of Stock</button>
+            </div>
+        </div>
+        <button type="button" class="inventory-filter-apply" data-inventory-filter-apply>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            Apply Filter
+        </button>
+        <button type="button" class="inventory-filter-reset" data-inventory-filter-reset>Reset</button>
+    </section>
+
     <section class="inventory-table-panel">
 
         <div class="inventory-table-head">
@@ -3240,18 +4213,13 @@
 
 
 
-            <div class="inventory-table-search-wrap">
-
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-
-                <input id="inventoryTableSearch" class="inventory-table-search" type="search" autocomplete="off" placeholder="Search products...">
-
-            </div>
+            <span class="inventory-table-counter" data-inventory-table-count role="status" aria-live="polite">Showing {{ $products->count() }} of {{ $products->total() }}</span>
 
         </div>
 
 
 
+        <div class="inventory-table-scroller" tabindex="0" role="region" aria-label="Scrollable product inventory table">
         <div class="inventory-grid-head">
 
             <span>Product</span>
@@ -3338,6 +4306,7 @@
 
                     data-search="{{ strtolower(trim($product->name . ' ' . ($product->sku ?: '') . ' ' . $productCategory . ' ' . $variantSearch)) }}"
 
+                    data-inventory-stock-state="{{ $state }}"
                     data-product-stock="{{ $currentStock }}"
 
                     data-low-stock-threshold="{{ $threshold }}"
@@ -3396,13 +4365,13 @@
 
 
 
-                        <div>
+                        <div class="inventory-variant-control">
 
                             @if($product->activeVariants->isNotEmpty())
 
                                 <select name="variant_id" required class="inventory-select" data-inventory-variant-select>
 
-                                    <option value="" data-stock="">Select variant</option>
+                                    <option value="" data-stock="" data-variant-label="Choose variant">Choose variant</option>
 
                                     @foreach($product->activeVariants as $variant)
 
@@ -3411,10 +4380,10 @@
                                             value="{{ $variant->id }}"
 
                                             data-stock="{{ (int) $variant->stock }}"
-
+                                            data-variant-label="{{ $variant->name ?: ($variant->option_summary ?: ($variant->sku ?: 'Variant #'.$variant->id)) }}"
+                                            data-variant-sku="{{ $variant->sku ?: '#'.$variant->id }}"
                                         >
-
-                                            {{ $variant->sku ?: '#'.$variant->id }} · stock {{ $variant->stock }}
+                                            {{ $variant->name ?: ($variant->option_summary ?: ($variant->sku ?: 'Variant #'.$variant->id)) }} · {{ number_format((int) $variant->stock) }} available
 
                                         </option>
 
@@ -3428,11 +4397,13 @@
 
                                 <select class="inventory-select" disabled>
 
-                                    <option>No variants</option>
+                                    <option>Standard product</option>
 
                                 </select>
 
                             @endif
+
+                            <svg class="inventory-variant-native-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
 
                         </div>
 
@@ -3492,7 +4463,11 @@
 
             @empty
 
-                <div class="inventory-empty">No active products found in inventory.</div>
+                <div class="inventory-empty" role="status">
+                    <span class="inventory-empty-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 22 32 11l21 11v25L32 58 11 47V22Z"/><path d="m11 22 21 12 21-12M32 34v24M21 17l21 12"/></svg></span>
+                    <h3>No active products found</h3>
+                    <p>Products you publish in your seller catalog will appear here for stock management.</p>
+                </div>
 
             @endforelse
 
@@ -3500,17 +4475,20 @@
 
 
 
-        <div id="inventoryNoSearchResults" class="inventory-empty inventory-hidden">
-
-            No matching products found.
-
+        <div id="inventoryNoSearchResults" class="inventory-empty inventory-hidden" role="status">
+            <span class="inventory-empty-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="28" cy="28" r="18"/><path d="m42 42 13 13M22 28h12"/></svg></span>
+            <h3>No matching products</h3>
+            <p>Try another product name, SKU, variant or stock status.</p>
+            <button type="button" class="inventory-empty-action" data-inventory-reset-from-empty>Clear filters</button>
         </div>
 
 
 
+        </div> {{-- End horizontal product grid scrolling region --}}
+
         @if($products->hasPages())
 
-            <div class="border-t border-[#e7ebf0] p-4">{{ $products->links() }}</div>
+            <div class="inventory-pagination-footer">{{ $products->links() }}</div>
 
         @endif
 
@@ -3518,7 +4496,17 @@
 
 
 
-    <section class="inventory-activity-panel">
+    {{-- History is available on demand instead of permanently expanding the Inventory page. --}}
+    <details class="inventory-activity-disclosure" id="inventoryRecentHistory">
+        <summary class="inventory-activity-toggle">
+            <span class="inventory-activity-toggle-text">
+                <span class="inventory-toggle-closed">See Recent Inventory</span>
+                <span class="inventory-toggle-open">Hide Recent Inventory</span>
+            </span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </summary>
+
+    <section class="inventory-activity-panel" aria-label="Recent inventory adjustments">
 
         <div class="inventory-activity-head">
 
@@ -3566,13 +4554,20 @@
 
                         <div>
 
-                            <div class="inventory-activity-name">Product #{{ $movement->seller_product_id }} · {{ str_replace('_', ' ', ucfirst($movement->reason)) }}</div>
+                            <div class="inventory-activity-name">
+                                <span>Product #{{ $movement->seller_product_id }}</span>
+                                <span class="inventory-activity-reason">{{ ucwords(str_replace('_', ' ', $movement->reason)) }}</span>
+                            </div>
 
                             <div class="inventory-activity-meta">{{ optional($movement->created_at)->format('M d, Y · h:i A') ?: 'Recent update' }}</div>
 
                         </div>
 
-                        <div class="inventory-activity-value">{{ $movement->quantity_before }} → {{ $movement->quantity_after }}</div>
+                        <div class="inventory-activity-value" aria-label="Stock changed from {{ $movement->quantity_before }} to {{ $movement->quantity_after }}">
+                            <span>{{ number_format((int) $movement->quantity_before) }}</span>
+                            <span class="inventory-activity-arrow" aria-hidden="true">→</span>
+                            <strong>{{ number_format((int) $movement->quantity_after) }}</strong>
+                        </div>
 
                     </div>
 
@@ -3583,6 +4578,7 @@
         @endif
 
     </section>
+    </details>
 
 </div>
 
@@ -3600,51 +4596,98 @@
 
     const bootInventoryPage = () => {
 
-        const tableSearch = document.getElementById('inventoryTableSearch');
+        const inventoryRoot = document.querySelector('.inventory-shell');
+        if (!inventoryRoot) return;
 
-        const rows = Array.from(document.querySelectorAll('.inventory-searchable-row'));
+        const tableSearch = inventoryRoot.querySelector('#inventoryTableSearch');
+        const rows = Array.from(inventoryRoot.querySelectorAll('.inventory-searchable-row'));
+        const emptyState = inventoryRoot.querySelector('#inventoryNoSearchResults');
+        const tableCounter = inventoryRoot.querySelector('[data-inventory-table-count]');
+        const statusMenu = inventoryRoot.querySelector('[data-inventory-filter-menu]');
+        const statusTrigger = inventoryRoot.querySelector('[data-inventory-filter-trigger]');
+        const statusPanel = inventoryRoot.querySelector('[data-inventory-filter-panel]');
+        const statusLabel = inventoryRoot.querySelector('[data-inventory-filter-label]');
+        const statusOptions = Array.from(inventoryRoot.querySelectorAll('[data-inventory-filter-option]'));
+        let selectedStatus = 'all';
 
-        const emptyState = document.getElementById('inventoryNoSearchResults');
 
 
-
-        const applyFilter = (value = '') => {
-
+        const applyFilter = (value = tableSearch?.value || '') => {
             if (!emptyState) return;
-
-
-
             const keyword = String(value || '').trim().toLowerCase();
-
             let visible = 0;
-
-
-
             rows.forEach((row) => {
-
                 const haystack = row.getAttribute('data-search') || '';
-
-                const matched = !keyword || haystack.includes(keyword);
-
+                const stockState = row.dataset.inventoryStockState || 'healthy';
+                const matched = (!keyword || haystack.includes(keyword))
+                    && (selectedStatus === 'all' || stockState === selectedStatus);
                 row.classList.toggle('inventory-hidden', !matched);
-
                 if (matched) visible += 1;
-
             });
-
-
-
-            emptyState.classList.toggle('inventory-hidden', visible !== 0);
-
+            emptyState.classList.toggle('inventory-hidden', visible !== 0 || rows.length === 0);
+            if (tableCounter) {
+                const total = rows.length;
+                tableCounter.textContent = keyword || selectedStatus !== 'all'
+                    ? `Showing ${visible} of ${total} on this page`
+                    : `Showing ${visible} of {{ $products->total() }}`;
+            }
         };
 
 
 
-        tableSearch?.addEventListener('input', () => {
+        tableSearch?.addEventListener('input', () => applyFilter(), { passive: true });
 
-            applyFilter(tableSearch.value);
-
-        }, { passive: true });
+        // Custom status filter: same trigger, sizing, and check-free options as Pickup Requests.
+        const closeStatusMenu = () => {
+            if (statusPanel) statusPanel.hidden = true;
+            statusTrigger?.setAttribute('aria-expanded', 'false');
+        };
+        statusTrigger?.addEventListener('click', () => {
+            if (!statusPanel) return;
+            const willOpen = statusPanel.hidden;
+            statusPanel.hidden = !willOpen;
+            statusTrigger.setAttribute('aria-expanded', String(willOpen));
+        });
+        statusOptions.forEach((option) => option.addEventListener('click', () => {
+            selectedStatus = option.dataset.value || 'all';
+            statusLabel.textContent = option.textContent.trim();
+            statusOptions.forEach((candidate) => {
+                const active = candidate === option;
+                candidate.classList.toggle('is-active', active);
+                candidate.setAttribute('aria-selected', String(active));
+            });
+            closeStatusMenu();
+            applyFilter();
+        }));
+        const resetInventoryFilters = () => {
+            if (tableSearch) tableSearch.value = '';
+            selectedStatus = 'all';
+            if (statusLabel) statusLabel.textContent = 'All Status';
+            statusOptions.forEach((option) => {
+                const active = option.dataset.value === 'all';
+                option.classList.toggle('is-active', active);
+                option.setAttribute('aria-selected', String(active));
+            });
+            closeStatusMenu();
+            applyFilter();
+        };
+        inventoryRoot.querySelector('[data-inventory-filter-apply]')?.addEventListener('click', () => applyFilter());
+        inventoryRoot.querySelector('[data-inventory-filter-reset]')?.addEventListener('click', resetInventoryFilters);
+        inventoryRoot.querySelector('[data-inventory-reset-from-empty]')?.addEventListener('click', resetInventoryFilters);
+        document.addEventListener('pointerdown', (event) => {
+            if (statusMenu && !statusMenu.contains(event.target)) closeStatusMenu();
+        });
+        statusMenu?.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') { closeStatusMenu(); statusTrigger?.focus(); }
+            if (statusPanel?.hidden) return;
+            const available = statusOptions;
+            const position = available.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const next = event.key === 'ArrowDown' ? position + 1 : position - 1;
+                available[(next + available.length) % available.length]?.focus();
+            }
+        });
 
 
 
@@ -3737,8 +4780,8 @@
 
 
                 setStatusBadge(statusBadge, selectedStock, threshold);
-
-
+                row.dataset.inventoryStockState = selectedStock <= 0 ? 'out' : (selectedStock <= threshold ? 'low' : 'healthy');
+                if (selectedStatus !== 'all') applyFilter();
 
                 if (quantityInput) {
 
@@ -3782,6 +4825,169 @@
 
         });
 
+        // Progressive-enhancement: keep the original <select> as the submitted
+        // form control. The custom panel is only for presentation and selection.
+        if (typeof document.createElement('div').showPopover === 'function') {
+            rows.forEach((row, rowIndex) => {
+                const select = row.querySelector('[data-inventory-variant-select]');
+                const control = select?.closest('.inventory-variant-control');
+                if (!select || !control || control.classList.contains('is-enhanced')) return;
+
+                const trigger = document.createElement('button');
+                trigger.type = 'button';
+                trigger.className = 'inventory-variant-trigger';
+                trigger.setAttribute('aria-haspopup', 'listbox');
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.setAttribute('aria-label', 'Choose product variant');
+                const valueText = document.createElement('span');
+                trigger.append(valueText);
+                const caret = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                caret.setAttribute('viewBox', '0 0 24 24');
+                caret.setAttribute('fill', 'none');
+                caret.setAttribute('stroke', 'currentColor');
+                caret.setAttribute('stroke-width', '1.8');
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                line.setAttribute('d', 'm7 10 5 5 5-5');
+                caret.append(line);
+                trigger.append(caret);
+
+                const popup = document.createElement('div');
+                popup.className = 'inventory-variant-popup';
+                popup.id = `inventory-variant-options-${rowIndex + 1}`;
+                popup.setAttribute('popover', 'auto');
+                popup.setAttribute('role', 'listbox');
+                popup.setAttribute('aria-label', 'Available product variants');
+                trigger.setAttribute('aria-controls', popup.id);
+
+                // Placeholder remains in the native control but not in the menu;
+                // the menu shows only real, selectable variants.
+                const variants = Array.from(select.options).filter((option) => option.value);
+                const menuHeading = document.createElement('div');
+                menuHeading.className = 'inventory-variant-popup-heading';
+                menuHeading.setAttribute('role', 'presentation');
+                const headingLabel = document.createElement('span');
+                headingLabel.textContent = 'Available variants';
+                const headingCount = document.createElement('span');
+                headingCount.className = 'inventory-variant-popup-count';
+                headingCount.textContent = `${variants.length} option${variants.length === 1 ? '' : 's'}`;
+                menuHeading.append(headingLabel, headingCount);
+                popup.append(menuHeading);
+
+                const optionButtons = variants.map((nativeOption) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'inventory-variant-option';
+                    button.dataset.value = nativeOption.value;
+                    button.setAttribute('role', 'option');
+                    const title = document.createElement('span');
+                    title.className = 'inventory-variant-option-title';
+                    title.textContent = nativeOption.dataset.variantLabel || nativeOption.textContent.trim();
+                    const meta = document.createElement('span');
+                    meta.className = 'inventory-variant-option-detail';
+                    const sku = document.createElement('span');
+                    sku.textContent = `SKU: ${nativeOption.dataset.variantSku || '—'}`;
+                    const stock = document.createElement('span');
+                    stock.className = 'inventory-variant-option-stock';
+                    stock.textContent = `${Number(nativeOption.dataset.stock || 0).toLocaleString('en-PH')} in stock`;
+                    meta.append(sku, stock);
+                    button.append(title, meta);
+                    button.addEventListener('click', () => {
+                        select.value = nativeOption.value;
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+                        if (popup.matches(':popover-open')) popup.hidePopover();
+                        updateTrigger();
+                    });
+                    popup.append(button);
+                    return button;
+                });
+
+                const updateTrigger = () => {
+                    valueText.textContent = select.selectedOptions[0]?.dataset.variantLabel || 'Choose variant';
+                    trigger.classList.toggle('is-placeholder', !select.value);
+                    optionButtons.forEach((option) => {
+                        const active = option.dataset.value === select.value;
+                        option.classList.toggle('is-active', active);
+                        option.setAttribute('aria-selected', String(active));
+                    });
+                };
+
+                // Popover uses the browser top layer to escape the horizontally
+                // scrollable inventory table. Position it using viewport coordinates.
+                inventoryRoot.appendChild(popup);
+                control.appendChild(trigger);
+                control.classList.add('is-enhanced');
+                select.tabIndex = -1;
+                select.setAttribute('aria-hidden', 'true');
+                select.addEventListener('change', updateTrigger);
+                updateTrigger();
+
+                const positionPopup = (measureActual = false) => {
+                    const rect = trigger.getBoundingClientRect();
+                    const viewportWidth = document.documentElement.clientWidth;
+                    const viewportHeight = document.documentElement.clientHeight;
+                    const width = Math.min(Math.max(rect.width, 230), viewportWidth - 24);
+                    const estimatedHeight = Math.min(330, variants.length * 64 + 55);
+                    const height = measureActual
+                        ? Math.min(330, popup.getBoundingClientRect().height || estimatedHeight)
+                        : estimatedHeight;
+                    const below = Math.max(0, viewportHeight - rect.bottom - 12);
+                    const above = Math.max(0, rect.top - 12);
+                    const placeAbove = below < Math.min(height, 230) && above > below;
+                    const available = Math.max(100, placeAbove ? above : below);
+                    popup.style.maxHeight = `${Math.min(330, available, viewportHeight - 24)}px`;
+                    popup.style.width = `${width}px`;
+                    const clampedHeight = Math.min(height, available);
+                    const left = Math.min(Math.max(12, rect.left), viewportWidth - width - 12);
+                    const top = placeAbove
+                        ? rect.top - clampedHeight - 8
+                        : rect.bottom + 8;
+                    popup.style.left = `${Math.round(left)}px`;
+                    popup.style.top = `${Math.round(Math.min(Math.max(12, top), viewportHeight - clampedHeight - 12))}px`;
+                };
+                const openPopup = () => {
+                    positionPopup();
+                    popup.showPopover();
+                    positionPopup(true);
+                };
+                trigger.addEventListener('click', () => {
+                    if (popup.matches(':popover-open')) popup.hidePopover();
+                    else openPopup();
+                });
+                popup.addEventListener('toggle', () => {
+                    trigger.setAttribute('aria-expanded', String(popup.matches(':popover-open')));
+                });
+                const closeOnScroll = () => {
+                    if (popup.matches(':popover-open')) popup.hidePopover();
+                };
+                inventoryRoot.querySelector('.inventory-table-scroller')?.addEventListener('scroll', closeOnScroll, { passive: true });
+                window.addEventListener('scroll', closeOnScroll, { passive: true });
+                window.addEventListener('resize', closeOnScroll, { passive: true });
+                trigger.addEventListener('keydown', (event) => {
+                    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        if (!popup.matches(':popover-open')) openPopup();
+                        optionButtons[Math.max(0, variants.findIndex((option) => option.value === select.value))]?.focus();
+                    }
+                });
+                popup.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') { popup.hidePopover(); trigger.focus(); return; }
+                    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+                    event.preventDefault();
+                    const index = optionButtons.indexOf(document.activeElement);
+                    const next = index + (event.key === 'ArrowDown' ? 1 : -1);
+                    optionButtons[(next + optionButtons.length) % optionButtons.length]?.focus();
+                });
+                // A required native select is visually minimized: return focus
+                // to its visible control if browser form validation fails.
+                select.addEventListener('invalid', (event) => {
+                    event.preventDefault();
+                    trigger.focus();
+                    if (!popup.matches(':popover-open')) openPopup();
+                });
+            });
+        }
+
+        applyFilter();
     };
 
 

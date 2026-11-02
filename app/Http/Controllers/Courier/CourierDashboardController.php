@@ -229,6 +229,8 @@ class CourierDashboardController extends Controller
 
                     'facility.name as facility_name',
                     'facility.address as facility_address',
+                    'facility.latitude as facility_latitude',
+                    'facility.longitude as facility_longitude',
                 ])
                 ->orderByRaw(
                     "
@@ -279,6 +281,40 @@ class CourierDashboardController extends Controller
 
         $currentLastMile =
             $lastMileAssignments->first();
+
+        /*
+        | ------------------------------------------------------------------
+        | SARI-MULTIPARCEL-ROUTE-STOPS-V2
+        | All undelivered Buyer stops belonging to THIS Rider's current batch.
+        | The Blade only maps coordinates actually saved on the order's
+        | delivery route. No guessed geocoding or cross-rider locations.
+        | ------------------------------------------------------------------
+        */
+        $lastMileDeliveryMapStops = collect();
+        if ($currentLastMile) {
+            $lastMileDeliveryMapStops = DB::table('last_mile_assignment_orders as link')
+                ->join('last_mile_assignments as assignment', 'assignment.id', '=', 'link.last_mile_assignment_id')
+                ->join('marketplace_orders as orders', 'orders.id', '=', 'link.marketplace_order_id')
+                ->join('logistics_parcels as parcel', 'parcel.marketplace_order_id', '=', 'orders.id')
+                ->join('delivery_route_stops as delivery_stop', function ($join): void {
+                    $join->on('delivery_stop.marketplace_order_id', '=', 'orders.id')
+                         ->where('delivery_stop.stop_key', '=', 'buyer');
+                })
+                ->where('assignment.id', $currentLastMile->id)
+                ->where('assignment.courier_account_id', $rider->id)
+                ->where('assignment.logistics_account_id', $rider->logistics_account_id)
+                ->whereNotIn('parcel.status', ['delivered'])
+                ->whereNotNull('delivery_stop.latitude')
+                ->whereNotNull('delivery_stop.longitude')
+                ->select([
+                    'delivery_stop.latitude',
+                    'delivery_stop.longitude',
+                    'delivery_stop.name',
+                    'orders.order_number',
+                ])
+                ->orderBy('link.id')
+                ->get();
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -485,6 +521,7 @@ class CourierDashboardController extends Controller
             compact(
                 'currentDelivery',
                 'currentLastMile',
+                'lastMileDeliveryMapStops',
                 'lastMileAssignments',
                 'assignments',
                 'stats',

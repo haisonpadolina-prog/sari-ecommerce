@@ -4,1309 +4,413 @@
 @section('page-title', 'Account Management')
 
 @push('styles')
-    <style>
-/* =========================================================
-   MERGED FROM public/css/logistics/account-management.css
-   Kept page-scoped/shared exactly as the original stylesheet.
-========================================================= */
-/*
-|--------------------------------------------------------------------------
-| SARI LOGISTICS — ACCOUNT MANAGEMENT
-|--------------------------------------------------------------------------
-|
-| Seller-aligned account/profile workspace.
-|
-*/
-
-
-/* ==========================================================================
-   PAGE
-   ========================================================================== */
-
-.account-page {
-    --account-ink: #1f2937;
-    --account-text: #344054;
-    --account-muted: #98a2b3;
-
-    --account-line: #e5e7eb;
-    --account-soft-line: #edf0f3;
-
-    --account-gold: #d59617;
-    --account-gold-hover: #c9890f;
-    --account-gold-soft: #fffaf0;
-
-    --account-canvas: #f7f8fa;
-    --account-white: #ffffff;
-
+<style>
+/* Buyer Account-inspired Logistics page; page-scoped to avoid shared CSS conflicts. */
+#lgAccountBuyerParity {
+    --ap-ink: #27313d;
+    --ap-muted: #8390a0;
+    --ap-line: #e5e8ed;
+    --ap-soft-line: #edf0f4;
+    --ap-gold: #d9950b;
     width: 100%;
-    max-width: 1500px;
-
+    max-width: 1480px;
     margin-inline: auto;
-    padding-bottom: 24px;
-
-    color: var(--account-text);
-
-    font-family:
-        "Poppins",
-        ui-sans-serif,
-        system-ui,
-        sans-serif;
+    color: var(--ap-ink);
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
-
-
-.account-page *,
-.account-page *::before,
-.account-page *::after {
-    box-sizing: border-box;
+#lgAccountBuyerParity *, #lgAccountBuyerParity *::before, #lgAccountBuyerParity *::after { box-sizing: border-box; }
+#lgAccountBuyerParity [hidden] { display: none !important; }
+#lgAccountBuyerParity .lg-account-heading {
+    display: block !important;
+    margin: 0 0 21px !important;
+    padding: 2px 2px 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
-
-
-/* ==========================================================================
-   HEADER
-   ========================================================================== */
-
-.account-page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 24px;
-
-    margin-bottom: 14px;
-    padding: 18px 20px;
-
-    border: 1px solid var(--account-line);
-    border-radius: 18px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(15, 23, 42, .025);
+#lgAccountBuyerParity .lg-account-heading::before, #lgAccountBuyerParity .lg-account-heading::after { content: none !important; }
+#lgAccountBuyerParity .lg-account-eyebrow {
+    margin: 0 0 6px; color: #a87316; font-size: 10.5px;
+    font-weight: 800; letter-spacing: .14em; line-height: 1.3; text-transform: uppercase;
 }
-
-
-.account-eyebrow {
-    margin: 0 0 4px;
-
-    color: #a8731f;
-
-    font-size: 7px;
-    font-weight: 700;
-
-    letter-spacing: .12em;
-    text-transform: uppercase;
+#lgAccountBuyerParity .lg-account-heading h1 {
+    margin: 0; color: #2e343b; font-size: clamp(27px,2.25vw,31px);
+    font-weight: 760; line-height: 1.08; letter-spacing: -.035em;
 }
-
-
-.account-page-header h1 {
-    margin: 0;
-
-    color: var(--account-ink);
-
-    font-size: 21px;
-    line-height: 1.2;
-    font-weight: 700;
-
-    letter-spacing: -.025em;
+#lgAccountBuyerParity .lg-account-heading h1 span { color: #c88912; }
+#lgAccountBuyerParity .lg-account-layout {
+    display: grid; grid-template-columns: minmax(245px,285px) minmax(0,1fr);
+    align-items: start; gap: 16px; min-width: 0;
 }
-
-
-.account-subtitle {
-    max-width: 680px;
-
-    margin: 6px 0 0;
-
-    color: #7c8592;
-
-    font-size: 8.5px;
-    line-height: 1.65;
+#lgAccountBuyerParity .lg-account-card {
+    min-width: 0; overflow: hidden;
+    border: 1px solid #e5e7eb; border-radius: 17px; background: #fff;
+    box-shadow: 0 3px 7px rgba(15,23,42,.045), 0 12px 30px rgba(15,23,42,.07), 0 26px 58px rgba(15,23,42,.075);
 }
-
-
-/* ==========================================================================
-   HEADER IDENTITY
-   ========================================================================== */
-
-.account-header-identity {
-    display: flex;
-    align-items: center;
-
-    min-width: 240px;
-
-    gap: 10px;
-
-    padding: 10px 12px;
-
-    border: 1px solid var(--account-line);
-    border-radius: 12px;
-
-    background: #fafbfc;
+#lgAccountBuyerParity .lg-account-profile { position: sticky; top: 86px; }
+#lgAccountBuyerParity .lg-account-card-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 15px 17px; border-bottom: 1px solid var(--ap-soft-line); background: #fff;
 }
-
-
-.account-header-avatar {
-    display: grid;
-
-    width: 38px;
-    height: 38px;
-
-    flex: 0 0 38px;
-
-    place-items: center;
-
-    border: 1px solid #efd9a7;
-    border-radius: 11px;
-
-    background: var(--account-gold-soft);
-
-    color: #a96f06;
-
-    font-size: 9px;
-    font-weight: 800;
+#lgAccountBuyerParity .lg-account-card-header h2 {
+    margin: 0; color: #293444; font-size: 14px; font-weight: 750; line-height: 1.35;
 }
-
-
-.account-header-identity > div {
-    min-width: 0;
+#lgAccountBuyerParity .lg-account-profile-badge {
+    color: #8e99a6; font-size: 8.5px; font-weight: 750; letter-spacing: .05em;
+    text-transform: uppercase; white-space: nowrap;
 }
-
-
-.account-header-identity span:not(
-    .account-header-avatar
-) {
-    display: block;
-
-    color: #98a2b3;
-
-    font-size: 6px;
-    font-weight: 700;
-
-    letter-spacing: .08em;
+#lgAccountBuyerParity .lg-account-profile-body { padding: 20px 18px 18px; text-align: center; }
+#lgAccountBuyerParity .lg-account-photo-wrap {
+    position: relative; width: 116px; height: 116px; margin: 0 auto;
 }
-
-
-.account-header-identity strong {
-    display: block;
-
-    margin-top: 2px;
-
-    overflow: hidden;
-
-    color: #344054;
-
-    font-size: 8.5px;
-    font-weight: 700;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
+#lgAccountBuyerParity .lg-account-avatar {
+    display: grid; width: 116px; height: 116px; overflow: hidden; place-items: center;
+    border: 1px solid #dee4eb; border-radius: 19px; background: #f3f6f9;
+    color: #9ba5b1; font-size: 32px; font-weight: 740;
 }
-
-
-.account-header-identity p {
-    margin: 1px 0 0;
-
-    overflow: hidden;
-
-    color: #98a2b3;
-
-    font-size: 7px;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
+#lgAccountBuyerParity .lg-account-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+#lgAccountBuyerParity .lg-account-photo-trigger {
+    position: absolute; right: -7px; bottom: -7px; display: grid; place-items: center;
+    width: 35px; height: 35px; border: 3px solid white; border-radius: 11px;
+    background: #c88912; color: white; cursor: pointer;
+    box-shadow: 0 5px 13px rgba(200,137,18,.2);
 }
-
-
-/* ==========================================================================
-   ALERTS
-   ========================================================================== */
-
-.account-alert {
-    margin-bottom: 14px;
-    padding: 12px 14px;
-
-    border: 1px solid;
-    border-radius: 12px;
-}
-
-
-.account-alert strong {
-    display: block;
-
-    font-size: 9px;
-    font-weight: 700;
-}
-
-
-.account-alert p {
-    margin: 3px 0 0;
-
-    font-size: 8px;
-}
-
-
-.account-alert ul {
-    margin: 5px 0 0;
-    padding-left: 17px;
-
-    font-size: 8px;
-}
-
-
-.account-alert-success {
-    border-color: #dce7df;
-
-    background: #f4f9f6;
-
-    color: #4f7d63;
-}
-
-
-.account-alert-danger {
-    border-color: #efcece;
-
-    background: #fff5f5;
-
-    color: #a65353;
-}
-
-
-/* ==========================================================================
-   FORM LAYOUT
-   ========================================================================== */
-
-.account-layout {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.55fr)
-        minmax(300px, .7fr);
-
-    align-items: start;
-
-    gap: 14px;
-}
-
-
-.account-main-column,
-.account-side-column {
-    display: grid;
-
-    gap: 14px;
-}
-
-
-/* ==========================================================================
-   CARD
-   ========================================================================== */
-
-.account-card {
-    overflow: hidden;
-
-    border: 1px solid var(--account-line);
-    border-radius: 17px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(15, 23, 42, .025);
-}
-
-
-.account-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 14px;
-
-    padding:
-        15px
-        17px;
-
-    border-bottom: 1px solid var(--account-soft-line);
-}
-
-
-.account-card-header h2 {
-    margin: 0;
-
-    color: var(--account-ink);
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-
-.account-card-header p:not(
-    .account-eyebrow
-) {
-    margin: 3px 0 0;
-
-    color: #98a2b3;
-
-    font-size: 7.5px;
-    line-height: 1.5;
-}
-
-
-.account-card-body {
-    padding:
-        17px;
-}
-
-
-/* ==========================================================================
-   PROFILE PHOTO
-   ========================================================================== */
-
-.account-photo-section {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        220px;
-
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 17px;
-}
-
-
-.account-photo-component {
-    min-width: 0;
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| Shared profile-photo component normalization
-|--------------------------------------------------------------------------
-*/
-
-.account-photo-component input[type="file"] {
-    max-width: 100%;
-}
-
-
-.account-photo-note {
-    padding: 11px 12px;
-
-    border: 1px solid #e8e1d6;
-    border-radius: 10px;
-
-    background: #fffaf0;
-}
-
-
-.account-photo-note strong {
-    display: block;
-
-    color: #7f632d;
-
-    font-size: 7.5px;
-    font-weight: 700;
-}
-
-
-.account-photo-note p {
-    margin: 3px 0 0;
-
-    color: #a18d69;
-
-    font-size: 6.5px;
-    line-height: 1.5;
-}
-
-
-/* ==========================================================================
-   FIELDS
-   ========================================================================== */
-
-.account-fields-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 14px;
-}
-
-
-.account-field {
-    display: block;
-
-    min-width: 0;
-}
-
-
-.account-field-wide {
-    grid-column: 1 / -1;
-}
-
-
-.account-field > span {
-    display: block;
-
-    margin-bottom: 6px;
-
-    color: #667085;
-
-    font-size: 7.5px;
-    font-weight: 600;
-}
-
-
-.account-field input,
-.account-field textarea {
-    width: 100%;
-
-    border: 1px solid #d8dee6;
-    border-radius: 10px;
-
-    background: #ffffff;
-
-    color: #344054;
-
-    font-size: 9px;
-
-    outline: none;
-
-    transition:
-        border-color .15s ease,
-        box-shadow .15s ease,
-        background-color .15s ease;
-}
-
-
-.account-field input {
-    height: 41px;
-
-    padding:
-        0
-        11px;
-}
-
-
-.account-field textarea {
-    min-height: 78px;
-
-    resize: vertical;
-
-    padding:
-        10px
-        11px;
-
-    line-height: 1.55;
-}
-
-
-.account-field input:hover,
-.account-field textarea:hover {
-    border-color: #cdd4dd;
-}
-
-
-.account-field input:focus,
-.account-field textarea:focus {
-    border-color: var(--account-gold);
-
-    background: #ffffff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(213, 150, 23, .08);
-}
-
-
-.account-field-help {
-    display: block;
-
-    margin-top: 5px;
-
-    color: #98a2b3;
-
-    font-size: 6.5px;
-    line-height: 1.45;
-}
-
-
-.account-field-error {
-    display: block;
-
-    margin-top: 5px;
-
-    color: #b35b5b;
-
-    font-size: 6.8px;
-    font-weight: 600;
-}
-
-
-/* ==========================================================================
-   ACCOUNT SUMMARY
-   ========================================================================== */
-
-.account-summary-card {
-    padding:
-        18px
-        16px
-        15px;
-}
-
-
-.account-summary-profile {
-    text-align: center;
-}
-
-
-.account-summary-avatar {
-    display: grid;
-
-    width: 58px;
-    height: 58px;
-
-    place-items: center;
-
-    margin:
-        0
-        auto;
-
-    border: 1px solid #efd9a7;
-    border-radius: 16px;
-
-    background: #fffaf0;
-
-    color: #a96f06;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    box-shadow:
-        0 6px 16px
-        rgba(213, 150, 23, .07);
-}
-
-
-.account-summary-profile h2 {
-    margin:
-        10px
-        0
-        0;
-
-    color: #1f2937;
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-
-.account-summary-profile p {
-    margin: 2px 0 0;
-
-    color: #98a2b3;
-
-    font-size: 7px;
-}
-
-
-.account-summary-list {
-    display: grid;
-
-    gap: 8px;
-
-    margin-top: 16px;
-}
-
-
-.account-summary-list > div {
-    padding: 10px;
-
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-
-    background: #fafbfc;
-}
-
-
-.account-summary-list span {
-    display: block;
-
-    color: #98a2b3;
-
-    font-size: 6px;
-    font-weight: 700;
-
-    letter-spacing: .07em;
-}
-
-
-.account-summary-list strong {
-    display: block;
-
-    margin-top: 3px;
-
-    color: #344054;
-
-    font-size: 8px;
-    font-weight: 700;
-
+#lgAccountBuyerParity .lg-account-photo-trigger:hover { background: #ad760f; }
+#lgAccountBuyerParity .lg-account-photo-trigger svg { width: 16px; height: 16px; }
+#lgAccountBuyerParity .lg-account-profile-name {
+    margin: 17px 0 0; color: #283340; font-size: 16px; font-weight: 750; line-height: 1.35;
     overflow-wrap: anywhere;
 }
-
-
-/* ==========================================================================
-   SECURITY
-   ========================================================================== */
-
-.account-security-fields {
-    display: grid;
-
-    gap: 13px;
+#lgAccountBuyerParity .lg-account-profile-email {
+    margin: 4px 0 0; color: #8591a0; font-size: 10px; line-height: 1.45;
+    overflow-wrap: anywhere;
 }
-
-
-.account-password-field {
-    position: relative;
+#lgAccountBuyerParity .lg-account-role {
+    display: inline-block; margin-top: 10px; padding: 5px 10px;
+    border: 1px solid #e5eaf0; border-radius: 100px; background: #f8fafc;
+    color: #677586; font-size: 9px; font-weight: 700;
 }
-
-
-.account-password-field input {
-    padding-right: 52px;
+#lgAccountBuyerParity .lg-account-photo-help {
+    margin: 14px auto 0; max-width: 230px; color: #98a2ae; font-size: 9px; line-height: 1.65;
 }
+#lgAccountBuyerParity .lg-account-photo-file { color: #66758a; overflow-wrap: anywhere; }
+#lgAccountBuyerParity input[data-profile-input] {
+    position: absolute !important; width: 1px !important; height: 1px !important;
+    margin: -1px !important; padding: 0 !important; border: 0 !important;
+    overflow: hidden !important; clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important; opacity: 0 !important;
+}
+#lgAccountBuyerParity .lg-account-meta { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--ap-soft-line); text-align: left; }
+#lgAccountBuyerParity .lg-account-meta-row {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid #f0f2f5;
+}
+#lgAccountBuyerParity .lg-account-meta-row:last-child { border-bottom: 0; padding-bottom: 0; }
+#lgAccountBuyerParity .lg-account-meta-row span { color: #83909e; font-size: 10px; }
+#lgAccountBuyerParity .lg-account-meta-row strong {
+    color: #465466; font-size: 10px; font-weight: 680; text-align: right; overflow-wrap: anywhere;
+}
+#lgAccountBuyerParity .lg-account-settings > .lg-account-section + .lg-account-section { border-top: 1px solid var(--ap-soft-line); }
+#lgAccountBuyerParity .lg-account-section-head {
+    display: flex; align-items: center; gap: 15px; padding: 18px 19px 12px;
+}
+#lgAccountBuyerParity .lg-account-section-head h2 {
+    margin: 0; font-size: 15.5px; font-weight: 750; line-height: 1.35; color: #293444;
+}
+#lgAccountBuyerParity .lg-account-section-head .lg-account-head-rule { flex: 1; height: 1px; background: #e4e8ed; }
+#lgAccountBuyerParity .lg-account-section-copy {
+    margin: 3px 0 0; padding: 0 19px; color: #8793a2; font-size: 10px; line-height: 1.55;
+}
+#lgAccountBuyerParity .lg-account-fields { padding: 13px 19px 20px; }
+#lgAccountBuyerParity .account-fields-grid {
+    display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px;
+}
+#lgAccountBuyerParity .account-field { display: block; min-width: 0; }
+#lgAccountBuyerParity .account-field-wide { grid-column: 1 / -1; }
+#lgAccountBuyerParity .account-field > span {
+    display: block; margin-bottom: 6px; font-size: 10.5px; font-weight: 700; color: #47566a;
+}
+#lgAccountBuyerParity .account-field input, #lgAccountBuyerParity .account-field textarea {
+    display: block; width: 100%; height: 44px; min-height: 44px;
+    padding: 10px 12px; border: 1px solid #d9e0e8; border-radius: 10px;
+    background: white; color: #334155; font-family: inherit;
+    font-size: 11.5px; line-height: 1.5; outline: none; box-shadow: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+#lgAccountBuyerParity .account-field textarea { min-height: 85px; height: auto; resize: vertical; }
+#lgAccountBuyerParity .account-field :is(input,textarea):hover { border-color: #cbd4de; }
+#lgAccountBuyerParity .account-field :is(input,textarea):focus { border-color: #c88912; box-shadow: 0 0 0 3px rgba(200,137,18,.08); }
+#lgAccountBuyerParity .account-field-help { display: block; margin-top: 6px; color: #96a0ad; font-size: 9px; line-height: 1.55; }
+#lgAccountBuyerParity .account-field-error { display: block; margin-top: 5px; color: #b45454; font-size: 9px; }
+#lgAccountBuyerParity .account-security-fields { display: grid; gap: 13px; }
+#lgAccountBuyerParity .account-password-field { position: relative; }
+#lgAccountBuyerParity .account-password-field input { padding-right: 48px; }
+#lgAccountBuyerParity .account-password-field button {
+    position: absolute; top: 50%; right: 7px; transform: translateY(-50%);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; min-width: 34px; height: 34px; padding: 0;
+    border: 0; border-radius: 8px; background: transparent;
+    color: #8894a3; cursor: pointer;
+    transition: color .15s ease, background-color .15s ease;
+}
+#lgAccountBuyerParity .account-password-field button svg {
+    display: block; width: 19px; height: 19px; stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+#lgAccountBuyerParity .account-password-field button [hidden] { display: none !important; }
+#lgAccountBuyerParity .account-password-field button:hover { background: #f0f2f5; color: #556578; }
+#lgAccountBuyerParity .account-password-field button:focus-visible { outline: 2px solid rgba(217,149,11,.6); outline-offset: 2px; }
+#lgAccountBuyerParity .lg-account-save {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    border-top: 1px solid var(--ap-soft-line); padding: 16px 19px 18px;
+}
+#lgAccountBuyerParity .lg-account-save p { margin: 0; color: #8794a2; font-size: 10px; }
+#lgAccountBuyerParity .account-save-button {
+    min-height: 43px; padding: 0 20px; border: 1px solid #d9950b; border-radius: 10px;
+    background: #d9950b; color: white; cursor: pointer;
+    font-family: inherit; font-size: 11px; font-weight: 750;
+    box-shadow: 0 5px 13px rgba(217,149,11,.15);
+}
+#lgAccountBuyerParity .account-save-button:hover { background: #be8208; border-color: #be8208; }
+#lgAccountBuyerParity .account-save-button:disabled { cursor: wait; opacity: .65; }
+#lgAccountBuyerParity .account-alert {
+    border-radius: 11px; margin: 0 0 14px; padding: 12px 15px; font-size: 11px; line-height: 1.5;
+}
+#lgAccountBuyerParity .account-alert-success { background: #f6fbf8; border: 1px solid #d9eadf; color: #447a58; }
+#lgAccountBuyerParity .account-alert-danger { background: #fff7f7; border: 1px solid #efd5d5; color: #a54f4f; }
+#lgAccountBuyerParity .account-alert strong { font-size: 11px; }
+#lgAccountBuyerParity .account-alert p, #lgAccountBuyerParity .account-alert li { margin-top: 4px; font-size: 10px; }
+#lgAccountBuyerParity .lg-account-support { margin-top: 17px; }
+#lgAccountBuyerParity .lg-account-support .lg-account-card-header { border-bottom: 1px solid var(--ap-soft-line); }
+#lgAccountBuyerParity .lg-account-support .lg-account-card-header p { margin: 4px 0 0; color: #8995a2; font-size: 10px; }
+#lgAccountBuyerParity .account-support-component { padding: 17px 19px 20px; }
+#lgAccountBuyerParity .account-support-component > * { max-width: none !important; margin-top: 0 !important; }
+#lgAccountBuyerParity .lg-account-no-account { padding: 45px 20px; text-align: center; }
+#lgAccountBuyerParity .lg-account-no-account svg { width: 56px; height: 56px; margin: 0 auto 14px; color: #b1bac4; }
+#lgAccountBuyerParity .lg-account-no-account h2 { margin: 0; font-size: 21px; color: #778595; }
+#lgAccountBuyerParity .lg-account-no-account p { max-width: 470px; margin: 9px auto 0; font-size: 11px; color: #8a96a4; line-height: 1.6; }
+#lgAccountBuyerParity :is(button,input,textarea,a):focus-visible { outline: 2px solid rgba(200,137,18,.6); outline-offset: 2px; }
+@media(max-width:1000px) { #lgAccountBuyerParity .lg-account-layout { grid-template-columns: minmax(230px,260px) minmax(0,1fr); } }
+@media(max-width:760px) {
+    #lgAccountBuyerParity .lg-account-layout { grid-template-columns: 1fr; }
+    #lgAccountBuyerParity .lg-account-profile { position: static; top: auto; }
+    #lgAccountBuyerParity .lg-account-profile-body { padding: 18px 17px; }
+    #lgAccountBuyerParity .lg-account-heading h1 { font-size: 25px; }
+    #lgAccountBuyerParity .lg-account-eyebrow { font-size: 9.5px; }
+}
+@media(max-width:520px) {
+    #lgAccountBuyerParity .account-fields-grid { grid-template-columns: 1fr; }
+    #lgAccountBuyerParity .account-field-wide { grid-column: auto; }
+    #lgAccountBuyerParity .lg-account-section-head { padding: 16px 15px 11px; }
+    #lgAccountBuyerParity .lg-account-fields { padding: 10px 15px 18px; }
+    #lgAccountBuyerParity .lg-account-section-copy { padding-inline: 15px; }
+    #lgAccountBuyerParity .lg-account-save { padding: 15px; align-items: stretch; }
+    #lgAccountBuyerParity .account-save-button { width: 100%; }
+    #lgAccountBuyerParity .account-support-component { padding: 14px; }
+}
+@media(prefers-reduced-motion:reduce) { #lgAccountBuyerParity *, #lgAccountBuyerParity *::before, #lgAccountBuyerParity *::after { transition: none !important; animation: none !important; } }
 
-
-.account-password-field button {
-    position: absolute;
-
-    right: 5px;
-    top: 50%;
-
-    min-width: 42px;
-    height: 30px;
-
-    transform: translateY(-50%);
-
-    border: 0;
-    border-radius: 7px;
-
-    background: #f6f7f9;
-
-    color: #667085;
-
-    font-size: 6.5px;
-    font-weight: 700;
-
+/* Compact icon trigger and accessible floating support modal (account-page only). */
+#lgAccountBuyerParity .lg-account-heading-with-help {
+    display: flex !important; align-items: center; justify-content: space-between;
+    gap: 14px; width: 100%;
+}
+#lgAccountBuyerParity .lg-account-help-trigger,
+#lgAccountBuyerParity .lg-account-support-close {
+    display: inline-flex !important; align-items: center; justify-content: center;
+    flex: 0 0 auto; width: 40px; height: 40px; padding: 0 !important;
+    border: 1px solid #dfe5ec !important; border-radius: 11px !important;
+    background: #fff !important; color: #728093 !important;
+    box-shadow: 0 3px 8px rgba(25,35,50,.035) !important; cursor: pointer;
+    transition: background-color .17s ease, color .17s ease, border-color .17s ease;
+}
+#lgAccountBuyerParity .lg-account-help-trigger:hover,
+#lgAccountBuyerParity .lg-account-support-close:hover {
+    background: #f4f6f9 !important; color: #344256 !important; border-color: #cdd6e1 !important;
+}
+#lgAccountBuyerParity :is(.lg-account-help-trigger,.lg-account-support-close) svg {
+    display: block; width: 20px; height: 20px;
+}
+#lgAccountBuyerParity .lg-account-support-modal {
+    position: fixed !important; inset: 0 !important; z-index: 10060 !important;
+    display: flex !important; align-items: center; justify-content: center;
+    padding: 18px !important; margin: 0 !important; width: auto !important; height: auto !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    background: transparent !important; visibility: hidden; opacity: 0;
+    pointer-events: none; transition: opacity .21s ease, visibility .21s ease;
+}
+#lgAccountBuyerParity .lg-account-support-modal.is-open {
+    visibility: visible; opacity: 1; pointer-events: auto;
+}
+#lgAccountBuyerParity .lg-account-support-backdrop {
+    position: absolute; inset: 0; background: rgba(24,33,45,.52);
+    backdrop-filter: blur(3px);
+}
+#lgAccountBuyerParity .lg-account-support-panel {
+    position: relative; z-index: 1; display: flex; flex-direction: column;
+    width: min(100%, 540px); max-height: min(90dvh, 740px);
+    overflow: auto; overscroll-behavior: contain;
+    border: 1px solid #e5e9ef; border-radius: 18px; background: #fff;
+    box-shadow: 0 28px 75px rgba(13,24,38,.22);
+    transform: translateY(13px) scale(.985);
+    transition: transform .24s cubic-bezier(.22,1,.36,1);
+}
+#lgAccountBuyerParity .lg-account-support-modal.is-open .lg-account-support-panel {
+    transform: translateY(0) scale(1);
+}
+#lgAccountBuyerParity .lg-account-support-modal-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; padding: 20px 22px 17px; border-bottom: 1px solid #edf0f4;
+    background: white;
+}
+#lgAccountBuyerParity .lg-account-support-overline {
+    margin: 0 0 5px; color: #b27b16; font-size: 9px; font-weight: 750;
+    letter-spacing: .12em;
+}
+#lgAccountBuyerParity .lg-account-support-modal-header h2 {
+    margin: 0; font-size: 19px; font-weight: 750; line-height: 1.3; color: #293444;
+}
+#lgAccountBuyerParity .lg-account-support-modal-header p:not(.lg-account-support-overline) {
+    margin: 6px 0 0; color: #8390a0; font-size: 11px; line-height: 1.55;
+}
+#lgAccountBuyerParity .lg-account-support-close {
+    width: 34px; height: 34px; box-shadow: none !important;
+}
+#lgAccountBuyerParity .lg-account-support-close svg { width: 18px; height: 18px; }
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component {
+    padding: 20px 22px 22px !important;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component > section {
+    max-width: none !important; margin: 0 !important; padding: 0 !important;
+    border: 0 !important; border-radius: 0 !important;
+    background: transparent !important; box-shadow: none !important;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component h3 {
+    font-size: 14px !important; font-weight: 700 !important; color: #354256 !important;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component section > p {
+    font-size: 10px !important; line-height: 1.6; color: #8290a0 !important;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component form {
+    display: grid !important; gap: 13px !important; margin-top: 16px !important;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component :is(input,textarea) {
+    display: block; width: 100%; min-height: 43px;
+    padding: 11px 13px !important; border: 1px solid #dce3ea !important;
+    border-radius: 10px !important; background: white !important;
+    color: #334155 !important; font: inherit !important; font-size: 12px !important;
+    line-height: 1.5; outline: none;
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component textarea { min-height: 105px; resize: vertical; }
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component :is(input,textarea):focus {
+    border-color: #c88912 !important; box-shadow: 0 0 0 3px rgba(200,137,18,.09);
+}
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component form button {
+    min-height: 42px !important; padding: 0 18px !important;
+    border: 1px solid #d9950b !important; border-radius: 10px !important;
+    background: #d9950b !important; color: #fff !important;
+    font: inherit !important; font-size: 11px !important; font-weight: 700 !important;
     cursor: pointer;
 }
-
-
-.account-password-field button:hover {
-    background: #fff7e7;
-
-    color: #9b6505;
+#lgAccountBuyerParity .lg-account-support-modal .account-support-component form button:hover {
+    background: #c4870a !important;
 }
-
-
-/* ==========================================================================
-   SAVE CARD
-   ========================================================================== */
-
-.account-save-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 14px;
-
-    padding: 14px;
-
-    border: 1px solid #eadfc9;
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf8,
-            #fff8e9
-        );
+@media(max-width:520px) {
+    #lgAccountBuyerParity .lg-account-support-modal { padding: 12px !important; }
+    #lgAccountBuyerParity .lg-account-support-panel { max-height: 88dvh; border-radius: 15px; }
+    #lgAccountBuyerParity .lg-account-support-modal-header { padding: 17px 16px 14px; }
+    #lgAccountBuyerParity .lg-account-support-modal .account-support-component { padding: 17px 16px 19px !important; }
 }
-
-
-.account-save-card strong {
-    display: block;
-
-    color: #5c4930;
-
-    font-size: 8px;
-    font-weight: 700;
-}
-
-
-.account-save-card p {
-    margin: 3px 0 0;
-
-    color: #a08b6c;
-
-    font-size: 6.5px;
-    line-height: 1.45;
-}
-
-
-.account-save-button {
-    min-height: 38px;
-
-    flex: 0 0 auto;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: var(--account-gold);
-
-    padding:
-        0
-        14px;
-
-    color: #ffffff;
-
-    font-size: 7.5px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 12px
-        rgba(213, 150, 23, .14);
-
-    transition:
-        background-color .15s ease,
-        opacity .15s ease;
-}
-
-
-.account-save-button:hover:not(:disabled) {
-    background: var(--account-gold-hover);
-}
-
-
-.account-save-button:disabled {
-    cursor: not-allowed;
-
-    opacity: .55;
-}
-
-
-/* ==========================================================================
-   NO ACCOUNT
-   ========================================================================== */
-
-.account-no-account {
-    padding: 36px 22px;
-
-    text-align: center;
-}
-
-
-.account-no-account-icon {
-    display: grid;
-
-    width: 42px;
-    height: 42px;
-
-    place-items: center;
-
-    margin:
-        0
-        auto
-        11px;
-
-    border: 1px solid #ead9b2;
-    border-radius: 12px;
-
-    background: #fff8e8;
-
-    color: #a8731f;
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-
-.account-no-account h2 {
-    margin: 0;
-
-    color: #344054;
-
-    font-size: 11px;
-}
-
-
-.account-no-account p {
-    max-width: 500px;
-
-    margin:
-        6px
-        auto
-        0;
-
-    color: #98a2b3;
-
-    font-size: 8px;
-    line-height: 1.6;
-}
-
-
-/* ==========================================================================
-   SUPPORT
-   ========================================================================== */
-
-.account-support-section {
-    margin-top: 14px;
-
-    overflow: hidden;
-
-    border: 1px solid var(--account-line);
-    border-radius: 17px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 4px 14px
-        rgba(15, 23, 42, .025);
-}
-
-
-.account-section-heading {
-    padding:
-        15px
-        17px;
-
-    border-bottom: 1px solid var(--account-soft-line);
-}
-
-
-.account-section-heading h2 {
-    margin: 0;
-
-    color: #1f2937;
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-
-.account-section-heading p:not(
-    .account-eyebrow
-) {
-    margin: 3px 0 0;
-
-    color: #98a2b3;
-
-    font-size: 7.5px;
-}
-
-
-.account-support-component {
-    padding: 16px;
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| Keep the shared support form visually contained.
-|--------------------------------------------------------------------------
-*/
-
-.account-support-component > * {
-    max-width: none !important;
-
-    margin-top: 0 !important;
-}
-
-
-/* ==========================================================================
-   FOCUS
-   ========================================================================== */
-
-.account-page
-:is(
-    button,
-    input,
-    textarea,
-    a
-):focus-visible {
-    outline:
-        2px solid rgba(213, 150, 23, .28);
-
-    outline-offset: 2px;
-}
-
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-
-@media (max-width: 1050px) {
-
-    .account-layout {
-        grid-template-columns:
-            minmax(0, 1fr)
-            280px;
-    }
-
-
-    .account-photo-section {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-@media (max-width: 850px) {
-
-    .account-layout {
-        grid-template-columns: 1fr;
-    }
-
-
-    .account-side-column {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        align-items: start;
-    }
-
-
-    .account-save-card {
-        grid-column: 1 / -1;
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
-    .account-page-header {
-        flex-direction: column;
-        align-items: stretch;
-
-        gap: 14px;
-
-        padding: 16px;
-    }
-
-
-    .account-header-identity {
-        min-width: 0;
-    }
-
-
-    .account-fields-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    .account-field-wide {
-        grid-column: auto;
-    }
-
-
-    .account-side-column {
-        grid-template-columns: 1fr;
-    }
-
-
-    .account-save-card {
-        grid-column: auto;
-    }
-
-}
-
-
-@media (max-width: 520px) {
-
-    .account-page-header h1 {
-        font-size: 18px;
-    }
-
-
-    .account-card-header,
-    .account-card-body,
-    .account-photo-section,
-    .account-support-component {
-        padding:
-            13px
-            14px;
-    }
-
-
-    .account-save-card {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-
-    .account-save-button {
-        width: 100%;
-    }
-
-}
-
-
-/* ==========================================================================
-   REDUCED MOTION
-   ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .account-page *,
-    .account-page *::before,
-    .account-page *::after {
-        animation: none !important;
-
-        transition: none !important;
-    }
-
+@media(prefers-reduced-motion: reduce) {
+    #lgAccountBuyerParity .lg-account-support-modal,
+    #lgAccountBuyerParity .lg-account-support-panel { transition: none !important; }
 }
 </style>
 @endpush
 
-
 @section('content')
-
-<div class="sari-logistics-ui account-page">
-
-    {{-- =====================================================
-        PAGE INTRO
-    ====================================================== --}}
-
-    <header class="account-page-header">
-
+<div id="lgAccountBuyerParity" class="sari-logistics-ui account-page">
+    <header class="lg-account-heading lg-account-heading-with-help">
         <div>
-
-            <p class="account-eyebrow">
-                LOGISTICS PROFILE
-            </p>
-
-            <h1>
-                Account Management
-            </h1>
-
-            <p class="account-subtitle">
-                Manage your Logistics profile, contact information,
-                account address, profile image, and sign-in password.
-            </p>
-
+            <p class="lg-account-eyebrow">Account Management</p>
+            <h1>Logistics <span>Profile</span></h1>
         </div>
-
-
-        @if($account)
-
-            <div class="account-header-identity">
-
-                <span class="account-header-avatar">
-                    {{
-                        mb_strtoupper(
-                            mb_substr(
-                                trim(
-                                    (string) (
-                                        $account->first_name
-                                        ?: 'L'
-                                    )
-                                ),
-                                0,
-                                1
-                            )
-                        )
-                    }}
-                </span>
-
-
-                <div>
-
-                    <span>
-                        SIGNED IN AS
-                    </span>
-
-                    <strong>
-                        {{ $account->displayName() }}
-                    </strong>
-
-                    <p>
-                        {{ $account->email }}
-                    </p>
-
-                </div>
-
-            </div>
-
-        @endif
-
+        <button type="button" class="lg-account-help-trigger" data-account-support-open
+                aria-label="Open account help and support" aria-haspopup="dialog"
+                aria-controls="lgAccountSupportModal" title="Help & Support">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/><path d="M9.4 9a2.6 2.6 0 0 1 5.2.5c0 2-2.6 2.3-2.6 4.5"/>
+                <path d="M12 17h.01"/>
+            </svg>
+        </button>
     </header>
 
-
-    {{-- =====================================================
-        FLASH MESSAGES
-    ====================================================== --}}
-
     @if(session('success'))
-
-        <div
-            class="account-alert account-alert-success"
-            role="status"
-        >
-            <div>
-
-                <strong>
-                    Account updated
-                </strong>
-
-                <p>
-                    {{ session('success') }}
-                </p>
-
-            </div>
+        <div class="account-alert account-alert-success" role="status">
+            <strong>Account updated</strong><p>{{ session('success') }}</p>
         </div>
-
     @endif
-
-
     @if($errors->any())
-
-        <div
-            class="account-alert account-alert-danger"
-            role="alert"
-        >
-            <div>
-
-                <strong>
-                    Please review your account details
-                </strong>
-
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>
-                            {{ $error }}
-                        </li>
-                    @endforeach
-                </ul>
-
-            </div>
+        <div class="account-alert account-alert-danger" role="alert">
+            <strong>Please review your account details</strong>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-
     @endif
-
 
     @if($account)
-
-        <form
-            method="POST"
-            action="{{ route(
-                'logistics.account-management.update'
-            ) }}"
-            enctype="multipart/form-data"
-            class="account-form"
-        >
+        <form method="POST" action="{{ route('logistics.account-management.update') }}"
+            enctype="multipart/form-data" class="account-form" id="logisticsAccountForm">
             @csrf
             @method('PATCH')
 
-
-            <div class="account-layout">
-
-                {{-- =========================================
-                    LEFT COLUMN
-                ========================================== --}}
-
-                <div class="account-main-column">
-
-                    {{-- =====================================
-                        PROFILE PHOTO
-                    ====================================== --}}
-
-                    <section class="account-card">
-
-                        <div class="account-card-header">
-
-                            <div>
-
-                                <p class="account-eyebrow">
-                                    PROFILE IDENTITY
-                                </p>
-
-                                <h2>
-                                    Profile photo
-                                </h2>
-
-                                <p>
-                                    This image is used across your
-                                    SARI Logistics workspace.
-                                </p>
-
+            <div class="lg-account-layout">
+                {{-- Buyer-style left profile card; profile_image remains the original Laravel field. --}}
+                <aside class="lg-account-card lg-account-profile">
+                    <div class="lg-account-card-header">
+                        <h2>Profile</h2><span class="lg-account-profile-badge">Logistics Account</span>
+                    </div>
+                    <div class="lg-account-profile-body">
+                        <div class="lg-account-photo-wrap">
+                            <div class="lg-account-avatar">
+                                @if($account->profile_image_path)
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($account->profile_image_path) }}"
+                                        alt="Current Logistics profile photo" data-profile-preview>
+                                @else
+                                    <img alt="Selected Logistics profile photo" data-profile-preview hidden>
+                                @endif
+                                <span data-profile-fallback @if($account->profile_image_path) hidden @endif>{{ mb_strtoupper(mb_substr(trim((string) ($account->first_name ?: 'L')),0,1)) }}</span>
                             </div>
-
+                            <button type="button" class="lg-account-photo-trigger" data-photo-trigger aria-label="Change profile photo" title="Change profile photo">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z" />
+                                </svg>
+                            </button>
                         </div>
-
-
-                        <div class="account-photo-section">
-
-                            <div class="account-photo-component">
-                                <x-account.profile-photo
-                                    :account="$account"
-                                />
-                            </div>
-
-
-                            <div class="account-photo-note">
-
-                                <strong>
-                                    Profile image requirements
-                                </strong>
-
-                                <p>
-                                    JPG, JPEG, PNG, or WEBP.
-                                    Maximum file size is 5 MB.
-                                </p>
-
-                            </div>
-
+                        <input id="logisticsProfilePhotoInput" type="file" name="profile_image"
+                            accept="image/jpeg,image/png,image/webp" class="sr-only" data-profile-input tabindex="-1">
+                        <p class="lg-account-profile-name" data-profile-name>{{ $account->displayName() }}</p>
+                        <p class="lg-account-profile-email" data-profile-email>{{ $account->email }}</p>
+                        <span class="lg-account-role">Logistics Manager</span>
+                        <p class="lg-account-photo-help">Select the pencil icon to change your photo. JPG, PNG or WEBP, up to 5 MB.</p>
+                        <p class="lg-account-photo-help lg-account-photo-file" data-photo-filename aria-live="polite"></p>
+                        <div class="lg-account-meta">
+                            <div class="lg-account-meta-row"><span>Contact</span><strong data-profile-contact>{{ $account->contact_no ?: 'Not provided' }}</strong></div>
+                            <div class="lg-account-meta-row"><span>Account ID</span><strong>#{{ $account->id }}</strong></div>
                         </div>
+                    </div>
+                </aside>
 
-                    </section>
-
-
-                    {{-- =====================================
-                        PERSONAL INFORMATION
-                    ====================================== --}}
-
-                    <section class="account-card">
-
-                        <div class="account-card-header">
-
-                            <div>
-
-                                <p class="account-eyebrow">
-                                    ACCOUNT DETAILS
-                                </p>
-
-                                <h2>
-                                    Personal information
-                                </h2>
-
-                                <p>
-                                    Keep your Logistics contact
-                                    information accurate and current.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="account-card-body">
-
+                {{-- Buyer-style one unified account container; original forms unchanged. --}}
+                <div class="lg-account-card lg-account-settings">
+                    <div class="lg-account-section">
+                        <div class="lg-account-section-head"><h2>Basic information</h2><span class="lg-account-head-rule" aria-hidden="true"></span></div>
+                        <div class="lg-account-fields">
                             <div class="account-fields-grid">
 
                                 {{-- First Name --}}
@@ -1458,135 +562,12 @@
                                 </label>
 
                             </div>
-
                         </div>
-
-                    </section>
-
-                </div>
-
-
-                {{-- =========================================
-                    RIGHT COLUMN
-                ========================================== --}}
-
-                <aside class="account-side-column">
-
-                    {{-- =====================================
-                        ACCOUNT SUMMARY
-                    ====================================== --}}
-
-                    <section class="account-card account-summary-card">
-
-                        <div class="account-summary-profile">
-
-                            <span class="account-summary-avatar">
-                                {{
-                                    mb_strtoupper(
-                                        mb_substr(
-                                            trim(
-                                                (string) (
-                                                    $account->first_name
-                                                    ?: 'L'
-                                                )
-                                            ),
-                                            0,
-                                            1
-                                        )
-                                    )
-                                }}
-                            </span>
-
-
-                            <h2>
-                                {{ $account->displayName() }}
-                            </h2>
-
-                            <p>
-                                Logistics Manager
-                            </p>
-
-                        </div>
-
-
-                        <div class="account-summary-list">
-
-                            <div>
-
-                                <span>
-                                    EMAIL
-                                </span>
-
-                                <strong>
-                                    {{ $account->email }}
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    CONTACT
-                                </span>
-
-                                <strong>
-                                    {{
-                                        $account->contact_no
-                                        ?: 'Not provided'
-                                    }}
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    ACCOUNT ID
-                                </span>
-
-                                <strong>
-                                    #{{ $account->id }}
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    {{-- =====================================
-                        SECURITY
-                    ====================================== --}}
-
-                    <section class="account-card">
-
-                        <div class="account-card-header">
-
-                            <div>
-
-                                <p class="account-eyebrow">
-                                    SECURITY
-                                </p>
-
-                                <h2>
-                                    Change password
-                                </h2>
-
-                                <p>
-                                    Leave these fields empty if you
-                                    do not want to change the password.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="account-card-body">
-
+                    </div>
+                    <div class="lg-account-section">
+                        <div class="lg-account-section-head"><h2>Change password</h2><span class="lg-account-head-rule" aria-hidden="true"></span></div>
+                        <p class="lg-account-section-copy">Leave these fields blank if you don't want to change your password.</p>
+                        <div class="lg-account-fields">
                             <div class="account-security-fields">
 
                                 <label class="account-field">
@@ -1607,9 +588,17 @@
                                         <button
                                             type="button"
                                             data-password-toggle
+                                            aria-pressed="false"
                                             aria-label="Show current password"
-                                        >
-                                            Show
+                                         title="Show password">
+                                            <svg data-eye-show viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                            <svg data-eye-hide viewBox="0 0 24 24" aria-hidden="true" hidden>
+                                                <path d="M3 3l18 18M9.9 6.3A10.9 10.9 0 0 1 12 6c6.4 0 10 6 10 6a15.9 15.9 0 0 1-4 4.4M6.6 6.7C3.8 8.6 2 12 2 12s3.6 6 10 6c1.6 0 3-.3 4.2-.9"/>
+                                                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                            </svg>
                                         </button>
 
                                     </div>
@@ -1642,9 +631,17 @@
                                         <button
                                             type="button"
                                             data-password-toggle
+                                            aria-pressed="false"
                                             aria-label="Show new password"
-                                        >
-                                            Show
+                                         title="Show password">
+                                            <svg data-eye-show viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                            <svg data-eye-hide viewBox="0 0 24 24" aria-hidden="true" hidden>
+                                                <path d="M3 3l18 18M9.9 6.3A10.9 10.9 0 0 1 12 6c6.4 0 10 6 10 6a15.9 15.9 0 0 1-4 4.4M6.6 6.7C3.8 8.6 2 12 2 12s3.6 6 10 6c1.6 0 3-.3 4.2-.9"/>
+                                                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                            </svg>
                                         </button>
 
                                     </div>
@@ -1681,9 +678,17 @@
                                         <button
                                             type="button"
                                             data-password-toggle
+                                            aria-pressed="false"
                                             aria-label="Show password confirmation"
-                                        >
-                                            Show
+                                         title="Show password">
+                                            <svg data-eye-show viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                            <svg data-eye-hide viewBox="0 0 24 24" aria-hidden="true" hidden>
+                                                <path d="M3 3l18 18M9.9 6.3A10.9 10.9 0 0 1 12 6c6.4 0 10 6 10 6a15.9 15.9 0 0 1-4 4.4M6.6 6.7C3.8 8.6 2 12 2 12s3.6 6 10 6c1.6 0 3-.3 4.2-.9"/>
+                                                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                            </svg>
                                         </button>
 
                                     </div>
@@ -1691,109 +696,49 @@
                                 </label>
 
                             </div>
-
                         </div>
-
-                    </section>
-
-
-                    {{-- =====================================
-                        SAVE
-                    ====================================== --}}
-
-                    <section class="account-save-card">
-
-                        <div>
-
-                            <strong>
-                                Save account changes
-                            </strong>
-
-                            <p>
-                                Your updated profile will be used
-                                across the Logistics workspace.
-                            </p>
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            class="account-save-button"
-                            data-account-submit
-                        >
-                            Save Changes
-                        </button>
-
-                    </section>
-
-                </aside>
-
+                    </div>
+                    <div class="lg-account-save">
+                        <p>Your profile and security changes will be saved to your Logistics account.</p>
+                        <button type="submit" class="account-save-button" data-account-submit>Save Changes</button>
+                    </div>
+                </div>
             </div>
-
         </form>
-
     @else
-
-        <section class="account-card account-no-account">
-
-            <span class="account-no-account-icon">
-                !
-            </span>
-
-            <h2>
-                No editable Logistics account
-            </h2>
-
-            <p>
-                You are currently using the temporary Logistics
-                test login. Register and approve a real Logistics
-                account before editing profile information.
-            </p>
-
-        </section>
-
+        <div class="lg-account-card lg-account-no-account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6m0 4h.01"/></svg>
+            <h2>No editable Logistics account</h2>
+            <p>You are currently using the temporary Logistics test login. Register and approve a real Logistics account before editing profile information.</p>
+        </div>
     @endif
 
-
-    {{-- =====================================================
-        SUPPORT / COMPLAINT FORM
-    ====================================================== --}}
-
-    <section class="account-support-section">
-
-        <div class="account-section-heading">
-
-            <div>
-
-                <p class="account-eyebrow">
-                    SUPPORT
-                </p>
-
-                <h2>
-                    Need help with your account?
-                </h2>
-
-                <p>
-                    Submit an account or Logistics-related concern
-                    to the SARI support team.
-                </p>
-
+    {{-- Support form remains unchanged; this modal only changes its presentation. --}}
+    <div id="lgAccountSupportModal" class="lg-account-support-modal" data-account-support-modal
+         role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lgAccountSupportTitle">
+        <div class="lg-account-support-backdrop" data-account-support-dismiss></div>
+        <div class="lg-account-support-panel" tabindex="-1" data-account-support-panel>
+            <header class="lg-account-support-modal-header">
+                <div>
+                    <p class="lg-account-support-overline">LOGISTICS SUPPORT</p>
+                    <h2 id="lgAccountSupportTitle">Help & Support</h2>
+                    <p>Report an account or Logistics-related issue to the SARI support team.</p>
+                </div>
+                <button type="button" class="lg-account-support-close" data-account-support-close
+                        aria-label="Close help and support" title="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </header>
+            <div class="account-support-component">
+                @include('components.support.complaint-form')
             </div>
-
         </div>
-
-
-        <div class="account-support-component">
-            @include('components.support.complaint-form')
-        </div>
-
-    </section>
-
+    </div>
 </div>
-
 @endsection
-
 
 @push('scripts')
 
@@ -1866,18 +811,15 @@
                                 : 'text';
 
 
-                        button.textContent =
-                            showing
-                                ? 'Show'
-                                : 'Hide';
-
-
-                        button.setAttribute(
-                            'aria-label',
-                            showing
-                                ? 'Show password'
-                                : 'Hide password'
-                        );
+                        const eyeShow = button.querySelector('[data-eye-show]');
+                        const eyeHide = button.querySelector('[data-eye-hide]');
+                        if (eyeShow) eyeShow.toggleAttribute('hidden', !showing);
+                        if (eyeHide) eyeHide.toggleAttribute('hidden', showing);
+                        button.setAttribute('aria-pressed', String(!showing));
+                        const action = showing ? 'Show' : 'Hide';
+                        const fieldName = wrapper?.closest('label')?.querySelector('span')?.textContent?.trim() || 'password';
+                        button.setAttribute('aria-label', `${action} ${fieldName}`);
+                        button.title = `${action} password`;
 
                     }
                 );
@@ -1944,4 +886,90 @@
 })();
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = document.getElementById('lgAccountBuyerParity');
+    if (!page) return;
+    const fileInput = page.querySelector('[data-profile-input]');
+    const preview = page.querySelector('[data-profile-preview]');
+    const fallback = page.querySelector('[data-profile-fallback]');
+    const fileName = page.querySelector('[data-photo-filename]');
+    const trigger = page.querySelector('[data-photo-trigger]');
+    let objectUrl = null;
+    trigger?.addEventListener('click', () => fileInput?.click());
+    fileInput?.addEventListener('change', () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        if (!['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+            fileInput.value = '';
+            if (fileName) fileName.textContent = 'Choose JPG, PNG or WEBP under 5 MB.';
+            return;
+        }
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        objectUrl = URL.createObjectURL(file);
+        if (preview) { preview.src = objectUrl; preview.hidden = false; }
+        if (fallback) fallback.hidden = true;
+        if (fileName) fileName.textContent = file.name;
+    });
+    window.addEventListener('pagehide', () => { if (objectUrl) URL.revokeObjectURL(objectUrl); }, {once:true});
+});
+</script>
+
+<script>
+(() => {
+    'use strict';
+    const initSupportModal = () => {
+        const root = document.getElementById('lgAccountBuyerParity');
+        const modal = root?.querySelector('[data-account-support-modal]');
+        const trigger = root?.querySelector('[data-account-support-open]');
+        const panel = modal?.querySelector('[data-account-support-panel]');
+        if (!root || !modal || !trigger || !panel || modal.dataset.initialized) return;
+        modal.dataset.initialized = 'true';
+        let priorFocus = null;
+        let previousOverflow = '';
+        const focusable = () => [...modal.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled]),a[href]')]
+            .filter(el => el.getClientRects().length);
+        const open = () => {
+            if (modal.classList.contains('is-open')) return;
+            priorFocus = document.activeElement;
+            previousOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            modal.setAttribute('aria-hidden','false');
+            modal.classList.add('is-open');
+            const target = modal.querySelector('[data-account-support-close]') || panel;
+            requestAnimationFrame(() => requestAnimationFrame(() => target.focus({preventScroll:true})));
+        };
+        const close = () => {
+            if (!modal.classList.contains('is-open')) return;
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden','true');
+            document.body.style.overflow = previousOverflow;
+            (priorFocus?.isConnected ? priorFocus : trigger).focus({preventScroll:true});
+        };
+        trigger.addEventListener('click', open);
+        modal.querySelector('[data-account-support-close]')?.addEventListener('click', close);
+        modal.querySelector('[data-account-support-dismiss]')?.addEventListener('click', close);
+        modal.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+            if (event.key !== 'Tab') return;
+            const items = focusable();
+            if (!items.length) { event.preventDefault(); panel.focus(); return; }
+            const first = items[0], last = items[items.length-1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        });
+        // Reopen after a server-side complaint form validation error.
+        @if($errors->has('subject') || $errors->has('description'))
+            open();
+            const supportForm = modal.querySelector('form');
+            if (supportForm) {
+                if (supportForm.elements.subject) supportForm.elements.subject.value = @json(old('subject', ''));
+                if (supportForm.elements.description) supportForm.elements.description.value = @json(old('description', ''));
+            }
+        @endif
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSupportModal);
+    else initSupportModal();
+})();
+</script>
 @endpush
