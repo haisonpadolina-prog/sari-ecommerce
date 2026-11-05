@@ -2703,6 +2703,10 @@ body {
 
     @stack('scripts')
 
+    {{-- Authentication feedback only; displayed when an auth flash/error is present. --}}
+    @include('components.auth.login-feedback-modal')
+
+    @include('components.auth.logout-history-protection')
 </body>
 
 </html>

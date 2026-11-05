@@ -53,7 +53,7 @@ class MobileBuyerRegistrationController extends Controller
             'postal_code' => ['nullable', 'regex:/^\d{4}$/'],
             'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()],
             'terms' => ['accepted'],
-            'profile_image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
         $email = (string) $validated['email'];
@@ -77,14 +77,19 @@ class MobileBuyerRegistrationController extends Controller
         }
 
         $birthday = Carbon::parse((string) $validated['birthday'])->startOfDay();
-        $newProfile = $request->file('profile_image')->store('profile-images/buyer/'.now()->format('Y/m'), 'public');
-        if (!$newProfile || !Storage::disk('public')->exists($newProfile)) {
-            throw ValidationException::withMessages(['profile_image' => 'The profile photo could not be saved.']);
-        }
         $oldProfile = $existing?->profile_image_path;
+        $newProfile = null;
+        if ($request->hasFile('profile_image')) {
+            $newProfile = $request->file('profile_image')->store('profile-images/buyer/'.now()->format('Y/m'), 'public');
+            if (!$newProfile || !Storage::disk('public')->exists($newProfile)) {
+                throw ValidationException::withMessages(['profile_image' => 'The profile photo could not be saved.']);
+            }
+        }
+        // A retry with no uploaded photo keeps any image already stored.
+        $profilePath = $newProfile ?? $oldProfile;
 
         try {
-            $application = DB::transaction(function () use ($validated, $email, $mobile, $birthday, $existing, $newProfile): RegistrationApplication {
+            $application = DB::transaction(function () use ($validated, $email, $mobile, $birthday, $existing, $profilePath): RegistrationApplication {
                 $payload = [
                     'role' => 'buyer',
                     'logistics_account_id' => null,
@@ -107,7 +112,7 @@ class MobileBuyerRegistrationController extends Controller
                     'street_address' => $validated['street_address'] ?? null,
                     'postal_code' => $validated['postal_code'] ?? null,
                     'password' => Hash::make((string) $validated['password']),
-                    'profile_image_path' => $newProfile,
+                    'profile_image_path' => $profilePath,
                     'status' => 'unverified',
                     'admin_note' => null,
                     'reviewed_at' => null,
@@ -137,7 +142,7 @@ class MobileBuyerRegistrationController extends Controller
                     'barangay_name' => $payload['barangay_name'],
                     'street_address' => $payload['street_address'],
                     'password' => $payload['password'],
-                    'profile_image_path' => $newProfile,
+                    'profile_image_path' => $profilePath,
                     'account_status' => 'unverified',
                     'approved_at' => null,
                 ]);
@@ -145,11 +150,13 @@ class MobileBuyerRegistrationController extends Controller
                 return $application;
             });
         } catch (\Throwable $exception) {
-            Storage::disk('public')->delete($newProfile);
+            if ($newProfile) {
+                Storage::disk('public')->delete($newProfile);
+            }
             throw $exception;
         }
 
-        if ($oldProfile && $oldProfile !== $newProfile && str_starts_with((string) $oldProfile, 'profile-images/')) {
+        if ($newProfile && $oldProfile && $oldProfile !== $newProfile && str_starts_with((string) $oldProfile, 'profile-images/')) {
             Storage::disk('public')->delete($oldProfile);
         }
 

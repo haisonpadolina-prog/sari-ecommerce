@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.rider-registration')
 
 @section('title', 'Verify Rider Email — SARI')
 
@@ -7,29 +7,26 @@
 
 @php
     $providerName = $logistics->displayName();
-    $email = old('email', session('rider_registration_otp_email', ''));
+    $email = $email ?? session('rider_registration_otp_email', '');
 @endphp
 
-<div class="min-h-screen bg-[#f4f5f7] font-['Poppins',sans-serif] text-[#202124]">
+<div class="rider-page-shell min-h-screen bg-[#f4f5f7] font-['Poppins',sans-serif] text-[#202124]">
     <main class="mx-auto flex min-h-screen w-full max-w-[760px] items-center px-4 py-10 sm:px-6">
         <section class="w-full rounded-[24px] border border-[#e7e9ee] bg-white p-6 shadow-[0_18px_45px_rgba(32,33,36,.08)] sm:p-8">
-            <a
-                href="{{ route('rider.logistics.index') }}"
-                class="text-[11px] font-semibold text-[#7b8089] hover:text-[#b67a08]"
-            >
-                ← Choose another Logistics
-            </a>
+            <p class="text-[11px] font-semibold text-[#7b8089]">
+                Step 3 of 5 · Email verification
+            </p>
 
             <div class="mt-6">
                 <p class="text-[9px] font-bold uppercase tracking-[.16em] text-[#b67a08]">
-                    Rider Email Verification
+                    Rider Application — Email Verification
                 </p>
                 <h1 class="mt-2 text-[28px] font-bold tracking-[-.035em] text-[#202124]">
-                    Verify your email first
+                    Verify your email to submit
                 </h1>
                 <p class="mt-2 text-[11px] leading-6 text-[#6b7280]">
-                    Before applying to <strong>{{ $providerName }}</strong>, verify the email
-                    address you will use for your Rider account.
+                    Your application to <strong>{{ $providerName }}</strong> is saved. Verify this
+                    email to send your application to their review queue.
                 </p>
             </div>
 
@@ -75,7 +72,7 @@
                         type="email"
                         name="email"
                         value="{{ $email }}"
-                        required
+                        readonly required
                         autocomplete="email"
                         placeholder="name@email.com"
                         class="h-12 rounded-xl border border-[#dfe3e8] bg-white px-4 text-[11px] outline-none transition focus:border-[#d89b10] focus:ring-4 focus:ring-[#fff7e6]"
@@ -140,8 +137,9 @@
 
             <div class="mt-7 rounded-[14px] bg-[#fafafb] p-4">
                 <p class="text-[9px] leading-5 text-[#7b8089]">
-                    The code expires after 10 minutes. After verification, SARI will open the
-                    normal Rider application form for your selected Logistics provider.
+                    The verification code expires after 5 minutes. Once verified, your Rider
+                    application enters the selected Logistics provider’s review queue. Your account
+                    becomes active only after approval.
                 </p>
             </div>
         </section>

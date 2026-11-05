@@ -95,8 +95,8 @@ class LogisticsRemittanceController extends Controller
         }
 
         $message = $facility->is_main_branch
-            ? 'Physical COD cash verified at the Main Branch. Central reconciliation completed and affected wallets were released.'
-            : 'Physical COD cash verified at '.$facility->name.'. Rider cash custody is cleared. The cash is now held by this branch and must be remitted to the Main Branch before affected wallets are released.';
+            ? 'Physical COD cash verified at the Main Branch. Prepare a SARI Admin cash turnover before any stakeholder wallet is released.'
+            : 'Physical COD cash verified at '.$facility->name.'. Rider cash custody is cleared. The cash is now held by this branch and must reach the Main Branch, then SARI Admin, before wallets are released.';
 
         return redirect()
             ->route('logistics.remittances.index')

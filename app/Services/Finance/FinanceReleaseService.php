@@ -31,6 +31,43 @@ class FinanceReleaseService
                 ]);
             }
 
+            // Delivery alone is not proof that SARI holds the collected COD cash.
+            // The remittance batch must have passed both physical cash counting
+            // and Main Branch central reconciliation before Admin cash handover.
+            if (strtoupper((string) $locked->payment_method) === 'COD') {
+                $remittance = $locked->codRemittanceItem()->with('batch')->first()?->batch;
+
+                if (! $remittance
+                    || $remittance->remittance_method !== 'cash_hub'
+                    || $remittance->status !== 'verified'
+                    || ! $remittance->central_reconciled_at
+                    || ! $remittance->verified_at
+                    || abs((float) $remittance->expected_amount - (float) $remittance->confirmed_amount) >= 0.01
+                    || ($locked->logistics_account_id
+                        && (int) $remittance->logistics_account_id !== (int) $locked->logistics_account_id)) {
+                    throw ValidationException::withMessages([
+                        'remittance' => 'COD earnings cannot be released until the full cash collection is verified at the Logistics Main Branch and received by SARI Admin.',
+                    ]);
+                }
+
+                $handover = $remittance->adminCashTurnoverItem()
+                    ->with('turnover')
+                    ->first();
+                $turnover = $handover?->turnover;
+
+                if (! $turnover
+                    || $turnover->status !== 'received'
+                    || ! $turnover->received_at
+                    || ! $turnover->received_by_admin_account_id
+                    || (int) $turnover->logistics_account_id !== (int) $remittance->logistics_account_id
+                    || abs((float) $turnover->expected_amount - (float) $turnover->confirmed_amount) >= 0.01
+                    || abs((float) $handover->expected_amount - (float) $remittance->confirmed_amount) >= 0.01) {
+                    throw ValidationException::withMessages([
+                        'turnover' => 'COD earnings stay pending until an authorized SARI Admin counts and receives the full physical cash turnover.',
+                    ]);
+                }
+            }
+
             $commission = OrderCommission::query()
                 ->where('marketplace_order_id', $locked->id)
                 ->lockForUpdate()

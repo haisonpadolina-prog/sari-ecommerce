@@ -29,8 +29,7 @@
         'buyer' => [
             ['icon' => 'form', 'label' => 'Register'],
             ['icon' => 'mail', 'label' => 'Verify email'],
-            ['icon' => 'shield', 'label' => 'Admin review'],
-            ['icon' => 'check', 'label' => 'Approved'],
+            ['icon' => 'check', 'label' => 'Account activated'],
             ['icon' => 'login', 'label' => 'Can log in'],
         ],
         'seller' => [
@@ -64,54 +63,54 @@
 @endphp
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
+    /* Registration status — centered SARI card, shared across account roles. */
     :root {
-        --status-gold: #c9870b;
-        --status-gold-dark: #a96e06;
-        --status-ink: #1f2328;
-        --status-body: #666d76;
-        --status-muted: #8b9198;
-        --status-line: #e7e2da;
-        --status-soft: #faf8f4;
-        --status-success: #2f7d50;
-        --status-danger: #b84040;
+        --status-gold: #c88100;
+        --status-gold-dark: #9c6500;
+        --status-ink: #23252b;
+        --status-body: #5a6270;
+        --status-muted: #7e8794;
+        --status-line: #e5e9ef;
+        --status-soft: #f7f9fc;
+        --status-success: #24764a;
+        --status-danger: #b53c42;
     }
 
     .sari-status-page,
-    .sari-status-page * {
-        box-sizing: border-box;
-    }
+    .sari-status-page * { box-sizing: border-box; }
 
     .sari-status-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         min-height: 100vh;
-        background: #f7f4ee;
-        padding: 34px 16px;
+        min-height: 100dvh;
+        width: 100%;
+        padding: 32px 18px;
+        margin: 0;
+        background-color: #e7e2dd;
+        background-image: url('{{ asset('images/login-bg.png') }}');
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
         font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
         color: var(--status-ink);
     }
 
     .sari-status-shell {
-        width: min(100%, 820px);
+        width: min(100%, 640px);
         margin: 0 auto;
     }
 
     .sari-status-card {
         position: relative;
         overflow: hidden;
-        border: 1px solid #e6ded1;
-        border-radius: 24px;
-        background: #fff;
-        padding: 32px;
-        box-shadow: 0 18px 55px rgba(40, 32, 20, .08);
-    }
-
-    .sari-status-logo {
-        display: block;
-        width: 156px;
-        height: auto;
-        margin: 0 auto;
-        filter: brightness(0);
+        width: 100%;
+        padding: 30px 38px 27px;
+        border: 1px solid #e7e9ed;
+        border-radius: 19px;
+        background: #ffffff;
+        box-shadow: 0 21px 58px rgba(28, 34, 43, 0.13), 0 2px 8px rgba(28, 34, 43, 0.04);
     }
 
     .sari-status-hero {
@@ -120,221 +119,236 @@
         text-align: center;
     }
 
+    /* No logo box; the existing PNG is shown on its own. */
+    .sari-status-logo {
+        display: block;
+        width: 127px;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        filter: brightness(0);
+    }
+
     .sari-status-animation-wrap {
         display: grid;
-        width: 104px;
-        height: 104px;
-        margin: 22px auto 0;
         place-items: center;
+        width: 78px;
+        height: 78px;
+        margin: 18px auto 0;
     }
 
     .sari-waiting-animation {
         display: block;
-        width: 96px;
-        height: 96px;
+        width: 76px;
+        height: 76px;
         object-fit: contain;
     }
 
     .sari-approved-icon,
     .sari-rejected-icon {
         display: none;
-        width: 70px;
-        height: 70px;
+        width: 62px;
+        height: 62px;
         place-items: center;
-        border-radius: 999px;
+        border-radius: 50%;
     }
 
     .sari-approved-icon {
-        border: 1px solid #cde5d5;
-        background: #f1faf4;
+        border: 1px solid #cae7d3;
+        background: #edf8f1;
         color: var(--status-success);
     }
 
     .sari-rejected-icon {
-        border: 1px solid #eed1d1;
-        background: #fff6f6;
+        border: 1px solid #f0d2d4;
+        background: #fff4f4;
         color: var(--status-danger);
     }
 
     .sari-approved-icon svg,
-    .sari-rejected-icon svg {
-        width: 32px;
-        height: 32px;
-    }
+    .sari-rejected-icon svg { width: 30px; height: 30px; }
 
     .sari-status-eyebrow {
-        margin: 14px 0 0;
+        margin: 13px 0 0;
+        color: var(--status-gold-dark);
         font-size: 10px;
-        line-height: 1;
         font-weight: 700;
-        letter-spacing: .17em;
+        letter-spacing: .14em;
+        line-height: 1.5;
         text-transform: uppercase;
-        color: var(--status-gold);
     }
 
     .sari-status-title {
-        margin: 10px 0 0;
-        font-size: clamp(27px, 4vw, 36px);
-        line-height: 1.18;
+        margin: 7px auto 0;
+        max-width: 530px;
+        color: #20242a;
+        font-size: clamp(23px, 3.3vw, 29px);
         font-weight: 700;
-        letter-spacing: -.04em;
-        color: var(--status-ink);
+        letter-spacing: -.035em;
+        line-height: 1.27;
     }
 
     .sari-status-copy {
-        width: min(100%, 610px);
+        max-width: 505px;
         margin: 12px auto 0;
-        font-size: 13px;
-        line-height: 1.75;
         color: var(--status-body);
+        font-size: 12.5px;
+        line-height: 1.75;
     }
 
+    /* Email information stays visible without an icon box or colored panel. */
     .sari-email-card {
         display: flex;
-        width: min(100%, 560px);
-        margin: 22px auto 0;
         align-items: center;
-        gap: 13px;
-        border: 1px solid var(--status-line);
-        border-radius: 14px;
-        background: #fff;
-        padding: 13px 15px;
+        justify-content: center;
+        gap: 10px;
+        width: min(100%, 470px);
+        margin: 20px auto 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
         text-align: left;
     }
 
     .sari-email-icon {
-        display: grid;
-        width: 40px;
-        height: 40px;
-        flex: 0 0 40px;
-        place-items: center;
-        border-radius: 11px;
-        background: #fbf5e9;
-        color: #a96f08;
+        display: flex;
+        flex: 0 0 20px;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
+        box-shadow: none;
+        color: var(--status-gold-dark);
     }
 
-    .sari-email-icon svg {
-        width: 19px;
-        height: 19px;
-    }
-
-    .sari-email-meta {
-        min-width: 0;
-    }
+    .sari-email-icon svg { display: block; width: 20px; height: 20px; }
+    .sari-email-meta { min-width: 0; }
 
     .sari-email-label {
         margin: 0;
-        font-size: 10px;
-        color: var(--status-muted);
+        color: #687384;
+        font-size: 11px;
+        line-height: 1.45;
     }
 
     .sari-email-value {
         margin: 3px 0 0;
+        color: #222931;
+        font-size: 13px;
+        font-weight: 650;
+        line-height: 1.45;
         overflow-wrap: anywhere;
-        font-size: 12.5px;
-        font-weight: 600;
-        color: #363b42;
     }
 
     .sari-rejection-note {
         display: none;
-        width: min(100%, 610px);
-        margin: 18px auto 0;
-        border: 1px solid #efd2d2;
-        border-radius: 12px;
-        background: #fff8f8;
+        width: min(100%, 505px);
+        margin: 15px auto 0;
         padding: 12px 14px;
+        border: 1px solid #f1cdcf;
+        border-radius: 11px;
+        background: #fff7f7;
         text-align: left;
     }
 
     .sari-rejection-note strong {
         display: block;
-        font-size: 11px;
-        color: #8f3333;
+        color: #963036;
+        font-size: 12px;
     }
 
     .sari-rejection-note p {
         margin: 4px 0 0;
+        color: #75464a;
         font-size: 11.5px;
         line-height: 1.6;
-        color: #7d5555;
     }
 
+    /* Clean, accessible registration-process accordion. */
     .sari-details {
-        margin-top: 24px;
-        border-top: 1px solid #eee9e2;
-        padding-top: 18px;
+        margin-top: 23px;
+        padding-top: 16px;
+        border-top: 1px solid var(--status-line);
     }
 
     .sari-details-toggle {
         display: flex;
-        width: 100%;
         align-items: center;
         justify-content: space-between;
         gap: 14px;
-        border: 0;
-        background: transparent;
-        padding: 0;
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #e6eaf0;
+        border-radius: 11px;
+        background: #f8fafc;
         color: inherit;
+        font: inherit;
         text-align: left;
         cursor: pointer;
+        transition: background-color .18s ease, border-color .18s ease;
+    }
+
+    .sari-details-toggle:hover,
+    .sari-details.is-open .sari-details-toggle {
+        border-color: #dae1eb;
+        background: #f4f7fa;
     }
 
     .sari-details-toggle-copy {
         display: flex;
-        min-width: 0;
         align-items: center;
         gap: 12px;
+        min-width: 0;
     }
 
     .sari-details-toggle-icon {
-        display: grid;
-        width: 38px;
-        height: 38px;
-        flex: 0 0 38px;
-        place-items: center;
-        border-radius: 10px;
-        background: #faf6ee;
-        color: #a96f08;
+        display: flex;
+        flex: 0 0 20px;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        color: #677385;
     }
 
-    .sari-details-toggle-icon svg {
-        width: 18px;
-        height: 18px;
-    }
+    .sari-details-toggle-icon svg { display: block; width: 19px; height: 19px; }
 
     .sari-details-toggle-title {
         display: block;
+        color: #252a33;
         font-size: 13px;
-        font-weight: 650;
-        color: #292d32;
+        font-weight: 700;
+        line-height: 1.45;
     }
 
     .sari-details-toggle-subtitle {
         display: block;
         margin-top: 2px;
-        font-size: 10.5px;
-        line-height: 1.45;
-        color: var(--status-muted);
+        color: #748090;
+        font-size: 11px;
+        line-height: 1.55;
     }
 
     .sari-details-chevron {
+        flex: 0 0 18px;
         width: 18px;
         height: 18px;
-        flex: 0 0 18px;
-        color: #8e867b;
-        transition: transform .22s ease;
+        color: #768393;
+        transition: transform .2s ease;
     }
 
-    .sari-details.is-open .sari-details-chevron {
-        transform: rotate(180deg);
-    }
+    .sari-details.is-open .sari-details-chevron { transform: rotate(180deg); }
 
     .sari-details-body {
         display: grid;
         grid-template-rows: 0fr;
         opacity: 0;
-        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .2s ease;
+        transition: grid-template-rows .25s ease, opacity .2s ease;
     }
 
     .sari-details.is-open .sari-details-body {
@@ -342,221 +356,343 @@
         opacity: 1;
     }
 
-    .sari-details-inner {
-        min-height: 0;
-        overflow: hidden;
-    }
+    .sari-details-inner { min-height: 0; overflow: hidden; }
 
+    /* Four equal-width role buttons; two-by-two on small phones. */
     .sari-role-tabs {
-        display: flex;
-        gap: 8px;
-        margin-top: 18px;
-        overflow-x: auto;
-        padding-bottom: 2px;
-        scrollbar-width: thin;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 14px;
     }
 
     .sari-role-tab {
         display: inline-flex;
-        min-height: 38px;
-        flex: 0 0 auto;
+        min-width: 0;
+        min-height: 41px;
         align-items: center;
-        gap: 8px;
-        border: 1px solid #e4dfd7;
-        border-radius: 10px;
+        justify-content: center;
+        gap: 7px;
+        padding: 7px 9px;
+        border: 1px solid #e2e7ef;
+        border-radius: 9px;
         background: #fff;
-        padding: 8px 12px;
+        color: #5b6573;
         font: inherit;
         font-size: 11px;
-        font-weight: 600;
-        color: #60666d;
+        font-weight: 650;
+        line-height: 1.3;
         cursor: pointer;
-        transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+        transition: background-color .18s ease, border-color .18s ease, color .18s ease;
     }
 
-    .sari-role-tab:hover {
-        border-color: #d8c59d;
-        color: #8b5b06;
-    }
-
+    .sari-role-tab:hover { border-color: #d7aa5b; color: #8c5b08; }
     .sari-role-tab.is-active {
-        border-color: #d2a24a;
-        background: #fffaf1;
-        color: #875805;
+        border-color: #d6a659;
+        background: #fff8ec;
+        color: #825300;
     }
 
     .sari-role-tab svg {
+        display: block;
+        flex: 0 0 16px;
         width: 16px;
         height: 16px;
     }
 
     .sari-role-panel {
         display: none;
-        margin-top: 14px;
-        border: 1px solid #ece7df;
-        border-radius: 14px;
-        background: #fcfbf9;
-        padding: 16px;
+        margin-top: 11px;
+        padding: 18px;
+        border: 1px solid #e6eaf0;
+        border-radius: 11px;
+        background: #fff;
     }
 
-    .sari-role-panel.is-active {
-        display: block;
-        animation: sariStatusPanelIn .2s ease-out both;
-    }
-
-    @keyframes sariStatusPanelIn {
-        from { opacity: 0; transform: translateY(3px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    .sari-role-panel.is-active { display: block; }
 
     .sari-role-panel-head {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
     }
 
     .sari-role-panel-title {
         margin: 0;
-        font-size: 13px;
-        font-weight: 650;
-        color: #292d32;
+        color: #252b33;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.45;
     }
 
     .sari-role-panel-copy {
-        margin: 3px 0 0;
-        font-size: 10.5px;
-        line-height: 1.5;
-        color: #7b828a;
+        margin: 4px 0 0;
+        color: #6c7685;
+        font-size: 11.5px;
+        line-height: 1.55;
     }
 
     .sari-current-role-badge {
         display: none;
         flex: 0 0 auto;
+        padding: 5px 9px;
+        border: 1px solid #f0d7a4;
         border-radius: 999px;
-        background: #f7edd9;
-        padding: 5px 8px;
-        font-size: 8.5px;
-        font-weight: 700;
-        letter-spacing: .05em;
-        text-transform: uppercase;
-        color: #98640a;
+        background: #fff9ee;
+        color: #8c5b08;
+        font-size: 10px;
+        font-weight: 650;
+        white-space: nowrap;
     }
 
-    .sari-role-panel.is-current-role .sari-current-role-badge {
-        display: inline-flex;
-    }
+    .sari-role-panel.is-current-role .sari-current-role-badge { display: inline-flex; }
 
+    /* Connected timeline on desktops. Steps are labels, not clickable actions. */
     .sari-process {
         display: grid;
-        grid-template-columns: repeat(var(--step-count), minmax(86px, 1fr));
-        gap: 10px;
-        margin-top: 17px;
-        overflow-x: auto;
-        padding: 3px 1px 6px;
+        grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+        gap: 0;
+        margin-top: 19px;
+        padding: 0 0 3px;
     }
 
     .sari-process-step {
         position: relative;
-        min-width: 86px;
+        min-width: 0;
+        padding: 0 2px;
         text-align: center;
     }
 
     .sari-process-step:not(:last-child)::after {
         content: '';
         position: absolute;
-        top: 20px;
-        left: calc(50% + 25px);
-        width: calc(100% - 50px + 10px);
-        height: 1px;
-        background: #ddd8d0;
+        top: 16px;
+        left: calc(50% + 18px);
+        width: calc(100% - 36px);
+        height: 2px;
+        background: #e2e6ed;
     }
 
     .sari-process-icon {
         position: relative;
         z-index: 1;
         display: grid;
-        width: 40px;
-        height: 40px;
-        margin: 0 auto;
         place-items: center;
-        border: 1px solid #ded8ce;
-        border-radius: 999px;
+        width: 33px;
+        height: 33px;
+        margin: 0 auto;
+        border: 1px solid #dbe2e9;
+        border-radius: 50%;
         background: #fff;
-        color: #806f55;
+        color: #748091;
     }
 
-    .sari-process-icon svg {
-        width: 17px;
-        height: 17px;
-    }
-
-    .sari-role-panel.is-current-role .sari-process-step:nth-child(-n+2) .sari-process-icon {
-        border-color: #d6ac60;
-        background: #fff9ed;
-        color: #a76c08;
-    }
-
-    .sari-role-panel.is-current-role .sari-process-step:nth-child(-n+2)::after {
-        background: #d6ac60;
-    }
+    .sari-process-icon svg { width: 16px; height: 16px; }
 
     .sari-process-label {
         display: block;
-        margin-top: 7px;
-        font-size: 9.5px;
-        line-height: 1.35;
+        margin-top: 8px;
+        color: #566171;
+        font-size: 10px;
         font-weight: 550;
-        color: #5f656c;
+        line-height: 1.45;
+        overflow-wrap: normal;
     }
+
+    .sari-role-panel.is-current-role .sari-process-step:nth-child(-n+2) .sari-process-icon {
+        border-color: #e5bd79;
+        background: #fff8eb;
+        color: #99620a;
+    }
+
+    .sari-role-panel.is-current-role .sari-process-step:nth-child(-n+2)::after { background: #e4bf84; }
 
     .sari-status-actions {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
         gap: 10px;
-        margin-top: 26px;
-        border-top: 1px solid #eee9e2;
-        padding-top: 20px;
+        margin-top: 22px;
+        padding-top: 19px;
+        border-top: 1px solid var(--status-line);
     }
 
     .sari-status-button {
         display: inline-flex;
-        min-height: 46px;
         align-items: center;
         justify-content: center;
-        border-radius: 11px;
-        padding: 0 20px;
-        font-size: 11.5px;
-        font-weight: 650;
+        min-width: 142px;
+        min-height: 42px;
+        padding: 0 17px;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.35;
+        text-align: center;
         text-decoration: none;
-        transition: transform .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
+        transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
     }
 
-    .sari-status-button:hover {
-        transform: translateY(-1px);
-    }
+    .sari-status-button:hover { transform: translateY(-1px); }
 
     .sari-status-button-primary {
-        border: 1px solid #bc7b06;
+        border: 1px solid #bf7b00;
         background: var(--status-gold);
         color: #fff;
     }
 
-    .sari-status-button-primary:hover {
-        background: var(--status-gold-dark);
-    }
+    .sari-status-button-primary:hover { background: var(--status-gold-dark); color: #fff; }
 
     .sari-status-button-secondary {
-        border: 1px solid #ded8cf;
+        border: 1px solid #d7dee7;
         background: #fff;
-        color: #555b62;
+        color: #404a57;
     }
 
-    .sari-status-button-secondary:hover {
-        border-color: #cfc7bc;
-        background: #fafafa;
+    .sari-status-button-secondary:hover { border-color: #b7c2ce; background: #f7f9fc; }
+
+    .sari-details-toggle:focus-visible,
+    .sari-role-tab:focus-visible,
+    .sari-status-button:focus-visible {
+        outline: 3px solid #d69c37;
+        outline-offset: 3px;
     }
 
+
+    /* Approval result modal - independent of the review-details panel. */
+    .sari-approval-overlay[hidden] { display: none !important; }
+    .sari-approval-overlay,
+    .sari-approval-overlay * { box-sizing: border-box; }
+    .sari-approval-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(20, 27, 37, .57);
+        backdrop-filter: blur(3px);
+    }
+    .sari-approval-dialog {
+        width: min(100%, 405px);
+        border: 1px solid #e2e7ec;
+        border-radius: 17px;
+        background: #fff;
+        padding: 27px 27px 25px;
+        box-shadow: 0 22px 68px rgba(0, 0, 0, .24);
+        color: #20252b;
+        text-align: center;
+    }
+    .sari-approval-check {
+        display: grid;
+        place-items: center;
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 16px;
+        border-radius: 50%;
+        background: #edf8f1;
+        color: #24764a;
+    }
+    .sari-approval-check svg { width: 34px; height: 34px; }
+    .sari-approval-overline {
+        margin: 0 0 7px;
+        color: #217348;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+    .sari-approval-dialog h2 {
+        margin: 0;
+        font-size: clamp(22px, 5vw, 27px);
+        line-height: 1.25;
+        font-weight: 700;
+        letter-spacing: -.025em;
+    }
+    .sari-approval-description {
+        margin: 11px 0 23px;
+        color: #586272;
+        font-size: 13px;
+        line-height: 1.75;
+    }
+    /* Compact, content-sized modal actions instead of two stretched blocks. */
+    .sari-approval-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .sari-approval-actions a,
+    .sari-approval-actions button {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 1 130px;
+        width: auto;
+        min-width: 110px;
+        max-width: 145px;
+        height: 38px;
+        min-height: 38px;
+        margin: 0;
+        padding: 0 12px;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: none;
+        appearance: none;
+        cursor: pointer;
+    }
+    .sari-approval-dismiss { border: 1px solid #dbe2eb; background: #fff; color: #405063; }
+    .sari-approval-login { border: 1px solid #c88100; background: #c88100; color: #fff !important; }
+    .sari-approval-login:hover { background: #a76800; border-color: #a76800; }
+    .sari-approval-actions :focus-visible { outline: 2px solid #24764a; outline-offset: 2px; }
+    @media (max-width: 420px) {
+        .sari-approval-dialog { padding: 24px 18px 22px; }
+        .sari-approval-actions { flex-wrap: nowrap; gap: 8px; }
+        .sari-approval-actions a,
+        .sari-approval-actions button { flex: 1 1 0; min-width: 0; max-width: none; }
+    }
+
+    /* Optional sound unlock: icon-only on the WAITING page, not in the approval modal. */
+    .sari-approval-sound-enable {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: 1px solid #e1e7ee;
+        border-radius: 9px;
+        background: #fff;
+        color: #637184;
+        cursor: pointer;
+    }
+    .sari-approval-sound-enable svg { width: 17px; height: 17px; }
+    .sari-approval-sound-enable:hover { background: #f5f8fa; }
+    .sari-approval-sound-enable[aria-pressed="true"] {
+        border-color: #b9dcca;
+        background: #eef8f2;
+        color: #24764a;
+    }
+    .sari-approval-sound-enable:focus-visible { outline: 2px solid #24764a; outline-offset: 2px; }
+    .sari-status-card.is-approved .sari-approval-sound-enable,
+    .sari-status-card.is-rejected .sari-approval-sound-enable { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+        .sari-approval-overlay { backdrop-filter: none; }
+    }
+
+    /* Existing confetti / approval and rejection status behavior. */
     .sari-confetti-canvas {
         position: absolute;
         inset: 0;
@@ -567,500 +703,82 @@
         pointer-events: none;
     }
 
-    .sari-status-card.is-approved .sari-confetti-canvas {
-        display: block;
-    }
-
+    .sari-status-card.is-approved .sari-confetti-canvas { display: block; }
     .sari-status-card.is-approved .sari-waiting-animation,
-    .sari-status-card.is-rejected .sari-waiting-animation {
-        display: none;
-    }
-
-    .sari-status-card.is-approved .sari-approved-icon {
-        display: grid;
-    }
-
-    .sari-status-card.is-rejected .sari-rejected-icon {
-        display: grid;
-    }
-
-    .sari-status-card.is-approved .sari-status-eyebrow {
-        color: var(--status-success);
-    }
-
-    .sari-status-card.is-rejected .sari-status-eyebrow {
-        color: var(--status-danger);
-    }
-
-    .sari-status-card.is-rejected .sari-rejection-note {
-        display: block;
-    }
-
+    .sari-status-card.is-rejected .sari-waiting-animation { display: none; }
+    .sari-status-card.is-approved .sari-approved-icon { display: grid; }
+    .sari-status-card.is-rejected .sari-rejected-icon { display: grid; }
+    .sari-status-card.is-approved .sari-status-eyebrow { color: var(--status-success); }
+    .sari-status-card.is-rejected .sari-status-eyebrow { color: var(--status-danger); }
+    .sari-status-card.is-rejected .sari-rejection-note { display: block; }
     .sari-status-card.is-approved .sari-role-panel.is-current-role .sari-process-icon {
-        border-color: #9ec7ad;
-        background: #f2faf5;
+        border-color: #a7d1b7;
+        background: #effaf3;
         color: var(--status-success);
     }
-
     .sari-status-card.is-approved .sari-role-panel.is-current-role .sari-process-step:not(:last-child)::after {
-        background: #a8cdb5;
+        background: #add2ba;
     }
 
     @media (max-width: 640px) {
-        .sari-status-page {
-            padding: 18px 11px 24px;
-        }
-
-        .sari-status-card {
-            border-radius: 18px;
-            padding: 24px 17px;
-        }
-
-        .sari-status-logo {
-            width: 140px;
-        }
-
-        .sari-status-animation-wrap {
-            width: 92px;
-            height: 92px;
-            margin-top: 18px;
-        }
-
-        .sari-waiting-animation {
-            width: 86px;
-            height: 86px;
-        }
-
-        .sari-status-copy {
-            font-size: 12px;
-        }
-
-        .sari-status-actions {
+        .sari-status-page { padding: 22px 12px; background-position: 62% center; }
+        .sari-status-shell { width: 100%; }
+        .sari-status-card { padding: 24px 19px; border-radius: 16px; }
+        .sari-status-logo { width: 115px; }
+        .sari-status-animation-wrap { width: 68px; height: 68px; margin-top: 14px; }
+        .sari-waiting-animation { width: 67px; height: 67px; }
+        .sari-status-title { font-size: clamp(21px, 6vw, 26px); }
+        .sari-status-copy { font-size: 12px; }
+        .sari-email-card { width: 100%; }
+        .sari-role-panel-head { flex-wrap: wrap; }
+        .sari-role-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .sari-role-panel { padding: 16px; }
+        .sari-process {
+            display: flex;
             flex-direction: column;
+            gap: 0;
+            margin-top: 17px;
+            padding: 0;
         }
-
-        .sari-status-button {
-            width: 100%;
+        .sari-process-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 44px;
+            padding: 0 0 13px;
+            text-align: left;
         }
+        .sari-process-step:last-child { padding-bottom: 0; min-height: 33px; }
+        .sari-process-step:not(:last-child)::after {
+            top: 34px;
+            left: 16px;
+            width: 2px;
+            height: calc(100% - 33px);
+        }
+        .sari-process-icon { flex: 0 0 33px; margin: 0; }
+        .sari-process-label { margin: 0; font-size: 11.5px; }
+        .sari-status-actions { gap: 9px; }
+        .sari-status-button { flex: 1 1 130px; min-width: 0; min-height: 43px; }
+    }
 
+    @media (max-width: 390px) {
+        .sari-status-card { padding: 22px 15px; }
+        .sari-role-tab { padding: 7px 6px; gap: 5px; font-size: 10.5px; }
+        .sari-role-panel-head { display: block; }
+        .sari-current-role-badge { margin-top: 9px; }
+
+        .sari-status-actions { flex-direction: column; }
+        .sari-status-button { flex: initial; width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
         .sari-waiting-animation,
-        .sari-confetti-canvas {
-            display: none !important;
-        }
-
+        .sari-confetti-canvas { display: none !important; }
         .sari-details-body,
         .sari-details-chevron,
-        .sari-role-panel,
-        .sari-status-button {
-            animation: none !important;
-            transition: none !important;
-        }
+        .sari-role-tab,
+        .sari-status-button { animation: none !important; transition: none !important; }
     }
-
-    /* ============================================================
-       REGISTRATION STATUS V2 — COMPACT / CLEAN / POPPINS
-       Visual-only sizing layer. Status polling and Laravel logic
-       remain untouched.
-       ============================================================ */
-
-    .sari-status-page {
-        min-height: 100vh !important;
-        min-height: 100dvh !important;
-        padding: 18px 14px 22px !important;
-        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
-    }
-
-    .sari-status-shell {
-        width: min(100%, 720px) !important;
-    }
-
-    .sari-status-card {
-        border-radius: 18px !important;
-        padding: 24px 26px 22px !important;
-        box-shadow: 0 14px 42px rgba(40, 32, 20, .07) !important;
-    }
-
-    /* Brand */
-    .sari-status-logo {
-        width: 120px !important;
-        filter: brightness(0) !important;
-    }
-
-    /* Status animation / state icon */
-    .sari-status-animation-wrap {
-        width: 78px !important;
-        height: 78px !important;
-        margin-top: 14px !important;
-    }
-
-    .sari-waiting-animation {
-        width: 72px !important;
-        height: 72px !important;
-    }
-
-    .sari-approved-icon,
-    .sari-rejected-icon {
-        width: 58px !important;
-        height: 58px !important;
-    }
-
-    .sari-approved-icon svg,
-    .sari-rejected-icon svg {
-        width: 25px !important;
-        height: 25px !important;
-    }
-
-    /* Hero typography */
-    .sari-status-eyebrow {
-        margin-top: 10px !important;
-        font-size: 7.5px !important;
-        line-height: 1 !important;
-        font-weight: 700 !important;
-        letter-spacing: .15em !important;
-    }
-
-    .sari-status-title {
-        max-width: 560px !important;
-        margin: 7px auto 0 !important;
-        font-size: clamp(21px, 2vw, 25px) !important;
-        line-height: 1.2 !important;
-        font-weight: 700 !important;
-        letter-spacing: -.032em !important;
-    }
-
-    .sari-status-copy {
-        width: min(100%, 540px) !important;
-        margin-top: 8px !important;
-        font-size: 10px !important;
-        line-height: 1.65 !important;
-        color: #777067 !important;
-    }
-
-    /* Email notification card */
-    .sari-email-card {
-        width: min(100%, 500px) !important;
-        margin-top: 15px !important;
-        gap: 10px !important;
-        border-radius: 11px !important;
-        padding: 10px 12px !important;
-        background: #fffdf9 !important;
-    }
-
-    .sari-email-icon {
-        width: 32px !important;
-        height: 32px !important;
-        flex-basis: 32px !important;
-        border-radius: 9px !important;
-    }
-
-    .sari-email-icon svg {
-        width: 15px !important;
-        height: 15px !important;
-    }
-
-    .sari-email-label {
-        font-size: 8px !important;
-        line-height: 1.35 !important;
-    }
-
-    .sari-email-value {
-        margin-top: 2px !important;
-        font-size: 10.5px !important;
-        line-height: 1.4 !important;
-        font-weight: 600 !important;
-    }
-
-    /* Rejection message */
-    .sari-rejection-note {
-        width: min(100%, 540px) !important;
-        margin-top: 13px !important;
-        border-radius: 10px !important;
-        padding: 10px 12px !important;
-    }
-
-    .sari-rejection-note strong {
-        font-size: 9px !important;
-    }
-
-    .sari-rejection-note p {
-        margin-top: 3px !important;
-        font-size: 9.5px !important;
-        line-height: 1.5 !important;
-    }
-
-    /* Details accordion */
-    .sari-details {
-        margin-top: 17px !important;
-        padding-top: 14px !important;
-    }
-
-    .sari-details-toggle {
-        gap: 10px !important;
-    }
-
-    .sari-details-toggle-copy {
-        gap: 9px !important;
-    }
-
-    .sari-details-toggle-icon {
-        width: 31px !important;
-        height: 31px !important;
-        flex-basis: 31px !important;
-        border-radius: 8px !important;
-    }
-
-    .sari-details-toggle-icon svg {
-        width: 15px !important;
-        height: 15px !important;
-    }
-
-    .sari-details-toggle-title {
-        font-size: 10.5px !important;
-        font-weight: 600 !important;
-    }
-
-    .sari-details-toggle-subtitle {
-        margin-top: 1px !important;
-        font-size: 8.5px !important;
-        line-height: 1.4 !important;
-    }
-
-    .sari-details-chevron {
-        width: 15px !important;
-        height: 15px !important;
-        flex-basis: 15px !important;
-    }
-
-    /* Role tabs */
-    .sari-role-tabs {
-        gap: 6px !important;
-        margin-top: 13px !important;
-    }
-
-    .sari-role-tab {
-        min-height: 31px !important;
-        gap: 6px !important;
-        border-radius: 8px !important;
-        padding: 6px 9px !important;
-        font-size: 9px !important;
-        font-weight: 600 !important;
-    }
-
-    .sari-role-tab svg {
-        width: 13px !important;
-        height: 13px !important;
-    }
-
-    /* Per-role process panel */
-    .sari-role-panel {
-        margin-top: 10px !important;
-        border-radius: 11px !important;
-        padding: 12px !important;
-    }
-
-    .sari-role-panel-head {
-        gap: 9px !important;
-    }
-
-    .sari-role-panel-title {
-        font-size: 10.5px !important;
-        font-weight: 600 !important;
-    }
-
-    .sari-role-panel-copy {
-        margin-top: 2px !important;
-        font-size: 8.5px !important;
-        line-height: 1.45 !important;
-    }
-
-    .sari-current-role-badge {
-        padding: 4px 6px !important;
-        font-size: 6.8px !important;
-        letter-spacing: .04em !important;
-    }
-
-    .sari-process {
-        grid-template-columns: repeat(var(--step-count), minmax(70px, 1fr)) !important;
-        gap: 7px !important;
-        margin-top: 12px !important;
-        padding-bottom: 4px !important;
-    }
-
-    .sari-process-step {
-        min-width: 70px !important;
-    }
-
-    .sari-process-step:not(:last-child)::after {
-        top: 16px !important;
-        left: calc(50% + 20px) !important;
-        width: calc(100% - 40px + 7px) !important;
-    }
-
-    .sari-process-icon {
-        width: 32px !important;
-        height: 32px !important;
-    }
-
-    .sari-process-icon svg {
-        width: 14px !important;
-        height: 14px !important;
-    }
-
-    .sari-process-label {
-        margin-top: 5px !important;
-        font-size: 7.8px !important;
-        line-height: 1.3 !important;
-        font-weight: 500 !important;
-    }
-
-    /* Bottom actions */
-    .sari-status-actions {
-        gap: 8px !important;
-        margin-top: 18px !important;
-        padding-top: 15px !important;
-    }
-
-    .sari-status-button {
-        min-height: 40px !important;
-        border-radius: 9px !important;
-        padding: 0 16px !important;
-        font-family: 'Poppins', sans-serif !important;
-        font-size: 9.8px !important;
-        font-weight: 600 !important;
-    }
-
-    /* Common laptop screens, e.g. 1366 × 768 at 100% */
-    @media (max-height: 820px) and (min-width: 641px) {
-        .sari-status-page {
-            padding-top: 10px !important;
-            padding-bottom: 12px !important;
-        }
-
-        .sari-status-shell {
-            width: min(100%, 680px) !important;
-        }
-
-        .sari-status-card {
-            padding: 18px 22px 17px !important;
-        }
-
-        .sari-status-logo {
-            width: 105px !important;
-        }
-
-        .sari-status-animation-wrap {
-            width: 66px !important;
-            height: 66px !important;
-            margin-top: 10px !important;
-        }
-
-        .sari-waiting-animation {
-            width: 61px !important;
-            height: 61px !important;
-        }
-
-        .sari-status-eyebrow {
-            margin-top: 7px !important;
-        }
-
-        .sari-status-title {
-            margin-top: 5px !important;
-            font-size: 21px !important;
-        }
-
-        .sari-status-copy {
-            margin-top: 6px !important;
-            font-size: 9.3px !important;
-            line-height: 1.55 !important;
-        }
-
-        .sari-email-card {
-            margin-top: 11px !important;
-            padding: 8px 10px !important;
-        }
-
-        .sari-details {
-            margin-top: 13px !important;
-            padding-top: 11px !important;
-        }
-
-        .sari-status-actions {
-            margin-top: 14px !important;
-            padding-top: 12px !important;
-        }
-
-        .sari-status-button {
-            min-height: 36px !important;
-            font-size: 9.2px !important;
-        }
-    }
-
-    /* Mobile remains compact but readable/tappable */
-    @media (max-width: 640px) {
-        .sari-status-page {
-            padding: 12px 9px 18px !important;
-        }
-
-        .sari-status-shell {
-            width: 100% !important;
-        }
-
-        .sari-status-card {
-            border-radius: 15px !important;
-            padding: 20px 15px 18px !important;
-        }
-
-        .sari-status-logo {
-            width: 108px !important;
-        }
-
-        .sari-status-animation-wrap {
-            width: 70px !important;
-            height: 70px !important;
-            margin-top: 12px !important;
-        }
-
-        .sari-waiting-animation {
-            width: 65px !important;
-            height: 65px !important;
-        }
-
-        .sari-status-title {
-            font-size: 21px !important;
-        }
-
-        .sari-status-copy {
-            font-size: 10px !important;
-            line-height: 1.6 !important;
-        }
-
-        .sari-email-card {
-            width: 100% !important;
-        }
-
-        .sari-role-tab {
-            min-height: 36px !important;
-            font-size: 9.5px !important;
-        }
-
-        .sari-process {
-            grid-template-columns: repeat(var(--step-count), minmax(68px, 1fr)) !important;
-        }
-
-        .sari-status-actions {
-            flex-direction: column !important;
-        }
-
-        .sari-status-button {
-            width: 100% !important;
-            min-height: 44px !important;
-            font-size: 10.5px !important;
-        }
-    }
-
 </style>
 
 <div class="sari-status-page">
@@ -1076,6 +794,19 @@
                 class="sari-confetti-canvas"
                 aria-hidden="true"
             ></canvas>
+            <button
+                id="sariApprovalSoundEnable"
+                type="button"
+                class="sari-approval-sound-enable"
+                aria-label="Enable approval notification sound"
+                title="Enable approval sound"
+                aria-pressed="false"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
+            </button>
 
             <section class="sari-status-hero" aria-live="polite">
                 <img src="{{ asset('images/sari-logo.png') }}" alt="SARI" class="sari-status-logo">
@@ -1177,6 +908,9 @@
                                     type="button"
                                     class="sari-role-tab {{ $roleKey === $defaultFlowRole ? 'is-active' : '' }}"
                                     data-role-tab="{{ $roleKey }}"
+                                    id="sari-tab-{{ $roleKey }}"
+                                    aria-controls="sari-panel-{{ $roleKey }}"
+                                    tabindex="{{ $roleKey === $defaultFlowRole ? '0' : '-1' }}"
                                     role="tab"
                                     aria-selected="{{ $roleKey === $defaultFlowRole ? 'true' : 'false' }}"
                                 >
@@ -1198,6 +932,8 @@
                             <article
                                 class="sari-role-panel {{ $roleKey === $defaultFlowRole ? 'is-active' : '' }} {{ $roleKey === $registrationRole ? 'is-current-role' : '' }}"
                                 data-role-panel="{{ $roleKey }}"
+                                id="sari-panel-{{ $roleKey }}"
+                                aria-labelledby="sari-tab-{{ $roleKey }}"
                                 role="tabpanel"
                             >
                                 <div class="sari-role-panel-head">
@@ -1260,6 +996,38 @@
     </div>
 </div>
 
+
+<!-- Shared Seller/Logistics/Rider registration approval confirmation. -->
+<div id="sariApprovalModal" class="sari-approval-overlay" hidden>
+    <section
+        id="sariApprovalDialog"
+        class="sari-approval-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sariApprovalTitle"
+        aria-describedby="sariApprovalDescription"
+        tabindex="-1"
+    >
+        <span class="sari-approval-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m7.5 12 3 3 6-6"></path>
+            </svg>
+        </span>
+        <p class="sari-approval-overline">Registration Approved</p>
+        <h2 id="sariApprovalTitle">Your account is ready!</h2>
+        <p id="sariApprovalDescription" class="sari-approval-description">
+            Your SARI {{ $roleLabels[$registrationRole] ?? ucfirst($registrationRole) }} account has been approved.
+            You can now log in with your registered email and password.
+        </p>
+        <div class="sari-approval-actions">
+            <button id="sariApprovalClose" type="button" class="sari-approval-dismiss">Close</button>
+            <a id="sariApprovalLogin" class="sari-approval-login" href="{{ route('login') }}">Go to Login</a>
+        </div>
+    </section>
+</div>
+<audio id="sariApprovalSound" preload="auto" src="{{ asset('sounds/buyer/notification-success.wav') }}"></audio>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const card = document.getElementById('registrationStatusCard');
@@ -1274,6 +1042,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const detailsToggle = document.getElementById('statusDetailsToggle');
     const roleTabs = Array.from(document.querySelectorAll('[data-role-tab]'));
     const rolePanels = Array.from(document.querySelectorAll('[data-role-panel]'));
+    const approvalModal = document.getElementById('sariApprovalModal');
+    const approvalDialog = document.getElementById('sariApprovalDialog');
+    const approvalClose = document.getElementById('sariApprovalClose');
+    const approvalLogin = document.getElementById('sariApprovalLogin');
+    const approvalSound = document.getElementById('sariApprovalSound');
+    const approvalSoundEnable = document.getElementById('sariApprovalSoundEnable');
+    const trackedApplicationId = @json($application?->id);
+    let approvalModalPreviousFocus = null;
+    let approvalSoundPlayed = false;
+    let approvalSoundBlocked = false;
+    let approvalAudioContext = null;
+    let approvalAudioBufferPromise = null;
+    let approvalAudioBuffer = null;
+
 
     const statusUrl = @json(route('registration.status'));
     const loginUrl = @json(route('login'));
@@ -1299,6 +1081,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const active = tab.dataset.roleTab === role;
             tab.classList.toggle('is-active', active);
             tab.setAttribute('aria-selected', active ? 'true' : 'false');
+            tab.setAttribute('tabindex', active ? '0' : '-1');
         });
 
         rolePanels.forEach(function (panel) {
@@ -1306,9 +1089,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    roleTabs.forEach(function (tab) {
+    roleTabs.forEach(function (tab, index) {
         tab.addEventListener('click', function () {
             selectRole(tab.dataset.roleTab || currentRole);
+        });
+
+        // Arrow-key navigation for the account-type tabs.
+        tab.addEventListener('keydown', function (event) {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+            event.preventDefault();
+            const nextIndex = event.key === 'Home' ? 0
+                : event.key === 'End' ? roleTabs.length - 1
+                : (index + (event.key === 'ArrowRight' ? 1 : -1) + roleTabs.length) % roleTabs.length;
+            const nextTab = roleTabs[nextIndex];
+            selectRole(nextTab.dataset.roleTab || currentRole);
+            nextTab.focus();
         });
     });
 
@@ -1470,6 +1265,176 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {}
     }
 
+    // The page polls every three seconds. This popup and sound are one-time per
+    // approved application in this browser tab, not on every poll or refresh.
+    function approvalAlreadyShown(applicationId) {
+        if (!applicationId) return false;
+        try {
+            return window.sessionStorage.getItem('sari_approval_shown_' + applicationId) === '1';
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function rememberApprovalShown(applicationId) {
+        if (!applicationId) return;
+        try {
+            window.sessionStorage.setItem('sari_approval_shown_' + applicationId, '1');
+        } catch (error) {
+            // Keep the modal functional in privacy-restricted browsers.
+        }
+    }
+
+    // Browsers often block sound triggered by an automatic status poll. A user
+    // gesture on this page unlocks Web Audio so the success WAV can play later.
+    // The small bell is optional; interacting with the page also unlocks it.
+    function armApprovalSound() {
+        if (approvalAudioContext || lastStatus === 'approved' || lastStatus === 'rejected') return;
+
+        const Context = window.AudioContext || window.webkitAudioContext;
+        if (!Context || !approvalSound) return;
+        try {
+            approvalAudioContext = new Context();
+            // Must be called directly inside the click/key event, before awaits.
+            const resumed = approvalAudioContext.resume();
+            if (resumed && typeof resumed.catch === 'function') {
+                resumed.catch(function () { /* Automatic HTML audio is still attempted. */ });
+            }
+
+            approvalSoundEnable?.setAttribute('aria-pressed', 'true');
+            approvalSoundEnable?.setAttribute('title', 'Approval sound enabled');
+            approvalSoundEnable?.setAttribute('aria-label', 'Approval sound enabled');
+
+            // Decode the existing file once so it is ready before Admin approves.
+            approvalAudioBufferPromise = fetch(approvalSound.src, {
+                credentials: 'same-origin',
+                cache: 'force-cache'
+            }).then(function (response) {
+                if (!response.ok) throw new Error('Approval audio not found');
+                return response.arrayBuffer();
+            }).then(function (bytes) {
+                return approvalAudioContext.decodeAudioData(bytes);
+            }).then(function (buffer) {
+                approvalAudioBuffer = buffer;
+                return buffer;
+            }).catch(function () {
+                approvalAudioBufferPromise = null;
+                return null;
+            });
+        } catch (error) {
+            approvalAudioContext = null;
+        }
+    }
+
+    approvalSoundEnable?.addEventListener('click', armApprovalSound);
+    // Any intentional user interaction can enable future approval audio.
+    document.addEventListener('pointerdown', armApprovalSound, { once: true, capture: true });
+    document.addEventListener('keydown', armApprovalSound, { once: true, capture: true });
+
+    function playUnlockedApprovalSound() {
+        if (approvalSoundPlayed || !approvalAudioContext || !approvalAudioBuffer ||
+                approvalAudioContext.state !== 'running') return false;
+        try {
+            const source = approvalAudioContext.createBufferSource();
+            source.buffer = approvalAudioBuffer;
+            source.connect(approvalAudioContext.destination);
+            source.start();
+            approvalSoundPlayed = true;
+            approvalSoundBlocked = false;
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function playApprovalSound() {
+        if (approvalSoundPlayed || !approvalSound) return;
+        if (playUnlockedApprovalSound()) return;
+
+        if (approvalAudioContext && approvalAudioBufferPromise &&
+                approvalAudioContext.state === 'running') {
+            // Handle approval arriving while the WAV is still decoding.
+            approvalAudioBufferPromise.then(function (buffer) {
+                if (!approvalSoundPlayed && buffer && !approvalModal.hidden) {
+                    playUnlockedApprovalSound();
+                }
+            });
+            return;
+        }
+
+        // Best effort if the user did not enable audio: browsers may block it.
+        try {
+            approvalSound.currentTime = 0;
+            const playing = approvalSound.play();
+            if (playing && typeof playing.then === 'function') {
+                playing.then(function () {
+                    approvalSoundPlayed = true;
+                    approvalSoundBlocked = false;
+                }).catch(function () {
+                    approvalSoundBlocked = true;
+                });
+            } else {
+                approvalSoundPlayed = true;
+            }
+        } catch (error) {
+            approvalSoundBlocked = true;
+        }
+    }
+
+    function closeApprovalModal() {
+        if (!approvalModal || approvalModal.hidden) return;
+        approvalModal.hidden = true;
+        approvalModalPreviousFocus?.focus?.();
+        approvalModalPreviousFocus = null;
+    }
+
+    function showApprovalModal(payload) {
+        if (!approvalModal) return;
+        const applicationId = payload.id || trackedApplicationId;
+        if (approvalAlreadyShown(applicationId)) return;
+        rememberApprovalShown(applicationId);
+
+        approvalModalPreviousFocus = document.activeElement;
+        approvalModal.hidden = false;
+        // Focus the dialog, not the Login button (avoids the thick focus ring).
+        approvalDialog?.focus({ preventScroll: true });
+        playApprovalSound();
+    }
+
+    // If the browser blocked autoplay, retry on the first gesture in the modal.
+    // No visible replay button or sound caption is added to the dialog.
+    approvalModal?.addEventListener('pointerdown', function () {
+        if (approvalSoundBlocked && !approvalSoundPlayed) playApprovalSound();
+    }, { capture: true });
+    approvalModal?.addEventListener('keydown', function () {
+        if (approvalSoundBlocked && !approvalSoundPlayed) playApprovalSound();
+    }, { capture: true });
+
+    approvalClose?.addEventListener('click', closeApprovalModal);
+    approvalModal?.addEventListener('click', function (event) {
+        if (event.target === approvalModal) closeApprovalModal();
+    });
+    document.addEventListener('keydown', function (event) {
+        if (!approvalModal || approvalModal.hidden) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeApprovalModal();
+            return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusables = [approvalClose, approvalLogin].filter(Boolean);
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+
     function applyStatus(status, payload = {}, playEffects = true) {
         const normalized = String(status || 'pending').toLowerCase();
         const previous = lastStatus;
@@ -1487,7 +1452,10 @@ document.addEventListener('DOMContentLoaded', function () {
             primaryAction.textContent = 'Go to Login';
 
             if (playEffects && previous !== 'approved') {
-                playConfetti();
+                if (!approvalAlreadyShown(payload.id || trackedApplicationId)) {
+                    playConfetti();
+                    showApprovalModal(payload);
+                }
             }
 
             return;

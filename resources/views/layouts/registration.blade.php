@@ -7,6 +7,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+{{-- Reuse the same Buyer/login-style error notification UI and warning sound. --}}
+<link rel="stylesheet" href="{{ asset('css/buyer/sari-toast.css') }}?v=20261102-register-validation-1">
+<script src="{{ asset('js/buyer/sari-toast.js') }}?v=20261102-register-validation-1" data-sounds-base="{{ asset('sounds/buyer') }}" defer></script>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -58,6 +61,50 @@
             border-color .18s ease,
             box-shadow .18s ease;
     }
+
+    /* Buyer registration: same SARI gold accents as the login page. */
+    .sari-register-shell[data-registration-role="buyer"] .sari-register-card .sari-field-label {
+        color: var(--sari-text);
+    }
+
+    .sari-password-control {
+        position: relative;
+    }
+
+    .sari-password-control .sari-control {
+        padding-right: 50px;
+    }
+
+    .sari-password-visibility {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        display: inline-flex;
+        width: 36px;
+        height: 36px;
+        transform: translateY(-50%);
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        color: #85796c;
+        cursor: pointer;
+    }
+
+    .sari-password-visibility:hover,
+    .sari-password-visibility[aria-pressed="true"] {
+        color: var(--sari-yellow-dark);
+        background: rgba(212, 143, 8, .08);
+    }
+
+    .sari-password-visibility:focus-visible {
+        outline: 2px solid var(--sari-yellow);
+        outline-offset: 2px;
+    }
+
+    .sari-password-visibility svg { width: 18px; height: 18px; }
+    .sari-password-visibility .is-hidden { display: none; }
 
     .sari-control::placeholder {
         color: #aaa196 !important;
@@ -257,6 +304,12 @@
             background-color .18s ease,
             box-shadow .18s ease,
             transform .18s ease;
+    }
+
+    .sari-role-option[href] {
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
     }
 
     .sari-role-option:hover {
@@ -6230,7 +6283,7 @@
         <div class="absolute inset-0 bg-[#fffaf1]/18"></div>
     </div>
 
-    <div class="sari-register-shell relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12">
+    <div class="sari-register-shell relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12" data-registration-role="{{ old('role', $defaultRole ?? '') }}">
 
         {{-- CENTERED BRAND --}}
         <a
@@ -6344,7 +6397,7 @@
                         </select>
 
                         <div class="sari-role-grid" role="radiogroup" aria-label="Choose an account type">
-                            <button type="button" class="sari-role-option" data-role-option="buyer" role="radio" aria-checked="false">
+                            <a href="{{ route('register.buyer') }}" class="sari-role-option" data-role-option="buyer" aria-label="Register as Buyer">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
@@ -6358,9 +6411,9 @@
                                     <span class="sari-role-description">Shop, track orders, and manage purchases.</span>
                                 </span>
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
-                            </button>
+                            </a>
 
-                            <button type="button" class="sari-role-option" data-role-option="seller" role="radio" aria-checked="false">
+                            <a href="{{ route('register.seller') }}" class="sari-role-option" data-role-option="seller" aria-label="Register as Seller">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
@@ -6374,9 +6427,9 @@
                                     <span class="sari-role-description">List products and manage your SARI store.</span>
                                 </span>
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
-                            </button>
+                            </a>
 
-                            <button type="button" class="sari-role-option" data-role-option="logistics" role="radio" aria-checked="false">
+                            <a href="{{ route('register.logistics') }}" class="sari-role-option" data-role-option="logistics" aria-label="Register as Logistics">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
@@ -6390,7 +6443,7 @@
                                     <span class="sari-role-description">Operate a Logistics team and manage Riders.</span>
                                 </span>
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
-                            </button>
+                            </a>
 
                             <button type="button" class="sari-role-option is-rider" data-role-option="rider" role="radio" aria-checked="false">
                                 <span class="sari-role-check" aria-hidden="true">
@@ -6500,7 +6553,6 @@
                                     name="last_name"
                                     value="{{ old('last_name') }}"
                                     required
-                                    maxlength="100"
                                     data-person-name
                                     autocomplete="family-name"
                                     placeholder="Dela Cruz"
@@ -6515,7 +6567,6 @@
                                     name="first_name"
                                     value="{{ old('first_name') }}"
                                     required
-                                    maxlength="100"
                                     data-person-name
                                     autocomplete="given-name"
                                     placeholder="Juan"
@@ -6637,7 +6688,7 @@
                                         name="email"
                                         value="{{ old('email', session('registration_email')) }}"
                                         required
-                                        maxlength="190"
+                                        maxlength="180"
                                         autocomplete="email"
                                         placeholder="name@email.com"
                                         class="sari-control w-full border border-[#e3ddd4]"
@@ -6674,11 +6725,11 @@
                             <div class="sari-profile-copy">
                                 <div class="sari-profile-title">
                                     <strong id="profileImageLabel">Profile Photo</strong>
-                                    <span id="profileImageRequirement" class="sari-profile-requirement">(Required)</span>
+                                    <span id="profileImageRequirement" class="sari-profile-requirement">(Optional for Buyer)</span>
                                 </div>
 
                                 <p id="profileImageHelp" class="sr-only">
-                                    A profile photo is required. Choose a JPG, JPEG, PNG, or WEBP image up to 5 MB.
+                                    Buyer profile photo is optional. If chosen, use a JPG, JPEG, PNG, or WEBP image up to 5 MB.
                                 </p>
                             </div>
 
@@ -6738,7 +6789,6 @@
                                 id="profileImageInput"
                                 type="file"
                                 name="profile_image"
-                                required
                                 accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
                                 class="sr-only"
                                 data-profile-input
@@ -7167,30 +7217,74 @@
                 <div class="mt-6 space-y-4">
                     <div>
                         <label class="sari-field-label">Password *</label>
-                        <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            required
-                            minlength="8"
-                            autocomplete="new-password"
-                            placeholder="Minimum 8 characters"
-                            class="sari-control w-full border border-[#e3ddd4]"
-                        >
+                        <div class="sari-password-control">
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                required
+                                minlength="8"
+                                maxlength="255"
+                                autocomplete="new-password"
+                                placeholder="Minimum 8 characters"
+                                class="sari-control w-full border border-[#e3ddd4]"
+                            >
+                            <button
+                                type="button"
+                                class="sari-password-visibility"
+                                data-sari-password-toggle="password"
+                                aria-controls="password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <svg data-icon="visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                    <circle cx="12" cy="12" r="2.5"></circle>
+                                </svg>
+                                <svg class="is-hidden" data-icon="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m3 3 18 18"></path>
+                                    <path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path>
+                                    <path d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6 0 9.5 7 9.5 7a16 16 0 0 1-2.1 2.8"></path>
+                                    <path d="M6.2 6.2C3.8 8 2.5 12 2.5 12S6 19 12 19a9.5 9.5 0 0 0 3.2-.5"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <div>
                         <label class="sari-field-label">Confirm Password *</label>
-                        <input
-                            id="passwordConfirmation"
-                            type="password"
-                            name="password_confirmation"
-                            required
-                            minlength="8"
-                            autocomplete="new-password"
-                            placeholder="Repeat password"
-                            class="sari-control w-full border border-[#e3ddd4]"
-                        >
+                        <div class="sari-password-control">
+                            <input
+                                id="passwordConfirmation"
+                                type="password"
+                                name="password_confirmation"
+                                required
+                                minlength="8"
+                                maxlength="255"
+                                autocomplete="new-password"
+                                placeholder="Repeat password"
+                                class="sari-control w-full border border-[#e3ddd4]"
+                            >
+                            <button
+                                type="button"
+                                class="sari-password-visibility"
+                                data-sari-password-toggle="passwordConfirmation"
+                                aria-controls="passwordConfirmation"
+                                aria-label="Show confirm password"
+                                aria-pressed="false"
+                            >
+                                <svg data-icon="visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                    <circle cx="12" cy="12" r="2.5"></circle>
+                                </svg>
+                                <svg class="is-hidden" data-icon="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="m3 3 18 18"></path>
+                                    <path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path>
+                                    <path d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6 0 9.5 7 9.5 7a16 16 0 0 1-2.1 2.8"></path>
+                                    <path d="M6.2 6.2C3.8 8 2.5 12 2.5 12S6 19 12 19a9.5 9.5 0 0 0 3.2-.5"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <label class="sari-terms-row" for="termsAgreement">
@@ -7218,7 +7312,7 @@
                             <path d="M12 3 5 6v5c0 4.6 2.8 8.1 7 10 4.2-1.9 7-5.4 7-10V6l-7-3Z"></path>
                             <path d="m9 12 2 2 4-4"></path>
                         </svg>
-                        <p>After email verification, your registration will be submitted for account review.</p>
+                        <p id="registrationReviewNote">After email verification, your Buyer account becomes active and you can sign in.</p>
                     </div>
                 </div>
 
@@ -7639,6 +7733,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }, current ? 185 : 0);
     }
 
+    // One consistent, sound-enabled notification for deliberate validation failures.
+    // The existing inline field error remains the source of field-level guidance.
+    let lastRegistrationNotice = { message: '', at: 0 };
+
+    function notifyRegistrationError(message) {
+        const text = String(message || '').trim();
+        if (!text) return;
+
+        const now = Date.now();
+        if (lastRegistrationNotice.message === text && now - lastRegistrationNotice.at < 1800) return;
+        lastRegistrationNotice = { message: text, at: now };
+
+        window.SariBuyerToast?.error(text);
+    }
+
     function validationFieldLabel(field) {
         const directLabel = field.id
             ? document.querySelector('label[for="' + field.id + '"]')
@@ -7862,6 +7971,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         if (firstInvalid) {
+            notifyRegistrationError(validationMessageFor(firstInvalid));
             focusInvalidField(firstInvalid);
             return false;
         }
@@ -7966,6 +8076,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const isBuyer = role === 'buyer';
         const isSeller = role === 'seller';
         const isLogistics = role === 'logistics';
+        const reviewNote = document.getElementById('registrationReviewNote');
+        if (reviewNote) {
+            reviewNote.textContent = isBuyer
+                ? 'After email verification, your Buyer account becomes active and you can sign in.'
+                : 'After email verification, your application will be submitted for account review.';
+        }
+        const registrationShell = document.querySelector('.sari-register-shell');
+        if (registrationShell) registrationShell.dataset.registrationRole = role;
 
         if (businessName) {
             businessName.maxLength = isSeller ? 30 : 180;
@@ -8028,7 +8146,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         customSelects.forEach(syncCustomSelect);
 
-        profileImageInput.required = true;
+        // Only Buyer photos are optional. Other roles keep their existing requirements.
+        profileImageInput.required = !isBuyer;
 
         if (isLogistics) {
             profileImageLabel.textContent = 'Profile Photo';
@@ -8040,8 +8159,8 @@ document.addEventListener('DOMContentLoaded', function () {
             profileImageHelp.textContent = 'Upload your profile photo. JPG, PNG, or WEBP, up to 5 MB.';
         } else {
             profileImageLabel.textContent = 'Profile Photo';
-            profileImageRequirement.textContent = '(Required)';
-            profileImageHelp.textContent = 'Upload a clear profile photo. JPG, PNG, or WEBP, up to 5 MB.';
+            profileImageRequirement.textContent = '(Optional)';
+            profileImageHelp.textContent = 'Optional for Buyer. If you upload a photo, use JPG, PNG, or WEBP up to 5 MB.';
         }
 
 
@@ -8188,15 +8307,44 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    /* Rider selection opens the Logistics page and requests a one-time Lottie intro. */
+    let riderLogisticsNavigating = false;
+    function openRiderLogisticsWithIntro() {
+        if (riderLogisticsNavigating) return;
+        riderLogisticsNavigating = true;
+        try {
+            sessionStorage.setItem('sari-rider-logistics-intro', String(Date.now()));
+        } catch (_error) {
+            // Storage can be unavailable in privacy mode; navigation must still work.
+        }
+        window.location.assign(@json(route('rider.logistics.index')));
+    }
+
     document.querySelectorAll('[data-role-option]').forEach(function (button) {
         button.addEventListener('click', function () {
             const role = button.dataset.roleOption || '';
+            if (role === 'buyer' || role === 'seller' || role === 'logistics') return; // Dedicated role registration pages.
             roleSelect.value = role;
             roleSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            if (role === 'rider') {
+                openRiderLogisticsWithIntro();
+            }
         });
     });
 
     roleSelect.addEventListener('change', function () {
+        if (roleSelect.value === 'buyer') {
+            window.location.assign(@json(route('register.buyer')));
+            return;
+        }
+        if (roleSelect.value === 'seller') {
+            window.location.assign(@json(route('register.seller')));
+            return;
+        }
+        if (roleSelect.value === 'logistics') {
+            window.location.assign(@json(route('register.logistics')));
+            return;
+        }
         syncRoleRequirements();
         syncRoleCards();
         updateProgress();
@@ -8208,20 +8356,87 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        if (roleSelect.value === 'buyer') {
+            window.location.assign(@json(route('register.buyer')));
+            return;
+        }
+        if (roleSelect.value === 'seller') {
+            window.location.assign(@json(route('register.seller')));
+            return;
+        }
+        if (roleSelect.value === 'logistics') {
+            window.location.assign(@json(route('register.logistics')));
+            return;
+        }
+
         if (roleSelect.value === 'rider') {
-            window.location.assign(@json(route('rider.logistics.index')));
+            openRiderLogisticsWithIntro();
             return;
         }
 
         showStep('details');
     });
 
-    /* PERSONAL VALIDATION */
+    /* PERSONAL VALIDATION — report invalid characters/length instead of silently removing them. */
+    function personNameError(input, candidate) {
+        const label = validationFieldLabel(input);
+        if (/[^\p{L}\s.'-]/u.test(candidate)) {
+            return label + ' may only contain letters, spaces, apostrophes, periods, and hyphens.';
+        }
+        if (candidate.length > 50) {
+            return label + ' must be 50 characters or fewer.';
+        }
+        return '';
+    }
+
+    function nameAfterInsert(input, text) {
+        const from = input.selectionStart ?? input.value.length;
+        const to = input.selectionEnd ?? from;
+        return input.value.slice(0, from) + text + input.value.slice(to);
+    }
+
+    function reportPersonNameError(input, message) {
+        showFieldError(input, message);
+        notifyRegistrationError(message);
+    }
+
     document.querySelectorAll('[data-person-name]').forEach(function (input) {
+        // Stop invalid keyboard entry before the browser can silently truncate it.
+        input.addEventListener('beforeinput', function (event) {
+            if (!event.cancelable || event.isComposing || !event.data
+                || !String(event.inputType || '').startsWith('insert')
+                || event.inputType === 'insertFromPaste'
+                || event.inputType === 'insertFromDrop') return;
+
+            const message = personNameError(input, nameAfterInsert(input, event.data));
+            if (!message) return;
+            event.preventDefault();
+            reportPersonNameError(input, message);
+        });
+
+        // A 51+ character paste is rejected with feedback, not silently cut to 50.
+        input.addEventListener('paste', function (event) {
+            const pasted = event.clipboardData?.getData('text');
+            if (pasted === undefined || pasted === null) return;
+
+            const message = personNameError(input, nameAfterInsert(input, pasted));
+            if (!message) return;
+            event.preventDefault();
+            reportPersonNameError(input, message);
+        });
+
+        // Fallback for autofill, drag/drop, IME and programmatic input events.
+        // Server-side RegistrationApplicationService validation remains authoritative.
         input.addEventListener('input', function () {
-            this.value = this.value
-                .replace(/[^\p{L}\s.'-]/gu, '')
-                .replace(/\s{2,}/g, ' ');
+            const message = personNameError(input, input.value);
+            input.setCustomValidity(message);
+
+            if (message) {
+                reportPersonNameError(input, message);
+                return;
+            }
+
+            input.value = input.value.replace(/\s{2,}/g, ' ');
         });
     });
 
@@ -8420,12 +8635,16 @@ document.addEventListener('DOMContentLoaded', function () {
     function validateProfileImage(file) {
         if (!file) {
             selectedProfileImage = null;
-            if (profileImageSelected?.value === '1') {
+            if (profileImageInput?.required && profileImageSelected?.value === '1') {
                 profileImageInput.setCustomValidity('Please select your profile photo again before submitting.');
                 showProfileImageError('Your previous photo selection was not retained. Select your profile photo again before submitting.');
                 return false;
             }
             resetProfileImagePreview(false);
+            if (!profileImageInput?.required && profileImageSelected) {
+                // An optional upload must not block a retry after a validation redirect.
+                profileImageSelected.value = '0';
+            }
 
             if (profileImageInput?.required) {
                 profileImageInput.setCustomValidity(
@@ -9277,6 +9496,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const invalid = form.querySelector(':invalid');
 
             if (invalid) {
+                notifyRegistrationError(validationMessageFor(invalid));
                 const step = invalid.closest('[data-step]');
 
                 if (step && step.dataset.step !== currentStepName) {
@@ -9386,6 +9606,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    if (Object.keys(serverErrors || {}).length > 0) {
+        const firstMessage = Object.values(serverErrors)[0];
+        notifyRegistrationError(Array.isArray(firstMessage) ? firstMessage[0] : firstMessage);
+    }
+
     if (firstServerErrorField) {
         const errorStep = firstServerErrorField.closest('[data-step]');
         if (errorStep && errorStep.dataset.step !== currentStepName) {
@@ -9440,6 +9665,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const password = document.getElementById('password');
     const passwordConfirmation = document.getElementById('passwordConfirmation');
+
+    document.querySelectorAll('[data-sari-password-toggle]').forEach(function (toggle) {
+        const target = document.getElementById(toggle.dataset.sariPasswordToggle);
+        if (!target) return;
+
+        toggle.addEventListener('click', function () {
+            const showing = target.type === 'password';
+            target.type = showing ? 'text' : 'password';
+            toggle.setAttribute('aria-pressed', showing ? 'true' : 'false');
+            toggle.setAttribute('aria-label', (showing ? 'Hide ' : 'Show ')
+                + (target.id === 'passwordConfirmation' ? 'confirm password' : 'password'));
+            toggle.querySelector('[data-icon="visible"]')?.classList.toggle('is-hidden', showing);
+            toggle.querySelector('[data-icon="hidden"]')?.classList.toggle('is-hidden', !showing);
+        });
+    });
 
     function syncPasswordConfirmation() {
         if (!passwordConfirmation) return;
@@ -9543,6 +9783,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (otpError) {
             otpError.textContent = message || 'Please check the verification code.';
         }
+        notifyRegistrationError(message || 'Please check the verification code.');
 
         const firstEmpty = otpDigits.find(input => !input.value) || otpDigits[0];
         firstEmpty?.focus();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerCartController;
 use App\Http\Controllers\Buyer\BuyerCheckoutController;
 use App\Http\Controllers\Buyer\BuyerOrderController;
+use App\Http\Controllers\Buyer\BuyerWalletController;
 use App\Http\Controllers\Buyer\BuyerRecentController;
 use App\Http\Controllers\Buyer\BuyerNotificationController;
 use App\Http\Controllers\Buyer\BuyerShippingController;
@@ -99,8 +100,8 @@ Route::get('/login', function () {
 | SOCIAL LOGIN — GOOGLE / FACEBOOK
 |--------------------------------------------------------------------------
 |
-| Social authentication always enters SARI as a Buyer.
-| It never grants Seller, Courier, or Admin privileges automatically.
+| Google signs in existing, approved SARI accounts using their registered role.
+| Facebook retains its legacy Buyer-only sign-in flow; neither grants Admin.
 |
 */
 
@@ -124,8 +125,9 @@ Route::get(
 Route::post('/login', function (Request $request) {
 
     $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
+        'email' => ['required', 'string', 'email', 'max:254'],
+        // Login does not impose a new password minimum on existing accounts.
+        'password' => ['required', 'string', 'max:255'],
     ]);
 
     /*
@@ -229,7 +231,8 @@ Route::post('/login', function (Request $request) {
             'logistics_role',
         ]);
 
-        return redirect()->route('buyer.dashboard');
+        $request->session()->put('sari_login_success_pending', 'Login successful! Welcome back to SARI.');
+        return redirect()->route('buyer.dashboard')->with('sari_login_success', 'Login successful! Welcome back to SARI.');
     }
 
     $registeredSeller = SellerAccount::query()
@@ -294,7 +297,8 @@ Route::post('/login', function (Request $request) {
             'logistics_role',
         ]);
 
-        return redirect()->route('seller.dashboard');
+        $request->session()->put('sari_login_success_pending', 'Login successful! Welcome back to SARI.');
+        return redirect()->route('seller.dashboard')->with('sari_login_success', 'Login successful! Welcome back to SARI.');
     }
 
     $courier = CourierAccount::query()->where('email', $email)->first();
@@ -333,7 +337,8 @@ Route::post('/login', function (Request $request) {
             'logistics_role',
         ]);
 
-        return redirect()->route('courier.dashboard');
+        $request->session()->put('sari_login_success_pending', 'Login successful! Welcome back to SARI.');
+        return redirect()->route('courier.dashboard')->with('sari_login_success', 'Login successful! Welcome back to SARI.');
     }
 
     $logistics = LogisticsAccount::query()->where('email', $email)->first();
@@ -389,7 +394,8 @@ Route::post('/login', function (Request $request) {
             report($exception);
         }
 
-        return redirect()->route('logistics.dashboard');
+        $request->session()->put('sari_login_success_pending', 'Login successful! Welcome back to SARI.');
+        return redirect()->route('logistics.dashboard')->with('sari_login_success', 'Login successful! Welcome back to SARI.');
     }
 
     $application = RegistrationApplication::query()
@@ -633,6 +639,9 @@ Route::post('/buyer/checkout', [BuyerCheckoutController::class, 'store'])
     ->name('buyer.checkout.store');
 
 /* Buyer order history + live tracking + early cancellation */
+Route::get('/buyer/wallet', [BuyerWalletController::class, 'index'])
+    ->name('buyer.wallet');
+
 Route::get('/buyer/orders', [BuyerOrderController::class, 'index'])
     ->name('buyer.orders');
 
@@ -1299,17 +1308,19 @@ Route::get(
 )->middleware(EnsureSellerNotRestricted::class)
   ->name('seller.orders');
 
-Route::post(
-    '/seller/orders/{order}/prepare',
-    [SellerOrderController::class, 'prepare']
-)->middleware(EnsureSellerNotRestricted::class)
-  ->name('seller.orders.prepare');
-
+// Bulk preparation uses the existing seller-owned, atomic prepareSelected() action.
+// This named route is required when seller.orders.blade.php renders the bulk form.
 Route::post(
     '/seller/orders/prepare-selected',
     [SellerOrderController::class, 'prepareSelected']
 )->middleware(EnsureSellerNotRestricted::class)
   ->name('seller.orders.prepare-selected');
+
+Route::post(
+    '/seller/orders/{order}/prepare',
+    [SellerOrderController::class, 'prepare']
+)->middleware(EnsureSellerNotRestricted::class)
+  ->name('seller.orders.prepare');
 
 Route::post(
     '/seller/orders/{order}/ready-pickup',

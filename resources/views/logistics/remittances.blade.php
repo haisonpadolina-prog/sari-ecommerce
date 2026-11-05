@@ -376,7 +376,7 @@
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg>
                         </button>
                     </div>
-                    <p class="cod-help-copy">COD remittance is physical cash only. This page is scoped to the selected operating branch: {{ $facility->name }}. Scan the Rider's batch QR when the Rider arrives, physically count the cash, and confirm the counted amount. Regular branches hold the verified cash for Main Branch remittance; only central reconciliation releases wallets.</p>
+                    <p class="cod-help-copy">COD remittance is physical cash only. This page is scoped to the selected operating branch: {{ $facility->name }}. Scan the Rider's batch QR when the Rider arrives, physically count the cash, and confirm the counted amount. Regular branches hold the verified cash for Main Branch remittance; wallets release only after SARI Admin confirms physical receipt of centrally reconciled cash.</p>
                 </aside>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Accounts\CourierAccount;
+use App\Models\Delivery\LogisticsFacility;
 use App\Models\Finance\CodRemittanceBatch;
 use App\Models\Finance\FinancePayoutRequest;
 use App\Models\Finance\RiderEarning;
@@ -169,6 +170,33 @@ class MobileRiderFinanceController extends Controller
                 'status' => $payout->status,
             ],
         ], 201);
+    }
+
+    public function remittanceHubs(Request $request): JsonResponse
+    {
+        $rider = $this->rider($request);
+
+        $facilities = LogisticsFacility::query()
+            ->active()
+            ->when(
+                $rider->logistics_account_id,
+                fn ($query) => $query->forLogistics((int) $rider->logistics_account_id)
+            )
+            ->orderBy('name')
+            ->get()
+            ->map(fn (LogisticsFacility $facility) => [
+                'id' => (int) $facility->id,
+                'name' => (string) $facility->name,
+                'address' => (string) ($facility->address ?? ''),
+                'municipality_name' => (string) ($facility->municipality_name ?? ''),
+                'province_name' => (string) ($facility->province_name ?? ''),
+            ])
+            ->values();
+
+        return response()->json([
+            'success' => true,
+            'data' => $facilities,
+        ])->header('Cache-Control', 'no-store');
     }
 
     public function remittanceEligible(Request $request): JsonResponse

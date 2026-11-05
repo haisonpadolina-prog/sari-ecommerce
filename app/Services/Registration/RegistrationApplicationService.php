@@ -54,14 +54,16 @@ class RegistrationApplicationService
         }
 
         $personName = ['required', 'string', 'min:2', 'max:50', 'regex:/^[\pL\s.\'\-]+$/u'];
-        $requiresAddress = in_array($role, ['seller', 'logistics'], true);
+        $requiresAddress = in_array($role, ['buyer', 'seller', 'logistics'], true);
         $requiresId = in_array($role, ['seller', 'logistics'], true) && !$isRejectedResubmission;
 
         $rules = [
             'role' => ['required', Rule::in([$role])],
             'last_name' => $personName,
             'first_name' => $personName,
-            'middle_initial' => ['nullable', 'string', 'size:1', 'regex:/^\pL$/u'],
+            'middle_initial' => $role === 'buyer'
+                ? ['nullable', 'string', 'max:2', 'regex:/^\pL{1,2}$/u']
+                : ['nullable', 'string', 'size:1', 'regex:/^\pL$/u'],
             'sex' => ['nullable', Rule::in(['Male', 'Female'])],
             'email' => ['required', 'email:rfc', 'max:180'],
             'contact_no' => ['required', 'string', 'regex:/^09\d{9}$/'],
@@ -78,16 +80,19 @@ class RegistrationApplicationService
             'barangay_name' => [$requiresAddress ? 'required' : 'nullable', 'string', 'max:150'],
             'street_address' => [$requiresAddress ? 'required' : 'nullable', 'string', 'max:500'],
             'postal_code' => [$requiresAddress ? 'required' : 'nullable', 'regex:/^\d{4}$/'],
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
+            'password' => ['required', 'string', 'max:255', Password::min(8)->mixedCase()->numbers()->symbols()],
             'password_confirmation' => ['required', 'same:password'],
             'terms' => ['accepted'],
             'profile_image_selected' => ['nullable', 'boolean'],
-            'profile_image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'profile_image' => [$role === 'buyer' ? 'nullable' : 'required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'id_document' => [$requiresId ? 'required' : 'nullable', 'file', 'mimetypes:image/jpeg,image/png,application/pdf', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
         ];
 
         $validated = $request->validate(array_merge($rules, $roleRules, ['profile_image' => $rules['profile_image']]), [
-            'profile_image.required' => 'A profile photo is required. Choose a JPG, JPEG, PNG, or WEBP image up to 5 MB.',
+            'profile_image.required' => 'A profile photo is required for this account type. Choose a JPG, JPEG, PNG, or WEBP image up to 5 MB.',
+            'profile_image.image' => 'Choose a valid image for your profile photo.',
+            'profile_image.mimes' => 'Choose a JPG, JPEG, PNG, or WEBP profile photo.',
+            'profile_image.max' => 'The profile photo must not exceed 5 MB.',
             'last_name.regex' => 'Last name may only contain letters, spaces, apostrophes, periods, and hyphens.',
             'first_name.regex' => 'First name may only contain letters, spaces, apostrophes, periods, and hyphens.',
             'contact_no.regex' => 'Enter a Philippine mobile number as 09XXXXXXXXX or +639XXXXXXXXX.',

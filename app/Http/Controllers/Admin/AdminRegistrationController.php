@@ -32,7 +32,7 @@ class AdminRegistrationController extends Controller
     {
         $this->guard($request);
 
-        $allowedRoles = ['buyer', 'seller', 'courier', 'logistics', 'rider'];
+        $allowedRoles = ['seller', 'courier', 'logistics', 'rider'];
         $allowedStatuses = ['all', 'pending', 'approved', 'rejected'];
 
         $role = strtolower(trim((string) $request->query('role', '')));
@@ -47,7 +47,10 @@ class AdminRegistrationController extends Controller
          * does not remove this row, so approved/rejected records can always be
          * reopened from this page.
          */
+        // Buyers activate automatically after email OTP verification and
+        // belong in Admin Users, not the administrator approval queue.
         $applications = RegistrationApplication::query()
+            ->where('role', '!=', 'buyer')
             ->when($role, fn ($query) => $query->where('role', $role))
             ->when(
                 $status !== 'all',
@@ -65,6 +68,7 @@ class AdminRegistrationController extends Controller
         | exact same statistics while reducing the dashboard refresh cost.
         */
         $summary = RegistrationApplication::query()
+            ->where('role', '!=', 'buyer')
             ->selectRaw('COUNT(*) AS total')
             ->selectRaw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending")
             ->selectRaw("SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved")
@@ -97,6 +101,7 @@ class AdminRegistrationController extends Controller
         // not always the pending queue. This makes Approved/Rejected history
         // easier to understand in the UI.
         $roleSummary = RegistrationApplication::query()
+            ->where('role', '!=', 'buyer')
             ->when(
                 $status !== 'all',
                 fn ($query) => $query->where('status', $status)
@@ -142,6 +147,9 @@ class AdminRegistrationController extends Controller
         RegistrationApplication $application
     ) {
         $this->guard($request);
+
+        // Buyer approval is automatic on successful email OTP verification.
+        abort_if($application->role === 'buyer', 404);
 
         $validated = $request->validate([
             'admin_note' => ['nullable', 'string', 'max:1500'],
@@ -296,6 +304,9 @@ class AdminRegistrationController extends Controller
     ) {
         $this->guard($request);
 
+        // Buyer approval is automatic on successful email OTP verification.
+        abort_if($application->role === 'buyer', 404);
+
         $validated = $request->validate([
             'admin_note' => ['required', 'string', 'min:5', 'max:1500'],
         ]);
@@ -430,7 +441,7 @@ class AdminRegistrationController extends Controller
             ];
 
             $returnRole = strtolower(trim((string) $request->input('return_role', '')));
-            if (in_array($returnRole, ['buyer', 'seller', 'courier', 'logistics', 'rider'], true)) {
+            if (in_array($returnRole, ['seller', 'courier', 'logistics', 'rider'], true)) {
                 $params['role'] = $returnRole;
             }
 

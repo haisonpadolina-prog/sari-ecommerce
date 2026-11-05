@@ -784,6 +784,19 @@ body:has(#sariRiderEarnings) #courierPageContent { background:#f4f5f7 !important
 
             </div>
 
+            <div class="re-payout-history" aria-label="Recent rider wallet movements">
+                <h4 class="re-payout-title">Recent Wallet Activity</h4>
+                <p class="re-balance-note">Earnings are credited only after Main Branch COD reconciliation AND SARI Admin physical cash receipt. Reservations and manual payouts are shown separately.</p>
+                @forelse($walletEntries as $entry)
+                    <div class="re-payout-entry">
+                        <span>{{ ucwords(str_replace('_', ' ', $entry->category)) }} · {{ $entry->occurred_at?->format('M d, Y') }}</span>
+                        <strong>{{ (float) $entry->available_delta >= 0 ? '+' : '−' }}₱{{ number_format(abs((float) $entry->available_delta), 2) }}</strong>
+                    </div>
+                @empty
+                    <div class="re-payout-empty">No wallet activity yet.</div>
+                @endforelse
+            </div>
+
         </aside>
 
     </section>

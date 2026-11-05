@@ -1,1 +1,1 @@
-@extends('layouts.registration')
+@extends('layouts.logistics-registration')

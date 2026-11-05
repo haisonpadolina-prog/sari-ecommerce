@@ -71,6 +71,11 @@ class CodRemittanceBatch extends Model
         return $this->hasMany(CodRemittanceItem::class);
     }
 
+    public function adminCashTurnoverItem(): HasOne
+    {
+        return $this->hasOne(AdminCashTurnoverItem::class, 'cod_remittance_batch_id');
+    }
+
     public function branchRemittanceItem(): HasOne
     {
         return $this->hasOne(BranchRemittanceItem::class, 'cod_remittance_batch_id');

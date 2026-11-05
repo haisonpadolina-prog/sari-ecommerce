@@ -2,6 +2,7 @@
 <html lang="en" class="light-mode">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <meta
         name="viewport"
@@ -40,6 +41,9 @@
         })();
     </script>
 
+    {{-- Preload role-specific assets before render-blocking CSS. --}}
+    @stack('preloads')
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         rel="preconnect"
@@ -51,6 +55,7 @@
         rel="stylesheet"
     >
 
+    @unless(request()->routeIs('login'))
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('css/how-it-works.css') }}">
@@ -65,6 +70,8 @@
         href="{{ asset('css/landing-compact.css') }}?v={{ file_exists(public_path('css/landing-compact.css')) ? filemtime(public_path('css/landing-compact.css')) : time() }}"
     >
 
+    @endunless
+
     @stack('styles')
 </head>
 
@@ -72,6 +79,7 @@
     @yield('content')
 
     {{-- Browser-ready; no ES-module imports required --}}
+    @unless(request()->routeIs('login'))
     <script src="{{ asset('js/landing.js') }}"></script>
 
     {{-- Final light-mode safety after landing.js executes --}}
@@ -102,6 +110,11 @@
         })();
     </script>
 
+    @endunless
+
     @stack('scripts')
+    {{-- Authentication feedback only; displayed when an auth flash/error is present. --}}
+    @include('components.auth.login-feedback-modal')
+
 </body>
 </html>

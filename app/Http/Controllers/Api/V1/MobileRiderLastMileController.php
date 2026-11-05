@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Accounts\CourierAccount;
+use App\Models\Delivery\DeliveryProof;
+use App\Models\Delivery\ParcelQrScanEvent;
 use App\Models\Orders\MarketplaceOrder;
+use App\Services\Delivery\ParcelQrScanRecorder;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,6 +18,7 @@ class MobileRiderLastMileController extends Controller
 {
     public function __construct(
         private readonly MarketplaceOrderWorkflowService $workflow,
+        private readonly ParcelQrScanRecorder $scanRecorder,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -98,6 +102,22 @@ class MobileRiderLastMileController extends Controller
             if ($orderIds->isEmpty()) {
                 throw ValidationException::withMessages([
                     'assignment' => 'This last-mile assignment has no parcels.',
+                ]);
+            }
+
+            $scannedHandoffs = ParcelQrScanEvent::query()
+                ->where('context_type', 'last_mile_assignment')
+                ->where('context_id', $assignment)
+                ->where('checkpoint', 'last_mile_rider_handoff')
+                ->where('actor_role', 'rider')
+                ->where('actor_id', $rider->id)
+                ->whereIn('marketplace_order_id', $orderIds)
+                ->distinct('marketplace_order_id')
+                ->count('marketplace_order_id');
+
+            if ($scannedHandoffs !== $orderIds->count()) {
+                throw ValidationException::withMessages([
+                    'assignment' => 'Scan every parcel released by the destination hub before starting this last-mile route.',
                 ]);
             }
 
@@ -207,6 +227,38 @@ class MobileRiderLastMileController extends Controller
                 ]);
             }
 
+            $verified = ParcelQrScanEvent::query()
+                ->where('marketplace_order_id', $order->id)
+                ->where('checkpoint', 'mobile_final_delivery_verified')
+                ->where('actor_role', 'rider')
+                ->where('actor_id', $rider->id)
+                ->where('context_type', 'last_mile_assignment')
+                ->where('context_id', $assignment)
+                ->exists();
+            $proof = DeliveryProof::query()
+                ->where('marketplace_order_id', $order->id)
+                ->where('courier_account_id', $rider->id)
+                ->where('last_mile_assignment_id', $assignment)
+                ->exists();
+
+            $codCashConfirmed = strtoupper(trim((string) $order->payment_method)) !== 'COD'
+                || ParcelQrScanEvent::query()
+                    ->where('marketplace_order_id', $order->id)
+                    ->where('checkpoint', 'mobile_cod_cash_confirmed')
+                    ->where('actor_role', 'rider')
+                    ->where('actor_id', $rider->id)
+                    ->where('context_type', 'last_mile_assignment')
+                    ->where('context_id', $assignment)
+                    ->exists();
+
+            if (! $verified || ! $proof || ! $codCashConfirmed) {
+                throw ValidationException::withMessages([
+                    'order' => strtoupper(trim((string) $order->payment_method)) === 'COD'
+                        ? 'Scan the parcel QR, upload proof, and confirm physical COD cash receipt before completing this last-mile handoff.'
+                        : 'Scan the parcel QR and upload proof of delivery before completing this last-mile handoff.',
+                ]);
+            }
+
             $this->workflow->transition(
                 $order,
                 'arrived_buyer',
@@ -216,7 +268,7 @@ class MobileRiderLastMileController extends Controller
                 'both',
                 [
                     'delivered_at' => now(),
-                    'payment_status' => $order->payment_method === 'COD' ? 'paid' : $order->payment_status,
+                    'payment_status' => strtoupper(trim((string) $order->payment_method)) === 'COD' ? 'paid' : $order->payment_status,
                 ],
                 $rider->id
             );
@@ -224,6 +276,20 @@ class MobileRiderLastMileController extends Controller
             DB::table('logistics_parcels')
                 ->where('marketplace_order_id', $order->id)
                 ->update(['status' => 'delivered', 'updated_at' => now()]);
+
+            // Keep the same final QR checkpoint key/schema used by the web
+            // scanner so both clients see one shared delivery audit trail.
+            $order->refresh();
+            $this->scanRecorder->record(
+                $order,
+                'final-delivery:'.$assignment.':order:'.$order->id,
+                'final_delivery_scan',
+                'rider',
+                (int) $rider->id,
+                null,
+                'last_mile_assignment',
+                $assignment
+            );
 
             $remaining = DB::table('last_mile_assignment_orders as link')
                 ->join('marketplace_orders as orders', 'orders.id', '=', 'link.marketplace_order_id')

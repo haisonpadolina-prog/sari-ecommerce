@@ -50,6 +50,13 @@ Route::get(
     ->whereNumber('logistics')
     ->name('rider.logistics.apply');
 
+Route::get(
+    '/register/rider/{logistics}/email',
+    [RiderRegistrationController::class, 'showEmailVerification']
+)
+    ->whereNumber('logistics')
+    ->name('rider.logistics.email.show');
+
 Route::post(
     '/register/rider/{logistics}/email/send',
     [RiderRegistrationController::class, 'sendEmailCode']

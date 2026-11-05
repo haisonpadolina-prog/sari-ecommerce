@@ -23,6 +23,7 @@ class EnsureLogisticsOperatingBranch
         'logistics.reports',
         'logistics.remittances',
         'logistics.branch-treasury',
+        'logistics.admin-turnovers',
     ];
 
     public function handle(Request $request, Closure $next): Response
@@ -58,6 +59,12 @@ class EnsureLogisticsOperatingBranch
                 'message' => 'Select an operating Logistics branch first.',
                 'redirect' => route('logistics.branch.select'),
             ], 409);
+        }
+
+        // Keep the one-time login notification through this extra redirect.
+        // The branch selection page will render and consume the flash.
+        if ($request->session()->has('sari_login_success')) {
+            $request->session()->keep(['sari_login_success']);
         }
 
         return redirect()

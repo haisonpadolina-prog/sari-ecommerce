@@ -1,0 +1,71 @@
+/* Authentication notices use the SAME Buyer notification card classes
+   from public/css/buyer/sari-toast.css. This file only positions the single
+   login toast and styles multiline/actionable auth content. */
+#sariLoginFeedback[hidden] { display: none !important; }
+#sariLoginFeedback {
+    position: fixed;
+    z-index: 2147483000;
+    top: 90px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    width: min(320px, calc(100vw - 24px));
+    pointer-events: none;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+#sariLoginFeedback .sari-login-feedback__toast {
+    /* All geometry, colors, icon sizing, shadow, entrance animation and
+       close button come from .sari-modern-toast in the Buyer stylesheet. */
+    align-items: flex-start;
+    pointer-events: auto;
+}
+#sariLoginFeedback .sari-modern-toast-icon {
+    margin-top: 1px;
+}
+#sariLoginFeedback .sari-modern-toast-copy {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+#sariLoginFeedback .sari-login-feedback__title {
+    margin: 0;
+    color: var(--sari-toast-ink, #263241);
+    font-size: 11px;
+    line-height: 1.45;
+    font-weight: 700;
+}
+#sariLoginFeedback .sari-login-feedback__message {
+    margin: 2px 0 0;
+    color: #566274;
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 500;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+#sariLoginFeedback .sari-login-feedback__message:empty { display: none; }
+#sariLoginFeedback .sari-login-feedback__register {
+    display: inline-flex;
+    margin-top: 8px;
+    padding: 5px 8px;
+    align-items: center;
+    border: 1px solid rgba(220, 57, 71, .24);
+    border-radius: 5px;
+    background: #fff4f5;
+    color: #b32636;
+    font: 600 10px/1.4 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    text-decoration: none;
+    transition: background-color .15s;
+}
+#sariLoginFeedback .sari-login-feedback__register:hover { background: #ffe7ea; }
+#sariLoginFeedback .sari-login-feedback__register:focus-visible {
+    outline: 2px solid var(--sari-toast-error, #DC3947);
+    outline-offset: 2px;
+}
+@media (max-width: 640px) {
+    #sariLoginFeedback { top: 82px; right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #sariLoginFeedback .sari-login-feedback__register { transition: none; }
+}

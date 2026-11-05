@@ -17,7 +17,6 @@ use Illuminate\Validation\ValidationException;
 class CodRemittanceService
 {
     public function __construct(
-        private readonly FinanceReleaseService $release,
         private readonly FinancialFlowService $financialFlow
     ) {
     }
@@ -241,24 +240,21 @@ class CodRemittanceService
 
             // Rider -> Branch verification clears Rider cash custody. Wallets
             // are released only when the cash is centrally reconciled at the
-            // Main Branch. If the Rider physically remits directly to the Main
-            // Branch, central custody is already satisfied and no second branch
-            // transfer is required.
+            // Main Branch. Even at Main Branch, stakeholder wallets stay pending
+            // until the SARI Admin independently confirms full cash receipt.
             $facility = $locked->facility;
 
             if ($facility?->is_main_branch) {
-                foreach ($locked->items as $item) {
-                    if ($item->order) {
-                        $this->release->releaseOrder(
-                            $item->order,
-                            'cod_cash_main_branch:'.$locked->batch_code
-                        );
-                    }
-                }
-
+                // Mark central reconciliation before calling the wallet release
+                // guard. Both writes remain in this same database transaction.
                 $locked->forceFill([
                     'central_reconciled_at' => now(),
                 ])->save();
+
+                // Physical custody is now at Logistics Main Branch only.
+                // SARI earnings stay pending until Admin independently counts
+                // the complete Logistics -> Admin turnover.
+
             }
 
             return $locked->fresh(['items.order', 'courier', 'facility']);

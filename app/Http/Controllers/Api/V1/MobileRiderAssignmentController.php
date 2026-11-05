@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Accounts\CourierAccount;
+use App\Models\Delivery\DeliveryProof;
 use App\Models\Delivery\LogisticsParcel;
+use App\Models\Delivery\ParcelQrScanEvent;
 use App\Models\Orders\MarketplaceOrder;
+use App\Services\Delivery\ParcelQrScanRecorder;
 use App\Services\Orders\MarketplaceOrderWorkflowService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +19,7 @@ class MobileRiderAssignmentController extends Controller
 {
     public function __construct(
         private readonly MarketplaceOrderWorkflowService $workflow,
+        private readonly ParcelQrScanRecorder $scanRecorder,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -157,6 +161,13 @@ class MobileRiderAssignmentController extends Controller
     public function confirmPickup(Request $request, MarketplaceOrder $order): JsonResponse
     {
         $order = $this->assigned($request, $order);
+
+        if ($order->logisticsParcel()->exists()) {
+            throw ValidationException::withMessages([
+                'pickup' => 'Scan the SARI parcel QR at the Seller. Manual pickup confirmation is disabled for Logistics parcels.',
+            ]);
+        }
+
         $updated = $this->workflow->transition(
             $order,
             'arrived_pickup',
@@ -194,6 +205,35 @@ class MobileRiderAssignmentController extends Controller
         $order = $this->assigned($request, $order);
         $this->assertNotLogisticsFinalMile($order);
 
+        $verified = ParcelQrScanEvent::query()
+            ->where('marketplace_order_id', $order->id)
+            ->where('checkpoint', 'mobile_final_delivery_verified')
+            ->where('actor_role', 'rider')
+            ->where('actor_id', $rider->id)
+            ->exists();
+        $proof = DeliveryProof::query()
+            ->where('marketplace_order_id', $order->id)
+            ->where('courier_account_id', $rider->id)
+            ->exists();
+
+        $codCashConfirmed = strtoupper(trim((string) $order->payment_method)) !== 'COD'
+            || ParcelQrScanEvent::query()
+                ->where('marketplace_order_id', $order->id)
+                ->where('checkpoint', 'mobile_cod_cash_confirmed')
+                ->where('actor_role', 'rider')
+                ->where('actor_id', $rider->id)
+                ->where('context_type', 'order')
+                ->where('context_id', $order->id)
+                ->exists();
+
+        if (! $verified || ! $proof || ! $codCashConfirmed) {
+            throw ValidationException::withMessages([
+                'delivery' => strtoupper(trim((string) $order->payment_method)) === 'COD'
+                    ? 'Scan the parcel QR, upload proof, and confirm physical COD cash receipt before completing this order.'
+                    : 'Scan the parcel QR and upload proof of delivery before completing this order.',
+            ]);
+        }
+
         $updated = $this->workflow->transition(
             $order,
             'arrived_buyer',
@@ -203,9 +243,22 @@ class MobileRiderAssignmentController extends Controller
             'both',
             [
                 'delivered_at' => now(),
-                'payment_status' => $order->payment_method === 'COD' ? 'paid' : $order->payment_status,
+                'payment_status' => strtoupper(trim((string) $order->payment_method)) === 'COD' ? 'paid' : $order->payment_status,
             ],
             $rider->id
+        );
+
+        // Write the same final checkpoint used by the web scanner so web and
+        // mobile history/audit views immediately agree on delivery completion.
+        $this->scanRecorder->record(
+            $updated,
+            'direct-final-delivery:order:'.$updated->id,
+            'final_delivery_scan',
+            'rider',
+            (int) $rider->id,
+            null,
+            'order',
+            (int) $updated->id
         );
 
         return $this->changed($updated, 'Delivery completed successfully.');

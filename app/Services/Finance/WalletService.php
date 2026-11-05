@@ -70,6 +70,8 @@ class WalletService
                 ->first();
 
             if ($existing) {
+                $this->assertMatchingEntry($existing, $wallet, $amount, 'credit', $category);
+
                 return $existing;
             }
 
@@ -168,6 +170,8 @@ class WalletService
                 ->first();
 
             if ($existing) {
+                $this->assertMatchingEntry($existing, $wallet, $amount, 'payout', 'payout_paid');
+
                 return $existing;
             }
 
@@ -240,6 +244,8 @@ class WalletService
                 ->first();
 
             if ($existing) {
+                $this->assertMatchingEntry($existing, $wallet, $amount, $entryType, $category);
+
                 return $existing;
             }
 
@@ -286,4 +292,23 @@ class WalletService
             ]);
         });
     }
+
+    /** Prevent the same idempotency key from crediting a different owner or amount. */
+    private function assertMatchingEntry(
+        FinanceWalletEntry $existing,
+        FinanceWallet $wallet,
+        float $amount,
+        string $entryType,
+        string $category
+    ): void {
+        if ((int) $existing->finance_wallet_id !== (int) $wallet->id
+            || round((float) $existing->amount, 2) !== $amount
+            || $existing->entry_type !== $entryType
+            || $existing->category !== $category) {
+            throw ValidationException::withMessages([
+                'wallet' => 'An existing wallet movement has conflicting idempotency details.',
+            ]);
+        }
+    }
+
 }

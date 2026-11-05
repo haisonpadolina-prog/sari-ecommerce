@@ -11,7 +11,7 @@
     <section class="rounded-2xl border border-[#e5e0d8] bg-white p-6 shadow-sm">
         <p class="text-[9px] font-bold uppercase tracking-[.14em] text-[#a06b0b]">Shipping Economics</p>
         <h2 class="mt-2 text-xl font-bold text-[#211d17]">{{ $logistics->displayName() }}</h2>
-        <p class="mt-2 max-w-4xl text-[10px] leading-5 text-[#7e756a]">Gross shipping revenue minus pickup Rider and final-mile Rider shares becomes the Logistics margin. COD amounts enter the wallet only after verified Rider remittance.</p>
+        <p class="mt-2 max-w-4xl text-[10px] leading-5 text-[#7e756a]">Gross shipping revenue minus pickup Rider and final-mile Rider shares becomes the Logistics margin. COD earnings enter the internal wallet only after Main Branch reconciliation and independent physical cash receipt by SARI Admin. The wallet is not an automatic bank or GCash transfer.</p>
     </section>
 
     <section class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
@@ -46,6 +46,24 @@
                     <div class="flex items-center justify-between gap-3 rounded-xl border border-[#eee6da] px-4 py-3 text-[9px]"><div><strong>{{ $payout->request_code }}</strong><div class="mt-1 text-[#817769]">{{ $payout->destination_label }}</div></div><div class="text-right"><strong>₱{{ number_format((float)$payout->amount,2) }}</strong><div class="mt-1 text-[#817769]">{{ strtoupper($payout->status) }}</div></div></div>
                 @empty<p class="text-[9px] text-[#817769]">No withdrawal requests yet.</p>@endforelse
             </div>
+        </div>
+    </section>
+
+    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-[13px] font-bold">Logistics Wallet Ledger</h3>
+            <p class="text-[10px] text-[#817769]">Available ₱{{ number_format((float)$wallet->available_balance,2) }} · Reserved ₱{{ number_format((float)$wallet->reserved_balance,2) }} · Paid ₱{{ number_format((float)$wallet->lifetime_payouts,2) }}</p>
+        </div>
+        <p class="mt-2 text-[10px] leading-5 text-[#817769]">Credits mean COD cash was reconciled at Main Branch and the full physical turnover was confirmed received by SARI Admin; reserve/payout entries track requested and externally confirmed withdrawals. These are internal accounting movements, not automatic transfers.</p>
+        <div class="mt-4 space-y-2">
+            @forelse($walletEntries as $entry)
+                <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#eee6da] px-4 py-3 text-[10px]">
+                    <div><strong>{{ ucfirst(str_replace('_', ' ', $entry->category)) }}</strong><div class="mt-1 text-[#817769]">{{ $entry->occurred_at?->format('M d, Y · h:i A') }} · {{ $entry->description }}</div></div>
+                    <div class="text-right"><strong>₱{{ number_format((float)$entry->amount,2) }}</strong><div class="mt-1 text-[#817769]">Available after ₱{{ number_format((float)$entry->available_balance_after,2) }}</div></div>
+                </div>
+            @empty
+                <p class="rounded-xl bg-[#fffaf0] p-4 text-[10px] text-[#817769]">No wallet movements yet. Earnings stay pending until Main Branch COD reconciliation and SARI Admin physical cash receipt.</p>
+            @endforelse
         </div>
     </section>
 

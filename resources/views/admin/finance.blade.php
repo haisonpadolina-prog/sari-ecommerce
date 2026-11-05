@@ -13,13 +13,23 @@
             <div>
                 <p class="text-[9px] font-bold uppercase tracking-[.14em] text-[#a06b0b]">Platform Treasury</p>
                 <h2 class="mt-2 text-xl font-bold text-[#211d17]">COD, Earnings & Payout Control</h2>
-                <p class="mt-2 max-w-4xl text-[10px] leading-5 text-[#7e756a]">Every peso is tracked from Buyer collection to Rider custody, Logistics remittance verification, wallet release, reservation, and confirmed external payout. Marking a payout paid requires a real external reference.</p>
+                <p class="mt-2 max-w-4xl text-[10px] leading-5 text-[#7e756a]">COD cash must pass Rider, Logistics Branch and Main Branch custody, then an independently confirmed SARI Admin physical cash turnover before wallet release. Marking a payout paid requires a real external reference.</p>
             </div>
             <div class="rounded-2xl bg-[#211d17] px-6 py-5 text-white">
                 <p class="text-[8px] uppercase tracking-[.12em] text-white/60">Platform available</p>
                 <p class="mt-1 text-[25px] font-bold">₱{{ number_format((float)$platformWallet->available_balance,2) }}</p>
                 <p class="mt-1 text-[8px] text-white/60">Reserved ₱{{ number_format((float)$platformWallet->reserved_balance,2) }}</p>
             </div>
+        </div>
+    </section>
+
+    <section class="rounded-2xl border border-[#e6dac8] bg-[#fff9ed] p-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h3 class="text-[13px] font-bold text-[#211d17]">Logistics → SARI Admin Cash Turnovers</h3>
+                <p class="mt-1 text-[10px] text-[#817769]">Count the actual Logistics handover. No new COD earnings become withdrawable before Admin receives the full physical cash.</p>
+            </div>
+            <a href="{{ route('admin.finance.cash-turnovers.index') }}" class="rounded-xl bg-[#211d17] px-5 py-3 text-[11px] font-semibold text-white">Open Cash Turnover Queue</a>
         </div>
     </section>
 

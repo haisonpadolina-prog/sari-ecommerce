@@ -20,9 +20,10 @@ class FinancialFlowService
     /**
      * Record all internal obligations for a completed marketplace order.
      *
-     * COD is deliberately two-stage:
-     * 1. Delivery confirms Buyer payment and creates internal obligations.
-     * 2. Verified Rider remittance releases those obligations to wallets.
+     * COD uses physical-custody settlement:
+     * 1. Delivery confirms reported Buyer payment and records obligations.
+     * 2. Rider -> Branch -> Main Branch moves and reconciles cash.
+     * 3. SARI Admin independently counts the final turnover before release.
      *
      * Non-COD paid orders can release immediately because no Rider cash
      * custody remains to reconcile.
@@ -80,7 +81,7 @@ class FinancialFlowService
                 'rider_earning' => $shipping['primary_rider_earning'],
                 'rider_earnings' => $shipping['rider_earnings'],
                 'logistics_earning' => $shipping['logistics_earning'],
-                'wallet_release_status' => $isCod ? 'awaiting_cod_remittance' : 'released',
+                'wallet_release_status' => $isCod ? 'awaiting_admin_cash_receipt' : 'released',
             ];
         });
     }

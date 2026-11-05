@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Finance\AdminCashTurnoverController;
 use App\Http\Controllers\Finance\AdminFinanceController;
 use App\Http\Controllers\Finance\BranchTreasuryController;
 use App\Http\Controllers\Finance\CourierRemittanceController;
 use App\Http\Controllers\Finance\FinancePayoutController;
+use App\Http\Controllers\Finance\LogisticsAdminCashTurnoverController;
 use App\Http\Controllers\Finance\LogisticsFinanceController;
 use App\Http\Controllers\Finance\LogisticsRemittanceController;
 use App\Http\Middleware\Courier\CourierOnly;
@@ -51,6 +53,16 @@ Route::middleware(['web'])->group(function (): void {
                 ->whereNumber('rider')->middleware('throttle:12,1')
                 ->name('cod-compliance.action');
 
+            // Verified Main Branch cash -> SARI Admin physical cash turnover.
+            Route::middleware(EnsureLogisticsOperatingBranch::class)->group(function (): void {
+                Route::get('/admin-cash-turnovers', [LogisticsAdminCashTurnoverController::class, 'index'])
+                    ->name('admin-turnovers.index');
+                Route::post('/admin-cash-turnovers', [LogisticsAdminCashTurnoverController::class, 'store'])
+                    ->middleware('throttle:10,1')->name('admin-turnovers.store');
+                Route::get('/admin-cash-turnovers/{turnover}', [LogisticsAdminCashTurnoverController::class, 'show'])
+                    ->whereNumber('turnover')->name('admin-turnovers.show');
+            });
+
             Route::get('/finance', [LogisticsFinanceController::class, 'index'])
                 ->name('finance.index');
             Route::post('/finance/payout', [FinancePayoutController::class, 'logisticsStore'])
@@ -92,6 +104,13 @@ Route::middleware(['web'])->group(function (): void {
         ->name('admin.finance.')
         ->group(function (): void {
             Route::get('/', [AdminFinanceController::class, 'index'])->name('index');
+            Route::get('/cash-turnovers', [AdminCashTurnoverController::class, 'index'])
+                ->name('cash-turnovers.index');
+            Route::get('/cash-turnovers/{turnover}', [AdminCashTurnoverController::class, 'show'])
+                ->whereNumber('turnover')->name('cash-turnovers.show');
+            Route::post('/cash-turnovers/{turnover}/receive', [AdminCashTurnoverController::class, 'receive'])
+                ->whereNumber('turnover')->middleware('throttle:20,1')
+                ->name('cash-turnovers.receive');
             Route::post('/shipping-policy', [AdminFinanceController::class, 'updateShippingPolicy'])
                 ->middleware('throttle:6,1')
                 ->name('shipping-policy');

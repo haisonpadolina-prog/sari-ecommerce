@@ -140,6 +140,21 @@
             <span class="buyer-sidebar-label whitespace-nowrap">Rewards / Vouchers</span>
         </a>
 
+        <a
+            href="{{ route('buyer.wallet') }}"
+            wire:navigate.hover
+            title="My Wallet & COD History"
+            data-buyer-sidebar-item
+            data-buyer-nav-active="{{ request()->routeIs('buyer.wallet') ? 'true' : 'false' }}"
+            class="buyer-sidebar-item flex items-center gap-3"
+        >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3" y="6" width="18" height="14" rx="2"></rect>
+                <path d="M3 10h18m-5 5h3"></path>
+            </svg>
+            <span class="buyer-sidebar-label whitespace-nowrap">My Wallet / COD</span>
+        </a>
+
         <div class="buyer-sidebar-section-divider"></div>
         <p class="buyer-sidebar-section-label">Orders & delivery</p>
 

@@ -141,6 +141,13 @@
                 ],
 
                 [
+                    'logistics.admin-turnovers.index',
+                    'SARI Admin Cash Turnover',
+                    'logistics.admin-turnovers*',
+                    'treasury',
+                ],
+
+                [
                     'logistics.last-mile-assignment',
                     'Last Mile Assignment',
                     'logistics.last-mile-assignment*',
@@ -159,6 +166,13 @@
         [
             'label' => 'Management',
             'items' => [
+                [
+                    'logistics.finance.index',
+                    'Earnings & Wallet',
+                    'logistics.finance.*',
+                    'wallet',
+                ],
+
                 [
                     'logistics.reports',
                     'Reports',
@@ -364,6 +378,10 @@
         'cash' =>
             '<rect x="3" y="6" width="18" height="12" rx="2"/>'
             .'<path d="M7 10h10M7 14h5"/>',
+
+        'wallet' =>
+            '<rect x="3" y="6" width="18" height="14" rx="2"/>'
+            .'<path d="M3 10h18m-5 5h3"/>',
 
         'treasury' =>
             '<path d="M3 9h18M5 9v9m4-9v9m6-9v9m4-9v9M3 18h18M12 3l9 4H3l9-4Z"/>',

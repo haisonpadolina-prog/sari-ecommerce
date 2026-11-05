@@ -269,5 +269,7 @@
             })();
         </script>
     @endif
+    {{-- Login can land here before an operating branch has been selected. --}}
+    @include('components.auth.login-feedback-modal')
 </body>
 </html>

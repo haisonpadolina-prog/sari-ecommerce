@@ -194,16 +194,23 @@
                     <div class="bt-help-copy">
                         <p>Operating Branch: <strong>{{ $facility->name }}</strong>.</p>
                         @if($facility->is_main_branch)
-                            <p>This is the Main Branch. Scan incoming branch treasury QR codes, count the physical cash, and centrally reconcile exact batches before stakeholder wallets are released.</p>
+                            <p>This is the Main Branch. Scan incoming branch treasury QR codes, count the physical cash, and centrally reconcile exact batches before preparing the separate Logistics to SARI Admin cash turnover. Wallet earnings stay pending until Admin receipt.</p>
                             <p>Scan only when the branch cash physically arrives. The QR opens the batch; it does not confirm receipt until the Main Branch counts the money.</p>
                         @else
-                            <p>Verified Rider COD cash is now branch custody. Aggregate eligible Rider cash batches and physically send the full amount to <strong>{{ $mainBranch?->name ?: 'the Main Branch' }}</strong>. Wallets remain pending until the Main Branch verifies the full cash batch.</p>
+                            <p>Verified Rider COD cash is now branch custody. Aggregate eligible Rider cash batches and physically send the full amount to <strong>{{ $mainBranch?->name ?: 'the Main Branch' }}</strong>. Wallets remain pending until the Main Branch verifies the cash and SARI Admin independently confirms full receipt.</p>
                         @endif
                     </div>
                 </aside>
             </div>
         </div>
     </header>
+
+    @if($facility->is_main_branch)
+        <div class="mb-4 rounded-xl border border-[#e9d6b2] bg-[#fff8e8] p-4 text-[12px] text-[#6e5422]">
+            <strong>Next cash custody step:</strong> Once Rider/Branch cash is centrally reconciled, prepare the full physical handover to SARI Admin.
+            <a href="{{ route('logistics.admin-turnovers.index') }}" class="ml-2 font-bold underline">Open SARI Admin Cash Turnover</a>
+        </div>
+    @endif
 
     <div class="bt-stats" role="group" aria-label="Treasury overview">
         @foreach([

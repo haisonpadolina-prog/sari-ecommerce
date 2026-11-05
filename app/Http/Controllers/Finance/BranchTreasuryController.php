@@ -156,7 +156,7 @@ class BranchTreasuryController extends Controller
             ->route('logistics.branch-treasury.index')
             ->with(
                 'success',
-                'Main Branch received and verified the full physical cash batch. Affected Seller, platform, Logistics, and Rider wallets were released.'
+                'Main Branch received and verified the full cash batch. Prepare a separate Main Branch to SARI Admin turnover; wallets remain pending.'
             );
     }
 }

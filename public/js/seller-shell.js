@@ -13,7 +13,13 @@
             const notificationReadAllUrl = String(shellConfig.notificationReadAllUrl || '');
             const buyerMessagesUrl = String(shellConfig.buyerMessagesUrl || '');
             const ordersLiveStateUrl = String(shellConfig.ordersLiveStateUrl || '');
-            const csrfToken = String(shellConfig.csrfToken || '');
+            // Seller shell persists across wire:navigate. Never capture a session token once.
+            const currentCsrfToken = () => String(
+                document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                || document.querySelector('input[name="_token"]')?.value
+                || shellConfig.csrfToken
+                || ''
+            );
 
             const desktopBreakpoint = 1024;
             const sidebarStorageKey = 'sari:seller-sidebar-collapsed';
@@ -870,7 +876,7 @@
                             headers: {
                                 'Accept': 'application/json',
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRF-TOKEN': csrfToken,
+                                'X-CSRF-TOKEN': currentCsrfToken(),
                             },
                             credentials: 'same-origin',
                             cache: 'no-store',
@@ -967,7 +973,7 @@
                             headers: {
                                 'Accept': 'application/json',
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRF-TOKEN': csrfToken,
+                                'X-CSRF-TOKEN': currentCsrfToken(),
                             },
                             credentials: 'same-origin',
                             cache: 'no-store',

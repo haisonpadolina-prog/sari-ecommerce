@@ -27,6 +27,17 @@ class PayoutService
         $accountName = trim($accountName);
         $accountReference = trim($accountReference);
 
+        // Buyers may inspect an internal wallet, but COD purchases and refunds
+        // are not paid from it. Earnings payout is restricted to earning owners.
+        if (! in_array($ownerType, ['seller', 'logistics', 'courier', WalletService::PLATFORM_OWNER_TYPE], true)
+            || $ownerId <= 0
+            || ($ownerType === WalletService::PLATFORM_OWNER_TYPE
+                && $ownerId !== WalletService::PLATFORM_OWNER_ID)) {
+            throw ValidationException::withMessages([
+                'payout' => 'This account cannot request an earnings withdrawal.',
+            ]);
+        }
+
         if ($amount <= 0) {
             throw ValidationException::withMessages([
                 'amount' => 'Withdrawal amount must be greater than zero.',

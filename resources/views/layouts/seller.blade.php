@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -3563,16 +3564,28 @@
                 reviewFeedback?.start?.();
 
                 try {
+                    // Livewire may preserve forms while Laravel rotates its CSRF token.
+                    const currentToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+                    const formData = new FormData(form);
+                    if (currentToken) formData.set('_token', currentToken);
+
                     const response = await fetch(form.action, {
                         method: 'POST',
-                        body: new FormData(form),
+                        body: formData,
                         credentials: 'same-origin',
                         cache: 'no-store',
                         headers: {
                             'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
+                            'X-Requested-With': 'XMLHttpRequest',
+                            ...(currentToken ? { 'X-CSRF-TOKEN': currentToken } : {})
                         }
                     });
+
+                    if (response.status === 419) {
+                        reviewFeedback?.hide?.();
+                        showToast('Your session expired. Refresh this page and try again.', 'error');
+                        return; // Never replay a write without the user's confirmation.
+                    }
 
                     if (response.redirected) {
                         const redirected = new URL(response.url, window.location.origin);
@@ -3972,5 +3985,9 @@
 
     {{-- Start Livewire after all navigation listeners are registered. --}}
     @livewireScripts
+    {{-- Authentication feedback only; displayed when an auth flash/error is present. --}}
+    @include('components.auth.login-feedback-modal')
+
+    @include('components.auth.logout-history-protection')
 </body>
 </html>

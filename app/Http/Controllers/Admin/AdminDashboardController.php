@@ -52,6 +52,7 @@ class AdminDashboardController extends Controller
         }
 
         $summary = RegistrationApplication::query()
+            ->where('role', '!=', 'buyer')
             ->selectRaw('COUNT(*) AS total')
             ->selectRaw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending")
             ->selectRaw("SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved")
@@ -76,6 +77,7 @@ class AdminDashboardController extends Controller
         ];
 
         $recentRegistrationApplications = RegistrationApplication::query()
+            ->where('role', '!=', 'buyer')
             ->latest('created_at')
             ->limit(8)
             ->get();
@@ -288,7 +290,7 @@ class AdminDashboardController extends Controller
             ],
             'roles' => [
                 'sellers' => ['value' => $activeSellers, 'issue' => $registrationStats['sellers'] . ' pending'],
-                'buyers' => ['value' => $activeBuyers, 'issue' => $registrationStats['buyers'] . ' pending'],
+                'buyers' => ['value' => $activeBuyers, 'issue' => 'Automatic after email verification'],
                 'logistics' => ['value' => $activeLogistics, 'issue' => $registrationStats['logistics'] . ' pending'],
                 'riders' => ['value' => $activeRiders, 'issue' => $registrationStats['riders'] . ' pending'],
             ],

@@ -3,20 +3,12 @@
 @section('title', 'Login — SARI')
 
 @push('styles')
-    {{--
-        Warm the Seller first-screen CSS while the user is on the login page.
-        These are low-priority prefetches: they do not style or block the login UI,
-        but a Seller login can reuse the downloaded bytes after the redirect.
-    --}}
-    
-    
-    <link rel="prefetch" as="style" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}">
+    {{-- Load Tailwind from SARI's already configured Vite build before the page paints. --}}
+    @vite('resources/css/app.css')
 @endpush
 
 @section('content')
 
-{{-- Tailwind CDN for this page --}}
-<script src="https://cdn.tailwindcss.com"></script>
 
 {{-- Poppins was referenced via font-['Poppins'] but never loaded — this was silently
      falling back to the browser's generic sans-serif, which is why type felt "off". --}}
@@ -333,14 +325,15 @@
     {{-- BACKGROUND IMAGE --}}
     <div class="absolute inset-0">
         <img
-            src="{{ asset('images/login-bg.jpg') }}"
+            src="{{ asset('images/login-bg.png') }}?v=57fe589538e9"
             alt=""
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            onerror="if (!this.dataset.sariBgFallback) { this.dataset.sariBgFallback = '1'; this.src = '{{ asset('images/login-bg.jpg') }}'; } else { this.style.display = 'none'; }"
             class="h-full w-full object-cover object-center"
         >
 
-        {{-- Solid overlays only — no gradients --}}
-        <div class="absolute inset-0 bg-white/68"></div>
-        <div class="absolute inset-0 bg-[#fffaf1]/18"></div>
     </div>
 
     {{-- PAGE --}}
@@ -387,50 +380,7 @@
                     </p>
                 </div>
 
-                {{-- STATUS / PASSWORD RESET SUCCESS --}}
-                @if (session('status'))
-                    <div
-                        class="mb-5 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-[12px] leading-5 text-emerald-700 sm:text-[13px]"
-                        role="status"
-                    >
-                        <svg viewBox="0 0 24 24" class="mt-0.5 h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <path d="m8 12 2.5 2.5L16 9"></path>
-                        </svg>
-                        <p>{{ session('status') }}</p>
-                    </div>
-                @endif
-
-                {{-- LOGIN ERROR --}}
-                @if ($errors->any())
-                    <div
-                        class="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[12px] leading-5 text-red-700 sm:text-[13px]"
-                        role="alert"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            class="mt-0.5 h-[18px] w-[18px] shrink-0"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            aria-hidden="true"
-                        >
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <path d="M12 8v5"></path>
-                            <path d="M12 16.5h.01"></path>
-                        </svg>
-
-                        <div>
-                            <p class="font-semibold">
-                                Unable to log in
-                            </p>
-
-                            <p class="mt-0.5">
-                                {{ $errors->first() }}
-                            </p>
-                        </div>
-                    </div>
-                @endif
+                {{-- Auth status and errors appear in the shared sound-enabled modal. --}}
 
                 {{-- FORM --}}
                 <form
@@ -470,6 +420,7 @@
                                 type="email"
                                 id="email"
                                 name="email"
+                                maxlength="254"
                                 value="{{ old('email') }}"
                                 placeholder="Enter your email"
                                 autocomplete="email"
@@ -516,6 +467,7 @@
                                 type="password"
                                 id="password"
                                 name="password"
+                                maxlength="255"
                                 placeholder="Enter your password"
                                 autocomplete="current-password"
                                 required
@@ -626,6 +578,7 @@
                         href="{{ route('oauth.redirect', ['provider' => 'google']) }}"
                         class="sari-login-social sari-login-social-control flex items-center justify-center gap-2 rounded-lg border border-[#e4ddd3] bg-transparent text-[#28241e] hover:border-[#d8cdb9] hover:bg-[#fffaf1]/70"
                         aria-label="Continue with Google"
+                        data-sari-google-login
                     >
                         <svg
                             viewBox="0 0 24 24"
@@ -638,7 +591,7 @@
                             <path fill="#EA4335" d="M12 5.94c1.47 0 2.79.51 3.83 1.5l2.87-2.87A9.66 9.66 0 0 0 12 2a10 10 0 0 0-8.94 5.48l3.33 2.59C7.18 7.7 9.39 5.94 12 5.94Z"/>
                         </svg>
 
-                        Continue with Google
+                        <span data-sari-google-label>Continue with Google</span>
                     </a>
 
                 </div>
@@ -691,6 +644,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggle = document.getElementById('sariPasswordToggle');
     const eyeOpen = document.getElementById('sariEyeOpen');
     const eyeClosed = document.getElementById('sariEyeClosed');
+
+    const loginForm = document.querySelector('.sari-login-form');
+    const attemptKey = 'sari:login:attempt';
+    function rememberLoginAttempt() {
+        try {
+            sessionStorage.setItem(attemptKey, JSON.stringify({ at: Date.now() }));
+        } catch (_) {
+            // A blocked storage API must never prevent login.
+        }
+    }
+    // The browser fires submit only after native required/email validation.
+    loginForm?.addEventListener('submit', rememberLoginAttempt);
+
+    const googleLink = document.querySelector('[data-sari-google-login]');
+    const googleLabel = googleLink?.querySelector('[data-sari-google-label]');
+
+    googleLink?.addEventListener('click', function (event) {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        rememberLoginAttempt();
+        googleLink.setAttribute('aria-busy', 'true');
+        googleLink.classList.add('pointer-events-none', 'opacity-75');
+        if (googleLabel) googleLabel.textContent = 'Connecting to Google…';
+    });
+
+    window.addEventListener('pageshow', function () {
+        if (!googleLink) return;
+        googleLink.removeAttribute('aria-busy');
+        googleLink.classList.remove('pointer-events-none', 'opacity-75');
+        if (googleLabel) googleLabel.textContent = 'Continue with Google';
+    });
 
     if (!input || !toggle) return;
 

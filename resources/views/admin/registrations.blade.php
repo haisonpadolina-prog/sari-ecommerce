@@ -3452,7 +3452,6 @@
 
             $roleOptions = [
                 '' => 'All Roles',
-                'buyer' => 'Buyer',
                 'seller' => 'Seller',
                 'courier' => 'Courier',
                 'logistics' => 'Logistics',
@@ -3626,7 +3625,6 @@
                                     . mb_strtoupper(mb_substr($application->last_name ?? '', 0, 1));
         
                                 $roleTone = match($application->role) {
-                                    'buyer' => 'border-[#dae7f2] bg-[#f4f8fc] text-[#537a9f]',
                                     'seller' => 'border-[#eee0c5] bg-[#fff8ec] text-[#a8731f]',
                                     'courier' => 'border-[#d9e7e3] bg-[#f2f8f6] text-[#527b6f]',
                                     'logistics' => 'border-[#e4dcf2] bg-[#f8f5fc] text-[#725b91]',

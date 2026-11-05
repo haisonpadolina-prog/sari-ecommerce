@@ -1018,5 +1018,6 @@
         })();
     </script>
 
+    @include('components.auth.logout-history-protection')
 </body>
 </html>

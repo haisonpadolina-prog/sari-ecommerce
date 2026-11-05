@@ -736,6 +736,67 @@
 
     </section>
 
+    <section class="mt-6 space-y-4" aria-label="Seller earnings wallet">
+        <header class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+                <h2 class="text-lg font-bold text-[#273442]">Seller Earnings Wallet</h2>
+                <p class="mt-1 text-[11px] text-[#738094]">Available only after Main Branch reconciliation and SARI Admin confirmation of the full physical COD cash turnover. A wallet credit is not an external payment.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[11px]">
+                <span class="rounded-xl border border-[#e5e7eb] bg-white px-4 py-2 text-[#475569]">Reserved: <strong>₱{{ number_format((float) $wallet->reserved_balance, 2) }}</strong></span>
+                <span class="rounded-xl border border-[#e5e7eb] bg-white px-4 py-2 text-[#475569]">Externally paid (recorded): <strong>₱{{ number_format((float) $wallet->lifetime_payouts, 2) }}</strong></span>
+            </div>
+        </header>
+
+        @include('finance.payout-form', [
+            'payoutAction' => route('seller.finance.payout'),
+            'wallet' => $wallet,
+            'payoutTitle' => 'Withdraw Seller Earnings',
+        ])
+
+        <div class="grid gap-4 xl:grid-cols-2">
+            <article class="rounded-2xl border border-[#e5e7eb] bg-white p-5 shadow-sm">
+                <h3 class="text-[13px] font-bold text-[#273442]">Wallet Activity</h3>
+                <p class="mt-1 text-[10px] text-[#738094]">Latest credits, reservations and completed payouts.</p>
+                <div class="mt-4 space-y-2">
+                    @forelse($walletEntries as $entry)
+                        <div class="flex items-center justify-between gap-4 rounded-xl border border-[#edf0f3] px-3 py-3 text-[11px]">
+                            <div>
+                                <strong class="block text-[#273442]">{{ ucwords(str_replace('_', ' ', $entry->category)) }}</strong>
+                                <span class="mt-1 block text-[#738094]">{{ $entry->occurred_at?->format('M d, Y h:i A') }}</span>
+                            </div>
+                            <div class="text-right text-[#273442]">
+                                <strong class="block">{{ (float) $entry->available_delta >= 0 ? '+' : '−' }}₱{{ number_format(abs((float) $entry->available_delta), 2) }}</strong>
+                                @if((float) $entry->reserved_delta != 0)
+                                    <span class="block text-[9px] text-[#738094]">Reserved {{ (float) $entry->reserved_delta > 0 ? '+' : '−' }}₱{{ number_format(abs((float) $entry->reserved_delta), 2) }}</span>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <p class="rounded-xl bg-[#f8fafc] p-4 text-[11px] text-[#738094]">No wallet movements yet. COD cash must be reconciled at Main Branch and physically received by SARI Admin first.</p>
+                    @endforelse
+                </div>
+            </article>
+            <article class="rounded-2xl border border-[#e5e7eb] bg-white p-5 shadow-sm">
+                <h3 class="text-[13px] font-bold text-[#273442]">Recent Withdrawal Requests</h3>
+                <p class="mt-1 text-[10px] text-[#738094]">An Admin confirms payment only after funds are physically released or transferred.</p>
+                <div class="mt-4 space-y-2">
+                    @forelse($payoutRequests as $payout)
+                        <div class="flex items-center justify-between gap-4 rounded-xl border border-[#edf0f3] px-3 py-3 text-[11px]">
+                            <div>
+                                <strong class="block text-[#273442]">{{ $payout->request_code }}</strong>
+                                <span class="mt-1 block text-[#738094]">{{ $payout->requested_at?->format('M d, Y') }} · {{ strtoupper($payout->status) }}</span>
+                            </div>
+                            <strong class="text-[#273442]">₱{{ number_format((float) $payout->amount, 2) }}</strong>
+                        </div>
+                    @empty
+                        <p class="rounded-xl bg-[#f8fafc] p-4 text-[11px] text-[#738094]">No withdrawal requests yet.</p>
+                    @endforelse
+                </div>
+            </article>
+        </div>
+    </section>
+
     <section class="seller-finance-ledger">
 
         <div class="seller-finance-ledger-head">

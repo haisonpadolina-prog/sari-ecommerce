@@ -54,7 +54,7 @@
         <form method="POST" action="{{ route('logistics.branch-treasury.verify',$batch) }}" class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
             @csrf
             <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[9px] leading-5 text-amber-800">
-                <strong>Count the physical branch cash before submitting.</strong> The QR only identifies the batch. Only an exact Main Branch count centrally reconciles the affected orders and releases stakeholder wallets.
+                <strong>Count the physical branch cash before submitting.</strong> The QR only identifies the batch. An exact Main Branch count reconciles Logistics custody only; stakeholder wallets remain pending until SARI Admin confirms physical cash receipt.
             </div>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -80,7 +80,7 @@
         <section class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-800">
             <p class="text-[9px] font-bold uppercase tracking-[.1em]">Centrally verified</p>
             <p class="mt-2 text-[18px] font-bold">₱{{ number_format((float)$batch->confirmed_amount,2) }}</p>
-            <p class="mt-1 text-[9px]">Verified {{ $batch->verified_at?->format('M d, Y · h:i A') }}. Affected wallet releases were processed idempotently.</p>
+            <p class="mt-1 text-[9px]">Verified {{ $batch->verified_at?->format('M d, Y · h:i A') }}. The cash is ready for Logistics to SARI Admin turnover. Wallet earnings are still pending.</p>
         </section>
     @endif
 </div>

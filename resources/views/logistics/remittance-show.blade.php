@@ -52,7 +52,7 @@
         <form method="POST" action="{{ route('logistics.remittances.verify',$batch) }}" class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
             @csrf
             <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[9px] leading-5 text-amber-800">
-                <strong>Count the physical money before submitting.</strong> Do not confirm from the QR alone. At a regular branch, an exact match clears Rider custody and moves the cash into branch custody; stakeholder wallets remain pending until Main Branch reconciliation. At the Main Branch, an exact match is central reconciliation and can release wallets.
+                <strong>Count the physical money before submitting.</strong> Do not confirm from the QR alone. At a regular branch, an exact match clears Rider custody and moves the cash into branch custody; stakeholder wallets remain pending until both Main Branch reconciliation and independent SARI Admin cash receipt. At Main Branch, an exact count records central Logistics custody only.
             </div>
 
             <div class="mt-5 grid gap-4 md:grid-cols-2">
@@ -82,7 +82,7 @@
         <section class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-800">
             <p class="text-[9px] font-bold uppercase tracking-[.1em]">Verified physical cash</p>
             <p class="mt-2 text-[18px] font-bold">₱{{ number_format((float)$batch->confirmed_amount,2) }}</p>
-            <p class="mt-1 text-[9px]">Verified {{ $batch->verified_at?->format('M d, Y · h:i A') }}. {{ $batch->central_reconciled_at ? 'Central reconciliation is complete and wallet release was processed idempotently.' : 'Rider custody is cleared; this physical cash remains in branch custody until it is remitted to the Main Branch.' }}</p>
+            <p class="mt-1 text-[9px]">Verified {{ $batch->verified_at?->format('M d, Y · h:i A') }}. {{ $batch->central_reconciled_at ? 'Main Branch reconciliation is complete. Turn this cash over to SARI Admin before any stakeholder wallet is released.' : 'Rider custody is cleared; this physical cash remains in branch custody until it is remitted to the Main Branch.' }}</p>
         </section>
     @endif
 </div>

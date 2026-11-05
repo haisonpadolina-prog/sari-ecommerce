@@ -1190,7 +1190,7 @@
 
                 // HTML pages only: never prefetch or navigate media, JSON,
                 // tracking, documents or mutation URLs as page content.
-                return /^\/buyer\/(?:dashboard|home|products|cart|checkout|orders|recent-orders|recent-activity|shipping|notifications|messages|account|rewards|shop\/[^/]+|products\/\d+|orders\/\d+)$/.test(url.pathname);
+                return /^\/buyer\/(?:dashboard|home|products|cart|checkout|wallet|orders|recent-orders|recent-activity|shipping|notifications|messages|account|rewards|shop\/[^/]+|products\/\d+|orders\/\d+)$/.test(url.pathname);
             }
 
 
@@ -1334,5 +1334,9 @@
         })();
     </script>
 
+    {{-- Login success feedback: share the existing notification with Seller, Courier, and Logistics. --}}
+    @include('components.auth.login-feedback-modal')
+
+    @include('components.auth.logout-history-protection')
 </body>
 </html>

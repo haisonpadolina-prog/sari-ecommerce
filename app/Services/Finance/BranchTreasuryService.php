@@ -14,11 +14,6 @@ use Illuminate\Validation\ValidationException;
 
 class BranchTreasuryService
 {
-    public function __construct(
-        private readonly FinanceReleaseService $release
-    ) {
-    }
-
     public function mainBranch(LogisticsAccount $logistics): ?LogisticsFacility
     {
         return LogisticsFacility::query()
@@ -223,18 +218,9 @@ class BranchTreasuryService
                     'central_reconciled_at' => now(),
                 ])->save();
 
-                foreach ($riderBatch->items as $riderItem) {
-                    if ($riderItem->order) {
-                        $this->release->releaseOrder(
-                            $riderItem->order,
-                            'branch_main_cash_handover:'.$locked->batch_code
-                        );
-                    }
-                }
-
-                $item->forceFill([
-                    'central_released_at' => now(),
-                ])->save();
+                // Main Branch has counted physical cash, but it remains
+                // Logistics custody. Admin must receive the final turnover
+                // before any Seller/Rider/Logistics/Platform wallet credit.
             }
 
             return $locked->fresh([
