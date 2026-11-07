@@ -52,6 +52,9 @@ Route::middleware(['web'])->group(function (): void {
             Route::get('/notifications', [SellerNotificationCenterController::class, 'index'])->name('notifications.index');
             Route::post('/notifications/read-all', [SellerNotificationCenterController::class, 'readAll'])->name('notifications.read-all');
             Route::post('/notifications/{notification}/read', [SellerNotificationCenterController::class, 'read'])->name('notifications.read');
+            Route::patch('/notifications/{notification}/archive', [SellerNotificationCenterController::class, 'archive'])->name('notifications.archive');
+            Route::patch('/notifications/{notification}/restore', [SellerNotificationCenterController::class, 'restore'])->name('notifications.restore');
+            Route::delete('/notifications/{notification}', [SellerNotificationCenterController::class, 'destroy'])->name('notifications.destroy');
 
             Route::get('/store-management', [SellerStoreController::class, 'index'])->name('store.index');
             Route::patch('/store-management', [SellerStoreController::class, 'update'])->name('store.update');

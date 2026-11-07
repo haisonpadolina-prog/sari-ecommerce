@@ -601,6 +601,10 @@ Route::post('/buyer/ai-assistant/message', [BuyerAiAssistantController::class, '
 Route::get('/buyer/products', [BuyerProductController::class, 'index'])
     ->name('buyer.products');
 
+Route::get('/buyer/products/{product}/size-guide', [BuyerProductController::class, 'sizeGuideImage'])
+    ->whereNumber('product')
+    ->name('buyer.product.size-guide');
+
 Route::get('/buyer/products/{product}/image', [BuyerProductController::class, 'image'])
     ->whereNumber('product')
     ->name('buyer.product.image');
@@ -1159,7 +1163,7 @@ Route::get(
     '/seller/product-drafts/media/{kind}/{key?}',
     [SellerProductDraftController::class, 'media']
 )->middleware(EnsureSellerNotRestricted::class)
-  ->whereIn('kind', ['cover', 'gallery', 'variant'])
+  ->whereIn('kind', ['cover', 'gallery', 'variant', 'size-guide'])
   ->name('seller.products.draft-media');
 
 
@@ -1208,6 +1212,10 @@ Route::get(
     [SellerProductController::class, 'galleryImage']
 )->whereNumber('image')
   ->name('seller.products.gallery-image');
+
+Route::get('/seller/products/{product}/size-guide', [SellerProductController::class, 'sizeGuideImage'])
+    ->whereNumber('product')
+    ->name('seller.products.size-guide');
 
 Route::get(
     '/seller/product-variants/{variant}/image',

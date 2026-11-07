@@ -822,6 +822,7 @@
                                     data-selected="false"
                                     data-line-total="{{ number_format($line, 2, '.', '') }}"
                                     data-seller-id="{{ (int) ($item->product?->seller_account_id ?? 0) }}"
+                                    data-seller-name="{{ $storeName }}"
                                     data-shipping-promo-active="{{ $sellerShippingActive ? '1' : '0' }}"
                                     data-shipping-minimum="{{ number_format($sellerShippingMinimum, 2, '.', '') }}"
                                     data-shipping-max-discount="{{ number_format($sellerShippingMaximum, 2, '.', '') }}"
@@ -1019,6 +1020,8 @@
 
                 <div class="p-5">
                     <div class="space-y-3.5 text-[8px]">
+                        {{-- Selected sellers are populated by the existing cart selection sync. --}}
+                        <div id="cartSellerBreakdown" class="space-y-3" aria-live="polite"></div>
                         <div class="flex justify-between gap-4">
                             <span class="text-[#8d8479]">Selected items</span>
                             <span id="cartSelectedSubtotal" class="font-semibold text-[#4c453d]">₱0.00</span>
@@ -1101,6 +1104,7 @@
 
         const topCount = page.querySelector('#cartSelectedTopCount');
         const summaryCount = page.querySelector('#cartSelectedSummaryCount');
+        const sellerBreakdownNode = page.querySelector('#cartSellerBreakdown');
         const subtotalNode = page.querySelector('#cartSelectedSubtotal');
         const deliveryNode = page.querySelector('#cartSelectedDelivery');
         const shippingDiscountRow = page.querySelector('#cartSelectedShippingDiscountRow');
@@ -1133,6 +1137,7 @@
                         card,
                         line: Number(card?.dataset.lineTotal || 0),
                         seller: String(card?.dataset.sellerId || ''),
+                        sellerName: String(card?.dataset.sellerName || 'SARI Seller Store'),
                         promotionActive: String(card?.dataset.shippingPromoActive || '0') === '1',
                         shippingMinimum: Number(card?.dataset.shippingMinimum || 0),
                         shippingMaxDiscount: Number(card?.dataset.shippingMaxDiscount || 0),
@@ -1152,7 +1157,8 @@
             let discount = 0;
             let payable = 0;
 
-            groups.forEach((group) => {
+            const sellers = [];
+            groups.forEach((group, sellerId) => {
                 original += feePerSeller;
 
                 const sellerSubtotal = group.reduce((sum, entry) => sum + entry.line, 0);
@@ -1163,11 +1169,21 @@
                     ? Math.min(feePerSeller, Math.max(0, Number(terms.shippingMaxDiscount || 0)))
                     : 0;
 
+                const sellerDelivery = Math.max(0, feePerSeller - sellerDiscount);
                 discount += sellerDiscount;
-                payable += Math.max(0, feePerSeller - sellerDiscount);
+                payable += sellerDelivery;
+                sellers.push({
+                    sellerId,
+                    name: terms.sellerName || 'SARI Seller Store',
+                    count: group.length,
+                    subtotal: sellerSubtotal,
+                    delivery: sellerDelivery,
+                    discount: sellerDiscount,
+                    total: sellerSubtotal + sellerDelivery,
+                });
             });
 
-            return { original, discount, payable };
+            return { original, discount, payable, sellers };
         }
 
         function sync() {
@@ -1193,6 +1209,43 @@
 
             if (topCount) topCount.textContent = countText;
             if (summaryCount) summaryCount.textContent = countText;
+            if (sellerBreakdownNode) {
+                // Build DOM nodes with textContent: seller store names are untrusted text.
+                sellerBreakdownNode.replaceChildren();
+                shipping.sellers.forEach((seller) => {
+                    const section = document.createElement('section');
+                    section.className = 'space-y-2 border-b border-[#eee8df] pb-3';
+
+                    const heading = document.createElement('div');
+                    heading.className = 'flex justify-between gap-3 text-[10px] font-bold text-[#302a24]';
+                    const store = document.createElement('span');
+                    store.className = 'min-w-0 break-words';
+                    store.textContent = seller.name;
+                    const count = document.createElement('span');
+                    count.className = 'shrink-0 font-normal text-[#8d8479]';
+                    count.textContent = `${seller.count} item${seller.count === 1 ? '' : 's'}`;
+                    heading.append(store, count);
+                    section.append(heading);
+
+                    const addRow = (label, amount, strong = false, discounted = false) => {
+                        const row = document.createElement('div');
+                        row.className = 'flex justify-between gap-3 text-[9px] ' +
+                            (strong ? 'font-bold text-[#514a42]' : discounted ? 'text-[#4f8065]' : 'text-[#8d8479]');
+                        const left = document.createElement('span');
+                        left.textContent = label;
+                        const right = document.createElement('span');
+                        right.className = 'shrink-0';
+                        right.textContent = (discounted ? '-' : '') + peso(amount);
+                        row.append(left, right);
+                        section.append(row);
+                    };
+                    addRow('Products subtotal', seller.subtotal);
+                    addRow('Estimated delivery', seller.delivery);
+                    if (seller.discount > 0) addRow('Free Shipping discount (applied)', seller.discount, false, true);
+                    addRow('Seller total', seller.total, true);
+                    sellerBreakdownNode.append(section);
+                });
+            }
             if (subtotalNode) subtotalNode.textContent = peso(subtotal);
             if (deliveryNode) deliveryNode.textContent = peso(delivery);
             if (shippingDiscountNode) shippingDiscountNode.textContent = '-' + peso(shipping.discount);

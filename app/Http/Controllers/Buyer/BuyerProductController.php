@@ -123,6 +123,17 @@ class BuyerProductController extends Controller
         return Storage::disk('public')->response($product->image_path);
     }
 
+    /** Keep seller-uploaded size charts buyer-only and limited to approved listings. */
+    public function sizeGuideImage(Request $request, SellerProduct $product)
+    {
+        abort_unless($this->isBuyer($request), 403);
+        abort_unless($product->isBuyerVisible(), 404);
+        abort_unless($product->size_guide_image_path, 404);
+        abort_unless(Storage::disk('public')->exists($product->size_guide_image_path), 404);
+
+        return Storage::disk('public')->response($product->size_guide_image_path);
+    }
+
     public function galleryImage(Request $request, SellerProductImage $image)
     {
         abort_unless($this->isBuyer($request), 403);

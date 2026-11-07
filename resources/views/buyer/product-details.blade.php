@@ -27,6 +27,7 @@
     $brand = trim((string) ($product['brand'] ?? ''));
     $sku = trim((string) ($product['sku'] ?? ''));
     $description = trim((string) ($product['description'] ?? ''));
+    $sizeGuideImage = trim((string) ($product['size_guide_image'] ?? ''));
 
     $price = (float) ($product['price'] ?? 0);
     $oldPrice = isset($product['old_price']) && $product['old_price'] !== null
@@ -92,10 +93,17 @@
     $sellerAvatar = $sellerAvatarRaw !== '' ? $imageUrl($sellerAvatarRaw) : null;
     $sellerInitial = strtoupper(mb_substr($shopName !== '' ? $shopName : 'S', 0, 1));
 
+    // Defensive filter for older/cached catalog payloads that may still mix
+    // variant photos into images. The dedicated variant selector owns them.
+    $variantImageUrls = $variants
+        ->map(fn ($variant) => $imageUrl($variant['image'] ?? null))
+        ->filter()
+        ->unique();
+
     $gallery = collect($product['images'] ?? [])
         ->filter(fn ($item) => trim((string) $item) !== '')
         ->map(fn ($item) => $imageUrl($item))
-        ->filter()
+        ->filter(fn ($url) => $url && !$variantImageUrls->contains($url))
         ->unique()
         ->values();
 
@@ -1886,47 +1894,67 @@
     }
 
     /* ============================================================
-       MAIN PRODUCT PHOTO — FULL-BLEED COVER
-       Keeps one stable gallery frame regardless of source image ratio.
-       The lightbox remains object-contain so the original full image
-       is still available through View image.
+       MAIN PRODUCT PHOTO — ORIGINAL RATIO / NO CROPPING
+       The gallery frame follows the uploaded image's aspect ratio.
+       A viewport-aware height cap prevents very tall portrait images
+       from overtaking the page. Rounded clipping stays on the frame.
+       Applies equally to cover/gallery photos and resolved variants.
     ============================================================ */
     .sari-product-gallery-stage {
-        aspect-ratio:3 / 2;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        aspect-ratio:auto;
+        min-height:0;
         overflow:hidden;
         border:1px solid #e5e9ee;
         border-radius:18px;
-        background:#f7f8fa;
+        background:#fff;
         box-shadow:0 8px 24px rgba(23,32,51,.035);
     }
 
     .sari-product-gallery-stage .sari-v7-main-photo {
         display:block !important;
         width:100% !important;
-        height:100% !important;
+        height:auto !important;
         min-height:0 !important;
-        max-height:none !important;
+        max-height:min(78vh, 780px) !important;
         padding:0 !important;
         border:0 !important;
         border-radius:0 !important;
-        background:#f7f8fa !important;
+        background:#fff !important;
         box-shadow:none !important;
-        object-fit:cover !important;
+        object-fit:contain !important;
         object-position:center center !important;
+    }
+
+    /* The fallback must remain visible if an image is missing/broken. */
+    .sari-product-gallery-stage .sari-v7-main-photo.hidden {
+        display:none !important;
     }
 
     .sari-product-gallery-stage .sari-v7-main-photo-placeholder {
         width:100% !important;
-        height:100% !important;
-        min-height:0 !important;
+        height:auto !important;
+        min-height:280px !important;
+        aspect-ratio:3 / 2;
         border:0 !important;
         border-radius:0 !important;
     }
 
     @media (max-width:767px) {
         .sari-product-gallery-stage {
-            aspect-ratio:4 / 3;
+            aspect-ratio:auto;
             border-radius:14px;
+        }
+
+        .sari-product-gallery-stage .sari-v7-main-photo {
+            max-height:min(70vh, 620px) !important;
+        }
+
+        .sari-product-gallery-stage .sari-v7-main-photo-placeholder {
+            min-height:220px !important;
+            aspect-ratio:4 / 3;
         }
     }
 
@@ -2937,6 +2965,21 @@
                         @endif
                     </div>
 
+                    @if ($sizeGuideImage !== '')
+                        <div id="sariSizeGuideSection" class="sari-product-size-guide" style="margin:18px 0 20px;padding:16px;border:1px solid #e9e2d5;border-radius:14px;background:#fffdf8">
+                            <div class="flex flex-wrap items-center justify-between gap-3" style="margin-bottom:12px">
+                                <div>
+                                    <h3 style="font-size:15px;font-weight:750;color:#293341">Size guide</h3>
+                                    <p style="font-size:11px;color:#6b7280">Seller-provided measurements. Compare with your own measurements before choosing a size.</p>
+                                </div>
+                                <a href="{{ $imageUrl($sizeGuideImage) }}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:700;color:#99691b;text-decoration:underline">View full size chart</a>
+                            </div>
+                            <a href="{{ $imageUrl($sizeGuideImage) }}" target="_blank" rel="noopener noreferrer" aria-label="Open {{ $productName }} size guide in full size">
+                                <img src="{{ $imageUrl($sizeGuideImage) }}" alt="Seller size guide for {{ $productName }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;max-height:700px;object-fit:contain;border-radius:8px;background:#fff">
+                            </a>
+                        </div>
+                    @endif
+
                     <dl class="sari-product-info-combined__details">
                         <div class="sari-product-info-combined__detail">
                             <dt>Category</dt>
@@ -3034,7 +3077,12 @@
 @if ($hasVariants && $variants->isNotEmpty())
                     <div class="sari-v7-section" data-buyer-variant-selector>
                         <div>
-                            <p class="sari-v7-section-title">Choose your variant</p>
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <p class="sari-v7-section-title">Choose your variant</p>
+                                @if ($sizeGuideImage !== '')
+                                    <a href="#sariSizeGuideSection" class="text-[11px] font-semibold text-[#9c6a12] underline underline-offset-2">View size guide</a>
+                                @endif
+                            </div>
                             <p class="sari-v7-section-help">
                                 @if ($variantOptionGroups->isNotEmpty())
                                     Select {{ $variantOptionGroups->pluck('name')->implode(' first, then ') }}.

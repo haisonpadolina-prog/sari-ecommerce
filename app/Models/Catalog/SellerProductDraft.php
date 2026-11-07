@@ -13,6 +13,7 @@ class SellerProductDraft extends Model
         'seller_account_id',
         'payload',
         'cover_image_path',
+        'size_guide_image_path',
         'gallery_image_paths',
         'variant_image_paths',
     ];

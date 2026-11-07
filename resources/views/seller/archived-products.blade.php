@@ -7,2080 +7,158 @@
 @push('styles')
 <style id="sariSellerEmbeddedCss-archived-products" data-sari-inline-css="archived-products">
 @verbatim
-/* Extracted from resources/views/seller/archived-products.blade.php — original style block 1. */
+/* SARI Seller — Archived Products / Buyer-card-inspired clean UI */
 .archive-shell {
-
-        --archive-gold: #D89B10;
-
-        --archive-gold-dark: #B67A08;
-
-        --archive-gold-soft: #FFF7E6;
-
-        --archive-border: #E7E9EE;
-
-        --archive-border-soft: #EEF1F4;
-
-        --archive-text: #202124;
-
-        --archive-muted: #8A919B;
-
-        --archive-page: #F4F5F7;
-
-        --archive-green: #4F7D63;
-
-        --archive-green-soft: #EDF7F1;
-
-        --archive-blue: #5A7B98;
-
-        --archive-blue-soft: #EEF5FB;
-
-        --archive-red: #B95D5D;
-
-        --archive-red-soft: #FFF0F0;
-
-        width: 100%;
-
-        max-width: 1700px;
-
-        margin: 0 auto;
-
-        padding-bottom: 20px;
-
-        color: var(--archive-text);
-
-        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-
-    }
-
-    .archive-shell * { box-sizing: border-box; }
-
-    .archive-header { margin-bottom: 16px; }
-
-    .archive-eyebrow {
-
-        margin: 0;
-
-        color: #A86F0B;
-
-        font-size: 9.5px;
-
-        font-weight: 800;
-
-        line-height: 1;
-
-        letter-spacing: .17em;
-
-        text-transform: uppercase;
-
-    }
-
-    .archive-title {
-
-        margin: 7px 0 0;
-
-        color: #1D1915;
-
-        font-size: clamp(28px, 2.1vw, 35px);
-
-        font-weight: 650;
-
-        line-height: 1;
-
-        letter-spacing: -.035em;
-
-    }
-
-    .archive-title span:last-child { color: var(--archive-gold); }
-
-    .archive-subtitle {
-
-        max-width: 760px;
-
-        margin: 10px 0 0;
-
-        color: #7D746B;
-
-        font-size: 10.5px;
-
-        line-height: 1.6;
-
-    }
-
-    .archive-filter-panel {
-
-        display: grid;
-
-        grid-template-columns: minmax(320px, 1fr) 170px auto;
-
-        gap: 9px;
-
-        margin-top: 16px;
-
-        padding: 10px;
-
-        border: 1px solid var(--archive-border);
-
-        border-radius: 14px;
-
-        background: #fff;
-
-        box-shadow: 0 5px 16px rgba(15, 23, 42, .03);
-
-    }
-
-    .archive-search-field,
-
-    .archive-history-dropdown { position: relative; }
-
-    .archive-search-field > svg {
-
-        position: absolute;
-
-        top: 50%;
-
-        left: 13px;
-
-        width: 15px;
-
-        height: 15px;
-
-        transform: translateY(-50%);
-
-        color: #8B95A1;
-
-        pointer-events: none;
-
-    }
-
-    #archiveProductSearch,
-
-    #archiveClearFilters {
-
-        height: 40px;
-
-        border-radius: 10px;
-
-        font-family: inherit;
-
-        font-size: 9px;
-
-    }
-
-    #archiveProductSearch {
-
-        width: 100%;
-
-        border: 1px solid #DDE3EA;
-
-        background: #fff;
-
-        color: #354052;
-
-        outline: none;
-
-        padding: 0 12px 0 38px;
-
-    }
-
-    #archiveProductSearch:focus {
-
-        border-color: rgba(216, 155, 16, .65);
-
-        box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
-
-    }
-
-    .archive-native-select {
-
-        position: absolute !important;
-
-        width: 1px !important;
-
-        height: 1px !important;
-
-        overflow: hidden !important;
-
-        clip: rect(0 0 0 0) !important;
-
-        clip-path: inset(50%) !important;
-
-        white-space: nowrap !important;
-
-        border: 0 !important;
-
-        padding: 0 !important;
-
-        margin: -1px !important;
-
-    }
-
-    .archive-history-button {
-
-        display: flex;
-
-        width: 100%;
-
-        height: 40px;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 10px;
-
-        border: 1px solid #DDE3EA;
-
-        border-radius: 10px;
-
-        background: #fff;
-
-        padding: 0 11px;
-
-        color: #354052;
-
-        font-family: inherit;
-
-        font-size: 9px;
-
-        font-weight: 650;
-
-        cursor: pointer;
-
-        outline: none;
-
-        transition: border-color .14s ease, box-shadow .14s ease, background-color .14s ease;
-
-    }
-
-    .archive-history-button:hover {
-
-        background: #FAFBFC;
-
-        border-color: #D3D9E1;
-
-    }
-
-    .archive-history-button[aria-expanded="true"] {
-
-        border-color: rgba(216, 155, 16, .55);
-
-        box-shadow: 0 0 0 3px rgba(216, 155, 16, .08);
-
-    }
-
-    .archive-history-button-left {
-
-        display: inline-flex;
-
-        min-width: 0;
-
-        align-items: center;
-
-        gap: 8px;
-
-    }
-
-    .archive-history-button-left > svg {
-
-        width: 14px;
-
-        height: 14px;
-
-        flex: 0 0 auto;
-
-        color: #9A7A3A;
-
-    }
-
-    .archive-history-chevron {
-
-        width: 13px;
-
-        height: 13px;
-
-        flex: 0 0 auto;
-
-        color: #8B95A1;
-
-        transition: transform .16s ease;
-
-    }
-
-    .archive-history-button[aria-expanded="true"] .archive-history-chevron {
-
-        transform: rotate(180deg);
-
-    }
-
-    .archive-history-menu {
-
-        position: absolute;
-
-        top: calc(100% + 7px);
-
-        right: 0;
-
-        z-index: 90;
-
-        width: min(310px, 92vw);
-
-        overflow: hidden;
-
-        border: 1px solid #E2E7ED;
-
-        border-radius: 14px;
-
-        background: #fff;
-
-        padding: 6px;
-
-        box-shadow: 0 18px 42px rgba(15, 23, 42, .13);
-
-    }
-
-    .archive-history-menu[hidden] {
-
-        display: none !important;
-
-    }
-
-    .archive-history-option {
-
-        display: flex;
-
-        width: 100%;
-
-        min-height: 50px;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 12px;
-
-        border: 0;
-
-        border-radius: 10px;
-
-        background: transparent;
-
-        padding: 9px 10px;
-
-        text-align: left;
-
-        cursor: pointer;
-
-        transition: background-color .13s ease;
-
-    }
-
-    .archive-history-option:hover {
-
-        background: #F8FAFC;
-
-    }
-
-    .archive-history-option.is-selected {
-
-        background: #FFF8E9;
-
-    }
-
-    .archive-history-option span {
-
-        display: block;
-
-        min-width: 0;
-
-    }
-
-    .archive-history-option strong {
-
-        display: block;
-
-        color: #293240;
-
-        font-size: 9px;
-
-        font-weight: 700;
-
-        line-height: 1.3;
-
-    }
-
-    .archive-history-option small {
-
-        display: block;
-
-        margin-top: 3px;
-
-        color: #8A919B;
-
-        font-size: 7.5px;
-
-        line-height: 1.4;
-
-    }
-
-    .archive-history-check {
-
-        width: 15px;
-
-        height: 15px;
-
-        flex: 0 0 auto;
-
-        opacity: 0;
-
-        color: #C08312;
-
-    }
-
-    .archive-history-option.is-selected .archive-history-check {
-
-        opacity: 1;
-
-    }
-
-    #archiveClearFilters {
-
-        display: inline-flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        border: 0;
-
-        padding: 0 14px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        white-space: nowrap;
-
-    }
-
-    #archiveClearFilters {
-
-        border: 1px solid #E0E5EB;
-
-        background: #fff;
-
-        color: #697586;
-
-    }
-
-    #archiveClearFilters:hover { background: #F8FAFC; }
-
-    .archive-card-grid {
-
-        display: grid;
-
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-
-        gap: 12px;
-
-        margin-top: 14px;
-
-    }
-
-    .archive-product-card {
-
-        min-width: 0;
-
-        overflow: hidden;
-
-        border: 1px solid #E4E8ED;
-
-        border-radius: 16px;
-
-        background: #fff;
-
-        box-shadow: 0 6px 18px rgba(15, 23, 42, .04);
-
-        transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
-
-    }
-
-    .archive-product-card:hover {
-
-        border-color: #D7DDE5;
-
-        box-shadow: 0 12px 28px rgba(15, 23, 42, .07);
-
-        transform: translateY(-1px);
-
-    }
-
-    .archive-card-media {
-
-        position: relative;
-
-        margin: 10px 10px 0;
-
-        height: 166px;
-
-        overflow: hidden;
-
-        border-radius: 12px;
-
-        background: #F5F7F9;
-
-    }
-
-    .archive-card-media img {
-
-        width: 100%;
-
-        height: 100%;
-
-        display: block;
-
-        object-fit: cover;
-
-    }
-
-    .archive-image-placeholder {
-
-        display: grid;
-
-        width: 100%;
-
-        height: 100%;
-
-        place-items: center;
-
-        color: #B5BDC7;
-
-    }
-
-    .archive-image-placeholder svg { width: 34px; height: 34px; }
-
-    .archive-card-badge-row {
-
-        position: absolute;
-
-        top: 9px;
-
-        left: 9px;
-
-        right: 9px;
-
-        display: flex;
-
-        align-items: flex-start;
-
-        justify-content: space-between;
-
-        gap: 7px;
-
-        pointer-events: none;
-
-    }
-
-    .archive-badge {
-
-        display: inline-flex;
-
-        min-height: 28px;
-
-        align-items: center;
-
-        border-radius: 999px;
-
-        padding: 0 10px;
-
-        font-size: 7.5px;
-
-        font-weight: 700;
-
-        box-shadow: 0 4px 10px rgba(15, 23, 42, .05);
-
-        backdrop-filter: blur(8px);
-
-    }
-
-    .archive-badge.pending { background: #EEF5FB; color: #557A9A; }
-
-    .archive-badge.approved { background: #EDF7F1; color: #4F7D63; }
-
-    .archive-badge.flagged,
-
-    .archive-badge.rejected { background: #FFF0F0; color: #B95D5D; }
-
-    .archive-badge.default { background: rgba(255,255,255,.94); color: #687386; }
-
-    .archive-type-badge {
-
-        display: inline-flex;
-
-        min-height: 27px;
-
-        align-items: center;
-
-        border-radius: 999px;
-
-        padding: 0 9px;
-
-        font-size: 7px;
-
-        font-weight: 700;
-
-        background: rgba(32, 33, 36, .88);
-
-        color: #fff;
-
-    }
-
-    .archive-type-badge.deleted { background: rgba(173, 74, 74, .92); }
-
-    .archive-card-body { padding: 11px 13px 12px; }
-
-    .archive-card-mainline {
-
-        display: flex;
-
-        align-items: flex-start;
-
-        justify-content: space-between;
-
-        gap: 14px;
-
-    }
-
-    .archive-card-name {
-
-        min-width: 0;
-
-        overflow: hidden;
-
-        margin: 0;
-
-        color: #242424;
-
-        font-size: 11.5px;
-
-        font-weight: 700;
-
-        line-height: 1.35;
-
-        text-overflow: ellipsis;
-
-        white-space: nowrap;
-
-    }
-
-    .archive-card-price {
-
-        flex: 0 0 auto;
-
-        color: #B97805;
-
-        font-size: 11.5px;
-
-        font-weight: 750;
-
-        white-space: nowrap;
-
-    }
-
-    .archive-card-meta {
-
-        overflow: hidden;
-
-        margin-top: 4px;
-
-        color: #8A8178;
-
-        font-size: 7.8px;
-
-        line-height: 1.45;
-
-        text-overflow: ellipsis;
-
-        white-space: nowrap;
-
-    }
-
-    .archive-card-divider {
-
-        height: 1px;
-
-        margin: 10px 0 9px;
-
-        background: #E8E3DD;
-
-    }
-
-    .archive-card-footer {
-
-        display: flex;
-
-        align-items: flex-end;
-
-        justify-content: space-between;
-
-        gap: 14px;
-
-    }
-
-    .archive-card-stock {
-
-        color: #403A34;
-
-        font-size: 8.5px;
-
-        font-weight: 700;
-
-    }
-
-    .archive-card-date {
-
-        margin-top: 2px;
-
-        color: #9A9188;
-
-        font-size: 7px;
-
-    }
-
-    .archive-card-actions {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 6px;
-
-    }
-
-    .archive-icon-button {
-
-        display: grid;
-
-        width: 30px;
-
-        height: 30px;
-
-        place-items: center;
-
-        border: 0;
-
-        border-radius: 9px;
-
-        background: transparent;
-
-        cursor: pointer;
-
-        transition: background-color .14s ease, color .14s ease, transform .14s ease;
-
-    }
-
-    .archive-icon-button svg { width: 15px; height: 15px; }
-
-    .archive-icon-button.restore { color: #B77808; }
-
-    .archive-icon-button.restore:hover { background: #FFF7E6; color: #986305; transform: translateY(-1px); }
-
-    .archive-icon-button.delete {
-
-        color: #FF2D2D;
-
-    }
-
-    .archive-icon-button.delete svg {
-
-        stroke: #FF2D2D !important;
-
-        stroke-width: 2.05 !important;
-
-    }
-
-    .archive-icon-button.delete:hover {
-
-        background: #FFF0F0;
-
-        color: #E60000;
-
-        transform: translateY(-1px);
-
-    }
-
-    .archive-icon-button.delete:hover svg {
-
-        stroke: #E60000 !important;
-
-    }
-
-    .archive-icon-button:disabled {
-
-        cursor: not-allowed;
-
-        opacity: .42;
-
-        transform: none;
-
-    }
-
-    .archive-empty-state {
-
-        grid-column: 1 / -1;
-
-        display: grid;
-
-        min-height: 170px;
-
-        place-items: center;
-
-        border: 1px solid var(--archive-border);
-
-        border-radius: 16px;
-
-        background: #fff;
-
-        padding: 26px 18px;
-
-        text-align: center;
-
-    }
-
-    .archive-empty-icon {
-
-        display: grid;
-
-        width: 44px;
-
-        height: 44px;
-
-        margin: 0 auto;
-
-        place-items: center;
-
-        border: 1px solid #E4E8ED;
-
-        border-radius: 12px;
-
-        background: #F8FAFC;
-
-        color: #A7B0BA;
-
-    }
-
-    .archive-empty-icon svg { width: 19px; height: 19px; }
-
-    .archive-empty-title {
-
-        margin-top: 10px;
-
-        color: #202124;
-
-        font-size: 11px;
-
-        font-weight: 700;
-
-    }
-
-    .archive-empty-copy {
-
-        max-width: 460px;
-
-        margin: 5px auto 0;
-
-        color: #8A919B;
-
-        font-size: 8px;
-
-        line-height: 1.55;
-
-    }
-
-    .archive-result-row {
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: flex-start;
-
-        gap: 12px;
-
-        margin: 9px 2px 0;
-
-        color: #8A919B;
-
-        font-size: 8px;
-
-        font-weight: 500;
-
-    }
-
-    /* Permanent delete modal */
-
-    .archive-delete-modal {
-
-        position: fixed;
-
-        inset: 0;
-
-        z-index: 240;
-
-        display: none;
-
-        align-items: center;
-
-        justify-content: center;
-
-        padding: 20px;
-
-        background: rgba(17, 24, 39, .34);
-
-        backdrop-filter: blur(5px);
-
-    }
-
-    .archive-delete-modal.is-open { display: flex; }
-
-    .archive-delete-dialog {
-
-        width: min(100%, 440px);
-
-        border: 1px solid #E7E9EE;
-
-        border-radius: 22px;
-
-        background: #fff;
-
-        padding: 22px;
-
-        box-shadow: 0 24px 70px rgba(15, 23, 42, .18);
-
-    }
-
-    .archive-delete-warning-icon {
-
-        display: inline-flex;
-
-        width: auto;
-
-        height: auto;
-
-        align-items: center;
-
-        justify-content: flex-start;
-
-        border: 0;
-
-        border-radius: 0;
-
-        background: transparent;
-
-        color: #E5484D;
-
-    }
-
-    .archive-delete-warning-icon svg {
-
-        width: 27px;
-
-        height: 27px;
-
-        stroke: #E5484D !important;
-
-        stroke-width: 2.15 !important;
-
-    }
-
-    .archive-delete-kicker {
-
-        margin-top: 15px;
-
-        color: #D24A4F;
-
-        font-size: 8px;
-
-        font-weight: 800;
-
-        letter-spacing: .12em;
-
-        text-transform: uppercase;
-
-    }
-
-    .archive-delete-title {
-
-        margin-top: 5px;
-
-        color: #202124;
-
-        font-size: 18px;
-
-        font-weight: 700;
-
-        letter-spacing: -.025em;
-
-    }
-
-    .archive-delete-copy {
-
-        margin-top: 9px;
-
-        color: #737D89;
-
-        font-size: 10px;
-
-        line-height: 1.7;
-
-    }
-
-    .archive-delete-product {
-
-        margin-top: 12px;
-
-        border: 1px solid #ECEFF3;
-
-        border-radius: 12px;
-
-        background: #F8FAFC;
-
-        padding: 10px 12px;
-
-        color: #394250;
-
-        font-size: 10px;
-
-        font-weight: 650;
-
-    }
-
-    .archive-delete-actions {
-
-        display: flex;
-
-        justify-content: flex-end;
-
-        gap: 9px;
-
-        margin-top: 20px;
-
-    }
-
-    .archive-delete-actions button {
-
-        height: 40px;
-
-        border-radius: 11px;
-
-        padding: 0 15px;
-
-        font-family: inherit;
-
-        font-size: 9px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-    }
-
-    #archiveDeleteCancel {
-
-        border: 1px solid #DFE4EA;
-
-        background: #fff;
-
-        color: #677384;
-
-    }
-
-    #archiveDeleteConfirm {
-
-        border: 1px solid #E5484D;
-
-        background: #E5484D;
-
-        color: #fff;
-
-        box-shadow: 0 8px 18px rgba(229, 72, 77, .18);
-
-    }
-
-    #archiveDeleteConfirm:hover {
-
-        border-color: #D93F44;
-
-        background: #D93F44;
-
-        box-shadow: 0 9px 20px rgba(217, 63, 68, .22);
-
-    }
-
-    #archiveDeleteConfirm:disabled { opacity: .55; cursor: not-allowed; }
-
-    @media (max-width: 1380px) {
-
-        .archive-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    }
-
-    @media (max-width: 1050px) {
-
-        .archive-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    }
-
-    @media (max-width: 900px) {
-
-        .archive-filter-panel { grid-template-columns: 1fr 150px auto; }
-
-    }
-
-    @media (max-width: 680px) {
-
-        .archive-title { font-size: clamp(26px, 7.4vw, 32px); }
-
-        .archive-filter-panel { grid-template-columns: 1fr; }
-
-        .archive-card-grid { grid-template-columns: 1fr; }
-
-        .archive-card-media { height: 190px; }
-
-        .archive-delete-actions { flex-direction: column-reverse; }
-
-        .archive-delete-actions button { width: 100%; }
-
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-        .archive-product-card,
-
-        .archive-icon-button { transition: none !important; }
-
-    }
-
-/* ============================================================
-
-   ARCHIVED PRODUCTS — COMPACT + READABLE FINAL LAYER
-
-   Compact in spacing/media, not in legibility.
-
-   Restore/delete/filter behavior remains untouched.
-
-   ============================================================ */
-
-.archive-shell {
-
-    max-width: 1440px !important;
-
-    padding-bottom: 22px !important;
-
+  --archive-gold: #c88912;
+  --archive-gold-dark: #9b6508;
+  --archive-ink: #17202d;
+  --archive-muted: #788495;
+  --archive-line: #e3e8ef;
+  --archive-focus: rgba(200,137,18,.14);
+  width: 100%; max-width: 1520px; margin: 0 auto; padding: 15px 10px 28px;
+  font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
+  color: var(--archive-ink);
 }
-
-/* Same Seller Catalog hierarchy used by the other refreshed pages. */
-
-.archive-header {
-
-    min-height: 66px;
-
-    margin-bottom: 0 !important;
-
-    padding: 2px 2px 14px;
-
-    border-bottom: 1px solid #e7ebf0;
-
-}
-
-.archive-eyebrow {
-
-    font-size: 8px !important;
-
-    letter-spacing: .16em !important;
-
-    color: #b87605 !important;
-
-}
-
-.archive-title {
-
-    margin-top: 6px !important;
-
-    font-size: clamp(29px, 2.2vw, 36px) !important;
-
-    font-weight: 650 !important;
-
-    line-height: 1 !important;
-
-    letter-spacing: -.035em !important;
-
-}
-
-.archive-title span:last-child {
-
-    margin-left: .18em;
-
-    color: #C9890B !important;
-
-}
-
-.archive-subtitle {
-
-    max-width: 720px !important;
-
-    margin-top: 7px !important;
-
-    font-size: 10px !important;
-
-    line-height: 1.5 !important;
-
-    color: #7c8592 !important;
-
-}
-
-/* Compact filter surface with readable 10px controls. */
-
-.archive-filter-panel {
-
-    grid-template-columns: minmax(300px, 1fr) 170px 72px !important;
-
-    gap: 8px !important;
-
-    margin-top: 12px !important;
-
-    padding: 9px !important;
-
-    border-radius: 13px !important;
-
-    box-shadow: 0 5px 16px rgba(15, 23, 42, .028) !important;
-
-}
-
-#archiveProductSearch,
-
-#archiveClearFilters,
-
-.archive-history-button {
-
-    height: 38px !important;
-
-    border-radius: 9px !important;
-
-    font-size: 9.5px !important;
-
-}
-
-#archiveProductSearch {
-
-    padding-left: 36px !important;
-
-}
-
-.archive-search-field > svg {
-
-    left: 12px !important;
-
-    width: 14px !important;
-
-    height: 14px !important;
-
-}
-
-.archive-history-button {
-
-    gap: 8px !important;
-
-    padding-inline: 10px !important;
-
-}
-
-.archive-history-button-left {
-
-    gap: 7px !important;
-
-}
-
-.archive-history-button-left > svg {
-
-    width: 13px !important;
-
-    height: 13px !important;
-
-}
-
-.archive-history-menu {
-
-    top: calc(100% + 5px) !important;
-
-    width: min(285px, 92vw) !important;
-
-    border-radius: 11px !important;
-
-    padding: 5px !important;
-
-}
-
-.archive-history-option {
-
-    min-height: 42px !important;
-
-    gap: 9px !important;
-
-    border-radius: 8px !important;
-
-    padding: 7px 8px !important;
-
-}
-
-.archive-history-option strong {
-
-    font-size: 9.2px !important;
-
-}
-
-.archive-history-option small {
-
-    margin-top: 2px !important;
-
-    font-size: 7.8px !important;
-
-}
-
-#archiveClearFilters {
-
-    padding-inline: 11px !important;
-
-    font-size: 9px !important;
-
-}
-
-.archive-result-row {
-
-    gap: 8px !important;
-
-    margin: 7px 2px 0 !important;
-
-    font-size: 8.5px !important;
-
-}
-
-/* Product grid: denser without hiding product context. */
-
-.archive-card-grid {
-
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-
-    gap: 9px !important;
-
-    margin-top: 9px !important;
-
-}
-
-.archive-product-card {
-
-    border-radius: 13px !important;
-
-    box-shadow: 0 5px 15px rgba(15, 23, 42, .03) !important;
-
-}
-
-.archive-product-card:hover {
-
-    box-shadow: 0 8px 20px rgba(15, 23, 42, .055) !important;
-
-    transform: none !important;
-
-}
-
-.archive-card-media {
-
-    height: 138px !important;
-
-    margin: 8px 8px 0 !important;
-
-    border-radius: 10px !important;
-
-}
-
-.archive-image-placeholder svg {
-
-    width: 27px !important;
-
-    height: 27px !important;
-
-}
-
-.archive-card-badge-row {
-
-    top: 7px !important;
-
-    left: 7px !important;
-
-    right: 7px !important;
-
-    gap: 5px !important;
-
-}
-
-.archive-badge,
-
-.archive-type-badge {
-
-    min-height: 23px !important;
-
-    padding-inline: 8px !important;
-
-    font-size: 7.6px !important;
-
-}
-
-.archive-card-body {
-
-    padding: 9px 10px 10px !important;
-
-}
-
-.archive-card-mainline {
-
-    gap: 9px !important;
-
-}
-
-.archive-card-name {
-
-    font-size: 10.5px !important;
-
-    line-height: 1.35 !important;
-
-}
-
-.archive-card-price {
-
-    font-size: 10.5px !important;
-
-}
-
-.archive-card-meta {
-
-    margin-top: 3px !important;
-
-    font-size: 8.5px !important;
-
-    line-height: 1.4 !important;
-
-}
-
-.archive-card-divider {
-
-    margin: 7px 0 !important;
-
-}
-
-.archive-card-footer {
-
-    gap: 9px !important;
-
-}
-
-.archive-card-stock {
-
-    font-size: 9px !important;
-
-}
-
-.archive-card-date {
-
-    margin-top: 2px !important;
-
-    font-size: 8px !important;
-
-    line-height: 1.35 !important;
-
-}
-
-.archive-card-actions {
-
-    gap: 4px !important;
-
-}
-
-.archive-icon-button {
-
-    width: 28px !important;
-
-    height: 28px !important;
-
-    border-radius: 8px !important;
-
-}
-
-.archive-icon-button svg {
-
-    width: 14px !important;
-
-    height: 14px !important;
-
-}
-
-/* Empty state: less vertical space, text remains readable. */
-
-.archive-empty-state {
-
-    min-height: 125px !important;
-
-    border-radius: 13px !important;
-
-    padding: 20px 16px !important;
-
-}
-
-.archive-empty-icon {
-
-    width: 38px !important;
-
-    height: 38px !important;
-
-    border-radius: 10px !important;
-
-}
-
-.archive-empty-title {
-
-    margin-top: 8px !important;
-
-    font-size: 10.5px !important;
-
-}
-
-.archive-empty-copy {
-
-    margin-top: 4px !important;
-
-    font-size: 8.8px !important;
-
-}
-
-/* Permanent delete modal: compact but clear for a destructive action. */
-
-.archive-delete-modal {
-
-    padding: 16px !important;
-
-}
-
-.archive-delete-dialog {
-
-    width: min(100%, 410px) !important;
-
-    border-radius: 17px !important;
-
-    padding: 17px !important;
-
-}
-
-.archive-delete-warning-icon svg {
-
-    width: 24px !important;
-
-    height: 24px !important;
-
-}
-
-.archive-delete-kicker {
-
-    margin-top: 11px !important;
-
-    font-size: 7.8px !important;
-
-}
-
-.archive-delete-title {
-
-    margin-top: 4px !important;
-
-    font-size: 16px !important;
-
-}
-
-.archive-delete-copy {
-
-    margin-top: 7px !important;
-
-    font-size: 9.5px !important;
-
-    line-height: 1.55 !important;
-
-}
-
-.archive-delete-product {
-
-    margin-top: 9px !important;
-
-    border-radius: 10px !important;
-
-    padding: 8px 10px !important;
-
-    font-size: 9.5px !important;
-
-}
-
-.archive-delete-actions {
-
-    gap: 7px !important;
-
-    margin-top: 14px !important;
-
-}
-
-.archive-delete-actions button {
-
-    height: 37px !important;
-
-    border-radius: 9px !important;
-
-    padding-inline: 13px !important;
-
-    font-size: 9px !important;
-
-}
-
-/* Keep toast feedback readable. */
-
-#archiveToastContainer {
-
-    width: min(92vw, 330px) !important;
-
-    gap: 8px !important;
-
-}
-
-@media (max-width: 1380px) {
-
-    .archive-card-grid {
-
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-
-    }
-
-}
-
-@media (max-width: 1180px) {
-
-    .archive-card-grid {
-
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-
-    }
-
-}
-
+.archive-shell, .archive-shell * { box-sizing: border-box; }
+.archive-header { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 0; width: 100%; margin: 0 0 20px; padding: 0 0 14px; border-bottom: 1px solid #e9edf1; text-align: left; }
+.archive-eyebrow { margin: 0 0 7px; font-size: 10.5px; line-height: 1.4; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #a87316; }
+.archive-title { align-self: flex-start; margin: 0; font-size: clamp(27px, 2.3vw, 31px); line-height: 1.12; letter-spacing: -.04em; font-weight: 760; color: #2e343b; text-align: left; }
+.archive-title span + span { margin-left: .21em; color: var(--archive-gold); }
+.archive-alert { font-size: 12px; line-height: 1.6; }
+.archive-subtitle { margin: 8px 0 0; font-size: 13px; color: var(--archive-muted); }
+
+/* Controls are a horizontal row, not another nested floating card. */
+.archive-filter-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(185px, 210px) auto; align-items: center; gap: 12px; margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.archive-search-field, .archive-history-dropdown { position: relative; min-width: 0; }
+.archive-search-field { display: block; }
+.archive-search-field > svg { position: absolute; top: 50%; left: 15px; width: 21px; height: 21px; color: #8c97a6; transform: translateY(-50%); pointer-events: none; }
+#archiveProductSearch, .archive-history-button, #archiveClearFilters { height: 48px; font: 600 11.5px/1.3 Poppins, ui-sans-serif, system-ui, sans-serif; border-radius: 14px; outline: none; }
+#archiveProductSearch { display: block; width: 100%; padding: 0 16px 0 46px; color: #3f4b59; border: 1px solid #dce2e8; background: #fff; box-shadow: 0 3px 10px rgba(15,23,42,.035); }
+#archiveProductSearch::placeholder { color: #98a3b1; }
+#archiveProductSearch:focus { border-color: var(--archive-gold); box-shadow: 0 0 0 3px var(--archive-focus); }
+.archive-native-select { position: absolute!important; width: 1px!important; height: 1px!important; overflow: hidden!important; clip: rect(0,0,0,0)!important; clip-path: inset(50%)!important; white-space: nowrap!important; border: 0!important; padding: 0!important; margin: -1px!important; }
+.archive-history-button { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 0 15px; cursor: pointer; border: 1px solid #dce2e8; background: #fff; color: #3f4b59; box-shadow: 0 3px 10px rgba(15,23,42,.035); font-weight: 600; text-align: left; }
+.archive-history-button:hover { border-color: #cbd4df; }
+.archive-history-button[aria-expanded="true"], .archive-history-button:focus-visible { border-color: var(--archive-gold); box-shadow: 0 0 0 3px var(--archive-focus); }
+.archive-history-button-left { display: inline-flex; gap: 0; align-items: center; min-width: 0; }
+.archive-history-button-left > svg { display: none; } /* All Status-style text-only filter trigger */
+.archive-history-chevron { width: 16px; height: 16px; color: #8793a5; transition: transform .15s ease; }
+.archive-history-button[aria-expanded="true"] .archive-history-chevron { transform: rotate(180deg); }
+.archive-history-menu { position: absolute; top: calc(100% + 7px); right: 0; z-index: 100; width: max(100%, 270px); max-width: calc(100vw - 32px); overflow: hidden; padding: 8px; border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; box-shadow: 0 14px 30px rgba(15,23,42,.12); }
+.archive-history-menu[hidden] { display: none!important; }
+.archive-history-option { display: grid; grid-template-columns: 20px minmax(0, 1fr) 16px; align-items: center; gap: 10px; min-height: 52px; width: 100%; text-align: left; padding: 9px 10px; border: 0; border-radius: 9px; background: transparent; cursor: pointer; }
+.archive-history-option:hover, .archive-history-option:focus-visible { background: #f5f7fa; outline: none; }
+.archive-history-option.is-selected { background: #f2f4f7; }
+.archive-history-option > span { display: block; min-width: 0; }
+.archive-history-item-icon { display: block; width: 19px; height: 19px; color: #8490a0; stroke: currentColor; flex: none; }
+.archive-history-option.is-selected .archive-history-item-icon { color: #637083; }
+.archive-history-option strong { display: block; font-size: 11.5px; font-weight: 650; color: #334155; }
+.archive-history-option small { display: block; margin-top: 2px; font-size: 10px; line-height: 1.4; color: #8792a1; }
+.archive-history-check { width: 16px; height: 16px; flex: none; color: #64748b; opacity: 0; }
+.archive-history-option.is-selected .archive-history-check { opacity: 1; }
+#archiveClearFilters { display: inline-flex; justify-content: center; align-items: center; min-width: 86px; padding: 0 18px; border: 1px solid #dce2e8; background: #fff; font-size: 12px; font-weight: 700; color: #677588; cursor: pointer; box-shadow: 0 3px 10px rgba(15,23,42,.035); }
+#archiveClearFilters:hover, #archiveClearFilters:focus-visible { border-color: #cbd5e1; background: #f5f7fa; color: #445164; outline: none; }
+.archive-result-row { display: flex; justify-content: flex-end; min-height: 24px; align-items: center; margin: 10px 1px 14px; font-size: 12px; font-weight: 550; color: #7a8798; }
+
+/* Buyer-style product card proportions, with seller-appropriate archived status. */
+.archive-card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.archive-product-card { display: flex; flex-direction: column; min-width: 0; min-height: 380px; overflow: hidden; border: 1px solid #e3e8ee; border-radius: 22px; background: #fff; box-shadow: 0 12px 30px rgba(18,29,45,.065); transition: border-color .14s ease, box-shadow .14s ease; }
+.archive-product-card[hidden] { display: none!important; }
+.archive-product-card:hover { border-color: #d4dce7; box-shadow: 0 16px 34px rgba(18,29,45,.085); }
+.archive-card-media { position: relative; flex: 0 0 auto; aspect-ratio: 1.42; isolation: isolate; overflow: hidden; margin: 12px 12px 0; border-radius: 14px; background: #f2f4f7; }
+.archive-card-media > .archive-card-image-bg { position: absolute; inset: -12px; z-index: 0; width: calc(100% + 24px); height: calc(100% + 24px); display: block; object-fit: cover; filter: blur(16px) brightness(.93); opacity: .42; }
+.archive-card-media > .archive-card-image-main { position: relative; z-index: 1; width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; }
+.archive-image-placeholder { display: grid; width: 100%; height: 100%; place-items: center; color: #aeb8c6; background: #f3f5f8; }
+.archive-image-placeholder svg { width: 40px; height: 40px; }
+.archive-card-badge-row { position: absolute; z-index: 3; top: 12px; left: 12px; right: 12px; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-start; gap: 7px; pointer-events: none; }
+.archive-badge, .archive-type-badge { display: inline-flex; align-items: center; min-height: 29px; max-width: 100%; padding: 0 12px; border-radius: 999px; font-size: 10px; line-height: 1.1; font-weight: 750; white-space: nowrap; box-shadow: 0 3px 9px rgba(15,23,42,.09); backdrop-filter: blur(5px); }
+.archive-badge.pending { background: #e8f1fb; color: #38638c; }
+.archive-badge.approved { background: #d7f4df; color: #08754b; }
+.archive-badge.flagged, .archive-badge.rejected { background: #ffeded; color: #a83943; }
+.archive-badge.default { background: rgba(255,255,255,.93); color: #596579; }
+.archive-type-badge { background: rgba(31,33,39,.91); color: #fff; }
+.archive-type-badge.deleted { background: rgba(157,54,63,.94); }
+.archive-card-body { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; padding: 16px 17px 16px; }
+.archive-card-mainline { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; min-width: 0; }
+.archive-card-name { display: -webkit-box; min-width: 0; min-height: 43px; overflow: hidden; margin: 0; color: #1a202b; font-size: 15px; font-weight: 750; line-height: 1.45; letter-spacing: -.02em; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.archive-card-price { flex: 0 0 auto; max-width: 49%; padding-top: 1px; color: #c18408; font-size: 15px; line-height: 1.5; font-weight: 800; letter-spacing: -.02em; overflow-wrap: anywhere; text-align: right; }
+.archive-card-meta { display: -webkit-box; min-width: 0; min-height: 21px; overflow: hidden; margin: 4px 0 0; color: #8995a6; font-size: 11.5px; line-height: 1.5; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.archive-card-divider { height: 1px; margin: 15px 0 12px; background: #e8edf2; }
+.archive-card-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-top: auto; min-width: 0; }
+.archive-card-footer > div:first-child { min-width: 0; }
+.archive-card-stock { font-size: 12px; line-height: 1.5; color: #293648; font-weight: 750; }
+.archive-card-date { margin-top: 3px; overflow: hidden; color: #8895a5; font-size: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+.archive-card-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 7px; }
+.archive-card-actions form { margin: 0; }
+.archive-icon-button { display: grid; place-items: center; width: 35px; height: 35px; padding: 0; border: 1px solid #e0e6ed; border-radius: 10px; background: #fff; color: #b67a06; cursor: pointer; box-shadow: 0 3px 9px rgba(15,23,42,.04); transition: background .12s ease, border-color .12s ease; }
+.archive-icon-button svg { width: 17px; height: 17px; }
+.archive-icon-button.restore:hover, .archive-icon-button.restore:focus-visible { border-color: #d6b675; background: #fff9eb; color: #9f6704; outline: none; }
+.archive-icon-button.delete { color: #ce454d; }
+.archive-icon-button.delete:hover, .archive-icon-button.delete:focus-visible { border-color: #efc5c8; background: #fff3f3; color: #bd2636; outline: none; }
+.archive-icon-button:disabled { opacity: .45; cursor: not-allowed; }
+.archive-icon-button:disabled:hover { background: #fff; border-color: #e0e6ed; }
+
+/* Search empty-state and no-archive state use the same spacing. */
+.archive-empty-state { grid-column: 1 / -1; display: grid; min-height: 245px; width: 100%; place-items: center; padding: 44px 18px; border: 0; border-radius: 0; background: transparent; box-shadow: none; text-align: center; }
+.archive-empty-state > div { max-width: 560px; margin-inline: auto; }
+.archive-filter-empty[hidden] { display: none!important; }
+.archive-empty-icon { display: grid; width: 68px; height: 68px; margin: auto; place-items: center; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: #96a1b0; }
+.archive-empty-icon svg { width: 42px; height: 42px; }
+.archive-empty-title { margin-top: 14px; font-size: clamp(20px, 1.8vw, 23px); line-height: 1.3; font-weight: 750; color: #273142; }
+.archive-empty-copy { max-width: 500px; margin: 8px auto 0; font-size: 13.5px; line-height: 1.7; color: #778597; }
+
+/* Permanent deletion remains visually distinct from ordinary actions. */
+.archive-delete-modal { position: fixed; inset: 0; z-index: 240; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(17,24,39,.46); backdrop-filter: blur(5px); }
+.archive-delete-modal.is-open { display: flex; }
+.archive-delete-dialog { width: min(100%, 470px); border: 1px solid #e5e9ef; border-radius: 22px; background: #fff; padding: 28px; box-shadow: 0 26px 80px rgba(15,23,42,.20); }
+.archive-delete-warning-icon { display: inline-flex; align-items: center; color: #d5434e; }
+.archive-delete-warning-icon svg { width: 29px; height: 29px; stroke: currentColor; }
+.archive-delete-kicker { margin-top: 12px; color: #bd434d; font-size: 11px; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
+.archive-delete-title { margin-top: 5px; color: #232c3a; font-size: 21px; line-height: 1.3; font-weight: 750; }
+.archive-delete-copy { margin-top: 9px; font-size: 13px; line-height: 1.7; color: #697687; }
+.archive-delete-product { margin-top: 14px; border: 1px solid #e6ebf1; border-radius: 11px; background: #f7f9fb; padding: 12px; color: #374355; font-size: 12px; font-weight: 650; overflow-wrap: anywhere; }
+.archive-delete-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+.archive-delete-actions button { min-height: 43px; padding: 0 17px; border-radius: 11px; font: 650 12px Poppins,ui-sans-serif,system-ui,sans-serif; cursor: pointer; }
+#archiveDeleteCancel { border: 1px solid #dce2ea; color: #576679; background: #fff; }
+#archiveDeleteCancel:hover { background: #f5f7fa; }
+#archiveDeleteConfirm { border: 1px solid #d6424b; color: #fff; background: #d6424b; }
+#archiveDeleteConfirm:hover { background: #bf303b; }
+#archiveDeleteConfirm:disabled { opacity: .55; cursor: not-allowed; }
+
+@media (max-width: 1420px) { .archive-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+@media (max-width: 1020px) { .archive-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) {
-
-    .archive-filter-panel {
-
-        grid-template-columns: minmax(0,1fr) 155px 68px !important;
-
-    }
-
-    .archive-card-grid {
-
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
-    }
-
+  .archive-filter-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .archive-search-field, .archive-history-dropdown { grid-column: 1 / -1; }
+  #archiveClearFilters { grid-column: 2; justify-self: end; min-width: 120px; }
+}
+@media (max-width: 760px) {
+  .archive-shell { padding: 10px 1px 28px; }
+  .archive-header { align-items: flex-start; flex-direction: column; }
+  .archive-title { font-size: 25px; }
+  .archive-filter-panel { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .archive-search-field, .archive-history-dropdown { grid-column: auto; }
+  #archiveClearFilters { grid-column: auto; justify-self: stretch; min-height: 46px; height: 46px; }
+  .archive-card-grid { gap: 13px; }
+  .archive-card-body { padding: 13px; }
+  .archive-card-name { font-size: 14px; }
+  .archive-card-price { font-size: 14px; }
+  .archive-card-media { margin: 9px 9px 0; }
+}
+@media (max-width: 560px) {
+  .archive-card-grid { grid-template-columns: minmax(0,1fr); }
+  .archive-filter-panel { grid-template-columns: 1fr; }
+  #archiveClearFilters { grid-column: auto; }
+  .archive-card-media { aspect-ratio: 1.53; }
+  .archive-product-card { min-height: 340px; }
+  .archive-delete-dialog { padding: 22px; }
+  .archive-delete-actions { flex-direction: column-reverse; }
+  .archive-delete-actions button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .archive-product-card, .archive-icon-button, .archive-history-chevron { transition: none; }
 }
 
-@media (max-width: 680px) {
-
-    .archive-header {
-
-        min-height: 0;
-
-    }
-
-    .archive-title {
-
-        font-size: clamp(28px, 8vw, 34px) !important;
-
-    }
-
-    .archive-subtitle {
-
-        font-size: 9.8px !important;
-
-    }
-
-    .archive-filter-panel {
-
-        grid-template-columns: 1fr !important;
-
-    }
-
-    #archiveProductSearch,
-
-    #archiveClearFilters,
-
-    .archive-history-button {
-
-        height: 40px !important;
-
-    }
-
-    .archive-card-grid {
-
-        grid-template-columns: 1fr !important;
-
-    }
-
-    .archive-card-media {
-
-        height: 178px !important;
-
-    }
-
-}
-
-/* ======================================================================
-   ARCHIVED PRODUCTS — STATIC FLOATING CONTAINER SYSTEM
-   Visual-only elevation. Structural borders stay neutral; semantic
-   status/action colors remain unchanged. No hover lift/movement.
-   ====================================================================== */
-
-.archive-shell {
-    --archive-float-border: #E2E7ED;
-    --archive-float-border-soft: #E9EDF2;
-    --archive-float-shadow:
-        0 1px 2px rgba(15, 23, 42, .035),
-        0 10px 26px rgba(15, 23, 42, .075),
-        inset 0 1px 0 rgba(255, 255, 255, .86);
-    --archive-float-shadow-soft:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 6px 16px rgba(15, 23, 42, .05),
-        inset 0 1px 0 rgba(255, 255, 255, .82);
-}
-
-.archive-shell .archive-filter-panel,
-.archive-shell .archive-product-card,
-.archive-shell .archive-empty-state {
-    border-color: var(--archive-float-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--archive-float-shadow) !important;
-    transform: none !important;
-}
-
-.archive-shell .archive-product-card:hover {
-    border-color: var(--archive-float-border) !important;
-    box-shadow: var(--archive-float-shadow) !important;
-    transform: none !important;
-}
-
-.archive-shell .archive-card-media {
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .04) !important;
-}
-
-.archive-shell .archive-history-menu {
-    border-color: var(--archive-float-border) !important;
-    box-shadow:
-        0 18px 42px rgba(15, 23, 42, .12),
-        0 4px 12px rgba(15, 23, 42, .04) !important;
-}
-
-.archive-shell .archive-delete-dialog {
-    border-color: var(--archive-float-border) !important;
-    box-shadow:
-        0 30px 80px rgba(15, 23, 42, .20),
-        0 8px 24px rgba(15, 23, 42, .08) !important;
-}
-
-.archive-shell .archive-delete-product {
-    border-color: var(--archive-float-border-soft) !important;
-    box-shadow: var(--archive-float-shadow-soft) !important;
-}
-
-.archive-shell .archive-icon-button,
-.archive-shell #archiveClearFilters,
-.archive-shell .archive-history-button,
-.archive-shell #archiveDeleteCancel,
-.archive-shell #archiveDeleteConfirm {
-    transform: none !important;
-}
-
-.archive-shell .archive-icon-button:hover,
-.archive-shell #archiveClearFilters:hover,
-.archive-shell .archive-history-button:hover,
-.archive-shell #archiveDeleteCancel:hover,
-.archive-shell #archiveDeleteConfirm:hover {
-    transform: none !important;
-}
-
-/* Filtered empty state created by JS. */
-.archive-filter-empty[hidden] {
-    display: none !important;
-}
-
-@media (max-width: 680px) {
-    .archive-shell .archive-filter-panel,
-    .archive-shell .archive-product-card,
-    .archive-shell .archive-empty-state {
-        box-shadow:
-            0 1px 2px rgba(15, 23, 42, .03),
-            0 7px 18px rgba(15, 23, 42, .06),
-            inset 0 1px 0 rgba(255, 255, 255, .84) !important;
-    }
-}
-
-
-/* ======================================================================
-   ARCHIVED PRODUCTS — DASHBOARD SHADOW + TALLER PRODUCT CARDS FINAL PASS
-   Front-end/CSS only. Search/filter, restore AJAX, permanent delete,
-   routes, CSRF, seller suspension checks and backend behavior unchanged.
-   ====================================================================== */
-
-.archive-shell {
-    --archive-dashboard-border: #E5E7EB;
-    --archive-dashboard-border-strong: #D1D5DB;
-    --archive-dashboard-divider: #ECEFF2;
-
-    /* Dashboard-style layered elevation:
-       contact shadow + middle separation + broad ambient float. */
-    --archive-dashboard-shadow:
-        0 2px 5px rgba(15, 23, 42, .045),
-        0 10px 24px rgba(15, 23, 42, .075),
-        0 24px 54px rgba(15, 23, 42, .095),
-        inset 0 1px 0 rgba(255, 255, 255, .92);
-
-    --archive-dashboard-shadow-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065),
-        inset 0 1px 0 rgba(255, 255, 255, .90);
-
-    --archive-dashboard-shadow-inner:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 14px rgba(15, 23, 42, .045);
-}
-
-/* Header divider remains neutral. */
-.archive-shell .archive-header {
-    border-bottom-color: var(--archive-dashboard-divider) !important;
-}
-
-/* ------------------------------------------------------------------
-   FILTER PANEL — strong main-surface elevation
-   ------------------------------------------------------------------ */
-.archive-shell .archive-filter-panel {
-    border: 1px solid var(--archive-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--archive-dashboard-shadow) !important;
-    transform: none !important;
-}
-
-.archive-shell .archive-filter-panel:hover {
-    border-color: var(--archive-dashboard-border) !important;
-    box-shadow: var(--archive-dashboard-shadow) !important;
-    transform: none !important;
-}
-
-.archive-shell #archiveProductSearch,
-.archive-shell .archive-history-button,
-.archive-shell #archiveClearFilters {
-    border-color: var(--archive-dashboard-border-strong) !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 1px 2px rgba(15, 23, 42, .025),
-        0 5px 12px rgba(15, 23, 42, .04) !important;
-    transform: none !important;
-}
-
-.archive-shell #archiveProductSearch:hover,
-.archive-shell .archive-history-button:hover,
-.archive-shell #archiveClearFilters:hover {
-    border-color: #C9D0D9 !important;
-    background: #F8FAFC !important;
-    transform: none !important;
-}
-
-/* Keep focus restrained and professional. */
-.archive-shell #archiveProductSearch:focus,
-.archive-shell .archive-history-button[aria-expanded="true"] {
-    border-color: #C4A35B !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 0 0 3px rgba(196, 163, 91, .08),
-        0 5px 14px rgba(15, 23, 42, .04) !important;
-}
-
-/* Dropdown floats one level above the filter panel. */
-.archive-shell .archive-history-menu {
-    border-color: #E1E5EA !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 4px 10px rgba(15, 23, 42, .05),
-        0 18px 42px rgba(15, 23, 42, .14),
-        0 32px 70px rgba(15, 23, 42, .08) !important;
-}
-
-/* ------------------------------------------------------------------
-   PRODUCT CARDS — taller, calmer, more premium
-   ------------------------------------------------------------------ */
-.archive-shell .archive-product-card {
-    display: flex !important;
-    min-height: 300px !important;
-    flex-direction: column !important;
-    border: 1px solid var(--archive-dashboard-border) !important;
-    border-radius: 15px !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--archive-dashboard-shadow-soft) !important;
-    transform: none !important;
-    overflow: hidden !important;
-}
-
-/* Static depth only — no hover lift. */
-.archive-shell .archive-product-card:hover {
-    border-color: var(--archive-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--archive-dashboard-shadow-soft) !important;
-    transform: none !important;
-}
-
-/* Give the product image a little more vertical presence so cards such as
-   "rt" feel intentionally proportioned instead of compressed. */
-.archive-shell .archive-card-media {
-    height: 154px !important;
-    flex: 0 0 154px !important;
-    border: 1px solid #EEF0F3 !important;
-    background: #F8FAFC !important;
-    box-shadow: var(--archive-dashboard-shadow-inner) !important;
-}
-
-/* The body fills the rest of the taller card. Footer is anchored low so
-   stock/date/actions line up consistently across products. */
-.archive-shell .archive-card-body {
-    display: flex !important;
-    min-height: 0 !important;
-    flex: 1 1 auto !important;
-    flex-direction: column !important;
-    padding: 12px 13px 13px !important;
-}
-
-.archive-shell .archive-card-mainline {
-    gap: 12px !important;
-}
-
-.archive-shell .archive-card-name,
-.archive-shell .archive-card-price {
-    font-size: 11px !important;
-}
-
-.archive-shell .archive-card-meta {
-    margin-top: 5px !important;
-    font-size: 8.7px !important;
-}
-
-.archive-shell .archive-card-divider {
-    margin: 10px 0 9px !important;
-    background: var(--archive-dashboard-divider) !important;
-}
-
-.archive-shell .archive-card-footer {
-    margin-top: auto !important;
-    padding-top: 2px !important;
-    align-items: flex-end !important;
-}
-
-.archive-shell .archive-card-stock {
-    font-size: 9.2px !important;
-}
-
-.archive-shell .archive-card-date {
-    margin-top: 3px !important;
-    font-size: 8.2px !important;
-}
-
-/* Keep action controls clean and stationary. */
-.archive-shell .archive-icon-button {
-    transform: none !important;
-}
-
-.archive-shell .archive-icon-button.restore:hover {
-    background: #F8FAFC !important;
-    color: #986305 !important;
-    transform: none !important;
-}
-
-.archive-shell .archive-icon-button.delete:hover {
-    background: #FFF5F5 !important;
-    transform: none !important;
-}
-
-/* ------------------------------------------------------------------
-   EMPTY STATE + DELETE MODAL
-   ------------------------------------------------------------------ */
-.archive-shell .archive-empty-state {
-    border: 1px solid var(--archive-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--archive-dashboard-shadow) !important;
-    transform: none !important;
-}
-
-.archive-shell .archive-empty-icon {
-    border-color: var(--archive-dashboard-border) !important;
-    background: #F8FAFC !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, .035) !important;
-}
-
-.archive-shell .archive-delete-dialog {
-    border-color: var(--archive-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 8px 22px rgba(15, 23, 42, .08),
-        0 28px 68px rgba(15, 23, 42, .18),
-        0 50px 110px rgba(15, 23, 42, .10) !important;
-}
-
-.archive-shell .archive-delete-product {
-    border-color: var(--archive-dashboard-border) !important;
-    background: #F8FAFC !important;
-    box-shadow: var(--archive-dashboard-shadow-inner) !important;
-}
-
-/* Structural surfaces use neutral outlines only. */
-.archive-shell .archive-filter-panel,
-.archive-shell .archive-product-card,
-.archive-shell .archive-empty-state,
-.archive-shell .archive-delete-dialog {
-    outline: 0 !important;
-}
-
-/* Responsive: keep the longer-card proportion without making mobile huge. */
-@media (max-width: 1180px) {
-    .archive-shell .archive-product-card {
-        min-height: 294px !important;
-    }
-}
-
-@media (max-width: 680px) {
-    .archive-shell .archive-filter-panel,
-    .archive-shell .archive-empty-state {
-        box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
-    }
-
-    .archive-shell .archive-product-card {
-        min-height: 322px !important;
-        box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
-    }
-
-    .archive-shell .archive-card-media {
-        height: 178px !important;
-        flex-basis: 178px !important;
-    }
-}
 @endverbatim
 </style>
 @endpush
@@ -2105,7 +183,7 @@
 
     @if (session('success'))
 
-        <div class="mb-4 rounded-[14px] border border-[#d6e6dc] bg-[#f7fbf8] px-4 py-3 text-[9px] font-medium text-[#4f7d63]">
+        <div class="archive-alert archive-alert--success mb-4 rounded-[14px] border border-[#d6e6dc] bg-[#f7fbf8] px-4 py-3 text-[9px] font-medium text-[#4f7d63]">
 
             {{ session('success') }}
 
@@ -2115,7 +193,7 @@
 
     @if ($errors->any())
 
-        <div class="mb-4 rounded-[14px] border border-[#ecd5d5] bg-[#fff8f8] px-4 py-3 text-[9px] font-medium text-[#9f5f5f]">
+        <div class="archive-alert archive-alert--error mb-4 rounded-[14px] border border-[#ecd5d5] bg-[#fff8f8] px-4 py-3 text-[9px] font-medium text-[#9f5f5f]">
 
             {{ $errors->first() }}
 
@@ -2125,11 +203,11 @@
 
     <header class="archive-header">
 
-        <p class="archive-eyebrow">Archived Products</p>
+        <p class="archive-eyebrow">Seller Catalog</p>
 
         <h1 class="archive-title"><span>Archived</span><span>Products</span></h1>
 
-        <p class="archive-subtitle">Search, review, restore, or permanently remove inactive product records from your catalog.</p>
+        
 
     </header>
 
@@ -2197,6 +275,8 @@
 
                 <button type="button" class="archive-history-option is-selected" data-history-value="">
 
+                        <svg class="archive-history-item-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 9h16M9 13h6"></path></svg>
+
                     <span>
 
                         <strong>All History</strong>
@@ -2215,6 +295,8 @@
 
                 <button type="button" class="archive-history-option" data-history-value="archived">
 
+                        <svg class="archive-history-item-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v4H4zM6 9v11h12V9M10 13h4"></path></svg>
+
                     <span>
 
                         <strong>Archived</strong>
@@ -2232,6 +314,8 @@
                 </button>
 
                 <button type="button" class="archive-history-option" data-history-value="deleted">
+
+                        <svg class="archive-history-item-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"></path></svg>
 
                     <span>
 
@@ -2253,7 +337,7 @@
 
         </div>
 
-        <button id="archiveClearFilters" type="button">Clear</button>
+        <button id="archiveClearFilters" type="button">Reset</button>
 
     </section>
 
@@ -2313,7 +397,8 @@
 
                         @if ($product->image_path)
 
-                            <img src="{{ route('seller.products.image', $product) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
+                            <img class="archive-card-image-bg" src="{{ route('seller.products.image', $product) }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                            <img class="archive-card-image-main" src="{{ route('seller.products.image', $product) }}" alt="{{ $product->name }}" loading="lazy" decoding="async">
 
                         @else
 

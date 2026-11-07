@@ -163,20 +163,8 @@ class BuyerCartService
     ): float {
         $base = (float) ($variant?->price ?? $product->price ?? 0);
 
-        $discount = min(
-            100,
-            max(
-                0,
-                (float) ($product->discount ?? 0)
-            )
-        );
-
-        if (
-            $product->flash_sale_ends_at !== null
-            && now()->gte($product->flash_sale_ends_at)
-        ) {
-            $discount = 0.0;
-        }
+        // Server-side checkout authority, not frontend labels or cached prices.
+        $discount = $product->effectiveDiscountPercent();
 
         return round(
             $discount > 0

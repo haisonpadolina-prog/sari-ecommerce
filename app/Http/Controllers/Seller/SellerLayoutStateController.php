@@ -91,6 +91,8 @@ class SellerLayoutStateController extends Controller
                         'seller_account_id',
                         $seller->id
                     )
+                    ->whereNull('archived_at')
+                    ->whereNull('deleted_at')
                     ->whereNull('read_at')
                     ->count();
 
@@ -100,6 +102,8 @@ class SellerLayoutStateController extends Controller
                         'seller_account_id',
                         $seller->id
                     )
+                    ->whereNull('archived_at')
+                    ->whereNull('deleted_at')
                     ->whereNull('read_at')
                     ->latest('created_at')
                     ->limit(8)

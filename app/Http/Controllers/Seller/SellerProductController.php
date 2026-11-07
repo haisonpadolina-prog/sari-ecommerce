@@ -10,6 +10,7 @@ use App\Models\Catalog\SellerProductDraft;
 use App\Models\Catalog\SellerProductImage;
 use App\Models\Catalog\SellerProductVariant;
 use App\Models\Catalog\SellerProductVersion;
+use App\Models\Promotions\SellerFreeShippingPromotion;
 use App\Models\Registration\RegistrationApplication;
 use App\Services\Products\ProductComplianceService;
 use Illuminate\Http\Request;
@@ -232,10 +233,9 @@ class SellerProductController extends Controller
         ]);
 
         $validated = $this->validateProduct($request);
-        $flashSaleEndsAt = $this->normalizeFlashSaleEndsAt(
-            $validated['flash_sale_ends_at'] ?? null,
-            (float) ($validated['discount'] ?? 0)
-        );
+        $flashSaleStartsAt = $this->normalizeFlashSaleStartsAt($validated['flash_sale_starts_at'] ?? null, (float) ($validated['discount'] ?? 0));
+        $flashSaleEndsAt = $this->normalizeFlashSaleEndsAt($validated['flash_sale_ends_at'] ?? null, (float) ($validated['discount'] ?? 0));
+        $this->assertFlashSaleSchedule($validated, $flashSaleStartsAt, $flashSaleEndsAt);
         $draft = $this->submittedDraft($request, $seller);
 
         $category = $sellerCategory;
@@ -274,6 +274,7 @@ class SellerProductController extends Controller
 
         $draftGalleryPaths = array_values((array) ($draft?->gallery_image_paths ?? []));
         $draftVariantPaths = (array) ($draft?->variant_image_paths ?? []);
+        $draftSizeGuidePath = $draft?->size_guide_image_path;
 
         $product = DB::transaction(function () use (
             $seller,
@@ -284,17 +285,25 @@ class SellerProductController extends Controller
             $variants,
             $parentPrice,
             $parentStock,
+            $flashSaleStartsAt,
             $flashSaleEndsAt,
             $uploadedImage,
             $draftCoverPath,
             $draftGalleryPaths,
             $draftVariantPaths,
+            $draftSizeGuidePath,
             $request,
             $scan
         ) {
             $imagePath = $uploadedImage
                 ? $uploadedImage->store('seller-products', 'public')
                 : $this->promoteDraftFile($draftCoverPath, 'seller-products');
+
+            $sizeGuidePath = $request->hasFile('size_guide_image')
+                ? $request->file('size_guide_image')->store('seller-products/size-guides', 'public')
+                : ($request->boolean('remove_size_guide_image')
+                    ? null
+                    : $this->promoteDraftFile($draftSizeGuidePath, 'seller-products/size-guides'));
 
             $product = new SellerProduct();
             $product->forceFill([
@@ -308,6 +317,7 @@ class SellerProductController extends Controller
                 'stock' => $parentStock,
                 'low_stock_threshold' => (int) ($validated['low_stock_threshold'] ?? 5),
                 'discount' => $validated['discount'] ?? 0,
+                'flash_sale_starts_at' => $flashSaleStartsAt,
                 'flash_sale_ends_at' => $flashSaleEndsAt,
                 'free_shipping' => (bool) ($validated['free_shipping'] ?? false),
                 'cash_on_delivery' => (bool) ($validated['cash_on_delivery'] ?? false),
@@ -319,6 +329,7 @@ class SellerProductController extends Controller
                 'voucher_code' => $validated['voucher_code'] ?? null,
                 'description' => $validated['description'] ?? null,
                 'image_path' => $imagePath,
+                'size_guide_image_path' => $sizeGuidePath,
                 'specifications' => $this->jsonColumnValue($product, 'specifications', $specifications),
                 'has_variants' => $hasVariants,
 
@@ -404,6 +415,10 @@ class SellerProductController extends Controller
         $validated = $this->validateProduct($request);
         $category = $sellerCategory;
 
+        $flashSaleStartsAt = $request->exists('flash_sale_starts_at')
+            ? $this->normalizeFlashSaleStartsAt($validated['flash_sale_starts_at'] ?? null, (float) ($validated['discount'] ?? 0))
+            : $product->flash_sale_starts_at;
+
         $flashSaleEndsAt = $request->exists('flash_sale_ends_at')
             ? $this->normalizeFlashSaleEndsAt(
                 $validated['flash_sale_ends_at'] ?? null,
@@ -412,8 +427,10 @@ class SellerProductController extends Controller
             : $product->flash_sale_ends_at;
 
         if ((float) ($validated['discount'] ?? 0) <= 0) {
+            $flashSaleStartsAt = null;
             $flashSaleEndsAt = null;
         }
+        $this->assertFlashSaleSchedule($validated, $flashSaleStartsAt, $flashSaleEndsAt);
 
         $currentSpecs = $this->decodeJsonArray($product->specifications);
         $currentVariants = $this->currentVariantRows($product);
@@ -456,6 +473,7 @@ class SellerProductController extends Controller
             'stock' => $parentStock,
             'low_stock_threshold' => (int) ($validated['low_stock_threshold'] ?? $product->low_stock_threshold ?? 5),
             'discount' => $validated['discount'] ?? 0,
+            'flash_sale_starts_at' => $flashSaleStartsAt,
             'flash_sale_ends_at' => $flashSaleEndsAt,
             // Legacy product flag is preserved for historical data only.
             // Buyer shipping eligibility now comes from Seller-level promotions.
@@ -474,6 +492,8 @@ class SellerProductController extends Controller
 
         $changedFields = $this->changedFields($product, $newValues);
         $imageChanged = $request->hasFile('image');
+        $sizeGuideChanged = $request->hasFile('size_guide_image')
+            || ($request->boolean('remove_size_guide_image') && filled($product->size_guide_image_path));
         $galleryChanged = $request->hasFile('gallery_images')
             || !empty($validated['remove_gallery_image_ids'] ?? []);
         $variantImagesChanged = $this->hasVariantImageUpload($request);
@@ -495,6 +515,9 @@ class SellerProductController extends Controller
         }
         if ($imageChanged) {
             $changedFields[] = 'image';
+        }
+        if ($sizeGuideChanged) {
+            $changedFields[] = 'size_guide_image';
         }
 
         $changedFields = array_values(array_unique($changedFields));
@@ -519,6 +542,7 @@ class SellerProductController extends Controller
             'image',
             'gallery',
             'variant_images',
+            'size_guide_image',
         ];
 
         $sensitiveChanged = !empty(array_intersect($changedFields, $sensitiveFields))
@@ -578,6 +602,7 @@ class SellerProductController extends Controller
             $newValues,
             $changedFields,
             $imageChanged,
+            $sizeGuideChanged,
             $galleryChanged,
             $hasVariants,
             $variants,
@@ -585,6 +610,13 @@ class SellerProductController extends Controller
             $variantImagesChanged
         ) {
             $this->snapshotProduct($product, $changedFields);
+
+            if ($sizeGuideChanged) {
+                // Previous size guide remains available for version history.
+                $newValues['size_guide_image_path'] = $request->hasFile('size_guide_image')
+                    ? $request->file('size_guide_image')->store('seller-products/size-guides', 'public')
+                    : null;
+            }
 
             if ($imageChanged) {
                 // Keep the old cover image because version history may reference it.
@@ -686,6 +718,12 @@ class SellerProductController extends Controller
             | cannot leave the database pointing at missing media.
             */
             $coverPath = $product->image_path;
+            $sizeGuidePath = $product->size_guide_image_path;
+            $versionSizeGuidePaths = SellerProductVersion::query()
+                ->where('seller_product_id', $product->id)
+                ->pluck('size_guide_image_path')
+                ->filter()
+                ->values();
 
             $galleryPaths = SellerProductImage::query()
                 ->where('seller_product_id', $product->id)
@@ -762,7 +800,8 @@ class SellerProductController extends Controller
             | Paths are unique, so deleting them here will not affect another
             | seller product.
             */
-            collect([$coverPath])
+            collect([$coverPath, $sizeGuidePath])
+                ->merge($versionSizeGuidePaths)
                 ->merge($galleryPaths)
                 ->merge($variantPaths)
                 ->merge($versionPaths)
@@ -865,6 +904,7 @@ class SellerProductController extends Controller
                 'stock',
                 'low_stock_threshold',
                 'discount',
+                'flash_sale_starts_at',
                 'flash_sale_ends_at',
                 'free_shipping',
                 'cash_on_delivery',
@@ -876,6 +916,7 @@ class SellerProductController extends Controller
                 'voucher_code',
                 'description',
                 'image_path',
+                'size_guide_image_path',
                 'moderation_status',
                 'specifications',
                 'has_variants',
@@ -894,9 +935,35 @@ class SellerProductController extends Controller
             $query->limit($limit);
         }
 
+        // The Buyer product card receives seller-funded Free Shipping
+        // promotions, but the Seller Product Library previously did not.
+        // Resolve the live promotion ONCE for this seller (no per-card N+1
+        // queries), using the model's authoritative status/time-window scope.
+        $liveShipping = SellerFreeShippingPromotion::query()
+            ->where('seller_account_id', $seller->id)
+            ->liveAt()
+            ->orderByDesc('starts_at')
+            ->first([
+                'id',
+                'status',
+                'minimum_order_amount',
+                'maximum_shipping_discount',
+                'starts_at',
+                'ends_at',
+            ]);
+
+        $shippingOffer = $liveShipping ? [
+            'id' => (int) $liveShipping->id,
+            'status' => SellerFreeShippingPromotion::STATUS_ACTIVE,
+            'minimum_order_amount' => (float) $liveShipping->minimum_order_amount,
+            'maximum_shipping_discount' => (float) $liveShipping->maximum_shipping_discount,
+            'starts_at' => $liveShipping->starts_at?->toIso8601String(),
+            'ends_at' => $liveShipping->ends_at?->toIso8601String(),
+        ] : null;
+
         return $query
             ->get()
-            ->map(function (SellerProduct $product) {
+            ->map(function (SellerProduct $product) use ($shippingOffer) {
                 $specifications = $this->decodeJsonArray(
                     $product->specifications ?? []
                 );
@@ -958,8 +1025,12 @@ class SellerProductController extends Controller
                         2
                     ),
                     'flash_sale_active' => $this->isFlashSaleActive($product),
+                    'flash_sale_starts_at' => $product->flash_sale_starts_at?->toIso8601String(),
                     'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
                     'free_shipping' => (bool) ($product->free_shipping ?? false),
+                    'free_shipping_promotion' => $product->moderation_status === 'approved'
+                        ? $shippingOffer
+                        : null,
                     'cash_on_delivery' => (bool) ($product->cash_on_delivery ?? false),
                     'package_weight' => $product->package_weight !== null
                         ? (float) $product->package_weight
@@ -992,6 +1063,9 @@ class SellerProductController extends Controller
                     'has_variants' => (bool) $product->has_variants,
                     'specifications' => array_values($specifications),
                     'variants' => $variants,
+                    'size_guide_image_url' => $product->size_guide_image_path
+                        ? route('seller.products.size-guide', $product)
+                        : null,
                     'image_url' => $product->image_path
                         ? route('seller.products.image', $product)
                         : ($product->galleryImages->first()
@@ -1101,6 +1175,14 @@ class SellerProductController extends Controller
         return $this->cachedPublicImageResponse($image->path);
     }
 
+    public function sizeGuideImage(Request $request, SellerProduct $product)
+    {
+        $seller = $this->resolveSeller($request);
+        $this->ensureOwnership($seller, $product);
+        abort_unless($product->size_guide_image_path, 404);
+        return $this->cachedPublicImageResponse($product->size_guide_image_path);
+    }
+
     public function variantImage(Request $request, SellerProductVariant $variant)
     {
         $product = $variant->product;
@@ -1150,6 +1232,7 @@ class SellerProductController extends Controller
             'stock' => ['nullable', 'integer', 'min:0'],
             'low_stock_threshold' => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'flash_sale_starts_at' => ['nullable', 'date'],
             'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
             'cash_on_delivery' => ['nullable', 'boolean'],
@@ -1160,6 +1243,8 @@ class SellerProductController extends Controller
             'preparation_days' => ['nullable', 'integer', 'min:0', 'max:365'],
             'voucher_code' => ['nullable', 'string', 'max:80'],
             'description' => ['nullable', 'string', 'max:5000'],
+            'size_guide_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'remove_size_guide_image' => ['nullable', 'boolean'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
@@ -1195,6 +1280,7 @@ class SellerProductController extends Controller
             'stock' => ['nullable', 'integer', 'min:0'],
             'low_stock_threshold' => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'discount' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'flash_sale_starts_at' => ['nullable', 'date'],
             'flash_sale_ends_at' => ['nullable', 'date'],
             'free_shipping' => ['nullable', 'boolean'],
             'cash_on_delivery' => ['nullable', 'boolean'],
@@ -1205,6 +1291,8 @@ class SellerProductController extends Controller
             'preparation_days' => ['nullable', 'integer', 'min:0', 'max:365'],
             'voucher_code' => ['nullable', 'string', 'max:80'],
             'description' => ['nullable', 'string', 'max:5000'],
+            'size_guide_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'remove_size_guide_image' => ['nullable', 'boolean'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
@@ -1505,7 +1593,7 @@ class SellerProductController extends Controller
 
             if (in_array($field, ['price', 'discount', 'package_weight', 'package_length', 'package_width', 'package_height'], true)) {
                 $isDifferent = (float) $oldValue !== (float) $newValue;
-            } elseif ($field === 'flash_sale_ends_at') {
+            } elseif (in_array($field, ['flash_sale_starts_at', 'flash_sale_ends_at'], true)) {
                 $oldTimestamp = $oldValue ? Carbon::parse($oldValue)->getTimestamp() : null;
                 $newTimestamp = $newValue ? Carbon::parse($newValue)->getTimestamp() : null;
                 $isDifferent = $oldTimestamp !== $newTimestamp;
@@ -1554,6 +1642,7 @@ class SellerProductController extends Controller
             'stock' => $product->stock,
             'low_stock_threshold' => (int) ($product->low_stock_threshold ?? 5),
             'discount' => $product->discount,
+            'flash_sale_starts_at' => $product->flash_sale_starts_at,
             'flash_sale_ends_at' => $product->flash_sale_ends_at,
             'free_shipping' => (bool) ($product->free_shipping ?? false),
             'cash_on_delivery' => (bool) ($product->cash_on_delivery ?? false),
@@ -1569,6 +1658,7 @@ class SellerProductController extends Controller
             'variants_snapshot' => $variantSnapshot,
             'gallery_snapshot' => $gallerySnapshot,
             'image_path' => $product->image_path,
+            'size_guide_image_path' => $product->size_guide_image_path,
             'moderation_status' => $product->moderation_status,
             'screening_risk' => $product->screening_risk,
             'screening_reason' => $product->screening_reason,
@@ -1726,6 +1816,7 @@ class SellerProductController extends Controller
     private function deleteDraftMedia(SellerProductDraft $draft): void
     {
         $this->deletePublicFile($draft->cover_image_path);
+        $this->deletePublicFile($draft->size_guide_image_path);
 
         foreach ((array) ($draft->gallery_image_paths ?? []) as $path) {
             $this->deletePublicFile($path);
@@ -1846,46 +1937,59 @@ class SellerProductController extends Controller
         abort_unless((int) $product->seller_account_id === (int) $seller->id, 403);
     }
 
+    /** datetime-local values are interpreted in the seller UI's Manila timezone. */
+    private function normalizeFlashSaleStartsAt(mixed $value, float $discountPercent): ?Carbon
+    {
+        $raw = trim((string) ($value ?? ''));
+        if ($raw === '' || $discountPercent <= 0) {
+            return null;
+        }
+
+        return Carbon::parse($raw, 'Asia/Manila')->utc();
+    }
+
     private function normalizeFlashSaleEndsAt(mixed $value, float $discountPercent): ?Carbon
     {
         $raw = trim((string) ($value ?? ''));
-
-        if ($raw === '') {
+        if ($raw === '' || $discountPercent <= 0) {
             return null;
         }
 
-        if ($discountPercent <= 0) {
-            return null;
+        return Carbon::parse($raw, 'Asia/Manila')->utc();
+    }
+
+    private function assertFlashSaleSchedule(array $validated, ?Carbon $start, ?Carbon $end): void
+    {
+        $startProvided = trim((string) ($validated['flash_sale_starts_at'] ?? '')) !== '';
+        $endProvided = trim((string) ($validated['flash_sale_ends_at'] ?? '')) !== '';
+
+        if ($startProvided !== $endProvided) {
+            throw ValidationException::withMessages([
+                'flash_sale_starts_at' => 'Set both Flash Sale start and end dates, or leave both blank.',
+            ]);
         }
 
-        return Carbon::parse($raw)->utc();
+        if (($startProvided || $endProvided) && (float) ($validated['discount'] ?? 0) <= 0) {
+            throw ValidationException::withMessages([
+                'discount' => 'Enter a discount greater than zero to schedule a Flash Sale.',
+            ]);
+        }
+
+        if ($start !== null && $end !== null && !$end->gt($start)) {
+            throw ValidationException::withMessages([
+                'flash_sale_ends_at' => 'Flash Sale end date must be later than the start date.',
+            ]);
+        }
     }
 
     private function isFlashSaleActive(SellerProduct $product): bool
     {
-        return $product->moderation_status === 'approved'
-            && (float) ($product->discount ?? 0) > 0
-            && $product->flash_sale_ends_at !== null
-            && now()->lt($product->flash_sale_ends_at);
+        return $product->isFlashSaleActive();
     }
 
     private function effectiveDiscountPercent(SellerProduct $product): float
     {
-        $discount = min(100, max(0, (float) ($product->discount ?? 0)));
-
-        if ($discount <= 0) {
-            return 0.0;
-        }
-
-        if (
-            $product->moderation_status === 'approved'
-            && $product->flash_sale_ends_at !== null
-            && now()->gte($product->flash_sale_ends_at)
-        ) {
-            return 0.0;
-        }
-
-        return $discount;
+        return $product->effectiveDiscountPercent();
     }
 
     private function ensureCanSell(SellerAccount $seller): void

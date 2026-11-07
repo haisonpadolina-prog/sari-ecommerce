@@ -64,6 +64,7 @@
                     layoutStateAbort: null,
                     layoutStateRequestSeq: 0,
                     notificationMutationSeq: 0,
+                    notificationFeedInitialized: false,
                     accountStateAbort: null,
                     orderPollAbort: null,
                     uiAbort: null,
@@ -438,67 +439,79 @@
                         );
                     });
 
+                const sidebarNotifications = document.getElementById(
+                    'sellerSidebarNotificationLink'
+                );
+                const modalClose = document.getElementById(
+                    'sellerNotificationClose'
+                );
+                let notificationReturnFocus = null;
+
                 function closeNotificationDropdown() {
+                    if (dropdown?.open) dropdown.close();
                     dropdown?.classList.add('hidden');
                     bell?.setAttribute('aria-expanded', 'false');
+                    sidebarNotifications?.setAttribute('aria-expanded', 'false');
                 }
 
-                bell?.addEventListener(
-                    'click',
-                    function (event) {
-                        event.stopPropagation();
+                function openNotificationModal(trigger) {
+                    if (!dropdown || typeof dropdown.showModal !== 'function') {
+                        // Only unsupported browsers use the existing center page.
+                        window.location.assign(notificationIndexUrl);
+                        return;
+                    }
+                    closeMobileSidebar();
+                    notificationReturnFocus = (trigger === sidebarNotifications && window.innerWidth < desktopBreakpoint)
+                        ? bell
+                        : (trigger || document.activeElement);
+                    if (!dropdown.open) {
+                        dropdown.classList.remove('hidden');
+                        dropdown.showModal();
+                    }
+                    bell?.setAttribute('aria-expanded', 'true');
+                    sidebarNotifications?.setAttribute('aria-expanded', 'true');
+                    modalClose?.focus({ preventScroll: true });
+                    // Refresh from the database whenever either entrypoint opens.
+                    loadLayoutState(true);
+                }
 
-                        if (!dropdown) {
-                            return;
-                        }
+                bell?.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    if (dropdown?.open) closeNotificationDropdown();
+                    else openNotificationModal(bell);
+                }, { signal });
 
-                        const open =
-                            dropdown.classList.contains('hidden');
+                sidebarNotifications?.addEventListener('click', function (event) {
+                    // Cmd/Ctrl/Shift click retains the full notification page shortcut.
+                    if (event.button !== 0 || event.metaKey || event.ctrlKey
+                        || event.shiftKey || event.altKey) return;
+                    event.preventDefault();
+                    openNotificationModal(sidebarNotifications);
+                }, { signal });
 
-                        dropdown.classList.toggle('hidden', !open);
+                modalClose?.addEventListener('click', closeNotificationDropdown, { signal });
+                dropdown?.addEventListener('click', function (event) {
+                    // A native <dialog> receives backdrop clicks at its own target.
+                    if (event.target === dropdown) closeNotificationDropdown();
+                }, { signal });
+                dropdown?.addEventListener('close', function () {
+                    dropdown.classList.add('hidden');
+                    bell?.setAttribute('aria-expanded', 'false');
+                    sidebarNotifications?.setAttribute('aria-expanded', 'false');
+                    if (notificationReturnFocus?.isConnected) {
+                        notificationReturnFocus.focus({ preventScroll: true });
+                    }
+                    notificationReturnFocus = null;
+                }, { signal });
 
-                        bell.setAttribute(
-                            'aria-expanded',
-                            open ? 'true' : 'false'
-                        );
-                    },
-                    { signal }
-                );
+                markAllNotifications?.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    markAllNotificationsRead();
+                }, { signal });
 
-                dropdown?.addEventListener(
-                    'click',
-                    function (event) {
-                        event.stopPropagation();
-                    },
-                    { signal }
-                );
-
-                markAllNotifications?.addEventListener(
-                    'click',
-                    function (event) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        markAllNotificationsRead();
-                    },
-                    { signal }
-                );
-
-                document.addEventListener(
-                    'click',
-                    closeNotificationDropdown,
-                    { signal }
-                );
-
-                document.addEventListener(
-                    'keydown',
-                    function (event) {
-                        if (event.key === 'Escape') {
-                            closeNotificationDropdown();
-                            closeMobileSidebar();
-                        }
-                    },
-                    { signal }
-                );
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape') closeMobileSidebar();
+                }, { signal });
             }
 
             function displayCount(count) {
@@ -815,7 +828,7 @@
 
                         return persisted;
                     },
-                    { once: true }
+                    // Keep retry available after a failed read request.
                 );
 
                 return item;
@@ -1128,14 +1141,15 @@
 
                 prependNotification(data);
                 syncUnreadUi();
-                ringBell();
+                announceNewNotification(data);
+            }
 
-                window.dispatchEvent(
-                    new CustomEvent(
-                        'sari:seller-notification',
-                        { detail: data }
-                    )
-                );
+            function announceNewNotification(data) {
+                if (!data || data.unread === false) return;
+                ringBell();
+                window.dispatchEvent(new CustomEvent(
+                    'sari:seller-notification', { detail: data }
+                ));
             }
 
             function ringBell() {
@@ -1166,6 +1180,10 @@
 
             function showMessageToast(data) {
                 if (currentPath() === messagesPath) {
+                    return;
+                }
+                if (window.SariSellerToast?.info) {
+                    window.SariSellerToast.info(notificationText(data));
                     return;
                 }
 
@@ -1340,18 +1358,30 @@
                             ? data.recent_notifications
                             : [];
 
-                    notifications.forEach(function (notification) {
-                        state.processedNotificationIds.add(
-                            String(notification.id)
-                        );
+                    const newlyDiscovered = notifications.filter(function (notification) {
+                        return notification?.id != null
+                            && !state.processedNotificationIds.has(String(notification.id));
                     });
+
+                    notifications.forEach(function (notification) {
+                        state.processedNotificationIds.add(String(notification.id));
+                    });
+
+                    const mayAnnounce = state.notificationFeedInitialized
+                        && !document.hidden && !state.navigationActive;
+                    if (hasNotificationFeed) state.notificationFeedInitialized = true;
 
                     syncUnreadUi();
 
                     if (hasNotificationFeed) {
-                        renderRecentNotifications(
-                            notifications
-                        );
+                        renderRecentNotifications(notifications);
+                        // Reverb is primary. This snapshot catches missed events
+                        // without playing sound for existing unread on initial load.
+                        if (mayAnnounce) {
+                            newlyDiscovered.slice(0, 3).reverse().forEach(
+                                announceNewNotification
+                            );
+                        }
                     }
                 } catch (error) {
                     if (error?.name !== 'AbortError') {
@@ -1705,6 +1735,10 @@
             }
 
             function showOrderToast(eventData) {
+                if (eventData && window.SariSellerToast?.info) {
+                    window.SariSellerToast.info([eventData.title || 'Order update', eventData.message || ''].filter(Boolean).join(' · '));
+                    return;
+                }
                 const toast =
                     document.getElementById(
                         'sellerOrderStatusToast'
@@ -2195,17 +2229,15 @@
                     abortSellerBackgroundRequests();
                     closeMobileSidebar();
 
-                    document
-                        .getElementById(
-                            'sellerNotificationDropdown'
-                        )
-                        ?.classList.add('hidden');
+                    const notificationsModal = document.getElementById('sellerNotificationDropdown');
+                    if (notificationsModal?.open) notificationsModal.close();
+                    notificationsModal?.classList.add('hidden');
+                    document.getElementById('sellerNotificationBell')
+                        ?.setAttribute('aria-expanded', 'false');
                 }
             );
 
-            document.addEventListener(
-                'livewire:navigated',
-                function () {
+            function initializeSellerShell() {
                     state.navigationActive = false;
 
                     bindCurrentShellUi();
@@ -2247,7 +2279,13 @@
                     subscribeOrders();
                     subscribeAccountStatus();
                 }
-            );
+
+            document.addEventListener('livewire:navigated', initializeSellerShell);
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeSellerShell, { once: true });
+            } else {
+                initializeSellerShell();
+            }
 
             if (
                 !window.__SARI_SELLER_STATUS_INTERVAL__
@@ -2262,6 +2300,24 @@
                     checkAccountState,
                     12000
                 );
+            }
+
+            // Periodic reconciliation: database is authoritative if Reverb
+            // drops an event, reconnects, or is not configured. No initial sound.
+            if (!window.__SARI_SELLER_NOTIFICATION_INTERVAL__) {
+                window.__SARI_SELLER_NOTIFICATION_INTERVAL__ = window.setInterval(
+                    function () {
+                        if (!document.hidden && !state.navigationActive) {
+                            loadLayoutState(true);
+                        }
+                    },
+                    30000
+                );
+                document.addEventListener('visibilitychange', function () {
+                    if (!document.hidden && !state.navigationActive) {
+                        loadLayoutState(true);
+                    }
+                });
             }
 
             if (

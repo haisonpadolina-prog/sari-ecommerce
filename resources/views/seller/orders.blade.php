@@ -4743,6 +4743,51 @@
     .seller-orders-page .seller-orders-selection-actions [data-order-prepare-selected] { width: 100%; justify-content: center; }
 }
 
+/* ======================================================================
+   SELLER ORDER MANAGEMENT — FILTER HOVER POSITION LOCK (CSS ONLY)
+   Keep the filter row and its controls in one fixed position on pointer
+   hover, keyboard focus, and when the custom status menu is expanded.
+   Does not change dropdown options, search, filtering or order workflow.
+   ====================================================================== */
+.seller-orders-page .seller-orders-filter-panel,
+.seller-orders-page .seller-orders-filter-panel:hover,
+.seller-orders-page .seller-orders-filter-panel:focus-within {
+    margin-top: 20px !important;
+    transform: none !important;
+    translate: none !important;
+}
+
+/* Preserve the status dropdown's relative positioning and stacking. */
+.seller-orders-page .seller-orders-filter-panel > .seller-orders-search-field,
+.seller-orders-page .seller-orders-filter-panel > .seller-orders-status-dropdown,
+.seller-orders-page .seller-orders-filter-panel > .seller-orders-apply-filter,
+.seller-orders-page .seller-orders-filter-panel > .seller-orders-reset-filter {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    transform: none !important;
+    translate: none !important;
+}
+
+/* The clickable controls do not lift or slide on hover/focus/press. */
+.seller-orders-page .seller-orders-filter-panel #sellerOrderSearch,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-status-trigger,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-apply-filter,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-reset-filter,
+.seller-orders-page .seller-orders-filter-panel #sellerOrderSearch:hover,
+.seller-orders-page .seller-orders-filter-panel #sellerOrderSearch:focus,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-status-trigger:hover,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-status-trigger:focus-visible,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-status-trigger[aria-expanded="true"],
+.seller-orders-page .seller-orders-filter-panel .seller-orders-apply-filter:hover,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-apply-filter:focus-visible,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-reset-filter:hover,
+.seller-orders-page .seller-orders-filter-panel .seller-orders-reset-filter:focus-visible {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    transform: none !important;
+    translate: none !important;
+}
+
 @endverbatim
 </style>
 {{-- Dedicated dialog design is maintained separately from the orders table. --}}
@@ -4834,9 +4879,7 @@
                 <h1 class="seller-orders-title">
                     <span>Seller</span><span class="seller-orders-title-accent">Orders</span>
                 </h1>
-                <p class="seller-orders-subtitle">
-                    Track, prepare, and fulfill Buyer orders from one clean workspace.
-                </p>
+               
             </div>
         </div>
 

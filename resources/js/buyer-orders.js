@@ -1,12 +1,15 @@
 // The Vite module persists during Livewire navigation; polling must not.
 let orderPollTimer = null;
+let orderPollFirstTimer = null;
 let orderPollController = null;
 let orderPollGeneration = 0;
 
 function stopBuyerOrderPolling() {
     orderPollGeneration++;
     if (orderPollTimer !== null) window.clearInterval(orderPollTimer);
+    if (orderPollFirstTimer !== null) window.clearTimeout(orderPollFirstTimer);
     orderPollTimer = null;
+    orderPollFirstTimer = null;
     orderPollController?.abort();
     orderPollController = null;
 }
@@ -50,8 +53,12 @@ function initBuyerOrderPolling() {
             inFlight = false;
         }
     }
-    sync();
-    orderPollTimer = window.setInterval(sync, 3500);
+    // Avoid an immediate extra network request during initial My Orders paint.
+    orderPollFirstTimer = window.setTimeout(() => {
+        orderPollFirstTimer = null;
+        sync();
+    }, 3500);
+    orderPollTimer = window.setInterval(sync, 12000);
 }
 
 if (document.readyState === 'loading') {

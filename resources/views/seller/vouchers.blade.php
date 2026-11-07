@@ -16,6 +16,11 @@
     --voucher-muted:#8190A1;
     --voucher-line:#E5E9EE;
     --voucher-soft:#F8FAFC;
+    --voucher-main-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
     width:100%; max-width:1520px; margin-inline:auto; padding-bottom:36px;
     font-family:"Poppins",ui-sans-serif,system-ui,sans-serif;
     color:var(--voucher-ink);
@@ -43,8 +48,8 @@
 .seller-shipping-promo-tz {color:#A56D0A;font-weight:650}
 .seller-shipping-promo-grid {display:grid;grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr);gap:16px;align-items:stretch}
 .seller-shipping-promo-card, .seller-voucher-panel {
-    min-width:0;border:1px solid #E5E7EB;border-radius:18px;background:#FFF;
-    box-shadow:0 2px 5px rgba(15,23,42,.025),0 10px 24px rgba(15,23,42,.07);
+    min-width:0;border:1px solid #E5E7EB;border-radius:20px;background:#FFF;
+    box-shadow:var(--voucher-main-shadow);
 }
 .seller-shipping-promo-card {padding:21px 22px}
 .seller-shipping-promo-card h3 {margin:0;color:#293440;font-size:16px;font-weight:750;line-height:1.4}
@@ -104,10 +109,7 @@
 .seller-voucher-panel {overflow:hidden}
 .seller-voucher-panel-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 22px 17px;border-bottom:1px solid var(--voucher-line);background:#FFF}
 .seller-voucher-panel-title-group {display:flex;align-items:center;min-width:0;gap:11px}
-.seller-voucher-panel-icon {display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border:0;border-radius:0;background:transparent;color:var(--voucher-gold);box-shadow:none}
-.seller-voucher-panel-icon svg {width:27px;height:27px}
 .seller-voucher-panel-title {margin:0;color:#293440;font-size:18px;font-weight:750;line-height:1.3;letter-spacing:-.025em}
-.seller-voucher-panel-subtitle {margin:5px 0 0;color:#8491A0;font-size:11px;line-height:1.55}
 .seller-voucher-count {display:inline-flex;align-items:center;min-height:28px;padding:3px 10px;border:1px solid #E2E8F0;border-radius:999px;background:#F8FAFC;color:#64748B;font-size:10.5px;font-weight:700;white-space:nowrap}
 .seller-voucher-form {padding:21px 22px 22px}
 .seller-voucher-form-grid {display:grid;gap:16px}
@@ -190,6 +192,28 @@
     .seller-shipping-promo-submit {width:100%}
     .seller-voucher-pagination {padding:12px 14px}
 }
+/* Exact Buyer Cart mobile depth; only primary promotion/voucher cards float. */
+@media (max-width: 767px) {
+    .seller-vouchers-page {
+        --voucher-main-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+    }
+    .seller-vouchers-page .seller-shipping-promo-card,
+    .seller-vouchers-page .seller-voucher-panel {
+        border-radius:16px;
+    }
+}
+@media print {
+    .seller-vouchers-page .seller-shipping-promo-card,
+    .seller-vouchers-page .seller-voucher-panel {
+        box-shadow:none;
+        break-inside:avoid;
+    }
+}
+
 @media(prefers-reduced-motion:reduce) {
     .seller-vouchers-page :is(button,input,select,a,summary) {transition:none}
 }
@@ -272,7 +296,6 @@
         <div class="seller-shipping-promo-grid">
             <div class="seller-shipping-promo-card">
                 <h3>Create promotion</h3>
-                <p class="seller-shipping-promo-note">Buyers qualify only while the promotion is active and their subtotal from your store reaches the minimum spend.</p>
 
                 <form method="POST" action="{{ route('seller.free-shipping-promotions.store') }}">
                     @csrf
@@ -308,7 +331,6 @@
 
             <div class="seller-shipping-promo-card">
                 <h3>Promotion history</h3>
-                <p class="seller-shipping-promo-note">Only one active or scheduled promotion may overlap a given time period. Paused and ended promotions never apply at checkout.</p>
 
                 @if(($freeShippingPromotions ?? collect())->isEmpty())
                     <div class="seller-shipping-promo-empty">No Free Shipping promotions created yet.</div>
@@ -398,27 +420,11 @@
 
                 <div class="seller-voucher-panel-title-group">
 
-                    <span class="seller-voucher-panel-icon" aria-hidden="true">
-
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                            <path d="M4 7h16v10H4z"></path>
-
-                            <path d="M8 7V5h8v2"></path>
-
-                            <path d="M12 10v4"></path>
-
-                            <path d="M10 12h4"></path>
-
-                        </svg>
-
-                    </span>
 
                     <div>
 
                         <h2 class="seller-voucher-panel-title">Create Voucher</h2>
 
-                        <p class="seller-voucher-panel-subtitle">Configure a checkout discount campaign.</p>
 
                     </div>
 
@@ -735,25 +741,11 @@
 
                 <div class="seller-voucher-panel-title-group">
 
-                    <span class="seller-voucher-panel-icon" aria-hidden="true">
-
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                            <path d="M4 7h16v10H4z"></path>
-
-                            <path d="M9 10h6"></path>
-
-                            <path d="M9 14h4"></path>
-
-                        </svg>
-
-                    </span>
 
                     <div>
 
                         <h2 class="seller-voucher-panel-title">Seller Vouchers</h2>
 
-                        <p class="seller-voucher-panel-subtitle">Manage active and inactive checkout campaigns.</p>
 
                     </div>
 

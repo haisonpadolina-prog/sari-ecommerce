@@ -722,6 +722,70 @@
         color: #4f8065;
     }
 
+    /* Flat per-seller price breakdown; no cream cards or nested containers. */
+    .sari-checkout--tiktok .sari-summary-totals.sari-seller-summary-breakdown {
+        gap: 0;
+        margin-top: 16px;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-group {
+        display: grid;
+        gap: 9px;
+        min-width: 0;
+        padding: 0 0 17px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-group + .sari-seller-summary-group {
+        padding-top: 17px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 2px;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-name {
+        min-width: 0;
+        color: #27313b;
+        font-size: 12px;
+        font-weight: 750;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-count {
+        flex: 0 0 auto;
+        color: #858e98;
+        font-size: 9px;
+        white-space: nowrap;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-total {
+        margin-top: 3px;
+        padding-top: 10px;
+        border-top: 1px solid #edf0f2;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-total span:first-child,
+    .sari-checkout--tiktok .sari-seller-summary-total strong {
+        color: #29313a;
+        font-weight: 750;
+    }
+
+    .sari-checkout--tiktok .sari-seller-summary-breakdown > .sari-summary-total {
+        margin-top: 0;
+        padding-top: 17px;
+        border-top: 1px solid #dfe4e8;
+    }
+
     .sari-summary-total {
         margin-top: 4px;
         padding-top: 14px;
@@ -1959,6 +2023,65 @@
         }
     }
 
+
+    /* Checkout success must remain visible over the Buyer sidebar and overlays. */
+    #sariCheckoutSuccessModal[hidden] { display: none !important; }
+    #sariCheckoutSuccessModal {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(15, 23, 42, .48);
+    }
+    #sariCheckoutSuccessModal .sari-checkout-success-card {
+        width: min(100%, 410px);
+        padding: 30px 26px 26px;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 22px 65px rgba(15, 23, 42, .22);
+        animation: sariCheckoutSuccessIn .22s ease-out both;
+    }
+    #sariCheckoutSuccessModal .sari-checkout-success-icon {
+        display: grid;
+        width: 62px;
+        height: 62px;
+        place-items: center;
+        margin: 0 auto 17px;
+        border: 2px solid #cdebd7;
+        border-radius: 50%;
+        color: #21834b;
+        background: #f5fbf7;
+    }
+    #sariCheckoutSuccessModal .sari-checkout-success-icon svg { width: 32px; height: 32px; }
+    #sariCheckoutSuccessModal h2 { margin: 0; font-size: 21px; font-weight: 800; color: #25303b; }
+    #sariCheckoutSuccessModal p { margin: 10px 0 0; color: #697583; font-size: 12px; line-height: 1.65; }
+    #sariCheckoutSuccessModal .sari-checkout-success-action {
+        display: inline-flex;
+        min-height: 45px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-top: 22px;
+        border: 1px solid #c88912;
+        border-radius: 10px;
+        background: #c88912;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 750;
+        cursor: pointer;
+    }
+    #sariCheckoutSuccessModal .sari-checkout-success-action:hover { background: #ae760f; }
+    @keyframes sariCheckoutSuccessIn {
+        from { opacity: 0; transform: translateY(9px) scale(.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #sariCheckoutSuccessModal .sari-checkout-success-card { animation: none; }
+    }
 </style>
 @endpush
 
@@ -1978,7 +2101,7 @@
             </span>
         </div>
 
-        <form id="buyerCheckoutForm" method="POST" action="{{ route('buyer.checkout.store') }}" class="sari-checkout-grid">
+        <form id="buyerCheckoutForm" method="POST" action="{{ route('buyer.checkout.store') }}" data-orders-url="{{ route('buyer.orders') }}" class="sari-checkout-grid">
             @csrf
 
             @if (!empty($buyNowItemId))
@@ -2343,54 +2466,69 @@
                         @endif
                     </div>
 
-                    <div class="sari-summary-totals">
-                        @if(($platformSaleDiscount ?? 0) > 0)
-                            <div class="sari-summary-row">
-                                <span>Merchandise subtotal</span>
-                                <strong>₱{{ number_format($sellerSubtotal, 2) }}</strong>
-                            </div>
-                            <div class="sari-summary-row is-discount">
-                                <span>SARI event discount</span>
-                                <strong>-₱{{ number_format($platformSaleDiscount, 2) }}</strong>
-                            </div>
-                            <div class="sari-summary-row">
-                                <span>Products payable</span>
-                                <strong>₱{{ number_format($subtotal, 2) }}</strong>
-                            </div>
-                        @else
-                            <div class="sari-summary-row">
-                                <span>Merchandise subtotal</span>
-                                <strong>₱{{ number_format($subtotal, 2) }}</strong>
-                            </div>
-                        @endif
+                    {{-- Seller-specific amounts use the same preview data as the checkout controller. --}}
+                    <div class="sari-summary-totals sari-seller-summary-breakdown">
+                        @foreach ($groups as $sellerId => $sellerItems)
+                            @php
+                                $summaryStoreName = $sellerItems->first()?->product?->seller?->store_name ?: 'SARI Seller Store';
+                                $summaryMerchandiseSubtotal = round($sellerItems->sum(fn ($item) => $cart->sellerLineTotal($item)), 2);
+                                $summaryProductsPayable = round($sellerItems->sum(fn ($item) => $cart->lineTotal($item)), 2);
+                                $summaryEventDiscount = round(max(0, $summaryMerchandiseSubtotal - $summaryProductsPayable), 2);
+                                $summaryVoucherDiscount = round((float) ($platformVoucherPreview['allocations'][(int) $sellerId] ?? 0), 2);
+                                $summaryShipping = $shippingBySeller[(int) $sellerId] ?? [];
+                                $summaryShippingOriginal = round((float) ($summaryShipping['original_delivery_fee'] ?? 0), 2);
+                                $summaryShippingDiscount = round((float) ($summaryShipping['shipping_discount'] ?? 0), 2);
+                                $summaryShippingPayable = round((float) ($summaryShipping['delivery_fee'] ?? max(0, $summaryShippingOriginal - $summaryShippingDiscount)), 2);
+                                $summarySellerTotal = round(max(0, $summaryProductsPayable - $summaryVoucherDiscount) + $summaryShippingPayable, 2);
+                            @endphp
 
-                        @if(($platformVoucherDiscount ?? 0) > 0)
-                            <div class="sari-summary-row is-discount">
-                                <span>Voucher discount</span>
-                                <strong>-₱{{ number_format((float) $platformVoucherDiscount, 2) }}</strong>
-                            </div>
-                        @endif
+                            <section class="sari-seller-summary-group" aria-label="Order breakdown for {{ $summaryStoreName }}">
+                                <div class="sari-seller-summary-heading">
+                                    <strong class="sari-seller-summary-name">{{ $summaryStoreName }}</strong>
+                                    <span class="sari-seller-summary-count">{{ $sellerItems->count() }} item{{ $sellerItems->count() === 1 ? '' : 's' }}</span>
+                                </div>
 
-                        <div class="sari-summary-row">
-                            <span>Shipping fee</span>
-                            <strong>₱{{ number_format($originalDeliveryFee, 2) }}</strong>
-                        </div>
+                                <div class="sari-summary-row">
+                                    <span>Product subtotal</span>
+                                    <strong>₱{{ number_format($summaryMerchandiseSubtotal, 2) }}</strong>
+                                </div>
 
-                        @if(($shippingDiscount ?? 0) > 0)
-                            <div class="sari-summary-row is-discount">
-                                <span>Shipping discount</span>
-                                <strong>-₱{{ number_format($shippingDiscount, 2) }}</strong>
-                            </div>
-                        @endif
+                                @if ($summaryEventDiscount > 0)
+                                    <div class="sari-summary-row is-discount">
+                                        <span>SARI event discount</span>
+                                        <strong>-₱{{ number_format($summaryEventDiscount, 2) }}</strong>
+                                    </div>
+                                @endif
 
-                        <div class="sari-summary-row">
-                            <span>Shipping payable</span>
-                            <strong>₱{{ number_format($deliveryFee, 2) }}</strong>
-                        </div>
+                                @if ($summaryVoucherDiscount > 0)
+                                    <div class="sari-summary-row is-discount">
+                                        <span>Voucher discount</span>
+                                        <strong>-₱{{ number_format($summaryVoucherDiscount, 2) }}</strong>
+                                    </div>
+                                @endif
+
+                                <div class="sari-summary-row">
+                                    <span>Shipping fee</span>
+                                    <strong>₱{{ number_format($summaryShippingOriginal, 2) }}</strong>
+                                </div>
+
+                                @if ($summaryShippingDiscount > 0)
+                                    <div class="sari-summary-row is-discount">
+                                        <span>Shipping discount</span>
+                                        <strong>-₱{{ number_format($summaryShippingDiscount, 2) }}</strong>
+                                    </div>
+                                @endif
+
+                                <div class="sari-summary-row sari-seller-summary-total">
+                                    <span>Seller total</span>
+                                    <strong>₱{{ number_format($summarySellerTotal, 2) }}</strong>
+                                </div>
+                            </section>
+                        @endforeach
 
                         <div class="sari-summary-total">
                             <div class="sari-summary-row">
-                                <span>Total</span>
+                                <span>Grand Total</span>
                                 <strong class="sari-summary-grand">₱{{ number_format($grandTotal, 2) }}</strong>
                             </div>
                         </div>
@@ -2404,6 +2542,20 @@
                 </div>
             </aside>
         </form>
+    </div>
+</div>
+
+{{-- Presented only after the server confirms checkout success. --}}
+<div id="sariCheckoutSuccessModal" role="dialog" aria-modal="true" aria-labelledby="sariCheckoutSuccessTitle" aria-describedby="sariCheckoutSuccessText" hidden>
+    <div class="sari-checkout-success-card">
+        <div class="sari-checkout-success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 12 4.5 4.5L19 7"/>
+            </svg>
+        </div>
+        <h2 id="sariCheckoutSuccessTitle">Order placed successfully!</h2>
+        <p id="sariCheckoutSuccessText">Your order has been confirmed. Opening My Orders…</p>
+        <button type="button" class="sari-checkout-success-action" id="sariCheckoutViewOrders">View My Orders now</button>
     </div>
 </div>
 @endsection

@@ -8995,6 +8995,2025 @@
         left: auto !important;
     }
 }
+
+
+/* ============================================================================
+   SELLER DASHBOARD — SELLER ORDERS DESIGN PARITY (UI ONLY)
+   Reference: Seller Order Management / Pickup Requests visual system.
+   Scoped to the dashboard stage; no changes to data, routes, modal workflows,
+   chart calculations, events, actions, or JavaScript IDs.
+   ============================================================================ */
+#sellerDashboardStage.seller-dashboard-ref {
+    --dashboard-ref-gold: #C88912;
+    --dashboard-ref-gold-hover: #B47B0E;
+    --dashboard-ref-ink: #2F3742;
+    --dashboard-ref-strong: #1F2937;
+    --dashboard-ref-muted: #637081;
+    --dashboard-ref-subtle: #8995A3;
+    --dashboard-ref-border: #E5E7EB;
+    --dashboard-ref-divider: #E9EDF1;
+    --dashboard-ref-soft: #F8FAFC;
+    --dashboard-ref-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055);
+    width: 100% !important;
+    max-width: 1520px !important;
+    margin-inline: auto !important;
+    padding-bottom: 28px !important;
+    color: var(--dashboard-ref-ink);
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Keep the existing functioning welcome/time/date/weather hero, but match the
+   reference's clean 18px radius and restrained stationary elevation. */
+#sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+    border-radius: 18px !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+}
+
+/* Five independent summary cards: same visual proportions as Seller Orders. */
+#sellerDashboardStage #sellerDashboardContent > .seller-dashboard-summary {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0,1fr)) !important;
+    gap: 14px !important;
+    margin-top: 20px !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card,
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:hover {
+    min-width: 0 !important;
+    min-height: 110px !important;
+    height: auto !important;
+    padding: 14px 16px !important;
+    border: 1px solid var(--dashboard-ref-border) !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+    transform: none !important;
+    transition: border-color .15s ease, background-color .15s ease !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:hover {
+    border-color: #D1D8E0 !important;
+    background: var(--dashboard-ref-soft) !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:focus-visible {
+    outline: 2px solid var(--dashboard-ref-gold) !important;
+    outline-offset: 3px !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card > div {
+    align-items: flex-start !important;
+    gap: 12px !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-label {
+    color: var(--dashboard-ref-muted) !important;
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-value {
+    margin-top: 7px !important;
+    color: var(--dashboard-ref-strong) !important;
+    font-size: clamp(25px, 1.9vw, 30px) !important;
+    font-weight: 650 !important;
+    font-variant-numeric: tabular-nums !important;
+    letter-spacing: -.035em !important;
+    line-height: 1.12 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    overflow-wrap: anywhere !important;
+    text-overflow: clip !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-note {
+    display: block !important;
+    margin-top: 6px !important;
+    color: var(--dashboard-ref-subtle) !important;
+    font-size: 11.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    -webkit-line-clamp: unset !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-icon {
+    display: grid !important;
+    flex: 0 0 27px !important;
+    width: 27px !important;
+    height: 27px !important;
+    padding: 0 !important;
+    place-items: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+    stroke-width: 1.8 !important;
+}
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-icon > span {
+    font-size: 25px !important;
+    line-height: 1 !important;
+}
+
+/* Two evenly weighted analytics panels, with consistent surface treatment. */
+#sellerDashboardStage #sellerAnalyticsRow {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard,
+#sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-activity-panel,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel,
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel {
+    min-width: 0 !important;
+    border: 1px solid var(--dashboard-ref-border) !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard:hover,
+#sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card:hover,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-activity-panel:hover,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel:hover,
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
+    border-color: var(--dashboard-ref-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head {
+    padding: 19px 21px !important;
+    border-bottom: 1px solid var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child h3,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-title,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head h3,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-panel-title,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-panel-title {
+    color: var(--dashboard-ref-ink) !important;
+    font-family: inherit !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -.02em !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child p,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-subtitle,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head p,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel > div:first-child p,
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel > div:first-child p {
+    margin-top: 4px !important;
+    color: var(--dashboard-ref-subtle) !important;
+    font-family: inherit !important;
+    font-size: 11.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard > div:first-child > span {
+    border-color: #E9D7B7 !important;
+    background: #FFF9EE !important;
+    color: #A87316 !important;
+    font-size: 10.5px !important;
+    font-weight: 650 !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-body {
+    grid-template-columns: minmax(195px,.88fr) minmax(0,1.12fr) !important;
+    align-items: center !important;
+    gap: 18px !important;
+    padding: 20px 22px !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-donut {
+    position: relative !important;
+    left: auto !important;
+    min-height: 210px !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-donut {
+    width: 208px !important;
+    height: 208px !important;
+    flex: 0 0 208px !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-donut::before { inset: 26% !important; }
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-donut-center { inset: 28% !important; }
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-center-label,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-center-sub {
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+    color: #7B8794 !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-center-value {
+    font-size: 30px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+    color: var(--dashboard-ref-strong) !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-kicker { font-size: 10px !important; }
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-title {
+    font-size: 13px !important;
+    font-weight: 650 !important;
+    color: var(--dashboard-ref-ink) !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-ranked-row {
+    min-height: 47px !important;
+    padding: 9px 0 !important;
+    border-bottom-color: var(--dashboard-ref-divider) !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-ranked-name,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-ranked-top > strong {
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+    font-weight: 600 !important;
+    color: #475467 !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-footer {
+    border-top-color: var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+    padding: 14px 21px !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-footer > p,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action { color: #A87316 !important; }
+
+/* Sales chart retains its SVG, tooltip and active-period JS behavior. */
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-periods {
+    border-radius: 12px !important;
+    background: var(--dashboard-ref-soft) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button {
+    min-height: 36px !important;
+    font-size: 10.5px !important;
+    padding: 0 11px !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metrics {
+    margin: 0 21px !important;
+    padding: 17px 0 !important;
+    border-color: var(--dashboard-ref-divider) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    color: var(--dashboard-ref-muted) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric-value {
+    margin-top: 7px !important;
+    font-size: clamp(20px,1.9vw,27px) !important;
+    font-weight: 650 !important;
+    color: var(--dashboard-ref-strong) !important;
+    overflow-wrap: anywhere !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-head {
+    padding: 18px 21px 12px !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-title {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--dashboard-ref-ink) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-copy,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-legend-item,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-footer p,
+#sellerDashboardStage #sellerSalesPerformanceCard #sellerSalesBestPeriod {
+    font-size: 10.5px !important;
+    line-height: 1.5 !important;
+    color: var(--dashboard-ref-subtle) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
+    margin: 0 21px !important;
+    border-color: var(--dashboard-ref-divider) !important;
+    background: var(--dashboard-ref-soft) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-period,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row {
+    font-size: 10.5px !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row strong { font-size: 11.5px !important; }
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-footer { padding: 14px 21px 18px !important; }
+
+/* Operations row: same quiet white cards, divider rhythm, readable typography. */
+#sellerDashboardStage #sellerCommerceSideColumn,
+#sellerDashboardStage #sellerFinancialOrdersRow { gap: 16px !important; margin-top: 20px !important; }
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-activity-panel,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 356px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-inventory-panel > div:first-child {
+    min-height: 82px !important;
+    padding: 19px 20px 16px !important;
+    border-bottom: 1px solid var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head .seller-activity-owner-badge,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-head .seller-recent-live,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel > div:first-child > .seller-inventory-count {
+    min-height: 27px !important;
+    font-size: 10px !important;
+    padding: 0 10px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-title,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-buyer,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row p:first-child {
+    color: var(--dashboard-ref-strong) !important;
+    font-size: 12.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.45 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-description,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-meta,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row p + p {
+    color: var(--dashboard-ref-muted) !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-time,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-count {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-activity-item,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-order-feed-item { border-bottom-color: var(--dashboard-ref-divider) !important; }
+#sellerDashboardStage #sellerCommerceSideColumn .seller-activity-item:hover,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-order-feed-item:hover {
+    background: var(--dashboard-ref-soft) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer {
+    border-top-color: var(--dashboard-ref-divider) !important;
+    padding: 13px 20px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer p,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a { font-size: 11px !important; }
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a { color: #A87316 !important; }
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row {
+    border-color: var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+    border-radius: 10px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-button,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-panel a[href*="reports"] {
+    min-height: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+    border-color: var(--dashboard-ref-gold) !important;
+    background: var(--dashboard-ref-gold) !important;
+    color: #FFFFFF !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-button:hover,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-panel a[href*="reports"]:hover {
+    border-color: var(--dashboard-ref-gold-hover) !important;
+    background: var(--dashboard-ref-gold-hover) !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel { padding: 19px 20px !important; }
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric {
+    border-color: var(--dashboard-ref-divider) !important;
+    background: var(--dashboard-ref-soft) !important;
+    border-radius: 10px !important;
+    padding: 10px 12px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-label {
+    color: var(--dashboard-ref-muted) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-value {
+    color: var(--dashboard-ref-strong) !important;
+    font-size: 19px !important;
+    font-weight: 650 !important;
+    line-height: 1.2 !important;
+    overflow-wrap: anywhere !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row {
+    min-height: 42px !important;
+    border-color: var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+    border-radius: 10px !important;
+    padding: 8px 11px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover { background: var(--dashboard-ref-soft) !important; }
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row > span:first-child {
+    color: var(--dashboard-ref-ink) !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row > span:last-child {
+    min-width: 27px !important;
+    min-height: 27px !important;
+    font-size: 10.5px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-view-all {
+    min-height: 44px !important;
+    height: 44px !important;
+    border: 1px solid #DCE2E8 !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    color: #A87316 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-view-all:hover { background: var(--dashboard-ref-soft) !important; }
+
+/* Responsive: preserve five/two/one card rhythm without making text tiny. */
+@media (max-width: 1180px) {
+    #sellerDashboardStage #sellerDashboardContent > .seller-dashboard-summary {
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    }
+    #sellerDashboardStage #sellerAnalyticsRow { grid-template-columns: minmax(0,1fr) !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-body {
+        grid-template-columns: minmax(190px,.85fr) minmax(0,1.15fr) !important;
+    }
+}
+@media (max-width: 767px) {
+    #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-label { font-size: 12.5px !important; }
+    #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-note { font-size: 11px !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-body {
+        grid-template-columns: minmax(0,1fr) !important;
+        gap: 18px !important;
+    }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-donut { left: auto !important; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head { gap: 12px !important; }
+}
+@media (max-width: 540px) {
+    #sellerDashboardStage #sellerDashboardContent > .seller-dashboard-summary {
+        grid-template-columns: minmax(0,1fr) !important;
+        gap: 11px !important;
+    }
+    #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card,
+    #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:hover {
+        min-height: 100px !important;
+    }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metrics {
+        grid-template-columns: minmax(0,1fr) !important;
+    }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric,
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric:first-child,
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric:last-child {
+        padding: 10px 0 !important;
+    }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-metric + .seller-sales-admin-metric {
+        border-top: 1px solid var(--dashboard-ref-divider) !important;
+        border-left: 0 !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    #sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card {
+        transition: none !important;
+    }
+}
+
+
+/* ========================================================================
+   SELLER DASHBOARD — RECENT ORDERS ROW FIT + INVENTORY EMPTY STATE
+   UI ONLY: keep all existing Blade bindings, order links, status mapping,
+   image URLs, onerror fallback, filters, charts, and backend untouched.
+   Deliberately last in the dashboard stylesheet to override legacy 56px
+   fixed rows and the image/fallback display conflicts.
+   ======================================================================== */
+
+/* The card follows its contents rather than clipping four three-line rows. */
+#sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentOrdersCard {
+    height: auto !important;
+    min-height: 356px !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 2px 18px !important;
+}
+
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: 54px minmax(0, 1fr) minmax(98px, 108px) !important;
+    gap: 12px !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 0 96px !important;
+    height: auto !important;
+    min-height: 96px !important;
+    max-height: none !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    text-decoration: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:last-child {
+    border-bottom: 0 !important;
+}
+
+/* Product preview fills its image frame; never display the fallback twice. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
+    position: relative !important;
+    display: block !important;
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+    flex: 0 0 54px !important;
+    overflow: hidden !important;
+    border: 1px solid #E2E7ED !important;
+    border-radius: 11px !important;
+    background: #F3F5F8 !important;
+    line-height: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar > img {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar > img.hidden,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-image-fallback.hidden {
+    display: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-image-fallback:not(.hidden) {
+    display: grid !important;
+    width: 100% !important;
+    height: 100% !important;
+    place-items: center !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    color: #8B96A4 !important;
+    background: #F3F5F8 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-new-dot {
+    z-index: 2 !important;
+    right: 3px !important;
+    bottom: 3px !important;
+}
+
+/* Keep buyer, product, and order reference on their own readable lines. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item > span:nth-child(2) {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+    gap: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-buyer {
+    display: block !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 10.5px !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
+    display: block !important;
+    margin-top: 5px !important;
+    font-size: 9.5px !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Dedicated amount/status/time column; no content is positioned over rows. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    align-self: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 5px !important;
+    text-align: right !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
+    display: block !important;
+    width: 100% !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side > span:nth-child(2) {
+    display: block !important;
+    margin: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 24px !important;
+    margin: 0 !important;
+    padding: 3px 8px !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
+    display: block !important;
+    margin: 0 !important;
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+}
+
+/* Inventory healthy state is a gray icon and text, not another card. */
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 116px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 24px 10px !important;
+    box-shadow: none !important;
+    color: #8A95A3 !important;
+    text-align: center !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty svg {
+    width: 20px !important;
+    height: 20px !important;
+    flex: 0 0 20px !important;
+    color: #98A2B3 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty p {
+    margin: 0 !important;
+    color: #7B8794 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    font-weight: 500 !important;
+}
+
+@media (max-width: 640px) {
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+        padding-inline: 14px !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item {
+        grid-template-columns: 48px minmax(0, 1fr) !important;
+        gap: 5px 11px !important;
+        min-height: 112px !important;
+        padding: 12px 0 !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        grid-row: 1 / span 2 !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        display: flex !important;
+        width: 100% !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: 5px 9px !important;
+        text-align: left !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
+        width: auto !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
+        font-size: 9px !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-panel .seller-inventory-empty {
+        min-height: 96px !important;
+        padding: 20px 4px !important;
+    }
+}
+
+
+/* ========================================================================
+   FINANCIAL SNAPSHOT + ORDER MANAGEMENT — CLEAN ICONS / UNBOXED METRICS
+   UI only: existing figures, order counts, links and realtime behavior intact.
+   Neutral line icons, no cream icon tiles, and no colored count capsules.
+   ======================================================================== */
+#sellerDashboardStage #sellerFinancialOrdersRow {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    margin-top: 18px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel {
+    min-width: 0 !important;
+    min-height: 338px !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 20px 22px !important;
+    overflow: visible !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055)) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow, 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055)) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-panel-title {
+    color: #2F3742 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel > div:first-child > p {
+    color: #8995A3 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+/* Financial data are three simple white rows separated by thin gray rules. */
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-panel > div:nth-child(2) {
+    display: grid !important;
+    gap: 0 !important;
+    margin-top: 13px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric {
+    display: grid !important;
+    grid-template-columns: 23px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 11px !important;
+    min-height: 64px !important;
+    margin: 0 !important;
+    padding: 10px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric:last-child {
+    border-bottom: 0 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    flex: 0 0 22px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #98A2B3 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-icon svg {
+    display: block !important;
+    width: 21px !important;
+    height: 21px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-copy {
+    display: block !important;
+    min-width: 0 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-label {
+    margin: 0 !important;
+    color: #637081 !important;
+    font-size: 11px !important;
+    font-weight: 550 !important;
+    line-height: 1.35 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-metric-value {
+    margin-top: 5px !important;
+    color: #1F2937 !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    font-variant-numeric: tabular-nums !important;
+    overflow-wrap: anywhere !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-panel > .mt-auto,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-panel > .mt-auto {
+    padding-top: 14px !important;
+}
+/* Workflow: gray inline symbols and bare counts; no cream or colored tiles. */
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-panel > div:nth-child(2) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 16px !important;
+    row-gap: 3px !important;
+    margin-top: 13px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    min-height: 48px !important;
+    padding: 9px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #ECEFF2 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+    text-decoration: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover {
+    border-bottom-color: #DDE3E9 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:focus-visible {
+    outline: 2px solid #C88912 !important;
+    outline-offset: 3px !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-label {
+    display: flex !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    align-items: center !important;
+    gap: 9px !important;
+    color: #475467 !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-line-icon {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 18px !important;
+    color: #98A2B3 !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-name {
+    display: block !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    overflow-wrap: anywhere !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row > .seller-order-count {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 0 0 auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #475467 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    font-variant-numeric: tabular-nums !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-line-icon,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-name,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-count {
+    color: #A87316 !important;
+}
+@media (max-width: 767px) {
+    #sellerDashboardStage #sellerFinancialOrdersRow {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px !important;
+    }
+    #sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel {
+        min-height: 0 !important;
+        padding: 18px !important;
+    }
+}
+@media (max-width: 420px) {
+    #sellerDashboardStage #sellerFinancialOrdersRow .seller-order-panel > div:nth-child(2) {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+
+/* ===============================================================
+   SARI ANALYTICS — FLAT GOLD, LARGE SALES / SMALL TOP SELLER
+   Screenshot-inspired layout; no color gradients or category mix.
+   =============================================================== */
+#sellerDashboardStage #sellerAnalyticsRow {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+    align-items: stretch !important;
+    margin-top: 20px !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard,
+#sellerDashboardStage #sellerCategoryBreakdownCard {
+    min-width: 0 !important;
+    min-height: 355px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 20px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    transform: none !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard:hover,
+#sellerDashboardStage #sellerCategoryBreakdownCard:hover {
+    border-color: #E5E7EB !important;
+    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card {
+    padding: 23px 26px 20px !important;
+    overflow: hidden !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 14px !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head,
+#sellerDashboardStage #sellerCategoryBreakdownCard > .seller-top-product-heading {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-overview-identity {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 250px;
+    gap: 12px;
+    align-items: flex-start;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-overview-icon {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    margin-top: 1px;
+    color: #252B33;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-title,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-heading h3 {
+    margin: 0 !important;
+    font-size: clamp(18px, 1.5vw, 23px) !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    letter-spacing: -.035em !important;
+    color: #202734 !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-subtitle,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-heading p {
+    margin-top: 5px !important;
+    color: #7B8794 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-periods {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    align-items: center !important;
+    padding: 4px !important;
+    gap: 2px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #F4F5F7 !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button {
+    min-height: 36px !important;
+    height: 36px !important;
+    padding: 0 14px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #697586 !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button.is-active,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button[aria-pressed="true"] {
+    background: #222831 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 5px rgba(18,24,32,.12) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-shell {
+    position: relative !important;
+    display: block !important;
+    margin: 15px 0 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard #sellerSalesChart {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-line {
+    stroke: #C88912 !important;
+    stroke-width: 3 !important;
+    stroke-linejoin: round !important;
+    stroke-linecap: round !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-area {
+    /* Flat gold line/dots, with a downward alpha fade only beneath the line. */
+    fill: url(#sellerSalesGoldVerticalFade) !important;
+    fill-opacity: 1 !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip {
+    border: 1px solid #C88912 !important;
+    background: #252B33 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 20px rgba(25,30,39,.14) !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-period,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row strong,
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row span {
+    color: #FFFFFF !important;
+}
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-tooltip-row span > i { background: #C88912 !important; }
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-empty {
+    inset: 52% 12px auto !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard.seller-top-product-card {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 23px 22px !important;
+    overflow: hidden !important;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-heading { min-width: 0; }
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-body {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 22px 0 8px;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-donut {
+    position: relative;
+    width: min(56%, 212px);
+    min-width: 126px;
+    aspect-ratio: 1;
+    flex: 0 1 212px;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-donut svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-center {
+    position: absolute;
+    inset: 21%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    pointer-events: none;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-center strong {
+    font-size: clamp(29px, 2.5vw, 40px);
+    line-height: 1;
+    font-weight: 700;
+    color: #202734;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-center span {
+    font-size: 10.5px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #697586;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-detail {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 120px;
+    align-items: flex-start;
+    gap: 9px;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-bullet {
+    display: block;
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: #C88912;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-name {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 700;
+    color: #202734;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-note,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-empty span {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #7B8794;
+}
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-empty p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 600;
+    color: #475467;
+}
+@media (min-width: 1180px) {
+    #sellerDashboardStage #sellerAnalyticsRow {
+        grid-template-columns: minmax(0, 2.15fr) minmax(320px, .95fr) !important;
+    }
+}
+@media (max-width: 1179px) {
+    #sellerDashboardStage #sellerAnalyticsRow { grid-template-columns: minmax(0, 1fr) !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard { min-height: 290px !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-donut { max-width: 190px; }
+}
+@media (max-width: 639px) {
+    #sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card { padding: 17px 13px !important; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-head { gap: 12px !important; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-overview-identity { flex-basis: 100%; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-periods { width: 100% !important; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button { flex: 1 1 0 !important; padding-inline: 7px !important; }
+    #sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-admin-chart-shell { margin-top: 13px !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard.seller-top-product-card { padding: 18px 15px !important; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-body { gap: 12px; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-donut { min-width: 112px; }
+    #sellerDashboardStage #sellerCategoryBreakdownCard .seller-top-product-name { font-size: 12px; }
+}
+
+
+/* ============================================================================
+   SELLER WELCOME HERO — COMFORTABLE, PROFESSIONAL READABILITY
+   Only the dashboard greeting panel is affected. Time/date/weather dynamic IDs,
+   store status, accessibility text, and all application logic stay unchanged.
+   Uses solid surfaces; no additional gradients or icon containers.
+   ============================================================================ */
+#sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+    padding: 23px 27px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+    grid-template-columns: minmax(265px, .95fr) 1px minmax(0, 1.36fr) !important;
+    min-height: 120px !important;
+    gap: 22px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe #sellerGreetingText.seller-hero-reference-title {
+    font-size: clamp(26px, 1.78vw, 32px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -.035em !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-wave {
+    width: 29px !important;
+    height: 29px !important;
+    flex-basis: 29px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-wave .fi {
+    font-size: 26px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-subtitle {
+    margin-top: 9px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-statuses {
+    flex-wrap: wrap !important;
+    gap: 11px !important;
+    margin-top: 12px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-status,
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-verified {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-status {
+    gap: 8px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-status > i {
+    width: 8px !important;
+    height: 8px !important;
+    flex-basis: 8px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-status-divider {
+    height: 19px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-verified {
+    gap: 7px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-verified svg {
+    width: 17px !important;
+    height: 17px !important;
+    flex: 0 0 17px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-divider {
+    height: 91px !important;
+    background: rgba(255,255,255,.14) !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat {
+    min-width: 0 !important;
+    padding: 9px 16px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:first-child {
+    padding-left: 0 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:last-child {
+    padding-right: 0 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-heading {
+    gap: 9px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-icon {
+    width: 19px !important;
+    height: 19px !important;
+    flex-basis: 19px !important;
+    stroke-width: 1.85 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-label {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 650 !important;
+    letter-spacing: .08em !important;
+    color: rgba(255,255,255,.66) !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-copy {
+    margin-top: 10px !important;
+    padding-left: 28px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+    font-size: clamp(19px, 1.30vw, 22px) !important;
+    line-height: 1.2 !important;
+    font-weight: 650 !important;
+    font-variant-numeric: tabular-nums !important;
+    letter-spacing: -.025em !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+    margin-top: 7px !important;
+    font-size: 10.5px !important;
+    line-height: 1.45 !important;
+    color: rgba(255,255,255,.65) !important;
+}
+@media (max-width: 1279px) and (min-width: 1100px) {
+    #sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+        padding: 21px 22px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+        gap: 15px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat {
+        padding-inline: 10px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+        font-size: 19px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+        font-size: 10px !important;
+    }
+}
+@media (max-width: 1099px) {
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+        grid-template-columns: 1fr !important;
+        min-height: 0 !important;
+        gap: 15px !important;
+    }
+    #sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+        padding: 20px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+@media (max-width: 639px) {
+    #sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+        padding: 19px 17px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe #sellerGreetingText.seller-hero-reference-title {
+        font-size: 24px !important;
+        line-height: 1.2 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-meta {
+        grid-template-columns: minmax(0, 1fr) !important;
+        padding-top: 12px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat,
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:first-child,
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:last-child {
+        padding: 12px 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
+        border-left: 0 !important;
+        border-top: 1px solid rgba(255,255,255,.10) !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+        font-size: 21px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-label {
+        font-size: 10.5px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+        font-size: 11px !important;
+    }
+}
+
+
+/* ========================================================================
+   SELLER DASHBOARD — NO CURSOR HOVER EFFECTS (CSS ONLY)
+   Hovering does not lift, recolor, or re-shadow cards/buttons/rows.
+   Click, focus-visible, selected chart periods and chart tooltips are intact.
+   The control states (e.g., .is-active, aria-pressed) remain untouched.
+   ======================================================================== */
+
+/* Freeze decorative motion on dashboard links, buttons and card surfaces;
+   do not affect data-driven chart SVG, selection, or modal transitions. */
+#sellerDashboardStage a:hover,
+#sellerDashboardStage button:hover,
+#sellerDashboardStage .seller-dashboard-summary-card:hover,
+#sellerDashboardStage #sellerCategoryBreakdownCard:hover,
+#sellerDashboardStage #sellerSalesPerformanceCard:hover,
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-side-panel:hover,
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover,
+#sellerDashboardStage .seller-activity-item:hover,
+#sellerDashboardStage .seller-order-feed-item:hover,
+#sellerDashboardStage .seller-inventory-row:hover,
+#sellerDashboardStage .seller-order-row:hover {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* The five KPI summary links must match their exact resting appearance. */
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:hover,
+#sellerDashboardStage #sellerDashboardContent .seller-dashboard-summary-card:active {
+    transform: none !important;
+    border-color: var(--dashboard-ref-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+    transition: none !important;
+}
+
+/* Top analytics: fixed panel depth at every hover state. */
+#sellerDashboardStage #sellerCategoryBreakdownCard:hover,
+#sellerDashboardStage #sellerSalesPerformanceCard:hover,
+#sellerDashboardStage #sellerSalesPerformanceCard.seller-sales-admin-card:hover {
+    border-color: #E5E7EB !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 9px 26px rgba(29,41,57,.055) !important;
+    transform: none !important;
+}
+
+/* Activity / inventory / financial / order cards remain visually still. */
+#sellerDashboardStage #sellerCommerceSideColumn > .seller-side-panel:hover,
+#sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentActivityCard:hover,
+#sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentOrdersCard:hover,
+#sellerDashboardStage #sellerFinancialOrdersRow > .seller-side-panel:hover {
+    border-color: var(--dashboard-ref-border) !important;
+    background: #FFFFFF !important;
+    box-shadow: var(--dashboard-ref-shadow) !important;
+    transform: none !important;
+}
+
+/* The operations feed stays flat; cursor no longer highlights entire rows. */
+#sellerDashboardStage #sellerCommerceSideColumn .seller-activity-item:hover,
+#sellerDashboardStage #sellerCommerceSideColumn .seller-order-feed-item:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-row:hover {
+    border-color: var(--dashboard-ref-divider) !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover {
+    border-color: #ECEFF2 !important;
+    border-bottom-color: #ECEFF2 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-line-icon,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-name,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-row:hover .seller-order-count {
+    color: inherit !important;
+}
+
+/* Action buttons keep their normal styles and remain clickable. */
+#sellerDashboardStage #sellerCommerceSideColumn .seller-inventory-button:hover,
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-financial-panel a[href*="reports"]:hover {
+    border-color: var(--dashboard-ref-gold) !important;
+    background: var(--dashboard-ref-gold) !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerFinancialOrdersRow .seller-order-view-all:hover {
+    border-color: #D8DEE6 !important;
+    background: #FFFFFF !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a:hover {
+    color: #A87316 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn .seller-recent-footer a:hover svg,
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-executive-action:hover svg {
+    transform: none !important;
+}
+
+/* Sales period buttons: hover is inert; clicked/active period keeps its cue. */
+#sellerDashboardStage #sellerSalesPerformanceCard .seller-sales-period-button:hover:not(.is-active):not([aria-pressed="true"]) {
+    border-color: transparent !important;
+    background: transparent !important;
+    color: #697586 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Legacy category/list and product tiles, if mounted, also stay still. */
+#sellerDashboardStage .seller-category-legend-button:hover:not(.is-active),
+#sellerDashboardStage #sellerCategoryBreakdownCard .seller-category-ranked-row:hover:not(.is-active) {
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+#sellerDashboardStage #sellerProductsPanel .seller-responsive-product-card:hover,
+#sellerDashboardStage #sellerProductsPanel .seller-responsive-add-card:hover {
+    border-color: rgba(217,203,182,.42) !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 1px 2px rgba(34,34,34,.018),
+                0 5px 14px rgba(34,34,34,.040),
+                0 10px 24px rgba(34,34,34,.035) !important;
+    transform: none !important;
+}
+
+/* Do not suppress focus-visible outlines, pressed/active colors, chart tooltips,
+   actual graph-point interactions, or user-triggered dropdowns. */
+
+
+/* ========================================================================
+   SELLER DASHBOARD — COMPACT GREETING HERO (CSS ONLY)
+   Shorter welcome bar, unchanged status/time/date/weather markup and logic.
+   Retain static no-hover effects and mobile readability.
+   ======================================================================== */
+#sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 12px 20px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+    min-height: 78px !important;
+    gap: 16px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe #sellerGreetingText.seller-hero-reference-title {
+    font-size: clamp(22px, 1.58vw, 26px) !important;
+    line-height: 1.12 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-subtitle {
+    margin-top: 4px !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-statuses {
+    margin-top: 7px !important;
+    gap: 8px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-status {
+    min-height: 22px !important;
+    padding-inline: 9px !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-verified {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-verified svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex-basis: 15px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-divider {
+    height: 66px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat {
+    padding: 5px 10px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-heading {
+    gap: 6px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-icon {
+    width: 16px !important;
+    height: 16px !important;
+    flex-basis: 16px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-label {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-copy {
+    margin-top: 5px !important;
+    padding-left: 22px !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+    font-size: clamp(16px, 1.15vw, 19px) !important;
+    line-height: 1.15 !important;
+}
+#sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+    margin-top: 4px !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+}
+/* Tablet: keep time/date/weather beside greeting instead of a tall second row. */
+@media (min-width: 640px) and (max-width: 1099px) {
+    #sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+        padding: 12px 15px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+        grid-template-columns: minmax(215px, .88fr) minmax(0, 1.3fr) !important;
+        gap: 12px !important;
+        min-height: 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-divider {
+        display: none !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        padding-top: 0 !important;
+        border-top: 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe #sellerGreetingText.seller-hero-reference-title {
+        font-size: 21px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat {
+        padding-inline: 6px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+        font-size: 16px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+        font-size: 8px !important;
+    }
+}
+/* Mobile: one-row three-metric strip keeps the hero short and readable. */
+@media (max-width: 639px) {
+    #sellerDashboardStage .seller-greeting-hero.seller-hero-admin-safe {
+        padding: 13px 14px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-layout {
+        grid-template-columns: minmax(0, 1fr) !important;
+        min-height: 0 !important;
+        gap: 10px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe #sellerGreetingText.seller-hero-reference-title {
+        font-size: 21px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-hero-reference-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 0 !important;
+        padding-top: 10px !important;
+        border-top: 1px solid rgba(255,255,255,.10) !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat,
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:first-child,
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:last-child {
+        padding: 6px 7px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:first-child {
+        padding-left: 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat:last-child {
+        padding-right: 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat + .seller-greeting-stat {
+        border-top: 0 !important;
+        border-left: 1px solid rgba(255,255,255,.10) !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-heading {
+        gap: 5px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-icon {
+        width: 14px !important;
+        height: 14px !important;
+        flex-basis: 14px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-label {
+        font-size: 8px !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-copy {
+        margin-top: 6px !important;
+        padding-left: 0 !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-value {
+        font-size: clamp(14px, 3.8vw, 17px) !important;
+    }
+    #sellerDashboardStage .seller-hero-admin-safe .seller-greeting-stat-sub {
+        margin-top: 4px !important;
+        font-size: 8.4px !important;
+        line-height: 1.25 !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+}
+
+
+/* ========================================================================
+   SELLER DASHBOARD — CLEAN RECENT ACTIVITY & ORDERS
+   Presentation only: shorten long text visually, remove repetitive labels,
+   and use compact, scannable rows. Preserve order/activity bindings and links.
+   ======================================================================== */
+#sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentActivityCard,
+#sellerDashboardStage #sellerCommerceSideColumn > #sellerRecentOrdersCard {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+}
+
+/* Clean headers: a single title and a quiet context badge. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    min-height: 60px !important;
+    padding: 15px 18px !important;
+    gap: 12px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head h3,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head h3 {
+    margin: 0 !important;
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+    letter-spacing: -.025em !important;
+    text-align: left !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-owner-badge,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-live {
+    flex: 0 0 auto !important;
+    min-height: 23px !important;
+    padding: 4px 9px !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+
+/* Activity: two readable lines and an understated timestamp, no SKU wall. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 2px 18px !important;
+    overflow: visible !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:hover {
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 12px !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 67px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 10px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #E9EDF2 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:last-child {
+    border-bottom: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item > span:first-child {
+    display: flex !important;
+    min-width: 0 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-title {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    color: #273142 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.35 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-description {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    margin-top: 4px !important;
+    color: #738091 !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-meta {
+    display: none !important; /* Detail remains available on linked pages. */
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-time {
+    display: block !important;
+    align-self: center !important;
+    margin: 0 !important;
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+}
+
+/* Orders: product thumbnail, two-line description, then total/status. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 2px 18px !important;
+    overflow: visible !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
+    box-sizing: border-box !important;
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) minmax(98px, 112px) !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 76px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 10px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #E9EDF2 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:last-child {
+    border-bottom: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    overflow: hidden !important;
+    border-radius: 11px !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item > span:nth-child(2) {
+    display: flex !important;
+    min-width: 0 !important;
+    flex-direction: column !important;
+    grid-column: 2 !important;
+    grid-row: auto !important;
+    justify-content: center !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-buyer {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    color: #273142 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.3 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-product {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    margin-top: 4px !important;
+    color: #6F7B8C !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    margin-top: 4px !important;
+    color: #9AA4B1 !important;
+    font-size: 9px !important;
+    line-height: 1.3 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-meta > span:not(:first-child) {
+    display: none !important; /* Order number stays; qty/payment remain in data. */
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex-direction: column !important;
+    grid-column: 3 !important;
+    grid-row: auto !important;
+    align-self: center !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    text-align: right !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total {
+    display: block !important;
+    width: auto !important;
+    color: #1F2937 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side > span:nth-child(2) {
+    display: block !important;
+    margin: 0 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-status {
+    display: inline-flex !important;
+    min-height: 22px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
+    display: block !important;
+    margin: 0 !important;
+    color: #98A2B3 !important;
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+}
+/* Footer calls to action are sufficient; no repetitive explanation below. */
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 45px !important;
+    padding: 8px 18px !important;
+    border-top: 1px solid #E9EDF2 !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: #A87316 !important;
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 650 !important;
+    transform: none !important;
+}
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer a:hover,
+#sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer a:hover {
+    color: #A87316 !important;
+    transform: none !important;
+}
+@media (max-width: 640px) {
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-head,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-head {
+        min-height: 54px !important;
+        padding: 13px 14px !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-list,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-orders-feed {
+        padding-inline: 14px !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-activity-item:hover {
+        gap: 8px !important;
+        min-height: 64px !important;
+        padding: 9px 0 !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-order-feed-item:hover {
+        grid-template-columns: 42px minmax(0, 1fr) !important;
+        align-items: start !important;
+        min-height: 94px !important;
+        gap: 5px 10px !important;
+        padding: 11px 0 !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-avatar {
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 42px !important;
+        grid-row: 1 / span 2 !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-side {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 5px 9px !important;
+        text-align: left !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-total,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-time {
+        font-size: 10px !important;
+    }
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentActivityCard .seller-recent-footer,
+    #sellerDashboardStage #sellerCommerceSideColumn #sellerRecentOrdersCard .seller-recent-footer {
+        padding-inline: 14px !important;
+    }
+}
+
 @endverbatim
 </style>
 <link
@@ -9083,81 +11102,8 @@
 
     $dashboardPreviewProducts = $products;
 
-    /*
-    |--------------------------------------------------------------------------
-    | CATEGORY BREAKDOWN — INSTANT PREVIEW PAYLOAD
-    |--------------------------------------------------------------------------
-    | The full active catalog is fetched once from the existing lazy Product
-    | Library endpoint. These preview rows let the donut paint immediately so
-    | the dashboard never waits on the network before showing useful content.
-    */
-    $categoryBreakdownPreview = $dashboardPreviewProducts
-        ->map(function ($product) {
-            return [
-                'category' => trim((string) ($product->category ?: 'Uncategorized')),
-                'moderation_status' => (string) ($product->moderation_status ?? ''),
-                'stock' => (int) ($product->stock ?? 0),
-            ];
-        })
-        ->values();
-
-
-    /*
-    | First-paint category preview uses only the controller-provided preview
-    | rows. The complete catalog starts fetching immediately below and silently
-    | refreshes this card as soon as the response is ready.
-    */
-    $categoryPreviewPalette = [
-        '#D89B10', // Primary Gold
-        '#B67A08', // Deep Gold
-        '#63A375', // Soft Green
-        '#6C8FB5', // Dusty Blue
-        '#D97C6C', // Soft Rose
-        '#4E5A4F', // Dark Olive Gray
-    ];
-
-    $categoryPreviewGroups = $categoryBreakdownPreview
-        ->groupBy('category')
-        ->map(fn ($items) => $items->count())
-        ->sortDesc();
-
-    if ($categoryPreviewGroups->count() > 6) {
-        $categoryPreviewVisible = $categoryPreviewGroups->take(5);
-        $categoryPreviewRemainder = $categoryPreviewGroups->skip(5)->sum();
-        $categoryPreviewGroups = $categoryPreviewVisible->put('Other Categories', $categoryPreviewRemainder);
-    }
-
-    $categoryPreviewVisibleTotal = max(1, (int) $categoryPreviewGroups->sum());
-    $categoryPreviewRows = collect();
-    $categoryPreviewSegments = [];
-    $categoryPreviewCursor = 0.0;
-
-    foreach ($categoryPreviewGroups as $categoryName => $categoryCount) {
-        $categoryPreviewIndex = $categoryPreviewRows->count();
-        $categoryPreviewPercent = ((int) $categoryCount / $categoryPreviewVisibleTotal) * 100;
-        $categoryPreviewStart = $categoryPreviewCursor;
-        $categoryPreviewEnd = $categoryPreviewCursor + ($categoryPreviewPercent * 3.6);
-        $categoryPreviewCursor = $categoryPreviewEnd;
-        $categoryPreviewColor = $categoryPreviewPalette[$categoryPreviewIndex % count($categoryPreviewPalette)];
-
-        $categoryPreviewRows->push([
-            'name' => (string) $categoryName,
-            'count' => (int) $categoryCount,
-            'percentage' => $categoryPreviewPercent,
-            'color' => $categoryPreviewColor,
-        ]);
-
-        $categoryPreviewSegments[] = sprintf(
-            '%s %.2fdeg %.2fdeg',
-            $categoryPreviewColor,
-            $categoryPreviewStart,
-            $categoryPreviewEnd
-        );
-    }
-
-    $categoryPreviewGradient = count($categoryPreviewSegments)
-        ? 'conic-gradient(' . implode(', ', $categoryPreviewSegments) . ')'
-        : 'conic-gradient(#e8e3dc 0deg 360deg)';
+    // Best-selling product and time-series sales are calculated in the controller.
+    $topSellingProduct = $topSellingProduct ?? ['name' => null, 'units' => 0, 'share' => 0, 'all_units' => 0];
 @endphp
 
 <script>
@@ -9313,7 +11259,7 @@
 
 
 
-<div id="sellerDashboardStage" class="mx-auto w-full max-w-[1800px]">
+<div id="sellerDashboardStage" class="seller-dashboard-ref mx-auto w-full max-w-[1800px]">
 
     <div id="sellerDashboardContent" class="w-full">
 
@@ -9536,7 +11482,7 @@
     {{-- =========================================================
         SUMMARY CARDS — REAL SELLER DATA
     ========================================================== --}}
-    <section class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+    <section class="seller-dashboard-summary mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
         @php
             $summaryCards = [
                 [
@@ -9609,29 +11555,29 @@
                 href="{{ $card['href'] }}"
                 data-dashboard-card="{{ $card['type'] }}"
                 @if ($card['navigate']) wire:navigate @endif
-                class="group relative overflow-hidden rounded-[18px] border {{ $card['border'] }} bg-white px-4 py-4 shadow-[0_5px_18px_rgba(37,29,20,.025)] sm:px-[17px] sm:py-[16px]"
+                class="seller-dashboard-summary-card group relative overflow-hidden rounded-[18px] border {{ $card['border'] }} bg-white px-4 py-4 shadow-[0_5px_18px_rgba(37,29,20,.025)] sm:px-[17px] sm:py-[16px]"
             >
                 <div class="flex items-start justify-between gap-4">
                     <div class="min-w-0 flex-1">
                         <div class="flex items-center gap-2">
-                            <p class="text-[10.5px] font-semibold leading-4 text-[#6f675e]">
+                            <p class="seller-dashboard-summary-label text-[10.5px] font-semibold leading-4 text-[#6f675e]">
                                 {{ $card['label'] }}
                             </p>
                         </div>
 
                         <p
                             @if ($card['type'] === 'products') id="sellerProductCount" @endif
-                            class="mt-2.5 truncate text-[22px] font-bold leading-none tracking-[-0.045em] text-[#211d18] sm:text-[24px]"
+                            class="seller-dashboard-summary-value mt-2.5 truncate text-[22px] font-bold leading-none tracking-[-0.045em] text-[#211d18] sm:text-[24px]"
                         >
                             {{ $card['value'] }}
                         </p>
 
-                        <p class="mt-2.5 line-clamp-1 text-[9.5px] font-medium leading-4 {{ $card['subClass'] }}">
+                        <p class="seller-dashboard-summary-note mt-2.5 line-clamp-1 text-[9.5px] font-medium leading-4 {{ $card['subClass'] }}">
                             {{ $card['sub'] }}
                         </p>
                     </div>
 
-                    <div class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] {{ $card['bg'] }} {{ $card['icon'] }} ">
+                    <div class="seller-dashboard-summary-icon grid h-11 w-11 shrink-0 place-items-center rounded-[12px] {{ $card['bg'] }} {{ $card['icon'] }} ">
                         @switch($card['type'])
                             @case('products')
                                 <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -9670,232 +11616,102 @@
 
 
     {{-- =========================================================
-        CATALOG + SALES OVERVIEW — SAME DESKTOP ROW
-        Layout only: existing IDs, JS hooks, routes, and backend data stay intact.
-        Full product management still lives on the dedicated Products page.
+        SALES OVERVIEW + TOP-SELLING PRODUCT
+        Both panels use real delivered-sales data. No category percentages.
     ========================================================== --}}
-    <section id="sellerAnalyticsRow" class="mt-4">
-        {{-- CATALOG CATEGORY BREAKDOWN — REAL SELLER E-COMMERCE DATA --}}
-        <div id="sellerCategoryBreakdownCard" class="seller-category-card h-full overflow-hidden rounded-[18px] border border-[#e8dfd2] bg-white shadow-[0_7px_18px_rgba(33,24,14,.035)]">
-            <div class="flex items-start justify-between gap-3 border-b border-[#eee8df] px-4 py-4">
-                <div class="flex min-w-0 items-start gap-3">
-                    <div class="min-w-0">
-                        <h3 class="text-[18px] font-semibold tracking-[-0.03em] text-[#28221b] sm:text-[19px]">Catalog Category Breakdown</h3>
-                        <p class="mt-1 text-[10.5px] leading-5 text-[#887f75]">Distribution of your active e-commerce product listings.</p>
-                    </div>
-                </div>
-
-                <span class="shrink-0 rounded-full border border-[#eadfc9] bg-[#fffaf2] px-3 py-1.5 text-[9px] font-medium text-[#9b6c1c]">
-                    Active Catalog
-                </span>
-            </div>
-
-            <div class="seller-category-executive-body">
-                <div class="seller-category-executive-donut">
-                    <div id="sellerCategoryDonut" class="seller-category-donut" role="img" aria-label="Seller catalog category distribution" style="--seller-category-gradient: {{ $categoryPreviewGradient }};">
-                        <div class="seller-category-donut-center">
-                            <span id="sellerCategoryCenterLabel" class="seller-category-center-label">Total Listings</span>
-                            <strong id="sellerCategoryCenterValue" class="seller-category-center-value">{{ number_format($totalProductCount) }}</strong>
-                            <span id="sellerCategoryCenterSub" class="seller-category-center-sub hidden"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="seller-category-executive-list">
-                    <div class="seller-category-executive-list-head">
-                        <div>
-                            <p class="seller-category-executive-kicker">Category mix</p>
-                            <h4 class="seller-category-executive-title">Active listing distribution</h4>
-                        </div>
-                    </div>
-
-                    <div id="sellerCategoryLegend" class="seller-category-ranked-list">
-                        @forelse($categoryPreviewRows as $previewRow)
-                            @php
-                                $previewPercent = (float) ($previewRow['percentage'] ?? 0);
-                                $previewPercentLabel = $previewPercent < 10 && fmod($previewPercent, 1.0) !== 0.0
-                                    ? number_format($previewPercent, 1) . '%'
-                                    : number_format(round($previewPercent)) . '%';
-                            @endphp
-                            <button
-                                type="button"
-                                data-seller-category="{{ $previewRow['name'] }}"
-                                data-seller-category-count="{{ $previewRow['count'] }}"
-                                data-seller-category-percent="{{ $previewPercent }}"
-                                class="seller-category-ranked-row"
-                                style="--seller-category-row-color:{{ $previewRow['color'] }};"
-                                aria-label="{{ $previewRow['name'] }}: {{ $previewPercentLabel }}"
-                            >
-                                <span class="seller-category-ranked-top">
-                                    <span class="seller-category-ranked-name">
-                                        <i aria-hidden="true"></i>
-                                        <span>{{ $previewRow['name'] }}</span>
-                                    </span>
-                                    <strong>{{ $previewPercentLabel }}</strong>
-                                </span>
-                                <span class="seller-category-ranked-track" aria-hidden="true">
-                                    <span style="width:{{ max(2.5, $previewPercent) }}%"></span>
-                                </span>
-                            </button>
-                        @empty
-                            <div class="seller-category-ranked-empty">
-                                <p class="text-[8.5px] font-medium text-[#766d63]">No active product categories yet.</p>
-                            </div>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-
-            <div class="seller-category-executive-footer">
-                <p>Percentages are based on active listing count.</p>
-
-                <button
-                    id="sellerCategoryViewProducts"
-                    type="button"
-                    class="seller-category-executive-action"
-                >
-                    <span id="sellerCategoryViewProductsLabel">View All Products</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
-                        <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        {{-- SALES PERFORMANCE — ADMIN-STYLE SELLER ANALYTICS --}}
-        <div
-            id="sellerSalesPerformanceCard"
-            class="seller-sales-admin-card h-full"
-        >
+    <section id="sellerAnalyticsRow" class="mt-4" aria-label="Seller sales analytics">
+        {{-- Sales overview occupies the larger left card. --}}
+        <div id="sellerSalesPerformanceCard" class="seller-sales-admin-card h-full">
             <div class="seller-sales-admin-head">
-                <div class="min-w-0">
-                    <h3 class="seller-sales-admin-title">Sales Performance</h3>
-                    <p id="sellerSalesPeriodLabel" class="seller-sales-admin-subtitle">
-                        Delivered merchandise sales.
-                    </p>
+                <div class="seller-sales-overview-identity">
+                    <svg class="seller-sales-overview-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3.5" y="13" width="4" height="7.5" rx=".8"></rect>
+                        <rect x="10" y="9" width="4" height="11.5" rx=".8"></rect>
+                        <rect x="16.5" y="4" width="4" height="16.5" rx=".8"></rect>
+                    </svg>
+                    <div class="min-w-0">
+                        <h3 class="seller-sales-admin-title">Sales Overview</h3>
+                        <p id="sellerSalesPeriodLabel" class="seller-sales-admin-subtitle">Delivered merchandise sales over the last 6 months</p>
+                    </div>
                 </div>
-
-                <div class="seller-sales-admin-periods" aria-label="Sales reporting period">
-                    <button
-                        type="button"
-                        data-sales-period="month"
-                        aria-pressed="true"
-                        class="seller-sales-period-button is-active"
-                    >
-                        This Month
-                    </button>
-                    <button
-                        type="button"
-                        data-sales-period="last_month"
-                        aria-pressed="false"
-                        class="seller-sales-period-button"
-                    >
-                        Last Month
-                    </button>
-                    <button
-                        type="button"
-                        data-sales-period="year"
-                        aria-pressed="false"
-                        class="seller-sales-period-button"
-                    >
-                        This Year
-                    </button>
-                </div>
-            </div>
-
-            <div class="seller-sales-admin-metrics">
-                <div class="seller-sales-admin-metric">
-                    <p class="seller-sales-admin-metric-label">Total Sales</p>
-                    <p id="sellerSalesTotal" class="seller-sales-admin-metric-value">₱0.00</p>
-                </div>
-
-                <div class="seller-sales-admin-metric">
-                    <p class="seller-sales-admin-metric-label">Delivered Orders</p>
-                    <p id="sellerSalesOrders" class="seller-sales-admin-metric-value">0</p>
-                </div>
-
-                <div class="seller-sales-admin-metric">
-                    <p class="seller-sales-admin-metric-label">Average Order</p>
-                    <p id="sellerSalesAverage" class="seller-sales-admin-metric-value">₱0.00</p>
-                </div>
-            </div>
-
-            <div class="seller-sales-admin-divider"></div>
-
-            <div class="seller-sales-admin-chart-head">
-                <div>
-                    <h4 class="seller-sales-admin-chart-title">Delivered sales trend</h4>
-                    <p class="seller-sales-admin-chart-copy">
-                        Merchandise sales from completed delivered orders
-                    </p>
-                </div>
-
-                <div class="seller-sales-admin-legend" aria-label="Chart series">
-                    <span class="seller-sales-admin-legend-item">
-                        <i aria-hidden="true"></i>
-                        Sales
-                    </span>
+                <div class="seller-sales-admin-periods" role="group" aria-label="Sales reporting period">
+                    <button type="button" data-sales-period="six_months" aria-pressed="true" class="seller-sales-period-button is-active">6 Months</button>
+                    <button type="button" data-sales-period="year" aria-pressed="false" class="seller-sales-period-button">1 Year</button>
+                    <button type="button" data-sales-period="all_time" aria-pressed="false" class="seller-sales-period-button">All Time</button>
                 </div>
             </div>
 
             <div id="sellerSalesChartShell" class="seller-sales-admin-chart-shell">
-                <div
-                    id="sellerSalesTooltip"
-                    class="seller-sales-admin-tooltip"
-                    aria-hidden="true"
-                >
+                <div id="sellerSalesTooltip" class="seller-sales-admin-tooltip" aria-hidden="true">
                     <p id="sellerSalesTooltipPeriod" class="seller-sales-admin-tooltip-period">Period</p>
                     <div class="seller-sales-admin-tooltip-row">
                         <span><i aria-hidden="true"></i>Sales</span>
                         <strong id="sellerSalesTooltipValue">₱0.00</strong>
                     </div>
                 </div>
-
-                <svg
-                    id="sellerSalesChart"
-                    viewBox="0 0 900 320"
-                    preserveAspectRatio="xMidYMid meet"
-                    role="img"
-                    aria-label="Seller delivered sales trend"
-                >
-<g id="sellerSalesGrid"></g>
+                <svg id="sellerSalesChart" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Actual seller delivered merchandise sales by period">
+                    <defs>
+                        {{-- A true vertical fade: strongest beneath the highest sale, transparent at the baseline. --}}
+                        <linearGradient id="sellerSalesGoldVerticalFade" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                            <stop offset="0%" stop-color="#C88912" stop-opacity=".33" />
+                            <stop offset="26%" stop-color="#C88912" stop-opacity=".19" />
+                            <stop offset="65%" stop-color="#C88912" stop-opacity=".065" />
+                            <stop offset="100%" stop-color="#C88912" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+                    <g id="sellerSalesGrid"></g>
                     <g id="sellerSalesGuides"></g>
-
-                    <path
-                        id="sellerSalesAreaPath"
-                        class="seller-sales-admin-area"
-                        fill="#D89B10"
-                        fill-opacity=".08"
-                    ></path>
-
-                    <path
-                        id="sellerSalesLinePath"
-                        class="seller-sales-admin-line"
-                        fill="none"
-                    ></path>
-
+                    <path id="sellerSalesAreaPath" class="seller-sales-admin-area" fill="url(#sellerSalesGoldVerticalFade)"></path>
+                    <path id="sellerSalesLinePath" class="seller-sales-admin-line" fill="none"></path>
                     <g id="sellerSalesPoints"></g>
                     <g id="sellerSalesXAxis"></g>
                     <g id="sellerSalesHitboxes"></g>
+                    <g id="sellerSalesPinnedValues" pointer-events="none" aria-hidden="true"></g>
                 </svg>
-
-                <div
-                    id="sellerSalesEmptyState"
-                    class="seller-sales-admin-empty hidden"
-                >
+                <div id="sellerSalesEmptyState" class="seller-sales-admin-empty hidden">
                     <div>
                         <p>No delivered sales in this period yet.</p>
-                        <span>Completed Buyer → Seller → Courier orders will appear here.</span>
+                        <span>Completed orders will appear in the chart once eligible.</span>
                     </div>
                 </div>
             </div>
-
-            <div class="seller-sales-admin-footer">
-                <p id="sellerSalesBestPeriod">Best period: —</p>
-                <p>Merchandise subtotal only · delivery fees excluded</p>
-            </div>
         </div>
 
+        {{-- Top seller is ranked by delivered units, not product categories. --}}
+        <div id="sellerCategoryBreakdownCard" class="seller-top-product-card h-full">
+            <div class="seller-top-product-heading">
+                <h3>Top-Selling Product</h3>
+                <p>Most units sold from delivered orders</p>
+            </div>
+            <div class="seller-top-product-body">
+                <div class="seller-top-product-donut">
+                    <svg viewBox="0 0 120 120" role="img" aria-label="Top-selling product share of delivered units">
+                        <circle cx="60" cy="60" r="45" fill="none" stroke="#E9EBEF" stroke-width="19"></circle>
+                        <circle cx="60" cy="60" r="45" fill="none" stroke="#C88912" stroke-width="19"
+                            pathLength="100" stroke-dasharray="{{ (float) ($topSellingProduct['share'] ?? 0) }} 100"
+                            transform="rotate(-90 60 60)"></circle>
+                    </svg>
+                    <div class="seller-top-product-center">
+                        <strong>{{ !empty($topSellingProduct['name']) ? '1' : '—' }}</strong>
+                        <span>Top Product</span>
+                    </div>
+                </div>
+                <div class="seller-top-product-detail">
+                    @if(!empty($topSellingProduct['name']))
+                        <span class="seller-top-product-bullet" aria-hidden="true"></span>
+                        <div class="min-w-0">
+                            <p class="seller-top-product-name" title="{{ $topSellingProduct['name'] }}">{{ $topSellingProduct['name'] }}</p>
+                            <span class="seller-top-product-note">Best seller · {{ number_format((int) $topSellingProduct['units']) }} {{ (int) $topSellingProduct['units'] === 1 ? 'unit' : 'units' }} sold</span>
+                        </div>
+                    @else
+                        <div class="seller-top-product-empty">
+                            <p>No top-selling product yet</p>
+                            <span>Products appear after delivered orders.</span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </section>
 
     {{-- =========================================================
@@ -9911,13 +11727,11 @@
                 <div class="flex min-w-0 items-center gap-3">
                     <div class="min-w-0">
                         <h3 class="text-[15px] font-bold tracking-[-0.025em] text-[#28221b]">Recent Activity</h3>
-                        <p class="mt-0.5 text-[8.5px] leading-4 text-[#91887d]">
-                            Actions you performed in your seller workspace.
-                        </p>
+
                     </div>
                 </div>
 
-                <span class="seller-activity-owner-badge">Seller activity</span>
+                <span class="seller-activity-owner-badge">Latest</span>
             </div>
 
             <div class="seller-activity-list">
@@ -9958,7 +11772,7 @@
             </div>
 
             <div class="seller-recent-footer">
-                <p>Your latest seller-side actions.</p>
+
                 <a href="{{ route('seller.products.index') }}" wire:navigate.hover>
                     Manage products
                     <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2">
@@ -9974,13 +11788,11 @@
                 <div class="flex min-w-0 items-center gap-3">
                     <div class="min-w-0">
                         <h3 class="text-[15px] font-bold tracking-[-0.025em] text-[#28221b]">Recent Orders</h3>
-                        <p class="mt-0.5 text-[8.5px] leading-4 text-[#91887d]">
-                            See who ordered, what they bought, and the current order status.
-                        </p>
+
                     </div>
                 </div>
 
-                <span class="seller-recent-live">Live orders</span>
+                <span class="seller-recent-live">Live</span>
             </div>
 
             <div class="seller-orders-feed">
@@ -10033,7 +11845,7 @@
                             </span>
 
                             <span class="seller-recent-product">
-                                Ordered {{ $order['item_summary'] ?? 'items' }}
+                                {{ $order['item_summary'] ?? 'items' }}
                             </span>
 
                             <span class="seller-recent-meta">
@@ -10078,10 +11890,7 @@
             </div>
 
             <div class="seller-recent-footer">
-                <p>
-                    Showing {{ min(4, $recentOrdersFeed->count()) }} latest
-                    {{ $recentOrdersFeed->count() === 1 ? 'order' : 'orders' }}.
-                </p>
+
 
                 <a href="{{ route('seller.orders') }}" wire:navigate.hover>
                     View all orders
@@ -10144,8 +11953,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="rounded-lg border border-[#dce9e1] bg-[#f7fbf8] px-3 py-4 text-center">
-                        <p class="font-semibold text-[#56816a]">Inventory levels look healthy.</p>
+                    <div class="seller-inventory-empty" role="status">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="m8 12 2.5 2.5L16 9"></path>
+                        </svg>
+                        <p>Inventory levels look healthy.</p>
                     </div>
                 @endforelse
             </div>
@@ -10178,18 +11991,39 @@
 
             <div class="mt-3 space-y-2">
                 <div class="seller-financial-metric">
-                    <p class="seller-financial-metric-label">Gross Sales</p>
-                    <p class="seller-financial-metric-value">₱{{ number_format($monthlySales, 2) }}</p>
+                    <span class="seller-financial-metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M7 6V4h10v2"/>
+                        </svg>
+                    </span>
+                    <div class="seller-financial-metric-copy">
+                        <p class="seller-financial-metric-label">Gross Sales</p>
+                        <p class="seller-financial-metric-value">₱{{ number_format($monthlySales, 2) }}</p>
+                    </div>
                 </div>
 
                 <div class="seller-financial-metric">
-                    <p class="seller-financial-metric-label">Est. Platform Commission ({{ number_format($platformCommissionRate, 0) }}%)</p>
-                    <p class="seller-financial-metric-value">₱{{ number_format($platformCommission, 2) }}</p>
+                    <span class="seller-financial-metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 19 19 5"/>
+                        </svg>
+                    </span>
+                    <div class="seller-financial-metric-copy">
+                        <p class="seller-financial-metric-label">Est. Platform Commission ({{ number_format($platformCommissionRate, 0) }}%)</p>
+                        <p class="seller-financial-metric-value">₱{{ number_format($platformCommission, 2) }}</p>
+                    </div>
                 </div>
 
                 <div class="seller-financial-metric">
-                    <p class="seller-financial-metric-label">Estimated Net Revenue</p>
-                    <p class="seller-financial-metric-value">₱{{ number_format($estimatedRevenue, 2) }}</p>
+                    <span class="seller-financial-metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 7h18v12H3z"/><path d="M3 10h18"/><path d="m8 15 2.5 2.5L16 12"/>
+                        </svg>
+                    </span>
+                    <div class="seller-financial-metric-copy">
+                        <p class="seller-financial-metric-label">Estimated Net Revenue</p>
+                        <p class="seller-financial-metric-value">₱{{ number_format($estimatedRevenue, 2) }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -10213,12 +12047,12 @@
 
             @php
                 $compactOrderFlow = [
-                    ['title' => 'New Orders', 'count' => (int) ($orderStats['new'] ?? 0), 'bg' => 'bg-[#fff6e8]', 'text' => 'text-[#b57a18]'],
-                    ['title' => 'Preparing', 'count' => (int) ($orderStats['preparing'] ?? 0), 'bg' => 'bg-[#eef5fc]', 'text' => 'text-[#5e7f9f]'],
-                    ['title' => 'Ready Pickup', 'count' => (int) ($orderStats['ready'] ?? 0), 'bg' => 'bg-[#eef8f2]', 'text' => 'text-[#56816a]'],
-                    ['title' => 'Courier Flow', 'count' => (int) ($orderStats['courier'] ?? 0), 'bg' => 'bg-[#f5f1f9]', 'text' => 'text-[#7b6a8b]'],
-                    ['title' => 'Delivered', 'count' => (int) ($orderStats['delivered'] ?? 0), 'bg' => 'bg-[#edf7f1]', 'text' => 'text-[#56816a]'],
-                    ['title' => 'Feedback', 'count' => (int) ($orderStats['feedback'] ?? 0), 'bg' => 'bg-[#fff8ec]', 'text' => 'text-[#9a7839]'],
+                    ['title' => 'New Orders', 'count' => (int) ($orderStats['new'] ?? 0), 'icon' => 'inbox'],
+                    ['title' => 'Preparing', 'count' => (int) ($orderStats['preparing'] ?? 0), 'icon' => 'package'],
+                    ['title' => 'Ready Pickup', 'count' => (int) ($orderStats['ready'] ?? 0), 'icon' => 'check'],
+                    ['title' => 'Courier Flow', 'count' => (int) ($orderStats['courier'] ?? 0), 'icon' => 'truck'],
+                    ['title' => 'Delivered', 'count' => (int) ($orderStats['delivered'] ?? 0), 'icon' => 'check-double'],
+                    ['title' => 'Feedback', 'count' => (int) ($orderStats['feedback'] ?? 0), 'icon' => 'star'],
                 ];
             @endphp
 
@@ -10229,8 +12063,25 @@
                         class="seller-order-row flex items-center justify-between rounded-lg border border-[#eee8df] transition hover:bg-[#fcfaf7]"
                         wire:navigate
                     >
-                        <span class="font-medium text-[#4a433b]">{{ $item['title'] }}</span>
-                        <span class="grid h-6 min-w-[24px] place-items-center rounded-lg {{ $item['bg'] }} px-1.5 text-[8px] font-bold {{ $item['text'] }}">{{ $item['count'] }}</span>
+                        <span class="seller-order-label">
+                            <svg class="seller-order-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                @if ($item['icon'] === 'inbox')
+                                    <path d="M4 4h16v12l-3 4H7l-3-4V4Z"/><path d="M4 14h5l1.5 2h3L15 14h5"/>
+                                @elseif ($item['icon'] === 'package')
+                                    <path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>
+                                @elseif ($item['icon'] === 'check')
+                                    <circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5 5-5"/>
+                                @elseif ($item['icon'] === 'truck')
+                                    <path d="M3 6h11v11H3z"/><path d="M14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/>
+                                @elseif ($item['icon'] === 'check-double')
+                                    <path d="m3 12 4 4 6-7"/><path d="m10 13 4 4 7-9"/>
+                                @else
+                                    <path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-3-5.7 3 1.1-6.4-4.6-4.5 6.4-.9L12 3Z"/>
+                                @endif
+                            </svg>
+                            <span class="seller-order-name">{{ $item['title'] }}</span>
+                        </span>
+                        <span class="seller-order-count">{{ $item['count'] }}</span>
                     </a>
                 @endforeach
             </div>
@@ -10631,6 +12482,7 @@ document.addEventListener('livewire:navigated', function () {
     const sellerSalesPoints = document.getElementById('sellerSalesPoints');
     const sellerSalesXAxis = document.getElementById('sellerSalesXAxis');
     const sellerSalesHitboxes = document.getElementById('sellerSalesHitboxes');
+    const sellerSalesPinnedValues = document.getElementById('sellerSalesPinnedValues');
     const sellerSalesChartShell = document.getElementById('sellerSalesChartShell');
     const sellerSalesTooltip = document.getElementById('sellerSalesTooltip');
     const sellerSalesTooltipPeriod = document.getElementById('sellerSalesTooltipPeriod');
@@ -10698,6 +12550,54 @@ document.addEventListener('livewire:navigated', function () {
         return element;
     }
 
+    // Permanently show the real peso amount at the rightmost dot. When the
+    // highest point is different, label it too if labels will not collide.
+    // All callouts are SVG elements so they remain aligned at every viewport.
+    function paintSellerSalesPinnedValue(point, viewWidth, compactChart) {
+        if (!sellerSalesPinnedValues) return null;
+
+        const amount = sellerPeso(point.value);
+        const fontSize = compactChart ? 13 : 12;
+        const boxWidth = Math.min(176, Math.max(84, amount.length * (compactChart ? 8.1 : 7.7) + 24));
+        const boxHeight = 29;
+        const centerX = Math.max(boxWidth / 2 + 5, Math.min(viewWidth - boxWidth / 2 - 5, point.x));
+        const top = Math.max(3, point.y - 43);
+        const bottom = top + boxHeight;
+        const pointerBase = Math.max(centerX - 11, Math.min(centerX + 11, point.x));
+        const tipY = Math.max(bottom + 3, point.y - 7);
+        const group = sellerSvgElement('g', { 'pointer-events': 'none' });
+
+        group.appendChild(sellerSvgElement('path', {
+            d: `M${pointerBase - 5} ${bottom - 1} L${pointerBase + 5} ${bottom - 1} L${point.x} ${tipY} Z`,
+            fill: '#222831',
+            stroke: '#C88912',
+            'stroke-width': 1,
+            'stroke-linejoin': 'round',
+        }));
+        group.appendChild(sellerSvgElement('rect', {
+            x: centerX - boxWidth / 2,
+            y: top,
+            width: boxWidth,
+            height: boxHeight,
+            rx: 9,
+            fill: '#222831',
+            stroke: '#C88912',
+            'stroke-width': 1,
+        }));
+        group.appendChild(sellerSvgElement('text', {
+            x: centerX,
+            y: top + boxHeight / 2 + fontSize * .35,
+            'text-anchor': 'middle',
+            fill: '#FFFFFF',
+            'font-size': fontSize,
+            'font-family': 'Poppins, sans-serif',
+            'font-weight': 650,
+        }, amount));
+
+        sellerSalesPinnedValues.appendChild(group);
+        return { left: centerX - boxWidth / 2, right: centerX + boxWidth / 2, top, bottom };
+    }
+
     let sellerSalesTooltipFrame = 0;
     let sellerSalesTooltipPending = null;
     let sellerSalesTooltipShellRect = null;
@@ -10758,7 +12658,7 @@ document.addEventListener('livewire:navigated', function () {
 
         let left = pointer
             ? pointer.clientX - shellRect.left + 10
-            : (point.x / 900) * shellRect.width + 10;
+                : (point.x / (sellerSalesChart?.viewBox?.baseVal?.width || 900)) * shellRect.width + 10;
 
         let top = pointer
             ? pointer.clientY - shellRect.top - tooltipHeight - 10
@@ -10813,7 +12713,7 @@ document.addEventListener('livewire:navigated', function () {
         });
     }
 
-    function renderSellerSalesPerformance(period = 'month') {
+    function renderSellerSalesPerformance(period = 'six_months') {
         if (!sellerSalesChart) return;
 
         hideSellerSalesTooltip();
@@ -10832,7 +12732,7 @@ document.addEventListener('livewire:navigated', function () {
 
         if (sellerSalesPeriodLabel) {
             sellerSalesPeriodLabel.textContent =
-                `${dataset.period_label || 'Sales period'} · delivered merchandise sales`;
+                `Delivered merchandise sales · ${dataset.period_label || 'Sales period'}`;
         }
 
         if (sellerSalesBestPeriod) {
@@ -10854,7 +12754,8 @@ document.addEventListener('livewire:navigated', function () {
             !sellerSalesLinePath ||
             !sellerSalesPoints ||
             !sellerSalesXAxis ||
-            !sellerSalesHitboxes
+            !sellerSalesHitboxes ||
+            !sellerSalesPinnedValues
         ) {
             return;
         }
@@ -10864,10 +12765,13 @@ document.addEventListener('livewire:navigated', function () {
         sellerSalesPoints.innerHTML = '';
         sellerSalesXAxis.innerHTML = '';
         sellerSalesHitboxes.innerHTML = '';
+        sellerSalesPinnedValues.innerHTML = '';
 
+        const compactChart = window.matchMedia('(max-width: 639px)').matches;
+        sellerSalesChart.setAttribute('viewBox', compactChart ? '0 0 520 320' : '0 0 900 320');
         const chart = {
-            left: 84,
-            right: 858,
+            left: compactChart ? 68 : 84,
+            right: compactChart ? 494 : 858,
             top: 34,
             bottom: 230,
         };
@@ -10889,14 +12793,14 @@ document.addEventListener('livewire:navigated', function () {
                 y2: y,
                 stroke: index === 4 ? '#E1E6EC' : '#EEF1F4',
                 'stroke-width': 1,
-                'stroke-dasharray': index === 4 ? '0' : '4 7',
+                'stroke-dasharray': '0',
             }));
 
             sellerSalesGrid.appendChild(sellerSvgElement('text', {
                 x: 18,
                 y: y + 4,
                 fill: '#6B7686',
-                'font-size': 12,
+                'font-size': compactChart ? 15 : 12,
                 'font-family': 'Poppins, sans-serif',
                 'font-weight': 500,
             }, sellerCompactPeso(axisValue)));
@@ -10956,7 +12860,7 @@ document.addEventListener('livewire:navigated', function () {
                 y1: chart.top,
                 x2: point.x,
                 y2: chart.bottom,
-                stroke: '#CBD3DD',
+                stroke: '#D8B46B',
                 'stroke-width': 1,
                 'stroke-dasharray': '4 5',
                 opacity: 0,
@@ -10969,21 +12873,24 @@ document.addEventListener('livewire:navigated', function () {
                 cx: point.x,
                 cy: point.y,
                 r: 5.2,
-                fill: '#FFFFFF',
-                stroke: '#C88C16',
-                'stroke-width': 2.4,
+                fill: '#C88912',
+                stroke: '#C88912',
+                'stroke-width': 2,
             });
             sellerSalesPoints.appendChild(circle);
 
-            sellerSalesXAxis.appendChild(sellerSvgElement('text', {
-                x: point.x,
-                y: 296,
-                fill: '#6B7686',
-                'font-size': count > 8 ? 10 : 12,
-                'font-family': 'Poppins, sans-serif',
-                'font-weight': 500,
-                'text-anchor': 'middle',
-            }, point.label));
+            const labelStep = count > 12 ? Math.ceil(count / 9) : 1;
+            if (index === 0 || index === count - 1 || index % labelStep === 0) {
+                sellerSalesXAxis.appendChild(sellerSvgElement('text', {
+                    x: point.x,
+                    y: 296,
+                    fill: '#6B7686',
+                    'font-size': compactChart ? 15 : (count > 8 ? 10 : 12),
+                    'font-family': 'Poppins, sans-serif',
+                    'font-weight': 500,
+                    'text-anchor': 'middle',
+                }, point.label));
+            }
 
             const hitLeft = index === 0
                 ? chart.left - (defaultHitWidth / 2)
@@ -11038,6 +12945,26 @@ document.addEventListener('livewire:navigated', function () {
             sellerSalesHitboxes.appendChild(hitbox);
         });
 
+        // Persist the latest-period value without requiring a hover.
+        // Optionally show the largest spike (e.g. October) as well when there
+        // is enough space, instead of displaying overlapping labels.
+        if (total > 0 && points.length) {
+            const latestPoint = points[points.length - 1];
+            const viewWidth = compactChart ? 520 : 900;
+            const latestBox = paintSellerSalesPinnedValue(latestPoint, viewWidth, compactChart);
+            const peakPoint = points.reduce((best, point) => point.value >= best.value ? point : best, points[0]);
+            if (peakPoint !== latestPoint && peakPoint.value > 0 && latestBox) {
+                const peakWidth = Math.min(176, Math.max(84, sellerPeso(peakPoint.value).length * (compactChart ? 8.1 : 7.7) + 24));
+                const peakCenterX = Math.max(peakWidth / 2 + 5, Math.min(viewWidth - peakWidth / 2 - 5, peakPoint.x));
+                const peakTop = Math.max(3, peakPoint.y - 43);
+                const separated = peakCenterX + peakWidth / 2 + 8 < latestBox.left
+                    || peakCenterX - peakWidth / 2 - 8 > latestBox.right
+                    || peakTop + 29 + 8 < latestBox.top
+                    || latestBox.bottom + 8 < peakTop;
+                if (separated) paintSellerSalesPinnedValue(peakPoint, viewWidth, compactChart);
+            }
+        }
+
         sellerSalesEmptyState?.classList.toggle('hidden', total > 0);
 
         animateSellerSalesGraph();
@@ -11045,11 +12972,11 @@ document.addEventListener('livewire:navigated', function () {
 
     sellerSalesPeriodButtons.forEach((button) => {
         button.addEventListener('click', function () {
-            renderSellerSalesPerformance(this.dataset.salesPeriod || 'month');
+            renderSellerSalesPerformance(this.dataset.salesPeriod || 'six_months');
         }, { signal: sellerDashboardEventSignal });
     });
 
-    renderSellerSalesPerformance('month');
+    renderSellerSalesPerformance('six_months');
 
     /*
     |--------------------------------------------------------------------------
@@ -11100,188 +13027,6 @@ document.addEventListener('livewire:navigated', function () {
     let productLibraryPayload = null;
     let productLibraryPromise = null;
 
-    const sellerCategoryPalette = [
-        '#d5a12b',
-        '#2f4668',
-        '#399783',
-        '#d59a4a',
-        '#7f68ab',
-        '#5b83a8'
-    ];
-
-    let sellerSelectedCategory = '';
-    let sellerCategoryRenderSignature = '';
-
-    function normalizeSellerCategoryProducts(products) {
-        return (Array.isArray(products) ? products : [])
-            .map(function (product) {
-                return {
-                    category: String(product?.category || 'Uncategorized').trim() || 'Uncategorized',
-                    moderation_status: String(product?.moderation_status || '').toLowerCase(),
-                    stock: Number(product?.stock || 0),
-                };
-            });
-    }
-
-    function buildSellerCategoryBreakdown(products) {
-        const normalized = normalizeSellerCategoryProducts(products);
-        const grouped = new Map();
-
-        normalized.forEach(function (product) {
-            grouped.set(
-                product.category,
-                (grouped.get(product.category) || 0) + 1
-            );
-        });
-
-        let categories = Array.from(grouped.entries())
-            .map(([name, count]) => ({ name, count }))
-            .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-
-        /*
-        | Keep the card readable: show the five largest categories and group
-        | the remainder into Other Categories. No data is discarded.
-        */
-        if (categories.length > 6) {
-            const visible = categories.slice(0, 5);
-            const remainder = categories.slice(5).reduce((sum, item) => sum + item.count, 0);
-            visible.push({ name: 'Other Categories', count: remainder, grouped: true });
-            categories = visible;
-        }
-
-        const total = normalized.length;
-        const approved = normalized.filter((product) => product.moderation_status === 'approved').length;
-        const lowStock = normalized.filter((product) => product.stock > 0 && product.stock <= Number(product.low_stock_threshold ?? 5)).length;
-        const uniqueCategories = grouped.size;
-
-        return {
-            total,
-            approved,
-            lowStock,
-            uniqueCategories,
-            categories: categories.map(function (item, index) {
-                return {
-                    ...item,
-                    percentage: total > 0 ? (item.count / total) * 100 : 0,
-                    color: sellerCategoryPalette[index % sellerCategoryPalette.length],
-                };
-            }),
-        };
-    }
-
-    function sellerCategoryPercent(value) {
-        const number = Number(value || 0);
-        return number < 10 && number % 1 !== 0
-            ? number.toFixed(1) + '%'
-            : Math.round(number) + '%';
-    }
-
-    function renderSellerCategoryBreakdown(products) {
-        const donut = document.getElementById('sellerCategoryDonut');
-        const legend = document.getElementById('sellerCategoryLegend');
-        const centerLabel = document.getElementById('sellerCategoryCenterLabel');
-        const centerValue = document.getElementById('sellerCategoryCenterValue');
-        const centerSub = document.getElementById('sellerCategoryCenterSub');
-        const viewLabel = document.getElementById('sellerCategoryViewProductsLabel');
-
-        if (!donut || !legend) return;
-
-        const data = buildSellerCategoryBreakdown(products);
-        const nextSignature = JSON.stringify({
-            total: data.total,
-            categories: data.categories.map((item) => [
-                item.name,
-                item.count,
-                Number(item.percentage || 0).toFixed(4),
-            ]),
-        });
-
-        if (nextSignature === sellerCategoryRenderSignature) {
-            return;
-        }
-
-        sellerCategoryRenderSignature = nextSignature;
-
-        if (!data.total || !data.categories.length) {
-            donut.style.setProperty('--seller-category-gradient', 'conic-gradient(#e8e3dc 0deg 360deg)');
-            legend.innerHTML = `
-                <div class="seller-category-ranked-empty">
-                    <p class="text-[8.5px] font-medium text-[#766d63]">No active product categories yet.</p>
-                </div>
-            `;
-            sellerSelectedCategory = '';
-            if (centerLabel) centerLabel.textContent = 'Total Listings';
-            if (centerValue) centerValue.textContent = '0';
-            if (centerSub) { centerSub.textContent = ''; centerSub.classList.add('hidden'); }
-            if (viewLabel) viewLabel.textContent = 'View All Products';
-            return;
-        }
-
-        let cursor = 0;
-        const segments = data.categories.map(function (item) {
-            const start = cursor;
-            const end = cursor + item.percentage * 3.6;
-            cursor = end;
-            return `${item.color} ${start.toFixed(2)}deg ${end.toFixed(2)}deg`;
-        });
-
-        donut.style.setProperty(
-            '--seller-category-gradient',
-            `conic-gradient(${segments.join(', ')})`
-        );
-
-        legend.innerHTML = data.categories.map(function (item) {
-            return `
-                <button
-                    type="button"
-                    data-seller-category="${escapeHtml(item.name)}"
-                    data-seller-category-count="${item.count}"
-                    data-seller-category-percent="${item.percentage}"
-                    class="seller-category-ranked-row"
-                    style="--seller-category-row-color:${item.color};"
-                    aria-label="${escapeHtml(item.name)}: ${sellerCategoryPercent(item.percentage)}"
-                >
-                    <span class="seller-category-ranked-top">
-                        <span class="seller-category-ranked-name">
-                            <i aria-hidden="true"></i>
-                            <span>${escapeHtml(item.name)}</span>
-                        </span>
-                        <strong>${sellerCategoryPercent(item.percentage)}</strong>
-                    </span>
-                    <span class="seller-category-ranked-track" aria-hidden="true">
-                        <span style="width:${Math.max(2.5, Number(item.percentage || 0))}%"></span>
-                    </span>
-                </button>
-            `;
-        }).join('');
-
-        sellerSelectedCategory = '';
-        if (centerLabel) centerLabel.textContent = 'Total Listings';
-        if (centerValue) centerValue.textContent = data.total.toLocaleString('en-PH');
-        if (centerSub) { centerSub.textContent = ''; centerSub.classList.add('hidden'); }
-        if (viewLabel) viewLabel.textContent = 'View All Products';
-
-        legend.querySelectorAll('[data-seller-category]').forEach(function (button) {
-            button.addEventListener('click', function () {
-                legend.querySelectorAll('[data-seller-category]').forEach((item) => item.classList.remove('is-active'));
-                this.classList.add('is-active');
-
-                sellerSelectedCategory = String(this.dataset.sellerCategory || '');
-                const count = Number(this.dataset.sellerCategoryCount || 0);
-                const percent = Number(this.dataset.sellerCategoryPercent || 0);
-
-                if (centerLabel) centerLabel.textContent = sellerSelectedCategory;
-                if (centerValue) centerValue.textContent = count.toLocaleString('en-PH');
-                if (centerSub) { centerSub.textContent = `${sellerCategoryPercent(percent)} of catalog`; centerSub.classList.remove('hidden'); }
-                if (viewLabel) {
-                    viewLabel.textContent = sellerSelectedCategory === 'Other Categories'
-                        ? 'View Product Library'
-                        : `View ${sellerSelectedCategory}`;
-                }
-            }, { signal: sellerDashboardEventSignal });
-        });
-    }
-
     async function fetchProductLibraryData() {
         if (Array.isArray(productLibraryPayload)) {
             return productLibraryPayload;
@@ -11293,7 +13038,6 @@ document.addEventListener('livewire:navigated', function () {
 
         function applyProductLibraryProducts(products) {
             productLibraryPayload = Array.isArray(products) ? products : [];
-            renderSellerCategoryBreakdown(productLibraryPayload);
             return productLibraryPayload;
         }
 
@@ -11681,33 +13425,6 @@ document.addEventListener('livewire:navigated', function () {
 
         filterAllProducts();
         allProductsSearch?.focus();
-    });
-
-    const sellerCategoryViewProducts = document.getElementById('sellerCategoryViewProducts');
-
-    const sellerProductsPageUrl = @json(route('seller.products.index'));
-
-    sellerCategoryViewProducts?.addEventListener('click', function () {
-        const category = sellerSelectedCategory === 'Other Categories'
-            ? ''
-            : sellerSelectedCategory;
-
-        const target = category
-            ? sellerProductsPageUrl + '?category=' + encodeURIComponent(category)
-            : sellerProductsPageUrl;
-
-        window.location.href = target;
-    }, { signal: sellerDashboardEventSignal });
-
-    /*
-    | Preview rows are already server-rendered, so the card is visible on first
-    | paint. Consume the Product Library request that started near the top of
-    | the document and silently refresh with the complete active catalog.
-    */
-    fetchProductLibraryData().catch(function (error) {
-        if (error?.name !== 'AbortError') {
-            console.debug('SARI category breakdown is using first-paint preview data.');
-        }
     });
 
     document.addEventListener('keydown', function (event) {

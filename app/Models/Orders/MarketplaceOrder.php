@@ -189,6 +189,12 @@ class MarketplaceOrder extends Model
         return $this->hasMany(MarketplaceOrderEvent::class, 'marketplace_order_id');
     }
 
+    // My Orders only needs the latest update, not the complete event history.
+    public function latestEvent(): HasOne
+    {
+        return $this->hasOne(MarketplaceOrderEvent::class, 'marketplace_order_id')->latestOfMany('id');
+    }
+
     public function commission(): HasOne
     {
         return $this->hasOne(OrderCommission::class, 'marketplace_order_id');

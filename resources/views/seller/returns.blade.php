@@ -2391,6 +2391,51 @@
     .seller-returns-page .seller-returns-pagination { max-width: 100%; }
 }
 
+/* =======================================================================
+   SARI RETURNS & REFUNDS — BUYER CART EXACT FLOATING PANELS
+   Scoped CSS-only update: outer KPI cards and Return Requests panel only.
+   Existing flat filter toolbar, return rows, controls and actions untouched.
+   ======================================================================= */
+.seller-returns-page {
+    --returns-cart-shadow-strong:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    --returns-cart-shadow-mobile:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 6px 16px rgba(15, 23, 42, .055),
+        0 13px 28px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+}
+
+.seller-returns-page .seller-returns-stat,
+.seller-returns-page .seller-returns-stat:hover,
+.seller-returns-page .seller-returns-records,
+.seller-returns-page .seller-returns-records:hover {
+    border-radius: 20px !important;
+    box-shadow: var(--returns-cart-shadow-strong) !important;
+}
+
+@media (max-width: 767px) {
+    .seller-returns-page .seller-returns-stat,
+    .seller-returns-page .seller-returns-stat:hover,
+    .seller-returns-page .seller-returns-records,
+    .seller-returns-page .seller-returns-records:hover {
+        border-radius: 16px !important;
+        box-shadow: var(--returns-cart-shadow-mobile) !important;
+    }
+}
+
+@media print {
+    .seller-returns-page .seller-returns-stat,
+    .seller-returns-page .seller-returns-stat:hover,
+    .seller-returns-page .seller-returns-records,
+    .seller-returns-page .seller-returns-records:hover {
+        box-shadow: none !important;
+    }
+}
+
 @endverbatim
 </style>
 

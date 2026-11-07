@@ -12,6 +12,14 @@
 <style id="sariSellerEmbeddedCss-reviews-center" data-sari-inline-css="reviews-center">
 @verbatim
 /* SARI Seller Reviews & Ratings — clean design system, scoped to the page. */
+/* Exact Buyer Cart multi-layer shadow, consistent with Seller Account / Compliance. */
+.seller-reviews-page {
+    --reviews-main-shadow:
+    0 2px 5px rgba(15, 23, 42, .045),
+    0 10px 24px rgba(15, 23, 42, .075),
+    0 24px 54px rgba(15, 23, 42, .095),
+    inset 0 1px 0 rgba(255, 255, 255, .92);
+}
 .seller-reviews-page{--reviews-gold:#C88912;--reviews-gold-hover:#B47B0E;--reviews-ink:#2F3742;--reviews-text:#475569;--reviews-muted:#8390A0;--reviews-line:#E5E7EB;--reviews-soft:#F8FAFC;width:100%;max-width:1520px;margin-inline:auto;padding-bottom:32px;color:var(--reviews-ink);font-family:'Poppins',ui-sans-serif,system-ui,sans-serif}
 .seller-reviews-page *, .seller-reviews-page *::before,.seller-reviews-page *::after{box-sizing:border-box}
 .seller-reviews-page :is(button,input,select,textarea,a){font-family:inherit}
@@ -22,7 +30,7 @@
 .seller-reviews-title span:last-child{margin-left:.17em;color:var(--reviews-gold)}
 .seller-reviews-subtitle{max-width:790px;margin:8px 0 0;color:#768397;font-size:11.5px;line-height:1.6}
 .seller-reviews-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
-.seller-reviews-stat{min-width:0;min-height:110px;border:1px solid var(--reviews-line);border-radius:18px;background:#fff;padding:17px 18px;box-shadow:0 2px 6px rgba(15,23,42,.035),0 10px 24px rgba(15,23,42,.07)}
+.seller-reviews-stat{min-width:0;min-height:110px;border:1px solid var(--reviews-line);border-radius:20px;background:#fff;padding:17px 18px;box-shadow:var(--reviews-main-shadow)}
 .seller-reviews-stat-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .seller-reviews-stat-inner .min-w-0{min-width:0}
 .seller-reviews-stat-label{color:#5A6879;font-size:13px;font-weight:650;line-height:1.4}
@@ -55,7 +63,7 @@
 .seller-reviews-reset{width:auto;min-width:96px;justify-content:center;padding:0 20px;text-decoration:none;white-space:nowrap}
 .seller-reviews-reset:hover,.seller-reviews-reset:focus-visible{background:#F8FAFC;color:#A56D0A}
 /* Main feed */
-.seller-reviews-feed{margin-top:24px;overflow:hidden;border:1px solid var(--reviews-line);border-radius:18px;background:#fff;box-shadow:0 2px 6px rgba(15,23,42,.035),0 14px 32px rgba(15,23,42,.08)}
+.seller-reviews-feed{margin-top:24px;overflow:hidden;border:1px solid var(--reviews-line);border-radius:20px;background:#fff;box-shadow:var(--reviews-main-shadow)}
 .seller-reviews-feed-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 26px;border-bottom:1px solid #E9EDF2;background:white}
 .seller-reviews-feed-title-group{display:flex;align-items:flex-start;gap:12px}
 .seller-reviews-feed-icon{display:flex;width:27px;height:27px;align-items:center;justify-content:center;color:var(--reviews-gold);background:transparent;border:0;flex:0 0 27px}
@@ -118,6 +126,28 @@
 @media(max-width:1080px){.seller-reviews-filter-form{grid-template-columns:minmax(0,1fr) minmax(155px,190px) minmax(150px,175px)}.seller-reviews-filter-button,.seller-reviews-reset{width:100%}.seller-reviews-filter-button{grid-column:2}.seller-reviews-reset{grid-column:3}}
 @media(max-width:900px){.seller-reviews-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.seller-reviews-filter-form{grid-template-columns:repeat(2,minmax(0,1fr))}.seller-reviews-search-wrap{grid-column:1/-1}.seller-reviews-filter-button{grid-column:auto}}
 @media(max-width:640px){.seller-reviews-title{font-size:25px}.seller-reviews-eyebrow{font-size:9.5px}.seller-reviews-summary{gap:10px;margin-top:18px}.seller-reviews-stat{min-height:105px;padding:14px}.seller-reviews-stat-label{font-size:11.5px}.seller-reviews-stat-value{font-size:23px}.seller-reviews-stat-note{font-size:10px}.seller-reviews-stat-icon,.seller-reviews-stat-icon svg{width:23px;height:23px;flex-basis:23px}.seller-reviews-filter-form{gap:9px;margin-top:18px}.seller-reviews-search-wrap{grid-column:1/-1}.seller-reviews-search,.seller-reviews-native,.seller-reviews-dropdown-trigger,.seller-reviews-filter-button,.seller-reviews-reset{height:46px;min-height:46px;font-size:11px}.seller-reviews-feed{margin-top:18px}.seller-reviews-feed-head{padding:18px 16px;align-items:flex-start;flex-direction:column}.seller-reviews-feed-title{font-size:17px}.seller-review-main{padding:17px 16px}.seller-review-top{flex-direction:column;gap:7px}.seller-review-product-name{font-size:12.5px}.seller-review-date{font-size:10.5px}.seller-review-reply-area{padding:14px 16px}.seller-review-reply-head{flex-direction:column;align-items:flex-start;gap:3px}.seller-review-reply-form{grid-template-columns:1fr}.seller-review-reply-button{min-height:44px;width:100%}.seller-review-photos{grid-template-columns:repeat(auto-fill,minmax(55px,1fr))}.seller-reviews-pagination{padding:14px 12px}}
+/* Buyer Cart mobile depth and shared Seller page rounded-panel geometry. */
+@media (max-width: 767px) {
+    .seller-reviews-page {
+        --reviews-main-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+    }
+    .seller-reviews-page .seller-reviews-stat,
+    .seller-reviews-page .seller-reviews-feed {
+        border-radius: 16px;
+    }
+}
+@media print {
+    .seller-reviews-page .seller-reviews-stat,
+    .seller-reviews-page .seller-reviews-feed {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+}
+
 @media(prefers-reduced-motion:reduce){.seller-reviews-page *{transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 @endverbatim
@@ -251,11 +281,7 @@
 
         </h1>
 
-        <p class="seller-reviews-subtitle">
-
-            Monitor verified product feedback and publish one Seller response per review.
-
-        </p>
+    
 
     </header>
 

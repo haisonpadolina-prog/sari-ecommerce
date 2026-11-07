@@ -6353,7 +6353,7 @@
 
                             $displayTotal = $order->total_amount ?? $order->total ?? null;
 
-                            $latestEvent = $order->events?->sortByDesc('id')->first();
+                            $latestEvent = $order->latestEvent;
 
                             $sellerSlug = 'seller-' . (int) $order->seller_account_id;
 

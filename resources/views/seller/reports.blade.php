@@ -1978,6 +1978,696 @@
         box-shadow: none !important;
     }
 }
+/* =====================================================================
+   SARI SELLER REPORTS — SELLER ORDERS UI PARITY
+   Shared Orders reference: open text header, 1520px workspace, 48px
+   filters, custom dropdown, floating white cards, flat data rows and
+   10-row pagination. Scoped to Reports; report logic is not changed.
+   ===================================================================== */
+.seller-report-page {
+    --report-orders-gold: #C88912;
+    --report-orders-gold-hover: #B47B0E;
+    --report-orders-ink: #2F3742;
+    --report-orders-muted: #667383;
+    --report-orders-border: #E5E7EB;
+    --report-orders-soft: #F8FAFC;
+    /* Exact Buyer Shopping Cart floating container shadow (desktop). */
+    --report-orders-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    width: 100% !important;
+    max-width: 1520px !important;
+    margin: 0 auto !important;
+    padding: 0 0 28px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    color: var(--report-orders-ink) !important;
+}
+.seller-report-page button,
+.seller-report-page input,
+.seller-report-page select,
+.seller-report-page a { font-family: inherit; }
+
+/* Orders-style open header (not a floating container). */
+.seller-report-page .seller-report-header {
+    display: flex !important;
+    min-height: 0 !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 14px 24px !important;
+    margin: 0 0 20px !important;
+    padding: 0 0 14px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #E9EDF1 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-heading { display: block !important; min-width: 0; }
+.seller-report-page .seller-report-heading-icon { display: none !important; }
+.seller-report-page .seller-report-eyebrow {
+    color: #A87316 !important;
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+    letter-spacing: .14em !important;
+}
+.seller-report-page .seller-report-title {
+    margin-top: 6px !important;
+    color: #2E343B !important;
+    font-size: clamp(27px, 2.3vw, 31px) !important;
+    font-weight: 760 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.04em !important;
+}
+.seller-report-page .seller-report-title-accent { color: var(--report-orders-gold) !important; }
+.seller-report-page .seller-report-subtitle {
+    max-width: 780px !important;
+    margin-top: 6px !important;
+    color: #8793A1 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+.seller-report-page .seller-report-header-actions { gap: 10px 24px !important; padding: 0 2px 0 0 !important; }
+.seller-report-page .seller-report-header-button,
+.seller-report-page .seller-report-header-button:hover,
+.seller-report-page .seller-report-header-button:focus-visible {
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    font-size: 11.5px !important;
+    font-weight: 750 !important;
+    color: #59636E !important;
+    text-decoration: none !important;
+}
+.seller-report-page .seller-report-header-button:hover,
+.seller-report-page .seller-report-header-button:focus-visible { color: var(--report-orders-gold) !important; }
+.seller-report-page .seller-report-header-button:focus-visible { outline: 2px solid var(--report-orders-gold) !important; outline-offset: 4px !important; }
+.seller-report-page .seller-report-header-button svg { width: 15px !important; height: 15px !important; }
+
+/* The report controls retain their original dates/type semantics. */
+.seller-report-page .seller-report-filter-panel,
+.seller-report-page .seller-report-filter-panel:hover {
+    position: relative;
+    z-index: 20;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-filter-grid {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(195px,1.14fr) 128px !important;
+    align-items: end !important;
+    gap: 12px !important;
+}
+.seller-report-page .seller-report-filter-field { min-width: 0; }
+.seller-report-page .seller-report-filter-field label {
+    margin: 0 0 7px 2px !important;
+    color: #637081 !important;
+    font-size: 11px !important;
+    font-weight: 650 !important;
+}
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-type-button,
+.seller-report-page .seller-report-generate {
+    height: 48px !important;
+    min-height: 48px !important;
+    border-radius: 14px !important;
+    font-size: 11.5px !important;
+}
+.seller-report-page .seller-report-filter-field input,
+.seller-report-page .seller-report-type-button {
+    border: 1px solid #DCE2E8 !important;
+    background: #FFF !important;
+    color: #3F4B59 !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-filter-field input { padding: 0 15px !important; cursor: pointer; }
+.seller-report-page .seller-report-type-button { padding: 0 15px !important; font-weight: 600 !important; }
+.seller-report-page .seller-report-type-icon { display: none !important; }
+.seller-report-page .seller-report-type-chevron { width: 17px !important; height: 17px !important; }
+.seller-report-page .seller-report-filter-field input:hover,
+.seller-report-page .seller-report-type-button:hover { border-color: #CFD6DE !important; background: #F8FAFC !important; }
+.seller-report-page .seller-report-filter-field input:focus,
+.seller-report-page .seller-report-type-button:focus-visible,
+.seller-report-page .seller-report-type-button[aria-expanded="true"] {
+    border-color: var(--report-orders-gold) !important;
+    background: #FFF !important;
+    box-shadow: 0 0 0 2px rgba(200,137,18,.12) !important;
+    outline: none !important;
+}
+.seller-report-page .seller-report-type-dropdown { position: relative; z-index: 25; }
+.seller-report-page .seller-report-type-menu {
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    left: 0 !important;
+    z-index: 100 !important;
+    min-width: min(100%, 270px) !important;
+    max-height: min(360px, 60vh);
+    overflow-y: auto !important;
+    padding: 8px !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    background: #FFF !important;
+    box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05) !important;
+    backdrop-filter: none !important;
+}
+.seller-report-page .seller-report-type-option {
+    min-height: 44px !important;
+    border-radius: 10px !important;
+    padding: 7px 12px !important;
+}
+.seller-report-page .seller-report-type-option:hover,
+.seller-report-page .seller-report-type-option:focus-visible,
+.seller-report-page .seller-report-type-option.is-selected { background: #F8FAFC !important; }
+.seller-report-page .seller-report-type-option-copy strong { color: #475569 !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-type-option-copy small { margin-top: 3px; color: #8B96A4 !important; font-size: 9px !important; }
+.seller-report-page .seller-report-type-option.is-selected strong { color: #A56D0A !important; }
+.seller-report-page .seller-report-generate {
+    width: 100% !important;
+    padding: 0 18px !important;
+    border: 1px solid var(--report-orders-gold) !important;
+    background: var(--report-orders-gold) !important;
+    color: #FFF !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+.seller-report-page .seller-report-generate:hover,
+.seller-report-page .seller-report-generate:focus-visible {
+    border-color: var(--report-orders-gold-hover) !important;
+    background: var(--report-orders-gold-hover) !important;
+}
+.seller-report-page .seller-report-ranges {
+    gap: 8px !important;
+    margin-top: 12px !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+}
+.seller-report-page .seller-report-ranges > span { color: #8793A1 !important; font-size: 11px !important; }
+.seller-report-page .seller-report-ranges button {
+    min-height: 32px !important;
+    border: 1px solid #DCE2E8 !important;
+    border-radius: 10px !important;
+    background: #FFF !important;
+    padding: 5px 12px !important;
+    color: #59636E !important;
+    font-size: 10.5px !important;
+    font-weight: 650 !important;
+}
+.seller-report-page .seller-report-ranges button:hover,
+.seller-report-page .seller-report-ranges button:focus-visible { border-color: var(--report-orders-gold) !important; background: #F8FAFC !important; color: #A56D0A !important; }
+
+/* 4 KPIs and the order status strip share Orders' readable card scale. */
+.seller-report-page .seller-report-kpi-grid { grid-template-columns: repeat(4,minmax(0,1fr)) !important; gap: 14px !important; margin-bottom: 20px !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card,
+.seller-report-page .seller-report-kpi-grid .seller-report-card:hover {
+    min-height: 110px !important;
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    padding: 14px 16px !important;
+    box-shadow: var(--report-orders-shadow) !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child { color: #637081 !important; font-size: 13px !important; font-weight: 650 !important; line-height: 1.4 !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2) { margin-top: 7px !important; color: #1F2937 !important; font-size: clamp(20px,1.9vw,30px) !important; font-weight: 650 !important; line-height: 1.12 !important; overflow-wrap: anywhere; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3) { margin-top: 6px !important; color: #8995A3 !important; font-size: 11.5px !important; line-height: 1.5 !important; white-space: normal !important; }
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid {
+    width: 28px !important; height: 28px !important; flex: 0 0 28px !important;
+    border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important;
+}
+.seller-report-page .seller-report-kpi-grid .seller-report-card span.grid svg { width: 27px !important; height: 27px !important; }
+.seller-report-page .seller-report-analytics-layout { gap: 14px !important; margin: 0 0 20px !important; grid-template-columns: minmax(0,1.45fr) minmax(310px,.65fr) !important; }
+.seller-report-page .seller-report-trend-panel,
+.seller-report-page .seller-report-performance-panel,
+.seller-report-page .seller-report-products-section,
+.seller-report-page .seller-report-financial-section {
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    box-shadow: var(--report-orders-shadow) !important;
+    transform: none !important;
+}
+.seller-report-page .seller-report-analytics-head,
+.seller-report-page .seller-report-performance-head { min-height: 92px !important; padding: 23px 25px !important; border-bottom: 1px solid #E9EDF1 !important; }
+.seller-report-page .seller-report-panel-heading { color: #1F2937 !important; font-size: 21px !important; font-weight: 750 !important; letter-spacing: -.025em !important; }
+.seller-report-page .seller-report-panel-subtitle { margin-top: 7px !important; color: #738093 !important; font-size: 13px !important; line-height: 1.5 !important; }
+.seller-report-page .seller-report-chart-shell--modern { min-height: 390px !important; padding: 19px 22px 22px !important; }
+.seller-report-page .seller-report-chart-shell--modern #sellerReportChart { height: 355px !important; }
+.seller-report-page .seller-report-legend-item { min-height: 36px !important; border: 1px solid #E5E9EF !important; background: #FFF !important; padding: 0 12px !important; color: #364152 !important; font-size: 12px !important; font-weight: 650 !important; }
+.seller-report-page .seller-report-legend-line--sales { width: 21px !important; background: #C88912 !important; }
+.seller-report-page .seller-report-legend-line--net { width: 21px !important; border-top-color: #8994A3 !important; }
+.seller-report-page .seller-report-performance-list { padding: 6px 22px 0 !important; }
+.seller-report-page .seller-report-performance-row { padding: 16px 0 !important; }
+.seller-report-page .seller-report-performance-label { font-size: 11.5px !important; }
+.seller-report-page .seller-report-performance-value { font-size: 12.5px !important; }
+.seller-report-page .seller-report-rating-value { font-size: 11.5px !important; }
+.seller-report-page .seller-report-rating-note { font-size: 10px !important; }
+.seller-report-page .seller-report-revenue-note { margin: auto 16px 16px !important; padding: 12px !important; }
+.seller-report-page .seller-report-revenue-note strong { font-size: 10.5px !important; }
+.seller-report-page .seller-report-revenue-note p { font-size: 9.5px !important; }
+.seller-report-page .seller-report-products-section { margin: 0 0 20px !important; overflow: hidden !important; }
+.seller-report-page .seller-report-products-section > div:first-child,
+.seller-report-page .seller-report-financial-section > div:first-child { padding: 20px 23px !important; border-bottom: 1px solid #E9EDF1 !important; }
+.seller-report-page .seller-report-products-section > div:first-child h2 { font-size: 20px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
+.seller-report-page .seller-report-financial-section > div:first-child h2 { font-size: 18px !important; font-weight: 750 !important; color: var(--report-orders-ink) !important; }
+.seller-report-page .seller-report-products-section > div:first-child p,
+.seller-report-page .seller-report-financial-section > div:first-child p { margin-top: 4px !important; color: #8B96A4 !important; font-size: 11.5px !important; }
+.seller-report-page .seller-report-product-grid { gap: 12px !important; padding: 16px !important; }
+.seller-report-page .seller-report-product-card { border-radius: 13px !important; }
+.seller-report-page .seller-report-product-media { height: 155px !important; }
+.seller-report-page .seller-report-product-media img { object-fit: cover !important; object-position: center !important; }
+.seller-report-page .seller-report-product-body { padding: 12px !important; }
+.seller-report-page .seller-report-product-name { margin-top: 0 !important; min-height: 0 !important; font-size: 12px !important; }
+.seller-report-page .seller-report-product-sales { font-size: 16px !important; color: #B47B0E !important; }
+.seller-report-page .seller-report-product-sold,
+.seller-report-page .seller-report-product-share { font-size: 10px !important; }
+
+/* Order-overview strip becomes four separate floating KPI cards. */
+.seller-report-page .seller-report-order-strip {
+    display: grid !important;
+    grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+    gap: 14px !important;
+    margin: 0 0 20px !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-order-stat {
+    min-height: 110px !important;
+    align-items: flex-start !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    border: 1px solid var(--report-orders-border) !important;
+    border-radius: 20px !important;
+    background: #FFF !important;
+    box-shadow: var(--report-orders-shadow) !important;
+}
+.seller-report-page .seller-report-order-stat-icon { width: 27px !important; height: 27px !important; flex: 0 0 27px !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; }
+.seller-report-page .seller-report-order-stat-icon svg { width: 27px !important; height: 27px !important; }
+.seller-report-page .seller-report-order-stat-label { font-size: 13px !important; line-height: 1.4 !important; color: #637081 !important; }
+.seller-report-page .seller-report-order-stat-value { display: block !important; margin-top: 7px !important; font-size: 27px !important; font-weight: 650 !important; color: #1F2937 !important; }
+.seller-report-page .seller-report-order-stat-desc { display: block !important; margin: 6px 0 0 !important; font-size: 11.5px !important; color: #8995A3 !important; }
+
+/* Financial breakdown: Orders table spacing, search, pagination. */
+.seller-report-page .seller-report-financial-section { margin: 0 0 20px !important; overflow: hidden !important; }
+.seller-report-page .seller-report-transaction-count-badge {
+    display: inline-flex; align-items: center; min-height: 32px;
+    border: 1px solid #E5E7EB !important; border-radius: 9px !important;
+    background: #F8FAFC !important; padding: 0 12px !important;
+    color: #667383 !important; font-size: 11px !important; font-weight: 600 !important;
+}
+.seller-report-page .seller-report-transaction-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 20px; border-bottom: 1px solid #E9EDF1;
+}
+.seller-report-page .seller-report-transaction-search-field { position: relative; display: block; flex: 1 1 auto; max-width: 580px; }
+.seller-report-page .seller-report-transaction-search-field > svg {
+    position: absolute; left: 16px; top: 50%; width: 20px; height: 20px;
+    transform: translateY(-50%); color: #98A2B3; pointer-events: none;
+}
+.seller-report-page #sellerReportTransactionSearch {
+    display: block; width: 100%; height: 48px; min-height: 48px;
+    border: 1px solid #DCE2E8; border-radius: 14px; background: #FFF;
+    padding: 0 14px 0 46px; color: #3F4B59;
+    font-size: 11.5px; outline: none; box-shadow: none;
+}
+.seller-report-page #sellerReportTransactionSearch::placeholder { color: #A0AAB6; }
+.seller-report-page #sellerReportTransactionSearch:focus { border-color: #C88912; box-shadow: 0 0 0 2px rgba(200,137,18,.12); }
+.seller-report-page .seller-report-transaction-per-page { flex: 0 0 auto; color: #8793A1; font-size: 11px; }
+.seller-report-page .seller-report-financial-section table { width: 100% !important; min-width: 1080px !important; border-collapse: collapse !important; }
+.seller-report-page .seller-report-financial-section table thead tr { background: #F8FAFC !important; }
+.seller-report-page .seller-report-financial-section table th {
+    padding: 15px 16px !important; color: #8591A0 !important;
+    font-size: 11px !important; font-weight: 750 !important;
+    letter-spacing: .075em !important; text-transform: uppercase !important;
+    white-space: nowrap;
+}
+.seller-report-page .seller-report-financial-section table td {
+    padding: 17px 16px !important; font-size: 11.5px !important;
+    color: #475569; vertical-align: middle;
+}
+.seller-report-page .seller-report-financial-section table td:first-child { font-weight: 750 !important; color: #293440 !important; }
+.seller-report-page .seller-report-financial-section table td span { font-size: 10.5px !important; font-weight: 700 !important; }
+.seller-report-page .seller-report-table-row { border-bottom: 1px solid #EDF0F3 !important; background: #FFF !important; }
+.seller-report-page .seller-report-table-row:hover { background: #F8FAFC !important; }
+.seller-report-page .seller-report-table-row[hidden],
+.seller-report-page .seller-report-transaction-no-match[hidden],
+.seller-report-page .seller-report-transaction-footer[hidden] { display: none !important; }
+.seller-report-page .seller-report-transaction-no-match { padding: 60px 20px; color: #8793A1; font-size: 12px; text-align: center; }
+.seller-report-page .seller-report-transaction-footer {
+    display: flex; min-height: 64px; align-items: center;
+    justify-content: space-between; gap: 12px;
+    padding: 13px 20px; border-top: 1px solid #E9EDF1; background: #FFF;
+}
+.seller-report-page #sellerReportTransactionCount { margin: 0; color: #7B8794; font-size: 11px; font-weight: 550; }
+.seller-report-page .seller-report-transaction-pagination { display: flex; align-items: center; gap: 6px; }
+.seller-report-page .seller-report-transaction-pages { display: flex; align-items: center; gap: 6px; }
+.seller-report-page .seller-report-transaction-pagination button {
+    display: grid; width: 34px; min-width: 34px; height: 34px;
+    place-items: center; border: 1px solid #E5E7EB; border-radius: 10px;
+    background: #FFF; padding: 0; color: #8793A1;
+    font-size: 11.5px; font-weight: 700; cursor: pointer;
+}
+.seller-report-page .seller-report-transaction-pagination button:hover:not(:disabled) { border-color: #C88912; color: #A56D0A; background: #F8FAFC; }
+.seller-report-page .seller-report-transaction-pagination button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+.seller-report-page .seller-report-transaction-pagination button.is-current {
+    border-color: #C88912; background: #C88912; color: #FFF;
+}
+.seller-report-page .seller-report-transaction-pagination button:disabled { opacity: .42; cursor: not-allowed; }
+.seller-report-page .seller-report-transaction-pagination svg { width: 16px; height: 16px; }
+
+@media (max-width: 1180px) {
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-analytics-layout { grid-template-columns: minmax(0,1fr) !important; }
+}
+@media (max-width: 900px) {
+    .seller-report-page .seller-report-header { align-items: flex-start !important; flex-direction: column !important; }
+    .seller-report-page .seller-report-header-actions { justify-content: flex-start !important; }
+    .seller-report-page .seller-report-filter-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-filter-grid > .seller-report-filter-field:nth-child(3) { grid-column: 1 / -1; }
+    .seller-report-page .seller-report-generate { grid-column: 1 / -1; }
+    .seller-report-page .seller-report-product-grid { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+}
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-title { font-size: 25px !important; }
+    .seller-report-page .seller-report-eyebrow { font-size: 9.5px !important; }
+    .seller-report-page .seller-report-header-actions { display: flex !important; width: auto !important; gap: 18px !important; }
+    .seller-report-page .seller-report-header-button { font-size: 10.5px !important; }
+    .seller-report-page .seller-report-filter-grid { grid-template-columns: 1fr !important; }
+    .seller-report-page .seller-report-filter-grid > .seller-report-filter-field:nth-child(3),
+    .seller-report-page .seller-report-generate { grid-column: auto !important; }
+    .seller-report-page .seller-report-filter-field input,
+    .seller-report-page .seller-report-type-button,
+    .seller-report-page .seller-report-generate { height: 48px !important; min-height: 48px !important; font-size: 11px !important; }
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 10px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-order-stat { min-height: 108px !important; padding: 12px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:first-child,
+    .seller-report-page .seller-report-order-stat-label { font-size: 11px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(2),
+    .seller-report-page .seller-report-order-stat-value { font-size: 21px !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card p:nth-child(3),
+    .seller-report-page .seller-report-order-stat-desc { font-size: 9px !important; }
+    .seller-report-page .seller-report-product-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-report-page .seller-report-transaction-toolbar { align-items: flex-start; flex-direction: column; padding: 12px 14px; }
+    .seller-report-page .seller-report-transaction-search-field { width: 100%; max-width: none; }
+    .seller-report-page .seller-report-transaction-footer { align-items: flex-start; flex-direction: column; }
+    .seller-report-page .seller-report-transaction-pagination { align-self: flex-end; }
+}
+@media (max-width: 380px) {
+    .seller-report-page .seller-report-kpi-grid,
+    .seller-report-page .seller-report-order-strip,
+    .seller-report-page .seller-report-product-grid { grid-template-columns: 1fr !important; }
+}
+@media print {
+    .seller-report-page .seller-report-transaction-toolbar,
+    .seller-report-page .seller-report-transaction-footer,
+    .seller-report-page .seller-report-transaction-no-match { display: none !important; }
+    /* Pagination is screen-only. Print every server-rendered transaction. */
+    .seller-report-page .seller-report-table-row[hidden] { display: table-row !important; }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-order-stat,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-financial-section { box-shadow: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .seller-report-page .seller-report-transaction-pagination button { transition: none !important; }
+}
+/* =====================================================================
+   SELLER REPORTS — DASHBOARD HIERARCHY (AFTER ORDERS UI PARITY)
+   Four financial KPIs -> four order KPIs -> left chart/performance +
+   right Top Selling Products. No report data or actions are altered.
+   ===================================================================== */
+.seller-report-page .seller-report-kpi-grid {
+    margin-bottom: 14px !important;
+}
+.seller-report-page .seller-report-order-strip {
+    margin: 0 0 20px !important;
+}
+
+/* The layout exists only when both Sales and Products are included.
+   Sales-only, Orders-only and Products-only reports remain full-width. */
+.seller-report-page .seller-report-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(365px, 30%);
+    align-items: start;
+    gap: 16px;
+    margin: 0 0 20px;
+}
+.seller-report-page .seller-report-dashboard-grid > .seller-report-analytics-layout {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+    margin: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid > .seller-report-products-section {
+    min-width: 0;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child {
+    padding: 23px 21px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child h2 {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+    letter-spacing: -.02em !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-products-section > div:first-child p {
+    margin-top: 7px !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+}
+
+/* A ranked sidebar list, not five empty product columns when there is
+   only one seller product. Keep the entire product image visible. */
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 12px !important;
+    padding: 15px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+    display: grid !important;
+    grid-template-columns: 136px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-width: 0 !important;
+    min-height: 164px !important;
+    padding: 14px !important;
+    border: 1px solid #E6EAF0 !important;
+    border-radius: 16px !important;
+    background: #FFF !important;
+    box-shadow: none !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-card:last-child {
+    border-bottom: 1px solid #E6EAF0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+    width: 136px !important;
+    height: 136px !important;
+    min-width: 136px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    background: #F8FAFC !important;
+    overflow: hidden !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-media img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-rank {
+    top: 8px !important;
+    left: 8px !important;
+    width: 29px !important;
+    height: 29px !important;
+    border-radius: 9px !important;
+    font-size: 11px !important;
+    color: #B47B0E !important;
+    background: rgba(255,255,255,.97) !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-body {
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-topline {
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-share {
+    flex: 0 0 auto !important;
+    color: #7E8998 !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-name {
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    color: #202B3A !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-sales {
+    margin-top: 10px !important;
+    color: #B47B0E !important;
+    font-size: clamp(18px, 1.45vw, 22px) !important;
+    font-weight: 750 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-progress {
+    height: 8px !important;
+    margin-top: 15px !important;
+    background: #EDF0F3 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-progress > span {
+    background: #C88912 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid > .col-span-full {
+    padding: 24px 14px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.seller-report-page .seller-report-dashboard-grid .seller-report-product-grid > .col-span-full p {
+    font-size: 11px !important;
+}
+
+/* Keep chart + performance side by side when their shared column fits. */
+@media (max-width: 1399px) and (min-width: 1280px) {
+    .seller-report-page .seller-report-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(350px, 30%);
+        gap: 14px;
+    }
+}
+/* Avoid squeezing analytics/table on tablets or narrow desktops. */
+@media (max-width: 1279px) {
+    .seller-report-page .seller-report-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        gap: 12px !important;
+        padding: 14px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 116px minmax(0,1fr) !important;
+        min-height: 144px !important;
+        padding: 12px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 116px !important;
+        min-width: 116px !important;
+        height: 116px !important;
+    }
+}
+@media (max-width: 639px) {
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 112px minmax(0, 1fr) !important;
+        gap: 12px !important;
+        border-right: 1px solid #E6EAF0 !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 112px !important;
+        min-width: 112px !important;
+        height: 112px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-sales {
+        font-size: 17px !important;
+    }
+}
+@media (max-width: 380px) {
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        grid-template-columns: 92px minmax(0,1fr) !important;
+        gap: 10px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-media {
+        width: 92px !important;
+        min-width: 92px !important;
+        height: 92px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-share {
+        font-size: 9px !important;
+    }
+}
+@media print {
+    .seller-report-page .seller-report-dashboard-grid {
+        display: block !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid > .seller-report-products-section {
+        margin-top: 12px !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    }
+    .seller-report-page .seller-report-dashboard-grid .seller-report-product-card {
+        break-inside: avoid;
+    }
+}
+
+/* SELLER REPORTS — SALES CHART ONLY (PERFORMANCE CARD REMOVED) */
+/* The Sales Trend fills the analytics column; Top Selling Products stays on the
+   right when the combined dashboard grid is present. Sales-only is full width. */
+.seller-report-page .seller-report-analytics-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+.seller-report-page .seller-report-analytics-layout > .seller-report-trend-panel {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Buyer Cart parity: rounded report card surfaces + lighter mobile elevation.
+   Applied only to the top-level floating cards, not filters, controls, inner
+   product tiles, chart elements, table rows or dropdown overlays. */
+@media screen and (max-width: 767px) {
+    .seller-report-page {
+        --report-orders-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90);
+    }
+    .seller-report-page .seller-report-kpi-grid .seller-report-card,
+    .seller-report-page .seller-report-order-stat,
+    .seller-report-page .seller-report-trend-panel,
+    .seller-report-page .seller-report-performance-panel,
+    .seller-report-page .seller-report-products-section,
+    .seller-report-page .seller-report-financial-section {
+        border-radius: 16px !important;
+    }
+}
+
 @endverbatim
 </style>
 
@@ -2004,9 +2694,7 @@
                     <h1 class="seller-report-title">
                         <span>Seller</span><span class="seller-report-title-accent">Reports</span>
                     </h1>
-                    <p class="seller-report-subtitle">
-                        Review sales, commission, orders, and product performance from real marketplace records.
-                    </p>
+                    
                 </div>
             </div>
 
@@ -2252,228 +2940,6 @@
             </section>
         @endif
 
-        @if ($showSales)
-            {{-- CHART + PERFORMANCE --}}
-            <section class="seller-report-print-section seller-report-analysis-grid seller-report-analytics-layout">
-                <article class="seller-report-panel seller-report-trend-panel">
-                    <div class="seller-report-analytics-head">
-                        <div class="seller-report-analytics-heading">
-                            <div>
-                                <h2 class="seller-report-panel-heading">Sales & Revenue Trend</h2>
-                                <p class="seller-report-panel-subtitle">
-                                    Delivered merchandise sales · {{ $from->format('M d, Y') }} — {{ $to->format('M d, Y') }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="seller-report-chart-legend" aria-label="Chart legend">
-                            <span class="seller-report-legend-item">
-                                <span class="seller-report-legend-line seller-report-legend-line--sales" aria-hidden="true"></span>
-                                Sales
-                            </span>
-                            <span class="seller-report-legend-item">
-                                <span class="seller-report-legend-line seller-report-legend-line--net" aria-hidden="true"></span>
-                                Net Revenue
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="seller-report-chart-shell seller-report-chart-shell--modern">
-                        <svg
-                            id="sellerReportChart"
-                            viewBox="0 0 860 310"
-                            class="block min-w-[700px] w-full"
-                            preserveAspectRatio="xMidYMid meet"
-                            role="img"
-                            aria-label="Sales and net revenue trend for the selected report period"
-                        >
-                            <defs>
-                                <linearGradient id="sellerReportAreaFill" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#d59617" stop-opacity=".12"></stop>
-                                    <stop offset="100%" stop-color="#d59617" stop-opacity=".012"></stop>
-                                </linearGradient>
-                            </defs>
-
-                            <g id="sellerReportGrid"></g>
-                            <path id="sellerReportSalesArea" fill="url(#sellerReportAreaFill)"></path>
-                            <path id="sellerReportSalesLine" class="seller-report-chart-path" fill="none" stroke="#d59617" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path id="sellerReportNetLine" class="seller-report-chart-path" fill="none" stroke="#7d93a5" stroke-width="2.2" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <g id="sellerReportSalesPoints"></g>
-                            <g id="sellerReportXAxis"></g>
-                        </svg>
-
-                        <div id="sellerReportChartEmpty" class="seller-report-chart-empty">
-                            <div class="seller-report-chart-empty-card">
-                                <span class="seller-report-chart-empty-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                        <path d="M4 18 9 13l3 3 7-8"></path>
-                                        <path d="M15 8h4v4"></path>
-                                    </svg>
-                                </span>
-                                <p>No delivered sales in this period.</p>
-                                <small>Try a wider date range to see the trend.</small>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <aside class="seller-report-panel seller-report-performance-panel">
-                    <div class="seller-report-performance-head">
-                        <div>
-                            <h2 class="seller-report-panel-heading">Performance Summary</h2>
-                            <p class="seller-report-panel-subtitle">Calculated from real Seller order records.</p>
-                        </div>
-                    </div>
-
-                    <div class="seller-report-performance-list">
-                        @foreach ([
-                            ['Order Completion Rate', $summary['completion_rate'], 'completed', '#4f7d63'],
-                            ['Cancellation Rate', $summary['cancellation_rate'], 'cancelled', '#a65353'],
-                        ] as [$label, $value, $tone, $color])
-                            <div class="seller-report-performance-row">
-                                <div class="seller-report-performance-row-head">
-                                    <span class="seller-report-performance-label">{{ $label }}</span>
-                                    <strong class="seller-report-performance-value seller-report-performance-value--{{ $tone }}">
-                                        {{ number_format($value, 1) }}%
-                                    </strong>
-                                </div>
-
-                                <div
-                                    class="seller-report-performance-track"
-                                    role="progressbar"
-                                    aria-label="{{ $label }}"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                    aria-valuenow="{{ number_format(min(100, max(0, $value)), 1, '.', '') }}"
-                                >
-                                    <span style="width: {{ min(100, max(0, $value)) }}%; background: {{ $color }};"></span>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        <div class="seller-report-performance-row seller-report-performance-row--rating">
-                            <div class="seller-report-performance-row-head">
-                                <span class="seller-report-performance-label">Customer Rating</span>
-
-                                <strong class="seller-report-rating-value">
-                                    {{ $summary['customer_rating'] !== null
-                                        ? number_format($summary['customer_rating'], 1) . ' / 5'
-                                        : 'No ratings yet' }}
-                                </strong>
-                            </div>
-
-                            <div class="seller-report-rating-note">
-                                <span class="seller-report-rating-star" aria-hidden="true">★</span>
-                                Uses real product reviews when available.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="seller-report-revenue-note">
-                        <span class="seller-report-revenue-note-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <circle cx="12" cy="12" r="8"></circle>
-                                <path d="M12 11v5"></path>
-                                <path d="M12 8h.01"></path>
-                            </svg>
-                        </span>
-
-                        <div>
-                            <strong>Revenue basis</strong>
-                            <p>
-                                Gross sales use delivered merchandise subtotals only. Delivery fees are excluded.
-                                Product cost is not tracked yet, so this report shows net revenue rather than accounting profit.
-                            </p>
-                        </div>
-                    </div>
-                </aside>
-            </section>
-        @endif
-
-        @if ($showProducts)
-            {{-- TOP PRODUCTS --}}
-            <section class="seller-report-print-section seller-report-products-section border bg-white">
-                <div>
-                    <h2>Top Selling Products</h2>
-                    <p>Ranked using real quantities and line totals from delivered order snapshots.</p>
-                </div>
-
-                <div class="seller-report-product-grid">
-                    @php
-                        $maxProductSales = max(1, (float) collect($topProducts)->max('sales'));
-                    @endphp
-
-                    @forelse ($topProducts as $index => $product)
-                        @php
-                            $width = min(100, (((float) $product['sales'] / $maxProductSales) * 100));
-                            $imagePath = $product['image_path'] ?? null;
-                            $imageUrl = null;
-
-                            if ($imagePath) {
-                                $imageUrl = \Illuminate\Support\Str::startsWith(
-                                    $imagePath,
-                                    ['http://', 'https://', '/storage/', '/images/', '/uploads/']
-                                )
-                                    ? $imagePath
-                                    : asset('storage/' . ltrim($imagePath, '/'));
-                            }
-                        @endphp
-
-                        <article class="seller-report-product-card">
-                            <div class="seller-report-product-media">
-                                @if($imageUrl)
-                                    <img
-                                        src="{{ $imageUrl }}"
-                                        alt="{{ $product['name'] }}"
-                                        loading="lazy"
-                                        decoding="async"
-                                    >
-                                @else
-                                    <div class="seller-report-product-placeholder" aria-label="No product image available">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                                            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
-                                            <path d="m7 15 3-3 3 3 4-5 3 4"></path>
-                                            <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"></circle>
-                                        </svg>
-                                    </div>
-                                @endif
-
-                                <span class="seller-report-product-rank">#{{ $index + 1 }}</span>
-                            </div>
-
-                            <div class="seller-report-product-body">
-                                <div class="seller-report-product-topline">
-                                    <span class="seller-report-product-sold">
-                                        {{ number_format((int) $product['quantity']) }} sold
-                                    </span>
-
-                                    <span class="seller-report-product-share">
-                                        {{ number_format($width, 0) }}% of top
-                                    </span>
-                                </div>
-
-                                <p class="seller-report-product-name" title="{{ $product['name'] }}">
-                                    {{ $product['name'] }}
-                                </p>
-
-                                <p class="seller-report-product-sales">
-                                    ₱{{ number_format((float) $product['sales'], 2) }}
-                                </p>
-
-                                <div class="seller-report-product-progress" aria-hidden="true">
-                                    <span style="width: {{ $width }}%"></span>
-                                </div>
-                            </div>
-                        </article>
-                    @empty
-                        <div class="col-span-full rounded-[12px] border border-dashed border-[#dfe3e8] bg-white px-6 py-9 text-center">
-                            <p class="text-[9px] font-medium text-[#667085]">No delivered product sales in this period.</p>
-                        </div>
-                    @endforelse
-                </div>
-            </section>
-        @endif
-
         @if ($showOrders)
             {{-- ORDER STATUS OVERVIEW — compact strip, not summary cards --}}
             <section class="seller-report-print-section seller-report-order-strip" aria-label="Order status overview">
@@ -2545,6 +3011,156 @@
             </section>
         @endif
 
+        {{-- Dashboard: sales analysis on the left, products on the right (All Reports). --}}
+        @if ($showSales && $showProducts)
+            <div class="seller-report-dashboard-grid">
+        @endif
+
+        @if ($showSales)
+            {{-- SALES TREND CHART — PERFORMANCE SUMMARY REMOVED --}}
+            <section class="seller-report-print-section seller-report-analysis-grid seller-report-analytics-layout">
+                <article class="seller-report-panel seller-report-trend-panel">
+                    <div class="seller-report-analytics-head">
+                        <div class="seller-report-analytics-heading">
+                            <div>
+                                <h2 class="seller-report-panel-heading">Sales & Revenue Trend</h2>
+                                <p class="seller-report-panel-subtitle">
+                                    Delivered merchandise sales · {{ $from->format('M d, Y') }} — {{ $to->format('M d, Y') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="seller-report-chart-legend" aria-label="Chart legend">
+                            <span class="seller-report-legend-item">
+                                <span class="seller-report-legend-line seller-report-legend-line--sales" aria-hidden="true"></span>
+                                Sales
+                            </span>
+                            <span class="seller-report-legend-item">
+                                <span class="seller-report-legend-line seller-report-legend-line--net" aria-hidden="true"></span>
+                                Net Revenue
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="seller-report-chart-shell seller-report-chart-shell--modern">
+                        <svg
+                            id="sellerReportChart"
+                            viewBox="0 0 860 340"
+                            class="block min-w-[700px] w-full"
+                            preserveAspectRatio="xMidYMid meet"
+                            role="img"
+                            aria-label="Sales and net revenue trend for the selected report period"
+                        >
+                            <defs>
+                                <linearGradient id="sellerReportAreaFill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#C88912" stop-opacity=".13"></stop>
+                                    <stop offset="100%" stop-color="#C88912" stop-opacity=".008"></stop>
+                                </linearGradient>
+                            </defs>
+
+                            <g id="sellerReportGrid"></g>
+                            <path id="sellerReportSalesArea" fill="url(#sellerReportAreaFill)"></path>
+                            <path id="sellerReportSalesLine" class="seller-report-chart-path" fill="none" stroke="#C88912" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path id="sellerReportNetLine" class="seller-report-chart-path" fill="none" stroke="#8994A3" stroke-width="2.4" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <g id="sellerReportSalesPoints"></g>
+                            <g id="sellerReportXAxis"></g>
+                        </svg>
+
+                        <div id="sellerReportChartEmpty" class="seller-report-chart-empty">
+                            <div class="seller-report-chart-empty-card">
+                                <p>No delivered sales in this period.</p>
+                                <small>Try a wider date range to see the trend.</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        @endif
+
+        @if ($showProducts)
+            {{-- TOP PRODUCTS --}}
+            <section class="seller-report-print-section seller-report-products-section border bg-white">
+                <div>
+                    <h2>Top Selling Products</h2>
+                    <p>Ranked using real quantities and line totals from delivered order snapshots.</p>
+                </div>
+
+                <div class="seller-report-product-grid">
+                    @php
+                        $maxProductSales = max(1, (float) collect($topProducts)->max('sales'));
+                    @endphp
+
+                    @forelse ($topProducts as $index => $product)
+                        @php
+                            $width = min(100, (((float) $product['sales'] / $maxProductSales) * 100));
+                            $imagePath = $product['image_path'] ?? null;
+                            $imageUrl = null;
+
+                            if ($imagePath) {
+                                $imageUrl = \Illuminate\Support\Str::startsWith(
+                                    $imagePath,
+                                    ['http://', 'https://', '/storage/', '/images/', '/uploads/']
+                                )
+                                    ? $imagePath
+                                    : asset('storage/' . ltrim($imagePath, '/'));
+                            }
+                        @endphp
+
+                        <article class="seller-report-product-card">
+                            <div class="seller-report-product-media">
+                                @if($imageUrl)
+                                    <img
+                                        src="{{ $imageUrl }}"
+                                        alt="{{ $product['name'] }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                    >
+                                @else
+                                    <div class="seller-report-product-placeholder" aria-label="No product image available">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+                                            <path d="m7 15 3-3 3 3 4-5 3 4"></path>
+                                            <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"></circle>
+                                        </svg>
+                                    </div>
+                                @endif
+
+                                <span class="seller-report-product-rank">#{{ $index + 1 }}</span>
+                            </div>
+
+                            <div class="seller-report-product-body">
+                                <div class="seller-report-product-topline">
+                                    <p class="seller-report-product-name" title="{{ $product['name'] }}">
+                                        {{ $product['name'] }}
+                                    </p>
+                                    <span class="seller-report-product-share">
+                                        {{ number_format($width, 0) }}% of top
+                                    </span>
+                                </div>
+
+                                <p class="seller-report-product-sales">
+                                    ₱{{ number_format((float) $product['sales'], 2) }}
+                                </p>
+
+                                <div class="seller-report-product-progress" aria-hidden="true">
+                                    <span style="width: {{ $width }}%"></span>
+                                </div>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-full rounded-[12px] border border-dashed border-[#dfe3e8] bg-white px-6 py-9 text-center">
+                            <p class="text-[9px] font-medium text-[#667085]">No delivered product sales in this period.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </section>
+        @endif
+
+        @if ($showSales && $showProducts)
+            </div>
+        @endif
+
         {{-- FINANCIAL / ORDER TRANSACTIONS --}}
         @if ($reportType !== 'products')
             <section class="seller-report-print-section seller-report-financial-section overflow-hidden border border-[#e9e2d9] bg-white">
@@ -2553,13 +3169,31 @@
                         <h2 class="text-[20px] font-semibold tracking-[-.025em] text-[#24201b]">Financial Breakdown</h2>
                         <p class="mt-1 text-[10.5px] text-[#887f75]">COD marketplace orders from the selected report period.</p>
                     </div>
-                    <span class="rounded-full border border-[#e8dfd1] bg-[#fffaf2] px-3 py-1.5 text-[9px] font-medium text-[#9b6c1c]">
-                        Showing latest {{ $transactions->count() }}
+                    <span class="seller-report-transaction-count-badge">
+                        Latest {{ $transactions->count() }} transactions
                     </span>
                 </div>
 
+                {{-- Screen-only search and pagination of the latest server-rendered transactions. --}}
+                <div class="seller-report-no-print seller-report-transaction-toolbar">
+                    <label class="seller-report-transaction-search-field">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <path d="m20 20-3.5-3.5"></path>
+                        </svg>
+                        <input
+                            id="sellerReportTransactionSearch"
+                            type="search"
+                            placeholder="Search order ID, buyer, status, payment..."
+                            aria-label="Search latest report transactions"
+                            autocomplete="off"
+                        >
+                    </label>
+                    <span class="seller-report-transaction-per-page">10 rows per page · latest transactions</span>
+                </div>
+
                 <div class="overflow-x-auto">
-                    <table class="w-full min-w-[980px] text-left">
+                    <table class="w-full min-w-[1080px] text-left">
                         <thead>
                             <tr class="border-b border-[#eee8df] bg-[#fdfbf8]">
                                 @foreach (['Order', 'Buyer', 'Date', 'Status', 'Gross Sales', 'Commission', 'Net Revenue', 'Payment'] as $head)
@@ -2569,7 +3203,7 @@
                         </thead>
                         <tbody>
                             @forelse ($transactions as $transaction)
-                                <tr class="seller-report-table-row border-b border-[#f1ece5] last:border-b-0">
+                                <tr class="seller-report-table-row border-b border-[#f1ece5] last:border-b-0" data-report-transaction-row>
                                     <td class="px-5 py-4 text-[10px] font-semibold text-[#302a24]">{{ $transaction['order_number'] }}</td>
                                     <td class="px-5 py-4 text-[9.5px] font-medium text-[#4a443d]">{{ $transaction['buyer_name'] }}</td>
                                     <td class="px-5 py-4 text-[9px] text-[#91887e]">{{ $transaction['date']?->format('M d, Y') }}</td>
@@ -2594,6 +3228,23 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div id="sellerReportTransactionNoMatch" class="seller-report-transaction-no-match seller-report-no-print" hidden>
+                    No matching transactions in the latest {{ $transactions->count() }} records.
+                </div>
+
+                <footer id="sellerReportTransactionFooter" class="seller-report-transaction-footer seller-report-no-print" hidden>
+                    <p id="sellerReportTransactionCount" aria-live="polite">Showing recent transactions</p>
+                    <nav class="seller-report-transaction-pagination" aria-label="Transaction pages">
+                        <button type="button" data-report-page-prev aria-label="Previous transaction page" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                        </button>
+                        <div class="seller-report-transaction-pages" data-report-page-numbers></div>
+                        <button type="button" data-report-page-next aria-label="Next transaction page" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                        </button>
+                    </nav>
+                </footer>
             </section>
         @endif
 
@@ -2635,6 +3286,7 @@
             const generateButton = form?.querySelector('button[type="submit"]');
 
             this.initReportTypeDropdown(signal);
+            this.initTransactionTable(signal);
 
             const dateValue = (date) => {
                 const y = date.getFullYear();
@@ -2799,6 +3451,85 @@
             sync(nativeSelect.value || 'all');
         },
 
+
+        initTransactionTable(signal) {
+            const search = document.getElementById('sellerReportTransactionSearch');
+            const footer = document.getElementById('sellerReportTransactionFooter');
+            const counter = document.getElementById('sellerReportTransactionCount');
+            const noMatch = document.getElementById('sellerReportTransactionNoMatch');
+            const numbers = footer?.querySelector('[data-report-page-numbers]');
+            const previous = footer?.querySelector('[data-report-page-prev]');
+            const next = footer?.querySelector('[data-report-page-next]');
+            const rows = Array.from(document.querySelectorAll('[data-report-transaction-row]'));
+
+            if (!search || !footer || !counter || !numbers || !previous || !next) return;
+            if (!rows.length) {
+                footer.hidden = true;
+                return;
+            }
+
+            const pageSize = 10;
+            const searchable = rows.map((row) => ({
+                row,
+                content: row.textContent.toLocaleLowerCase(),
+            }));
+            let currentPage = 1;
+
+            const render = () => {
+                const query = search.value.trim().toLocaleLowerCase();
+                const matching = searchable.filter(({ content }) => content.includes(query));
+                const count = matching.length;
+                const totalPages = Math.max(1, Math.ceil(count / pageSize));
+                currentPage = Math.min(currentPage, totalPages);
+                const start = (currentPage - 1) * pageSize;
+                const visible = new Set(matching.slice(start, start + pageSize).map(({ row }) => row));
+
+                rows.forEach((row) => { row.hidden = !visible.has(row); });
+                noMatch.hidden = count > 0;
+                footer.hidden = false;
+                counter.textContent = count
+                    ? `Showing ${start + 1}–${Math.min(start + pageSize, count)} of ${count} matching recent transactions`
+                    : `0 of ${rows.length} recent transactions match`;
+                previous.disabled = currentPage <= 1;
+                next.disabled = currentPage >= totalPages;
+                numbers.replaceChildren();
+
+                const firstPage = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
+                for (let page = firstPage; page <= Math.min(totalPages, firstPage + 4); page++) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = String(page);
+                    button.dataset.reportPage = String(page);
+                    button.setAttribute('aria-label', `Transaction page ${page}`);
+                    if (page === currentPage) {
+                        button.classList.add('is-current');
+                        button.setAttribute('aria-current', 'page');
+                    }
+                    numbers.appendChild(button);
+                }
+            };
+
+            search.addEventListener('input', () => {
+                currentPage = 1;
+                render();
+            }, { signal });
+            previous.addEventListener('click', () => {
+                currentPage = Math.max(1, currentPage - 1);
+                render();
+            }, { signal });
+            next.addEventListener('click', () => {
+                currentPage += 1;
+                render();
+            }, { signal });
+            numbers.addEventListener('click', (event) => {
+                const button = event.target.closest('[data-report-page]');
+                if (!button || !numbers.contains(button)) return;
+                currentPage = Number(button.dataset.reportPage) || 1;
+                render();
+            }, { signal });
+            render();
+        },
+
         renderChart() {
             const data = this.chartData || {};
             const svg = document.getElementById('sellerReportChart');
@@ -2831,10 +3562,10 @@
             emptyState?.classList.toggle('is-visible', !hasSales);
 
             const chart = {
-                left: 72,
-                right: 830,
-                top: 24,
-                bottom: 246,
+                left: 78,
+                right: 822,
+                top: 25,
+                bottom: 272,
             };
 
             const width = chart.right - chart.left;
@@ -2853,17 +3584,17 @@
                     y1: y,
                     x2: chart.right,
                     y2: y,
-                    stroke: index === 4 ? '#dcd4ca' : '#eee8e0',
-                    'stroke-dasharray': index === 4 ? '0' : '4 5',
+                    stroke: index === 4 ? '#D7DDE5' : '#E8EDF2',
+                    'stroke-dasharray': index === 4 ? '0' : '5 6',
                 }));
 
                 grid.appendChild(this.svgElement('text', {
-                    x: 7,
-                    y: y + 4,
-                    fill: '#8f867c',
-                    'font-size': 9.5,
+                    x: 10,
+                    y: y + 5,
+                    fill: '#344054',
+                    'font-size': 13.5,
                     'font-family': 'Poppins, sans-serif',
-                    'font-weight': 400,
+                    'font-weight': 600,
                 }, this.compactPeso(value)));
             }
 
@@ -2906,10 +3637,10 @@
                 const circle = this.svgElement('circle', {
                     cx: point.x,
                     cy: point.y,
-                    r: index === salesPoints.length - 1 ? 4.8 : 3.8,
+                    r: index === salesPoints.length - 1 ? 5.2 : 4.4,
                     fill: '#fff',
-                    stroke: '#d89412',
-                    'stroke-width': 2,
+                    stroke: '#C88912',
+                    'stroke-width': 2.4,
                 });
 
                 circle.appendChild(
@@ -2930,11 +3661,11 @@
                 if (shouldShowLabel) {
                     xAxis.appendChild(this.svgElement('text', {
                         x: point.x,
-                        y: 284,
-                        fill: '#81786e',
-                        'font-size': 8.8,
+                        y: 314,
+                        fill: '#344054',
+                        'font-size': 13,
                         'font-family': 'Poppins, sans-serif',
-                        'font-weight': 400,
+                        'font-weight': 600,
                         'text-anchor': 'middle',
                     }, labels[index] || ''));
                 }

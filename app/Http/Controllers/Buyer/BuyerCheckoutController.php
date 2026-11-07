@@ -17,6 +17,7 @@ use App\Services\Products\ProductVariantInventoryService;
 use App\Services\Promotions\PlatformCampaignService;
 use App\Services\Promotions\SellerFreeShippingPromotionService;
 use App\Services\Seller\SellerVoucherService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -187,7 +188,7 @@ class BuyerCheckoutController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         $this->identity->guard($request);
 
@@ -502,14 +503,30 @@ class BuyerCheckoutController extends Controller
             return $created;
         }, 3);
 
+        $ordersUrl = route('buyer.orders');
+        $confirmationUrl = route('buyer.messages', [
+            'seller' => (int) $createdOrders->first()->seller_account_id,
+        ]);
+        $successMessage = $createdOrders->count() === 1
+            ? 'Order placed successfully. The seller can now prepare it.'
+            : $createdOrders->count() . ' seller orders were created successfully.';
+
+        // Respond without rendering the entire My Orders page for AJAX checkout.
+        // The client only displays success after this transaction has committed.
+        if ($request->expectsJson()) {
+            return response()->json([
+                'ok' => true,
+                'redirect_url' => $ordersUrl,
+                'order_count' => $createdOrders->count(),
+                'order_confirmation_url' => $confirmationUrl,
+            ]);
+        }
+
+        // Keep ordinary POST and JavaScript-disabled checkout working as before.
         return redirect()
-            ->route('buyer.orders')
-            ->with('order_confirmation_url', route('buyer.messages', [
-                'seller' => (int) $createdOrders->first()->seller_account_id,
-            ]))
-            ->with('success', $createdOrders->count() === 1
-                ? 'Order placed successfully. The seller can now prepare it.'
-                : $createdOrders->count() . ' seller orders were created successfully.');
+            ->to($ordersUrl)
+            ->with('order_confirmation_url', $confirmationUrl)
+            ->with('success', $successMessage);
     }
 
     private function newOrderNumber(): string

@@ -3298,6 +3298,65 @@
     }
 }
 
+/* ======================================================================
+   SHIPPING TRACKING — BUYER CART CONTAINER RADIUS + FLOATING SHADOW
+   UI-only: four KPI cards + the single Shipment Tracking workspace.
+   Keep the search controls, shipment rows, status menu, and all routes flat.
+   ====================================================================== */
+.seller-shipping-page .seller-shipping-stat,
+.seller-shipping-page .seller-shipping-stat:hover,
+.seller-shipping-page .seller-shipping-workspace,
+.seller-shipping-page .seller-shipping-workspace:hover {
+    border-radius: 20px !important;
+    box-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92) !important;
+}
+
+/* The empty state already sits inside the floating workspace. */
+.seller-shipping-page .seller-shipping-workspace .seller-shipping-empty {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+@media screen and (max-width: 767px) {
+    .seller-shipping-page .seller-shipping-stat,
+    .seller-shipping-page .seller-shipping-stat:hover,
+    .seller-shipping-page .seller-shipping-workspace,
+    .seller-shipping-page .seller-shipping-workspace:hover {
+        border-radius: 16px !important;
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, .035),
+            0 6px 16px rgba(15, 23, 42, .055),
+            0 13px 28px rgba(15, 23, 42, .065),
+            inset 0 1px 0 rgba(255, 255, 255, .90) !important;
+    }
+}
+
+@media print {
+    .seller-shipping-page .seller-shipping-stat,
+    .seller-shipping-page .seller-shipping-workspace {
+        box-shadow: none !important;
+    }
+}
+
+/* ======================================================================
+   SHIPPING FILTER HOVER POSITION LOCK — CSS ONLY
+   The earlier :hover selector uses 24px while the normal filter bar uses
+   19px. Keep both states at 19px so All Status / Apply Filter / Reset
+   no longer drop by 5px when the pointer enters the filter row.
+   ====================================================================== */
+.seller-shipping-page .seller-shipping-filter-panel,
+.seller-shipping-page .seller-shipping-filter-panel:hover,
+.seller-shipping-page .seller-shipping-filter-panel:focus-within {
+    margin-top: 19px !important;
+    transform: none !important;
+    translate: none !important;
+}
+
 @endverbatim
 </style>
 
@@ -3337,13 +3396,6 @@
 
             <h1 class="seller-shipping-title">Shipping <span>Tracking</span></h1>
 
-            <p class="seller-shipping-subtitle">
-
-                Follow Seller parcels from pickup verification to Logistics hub intake,
-
-                sorting, final delivery, and completion.
-
-            </p>
 
         </div>
 

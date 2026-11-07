@@ -2145,6 +2145,778 @@
             font-size: 10px !important;
         }
     }
+
+
+/* ========================================================================
+   SARI SELLER MESSAGING — BUYER MESSAGES UI PARITY (VISUAL ONLY)
+   Source: SARI Buyer Messages UI reference. Preserve seller routes, API hooks,
+   realtime handling, restrictions, reactions, confirmation cards and CSRF.
+   ======================================================================== */
+.seller-platform-page {
+    --parity-gold: #C99128;
+    --parity-gold-hover: #AE7A1E;
+    --parity-gold-soft: #FFF7E7;
+    --parity-ink: #303740;
+    --parity-text: #3A424D;
+    --parity-muted: #8E99A6;
+    --parity-border: #EBEDF0;
+    --parity-canvas: #F7F8FA;
+    color: var(--parity-text) !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    background: #fff !important;
+}
+.seller-platform-page *,
+.seller-platform-page *::before,
+.seller-platform-page *::after { box-sizing: border-box; }
+
+/* The original full-bleed position still cancels Seller shell padding. */
+#sellerPlatformChat {
+    position: relative !important;
+    height: calc(100dvh - 86px) !important;
+    min-height: 510px !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    isolation: isolate;
+}
+#sellerPlatformChat .chat-grid {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 310px minmax(0, 1fr) !important;
+    overflow: hidden !important;
+    background: #fff !important;
+}
+
+/* Inbox — 310px, independent scroll, exactly like Buyer Messages. */
+#sellerPlatformChat #sellerConversationPane {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-right: 1px solid var(--parity-border) !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerConversationPane > div:first-child {
+    flex: 0 0 auto !important;
+    padding: 24px 18px 16px !important;
+    border-bottom: 1px solid var(--parity-border) !important;
+    background: #fff !important;
+}
+#sellerPlatformChat #sellerConversationPane h3 {
+    margin: 0 !important;
+    font-size: 20px !important;
+    font-weight: 750 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -.04em !important;
+    color: var(--parity-ink) !important;
+}
+#sellerPlatformChat #sellerConversationPane h3 + p {
+    margin-top: 6px !important;
+    color: #9AA3AF !important;
+    font-size: 10.5px !important;
+    line-height: 1.55 !important;
+}
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch {
+    display: block !important;
+    width: 100% !important;
+    height: 43px !important;
+    padding: 0 35px 0 42px !important;
+    border: 1px solid #E7EAEE !important;
+    border-radius: 100px !important;
+    outline: none !important;
+    background: #F5F6F8 !important;
+    color: var(--parity-ink) !important;
+    font-size: 11px !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerConversationPane > div:first-child .relative.mt-4 { margin-top: 20px !important; }
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch::placeholder { color: #9BA5B0 !important; }
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch:focus {
+    border-color: #E4BF75 !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 3px rgba(201,145,40,.10) !important;
+}
+#sellerPlatformChat #sellerConversationPane #sellerMessageSearch ~ button { color: #929AA5 !important; }
+#sellerPlatformChat #sellerConversationPane > div:first-child .relative.mt-4 > svg {
+    left: 14px !important;
+    width: 17px !important;
+    height: 17px !important;
+    color: var(--parity-gold) !important;
+}
+#sellerPlatformChat #sellerConversationPane > .seller-conversation-list {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    align-content: initial !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    padding: 11px 8px 18px !important;
+    border: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    scrollbar-width: thin;
+    scrollbar-color: #D7DCE2 transparent;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item {
+    display: block !important;
+    flex: 0 0 auto;
+    min-width: 0 !important;
+    min-height: 78px !important;
+    margin: 2px 0 !important;
+    padding: 12px 10px !important;
+    border: 0 !important;
+    border-left: 3px solid transparent !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    color: var(--parity-text) !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    transition: background .15s ease, border-color .15s ease;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item:hover { background: #F8F9FA !important; }
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item.is-active {
+    border-left-color: #C8CED6 !important;
+    background: #EEF1F4 !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item > .flex { gap: 12px !important; }
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-brand-avatar,
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item .seller-buyer-avatar {
+    width: 50px !important;
+    height: 50px !important;
+    flex: 0 0 50px !important;
+    border: 1px solid #E6E9ED !important;
+    border-radius: 50% !important;
+    background: #F1F4F7 !important;
+    color: #697886 !important;
+    font-size: 14px !important;
+    font-weight: 750 !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-brand-avatar img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-online-dot {
+    width: 10px !important; height: 10px !important;
+    background: #46A371 !important; border: 2px solid #fff !important;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item p.font-bold,
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item p.text-\[12px\] {
+    margin: 0 !important;
+    color: var(--parity-ink) !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item p:not(.font-bold):not(#sellerLastMessagePreview) {
+    margin-top: 4px !important;
+    color: #98A1AD !important;
+    font-size: 10px !important;
+    font-weight: 450 !important;
+    line-height: 1.55 !important;
+}
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item #sellerLastMessagePreview,
+#sellerPlatformChat #sellerConversationPane .seller-conversation-item p.line-clamp-2:not(.font-bold) {
+    margin-top: 5px !important;
+    color: #98A1AD !important;
+    font-size: 10px !important;
+    font-weight: 450 !important;
+    line-height: 1.55 !important;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#sellerPlatformChat .seller-conversation-unread {
+    min-width: 20px !important;
+    height: 20px !important;
+    padding: 0 5px !important;
+    border-radius: 50px !important;
+    background: var(--parity-gold) !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+}
+
+/* Main chat canvas + white 78px header. */
+#sellerPlatformChat #sellerCenterPane {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    background: var(--parity-canvas) !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerCenterPane > div:first-child {
+    min-height: 78px !important;
+    flex-shrink: 0 !important;
+    padding: 12px 22px !important;
+    border-bottom: 1px solid var(--parity-border) !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerCenterPane > div:first-child .seller-buyer-avatar,
+#sellerPlatformChat #sellerCenterPane > div:first-child .sari-support-brand-avatar {
+    width: 42px !important;
+    height: 42px !important;
+    flex: 0 0 42px !important;
+    border: 1px solid #E6E9ED !important;
+    border-radius: 50% !important;
+    background: #F1F4F7 !important;
+    color: #697886 !important;
+    font-size: 12px !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerCenterPane > div:first-child .sari-support-brand-avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+#sellerPlatformChat #sellerCenterPane > div:first-child p.font-bold {
+    color: var(--parity-ink) !important;
+    font-size: 14px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+    letter-spacing: -.018em !important;
+}
+#sellerPlatformChat #sellerCenterPane > div:first-child p:not(.font-bold),
+#sellerPlatformChat #sellerCenterPane .seller-buyer-thread-meta {
+    margin-top: 5px !important;
+    color: #9AA3AE !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+}
+#sellerPlatformChat .seller-parity-header-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
+#sellerPlatformChat .seller-buyer-thread-badge {
+    min-height: 26px !important;
+    height: 26px !important;
+    padding: 0 10px !important;
+    border: 1px solid #E7EAEE !important;
+    border-radius: 999px !important;
+    background: #F5F6F8 !important;
+    color: #758291 !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
+}
+#sellerPlatformChat .seller-platform-status,
+#sellerPlatformChat .seller-platform-ai {
+    min-height: 25px !important;
+    height: 25px !important;
+    padding: 0 8px !important;
+    border-radius: 999px !important;
+    border-color: #E7EAEE !important;
+    background: #F8F9FA !important;
+    color: #88939F !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+}
+#sellerPlatformChat .seller-platform-status[data-state="live"] { color: #648976 !important; }
+#sellerPlatformChat .seller-platform-status[data-state="offline"],
+#sellerPlatformChat .seller-platform-status[data-state="unavailable"] { color: #A65353 !important; }
+#sellerPlatformChat .seller-platform-status::before { width: 7px !important; height: 7px !important; }
+#sellerPlatformChat .seller-platform-ai img { width: 15px !important; height: 15px !important; }
+#sellerPlatformChat .seller-parity-info-button {
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 37px !important;
+    width: 37px !important;
+    height: 37px !important;
+    border: 1px solid transparent !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    color: var(--parity-gold) !important;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+#sellerPlatformChat .seller-parity-info-button:hover,
+#sellerPlatformChat .seller-parity-info-button[aria-expanded="true"] {
+    border-color: #F0E1C3 !important;
+    background: #FFF7E8 !important;
+    color: var(--parity-gold-hover) !important;
+}
+#sellerPlatformChat .seller-parity-info-button svg { width: 19px; height: 19px; }
+#sellerPlatformChat #sellerPlatformMessages {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    background: var(--parity-canvas) !important;
+    padding: 30px 22px 24px !important;
+    scrollbar-color: #D2D7DE transparent !important;
+    box-shadow: none !important;
+}
+
+/* Incoming and outgoing BOTH white, as in source Buyer Messages UI. */
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row { margin-top: 17px !important; align-items: flex-end !important; gap: 10px !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row:first-child { margin-top: 0 !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-content {
+    display: flex !important;
+    width: auto !important;
+    max-width: min(77%,580px) !important;
+    min-width: 0 !important;
+    flex-direction: column !important;
+}
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row.justify-end > .seller-message-content { align-items: flex-end !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row:not(.justify-end) > .seller-message-content { align-items: flex-start !important; }
+#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble] {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 12px 15px !important;
+    border: 1px solid #ECEEF1 !important;
+    border-radius: 17px 17px 17px 5px !important;
+    background: #fff !important;
+    color: #3C4652 !important;
+    font-size: 11.5px !important;
+    font-weight: 450 !important;
+    line-height: 1.65 !important;
+    letter-spacing: 0 !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    box-shadow: 0 2px 8px rgba(22,34,49,.04) !important;
+    transform: none !important;
+}
+#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-side="outgoing"] {
+    align-self: flex-end !important;
+    border-color: #E9E7E1 !important;
+    border-radius: 17px 17px 5px 17px !important;
+    background: #fff !important;
+    color: var(--parity-ink) !important;
+    box-shadow: 0 3px 10px rgba(22,34,49,.05) !important;
+}
+#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-side="incoming"] { align-self: flex-start !important; }
+#sellerPlatformChat #sellerPlatformMessages [data-chat-bubble][data-chat-kind="assistant"] { background: #fff !important; color: #3C4652 !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-label {
+    margin: 0 0 6px !important;
+    color: #89929E !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+}
+#sellerPlatformChat #sellerPlatformMessages .seller-message-time,
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row .mt-2 > p:last-child {
+    margin-top: 6px !important;
+    color: #A3ABB5 !important;
+    font-size: 9px !important;
+    line-height: 1.4 !important;
+}
+#sellerPlatformChat #sellerPlatformMessages .seller-message-row .seller-buyer-avatar,
+#sellerPlatformChat #sellerPlatformMessages .sari-admin-avatar,
+#sellerPlatformChat #sellerPlatformMessages .sari-bot-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    flex: 0 0 32px !important;
+    border: 1px solid #E2E7ED !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerPlatformMessages .sari-admin-avatar img,
+#sellerPlatformChat #sellerPlatformMessages .sari-bot-avatar img { object-fit: cover !important; }
+#sellerPlatformChat .sari-order-card { max-width: min(100%,470px) !important; border-radius: 17px !important; }
+
+/* Buyer-styled composition strip: tools | outlined input | circular gold Send. */
+#sellerPlatformChat .seller-platform-composer {
+    flex: 0 0 auto !important;
+    padding: 13px 17px 15px !important;
+    border-top: 1px solid var(--parity-border) !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerPlatformMessageForm,
+#sellerPlatformChat #sellerBuyerMessageForm {
+    display: grid !important;
+    grid-template-columns: auto minmax(0,1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 54px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerBuyerMessageForm { grid-template-columns: minmax(0,1fr) auto !important; }
+#sellerPlatformChat .seller-composer-attachment { display: flex !important; align-items: center; gap: 4px; min-width: 0; }
+#sellerPlatformChat .seller-composer-attachment-label {
+    display: grid !important;
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--parity-gold) !important;
+    cursor: pointer;
+    box-shadow: none !important;
+}
+#sellerPlatformChat .seller-composer-attachment-label:hover { background: #FFF3DD !important; color: var(--parity-gold-hover) !important; }
+#sellerPlatformChat .seller-composer-attachment-label svg { width: 18px !important; height: 18px !important; }
+#sellerPlatformChat .seller-parity-compose-main {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center;
+    gap: 6px !important;
+    min-height: 54px !important;
+    min-width: 0 !important;
+    padding: 0 14px !important;
+    border: 1px solid #D5A64A !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+}
+#sellerPlatformChat .seller-parity-compose-main:focus-within {
+    border-color: var(--parity-gold) !important;
+    box-shadow: 0 0 0 3px rgba(201,145,40,.10) !important;
+}
+#sellerPlatformChat #sellerPlatformInput,
+#sellerPlatformChat #sellerBuyerInput {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 22px !important;
+    max-height: 112px !important;
+    margin: 0 !important;
+    padding: 14px 0 13px !important;
+    border: 0 !important;
+    outline: 0 !important;
+    resize: none !important;
+    background: transparent !important;
+    color: var(--parity-ink) !important;
+    font-size: 11.5px !important;
+    font-weight: 450 !important;
+    line-height: 19px !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerPlatformInput::placeholder,
+#sellerPlatformChat #sellerBuyerInput::placeholder { color: #9EA7B2 !important; }
+#sellerPlatformChat #sellerAttachmentName {
+    display: block;
+    position: static !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    margin: 8px 0 0 !important;
+    padding: 7px 9px !important;
+    border: 1px solid #D9DDE3 !important;
+    border-radius: 14px !important;
+    background: #F5F7F9 !important;
+    color: #778390 !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerAttachmentName.hidden { display: none !important; }
+#sellerPlatformChat #sellerPlatformSend,
+#sellerPlatformChat #sellerBuyerSend {
+    display: grid !important;
+    place-items: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    flex: 0 0 42px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: var(--parity-gold) !important;
+    color: #fff !important;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(201,145,40,.2) !important;
+    transition: background .15s ease, transform .15s ease;
+}
+#sellerPlatformChat #sellerPlatformSend:hover:not(:disabled),
+#sellerPlatformChat #sellerBuyerSend:hover:not(:disabled) { background: var(--parity-gold-hover) !important; }
+#sellerPlatformChat #sellerPlatformSend svg,
+#sellerPlatformChat #sellerBuyerSend svg { width: 19px !important; height: 19px !important; stroke: #fff !important; }
+#sellerPlatformChat #sellerPlatformSend:disabled,
+#sellerPlatformChat #sellerBuyerSend:disabled { opacity: .58; cursor: not-allowed; }
+#sellerPlatformChat .seller-composer-attachment-text { display: none !important; }
+#sellerPlatformChat #sellerPlatformError,
+#sellerPlatformChat #sellerBuyerMessageError { margin-top: 8px !important; font-size: 11px !important; }
+
+/* Attachments and reaction chips are dynamically rendered by existing JS. */
+#sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden {
+    border-color: #ECEEF2 !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(22,34,49,.04) !important;
+}
+#sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden a { background: #fff !important; }
+#sellerPlatformChat #sellerPlatformMessages .seller-message-content > .mt-2.overflow-hidden a > div:first-child {
+    border-radius: 12px !important;
+    background: #F5F6F8 !important;
+    color: var(--parity-gold) !important;
+}
+#sellerPlatformChat #sellerPlatformMessages [data-reaction-toggle] {
+    border-color: #E7EAEE !important;
+    background: #fff !important;
+    color: #8E99A6 !important;
+}
+#sellerPlatformChat #sellerPlatformMessages [data-reaction-picker] {
+    border-color: #E7EAEE !important;
+    background: #fff !important;
+    box-shadow: 0 12px 30px rgba(15,23,42,.12) !important;
+}
+
+/* Empty chat: centered, no floating container, 62px icon ring. */
+#sellerPlatformChat #sellerEmptyChat { max-width: none !important; min-height: 210px !important; padding: 30px 20px !important; }
+#sellerPlatformChat #sellerEmptyChat > div { max-width: 360px; margin: auto; }
+#sellerPlatformChat #sellerEmptyChat > div > div:first-child {
+    display: grid !important;
+    place-items: center !important;
+    width: 62px !important;
+    height: 62px !important;
+    margin: 0 auto 15px !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: #F1F3F6 !important;
+    color: var(--parity-gold) !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerEmptyChat > div > div:first-child svg { width: 26px !important; height: 26px !important; }
+#sellerPlatformChat #sellerEmptyChat > div > p.font-bold { color: #4B5563 !important; font-size: 13px !important; font-weight: 700 !important; }
+#sellerPlatformChat #sellerEmptyChat > div > p:not(.font-bold) { color: #97A2AE !important; font-size: 11px !important; line-height: 1.7 !important; margin-top: 9px !important; }
+
+/* Seller/Buyer contextual information as on-demand right-side drawer. */
+#sellerPlatformChat #sellerDetailsPane {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 32 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    flex-direction: column !important;
+    width: min(372px,100%) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    border: 0 !important;
+    border-left: 1px solid #E4E8ED !important;
+    background: #F5F7FA !important;
+    box-shadow: -18px 0 45px rgba(28,35,45,.14) !important;
+    transform: translateX(102%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .22s ease, visibility 0s linear .34s !important;
+}
+#sellerPlatformChat #sellerDetailsPane.is-open {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .22s ease, visibility 0s !important;
+}
+#sellerPlatformChat .seller-parity-context-backdrop {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 31 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: rgba(255,255,255,.06) !important;
+    backdrop-filter: blur(2px) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    cursor: default;
+    transition: opacity .25s ease, visibility 0s linear .3s;
+}
+#sellerPlatformChat .seller-parity-context-backdrop.is-open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: opacity .25s ease, visibility 0s;
+}
+#sellerPlatformChat .seller-parity-context-header {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 16px 18px 14px !important;
+    border-bottom: 1px solid var(--parity-border) !important;
+    background: #fff !important;
+}
+#sellerPlatformChat .seller-parity-context-title { margin: 0 !important; color: var(--parity-ink) !important; font-size: 12.5px !important; font-weight: 750 !important; }
+#sellerPlatformChat .seller-parity-context-subtitle { margin: 5px 0 0 !important; color: #9BA4AE !important; font-size: 10px !important; line-height: 1.45 !important; }
+#sellerPlatformChat .seller-parity-context-close {
+    display: grid; place-items: center;
+    flex: 0 0 34px; width: 34px; height: 34px;
+    border: 0; border-radius: 50%;
+    background: #F5F6F8; color: #606C78;
+    cursor: pointer;
+}
+#sellerPlatformChat .seller-parity-context-close:hover { background: #ECEFF3; color: #374151; }
+#sellerPlatformChat .seller-parity-context-close svg { width: 16px; height: 16px; }
+#sellerPlatformChat #sellerDetailsPane > div:last-child { padding: 18px 18px 24px !important; }
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child .seller-buyer-avatar,
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child > div:first-child {
+    display: grid !important;
+    place-items: center !important;
+    width: 84px !important;
+    height: 84px !important;
+    flex: 0 0 84px !important;
+    border: 3px solid #fff !important;
+    border-radius: 50% !important;
+    background: #F1F4F7 !important;
+    color: var(--parity-gold) !important;
+    font-size: 26px !important;
+    box-shadow: 0 0 0 2px #F0DFBB, 0 8px 24px rgba(38,45,55,.08) !important;
+}
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child p.mt-3 { margin-top: 12px !important; color: var(--parity-ink) !important; font-size: 16px !important; font-weight: 750 !important; }
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child p.mt-1 { color: #9AA3AE !important; font-size: 10px !important; }
+#sellerPlatformChat #sellerDetailsPane > div:last-child > div:first-child span.mt-3 {
+    min-height: 28px !important;
+    margin-top: 10px !important;
+    padding: 5px 16px !important;
+    border: 1px solid #EEDCB8 !important;
+    border-radius: 999px !important;
+    background: #FFF9EE !important;
+    color: #A67819 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+}
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 { display: grid !important; gap: 10px !important; margin-top: 18px !important; }
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div {
+    margin: 0 !important;
+    padding: 14px 15px !important;
+    border: 1px solid #E5E9EF !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:first-child { color: #607488 !important; font-size: 11px !important; font-weight: 700 !important; }
+#sellerPlatformChat #sellerDetailsPane .mt-6.space-y-3 > div p:not(:first-child) { color: #6F7A87 !important; font-size: 11px !important; line-height: 1.75 !important; }
+
+/* Source-like responsive behavior: 275px tablet, 230px narrow, horizontal mobile inbox. */
+@media (max-width: 1320px) and (min-width: 851px) {
+    #sellerPlatformChat .chat-grid { grid-template-columns: 275px minmax(0,1fr) !important; }
+    #sellerPlatformChat #sellerDetailsPane { width: min(350px,100%) !important; }
+}
+@media (max-width: 850px) and (min-width: 651px) {
+    #sellerPlatformChat .chat-grid { grid-template-columns: 230px minmax(0,1fr) !important; }
+    #sellerPlatformChat #sellerConversationPane > div:first-child { padding: 18px 12px 14px !important; }
+    #sellerPlatformChat #sellerConversationPane h3 { font-size: 17px !important; }
+    #sellerPlatformChat #sellerPlatformMessages { padding: 20px 13px !important; }
+    #sellerPlatformChat #sellerCenterPane > div:first-child { padding: 11px 12px !important; }
+    #sellerPlatformChat .seller-platform-ai { display: none !important; }
+}
+@media (max-width: 650px) {
+    #sellerPlatformChat { height: calc(100dvh - 86px) !important; min-height: 420px !important; }
+    #sellerPlatformChat .chat-grid {
+        grid-template-columns: minmax(0,1fr) !important;
+        grid-template-rows: auto minmax(0,1fr) !important;
+    }
+    #sellerPlatformChat #sellerConversationPane {
+        display: flex !important;
+        height: auto !important;
+        max-height: 163px !important;
+        border-right: 0 !important;
+        border-bottom: 1px solid var(--parity-border) !important;
+    }
+    #sellerPlatformChat #sellerConversationPane > div:first-child { padding: 9px 12px 5px !important; border-bottom: 0 !important; }
+    #sellerPlatformChat #sellerConversationPane h3 { font-size: 14px !important; }
+    #sellerPlatformChat #sellerConversationPane h3 + p { display: none !important; }
+    #sellerPlatformChat #sellerConversationPane > div:first-child .relative.mt-4 { margin-top: 7px !important; }
+    #sellerPlatformChat #sellerConversationPane #sellerMessageSearch { height: 32px !important; font-size: 10px !important; }
+    #sellerPlatformChat #sellerConversationPane > .seller-conversation-list {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        min-height: 0 !important;
+        max-height: 80px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        padding: 4px 8px 8px !important;
+    }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item {
+        flex: 0 0 185px !important;
+        min-height: 60px !important;
+        margin: 0 !important;
+        padding: 6px 9px !important;
+        border: 1px solid transparent !important;
+        border-bottom: 3px solid transparent !important;
+        border-radius: 10px !important;
+    }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item.is-active {
+        border: 1px solid #D6DDE5 !important;
+        border-bottom: 3px solid #AEB7C2 !important;
+        background: #EEF1F4 !important;
+    }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item .sari-support-brand-avatar,
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item .seller-buyer-avatar {
+        width: 36px !important; height: 36px !important; flex-basis: 36px !important;
+    }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.font-bold,
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.text-\[12px\] { font-size: 10.5px !important; }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item p:not(.font-bold):not(#sellerLastMessagePreview) { font-size: 9px !important; }
+    /* Mobile inbox shows name + most recent message, not three clipped lines. */
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item p:not(.font-bold):not(#sellerLastMessagePreview):not(.line-clamp-2) { display: none !important; }
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item #sellerLastMessagePreview,
+    #sellerPlatformChat #sellerConversationPane .seller-conversation-item p.line-clamp-2:not(.font-bold) { font-size: 9px !important; }
+    #sellerPlatformChat #sellerCenterPane > div:first-child { min-height: 62px !important; padding: 9px 10px !important; }
+    #sellerPlatformChat #sellerCenterPane > div:first-child p.font-bold { font-size: 12px !important; }
+    #sellerPlatformChat #sellerCenterPane > div:first-child p:not(.font-bold) { font-size: 9px !important; }
+    #sellerPlatformChat .seller-parity-info-button { width: 33px !important; height: 33px !important; flex-basis: 33px !important; }
+    #sellerPlatformChat .seller-parity-info-button svg { width: 17px; height: 17px; }
+    #sellerPlatformChat .seller-platform-ai { display: none !important; }
+    #sellerPlatformChat #sellerPlatformMessages { padding: 13px 10px 15px !important; }
+    #sellerPlatformChat #sellerPlatformMessages .seller-message-content { max-width: 85% !important; }
+    #sellerPlatformChat #sellerPlatformMessages [data-chat-bubble] { padding: 10px 12px !important; font-size: 11px !important; }
+    #sellerPlatformChat #sellerPlatformMessages .seller-message-row .seller-buyer-avatar,
+    #sellerPlatformChat #sellerPlatformMessages .sari-admin-avatar,
+    #sellerPlatformChat #sellerPlatformMessages .sari-bot-avatar { width: 27px !important; height: 27px !important; flex-basis: 27px !important; }
+    #sellerPlatformChat .seller-platform-composer { padding: 8px !important; }
+    #sellerPlatformChat #sellerPlatformMessageForm,
+    #sellerPlatformChat #sellerBuyerMessageForm { gap: 8px !important; min-height: 50px !important; }
+    #sellerPlatformChat .seller-parity-compose-main { min-height: 50px !important; padding: 0 12px !important; }
+    #sellerPlatformChat .seller-composer-attachment-label { width: 30px !important; height: 30px !important; }
+    #sellerPlatformChat .seller-composer-attachment-label svg { width: 16px !important; height: 16px !important; }
+    #sellerPlatformChat #sellerPlatformSend,
+    #sellerPlatformChat #sellerBuyerSend { width: 38px !important; height: 38px !important; min-width: 38px !important; flex-basis: 38px !important; }
+    #sellerPlatformChat #sellerPlatformInput,
+    #sellerPlatformChat #sellerBuyerInput { font-size: 11.5px !important; }
+    #sellerPlatformChat #sellerDetailsPane { width: min(355px,100%) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #sellerPlatformChat #sellerDetailsPane,
+    #sellerPlatformChat .seller-parity-context-backdrop,
+    #sellerPlatformChat .seller-parity-info-button,
+    #sellerPlatformChat .seller-conversation-item,
+    #sellerPlatformChat #sellerPlatformSend,
+    #sellerPlatformChat #sellerBuyerSend { transition: none !important; }
+}
+#sellerPlatformChat a:focus-visible,
+#sellerPlatformChat button:focus-visible { outline: 2px solid var(--parity-gold) !important; outline-offset: 3px !important; }
+
 @endverbatim
 </style>
 <link rel="stylesheet" href="{{ asset('css/buyer/order-confirmation-card.css') }}?v=20261026-1">
@@ -2196,8 +2968,8 @@
             {{-- LEFT: UNIFIED CONVERSATIONS --}}
             <aside id="sellerConversationPane" class="border-b border-[#ebe5dc] bg-white lg:border-b-0 lg:border-r">
                 <div class="border-b border-[#eee8df] px-4 py-4 sm:px-5">
-                    <h3 class="font-bold tracking-[-0.02em] text-[#24201b]" style="font-size:clamp(14px,.88vw,16px)">Conversations</h3>
-                    <p class="mt-1 text-[#938a7f]" style="font-size:clamp(10px,.66vw,12px)">Admin support and your buyers</p>
+                    <h3 class="font-bold tracking-[-0.02em] text-[#24201b]" style="font-size:clamp(14px,.88vw,16px)">Messages</h3>
+                    <p class="mt-1 text-[#938a7f]" style="font-size:clamp(10px,.66vw,12px)">Conversations with SARI Admin and your buyers</p>
 
                     <div class="relative mt-4">
                         <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9b9287]" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -2290,7 +3062,14 @@
                             </div>
                         </div>
 
-                        <span class="seller-buyer-thread-badge">Buyer</span>
+                        <div class="seller-parity-header-actions">
+                            <span class="seller-buyer-thread-badge">Buyer</span>
+                            <button type="button" class="seller-parity-info-button" data-seller-info-open
+                                    aria-controls="sellerDetailsPane" aria-expanded="false"
+                                    title="Conversation information" aria-label="Open conversation information">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg>
+                            </button>
+                        </div>
                     </div>
                 @else
                     <div class="flex items-center justify-between gap-4 border-b border-[#ebe5dc] bg-white px-4 py-4 sm:px-5">
@@ -2313,6 +3092,11 @@
                                 <img src="{{ asset('images/sari-seller-ai-assistant.png') }}" alt="" aria-hidden="true">
                                 Receipt confirmation
                             </span>
+                            <button type="button" class="seller-parity-info-button" data-seller-info-open
+                                    aria-controls="sellerDetailsPane" aria-expanded="false"
+                                    title="Conversation information" aria-label="Open conversation information">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg>
+                            </button>
                         </div>
                     </div>
                 @endif
@@ -2392,14 +3176,16 @@
                         >
                             @csrf
 
-                            <textarea
-                                id="sellerBuyerInput"
-                                name="body"
-                                rows="1"
-                                maxlength="3000"
-                                required
-                                placeholder="Write a message to {{ $selectedBuyer['name'] }}..."
-                            ></textarea>
+                            <div class="seller-parity-compose-main">
+                                <textarea
+                                    id="sellerBuyerInput"
+                                    name="body"
+                                    rows="1"
+                                    maxlength="3000"
+                                    required
+                                    placeholder="Write a message to {{ $selectedBuyer['name'] }}..."
+                                ></textarea>
+                            </div>
 
                             <button
                                 id="sellerBuyerSend"
@@ -2423,25 +3209,24 @@
                             </div>
                         </div>
 
-                        <form id="sellerPlatformMessageForm" class="rounded-[16px] border border-[#e3ddd4] bg-[#fdfcfa] p-3 shadow-[0_6px_18px_rgba(35,28,20,.035)] transition focus-within:border-[#c99a3d] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#c99a3d]/10">
+                        <form id="sellerPlatformMessageForm" class="seller-parity-composer-form">
                             @csrf
-                            <textarea id="sellerPlatformInput" rows="1" @if($sellerChatBlocked) disabled @endif placeholder="{{ $sellerChatBlocked ? 'Messaging is restricted by SARI Admin.' : 'Message...' }}" class="w-full resize-none bg-transparent px-1 py-1 text-[12px] leading-[1.45] text-[#3e3831] outline-none placeholder:text-[#aaa197]"></textarea>
-
-                            <div id="sellerAttachmentName" class="mt-2 hidden rounded-xl border border-[#e8e1d7] bg-white px-3 py-2 text-[10px] text-[#62594e]"></div>
-
-                            <div class="seller-composer-actions">
-                                <div class="seller-composer-attachment">
-                                    <label class="seller-composer-attachment-label cursor-pointer border border-transparent text-[#756d63] transition hover:border-[#e8dfd0] hover:bg-[#f8f4ed] hover:text-[#a8731f]" title="Attach file">
-                                        <input id="sellerPlatformAttachment" type="file" @if($sellerChatBlocked) disabled @endif accept="image/*,.pdf,.txt,.csv,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.mp4,.mov,.mp3,.m4a,.wav" class="hidden">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path></svg>
-                                    </label>
-                                    <span class="seller-composer-attachment-text">Images/files up to 15 MB</span>
-                                </div>
-
-                                <button id="sellerPlatformSend" type="submit" @if($sellerChatBlocked) disabled @endif class="disabled:cursor-not-allowed disabled:opacity-50" title="Send message" aria-label="Send message">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 4 17 8-17 8 3-8-3-8Z"></path><path d="M7 12h14"></path></svg>
-                                </button>
+                            <div class="seller-composer-attachment">
+                                <label class="seller-composer-attachment-label" title="Attach file" aria-label="Attach image or file">
+                                    <input id="sellerPlatformAttachment" type="file" @if($sellerChatBlocked) disabled @endif accept="image/*,.pdf,.txt,.csv,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.mp4,.mov,.mp3,.m4a,.wav" class="hidden">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12.5 14.5 6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 0 1-7.1-7.1l8.3-8.3"></path></svg>
+                                </label>
+                                <span class="seller-composer-attachment-text">Images/files up to 15 MB</span>
                             </div>
+
+                            <div class="seller-parity-compose-main">
+                                <div id="sellerAttachmentName" class="hidden" role="status" aria-live="polite"></div>
+                                <textarea id="sellerPlatformInput" rows="1" @if($sellerChatBlocked) disabled @endif placeholder="{{ $sellerChatBlocked ? 'Messaging is restricted by SARI Admin.' : 'Write a message to SARI Admin...' }}" aria-label="Message SARI Admin"></textarea>
+                            </div>
+
+                            <button id="sellerPlatformSend" type="submit" @if($sellerChatBlocked) disabled @endif class="disabled:cursor-not-allowed disabled:opacity-50" title="Send message" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 4 17 8-17 8 3-8-3-8Z"></path><path d="M7 12h14"></path></svg>
+                            </button>
                         </form>
 
                         <p id="sellerPlatformError" class="mt-2 hidden text-[10px] text-[#a45f5f]" role="alert" aria-live="assertive"></p>
@@ -2451,11 +3236,18 @@
 
 
             {{-- RIGHT: CONVERSATION CONTEXT --}}
-            <aside id="sellerDetailsPane" class="hidden border-l border-[#ebe5dc] bg-white 2xl:block">
+            <aside id="sellerDetailsPane" class="seller-parity-context" role="dialog" aria-modal="true"
+                   aria-labelledby="sellerContextTitle" aria-hidden="true" inert>
                 @if ($selectedBuyer)
-                    <div class="border-b border-[#eee8df] px-5 py-4">
-                        <p class="text-[13px] font-bold text-[#302a24]">Buyer Details</p>
-                        <p class="mt-1 text-[10px] text-[#948b7f]">Order customer context</p>
+                    <div class="seller-parity-context-header">
+                        <div>
+                            <p id="sellerContextTitle" class="seller-parity-context-title">Buyer Details</p>
+                            <p class="seller-parity-context-subtitle">Order customer context</p>
+                        </div>
+                        <button type="button" class="seller-parity-context-close" data-seller-info-close
+                                title="Close conversation information" aria-label="Close conversation information">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 5 14 14M19 5 5 19"/></svg>
+                        </button>
                     </div>
 
                     <div class="p-5">
@@ -2487,9 +3279,15 @@
                         </div>
                     </div>
                 @else
-                    <div class="border-b border-[#eee8df] px-5 py-4">
-                        <p class="text-[13px] font-bold text-[#302a24]">Account Details</p>
-                        <p class="mt-1 text-[10px] text-[#948b7f]">Your seller support context</p>
+                    <div class="seller-parity-context-header">
+                        <div>
+                            <p id="sellerContextTitle" class="seller-parity-context-title">Account Details</p>
+                            <p class="seller-parity-context-subtitle">Your seller support context</p>
+                        </div>
+                        <button type="button" class="seller-parity-context-close" data-seller-info-close
+                                title="Close conversation information" aria-label="Close conversation information">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 5 14 14M19 5 5 19"/></svg>
+                        </button>
                     </div>
 
                     <div class="p-5">
@@ -2532,6 +3330,8 @@
                 @endif
             </aside>
         </div>
+        <button type="button" class="seller-parity-context-backdrop" data-seller-info-backdrop
+                tabindex="-1" aria-label="Close conversation information" aria-hidden="true"></button>
     </section>
 
 </div>
@@ -4057,6 +4857,78 @@
     } else {
         bootSelectedSellerConversation();
     }
+})();
+</script>
+
+<script>
+/* Buyer Messages-style seller info drawer. UI only — no requests or send hooks. */
+(function () {
+    if (window.SariSellerMessageInfoDrawer) {
+        window.SariSellerMessageInfoDrawer.init();
+        return;
+    }
+    function bootSellerMessageInfoDrawer() {
+        const root = document.getElementById('sellerPlatformChat');
+        if (!root || root.dataset.parityDrawerReady === '1') return;
+        const panel = root.querySelector('#sellerDetailsPane');
+        const trigger = root.querySelector('[data-seller-info-open]');
+        const closeButton = root.querySelector('[data-seller-info-close]');
+        const backdrop = root.querySelector('[data-seller-info-backdrop]');
+        if (!panel || !trigger || !closeButton || !backdrop) return;
+
+        root.dataset.parityDrawerReady = '1';
+        const lifecycle = new AbortController();
+        const { signal } = lifecycle;
+        let isOpen = false;
+
+        const toggle = (visible, focusTrigger = false) => {
+            if (isOpen === visible) return;
+            isOpen = visible;
+            panel.classList.toggle('is-open', visible);
+            backdrop.classList.toggle('is-open', visible);
+            panel.inert = !visible;
+            panel.setAttribute('aria-hidden', String(!visible));
+            trigger.setAttribute('aria-expanded', String(visible));
+            trigger.setAttribute('aria-label', visible ? 'Close conversation information' : 'Open conversation information');
+            if (visible) closeButton.focus({ preventScroll: true });
+            else if (focusTrigger) trigger.focus({ preventScroll: true });
+        };
+
+        trigger.addEventListener('click', () => toggle(!isOpen, isOpen), { signal });
+        closeButton.addEventListener('click', () => toggle(false, true), { signal });
+        backdrop.addEventListener('click', () => toggle(false, true), { signal });
+        root.addEventListener('keydown', event => {
+            if (!isOpen) return;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                toggle(false, true);
+                return;
+            }
+            if (event.key !== 'Tab') return;
+            const focusable = Array.from(panel.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])'))
+                .filter(element => !element.closest('details:not([open])') && element.getClientRects().length > 0);
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }, { signal });
+
+        const cleanup = () => {
+            lifecycle.abort();
+            root.dataset.parityDrawerReady = '0';
+        };
+        document.addEventListener('livewire:navigating', cleanup, { once: true, signal });
+        window.addEventListener('pagehide', cleanup, { once: true, signal });
+    }
+
+    window.SariSellerMessageInfoDrawer = { init: bootSellerMessageInfoDrawer };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootSellerMessageInfoDrawer, { once: true });
+    } else {
+        bootSellerMessageInfoDrawer();
+    }
+    document.addEventListener('livewire:navigated', bootSellerMessageInfoDrawer);
 })();
 </script>
 @endpush

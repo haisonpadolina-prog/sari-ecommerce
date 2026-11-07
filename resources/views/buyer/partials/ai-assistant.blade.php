@@ -106,8 +106,9 @@
                     <span class="sari-buyer-ai-welcome-kicker">YOUR SHOPPING COPILOT</span>
                     <h2>How can I help you shop?</h2>
                     <p>
-                        Ask about outfit ideas, colors for your skin tone, real product photos and sizes,
+                        Ask about outfit ideas, colors for your skin tone, seller size charts and sizes,
                         your cart, orders, notifications, and Buyer pages.
+                        You can optionally share measurements for size suggestions. These are not saved to your Buyer profile; if AI is configured, your chat is sent to its provider.
                     </p>
                 </div>
 
@@ -116,6 +117,21 @@
         </div>
 
         <div class="sari-buyer-ai-composer-wrap">
+            <details id="sariBuyerAiFitDetails" class="sari-buyer-ai-fit-details">
+                <summary>Optional fit &amp; style details <span aria-hidden="true">⌄</span></summary>
+                <div class="sari-buyer-ai-fit-content">
+                    <p>Share only what you want. Used for this chat; if AI is configured, these details are also sent to its provider.</p>
+                    <div class="sari-buyer-ai-fit-grid">
+                        <label>Skin tone <select id="sariBuyerAiTone"><option value="">Prefer not to say</option><option value="fair">Fair/light</option><option value="medium">Medium</option><option value="morena">Morena/tan</option><option value="deep">Deep</option></select></label>
+                        <label>Preferred fit <select id="sariBuyerAiFit"><option value="">No preference</option><option value="regular">Regular</option><option value="relaxed">Relaxed</option><option value="slim">Slim</option></select></label>
+                        <label>Height (cm) <input id="sariBuyerAiHeight" type="number" inputmode="decimal" min="120" max="229" step="0.1" placeholder="Optional"></label>
+                        <label>Weight (kg) <input id="sariBuyerAiWeight" type="number" inputmode="decimal" min="25" max="300" step="0.1" placeholder="Optional"></label>
+                        <label>Chest (cm) <input id="sariBuyerAiChest" type="number" inputmode="decimal" min="40" max="200" step="0.1" placeholder="Optional"></label>
+                        <label>Waist (cm) <input id="sariBuyerAiWaist" type="number" inputmode="decimal" min="35" max="200" step="0.1" placeholder="Optional"></label>
+                    </div>
+                    <button id="sariBuyerAiUseFit" type="button">Ask AI with these details</button>
+                </div>
+            </details>
             <div id="sariBuyerAiSuggestions" class="sari-buyer-ai-suggestions"></div>
 
             <form id="sariBuyerAiForm" class="sari-buyer-ai-composer">
@@ -263,6 +279,18 @@
 
 /* Compact composer; no visible scrollbars. Long messages still scroll within the input. */
 .sari-buyer-ai-composer-wrap {min-width:0;border-top:1px solid var(--sari-ai-border);background:#fff;}
+.sari-buyer-ai-fit-details{border-bottom:1px solid #f0f1f3;}
+.sari-buyer-ai-fit-details summary{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;font-size:11px;font-weight:600;color:#926006;cursor:pointer;list-style:none;}
+.sari-buyer-ai-fit-details summary::-webkit-details-marker{display:none;}
+.sari-buyer-ai-fit-details[open] summary span{transform:rotate(180deg);}
+.sari-buyer-ai-fit-content{max-height:min(42vh,265px);overflow-y:auto;padding:0 12px 11px;}
+.sari-buyer-ai-fit-content p{margin:0 0 8px;font-size:10px;line-height:1.4;color:#758196;}
+.sari-buyer-ai-fit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;}
+.sari-buyer-ai-fit-grid label{display:grid;gap:4px;min-width:0;color:#667085;font-size:10.5px;}
+.sari-buyer-ai-fit-grid select,.sari-buyer-ai-fit-grid input{min-width:0;width:100%;padding:6px 7px;border:1px solid #dfe4ea;border-radius:7px;background:#fff;color:#344054;font:inherit;font-size:11px;}
+.sari-buyer-ai-fit-grid select:focus-visible,.sari-buyer-ai-fit-grid input:focus-visible{outline:2px solid #d59617;outline-offset:1px;}
+#sariBuyerAiUseFit{width:100%;margin-top:9px;padding:8px 10px;border:0;border-radius:8px;background:#d59617;color:#fff;font-size:11px;font-weight:600;cursor:pointer;}
+#sariBuyerAiUseFit:disabled{opacity:.55;cursor:wait;}
 .sari-buyer-ai-suggestions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:9px 12px 3px;}
 .sari-buyer-ai-suggestions:empty {display:none;}
 .sari-buyer-ai-suggestions button {min-width:0;min-height:36px;overflow:hidden;border:1px solid #e4e8ee;border-radius:9px;background:#fff;padding:7px 9px;color:#5a697d;font-size:10.5px;font-weight:550;line-height:1.3;text-align:left;text-overflow:ellipsis;cursor:pointer;}
@@ -337,6 +365,8 @@
     const welcomeEl = document.getElementById('sariBuyerAiWelcome');
     const welcomeActionsEl = document.getElementById('sariBuyerAiWelcomeActions');
     const suggestionsEl = document.getElementById('sariBuyerAiSuggestions');
+    const fitDetails = document.getElementById('sariBuyerAiFitDetails');
+    const fitSend = document.getElementById('sariBuyerAiUseFit');
     const form = document.getElementById('sariBuyerAiForm');
     const input = document.getElementById('sariBuyerAiInput');
     const sendButton = document.getElementById('sariBuyerAiSend');
@@ -347,7 +377,7 @@
     const openKey = `sari:buyer-ai:v1:${root.dataset.buyerId}:open`;
     const robotUrl = @json(asset('images/sari-seller-ai-assistant.png'));
     const definitions = [
-        { key: 'product', test: p => /^\/buyer\/products\/\d+$/.test(p), title: 'Product Details', prompts: ['How do I choose a size and color?', 'Recommend similar clothing.', 'How do product variants work?', 'Where do I see product reviews?'] },
+        { key: 'product', test: p => /^\/buyer\/products\/\d+$/.test(p), title: 'Product Details', prompts: ['Check this product size guide and ask me for measurements if needed.', 'Recommend similar clothing.', 'How do product variants work?', 'Where do I see product reviews?'] },
         { key: 'shop', test: p => p.startsWith('/buyer/shop/'), title: 'Seller Shop', prompts: ['Suggest products from the marketplace.', 'How do I choose a good size?', 'How do I message a seller?', 'Explain this page.'] },
         { key: 'products', test: p => p === '/buyer/products', title: 'Shop Products', prompts: ['Morena ako, 5\'3, 60 kg. Suggest a casual outfit with photos.', 'Show trending products with photos.', 'Show the best books.', 'What is my total spending?'] },
         { key: 'cart', test: p => p === '/buyer/cart', title: 'Shopping Cart', prompts: ['What is in my cart?', 'How do size and color variants work in cart?', 'How do I select items for checkout?', 'Explain this page.'] },
@@ -361,7 +391,7 @@
         { key: 'account', test: p => p === '/buyer/account', title: 'Buyer Account', prompts: ['Summarize my Buyer account activity.', 'How do I manage my addresses?', 'Where can I view recent orders?', 'Explain this page.'] },
         { key: 'recent-orders', test: p => p === '/buyer/recent-orders', title: 'Recent Orders', prompts: ['Summarize my recent orders.', 'Where do I see order tracking?', 'How do returns work?', 'Explain this page.'] },
         { key: 'recent-activity', test: p => p === '/buyer/recent-activity', title: 'Recent Activity', prompts: ['What recent account changes were recorded?', 'What does recent activity mean?', 'How do I manage activity entries?', 'Explain this page.'] },
-        { key: 'home', test: p => ['/buyer/home', '/buyer/dashboard'].includes(p), title: 'Buyer Home', prompts: ['Suggest outfit colors for my skin tone and show product photos.', 'Show trending products and prices.', 'Summarize my orders and notifications.', 'What is my total spending?'] },
+        { key: 'home', test: p => ['/buyer/home', '/buyer/dashboard'].includes(p), title: 'Buyer Home', prompts: ['Help me choose clothing sizes using seller size charts; ask me for optional measurements.', 'Show trending products and prices.', 'Summarize my orders and notifications.', 'What is my total spending?'] },
     ];
     const fallbackPage = {key: 'buyer', title: 'Buyer workspace', prompts: ['Recommend a nice outfit.', 'What is in my cart?', 'Check my latest order.', 'Explain this page.']};
     let currentPage = resolvePage();
@@ -430,6 +460,7 @@
                     <span class="sari-buyer-ai-product-meta"><strong>Seller:</strong> ${escapeHtml(product.seller || 'SARI Seller')}</span>
                     <span class="sari-buyer-ai-product-price">${money(product.price)}</span>
                     ${variants ? `<div class="sari-buyer-ai-product-variants" aria-label="Available colors and sizes">${variants}</div>` : '<span class="sari-buyer-ai-product-meta">Standard option</span>'}
+                    ${url && product.size_guide_available ? `<span class="sari-buyer-ai-product-meta">Seller size chart available on product page</span>` : ''}
                     ${url ? `<a class="sari-buyer-ai-product-link" href="${escapeHtml(url)}" wire:navigate.hover>View Product ↗</a>` : ''}
                 </div>
             </article>`;
@@ -546,7 +577,35 @@
     closeButton?.addEventListener('click', () => setOpen(false));
     clearButton?.addEventListener('click', () => {
         if (busy) return;
-        history = []; saveHistory(); setError(''); render(); input?.focus();
+        history = []; saveHistory(); setError(''); render();
+        for (const field of root.querySelectorAll('.sari-buyer-ai-fit-grid input, .sari-buyer-ai-fit-grid select')) field.value = '';
+        if (fitDetails) fitDetails.open = false;
+        input?.focus();
+    });
+    fitSend?.addEventListener('click', () => {
+        if (busy) return;
+        const items = [];
+        const optional = [
+            ['sariBuyerAiTone', 'skin tone', null, null, ''],
+            ['sariBuyerAiFit', 'fit preference', null, null, ''],
+            ['sariBuyerAiHeight', 'height', 120, 229, ' cm'],
+            ['sariBuyerAiWeight', 'weight', 25, 300, ' kg'],
+            ['sariBuyerAiChest', 'chest circumference', 40, 200, ' cm'],
+            ['sariBuyerAiWaist', 'waist circumference', 35, 200, ' cm'],
+        ];
+        for (const [id, label, min, max, unit] of optional) {
+            const field = document.getElementById(id);
+            const raw = field?.value?.trim() || '';
+            if (!raw) continue;
+            if (min !== null && (!Number.isFinite(Number(raw)) || Number(raw) < min || Number(raw) > max)) {
+                setError(`Please enter a valid ${label} (${min}–${max}${unit}).`);
+                field.focus(); return;
+            }
+            items.push(`${label}: ${raw}${unit}`);
+        }
+        if (!items.length) { setError('Add one optional detail or ask a question in the chat.'); return; }
+        if (fitDetails) fitDetails.open = false;
+        ask(`Please recommend available clothing for me and help with seller size charts if relevant. My optional self-reported details: ${items.join('; ')}. Ask for other measurements only if needed.`);
     });
     form?.addEventListener('submit', event => { event.preventDefault(); ask(input.value); });
     input?.addEventListener('input', resizeInput);

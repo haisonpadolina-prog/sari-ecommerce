@@ -354,6 +354,7 @@ class SellerDashboardController extends Controller
         ];
 
         $salesPerformance = $this->buildSalesPerformance($sellerId);
+        $topSellingProduct = $this->buildTopSellingProduct($sellerId);
 
         return view('seller.dashboard', compact(
             'sellerAccount',
@@ -363,6 +364,7 @@ class SellerDashboardController extends Controller
             'orderStats',
             'dashboardStats',
             'salesPerformance',
+            'topSellingProduct',
             'sellerActivities',
             'recentOrdersFeed'
         ));
@@ -467,125 +469,171 @@ class SellerDashboardController extends Controller
         ];
     }
 
+    /**
+     * Sales figures come from eligible seller settlements, consistent with the
+     * existing financial summary. Read in batches rather than loading every
+     * historical settlement model into memory.
+     */
     private function buildSalesPerformance(int $sellerId): array
     {
         $now = now();
+        $byMonth = [];
 
-        $currentMonth = $now->copy()->startOfMonth();
-        $lastMonth = $now->copy()->subMonthNoOverflow()->startOfMonth();
-        $yearStart = $now->copy()->startOfYear();
-
-        $queryStart = $lastMonth->lt($yearStart)
-            ? $lastMonth->copy()
-            : $yearStart->copy();
-
-        $settlements = SellerSettlement::query()
+        SellerSettlement::query()
             ->where('seller_account_id', $sellerId)
-            ->whereBetween('eligible_at', [
-                $queryStart->copy()->startOfDay(),
-                $now->copy()->endOfDay(),
-            ])
-            ->orderBy('eligible_at')
-            ->get([
-                'merchandise_amount',
-                'eligible_at',
-            ]);
+            ->whereNotNull('eligible_at')
+            ->where('eligible_at', '<=', $now)
+            ->select(['id', 'merchandise_amount', 'eligible_at'])
+            ->chunkById(300, function ($settlements) use (&$byMonth): void {
+                foreach ($settlements as $settlement) {
+                    if (!$settlement->eligible_at) {
+                        continue;
+                    }
+
+                    $key = $settlement->eligible_at->format('Y-m');
+                    $byMonth[$key] ??= ['sales' => 0.0, 'orders' => 0];
+                    $byMonth[$key]['sales'] += (float) ($settlement->merchandise_amount ?? 0);
+                    $byMonth[$key]['orders']++;
+                }
+            });
+
+        $sixMonthStart = $now->copy()->startOfMonth()->subMonths(5);
+        $yearStart = $now->copy()->startOfMonth()->subMonths(11);
 
         return [
-            'month' => $this->buildMonthlySalesDataset(
-                $settlements,
-                $currentMonth,
-                $now->copy(),
-                $currentMonth->format('F Y')
-            ),
-            'last_month' => $this->buildMonthlySalesDataset(
-                $settlements,
-                $lastMonth,
-                $lastMonth->copy()->endOfMonth(),
-                $lastMonth->format('F Y')
-            ),
-            'year' => $this->buildYearSalesDataset(
-                $settlements,
-                (int) $now->year
-            ),
+            'six_months' => $this->buildRollingSalesDataset($byMonth, $sixMonthStart, 6, 'Last 6 months'),
+            'year' => $this->buildRollingSalesDataset($byMonth, $yearStart, 12, 'Last 12 months'),
+            'all_time' => $this->buildAllTimeSalesDataset($byMonth, $now),
         ];
     }
 
-    private function buildMonthlySalesDataset(
-        Collection $settlements,
-        Carbon $monthStart,
-        Carbon $periodEnd,
-        string $periodLabel
+    private function buildRollingSalesDataset(
+        array $byMonth,
+        Carbon $start,
+        int $monthCount,
+        string $label
     ): array {
-        $start = $monthStart->copy()->startOfMonth();
-        $end = $monthStart->copy()->endOfMonth();
-
-        if ($periodEnd->lt($end)) {
-            $end = $periodEnd->copy()->endOfDay();
-        }
-
-        $labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'];
-        $values = array_fill(0, 5, 0.0);
+        $labels = [];
+        $values = [];
         $orderCount = 0;
 
-        foreach ($settlements as $settlement) {
-            if (!$settlement->eligible_at) {
-                continue;
-            }
-
-            $eligibleAt = Carbon::parse($settlement->eligible_at);
-
-            if ($eligibleAt->lt($start) || $eligibleAt->gt($end)) {
-                continue;
-            }
-
-            $bucket = min(4, intdiv(max(1, (int) $eligibleAt->day) - 1, 7));
-
-            $values[$bucket] += (float) ($settlement->merchandise_amount ?? 0);
-            $orderCount++;
+        for ($index = 0; $index < $monthCount; $index++) {
+            $month = $start->copy()->addMonths($index);
+            $entry = $byMonth[$month->format('Y-m')] ?? ['sales' => 0, 'orders' => 0];
+            $labels[] = $month->format('M') . ($monthCount > 12 ? " '" . $month->format('y') : '');
+            $values[] = (float) $entry['sales'];
+            $orderCount += (int) $entry['orders'];
         }
 
+        return $this->finalizeSalesDataset($labels, $values, $orderCount, $label);
+    }
+
+    private function buildAllTimeSalesDataset(array $byMonth, Carbon $now): array
+    {
+        if ($byMonth === []) {
+            return $this->buildRollingSalesDataset(
+                [],
+                $now->copy()->startOfMonth()->subMonths(5),
+                6,
+                'All time'
+            );
+        }
+
+        ksort($byMonth);
+        $firstMonth = Carbon::createFromFormat('!Y-m', (string) array_key_first($byMonth));
+        $monthCount = ((int) $now->year - (int) $firstMonth->year) * 12
+            + (int) $now->month - (int) $firstMonth->month + 1;
+
+        if ($monthCount <= 24) {
+            $data = $this->buildRollingSalesDataset($byMonth, $firstMonth, $monthCount, 'All time');
+            $month = $firstMonth->copy();
+            $data['labels'] = array_map(function () use (&$month) {
+                $label = $month->format("M 'y");
+                $month->addMonth();
+                return $label;
+            }, $data['labels']);
+            return $data;
+        }
+
+        // Keep long-lived stores readable: annual rather than microscopic monthly ticks.
+        $yearTotals = [];
+        foreach ($byMonth as $month => $entry) {
+            $year = substr($month, 0, 4);
+            $yearTotals[$year] ??= ['sales' => 0.0, 'orders' => 0];
+            $yearTotals[$year]['sales'] += (float) $entry['sales'];
+            $yearTotals[$year]['orders'] += (int) $entry['orders'];
+        }
+        ksort($yearTotals);
+
         return $this->finalizeSalesDataset(
-            $labels,
-            $values,
-            $orderCount,
-            $periodLabel
+            array_keys($yearTotals),
+            array_map(static fn ($row) => (float) $row['sales'], array_values($yearTotals)),
+            array_sum(array_column($yearTotals, 'orders')),
+            'All time · yearly'
         );
     }
 
-    private function buildYearSalesDataset(Collection $settlements, int $year): array
+    /**
+     * Best seller means the most units in delivered MarketplaceOrder item
+     * snapshots. Counts reflect actual sold quantity, not catalog categories.
+     * The ring is top-product units / all delivered product units.
+     */
+    private function buildTopSellingProduct(int $sellerId): array
     {
-        $labels = [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-        ];
+        $unitsByProduct = [];
+        $allDeliveredUnits = 0;
 
-        $values = array_fill(0, 12, 0.0);
-        $orderCount = 0;
+        MarketplaceOrder::query()
+            ->where('seller_account_id', $sellerId)
+            ->where('status', 'delivered')
+            ->select(['id', 'items'])
+            ->chunkById(250, function ($orders) use (&$unitsByProduct, &$allDeliveredUnits): void {
+                foreach ($orders as $order) {
+                    foreach ((is_array($order->items) ? $order->items : []) as $item) {
+                        if (!is_array($item)) {
+                            continue;
+                        }
 
-        foreach ($settlements as $settlement) {
-            if (!$settlement->eligible_at) {
-                continue;
-            }
+                        $productId = (int) ($item['product_id'] ?? 0);
+                        $quantity = (int) ($item['qty'] ?? 0);
+                        if ($productId <= 0 || $quantity <= 0) {
+                            continue;
+                        }
 
-            $eligibleAt = Carbon::parse($settlement->eligible_at);
+                        $name = trim((string) ($item['name'] ?? ''));
+                        $unitsByProduct[$productId] ??= [
+                            'id' => $productId,
+                            'name' => $name !== '' ? $name : 'Product #' . $productId,
+                            'units' => 0,
+                            'sales' => 0.0,
+                        ];
+                        $unitsByProduct[$productId]['units'] += $quantity;
+                        $unitsByProduct[$productId]['sales'] += (float) ($item['seller_line_total'] ?? $item['line_total'] ?? 0);
+                        $allDeliveredUnits += $quantity;
+                    }
+                }
+            });
 
-            if ((int) $eligibleAt->year !== $year) {
-                continue;
-            }
-
-            $bucket = max(0, min(11, (int) $eligibleAt->month - 1));
-
-            $values[$bucket] += (float) ($settlement->merchandise_amount ?? 0);
-            $orderCount++;
+        if ($unitsByProduct === []) {
+            return ['name' => null, 'units' => 0, 'share' => 0.0, 'all_units' => 0];
         }
 
-        return $this->finalizeSalesDataset(
-            $labels,
-            $values,
-            $orderCount,
-            (string) $year
-        );
+        $ranking = array_values($unitsByProduct);
+        usort($ranking, static function (array $a, array $b): int {
+            return ($b['units'] <=> $a['units'])
+                ?: ($b['sales'] <=> $a['sales'])
+                ?: ($a['id'] <=> $b['id']);
+        });
+
+        $winner = $ranking[0];
+        return [
+            'name' => (string) $winner['name'],
+            'units' => (int) $winner['units'],
+            'share' => $allDeliveredUnits > 0
+                ? round(((int) $winner['units'] / $allDeliveredUnits) * 100, 2)
+                : 0.0,
+            'all_units' => $allDeliveredUnits,
+        ];
     }
 
     private function finalizeSalesDataset(

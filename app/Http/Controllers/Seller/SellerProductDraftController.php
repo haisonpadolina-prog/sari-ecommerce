@@ -75,6 +75,18 @@ class SellerProductDraftController extends Controller
         $coverPath = $draft->cover_image_path;
         $galleryPaths = array_values((array) ($draft->gallery_image_paths ?? []));
         $variantPaths = (array) ($draft->variant_image_paths ?? []);
+        $sizeGuidePath = $draft->size_guide_image_path;
+
+        if ($request->hasFile('size_guide_image')) {
+            $this->deletePublicFile($sizeGuidePath);
+            $sizeGuidePath = $request->file('size_guide_image')->store(
+                'seller-product-drafts/' . $seller->id . '/' . $draft->id . '/size-guide',
+                'public'
+            );
+        } elseif ($request->boolean('remove_size_guide_image')) {
+            $this->deletePublicFile($sizeGuidePath);
+            $sizeGuidePath = null;
+        }
 
         if ($request->hasFile('image')) {
             $this->deletePublicFile($coverPath);
@@ -192,6 +204,8 @@ class SellerProductDraftController extends Controller
             '_method',
             'image',
             'gallery_images',
+            'size_guide_image',
+            'remove_size_guide_image',
         ]);
 
         unset(
@@ -204,6 +218,7 @@ class SellerProductDraftController extends Controller
             'seller_account_id' => $seller->id,
             'payload' => $payload,
             'cover_image_path' => $coverPath,
+            'size_guide_image_path' => $sizeGuidePath,
             'gallery_image_paths' => array_values($galleryPaths),
             'variant_image_paths' => $variantPaths,
         ])->save();
@@ -270,6 +285,7 @@ class SellerProductDraftController extends Controller
 
         $path = match ($kind) {
             'cover' => $draft->cover_image_path,
+            'size-guide' => $draft->size_guide_image_path,
             'gallery' => $galleryPaths[(int) ($key ?? -1)] ?? null,
             'variant' => $variantPaths[(string) ($key ?? '')] ?? null,
             default => null,
@@ -300,6 +316,11 @@ class SellerProductDraftController extends Controller
                         ?: 'No category',
                     'saved_at' => $draft->updated_at?->toIso8601String(),
                     'has_cover' => filled($draft->cover_image_path),
+                    'size_guide_image_url' => $draft->size_guide_image_path
+                        ? route('seller.products.draft-media', [
+                            'kind' => 'size-guide', 'key' => 'chart', 'draft_id' => $draft->id,
+                        ])
+                        : null,
                     'cover_image_url' => $draft->cover_image_path
                         ? route('seller.products.draft-media', [
                             'kind' => 'cover',
@@ -365,6 +386,14 @@ class SellerProductDraftController extends Controller
             'payload' => $payload,
             'saved_at' => $draft->updated_at?->toIso8601String(),
 
+            'size_guide_image_url' => $draft->size_guide_image_path
+                ? route('seller.products.draft-media', [
+                    'kind' => 'size-guide',
+                    'key' => 'chart',
+                    'draft_id' => $draft->id,
+                ])
+                : null,
+
             'cover_image_url' => $draft->cover_image_path
                 ? route('seller.products.draft-media', [
                     'kind' => 'cover',
@@ -429,6 +458,8 @@ class SellerProductDraftController extends Controller
             'voucher_code' => ['nullable', 'string', 'max:80'],
             'description' => ['nullable', 'string', 'max:5000'],
 
+            'size_guide_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'remove_size_guide_image' => ['nullable', 'boolean'],
             'image' => [
                 'nullable',
                 'image',
@@ -486,6 +517,7 @@ class SellerProductDraftController extends Controller
     private function deleteDraftMedia(SellerProductDraft $draft): void
     {
         $this->deletePublicFile($draft->cover_image_path);
+        $this->deletePublicFile($draft->size_guide_image_path);
 
         foreach ((array) ($draft->gallery_image_paths ?? []) as $path) {
             $this->deletePublicFile($path);

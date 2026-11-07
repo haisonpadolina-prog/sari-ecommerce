@@ -489,6 +489,55 @@
 @media (prefers-reduced-motion: reduce) {
     .seller-finance-page * { transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* =======================================================================
+   FINANCE & EARNINGS — BUYER CART FLOATING PANELS / ROUNDED CORNERS
+   Visual-only. Style the five financial KPI cards, payout request panel,
+   wallet activity, recent withdrawals, and settlement ledger.
+   Keep wallet entry rows, table rows, inputs, buttons and badges flat.
+   ======================================================================= */
+.seller-finance-page {
+    --finance-buyer-cart-floating-shadow:
+        0 2px 5px rgba(15, 23, 42, .045),
+        0 10px 24px rgba(15, 23, 42, .075),
+        0 24px 54px rgba(15, 23, 42, .095),
+        inset 0 1px 0 rgba(255, 255, 255, .92);
+    --finance-buyer-cart-floating-mobile:
+        0 1px 3px rgba(15, 23, 42, .035),
+        0 6px 16px rgba(15, 23, 42, .055),
+        0 13px 28px rgba(15, 23, 42, .065),
+        inset 0 1px 0 rgba(255, 255, 255, .90);
+}
+
+/* Only structural cards receive the elevation, not their contents. */
+.seller-finance-page .seller-finance-stat,
+.seller-finance-page .seller-finance-ledger,
+.seller-finance-page [aria-label="Seller earnings wallet"] > .rounded-2xl,
+.seller-finance-page [aria-label="Seller earnings wallet"] > .grid > article {
+    border-radius: 20px !important;
+    box-shadow: var(--finance-buyer-cart-floating-shadow) !important;
+}
+
+@media (max-width: 767px) {
+    .seller-finance-page .seller-finance-stat,
+    .seller-finance-page .seller-finance-ledger,
+    .seller-finance-page [aria-label="Seller earnings wallet"] > .rounded-2xl,
+    .seller-finance-page [aria-label="Seller earnings wallet"] > .grid > article {
+        border-radius: 16px !important;
+        box-shadow: var(--finance-buyer-cart-floating-mobile) !important;
+    }
+}
+
+/* Print the financial figures without the web UI's elevation. */
+@media print {
+    .seller-finance-page .seller-finance-stat,
+    .seller-finance-page .seller-finance-ledger,
+    .seller-finance-page [aria-label="Seller earnings wallet"] > .rounded-2xl,
+    .seller-finance-page [aria-label="Seller earnings wallet"] > .grid > article {
+        box-shadow: none !important;
+    }
+}
+
 @endverbatim
 </style>
 
@@ -634,11 +683,7 @@
 
         </h1>
 
-        <p class="seller-finance-subtitle">
-
-            Delivered-and-paid orders only. Settlements are internal ledger records, not proof of an external bank transfer.
-
-        </p>
+    
 
     </header>
 
@@ -740,7 +785,7 @@
         <header class="flex flex-wrap items-end justify-between gap-3">
             <div>
                 <h2 class="text-lg font-bold text-[#273442]">Seller Earnings Wallet</h2>
-                <p class="mt-1 text-[11px] text-[#738094]">Available only after Main Branch reconciliation and SARI Admin confirmation of the full physical COD cash turnover. A wallet credit is not an external payment.</p>
+                <p class="mt-1 text-[11px] text-[#738094]"></p>
             </div>
             <div class="flex flex-wrap gap-2 text-[11px]">
                 <span class="rounded-xl border border-[#e5e7eb] bg-white px-4 py-2 text-[#475569]">Reserved: <strong>₱{{ number_format((float) $wallet->reserved_balance, 2) }}</strong></span>
@@ -1094,17 +1139,17 @@
         const generated = new Intl.DateTimeFormat('en-PH', {
             dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Manila'
         }).format(new Date());
-        const rows = records.map((record) => `<tr>
-            <td>${safe(record.order)}</td><td>${safe(record.eligible)}</td>
-            <td class="amount">${peso(record.gross)}</td>
-            <td class="amount">${peso(record.commission)}</td>
-            <td class="amount">${peso(record.withholding)}</td>
-            <td class="amount net">${peso(record.net)}</td>
-            <td>${safe(record.status)}</td>
-        </tr>`).join('');
-        return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-            <title>SARI Selected Earnings</title><style>
-            @page { size: A4 landscape; margin: 13mm; }
+        const rows = records.map((record) => `\x3Ctr>
+            \x3Ctd>${safe(record.order)}\x3C/td>\x3Ctd>${safe(record.eligible)}\x3C/td>
+            \x3Ctd class="amount">${peso(record.gross)}\x3C/td>
+            \x3Ctd class="amount">${peso(record.commission)}\x3C/td>
+            \x3Ctd class="amount">${peso(record.withholding)}\x3C/td>
+            \x3Ctd class="amount net">${peso(record.net)}\x3C/td>
+            \x3Ctd>${safe(record.status)}\x3C/td>
+        \x3C/tr>`).join('');
+        return `\x3C!DOCTYPE html>\x3Chtml lang="en">\x3Chead>\x3Cmeta charset="UTF-8">
+            \x3Ctitle>SARI Selected Earnings\x3C/title>\x3Cstyle>
+            \x40page { size: A4 landscape; margin: 13mm; }
             * { box-sizing: border-box; }
             body { margin: 0; color: #263443; font-family: Arial, sans-serif; font-size: 10px; }
             .top { display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:15px; border-bottom:2px solid #C88912; }
@@ -1122,22 +1167,22 @@
             tfoot td { border-top:2px solid #D8DFE8; border-bottom:0; background:#F8FAFC; font-weight:700; }
             .foot { margin-top:20px; border-top:1px solid #E5E7EB; padding-top:12px; color:#64748B; font-size:9px; }
             .print-action { margin-top:18px; border:0; background:#C88912; color:white; padding:10px 16px; border-radius:8px; font-size:12px; cursor:pointer; }
-            @media print { .print-action { display:none; } thead { display:table-header-group; } tr { page-break-inside:avoid; break-inside:avoid; } }
-            </style></head><body>
-            <div class="top"><div><div class="brand">SARI SELLER</div><h1>Selected Earnings</h1>
-            <div class="sub">Settlement ledger export · Selected records only</div></div>
-            <div class="meta"><strong>${records.length} ${records.length === 1 ? 'settlement' : 'settlements'}</strong>
-            Generated ${safe(generated)}<br>Philippine time (Asia/Manila)</div></div>
-            <table><thead><tr><th>Order</th><th>Eligible</th><th style="text-align:right">Gross</th>
-            <th style="text-align:right">Commission</th><th style="text-align:right">Withholding</th>
-            <th style="text-align:right">Net</th><th>Status</th></tr></thead>
-            <tbody>${rows}</tbody><tfoot><tr><td colspan="2">TOTAL SELECTED</td>
-            <td class="amount">${peso(sum('gross'))}</td><td class="amount">${peso(sum('commission'))}</td>
-            <td class="amount">${peso(sum('withholding'))}</td><td class="amount net">${peso(sum('net'))}</td><td>—</td>
-            </tr></tfoot></table>
-            <div class="foot">Internal settlement records only. This document is not proof of an external bank transfer. Values reflect the entries as displayed when selected.</div>
-            <button type="button" class="print-action" onclick="window.print()">Print / Save as PDF</button>
-            </body></html>`;
+            \x40media print { .print-action { display:none; } thead { display:table-header-group; } tr { page-break-inside:avoid; break-inside:avoid; } }
+            \x3C/style>\x3C/head>\x3Cbody>
+            \x3Cdiv class="top">\x3Cdiv>\x3Cdiv class="brand">SARI SELLER\x3C/div>\x3Ch1>Selected Earnings\x3C/h1>
+            \x3Cdiv class="sub">Settlement ledger export · Selected records only\x3C/div>\x3C/div>
+            \x3Cdiv class="meta">\x3Cstrong>${records.length} ${records.length === 1 ? 'settlement' : 'settlements'}\x3C/strong>
+            Generated ${safe(generated)}\x3Cbr>Philippine time (Asia/Manila)\x3C/div>\x3C/div>
+            \x3Ctable>\x3Cthead>\x3Ctr>\x3Cth>Order\x3C/th>\x3Cth>Eligible\x3C/th>\x3Cth style="text-align:right">Gross\x3C/th>
+            \x3Cth style="text-align:right">Commission\x3C/th>\x3Cth style="text-align:right">Withholding\x3C/th>
+            \x3Cth style="text-align:right">Net\x3C/th>\x3Cth>Status\x3C/th>\x3C/tr>\x3C/thead>
+            \x3Ctbody>${rows}\x3C/tbody>\x3Ctfoot>\x3Ctr>\x3Ctd colspan="2">TOTAL SELECTED\x3C/td>
+            \x3Ctd class="amount">${peso(sum('gross'))}\x3C/td>\x3Ctd class="amount">${peso(sum('commission'))}\x3C/td>
+            \x3Ctd class="amount">${peso(sum('withholding'))}\x3C/td>\x3Ctd class="amount net">${peso(sum('net'))}\x3C/td>\x3Ctd>—\x3C/td>
+            \x3C/tr>\x3C/tfoot>\x3C/table>
+            \x3Cdiv class="foot">Internal settlement records only. This document is not proof of an external bank transfer. Values reflect the entries as displayed when selected.\x3C/div>
+            \x3Cbutton type="button" class="print-action" onclick="window.print()">Print / Save as PDF\x3C/button>
+            \x3C/body>\x3C/html>`;
     };
 
     printButton?.addEventListener('click', () => {

@@ -111,9 +111,7 @@
         transition: color .12s ease;
     }
 
-    .seller-create-heading-back:hover {
-        color: #a56b05;
-    }
+    
 
     .seller-create-heading-back svg {
         width: 12px;
@@ -189,7 +187,6 @@
         transition: background .15s ease, color .15s ease, border-color .15s ease;
     }
 
-    .seller-create-nav button:hover,
     .seller-create-nav button.is-active {
         background: var(--sari-gold-soft-2);
         border-color: #f4dfad;
@@ -375,10 +372,7 @@
         transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
     }
 
-    .seller-category-trigger:hover {
-        border-color: #cfd6df;
-        background: #fcfcfd;
-    }
+    
 
     .seller-category-trigger[aria-expanded="true"] {
         border-color: #d59617;
@@ -461,7 +455,6 @@
         transition: background .12s ease, color .12s ease;
     }
 
-    .seller-category-option:hover,
     .seller-category-option.is-selected {
         background: #fff8e8;
         color: #9a6708;
@@ -504,11 +497,7 @@
         transition: border-color .15s ease, background .15s ease, transform .15s ease;
     }
 
-    .seller-create-upload:hover {
-        border-color: #d49a18;
-        background: #fffdf8;
-        transform: translateY(-1px);
-    }
+    
 
     .seller-create-upload img {
         width: 100%;
@@ -612,11 +601,7 @@
         transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
     }
 
-    .seller-create-setting-card:hover {
-        border-color: #e2bd67;
-        background: #fffdf8;
-        box-shadow: 0 8px 22px rgba(15,23,42,.035);
-    }
+    
 
     .seller-create-setting-copy {
         display: flex;
@@ -781,10 +766,7 @@
         transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
     }
 
-    .seller-create-button:hover {
-        background: #f8fafc;
-        transform: translateY(-1px);
-    }
+    
 
     .seller-create-button--primary {
         border-color: #d59617;
@@ -793,10 +775,7 @@
         box-shadow: 0 8px 18px rgba(213,150,23,.16);
     }
 
-    .seller-create-button--primary:hover {
-        border-color: #c9890f;
-        background: #c9890f;
-    }
+    
 
     .seller-create-button--soft {
         border-color: #efd9a7;
@@ -1216,10 +1195,7 @@
         transition: background-color .12s ease, transform .12s ease;
     }
 
-    .seller-gallery-remove:hover {
-        background: #b84444;
-        transform: scale(1.04);
-    }
+    
 
     .seller-gallery-remove svg {
         width: 12px;
@@ -1366,7 +1342,6 @@
         transition: border-color .1s ease, background-color .1s ease;
     }
 
-    .seller-draft-item:hover,
     .seller-draft-item.is-current {
         border-color: #eed8a7;
         background: #fffaf1;
@@ -1445,11 +1420,7 @@
         transition: border-color .1s ease, color .1s ease, background-color .1s ease;
     }
 
-    .seller-draft-delete:hover {
-        border-color: #efc9c9;
-        background: #fff8f8;
-        color: #c34b4b;
-    }
+    
 
     .seller-draft-delete svg {
         width: 13px;
@@ -2587,13 +2558,7 @@
 }
 
 /* No lift/motion when cursor passes over main cards. */
-.seller-create-page .seller-create-side-card:hover,
-.seller-create-page .seller-create-preview-card:hover,
-.seller-create-page .seller-create-section:hover {
-    border-color: var(--sari-float-border) !important;
-    box-shadow: var(--sari-float-shadow) !important;
-    transform: none !important;
-}
+
 
 /* Inner functional panels receive a softer elevation so the main cards
    remain visually dominant. */
@@ -2611,12 +2576,7 @@
 
 /* Settings cards should remain still on hover; only normal control color
    feedback is allowed. */
-.seller-create-page .seller-create-setting-card:hover {
-    border-color: #E1E6EC !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--sari-float-shadow-soft) !important;
-    transform: none !important;
-}
+
 
 /* Upload surface: subtle depth, but no physical movement. */
 .seller-create-page .seller-create-upload {
@@ -2628,14 +2588,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-upload:hover {
-    border-color: #D0D7E0 !important;
-    background: #FBFCFD !important;
-    box-shadow:
-        0 1px 2px rgba(15, 23, 42, .02),
-        0 5px 14px rgba(15, 23, 42, .045) !important;
-    transform: none !important;
-}
+
 
 /* Gallery / empty states remain light and secondary. */
 .seller-create-page #createGalleryEmpty,
@@ -2668,11 +2621,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-button:hover,
-.seller-create-page .seller-draft-new-button:hover,
-.seller-create-page .seller-gallery-remove:hover {
-    transform: none !important;
-}
+
 
 /* Keep semantic gold only where it is intentional; structural borders
    and elevation stay neutral. */
@@ -2760,14 +2709,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-side-card:hover,
-.seller-create-page .seller-create-section:hover,
-.seller-create-page .seller-create-preview-card:hover {
-    border-color: var(--add-dashboard-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--add-dashboard-shadow) !important;
-    transform: none !important;
-}
+
 
 /* Neutral internal dividers. */
 .seller-create-page .seller-create-side-title,
@@ -2792,16 +2734,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-setting-card:hover,
-.seller-create-page .seller-create-toggle-row:hover,
-.seller-create-page .seller-promo-preview:hover,
-.seller-create-page .seller-variant-table-wrap:hover,
-.seller-create-page details.mt-4:hover {
-    border-color: #E7EAEE !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--add-dashboard-shadow-soft) !important;
-    transform: none !important;
-}
+
 
 /* Upload / media surfaces stay subordinate to their parent sections. */
 .seller-create-page .seller-create-upload,
@@ -2814,12 +2747,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-upload:hover {
-    border-color: #D6DCE4 !important;
-    background: #F8FAFC !important;
-    box-shadow: var(--add-dashboard-shadow-inner) !important;
-    transform: none !important;
-}
+
 
 /* ------------------------------------------------------------------
    FORM CONTROLS
@@ -2838,13 +2766,7 @@
         0 4px 10px rgba(15, 23, 42, .03) !important;
 }
 
-.seller-create-page .seller-create-input:hover,
-.seller-create-page .seller-create-select:hover,
-.seller-create-page .seller-create-textarea:hover,
-.seller-create-page .seller-category-trigger:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
-}
+
 
 /* Keep focus visible but restrained. */
 .seller-create-page .seller-create-input:focus,
@@ -2875,20 +2797,14 @@
 }
 
 /* Neutral hover; selected state may keep a restrained gold cue. */
-.seller-create-page .seller-category-option:hover {
-    background: #F8FAFC !important;
-    color: #475467 !important;
-}
+
 
 .seller-create-page .seller-category-option.is-selected {
     background: #FFF9EC !important;
     color: #9A6708 !important;
 }
 
-.seller-create-page .seller-draft-item:hover {
-    border-color: #E5E7EB !important;
-    background: #F8FAFC !important;
-}
+
 
 .seller-create-page .seller-draft-item.is-current {
     border-color: #EAD7A9 !important;
@@ -2898,11 +2814,7 @@
 /* ------------------------------------------------------------------
    LEFT NAV + BUTTONS
    ------------------------------------------------------------------ */
-.seller-create-page .seller-create-nav button:hover {
-    border-color: #E5E7EB !important;
-    background: #F8FAFC !important;
-    color: #475467 !important;
-}
+
 
 .seller-create-page .seller-create-nav button.is-active {
     border-color: #EAD7A9 !important;
@@ -2918,23 +2830,12 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-button:hover,
-.seller-create-page .seller-draft-new-button:hover,
-.seller-create-page .seller-gallery-remove:hover,
-.seller-create-page .seller-draft-delete:hover {
-    transform: none !important;
-}
+
 
 /* Secondary buttons use neutral hover surfaces rather than cream. */
-.seller-create-page .seller-create-button:not(.seller-create-button--primary):not(.seller-create-button--soft):hover {
-    border-color: var(--add-dashboard-border-strong) !important;
-    background: #F8FAFC !important;
-}
 
-.seller-create-page .seller-create-button--soft:hover,
-.seller-create-page .seller-draft-new-button:hover {
-    background: #FFF9EC !important;
-}
+
+
 
 /* ------------------------------------------------------------------
    EMPTY / INFO / FEEDBACK SURFACES
@@ -3016,10 +2917,7 @@
    ------------------------------------------------------------ */
 .seller-create-page .seller-create-side-card,
 .seller-create-page .seller-create-section,
-.seller-create-page .seller-create-preview-card,
-.seller-create-page .seller-create-side-card:hover,
-.seller-create-page .seller-create-section:hover,
-.seller-create-page .seller-create-preview-card:hover {
+.seller-create-page .seller-create-preview-card {
     border: 1px solid var(--add-main-border) !important;
     background: #FFFFFF !important;
     box-shadow: var(--add-main-shadow) !important;
@@ -3028,8 +2926,7 @@
 }
 
 /* Header remains an open, non-card page header. */
-.seller-create-page .seller-create-topbar,
-.seller-create-page .seller-create-topbar:hover {
+.seller-create-page .seller-create-topbar {
     border-bottom-color: var(--add-main-divider) !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -3040,16 +2937,11 @@
    NESTED PANELS / GROUPS — FLAT
    ------------------------------------------------------------ */
 .seller-create-page .seller-create-setting-card,
-.seller-create-page .seller-create-setting-card:hover,
 .seller-create-page .seller-create-toggle-row,
-.seller-create-page .seller-create-toggle-row:hover,
 .seller-create-page .seller-promo-preview,
-.seller-create-page .seller-promo-preview:hover,
 .seller-create-page .seller-variant-table-wrap,
-.seller-create-page .seller-variant-table-wrap:hover,
 .seller-create-page .seller-create-mobile-preview,
-.seller-create-page details.mt-4,
-.seller-create-page details.mt-4:hover {
+.seller-create-page details.mt-4 {
     border-color: #E5E7EB !important;
     background: #FFFFFF !important;
     box-shadow: none !important;
@@ -3073,7 +2965,6 @@
    UPLOAD / MEDIA / EMPTY STATES — FLAT
    ------------------------------------------------------------ */
 .seller-create-page .seller-create-upload,
-.seller-create-page .seller-create-upload:hover,
 .seller-create-page .seller-preview-image,
 .seller-create-page .seller-create-gallery-thumb,
 .seller-create-page .seller-variant-image-label,
@@ -3083,8 +2974,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-upload,
-.seller-create-page .seller-create-upload:hover {
+.seller-create-page .seller-create-upload {
     border-color: #D7DEE7 !important;
     background: #FAFBFC !important;
 }
@@ -3119,17 +3009,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-create-input:hover,
-.seller-create-page .seller-create-select:hover,
-.seller-create-page .seller-create-textarea:hover,
-.seller-create-page .seller-create-money-field:hover,
-.seller-create-page .seller-category-trigger:hover,
-.seller-create-page .seller-variant-table input[type="text"]:hover,
-.seller-create-page .seller-variant-table input[type="number"]:hover {
-    border-color: #C9D0D9 !important;
-    background: #FFFFFF !important;
-    box-shadow: none !important;
-}
+
 
 /* Focus ring is accessibility feedback, not resting elevation. */
 .seller-create-page .seller-create-input:focus,
@@ -3148,14 +3028,10 @@
    BUTTONS / BADGES / TOGGLES / ICONS — NO FLOATING DEPTH
    ------------------------------------------------------------ */
 .seller-create-page .seller-create-button,
-.seller-create-page .seller-create-button:hover,
 .seller-create-page .seller-create-button:focus-visible,
 .seller-create-page .seller-draft-new-button,
-.seller-create-page .seller-draft-new-button:hover,
 .seller-create-page .seller-gallery-remove,
-.seller-create-page .seller-gallery-remove:hover,
 .seller-create-page .seller-draft-delete,
-.seller-create-page .seller-draft-delete:hover,
 .seller-create-page .seller-draft-status,
 .seller-create-page .seller-gallery-count,
 .seller-create-page .seller-preview-badge,
@@ -3169,8 +3045,7 @@
 }
 
 /* Primary CTA keeps color emphasis, not shadow emphasis. */
-.seller-create-page .seller-create-button--primary,
-.seller-create-page .seller-create-button--primary:hover {
+.seller-create-page .seller-create-button--primary {
     box-shadow: none !important;
 }
 
@@ -3332,9 +3207,7 @@
     cursor: pointer;
 }
 
-.seller-create-page .seller-variant-mode-choice:hover {
-    color: #344054;
-}
+
 
 .seller-create-page .seller-variant-mode-radio {
     position: relative;
@@ -3529,11 +3402,7 @@
     cursor: pointer;
 }
 
-.seller-create-page .seller-variant-add-value:hover {
-    border-color: #D9B96F;
-    background: #FFF9EC;
-    color: #986408;
-}
+
 
 .seller-create-page .seller-variant-combination-summary {
     display: flex;
@@ -3601,10 +3470,7 @@
     cursor: pointer;
 }
 
-.seller-create-page .seller-variant-bulk-button:hover {
-    border-color: #D6A740;
-    background: #FFF9EC;
-}
+
 
 .seller-create-page .seller-variant-bulk-button svg {
     width: 12px;
@@ -3672,9 +3538,7 @@
     cursor: pointer;
 }
 
-.seller-create-page .seller-variant-remove:hover {
-    background: #FFF5F5;
-}
+
 
 .seller-create-page .seller-variant-remove svg {
     width: 13px;
@@ -3912,10 +3776,7 @@
     box-shadow: none !important;
 }
 
-.seller-create-page .seller-variant-value-chip:hover {
-    border-color: #CDD4DD !important;
-    background: #F8FAFC !important;
-}
+
 
 .seller-create-page .seller-variant-value-chip button {
     color: #667085 !important;
@@ -3927,11 +3788,7 @@
     color: #475467 !important;
 }
 
-.seller-create-page .seller-variant-add-value:hover {
-    border-color: #CBD2DC !important;
-    background: #F1F4F7 !important;
-    color: #344054 !important;
-}
+
 
 /* Color dropdown: white control, light gray menu, swatches carry the color. */
 .seller-create-page .seller-variant-color-dropdown {
@@ -3971,10 +3828,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-variant-color-trigger:hover {
-    border-color: #C8D0DA !important;
-    background: #F8FAFC !important;
-}
+
 
 .seller-create-page .seller-variant-color-trigger:focus-visible,
 .seller-create-page .seller-variant-color-trigger[aria-expanded="true"] {
@@ -4042,10 +3896,7 @@
     transform: none !important;
 }
 
-.seller-create-page .seller-variant-color-choice:hover {
-    background: #F5F7FA !important;
-    color: #344054 !important;
-}
+
 
 .seller-create-page .seller-variant-color-choice[aria-selected="true"] {
     background: #F1F4F7 !important;
@@ -4156,10 +4007,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     transform: none !important;
 }
 
-body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice:hover {
-    background: #F5F7FA !important;
-    color: #344054 !important;
-}
+
 
 body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-variant-color-choice[aria-selected="true"] {
     background: #F1F4F7 !important;
@@ -4314,7 +4162,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     transition: border-color .12s ease, background-color .12s ease;
 }
 
-.seller-create-page .seller-gallery-drop-empty:hover,
 .seller-create-page .seller-gallery-drop-empty:focus-visible,
 .seller-create-page .seller-gallery-dropzone.is-dragover .seller-gallery-drop-empty {
     border-color: #D2AA50 !important;
@@ -4379,7 +4226,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     transition: border-color .12s ease, background-color .12s ease, color .12s ease;
 }
 
-.seller-create-page .seller-gallery-add-tile:hover,
 .seller-create-page .seller-gallery-add-tile:focus-visible {
     border-color: #D0A346;
     background: #FFFBF2;
@@ -4674,7 +4520,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             box-shadow .15s ease !important;
     }
 
-    #createGalleryDropzone .seller-gallery-drop-empty:hover,
     #createGalleryDropzone.is-dragover .seller-gallery-drop-empty {
         border-color:#c9a45a !important;
         background:#fffdf8 !important;
@@ -4828,9 +4673,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         backdrop-filter:blur(4px) !important;
     }
 
-    #createGalleryDropzone .seller-gallery-remove:hover {
-        background:#202833 !important;
-    }
+    
 
     #createGalleryDropzone .seller-gallery-remove svg {
         width:13px !important;
@@ -4889,12 +4732,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             box-shadow .15s ease !important;
     }
 
-    #createGalleryDropzone .seller-gallery-add-tile:hover {
-        border-color:#c6983e !important;
-        background:#fffaf0 !important;
-        color:#9a660d !important;
-        box-shadow:0 0 0 3px rgba(200,137,18,.05) !important;
-    }
+    
 
     /*
      * Drag events are intentionally still handled by the existing parent
@@ -4921,8 +4759,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         color:#758190 !important;
     }
 
-    #createGalleryDropzone .seller-gallery-add-tile:hover
-    .seller-gallery-add-tile-icon,
     #createGalleryDropzone[data-has-images="1"].is-dragover
     .seller-gallery-add-tile-icon {
         border-color:#ead7ad !important;
@@ -4951,7 +4787,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         line-height:1.3 !important;
     }
 
-    #createGalleryDropzone .seller-gallery-add-tile:hover > span:last-child,
     #createGalleryDropzone[data-has-images="1"].is-dragover
     .seller-gallery-add-tile > span:last-child {
         color:#a17a36 !important;
@@ -4992,7 +4827,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             box-shadow .16s ease !important;
     }
 
-    #createCoverDropzone:hover,
     #createCoverDropzone.is-dragover {
         border-color: #c79a43 !important;
         background: #fffdf9 !important;
@@ -5150,7 +4984,754 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     }
 </style>
 
-@endpush
+
+{{-- Premium Add Product visual layer. Kept in Blade; no public stylesheet required. --}}
+<style id="sariAddProductCleanPremiumStyle">
+@verbatim
+
+/* ============================================================
+   SARI ADD PRODUCT — CLEAN PREMIUM GOLD / RESPONSIVE FORM
+   Scoped to .seller-create-page; visual-only, preserves all JS hooks.
+   ============================================================ */
+.seller-create-page {
+  --sari-gold: #c88912;
+  --sari-gold-strong: #af7608;
+  --sari-gold-soft: #fff9ed;
+  --sari-ink: #22252b;
+  --sari-muted: #657080;
+  --sari-line: #e3e7ed;
+  --sari-soft: #f8fafc;
+  max-width: 1540px !important;
+  padding: 18px clamp(8px, 1.7vw, 24px) 56px !important;
+  font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  color: var(--sari-ink);
+}
+.seller-create-page *,
+.seller-create-page *::before,
+.seller-create-page *::after { box-sizing: border-box; }
+.seller-create-page .seller-create-topbar {
+  display:flex; align-items:center; flex-wrap:wrap; gap:18px;
+  min-height: 74px !important;
+  margin: 0 0 24px !important;
+  padding: 3px 0 17px !important;
+  border-bottom: 1px solid #e9ebef !important;
+  background:transparent !important;
+}
+.seller-create-page .seller-create-topbar > .flex { gap: 10px !important; }
+.seller-create-page .seller-create-heading-eyebrow {
+  color: #a67419 !important; font-size: 10px !important;
+  font-weight: 750 !important; letter-spacing: .14em !important;
+}
+.seller-create-page .seller-create-heading-title {
+  margin-top: 7px !important; font-size: clamp(30px, 2.7vw, 39px) !important;
+  line-height: 1.12 !important; font-weight: 750 !important;
+  letter-spacing: -.045em !important;
+}
+.seller-create-page .seller-create-heading-title span { color: #c88912 !important; }
+.seller-create-page .seller-create-heading-back {
+  display:inline-flex; align-items:center; gap: 7px;
+  margin-top: 8px !important; min-height: 24px !important;
+  color: #6c7582 !important; font-size: 12px !important;
+}
+.seller-create-page .seller-create-heading-back svg { width: 15px !important; height: 15px !important; }
+.seller-create-page .seller-create-button {
+  min-height: 43px !important; height: auto !important;
+  gap: 8px !important; border-radius: 11px !important;
+  padding: 10px 15px !important; font-size: 12.5px !important;
+  line-height: 1.4 !important; font-weight: 650 !important;
+  box-shadow: none !important; transform: none !important;
+}
+.seller-create-page .seller-create-button--primary {
+  border-color:#c88912 !important; background:#c88912 !important;
+  color:#fff !important; box-shadow: 0 5px 12px rgba(200,137,18,.13) !important;
+}
+
+.seller-create-page .seller-draft-count,
+.seller-create-page .seller-gallery-count { font-size:11px !important; }
+
+/* Keep form uncluttered: left section navigation and large editable surface. */
+.seller-create-page .seller-create-grid {
+  display:grid !important;
+  grid-template-columns: 204px minmax(0,1fr) !important;
+  gap: 22px !important; align-items:start !important;
+}
+.seller-create-page .seller-create-side {
+  display:block !important; position:sticky !important; top:110px !important;
+}
+.seller-create-page .seller-create-workspace { gap: 18px !important; }
+.seller-create-page .seller-create-side-card,
+.seller-create-page .seller-create-section,
+.seller-create-page .seller-create-preview-card {
+  border: 1px solid #e6e8ed !important;
+  border-radius: 18px !important; background: #fff !important;
+  box-shadow: 0 8px 25px rgba(33,38,48,.055), 0 2px 6px rgba(33,38,48,.025) !important;
+  transform:none !important; outline:none !important;
+}
+.seller-create-page .seller-create-side-card { padding: 16px !important; }
+.seller-create-page .seller-create-side-title {
+  display:block; padding: 2px 4px 15px !important;
+  border-color: #eceef2 !important;
+  color: #252a31 !important; font-size: 14px !important; font-weight: 750 !important;
+}
+.seller-create-page .seller-create-nav { margin-top: 12px !important; gap: 5px !important; }
+.seller-create-page .seller-create-nav button {
+  min-height:44px !important; padding:10px 12px !important;
+  border:1px solid transparent !important; border-radius:10px !important;
+  color:#596270 !important; font-size: 12px !important;
+  line-height:1.45 !important; font-weight: 550 !important;
+}
+.seller-create-page .seller-create-nav button.is-active {
+  border-color:#eedfc0 !important; background:#fff9ec !important; color:#956409 !important;
+}
+.seller-create-page .seller-create-section {
+  padding: clamp(19px, 2vw, 28px) !important;
+  scroll-margin-top: 114px !important;
+  overflow: hidden !important;
+  content-visibility: visible !important;
+}
+.seller-create-page .seller-create-section-head {
+  display:flex; align-items:center !important;
+  margin: 0 0 23px !important; padding: 0 !important; gap: 0 !important;
+}
+.seller-create-page .seller-create-section-copy h2 {
+  margin: 0 !important; color: #22262d !important;
+  font-size: 19px !important; font-weight: 750 !important;
+  line-height: 1.35 !important; letter-spacing: -.025em !important;
+}
+.seller-create-page .seller-create-section-copy p,
+.seller-create-page .seller-create-rule,
+.seller-create-page .seller-create-section-icon { display:none !important; }
+.seller-create-page .seller-create-field-grid { gap: 18px !important; }
+.seller-create-page .seller-create-label,
+.seller-create-page .seller-create-label-with-icon {
+  display:flex; align-items:center; gap:7px;
+  margin-bottom: 8px !important;
+  color:#39414c !important; font-size: 13px !important; line-height:1.45 !important;
+  font-weight:650 !important;
+}
+.seller-create-page .seller-create-label-with-icon .seller-create-plain-icon {display:none !important;}
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select,
+.seller-create-page .seller-create-money-field,
+.seller-create-page .seller-category-trigger {
+  height: 46px !important; border: 1px solid #d7dde5 !important;
+  border-radius: 11px !important; background: #fff !important;
+  font-size: 13px !important; color: #222831 !important;
+  box-shadow: none !important;
+}
+.seller-create-page .seller-create-input,
+.seller-create-page .seller-create-select { padding: 0 13px !important; }
+.seller-create-page .seller-create-money-input {
+  font-size: 13px !important; padding:0 13px !important;
+}
+.seller-create-page .seller-create-money-prefix { font-size:14px !important; }
+.seller-create-page .seller-create-textarea {
+  min-height: 220px !important; padding: 13px 14px !important;
+  font-size:13px !important; line-height:1.75 !important;
+  border:1px solid #d7dde5 !important; border-radius:11px !important;
+  box-shadow:none !important;
+}
+.seller-create-page .seller-create-input:focus,
+.seller-create-page .seller-create-select:focus,
+.seller-create-page .seller-create-textarea:focus,
+.seller-create-page .seller-create-money-field:focus-within {
+  border-color:#c88912 !important;
+  box-shadow:0 0 0 3px rgba(200,137,18,.10) !important;
+}
+.seller-create-page .seller-create-input::placeholder,
+.seller-create-page .seller-create-textarea::placeholder {color:#98a1ae !important; opacity:1;}
+.seller-create-page .seller-create-help {
+  margin-top:6px !important; font-size:11px !important; line-height:1.55 !important;
+  color:#77818e !important;
+}
+.seller-create-page .seller-category-locked {
+  min-height:46px; padding: 9px 11px;
+  border-color:#e1e5eb; border-radius:11px; background:#f8fafc;
+}
+.seller-create-page .seller-category-locked-copy strong {font-size:13px !important;}
+.seller-create-page .seller-category-locked-badge {font-size:10px !important;}
+.seller-create-page .seller-category-locked-icon {
+  background:#fff9ed; border-color:#eadbb9; border-radius:8px;
+}
+.seller-create-page details.mt-4 {margin-top:18px !important; border-radius:12px !important;}
+.seller-create-page details.mt-4 > summary {
+  min-height:44px; padding:13px 15px !important;
+  font-size:12px !important; color:#3e4651 !important;
+}
+.seller-create-page details.mt-4 > div {padding:15px !important;}
+.seller-create-page details.mt-4 > summary span {font-size:11px !important;}
+
+/* Product photography: portrait, landscape and square are fully visible. */
+.seller-create-page .seller-create-media-grid {
+  display:grid !important;
+  grid-template-columns:minmax(230px, .92fr) minmax(0,1.08fr) !important;
+  align-items:stretch !important;
+}
+.seller-create-page #createCoverDropzone {
+  min-height:250px !important; height:100% !important; max-height:330px !important;
+  border:1px dashed #d5dce5 !important; border-radius:14px !important;
+  background:#f8fafc !important;
+}
+.seller-create-page #createCoverDropzone #createCoverPreview,
+.seller-create-page #createCoverDropzone.has-image #createCoverPreview {
+  object-fit:contain !important; object-position:center !important;
+  background:#f8fafc !important;
+}
+.seller-create-page #createCoverDropzone #createCoverPlaceholder strong,
+.seller-create-page #createGalleryDropzone .seller-gallery-drop-copy strong {
+  font-size:13px !important; line-height:1.5 !important;
+}
+.seller-create-page #createCoverDropzone #createCoverPlaceholder span,
+.seller-create-page #createCoverDropzone #createCoverPlaceholder small,
+.seller-create-page #createGalleryDropzone .seller-gallery-drop-copy span,
+.seller-create-page #createGalleryDropzone .seller-gallery-drop-copy small {
+  font-size:11px !important; line-height:1.5 !important;
+}
+.seller-create-page #createCoverDropzone .seller-cover-change-hint {
+  min-height:32px !important; font-size:10px !important;
+}
+.seller-create-page #createGalleryDropzone .seller-create-gallery-thumb img,
+.seller-create-page .seller-variant-image-label img,
+.seller-create-page #previewImage img {object-fit:contain !important;}
+.seller-create-page #createGalleryDropzone .seller-gallery-drop-empty {min-height:130px !important;}
+.seller-create-page #createGalleryDropzone[data-has-images="1"] #createGalleryPreview {
+  grid-template-columns:repeat(auto-fill,minmax(120px,138px)) !important;
+  gap:11px !important;
+}
+.seller-create-page .seller-gallery-count {min-height:26px !important; padding:2px 10px !important;}
+
+/* Pricing, options and variant table: readable without oversized nested cards. */
+.seller-create-page .seller-sales-base-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0,1fr)) !important;
+  gap:18px !important;
+}
+.seller-create-page .seller-variant-mode-card {
+  grid-column:1 / -1;
+  display:flex; flex-direction:row; align-items:center; justify-content:space-between;
+  gap:20px !important; min-height:66px !important;
+  padding:14px 17px !important; border-radius:12px !important;
+  background:#f8fafc !important;
+}
+.seller-create-page .seller-variant-mode-title {font-size:13px !important;}
+.seller-create-page .seller-variant-mode-actions {margin-top:0 !important; gap:16px !important;}
+.seller-create-page .seller-variant-mode-choice {font-size:12px !important;}
+.seller-create-page .seller-smart-variants {gap:16px !important; margin-top:16px !important;}
+.seller-create-page .seller-variant-options-panel,
+.seller-create-page .seller-variants-panel {
+  border:1px solid #e5e8ed !important; border-radius:13px !important;
+  background:#fff !important;
+}
+.seller-create-page .seller-variant-subhead,
+.seller-create-page .seller-variants-panel-head {padding:15px 16px !important;}
+.seller-create-page .seller-variant-subhead h3,
+.seller-create-page .seller-variants-panel-head h3,
+.seller-create-page .seller-promo-preview-head strong {font-size:14px !important;}
+.seller-create-page .seller-variant-option-grid {gap:12px !important; padding:14px !important;}
+.seller-create-page .seller-variant-option-card {padding:13px !important;}
+.seller-create-page .seller-variant-option-name-label,
+.seller-create-page #createVariantSummaryEyebrow {font-size:11px !important;}
+.seller-create-page .seller-variant-option-name,
+.seller-create-page .seller-variant-option-value-input,
+.seller-create-page .seller-variant-add-value {height:40px !important; font-size:12px !important;}
+.seller-create-page .seller-variant-value-chip {min-height:29px !important; font-size:11px !important;}
+.seller-create-page #createVariantCombinationSummary {font-size:13px !important;}
+.seller-create-page #createVariantCombinationHelp {font-size:10.5px !important;}
+.seller-create-page .seller-variant-bulk-button {min-height:38px !important; font-size:11px !important;}
+.seller-create-page .seller-variant-table-wrap {
+  overflow-x:auto !important; max-width:100% !important;
+  border:1px solid #e5e8ed !important;
+}
+.seller-create-page .seller-variant-table,
+.seller-create-page .seller-smart-variant-table {
+  display:table !important; width:100% !important; min-width: 810px !important;
+  border-collapse:collapse !important; table-layout:auto !important;
+}
+.seller-create-page .seller-variant-table thead {display:table-header-group !important;}
+.seller-create-page .seller-variant-table tbody {display:table-row-group !important;}
+.seller-create-page .seller-variant-table tr {display:table-row !important;}
+.seller-create-page .seller-variant-table th,
+.seller-create-page .seller-variant-table td {display:table-cell !important; width:auto !important;}
+.seller-create-page .seller-variant-table th {
+  padding:12px 11px !important; background:#f8fafc !important;
+  color:#5b6674 !important; font-size:11px !important; font-weight:700 !important;
+}
+.seller-create-page .seller-variant-table td {padding:10px 10px !important;}
+.seller-create-page .seller-variant-table input[type="text"],
+.seller-create-page .seller-variant-table input[type="number"],
+.seller-create-page .seller-smart-variant-table select,
+.seller-create-page .seller-smart-variant-table input[type="text"],
+.seller-create-page .seller-smart-variant-table input[type="number"] {
+  min-height:39px !important; height:39px !important;
+  border-radius:9px !important; padding-inline:10px !important;
+  font-size:11px !important;
+}
+.seller-create-page .seller-variant-color-trigger {height:39px !important; font-size:11px !important;}
+.seller-create-page .seller-variant-color-choice {font-size:11px !important;}
+.seller-create-page .seller-variant-image-label {height:44px !important; width:44px !important;}
+.seller-create-page .seller-variant-empty {font-size:12px !important;}
+.seller-create-page .seller-create-setting-grid {gap:13px !important; margin-top:16px !important;}
+.seller-create-page .seller-create-setting-card {
+  min-height:82px !important; padding:15px 17px !important;
+  border:1px solid #e5e8ed !important; border-radius:12px !important;
+  box-shadow:none !important;
+}
+.seller-create-page .seller-create-setting-copy strong {font-size:13px !important;}
+.seller-create-page .seller-create-setting-copy span {font-size:11px !important;}
+.seller-create-page .seller-promo-preview {padding:16px !important; border-radius:12px !important;}
+.seller-create-page .seller-promo-preview-head span {font-size:11px !important;}
+.seller-create-page .seller-promo-preview-price strong {font-size:23px !important;}
+.seller-create-page .seller-promo-preview-note {font-size:11px !important;}
+.seller-create-page .seller-spec-row {grid-template-columns:1fr 1.4fr 95px 44px !important; gap:12px !important;}
+.seller-create-page #createSpecificationsEmpty {font-size:11px !important;}
+
+/* Right buyer preview only when there is enough space for a genuine third column. */
+.seller-create-page .seller-create-preview {display:none !important;}
+.seller-create-page .seller-create-mobile-preview {
+  display:flex !important; margin-top:18px !important; min-height:70px !important;
+  padding:14px 16px !important; border:1px solid #e6e9ee !important;
+  border-radius:12px !important; background:#f8fafc !important;
+  box-shadow:none !important;
+}
+.seller-create-page .seller-create-mobile-preview-label {font-size:10px !important;}
+.seller-create-page .seller-create-mobile-preview-copy strong {font-size:13px !important;}
+.seller-create-page .seller-create-mobile-preview-copy > span:last-child {font-size:11px !important;}
+.seller-create-page .seller-preview-badge {min-height:26px !important; font-size:10px !important;}
+.seller-create-page .seller-preview-head h3 {font-size:14px !important;}
+.seller-create-page .seller-preview-title {font-size:14px !important;}
+.seller-create-page .seller-preview-price {font-size:20px !important;}
+.seller-create-page .seller-preview-image {max-height:220px !important;}
+.seller-create-page .seller-draft-menu-head strong {font-size:13px !important;}
+.seller-create-page .seller-draft-menu-head span {font-size:11px !important;}
+.seller-create-page .seller-draft-open strong {font-size:12px !important;}
+.seller-create-page .seller-draft-open span {font-size:10px !important;}
+.seller-create-page .seller-draft-empty {font-size:11px !important;}
+.seller-create-page .seller-inline-alert {font-size:12px !important;}
+
+@media (min-width: 1700px) {
+  .seller-create-page .seller-create-grid {
+    grid-template-columns:194px minmax(0,1fr) 265px !important;
+    gap:20px !important;
+  }
+  .seller-create-page .seller-create-preview {
+    display:block !important; position:sticky !important; top:110px !important;
+  }
+}
+@media (max-width: 1080px) {
+  .seller-create-page .seller-create-grid {grid-template-columns: 170px minmax(0,1fr) !important; gap:14px !important;}
+  .seller-create-page .seller-create-section {padding:20px !important;}
+  .seller-create-page .seller-variant-option-grid {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  .seller-create-page .seller-variant-combination-summary {grid-column:1 / -1;}
+}
+@media (max-width: 860px) {
+  .seller-create-page .seller-create-grid {grid-template-columns:1fr !important;}
+  .seller-create-page .seller-create-side {display:none !important;}
+  .seller-create-page .seller-create-topbar {align-items:flex-start !important;}
+  .seller-create-page .seller-create-topbar > .flex {justify-content:flex-start !important;}
+}
+@media (max-width: 650px) {
+  .seller-create-page {padding:12px 3px 40px !important;}
+  .seller-create-page .seller-create-topbar {margin-bottom:16px !important; padding-inline:9px !important;}
+  .seller-create-page .seller-create-heading-title {font-size:30px !important;}
+  .seller-create-page .seller-create-button {font-size:11px !important; padding:10px !important;}
+  .seller-create-page .seller-create-section {padding:16px !important; border-radius:14px !important;}
+  .seller-create-page .seller-create-section-copy h2 {font-size:18px !important;}
+  .seller-create-page .seller-create-field-grid,
+  .seller-create-page .seller-create-media-grid,
+  .seller-create-page .seller-sales-base-grid,
+  .seller-create-page .seller-create-setting-grid,
+  .seller-create-page .seller-variant-option-grid {
+    grid-template-columns:1fr !important; gap:14px !important;
+  }
+  .seller-create-page .seller-create-span-2,
+  .seller-create-page .seller-variant-mode-card,
+  .seller-create-page .seller-variant-combination-summary {grid-column:auto !important;}
+  .seller-create-page .seller-variant-mode-card {flex-wrap:wrap !important;}
+  .seller-create-page #createCoverDropzone {min-height:245px !important; max-height:315px !important;}
+  .seller-create-page .seller-create-textarea {min-height:175px !important;}
+  .seller-create-page .seller-create-mobile-preview {align-items:flex-start; flex-wrap:wrap;}
+  .seller-create-page .seller-spec-row {grid-template-columns:1fr !important;}
+}
+@media (prefers-reduced-motion: reduce) {
+  .seller-create-page * {scroll-behavior:auto !important; transition-duration:.01ms !important;}
+}
+
+/* Add Product: restore the complete live Buyer Preview and remove sidebar column. */
+.seller-create-page .seller-create-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 285px) !important;
+    align-items: start !important;
+    gap: 20px !important;
+}
+.seller-create-page .seller-create-workspace {
+    min-width: 0 !important;
+    grid-column: 1 !important;
+}
+.seller-create-page .seller-create-preview {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    position: sticky !important;
+    top: 106px !important;
+    align-self: start !important;
+    grid-column: 2 !important;
+    z-index: 1 !important;
+}
+.seller-create-page .seller-create-preview-card {
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+.seller-create-page .seller-preview-image {
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    max-height: 260px !important;
+}
+.seller-create-page .seller-preview-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+}
+/* Full Buyer Preview replaces the duplicate condensed preview. */
+.seller-create-page .seller-create-mobile-preview {
+    display: none !important;
+}
+@media (max-width: 1170px) and (min-width: 1041px) {
+    .seller-create-page .seller-create-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 245px) !important;
+        gap: 14px !important;
+    }
+}
+@media (max-width: 1040px) {
+    .seller-create-page .seller-create-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 18px !important;
+    }
+    .seller-create-page .seller-create-preview {
+        display: block !important;
+        position: static !important;
+        top: auto !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        max-width: 600px !important;
+        justify-self: center !important;
+    }
+    .seller-create-page .seller-create-workspace {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+    }
+    .seller-create-page .seller-preview-image {
+        max-height: 280px !important;
+    }
+}
+
+/* Buyer Product Card promo treatment — Add Product LIVE PREVIEW only.
+   Markup IDs and submission/draft logic remain unchanged. */
+.seller-create-page .seller-buyer-preview-media {
+    position: relative !important;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 325 / 196;
+    overflow: hidden;
+    border: 1px solid #e8e2da;
+    border-radius: 16px 16px 11px 11px;
+    background: #f2f0ec;
+}
+.seller-create-page .seller-buyer-preview-media #previewImage {
+    display: grid !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: hidden !important;
+    place-items: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #f2f0ec !important;
+    box-shadow: none !important;
+}
+.seller-create-page .seller-buyer-preview-media #previewImage img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+}
+.seller-create-page .seller-buyer-preview-discount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    display: inline-flex;
+    min-width: 54px;
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 15px 0 15px;
+    background: #dda00b;
+    padding: 0 9px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.025em;
+    box-shadow: 0 4px 10px rgba(126,84,7,.15);
+    pointer-events: none;
+}
+.seller-create-page .seller-buyer-preview-offers {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    align-items: stretch;
+    max-width: calc(100% - 8px);
+    gap: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 7px rgba(22,20,18,.16));
+}
+.seller-create-page .seller-buyer-preview-offer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 71px;
+    height: 30px;
+    flex: 0 1 auto;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    color: #fff;
+    padding: 0 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+.seller-create-page .seller-buyer-preview-offer::before {
+    content: '';
+    position: absolute;
+    inset: 0 -2px;
+    z-index: -1;
+    background: var(--preview-offer-background, #24384d);
+    transform: skewX(-17deg);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+}
+.seller-create-page .seller-buyer-preview-offer:first-child::before { border-radius: 9px 0 0 0; }
+.seller-create-page .seller-buyer-preview-offer:last-child::before { border-radius: 0 9px 0 0; }
+.seller-create-page .seller-buyer-preview-offer + .seller-buyer-preview-offer {
+    margin-left: -4px;
+    padding-left: 13px;
+}
+.seller-create-page .seller-buyer-preview-offer strong {
+    display: block;
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .035em;
+}
+.seller-create-page .seller-buyer-preview-offer small {
+    display: block;
+    overflow: hidden;
+    font-size: 7.2px;
+    font-weight: 700;
+    line-height: 1.08;
+    text-overflow: ellipsis;
+}
+.seller-create-page .seller-buyer-preview-offer--mega {
+    --preview-offer-background: linear-gradient(135deg,#8f1730,#b92f49);
+    width: 68px;
+}
+.seller-create-page .seller-buyer-preview-offer--cod {
+    --preview-offer-background: linear-gradient(135deg,#f6cf66,#e2a91d);
+    width: 82px;
+    color: #221b11;
+}
+.seller-create-page .seller-buyer-preview-offer--shipping {
+    --preview-offer-background: linear-gradient(135deg,#16283b,#24384d);
+    width: 100px;
+}
+.seller-create-page .seller-buyer-preview-description {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: start;
+    gap: 8px;
+    margin-top: 11px;
+}
+.seller-create-page .seller-buyer-preview-product-copy { min-width: 0; }
+.seller-create-page .seller-buyer-preview-product-copy #previewTitle {
+    margin: 0 !important;
+    color: #26211d !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    overflow-wrap: anywhere;
+}
+.seller-create-page .seller-buyer-preview-category {
+    margin-top: 4px;
+    color: #82909e;
+    font-size: 10px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.seller-create-page .seller-buyer-preview-prices {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 80px;
+    max-width: 50%;
+    padding-top: 1px;
+    text-align: right;
+}
+.seller-create-page .seller-buyer-preview-prices #previewPrice {
+    margin: 0 !important;
+    color: #bd7b00 !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    white-space: nowrap;
+}
+.seller-create-page .seller-buyer-preview-prices #previewOldPrice {
+    margin: 5px 0 0 !important;
+    color: #9ca3af !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+}
+.seller-create-page .seller-buyer-preview-flash {
+    display: flex;
+    width: min(230px,100%);
+    height: 29px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: linear-gradient(105deg,#202329,#333b47);
+    padding: 0 12px;
+    color: #fff;
+}
+.seller-create-page .seller-buyer-preview-flash strong {
+    font-size: 9px;
+    font-weight: 800;
+}
+.seller-create-page .seller-buyer-preview-flash span {
+    font-size: 8px;
+    font-weight: 650;
+    color: #fae5aa;
+}
+.seller-create-page .seller-buyer-preview-discount.hidden,
+.seller-create-page .seller-buyer-preview-offer.hidden,
+.seller-create-page .seller-buyer-preview-flash.hidden { display: none !important; }
+@media (max-width: 370px) {
+    .seller-create-page .seller-buyer-preview-offer { height: 28px; padding-right: 7px; }
+    .seller-create-page .seller-buyer-preview-offer--mega { width: 61px; }
+    .seller-create-page .seller-buyer-preview-offer--cod { width: 74px; }
+    .seller-create-page .seller-buyer-preview-offer--shipping { width: 92px; }
+    .seller-create-page .seller-buyer-preview-offer strong { font-size: 7.3px; }
+    .seller-create-page .seller-buyer-preview-offer small { font-size: 6.5px; }
+}
+
+
+/* ===============================================================
+   RESPONSIVE PRODUCT MEDIA (COVER / GALLERY / BUYER LIVE PREVIEW)
+   Use the image itself as a subtle blurred full-frame backdrop while
+   keeping the foreground photo complete, sharp, and undistorted.
+   Existing inputs, draft behavior, preview badges and JS hooks stay.
+   =============================================================== */
+.seller-create-page #createCoverDropzone.sari-photo-loaded,
+.seller-create-page .seller-buyer-preview-media.sari-photo-loaded,
+.seller-create-page #createGalleryDropzone .seller-create-gallery-thumb.sari-photo-loaded {
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    background: #edf0f4 !important;
+}
+.seller-create-page #createCoverDropzone.sari-photo-loaded::before,
+.seller-create-page .seller-buyer-preview-media.sari-photo-loaded::before,
+.seller-create-page #createGalleryDropzone .seller-create-gallery-thumb.sari-photo-loaded::before {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    z-index: 0;
+    background-image: var(--sari-photo-backdrop, none);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(15px) saturate(.85) brightness(.93);
+    opacity: .78;
+    pointer-events: none;
+}
+/* The upload frame follows photo orientation within comfortable bounds. */
+.seller-create-page #createCoverDropzone.sari-photo-loaded {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 180px !important;
+    max-height: 420px !important;
+    aspect-ratio: var(--sari-photo-ratio, 4 / 3) !important;
+    align-self: start !important;
+    border-style: solid !important;
+}
+.seller-create-page #createCoverDropzone.sari-photo-loaded #createCoverPreview {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: transparent !important;
+}
+/* Keep a buyer-card-shaped image frame and all live promotion overlays. */
+.seller-create-page .seller-buyer-preview-media.sari-photo-loaded #previewImage {
+    position: relative !important;
+    z-index: 1 !important;
+    background: transparent !important;
+}
+.seller-create-page .seller-buyer-preview-media.sari-photo-loaded #previewImage img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: transparent !important;
+}
+/* Gallery tiles remain equal-sized; different image shapes remain uncropped. */
+.seller-create-page #createGalleryDropzone .seller-create-gallery-thumb.sari-photo-loaded > img {
+    position: relative !important;
+    z-index: 1 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: transparent !important;
+}
+.seller-create-page #createGalleryDropzone .seller-create-gallery-thumb.sari-photo-loaded .seller-gallery-saved-badge {
+    z-index: 3 !important;
+}
+@media (max-width: 650px) {
+    .seller-create-page #createCoverDropzone.sari-photo-loaded {
+        min-height: 185px !important;
+        max-height: 410px !important;
+    }
+}
+
+@endverbatim
+</style>
+
+<style>
+.seller-create-page .sari-flash-schedule-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 10px; }
+.seller-create-page .sari-flash-schedule-grid .seller-create-label { font-size: 12px !important; margin-bottom: 7px !important; }
+@media(max-width:680px){ .seller-create-page .sari-flash-schedule-grid { grid-template-columns: 1fr; } }
+</style>
+<style id="sariAddProductDisableUtilityHover">
+/* Add Product: disable the remaining Tailwind hover:underline utility. */
+.seller-create-page [class~="hover:underline"] {
+    text-decoration-line: none !important;
+}
+</style>@endpush
 
 @section('content')
 @php
@@ -5288,22 +5869,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     @endif
 
     <div class="seller-create-grid">
-        <aside class="seller-create-side">
-            <div class="seller-create-side-card">
-                <div class="seller-create-side-title">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4 text-[#c88912]" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h3l2-3 3 7 2-4h6"></path></svg>
-                    Suggestions
-                </div>
-                <p class="px-2 pt-2 text-[8px] leading-4 text-[#818995]">Complete each section to improve listing quality.</p>
-                <nav class="seller-create-nav" aria-label="Add product sections">
-                    <button type="button" data-create-nav="basic">Basic Information</button>
-                    <button type="button" data-create-nav="details">Product Details</button>
-                    <button type="button" data-create-nav="sales">Sales Information</button>
-                    <button type="button" data-create-nav="shipping">Shipping</button>
-                </nav>
-            </div>
-        </aside>
-
         <form id="sellerCreateProductForm" method="POST" action="{{ route('seller.products.store') }}" enctype="multipart/form-data" class="seller-create-workspace">
             @csrf
             <input id="sellerCreateDraftId" type="hidden" name="draft_id" value="{{ old('draft_id') }}">
@@ -5313,9 +5878,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 <div class="seller-create-section-head">
                     <div class="seller-create-section-copy">
                         <h2>Basic information</h2>
-                        <p>Core information buyers use to identify and discover your product.</p>
                     </div>
-                    <span class="seller-create-rule"></span>
                 </div>
 
                 <div class="seller-create-field-grid">
@@ -5351,7 +5914,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
 
                             <span class="seller-category-locked-copy">
                                 <strong>{{ $sellerDefaultCategory ?: 'Registration category unavailable' }}</strong>
-                                <small>Selected by you during Seller registration and used automatically for every listing.</small>
                             </span>
 
                             <span class="seller-category-locked-badge">
@@ -5393,12 +5955,10 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 <div class="seller-create-section-head">
                     <div class="seller-create-section-copy">
                         <h2>Product details</h2>
-                        <p>Add clear photos and an accurate description of the product.</p>
                     </div>
-                    <span class="seller-create-rule"></span>
                 </div>
 
-                <div class="seller-create-field-grid md:grid-cols-[190px_minmax(0,1fr)]">
+                <div class="seller-create-field-grid seller-create-media-grid md:grid-cols-[190px_minmax(0,1fr)]">
                     <div>
                         <label class="seller-create-label">Cover image</label>
                         <label
@@ -5446,12 +6006,32 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 </div>
 
                 <div class="mt-4 border-t border-[#edf0f3] pt-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                        <div>
+                            <label for="createSizeGuideImage" class="seller-create-label">Size guide <span style="font-weight:400;color:#8b929d">(optional)</span></label>
+                            <p class="text-[10px] text-[#747f8b]">One seller size chart, separate from the product gallery. Buyers can enlarge it to compare measurements.</p>
+                        </div>
+                        <button type="button" id="createRemoveSizeGuide" class="hidden text-[11px] font-semibold text-[#ae4a4a] hover:underline">Remove chart</button>
+                    </div>
+                    <input type="file" id="createSizeGuideImage" name="size_guide_image" class="hidden" accept="image/jpeg,image/png,image/webp">
+                    <input type="hidden" id="createRemoveSizeGuideFlag" name="remove_size_guide_image" value="0">
+                    <div id="createSizeGuideDropzone" class="seller-create-sizeguide-zone" role="button" tabindex="0" aria-label="Choose or drop a size guide image" aria-describedby="createSizeGuideHelp">
+                        <div id="createSizeGuidePlaceholder" class="seller-create-sizeguide-placeholder">
+                            <span aria-hidden="true" class="seller-create-sizeguide-upload-icon">↥</span>
+                            <strong>Drag &amp; drop size guide image</strong>
+                            <span id="createSizeGuideHelp">or click to browse · JPG, PNG or WEBP · up to 4 MB</span>
+                        </div>
+                        <img id="createSizeGuidePreview" alt="Uploaded size chart preview" class="hidden" decoding="async">
+                    </div>
+                    <p id="createSizeGuideError" class="mt-1 text-[11px] text-[#b23b3b]" role="alert" aria-live="polite"></p>
+                </div>
+
+                <div class="mt-4 border-t border-[#edf0f3] pt-4">
                     <div>
                         <div class="flex flex-wrap items-center gap-2">
                             <p class="text-[10px] font-semibold text-[#333840]">Product gallery</p>
                             <span id="createGalleryCount" class="seller-gallery-count">0 / 12 images</span>
                         </div>
-                        <p class="mt-1 text-[8px] text-[#818995]">Drag images into the gallery first. After that, use the Add images tile whenever you need more.</p>
                     </div>
 
                     <input id="createGalleryImages" name="gallery_images[]" type="file" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
@@ -5486,9 +6066,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 <div class="seller-create-section-head">
                     <div class="seller-create-section-copy">
                         <h2>Sales information</h2>
-                        <p>Set price, stock, variants and buyer-facing promotions.</p>
                     </div>
-                    <span class="seller-create-rule"></span>
                 </div>
 
                 <div id="createSimpleInventory" class="seller-sales-base-grid">
@@ -5509,7 +6087,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                                 inputmode="decimal"
                             >
                         </div>
-                        <p class="seller-create-help">Used as the default price when new variant combinations are generated.</p>
                     </div>
 
                     <div class="seller-sales-base-field">
@@ -5524,7 +6101,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                             class="seller-create-input"
                             placeholder="0"
                         >
-                        <p class="seller-create-help">Used as the default stock when new variant combinations are generated.</p>
                     </div>
 
                     <div class="seller-variant-mode-card">
@@ -5561,7 +6137,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                             </button>
                         </div>
 
-                        <p class="seller-create-help">Use variants for sizes, colors, designs or other buyer choices.</p>
 
                         <input
                             id="createVariantsToggle"
@@ -5577,7 +6152,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                         <div class="seller-variant-subhead">
                             <div>
                                 <h3 id="createVariantOptionsTitle">Variant Options</h3>
-                                <p>Select the choices that apply to your product. Combinations are generated automatically.</p>
                             </div>
                         </div>
 
@@ -5677,7 +6251,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                                     Variants
                                     <span id="createVariantCount">0 variants</span>
                                 </h3>
-                                <p>Each combination can have its own image, SKU, price and stock.</p>
                             </div>
 
                             <div class="seller-variant-bulk-actions">
@@ -5752,10 +6325,19 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                                         <path d="M13 2 5 14h6l-1 8 8-12h-6l1-8Z"></path>
                                     </svg>
                                 </span>
-                                <span>Flash Sale end date & time</span>
+                                <span>Flash Sale Schedule</span>
                             </label>
-                            <input id="createFlashSale" name="flash_sale_ends_at" type="datetime-local" value="{{ old('flash_sale_ends_at') }}" class="seller-create-input">
-                            <p class="seller-create-help">Countdown begins only after administrator approval.</p>
+                            <div class="sari-flash-schedule-grid">
+                                <div>
+                                    <label class="seller-create-label" for="createFlashSaleStart">Start Date &amp; Time</label>
+                                    <input id="createFlashSaleStart" name="flash_sale_starts_at" type="datetime-local" value="{{ old('flash_sale_starts_at') }}" class="seller-create-input">
+                                </div>
+                                <div>
+                                    <label class="seller-create-label" for="createFlashSale">End Date &amp; Time</label>
+                                    <input id="createFlashSale" name="flash_sale_ends_at" type="datetime-local" value="{{ old('flash_sale_ends_at') }}" class="seller-create-input">
+                                </div>
+                            </div>
+                            <p class="seller-create-help">Activates after approval, at the scheduled start time.</p>
                         </div>
                     </div>
 
@@ -5817,9 +6399,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 <div class="seller-create-section-head">
                     <div class="seller-create-section-copy">
                         <h2>Shipping</h2>
-                        <p>Provide packaged weight, dimensions and preparation details used for fulfillment.</p>
                     </div>
-                    <span class="seller-create-rule"></span>
                 </div>
 
                 <div class="seller-create-field-grid seller-create-field-grid--4">
@@ -5850,7 +6430,6 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <div>
                             <p class="text-[10px] font-semibold text-[#333840]">Product specifications</p>
-                            <p class="mt-1 text-[8px] text-[#818995]">Add material, model, warranty, capacity or other searchable details.</p>
                         </div>
                         <button id="addSpecificationRow" type="button" class="seller-create-button">+ Add specification</button>
                     </div>
@@ -5867,22 +6446,38 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                     <span class="text-[7px] font-semibold text-[#9aa1a9]">BUYER VIEW</span>
                 </div>
                 <div class="seller-preview-body">
-                    <div id="previewImage" class="seller-preview-image">
-                        <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="m5 17 5-5 4 4 2-2 3 3"></path></svg>
+                    {{-- Buyer product card-style promotional badges. Keep previewImage as a
+                         separate child: existing cover/draft JS replaces its innerHTML. --}}
+                    <div class="seller-buyer-preview-media">
+                        <div id="previewImage" class="seller-preview-image">
+                            <svg viewBox="0 0 24 24" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="m5 17 5-5 4 4 2-2 3 3"></path></svg>
+                        </div>
+                        <span id="previewDiscountBadge" class="seller-buyer-preview-discount hidden" aria-label="Discount percentage">-0%</span>
+                        <div class="seller-buyer-preview-offers" aria-label="Product promotion preview">
+                            <span id="previewMegaBadge" class="seller-buyer-preview-offer seller-buyer-preview-offer--mega hidden">
+                                <strong>MEGA</strong><small>Discount</small>
+                            </span>
+                            <span id="previewCODBadge" class="seller-buyer-preview-offer seller-buyer-preview-offer--cod hidden">
+                                <strong>COD</strong><small>Cash on Delivery</small>
+                            </span>
+                            <span id="previewShippingBadge" class="seller-buyer-preview-offer seller-buyer-preview-offer--shipping hidden">
+                                <strong>XTRA</strong><small>Free Shipping</small>
+                            </span>
+                        </div>
                     </div>
-                    <p id="previewTitle" class="seller-preview-title">Product title</p>
-                    <div class="mt-1 text-[8px] text-[#8c949e]"><span id="previewCategory">Category</span></div>
-                    <div>
-                        <span id="previewPrice" class="seller-preview-price">₱0.00</span>
-                        <span id="previewOldPrice" class="seller-preview-old-price hidden">₱0.00</span>
+                    <div class="seller-buyer-preview-description">
+                        <div class="seller-buyer-preview-product-copy">
+                            <p id="previewTitle" class="seller-preview-title">Product title</p>
+                            <p id="previewCategory" class="seller-buyer-preview-category">Category</p>
+                        </div>
+                        <div class="seller-buyer-preview-prices">
+                            <span id="previewPrice" class="seller-preview-price">₱0.00</span>
+                            <span id="previewOldPrice" class="seller-preview-old-price hidden">₱0.00</span>
+                        </div>
                     </div>
-                    <div class="seller-preview-badges">
-                        <span id="previewDiscountBadge" class="seller-preview-badge seller-preview-badge--gold hidden">0% OFF</span>
-                        <span id="previewShippingBadge" class="seller-preview-badge seller-preview-badge--green hidden">Free Shipping</span>
-                        <span id="previewFlashBadge" class="seller-preview-badge seller-preview-badge--blue hidden">Flash Sale</span>
-                        <span id="previewCODBadge" class="seller-preview-badge seller-preview-badge--blue hidden">COD</span>
+                    <div id="previewFlashBadge" class="seller-buyer-preview-flash hidden" aria-label="Flash Sale preview">
+                        <strong>Flash Sale</strong><span>Limited-time offer</span>
                     </div>
-                    <p class="seller-preview-note">For reference only. The final buyer view may vary based on category, promotions and checkout eligibility.</p>
                 </div>
             </div>
         </aside>
@@ -5890,6 +6485,18 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
 </div>
 @endsection
 
+@push('styles')
+<style>
+.seller-create-page .seller-create-sizeguide-zone{display:grid;place-items:center;cursor:pointer;min-height:142px;padding:13px;border:1px dashed #d7dee7;border-radius:12px;background:#fafbfc;transition:border-color .15s,background-color .15s}
+.seller-create-page .seller-create-sizeguide-zone.is-dragover {border-color:#d59617;background:#fffbf2}
+.seller-create-page .seller-create-sizeguide-zone:focus-visible{outline:3px solid rgba(213,150,23,.28);outline-offset:2px}
+.seller-create-page .seller-create-sizeguide-placeholder{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;color:#728092;font-size:10px}
+.seller-create-page .seller-create-sizeguide-placeholder strong{font-size:12px;color:#293847}
+.seller-create-page .seller-create-sizeguide-upload-icon{font-size:25px;line-height:1.3;color:#b48632}
+.seller-create-page #createSizeGuidePreview{width:100%;height:auto;max-height:370px;object-fit:contain;background:#fff;border-radius:9px}
+.seller-create-page .seller-create-sizeguide-zone.has-image{background:#fff;border-style:solid}
+</style>
+@endpush
 @push('scripts')
 <script>
 (() => {
@@ -5918,6 +6525,13 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     const coverPreview = document.getElementById('createCoverPreview');
     const coverPlaceholder = document.getElementById('createCoverPlaceholder');
     const coverDropzone = document.getElementById('createCoverDropzone');
+    const sizeGuideInput = document.getElementById('createSizeGuideImage');
+    const sizeGuideDropzone = document.getElementById('createSizeGuideDropzone');
+    const sizeGuidePreview = document.getElementById('createSizeGuidePreview');
+    const sizeGuidePlaceholder = document.getElementById('createSizeGuidePlaceholder');
+    const sizeGuideRemove = document.getElementById('createRemoveSizeGuide');
+    const sizeGuideRemoveFlag = document.getElementById('createRemoveSizeGuideFlag');
+    const sizeGuideError = document.getElementById('createSizeGuideError');
     const galleryInput = document.getElementById('createGalleryImages');
     const galleryPreview = document.getElementById('createGalleryPreview');
     const galleryEmpty = document.getElementById('createGalleryEmpty');
@@ -5926,6 +6540,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     const priceInput = document.getElementById('createProductPrice');
     const stockInput = document.getElementById('createProductStock');
     const discountInput = document.getElementById('createDiscount');
+    const flashStartInput = document.getElementById('createFlashSaleStart');
     const flashInput = document.getElementById('createFlashSale');
     const freeShipping = document.getElementById('createFreeShipping');
     const codToggle = document.getElementById('createCOD');
@@ -5974,6 +6589,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     const previewOldPrice = document.getElementById('previewOldPrice');
     const previewImage = document.getElementById('previewImage');
     const previewDiscountBadge = document.getElementById('previewDiscountBadge');
+    const previewMegaBadge = document.getElementById('previewMegaBadge');
     const previewShippingBadge = document.getElementById('previewShippingBadge');
     const previewFlashBadge = document.getElementById('previewFlashBadge');
     const previewCODBadge = document.getElementById('previewCODBadge');
@@ -6021,6 +6637,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     let savedDraftGallery = [];
     let galleryObjectUrls = [];
     let coverObjectUrl = null;
+    let sizeGuideObjectUrl = null;
     const variantObjectUrls = new Set();
 
     const acceptedImageFiles = (files) =>
@@ -6028,6 +6645,76 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             file instanceof File
             && ACCEPTED_IMAGE_TYPES.has(String(file.type || '').toLowerCase())
         );
+
+    function sizeGuidePreviewUrl(url = '') {
+        if (sizeGuideObjectUrl) {
+            URL.revokeObjectURL(sizeGuideObjectUrl);
+            sizeGuideObjectUrl = null;
+        }
+        const hasImage = Boolean(url);
+        if (sizeGuidePreview) {
+            if (hasImage) sizeGuidePreview.src = url;
+            else sizeGuidePreview.removeAttribute('src');
+            sizeGuidePreview.classList.toggle('hidden', !hasImage);
+        }
+        sizeGuidePlaceholder?.classList.toggle('hidden', hasImage);
+        sizeGuideRemove?.classList.toggle('hidden', !hasImage);
+        sizeGuideDropzone?.classList.toggle('has-image', hasImage);
+    }
+
+    function assignSizeGuide(file) {
+        if (!file || !sizeGuideInput) return;
+        if (!ACCEPTED_IMAGE_TYPES.has(String(file.type || '').toLowerCase()) || file.size > 4 * 1024 * 1024) {
+            if (sizeGuideError) sizeGuideError.textContent = 'Choose a JPG, PNG or WEBP image no larger than 4 MB.';
+            return;
+        }
+        if (sizeGuideError) sizeGuideError.textContent = '';
+        if (typeof DataTransfer !== 'undefined') {
+            const transfer = new DataTransfer();
+            transfer.items.add(file);
+            sizeGuideInput.files = transfer.files;
+        }
+        if (sizeGuideRemoveFlag) sizeGuideRemoveFlag.value = '0';
+        sizeGuidePreviewUrl('');
+        sizeGuideObjectUrl = URL.createObjectURL(file);
+        sizeGuidePreviewUrlFromObject(sizeGuideObjectUrl);
+    }
+
+    function sizeGuidePreviewUrlFromObject(url) {
+        if (!url) return;
+        sizeGuidePreview.src = url;
+        sizeGuidePreview.classList.remove('hidden');
+        sizeGuidePlaceholder?.classList.add('hidden');
+        sizeGuideRemove?.classList.remove('hidden');
+        sizeGuideDropzone?.classList.add('has-image');
+    }
+
+    sizeGuideDropzone?.addEventListener('click', () => sizeGuideInput?.click());
+    sizeGuideDropzone?.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); sizeGuideInput?.click(); }
+    });
+    sizeGuideInput?.addEventListener('change', event => {
+        const file = event.target.files?.[0];
+        if (file) assignSizeGuide(file);
+    });
+    ['dragenter', 'dragover'].forEach(type => sizeGuideDropzone?.addEventListener(type, event => {
+        event.preventDefault(); event.stopPropagation();
+        sizeGuideDropzone.classList.add('is-dragover');
+    }));
+    ['dragleave', 'drop'].forEach(type => sizeGuideDropzone?.addEventListener(type, event => {
+        event.preventDefault(); event.stopPropagation();
+        sizeGuideDropzone.classList.remove('is-dragover');
+    }));
+    sizeGuideDropzone?.addEventListener('drop', event => {
+        const file = event.dataTransfer?.files?.[0];
+        if (file) assignSizeGuide(file);
+    });
+    sizeGuideRemove?.addEventListener('click', () => {
+        if (sizeGuideInput) sizeGuideInput.value = '';
+        if (sizeGuideRemoveFlag) sizeGuideRemoveFlag.value = '1';
+        if (sizeGuideError) sizeGuideError.textContent = '';
+        sizeGuidePreviewUrl('');
+    });
 
     function assignCoverFile(file) {
         if (!coverInput || !file || typeof DataTransfer === 'undefined') return;
@@ -6079,7 +6766,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         const title = (nameInput?.value || '').trim() || 'Product title';
         const categoryText = category?.value || 'Category';
         const discount = Math.min(100, Math.max(0, Number(discountInput?.value || 0)));
-        const hasFlash = Boolean(flashInput?.value);
+        const hasFlash = Boolean(flashStartInput?.value && flashInput?.value && discount > 0);
         const hasFreeShipping = Boolean(freeShipping?.checked);
         const hasCOD = Boolean(codToggle?.checked);
         const variantMode = Boolean(variantsToggle?.checked);
@@ -6101,8 +6788,9 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         if (discount > 0 && base > 0) {
             previewOldPrice.textContent = money(base);
             previewOldPrice.classList.remove('hidden');
-            previewDiscountBadge.textContent = `${discount}% OFF`;
+            previewDiscountBadge.textContent = `-${discount}%`;
             previewDiscountBadge.classList.remove('hidden');
+            previewMegaBadge?.classList.remove('hidden');
             if (promoPreviewState) promoPreviewState.textContent = `${discount}% OFF`;
             if (promoPreviewOldPrice) {
                 promoPreviewOldPrice.textContent = money(base);
@@ -6117,6 +6805,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         } else {
             previewOldPrice.classList.add('hidden');
             previewDiscountBadge.classList.add('hidden');
+            previewMegaBadge?.classList.add('hidden');
             if (promoPreviewState) promoPreviewState.textContent = 'No discount';
             if (promoPreviewOldPrice) promoPreviewOldPrice.classList.add('hidden');
             if (promoPreviewPrice) promoPreviewPrice.textContent = money(base);
@@ -6142,6 +6831,38 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         mobilePreviewCOD?.classList.toggle('hidden', !hasCOD);
     }
 
+    // Orientation-sensitive photo handling shared by cover, gallery and Buyer View.
+    // The blurred copy fills the frame; the foreground is never stretched/cropped.
+    function bindAdaptivePhoto(frame, image) {
+        if (!frame || !image) return;
+        frame.classList.remove('sari-photo-loaded');
+        frame.style.removeProperty('--sari-photo-backdrop');
+        frame.style.removeProperty('--sari-photo-ratio');
+
+        const paint = () => {
+            if (!image.naturalWidth || !image.naturalHeight) return;
+            const ratio = image.naturalWidth / image.naturalHeight;
+            const src = image.currentSrc || image.src;
+            if (!src) return;
+            frame.style.setProperty('--sari-photo-backdrop', `url(${JSON.stringify(src)})`);
+            frame.style.setProperty('--sari-photo-ratio', Math.max(.65, Math.min(2.3, ratio)).toFixed(4));
+            frame.dataset.photoOrientation = ratio < .9 ? 'portrait' : (ratio > 1.1 ? 'landscape' : 'square');
+            frame.classList.add('sari-photo-loaded');
+        };
+        image.addEventListener('load', paint, { once: true });
+        if (image.complete && image.naturalWidth) paint();
+    }
+
+    function setBuyerPreviewPhoto(src) {
+        if (!previewImage || !src) return;
+        const image = document.createElement('img');
+        image.alt = 'Product preview';
+        image.decoding = 'async';
+        image.src = src;
+        previewImage.replaceChildren(image);
+        bindAdaptivePhoto(previewImage.closest('.seller-buyer-preview-media'), image);
+    }
+
     function setCoverPreview(file) {
         if (!file || !previewImage || !coverPreview || !coverPlaceholder) return;
 
@@ -6154,7 +6875,8 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         coverPreview.classList.remove('hidden');
         coverPlaceholder.classList.add('hidden');
         coverDropzone?.classList.add('has-image');
-        previewImage.innerHTML = `<img src="${coverObjectUrl}" alt="Product preview">`;
+        bindAdaptivePhoto(coverDropzone, coverPreview);
+        setBuyerPreviewPhoto(coverObjectUrl);
     }
 
     function clearGalleryObjectUrls() {
@@ -6493,6 +7215,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 <span class="seller-gallery-saved-badge">Saved draft</span>
             `;
             galleryPreview.appendChild(node);
+            bindAdaptivePhoto(node, node.querySelector('img'));
         });
 
         pendingGalleryFiles.forEach((file, index) => {
@@ -6511,6 +7234,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 </button>
             `;
             galleryPreview.appendChild(node);
+            bindAdaptivePhoto(node, node.querySelector('img'));
         });
 
         if (hasImages && total < GALLERY_LIMIT) {
@@ -8620,6 +9344,7 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             'price',
             'stock',
             'discount',
+            'flash_sale_starts_at',
             'flash_sale_ends_at',
             'package_weight',
             'package_length',
@@ -8690,11 +9415,13 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             coverPreview.classList.remove('hidden');
             coverPlaceholder.classList.add('hidden');
             coverDropzone?.classList.add('has-image');
-
-            if (previewImage) {
-                previewImage.innerHTML = `<img src="${draft.cover_image_url}" alt="Product preview">`;
-            }
+            bindAdaptivePhoto(coverDropzone, coverPreview);
+            setBuyerPreviewPhoto(draft.cover_image_url);
         }
+
+        if (sizeGuideInput) sizeGuideInput.value = '';
+        if (sizeGuideRemoveFlag) sizeGuideRemoveFlag.value = '0';
+        sizeGuidePreviewUrl(draft.size_guide_image_url || '');
 
         savedDraftGallery = Array.isArray(draft.gallery_images)
             ? draft.gallery_images.slice(0, GALLERY_LIMIT)
@@ -9011,6 +9738,10 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
                 await refreshDraftList();
             }
 
+            // The saved draft now owns the media; keep its server URL for later restore.
+            if (data.draft?.size_guide_image_url && !sizeGuideInput?.files?.length) {
+                sizeGuidePreviewUrl(data.draft.size_guide_image_url);
+            }
             savedDraftGallery = Array.isArray(data.draft?.gallery_images)
                 ? data.draft.gallery_images.slice(0, GALLERY_LIMIT)
                 : savedDraftGallery;
@@ -9263,25 +9994,12 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
         { capture: true, passive: true, signal: createProductSignal }
     );
 
-        document.querySelectorAll('[data-create-nav]').forEach(button => {
-        button.addEventListener('click', () => {
-            document.getElementById(`create-${button.dataset.createNav}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            document.querySelectorAll('[data-create-nav]').forEach(button => button.classList.toggle('is-active', button.dataset.createNav === entry.target.dataset.createSection));
-        });
-    }, { rootMargin: '-25% 0px -60% 0px', threshold: 0.01 });
-    document.querySelectorAll('[data-create-section]').forEach(section => observer.observe(section));
-
     category?.addEventListener('change', updateCustomCategory);
     customCategory?.addEventListener('input', queuePreviewUpdate);
     nameInput?.addEventListener('input', queuePreviewUpdate);
     priceInput?.addEventListener('input', queuePreviewUpdate);
     discountInput?.addEventListener('input', queuePreviewUpdate);
+    flashStartInput?.addEventListener('change', queuePreviewUpdate);
     flashInput?.addEventListener('change', queuePreviewUpdate);
     freeShipping?.addEventListener('change', queuePreviewUpdate);
     codToggle?.addEventListener('change', queuePreviewUpdate);
@@ -9431,6 +10149,17 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
     saveDraft?.addEventListener('click', saveDraftNow);
 
     form.addEventListener('submit', event => {
+        const startValue = flashStartInput?.value || '';
+        const endValue = flashInput?.value || '';
+        if (Boolean(startValue) !== Boolean(endValue)
+            || (startValue && endValue && new Date(endValue) <= new Date(startValue))
+            || (startValue && Number(discountInput?.value || 0) <= 0)) {
+            event.preventDefault();
+            alert('Flash Sale needs a discount, start date, and later end date.');
+            (flashStartInput || flashInput)?.focus();
+            return;
+        }
+
         if (variantsToggle?.checked) {
             const rows =
                 Array.from(
@@ -9594,13 +10323,16 @@ body > .seller-variant-color-menu.seller-variant-color-menu--portal .seller-vari
             variantMenuRepositionFrame = 0;
         }
 
-        observer.disconnect();
         clearDraftFeedbackTimers();
         clearGalleryObjectUrls();
 
         if (coverObjectUrl) {
             URL.revokeObjectURL(coverObjectUrl);
             coverObjectUrl = null;
+        }
+        if (sizeGuideObjectUrl) {
+            URL.revokeObjectURL(sizeGuideObjectUrl);
+            sizeGuideObjectUrl = null;
         }
 
         variantObjectUrls.forEach(url => URL.revokeObjectURL(url));

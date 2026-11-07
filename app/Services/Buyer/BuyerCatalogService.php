@@ -309,6 +309,10 @@ class BuyerCatalogService
                 'url' => route('buyer.product.details', ['product' => $product->id]),
                 'stock' => $product->activeVariants->isNotEmpty() ? (int) $product->activeVariants->sum('stock') : (int) $product->stock,
                 'variants' => $variants,
+                'size_guide_available' => filled($product->size_guide_image_path),
+                'size_guide_image_url' => $product->size_guide_image_path
+                    ? route('buyer.product.size-guide', ['product' => $product->id])
+                    : null,
                 'recommendation_basis' => $basis,
             ];
         })->values()->all();
@@ -683,13 +687,8 @@ class BuyerCatalogService
             $gallery->push('buyer/product-images/' . $image->id . '/image');
         }
 
-        // Variant-specific images also belong in the buyer gallery so buyers can
-        // browse every seller-supplied product image before choosing a variant.
-        foreach ($variantPayload as $variant) {
-            if (!empty($variant['image'])) {
-                $gallery->push($variant['image']);
-            }
-        }
+        // Keep variant photos separate. They preview only after the buyer selects
+        // a complete option combination; they are not gallery thumbnails.
 
         $gallery = $gallery
             ->filter()
@@ -719,6 +718,7 @@ class BuyerCatalogService
             'platform_campaign' => $platformSale['snapshot'],
             'platform_voucher' => $this->platformCampaigns->voucherOfferForProduct($product),
             'flash_sale_active' => $this->isFlashSaleActive($product),
+            'flash_sale_starts_at' => $product->flash_sale_starts_at?->toIso8601String(),
             'flash_sale_ends_at' => $product->flash_sale_ends_at?->toIso8601String(),
             'voucher' => $this->primaryVoucher($seller, (string) ($product->voucher_code ?? '')),
             'free_shipping' => $freeShippingActive,
@@ -744,6 +744,9 @@ class BuyerCatalogService
             'badge' => 'Approved',
             'marketplace_badge' => $storeName,
             'description' => (string) ($product->description ?? ''),
+            'size_guide_image' => $product->size_guide_image_path
+                ? 'buyer/products/' . $product->id . '/size-guide'
+                : null,
             'variations' => array_values($variations),
             'sizes' => array_values($sizeValues),
             'option_groups' => $optionGroups,
@@ -876,24 +879,12 @@ class BuyerCatalogService
 
     private function isFlashSaleActive(SellerProduct $product): bool
     {
-        return (float) ($product->discount ?? 0) > 0
-            && $product->flash_sale_ends_at !== null
-            && now()->lt($product->flash_sale_ends_at);
+        return $product->isFlashSaleActive();
     }
 
     private function effectiveDiscountPercent(SellerProduct $product): float
     {
-        $discount = min(100, max(0, (float) ($product->discount ?? 0)));
-
-        if ($discount <= 0) {
-            return 0.0;
-        }
-
-        if ($product->flash_sale_ends_at !== null && now()->gte($product->flash_sale_ends_at)) {
-            return 0.0;
-        }
-
-        return $discount;
+        return $product->effectiveDiscountPercent();
     }
 
     private function discounted(float $base, float $discountPercent): float

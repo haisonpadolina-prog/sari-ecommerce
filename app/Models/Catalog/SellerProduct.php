@@ -24,6 +24,7 @@ class SellerProduct extends Model
         'stock',
         'low_stock_threshold',
         'discount',
+        'flash_sale_starts_at',
         'flash_sale_ends_at',
         'free_shipping',
         'cash_on_delivery',
@@ -35,6 +36,7 @@ class SellerProduct extends Model
         'voucher_code',
         'description',
         'image_path',
+        'size_guide_image_path',
         'moderation_status',
         'screening_risk',
         'screening_reason',
@@ -52,6 +54,7 @@ class SellerProduct extends Model
         return [
             'price' => 'decimal:2',
             'discount' => 'decimal:2',
+            'flash_sale_starts_at' => 'datetime',
             'flash_sale_ends_at' => 'datetime',
             'free_shipping' => 'boolean',
             'cash_on_delivery' => 'boolean',
@@ -67,6 +70,40 @@ class SellerProduct extends Model
             'last_sensitive_edit_at' => 'datetime',
             'archived_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Real Flash Sale window, evaluated against server time (UTC storage).
+     * Older end-only promotions remain live until their end after approval.
+     */
+    public function isFlashSaleActive(): bool
+    {
+        if ($this->moderation_status !== 'approved'
+            || (float) ($this->discount ?? 0) <= 0
+            || $this->flash_sale_ends_at === null) {
+            return false;
+        }
+
+        $now = now();
+
+        return ($this->flash_sale_starts_at === null || $now->gte($this->flash_sale_starts_at))
+            && $now->lt($this->flash_sale_ends_at);
+    }
+
+    /**
+     * Ordinary unscheduled discounts retain their existing behavior.
+     * Scheduled/end-only Flash Sales never discount outside the live window.
+     */
+    public function effectiveDiscountPercent(): float
+    {
+        $discount = min(100.0, max(0.0, (float) ($this->discount ?? 0)));
+        if ($discount <= 0) {
+            return 0.0;
+        }
+
+        return $this->flash_sale_ends_at === null || $this->isFlashSaleActive()
+            ? $discount
+            : 0.0;
     }
 
     public function seller(): BelongsTo

@@ -477,10 +477,24 @@ function initSariProductsPage() {
         buildPremiumDropdown(category);
     }
 
+    // Keep the visible title compact in both server and refreshed product cards.
+    // The full name remains in the product payload, search index, image alt and View modal.
+    function compactCardTitle(value) {
+        const full = String(value || '').trim() || 'Untitled product';
+        const characters = Array.from(full);
+        return {
+            full,
+            label: characters.length > 40 ? characters.slice(0, 39).join('') + '…' : full,
+            shortened: characters.length > 40,
+        };
+    }
+
     function cardMarkup(product, cardIndex = 0) {
+        const title = compactCardTitle(product.name);
         const stockValue = Number(product.stock || 0);
         const discount = Math.min(100, Math.max(0, Number(product.discount || 0)));
         const backendEffectiveDiscount = Math.min(100, Math.max(0, Number(product.effective_discount ?? discount)));
+        const flashSaleStartsAtMs = product.flash_sale_starts_at ? Date.parse(product.flash_sale_starts_at) : -Infinity;
         const flashSaleEndsAtMs = Date.parse(product.flash_sale_ends_at || '');
 
         /*
@@ -490,21 +504,17 @@ function initSariProductsPage() {
          */
         const moderationStatus = String(product.moderation_status || '').toLowerCase();
         const awaitingApproval = moderationStatus === 'pending' || moderationStatus === 'flagged';
+        const nowMs = serverNowMs();
+        const validSchedule = Number.isFinite(flashSaleEndsAtMs) && flashSaleEndsAtMs > nowMs;
+        const beforeStart = Number.isFinite(flashSaleStartsAtMs) && flashSaleStartsAtMs > nowMs;
         const flashSaleScheduled = Boolean(
-            awaitingApproval
-            && discount > 0
-            && Number.isFinite(flashSaleEndsAtMs)
+            discount > 0 && validSchedule && (awaitingApproval || beforeStart)
         );
         const flashSaleActive = Boolean(
-            moderationStatus === 'approved'
-            && discount > 0
-            && Number.isFinite(flashSaleEndsAtMs)
-            && flashSaleEndsAtMs > serverNowMs()
+            moderationStatus === 'approved' && discount > 0 && validSchedule && !beforeStart
         );
-        const effectiveDiscount = (flashSaleActive || flashSaleScheduled)
-            ? discount
-            : backendEffectiveDiscount;
-        const displayedSalePrice = (flashSaleActive || flashSaleScheduled)
+        const effectiveDiscount = flashSaleActive ? discount : backendEffectiveDiscount;
+        const displayedSalePrice = flashSaleActive
             ? Math.round((Number(product.price || 0) * (1 - discount / 100)) * 100) / 100
             : Number(product.sale_price ?? product.price ?? 0);
         const threshold = Number(product.low_stock_threshold ?? 5);
@@ -543,7 +553,9 @@ function initSariProductsPage() {
         let secondaryBadge = '';
 
         if (flashSaleActive || flashSaleScheduled) {
-            secondaryBadge = `⚡ -${effectiveDiscount.toLocaleString('en-PH', { maximumFractionDigits: 2 })}%`;
+            secondaryBadge = flashSaleActive
+                ? `⚡ -${discount.toLocaleString('en-PH', { maximumFractionDigits: 2 })}%`
+                : 'Flash scheduled';
         } else if (product.on_trend) {
             secondaryBadge = 'Featured';
         } else if (product.mall_badge) {
@@ -571,14 +583,14 @@ function initSariProductsPage() {
             `
             : (flashSaleScheduled
                 ? `
-                    <div class="seller-product-flash-sale seller-product-flash-sale--scheduled" title="Countdown starts after administrator approval">
+                    <div class="seller-product-flash-sale seller-product-flash-sale--scheduled" title="Flash Sale starts after approval and its scheduled start date">
                         <span class="seller-product-flash-sale-label">Flash sale</span>
                         <span class="seller-product-flash-sale-bolt" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"></path>
                             </svg>
                         </span>
-                        <span class="seller-product-flash-sale-countdown seller-product-flash-sale-countdown--scheduled">Starts on approval</span>
+                        <span class="seller-product-flash-sale-countdown seller-product-flash-sale-countdown--scheduled">Scheduled</span>
                     </div>
                 `
                 : '');
@@ -630,13 +642,17 @@ function initSariProductsPage() {
                 <div class="seller-product-card-body">
                     <div class="seller-product-card-heading">
                         <div class="min-w-0">
-                            <h3 class="seller-product-card-title">
-                                ${escapeHtml(product.name || 'Untitled product')}
-                            </h3>
+                            <h3 class="seller-product-card-title" title="${escapeHtml(title.full)}">${escapeHtml(title.label)}</h3>
 
-                            <p class="seller-product-card-category">
-                                ${escapeHtml(product.category || 'Uncategorized')}${product.brand ? ' · ' + escapeHtml(product.brand) : ''}
-                            </p>
+                            <div class="seller-product-card-meta-line">
+                                <p class="seller-product-card-category">
+                                    ${escapeHtml(product.category || 'Uncategorized')}${product.brand ? ' · ' + escapeHtml(product.brand) : ''}
+                                </p>
+                                ${title.shortened ? `<button type="button" class="seller-product-card-see-details"
+                                    data-page-view-product data-id="${escapeHtml(product.id)}"
+                                    aria-label="See full details for ${escapeHtml(title.full)}"
+                                    title="View full product name and details">See details</button>` : ''}
+                            </div>
                         </div>
 
                         <div class="seller-product-card-price-wrap">
@@ -719,6 +735,23 @@ function initSariProductsPage() {
 
     function syncFlashSaleCountdowns() {
         let needsRerender = false;
+        const nowMs = serverNowMs();
+        products.forEach((product) => {
+            if (!product.flash_sale_ends_at) return;
+            const endMs = Date.parse(product.flash_sale_ends_at);
+            const startMs = product.flash_sale_starts_at ? Date.parse(product.flash_sale_starts_at) : -Infinity;
+            const isLive = String(product.moderation_status).toLowerCase() === 'approved'
+                && Number(product.discount || 0) > 0
+                && Number.isFinite(endMs) && nowMs < endMs && nowMs >= startMs;
+            if (Boolean(product.flash_sale_active) !== isLive) {
+                product.flash_sale_active = isLive;
+                product.effective_discount = isLive ? Number(product.discount || 0) : 0;
+                product.sale_price = isLive
+                    ? Math.round(Number(product.price || 0) * (1 - Number(product.discount || 0) / 100) * 100) / 100
+                    : Number(product.price || 0);
+                needsRerender = true;
+            }
+        });
 
         document.querySelectorAll('[data-flash-sale]').forEach((saleNode) => {
             const endValue = saleNode.dataset.flashSaleEndsAt || '';
@@ -1442,10 +1475,15 @@ function initSariProductsPage() {
     const editProductPriceInput = document.getElementById('editProductPrice');
     const editProductDiscountInput = document.getElementById('editProductDiscount');
     const editProductSalePreview = document.getElementById('editProductSalePreview');
+    const editProductFlashSaleStartLocalInput = document.getElementById('editProductFlashSaleStartsAtLocal');
+    const editProductFlashSaleStartInput = document.getElementById('editProductFlashSaleStartsAt');
     const editProductFlashSaleLocalInput = document.getElementById('editProductFlashSaleEndsAtLocal');
     const editProductFlashSaleInput = document.getElementById('editProductFlashSaleEndsAt');
 
     function syncEditFlashSaleEnd() {
+        if (editProductFlashSaleStartInput) {
+            editProductFlashSaleStartInput.value = localDateTimeValueToIso(editProductFlashSaleStartLocalInput?.value || '');
+        }
         if (!editProductFlashSaleInput) return;
         editProductFlashSaleInput.value = localDateTimeValueToIso(editProductFlashSaleLocalInput?.value || '');
     }
@@ -1784,6 +1822,9 @@ function initSariProductsPage() {
         document.getElementById('editProductStock').value = Number(product.stock || 0);
         document.getElementById('editProductDiscount').value = Number(product.discount || 0);
 
+        if (editProductFlashSaleStartLocalInput) {
+            editProductFlashSaleStartLocalInput.value = isoToLocalDateTimeValue(product.flash_sale_starts_at || (product.flash_sale_ends_at ? new Date().toISOString() : ''));
+        }
         if (editProductFlashSaleInput) {
             editProductFlashSaleInput.value = product.flash_sale_ends_at || '';
         }
@@ -1815,6 +1856,10 @@ function initSariProductsPage() {
 
     editProductPriceInput?.addEventListener('input', updateLocalEditSalePreview, { signal });
     editProductDiscountInput?.addEventListener('input', updateLocalEditSalePreview, { signal });
+    editProductFlashSaleStartLocalInput?.addEventListener('change', () => {
+        syncEditFlashSaleEnd();
+        updateLocalEditSalePreview();
+    }, { signal });
     editProductFlashSaleLocalInput?.addEventListener('change', () => {
         syncEditFlashSaleEnd();
         updateLocalEditSalePreview();
@@ -1850,6 +1895,14 @@ function initSariProductsPage() {
     */
     editProductForm?.addEventListener('submit', async function (event) {
         event.preventDefault();
+        syncEditFlashSaleEnd();
+        const startValue = editProductFlashSaleStartLocalInput?.value || '';
+        const endValue = editProductFlashSaleLocalInput?.value || '';
+        if (Boolean(startValue) !== Boolean(endValue) || (startValue && endValue && new Date(startValue) >= new Date(endValue)) || (startValue && Number(editProductDiscountInput?.value || 0) <= 0)) {
+            window.alert('Flash Sale needs a discount, start date, and later end date.');
+            editProductFlashSaleStartLocalInput?.focus();
+            return;
+        }
 
         const submit = editProductForm.querySelector('button[type="submit"]');
         const originalHtml = submit?.innerHTML || '';

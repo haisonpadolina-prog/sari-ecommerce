@@ -48,11 +48,6 @@
             mix-blend-mode: normal !important;
             background: #F4F5F7 !important;
         }
-    
-
-}
-
-
 
         /* ============================================================
            UNIFIED HEADER NOTIFICATIONS
@@ -160,6 +155,9 @@
 
     {{-- Seller loads compiled CSS + seller-only realtime JS. --}}
     @vite(['resources/css/app.css', 'resources/js/seller.js'])
+
+    {{-- Buyer-parity compact action toasts (Seller-only, globally available). --}}
+    <link rel="stylesheet" href="{{ asset('css/seller/sari-toast.css') }}?v=20261107-global-v2">
 
     {{-- Livewire Navigate / @persist support --}}
     @livewireStyles
@@ -2026,8 +2024,563 @@
     pointer-events: none !important;
     animation: none !important;
 }
+
+/* Seller notifications: one accessible modal for the sidebar and the header bell.
+   Native dialog top-layer prevents clipping by sticky header/sidebar containers. */
+#sellerNotificationDropdown.seller-notification-modal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(530px, calc(100vw - 28px)) !important;
+    max-width: calc(100vw - 28px) !important;
+    max-height: min(82dvh, 740px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 20px !important;
+    background: #fff !important;
+    box-shadow: 0 24px 70px rgba(15,23,42,.19) !important;
+    overflow: hidden !important;
+    color: #303740;
+    font-family: Poppins, ui-sans-serif, system-ui, sans-serif;
+}
+#sellerNotificationDropdown.seller-notification-modal:not([open]) { display:none !important; }
+#sellerNotificationDropdown.seller-notification-modal[open] { display:flex !important; flex-direction:column; }
+#sellerNotificationDropdown.seller-notification-modal::before { display:none !important; }
+#sellerNotificationDropdown.seller-notification-modal::backdrop { background: rgba(15,23,42,.43); backdrop-filter: blur(2px); }
+#sellerNotificationDropdown.seller-notification-modal > div:first-child {
+    display:flex; flex-wrap:wrap; align-items:center; min-height:82px !important;
+    padding:18px 20px !important; gap:10px 14px;
+}
+#sellerNotificationDropdown.seller-notification-modal > div:first-child > div:first-child > p:first-child {
+    font-size:19px !important; line-height:1.3 !important;
+}
+#sellerNotificationUnreadText { font-size:11px !important; line-height:1.4 !important; }
+.seller-notification-modal-actions { margin-left:auto; flex-wrap:wrap; justify-content:flex-end; gap:10px !important; }
+.seller-notification-sound-toggle {
+    display:inline-flex; align-items:center; gap:6px; min-height:32px;
+    border:1px solid #e2e6eb; border-radius:999px; background:#fff;
+    padding:0 9px; color:#5b6572; font-size:10.5px; font-weight:650; cursor:pointer;
+}
+.seller-notification-sound-toggle svg { width:15px; height:15px; }
+.seller-notification-sound-toggle:hover { background:#f6f7f9; }
+.seller-notification-sound-toggle[aria-pressed="false"] { color:#8c95a1; }
+.seller-notification-sound-toggle [hidden] { display:none !important; }
+.seller-notification-modal-close {
+    display:grid; place-items:center; width:32px; height:32px;
+    border:0; border-radius:50%; background:transparent; color:#798492; cursor:pointer;
+}
+.seller-notification-modal-close:hover { background:#f2f4f7; color:#303740; }
+.seller-notification-modal-close svg { width:18px; height:18px; }
+#sellerNotificationDropdown.seller-notification-modal #sellerNotificationList {
+    max-height:none !important; min-height:95px; flex:1 1 auto; overflow-y:auto;
+}
+#sellerNotificationDropdown.seller-notification-modal #sellerNotificationMarkAllRead,
+#sellerNotificationDropdown.seller-notification-modal > div:first-child a[href*="/notifications"] { font-size:10.5px !important; }
+#sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item { min-height:78px !important; }
+#sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item p.line-clamp-1 { font-size:11.5px !important; }
+#sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item p.line-clamp-2 { font-size:10.5px !important; }
+#sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item span.shrink-0.text-\[7px\] { font-size:9.5px !important; }
+#sellerNotificationDropdown.seller-notification-modal > a[href*="/notifications"] { flex:0 0 auto; }
+#sellerSidebarNotificationBadge[data-has-unread="false"] { display:none !important; }
+#sellerSidebarNotificationBadge[data-has-unread="true"] { display:grid; }
+.seller-notification-modal-close:focus-visible, .seller-notification-sound-toggle:focus-visible,
+#sellerSidebarNotificationLink:focus-visible { outline:2px solid #c88912; outline-offset:3px; }
+@media (max-width:639px) {
+    #sellerNotificationDropdown.seller-notification-modal {
+        top:50% !important; left:50% !important; right:auto !important;
+        width:calc(100vw - 20px) !important; max-width:calc(100vw - 20px) !important;
+        max-height: min(88dvh, 740px) !important; border-radius:16px !important;
+    }
+    #sellerNotificationDropdown.seller-notification-modal > div:first-child {
+        padding:15px !important; min-height:0 !important;
+    }
+    #sellerNotificationDropdown.seller-notification-modal > div:first-child > div:first-child > p:first-child { font-size:17px !important; }
+    .seller-notification-modal-actions { gap:7px !important; }
+    #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item { min-height:70px !important; }
+}
+
+/* A compact live toast for new SellerNotification events only. */
+.sari-seller-notification-toast {
+    position:fixed; z-index:1200; right:22px; bottom:20px;
+    display:flex; align-items:center; gap:11px;
+    width:min(410px, calc(100vw - 28px)); min-height:74px;
+    border:1px solid #e2e6ec; border-left:4px solid #c88912;
+    border-radius:15px; background:white; padding:12px 13px;
+    box-shadow:0 12px 38px rgba(15,23,42,.16);
+    color:#303740; font-family:Poppins,ui-sans-serif,system-ui,sans-serif;
+}
+.sari-seller-notification-toast__icon { display:grid; place-items:center; width:36px; height:36px; flex:0 0 36px; border-radius:50%; background:#fff8e9; color:#c88912; }
+.sari-seller-notification-toast__icon svg { width:19px; height:19px; }
+.sari-seller-notification-toast__copy { flex:1; min-width:0; }
+.sari-seller-notification-toast__copy strong { display:block; font-size:12px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sari-seller-notification-toast__copy p { margin:4px 0 0; font-size:10.5px; line-height:1.5; color:#7c8592; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.sari-seller-notification-toast__view { background:none; border:0; padding:6px 4px; font-size:11px; font-weight:700; color:#b77c10; cursor:pointer; }
+.sari-seller-notification-toast__close { background:none; border:0; color:#8995a2; font-size:20px; cursor:pointer; padding:0 2px; }
+@media (max-width:639px) { .sari-seller-notification-toast { right:10px; bottom:12px; } }
+
+/* ======================================================================
+   BUYER -> SELLER SHELL PARITY (FINAL AUTHORITATIVE VISUAL PASS)
+   Source: Buyer sidebar/header components and public/css/buyer/shell.css
+   Seller routes, badges, modals, sound, realtime, and navigation JS unchanged.
+   ====================================================================== */
+:root {
+    --seller-sidebar-expanded: 238px;
+    --seller-sidebar-collapsed: 76px;
+    --seller-shell-gold: #D9950B;
+}
+#sellerSidebar {
+    width: var(--seller-sidebar-width, 238px) !important;
+    overflow-x: hidden;
+    border-right-color: #ECE5DA !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+#sellerSidebarBrand {
+    min-height: 74px !important;
+    padding-inline: 12px !important;
+    border-bottom-color: #EEE7DC !important;
+}
+#sellerSidebarLogo { height: 44px !important; }
+#sellerSidebarFullLogo {
+    display: block !important;
+    width: 102px !important;
+    height: auto !important;
+}
+#sellerSidebarCompactLogo {
+    display: none !important;
+    width: 38px !important;
+    height: 38px !important;
+}
+#sellerSidebarNav {
+    padding: 14px 10px 16px !important;
+    scrollbar-width: thin;
+    scrollbar-color: #DDD4C7 transparent;
+}
+#sellerSidebarNav::-webkit-scrollbar { width: 4px; }
+#sellerSidebarNav::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #DDD4C7 !important;
+}
+.seller-sidebar-section-label {
+    margin: 13px 9px 8px !important;
+    color: #94713C !important;
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 750 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+}
+.seller-sidebar-section-label:first-child { margin-top: 4px !important; }
+.seller-sidebar-section-divider {
+    height: 1px !important;
+    margin: 11px 6px 9px !important;
+    background: #EEE7DD !important;
+}
+#sellerSidebarNav > a[data-seller-sidebar-item],
+#sellerSidebarNav > form > button[data-seller-sidebar-item] {
+    width: 100% !important;
+    min-height: 43px !important;
+    gap: 11px !important;
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+    padding: 9px 11px !important;
+    color: #514B42 !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+    letter-spacing: -.008em !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: background-color .12s ease, border-color .12s ease,
+                color .12s ease, box-shadow .12s ease !important;
+}
+#sellerSidebarNav [data-seller-sidebar-item] svg {
+    width: 18px !important;
+    height: 18px !important;
+    flex: 0 0 18px;
+    stroke-width: 1.8 !important;
+}
+#sellerSidebarNav [data-seller-sidebar-item] > span:first-child { gap: 11px !important; }
+#sellerSidebarNav > a[data-seller-sidebar-item] + a[data-seller-sidebar-item],
+#sellerSidebarNav > a[data-seller-sidebar-item] + form,
+#sellerSidebarNav > form + a[data-seller-sidebar-item] { margin-top: 2px !important; }
+#sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\],
+#sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\]:hover {
+    border-color: #D9950B !important;
+    background-color: #D9950B !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    box-shadow: 0 5px 12px rgba(194, 132, 10, .12) !important;
+}
+#sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] svg,
+#sellerSidebarNav > a[data-seller-sidebar-item].bg-\[\#d9930a\] .seller-sidebar-label {
+    color: #FFFFFF !important;
+    stroke: currentColor !important;
+}
+#sellerSidebarNav > a[data-seller-sidebar-item]:not(.bg-\[\#d9930a\]):hover {
+    border-color: #EADFCF !important;
+    background-color: #FFF9EF !important;
+    color: #9A680B !important;
+    box-shadow: none !important;
+}
+/* Buyer-style red Logout; do not let the generic gold hover override it. */
+#sellerSidebarNav #sellerLogoutForm > button[data-seller-sidebar-item] {
+    color: #EF4444 !important;
+}
+#sellerSidebarNav #sellerLogoutForm > button[data-seller-sidebar-item]:hover,
+#sellerSidebarNav #sellerLogoutForm > button[data-seller-sidebar-item]:focus-visible {
+    border-color: #FEE2E2 !important;
+    background-color: #FEF2F2 !important;
+    color: #DC2626 !important;
+}
+#sellerSidebarMessageBadge,
+#sellerSidebarNotificationBadge {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding-inline: 5px !important;
+    font-size: 7.5px !important;
+}
+#sellerSidebarProfile {
+    padding: 9px 10px !important;
+    border-top-color: #EEE7DC !important;
+    background: #FFFFFF !important;
+}
+#sellerSidebarProfile > a {
+    min-height: 54px !important;
+    gap: 8px !important;
+    border: 1px solid #EBE2D4 !important;
+    border-radius: 11px !important;
+    background: #FFFFFF !important;
+    padding: 8px 9px !important;
+    box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
+}
+#sellerSidebarProfile > a:hover {
+    border-color: #DDCCB0 !important;
+    background-color: #FFFDF8 !important;
+    box-shadow: 0 4px 12px rgba(40, 31, 21, .03) !important;
+}
+#sellerSidebarProfile > a > div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+    font-size: 9.5px !important;
+}
+#sellerSidebarProfile .seller-sidebar-label p:first-child {
+    font-size: 9.5px !important;
+    line-height: 1.3 !important;
+    font-weight: 650 !important;
+}
+#sellerSidebarProfile .seller-sidebar-label p:last-child {
+    font-size: 7.5px !important;
+    line-height: 1.4 !important;
+}
+
+/* Buyer header hierarchy: menu + title/crumb | bell + account avatar. */
+#sellerHeader {
+    border-bottom-color: #E9EDF2 !important;
+    background: #FFFFFF !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+#sellerHeader .seller-header-main {
+    min-height: 82px !important;
+    gap: 16px !important;
+    padding-inline: 16px !important;
+}
+#sellerHeader .seller-header-main > div:first-child { gap: 10px !important; }
+#sellerHeader .seller-header-actions { gap: 6px !important; }
+#sellerHeader #sellerMenuButton,
+#sellerHeader #sellerSidebarToggle,
+#sellerHeader #sellerNotificationBell {
+    width: 38px !important;
+    height: 38px !important;
+    flex: 0 0 38px;
+    border-radius: 10px !important;
+}
+#sellerHeader #sellerMenuButton,
+#sellerHeader #sellerSidebarToggle {
+    border-color: #E5EAF0 !important;
+    background-color: #FFFFFF !important;
+    color: #344054 !important;
+    box-shadow: none !important;
+}
+#sellerHeader #sellerMenuButton:hover,
+#sellerHeader #sellerSidebarToggle:hover {
+    border-color: #D4DBE4 !important;
+    background-color: #F4F6F9 !important;
+}
+#sellerHeader #sellerMenuButton svg,
+#sellerHeader #sellerSidebarToggle svg,
+#sellerHeader #sellerNotificationBell > svg {
+    width: 17px !important;
+    height: 17px !important;
+}
+#sellerHeader h1 {
+    color: #17212F !important;
+    font-size: clamp(21px, 1.85vw, 27px) !important;
+    line-height: 1.22 !important;
+    font-weight: 700 !important;
+    letter-spacing: -.035em !important;
+}
+#sellerHeader .seller-header-breadcrumb {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+    color: #758092 !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+}
+#sellerHeader .seller-header-breadcrumb svg {
+    width: 13px !important;
+    height: 13px !important;
+    flex: 0 0 13px !important;
+    color: #B5BDC8 !important;
+}
+#sellerHeader .seller-header-profile {
+    display: flex !important;
+    gap: 11px !important;
+    border-radius: 13px !important;
+    padding: 6px 9px !important;
+    color: #202B3A !important;
+    text-decoration: none !important;
+}
+#sellerHeader .seller-header-profile:hover {
+    border-color: #E5EAF0 !important;
+    background-color: #F6F8FB !important;
+}
+#sellerHeader #sellerHeaderProfileAvatar {
+    width: 39px !important;
+    height: 39px !important;
+    flex: 0 0 39px !important;
+    font-size: 12px !important;
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px #F0E5CD !important;
+}
+#sellerHeader .seller-header-profile-details p:first-child {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    font-weight: 650 !important;
+}
+#sellerHeader .seller-header-profile-details p:last-child {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+}
+#sellerHeader #sellerBellNotificationBadge {
+    right: -5px !important;
+    top: -5px !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    font-size: 8px !important;
+}
+@media (min-width: 640px) {
+    #sellerHeader .seller-header-main { padding-inline: 24px !important; }
+    #sellerHeader .seller-header-actions { gap: 8px !important; }
+}
+@media (min-width: 1024px) {
+    #sellerHeader .seller-header-main { padding-inline: 20px !important; }
+    html.seller-sidebar-collapsed #sellerSidebarBrand {
+        min-height: 74px !important;
+        padding-inline: 8px !important;
+    }
+    html.seller-sidebar-collapsed #sellerSidebarFullLogo { display: none !important; }
+    html.seller-sidebar-collapsed #sellerSidebarCompactLogo { display: block !important; }
+    html.seller-sidebar-collapsed #sellerSidebarNav { padding: 12px 9px !important; }
+    html.seller-sidebar-collapsed #sellerSidebarNav [data-seller-sidebar-item] {
+        min-height: 43px !important;
+        gap: 0 !important;
+        padding-inline: 0 !important;
+        justify-content: center !important;
+    }
+    html.seller-sidebar-collapsed #sellerSidebarProfile { padding: 9px !important; }
+    html.seller-sidebar-collapsed #sellerSidebarProfile > a {
+        justify-content: center !important;
+        padding: 8px !important;
+    }
+}
+@media (min-width: 1280px) {
+    #sellerHeader .seller-header-main { padding-inline: 24px !important; }
+}
+@media (max-width: 1279px) {
+    #sellerHeader .seller-header-profile { padding: 5px !important; }
+}
+@media (max-height: 820px) and (min-width: 1024px) {
+    #sellerSidebarNav { padding-top: 10px !important; padding-bottom: 10px !important; }
+    .seller-sidebar-section-label { margin-top: 8px !important; margin-bottom: 6px !important; }
+    .seller-sidebar-section-divider { margin-top: 8px !important; margin-bottom: 7px !important; }
+    #sellerSidebarNav > a[data-seller-sidebar-item],
+    #sellerSidebarNav > form > button[data-seller-sidebar-item] {
+        min-height: 40px !important;
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+        font-size: 12px !important;
+    }
+    html.seller-sidebar-collapsed #sellerSidebarNav [data-seller-sidebar-item] { min-height: 40px !important; }
+}
+@media (max-width: 1023px) {
+    #sellerSidebar { width: 238px !important; }
+    #sellerContent { padding-left: 0 !important; }
+}
+@media (max-width: 767px) {
+    #sellerHeader .seller-header-main {
+        min-height: 74px !important;
+        padding-inline: 12px !important;
+        gap: 10px !important;
+    }
+    #sellerHeader h1 { font-size: 21px !important; }
+    #sellerHeader .seller-header-breadcrumb { font-size: 10px !important; }
+    #sellerHeader #sellerMenuButton,
+    #sellerHeader #sellerNotificationBell {
+        width: 40px !important;
+        height: 40px !important;
+        flex-basis: 40px !important;
+    }
+    #sellerHeader #sellerHeaderProfileAvatar {
+        width: 35px !important;
+        height: 35px !important;
+        flex-basis: 35px !important;
+    }
+}
+@media (max-width: 380px) {
+    #sellerHeader .seller-header-main { gap: 5px !important; }
+    #sellerHeader #sellerNotificationBell { width: 34px !important; flex-basis: 34px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #sellerSidebar, #sellerContent, #sellerHeader .seller-header-profile {
+        transition-duration: 1ms !important;
+    }
+}
 @endverbatim
 </style>
+
+
+    {{-- Seller notifications: Buyer-inspired neutral white/gray surfaces and SARI mark.
+         Cosmetic-only: leaves existing sound, realtime, read and navigation logic alone. --}}
+    <style id="sariSellerNotificationNeutralTheme">
+        #sellerNotificationDropdown.seller-notification-modal {
+            border-color: #E4E7EC !important;
+            background: #FFFFFF !important;
+            color: #303740 !important;
+            box-shadow: 0 20px 58px rgba(15, 23, 42, .15) !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal > div:first-child,
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationList {
+            background: #FFFFFF !important;
+            border-color: #E9EDF2 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item {
+            background: #FFFFFF !important;
+            border-bottom-color: #ECEFF3 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item[data-unread="true"] {
+            background: #F8F9FB !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item:hover,
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item[data-unread="true"]:hover {
+            background: #F0F2F5 !important;
+        }
+
+        /* All notification types use the existing SARI main mark instead of their SVG icons. */
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-icon {
+            width: 44px !important;
+            height: 44px !important;
+            flex: 0 0 44px !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 12px !important;
+            background-color: #FFFFFF !important;
+            background-image: url('{{ asset('images/sari-main-logo.png') }}') !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: 39px 39px !important;
+            box-shadow: none !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-icon svg {
+            display: none !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item p.line-clamp-1 {
+            color: #263241 !important;
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item p.line-clamp-2 {
+            color: #667085 !important;
+            font-size: 10.5px !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-item [data-notification-unread-dot] {
+            background: #98A2B3 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationsModalTitle {
+            color: #202936 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationUnreadText {
+            color: #798493 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-notification-sound-toggle {
+            border-color: #E3E7ED !important;
+            background: #FFFFFF !important;
+            color: #606C7A !important;
+            box-shadow: none !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal .seller-notification-sound-toggle:hover {
+            border-color: #D2D8E0 !important;
+            background: #F4F5F7 !important;
+            color: #293545 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationMarkAllRead,
+        #sellerNotificationDropdown.seller-notification-modal > div:first-child a[href*="/notifications"] {
+            color: #667085 !important;
+            text-decoration: none !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationMarkAllRead:hover,
+        #sellerNotificationDropdown.seller-notification-modal > div:first-child a[href*="/notifications"]:hover {
+            color: #293545 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal #sellerNotificationEmpty > div:first-child {
+            color: #98A2B3 !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal > a[href*="/notifications"] {
+            border-color: #E2E6EC !important;
+            background: #FFFFFF !important;
+            color: #475467 !important;
+            box-shadow: none !important;
+        }
+
+        #sellerNotificationDropdown.seller-notification-modal > a[href*="/notifications"]:hover {
+            border-color: #CED5DE !important;
+            background: #F4F5F7 !important;
+            color: #263241 !important;
+        }
+
+        @media (max-width: 639px) {
+            #sellerNotificationDropdown.seller-notification-modal .seller-shell-notification-icon {
+                width: 40px !important;
+                height: 40px !important;
+                flex-basis: 40px !important;
+                border-radius: 11px !important;
+                background-size: 36px 36px !important;
+            }
+        }
+    </style>
 
     @stack('styles')
 
@@ -2679,10 +3232,13 @@
                 </span>
             </a>
 
-            {{-- NOTIFICATIONS --}}
+            {{-- NOTIFICATIONS: header + sidebar share one database-backed modal. --}}
             <a
+                id="sellerSidebarNotificationLink"
                 href="{{ route('seller.notifications.index') }}"
-                title="Notifications"
+                title="Open notifications"
+                aria-haspopup="dialog"
+                aria-controls="sellerNotificationDropdown"
                 data-seller-sidebar-item
                 class="
                     flex items-center gap-3 rounded-xl px-4 py-3.5
@@ -2701,6 +3257,13 @@
                 <span class="seller-sidebar-label whitespace-nowrap">
                     Notifications
                 </span>
+                <span
+                    id="sellerSidebarNotificationBadge"
+                    data-seller-notification-badge
+                    data-has-unread="false"
+                    aria-hidden="true"
+                    class="seller-sidebar-extra hidden min-w-[20px] h-5 place-items-center rounded-full bg-[#d9930a] px-1.5 text-[9px] font-bold text-white"
+                >0</span>
             </a>
 
             {{-- COMPLIANCE CENTER --}}
@@ -2813,64 +3376,7 @@
 
         </nav>
 
-        {{-- PROFILE --}}
-        <div
-            id="sellerSidebarProfile"
-            class="border-t border-[#eee4d3] bg-white p-4 transition-all duration-300"
-        >
-            <a
-                href="{{ route('seller.account') }}"
-                title="{{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }}"
-                data-seller-sidebar-item
-                class="
-                    flex w-full items-center gap-3 rounded-2xl
-                    border border-[#eadfca] bg-white p-3.5
-                    transition hover:border-[#dbc396] hover:shadow-sm
-                "
-                wire:navigate.hover
-            >
-                <div
-                    id="sellerSidebarProfileAvatar"
-                    class="seller-shell-profile-avatar grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[12px] font-semibold text-white"
-                    data-profile-photo-url="{{ $sellerShellProfilePhotoUrl }}"
-                >
-                    <img
-                        class="seller-shell-profile-avatar__image"
-                        src="{{ $sellerShellProfilePhotoUrl ?: '' }}"
-                        alt="{{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }} profile photo"
-                        loading="eager"
-                        decoding="async"
-                        @if(!$sellerShellProfilePhotoUrl) hidden @endif
-                    >
-                    <span
-                        class="seller-shell-profile-avatar__fallback"
-                        @if($sellerShellProfilePhotoUrl) hidden @endif
-                    >
-                        {{ $sellerShellProfileInitials }}
-                    </span>
-                </div>
-
-                <div class="seller-sidebar-label min-w-0 flex-1">
-                    <p class="truncate text-[12px] font-semibold text-[#211d17]">
-                        {{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }}
-                    </p>
-
-                    <p id="sellerSidebarStoreStatus" class="mt-0.5 truncate text-[9px] text-[#8d8272]">
-                        {{ $sellerActiveSuspension ? 'Suspended Store' : 'Verified Store' }}
-                    </p>
-                </div>
-
-                <svg
-                    viewBox="0 0 24 24"
-                    class="seller-sidebar-extra h-4 w-4 shrink-0 text-[#82796b]"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                >
-                    <path d="m9 18 6-6-6-6"></path>
-                </svg>
-            </a>
-        </div>
+        {{-- Buyer-style shell: profile shortcut lives in the header and Account Management menu only. --}}
     </aside>
     @endpersist
 
@@ -2879,15 +3385,24 @@
         MAIN CONTENT WRAPPER
     ========================================================== --}}
     <div id="sellerContent" class="min-h-screen transition-all duration-300 ease-out">
+        {{-- Same server-flash bridge as Buyer; intentionally not visible as page content. --}}
+        <div id="sariSellerToastFlash" hidden
+             data-success="{{ (string) session('success', '') }}"
+             data-error="{{ (string) (session('error') ?: ($errors->first() ?? '')) }}"
+             data-warning="{{ (string) session('warning', '') }}"
+             data-info="{{ (string) session('info', '') }}"
+             data-status="{{ (string) session('status', '') }}"
+             data-cancel-success="{{ (string) session('cancel_success', '') }}"></div>
+
 
         {{-- =====================================================
             SELLER HEADER
         ====================================================== --}}
-        <header class="sticky top-0 z-40 border-b border-[#eee4d3] bg-white">
-            <div class="flex min-h-[86px] w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 xl:px-10">
+        <header id="sellerHeader" class="sticky top-0 z-40 border-b border-[#E9EDF2] bg-white">
+            <div class="seller-header-main flex min-h-[82px] w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-5 xl:px-6">
 
                 {{-- LEFT --}}
-                <div class="flex min-w-0 items-center gap-3 sm:gap-4">
+                <div class="flex min-w-0 items-center gap-2.5">
 
                     {{-- MOBILE MENU --}}
                     <button
@@ -2901,6 +3416,7 @@
                             lg:hidden
                         "
                         aria-label="Open seller sidebar"
+                        aria-controls="sellerSidebar"
                     >
                         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
                             <path d="M4 7h16"></path>
@@ -2921,6 +3437,7 @@
                             active:scale-95 lg:grid
                         "
                         aria-label="Collapse sidebar"
+                        aria-controls="sellerSidebar"
                         aria-expanded="true"
                     >
                         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -2932,11 +3449,11 @@
 
                     {{-- PAGE TITLE --}}
                     <div class="min-w-0">
-                        <h1 class="truncate text-[18px] font-bold tracking-[-0.025em] text-[#17140e] sm:text-[20px] xl:text-[22px]">
+                        <h1 class="truncate font-bold tracking-[-0.035em] text-[#17212F]">
                             @yield('page-title', 'Seller Dashboard')
                         </h1>
 
-                        <div class="mt-1 hidden items-center gap-1.5 text-[11px] text-[#978d7d] sm:flex">
+                        <div class="seller-header-breadcrumb mt-1 flex min-w-0 items-center gap-2 text-[#758092]">
                             <a
                                 href="{{ route('seller.dashboard') }}"
                                 class="transition hover:text-[#b97805]"
@@ -2945,11 +3462,11 @@
                                 Seller
                             </a>
 
-                            <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg viewBox="0 0 24 24" class="h-3 w-3 shrink-0 text-[#B5BDC8]" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m9 18 6-6-6-6"></path>
                             </svg>
 
-                            <span class="font-medium text-[#5c5448]">
+                            <span class="truncate font-semibold text-[#475467]">
                                 @yield('page-title', 'Dashboard')
                             </span>
                         </div>
@@ -2957,34 +3474,9 @@
                 </div>
 
                 {{-- RIGHT --}}
-                <div class="flex items-center gap-2 sm:gap-3">
+                <div class="seller-header-actions flex min-w-0 items-center gap-1.5 sm:gap-2">
 
-                    {{-- SEARCH --}}
-                    <div class="relative hidden md:block">
-                        <svg
-                            viewBox="0 0 24 24"
-                            class="pointer-events-none absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#9a9184]"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                        >
-                            <circle cx="11" cy="11" r="7"></circle>
-                            <path d="m20 20-4-4"></path>
-                        </svg>
-
-                        <input
-                            type="search"
-                            placeholder="Search orders, products..."
-                            class="
-                                h-11 w-[220px] rounded-[14px]
-                                border border-[#e6ddcf] bg-white
-                                pl-11 pr-4 text-[11px] outline-none
-                                placeholder:text-[#a89f92]
-                                focus:border-[#d89a25] focus:ring-4 focus:ring-[#d89a25]/10
-                                xl:w-[300px]
-                            "
-                        >
-                    </div>
+                    {{-- Buyer header parity: no unconnected global search field. --}}
 
                     {{-- UNIFIED REAL-TIME NOTIFICATION CENTER --}}
                     <div class="relative">
@@ -2992,9 +3484,11 @@
                             id="sellerNotificationBell"
                             type="button"
                             aria-label="Open notifications"
+                            aria-haspopup="dialog"
+                            aria-controls="sellerNotificationDropdown"
                             aria-expanded="false"
                             class="
-                                relative grid h-11 w-11 place-items-center
+                                seller-header-icon-button relative grid h-11 w-11 place-items-center
                                 border-0 bg-transparent
                                 text-[#475467] transition-colors
                                 hover:text-[#c9890b]
@@ -3020,9 +3514,13 @@
                             >0</span>
                         </button>
 
-                        <div
+                        <dialog
                             id="sellerNotificationDropdown"
-                            class="
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="sellerNotificationsModalTitle"
+                            aria-describedby="sellerNotificationUnreadText"
+                            class="seller-notification-modal
                                 absolute right-0 top-[54px] z-[80]
                                 hidden w-[350px] overflow-hidden
                                 rounded-[18px] border border-[#e5e7eb]
@@ -3032,7 +3530,7 @@
                         >
                             <div class="flex items-start justify-between gap-4 border-b border-[#eceff2] px-4 py-3.5">
                                 <div class="min-w-0">
-                                    <p class="text-[11px] font-bold text-[#202124]">
+                                    <p id="sellerNotificationsModalTitle" class="text-[11px] font-bold text-[#202124]">
                                         Notifications
                                     </p>
                                     <p id="sellerNotificationUnreadText" class="mt-0.5 text-[8px] text-[#8a919b]">
@@ -3040,7 +3538,34 @@
                                     </p>
                                 </div>
 
-                                <div class="flex shrink-0 items-center gap-3">
+                                <div class="seller-notification-modal-actions flex shrink-0 items-center gap-3">
+                                    <button
+                                        id="sellerNotificationSoundToggle"
+                                        type="button"
+                                        class="seller-notification-sound-toggle"
+                                        aria-label="Mute notification sounds"
+                                        aria-pressed="true"
+                                        title="Mute notification sounds"
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+                                            <path data-seller-sound-wave d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"></path>
+                                            <path data-seller-sound-muted d="m16 9 5 6m0-6-5 6" hidden></path>
+                                        </svg>
+                                        <span id="sellerNotificationSoundLabel">Sound on</span>
+                                    </button>
+                                    <button
+                                        id="sellerNotificationSoundTest"
+                                        type="button"
+                                        class="seller-notification-sound-toggle seller-notification-sound-test"
+                                        aria-label="Play test notification sound"
+                                        title="Test notification sound"
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M8 5.5 18 12 8 18.5Z"></path>
+                                        </svg>
+                                        <span>Test</span>
+                                    </button>
                                     <button
                                         id="sellerNotificationMarkAllRead"
                                         type="button"
@@ -3056,6 +3581,15 @@
                                     >
                                         View all
                                     </a>
+                                    <button
+                                        id="sellerNotificationClose"
+                                        type="button"
+                                        class="seller-notification-modal-close"
+                                        aria-label="Close notifications"
+                                        title="Close notifications"
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
@@ -3096,15 +3630,15 @@
                             >
                                 Open Notification Center
                             </a>
-                        </div>
+                        </dialog>
                     </div>
 
-                    <div class="hidden h-9 w-px bg-[#eee4d5] xl:block"></div>
+                    <div class="mx-1 hidden h-8 w-px bg-[#E5EAF0] xl:block"></div>
 
                     {{-- ACCOUNT SHORTCUT --}}
                     <a
                         href="{{ route('seller.account') }}"
-                        class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
+                        class="seller-header-profile flex shrink-0 items-center gap-2.5 rounded-[13px] border border-transparent px-2 py-1.5 transition-colors hover:border-[#E5EAF0] hover:bg-[#F6F8FB]"
                 wire:navigate.hover
             >
                         <div
@@ -3128,12 +3662,12 @@
                             </span>
                         </div>
 
-                        <div>
-                            <p class="max-w-[160px] truncate text-[11px] font-semibold text-[#28231c]">
+                        <div class="seller-header-profile-details hidden min-w-0 xl:block">
+                            <p class="max-w-[165px] truncate text-[12px] font-semibold text-[#202B3A]">
                                 {{ $sellerLayoutAccount?->store_name ?: 'SARI Seller' }}
                             </p>
 
-                            <p class="mt-0.5 text-[9px] text-[#908779]">
+                            <p class="mt-0.5 max-w-[165px] truncate text-[10px] text-[#667085]">
                                 {{ $sellerActiveSuspension ? 'Suspended Store' : 'Verified Store' }}
                             </p>
                         </div>
@@ -3339,7 +3873,16 @@
             csrfToken: @json(csrf_token()),
         };
     </script>
-    <script src="{{ asset('js/seller-shell.js') }}?v=20261007-3" data-navigate-once></script>
+    {{-- Persist the Buyer-style toast stack across Livewire navigation so
+         confirmed notification feedback remains visible after the feed refreshes. --}}
+    @persist('seller-global-toast-stack')
+        <div id="sariSellerToastStack" aria-label="Action notifications"></div>
+    @endpersist
+
+    {{-- Same global action/sound engine as Buyer; also presents new Seller realtime notifications. --}}
+    <script src="{{ asset('js/seller-notification-sound.js') }}?v=20261107-toast-only-audio-v3"
+            data-sounds-base="{{ asset('sounds/buyer') }}" data-navigate-once></script>
+    <script src="{{ asset('js/seller-shell.js') }}?v=20261107-notification-modal-sound-1" data-navigate-once></script>
 
 
 
@@ -3402,6 +3945,13 @@
             let toastTimer = null;
 
             function showToast(message, type = 'success') {
+                // A single Buyer-style toast + audio system across Seller pages.
+                // Legacy in-layout markup remains available only as a fallback.
+                if (window.SariSellerToast?.show) {
+                    window.SariSellerToast.show(message || 'Your seller action was saved.',
+                        type === 'error' ? 'error' : (type === 'warning' ? 'info' : 'success'));
+                    return;
+                }
                 const toast = document.getElementById('sellerActionToast');
                 const icon = document.getElementById('sellerActionToastIcon');
                 const title = document.getElementById('sellerActionToastTitle');

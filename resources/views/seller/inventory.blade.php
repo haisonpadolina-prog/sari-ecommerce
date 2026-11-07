@@ -3811,6 +3811,44 @@
     .inventory-shell .inventory-activity-value { margin-left: auto; }
 }
 
+/* ========================================================================
+   INVENTORY FILTER BAR — FIXED POSITION ON HOVER / FOCUS
+   Visual-only: lock toolbar and controls to their normal layout position.
+   Preserve existing dropdown menu, filtering, and stock adjustment logic.
+   ======================================================================== */
+.inventory-shell .inventory-admin-filters,
+.inventory-shell .inventory-admin-filters:hover,
+.inventory-shell .inventory-admin-filters:focus-within {
+    margin: 20px 0 0 !important;
+    transform: none !important;
+    translate: none !important;
+}
+
+/* Only the four filter controls: do not modify the menu, icon or table. */
+.inventory-shell .inventory-admin-filters :is(
+    .inventory-filter-search,
+    .inventory-filter-search input,
+    .inventory-filter-dropdown,
+    .inventory-filter-trigger,
+    .inventory-filter-apply,
+    .inventory-filter-reset
+),
+.inventory-shell .inventory-admin-filters :is(
+    .inventory-filter-search,
+    .inventory-filter-search input,
+    .inventory-filter-dropdown,
+    .inventory-filter-trigger,
+    .inventory-filter-apply,
+    .inventory-filter-reset
+):is(:hover, :focus, :focus-visible, :active) {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    translate: none !important;
+}
+
 @endverbatim
 </style>
 @endpush
@@ -3885,11 +3923,6 @@
 
             <h1 class="inventory-title">Inventory</h1>
 
-            <p class="inventory-subtitle">
-
-                Monitor product stock, update quantities, and manage inventory across your catalog.
-
-            </p>
 
         </div>
 

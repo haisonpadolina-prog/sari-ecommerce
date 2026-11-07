@@ -19,6 +19,7 @@ class SellerProductVersion extends Model
         'stock',
         'low_stock_threshold',
         'discount',
+        'flash_sale_starts_at',
         'flash_sale_ends_at',
         'free_shipping',
         'cash_on_delivery',
@@ -34,6 +35,7 @@ class SellerProductVersion extends Model
         'variants_snapshot',
         'gallery_snapshot',
         'image_path',
+        'size_guide_image_path',
         'moderation_status',
         'screening_risk',
         'screening_reason',
@@ -47,6 +49,7 @@ class SellerProductVersion extends Model
         return [
             'price' => 'decimal:2',
             'discount' => 'decimal:2',
+            'flash_sale_starts_at' => 'datetime',
             'flash_sale_ends_at' => 'datetime',
             'free_shipping' => 'boolean',
             'cash_on_delivery' => 'boolean',

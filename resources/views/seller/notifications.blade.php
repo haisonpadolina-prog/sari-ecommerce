@@ -1,1971 +1,685 @@
 @extends('layouts.seller')
 
-
-
 @section('title', 'Notifications — SARI Seller')
-
 @section('page-title', 'Notifications')
-
-
 
 @push('styles')
 <style id="sariSellerEmbeddedCss-notifications" data-sari-inline-css="notifications">
 @verbatim
-/* Extracted from resources/views/seller/notifications.blade.php — original style block 1. */
+/* Seller notification inbox — scoped, single-source UI rules.
+   Visual reference: Buyer Notifications. No global layout overrides. */
 .seller-notifications-feed {
-
-        --nf-gold: #d59617;
-
-        --nf-gold-dark: #a96f06;
-
-        --nf-gold-soft: #fffaf0;
-
-        --nf-ink: #202124;
-
-        --nf-text: #475467;
-
-        --nf-muted: #8f96a3;
-
-        --nf-line: #e4e7eb;
-
-        --nf-soft-line: #eef0f2;
-
-        --nf-canvas: #f5f6f8;
-
-        --nf-panel: #ffffff;
-
-        --nf-green: #32c36c;
-
-
-
-        width: 100%;
-
-        max-width: 1500px;
-
-        margin: 0 auto;
-
-        color: var(--nf-ink);
-
-        font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
-
-    }
-
-
-
-    .seller-notifications-feed *,
-
-    .seller-notifications-feed *::before,
-
-    .seller-notifications-feed *::after {
-
-        box-sizing: border-box;
-
-    }
-
-
-
-    .nf-alert {
-
-        display: flex;
-
-        align-items: flex-start;
-
-        gap: 9px;
-
-        margin-bottom: 12px;
-
-        border: 1px solid;
-
-        border-radius: 12px;
-
-        padding: 10px 12px;
-
-        font-size: 9px;
-
-        font-weight: 600;
-
-        line-height: 1.5;
-
-    }
-
-
-
-    .nf-alert--success {
-
-        border-color: #cfe4d7;
-
-        background: #f3faf5;
-
-        color: #4f7d63;
-
-    }
-
-
-
-    .nf-alert--error {
-
-        border-color: #efcece;
-
-        background: #fff5f5;
-
-        color: #a65353;
-
-    }
-
-
-
-    .nf-alert__icon {
-
-        display: grid;
-
-        width: 22px;
-
-        height: 22px;
-
-        flex: 0 0 22px;
-
-        place-items: center;
-
-        border-radius: 7px;
-
-        background: rgba(255,255,255,.78);
-
-    }
-
-
-
-    .nf-alert__icon svg {
-
-        width: 12px;
-
-        height: 12px;
-
-    }
-
-
-
-    .nf-top {
-
-        display: flex;
-
-        align-items: flex-end;
-
-        justify-content: space-between;
-
-        gap: 16px;
-
-    }
-
-
-
-    .nf-eyebrow {
-
-        margin: 0;
-
-        color: #8e949d;
-
-        font-size: 8px;
-
-        font-weight: 800;
-
-        letter-spacing: .14em;
-
-        text-transform: uppercase;
-
-    }
-
-
-
-    .nf-title {
-
-        margin: 5px 0 0;
-
-        color: #202124;
-
-        font-size: clamp(28px, 2.2vw, 36px);
-
-        font-weight: 700;
-
-        letter-spacing: -.045em;
-
-        line-height: 1.06;
-
-    }
-
-
-
-    .nf-subtitle {
-
-        margin: 7px 0 0;
-
-        color: var(--nf-muted);
-
-        font-size: 9.5px;
-
-        line-height: 1.55;
-
-    }
-
-
-
-    .nf-subtitle strong {
-
-        color: #4b5563;
-
-        font-weight: 700;
-
-    }
-
-
-
-    .nf-mark-all {
-
-        display: inline-flex;
-
-        height: 38px;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 7px;
-
-        flex: 0 0 auto;
-
-        border: 1px solid #dfe3e8;
-
-        border-radius: 10px;
-
-        background: #fff;
-
-        padding: 0 13px;
-
-        color: #475467;
-
-        font: inherit;
-
-        font-size: 8.5px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        transition:
-
-            background .15s ease,
-
-            border-color .15s ease,
-
-            color .15s ease,
-
-            transform .15s ease;
-
-    }
-
-
-
-    .nf-mark-all:hover {
-
-        border-color: #d9c391;
-
-        background: var(--nf-gold-soft);
-
-        color: #8f5d00;
-
-        transform: translateY(-1px);
-
-    }
-
-
-
-    .nf-mark-all svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    .nf-toolbar {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 10px;
-
-        margin-top: 18px;
-
-    }
-
-
-
-    .nf-search {
-
-        position: relative;
-
-        width: min(520px, 100%);
-
-    }
-
-
-
-    .nf-search__icon {
-
-        position: absolute;
-
-        left: 13px;
-
-        top: 50%;
-
-        width: 15px;
-
-        height: 15px;
-
-        color: #98a2b3;
-
-        transform: translateY(-50%);
-
-        pointer-events: none;
-
-    }
-
-
-
-    .nf-search__input {
-
-        width: 100%;
-
-        height: 44px;
-
-        border: 1px solid #d9dde3;
-
-        border-radius: 11px;
-
-        background: #fff;
-
-        padding: 0 38px 0 38px;
-
-        color: #344054;
-
-        font: inherit;
-
-        font-size: 9.5px;
-
-        outline: none;
-
-        transition:
-
-            border-color .15s ease,
-
-            box-shadow .15s ease,
-
-            background .15s ease;
-
-    }
-
-
-
-    .nf-search__input::placeholder {
-
-        color: #9ca3af;
-
-    }
-
-
-
-    .nf-search__input:focus {
-
-        border-color: var(--nf-gold);
-
-        background: #fff;
-
-        box-shadow: 0 0 0 3px rgba(213,150,23,.08);
-
-    }
-
-
-
-    .nf-search__clear {
-
-        position: absolute;
-
-        right: 9px;
-
-        top: 50%;
-
-        display: none;
-
-        width: 26px;
-
-        height: 26px;
-
-        place-items: center;
-
-        border: 0;
-
-        border-radius: 7px;
-
-        background: transparent;
-
-        color: #98a2b3;
-
-        cursor: pointer;
-
-        transform: translateY(-50%);
-
-    }
-
-
-
-    .nf-search__clear:hover {
-
-        background: #f3f4f6;
-
-        color: #475467;
-
-    }
-
-
-
-    .nf-search__clear[data-visible="1"] {
-
-        display: grid;
-
-    }
-
-
-
-    .nf-search__clear svg {
-
-        width: 13px;
-
-        height: 13px;
-
-    }
-
-
-
-    .nf-search-count {
-
-        color: #98a2b3;
-
-        font-size: 8px;
-
-        white-space: nowrap;
-
-    }
-
-
-
-    .nf-panel {
-
-        margin-top: 16px;
-
-        overflow: hidden;
-
-        border: 1px solid #dfe3e8;
-
-        border-radius: 22px;
-
-        background: #fff;
-
-        box-shadow: 0 12px 32px rgba(15,23,42,.055);
-
-    }
-
-
-
-    .nf-row {
-
-        position: relative;
-
-        display: grid;
-
-        grid-template-columns: 46px minmax(0, 1fr) auto;
-
-        gap: 14px;
-
-        align-items: center;
-
-        min-height: 92px;
-
-        border-bottom: 1px solid var(--nf-soft-line);
-
-        background: #fff;
-
-        padding: 16px 20px;
-
-        transition:
-
-            background .14s ease,
-
-            transform .14s ease;
-
-    }
-
-
-
-    .nf-row:last-child {
-
-        border-bottom: 0;
-
-    }
-
-
-
-    .nf-row:hover {
-
-        background: #fbfcfd;
-
-    }
-
-
-
-    .nf-row--unread {
-
-        background: #fffefb;
-
-    }
-
-
-
-    .nf-row--unread:hover {
-
-        background: #fffaf0;
-
-    }
-
-
-
-    .nf-row--unread::before {
-
-        content: '';
-
-        position: absolute;
-
-        inset: 0 auto 0 0;
-
-        width: 3px;
-
-        background: var(--nf-gold);
-
-    }
-
-
-
-    .nf-avatar {
-
-        position: relative;
-
-        display: grid;
-
-        width: 42px;
-
-        height: 42px;
-
-        place-items: center;
-
-        overflow: hidden;
-
-        border: 3px solid #34cc70;
-
-        border-radius: 999px;
-
-        background: #202329;
-
-        box-shadow:
-
-            0 0 0 2px #fff,
-
-            0 3px 10px rgba(15,23,42,.08);
-
-    }
-
-
-
-    .nf-avatar img {
-
-        width: 100%;
-
-        height: 100%;
-
-        object-fit: cover;
-
-    }
-
-
-
-    .nf-row--unread .nf-avatar::after {
-
-        content: '';
-
-        position: absolute;
-
-        right: -1px;
-
-        bottom: -1px;
-
-        width: 9px;
-
-        height: 9px;
-
-        border: 2px solid #fff;
-
-        border-radius: 999px;
-
-        background: var(--nf-gold);
-
-    }
-
-
-
-    .nf-main {
-
-        min-width: 0;
-
-    }
-
-
-
-    .nf-row__title {
-
-        margin: 0;
-
-        color: #25272b;
-
-        font-size: 10.5px;
-
-        font-weight: 750;
-
-        line-height: 1.45;
-
-        overflow-wrap: anywhere;
-
-    }
-
-
-
-    .nf-row--unread .nf-row__title {
-
-        color: #15171a;
-
-    }
-
-
-
-    .nf-row__message {
-
-        margin: 3px 0 0;
-
-        color: #7b828d;
-
-        font-size: 8.5px;
-
-        line-height: 1.5;
-
-        overflow-wrap: anywhere;
-
-    }
-
-
-
-    .nf-row__meta {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 5px;
-
-        margin-top: 3px;
-
-        color: #949ba5;
-
-        font-size: 8px;
-
-        line-height: 1.4;
-
-    }
-
-
-
-    .nf-meta-dot {
-
-        width: 3px;
-
-        height: 3px;
-
-        border-radius: 999px;
-
-        background: #c2c7ce;
-
-    }
-
-
-
-    .nf-actions {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        justify-self: end;
-
-    }
-
-
-
-    .nf-view {
-
-        display: inline-flex;
-
-        height: 31px;
-
-        min-width: 60px;
-
-        align-items: center;
-
-        justify-content: center;
-
-        border: 1px solid #e4e7eb;
-
-        border-radius: 9px;
-
-        background: #f7f8fa;
-
-        padding: 0 12px;
-
-        color: #30343a;
-
-        font-size: 8.5px;
-
-        font-weight: 750;
-
-        text-decoration: none;
-
-        transition:
-
-            background .15s ease,
-
-            border-color .15s ease,
-
-            color .15s ease;
-
-    }
-
-
-
-    .nf-view:hover {
-
-        border-color: #dfc68f;
-
-        background: #fff8e8;
-
-        color: #8b5a00;
-
-    }
-
-
-
-    .nf-view--disabled {
-
-        opacity: .52;
-
-        pointer-events: none;
-
-    }
-
-
-
-    .nf-menu {
-
-        position: relative;
-
-    }
-
-
-
-    .nf-menu__button {
-
-        display: grid;
-
-        width: 31px;
-
-        height: 31px;
-
-        place-items: center;
-
-        border: 1px solid transparent;
-
-        border-radius: 9px;
-
-        background: transparent;
-
-        color: #7d8590;
-
-        cursor: pointer;
-
-        transition:
-
-            border-color .15s ease,
-
-            background .15s ease,
-
-            color .15s ease;
-
-    }
-
-
-
-    .nf-menu__button:hover,
-
-    .nf-menu__button[aria-expanded="true"] {
-
-        border-color: #e4e7eb;
-
-        background: #f7f8fa;
-
-        color: #344054;
-
-    }
-
-
-
-    .nf-menu__button svg {
-
-        width: 15px;
-
-        height: 15px;
-
-    }
-
-
-
-    .nf-menu__panel {
-
-        position: absolute;
-
-        right: 0;
-
-        top: calc(100% + 6px);
-
-        z-index: 30;
-
-        display: none;
-
-        min-width: 150px;
-
-        overflow: hidden;
-
-        border: 1px solid #e2e6eb;
-
-        border-radius: 10px;
-
-        background: #fff;
-
-        padding: 5px;
-
-        box-shadow: 0 12px 28px rgba(15,23,42,.14);
-
-    }
-
-
-
-    .nf-menu__panel[data-open="1"] {
-
-        display: block;
-
-    }
-
-
-
-    .nf-menu__action {
-
-        display: flex;
-
-        width: 100%;
-
-        min-height: 32px;
-
-        align-items: center;
-
-        gap: 8px;
-
-        border: 0;
-
-        border-radius: 7px;
-
-        background: transparent;
-
-        padding: 0 9px;
-
-        color: #475467;
-
-        font: inherit;
-
-        font-size: 8px;
-
-        font-weight: 650;
-
-        text-align: left;
-
-        text-decoration: none;
-
-        cursor: pointer;
-
-    }
-
-
-
-    .nf-menu__action:hover {
-
-        background: #f7f8fa;
-
-        color: #202124;
-
-    }
-
-
-
-    .nf-menu__action svg {
-
-        width: 12px;
-
-        height: 12px;
-
-        flex: 0 0 12px;
-
-    }
-
-
-
-    .nf-empty,
-
-    .nf-search-empty {
-
-        display: grid;
-
-        min-height: 320px;
-
-        place-items: center;
-
-        padding: 34px 20px;
-
-        text-align: center;
-
-    }
-
-
-
-    .nf-empty__icon {
-
-        display: grid;
-
-        width: 50px;
-
-        height: 50px;
-
-        margin: 0 auto;
-
-        place-items: center;
-
-        border: 1px solid #e4e7eb;
-
-        border-radius: 15px;
-
-        background: #f8fafc;
-
-        color: #98a2b3;
-
-    }
-
-
-
-    .nf-empty__icon svg {
-
-        width: 21px;
-
-        height: 21px;
-
-    }
-
-
-
-    .nf-empty__title {
-
-        margin: 11px 0 0;
-
-        color: #475467;
-
-        font-size: 10px;
-
-        font-weight: 750;
-
-    }
-
-
-
-    .nf-empty__copy {
-
-        margin: 4px 0 0;
-
-        color: #98a2b3;
-
-        font-size: 8.3px;
-
-        line-height: 1.55;
-
-    }
-
-
-
-    .nf-pagination {
-
-        margin-top: 12px;
-
-        overflow: hidden;
-
-        border: 1px solid #e4e7eb;
-
-        border-radius: 12px;
-
-        background: #fff;
-
-        padding: 10px 12px;
-
-    }
-
-
-
-    .nf-mark-all:focus-visible,
-
-    .nf-search__clear:focus-visible,
-
-    .nf-view:focus-visible,
-
-    .nf-menu__button:focus-visible,
-
-    .nf-menu__action:focus-visible {
-
-        outline: 2px solid rgba(213,150,23,.3);
-
-        outline-offset: 2px;
-
-    }
-
-
-
-    @media (max-width: 760px) {
-
-        .nf-top {
-
-            align-items: flex-start;
-
-            flex-direction: column;
-
-        }
-
-
-
-        .nf-mark-all {
-
-            width: 100%;
-
-        }
-
-
-
-        .nf-toolbar {
-
-            align-items: stretch;
-
-            flex-direction: column;
-
-        }
-
-
-
-        .nf-search {
-
-            width: 100%;
-
-        }
-
-
-
-        .nf-row {
-
-            grid-template-columns: 40px minmax(0, 1fr);
-
-            gap: 11px;
-
-            min-height: 0;
-
-            padding: 14px 14px;
-
-        }
-
-
-
-        .nf-avatar {
-
-            width: 38px;
-
-            height: 38px;
-
-        }
-
-
-
-        .nf-actions {
-
-            grid-column: 2;
-
-            justify-self: start;
-
-            margin-top: 7px;
-
-        }
-
-
-
-        .nf-row__title {
-
-            font-size: 9.8px;
-
-        }
-
-    }
-
-
-
-    @media (max-width: 480px) {
-
-        .nf-panel {
-
-            border-radius: 15px;
-
-        }
-
-
-
-        .nf-row {
-
-            padding: 13px 12px;
-
-        }
-
-
-
-        .nf-view {
-
-            min-width: 54px;
-
-            height: 29px;
-
-        }
-
-    }
-
-
-
-    @media (prefers-reduced-motion: reduce) {
-
-        .nf-mark-all,
-
-        .nf-search__input,
-
-        .nf-row,
-
-        .nf-view,
-
-        .nf-menu__button {
-
-            transition: none !important;
-
-        }
-
-    }
-
-
-
-/* ======================================================================
-   NOTIFICATIONS — MAIN CONTAINERS FLOATING
-   Visual-only hierarchy pass.
-   Backend/routes/forms/search/menu/pagination behavior remain unchanged.
-   ====================================================================== */
-
-.seller-notifications-feed {
-    --nf-float-border: #E5E7EB;
-    --nf-float-divider: #ECEFF2;
-    --nf-float-main:
-        0 3px 7px rgba(15, 23, 42, .055),
-        0 14px 32px rgba(15, 23, 42, .095),
-        0 30px 68px rgba(15, 23, 42, .11);
-    --nf-float-soft:
-        0 1px 3px rgba(15, 23, 42, .035),
-        0 7px 18px rgba(15, 23, 42, .06),
-        0 15px 32px rgba(15, 23, 42, .065);
+    --sn-gold: #c88912;
+    --sn-gold-hover: #a9700c;
+    --sn-ink: #252c36;
+    --sn-muted: #737f8c;
+    --sn-line: #e6e9ee;
+    --sn-shadow: 0 3px 7px rgba(15,23,42,.045),
+                 0 13px 30px rgba(15,23,42,.075),
+                 0 25px 54px rgba(15,23,42,.07);
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 10px 0 34px;
+    color: var(--sn-ink);
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
+.seller-notifications-feed *,
+.seller-notifications-feed *::before,
+.seller-notifications-feed *::after { box-sizing: border-box; }
+.seller-notifications-feed button,
+.seller-notifications-feed input,
+.seller-notifications-feed a { font-family: inherit; }
 
-/* ------------------------------------------------------------
-   MAIN VISIBLE SURFACES
-   ------------------------------------------------------------ */
-.seller-notifications-feed .nf-panel {
-    border-color: var(--nf-float-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--nf-float-main) !important;
-    transform: none !important;
+/* Open header: no nested title card or decorative icon. */
+.sn-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 2px 15px;
+    border-bottom: 1px solid var(--sn-line);
 }
-
-.seller-notifications-feed .nf-pagination {
-    border-color: var(--nf-float-border) !important;
-    background: #FFFFFF !important;
-    box-shadow: var(--nf-float-soft) !important;
-    transform: none !important;
+.sn-eyebrow {
+    margin: 0;
+    color: #a3731b;
+    font-size: 10.5px;
+    font-weight: 750;
+    letter-spacing: .13em;
+    text-transform: uppercase;
 }
-
-.seller-notifications-feed .nf-alert {
-    box-shadow: var(--nf-float-soft) !important;
-    transform: none !important;
+.sn-heading {
+    margin: 6px 0 0;
+    font-size: clamp(27px, 2.5vw, 32px);
+    font-weight: 750;
+    line-height: 1.12;
+    letter-spacing: -.04em;
 }
-
-/* Header and search toolbar stay open, not boxed as extra cards. */
-.seller-notifications-feed .nf-top,
-.seller-notifications-feed .nf-toolbar,
-.seller-notifications-feed .nf-search {
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
+.sn-heading span { color: var(--sn-gold); }
+.sn-subtitle {
+    margin: 7px 0 0;
+    color: var(--sn-muted);
+    font-size: 11.5px;
+    line-height: 1.55;
 }
-
-/* ------------------------------------------------------------
-   NOTIFICATION ROWS = FLAT CONTENT INSIDE THE FLOATING PANEL
-   ------------------------------------------------------------ */
-.seller-notifications-feed .nf-row,
-.seller-notifications-feed .nf-row:hover,
-.seller-notifications-feed .nf-row--unread,
-.seller-notifications-feed .nf-row--unread:hover {
-    box-shadow: none !important;
-    transform: none !important;
+.sn-subtitle strong { color: #475467; font-weight: 650; }
+.sn-mark-all {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 5px 0;
+    color: var(--sn-gold-hover);
+    cursor: pointer;
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
 }
+.sn-mark-all:hover { color: #875707; }
+.sn-mark-all:disabled { opacity: .45; cursor: default; }
 
-.seller-notifications-feed .nf-row {
-    border-bottom-color: var(--nf-float-divider) !important;
-    background: #FFFFFF !important;
+/* Folder tabs and search remain OUTSIDE the floating feed. */
+.sn-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin: 14px 2px 17px;
 }
-
-.seller-notifications-feed .nf-row:hover {
-    background: #F8FAFC !important;
+.sn-tabs { display: flex; align-items: center; gap: 25px; }
+.sn-tab {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    border: 0;
+    background: transparent;
+    padding: 5px 0;
+    color: #7b8793;
+    font-size: 12px;
+    font-weight: 650;
+    text-decoration: none;
 }
-
-.seller-notifications-feed .nf-row--unread {
-    background: #FFFEFB !important;
+.sn-tab:hover,
+.sn-tab[aria-current="page"] { color: var(--sn-gold); }
+.sn-search { position: relative; width: min(100%, 340px); }
+.sn-search input {
+    display: block;
+    width: 100%;
+    height: 42px;
+    border: 1px solid #dce2e8;
+    border-radius: 12px;
+    outline: 0;
+    background: #fff;
+    padding: 0 38px 0 14px;
+    color: #364152;
+    font-size: 11.5px;
 }
-
-.seller-notifications-feed .nf-row--unread:hover {
-    background: #F8FAFC !important;
+.sn-search input::placeholder { color: #9ca5af; }
+.sn-search input:focus {
+    border-color: #c6a267;
+    box-shadow: 0 0 0 3px rgba(200,137,18,.09);
 }
-
-/* Avatar is identity content, not another floating card. */
-.seller-notifications-feed .nf-avatar {
-    box-shadow: none !important;
+.sn-search-clear {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: none;
+    width: 26px;
+    height: 26px;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #89939f;
+    cursor: pointer;
+    font-size: 19px;
+    line-height: 1;
 }
+.sn-search-clear[data-visible="1"] { display: block; }
+.sn-search-clear:hover { color: var(--sn-ink); background: #f1f3f5; }
 
-/* ------------------------------------------------------------
-   CONTROLS = FLAT
-   ------------------------------------------------------------ */
-.seller-notifications-feed .nf-search__input,
-.seller-notifications-feed .nf-mark-all,
-.seller-notifications-feed .nf-view,
-.seller-notifications-feed .nf-menu__button,
-.seller-notifications-feed .nf-empty__icon,
-.seller-notifications-feed .nf-alert__icon {
-    box-shadow: none !important;
-    transform: none !important;
+/* One elevated workspace; notification rows are flat. */
+.sn-shell {
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    border: 1px solid var(--sn-line);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: var(--sn-shadow);
 }
-
-.seller-notifications-feed .nf-mark-all:hover,
-.seller-notifications-feed .nf-view:hover,
-.seller-notifications-feed .nf-menu__button:hover,
-.seller-notifications-feed .nf-menu__button[aria-expanded="true"] {
-    transform: none !important;
+.sn-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 58px;
+    padding: 13px 20px;
+    border-bottom: 1px solid #edf0f3;
+    border-radius: 20px 20px 0 0;
 }
-
-/* Search keeps only an accessibility focus ring. */
-.seller-notifications-feed .nf-search__input:focus {
-    box-shadow: 0 0 0 3px rgba(213,150,23,.08) !important;
+.sn-toolbar h2 { margin: 0; color: #303740; font-size: 15px; font-weight: 750; }
+.sn-count { color: #85909c; font-size: 11px; font-weight: 600; }
+.sn-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto 34px;
+    align-items: center;
+    gap: 14px;
+    min-height: 104px;
+    padding: 17px 19px;
+    border-bottom: 1px solid #e8ebef;
+    background: #fff;
+    transition: background-color .14s ease;
 }
-
-/* Empty states belong to the notification panel. */
-.seller-notifications-feed .nf-empty,
-.seller-notifications-feed .nf-search-empty {
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
+.sn-row:last-child { border-bottom: 0; }
+.sn-row:hover, .sn-row:focus-within { background: #f6f7f9; }
+.sn-row[hidden] { display: none !important; }
+.sn-avatar {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    place-items: center;
+    border: 2px solid #e4c489;
+    border-radius: 50%;
+    background: #161616;
 }
-
-/* ------------------------------------------------------------
-   POPOVER MENU
-   This may float because it is a transient overlay.
-   ------------------------------------------------------------ */
-.seller-notifications-feed .nf-menu__panel {
-    border-color: #E1E5EA !important;
-    background: #FFFFFF !important;
-    box-shadow:
-        0 4px 10px rgba(15, 23, 42, .05),
-        0 18px 42px rgba(15, 23, 42, .14),
-        0 32px 70px rgba(15, 23, 42, .08) !important;
+.sn-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    transform: scale(1.4);
 }
-
-/* No physical lift on any persistent container. */
-.seller-notifications-feed .nf-panel:hover,
-.seller-notifications-feed .nf-pagination:hover,
-.seller-notifications-feed .nf-alert:hover {
-    transform: none !important;
+.sn-main { min-width: 0; }
+.sn-title {
+    margin: 0;
+    overflow: hidden;
+    color: #242a32;
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+.sn-message {
+    margin: 4px 0 0;
+    overflow: hidden;
+    color: #717b87;
+    font-size: 11.5px;
+    line-height: 1.55;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sn-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+    color: #929ca6;
+    font-size: 10.5px;
+    font-weight: 550;
+}
+.sn-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #aeb6bf; }
+.sn-unread-label { color: #a3731b; font-weight: 700; }
+.sn-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    height: 36px;
+    border: 0;
+    border-radius: 11px;
+    background: #f0f2f4;
+    padding: 0 14px;
+    color: #30363d;
+    font-size: 11px;
+    font-weight: 750;
+    text-decoration: none;
+}
+.sn-view:hover { background: #e7e9ec; color: #20252b; }
+.sn-view--disabled { opacity: .5; cursor: default; }
 
-/* Mobile keeps the same hierarchy with a tighter shadow spread. */
-@media (max-width: 760px) {
-    .seller-notifications-feed .nf-panel {
-        box-shadow:
-            0 2px 4px rgba(15, 23, 42, .035),
-            0 8px 18px rgba(15, 23, 42, .06),
-            0 18px 38px rgba(15, 23, 42, .07) !important;
-    }
+/* Vertical 3-dots menu (same interaction scheme as Buyer Notifications). */
+.sn-menu-wrap { position: relative; display: flex; justify-content: flex-end; }
+.sn-menu-toggle {
+    display: grid;
+    width: 34px;
+    height: 36px;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #6b7480;
+    cursor: pointer;
+}
+.sn-menu-toggle:hover,
+.sn-menu-toggle[aria-expanded="true"] { color: #27303a; background: #f0f2f5; }
+.sn-menu-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+.sn-menu {
+    position: absolute;
+    z-index: 80;
+    top: 42px;
+    right: 0;
+    width: 224px;
+    padding: 7px;
+    border: 1px solid #e0e5ea;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 18px 42px rgba(15,23,42,.16), 0 3px 10px rgba(15,23,42,.06);
+}
+.sn-menu[hidden] { display: none !important; }
+.sn-menu form { margin: 0; }
+.sn-menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 43px;
+    gap: 10px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    padding: 8px 11px;
+    color: #374151;
+    cursor: pointer;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+}
+.sn-menu-item:hover { background: #f2f4f7; color: #20252b; }
+.sn-menu-item svg { width: 18px; height: 18px; flex: 0 0 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sn-menu-item--danger { color: #cc2936; }
+.sn-menu-item--danger:hover { color: #b91c30; background: #fff0f2; }
+.sn-menu-divider { height: 1px; margin: 5px 5px; background: #eceff2; }
 
-    .seller-notifications-feed .nf-pagination,
-    .seller-notifications-feed .nf-alert {
-        box-shadow:
-            0 1px 3px rgba(15, 23, 42, .03),
-            0 6px 14px rgba(15, 23, 42, .05),
-            0 12px 26px rgba(15, 23, 42, .055) !important;
-    }
+/* Empty feed, search feedback and pagination. */
+.sn-empty {
+    display: grid;
+    min-height: 315px;
+    place-items: center;
+    padding: 48px 22px;
+    text-align: center;
+}
+.sn-empty[hidden] { display: none !important; }
+.sn-empty h3 { margin: 0; color: #576270; font-size: 17px; font-weight: 700; }
+.sn-empty p { margin: 8px 0 0; color: #8a94a1; font-size: 11.5px; line-height: 1.6; }
+.sn-empty a { display: inline-block; margin-top: 15px; color: var(--sn-gold-hover); font-size: 11.5px; font-weight: 700; text-decoration: none; }
+.sn-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin: 17px 2px 0;
+}
+.sn-range { margin: 0; color: #909aa6; font-size: 11px; }
+.sn-pagination { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+.sn-page {
+    display: inline-flex;
+    min-width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e8ebef;
+    border-radius: 10px;
+    background: #fff;
+    padding: 0 8px;
+    color: #6e7a87;
+    font-size: 11px;
+    font-weight: 650;
+    text-decoration: none;
+}
+.sn-page:hover { background: #f5f6f8; color: #3b4551; }
+.sn-page[aria-current="page"] { border-color: var(--sn-gold); background: var(--sn-gold); color: #fff; }
+.sn-page--disabled { background: #f3f4f6; color: #b0b8c2; }
+.sn-page-ellipsis { padding: 0 5px; color: #9ca6af; font-size: 12px; }
+/* Server action feedback is presented only by the shared Seller toast engine. */
+.seller-notifications-feed button:focus-visible,
+.seller-notifications-feed a:focus-visible { outline: 2px solid var(--sn-gold); outline-offset: 3px; }
+
+@media (max-width: 700px) {
+    .sn-header { align-items: flex-start; flex-direction: column; }
+    .sn-controls { align-items: stretch; flex-direction: column; }
+    .sn-search { width: 100%; }
+    .sn-shell { border-radius: 16px; }
+    .sn-toolbar { border-radius: 16px 16px 0 0; padding: 12px 14px; }
+    .sn-row { grid-template-columns: 43px minmax(0, 1fr) 32px; gap: 10px; min-height: 96px; padding: 14px 12px; }
+    .sn-avatar { width: 43px; height: 43px; }
+    .sn-title { font-size: 12.5px; }
+    .sn-message { font-size: 10.5px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .sn-meta { font-size: 9.5px; }
+    .sn-view { display: none; }
+    .sn-menu-wrap { grid-column: 3; grid-row: 1; }
+    .sn-menu { right: -2px; width: 210px; }
+    .sn-footer { align-items: flex-start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sn-row { transition: none; }
+}
+@media print {
+    .sn-controls, .sn-menu-wrap, .sn-view, .sn-mark-all, .sn-footer { display: none !important; }
+    .sn-shell { box-shadow: none; }
 }
 @endverbatim
 </style>
 @endpush
 
 @section('content')
-
 @php
-
-    $totalNotifications = method_exists($notifications, 'total')
-
-        ? (int) $notifications->total()
-
-        : (int) $notifications->count();
-
+    $totalNotifications = (int) $notifications->total();
 @endphp
+<div class="seller-notifications-feed" data-seller-notification-page>
 
-
-
-
-
-
-
-<div class="seller-notifications-feed">
-
-    @if(session('success'))
-
-        <div class="nf-alert nf-alert--success" role="status">
-
-            <span class="nf-alert__icon" aria-hidden="true">
-
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                    <circle cx="12" cy="12" r="9"></circle>
-
-                    <path d="m7.5 12 3 3 6-6"></path>
-
-                </svg>
-
-            </span>
-
-            <span>{{ session('success') }}</span>
-
-        </div>
-
-    @endif
-
-
-
-    @if($errors->any())
-
-        <div class="nf-alert nf-alert--error" role="alert">
-
-            <span class="nf-alert__icon" aria-hidden="true">
-
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                    <circle cx="12" cy="12" r="9"></circle>
-
-                    <path d="M12 7v6"></path>
-
-                    <path d="M12 17h.01"></path>
-
-                </svg>
-
-            </span>
-
-            <span>{{ $errors->first() }}</span>
-
-        </div>
-
-    @endif
-
-
-
-    <header class="nf-top">
-
+    <header class="sn-header">
         <div>
-
-            <p class="nf-eyebrow">Activity</p>
-
-            <h1 class="nf-title">Notifications</h1>
-
-            <p class="nf-subtitle">
-
-                Seller alerts and SARI activity updates.
-
-                <strong>{{ (int) $unread }} unread</strong>.
-
-            </p>
-
+            <p class="sn-eyebrow">Seller updates</p>
+            <h1 class="sn-heading">Your <span>Notifications</span></h1>
+            <p class="sn-subtitle">Orders, fulfillment and marketplace updates. <strong>{{ number_format((int) $unread) }} unread</strong>.</p>
         </div>
-
-
-
-        @if($unread > 0)
-
+        @if(!$showArchived)
             <form method="POST" action="{{ route('seller.notifications.read-all') }}">
-
                 @csrf
-
-                <button type="submit" class="nf-mark-all">
-
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-
-                        <path d="m5 12 4 4L19 6"></path>
-
-                        <path d="m12 16 2 2 5-5"></path>
-
-                    </svg>
-
-                    Mark all as read
-
-                </button>
-
+                <button type="submit" class="sn-mark-all" @disabled((int) $unread === 0)>Mark all as read</button>
             </form>
-
         @endif
-
     </header>
 
-
-
-    <div class="nf-toolbar">
-
-        <div class="nf-search">
-
-            <svg class="nf-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-
-                <circle cx="11" cy="11" r="6.5"></circle>
-
-                <path d="m16 16 4 4"></path>
-
-            </svg>
-
-
-
-            <input
-
-                id="sellerNotificationSearch"
-
-                type="search"
-
-                class="nf-search__input"
-
-                autocomplete="off"
-
-                placeholder="Search notifications..."
-
-                aria-label="Search notifications"
-
-            >
-
-
-
-            <button
-
-                id="sellerNotificationSearchClear"
-
-                type="button"
-
-                class="nf-search__clear"
-
-                aria-label="Clear notification search"
-
-            >
-
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-
-                    <path d="m7 7 10 10"></path>
-
-                    <path d="m17 7-10 10"></path>
-
-                </svg>
-
-            </button>
-
+    <div class="sn-controls">
+        <nav class="sn-tabs" aria-label="Notification folders">
+            <a href="{{ route('seller.notifications.index') }}" class="sn-tab" @unless($showArchived) aria-current="page" @endunless wire:navigate.hover>Recent</a>
+            <a href="{{ route('seller.notifications.index', ['filter' => 'archived']) }}" class="sn-tab" @if($showArchived) aria-current="page" @endif wire:navigate.hover>Archived</a>
+        </nav>
+        <div class="sn-search">
+            <input id="sellerNotificationSearch" type="search" placeholder="Search notifications on this page..." aria-label="Search notifications on this page" autocomplete="off">
+            <button type="button" id="sellerNotificationSearchClear" class="sn-search-clear" aria-label="Clear search" data-visible="0">&times;</button>
         </div>
-
-
-
-        <span id="sellerNotificationSearchCount" class="nf-search-count">
-
-            {{ $notifications->count() }} shown
-
-        </span>
-
     </div>
 
-
-
-    <section class="nf-panel" aria-label="Seller notifications">
-
-        <div id="sellerNotificationList">
-
-            @forelse($notifications as $notification)
-
-                <article
-
-                    class="nf-row {{ $notification->read_at ? '' : 'nf-row--unread' }}"
-
-                    data-notification-item
-
-                    data-search="{{ strtolower(trim(($notification->title ?? '') . ' ' . ($notification->message ?? '') . ' ' . optional($notification->created_at)->diffForHumans())) }}"
-
-                >
-
-                    <div class="nf-avatar" aria-hidden="true">
-
-                        <img src="{{ asset('images/sari-main-logo.png') }}" alt="">
-
-                    </div>
-
-
-
-                    <div class="nf-main">
-
-                        <p class="nf-row__title">{{ $notification->title }}</p>
-
-                        <p class="nf-row__message">{{ $notification->message }}</p>
-
-
-
-                        <div class="nf-row__meta">
-
-                            <span>{{ $notification->read_at ? 'Notification' : 'New notification' }}</span>
-
-                            <span class="nf-meta-dot" aria-hidden="true"></span>
-
-                            <time datetime="{{ optional($notification->created_at)->toIso8601String() }}">
-
-                                {{ $notification->created_at?->diffForHumans() }}
-
-                            </time>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="nf-actions">
-
-                        @if($notification->action_url)
-
-                            <a href="{{ $notification->action_url }}" class="nf-view">View</a>
-
-                        @else
-
-                            <span class="nf-view nf-view--disabled" aria-disabled="true">View</span>
-
-                        @endif
-
-
-
-                        <div class="nf-menu" data-notification-menu>
-
-                            <button
-
-                                type="button"
-
-                                class="nf-menu__button"
-
-                                data-notification-menu-toggle
-
-                                aria-haspopup="true"
-
-                                aria-expanded="false"
-
-                                aria-label="Notification options"
-
-                            >
-
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-
-                                    <circle cx="12" cy="5" r="1.7"></circle>
-
-                                    <circle cx="12" cy="12" r="1.7"></circle>
-
-                                    <circle cx="12" cy="19" r="1.7"></circle>
-
-                                </svg>
-
-                            </button>
-
-
-
-                            <div class="nf-menu__panel" data-notification-menu-panel>
-
-                                @if($notification->action_url)
-
-                                    <a href="{{ $notification->action_url }}" class="nf-menu__action">
-
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-
-                                            <path d="M5 12h14"></path>
-
-                                            <path d="m13 6 6 6-6 6"></path>
-
-                                        </svg>
-
-                                        Open notification
-
-                                    </a>
-
-                                @endif
-
-
-
-                                @if(!$notification->read_at)
-
-                                    <form method="POST" action="{{ route('seller.notifications.read', $notification) }}">
-
-                                        @csrf
-
-                                        <button type="submit" class="nf-menu__action">
-
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-
-                                                <path d="m5 12 4 4L19 6"></path>
-
-                                            </svg>
-
-                                            Mark as read
-
-                                        </button>
-
-                                    </form>
-
-                                @endif
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            @empty
-
-                <div class="nf-empty">
-
-                    <div>
-
-                        <div class="nf-empty__icon" aria-hidden="true">
-
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-
-                                <path d="M10 21h4"></path>
-
-                            </svg>
-
-                        </div>
-
-                        <p class="nf-empty__title">No notifications yet</p>
-
-                        <p class="nf-empty__copy">Seller alerts and SARI activity updates will appear here.</p>
-
-                    </div>
-
-                </div>
-
-            @endforelse
-
-
-
-            <div id="sellerNotificationSearchEmpty" class="nf-search-empty" hidden>
-
-                <div>
-
-                    <div class="nf-empty__icon" aria-hidden="true">
-
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-
-                            <circle cx="11" cy="11" r="6.5"></circle>
-
-                            <path d="m16 16 4 4"></path>
-
-                        </svg>
-
-                    </div>
-
-                    <p class="nf-empty__title">No matching notifications</p>
-
-                    <p class="nf-empty__copy">Try a different keyword.</p>
-
-                </div>
-
-            </div>
-
+    <section class="sn-shell" aria-label="Seller notifications">
+        <div class="sn-toolbar">
+            <h2>{{ $showArchived ? 'Archived Notifications' : 'Notifications' }}</h2>
+            <span id="sellerNotificationSearchCount" class="sn-count">{{ number_format($totalNotifications) }} {{ $totalNotifications === 1 ? 'notification' : 'notifications' }}</span>
         </div>
 
+        <div id="sellerNotificationFeedItems">
+            @forelse($notifications as $notification)
+                <article class="sn-row" data-notification-item data-search="{{ strtolower(trim(($notification->title ?? '') . ' ' . ($notification->message ?? '') . ' ' . optional($notification->created_at)->diffForHumans())) }}">
+                    <span class="sn-avatar" aria-hidden="true"><img src="{{ asset('images/sari-main-logo.png') }}" alt="" loading="lazy"></span>
+                    <div class="sn-main">
+                        <h3 class="sn-title">{{ $notification->title }}</h3>
+                        <p class="sn-message">{{ $notification->message }}</p>
+                        <div class="sn-meta">
+                            <span @class(['sn-unread-label' => !$notification->read_at && !$showArchived])>{{ $showArchived ? 'Archived' : ($notification->read_at ? 'Notification' : 'New notification') }}</span>
+                            <span class="sn-meta-dot" aria-hidden="true"></span>
+                            <time datetime="{{ optional($notification->created_at)->toIso8601String() }}">{{ $notification->created_at?->diffForHumans() }}</time>
+                        </div>
+                    </div>
+                    @if($notification->action_url)
+                        <a href="{{ $notification->action_url }}" class="sn-view">View</a>
+                    @else
+                        <span class="sn-view sn-view--disabled" aria-disabled="true">View</span>
+                    @endif
+                    <div class="sn-menu-wrap" data-notification-menu>
+                        <button type="button" class="sn-menu-toggle" data-notification-menu-toggle aria-label="More actions for {{ $notification->title }}" aria-haspopup="true" aria-expanded="false" aria-controls="sn-notification-menu-{{ $notification->id }}">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.65"/><circle cx="12" cy="12" r="1.65"/><circle cx="12" cy="19" r="1.65"/></svg>
+                        </button>
+                        <div id="sn-notification-menu-{{ $notification->id }}" class="sn-menu" data-notification-menu-panel hidden>
+                            @if(!$notification->read_at && !$showArchived)
+                                <form method="POST" action="{{ route('seller.notifications.read', $notification) }}">
+                                    @csrf
+                                    <button type="submit" class="sn-menu-item">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5 5.5-5.5"/></svg>
+                                        Mark as read
+                                    </button>
+                                </form>
+                            @endif
+                            @if($notification->action_url)
+                                <a href="{{ $notification->action_url }}" class="sn-menu-item">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+                                    View details
+                                </a>
+                            @endif
+                            <div class="sn-menu-divider" aria-hidden="true"></div>
+                            @if($showArchived)
+                                <form method="POST" action="{{ route('seller.notifications.restore', $notification) }}">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="sn-menu-item">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>
+                                        Restore
+                                    </button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('seller.notifications.archive', $notification) }}">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="sn-menu-item">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v11h14V9M10 13h4"/></svg>
+                                        Archive
+                                    </button>
+                                </form>
+                            @endif
+                            <div class="sn-menu-divider" aria-hidden="true"></div>
+                            <form method="POST" action="{{ route('seller.notifications.destroy', $notification) }}" data-seller-notification-delete>
+                                @csrf @method('DELETE')
+                                <button type="submit" class="sn-menu-item sn-menu-item--danger">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M5 6l1 14h12l1-14M10 10v7M14 10v7"/></svg>
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            @empty
+                <div class="sn-empty">
+                    <div>
+                        <h3>{{ $showArchived ? 'No archived notifications' : 'No notifications yet' }}</h3>
+                        <p>{{ $showArchived ? 'Archived notifications will appear here. You can restore them anytime.' : 'Order and marketplace updates will appear here as they arrive.' }}</p>
+                        @if($showArchived)
+                            <a href="{{ route('seller.notifications.index') }}" wire:navigate.hover>Back to Recent</a>
+                        @endif
+                    </div>
+                </div>
+            @endforelse
+            <div class="sn-empty" id="sellerNotificationSearchEmpty" hidden>
+                <div><h3>No matching notifications</h3><p>Try a different keyword or another page.</p></div>
+            </div>
+        </div>
     </section>
 
-
-
-    @if($notifications->hasPages())
-
-        <div class="nf-pagination">
-
-            {{ $notifications->links() }}
-
-        </div>
-
+    @if($totalNotifications > 0)
+        <footer class="sn-footer">
+            <p class="sn-range">Showing {{ number_format($notifications->firstItem()) }}–{{ number_format($notifications->lastItem()) }} of {{ number_format($totalNotifications) }}</p>
+            @if($notifications->hasPages())
+                @php
+                    $currentPage = $notifications->currentPage();
+                    $lastPage = $notifications->lastPage();
+                    $firstMiddle = max(2, min($currentPage - 1, $lastPage - 3));
+                    $lastMiddle = min($lastPage - 1, max($currentPage + 1, 4));
+                @endphp
+                <nav class="sn-pagination" aria-label="Notification pages">
+                    @if($notifications->onFirstPage())
+                        <span class="sn-page sn-page--disabled" aria-disabled="true" aria-label="Previous page">‹</span>
+                    @else
+                        <a class="sn-page" href="{{ $notifications->previousPageUrl() }}" aria-label="Previous page" rel="prev" wire:navigate.hover>‹</a>
+                    @endif
+                    <a class="sn-page" href="{{ $notifications->url(1) }}" aria-label="Page 1" @if($currentPage === 1) aria-current="page" @endif wire:navigate.hover>1</a>
+                    @if($firstMiddle > 2)<span class="sn-page-ellipsis" aria-hidden="true">…</span>@endif
+                    @for($page = $firstMiddle; $page <= $lastMiddle; $page++)
+                        <a class="sn-page" href="{{ $notifications->url($page) }}" aria-label="Page {{ $page }}" @if($page === $currentPage) aria-current="page" @endif wire:navigate.hover>{{ $page }}</a>
+                    @endfor
+                    @if($lastMiddle < $lastPage - 1)<span class="sn-page-ellipsis" aria-hidden="true">…</span>@endif
+                    @if($lastPage > 1)
+                        <a class="sn-page" href="{{ $notifications->url($lastPage) }}" aria-label="Page {{ $lastPage }}" @if($currentPage === $lastPage) aria-current="page" @endif wire:navigate.hover>{{ $lastPage }}</a>
+                    @endif
+                    @if($notifications->hasMorePages())
+                        <a class="sn-page" href="{{ $notifications->nextPageUrl() }}" aria-label="Next page" rel="next" wire:navigate.hover>›</a>
+                    @else
+                        <span class="sn-page sn-page--disabled" aria-disabled="true" aria-label="Next page">›</span>
+                    @endif
+                </nav>
+            @endif
+        </footer>
     @endif
-
 </div>
-
 @endsection
 
-
-
 @push('scripts')
-
 <script>
-
 (function () {
+    // Delegated listeners survive Livewire navigation; never bind twice.
+    if (window.__SARI_SELLER_NOTIFICATION_UI_BOUND__) return;
+    window.__SARI_SELLER_NOTIFICATION_UI_BOUND__ = true;
 
-    function bootSellerNotificationsFeed() {
-
-        const search = document.getElementById('sellerNotificationSearch');
-
-        const clear = document.getElementById('sellerNotificationSearchClear');
-
-        const count = document.getElementById('sellerNotificationSearchCount');
-
-        const empty = document.getElementById('sellerNotificationSearchEmpty');
-
-        const items = Array.from(document.querySelectorAll('[data-notification-item]'));
-
-
-
-        if (!search || search.dataset.initialized === '1') return;
-
-        search.dataset.initialized = '1';
-
-        window.__SARI_SELLER_NOTIFICATIONS_LIFECYCLE__?.abort();
-
-        const lifecycle = new AbortController();
-        const { signal } = lifecycle;
-
-        window.__SARI_SELLER_NOTIFICATIONS_LIFECYCLE__ = lifecycle;
-
-
-
-        const closeMenus = (except = null) => {
-
-            document.querySelectorAll('[data-notification-menu-panel]').forEach((panel) => {
-
-                if (panel === except) return;
-
-                panel.dataset.open = '0';
-
-                panel.closest('[data-notification-menu]')
-
-                    ?.querySelector('[data-notification-menu-toggle]')
-
-                    ?.setAttribute('aria-expanded', 'false');
-
-            });
-
-        };
-
-
-
-        const applySearch = () => {
-
-            const query = String(search.value || '').trim().toLowerCase();
-
-            let visible = 0;
-
-
-
-            items.forEach((item) => {
-
-                const haystack = String(item.dataset.search || '').toLowerCase();
-
-                const matches = query === '' || haystack.includes(query);
-
-
-
-                item.hidden = !matches;
-
-                if (matches) visible += 1;
-
-            });
-
-
-
-            if (clear) clear.dataset.visible = query === '' ? '0' : '1';
-
-            if (count) count.textContent = `${visible} shown`;
-
-            if (empty) empty.hidden = query === '' || visible > 0;
-
-
-
-            closeMenus();
-
-        };
-
-
-
-        search.addEventListener('input', applySearch);
-
-
-
-        clear?.addEventListener('click', () => {
-
-            search.value = '';
-
-            applySearch();
-
-            search.focus();
-
+    const root = () => document.querySelector('[data-seller-notification-page]');
+    const closeMenus = (except = null) => {
+        root()?.querySelectorAll('[data-notification-menu-panel]').forEach((menu) => {
+            if (menu === except) return;
+            menu.hidden = true;
+            menu.closest('[data-notification-menu]')
+                ?.querySelector('[data-notification-menu-toggle]')
+                ?.setAttribute('aria-expanded', 'false');
         });
+    };
+    const updateSearch = () => {
+        const page = root();
+        if (!page) return;
+        const input = page.querySelector('#sellerNotificationSearch');
+        const clear = page.querySelector('#sellerNotificationSearchClear');
+        const count = page.querySelector('#sellerNotificationSearchCount');
+        const empty = page.querySelector('#sellerNotificationSearchEmpty');
+        const query = String(input?.value || '').trim().toLowerCase();
+        const rows = Array.from(page.querySelectorAll('[data-notification-item]'));
+        let visible = 0;
+        rows.forEach((row) => {
+            const matches = !query || String(row.dataset.search || '').includes(query);
+            row.hidden = !matches;
+            if (matches) visible++;
+        });
+        if (clear) clear.dataset.visible = query ? '1' : '0';
+        if (count && query) count.textContent = `${visible} matching on this page`;
+        else if (count) count.textContent = count.dataset.totalLabel || count.textContent;
+        if (empty) empty.hidden = !query || visible !== 0 || rows.length === 0;
+        closeMenus();
+    };
+    const setup = () => {
+        const count = root()?.querySelector('#sellerNotificationSearchCount');
+        if (count) count.dataset.totalLabel = count.textContent;
+    };
+    document.addEventListener('input', (event) => {
+        if (event.target?.id === 'sellerNotificationSearch' && root()?.contains(event.target)) updateSearch();
+    });
+    document.addEventListener('click', (event) => {
+        const page = root();
+        if (!page || !page.contains(event.target)) return;
+        if (event.target.closest('#sellerNotificationSearchClear')) {
+            const input = page.querySelector('#sellerNotificationSearch');
+            if (input) { input.value = ''; updateSearch(); input.focus(); }
+            return;
+        }
+        const toggle = event.target.closest('[data-notification-menu-toggle]');
+        if (toggle) {
+            event.preventDefault();
+            const menu = toggle.closest('[data-notification-menu]')?.querySelector('[data-notification-menu-panel]');
+            if (!menu) return;
+            const shouldOpen = menu.hidden;
+            closeMenus();
+            menu.hidden = !shouldOpen;
+            toggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+            return;
+        }
+        if (!event.target.closest('[data-notification-menu]')) closeMenus();
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && root()) closeMenus();
+    });
+    // Keep the notification-action toast and its sound in the same browser
+    // document as the seller's click. Native POST -> redirect loses user
+    // activation, so the browser may block audio on the redirect page.
+    // We still let Laravel authenticate, authorize and mutate the records.
+    if (!window.__SARI_SELLER_NOTIFICATION_ACTION_TOAST_BOUND__) {
+        window.__SARI_SELLER_NOTIFICATION_ACTION_TOAST_BOUND__ = true;
+        document.addEventListener('submit', async (event) => {
+            const form = event.target;
+            const page = root();
+            if (!page || !form || !page.contains(form) || form.tagName !== 'FORM'
+                || form.method.toUpperCase() !== 'POST') return;
 
-
-
-        document.addEventListener('click', (event) => {
-
-            const toggle = event.target.closest('[data-notification-menu-toggle]');
-
-
-
-            if (toggle) {
-
+            if (form.matches('[data-seller-notification-delete]')
+                && !window.confirm('Delete this notification from your history? This cannot be undone. Orders and other marketplace records will not be deleted.')) {
                 event.preventDefault();
-
-
-
-                const wrap = toggle.closest('[data-notification-menu]');
-
-                const panel = wrap?.querySelector('[data-notification-menu-panel]');
-
-                if (!panel) return;
-
-
-
-                const opening = panel.dataset.open !== '1';
-
-                closeMenus(panel);
-
-                panel.dataset.open = opening ? '1' : '0';
-
-                toggle.setAttribute('aria-expanded', opening ? 'true' : 'false');
-
                 return;
-
             }
 
+            // Progressive enhancement: on old browsers use Laravel redirects
+            // and the global flash-to-toast bridge instead.
+            if (!window.fetch || !window.SariSellerToast?.show || !window.DOMParser) return;
+            event.preventDefault();
+            if (form.dataset.notificationSubmitting === '1') return;
 
-
-            if (!event.target.closest('[data-notification-menu]')) {
-
-                closeMenus();
-
+            const action = new URL(form.action, window.location.href);
+            if (action.origin !== window.location.origin) {
+                window.SariSellerToast.error('Unable to submit this notification action safely.');
+                return;
             }
 
-        }, { signal });
+            form.dataset.notificationSubmitting = '1';
+            const submit = form.querySelector('button[type="submit"]');
+            if (submit) submit.disabled = true;
 
+            try {
+                const response = await fetch(action.href, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    cache: 'no-store',
+                    redirect: 'follow',
+                    headers: { Accept: 'text/html' },
+                    body: new FormData(form),
+                });
+                const html = await response.text();
+                const destination = new URL(response.url, window.location.href);
+                const documentResult = new DOMParser().parseFromString(html, 'text/html');
+                const flash = documentResult.getElementById('sariSellerToastFlash');
+                const errorText = (flash?.dataset.error || '').trim();
+                const successText = (flash?.dataset.success || '').trim();
 
-
-        document.addEventListener('keydown', (event) => {
-
-            if (event.key === 'Escape') {
-
-                closeMenus();
-
-                if (document.activeElement === search && search.value) {
-
-                    search.value = '';
-
-                    applySearch();
-
+                // The expected successful response is Laravel's redirect back
+                // to the *same notification page*. Do not turn login, CSRF,
+                // 403, validation errors, or unexpected HTML into success.
+                if (!response.ok || !response.redirected
+                    || destination.origin !== window.location.origin
+                    || destination.pathname !== window.location.pathname
+                    || errorText) {
+                    throw new Error(errorText || 'Unable to complete this notification action. Please try again.');
                 }
 
+                const feedback = successText || (
+                    action.pathname.includes('/read-all') ? 'Notifications marked as read.'
+                    : action.pathname.endsWith('/read') ? 'Notification marked as read.'
+                    : 'Notification updated.'
+                );
+                window.SariSellerToast.success(feedback);
+
+                // Livewire changes the page without interrupting the audible
+                // toast. The Seller shell already refreshes badges on navigate.
+                if (typeof window.Livewire?.navigate === 'function') {
+                    window.Livewire.navigate(destination.href);
+                } else {
+                    // Audio is initiated *before* fallback full navigation.
+                    window.setTimeout(() => window.location.assign(destination.href), 550);
+                }
+            } catch (error) {
+                window.SariSellerToast.error(error?.message || 'Unable to complete this notification action.');
+                form.dataset.notificationSubmitting = '0';
+                if (submit) submit.disabled = false;
             }
-
-        }, { signal });
-
-
-
-        const cleanup = () => {
-
-            search.dataset.initialized = '0';
-            lifecycle.abort();
-
-            if (window.__SARI_SELLER_NOTIFICATIONS_LIFECYCLE__ === lifecycle) {
-                window.__SARI_SELLER_NOTIFICATIONS_LIFECYCLE__ = null;
-            }
-
-        };
-
-
-
-        document.addEventListener('livewire:navigating', cleanup, { once: true, signal });
-        window.addEventListener('beforeunload', cleanup, { once: true, signal });
-
+        });
     }
-
-
-
-    if (document.readyState === 'loading') {
-
-        document.addEventListener('DOMContentLoaded', bootSellerNotificationsFeed, { once: true });
-
-    } else {
-
-        bootSellerNotificationsFeed();
-
-    }
-
+    document.addEventListener('livewire:navigated', setup);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup, { once: true });
+    else setup();
 })();
-
 </script>
-
 @endpush

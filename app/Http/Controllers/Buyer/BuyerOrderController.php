@@ -37,7 +37,7 @@ class BuyerOrderController extends Controller
 
         $orders = $this->identity
             ->apply(MarketplaceOrder::query(), $request)
-            ->with(['seller', 'reviews', 'returnRequest', 'logisticsParcel', 'events'])
+            ->with(['seller', 'latestEvent'])
             ->latest('created_at')
             ->get();
 
