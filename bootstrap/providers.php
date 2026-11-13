@@ -10,4 +10,5 @@ return [
     SellerShippingServiceProvider::class,
     SellerCenterServiceProvider::class,
     FinanceServiceProvider::class,
+    \App\Providers\AdminNotificationServiceProvider::class,
 ];

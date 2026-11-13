@@ -24,6 +24,7 @@ class MobileCatalogController extends Controller
             'category' => ['nullable', 'string', 'max:100'],
             'sort' => ['nullable', Rule::in(['newest', 'price_low', 'price_high'])],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'seller_id' => ['nullable', 'integer', 'min:1'],
         ]);
 
         $query = SellerProduct::query()
@@ -45,6 +46,10 @@ class MobileCatalogController extends Controller
                 'preparation_days',
                 'created_at',
             ]);
+
+        if (isset($filters['seller_id'])) {
+            $query->where('seller_account_id', (int) $filters['seller_id']);
+        }
 
         if (filled($filters['q'] ?? null)) {
             $search = trim((string) $filters['q']);

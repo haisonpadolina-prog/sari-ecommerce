@@ -1,6 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\V1\MobileAuthController;
+use App\Http\Controllers\Api\V1\MobileDeviceController;
+use App\Http\Controllers\Api\V1\MobileUpdatesController;
+use App\Http\Controllers\Api\V1\MobileRiderLocationController;
+use App\Http\Controllers\Api\V1\MobileBuyerAiController;
+use App\Http\Controllers\Api\V1\MobileBuyerRecentActivityController;
+use App\Http\Middleware\Api\RecordMobileBuyerActivity;
+use App\Http\Controllers\Api\V1\MobileGoogleAuthController;
+use App\Http\Controllers\Api\V1\MobileBuyerAddressConfirmationController;
 use App\Http\Controllers\Api\V1\MobileBuyerAccountController;
 use App\Http\Controllers\Api\V1\MobileBuyerCartController;
 use App\Http\Controllers\Api\V1\MobileBuyerCheckoutController;
@@ -93,19 +101,33 @@ Route::prefix('v1')->group(function (): void {
     /* Authentication */
     Route::post('auth/login', [MobileAuthController::class, 'login'])
         ->middleware('throttle:5,1');
+    Route::post('auth/google', [MobileGoogleAuthController::class, 'login'])
+        ->middleware('throttle:5,1');
 
     Route::middleware(['auth:sanctum', EnsureMobileRole::class])->group(function (): void {
         Route::get('auth/me', [MobileAuthController::class, 'me']);
         Route::post('auth/logout', [MobileAuthController::class, 'logout']);
         Route::post('auth/logout-all', [MobileAuthController::class, 'logoutAll'])
             ->middleware('throttle:5,1');
+        Route::post('devices', [MobileDeviceController::class, 'register'])->middleware('throttle:12,1');
+        Route::delete('devices', [MobileDeviceController::class, 'unregister']);
+        Route::get('updates', [MobileUpdatesController::class, 'index'])->middleware('throttle:60,1');
     });
 
     /* Buyer */
-    Route::middleware(['auth:sanctum', EnsureMobileRole::class.':buyer'])
+    Route::middleware(['auth:sanctum', EnsureMobileRole::class.':buyer', RecordMobileBuyerActivity::class])
         ->prefix('buyer')
         ->group(function (): void {
             Route::get('wallet', [MobileBuyerWalletController::class, 'index']);
+            Route::post('ai-assistant/message', [MobileBuyerAiController::class, 'message'])->middleware('throttle:8,1');
+            Route::get('recent-activity', [MobileBuyerRecentActivityController::class, 'index']);
+            Route::get('recent-activity/summary', [MobileBuyerRecentActivityController::class, 'summary']);
+            Route::post('recent-activity/read-all', [MobileBuyerRecentActivityController::class, 'readAll']);
+            Route::post('recent-activity/{event}/read', [MobileBuyerRecentActivityController::class, 'read'])->whereNumber('event');
+            Route::post('recent-activity/{event}/archive', [MobileBuyerRecentActivityController::class, 'archive'])->whereNumber('event');
+            Route::patch('recent-activity/{event}/restore', [MobileBuyerRecentActivityController::class, 'restore'])->whereNumber('event');
+            Route::delete('recent-activity/{event}', [MobileBuyerRecentActivityController::class, 'destroy'])->whereNumber('event');
+            Route::get('orders/{order}/rider-location', [MobileRiderLocationController::class, 'buyerOrder'])->whereNumber('order');
             Route::get('orders', [MobileBuyerOrderController::class, 'index']);
             Route::get('orders/{order}', [MobileBuyerOrderController::class, 'show'])
                 ->whereNumber('order');
@@ -144,6 +166,9 @@ Route::prefix('v1')->group(function (): void {
             Route::get('notifications', [MobileBuyerNotificationController::class, 'index']);
             Route::get('notifications/summary', [MobileBuyerNotificationController::class, 'summary']);
             Route::post('notifications/read-all', [MobileBuyerNotificationController::class, 'readAll']);
+            Route::post('notifications/{event}/archive', [MobileBuyerNotificationController::class, 'archive'])->whereNumber('event');
+            Route::patch('notifications/{event}/restore', [MobileBuyerNotificationController::class, 'restore'])->whereNumber('event');
+            Route::delete('notifications/{event}', [MobileBuyerNotificationController::class, 'destroy'])->whereNumber('event');
             Route::post('notifications/{event}/read', [MobileBuyerNotificationController::class, 'read'])
                 ->whereNumber('event');
 
@@ -151,6 +176,8 @@ Route::prefix('v1')->group(function (): void {
             Route::get('rewards', [MobileBuyerRewardController::class, 'index']);
 
             Route::get('messages', [MobileBuyerMessageController::class, 'index']);
+            Route::get('messages/unread', [MobileBuyerMessageController::class, 'unread']);
+            Route::post('messages/orders/{order}/confirm-address', [MobileBuyerAddressConfirmationController::class, 'confirm'])->whereNumber('order');
             Route::get('messages/{seller}', [MobileBuyerMessageController::class, 'thread'])
                 ->whereNumber('seller');
             Route::post('messages/{seller}', [MobileBuyerMessageController::class, 'send'])
@@ -162,6 +189,8 @@ Route::prefix('v1')->group(function (): void {
         ->prefix('rider')
         ->group(function (): void {
             Route::get('dashboard', [MobileRiderDashboardController::class, 'index']);
+            Route::post('location', [MobileRiderLocationController::class, 'upload'])->middleware('throttle:12,1');
+            Route::delete('location', [MobileRiderLocationController::class, 'stop']);
 
             Route::get('assignments', [MobileRiderAssignmentController::class, 'index']);
             Route::get('pickups', [MobileRiderAssignmentController::class, 'pickups']);
@@ -257,11 +286,14 @@ Route::prefix('v1')->group(function (): void {
             Route::post('transfers/{transfer}/{action}', [MobileLogisticsController::class,'transferAction'])
                 ->whereNumber('transfer')->whereIn('action',['dispatch','receive']);
             Route::get('notifications', [MobileLogisticsController::class,'notifications']);
+            Route::get('notifications/summary', [MobileLogisticsController::class,'notificationSummary']);
+            Route::post('notifications/read-all', [MobileLogisticsController::class,'readAllNotifications']);
             Route::post('notifications/{notification}/read', [MobileLogisticsController::class,'readNotification'])->whereNumber('notification');
             Route::get('remittances', [MobileLogisticsRemittanceController::class,'index']);
             Route::get('remittances/{batch}', [MobileLogisticsRemittanceController::class,'show'])->whereNumber('batch');
             Route::post('remittances/{batch}/verify', [MobileLogisticsRemittanceController::class,'verify'])->whereNumber('batch');
             Route::get('riders', [MobileLogisticsController::class,'riders']);
+            Route::get('riders/{rider}/location', [MobileRiderLocationController::class, 'logisticsRider'])->whereNumber('rider');
             Route::get('messages', [MobileLogisticsController::class,'messages']);
             Route::post('messages', [MobileLogisticsController::class,'sendMessage']);
         });

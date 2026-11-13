@@ -908,7 +908,7 @@ textarea.sm-control { min-height: 110px; padding: 13px 14px; resize: vertical; l
                 <div class="sm-panel__body">
                     <div class="sm-grid">
                         <div class="sm-span-2">
-                            <label class="sm-label" for="storeStatus">Store status</label>
+                            <label class="sm-label" for="storeStatusButton">Store status</label>
                             <div class="sm-select" data-custom-select>
                                 <select
                                     id="storeStatus"
@@ -929,11 +929,12 @@ textarea.sm-control { min-height: 110px; padding: 13px 14px; resize: vertical; l
 
                                 <button
                                     type="button"
+                                    id="storeStatusButton"
                                     class="sm-select__button"
                                     data-custom-select-button
                                     aria-haspopup="listbox"
+                                    aria-controls="storeStatusMenu"
                                     aria-expanded="false"
-                                    disabled
                                 >
                                     <span class="sm-select__value" data-custom-select-value>
                                         {{ $storeStatus === 'paused'
@@ -947,6 +948,7 @@ textarea.sm-control { min-height: 110px; padding: 13px 14px; resize: vertical; l
                                 </button>
 
                                 <div
+                                    id="storeStatusMenu"
                                     class="sm-select__menu"
                                     data-custom-select-menu
                                     role="listbox"
@@ -1238,7 +1240,8 @@ textarea.sm-control { min-height: 110px; padding: 13px 14px; resize: vertical; l
             section
                 .querySelectorAll('[data-custom-select-button]')
                 .forEach((button) => {
-                    button.disabled = !editing;
+                    // Store status is directly clickable even before Edit is pressed.
+                    button.disabled = false;
 
                     if (!editing) {
                         const customSelect =
@@ -1358,6 +1361,12 @@ textarea.sm-control { min-height: 110px; padding: 13px 14px; resize: vertical; l
         };
 
         customStatusButton?.addEventListener('click', () => {
+            // Clicking Store status automatically enables Fulfillment editing.
+            const section = customStatusButton.closest('[data-editable-section]');
+            if (section && !section.classList.contains('is-editing')) {
+                setSectionEditing(section, true);
+            }
+
             if (customStatus?.classList.contains('is-open')) {
                 closeStatusMenu();
             } else {

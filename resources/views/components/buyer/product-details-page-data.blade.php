@@ -66,6 +66,12 @@
             return $path;
         }
 
+        // Protected Buyer image endpoints need the current browser session;
+        // asset() may send these URLs to a different asset host or CDN.
+        if (str_starts_with(ltrim($path, '/'), 'buyer/')) {
+            return '/' . ltrim($path, '/');
+        }
+
         return asset(ltrim($path, '/'));
     };
 

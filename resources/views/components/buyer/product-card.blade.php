@@ -19,6 +19,10 @@
     $stock = max(0, (int) ($product['stock'] ?? 0));
 
     $image = $product['image'] ?? null;
+    $imagePath = ltrim(trim((string) $image), '/');
+    $imageSrc = str_starts_with($imagePath, 'buyer/')
+        ? '/' . $imagePath
+        : ($image ? asset($image) : null);
     $variations = $product['variations'] ?? [];
     $voucher = $product['voucher'] ?? null;
 
@@ -113,7 +117,7 @@
         overflow: hidden;
         border: 0 !important;
         border-radius: 19px 19px 12px 12px;
-        background: #f2f0ec;
+        background: #ffffff !important;
     }
 
     .sari-buyer-card-media img {
@@ -920,7 +924,7 @@
         <div class="sari-product-media sari-buyer-card-media">
             @if ($image)
                 <img
-                    src="{{ asset($image) }}"
+                    src="{{ $imageSrc }}"
                     alt="{{ $productName }}"
                     width="325"
                     height="196"

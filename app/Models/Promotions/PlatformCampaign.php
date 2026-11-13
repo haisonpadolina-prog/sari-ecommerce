@@ -36,6 +36,8 @@ class PlatformCampaign extends Model
         'voucher_usage_limit',
         'voucher_used_count',
         'voucher_per_buyer_limit',
+        'shipping_enabled', 'shipping_code', 'shipping_budget_cents', 'shipping_cap_cents',
+        'shipping_minimum_cents', 'shipping_per_buyer_limit', 'shipping_areas',
         'starts_at',
         'ends_at',
     ];
@@ -51,6 +53,10 @@ class PlatformCampaign extends Model
         'voucher_usage_limit' => 'integer',
         'voucher_used_count' => 'integer',
         'voucher_per_buyer_limit' => 'integer',
+        'shipping_enabled' => 'boolean', 'shipping_budget_cents' => 'integer',
+        'shipping_reserved_cents' => 'integer', 'shipping_used_cents' => 'integer',
+        'shipping_cap_cents' => 'integer', 'shipping_minimum_cents' => 'integer',
+        'shipping_per_buyer_limit' => 'integer', 'shipping_areas' => 'array',
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
     ];
@@ -88,6 +94,11 @@ class PlatformCampaign extends Model
     public function redemptions(): HasMany
     {
         return $this->hasMany(PlatformCampaignRedemption::class);
+    }
+
+    public function shippingRedemptions(): HasMany
+    {
+        return $this->hasMany(PlatformShippingRedemption::class);
     }
 
     public function scopePublished(Builder $query): Builder

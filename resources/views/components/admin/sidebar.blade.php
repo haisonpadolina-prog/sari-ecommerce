@@ -27,7 +27,7 @@
     #adminSidebar {
         width: var(--admin-sidebar-width, 238px) !important;
         overflow-x: hidden !important;
-        border-right-color: #ece5da !important;
+        border-right-color: #E4E7EC !important;
         background: #ffffff !important;
         contain: layout paint;
         transition:
@@ -39,7 +39,7 @@
         min-height: 74px !important;
         padding-left: 12px !important;
         padding-right: 12px !important;
-        border-bottom-color: #eee7dc !important;
+        border-bottom-color: #EAECF0 !important;
         background: #ffffff !important;
         transition:
             min-height 220ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1)),
@@ -115,7 +115,7 @@
     .admin-sidebar-section-divider {
         height: 1px !important;
         margin: 11px 6px 9px !important;
-        background: #eee5d7 !important;
+        background: #EAECF0 !important;
     }
 
     #adminSidebarNav > a[data-sidebar-item],
@@ -158,8 +158,8 @@
     #adminSidebarNav > a[data-sidebar-item]:not([data-sidebar-current="true"]):hover,
     #adminSidebarNav > form > button[data-sidebar-item]:hover,
     #adminSidebar [data-sidebar-item][data-admin-nav-active="false"]:hover {
-        border-color: #eadfcf !important;
-        background-color: #fff9ef !important;
+        border-color: #E4E7EC !important;
+        background-color: #F2F4F7 !important;
         color: #94620a !important;
         box-shadow: none !important;
     }
@@ -187,7 +187,7 @@
     }
 
     #adminSidebarProfile {
-        border-top-color: #eee7dc !important;
+        border-top-color: #EAECF0 !important;
         background: #ffffff !important;
         padding: 9px 10px !important;
         transition: padding 190ms var(--admin-sidebar-ease, cubic-bezier(.22, 1, .36, 1));
@@ -196,7 +196,7 @@
     #adminSidebarProfile > a {
         min-height: 54px !important;
         gap: 8px !important;
-        border-color: #e9e0d3 !important;
+        border-color: #E4E7EC !important;
         border-radius: 11px !important;
         background-color: #ffffff !important;
         padding: 8px 9px !important;
@@ -204,22 +204,22 @@
     }
 
     #adminSidebarProfile > a:hover {
-        border-color: #dcc9a7 !important;
-        background-color: #fffdf9 !important;
+        border-color: #D0D5DD !important;
+        background-color: #FFFFFF !important;
         box-shadow: 0 4px 12px rgba(40, 31, 21, .03) !important;
     }
 
     /* The profile shortcut stays a neutral Seller-style card on /admin/account. */
     #adminSidebar #adminSidebarProfile > a[data-admin-nav-active="true"] {
-        border-color: #e9e0d3 !important;
+        border-color: #E4E7EC !important;
         background-color: #ffffff !important;
         color: inherit !important;
         box-shadow: 0 3px 10px rgba(40, 31, 21, .02) !important;
     }
 
     #adminSidebar #adminSidebarProfile > a[data-admin-nav-active="true"]:hover {
-        border-color: #dcc9a7 !important;
-        background-color: #fffdf9 !important;
+        border-color: #D0D5DD !important;
+        background-color: #FFFFFF !important;
     }
 
     #adminSidebarProfile > a > div:first-child {
@@ -350,7 +350,7 @@
     class="
         fixed inset-y-0 left-0 z-50
         flex w-[238px] -translate-x-full flex-col
-        border-r border-[#eee4d3]
+        border-r border-[#E4E7EC]
         bg-white
         transition-all duration-300 ease-out
         lg:translate-x-0
@@ -359,7 +359,7 @@
     {{-- BRAND / LOGO --}}
     <div
         id="adminSidebarBrand"
-        class="relative flex min-h-[74px] items-center justify-center border-b border-[#eee7dc] px-3"
+        class="relative flex min-h-[74px] items-center justify-center border-b border-[#EAECF0] px-3"
     >
         <a
             id="adminSidebarLogo"
@@ -396,7 +396,7 @@
         <button
             id="adminSidebarClose"
             type="button"
-            class="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-[10px] text-[#6e6558] transition hover:bg-[#f7eedf] hover:text-[#b97805] lg:hidden"
+            class="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-[10px] text-[#667085] transition hover:bg-[#F2F4F7] hover:text-[#b97805] lg:hidden"
             aria-label="Close admin sidebar"
         >
             <svg viewBox="0 0 24 24" class="h-[17px] w-[17px]" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -408,6 +408,8 @@
 
     {{-- NAVIGATION --}}
     <nav id="adminSidebarNav" class="flex-1 overflow-y-auto">
+
+
         <p class="admin-sidebar-section-label">MAIN MENU</p>
 
         {{-- Dashboard --}}
@@ -416,7 +418,7 @@
             title="Dashboard Overview"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.dashboard') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-semibold transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-semibold transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M3 11.5 12 4l9 7.5"></path>
@@ -435,7 +437,7 @@
             title="Account Registrations"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.registrations') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.registrations') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.registrations') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="10" cy="8" r="3.5"></circle>
@@ -452,7 +454,7 @@
             title="User Accounts"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.users') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="9" cy="8" r="3"></circle>
@@ -470,7 +472,7 @@
             title="Platform Monitoring"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.monitoring*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.monitoring*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.monitoring*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M3 12s3.4-6 9-6 9 6 9 6-3.4 6-9 6-9-6-9-6Z"></path>
@@ -489,7 +491,7 @@
             title="Security Center"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.security*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.security*') ? 'bg-[#d9950b] text-white shadow-[0_5px_12px_rgba(194,132,10,0.12)]' : 'text-[#514b42] hover:bg-[#fff9ef] hover:text-[#94620a]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.security*') ? 'bg-[#d9950b] text-white shadow-[0_5px_12px_rgba(194,132,10,0.12)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#94620a]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M12 3 5 6v5c0 4.6 2.8 8.2 7 10 4.2-1.8 7-5.4 7-10V6l-7-3Z"></path>
@@ -498,13 +500,30 @@
             <span class="sidebar-label whitespace-nowrap">Security Center</span>
         </a>
 
+        {{-- Products for Review --}}
+        <a
+            href="{{ route('admin.product-reviews') }}"
+            title="Products for Review"
+            data-sidebar-item
+            data-sidebar-current="{{ request()->routeIs('admin.product-reviews') ? 'true' : 'false' }}"
+            @if(request()->routeIs('admin.product-reviews')) aria-current="page" @endif
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.product-reviews') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
+        >
+            <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M8 4H6a2 2 0 0 0-2 2v14h16V6a2 2 0 0 0-2-2h-2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1"></rect>
+                <path d="m8 13 3 3 5-6"></path>
+            </svg>
+            <span class="sidebar-label whitespace-nowrap">Products for Review</span>
+        </a>
+
         {{-- Seller Compliance --}}
         <a
             href="{{ route('admin.seller-compliance') }}"
             title="Seller Compliance"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.seller-compliance') || request()->routeIs('admin.seller-accounts.control') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.seller-compliance') || request()->routeIs('admin.seller-accounts.control') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.seller-compliance') || request()->routeIs('admin.seller-accounts.control') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M5 8h14l-1-4H6L5 8Z"></path>
@@ -520,7 +539,7 @@
             title="Complaints & Disputes"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.complaints') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.complaints') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.complaints') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <rect x="5" y="3" width="14" height="18" rx="2"></rect>
@@ -540,7 +559,7 @@
             title="Finance Treasury"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.finance.index') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.finance.index') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.finance.index') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M4 7h14a2 2 0 0 1 2 2v9H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"></path>
@@ -556,7 +575,7 @@
             title="Logistics Cash Turnovers"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.finance.cash-turnovers.*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.finance.cash-turnovers.*') ? 'bg-[#d9930a] text-white' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.finance.cash-turnovers.*') ? 'bg-[#d9930a] text-white' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M3 7h18v13H3zM7 7V4h10v3M8 12h8M8 16h5"></path>
@@ -570,7 +589,7 @@
             title="Commission Management"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.commissions') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.commissions') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.commissions') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="12" cy="12" r="9"></circle>
@@ -586,7 +605,7 @@
             title="Reports"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.reports') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.reports') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.reports') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M4 20h16"></path>
@@ -606,7 +625,7 @@
             title="Buyer Homepage Management"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.buyer-homepage*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.buyer-homepage*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.buyer-homepage*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <rect x="3" y="4" width="18" height="16" rx="2"></rect>
@@ -621,7 +640,7 @@
             title="Events & Promotions"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.platform-campaigns*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.platform-campaigns*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.platform-campaigns*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M4 8h16v11H4z"></path>
@@ -637,7 +656,7 @@
             title="Platform Announcements"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.announcements*') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.announcements*') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M4 13V9l12-5v14L4 13Z"></path>
@@ -656,7 +675,7 @@
             title="Platform Settings"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.platform-settings') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.platform-settings') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.platform-settings') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="12" cy="12" r="3"></circle>
@@ -668,13 +687,18 @@
         <div class="admin-sidebar-section-divider"></div>
         <p class="admin-sidebar-section-label">SUPPORT</p>
 
+        <button type="button" id="adminSidebarNotifications" data-sidebar-item aria-label="Open notifications" aria-controls="adminLiveNotificationPanel" aria-expanded="false" class="admin-sidebar-notification-link" style="margin-top:2px;margin-bottom:2px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+            <span class="sidebar-label">Notifications</span><span data-admin-live-count class="sidebar-extra" hidden></span>
+        </button>
+
         {{-- Chat / Messaging --}}
         <a
             href="{{ route('admin.messages') }}"
             title="Chat / Messaging"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.messages') ? 'true' : 'false' }}"
-            class="flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.messages') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.messages') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <span class="flex items-center gap-3" data-sidebar-inner>
                 <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -704,7 +728,7 @@
             title="User Activity Log"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.user-activity') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.user-activity') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.user-activity') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M5 4h14v16H5z"></path>
@@ -719,7 +743,7 @@
             title="Admin Recent Activity"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.recent-activity') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.recent-activity') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.recent-activity') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="12" cy="12" r="8"></circle>
@@ -734,7 +758,7 @@
             title="Account Management"
             data-sidebar-item
             data-sidebar-current="{{ request()->routeIs('admin.account') ? 'true' : 'false' }}"
-            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.account') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#514b42] hover:bg-[#f9f1e3] hover:text-[#a96e05]' }}"
+            class="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium transition-all duration-200 {{ request()->routeIs('admin.account') ? 'bg-[#d9930a] text-white shadow-[0_10px_25px_rgba(217,147,10,0.18)]' : 'text-[#475467] hover:bg-[#F2F4F7] hover:text-[#a96e05]' }}"
         >
             <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                 <circle cx="12" cy="8" r="3.5"></circle>
@@ -744,13 +768,13 @@
         </a>
 
         {{-- Logout --}}
-        <form method="POST" action="{{ route('admin.logout') }}">
+        <form method="POST" action="{{ route('admin.logout') }}" data-admin-logout-form>
             @csrf
             <button
                 type="submit"
                 title="Logout"
                 data-sidebar-item
-                class="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium text-[#514b42] transition-all duration-200 hover:bg-red-50 hover:text-red-600"
+                class="flex w-full items-center gap-3 rounded-xl px-4 py-3.5 text-[13px] font-medium text-[#475467] transition-all duration-200 hover:bg-red-50 hover:text-red-600"
             >
                 <svg viewBox="0 0 24 24" class="h-[19px] w-[19px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M10 17l5-5-5-5"></path>
@@ -763,25 +787,6 @@
     </nav>
 
     {{-- ADMIN PROFILE --}}
-    <div id="adminSidebarProfile" class="border-t border-[#eee7dc] bg-white p-4 transition-all duration-300">
-        <a
-            href="{{ route('admin.account') }}"
-            title="Admin User"
-            data-sidebar-item
-            class="flex w-full items-center gap-3 rounded-2xl border border-[#eadfca] bg-white p-3.5 text-left transition-all duration-200 hover:border-[#dbc396] hover:shadow-sm"
-        >
-            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[13px] font-semibold text-white">AD</div>
-
-            <div class="sidebar-label min-w-0 flex-1">
-                <p class="truncate text-[13px] font-semibold text-[#211d17]">Admin User</p>
-                <p class="mt-0.5 truncate text-[10px] text-[#8d8272]">Super Administrator</p>
-            </div>
-
-            <svg viewBox="0 0 24 24" class="sidebar-extra h-4 w-4 shrink-0 text-[#82796b]" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="m9 18 6-6-6-6"></path>
-            </svg>
-        </a>
-    </div>
 </aside>
 
 @push('scripts')

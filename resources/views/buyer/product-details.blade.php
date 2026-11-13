@@ -87,6 +87,12 @@
             return $path;
         }
 
+        // Protected Buyer image endpoints need the current browser session;
+        // asset() may send these URLs to a different asset host or CDN.
+        if (str_starts_with(ltrim($path, '/'), 'buyer/')) {
+            return '/' . ltrim($path, '/');
+        }
+
         return asset(ltrim($path, '/'));
     };
 
@@ -2744,6 +2750,39 @@
         }
     }
 
+    /* Compact size guide and product specification rows. */
+    #sariSizeGuideSection {
+        margin: 0 !important; padding: 16px 20px !important;
+        border-top: 1px solid #edf0f3; background: #fff;
+    }
+    #sariSizeGuideSection .sari-size-guide-title {
+        margin: 0; font-size: 14px; font-weight: 700; line-height: 1.4; color: #293341;
+    }
+    #sariSizeGuideSection .sari-size-guide-copy {
+        margin: 4px 0 12px; max-width: 60ch;
+        font-size: 12px; line-height: 1.55; color: #6b7280;
+    }
+    #sariSizeGuideSection .sari-size-guide-image {
+        display: block; width: 100%; height: auto; max-height: none;
+        object-fit: contain; object-position: center;
+        border: 1px solid #edf0f3; border-radius: 8px; background: #fff;
+    }
+    .sari-product-info-combined .sari-product-info-combined__detail {
+        min-height: 44px !important; padding: 10px 16px !important; gap: 12px !important;
+    }
+    .sari-product-info-combined .sari-product-info-combined__detail dt {
+        font-size: 11px !important; font-weight: 500 !important; color: #778391 !important;
+    }
+    .sari-product-info-combined .sari-product-info-combined__detail dd {
+        font-size: 12px !important; font-weight: 600 !important; color: #334155 !important;
+    }
+    .sari-product-info-combined .sari-product-info-combined__detail dd.is-positive { color: #3f7e5a !important; }
+    @media (max-width: 767px) {
+        #sariSizeGuideSection { padding: 14px 16px !important; }
+        .sari-product-info-combined .sari-product-info-combined__details { grid-template-columns: 1fr !important; }
+        .sari-product-info-combined .sari-product-info-combined__detail { border-right: 0 !important; border-bottom: 1px solid #edf0f3 !important; }
+        .sari-product-info-combined .sari-product-info-combined__detail:last-child { border-bottom: 0 !important; }
+    }
 </style>
 
 <!-- SARI_PRODUCT_DETAILS_V8_LIGHT_NEUMORPHISM -->
@@ -2966,17 +3005,10 @@
                     </div>
 
                     @if ($sizeGuideImage !== '')
-                        <div id="sariSizeGuideSection" class="sari-product-size-guide" style="margin:18px 0 20px;padding:16px;border:1px solid #e9e2d5;border-radius:14px;background:#fffdf8">
-                            <div class="flex flex-wrap items-center justify-between gap-3" style="margin-bottom:12px">
-                                <div>
-                                    <h3 style="font-size:15px;font-weight:750;color:#293341">Size guide</h3>
-                                    <p style="font-size:11px;color:#6b7280">Seller-provided measurements. Compare with your own measurements before choosing a size.</p>
-                                </div>
-                                <a href="{{ $imageUrl($sizeGuideImage) }}" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:700;color:#99691b;text-decoration:underline">View full size chart</a>
-                            </div>
-                            <a href="{{ $imageUrl($sizeGuideImage) }}" target="_blank" rel="noopener noreferrer" aria-label="Open {{ $productName }} size guide in full size">
-                                <img src="{{ $imageUrl($sizeGuideImage) }}" alt="Seller size guide for {{ $productName }}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;max-height:700px;object-fit:contain;border-radius:8px;background:#fff">
-                            </a>
+                        <div id="sariSizeGuideSection" class="sari-product-size-guide">
+                            <h3 class="sari-size-guide-title">Size guide</h3>
+                            <p class="sari-size-guide-copy">Seller-provided measurements. Compare with your own measurements before choosing a size.</p>
+                            <img src="{{ $imageUrl($sizeGuideImage) }}" alt="Size chart for {{ $productName }}" loading="lazy" decoding="async" class="sari-size-guide-image">
                         </div>
                     @endif
 

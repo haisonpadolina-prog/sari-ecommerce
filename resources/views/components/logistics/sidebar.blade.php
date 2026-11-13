@@ -567,7 +567,11 @@
             <div
                 class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#d9930a] text-[9.5px] font-semibold text-white"
             >
-                {{ $initials }}
+                @if(!$isHubOperator && filled($provider?->profile_image_path))
+                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($provider->profile_image_path) }}" alt="{{ $profileName }}" width="32" height="32" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+                @else
+                    {{ $initials }}
+                @endif
             </div>
 
             <div

@@ -7,7 +7,6 @@
         'sellers' => ['label' => 'Stores & Sellers', 'count' => $overview['sellers']],
         'logistics' => ['label' => 'Logistics Providers', 'count' => $overview['logistics']],
         'buyers' => ['label' => 'Buyers', 'count' => $overview['buyers']],
-        'riders' => ['label' => 'Riders', 'count' => $overview['riders']],
         'sla' => ['label' => 'Delivery SLA', 'count' => $slaSummary['breached']],
     ];
     $statusLabel = static fn ($value) => match (strtolower((string) $value)) {
@@ -104,11 +103,149 @@
     outline: 2px solid #475467;
     outline-offset: 3px;
 }
+
+        /* SARI Seller Orders UI parity — monitoring only (no global overrides). */
+        .pm-page{width:100%;max-width:1520px!important;padding-bottom:28px!important}
+        .pm-header{position:relative;min-height:92px;padding:0 180px 15px 0!important;border-bottom:1px solid #E9EDF1!important}
+        .pm-eyebrow{font-size:10.5px!important;font-weight:800!important;line-height:1.4!important;color:#A87316!important}
+        .pm-title{margin-top:6px!important;font-size:clamp(27px,2.3vw,31px)!important;font-weight:760!important;line-height:1.08!important;color:#2E343B!important}
+        .pm-title span{color:#C88912!important}
+        .pm-copy{max-width:790px!important;margin-top:6px!important;font-size:11.5px!important;line-height:1.5!important;color:#8793A1!important}
+        .pm-export{position:absolute;right:0;top:6px;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 14px;border:1px solid #DCE2E8;border-radius:11px;background:#fff;color:#475569;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap}
+        .pm-export svg{width:16px;height:16px}
+        .pm-export:hover,.pm-export:focus-visible{background:#F8FAFC;border-color:#C88912;color:#94620A}
+        .pm-metrics{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important;margin-top:18px!important}
+        .pm-page .pm-metric{min-height:110px!important;padding:14px 16px!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#fff!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important}
+        .pm-page .pm-metric > span:first-child{color:#637081!important;font-size:13px!important;letter-spacing:0!important;text-transform:none!important;font-weight:650!important}
+        .pm-page .pm-metric strong{margin-top:7px!important;color:#1F2937!important;font-size:clamp(25px,1.9vw,30px)!important;line-height:1.12!important}
+        .pm-page .pm-metric > .pm-metric-icon{top:14px!important;right:16px!important;width:27px!important;height:27px!important}
+        .pm-page .pm-metric-icon svg{width:27px!important;height:27px!important}
+        .pm-tabs{gap:9px!important;margin-top:18px!important;padding-bottom:0!important;scrollbar-width:none}
+        .pm-tabs::-webkit-scrollbar{display:none}
+        .pm-tab{min-height:43px!important;gap:8px!important;border-radius:12px!important;padding:0 15px!important;font-size:11.5px!important}
+        .pm-tab b{min-width:23px!important;height:23px!important;font-size:10px!important}
+        .pm-tab:not(.is-active):hover{background:#F8FAFC!important;color:#344054!important;border-color:#CBD5E1!important}
+        .pm-filter{grid-template-columns:minmax(0,1fr) minmax(185px,210px) auto auto!important;gap:12px!important;margin-top:20px!important;align-items:end!important}
+        .pm-field{min-width:0}
+        .pm-field label{margin-bottom:7px!important;color:#4B5563!important;font-size:11px!important;font-weight:700!important}
+        .pm-control,.pm-select-trigger,.pm-btn{height:48px!important;min-height:48px!important;border-radius:14px!important;font-size:11.5px!important}
+        .pm-control{border:1px solid #DCE2E8!important;padding:0 16px!important;color:#3F4B59!important;background:#fff!important;font-weight:500!important;box-shadow:none!important}
+        .pm-control:hover,.pm-select-trigger:hover{background:#F8FAFC!important;border-color:#CBD5E1!important}
+        .pm-control:focus{background:#fff!important;border-color:#C88912!important;box-shadow:0 0 0 3px rgba(200,137,18,.09)!important}
+        .pm-btn{padding:0 18px!important;font-weight:700!important;box-shadow:none!important}
+        .pm-btn.primary{background:#C88912!important;border-color:#C88912!important;font-size:12px!important}
+        .pm-btn.primary:hover{background:#B47B0E!important;border-color:#B47B0E!important}
+        .pm-btn.secondary{background:#fff!important;border-color:#DCE2E8!important;color:#5F6D7C!important;font-size:12px!important}
+        .pm-btn.secondary:hover{background:#F8FAFC!important;border-color:#CBD5E1!important}
+        .pm-select{position:relative;width:100%}
+        .pm-native-select{display:block}
+        .pm-select-trigger{display:none;width:100%;align-items:center;justify-content:space-between;gap:8px;border:1px solid #DCE2E8;background:#fff;padding:0 15px;color:#344054;font:600 11.5px Poppins,system-ui,sans-serif;text-align:left;cursor:pointer}
+        .pm-select-trigger svg{width:17px;height:17px;color:#667085}
+        .pm-select.is-enhanced .pm-native-select{position:absolute!important;width:1px!important;height:1px!important;min-height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;opacity:0!important;pointer-events:none!important}
+        .pm-select.is-enhanced .pm-select-trigger{display:flex}
+        .pm-select-trigger[aria-expanded="true"]{border-color:#A0AAB6!important;box-shadow:0 0 0 3px rgba(148,163,184,.10)!important}
+        .pm-select-menu{position:absolute;z-index:90;top:calc(100% + 8px);left:0;right:0;padding:7px;border:1px solid #E2E8F0;border-radius:14px;background:#fff;box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05)}
+        .pm-select-menu[hidden]{display:none!important}
+        .pm-select-option{display:flex;width:100%;min-height:38px;align-items:center;justify-content:space-between;border:0;border-radius:9px;padding:0 12px;background:#fff;color:#475569;font:600 11.5px Poppins,system-ui,sans-serif;cursor:pointer;text-align:left}
+        .pm-select-option:hover,.pm-select-option:focus-visible,.pm-select-option[aria-selected="true"]{outline:none!important;background:#F1F5F9!important;color:#344054!important}
+        .pm-select-option[aria-selected="true"]:after{content:'✓';color:#667085;font-size:13px}
+        .pm-panel{margin-top:20px!important;border:1px solid #E5E7EB!important;border-radius:18px!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important}
+        .pm-panel-head{min-height:78px!important;padding:21px 23px!important;border-color:#E9EDF1!important;background:#fff!important}
+        .pm-panel-head h2{font-size:18px!important;font-weight:780!important;color:#2F3742!important}
+        .pm-panel-head p{margin-top:4px!important;font-size:11.5px!important;color:#8B96A4!important}
+        .pm-count{min-height:28px!important;padding:0 10px!important;border-color:#E5E7EB!important;background:#F8FAFC!important;color:#667085!important;font-size:11px!important}
+        .pm-table-wrap{width:100%;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important}
+        .pm-table-wrap::-webkit-scrollbar{display:none!important}
+        .pm-table{width:100%;min-width:1060px!important}
+        .pm-table th{height:48px!important;padding:13px 13px!important;background:#F8FAFC!important;color:#8591A0!important;font-size:11px!important;letter-spacing:.065em!important}
+        .pm-table td{padding:17px 13px!important;background:#fff!important;color:#475467!important;font-size:11.5px!important;line-height:1.5!important}
+        .pm-table tbody tr:hover td{background:#F8FAFC!important}
+        .pm-name{color:#293440!important;font-size:12.5px!important;font-weight:750!important;line-height:1.4!important}
+        .pm-sub{margin-top:3px!important;color:#8793A1!important;font-size:10.5px!important;line-height:1.45!important}
+        .pm-status,.pm-sla{min-height:27px!important;padding:4px 10px!important;font-size:10px!important}
+        .pm-view{min-height:34px!important;padding:8px 12px!important;border-radius:10px!important;background:#fff!important;border:1px solid #DCE2E8!important;color:#475569!important;font-size:10.5px!important}
+        .pm-view:hover{border-color:#C88912!important;background:#F8FAFC!important;color:#94620A!important}
+        .pm-check-cell{width:50px!important;min-width:50px!important;text-align:center!important;padding-left:17px!important;padding-right:7px!important}
+        .pm-check-wrap{display:inline-flex;min-width:28px;min-height:32px;align-items:center;justify-content:center;cursor:pointer}
+        .pm-check-wrap input[type=checkbox]{appearance:none;-webkit-appearance:none;display:grid;place-items:center;width:18px;height:18px;border:1.5px solid #CBD5E1;border-radius:5px;background:#fff;cursor:pointer}
+        .pm-check-wrap input[type=checkbox]:checked,.pm-check-wrap input[type=checkbox]:indeterminate{background:#C88912;border-color:#C88912}
+        .pm-check-wrap input[type=checkbox]:checked:after{content:'';width:5px;height:9px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px)}
+        .pm-check-wrap input[type=checkbox]:indeterminate:after{content:'';width:9px;height:2px;background:#fff;border-radius:2px}
+        .pm-check-wrap input[type=checkbox]:focus-visible{outline:2px solid #C88912;outline-offset:3px}
+        .pm-selection{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 19px;background:#F8FAFC;border-bottom:1px solid #E5E7EB;font-size:11.5px;color:#465362}
+        .pm-selection[hidden]{display:none!important}
+        .pm-selection small{font-size:10px;color:#8591A0}
+        .pm-selection button{min-height:32px;border:1px solid #DCE2E8;border-radius:9px;padding:0 12px;background:#fff;color:#475569;font-weight:650;cursor:pointer}
+        .pm-selection button:hover{background:#F1F5F9}
+        .pm-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:76px 18px!important;background:#fff!important;color:#8793A1!important}
+        .pm-empty svg{width:70px;height:70px;color:#98A2B3}
+        .pm-empty strong{margin-top:15px;color:#667085;font-size:22px;font-weight:700;line-height:1.3}
+        .pm-empty p{margin:8px 0 0;color:#98A2B3;font-size:13px;line-height:1.6;text-align:center}
+        .pm-pagination{display:flex;min-height:64px;align-items:center;justify-content:space-between;gap:15px;padding:13px 20px!important;border-color:#E9EDF1!important;background:#fff!important}
+        .pm-pagination-summary{color:#7B8794;font-size:11px;font-weight:500}
+        .pm-pages{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+        .pm-page-arrow,.pm-page-number,.pm-page-ellipsis{display:grid;place-items:center;min-width:34px;height:34px;border:1px solid #E5E7EB;border-radius:10px;background:#fff;color:#667085;font-size:11.5px;font-weight:700;text-decoration:none}
+        .pm-page-arrow svg{width:15px;height:15px}
+        .pm-page-number.is-current{background:#C88912!important;border-color:#C88912!important;color:white!important}
+        .pm-page-arrow.is-disabled{opacity:.42}
+        .pm-page-ellipsis{border-color:transparent}
+        .pm-pages a:hover,.pm-pages a:focus-visible{outline:0;border-color:#C88912;background:#F8FAFC;color:#94620A}
+        @media(max-width:1180px){.pm-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+        @media(max-width:900px){.pm-filter{grid-template-columns:repeat(2,minmax(0,1fr))!important}.pm-filter .pm-field{grid-column:1/-1}.pm-filter .pm-btn{width:100%}}
+        @media(max-width:640px){.pm-header{padding-right:0!important;padding-bottom:66px!important}.pm-export{top:auto;left:0;right:auto;bottom:13px}.pm-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.pm-page .pm-metric{min-height:94px!important;padding:12px!important}.pm-page .pm-metric>span:first-child{font-size:11.5px!important}.pm-page .pm-metric strong{font-size:24px!important}.pm-tabs{overflow-x:auto!important;flex-wrap:nowrap}.pm-filter{grid-template-columns:1fr!important}.pm-filter .pm-field{grid-column:auto!important}.pm-panel-head{align-items:flex-start!important;flex-direction:column!important;gap:8px!important;padding:17px 16px!important}.pm-pagination{align-items:flex-start;flex-direction:column}.pm-pages{align-self:flex-end}.pm-empty strong{font-size:20px}.pm-empty p{font-size:12px}}
+
+
+        /* Section filter replaces four navigation tabs; same neutral/white controls as Account status. */
+        .pm-page .pm-header { min-height:72px!important; }
+        .pm-page .pm-filter { grid-template-columns:minmax(210px,1fr) minmax(195px,245px) minmax(180px,210px) auto auto!important; gap:12px!important; }
+        .pm-page .pm-section-field .pm-select-trigger [data-pm-label] { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .pm-page .pm-section-field .pm-select-menu { max-height:340px; overflow-y:auto; scrollbar-width:thin; }
+        .pm-page .pm-section-field .pm-select-option { gap:10px; }
+        .pm-page .pm-section-field .pm-section-count { margin-left:auto; color:#98A2B3; font-size:10px; font-weight:700; }
+        .pm-page .pm-section-field .pm-select-option[aria-selected="true"] .pm-section-count { color:#667085; }
+        .pm-page .pm-section-field .pm-select-option[aria-selected="true"]:after { margin-left:0; }
+        @media(max-width:1150px) {
+            .pm-page .pm-filter { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+            .pm-page .pm-filter .pm-field { grid-column:auto!important; }
+            .pm-page .pm-filter .pm-search-field { grid-column:1/-1!important; }
+            .pm-page .pm-filter .pm-btn { width:100%!important; }
+        }
+        @media(max-width:640px) {
+            .pm-page .pm-filter { grid-template-columns:minmax(0,1fr)!important; gap:10px!important; }
+            .pm-page .pm-filter .pm-search-field { grid-column:auto!important; }
+        }
+
+        /* Monitoring record total: plain supporting text, no pill/container. */
+        .pm-page .pm-panel-head .pm-record-count {
+            display: inline;
+            align-self: center;
+            min-height: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            color: #7B8794;
+            font-size: 11.5px;
+            font-weight: 500;
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .pm-page .pm-panel-head .pm-record-count {
+                align-self: flex-start;
+                font-size: 11px;
+            }
+        }
 </style>
     <div class="pm-header">
         <p class="pm-eyebrow">Operations & Account Oversight</p>
         <h1 class="pm-title">Platform <span>Monitoring</span></h1>
-        <p class="pm-copy">Monitor SARI stores, Logistics providers and hubs, Buyers, Riders, account access, and delivery SLA breaches from one administrator workspace.</p>
+        <a class="pm-export" href="{{ route('admin.monitoring.export-pdf', ['section' => $section, 'q' => $search, 'status' => $status]) }}" aria-label="Export filtered monitoring records as PDF">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3h7l4 4v14H7zM14 3v5h4M9 13h6M9 17h6"/></svg>
+            Export PDF
+        </a>
     </div>
     @if(session('success'))
         <div class="mt-3 rounded-[8px] border border-[#d7e7dc] bg-[#f5faf6] px-3 py-2 text-[9px] font-semibold text-[#51715d]">{{ session('success') }}</div>
@@ -120,20 +257,11 @@
         <div class="pm-metric"><span>Stores</span><strong>{{ number_format($overview['sellers']) }}</strong><span class="pm-metric-icon" style="color:#C47522" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18l-2-5H5L3 9ZM5 9v11h14V9M9 20v-6h6v6"/></svg></span></div>
         <div class="pm-metric"><span>Logistics</span><strong>{{ number_format($overview['logistics']) }}</strong><span class="pm-metric-icon" style="color:#7C3AED" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v12H3zM14 10h4l3 3v5h-7"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></span></div>
         <div class="pm-metric"><span>Buyers</span><strong>{{ number_format($overview['buyers']) }}</strong><span class="pm-metric-icon" style="color:#2563EB" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span></div>
-        <div class="pm-metric"><span>Riders</span><strong>{{ number_format($overview['riders']) }}</strong><span class="pm-metric-icon" style="color:#0F766E" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M8 17h8l-4-7H8M15 5h3l2 8M10 7h3"/></svg></span></div>
         <div class="pm-metric"><span>Active deliveries</span><strong>{{ number_format($overview['active_deliveries']) }}</strong><span class="pm-metric-icon" style="color:#AC7A16" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 8v10l9 4 9-4V8M12 13v9"/></svg></span></div>
         <div class="pm-metric"><span>SLA breached</span><strong>{{ number_format($slaSummary['breached']) }}</strong><span class="pm-metric-icon" style="color:#C45454" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 10 18H2L12 3ZM12 9v5M12 17h.01"/></svg></span></div>
     </div>
-    <div class="pm-tabs" role="tablist" aria-label="Monitoring sections">
-        @foreach($sections as $key => $meta)
-            <a class="pm-tab {{ $section === $key ? 'is-active' : '' }}" href="{{ route('admin.monitoring', ['section' => $key]) }}">
-                {{ $meta['label'] }} <b>{{ number_format($meta['count']) }}</b>
-            </a>
-        @endforeach
-    </div>
     <form method="GET" action="{{ route('admin.monitoring') }}" class="pm-filter">
-        <input type="hidden" name="section" value="{{ $section }}">
-        <div class="pm-field">
+        <div class="pm-field pm-search-field">
             <label for="monitorSearch">Search</label>
             <input
                 id="monitorSearch"
@@ -144,16 +272,48 @@
                 placeholder="{{ $section === 'sla' ? 'Order, Seller, Logistics, Rider...' : 'Name, email, store, business, plate, location...' }}"
             >
         </div>
+        <div class="pm-field pm-section-field">
+            <label for="monitorSection">Monitoring section</label>
+            <div class="pm-select" data-pm-select>
+                <select id="monitorSection" name="section" class="pm-control pm-native-select" data-pm-native>
+                    @foreach($sections as $key => $meta)
+                        <option value="{{ $key }}" @selected($section === $key)>{{ $meta['label'] }} ({{ number_format($meta['count']) }})</option>
+                    @endforeach
+                </select>
+                <button type="button" class="pm-select-trigger" data-pm-trigger aria-controls="pmSectionOptions" aria-expanded="false" aria-haspopup="listbox" aria-label="Monitoring section filter">
+                    <span data-pm-label>{{ $sections[$section]['label'] }} ({{ number_format($sections[$section]['count']) }})</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+                </button>
+                <div id="pmSectionOptions" class="pm-select-menu" data-pm-menu role="listbox" aria-label="Monitoring sections" hidden>
+                    @foreach($sections as $key => $meta)
+                        <button type="button" role="option" class="pm-select-option" data-pm-option="{{ $key }}" aria-selected="{{ $section === $key ? 'true' : 'false' }}">
+                            <span>{{ $meta['label'] }}</span><span class="pm-section-count">{{ number_format($meta['count']) }}</span>
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+        </div>
         @if($section !== 'sla')
             <div class="pm-field">
                 <label for="monitorStatus">Account status</label>
-                <select id="monitorStatus" class="pm-control" name="status">
-                    <option value="all" @selected($status === 'all')>All statuses</option>
-                    <option value="active" @selected($status === 'active')>Active</option>
-                    <option value="deactivated" @selected($status === 'deactivated')>Suspended</option>
-                    <option value="blocked" @selected($status === 'blocked')>Blocked</option>
-                    <option value="banned" @selected($status === 'banned')>Banned</option>
-                </select>
+                <div class="pm-select" data-pm-select>
+                    <select id="monitorStatus" class="pm-control pm-native-select" name="status" data-pm-native>
+                        <option value="all" @selected($status === 'all')>All statuses</option>
+                        <option value="active" @selected($status === 'active')>Active</option>
+                        <option value="deactivated" @selected($status === 'deactivated')>Suspended</option>
+                        <option value="blocked" @selected($status === 'blocked')>Blocked</option>
+                        <option value="banned" @selected($status === 'banned')>Banned</option>
+                    </select>
+                    <button type="button" class="pm-select-trigger" data-pm-trigger aria-expanded="false" aria-haspopup="listbox" aria-label="Account status filter">
+                        <span data-pm-label>{{ ['all' => 'All statuses', 'active' => 'Active', 'deactivated' => 'Suspended', 'blocked' => 'Blocked', 'banned' => 'Banned'][$status] ?? 'All statuses' }}</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+                    </button>
+                    <div class="pm-select-menu" data-pm-menu role="listbox" aria-label="Account status options" hidden>
+                        @foreach(['all'=>'All statuses', 'active'=>'Active', 'deactivated'=>'Suspended', 'blocked'=>'Blocked', 'banned'=>'Banned'] as $value=>$label)
+                            <button type="button" role="option" class="pm-select-option" data-pm-option="{{ $value }}" aria-selected="{{ $status === $value ? 'true' : 'false' }}">{{ $label }}</button>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         @else
             <div class="pm-field">
@@ -172,25 +332,28 @@
         <div class="pm-panel-head">
             <div>
                 <h2>{{ $sections[$section]['label'] }}</h2>
-                <p>
-                    {{ $section === 'sla'
-                        ? 'One SLA engine is shared with Security Center. Review active delivery stages, thresholds, elapsed time, and breaches here.'
-                        : 'Open a record to review profile, operations, orders, delivery activity, products, hubs, and administrative controls.' }}
-                </p>
+                @if($section === 'sla')
+                    <p>One SLA engine is shared with Security Center. Review active delivery stages, thresholds, elapsed time, and breaches here.</p>
+                @endif
             </div>
-            <span class="pm-count">
+            <span class="pm-record-count">
                 {{ number_format($section === 'sla' ? $records->count() : $records->total()) }}
                 {{ $section === 'sla' ? 'active orders' : 'records' }}
             </span>
+        </div>
+        <div class="pm-selection" data-pm-selection hidden aria-live="polite">
+            <span><strong data-pm-selected-count>0</strong> selected on this page <small>· Read-only review selection</small></span>
+            <button type="button" data-pm-clear>Clear selection</button>
         </div>
         <div class="pm-table-wrap">
             @if($records->count())
                 <table class="pm-table">
                     @if($section === 'sla')
-                        <thead><tr><th>Order</th><th>Stage</th><th>Elapsed</th><th>SLA</th><th>Seller</th><th>Logistics</th><th>Rider</th><th>Stage started</th></tr></thead>
+                        <thead><tr><th class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-all aria-label="Select all visible monitoring records"></label></th><th>Order</th><th>Stage</th><th>Elapsed</th><th>SLA</th><th>Seller</th><th>Logistics</th><th>Rider</th><th>Stage started</th></tr></thead>
                         <tbody>
                         @foreach($records as $record)
-                            <tr>
+                            <tr data-pm-record-row>
+                                <td class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-check aria-label="Select order {{ $record['order_number'] }}"></label></td>
                                 <td>
                                     <div class="pm-name">{{ $record['order_number'] }}</div>
                                     <div class="pm-sub">Last update {{ $record['last_updated_at']?->diffForHumans() ?? '—' }}</div>
@@ -234,11 +397,12 @@
                         @endforeach
                         </tbody>
                     @elseif($section === 'sellers')
-                        <thead><tr><th>Store</th><th>Owner</th><th>Location</th><th>Products</th><th>Orders</th><th>Delivered</th><th>Status</th><th></th></tr></thead>
+                        <thead><tr><th class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-all aria-label="Select all visible monitoring records"></label></th><th>Store</th><th>Owner</th><th>Location</th><th>Products</th><th>Orders</th><th>Delivered</th><th>Status</th><th></th></tr></thead>
                         <tbody>
                         @foreach($records as $record)
                             @php $recordStatus = ($record->suspended_until && now()->lt($record->suspended_until) && strtolower((string)($record->account_status ?: 'active')) === 'active') ? 'suspended' : strtolower((string) ($record->account_status ?: 'active')); @endphp
-                            <tr>
+                            <tr data-pm-record-row>
+                                <td class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-check aria-label="Select store {{ $record->store_name }}"></label></td>
                                 <td><div class="pm-name">{{ $record->store_name ?: 'Unnamed Store' }}</div><div class="pm-sub">{{ $record->email }}</div></td>
                                 <td><div class="pm-name">{{ trim(($record->first_name ?? '').' '.($record->last_name ?? '')) ?: '—' }}</div><div class="pm-sub">{{ $record->contact_no ?: 'No contact' }}</div></td>
                                 <td>{{ collect([$record->municipality_name, $record->province_name])->filter()->implode(', ') ?: '—' }}</td>
@@ -251,11 +415,12 @@
                         @endforeach
                         </tbody>
                     @elseif($section === 'logistics')
-                        <thead><tr><th>Provider</th><th>Representative</th><th>Service area</th><th>Hubs</th><th>Riders</th><th>Active deliveries</th><th>Status</th><th></th></tr></thead>
+                        <thead><tr><th class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-all aria-label="Select all visible monitoring records"></label></th><th>Provider</th><th>Representative</th><th>Service area</th><th>Hubs</th><th>Riders</th><th>Active deliveries</th><th>Status</th><th></th></tr></thead>
                         <tbody>
                         @foreach($records as $record)
                             @php $recordStatus = strtolower((string) ($record->account_status ?: 'active')); @endphp
-                            <tr>
+                            <tr data-pm-record-row>
+                                <td class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-check aria-label="Select provider {{ $record->business_name }}"></label></td>
                                 <td><div class="pm-name">{{ $record->business_name ?: $record->displayName() }}</div><div class="pm-sub">{{ $record->email }}</div></td>
                                 <td>{{ trim(($record->first_name ?? '').' '.($record->last_name ?? '')) ?: '—' }}</td>
                                 <td><div>{{ collect([$record->municipality_name, $record->province_name])->filter()->implode(', ') ?: '—' }}</div><div class="pm-sub">{{ \Illuminate\Support\Str::limit((string) $record->service_areas, 55) }}</div></td>
@@ -268,11 +433,12 @@
                         @endforeach
                         </tbody>
                     @elseif($section === 'buyers')
-                        <thead><tr><th>Buyer</th><th>Account type</th><th>Location</th><th>Total orders</th><th>Successful</th><th>Cancelled</th><th>Status</th><th></th></tr></thead>
+                        <thead><tr><th class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-all aria-label="Select all visible monitoring records"></label></th><th>Buyer</th><th>Account type</th><th>Location</th><th>Total orders</th><th>Successful</th><th>Cancelled</th><th>Status</th><th></th></tr></thead>
                         <tbody>
                         @foreach($records as $record)
                             @php $recordStatus = strtolower((string) ($record->account_status ?: 'active')); @endphp
-                            <tr>
+                            <tr data-pm-record-row>
+                                <td class="pm-check-cell"><label class="pm-check-wrap"><input type="checkbox" data-pm-check aria-label="Select buyer {{ $record->display_name }}"></label></td>
                                 <td><div class="pm-name">{{ $record->display_name }}</div><div class="pm-sub">{{ $record->email ?: 'No email' }}</div></td>
                                 <td>{{ $record->role_key === 'social_buyer' ? 'Social Buyer' : 'Registered Buyer' }}</td>
                                 <td>{{ collect([$record->municipality_name, $record->province_name])->filter()->implode(', ') ?: '—' }}</td>
@@ -284,32 +450,144 @@
                             </tr>
                         @endforeach
                         </tbody>
-                    @else
-                        <thead><tr><th>Rider</th><th>Logistics</th><th>Registered area</th><th>Vehicle</th><th>Active load</th><th>Delivered</th><th>Status</th><th></th></tr></thead>
-                        <tbody>
-                        @foreach($records as $record)
-                            @php $recordStatus = strtolower((string) ($record->account_status ?: 'active')); @endphp
-                            <tr>
-                                <td><div class="pm-name">{{ trim(($record->first_name ?? '').' '.($record->last_name ?? '')) ?: 'SARI Rider' }}</div><div class="pm-sub">{{ $record->email }}</div></td>
-                                <td>{{ $record->logistics?->displayName() ?? 'Unlinked' }}</td>
-                                <td>{{ collect([$record->barangay_name, $record->municipality_name, $record->province_name])->filter()->implode(', ') ?: '—' }}</td>
-                                <td><div>{{ $record->vehicle_type ?: '—' }}</div><div class="pm-sub">{{ $record->plate_number ?: 'No plate' }}</div></td>
-                                <td>{{ number_format((int) $record->active_deliveries_count) }}</td>
-                                <td>{{ number_format((int) $record->delivered_orders_count) }}</td>
-                                <td><span class="pm-status {{ $recordStatus }}">{{ $statusLabel($recordStatus) }}</span></td>
-                                <td><a class="pm-view" href="{{ route('admin.monitoring.riders.show', $record) }}">View rider</a></td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     @endif
                 </table>
             @else
-                <div class="pm-empty">No records match the selected filters.</div>
+                <div class="pm-empty" role="status">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></svg>
+                    <strong>No matching monitoring records</strong>
+                    <p>Try a different search term or account status filter.</p>
+                </div>
             @endif
         </div>
-        @if($section !== 'sla' && $records->hasPages())
-            <div class="pm-pagination">{{ $records->links() }}</div>
-        @endif
+        <div class="pm-pagination">
+            <span class="pm-pagination-summary">
+                @if($section === 'sla')
+                    Showing {{ number_format($records->count()) }} active orders
+                @else
+                    Showing {{ number_format($records->firstItem() ?? 0) }}–{{ number_format($records->lastItem() ?? 0) }} of {{ number_format($records->total()) }} results
+                @endif
+            </span>
+            @if($section !== 'sla' && $records->hasPages())
+                @php
+                    $current = $records->currentPage();
+                    $last = $records->lastPage();
+                    $first = max(1, min($current - 2, $last - 4));
+                    $end = min($last, $first + 4);
+                @endphp
+                <nav class="pm-pages" aria-label="Monitoring record pages">
+                    @if($records->onFirstPage())
+                        <span class="pm-page-arrow is-disabled" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></span>
+                    @else
+                        <a class="pm-page-arrow" href="{{ $records->previousPageUrl() }}" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></a>
+                    @endif
+                    @if($first > 1)
+                        <a class="pm-page-number" href="{{ $records->url(1) }}">1</a>
+                        @if($first > 2)<span class="pm-page-ellipsis">…</span>@endif
+                    @endif
+                    @for($number = $first; $number <= $end; $number++)
+                        @if($number === $current)
+                            <span class="pm-page-number is-current" aria-current="page">{{ $number }}</span>
+                        @else
+                            <a class="pm-page-number" href="{{ $records->url($number) }}">{{ $number }}</a>
+                        @endif
+                    @endfor
+                    @if($end < $last)
+                        @if($end < $last - 1)<span class="pm-page-ellipsis">…</span>@endif
+                        <a class="pm-page-number" href="{{ $records->url($last) }}">{{ $last }}</a>
+                    @endif
+                    @if($records->hasMorePages())
+                        <a class="pm-page-arrow" href="{{ $records->nextPageUrl() }}" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+                    @else
+                        <span class="pm-page-arrow is-disabled" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+                    @endif
+                </nav>
+            @endif
+        </div>
     </section>
 </div>
+<script>
+(function () {
+    function initializeMonitoringControls() {
+        const page = document.querySelector('.pm-page');
+        if (!page || page.dataset.pmInitialized === 'true') return;
+        page.dataset.pmInitialized = 'true';
+
+        const selectRoots = Array.from(page.querySelectorAll('[data-pm-select]'));
+        const closeAllSelects = (except = null) => {
+            selectRoots.forEach(root => {
+                if (root === except) return;
+                const menu = root.querySelector('[data-pm-menu]');
+                const trigger = root.querySelector('[data-pm-trigger]');
+                if (menu) menu.hidden = true;
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            });
+        };
+        selectRoots.forEach(root => {
+            const native = root.querySelector('[data-pm-native]');
+            const trigger = root.querySelector('[data-pm-trigger]');
+            const label = root.querySelector('[data-pm-label]');
+            const menu = root.querySelector('[data-pm-menu]');
+            const options = Array.from(root.querySelectorAll('[data-pm-option]'));
+            if (!native || !trigger || !menu || !label) return;
+            root.classList.add('is-enhanced');
+            native.tabIndex = -1;
+            native.setAttribute('aria-hidden', 'true');
+            const close = () => { menu.hidden = true; trigger.setAttribute('aria-expanded', 'false'); };
+            const sync = () => {
+                label.textContent = native.selectedOptions[0]?.textContent?.trim() || '';
+                options.forEach(option => option.setAttribute('aria-selected', String(option.dataset.pmOption === native.value)));
+            };
+            sync();
+            trigger.addEventListener('click', () => {
+                const opening = menu.hidden;
+                closeAllSelects(root);
+                menu.hidden = !opening;
+                trigger.setAttribute('aria-expanded', String(opening));
+                if (opening) options.find(option => option.dataset.pmOption === native.value)?.focus();
+            });
+            options.forEach((option, index) => {
+                option.addEventListener('click', () => {
+                    native.value = option.dataset.pmOption || '';
+                    native.dispatchEvent(new Event('change', { bubbles: true }));
+                    sync(); close(); trigger.focus();
+                });
+                option.addEventListener('keydown', event => {
+                    if (event.key === 'Escape') { event.preventDefault(); close(); trigger.focus(); return; }
+                    const step = event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : 0;
+                    if (step) { event.preventDefault(); options[(index + step + options.length) % options.length].focus(); }
+                    if (event.key === 'Home' || event.key === 'End') {
+                        event.preventDefault(); options[event.key === 'Home' ? 0 : options.length - 1].focus();
+                    }
+                });
+            });
+            native.addEventListener('change', sync);
+        });
+        document.addEventListener('pointerdown', event => {
+            if (!selectRoots.some(root => root.contains(event.target))) closeAllSelects();
+        });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape') closeAllSelects(); });
+
+        const all = page.querySelector('[data-pm-all]');
+        const checks = Array.from(page.querySelectorAll('[data-pm-check]'));
+        const selection = page.querySelector('[data-pm-selection]');
+        const counter = page.querySelector('[data-pm-selected-count]');
+        const clear = page.querySelector('[data-pm-clear]');
+        const refresh = () => {
+            const checked = checks.filter(input => input.checked).length;
+            if (selection) selection.hidden = checked === 0;
+            if (counter) counter.textContent = String(checked);
+            if (all) { all.checked = checks.length > 0 && checked === checks.length; all.indeterminate = checked > 0 && checked < checks.length; }
+        };
+        all?.addEventListener('change', () => { checks.forEach(input => { input.checked = all.checked; }); refresh(); });
+        checks.forEach(input => input.addEventListener('change', refresh));
+        clear?.addEventListener('click', () => { checks.forEach(input => { input.checked = false; }); refresh(); });
+        refresh();
+    }
+    document.addEventListener('livewire:navigated', initializeMonitoringControls);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeMonitoringControls, { once:true });
+    else initializeMonitoringControls();
+})();
+</script>
+
 @endsection

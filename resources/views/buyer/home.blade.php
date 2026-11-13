@@ -63,6 +63,14 @@
     ]);
 
     $featuredCollection = collect($featuredProducts ?? []);
+    // Include every category represented in the full buyer-visible catalog.
+    $categoryCollection = $categoryCollection->concat(
+        $featuredCollection->map(fn ($product) => [
+            'name' => trim((string) ($product['category'] ?? 'General')) ?: 'General',
+            'image' => null,
+        ])
+    )->unique(fn ($category) => mb_strtolower(trim($category['name'])))->values();
+
 
 
 
@@ -4155,6 +4163,25 @@
         }
     }
 
+    #categories #buyerCategoryRail {
+        display: flex !important; flex-wrap: nowrap !important;
+        overflow-x: auto !important; overflow-y: hidden !important;
+        max-width: 100%; scrollbar-width: none; -ms-overflow-style: none;
+        padding-bottom: 12px !important;
+    }
+    #categories #buyerCategoryRail::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    #categories #buyerCategoryRail .sari-category-card { flex-shrink: 0 !important; }
+    #categories #buyerCategoryRail .sari-category-name { white-space: nowrap; max-width: none !important; }
+    #homeCatalogProducts, #homeCatalogGrid {
+        height: auto !important; max-height: none !important; overflow: visible !important;
+    }
+    #buyerCategoryRail button.sari-category-card { border: 0; background: transparent; cursor: pointer; font: inherit; }
+    #buyerCategoryRail .sari-category-card.is-active .sari-category-name { color: #a86d08; font-weight: 700; }
+    #buyerCategoryRail .sari-category-card:focus-visible { outline: 2px solid #c9870e; outline-offset: 4px; }
+    #buyerCategoryRail .sari-category-photo { display: grid; place-items: center; background: white; }
+    #buyerCategoryRail .sari-home-category-fallback svg,
+    #buyerCategoryRail .sari-home-category-glyph { width: 38px; height: 38px; color: #a86d08; }
+    #homeCatalogGrid [data-product-card][hidden] { display: none !important; }
 </style>
 
 
@@ -4490,11 +4517,17 @@
 
             <div id="buyerCategoryRail" class="sari-category-rail mt-3">
 
+                <button type="button" class="sari-category-card is-active" data-home-category="" aria-pressed="true">
+                    <span class="sari-category-photo sari-home-category-fallback" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                    </span>
+                    <span class="sari-category-name">All</span>
+                </button>
                 @forelse ($categoryCollection as $category)
 
-                    <a
+                    <button type="button"
 
-                        href="{{ route('marketplace.category', ['category' => $category['slug']]) }}"
+                        data-home-category="{{ $category['name'] }}" aria-pressed="false"
 
                         class="sari-category-card"
 
@@ -4503,6 +4536,7 @@
                     >
 
                         <span class="sari-category-photo">
+                            @if (!empty($category['image']))
                             <img
                                 src="{{ asset($category['image']) }}"
                                 alt="{{ $category['name'] }} category"
@@ -4511,11 +4545,14 @@
                                 loading="lazy"
                                 decoding="async"
                             >
+                            @else
+                                <svg class="sari-home-category-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 7 9-4 9 4v10l-9 4-9-4V7Z"/><path d="m3 7 9 4 9-4M12 11v10"/></svg>
+                            @endif
                         </span>
 
                         <span class="sari-category-name">{{ $category['name'] }}</span>
 
-                    </a>
+                    </button>
 
                 @empty
 
@@ -4539,17 +4576,18 @@
 
         ============================================================ --}}
 
-        <section class="mt-5">
+        <section id="homeCatalogProducts" class="mt-5">
 
             <div>
 
-                <h2 class="sari-section-title text-[19px] font-bold text-[#201b17] sm:text-[22px]">Recommended for You</h2>
+                <h2 id="homeCatalogTitle" class="sari-section-title text-[19px] font-bold text-[#201b17] sm:text-[22px]">Recommended for You</h2>
 
             </div>
 
 
 
-            <div class="sari-product-grid mt-3">
+            <p id="homeCategoryEmpty" hidden class="mt-4 text-sm text-slate-500" role="status">No products in this category yet.</p>
+            <div id="homeCatalogGrid" class="sari-product-grid mt-3">
 
                 @forelse ($featuredCollection as $product)
 
@@ -4952,3 +4990,39 @@
 </script>
 
 @endpush
+
+@once
+<script>
+(() => {
+    function initHomeCategories() {
+        const rail = document.getElementById('buyerCategoryRail');
+        const grid = document.getElementById('homeCatalogGrid');
+        if (!rail || !grid || rail.dataset.inlineBound === '1') return;
+        rail.dataset.inlineBound = '1';
+        const cards = Array.from(grid.querySelectorAll('[data-product-card]'));
+        const normalize = value => String(value || '').trim().toLocaleLowerCase();
+        rail.addEventListener('click', event => {
+            const button = event.target.closest('[data-home-category]');
+            if (!button || !rail.contains(button)) return;
+            const category = normalize(button.dataset.homeCategory);
+            let visible = 0;
+            cards.forEach(card => {
+                card.hidden = Boolean(category) && normalize(card.dataset.productCategory) !== category;
+                if (!card.hidden) visible++;
+            });
+            rail.querySelectorAll('[data-home-category]').forEach(item => {
+                const active = item === button;
+                item.classList.toggle('is-active', active);
+                item.setAttribute('aria-pressed', String(active));
+            });
+            document.getElementById('homeCatalogTitle').textContent = category ? button.dataset.homeCategory : 'Recommended for You';
+            document.getElementById('homeCategoryEmpty').hidden = visible > 0 || cards.length === 0;
+            document.getElementById('homeCatalogProducts')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initHomeCategories, { once: true });
+    else initHomeCategories();
+    document.addEventListener('livewire:navigated', initHomeCategories);
+})();
+</script>
+@endonce

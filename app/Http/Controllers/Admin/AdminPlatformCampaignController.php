@@ -25,7 +25,7 @@ class AdminPlatformCampaignController extends Controller
         }
 
         $campaigns = PlatformCampaign::query()
-            ->withCount(['products', 'sellers', 'categories', 'redemptions'])
+            ->withCount(['products', 'sellers', 'categories', 'redemptions', 'shippingRedemptions'])
             ->orderByDesc('starts_at')
             ->orderByDesc('id')
             ->paginate(12)
@@ -108,6 +108,12 @@ class AdminPlatformCampaignController extends Controller
         $validated = $this->validated($request, $campaign);
 
         DB::transaction(function () use ($request, $campaign, $validated): void {
+            $campaign = PlatformCampaign::query()->whereKey($campaign->id)->lockForUpdate()->firstOrFail();
+            $totals = app(\App\Services\Promotions\PlatformShippingBudgetService::class)->totals($campaign);
+            $newBudget = \App\Services\Promotions\PlatformShippingBudgetService::cents($validated['shipping_budget'] ?? '0');
+            if ($newBudget < $totals['reserved'] + $totals['used']) {
+                throw ValidationException::withMessages(['shipping_budget' => 'Budget cannot be below reserved plus used shipping subsidies.']);
+            }
             $this->fillCampaign($campaign, $request, $validated);
             $campaign->save();
             $this->syncTargets($campaign, $validated);
@@ -122,9 +128,9 @@ class AdminPlatformCampaignController extends Controller
     {
         abort_unless($request->session()->get('is_admin'), 403);
 
-        if (!$campaign->sale_enabled && !$campaign->voucher_enabled) {
+        if (!$campaign->sale_enabled && !$campaign->voucher_enabled && !$campaign->shipping_enabled) {
             return back()->withErrors([
-                'campaign' => 'Enable a Buyer sale discount or voucher before publishing this campaign.',
+                'campaign' => 'Enable a sale, event voucher, or shipping voucher before publishing this campaign.',
             ]);
         }
 
@@ -145,13 +151,15 @@ class AdminPlatformCampaignController extends Controller
     {
         abort_unless($request->session()->get('is_admin'), 403);
 
-        if ($campaign->redemptions()->exists()) {
-            throw ValidationException::withMessages([
-                'campaign' => 'This campaign already has voucher redemptions. Pause it instead so audit history is preserved.',
-            ]);
-        }
-
-        $campaign->delete();
+        DB::transaction(function () use ($campaign): void {
+            $locked = PlatformCampaign::query()->whereKey($campaign->id)->lockForUpdate()->firstOrFail();
+            if ($locked->redemptions()->exists() || $locked->shippingRedemptions()->exists()) {
+                throw ValidationException::withMessages([
+                    'campaign' => 'This campaign has redemption history. Pause it instead so subsidy and voucher records are preserved.',
+                ]);
+            }
+            $locked->delete();
+        });
 
         return redirect()
             ->route('admin.platform-campaigns')
@@ -164,6 +172,10 @@ class AdminPlatformCampaignController extends Controller
             $request->merge([
                 'voucher_code' => strtoupper(trim((string) $request->input('voucher_code'))),
             ]);
+        }
+
+        if ($request->filled('shipping_code')) {
+            $request->merge(['shipping_code' => strtoupper(trim((string) $request->input('shipping_code')))]);
         }
 
         $validated = $request->validate([
@@ -198,6 +210,15 @@ class AdminPlatformCampaignController extends Controller
             'voucher_usage_limit' => ['nullable', 'integer', 'min:1', 'max:100000000'],
             'voucher_per_buyer_limit' => ['nullable', 'integer', 'min:1', 'max:1000'],
 
+            'shipping_enabled' => ['nullable', 'boolean'],
+            'shipping_code' => ['nullable', 'required_if:shipping_enabled,1', 'string', 'max:64',
+                'regex:/^[A-Za-z0-9_-]+$/', Rule::unique('platform_campaigns', 'shipping_code')->ignore($campaign?->id)],
+            'shipping_budget' => ['nullable', 'required_if:shipping_enabled,1', 'numeric', 'min:0', 'max:100000000', 'decimal:0,2'],
+            'shipping_cap' => ['nullable', 'required_if:shipping_enabled,1', 'numeric', 'min:0', 'max:1000000', 'decimal:0,2'],
+            'shipping_minimum' => ['nullable', 'numeric', 'min:0', 'max:100000000', 'decimal:0,2'],
+            'shipping_per_buyer_limit' => ['nullable', 'integer', 'min:1', 'max:1000'],
+            'shipping_areas_text' => ['nullable', 'string', 'max:2000'],
+
             'activate_immediately' => ['nullable', 'boolean'],
             'starts_at' => ['nullable', 'date'],
             'ends_at' => ['required', 'date'],
@@ -207,7 +228,15 @@ class AdminPlatformCampaignController extends Controller
         $validated['voucher_enabled'] = $request->boolean('voucher_enabled');
         $validated['activate_immediately'] = $request->boolean('activate_immediately');
 
+        $validated['shipping_enabled'] = $request->boolean('shipping_enabled');
         $errors = [];
+        if (trim((string) $validated['name']) === '') $errors['name'] = 'Enter a campaign name.';
+        if ($validated['shipping_enabled']) {
+            if ((float) ($validated['shipping_budget'] ?? 0) <= 0) $errors['shipping_budget'] = 'Enter a shipping budget greater than zero.';
+            if ((float) ($validated['shipping_cap'] ?? 0) <= 0) $errors['shipping_cap'] = 'Enter a subsidy cap greater than zero.';
+            if ((float) ($validated['shipping_cap'] ?? 0) > (float) ($validated['shipping_budget'] ?? 0)) $errors['shipping_cap'] = 'The subsidy cap cannot exceed the campaign budget.';
+        }
+
 
         $startUtc = null;
 
@@ -260,8 +289,9 @@ class AdminPlatformCampaignController extends Controller
 
         if (($validated['state'] ?? 'draft') === 'published'
             && !$validated['sale_enabled']
-            && !$validated['voucher_enabled']) {
-            $errors['campaign'] = 'A published campaign needs a Buyer sale discount, voucher, or both.';
+            && !$validated['voucher_enabled']
+            && !$validated['shipping_enabled']) {
+            $errors['campaign'] = 'A published campaign needs a sale, event voucher, or shipping voucher.';
         }
 
         $scope = (string) $validated['target_scope'];
@@ -289,6 +319,13 @@ class AdminPlatformCampaignController extends Controller
         array $validated
     ): void {
         $campaign->fill([
+            'shipping_enabled' => (bool) $validated['shipping_enabled'],
+            'shipping_code' => filled($validated['shipping_code'] ?? null) ? strtoupper(trim($validated['shipping_code'])) : null,
+            'shipping_budget_cents' => \App\Services\Promotions\PlatformShippingBudgetService::cents($validated['shipping_budget'] ?? '0'),
+            'shipping_cap_cents' => \App\Services\Promotions\PlatformShippingBudgetService::cents($validated['shipping_cap'] ?? '0'),
+            'shipping_minimum_cents' => \App\Services\Promotions\PlatformShippingBudgetService::cents($validated['shipping_minimum'] ?? '0'),
+            'shipping_per_buyer_limit' => (int) ($validated['shipping_per_buyer_limit'] ?? 1),
+            'shipping_areas' => collect(explode(',', (string) ($validated['shipping_areas_text'] ?? '')))->map(fn ($area) => trim($area))->filter()->unique()->values()->all(),
             'name' => trim((string) $validated['name']),
             'description' => trim((string) ($validated['description'] ?? '')) ?: null,
             'state' => (string) $validated['state'],

@@ -366,6 +366,7 @@
             @endif
         </div>
         <aside class="pmd-stack">
+            @if($kind !== 'rider')
             <section class="pmd-panel pmd-admin">
                 <div class="pmd-panel-head"><div><h2>Administrative controls</h2><p>Account restrictions take effect server-side and are written to the Admin audit trail.</p></div></div>
                 <div class="pmd-body">
@@ -396,6 +397,12 @@
                     <div class="pmd-warning">Suspend disables account access using the existing deactivated state. Block is an indefinite reversible lock. Ban is permanent and also uses SARI's email-ban protection.</div>
                 </div>
             </section>
+            @else
+            <section class="pmd-panel pmd-admin">
+                <div class="pmd-panel-head"><div><h2>Logistics-owned Rider account</h2><p>Rider access management belongs to the linked Logistics provider.</p></div></div>
+                <div class="pmd-body"><div class="pmd-warning">This Rider profile is available for delivery oversight only. Manage Rider access and assignments through the Logistics portal.</div></div>
+            </section>
+            @endif
             <section class="pmd-panel">
                 <div class="pmd-panel-head"><div><h2>Recent account activity</h2><p>User and Admin audit events when available.</p></div></div>
                 <div class="pmd-body">

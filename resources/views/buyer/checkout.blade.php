@@ -2466,6 +2466,17 @@
                         @endif
                     </div>
 
+                    <div class="sari-voucher-card">
+                        <label for="checkoutShippingCode" class="sari-voucher-label">SARI shipping voucher</label>
+                        <div class="sari-voucher-row"><input id="checkoutShippingCode" name="shipping_code" maxlength="64" value="{{ old('shipping_code', $shippingCode ?? '') }}" class="sari-checkout-input" placeholder="Enter shipping code"><button id="applyShippingVoucher" type="button" class="sari-voucher-apply">Apply</button></div>
+                        @if(!empty($shippingPreviewError))<p class="sari-voucher-error" role="alert">{{ $shippingPreviewError }}</p>@endif
+                        @if(($platformShippingDiscount ?? 0) > 0)<p class="sari-voucher-success">SARI covers ₱{{ number_format($platformShippingDiscount, 2) }} shipping.</p>@endif
+                        <p class="sari-voucher-help">Preview uses your saved/default address. Final address, eligibility and remaining budget are checked when ordering.</p>
+                        @foreach(($shippingVoucherOffers ?? []) as $shippingOffer)
+                            <button type="button" class="sari-voucher-offer" data-shipping-code="{{ $shippingOffer->shipping_code }}"><strong>{{ $shippingOffer->shipping_code }}</strong><span>Up to ₱{{ number_format($shippingOffer->shipping_cap_cents / 100, 2) }} per seller order · Min ₱{{ number_format($shippingOffer->shipping_minimum_cents / 100, 2) }}</span></button>
+                        @endforeach
+                    </div>
+
                     {{-- Seller-specific amounts use the same preview data as the checkout controller. --}}
                     <div class="sari-summary-totals sari-seller-summary-breakdown">
                         @foreach ($groups as $sellerId => $sellerItems)
@@ -2625,6 +2636,8 @@
             function openVoucherPreview(code) {
                 const value = String(code || '').trim().toUpperCase();
                 const url = new URL(@json(route('buyer.checkout')), window.location.origin);
+                const shippingCode = document.getElementById('checkoutShippingCode')?.value?.trim();
+                if (shippingCode) url.searchParams.set('shipping_code', shippingCode);
 
                 if (value) {
                     url.searchParams.set('voucher_code', value);
@@ -2642,6 +2655,14 @@
                 window.location.assign(url.toString());
             }
 
+            document.getElementById('applyShippingVoucher')?.addEventListener('click', () => openVoucherPreview(voucherInput?.value));
+            document.getElementById('checkoutShippingCode')?.addEventListener('keydown', event => {
+                if (event.key === 'Enter') { event.preventDefault(); openVoucherPreview(voucherInput?.value); }
+            });
+            document.querySelectorAll('[data-shipping-code]').forEach(button => button.addEventListener('click', () => {
+                document.getElementById('checkoutShippingCode').value = button.dataset.shippingCode;
+                openVoucherPreview(voucherInput?.value);
+            }));
             applyButton?.addEventListener('click', () => openVoucherPreview(voucherInput?.value));
 
             voucherInput?.addEventListener('keydown', (event) => {

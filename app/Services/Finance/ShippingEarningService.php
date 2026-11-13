@@ -148,7 +148,8 @@ class ShippingEarningService
                         'logistics_remainder_percent' => round(100 - $pickupPercent - $lastMilePercent, 4),
                         'pickup_rider_id' => $pickupRider?->id,
                         'final_mile_rider_id' => $finalRider?->id,
-                        'seller_funded_shipping_discount' => (float) ($locked->shipping_discount_amount ?? 0),
+                        'seller_funded_shipping_discount' => $locked->sellerFundedShippingDiscount(),
+                        'platform_funded_shipping_discount' => (float) $locked->platform_shipping_discount_amount,
                         'important' => 'This is an internal earning allocation. COD cash is not released to wallets until remittance verification.',
                     ],
                 ]

@@ -3233,6 +3233,31 @@
         }
     }
 
+    /* Keep the catalog filters in page flow and below the buyer header. */
+    .sari-products-page .sari-filter-dock {
+        position: relative !important;
+        inset: auto !important;
+        z-index: 0 !important;
+        isolation: isolate;
+    }
+
+    /* Compact gold action aligned with the existing filter controls. */
+    .sari-products-page #buyerApplyFilters {
+        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        height: 40px; min-height: 40px; padding: 0 15px; border: 1px solid #c9870e;
+        border-radius: 10px; background: #c9870e; color: #fff;
+        font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+        align-self: end; white-space: nowrap;
+        transition: background-color .15s ease, border-color .15s ease;
+    }
+    .sari-products-page #buyerApplyFilters svg { width: 16px; height: 16px; }
+    .sari-products-page #buyerApplyFilters:hover { background: #ad720b; border-color: #ad720b; }
+    .sari-products-page #buyerApplyFilters:focus-visible { outline: 3px solid #e9c56e; outline-offset: 3px; }
+    .sari-products-page .sari-insight-heading-icon {
+        width: 28px; height: 28px; flex: 0 0 28px;
+        background: transparent; border: 0; box-shadow: none;
+    }
+    .sari-products-page .sari-insight-heading-icon svg { width: 28px; height: 28px; }
 </style>
 @endpush
 
@@ -3528,12 +3553,13 @@
                     </details>
                 </div>
 
-                <button id="clearAllFilters" type="button" class="sari-filter-reset">
-                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                        <path d="M4 12a8 8 0 1 0 2.3-5.7"></path><path d="M4 4v5h5"></path>
+                <button id="buyerApplyFilters" type="button" class="sari-filter-apply">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                        <path d="M4 6h16M7 12h10M10 18h4"></path>
                     </svg>
-                    Reset
+                    Apply
                 </button>
+                <button id="clearAllFilters" type="button" hidden aria-hidden="true" tabindex="-1"></button>
 
                 <span class="sari-result-pill">
                     <span id="toolbarResultCount">{{ count($products) }}</span>&nbsp;products
@@ -3561,20 +3587,6 @@
             @foreach ($categories as $category)
                 <button type="button" data-filter-category="{{ $category['name'] }}"></button>
             @endforeach
-        </div>
-
-        {{-- Category chips — reference layout --}}
-        <div class="sari-reference-category-row">
-            <div class="sari-category-chips">
-                <button type="button" data-shop-category-chip="" class="sari-inline-chip is-active">All</button>
-
-                @foreach (collect($categories)->take(6) as $category)
-                    <button type="button" data-shop-category-chip="{{ $category['name'] }}" class="sari-inline-chip">
-                        {{ $category['name'] }}
-                    </button>
-                @endforeach
-
-            </div>
         </div>
 
         {{-- Product grid --}}
@@ -3614,15 +3626,16 @@
                     <div class="sari-insight-card-head">
                         <div class="sari-insight-heading">
                             <span class="sari-insight-heading-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-                                    <path d="M4 19V10"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19V3"></path>
+                                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                                    <path d="M4 27V18h5v9" fill="#e5c47b" stroke="#a97413" stroke-width="1.3"/>
+                                    <path d="M13 27V13h5v14" fill="#dba834" stroke="#a97413" stroke-width="1.3"/>
+                                    <path d="M22 27V7h5v20" fill="#c9870e" stroke="#a97413" stroke-width="1.3"/>
+                                    <path d="m4 13 9-6 6 2 9-7m-6 0h6v6" stroke="#685027" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3 28h26" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/>
                                 </svg>
                             </span>
                             <h2 id="buyerTrendingTitle">Trending Now</h2>
                         </div>
-                        <button id="buyerTrendingViewAll" type="button" class="sari-insight-link">
-                            View all <span aria-hidden="true">→</span>
-                        </button>
                     </div>
 
                     <div class="sari-trending-list">
@@ -3634,7 +3647,7 @@
                             >
                                 <span class="sari-trending-thumb">
                                     @if (!empty($trendingProduct['image']))
-                                        <img src="{{ asset($trendingProduct['image']) }}" alt="" loading="lazy" decoding="async">
+                                        <img src="{{ str_starts_with(ltrim($trendingProduct['image'], '/'), 'buyer/') ? '/' . ltrim($trendingProduct['image'], '/') : asset($trendingProduct['image']) }}" alt="" loading="lazy" decoding="async">
                                     @else
                                         <span aria-hidden="true">S</span>
                                     @endif
@@ -3658,15 +3671,17 @@
                     <div class="sari-insight-card-head">
                         <div class="sari-insight-heading">
                             <span class="sari-insight-heading-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-                                    <path d="M20 13 13 20 4 11V4h7l9 9Z"></path><circle cx="8.5" cy="8.5" r="1.2"></circle>
+                                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                                    <path d="m3 12 9-5 9 5-9 5-9-5Z" fill="#f0d79d" stroke="#a97413" stroke-width="1.3" stroke-linejoin="round"/>
+                                    <path d="M3 12v11l9 5V17L3 12Z" fill="#dba834" stroke="#a97413" stroke-width="1.3" stroke-linejoin="round"/>
+                                    <path d="m12 17 9-5v11l-9 5V17Z" fill="#c9870e" stroke="#a97413" stroke-width="1.3" stroke-linejoin="round"/>
+                                    <path d="m8 9 9 5v5" stroke="#fff5d9" stroke-width="2"/>
+                                    <path d="m21 4 7 4v8l-7 4V4Z" fill="#e2e8f0" stroke="#64748b" stroke-width="1.3" stroke-linejoin="round"/>
+                                    <path d="m14 8 7-4 7 4-7 4-7-4Z" fill="#f1f5f9" stroke="#64748b" stroke-width="1.3" stroke-linejoin="round"/>
                                 </svg>
                             </span>
                             <h2 id="buyerPopularCategoriesTitle">Popular Categories</h2>
                         </div>
-                        <button id="buyerPopularCategoriesViewAll" type="button" class="sari-insight-link">
-                            View all <span aria-hidden="true">→</span>
-                        </button>
                     </div>
 
                     <div class="sari-popular-category-list">
@@ -3841,6 +3856,17 @@
         const maxPrice = document.getElementById('maxPrice');
 
         const clearAll = document.getElementById('clearAllFilters');
+        const applyFiltersButton = document.getElementById('buyerApplyFilters');
+        if (applyFiltersButton && applyFiltersButton.dataset.bound !== '1') {
+            applyFiltersButton.dataset.bound = '1';
+            applyFiltersButton.addEventListener('click', () => {
+                categorySelect?.dispatchEvent(new Event('change', { bubbles: true }));
+                document.getElementById('buyerSort')?.dispatchEvent(new Event('change', { bubbles: true }));
+                document.querySelectorAll('.sari-formal-dropdown[open]').forEach((menu) => menu.removeAttribute('open'));
+                document.getElementById('buyerLiveSearchViewAll')?.click();
+            });
+        }
+
         const showAll = document.getElementById('showAllProducts');
 
         const formalDropdowns = Array.from(document.querySelectorAll('.sari-formal-dropdown'));
@@ -4006,28 +4032,6 @@
                 document.getElementById('buyerProductGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
-
-        const trendingViewAll = document.getElementById('buyerTrendingViewAll');
-        if (trendingViewAll && trendingViewAll.dataset.bound !== '1') {
-            trendingViewAll.dataset.bound = '1';
-            trendingViewAll.addEventListener('click', function () {
-                const sortSelect = document.getElementById('buyerSort');
-                if (sortSelect) {
-                    sortSelect.value = 'sold';
-                    sortSelect.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-                document.getElementById('buyerProductGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
-
-        const popularCategoriesViewAll = document.getElementById('buyerPopularCategoriesViewAll');
-        if (popularCategoriesViewAll && popularCategoriesViewAll.dataset.bound !== '1') {
-            popularCategoriesViewAll.dataset.bound = '1';
-            popularCategoriesViewAll.addEventListener('click', function () {
-                chooseCategory('');
-                document.querySelector('.sari-reference-category-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
-        }
 
         if (mobileFilterDrawer && mobileFilterDrawer.dataset.bound !== '1') {
             mobileFilterDrawer.dataset.bound = '1';

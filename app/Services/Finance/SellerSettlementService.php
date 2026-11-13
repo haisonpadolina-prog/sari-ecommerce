@@ -61,14 +61,14 @@ class SellerSettlementService
             $withholdingTax = 0.0;
             $sellerShippingPromotion = round(max(
                 0,
-                (float) ($lockedOrder->shipping_discount_amount ?? 0)
+                $lockedOrder->sellerFundedShippingDiscount()
             ), 2);
 
             /*
-             * Free Shipping promotions are explicitly seller-funded. The Buyer
+             * Only the seller-funded portion is deducted from seller proceeds. The Buyer
              * pays the reduced delivery fee, the rider still earns the original
              * courier fee, and this discount is funded by reducing the Seller's
-             * settlement. No platform shipping expense is invented here.
+             * settlement. Platform shipping subsidies are tracked in their own reservation ledger.
              */
             $sellerNet = round(max(
                 0,
@@ -100,6 +100,7 @@ class SellerSettlementService
                         'free_shipping_promotion' => [
                             'funder' => $sellerShippingPromotion > 0 ? 'seller' : null,
                             'seller_funded_discount' => $sellerShippingPromotion,
+                            'platform_funded_discount' => (float) $lockedOrder->platform_shipping_discount_amount,
                             'promotion_id' => $lockedOrder->seller_free_shipping_promotion_id,
                             'original_delivery_fee' => $lockedOrder->courierDeliveryFee(),
                             'buyer_delivery_fee' => (float) $lockedOrder->delivery_fee,
@@ -140,7 +141,7 @@ class SellerSettlementService
             $order = MarketplaceOrder::query()->find($settlement->marketplace_order_id);
             $sellerShippingPromotion = round(max(
                 0,
-                (float) ($order?->shipping_discount_amount ?? 0)
+                $order?->sellerFundedShippingDiscount() ?? 0
             ), 2);
             $sellerNet = round(max(
                 0,

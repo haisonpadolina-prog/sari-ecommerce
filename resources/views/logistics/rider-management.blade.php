@@ -750,8 +750,13 @@
                             data-availability="{{ $availability }}"
                         >
                             <td>
-                                <p class="rm-rider-name">{{ trim($rider->first_name.' '.$rider->last_name) }}</p>
-                                <p class="rm-rider-email">{{ $rider->email }}</p>
+                                <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                                    @if($rider->profile_image_path)
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($rider->profile_image_path) }}" alt="{{ trim($rider->first_name.' '.$rider->last_name) }}" width="44" height="44" loading="lazy" style="width:44px;height:44px;flex-shrink:0;object-fit:cover;border-radius:12px">
+                                    @endif
+                                    <div style="min-width:0"><p class="rm-rider-name">{{ trim($rider->first_name.' '.$rider->last_name) }}</p>
+                                    <p class="rm-rider-email">{{ $rider->email }}</p></div>
+                                </div>
                             </td>
                             <td>
                                 <p class="font-medium text-[#344054]">{{ $rider->vehicle_type ?: '—' }}</p>

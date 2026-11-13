@@ -142,7 +142,7 @@ class MobileRiderNotificationController extends Controller
         ])->header('Cache-Control', 'no-store, private');
     }
 
-    private function sync(CourierAccount $rider): void
+    public function sync(CourierAccount $rider): void
     {
         $id = (int) $rider->id;
         $now = now();

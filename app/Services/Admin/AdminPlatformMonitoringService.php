@@ -43,7 +43,7 @@ class AdminPlatformMonitoringService
         ];
     }
 
-    public function sellerDirectory(string $search, string $status): LengthAwarePaginator
+    public function sellerDirectory(string $search, string $status, int $perPage = 10, ?int $page = null): LengthAwarePaginator
     {
         return SellerAccount::query()
             ->withCount([
@@ -91,11 +91,11 @@ class AdminPlatformMonitoringService
                 $query->where('account_status', $status);
             })
             ->latest('created_at')
-            ->paginate(18)
+            ->paginate($perPage, ['*'], 'page', $page)
             ->withQueryString();
     }
 
-    public function logisticsDirectory(string $search, string $status): LengthAwarePaginator
+    public function logisticsDirectory(string $search, string $status, int $perPage = 10, ?int $page = null): LengthAwarePaginator
     {
         return LogisticsAccount::query()
             ->withCount([
@@ -118,7 +118,7 @@ class AdminPlatformMonitoringService
             })
             ->when($status !== 'all', fn (Builder $query) => $query->where('account_status', $status))
             ->latest('created_at')
-            ->paginate(18)
+            ->paginate($perPage, ['*'], 'page', $page)
             ->withQueryString();
     }
 
@@ -150,7 +150,7 @@ class AdminPlatformMonitoringService
             ->withQueryString();
     }
 
-    public function buyerDirectory(string $search, string $status): LengthAwarePaginator
+    public function buyerDirectory(string $search, string $status, int $perPage = 10, ?int $page = null): LengthAwarePaginator
     {
         $registered = DB::table('buyer_accounts')
             ->whereNull('deleted_at')
@@ -199,7 +199,7 @@ class AdminPlatformMonitoringService
             })
             ->when($status !== 'all', fn ($query) => $query->where('account_status', $status))
             ->orderByDesc('created_at')
-            ->paginate(18)
+            ->paginate($perPage, ['*'], 'page', $page)
             ->withQueryString();
 
         $this->attachBuyerOrderStats($paginator);

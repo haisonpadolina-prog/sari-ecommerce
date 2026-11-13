@@ -3314,10 +3314,679 @@
         right: 14px !important;
     }
 }
+
+
+    /* ============================================================
+       ACCOUNT REGISTRATIONS — SELLER ORDERS MAIN TABLE/UI PARITY
+       Main page only. Modal, protected documents, routes and forms
+       retain their existing logic; no bulk approval/rejection.
+       ============================================================ */
+    .reg-page.registration-page-shell {
+        width: 100% !important;
+        max-width: 1520px !important;
+        margin-inline: auto !important;
+        padding: 0 0 28px !important;
+        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif !important;
+        color: #2F3742 !important;
+    }
+    .reg-page .registration-page-header {
+        min-height: 0 !important;
+        margin: 0 0 20px !important;
+        padding: 0 0 14px !important;
+        border: 0 !important;
+        border-bottom: 1px solid #E9EDF1 !important;
+        background: transparent !important;
+    }
+    .reg-page .registration-page-header-icon { display: none !important; }
+    .reg-page .registration-page-eyebrow {
+        margin: 0 !important;
+        color: #A87316 !important;
+        -webkit-text-fill-color: #A87316 !important;
+        font-size: 10.5px !important;
+        font-weight: 800 !important;
+        line-height: 1.4 !important;
+        letter-spacing: .14em !important;
+    }
+    .reg-page .registration-page-header h2 {
+        margin: 6px 0 0 !important;
+        font-size: clamp(27px,2.3vw,31px) !important;
+        font-weight: 760 !important;
+        line-height: 1.08 !important;
+        letter-spacing: -.04em !important;
+    }
+    .reg-page .registration-page-header h2 .registration-title-base {
+        color: #2E343B !important;
+        -webkit-text-fill-color: #2E343B !important;
+    }
+    .reg-page .registration-page-header h2 .registration-title-accent {
+        color: #C88912 !important;
+        -webkit-text-fill-color: #C88912 !important;
+    }
+    .reg-page .registration-page-subtitle {
+        max-width: 780px !important;
+        margin: 6px 0 0 !important;
+        color: #8793A1 !important;
+        -webkit-text-fill-color: #8793A1 !important;
+        font-size: 11.5px !important;
+        line-height: 1.5 !important;
+    }
+    .reg-page .summary-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+        gap: 14px !important;
+        margin: 0 !important;
+    }
+    .reg-page .summary-grid .summary-card,
+    .reg-page .summary-grid .summary-card:hover {
+        min-height: 110px !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+        transform: none !important;
+    }
+    .reg-page .summary-grid .summary-card p:first-child {
+        font-size: 13px !important;
+        font-weight: 650 !important;
+        line-height: 1.4 !important;
+        color: #637081 !important;
+    }
+    .reg-page .summary-grid .summary-card p:nth-child(2) {
+        margin-top: 7px !important;
+        font-size: clamp(25px,1.9vw,30px) !important;
+        font-weight: 650 !important;
+        line-height: 1.12 !important;
+        color: #1F2937 !important;
+    }
+    .reg-page .summary-grid .summary-card > .summary-card-icon {
+        top: 16px !important;
+        right: 16px !important;
+        width: 27px !important;
+        height: 27px !important;
+    }
+    .reg-page .summary-grid .summary-card > .summary-card-icon svg {
+        width: 27px !important;
+        height: 27px !important;
+        stroke-width: 1.8;
+    }
+    .reg-page .registration-workspace-layout,
+    .reg-page .registration-main-column { width: 100% !important; min-width: 0 !important; }
+    .reg-page .registration-workspace-layout { grid-template-columns: minmax(0, 1fr) !important; }
+    /* Reference: four free-standing toolbar controls; Registrations has two filters, so five items. */
+    .reg-page section.registration-filter-surface,
+    .reg-page section.registration-filter-surface:hover {
+        position: relative !important;
+        z-index: 20 !important;
+        margin: 20px 0 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    .reg-page .registration-filter-surface > form.registration-filter-bar {
+        display: grid !important;
+        grid-template-columns: minmax(0,1fr) minmax(175px,190px) minmax(175px,190px) auto auto !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    .reg-page .registration-filter-search .reg-control,
+    .reg-page .registration-filter-select .premium-select-trigger,
+    .reg-page .registration-filter-apply,
+    .reg-page .registration-filter-reset {
+        height: 48px !important;
+        min-height: 48px !important;
+        border-radius: 14px !important;
+        font-size: 11.5px !important;
+        transform: none !important;
+        translate: none !important;
+        margin: 0 !important;
+    }
+    .reg-page .registration-filter-search .reg-control,
+    .reg-page .registration-filter-select .premium-select-trigger {
+        border: 1px solid #DCE2E8 !important;
+        background: #FFFFFF !important;
+        box-shadow: none !important;
+        color: #3F4B59 !important;
+        font-weight: 600 !important;
+    }
+    .reg-page .registration-filter-search > svg {
+        width: 21px !important;
+        height: 21px !important;
+        left: 16px !important;
+        color: #97A3B2 !important;
+    }
+    .reg-page .registration-filter-search .reg-control { padding: 0 14px 0 46px !important; }
+    .reg-page .registration-filter-search .reg-control::placeholder {
+        font-size: 11.5px !important;
+        color: #A0AAB6 !important;
+    }
+    .reg-page .registration-filter-select .premium-select-trigger { padding-inline: 16px !important; }
+    .reg-page .registration-filter-select .premium-select-chevron {
+        width: 17px !important;
+        height: 17px !important;
+    }
+    .reg-page .registration-filter-select .premium-select-menu {
+        top: calc(100% + 8px) !important;
+        min-width: 100% !important;
+        padding: 8px !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 14px !important;
+        background: #FFFFFF !important;
+        box-shadow: 0 16px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.05) !important;
+    }
+    .reg-page .registration-filter-select .premium-select-option {
+        min-height: 38px !important;
+        border-radius: 10px !important;
+        padding-inline: 12px !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+    }
+    .reg-page .registration-filter-apply {
+        min-width: 128px !important;
+        gap: 8px !important;
+        border: 1px solid #C88912 !important;
+        background: #C88912 !important;
+        color: #FFFFFF !important;
+        padding-inline: 18px !important;
+        box-shadow: none !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+    }
+    .reg-page .registration-filter-apply:hover {
+        border-color: #B47B0E !important;
+        background: #B47B0E !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    .reg-page .registration-filter-apply svg { width: 15px !important; height: 15px !important; }
+    .reg-page .registration-filter-reset {
+        min-width: 86px !important;
+        padding-inline: 18px !important;
+        border: 1px solid #DCE2E8 !important;
+        background: #FFFFFF !important;
+        color: #5F6D7C !important;
+        box-shadow: none !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+    }
+    .reg-page .registration-filter-reset:hover { background: #F8FAFC !important; box-shadow: none !important; }
+    .reg-page .registration-filter-search .reg-control:focus,
+    .reg-page .registration-filter-select .premium-select-trigger:focus-visible,
+    .reg-page .registration-filter-select.is-open .premium-select-trigger {
+        outline: none !important;
+        border-color: #C88912 !important;
+        box-shadow: 0 0 0 2px rgba(200,137,18,.10) !important;
+    }
+    .reg-page .registration-queue-card,
+    .reg-page .registration-queue-card:hover {
+        margin-top: 20px !important;
+        overflow: hidden !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 18px !important;
+        background: #FFFFFF !important;
+        box-shadow: 0 3px 10px rgba(15,23,42,.035), 0 12px 30px rgba(15,23,42,.055) !important;
+        transform: none !important;
+    }
+    .reg-page .registration-queue-card .queue-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 21px 23px !important;
+        border-bottom: 1px solid #E9EDF1 !important;
+        background: #FFFFFF !important;
+    }
+    .reg-page .registration-queue-card .queue-header h3 {
+        margin: 0 !important;
+        color: #2F3742 !important;
+        font-size: 18px !important;
+        font-weight: 780 !important;
+    }
+    .reg-page .registration-queue-card .queue-header p {
+        margin-top: 4px !important;
+        color: #8B96A4 !important;
+        font-size: 11.5px !important;
+        line-height: 1.5 !important;
+    }
+    .reg-page .registration-queue-card #visibleCount {
+        color: #7B8794 !important;
+        border: 0 !important;
+        background: transparent !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+    }
+    .reg-page .registration-queue-card .queue-header > div { width: 100% !important; }
+    .reg-page .registration-queue-card .queue-header > div > div:first-child { width: 100%; }
+    .reg-page .registration-queue-card .queue-header .flex.flex-wrap.items-center.gap-2 {
+        justify-content: space-between !important;
+        gap: 12px !important;
+    }
+    .reg-page .application-table-wrap {
+        width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: thin;
+    }
+    .reg-page .application-table-wrap:focus-visible {
+        outline: 2px solid #C88912;
+        outline-offset: -2px;
+    }
+    .reg-page .application-table { width: 100% !important; min-width: 1100px !important; table-layout: auto; }
+    .reg-page .application-table col:first-child { width: 52px; }
+    .reg-page .application-table col:nth-child(2) { width: 24%; }
+    .reg-page .application-table col:nth-child(3) { width: 21%; }
+    .reg-page .application-table col:nth-child(4) { width: 10%; }
+    .reg-page .application-table col:nth-child(5) { width: 10%; }
+    .reg-page .application-table col:nth-child(6) { width: 12%; }
+    .reg-page .application-table col:nth-child(7) { width: 13%; }
+    .reg-page .application-table col:nth-child(8) { width: 10%; }
+    .reg-page .application-table thead tr { background: #F8FAFC !important; }
+    .reg-page .application-table th {
+        height: 48px !important;
+        padding: 12px 14px !important;
+        border-bottom: 1px solid #E9EDF1 !important;
+        color: #8591A0 !important;
+        font-size: 11px !important;
+        font-weight: 750 !important;
+        line-height: 1.4 !important;
+        letter-spacing: .075em !important;
+        vertical-align: middle !important;
+        text-transform: uppercase !important;
+    }
+    .reg-page .application-table th:first-child,
+    .reg-page .application-table td:first-child { padding-left: 16px !important; padding-right: 6px !important; }
+    .reg-page .application-table th:last-child,
+    .reg-page .application-table td:last-child { padding-right: 20px !important; }
+    .reg-page .application-table tbody tr,
+    .reg-page .application-table tbody tr:hover {
+        border-bottom: 1px solid #EDF0F3 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    .reg-page .application-table tbody tr { background: #FFFFFF !important; }
+    .reg-page .application-table tbody tr:hover { background: #F8FAFC !important; }
+    .reg-page .application-table tbody td {
+        padding: 17px 14px !important;
+        vertical-align: middle !important;
+        color: #475467 !important;
+    }
+    .reg-page .application-table tbody .registration-applicant-avatar {
+        display: grid !important;
+        width: 44px !important;
+        height: 44px !important;
+        flex: 0 0 44px !important;
+        place-items: center !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 50% !important;
+        background: #F8FAFC !important;
+        color: #59636E !important;
+        font-size: 11.5px !important;
+    }
+    .reg-page .application-table tbody td > div.flex.items-center.gap-3 { gap: 12px !important; }
+    .reg-page .application-table td .registration-applicant-name {
+        color: #293440 !important;
+        font-size: 12.5px !important;
+        font-weight: 750 !important;
+        line-height: 1.5 !important;
+    }
+    .reg-page .application-table td .registration-applicant-id {
+        margin-top: 3px !important;
+        color: #8793A1 !important;
+        font-size: 11px !important;
+    }
+    .reg-page .application-table td .registration-contact-primary,
+    .reg-page .application-table td .registration-date-primary {
+        color: #293440 !important;
+        font-size: 11.5px !important;
+        font-weight: 650 !important;
+    }
+    .reg-page .application-table td .registration-contact-secondary,
+    .reg-page .application-table td .registration-date-secondary,
+    .reg-page .application-table td .registration-doc-secondary {
+        margin-top: 3px !important;
+        color: #8793A1 !important;
+        font-size: 11px !important;
+        line-height: 1.5 !important;
+    }
+    .reg-page .application-table td .registration-doc-primary { color: #293440 !important; font-size: 11.5px !important; font-weight: 650 !important; }
+    .reg-page .application-table td .registration-badge {
+        min-height: 27px !important;
+        align-items: center !important;
+        padding: 5px 10px !important;
+        border-radius: 999px !important;
+        font-size: 10.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+    }
+    .reg-page .application-table .reg-review-btn {
+        height: 34px !important;
+        min-height: 34px !important;
+        border: 1px solid #DCE2E8 !important;
+        border-radius: 10px !important;
+        background: #FFFFFF !important;
+        padding: 0 12px !important;
+        color: #59636E !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    .reg-page .application-table .reg-review-btn svg { width: 15px !important; height: 15px !important; }
+    .reg-page .application-table .reg-review-btn:hover,
+    .reg-page .application-table .reg-review-btn:focus-visible {
+        border-color: #C88912 !important;
+        background: #F8FAFC !important;
+        color: #C88912 !important;
+        box-shadow: none !important;
+    }
+    /* Checkboxes are independent of the row's click-to-review behavior. */
+    .reg-page .registration-check-wrap {
+        display: inline-flex;
+        min-width: 24px;
+        min-height: 32px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .reg-page .registration-check-wrap input[type="checkbox"] {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        display: inline-grid !important;
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        place-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 5px !important;
+        background: #FFFFFF !important;
+        cursor: pointer;
+    }
+    .reg-page .registration-check-wrap input[type="checkbox"]::after {
+        content: "";
+        width: 4px;
+        height: 8px;
+        border: solid #FFFFFF;
+        border-width: 0 2px 2px 0;
+        transform: translateY(-1px) rotate(45deg);
+        opacity: 0;
+    }
+    .reg-page .registration-check-wrap input[type="checkbox"]:checked,
+    .reg-page .registration-check-wrap input[type="checkbox"]:indeterminate {
+        border-color: #C88912 !important;
+        background: #C88912 !important;
+    }
+    .reg-page .registration-check-wrap input[type="checkbox"]:checked::after { opacity: 1; }
+    .reg-page .registration-check-wrap input[type="checkbox"]:indeterminate::after {
+        width: 9px; height: 2px; border: 0; border-radius: 2px; background: #FFFFFF; transform: none; opacity: 1;
+    }
+    .reg-page .registration-check-wrap input[type="checkbox"]:focus-visible {
+        outline: 2px solid #C88912 !important;
+        outline-offset: 3px !important;
+    }
+    .reg-page .application-table tbody tr.is-bulk-selected,
+    .reg-page .application-table tbody tr.is-bulk-selected:hover { background: #F2F6FA !important; }
+    .reg-page .application-table tbody tr[hidden],
+    .reg-page #searchEmpty[hidden],
+    .reg-page .registration-selection-toolbar[hidden],
+    .reg-page .registration-pagination[hidden] { display: none !important; }
+    .reg-page .registration-selection-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        border-bottom: 1px solid #E5E7EB;
+        padding: 10px 19px;
+        background: #F8FAFC;
+        color: #465362;
+        font-size: 11.5px;
+        font-weight: 600;
+    }
+    .reg-page .registration-selection-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .reg-page .registration-selection-actions button {
+        min-height: 32px;
+        padding: 0 12px;
+        border: 1px solid #DCE2E8;
+        border-radius: 9px;
+        background: #FFFFFF;
+        color: #465362;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 650;
+        cursor: pointer;
+    }
+    .reg-page .registration-selection-actions [data-reg-review-selected] {
+        border-color: #C88912;
+        background: #C88912;
+        color: #FFFFFF;
+    }
+    .reg-page .registration-selection-actions [data-reg-review-selected]:hover { background: #B47B0E; }
+    .reg-page .registration-selection-actions button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+    .reg-page .registration-table-footer {
+        display: flex;
+        min-height: 64px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 20px;
+        border-top: 1px solid #E9EDF1;
+        background: #FFFFFF;
+    }
+    .reg-page .registration-page-result-count {
+        margin: 0;
+        color: #7B8794;
+        font-size: 11px;
+        font-weight: 550;
+    }
+    .reg-page .registration-pagination,
+    .reg-page .registration-page-numbers { display: flex; align-items: center; gap: 6px; }
+    .reg-page .registration-pagination button {
+        display: grid;
+        width: 34px;
+        min-width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid #E5E7EB;
+        border-radius: 10px;
+        background: #FFFFFF;
+        color: #8893A0;
+        font-family: inherit;
+        font-size: 11.5px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .reg-page .registration-pagination button:hover:not(:disabled) { border-color: #C88912; color: #A87316; }
+    .reg-page .registration-pagination button.is-current {
+        border-color: #C88912;
+        background: #C88912;
+        color: #FFFFFF;
+    }
+    .reg-page .registration-pagination button:disabled { opacity: .42; cursor: not-allowed; }
+    .reg-page .registration-pagination button:focus-visible { outline: 2px solid #C88912; outline-offset: 2px; }
+    .reg-page .registration-pagination svg { width: 16px; height: 16px; }
+    @media (max-width: 1180px) {
+        .reg-page .summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+        .reg-page .registration-filter-surface > form.registration-filter-bar {
+            grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+        }
+        .reg-page .registration-filter-search { grid-column: 1 / -1 !important; }
+        .reg-page .registration-filter-apply,
+        .reg-page .registration-filter-reset { width: 100% !important; }
+    }
+    @media (max-width: 767px) {
+        .reg-page .registration-page-header h2 { font-size: 25px !important; }
+        .reg-page .registration-page-eyebrow { font-size: 9.5px !important; }
+        .reg-page .registration-page-subtitle { font-size: 11px !important; }
+        .reg-page .summary-grid .summary-card p:first-child { font-size: 12px !important; }
+        .reg-page .registration-queue-card .queue-header { padding: 17px 16px !important; }
+    }
+    @media (max-width: 540px) {
+        .reg-page .summary-grid { grid-template-columns: 1fr !important; gap: 11px !important; }
+        .reg-page .registration-filter-surface > form.registration-filter-bar { grid-template-columns: 1fr !important; }
+        .reg-page .registration-filter-search { grid-column: auto !important; }
+        .reg-page .registration-table-footer { align-items: flex-start; flex-direction: column; }
+        .reg-page .registration-pagination { align-self: flex-end; }
+        .reg-page .registration-selection-actions { width: 100%; }
+        .reg-page .registration-selection-actions button { flex: 1 1 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .reg-page .application-table tbody tr,
+        .reg-page .registration-filter-bar * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+
+
+    /* ============================================================
+       ACCOUNT REGISTRATIONS — GRAY UNBOXED EMPTY STATES + DROPDOWNS
+       Main page presentation only; filtering, selection and review
+       behavior remain unchanged. Based on existing Seller Orders UI.
+       ============================================================ */
+    /* No nested icon chip/card: large gray icon above gray readable copy. */
+    .reg-page .application-table tbody tr.registration-empty-row,
+    .reg-page .application-table tbody tr.registration-empty-row:hover {
+        background: #FFFFFF !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    .reg-page .application-table tbody td.reg-empty-cell {
+        padding: 76px 24px 82px !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        text-align: center !important;
+    }
+    .reg-page #searchEmpty.reg-search-empty {
+        padding: 76px 24px 82px !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        text-align: center !important;
+    }
+    .reg-page .reg-empty-icon {
+        display: block !important;
+        width: 70px !important;
+        height: 70px !important;
+        margin: 0 auto 18px !important;
+        color: #98A2B3 !important;
+        stroke: currentColor !important;
+    }
+    .reg-page .reg-empty-title {
+        margin: 0 !important;
+        color: #667085 !important;
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        line-height: 1.35 !important;
+        letter-spacing: -.025em !important;
+    }
+    .reg-page .reg-empty-description {
+        max-width: 540px !important;
+        margin: 8px auto 0 !important;
+        color: #98A2B3 !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        line-height: 1.65 !important;
+    }
+
+    /* Role & Status custom dropdowns: remove warm/cream fills entirely. */
+    .reg-page .registration-filter-select .premium-select-trigger,
+    .reg-page .registration-filter-select .premium-select-trigger:hover {
+        background: #FFFFFF !important;
+        border-color: #DCE2E8 !important;
+        color: #475467 !important;
+        box-shadow: none !important;
+    }
+    .reg-page .registration-filter-select.is-open .premium-select-trigger,
+    .reg-page .registration-filter-select .premium-select-trigger:focus-visible {
+        background: #FFFFFF !important;
+        border-color: #94A3B8 !important;
+        color: #344054 !important;
+        box-shadow: 0 0 0 3px rgba(148,163,184,.12) !important;
+    }
+    .reg-page .registration-filter-select .premium-select-menu {
+        background: #FFFFFF !important;
+        border-color: #E2E8F0 !important;
+    }
+    .reg-page .registration-filter-select .premium-select-option {
+        background: #FFFFFF !important;
+        color: #475467 !important;
+    }
+    .reg-page .registration-filter-select .premium-select-option:hover,
+    .reg-page .registration-filter-select .premium-select-option:focus-visible,
+    .reg-page .registration-filter-select .premium-select-option.is-selected,
+    .reg-page .registration-filter-select .premium-select-option[aria-selected="true"] {
+        background: #F1F5F9 !important;
+        color: #344054 !important;
+    }
+    .reg-page .registration-filter-select .premium-select-check,
+    .reg-page .registration-filter-select .premium-select-chevron,
+    .reg-page .registration-filter-select.is-open .premium-select-chevron {
+        color: #64748B !important;
+    }
+    .reg-page .registration-filter-select .premium-select-option.is-selected .premium-select-check,
+    .reg-page .registration-filter-select .premium-select-option[aria-selected="true"] .premium-select-check {
+        color: #64748B !important;
+    }
+    @media (max-width: 640px) {
+        .reg-page .application-table tbody td.reg-empty-cell,
+        .reg-page #searchEmpty.reg-search-empty { padding: 55px 16px 60px !important; }
+        .reg-page .reg-empty-icon { width: 58px !important; height: 58px !important; margin-bottom: 15px !important; }
+        .reg-page .reg-empty-title { font-size: 19px !important; }
+        .reg-page .reg-empty-description { font-size: 12px !important; }
+    }
+
+/* SARI Seller Orders reference: final main-page presentation. */
+.reg-page.registration-page-shell.reg-orders-ui{--sari-line:#E5E7EB;--sari-soft:#F8FAFC;--sari-warm:#F8FAFC;--sari-muted:#7C8592;--reg-line:#E5E7EB;--reg-line-soft:#EDF0F3;max-width:1520px!important;font-size:13px;color:#293440!important}
+.reg-page.reg-orders-ui .summary-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important}
+.reg-page.reg-orders-ui .summary-grid .summary-card,.reg-page.reg-orders-ui .summary-grid .summary-card:hover{min-height:118px!important;padding:20px!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#FFF!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;transform:none!important}
+.reg-page.reg-orders-ui .summary-grid .summary-card p:first-child{font-size:13px!important;line-height:1.5!important;font-weight:600!important}
+.reg-page.reg-orders-ui .summary-grid .summary-card p:nth-child(2){margin-top:10px!important;font-size:30px!important;font-weight:700!important}
+.reg-page.reg-orders-ui .summary-grid .summary-card-icon{top:20px!important;right:20px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.reg-page.reg-orders-ui .registration-filter-surface > form.registration-filter-bar{grid-template-columns:minmax(220px,1fr) minmax(150px,180px) minmax(150px,180px) auto auto!important;gap:12px!important}
+.reg-page.reg-orders-ui .registration-filter-search .reg-control,.reg-page.reg-orders-ui .registration-filter-select .premium-select-trigger,.reg-page.reg-orders-ui .registration-filter-apply,.reg-page.reg-orders-ui .registration-filter-reset{height:48px!important;min-height:48px!important;font-size:13px!important;border-radius:12px!important;box-shadow:none!important}
+.reg-page.reg-orders-ui .registration-filter-search .reg-control{color:#344054!important;-webkit-text-fill-color:#344054!important;font-weight:400!important}
+.reg-page.reg-orders-ui .registration-filter-search .reg-control::placeholder{font-size:12px!important;color:#98A2B3!important;-webkit-text-fill-color:#98A2B3!important}
+.reg-page.reg-orders-ui .registration-filter-select .premium-select-option{min-height:40px!important;font-size:12px!important}
+.reg-page.reg-orders-ui .registration-filter-select .premium-select-option:hover,.reg-page.reg-orders-ui .registration-filter-select .premium-select-option.is-selected{background:#F1F5F9!important;color:#344054!important}
+.reg-page.reg-orders-ui .registration-filter-status-dot{background:#94A3B8!important}
+.reg-page.reg-orders-ui .registration-queue-card .queue-header{padding:22px!important}
+.reg-page.reg-orders-ui .registration-queue-card .queue-header > div{width:100%!important}
+.reg-page.reg-orders-ui .registration-queue-card .queue-header > div > div{width:100%!important;position:relative!important;padding-right:105px!important}
+.reg-page.reg-orders-ui .registration-queue-card .queue-header h3{font-size:19px!important;line-height:1.4!important;font-weight:700!important}
+.reg-page.reg-orders-ui .registration-queue-card .queue-header p{font-size:12px!important;line-height:1.6!important;margin-top:5px!important}
+.reg-page.reg-orders-ui .registration-queue-card #visibleCount{position:absolute!important;right:0!important;top:5px!important;padding:0!important;border:0!important;background:transparent!important;font-size:12px!important;font-weight:500!important;color:#7C8592!important}
+.reg-page.reg-orders-ui .application-table{min-width:1000px!important}
+.reg-page.reg-orders-ui .application-table th{font-size:11px!important;height:48px!important;padding:14px!important;background:#F8FAFC!important}
+.reg-page.reg-orders-ui .application-table tbody td{padding:18px 14px!important;border-bottom:1px solid #EDF0F3!important}
+.reg-page.reg-orders-ui .application-table td .registration-applicant-name{font-size:13px!important;font-weight:600!important}
+.reg-page.reg-orders-ui .application-table td :is(.registration-contact-primary,.registration-date-primary,.registration-doc-primary){font-size:12px!important;font-weight:500!important}
+.reg-page.reg-orders-ui .application-table td :is(.registration-applicant-id,.registration-contact-secondary,.registration-date-secondary,.registration-doc-secondary){font-size:11.5px!important;line-height:1.6!important;color:#8591A0!important}
+.reg-page.reg-orders-ui .application-table td:nth-child(6) .flex > span{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;width:22px!important;height:24px!important;color:#7C8592!important}
+.reg-page.reg-orders-ui .application-table td:nth-child(6) .flex > span svg{width:21px!important;height:21px!important}
+.reg-page.reg-orders-ui .application-table td:nth-child(4) .registration-badge{background:#F3F4F6!important;border-color:#E5E7EB!important;color:#475467!important}
+.reg-page.reg-orders-ui .application-table td:nth-child(5) .registration-badge{background:#FFF!important}
+.reg-page.reg-orders-ui .application-table .reg-review-btn{height:36px!important;min-height:36px!important;font-size:12px!important;border-radius:9px!important}
+.reg-page.reg-orders-ui .application-table tbody tr.is-selected,.reg-page.reg-orders-ui .application-table tbody tr:hover{box-shadow:none!important;background:#F8FAFC!important}
+.reg-page.reg-orders-ui .application-table tbody tr.is-bulk-selected{background:#F1F5F9!important}
+.reg-page.reg-orders-ui .registration-table-footer{min-height:68px;padding:16px 22px}
+.reg-page.reg-orders-ui .registration-page-result-count{font-size:12px}
+.reg-page.reg-orders-ui .registration-pagination button{width:36px;height:36px;font-size:12px}
+@media(max-width:1100px){.reg-page.reg-orders-ui .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.reg-page.reg-orders-ui .registration-filter-surface > form.registration-filter-bar{grid-template-columns:repeat(2,minmax(0,1fr))!important}.reg-page.reg-orders-ui .registration-filter-search{grid-column:1 / -1!important}}
+@media(max-width:600px){.reg-page.reg-orders-ui .summary-grid{gap:10px!important}.reg-page.reg-orders-ui .summary-grid .summary-card{min-height:110px!important;padding:16px!important}.reg-page.reg-orders-ui .summary-card-content{padding-right:22px}.reg-page.reg-orders-ui .summary-grid .summary-card p:first-child{font-size:11.5px!important}.reg-page.reg-orders-ui .summary-grid .summary-card-icon{right:12px!important;top:16px!important;width:20px!important;height:20px!important}.reg-page.reg-orders-ui .summary-grid .summary-card-icon svg{width:20px!important;height:20px!important}.reg-page.reg-orders-ui .registration-filter-surface > form.registration-filter-bar{grid-template-columns:minmax(0,1fr)!important}.reg-page.reg-orders-ui .registration-filter-search{grid-column:auto!important}.reg-page.reg-orders-ui .registration-queue-card .queue-header{padding:18px 16px!important}.reg-page.reg-orders-ui .registration-queue-card .queue-header > div > div{padding-right:0!important}.reg-page.reg-orders-ui .registration-queue-card #visibleCount{position:static!important;margin-left:auto!important}.reg-page.reg-orders-ui .registration-queue-card .queue-header h3{font-size:17px!important}.reg-page.reg-orders-ui .registration-table-footer{padding:14px 16px;flex-wrap:wrap}}
+
 </style>
 @include('admin.partials.registration.review-styles')
 
-<div class="reg-page registration-page-shell mx-auto w-full max-w-[1880px] pb-6">
+<div class="reg-page registration-page-shell reg-orders-ui mx-auto w-full max-w-[1880px] pb-6">
 
     {{-- ALERTS --}}
     @if (session('success'))
@@ -3367,9 +4036,7 @@
                     <span class="registration-title-accent">applications</span>
                 </h2>
 
-                <p class="registration-page-subtitle">
-                    Verify applicant information, inspect documents, then approve or reject registrations from a focused review panel.
-                </p>
+             
             </div>
         </div>
     </section>
@@ -3604,11 +4271,28 @@
                 </div>
             </div>
 
-            <div class="application-table-wrap overflow-x-auto">
+            <div id="registrationSelectionToolbar" class="registration-selection-toolbar" hidden>
+                <span id="registrationSelectionCount" role="status" aria-live="polite">0 selected</span>
+                <div class="registration-selection-actions">
+                    <button type="button" data-reg-review-selected>Review first selected</button>
+                    <button type="button" data-reg-show-selected aria-pressed="false">Show selected only</button>
+                    <button type="button" data-reg-clear-selection>Clear selection</button>
+                </div>
+            </div>
+
+            <div class="application-table-wrap overflow-x-auto" tabindex="0" role="region" aria-label="Registration applications table">
                 <table class="application-table w-full min-w-[820px] border-collapse">
+                    <colgroup>
+                        <col><col><col><col><col><col><col><col>
+                    </colgroup>
                     <thead>
                         <tr class="border-b border-[#eee8df] bg-[#fcfbf8] text-left">
-                            <th class="px-5 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">Applicant</th>
+                            <th scope="col" class="px-5 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">
+                                <label class="registration-check-wrap" data-reg-checkbox-label>
+                                    <input type="checkbox" data-reg-select-page aria-label="Select all applications on this page">
+                                </label>
+                            </th>
+                            <th scope="col" class="px-5 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">Applicant</th>
                             <th class="px-4 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">Contact</th>
                             <th class="px-4 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">Role</th>
                             <th class="px-4 py-3 text-[10px] font-bold uppercase tracking-[.09em] text-[#6f655a]">Status</th>
@@ -3673,23 +4357,28 @@
                                 class="border-b border-[#f0ebe4] last:border-b-0"
                             >
                                 <td class="px-5 py-3.5 sm:py-4">
+                                    <label class="registration-check-wrap" data-reg-checkbox-label>
+                                        <input type="checkbox" data-reg-row-checkbox value="{{ $rowKey }}" aria-label="Select {{ $application->fullName() }}">
+                                    </label>
+                                </td>
+                                <td class="px-5 py-3.5 sm:py-4">
                                     <div class="flex items-center gap-3">
-                                        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#e6dfd6] bg-[#faf8f4] text-[9px] font-bold text-[#6e655a]">{{ $initials ?: 'SA' }}</span>
+                                        <span class="registration-applicant-avatar grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#e6dfd6] bg-[#faf8f4] text-[9px] font-bold text-[#6e655a]">{{ $initials ?: 'SA' }}</span>
                                         <div class="min-w-0">
-                                            <p class="truncate text-[10px] font-bold text-[#2b261f]">{{ $application->fullName() }}</p>
-                                            <p class="mt-0.5 truncate text-[9px] text-[#91887d]">ID #{{ $application->getKey() }}</p>
+                                            <p class="registration-applicant-name truncate text-[10px] font-bold text-[#2b261f]">{{ $application->fullName() }}</p>
+                                            <p class="registration-applicant-id mt-0.5 truncate text-[9px] text-[#91887d]">ID #{{ $application->getKey() }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3.5 sm:py-4">
-                                    <p class="max-w-[220px] truncate text-[9px] font-semibold text-[#50483f]">{{ $application->email }}</p>
-                                    <p class="mt-0.5 text-[9px] text-[#968d82]">{{ $application->contact_no ?: 'No contact number' }}</p>
+                                    <p class="registration-contact-primary max-w-[220px] truncate text-[9px] font-semibold text-[#50483f]">{{ $application->email }}</p>
+                                    <p class="registration-contact-secondary mt-0.5 text-[9px] text-[#968d82]">{{ $application->contact_no ?: 'No contact number' }}</p>
                                 </td>
                                 <td class="px-4 py-3.5 sm:py-4">
-                                    <span class="inline-flex rounded-full border px-2.5 py-1 text-[8px] font-semibold {{ $roleTone }}">{{ strtoupper($application->role) }}</span>
+                                    <span class="registration-badge inline-flex rounded-full border px-2.5 py-1 text-[8px] font-semibold {{ $roleTone }}">{{ strtoupper($application->role) }}</span>
                                 </td>
                                 <td class="px-4 py-3.5 sm:py-4">
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[8px] font-semibold {{ $statusTone }}"><span class="h-1.5 w-1.5 rounded-full bg-current opacity-70"></span>{{ ucfirst($application->status) }}</span>
+                                    <span class="registration-badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[8px] font-semibold {{ $statusTone }}"><span class="h-1.5 w-1.5 rounded-full bg-current opacity-70"></span>{{ ucfirst($application->status) }}</span>
                                 </td>
                                 <td class="px-4 py-3.5 sm:py-4">
                                     <div class="flex items-center gap-2">
@@ -3697,14 +4386,14 @@
                                             <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path></svg>
                                         </span>
                                         <div>
-                                            <p class="text-[9px] font-medium text-[#5f574e]">{{ $availableDocumentCount }}/{{ count($requiredDocuments) }} files</p>
-                                            <p class="mt-0.5 text-[8px] {{ $allDocumentsAvailable ? 'text-[#56816a]' : 'text-[#a8731f]' }}">{{ $allDocumentsAvailable ? 'Complete' : 'Needs review' }}</p>
+                                            <p class="registration-doc-primary text-[9px] font-medium text-[#5f574e]">{{ $availableDocumentCount }}/{{ count($requiredDocuments) }} files</p>
+                                            <p class="registration-doc-secondary mt-0.5 text-[8px] {{ $allDocumentsAvailable ? 'text-[#56816a]' : 'text-[#a8731f]' }}">{{ $allDocumentsAvailable ? 'Complete' : 'Needs review' }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3.5 sm:py-4">
-                                    <p class="text-[9px] font-medium text-[#5f574e]">{{ $application->created_at?->format('M d, Y') }}</p>
-                                    <p class="mt-0.5 text-[8px] text-[#a0978c]">{{ $application->created_at?->format('h:i A') }}</p>
+                                    <p class="registration-date-primary text-[9px] font-medium text-[#5f574e]">{{ $application->created_at?->format('M d, Y') }}</p>
+                                    <p class="registration-date-secondary mt-0.5 text-[8px] text-[#a0978c]">{{ $application->created_at?->format('h:i A') }}</p>
                                 </td>
                                 <td class="px-5 py-3.5 text-right">
                                     <button type="button" data-open-review="{{ $rowKey }}" class="reg-review-btn inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#e3d9cc] bg-white px-3 text-[9px] font-medium text-[#5f574e]">
@@ -3714,13 +4403,13 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="7" class="px-6 py-16 text-center">
-                                    <div class="mx-auto grid h-11 w-11 place-items-center rounded-full border border-[#e6dfd5] bg-[#fcfbf8] text-[#958a7c]">
-                                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
-                                    </div>
-                                    <p class="mt-4 text-[13px] font-bold text-[#3f3831]">No matching registration applications</p>
-                                    <p class="mx-auto mt-1.5 max-w-[420px] text-[10px] leading-5 text-[#81786c]">Change the status or role filter to review another group.</p>
+                            <tr class="registration-empty-row">
+                                <td colspan="8" class="reg-empty-cell text-center">
+                                    <svg class="reg-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path>
+                                    </svg>
+                                    <p class="reg-empty-title">No matching registration applications</p>
+                                    <p class="reg-empty-description">Change the status or role filter to review another group.</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -3728,11 +4417,24 @@
                 </table>
             </div>
         
-            <div id="searchEmpty" hidden class="border-t border-[#eee8df] px-6 py-12 text-center">
-                <div class="mx-auto grid h-11 w-11 place-items-center rounded-full border border-[#e6dfd5] bg-[#fcfbf8] text-[#958a7c]">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
-                </div>
-                <p class="mt-3 text-[11px] font-semibold text-[#51483f]">No applicant matches your search.</p>
+            <div id="searchEmpty" hidden class="reg-search-empty text-center" role="status">
+                <svg class="reg-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path>
+                </svg>
+                <p class="reg-empty-title">No applicant matches your search.</p>
+                <p class="reg-empty-description">Try another name, email, contact number, or role.</p>
+            </div>
+            <div class="registration-table-footer">
+                <p id="registrationPageResultCount" class="registration-page-result-count" role="status" aria-live="polite">Showing 0 of 0 applications</p>
+                <nav class="registration-pagination" data-reg-pagination aria-label="Registration application pages" hidden>
+                    <button type="button" data-reg-prev aria-label="Previous page" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+                    </button>
+                    <div class="registration-page-numbers" data-reg-pages></div>
+                    <button type="button" data-reg-next aria-label="Next page" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+                    </button>
+                </nav>
             </div>
         </section>
         </div>
@@ -3758,10 +4460,21 @@
         window.__SARI_REGISTRATION_PAGE_ABORT__ = abortController;
 
         const search = document.getElementById('applicationSearch');
-        const rows = Array.from(document.querySelectorAll('[data-application-row]'));
+        const rows = Array.from(page.querySelectorAll('.application-table tbody [data-application-row]'));
         const empty = document.getElementById('searchEmpty');
         const count = document.getElementById('visibleCount');
-        const premiumSelects = Array.from(document.querySelectorAll('[data-premium-select]'));
+        const premiumSelects = Array.from(page.querySelectorAll('[data-premium-select]'));
+        const selectPage = page.querySelector('[data-reg-select-page]');
+        const selectionToolbar = page.querySelector('#registrationSelectionToolbar');
+        const selectionCount = page.querySelector('#registrationSelectionCount');
+        const reviewSelected = page.querySelector('[data-reg-review-selected]');
+        const showSelected = page.querySelector('[data-reg-show-selected]');
+        const clearSelection = page.querySelector('[data-reg-clear-selection]');
+        const pagination = page.querySelector('[data-reg-pagination]');
+        const previousPage = page.querySelector('[data-reg-prev]');
+        const nextPage = page.querySelector('[data-reg-next]');
+        const pageNumbers = page.querySelector('[data-reg-pages]');
+        const resultCount = page.querySelector('#registrationPageResultCount');
 
         function listen(element, eventName, handler, options) {
             if (!element) return;
@@ -3817,9 +4530,18 @@
         const rowIndex = rows.map(function (row) {
             return {
                 row,
+                key: String(row.dataset.applicationRow),
+                checkbox: row.querySelector('[data-reg-row-checkbox]'),
                 searchText: (row.dataset.search || '').toLowerCase(),
             };
         });
+
+        // Bulk selection is a client-side review aid, never a mass approval action.
+        const PAGE_SIZE = 10;
+        const selectedKeys = new Set();
+        let currentPage = 1;
+        let selectedOnly = false;
+        let currentPageItems = [];
 
         function debounce(callback, wait) {
             let timer = 0;
@@ -3836,32 +4558,137 @@
 
         let filterFrame = 0;
 
-        function filterRows() {
+        function renderRows() {
             const query = (search?.value || '').trim().toLowerCase();
-            window.cancelAnimationFrame(filterFrame);
-
-            filterFrame = window.requestAnimationFrame(function () {
-                let visible = 0;
-
-                rowIndex.forEach(function (item) {
-                    const match = !query || item.searchText.includes(query);
-                    item.row.hidden = !match;
-                    if (match) visible++;
-                });
-
-                if (empty) empty.hidden = visible !== 0 || rowIndex.length === 0;
-                if (count) count.textContent = 'Showing ' + visible;
+            const matches = rowIndex.filter(function (item) {
+                return (!query || item.searchText.includes(query))
+                    && (!selectedOnly || selectedKeys.has(item.key));
             });
+            const total = matches.length;
+            const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+            currentPage = Math.max(1, Math.min(currentPage, totalPages));
+            const start = (currentPage - 1) * PAGE_SIZE;
+            currentPageItems = matches.slice(start, start + PAGE_SIZE);
+            const pageKeys = new Set(currentPageItems.map(item => item.key));
+
+            rowIndex.forEach(function (item) {
+                const checked = selectedKeys.has(item.key);
+                item.row.hidden = !pageKeys.has(item.key);
+                item.row.classList.toggle('is-bulk-selected', checked);
+                if (item.checkbox) item.checkbox.checked = checked;
+            });
+
+            if (selectPage) {
+                const checkedCount = currentPageItems.filter(item => selectedKeys.has(item.key)).length;
+                selectPage.checked = currentPageItems.length > 0 && checkedCount === currentPageItems.length;
+                selectPage.indeterminate = checkedCount > 0 && checkedCount < currentPageItems.length;
+                selectPage.disabled = currentPageItems.length === 0;
+            }
+
+            if (empty) empty.hidden = total !== 0 || rowIndex.length === 0;
+            if (count) count.textContent = 'Showing ' + total;
+            if (resultCount) {
+                resultCount.textContent = total === 0
+                    ? 'Showing 0 of 0 applications'
+                    : 'Showing ' + (start + 1) + '–' + (start + currentPageItems.length) + ' of ' + total + ' applications';
+            }
+
+            if (selectionToolbar) selectionToolbar.hidden = selectedKeys.size === 0;
+            if (selectionCount) selectionCount.textContent = selectedKeys.size + ' selected';
+            if (reviewSelected) reviewSelected.disabled = selectedKeys.size === 0;
+            if (showSelected) {
+                showSelected.setAttribute('aria-pressed', String(selectedOnly));
+                showSelected.textContent = selectedOnly ? 'Show all matching' : 'Show selected only';
+            }
+
+            if (pagination) pagination.hidden = totalPages <= 1;
+            if (previousPage) previousPage.disabled = currentPage <= 1;
+            if (nextPage) nextPage.disabled = currentPage >= totalPages;
+            if (pageNumbers) {
+                pageNumbers.replaceChildren();
+                const firstPage = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
+                const lastPage = Math.min(totalPages, firstPage + 4);
+                for (let number = firstPage; number <= lastPage; number++) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = String(number);
+                    button.setAttribute('aria-label', 'Page ' + number);
+                    if (number === currentPage) {
+                        button.classList.add('is-current');
+                        button.setAttribute('aria-current', 'page');
+                    }
+                    listen(button, 'click', function () {
+                        currentPage = number;
+                        renderRows();
+                    });
+                    pageNumbers.appendChild(button);
+                }
+            }
         }
 
-        const debouncedFilterRows = debounce(filterRows, 120);
+        function filterRows() {
+            window.cancelAnimationFrame(filterFrame);
+            filterFrame = window.requestAnimationFrame(renderRows);
+        }
+        const debouncedFilterRows = debounce(function () {
+            currentPage = 1;
+            filterRows();
+        }, 120);
 
+        rowIndex.forEach(function (item) {
+            const label = item.row.querySelector('[data-reg-checkbox-label]');
+            // The existing review drawer opens on row click; checkbox clicks must not open it.
+            listen(label, 'click', function (event) { event.stopPropagation(); });
+            listen(item.checkbox, 'change', function () {
+                if (item.checkbox.checked) selectedKeys.add(item.key);
+                else selectedKeys.delete(item.key);
+                if (!selectedKeys.size) selectedOnly = false;
+                renderRows();
+            });
+        });
+        listen(page.querySelector('.application-table thead [data-reg-checkbox-label]'), 'click', function (event) {
+            event.stopPropagation();
+        });
+        listen(selectPage, 'change', function () {
+            currentPageItems.forEach(function (item) {
+                if (selectPage.checked) selectedKeys.add(item.key);
+                else selectedKeys.delete(item.key);
+            });
+            if (!selectedKeys.size) selectedOnly = false;
+            renderRows();
+        });
+        listen(showSelected, 'click', function () {
+            selectedOnly = !selectedOnly;
+            currentPage = 1;
+            renderRows();
+        });
+        listen(clearSelection, 'click', function () {
+            selectedKeys.clear();
+            selectedOnly = false;
+            currentPage = 1;
+            renderRows();
+        });
+        listen(reviewSelected, 'click', function () {
+            const firstKey = selectedKeys.values().next().value;
+            const first = rowIndex.find(item => item.key === firstKey);
+            // Invoke the original protected review drawer, not the approval/rejection forms.
+            first?.row.querySelector('[data-open-review]')?.click();
+        });
+        listen(previousPage, 'click', function () {
+            if (currentPage > 1) { currentPage--; renderRows(); }
+        });
+        listen(nextPage, 'click', function () {
+            const total = rowIndex.filter(item =>
+                (!selectedOnly || selectedKeys.has(item.key))
+                && (!(search?.value || '').trim() || item.searchText.includes(search.value.trim().toLowerCase()))
+            ).length;
+            if (currentPage < Math.ceil(total / PAGE_SIZE)) { currentPage++; renderRows(); }
+        });
         listen(document, 'keydown', function (event) {
             if (event.key === 'Escape') closePremiumSelects();
         });
-
         listen(search, 'input', debouncedFilterRows, { passive: true });
-        filterRows();
+        renderRows();
     }
 
     window.__SARI_INIT_REGISTRATION_PAGE__ = initRegistrationPage;

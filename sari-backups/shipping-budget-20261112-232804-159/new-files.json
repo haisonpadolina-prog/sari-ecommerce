@@ -1,0 +1,7 @@
+[
+    "app/Models/Promotions/PlatformShippingRedemption.php",
+    "app/Services/Promotions/PlatformShippingBudgetService.php",
+    "app/Console/Commands/ReconcilePlatformShipping.php",
+    "database/migrations/2026_11_12_230000_add_platform_shipping_budgets.php",
+    "tests/Feature/PlatformShippingBudgetTest.php"
+]

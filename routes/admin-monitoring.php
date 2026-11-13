@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin/monitoring', [AdminPlatformMonitoringController::class, 'index'])
     ->name('admin.monitoring');
 
+Route::get('/admin/monitoring/export/pdf', [AdminPlatformMonitoringController::class, 'exportPdf'])
+    ->name('admin.monitoring.export-pdf');
+
 Route::get('/admin/monitoring/sellers/{seller}', [AdminPlatformMonitoringController::class, 'seller'])
     ->whereNumber('seller')
     ->name('admin.monitoring.sellers.show');
@@ -25,11 +28,11 @@ Route::get('/admin/monitoring/riders/{rider}', [AdminPlatformMonitoringControlle
     ->name('admin.monitoring.riders.show');
 
 Route::post('/admin/users/{role}/{id}/block', [AdminUsersController::class, 'block'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereIn('role', ['buyer', 'seller', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.block');
 
 Route::post('/admin/users/{role}/{id}/unblock', [AdminUsersController::class, 'unblock'])
-    ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics', 'social_buyer'])
+    ->whereIn('role', ['buyer', 'seller', 'logistics', 'social_buyer'])
     ->whereNumber('id')
     ->name('admin.users.unblock');

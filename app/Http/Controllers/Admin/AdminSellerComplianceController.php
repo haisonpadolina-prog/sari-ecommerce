@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AdminSellerComplianceController extends Controller
@@ -82,6 +83,47 @@ class AdminSellerComplianceController extends Controller
         $record->save();
     }
 
+    /**
+     * Serve moderation images from an Admin-only endpoint instead of relying
+     * on Seller routes (and their separate session / middleware behavior).
+     * File paths are never accepted from the URL; only DB-owned media IDs.
+     */
+    public function productMedia(Request $request, SellerProduct $product, string $kind, ?int $media = null)
+    {
+        $this->guard($request);
+
+        $path = match ($kind) {
+            'cover' => $media === null ? $product->availableCoverImagePath() : null,
+            'size-guide' => $media === null ? $product->size_guide_image_path : null,
+            'gallery' => $media !== null
+                ? $product->galleryImages()->whereKey($media)->firstOrFail()->path
+                : null,
+            'variant' => $media !== null
+                ? $product->activeVariants()->whereKey($media)->firstOrFail()->image_path
+                : null,
+            default => null,
+        };
+
+        $disk = Storage::disk('public');
+        abort_unless($path && $disk->exists($path), 404);
+
+        // Filesystem MIME detection may trust a .png/.jpg extension. Inspect
+        // the bytes instead, without requiring the optional GD extension.
+        // Seller uploads are capped at 4 MB; bound legacy files before reading.
+        $size = $disk->size($path);
+        abort_unless($size > 0 && $size <= 32 * 1024 * 1024, 415);
+
+        $imageInfo = @getimagesizefromstring($disk->get($path));
+        $contentType = is_array($imageInfo) ? ($imageInfo['mime'] ?? null) : null;
+        abort_unless(in_array($contentType, ['image/jpeg', 'image/png', 'image/webp'], true), 415);
+
+        return $disk->response($path, null, [
+            'Content-Type' => $contentType,
+            'Cache-Control' => 'private, max-age=300',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
     public function index(Request $request)
     {
         $this->guard($request);
@@ -115,19 +157,12 @@ class AdminSellerComplianceController extends Controller
         | Load the review set once, then derive specialized queues from the same
         | in-memory collection so counts and UI sections stay consistent.
         */
-        $reviewProducts = SellerProduct::query()
-            ->with(['seller', 'latestVersion'])
-            ->whereNull('archived_at')
-            ->whereIn('moderation_status', ['pending', 'flagged'])
-            ->latest('created_at')
-            ->get();
+        $queue = app(\App\Services\Admin\AdminProductReviewQueueService::class)->load();
+        $reviewProducts = $queue['reviewProducts'];
+        $reviewMedia = $queue['reviewMedia'];
 
         $flaggedProducts = $reviewProducts
             ->where('moderation_status', 'flagged')
-            ->values();
-
-        $pendingProducts = $reviewProducts
-            ->where('moderation_status', 'pending')
             ->values();
 
         $recentWarnings = SellerWarning::query()
@@ -170,8 +205,8 @@ class AdminSellerComplianceController extends Controller
 
         return view('admin.seller-compliance', compact(
             'reviewProducts',
+            'reviewMedia',
             'flaggedProducts',
-            'pendingProducts',
             'recentWarnings',
             'suspendedSellers',
             'complianceMessages',
@@ -327,9 +362,35 @@ class AdminSellerComplianceController extends Controller
             $approvedProduct->name
         );
 
+        // Approval and Buyer publication are separate decisions: a paused,
+        // suspended, or blocked store must not become public by accident.
+        $buyerVisible = SellerProduct::query()
+            ->whereKey($approvedProduct->id)
+            ->buyerVisible()
+            ->exists();
+
+        if (!$buyerVisible) {
+            $seller->refresh();
+
+            $reason = match (true) {
+                in_array((string) $seller->account_status, ['banned', 'deactivated', 'blocked'], true)
+                    => 'the seller account is restricted',
+                (string) ($seller->store_status ?: 'open') !== 'open'
+                    => 'the seller store is paused',
+                $this->statusService->isSuspended($seller)
+                    => 'the seller account is suspended',
+                default => 'the seller is not currently eligible to publish listings',
+            };
+
+            return $this->success(
+                $request,
+                'Product approved, but it is not visible to Buyers because ' . $reason . '.'
+            );
+        }
+
         return $this->success(
             $request,
-            'Product approved successfully.'
+            'Product approved and eligible for the Buyer catalog.'
         );
     }
 

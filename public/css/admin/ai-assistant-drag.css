@@ -1,0 +1,7 @@
+/* Allow the launcher to move without changing the chat's existing visual design. */
+#sariAdminAi[data-ai-draggable="1"] .sai-launch{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab;transform:none!important}
+#sariAdminAi.is-dragging .sai-launch{cursor:grabbing;transition:none}
+#sariAdminAi.is-dragging .sari-admin-ai-launcher-callout{display:none!important}
+#sariAdminAi[data-ai-dock="left"] .sari-admin-ai-launcher-callout{left:85px;right:auto}
+#sariAdminAi[data-ai-draggable="1"] .sai-panel{position:fixed!important;right:auto!important;bottom:auto!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important}
+@media(max-width:600px){#sariAdminAi[data-ai-draggable="1"] .sari-admin-ai-launcher-callout{display:none}}

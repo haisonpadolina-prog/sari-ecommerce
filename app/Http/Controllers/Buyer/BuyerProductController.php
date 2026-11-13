@@ -117,10 +117,10 @@ class BuyerProductController extends Controller
     {
         abort_unless($this->isBuyer($request), 403);
         abort_unless($product->isBuyerVisible(), 404);
-        abort_unless($product->image_path, 404);
-        abort_unless(Storage::disk('public')->exists($product->image_path), 404);
+        $path = $product->availableCoverImagePath();
+        abort_unless($path, 404);
 
-        return Storage::disk('public')->response($product->image_path);
+        return Storage::disk('public')->response($path);
     }
 
     /** Keep seller-uploaded size charts buyer-only and limited to approved listings. */

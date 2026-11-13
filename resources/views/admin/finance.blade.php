@@ -4,36 +4,394 @@
 @section('page-title', 'Finance Treasury')
 
 @section('content')
-<div class="mx-auto max-w-[1700px] space-y-5">
-    @if(session('success'))<div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-[10px] font-semibold text-emerald-700">{{ session('success') }}</div>@endif
-    @if($errors->any())<div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-[10px] font-semibold text-rose-700">{{ $errors->first() }}</div>@endif
+<style>
+    /* ============================================================
+       SARI ADMIN — FINANCE TREASURY
+       UI parity with Buyer "Shop Products" catalog.
+       VISUAL ONLY: all Blade logic, routes, forms, field names,
+       tokens, partials and pagination are unchanged.
+       ============================================================ */
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-6 shadow-sm">
+    .treasury-page {
+        --sh-gold: #c88912;
+        --sh-gold-dark: #a96f0e;
+        --sh-gold-text: #89580c;
+        --sh-ink: #20252b;
+        --sh-text: #2e343b;
+        --sh-body: #29323b;
+        --sh-muted: #707b86;
+        --sh-soft: #818995;
+        --sh-border: #e5e7eb;
+        --sh-control-border: #dfe3e8;
+        --sh-divider: #eceef1;
+        --sh-row-divider: #eef0f2;
+        --sh-shadow:
+            0 2px 5px rgba(15, 23, 42, .045),
+            0 10px 24px rgba(15, 23, 42, .075),
+            0 24px 54px rgba(15, 23, 42, .095),
+            inset 0 1px 0 rgba(255, 255, 255, .92);
+
+        width: 100%;
+        max-width: 1440px;
+        margin-inline: auto;
+        margin-top: 0;
+        padding: 0 0 34px;
+        color: var(--sh-text);
+        font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .treasury-page *,
+    .treasury-page *::before,
+    .treasury-page *::after { box-sizing: border-box; }
+
+    .treasury-page button,
+    .treasury-page input,
+    .treasury-page a {
+        font-family: inherit;
+        transition: color .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .treasury-stack > * + * { margin-top: 18px; }
+
+    /* ---------------- Flash messages ---------------- */
+    .ft-alert {
+        border-radius: 14px;
+        padding: 12px 16px;
+        font-size: 12px;
+        font-weight: 650;
+        line-height: 1.5;
+    }
+    .ft-alert-success { border: 1px solid #d5e6da; background: #f4faf6; color: #36805a; }
+    .ft-alert-error { border: 1px solid #f1d3d3; background: #fff5f5; color: #b04545; }
+
+    /* ---------------- Open page header ---------------- */
+    .ft-hero { padding: 0 2px 12px; }
+
+    .ft-eyebrow {
+        margin: 0;
+        color: #a87316;
+        font-size: 10.5px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+    }
+
+    .ft-title {
+        margin: 5px 0 0;
+        color: var(--sh-text);
+        font-size: clamp(29px, 2.35vw, 34px);
+        font-weight: 760;
+        line-height: 1.04;
+        letter-spacing: -.035em;
+    }
+    .ft-title span { color: var(--sh-gold); }
+
+    .ft-lead {
+        max-width: 860px;
+        margin: 8px 0 0;
+        color: #7d8792;
+        font-size: 11.5px;
+        font-weight: 450;
+        line-height: 1.6;
+    }
+
+    /* Platform balance (charcoal, same as active category chip) */
+    .ft-balance {
+        min-width: 260px;
+        border: 1px solid #2f2f2f;
+        border-radius: 17px;
+        background: linear-gradient(180deg, #363636 0%, #292929 100%);
+        padding: 18px 22px;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(24, 24, 24, .17), inset 0 1px 0 rgba(255, 255, 255, .06);
+    }
+    .ft-balance-label {
+        margin: 0;
+        color: rgba(255, 255, 255, .65);
+        font-size: 10.5px;
+        font-weight: 750;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+    .ft-balance-value {
+        margin: 6px 0 0;
+        font-size: 28px;
+        font-weight: 760;
+        line-height: 1.05;
+        letter-spacing: -.035em;
+    }
+    .ft-balance-sub { margin: 6px 0 0; color: rgba(255, 255, 255, .65); font-size: 11px; font-weight: 500; }
+
+    /* ---------------- Floating card surface ---------------- */
+    .ft-card {
+        border: 1px solid var(--sh-border);
+        border-radius: 17px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: var(--sh-shadow);
+    }
+
+    .ft-card-accent { background: #fffaf1; border-color: #eadfc9; }
+
+    .ft-h3 {
+        margin: 0;
+        color: var(--sh-ink);
+        font-size: 14px;
+        font-weight: 750;
+        line-height: 1.35;
+        letter-spacing: -.015em;
+    }
+
+    .ft-muted {
+        margin: 4px 0 0;
+        color: var(--sh-muted);
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .ft-kicker {
+        margin: 0;
+        color: #a87316;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    /* ---------------- KPI cards ---------------- */
+    .ft-kpi { padding: 16px 18px; min-height: 96px; }
+    .ft-kpi-label {
+        margin: 0;
+        color: var(--sh-soft);
+        font-size: 10.5px;
+        font-weight: 750;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+    .ft-kpi-value {
+        margin: 8px 0 0;
+        color: var(--sh-ink);
+        font-size: 22px;
+        font-weight: 760;
+        line-height: 1.1;
+        letter-spacing: -.03em;
+    }
+
+    /* ---------------- Buttons ---------------- */
+    .ft-btn {
+        display: inline-flex;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        padding: 0 16px;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1;
+        white-space: nowrap;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .ft-btn-dark {
+        border-color: #2f2f2f;
+        background: linear-gradient(180deg, #363636 0%, #292929 100%);
+        box-shadow: 0 8px 18px rgba(24, 24, 24, .17), inset 0 1px 0 rgba(255, 255, 255, .06);
+    }
+    .ft-btn-dark:hover { background: linear-gradient(180deg, #333 0%, #262626 100%); }
+    .ft-btn-gold {
+        border-color: #d79a28;
+        background: var(--sh-gold);
+        box-shadow: 0 5px 12px rgba(200, 137, 18, .14);
+    }
+    .ft-btn-gold:hover { border-color: var(--sh-gold-dark); background: var(--sh-gold-dark); }
+    .ft-btn-green { border-color: #2f9e63; background: #2f9e63; }
+    .ft-btn-green:hover { border-color: #268650; background: #268650; }
+    .ft-btn-red { border-color: #dc4a4a; background: #dc4a4a; }
+    .ft-btn-red:hover { border-color: #c03b3b; background: #c03b3b; }
+    .ft-btn:focus-visible { outline: 2px solid rgba(47, 47, 47, .28); outline-offset: 2px; }
+
+    /* ---------------- Inputs ---------------- */
+    .ft-label {
+        display: block;
+        color: #4b5560;
+        font-size: 10.5px;
+        font-weight: 750;
+        letter-spacing: .045em;
+        text-transform: uppercase;
+    }
+
+    .ft-input {
+        width: 100%;
+        min-width: 0;
+        height: 42px;
+        border: 1px solid var(--sh-control-border);
+        border-radius: 10px;
+        background: #fff;
+        padding: 0 12px;
+        color: var(--sh-body);
+        font-size: 12px;
+        font-weight: 550;
+        box-shadow: none;
+    }
+    .ft-label .ft-input { margin-top: 6px; text-transform: none; letter-spacing: 0; }
+    .ft-input::placeholder { color: #79838e; font-size: 11.5px; font-weight: 450; opacity: 1; }
+    .ft-input:hover { border-color: #cfd5dc; background: #fbfcfd; }
+    .ft-input:focus {
+        outline: none;
+        border-color: var(--sh-gold);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(200, 137, 18, .08);
+    }
+
+    /* ---------------- Tinted pills / tiles ---------------- */
+    .ft-pill {
+        display: inline-flex;
+        min-height: 30px;
+        align-items: center;
+        border-radius: 9px;
+        padding: 0 12px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+    .ft-pill-amber { background: #fff8e9; color: #a87019; border: 1px solid #efd9b0; }
+    .ft-pill-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #d6e4fb; }
+    .ft-pill-green { background: #eef8f1; color: #36805a; border: 1px solid #d6e9dc; }
+
+    .ft-tile {
+        border-radius: 12px;
+        padding: 12px 16px;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+    .ft-tile strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 17px;
+        font-weight: 760;
+        letter-spacing: -.02em;
+        text-transform: none;
+    }
+    .ft-tile-blue { background: #eff6ff; color: #1d4ed8; }
+    .ft-tile-violet { background: #f5f3ff; color: #6d28d9; }
+    .ft-tile-green { background: #eef8f1; color: #36805a; }
+    .ft-tile-neutral { background: #f8f9fa; color: var(--sh-muted); border: 1px solid var(--sh-row-divider); }
+    .ft-tile-neutral strong { color: var(--sh-ink); }
+
+    /* ---------------- Payout rows (flat inside floating card) ---------------- */
+    .ft-payout {
+        border: 1px solid var(--sh-row-divider);
+        border-radius: 14px;
+        background: #fff;
+        padding: 16px;
+    }
+    .ft-payout-code {
+        margin: 0;
+        color: var(--sh-muted);
+        font-size: 10.5px;
+        font-weight: 750;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+    .ft-payout-name { margin: 4px 0 0; color: var(--sh-body); font-size: 13px; font-weight: 750; }
+    .ft-payout-meta { margin: 4px 0 0; color: var(--sh-muted); font-size: 11px; font-weight: 500; line-height: 1.5; }
+    .ft-payout-amount { margin: 0; color: var(--sh-ink); font-size: 20px; font-weight: 760; letter-spacing: -.03em; }
+    .ft-payout-status { margin: 4px 0 0; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; }
+
+    .ft-transfer {
+        margin-top: 10px;
+        border: 1px solid var(--sh-row-divider);
+        border-radius: 10px;
+        background: #fafbfc;
+        padding: 9px 12px;
+        color: #3f4852;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+    .ft-transfer span { font-weight: 750; color: var(--sh-ink); }
+
+    .ft-note { margin-top: 12px; border-radius: 10px; padding: 9px 12px; font-size: 11px; font-weight: 500; }
+    .ft-note-green { background: #eef8f1; color: #36805a; border: 1px solid #d6e9dc; }
+    .ft-note-red { background: #fff5f5; color: #b04545; border: 1px solid #f1d3d3; }
+
+    .ft-empty {
+        border: 1px dashed #d9dde2;
+        border-radius: 14px;
+        padding: 36px 16px;
+        color: var(--sh-muted);
+        font-size: 11.5px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* ---------------- Ledger rows ---------------- */
+    .ft-ledger-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid var(--sh-row-divider);
+        border-radius: 12px;
+        padding: 11px 14px;
+        font-size: 11px;
+        color: var(--sh-body);
+    }
+    .ft-ledger-row strong { font-weight: 750; font-size: 11.5px; }
+    .ft-ledger-row .ft-ledger-desc { margin-top: 3px; color: var(--sh-muted); font-weight: 500; }
+    .ft-ledger-amt { font-size: 12px; font-weight: 750; white-space: nowrap; text-align: right; }
+
+    /* ---------------- Pagination (Laravel links) ---------------- */
+    .treasury-page nav[role="navigation"] { font-size: 11px; }
+    .treasury-page nav[role="navigation"] a,
+    .treasury-page nav[role="navigation"] span[aria-current] span,
+    .treasury-page nav[role="navigation"] span[aria-disabled] span {
+        border-radius: 8px;
+        font-size: 11px;
+    }
+
+    /* ---------------- Responsive ---------------- */
+    @media (max-width: 1023px) {
+        .ft-balance { width: 100%; min-width: 0; }
+    }
+
+    @media (max-width: 767px) {
+        .ft-eyebrow { font-size: 9.5px; }
+        .ft-title { font-size: 29px; }
+        .ft-lead { font-size: 10.5px; }
+        .ft-card { border-radius: 14px; padding: 16px; }
+        .treasury-stack > * + * { margin-top: 14px; }
+        .ft-btn { width: 100%; }
+        .ft-payout form.flex { flex-direction: column; }
+        .ft-payout form.flex .ft-btn { width: 100%; }
+    }
+</style>
+
+<div class="treasury-page">
+<div class="treasury-stack">
+    @if(session('success'))<div class="ft-alert ft-alert-success">{{ session('success') }}</div>@endif
+    @if($errors->any())<div class="ft-alert ft-alert-error">{{ $errors->first() }}</div>@endif
+
+    <section class="ft-hero">
         <div class="flex flex-wrap items-start justify-between gap-5">
-            <div>
-                <p class="text-[9px] font-bold uppercase tracking-[.14em] text-[#a06b0b]">Platform Treasury</p>
-                <h2 class="mt-2 text-xl font-bold text-[#211d17]">COD, Earnings & Payout Control</h2>
-                <p class="mt-2 max-w-4xl text-[10px] leading-5 text-[#7e756a]">COD cash must pass Rider, Logistics Branch and Main Branch custody, then an independently confirmed SARI Admin physical cash turnover before wallet release. Marking a payout paid requires a real external reference.</p>
+            <div class="min-w-0">
+                <p class="ft-eyebrow">Platform Treasury</p>
+                <h2 class="ft-title">COD, Earnings & <span>Payout Control</span></h2>
             </div>
-            <div class="rounded-2xl bg-[#211d17] px-6 py-5 text-white">
-                <p class="text-[8px] uppercase tracking-[.12em] text-white/60">Platform available</p>
-                <p class="mt-1 text-[25px] font-bold">₱{{ number_format((float)$platformWallet->available_balance,2) }}</p>
-                <p class="mt-1 text-[8px] text-white/60">Reserved ₱{{ number_format((float)$platformWallet->reserved_balance,2) }}</p>
+            <div class="ft-balance">
+                <p class="ft-balance-label">Platform available</p>
+                <p class="ft-balance-value">₱{{ number_format((float)$platformWallet->available_balance,2) }}</p>
+                <p class="ft-balance-sub">Reserved ₱{{ number_format((float)$platformWallet->reserved_balance,2) }}</p>
             </div>
         </div>
     </section>
 
-    <section class="rounded-2xl border border-[#e6dac8] bg-[#fff9ed] p-5">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-                <h3 class="text-[13px] font-bold text-[#211d17]">Logistics → SARI Admin Cash Turnovers</h3>
-                <p class="mt-1 text-[10px] text-[#817769]">Count the actual Logistics handover. No new COD earnings become withdrawable before Admin receives the full physical cash.</p>
-            </div>
-            <a href="{{ route('admin.finance.cash-turnovers.index') }}" class="rounded-xl bg-[#211d17] px-5 py-3 text-[11px] font-semibold text-white">Open Cash Turnover Queue</a>
-        </div>
-    </section>
-
-    <section class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+    <section class="grid gap-[18px] sm:grid-cols-2 xl:grid-cols-5">
         @foreach([
             ['Commission earned',$commissionStats['earned']],
             ['All wallet available',$walletStats['available']],
@@ -41,33 +399,32 @@
             ['COD awaiting verification',$remittanceStats['awaiting']],
             ['Lifetime payouts',$walletStats['lifetime_payouts']],
         ] as [$label,$value])
-            <article class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm"><p class="text-[8px] uppercase tracking-[.1em] text-[#8a8175]">{{ $label }}</p><p class="mt-2 text-[18px] font-bold text-[#211d17]">₱{{ number_format((float)$value,2) }}</p></article>
+            <article class="ft-card ft-kpi"><p class="ft-kpi-label">{{ $label }}</p><p class="ft-kpi-value">₱{{ number_format((float)$value,2) }}</p></article>
         @endforeach
     </section>
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+    <section class="ft-card">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <p class="text-[9px] font-bold uppercase tracking-[.12em] text-[#a06b0b]">Shipping Earnings Policy</p>
-                <h3 class="mt-1 text-[13px] font-bold text-[#211d17]">Pickup + Last-Mile split</h3>
-                <p class="mt-1 max-w-3xl text-[9px] leading-5 text-[#817769]">These percentages apply to gross shipping revenue on Logistics-managed delivered parcels. Logistics automatically receives the remainder. Existing completed-order snapshots are not recomputed.</p>
+                <p class="ft-kicker">Shipping Earnings Policy</p>
+                <h3 class="ft-h3 mt-1">Pickup + Last-Mile split</h3>
             </div>
-            <div class="grid grid-cols-3 gap-2 text-center text-[8px]">
-                <div class="rounded-xl bg-blue-50 px-4 py-3 text-blue-700"><span class="block uppercase">Pickup Rider</span><strong class="mt-1 block text-[14px]">{{ number_format($shippingPolicy['pickup_percent'],2) }}%</strong></div>
-                <div class="rounded-xl bg-violet-50 px-4 py-3 text-violet-700"><span class="block uppercase">Final Mile</span><strong class="mt-1 block text-[14px]">{{ number_format($shippingPolicy['last_mile_percent'],2) }}%</strong></div>
-                <div class="rounded-xl bg-emerald-50 px-4 py-3 text-emerald-700"><span class="block uppercase">Logistics</span><strong class="mt-1 block text-[14px]">{{ number_format($shippingPolicy['logistics_percent'],2) }}%</strong></div>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="ft-tile ft-tile-blue"><span class="block">Pickup Rider</span><strong>{{ number_format($shippingPolicy['pickup_percent'],2) }}%</strong></div>
+                <div class="ft-tile ft-tile-violet"><span class="block">Final Mile</span><strong>{{ number_format($shippingPolicy['last_mile_percent'],2) }}%</strong></div>
+                <div class="ft-tile ft-tile-green"><span class="block">Logistics</span><strong>{{ number_format($shippingPolicy['logistics_percent'],2) }}%</strong></div>
             </div>
         </div>
 
         <form method="POST" action="{{ route('admin.finance.shipping-policy') }}" class="mt-4 grid gap-3 md:grid-cols-[1fr_1fr_auto]">
             @csrf
-            <label class="text-[8px] font-semibold text-[#5f574d]">Pickup Rider %
-                <input type="number" name="pickup_percent" min="0" max="100" step="0.01" value="{{ old('pickup_percent',$shippingPolicy['pickup_percent']) }}" required class="mt-1 w-full rounded-xl border border-[#ddd4c6] px-3 py-2 text-[10px]">
+            <label class="ft-label">Pickup Rider %
+                <input type="number" name="pickup_percent" min="0" max="100" step="0.01" value="{{ old('pickup_percent',$shippingPolicy['pickup_percent']) }}" required class="ft-input">
             </label>
-            <label class="text-[8px] font-semibold text-[#5f574d]">Final-Mile Rider %
-                <input type="number" name="last_mile_percent" min="0" max="100" step="0.01" value="{{ old('last_mile_percent',$shippingPolicy['last_mile_percent']) }}" required class="mt-1 w-full rounded-xl border border-[#ddd4c6] px-3 py-2 text-[10px]">
+            <label class="ft-label">Final-Mile Rider %
+                <input type="number" name="last_mile_percent" min="0" max="100" step="0.01" value="{{ old('last_mile_percent',$shippingPolicy['last_mile_percent']) }}" required class="ft-input">
             </label>
-            <button type="submit" class="self-end rounded-xl bg-[#211d17] px-5 py-2.5 text-[8px] font-semibold text-white">Save Policy</button>
+            <button type="submit" class="ft-btn ft-btn-gold self-end">Save Policy</button>
         </form>
     </section>
 
@@ -76,60 +433,61 @@
             'payoutAction'=>route('admin.finance.platform-payout'),
             'wallet'=>$platformWallet,
             'payoutTitle'=>'Platform Treasury Withdrawal',
-            'payoutHelp'=>'Creates an internal treasury withdrawal request. It does not send money automatically; an approved request must later be confirmed with the real bank/e-wallet/cash reference.'
+            'payoutHelp'=>''
         ])
     @endif
 
-    <section class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm">
+    <section class="ft-card">
         <div class="flex flex-wrap items-end justify-between gap-3">
-            <div><h3 class="text-[13px] font-bold text-[#211d17]">Payout Queue</h3><p class="mt-1 text-[9px] text-[#817769]">Seller, Logistics, Rider, and platform withdrawal requests.</p></div>
-            <div class="flex gap-2 text-[8px]"><span class="rounded-lg bg-amber-50 px-3 py-2 text-amber-700">Pending ₱{{ number_format($payoutStats['pending'],2) }}</span><span class="rounded-lg bg-blue-50 px-3 py-2 text-blue-700">Approved ₱{{ number_format($payoutStats['approved'],2) }}</span><span class="rounded-lg bg-emerald-50 px-3 py-2 text-emerald-700">Paid ₱{{ number_format($payoutStats['paid'],2) }}</span></div>
+            <div><h3 class="ft-h3">Payout Queue</h3><p class="ft-muted">Seller, Logistics, Rider, and platform withdrawal requests.</p></div>
+            <div class="flex flex-wrap gap-2"><span class="ft-pill ft-pill-amber">Pending ₱{{ number_format($payoutStats['pending'],2) }}</span><span class="ft-pill ft-pill-blue">Approved ₱{{ number_format($payoutStats['approved'],2) }}</span><span class="ft-pill ft-pill-green">Paid ₱{{ number_format($payoutStats['paid'],2) }}</span></div>
         </div>
 
         <div class="mt-4 space-y-3">
             @forelse($payoutRequests as $payout)
-                <article class="rounded-2xl border border-[#eee6da] p-4">
+                <article class="ft-payout">
                     <div class="flex flex-wrap items-start justify-between gap-4">
                         <div>
-                            <p class="text-[8px] uppercase tracking-[.1em] text-[#8a8175]">{{ $payout->request_code }} · {{ strtoupper($payout->owner_type) }}</p>
-                            <h4 class="mt-1 text-[12px] font-bold">{{ $payout->owner_label }}</h4>
-                            <p class="mt-1 text-[8px] text-[#817769]">{{ strtoupper(str_replace('_',' ',$payout->payout_method)) }} · {{ $payout->destination_label }} · {{ $payout->requested_at?->format('M d, Y · h:i A') }}</p>
+                            <p class="ft-payout-code">{{ $payout->request_code }} · {{ strtoupper($payout->owner_type) }}</p>
+                            <h4 class="ft-payout-name">{{ $payout->owner_label }}</h4>
+                            <p class="ft-payout-meta">{{ strtoupper(str_replace('_',' ',$payout->payout_method)) }} · {{ $payout->destination_label }} · {{ $payout->requested_at?->format('M d, Y · h:i A') }}</p>
                             @php($destination = (array) ($payout->destination_details ?? []))
-                            <div class="mt-2 rounded-xl border border-[#eee6da] bg-[#faf8f4] px-3 py-2 text-[8px] leading-4 text-[#5f574d]">
-                                <span class="font-semibold">Transfer to:</span>
+                            <div class="ft-transfer">
+                                <span>Transfer to:</span>
                                 {{ $destination['account_name'] ?? '—' }} · {{ $destination['account_reference'] ?? '—' }}
                             </div>
                         </div>
-                        <div class="text-right"><p class="text-[18px] font-bold">₱{{ number_format((float)$payout->amount,2) }}</p><p class="mt-1 text-[8px] font-semibold {{ $payout->status === 'paid' ? 'text-emerald-700' : ($payout->status === 'rejected' ? 'text-rose-700' : 'text-amber-700') }}">{{ strtoupper($payout->status) }}</p></div>
+                        <div class="text-right"><p class="ft-payout-amount">₱{{ number_format((float)$payout->amount,2) }}</p><p class="ft-payout-status {{ $payout->status === 'paid' ? 'text-emerald-700' : ($payout->status === 'rejected' ? 'text-rose-700' : 'text-amber-700') }}">{{ strtoupper($payout->status) }}</p></div>
                     </div>
 
                     @if($payout->status === 'pending')
                         <div class="mt-4 grid gap-2 md:grid-cols-2">
-                            <form method="POST" action="{{ route('admin.finance.payouts.approve',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" maxlength="1000" placeholder="Optional approval note" class="min-w-0 flex-1 rounded-xl border border-[#ddd4c6] px-3 py-2 text-[9px]"><button class="rounded-xl bg-[#d9930a] px-4 py-2 text-[8px] font-semibold text-white">Approve</button></form>
-                            <form method="POST" action="{{ route('admin.finance.payouts.reject',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" required minlength="3" maxlength="1000" placeholder="Required rejection reason" class="min-w-0 flex-1 rounded-xl border border-[#ddd4c6] px-3 py-2 text-[9px]"><button class="rounded-xl bg-rose-600 px-4 py-2 text-[8px] font-semibold text-white">Reject</button></form>
+                            <form method="POST" action="{{ route('admin.finance.payouts.approve',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" maxlength="1000" placeholder="Optional approval note" class="ft-input flex-1"><button class="ft-btn ft-btn-gold">Approve</button></form>
+                            <form method="POST" action="{{ route('admin.finance.payouts.reject',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" required minlength="3" maxlength="1000" placeholder="Required rejection reason" class="ft-input flex-1"><button class="ft-btn ft-btn-red">Reject</button></form>
                         </div>
                     @elseif($payout->status === 'approved')
                         <div class="mt-4 grid gap-2 md:grid-cols-2">
-                            <form method="POST" action="{{ route('admin.finance.payouts.paid',$payout) }}" class="flex gap-2">@csrf<input name="external_reference" required minlength="3" maxlength="191" placeholder="Real bank/e-wallet/cash reference" class="min-w-0 flex-1 rounded-xl border border-[#ddd4c6] px-3 py-2 text-[9px]"><button class="rounded-xl bg-emerald-600 px-4 py-2 text-[8px] font-semibold text-white">Confirm Paid</button></form>
-                            <form method="POST" action="{{ route('admin.finance.payouts.reject',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" required minlength="3" maxlength="1000" placeholder="Cancel reason" class="min-w-0 flex-1 rounded-xl border border-[#ddd4c6] px-3 py-2 text-[9px]"><button class="rounded-xl bg-rose-600 px-4 py-2 text-[8px] font-semibold text-white">Reject / Return Funds</button></form>
+                            <form method="POST" action="{{ route('admin.finance.payouts.paid',$payout) }}" class="flex gap-2">@csrf<input name="external_reference" required minlength="3" maxlength="191" placeholder="Real bank/e-wallet/cash reference" class="ft-input flex-1"><button class="ft-btn ft-btn-green">Confirm Paid</button></form>
+                            <form method="POST" action="{{ route('admin.finance.payouts.reject',$payout) }}" class="flex gap-2">@csrf<input name="admin_note" required minlength="3" maxlength="1000" placeholder="Cancel reason" class="ft-input flex-1"><button class="ft-btn ft-btn-red">Reject / Return Funds</button></form>
                         </div>
                     @elseif($payout->status === 'paid')
-                        <p class="mt-3 rounded-xl bg-emerald-50 px-3 py-2 text-[8px] text-emerald-700">External reference: <strong>{{ $payout->external_reference }}</strong></p>
+                        <p class="ft-note ft-note-green">External reference: <strong>{{ $payout->external_reference }}</strong></p>
                     @elseif($payout->status === 'rejected')
-                        <p class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-[8px] text-rose-700">{{ $payout->admin_note }}</p>
+                        <p class="ft-note ft-note-red">{{ $payout->admin_note }}</p>
                     @endif
                 </article>
             @empty
-                <p class="rounded-xl border border-dashed border-[#d8d2c8] p-8 text-center text-[9px] text-[#817769]">No payout requests yet.</p>
+                <p class="ft-empty">No payout requests yet.</p>
             @endforelse
         </div>
 
         <div class="mt-4">{{ $payoutRequests->links() }}</div>
     </section>
 
-    <section class="grid gap-5 xl:grid-cols-2">
-        <div class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm"><h3 class="text-[13px] font-bold">COD Reconciliation Snapshot</h3><div class="mt-4 grid grid-cols-3 gap-3 text-center"><div class="rounded-xl bg-[#f7f4ee] p-4"><p class="text-[7px] uppercase text-[#817769]">Awaiting</p><p class="mt-2 font-bold">₱{{ number_format($remittanceStats['awaiting'],2) }}</p></div><div class="rounded-xl bg-emerald-50 p-4"><p class="text-[7px] uppercase text-emerald-700">Verified</p><p class="mt-2 font-bold">₱{{ number_format($remittanceStats['verified'],2) }}</p></div><div class="rounded-xl bg-rose-50 p-4"><p class="text-[7px] uppercase text-rose-700">Discrepancies</p><p class="mt-2 font-bold">{{ number_format($remittanceStats['discrepancy_count']) }}</p></div></div></div>
-        <div class="rounded-2xl border border-[#e5e0d8] bg-white p-5 shadow-sm"><h3 class="text-[13px] font-bold">Platform Wallet Ledger</h3><div class="mt-4 space-y-2">@forelse($platformEntries as $entry)<div class="flex justify-between gap-3 rounded-xl border border-[#eee6da] px-3 py-3 text-[8px]"><div><strong>{{ strtoupper(str_replace('_',' ',$entry->category)) }}</strong><div class="mt-1 text-[#817769]">{{ $entry->description }}</div></div><div class="text-right font-semibold">{{ $entry->available_delta >= 0 ? '+' : '' }}₱{{ number_format((float)$entry->available_delta,2) }}</div></div>@empty<p class="text-[9px] text-[#817769]">No platform wallet entries yet.</p>@endforelse</div></div>
+    <section class="grid gap-[18px] xl:grid-cols-2">
+        <div class="ft-card"><h3 class="ft-h3">COD Reconciliation Snapshot</h3><div class="mt-4 grid grid-cols-3 gap-3"><div class="ft-tile ft-tile-neutral"><span>Awaiting</span><strong>₱{{ number_format($remittanceStats['awaiting'],2) }}</strong></div><div class="ft-tile ft-tile-green"><span>Verified</span><strong>₱{{ number_format($remittanceStats['verified'],2) }}</strong></div><div class="ft-tile" style="background:#fff5f5;color:#b04545;"><span>Discrepancies</span><strong>{{ number_format($remittanceStats['discrepancy_count']) }}</strong></div></div></div>
+        <div class="ft-card"><h3 class="ft-h3">Platform Wallet Ledger</h3><div class="mt-4 space-y-2">@forelse($platformEntries as $entry)<div class="ft-ledger-row"><div><strong>{{ strtoupper(str_replace('_',' ',$entry->category)) }}</strong><div class="ft-ledger-desc">{{ $entry->description }}</div></div><div class="ft-ledger-amt">{{ $entry->available_delta >= 0 ? '+' : '' }}₱{{ number_format((float)$entry->available_delta,2) }}</div></div>@empty<p class="ft-muted">No platform wallet entries yet.</p>@endforelse</div></div>
     </section>
+</div>
 </div>
 @endsection

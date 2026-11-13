@@ -1634,6 +1634,137 @@
             scroll-behavior:auto !important;
         }
     }
+
+    /* SARI reference parity — scoped settings presentation. */
+    .platform-settings-page {
+        --ps-accent: #c88912 !important;
+        --ps-accent-ink: #a96d08 !important;
+        --ps-ink: #29323b !important;
+        --ps-text: #4c545e !important;
+        --ps-muted: #707b86 !important;
+        --ps-radius-lg: 17px !important;
+        --ps-shadow: 0 2px 5px rgba(15,23,42,.045),0 10px 24px rgba(15,23,42,.075),0 24px 54px rgba(15,23,42,.095),inset 0 1px 0 rgba(255,255,255,.92) !important;
+        max-width: 1640px !important;
+        min-width: 0;
+        padding: 2px 2px 32px !important;
+        font-size: 12px !important;
+        line-height: 1.5;
+        container-type: inline-size;
+    }
+    .platform-settings-page *, .platform-settings-page *::before, .platform-settings-page *::after { box-sizing: border-box; }
+    .platform-settings-page :is(input,textarea,button) { font-family: inherit; }
+    .platform-settings-page .ps-header { align-items: flex-end !important; gap: 20px !important; padding: 2px 0 16px !important; margin-bottom: 18px !important; border-bottom: 0 !important; }
+    .platform-settings-page .ps-eyebrow { color: #a87316 !important; -webkit-text-fill-color: #a87316 !important; font-size: 10.5px !important; font-weight: 800 !important; line-height: 1.2 !important; letter-spacing: .14em !important; }
+    .platform-settings-page .ps-title { margin-top: 5px !important; font-size: clamp(29px,2.35vw,34px) !important; font-weight: 750 !important; line-height: 1.04 !important; }
+    .platform-settings-page .ps-title-dark { color: #2e343b !important; -webkit-text-fill-color: #2e343b !important; }
+    .platform-settings-page .ps-title-accent { color: #c88912 !important; -webkit-text-fill-color: #c88912 !important; }
+    .platform-settings-page .ps-subtitle { color: #707b86 !important; -webkit-text-fill-color: #707b86 !important; font-size: 11.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-header-actions { gap: 10px !important; padding-left: 0 !important; }
+    .platform-settings-page .ps-header-actions :is(.ps-badge,.ps-help-trigger) { min-height: 40px !important; height: 40px !important; font-size: 11px !important; }
+    .platform-settings-page .ps-card { min-width: 0; border-radius: 17px !important; box-shadow: var(--ps-shadow) !important; }
+    .platform-settings-page .ps-policy-strip { grid-template-columns: repeat(4,minmax(0,1fr)) !important; margin-bottom: 18px !important; }
+    .platform-settings-page .ps-policy-cell { min-height: 110px !important; padding: 17px 18px !important; border-bottom: 0 !important; }
+    .platform-settings-page .ps-policy-cell:last-child { border-right: 0 !important; }
+    .platform-settings-page .ps-kicker { color: #707b86 !important; font-size: 11.5px !important; font-weight: 500 !important; }
+    .platform-settings-page .ps-policy-value { margin-top: 7px !important; color: #29323b !important; font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+    .platform-settings-page .ps-policy-note { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.5 !important; }
+    .platform-settings-page .ps-grid { grid-template-columns: minmax(0,1.5fr) minmax(350px,1fr) !important; gap: 18px !important; }
+    .platform-settings-page .ps-stack { min-width: 0; gap: 18px !important; }
+    .platform-settings-page .ps-section { padding: 18px !important; }
+    .platform-settings-page .ps-section-head { gap: 12px !important; flex-wrap: wrap; margin-bottom: 16px !important; padding-bottom: 14px !important; }
+    .platform-settings-page .ps-section-title { color: #29323b !important; font-size: 14px !important; font-weight: 750 !important; }
+    .platform-settings-page .ps-section-copy { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-head-actions { gap: 7px !important; flex-wrap: wrap; }
+    .platform-settings-page :is(.ps-tag,.ps-help-trigger) { min-height: 32px !important; height: 32px !important; font-size: 10.5px !important; }
+    .platform-settings-page .ps-help-chevron { width: 13px !important; height: 13px !important; }
+    .platform-settings-page .ps-help-icon { width: 17px !important; height: 17px !important; font-size: 10px !important; }
+    .platform-settings-page .ps-form-grid { gap: 14px !important; }
+    .platform-settings-page .ps-label-row { flex-wrap: wrap; gap: 4px 10px; margin-bottom: 6px !important; }
+    .platform-settings-page .ps-label { color: #4b5560 !important; font-size: 11px !important; font-weight: 750 !important; }
+    .platform-settings-page .ps-current { color: #707b86 !important; font-size: 10px !important; }
+    .platform-settings-page :is(.ps-input,.ps-textarea) { min-width: 0; border-color: #dfe3e8 !important; background: #fff !important; color: #333d47 !important; font-size: 12px !important; font-weight: 550 !important; }
+    .platform-settings-page .ps-input { height: 42px !important; padding-inline: 11px !important; }
+    .platform-settings-page .ps-input-wrap .ps-input { padding-right: 46px !important; }
+    .platform-settings-page .ps-textarea { min-height: 100px !important; padding: 11px !important; line-height: 1.6 !important; }
+    .platform-settings-page :is(.ps-input,.ps-textarea)::placeholder { color: #79838e; font-size: 11.5px; }
+    .platform-settings-page .ps-suffix { font-size: 10px !important; }
+    .platform-settings-page .ps-help { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-toggle-list { gap: 10px !important; }
+    .platform-settings-page .ps-toggle-row { padding: 13px !important; gap: 14px; }
+    .platform-settings-page .ps-toggle-row > div { min-width: 0; }
+    .platform-settings-page :is(.ps-toggle-title,.ps-governance-title) { color: #4c545e !important; font-size: 11.5px !important; }
+    .platform-settings-page :is(.ps-toggle-copy,.ps-governance-copy) { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-switch { width: 40px !important; height: 24px !important; flex-basis: 40px !important; }
+    .platform-settings-page .ps-switch span::after { width: 18px; height: 18px; }
+    .platform-settings-page .ps-switch input:checked + span { border-color: #c88912 !important; background: #c88912 !important; }
+    .platform-settings-page .ps-switch input:focus-visible + span { outline: 2px solid #9b6710; outline-offset: 3px; }
+    .platform-settings-page .ps-permission { font-size: 10.5px !important; }
+    .platform-settings-page .ps-mini span { color: #707b86 !important; font-size: 10px !important; }
+    .platform-settings-page .ps-mini strong { font-size: 11px !important; overflow-wrap: anywhere; }
+    .platform-settings-page .ps-diff { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr) 18px minmax(0,1fr); font-size: 11px !important; overflow-wrap: anywhere; }
+    .platform-settings-page .ps-scheduled-head { flex-wrap: wrap; }
+    .platform-settings-page .ps-btn { min-height: 42px !important; height: 42px !important; font-size: 11px !important; }
+    .platform-settings-page .ps-btn-primary { border-color: #c88912 !important; background: #c88912 !important; box-shadow: 0 6px 16px rgba(201,132,8,.14) !important; }
+    .platform-settings-page .ps-btn-primary:hover { background: #a96d08 !important; border-color: #a96d08 !important; }
+    .platform-settings-page .ps-actions { border-radius: 17px !important; padding: 13px 16px !important; gap: 12px; }
+    .platform-settings-page .ps-change-state { font-size: 11px !important; }
+    .platform-settings-page .ps-actions-right { flex-wrap: wrap; }
+    .platform-settings-page .ps-help-panel { border-radius: 12px !important; padding: 14px !important; max-height: min(640px,70dvh); overflow-y: auto; box-shadow: 0 18px 42px rgba(31,41,55,.13),0 4px 12px rgba(31,41,55,.04) !important; }
+    .platform-settings-page .ps-help-panel-title { font-size: 12px !important; }
+    .platform-settings-page .ps-help-step strong { font-size: 11px !important; }
+    .platform-settings-page :is(.ps-help-step p,.ps-help-note) { font-size: 10.5px !important; line-height: 1.6 !important; }
+    .platform-settings-page .ps-audit { margin-top: 18px !important; }
+    .platform-settings-page .ps-audit-head { padding: 16px 18px !important; flex-wrap: wrap; }
+    .platform-settings-page .ps-table-wrap { max-width: 100%; scrollbar-width: thin; scrollbar-color: #d9dde2 transparent; }
+    .platform-settings-page .ps-table th { padding: 12px 14px !important; font-size: 10.5px !important; font-weight: 650 !important; letter-spacing: .045em !important; }
+    .platform-settings-page .ps-table td { padding: 14px !important; font-size: 12px !important; line-height: 1.5 !important; }
+    .platform-settings-page :is(.ps-alert,.ps-errors) { font-size: 11.5px !important; }
+    .platform-settings-page :is(button,input,textarea,summary):focus-visible { outline: 2px solid #9b6710 !important; outline-offset: 3px; }
+    /* Confirmation modal sits outside the page wrapper. */
+    .ps-modal-backdrop .ps-modal { max-height: calc(100dvh - 40px); overflow-y: auto; border-radius: 17px !important; padding: 20px !important; font-family: 'Poppins',ui-sans-serif,system-ui,sans-serif; }
+    .ps-modal-backdrop .ps-modal h3 { font-size: 16px !important; }
+    .ps-modal-backdrop .ps-modal p { font-size: 11.5px !important; }
+    .ps-modal-backdrop .ps-modal-summary { font-size: 12px !important; }
+    .ps-modal-backdrop .ps-modal-actions { flex-wrap: wrap; }
+    .ps-modal-backdrop .ps-btn { min-height: 42px; font-family: inherit; font-size: 11px; border-radius: 9px; }
+    .ps-modal-backdrop .ps-btn-primary { border-color: #c88912; background: #c88912; }
+    .ps-modal-backdrop .ps-btn-primary:hover { border-color: #a96d08; background: #a96d08; }
+    .ps-modal-backdrop .ps-btn:focus-visible { outline: 2px solid #9b6710; outline-offset: 3px; }
+    @container (max-width: 1100px) {
+        .platform-settings-page .ps-grid { grid-template-columns: 1fr !important; }
+        .platform-settings-page .ps-header { align-items: stretch !important; flex-direction: column !important; }
+        .platform-settings-page .ps-header-actions { justify-content: flex-start !important; }
+    }
+    @container (max-width: 800px) {
+        .platform-settings-page .ps-policy-strip { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+        .platform-settings-page .ps-policy-cell:nth-child(2) { border-right: 0 !important; }
+        .platform-settings-page .ps-policy-cell:nth-child(-n+2) { border-bottom: 1px solid #eceff2 !important; }
+    }
+    @container (max-width: 600px) {
+        .platform-settings-page .ps-form-grid { grid-template-columns: 1fr; }
+        .platform-settings-page .ps-actions { position: static; flex-direction: column; align-items: stretch; }
+        .platform-settings-page .ps-actions-right { width: 100%; }
+        .platform-settings-page .ps-actions-right .ps-btn { flex: 1; }
+        .platform-settings-page .ps-diff { grid-template-columns: 1fr; }
+        .platform-settings-page .ps-arrow { display: none; }
+    }
+    @container (max-width: 400px) {
+        .platform-settings-page .ps-policy-strip { grid-template-columns: 1fr !important; }
+        .platform-settings-page .ps-policy-cell { border-right: 0 !important; border-bottom: 1px solid #eceff2 !important; }
+        .platform-settings-page .ps-policy-cell:last-child { border-bottom: 0 !important; }
+    }
+    @media (max-width: 767px) {
+        .platform-settings-page .ps-title { font-size: 29px !important; }
+        .platform-settings-page .ps-eyebrow { font-size: 9.5px !important; }
+        .platform-settings-page .ps-card { border-radius: 14px !important; box-shadow: 0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07) !important; }
+        .platform-settings-page .ps-section { padding: 14px !important; }
+        .platform-settings-page :is(.ps-input,.ps-btn) { height: 44px !important; min-height: 44px !important; }
+    }
+
+
+    /* Audit history belongs to the registration stack. */
+    .platform-settings-page .ps-stack > .ps-audit { margin-top: 0 !important; }
+    .platform-settings-page .ps-stack > .ps-audit .ps-table { min-width: 900px !important; }
 </style>
 
 <div class="platform-settings-page">
@@ -1645,7 +1776,7 @@
             <div>
                 <p class="ps-eyebrow">Administration</p>
                 <h1 class="ps-title"><span class="ps-title-dark">Platform</span> <span class="ps-title-accent">Settings</span></h1>
-                <p class="ps-subtitle">Manage pricing, checkout rules, registration access, finance controls, and scheduled policy changes from one governed workspace.</p>
+                
             </div>
         </div>
         <div class="ps-header-actions">
@@ -1725,7 +1856,7 @@
                         <div class="ps-section-head">
                             <div>
                                 <h2 class="ps-section-title">Commerce &amp; fees</h2>
-                                <p class="ps-section-copy">Pricing rules currently used by checkout and commission calculations.</p>
+                                
                             </div>
                             <div class="ps-head-actions">
                                 <span class="ps-tag">Financial policy</span>
@@ -1758,7 +1889,7 @@
                                     <input class="ps-input" name="commission_rate" type="number" step="0.01" min="0" max="100" value="{{ old('commission_rate',$settings['commission_rate']) }}" required>
                                     <span class="ps-suffix">%</span>
                                 </div>
-                                <p class="ps-help">New delivered-and-paid commissions use the effective rate. Existing order commission snapshots are not rewritten.</p>
+                                
                             </label>
 
                             <label class="ps-field">
@@ -1770,7 +1901,7 @@
                                     <input class="ps-input" name="delivery_fee_per_seller" type="number" step="0.01" min="0" max="100000" value="{{ old('delivery_fee_per_seller',$settings['delivery_fee_per_seller']) }}" required>
                                     <span class="ps-suffix">₱</span>
                                 </div>
-                                <p class="ps-help">Default per-seller delivery charge where the seller group is not fully free-shipping.</p>
+                                
                             </label>
                         </div>
                     </section>
@@ -1779,7 +1910,7 @@
                         <div class="ps-section-head">
                             <div>
                                 <h2 class="ps-section-title">Order &amp; checkout rules</h2>
-                                <p class="ps-section-copy">Set the rules buyers must satisfy before checkout or cancellation is allowed.</p>
+                                
                             </div>
                             <div class="ps-head-actions">
                                 <span class="ps-tag">Operations</span>
@@ -1806,7 +1937,7 @@
                             <div class="ps-toggle-row">
                                 <div>
                                     <div class="ps-toggle-title">Checkout enabled</div>
-                                    <div class="ps-toggle-copy">When disabled, buyers can still view their cart but cannot enter or submit checkout.</div>
+                                    
                                 </div>
                                 <label class="ps-switch">
                                     <input type="hidden" name="checkout_enabled" value="0">
@@ -1822,7 +1953,7 @@
                             <label class="ps-field">
                                 <div class="ps-label-row"><span class="ps-label">Maximum sellers per checkout</span></div>
                                 <input class="ps-input" name="max_sellers_per_checkout" type="number" min="0" max="50" value="{{ old('max_sellers_per_checkout',$settings['max_sellers_per_checkout']) }}" required>
-                                <p class="ps-help">Set 0 for unlimited. Any positive value limits how many seller groups can be submitted in one checkout.</p>
+                                
                             </label>
 
                             <label class="ps-field">
@@ -1831,7 +1962,7 @@
                                     <input class="ps-input" name="buyer_cancellation_window_minutes" type="number" min="0" max="10080" value="{{ old('buyer_cancellation_window_minutes',$settings['buyer_cancellation_window_minutes']) }}" required>
                                     <span class="ps-suffix">min</span>
                                 </div>
-                                <p class="ps-help">Set 0 to preserve the existing rule: buyer may cancel while order status is still New.</p>
+                                
                             </label>
                         </div>
                     </section>
@@ -1840,7 +1971,7 @@
                         <div class="ps-section-head">
                             <div>
                                 <h2 class="ps-section-title">Registration &amp; notifications</h2>
-                                <p class="ps-section-copy">Manage who can register and whether approval or rejection emails are sent.</p>
+                                
                             </div>
                             <div class="ps-head-actions">
                                 <span class="ps-tag">Access + email</span>
@@ -1867,7 +1998,7 @@
                             <div class="ps-toggle-row">
                                 <div>
                                     <div class="ps-toggle-title">New registrations enabled</div>
-                                    <div class="ps-toggle-copy">Applies to Buyer, Seller, Logistics, and Rider registration submission flows.</div>
+                                    
                                 </div>
                                 <label class="ps-switch">
                                     <input type="hidden" name="registrations_enabled" value="0">
@@ -1879,7 +2010,7 @@
                             <div class="ps-toggle-row">
                                 <div>
                                     <div class="ps-toggle-title">Registration decision emails</div>
-                                    <div class="ps-toggle-copy">Controls the existing queued approval/rejection email job. Database review decisions still save even when email is off.</div>
+                                    
                                 </div>
                                 <label class="ps-switch">
                                     <input type="hidden" name="registration_decision_email_enabled" value="0">
@@ -1889,236 +2020,12 @@
                             </div>
                         </div>
                     </section>
-                </div>
 
-                <aside class="ps-stack">
-                    <section class="ps-card ps-section">
-                        <div class="ps-section-head">
-                            <div>
-                                <h2 class="ps-section-title">Finance rules</h2>
-                                <p class="ps-section-copy">Control when internal seller settlements become eligible and when riders may request payout.</p>
-                            </div>
-                            <div class="ps-head-actions">
-                                <details class="ps-help-menu">
-                                    <summary class="ps-help-trigger" aria-label="Help for Finance Rules">
-                                        <span class="ps-help-icon">?</span>
-                                        Help
-                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
-                                    </summary>
-                                    <div class="ps-help-panel">
-                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Finance rules guide</div>
-                                        <div class="ps-help-steps">
-                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Settlement hold</strong><p>Enter how many days after delivery a newly created seller settlement becomes internally eligible. 0 means no added hold.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Minimum rider payout</strong><p>Set the minimum available rider earnings required before the existing payout-request action can be submitted.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Internal controls only</strong><p>These values control eligibility and request rules inside SARI; they do not represent an external bank or e-wallet transfer.</p></div></div>
-                                        </div>
-                                <div class="ps-help-note">Previously stored finance records are not retroactively rewritten by these controls.</div>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-
-                        <div class="ps-form-grid" style="grid-template-columns:1fr">
-                            <label class="ps-field">
-                                <div class="ps-label-row"><span class="ps-label">Seller settlement hold</span></div>
-                                <div class="ps-input-wrap">
-                                    <input class="ps-input" name="seller_settlement_hold_days" type="number" min="0" max="90" value="{{ old('seller_settlement_hold_days',$settings['seller_settlement_hold_days']) }}" required>
-                                    <span class="ps-suffix">days</span>
-                                </div>
-                                <p class="ps-help">Moves the internal seller settlement eligible_at date forward from delivery. 0 means immediately eligible internally.</p>
-                            </label>
-
-                            <label class="ps-field">
-                                <div class="ps-label-row"><span class="ps-label">Minimum rider payout request</span></div>
-                                <div class="ps-input-wrap">
-                                    <input class="ps-input" name="rider_payout_minimum" type="number" step="0.01" min="0" max="100000" value="{{ old('rider_payout_minimum',$settings['rider_payout_minimum']) }}" required>
-                                    <span class="ps-suffix">₱</span>
-                                </div>
-                                <p class="ps-help">Riders cannot submit the existing internal payout request unless available earnings meet this amount. 0 disables the minimum.</p>
-                            </label>
-                        </div>
-                    </section>
-
-                    <section class="ps-card ps-section">
-                        <div class="ps-section-head">
-                            <div>
-                                <h2 class="ps-section-title">Commerce maintenance</h2>
-                                <p class="ps-section-copy">Control commerce availability without shutting down the Admin workspace. Existing checkout and registration controls are preserved; Seller posting and platform-campaign delivery are managed here too.</p>
-                            </div>
-                            <div class="ps-head-actions">
-                                <details class="ps-help-menu">
-                                    <summary class="ps-help-trigger" aria-label="Help for Commerce Maintenance">
-                                        <span class="ps-help-icon">?</span>
-                                        Help
-                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
-                                    </summary>
-                                    <div class="ps-help-panel">
-                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Maintenance guide</div>
-                                        <div class="ps-help-steps">
-                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Enable maintenance mode</strong><p>Use this when checkout and new registrations need to be temporarily stopped.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Write the public message</strong><p>Enter a clear maintenance message explaining why the action is unavailable.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Admin remains available</strong><p>The maintenance switch does not lock the Admin settings page, so an administrator can turn it off again.</p></div></div>
-                                        </div>
-                                <div class="ps-help-note">Maintenance mode continues to pause checkout and registration entry points. The separate feature switches below let Admin pause Seller product posting or Buyer-facing platform campaigns without disabling the rest of SARI.</div>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-
-                        <div class="ps-toggle-row">
-                            <div>
-                                <div class="ps-toggle-title">Maintenance mode</div>
-                                <div class="ps-toggle-copy">Temporarily blocks checkout and new registration actions.</div>
-                            </div>
-                            <label class="ps-switch">
-                                <input type="hidden" name="maintenance_mode" value="0">
-                                <input type="checkbox" name="maintenance_mode" value="1" @checked($boolValue('maintenance_mode',false))>
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <div class="ps-toggle-row" style="margin-top:12px">
-                            <div>
-                                <div class="ps-toggle-title">Seller product posting</div>
-                                <div class="ps-toggle-copy">When disabled, Sellers can still manage existing products, but cannot open Add Product or save new product drafts/listings.</div>
-                            </div>
-                            <label class="ps-switch">
-                                <input type="hidden" name="seller_product_posting_enabled" value="0">
-                                <input type="checkbox" name="seller_product_posting_enabled" value="1" @checked($boolValue('seller_product_posting_enabled',true))>
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <div class="ps-toggle-row" style="margin-top:12px">
-                            <div>
-                                <div class="ps-toggle-title">Platform campaigns</div>
-                                <div class="ps-toggle-copy">When disabled, Admin event discounts and SARI platform vouchers stop applying to Buyer quotes and checkout. Campaign records stay intact for later reactivation.</div>
-                            </div>
-                            <label class="ps-switch">
-                                <input type="hidden" name="platform_campaigns_enabled" value="0">
-                                <input type="checkbox" name="platform_campaigns_enabled" value="1" @checked($boolValue('platform_campaigns_enabled',true))>
-                                <span></span>
-                            </label>
-                        </div>
-
-                        <label class="ps-field" style="margin-top:14px">
-                            <div class="ps-label-row"><span class="ps-label">Maintenance message</span></div>
-                            <textarea class="ps-textarea" name="maintenance_message" maxlength="500" required>{{ old('maintenance_message',$settings['maintenance_message']) }}</textarea>
-                        </label>
-                    </section>
-
-                    <section class="ps-card ps-section">
-                        <div class="ps-section-head">
-                            <div>
-                                <h2 class="ps-section-title">Change governance</h2>
-                                <p class="ps-section-copy">Define when changes take effect and keep every policy update traceable.</p>
-                            </div>
-                            <div class="ps-head-actions">
-                                <details class="ps-help-menu">
-                                    <summary class="ps-help-trigger" aria-label="Help for Change Governance">
-                                        <span class="ps-help-icon">?</span>
-                                        Help
-                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
-                                    </summary>
-                                    <div class="ps-help-panel">
-                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Publishing & governance guide</div>
-                                        <div class="ps-help-steps">
-                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Effective at</strong><p>Use the current time to publish now, or a future time to schedule the complete next policy snapshot.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Change reason</strong><p>Explain why the policy changed. This reason is stored in the database-backed audit history.</p></div></div>
-                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Review & Save Policy</strong><p>The review dialog appears first. After confirmation, server validation creates the next policy version.</p></div></div>
-                                        </div>
-                                <div class="ps-help-note">Only one future policy can be pending at a time. Cancel the pending schedule before creating another one.</div>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-
-                        <div class="ps-governance">
-                            <div class="ps-governance-title">Effective date &amp; traceability</div>
-                            <div class="ps-governance-copy">Choose now or a future date. Only one future policy may be pending at a time so overlapping commission windows cannot be created.</div>
-                        </div>
-
-                        <label class="ps-field" style="margin-top:14px">
-                            <div class="ps-label-row"><span class="ps-label">Effective at</span><span class="ps-current">{{ config('app.timezone') }}</span></div>
-                            <input class="ps-input" name="effective_at" type="datetime-local" value="{{ $effectiveDefault }}" required>
-                        </label>
-
-                        <label class="ps-field" style="margin-top:14px">
-                            <div class="ps-label-row"><span class="ps-label">Change reason</span></div>
-                            <textarea class="ps-textarea" name="change_reason" minlength="10" maxlength="1000" placeholder="Example: Updated logistics pricing policy for the next operating period." required>{{ old('change_reason') }}</textarea>
-                            <p class="ps-help">Required for every settings version and written into the immutable audit trail.</p>
-                        </label>
-
-                        <div class="ps-permission">
-                            <span class="ps-permission-dot {{ $canManageSettings ? '' : 'no' }}"></span>
-                            <span>
-                                @if($canManageSettings)
-                                    {{ $admin?->name ?: 'Legacy Admin session' }} can publish platform settings.
-                                @else
-                                    This Admin account has read-only Platform Settings access.
-                                @endif
-                            </span>
-                        </div>
-                    </section>
-                </aside>
-            </div>
-
-            <div class="ps-actions" id="settingsActionBar">
-                <div class="ps-change-state"><span class="ps-change-dot"></span><span id="settingsChangeText">No unsaved changes</span></div>
-                <div class="ps-actions-right">
-                    <button type="button" class="ps-btn ps-btn-secondary" id="resetSettingsBtn">Reset</button>
-                    <button type="submit" class="ps-btn ps-btn-primary">Review &amp; save policy</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-
-    @if($scheduledVersion)
-        <section class="ps-card ps-section ps-scheduled" style="margin-top:20px">
-            <div class="ps-scheduled-head">
-                <div>
-                    <div class="ps-kicker">Pending scheduled policy</div>
-                    <h2 class="ps-section-title" style="margin-top:4px">Version {{ $scheduledVersion->version_number }}</h2>
-                    <p class="ps-section-copy">Effective {{ $scheduledVersion->effective_at?->format('M j, Y, h:i A') }} — {{ $scheduledVersion->change_reason }}</p>
-                </div>
-
-                @if($canManageSettings)
-                    <form method="POST" action="{{ route('admin.platform-settings.update') }}" onsubmit="return confirm('Cancel this future platform policy?');">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="operation" value="cancel_scheduled">
-                        <input type="hidden" name="version_id" value="{{ $scheduledVersion->id }}">
-                        <button class="ps-btn ps-btn-danger" type="submit">Cancel schedule</button>
-                    </form>
-                @endif
-            </div>
-
-            <div class="ps-scheduled-meta">
-                <div class="ps-mini"><span>Scheduled by</span><strong>{{ $scheduledVersion->admin?->name ?: 'Administrator' }}</strong></div>
-                <div class="ps-mini"><span>Created</span><strong>{{ $scheduledVersion->created_at?->format('M j, Y, h:i A') }}</strong></div>
-            </div>
-
-            <div class="ps-diff-list">
-                @foreach((array)$scheduledVersion->settings as $key => $newValue)
-                    @php $oldValue = $settings[$key] ?? null; @endphp
-                    @if((string)$oldValue !== (string)$newValue)
-                        <div class="ps-diff">
-                            <strong>{{ $labels[$key] ?? str($key)->replace('_',' ')->title() }}</strong>
-                            <span>{{ $formatSetting($key,$oldValue) }}</span>
-                            <span class="ps-arrow">→</span>
-                            <span>{{ $formatSetting($key,$newValue) }}</span>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-        </section>
-    @endif
-
-    <section class="ps-card ps-audit">
+<section class="ps-card ps-audit">
         <div class="ps-audit-head">
             <div>
                 <h2 class="ps-section-title">Configuration audit history</h2>
-                <p class="ps-section-copy">Database-backed record of published, scheduled, and cancelled settings changes.</p>
+                
             </div>
             <div class="ps-head-actions">
                 <span class="ps-tag">Latest {{ $auditHistory->count() }}</span>
@@ -2166,6 +2073,229 @@
             @endif
         </div>
     </section>
+                </div>
+
+                <aside class="ps-stack">
+                    <section class="ps-card ps-section">
+                        <div class="ps-section-head">
+                            <div>
+                                <h2 class="ps-section-title">Finance rules</h2>
+                                
+                            </div>
+                            <div class="ps-head-actions">
+                                <details class="ps-help-menu">
+                                    <summary class="ps-help-trigger" aria-label="Help for Finance Rules">
+                                        <span class="ps-help-icon">?</span>
+                                        Help
+                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+                                    </summary>
+                                    <div class="ps-help-panel">
+                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Finance rules guide</div>
+                                        <div class="ps-help-steps">
+                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Settlement hold</strong><p>Enter how many days after delivery a newly created seller settlement becomes internally eligible. 0 means no added hold.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Minimum rider payout</strong><p>Set the minimum available rider earnings required before the existing payout-request action can be submitted.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Internal controls only</strong><p>These values control eligibility and request rules inside SARI; they do not represent an external bank or e-wallet transfer.</p></div></div>
+                                        </div>
+                                <div class="ps-help-note">Previously stored finance records are not retroactively rewritten by these controls.</div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <div class="ps-form-grid" style="grid-template-columns:1fr">
+                            <label class="ps-field">
+                                <div class="ps-label-row"><span class="ps-label">Seller settlement hold</span></div>
+                                <div class="ps-input-wrap">
+                                    <input class="ps-input" name="seller_settlement_hold_days" type="number" min="0" max="90" value="{{ old('seller_settlement_hold_days',$settings['seller_settlement_hold_days']) }}" required>
+                                    <span class="ps-suffix">days</span>
+                                </div>
+                                
+                            </label>
+
+                            <label class="ps-field">
+                                <div class="ps-label-row"><span class="ps-label">Minimum rider payout request</span></div>
+                                <div class="ps-input-wrap">
+                                    <input class="ps-input" name="rider_payout_minimum" type="number" step="0.01" min="0" max="100000" value="{{ old('rider_payout_minimum',$settings['rider_payout_minimum']) }}" required>
+                                    <span class="ps-suffix">₱</span>
+                                </div>
+                                
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="ps-card ps-section">
+                        <div class="ps-section-head">
+                            <div>
+                                <h2 class="ps-section-title">Commerce maintenance</h2>
+                                
+                            </div>
+                            <div class="ps-head-actions">
+                                <details class="ps-help-menu">
+                                    <summary class="ps-help-trigger" aria-label="Help for Commerce Maintenance">
+                                        <span class="ps-help-icon">?</span>
+                                        Help
+                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+                                    </summary>
+                                    <div class="ps-help-panel">
+                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Maintenance guide</div>
+                                        <div class="ps-help-steps">
+                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Enable maintenance mode</strong><p>Use this when checkout and new registrations need to be temporarily stopped.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Write the public message</strong><p>Enter a clear maintenance message explaining why the action is unavailable.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Admin remains available</strong><p>The maintenance switch does not lock the Admin settings page, so an administrator can turn it off again.</p></div></div>
+                                        </div>
+                                <div class="ps-help-note">Maintenance mode continues to pause checkout and registration entry points. The separate feature switches below let Admin pause Seller product posting or Buyer-facing platform campaigns without disabling the rest of SARI.</div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <div class="ps-toggle-row">
+                            <div>
+                                <div class="ps-toggle-title">Maintenance mode</div>
+                                
+                            </div>
+                            <label class="ps-switch">
+                                <input type="hidden" name="maintenance_mode" value="0">
+                                <input type="checkbox" name="maintenance_mode" value="1" @checked($boolValue('maintenance_mode',false))>
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="ps-toggle-row" style="margin-top:12px">
+                            <div>
+                                <div class="ps-toggle-title">Seller product posting</div>
+                                
+                            </div>
+                            <label class="ps-switch">
+                                <input type="hidden" name="seller_product_posting_enabled" value="0">
+                                <input type="checkbox" name="seller_product_posting_enabled" value="1" @checked($boolValue('seller_product_posting_enabled',true))>
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="ps-toggle-row" style="margin-top:12px">
+                            <div>
+                                <div class="ps-toggle-title">Platform campaigns</div>
+                                
+                            </div>
+                            <label class="ps-switch">
+                                <input type="hidden" name="platform_campaigns_enabled" value="0">
+                                <input type="checkbox" name="platform_campaigns_enabled" value="1" @checked($boolValue('platform_campaigns_enabled',true))>
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <label class="ps-field" style="margin-top:14px">
+                            <div class="ps-label-row"><span class="ps-label">Maintenance message</span></div>
+                            <textarea class="ps-textarea" name="maintenance_message" maxlength="500" required>{{ old('maintenance_message',$settings['maintenance_message']) }}</textarea>
+                        </label>
+                    </section>
+
+                    <section class="ps-card ps-section">
+                        <div class="ps-section-head">
+                            <div>
+                                <h2 class="ps-section-title">Change governance</h2>
+                                
+                            </div>
+                            <div class="ps-head-actions">
+                                <details class="ps-help-menu">
+                                    <summary class="ps-help-trigger" aria-label="Help for Change Governance">
+                                        <span class="ps-help-icon">?</span>
+                                        Help
+                                        <svg class="ps-help-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+                                    </summary>
+                                    <div class="ps-help-panel">
+                                        <div class="ps-help-panel-title"><span class="ps-help-icon">?</span> Publishing & governance guide</div>
+                                        <div class="ps-help-steps">
+                                    <div class="ps-help-step"><span class="ps-help-step-num">1</span><div><strong>Effective at</strong><p>Use the current time to publish now, or a future time to schedule the complete next policy snapshot.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">2</span><div><strong>Change reason</strong><p>Explain why the policy changed. This reason is stored in the database-backed audit history.</p></div></div>
+                                    <div class="ps-help-step"><span class="ps-help-step-num">3</span><div><strong>Review & Save Policy</strong><p>The review dialog appears first. After confirmation, server validation creates the next policy version.</p></div></div>
+                                        </div>
+                                <div class="ps-help-note">Only one future policy can be pending at a time. Cancel the pending schedule before creating another one.</div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        
+
+                        <label class="ps-field" style="margin-top:14px">
+                            <div class="ps-label-row"><span class="ps-label">Effective at</span><span class="ps-current">{{ config('app.timezone') }}</span></div>
+                            <input class="ps-input" name="effective_at" type="datetime-local" value="{{ $effectiveDefault }}" required>
+                        </label>
+
+                        <label class="ps-field" style="margin-top:14px">
+                            <div class="ps-label-row"><span class="ps-label">Change reason</span></div>
+                            <textarea class="ps-textarea" name="change_reason" minlength="10" maxlength="1000" placeholder="Example: Updated logistics pricing policy for the next operating period." required>{{ old('change_reason') }}</textarea>
+                            
+                        </label>
+
+                        <div class="ps-permission">
+                            <span class="ps-permission-dot {{ $canManageSettings ? '' : 'no' }}"></span>
+                            <span>
+                                @if($canManageSettings)
+                                    {{ $admin?->name ?: 'Legacy Admin session' }} can publish platform settings.
+                                @else
+                                    This Admin account has read-only Platform Settings access.
+                                @endif
+                            </span>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+
+            <div class="ps-actions" id="settingsActionBar">
+                <div class="ps-change-state"><span class="ps-change-dot"></span><span id="settingsChangeText">No unsaved changes</span></div>
+                <div class="ps-actions-right">
+                    <button type="button" class="ps-btn ps-btn-secondary" id="resetSettingsBtn">Reset</button>
+                    <button type="submit" class="ps-btn ps-btn-primary">Review &amp; save policy</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    @if($scheduledVersion)
+        <section class="ps-card ps-section ps-scheduled" style="margin-top:20px">
+            <div class="ps-scheduled-head">
+                <div>
+                    <div class="ps-kicker">Pending scheduled policy</div>
+                    <h2 class="ps-section-title" style="margin-top:4px">Version {{ $scheduledVersion->version_number }}</h2>
+                    
+                </div>
+
+                @if($canManageSettings)
+                    <form method="POST" action="{{ route('admin.platform-settings.update') }}" onsubmit="return confirm('Cancel this future platform policy?');">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="operation" value="cancel_scheduled">
+                        <input type="hidden" name="version_id" value="{{ $scheduledVersion->id }}">
+                        <button class="ps-btn ps-btn-danger" type="submit">Cancel schedule</button>
+                    </form>
+                @endif
+            </div>
+
+            <div class="ps-scheduled-meta">
+                <div class="ps-mini"><span>Scheduled by</span><strong>{{ $scheduledVersion->admin?->name ?: 'Administrator' }}</strong></div>
+                <div class="ps-mini"><span>Created</span><strong>{{ $scheduledVersion->created_at?->format('M j, Y, h:i A') }}</strong></div>
+            </div>
+
+            <div class="ps-diff-list">
+                @foreach((array)$scheduledVersion->settings as $key => $newValue)
+                    @php $oldValue = $settings[$key] ?? null; @endphp
+                    @if((string)$oldValue !== (string)$newValue)
+                        <div class="ps-diff">
+                            <strong>{{ $labels[$key] ?? str($key)->replace('_',' ')->title() }}</strong>
+                            <span>{{ $formatSetting($key,$oldValue) }}</span>
+                            <span class="ps-arrow">→</span>
+                            <span>{{ $formatSetting($key,$newValue) }}</span>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    
 </div>
 
 <div class="ps-modal-backdrop" id="settingsConfirmModal" aria-hidden="true">

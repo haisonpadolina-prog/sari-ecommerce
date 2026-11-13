@@ -2,6 +2,10 @@
 
 @section('title', 'Login — SARI')
 
+@push('preloads')
+    <link rel="preload" as="image" href="{{ asset('images/login-bg-1536.webp') }}?v=57fe589538e9" fetchpriority="high">
+@endpush
+
 @push('styles')
     {{-- Load Tailwind from SARI's already configured Vite build before the page paints. --}}
     @vite('resources/css/app.css')
@@ -325,12 +329,12 @@
     {{-- BACKGROUND IMAGE --}}
     <div class="absolute inset-0">
         <img
-            src="{{ asset('images/login-bg.png') }}?v=57fe589538e9"
+            src="{{ asset('images/login-bg-1536.webp') }}?v=57fe589538e9"
             alt=""
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            onerror="if (!this.dataset.sariBgFallback) { this.dataset.sariBgFallback = '1'; this.src = '{{ asset('images/login-bg.jpg') }}'; } else { this.style.display = 'none'; }"
+            onerror="if (!this.dataset.sariBgFallback) { this.dataset.sariBgFallback = '1'; this.src = '{{ asset('images/login-bg.png') }}?v=57fe589538e9'; } else { this.style.display = 'none'; }"
             class="h-full w-full object-cover object-center"
         >
 

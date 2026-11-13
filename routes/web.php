@@ -793,6 +793,9 @@ Route::get(
 Route::get('/admin/users', [AdminUsersController::class, 'index'])
     ->name('admin.users');
 
+Route::post('/admin/users/export/pdf', [AdminUsersController::class, 'exportPdf'])
+    ->name('admin.users.export-pdf');
+
 Route::get('/admin/users/{role}/{id}/photo', [AdminUsersController::class, 'photo'])
     ->whereIn('role', ['buyer', 'seller', 'rider', 'logistics'])
     ->whereNumber('id')
@@ -850,6 +853,23 @@ Route::get(
     '/admin/seller-compliance',
     [AdminSellerComplianceController::class, 'index']
 )->name('admin.seller-compliance');
+
+// SARI Product Reviews: use existing AdminSellerComplianceController::index.
+// The controller retains its current guard, image validation, and moderation logic.
+Route::get('/admin/product-reviews', [\App\Http\Controllers\Admin\AdminProductReviewsController::class, 'index'])
+    ->name('admin.product-reviews');
+
+/*
+| Admin image previews are authorized; never accept a raw storage path.
+| Resolve only known images belonging to the requested product.
+*/
+Route::get(
+    '/admin/seller-compliance/products/{product}/media/{kind}/{media?}',
+    [AdminSellerComplianceController::class, 'productMedia']
+)->whereNumber('product')
+  ->whereIn('kind', ['cover', 'gallery', 'variant', 'size-guide'])
+  ->whereNumber('media')
+  ->name('admin.compliance.products.media');
 
 
 Route::post(
@@ -1772,3 +1792,6 @@ require __DIR__.'/logistics.php';
 
 
 require __DIR__.'/messaging.php';
+
+// Admin AI endpoints retain the web session and CSRF middleware.
+require __DIR__.'/admin-ai.php';

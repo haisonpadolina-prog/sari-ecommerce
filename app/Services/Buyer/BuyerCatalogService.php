@@ -737,9 +737,9 @@ class BuyerCatalogService
             'rating_count' => $reviewCount,
             'sold' => $this->soldCountForProduct((int) $product->id),
             'stock' => $stock,
-            'image' => $product->image_path
+            'image' => ($product->image_path || $product->galleryImages->isNotEmpty())
                 ? 'buyer/products/' . $product->id . '/image'
-                : ($gallery->first() ?: $this->categoryImage((string) $product->category)),
+                : $this->categoryImage((string) $product->category),
             'images' => $gallery->values()->all(),
             'badge' => 'Approved',
             'marketplace_badge' => $storeName,

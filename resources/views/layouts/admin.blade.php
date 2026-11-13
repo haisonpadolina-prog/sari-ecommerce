@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@yield('title', 'SARI Admin')</title>
@@ -197,7 +198,17 @@
         Keep Vite / Echo loaded once in the document head.
         Livewire navigation does not recreate this connection.
     --}}
+    <link rel="stylesheet" href="{{ asset('css/admin/sari-toast.css') }}?v=20261109">
+    <link rel="stylesheet" href="{{ asset('css/admin/notifications.css') }}?v=20261109">
+    <script defer src="{{ asset('js/admin/sari-toast.js') }}?v=20261109" data-sounds-base="{{ asset('sounds/admin') }}"></script>
+    <script defer src="{{ asset('js/admin/notifications.js') }}?v=20261109"></script>
     @vite('resources/js/app.js')
+    <link rel="stylesheet" href="{{ asset('css/admin/ai-assistant.css') }}?v=20261112-admin-tools-7">
+    <script defer src="{{ asset('js/admin/ai-assistant-i18n.js') }}?v=20261112-admin-tools-7"></script>
+    <script defer src="{{ asset('js/admin/ai-assistant-chart.js') }}?v=20261112-admin-tools-7"></script>
+    <script defer src="{{ asset('js/admin/ai-assistant.js') }}?v=20261112-admin-tools-7"></script>
+    <link rel="stylesheet" href="{{ asset('css/admin/ai-assistant-drag.css') }}?v=20261113-drag-1">
+    <script defer src="{{ asset('js/admin/ai-assistant-drag.js') }}?v=20261113-drag-1"></script>
 </head>
 
 <body class="m-0 min-h-screen bg-[#F4F5F7] font-poppins text-[#1f1b16] antialiased">
@@ -238,6 +249,12 @@
                     xl:px-10
                 "
             >
+                <div id="sariAdminToastFlash" hidden
+                    data-success="{{ (string) session('success', '') }}"
+                    data-error="{{ (string) (session('error') ?: collect($errors->getBags())->map(fn ($bag) => $bag->first())->first(fn ($message) => $message !== '') ?: '') }}"
+                    data-info="{{ (string) session('info', '') }}"
+                    data-status="{{ (string) session('status', '') }}"></div>
+
                 @yield('content')
             </main>
         </div>
@@ -1018,6 +1035,11 @@
         })();
     </script>
 
+    @persist('admin-ai-assistant')
+        @include('components.admin.ai-assistant')
+    @endpersist
+
+    @include('components.admin.logout-modal')
     @include('components.auth.logout-history-protection')
 </body>
 </html>

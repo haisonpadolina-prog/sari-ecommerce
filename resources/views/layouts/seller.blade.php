@@ -143,7 +143,7 @@
     {{-- Faster first paint: compiled Tailwind CSS instead of the browser CDN compiler. --}}
     <link rel="preload" as="image" href="{{ asset('images/sari-logo.png') }}" fetchpriority="high">
     <link rel="preload" as="image" href="{{ asset('images/sari-main-logo.png') }}">
-    <link rel="preload" as="script" href="{{ asset('js/seller-shell.js') }}?v=20261007-3">
+    <link rel="preload" as="script" href="{{ asset('js/seller-shell.js') }}?v=20261107-notification-modal-sound-1">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2899,7 +2899,7 @@
             {{-- PRODUCT MANAGEMENT --}}
             <a
                 href="{{ route('seller.products.index') }}"
-                data-sari-navigation-script="{{ asset('js/seller-products.js') }}?v=20261007-3"
+                data-sari-navigation-script="{{ asset('js/seller-products.js') }}?v=20261107-title-ellipsis"
                 title="Product Management"
                 data-seller-sidebar-item
                 class="

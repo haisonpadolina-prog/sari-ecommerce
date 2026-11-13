@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('title', 'Seller Compliance — SARI Admin')
 @section('page-title', 'Seller Compliance')
 
@@ -7,7 +8,7 @@
 
 @php
     // Load variant rows once for all products shown in the compliance workspace.
-    $complianceProductIds = $reviewProducts
+    $complianceProductIds = $flaggedProducts
         ->pluck('id')
         ->filter()
         ->unique()
@@ -52,10 +53,7 @@
 @endphp
 
 <style>
-    /* ============================================================
-       SARI SELLER COMPLIANCE — ENTERPRISE / PERFORMANCE EDITION
-       Poppins • compact admin density • reduced paint cost
-       ============================================================ */
+    
 
     .seller-compliance-page {
         --sc-gold: #d99500;
@@ -81,7 +79,7 @@
         box-sizing: border-box;
     }
 
-    /* ---------- Shared motion: keep it cheap ---------- */
+    
     .seller-compliance-page button,
     .seller-compliance-page a,
     .seller-compliance-page .compliance-control,
@@ -94,7 +92,7 @@
             transform .15s ease;
     }
 
-    /* ---------- Page header ---------- */
+    
     .compliance-page-header {
         margin-bottom: 12px !important;
         gap: 12px !important;
@@ -173,14 +171,14 @@
         transform: translateY(-1px);
     }
 
-    /* ---------- Flash messages ---------- */
+    
     .seller-compliance-page > .mb-4 {
         margin-bottom: 10px !important;
         border-radius: 12px !important;
         padding: 9px 11px !important;
     }
 
-    /* ---------- KPI summary ---------- */
+    
     .compliance-summary-grid {
         gap: 9px !important;
         margin-top: 11px !important;
@@ -237,7 +235,7 @@
         height: 14px !important;
     }
 
-    /* ---------- Workspace ---------- */
+    
     .compliance-workspace {
         margin-top: 11px !important;
         overflow: visible !important;
@@ -425,7 +423,7 @@
         box-shadow: none !important;
     }
 
-    /* ---------- Queue surfaces ---------- */
+    
     [data-compliance-panel] {
         margin-top: 10px !important;
         overflow: hidden;
@@ -613,7 +611,7 @@
         border-top: 1px solid #eee8df;
     }
 
-    /* ---------- Other queue cards/tables ---------- */
+    
     .compliance-card {
         border-radius: 11px !important;
         border-color: var(--sc-line) !important;
@@ -627,37 +625,27 @@
         box-shadow: 0 5px 15px rgba(61,43,22,.045) !important;
         transform: none !important;
     }
-
-    #compliancePanel-pending > div:first-child,
     #compliancePanel-warnings > div:first-child,
     #compliancePanel-suspended > div:first-child,
     #compliancePanel-messages > div:first-child {
         padding: 11px 14px !important;
         background: #faf9f6;
     }
-
-    #compliancePanel-pending > div:first-child p:first-child,
     #compliancePanel-warnings > div:first-child p:first-child,
     #compliancePanel-suspended > div:first-child p:first-child,
     #compliancePanel-messages > div:first-child p:first-child {
         font-size: 10px !important;
     }
-
-    #compliancePanel-pending > div:first-child p:last-child,
     #compliancePanel-warnings > div:first-child p:last-child,
     #compliancePanel-suspended > div:first-child p:last-child,
     #compliancePanel-messages > div:first-child p:last-child {
         font-size: 7.5px !important;
     }
-
-    #compliancePanel-pending > .grid,
     #compliancePanel-suspended > .grid,
     #compliancePanel-messages > .space-y-3 {
         gap: 9px !important;
         padding: 12px !important;
     }
-
-    #compliancePanel-pending article,
     #compliancePanel-suspended article,
     #compliancePanel-messages article {
         content-visibility: auto;
@@ -704,9 +692,7 @@
         min-height: 84px !important;
     }
 
-    /* ============================================================
-       SELLER REVIEW MODAL — CONTENT-ADAPTIVE ENTERPRISE LAYOUT
-       ============================================================ */
+    
     .seller-review-modal {
         background: rgba(28, 24, 20, .44) !important;
         backdrop-filter: none !important;
@@ -925,8 +911,8 @@
         border-radius: 11px !important;
         background: #fff !important;
         box-shadow: none !important;
-        content-visibility: auto;
-        contain-intrinsic-size: 540px;
+        
+        content-visibility: visible;
     }
 
     .seller-review-product-intro {
@@ -1235,7 +1221,7 @@
         box-shadow: none !important;
     }
 
-    /* ---------- Warning modal ---------- */
+    
     .warning-modal-backdrop {
         background: rgba(28,24,20,.44) !important;
         backdrop-filter: none !important;
@@ -1268,13 +1254,13 @@
         font-size: 7.8px !important;
     }
 
-    /* ---------- Performance containment ---------- */
+    
     #compliancePanel-warnings tbody tr {
         content-visibility: auto;
         contain-intrinsic-size: 44px;
     }
 
-    /* ---------- Laptop 100% zoom ---------- */
+    
     @media (max-height: 850px) and (min-width: 900px) {
         .compliance-page-title {
             font-size: 22px !important;
@@ -1299,7 +1285,7 @@
         }
     }
 
-    /* ---------- Tablet ---------- */
+    
     @media (max-width: 1023px) {
         .compliance-master-filter {
             grid-template-columns: minmax(0, 1fr) minmax(140px, .45fr);
@@ -1329,7 +1315,7 @@
         }
     }
 
-    /* ---------- Mobile ---------- */
+    
     @media (max-width: 639px) {
         .seller-compliance-page {
             padding-bottom: 14px;
@@ -1464,11 +1450,7 @@
         }
     }
 
-    /* ============================================================
-       SELLER COMPLIANCE — HEADER SCALE MATCH
-       Matches Platform Settings / Commissions / Complaints.
-       Visual-only; compliance logic and backend remain untouched.
-       ============================================================ */
+    
 
     .seller-compliance-page .compliance-page-header{
         display:flex !important;
@@ -1606,18 +1588,14 @@
     }
 
 
-    /* ============================================================
-       SELLER COMPLIANCE — FINAL SELLER VISUAL SYSTEM
-       Matches the final Admin Registrations / Users visual language.
-       Visual-only overrides: no routes, forms, IDs, data hooks, or JS.
-       ============================================================ */
+    
 
     .seller-compliance-page {
         max-width: 1800px !important;
         padding-bottom: 28px !important;
     }
 
-    /* ---------- Open document-style page header ---------- */
+    
     .seller-compliance-page .compliance-page-header {
         display: flex !important;
         align-items: flex-end !important;
@@ -1691,7 +1669,7 @@
         transform: none !important;
     }
 
-    /* ---------- KPI cards: static, premium, top-level depth ---------- */
+    
     .seller-compliance-page .compliance-summary-grid {
         gap: 10px !important;
         margin-top: 0 !important;
@@ -1743,7 +1721,7 @@
         box-shadow: none !important;
     }
 
-    /* ---------- Filter workspace ---------- */
+    
     .seller-compliance-page .compliance-workspace {
         margin-top: 12px !important;
         overflow: visible !important;
@@ -1820,7 +1798,7 @@
         transform: none !important;
     }
 
-    /* ---------- Main queue panels: top-level floating surfaces ---------- */
+    
     .seller-compliance-page [data-compliance-panel] {
         margin-top: 11px !important;
         overflow: hidden !important;
@@ -1877,7 +1855,7 @@
         padding: 10px 15px !important;
     }
 
-    /* Nested queue cards stay intentionally flat. */
+    
     .seller-compliance-page .compliance-card {
         border: 1px solid #e7e9ec !important;
         border-radius: 12px !important;
@@ -1891,8 +1869,6 @@
         box-shadow: none !important;
         transform: none !important;
     }
-
-    .seller-compliance-page #compliancePanel-pending > div:first-child,
     .seller-compliance-page #compliancePanel-warnings > div:first-child,
     .seller-compliance-page #compliancePanel-suspended > div:first-child,
     .seller-compliance-page #compliancePanel-messages > div:first-child {
@@ -1930,7 +1906,7 @@
         box-shadow: 0 0 0 3px rgba(217, 149, 0, .075) !important;
     }
 
-    /* ---------- Seller review modal: one focal elevated surface ---------- */
+    
     .seller-review-modal {
         background: rgba(24, 20, 15, .42) !important;
         backdrop-filter: blur(3px) !important;
@@ -2011,7 +1987,7 @@
         box-shadow: none !important;
     }
 
-    /* ---------- Warning modal follows the same focal-dialog hierarchy ---------- */
+    
     .warning-modal-backdrop {
         background: rgba(24, 20, 15, .42) !important;
         backdrop-filter: blur(3px) !important;
@@ -2029,7 +2005,7 @@
             0 8px 24px rgba(31, 24, 17, .07) !important;
     }
 
-    /* ---------- Responsive parity ---------- */
+    
     @media (max-width: 1023px) {
         .seller-compliance-page .compliance-master-filter {
             grid-template-columns: minmax(0, 1fr) minmax(150px, .45fr) !important;
@@ -2110,15 +2086,118 @@
         }
     }
 
+
+    
+    .seller-review-image-frame { position: relative; }
+    .seller-review-image-frame img[data-review-media] {
+        display: block !important;
+        opacity: 0;
+        visibility: visible !important;
+        transition: opacity .16s ease;
+    }
+    .seller-review-image-frame.is-ready img[data-review-media] { opacity: 1; }
+    .seller-review-image-frame.is-error img[data-review-media] { display: none !important; }
+    .seller-review-image-status {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: calc(100% - 28px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        background: #f8fafc;
+        color: #667085;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
+    }
+    .seller-review-product-image .seller-review-image-status,
+    .seller-review-product-summary .seller-review-image-status,
+    .compliance-card > .flex .seller-review-image-status { height: 100%; }
+    .seller-review-media-card .seller-review-image-status {
+        display: flex;
+        overflow: visible;
+        padding: 8px;
+        white-space: normal;
+        text-overflow: clip;
+    }
+    .seller-review-image-frame.is-ready .seller-review-image-status { display: none !important; }
+    .seller-review-image-frame.is-error .seller-review-image-status {
+        background: #fff7f5;
+        color: #9f4a41;
+    }
+
+    
+    .seller-review-media-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 11px;
+        border-top: 1px solid #eee9e3;
+        background: #fff;
+    }
+
+    .seller-review-media-card {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: #fff;
+        text-decoration: none;
+    }
+
+    .seller-review-media-card:hover,
+    .seller-review-media-card:focus-visible {
+        outline: 2px solid #d59617;
+        outline-offset: 1px;
+    }
+
+    .seller-review-media-card img {
+        display: block;
+        width: 100%;
+        height: 112px;
+        background: #f8fafc;
+    }
+
+    .seller-review-media-card span {
+        display: block;
+        overflow: hidden;
+        padding: 8px 10px;
+        color: #475467;
+        font-size: 10px;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    @media (min-width: 640px) {
+        .seller-review-media-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .seller-review-media-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+
+.seller-compliance-page .compliance-workspace{border:1px solid #e2e8f0!important;border-radius:14px!important;box-shadow:none!important;background:#fff!important}
+.seller-compliance-page .filter-dropdown-toggle,.seller-compliance-page .filter-dropdown-menu,.seller-compliance-page .filter-dropdown-option,.seller-compliance-page .master-filter-control{background:#fff!important;border-color:#e2e8f0!important;color:#334155!important}
+.seller-compliance-page .filter-dropdown-option:hover,.seller-compliance-page .filter-dropdown-option.is-selected{background:#f1f5f9!important;color:#0f172a!important}
+.seller-compliance-page .compliance-workspace-tabs{border-color:#e2e8f0!important;background:#fff!important}
+.compliance-pagination{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:13px 16px;border-top:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:11px}
+.compliance-pagination-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.compliance-pagination button{min-width:32px;min-height:32px;border:1px solid #e2e8f0;border-radius:7px;background:#fff;color:#334155;font-size:11px;font-weight:650;padding:0 8px}.compliance-pagination button:hover:not(:disabled){background:#f1f5f9}.compliance-pagination button[aria-current="page"]{background:#0f172a;color:#fff;border-color:#0f172a}.compliance-pagination button:disabled{opacity:.35;cursor:not-allowed}
+
 </style>
 
 <style>
-/* ============================================================
-   SELLER COMPLIANCE — ADMIN USERS PAGE UI PARITY
-   Visual-only final layer. Mirrors User Management summary cards,
-   free-floating summary icons, filter spacing, and table hierarchy.
-   Routes, forms, PHP data, IDs, data hooks, modals, and JS untouched.
-   ============================================================ */
+
 
 .seller-compliance-page {
     --users-surface: #ffffff;
@@ -2145,7 +2224,7 @@
     color: var(--users-text) !important;
 }
 
-/* ---------- Summary cards: same proportions as Admin Users ---------- */
+
 .seller-compliance-page .compliance-summary-grid {
     gap: 12px !important;
     margin-top: 0 !important;
@@ -2193,7 +2272,7 @@
     letter-spacing: -.035em !important;
 }
 
-/* Admin Users summary-icon design: icon only, no tile / box / circle. */
+
 .seller-compliance-page .compliance-summary-card > div > div:last-child {
     display: inline-flex !important;
     align-items: center !important;
@@ -2222,7 +2301,7 @@
     stroke-linejoin: round;
 }
 
-/* ---------- Bare User Management-style filter row ---------- */
+
 .seller-compliance-page .compliance-workspace {
     margin-top: 12px !important;
     overflow: visible !important;
@@ -2327,7 +2406,7 @@
     color: var(--users-gold-strong) !important;
 }
 
-/* ---------- Main queue surface: Admin Users table depth ---------- */
+
 .seller-compliance-page [data-compliance-panel] {
     position: relative !important;
     z-index: 1 !important;
@@ -2339,7 +2418,7 @@
     box-shadow: var(--users-surface-shadow) !important;
 }
 
-/* Flagged sellers is a CSS-grid table; make it visually identical to the Users table. */
+
 .seller-compliance-page .flagged-list-shell {
     overflow-x: auto !important;
     background: #fff !important;
@@ -2535,7 +2614,7 @@
     color: #fff !important;
 }
 
-/* Warning History is a real table: use the exact Users-table rhythm. */
+
 .seller-compliance-page #compliancePanel-warnings > .overflow-x-auto > table {
     min-width: 1060px !important;
     background: #fff !important;
@@ -2565,9 +2644,6 @@
 .seller-compliance-page #compliancePanel-warnings > .overflow-x-auto > table tbody tr:hover {
     background: #fafbfc !important;
 }
-
-/* Other queue headers use the same pale table-header band. */
-.seller-compliance-page #compliancePanel-pending > div:first-child,
 .seller-compliance-page #compliancePanel-warnings > div:first-child,
 .seller-compliance-page #compliancePanel-suspended > div:first-child,
 .seller-compliance-page #compliancePanel-messages > div:first-child {
@@ -2644,7 +2720,123 @@
 }
 </style>
 
-<div class="seller-compliance-page mx-auto w-full max-w-[1800px]">
+<style id="sellerComplianceOrdersParity">
+
+.seller-compliance-page.orders-ui-parity{--sc-gold:#C88912;--sc-gold-dark:#B47B0E;--sc-ink:#2F3742;--sc-line:#E5E7EB;--sc-soft:#F8FAFC;--users-gold:#C88912;--users-gold-strong:#B47B0E;--users-summary-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055);--users-surface-shadow:var(--users-summary-shadow);width:100%;max-width:1520px!important;margin:0 auto!important;padding-bottom:28px!important;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;color:#2F3742!important}
+.orders-ui-parity.seller-compliance-page .compliance-page-header{display:flex;align-items:flex-end!important;justify-content:space-between;gap:14px 24px!important;min-height:0!important;margin:0 0 20px!important;padding:0 0 14px!important;border:0!important;border-bottom:1px solid #E9EDF1!important;background:transparent!important}
+.orders-ui-parity.seller-compliance-page .compliance-page-header-main{gap:0!important}.orders-ui-parity.seller-compliance-page .compliance-page-icon{display:none!important}
+.orders-ui-parity.seller-compliance-page .compliance-eyebrow{font-size:10.5px!important;font-weight:800!important;line-height:1.4!important;letter-spacing:.14em!important;color:#A87316!important;text-transform:uppercase}
+.orders-ui-parity.seller-compliance-page .compliance-page-title{margin:6px 0 0!important;font-size:clamp(27px,2.3vw,31px)!important;font-weight:760!important;line-height:1.08!important;letter-spacing:-.04em!important;color:#2E343B!important}
+.orders-ui-parity.seller-compliance-page .compliance-title-base{color:#2E343B!important}.orders-ui-parity.seller-compliance-page .compliance-title-accent{color:#C88912!important}
+.orders-ui-parity.seller-compliance-page .compliance-page-subtitle{margin-top:6px!important;max-width:780px!important;font-size:11.5px!important;line-height:1.5!important;color:#8793A1!important}
+.orders-ui-parity .compliance-heading-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 24px;padding-right:2px}
+.orders-ui-parity.seller-compliance-page .compliance-account-control,.orders-ui-parity .compliance-heading-link{position:relative;display:inline-flex!important;align-items:center!important;gap:8px!important;min-height:0!important;height:auto!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#59636E!important;font-size:11.5px!important;font-weight:750!important;line-height:1.35!important;text-decoration:none!important;transform:none!important;white-space:nowrap}
+.orders-ui-parity.seller-compliance-page .compliance-account-control svg{display:none!important}.orders-ui-parity .compliance-heading-arrow{font-size:18px;font-weight:800;line-height:.8}
+.orders-ui-parity.seller-compliance-page .compliance-account-control:hover,.orders-ui-parity .compliance-heading-link:hover{color:#C88912!important;background:transparent!important}
+.orders-ui-parity .compliance-heading-actions a:focus-visible{outline:2px solid #C88912;outline-offset:4px}
+.orders-ui-parity.seller-compliance-page .compliance-summary-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important;margin:0!important}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card,.orders-ui-parity.seller-compliance-page .compliance-summary-card:hover{min-height:110px!important;padding:14px 16px!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#FFF!important;box-shadow:var(--users-summary-shadow)!important;transform:none!important;contain:none!important}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div{min-height:0!important;align-items:flex-start!important;gap:12px!important}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div>div:first-child{min-width:0;flex:1}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div>div:first-child>p:first-child{font-size:13px!important;font-weight:650!important;line-height:1.4!important;color:#637081!important}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div>div:first-child>p:nth-child(2){margin-top:7px!important;font-size:clamp(25px,1.9vw,30px)!important;line-height:1.12!important;font-weight:650!important;color:#1F2937!important;font-variant-numeric:tabular-nums}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div>div:last-child{position:static!important;flex:0 0 27px!important;width:27px!important;height:27px!important;min-width:27px!important;min-height:27px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.orders-ui-parity.seller-compliance-page .compliance-summary-card>div>div:last-child svg{width:27px!important;height:27px!important;min-width:27px!important;min-height:27px!important;stroke-width:1.8}
+.orders-ui-parity.seller-compliance-page .compliance-workspace{margin-top:20px!important;border:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+.orders-ui-parity.seller-compliance-page .compliance-workspace-tabs{padding:0!important;transform:none!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.orders-ui-parity.seller-compliance-page .compliance-master-filter{grid-template-columns:minmax(0,1fr) minmax(185px,210px) minmax(155px,185px) auto auto!important;align-items:center;gap:12px!important;transform:none!important}
+.orders-ui-parity.seller-compliance-page .master-filter-control,.orders-ui-parity.seller-compliance-page .filter-dropdown-toggle,.orders-ui-parity.seller-compliance-page .master-filter-apply,.orders-ui-parity.seller-compliance-page .master-filter-reset{height:48px!important;min-height:48px!important;border-radius:14px!important;transform:none!important;translate:none!important;margin-top:0!important;margin-bottom:0!important;box-shadow:none!important}
+.orders-ui-parity.seller-compliance-page .master-filter-control,.orders-ui-parity.seller-compliance-page .filter-dropdown-toggle{font-size:11.5px!important;font-weight:600!important;background:#FFF!important;border:1px solid #DCE2E8!important;color:#3F4B59!important}
+.orders-ui-parity.seller-compliance-page .master-filter-control{padding:0 14px 0 46px!important}.orders-ui-parity.seller-compliance-page .master-filter-control::placeholder{font-size:11.5px!important;color:#A0AAB6!important}
+.orders-ui-parity.seller-compliance-page .master-search>svg{left:16px!important;width:21px!important;height:21px!important;color:#97A3B2!important}
+.orders-ui-parity.seller-compliance-page .filter-dropdown-toggle{padding:0 16px!important}.orders-ui-parity.seller-compliance-page .filter-dropdown-chevron{width:17px!important;height:17px!important}
+.orders-ui-parity.seller-compliance-page .master-filter-control:focus,.orders-ui-parity.seller-compliance-page .filter-dropdown-toggle:focus-visible,.orders-ui-parity.seller-compliance-page .filter-dropdown.is-open .filter-dropdown-toggle{border-color:#C88912!important;box-shadow:0 0 0 1px rgba(200,137,18,.12)!important;outline:none!important}
+.orders-ui-parity.seller-compliance-page .filter-dropdown-menu{top:calc(100% + 8px)!important;padding:8px!important;border:1px solid #E2E8F0!important;border-radius:14px!important;background:#FFF!important;box-shadow:0 16px 32px rgba(15,23,42,.12),0 2px 6px rgba(15,23,42,.05)!important}
+.orders-ui-parity.seller-compliance-page .filter-dropdown-option{min-height:38px!important;padding:0 12px!important;border-radius:10px!important;font-size:11.5px!important;font-weight:600!important;color:#475569!important}
+.orders-ui-parity.seller-compliance-page .filter-dropdown-option:hover,.orders-ui-parity.seller-compliance-page .filter-dropdown-option.is-selected{background:#F8FAFC!important;color:#A56D0A!important}
+.orders-ui-parity.seller-compliance-page .master-filter-apply,.orders-ui-parity.seller-compliance-page .master-filter-reset{padding:0 18px!important;font-size:12px!important;font-weight:700!important}
+.orders-ui-parity.seller-compliance-page .master-filter-apply{border:1px solid #C88912!important;background:#C88912!important;color:#FFF!important}.orders-ui-parity.seller-compliance-page .master-filter-apply:hover{background:#B47B0E!important;border-color:#B47B0E!important}
+.orders-ui-parity.seller-compliance-page .master-filter-reset{min-width:86px!important;border:1px solid #DCE2E8!important;background:#FFF!important;color:#5F6D7C!important}
+.orders-ui-parity.seller-compliance-page [data-compliance-panel]{margin-top:20px!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#FFF!important;box-shadow:var(--users-surface-shadow)!important}
+.orders-ui-parity.seller-compliance-page [data-compliance-panel]>div.border-b{padding:21px 23px!important;border-color:#E9EDF1!important}
+.orders-ui-parity.seller-compliance-page [data-compliance-panel]>div.border-b>p:first-child{font-size:18px!important;font-weight:780!important;color:#2F3742!important}
+.orders-ui-parity.seller-compliance-page [data-compliance-panel]>div.border-b>p:nth-child(2){margin-top:4px!important;font-size:11.5px!important;line-height:1.5!important;color:#8B96A4!important}
+.orders-ui-parity .compliance-table-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:21px 23px;border-bottom:1px solid #E9EDF1}
+.orders-ui-parity .compliance-table-heading h2{font-size:18px;font-weight:780;margin:0;color:#2F3742}.orders-ui-parity .compliance-table-heading p{font-size:11.5px;color:#8B96A4;margin:4px 0 0}
+.orders-ui-parity.seller-compliance-page .flagged-list-shell{overflow-x:auto!important;scrollbar-width:thin}
+.orders-ui-parity.seller-compliance-page .flagged-table-head,.orders-ui-parity.seller-compliance-page .flagged-seller-row-modern>div{display:grid!important;grid-template-columns:42px minmax(250px,1.4fr) 140px 112px 112px 140px 48px!important;gap:12px!important;align-items:center!important;min-width:1060px!important;padding-left:16px!important;padding-right:16px!important}
+.orders-ui-parity.seller-compliance-page .flagged-table-head{min-height:48px!important;padding-top:13px!important;padding-bottom:13px!important;background:#F8FAFC!important;font-size:11px!important;font-weight:750!important;letter-spacing:.075em!important;line-height:1.4!important;color:#8591A0!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-row-modern>div>div{min-height:0!important;padding:17px 0!important;border:0!important;grid-column:auto!important;justify-content:flex-start!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-row-modern>div>div:last-child{justify-content:flex-end!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-row-modern:hover,.orders-ui-parity.seller-compliance-page .flagged-seller-row-modern.is-selected{background:#F8FAFC!important;box-shadow:none!important;transform:none!important}
+.orders-ui-parity.seller-compliance-page .flagged-mobile-label{display:none!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-name{font-size:12.5px!important;font-weight:750!important;line-height:1.5!important;color:#293440!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-email,.orders-ui-parity.seller-compliance-page .flagged-count-copy,.orders-ui-parity.seller-compliance-page .flagged-last-relative{font-size:11px!important;line-height:1.5!important;color:#8793A1!important}
+.orders-ui-parity.seller-compliance-page .flagged-seller-avatar{width:44px!important;height:44px!important;flex-basis:44px!important;border-radius:9px!important;background:#F8FAFC!important}
+.orders-ui-parity.seller-compliance-page .flagged-last-date{font-size:11.5px!important;font-weight:650!important;color:#293440!important}
+.orders-ui-parity.seller-compliance-page .flagged-risk-badge,.orders-ui-parity.seller-compliance-page .flagged-warning-badge{font-size:10.5px!important;font-weight:700!important;min-height:27px!important;padding:5px 10px!important;border-radius:999px!important}
+.orders-ui-parity.seller-compliance-page .flagged-review-button{width:32px!important;height:32px!important;min-width:32px!important;border:1px solid #DCE2E8!important;border-radius:10px!important;background:#FFF!important;color:#59636E!important;box-shadow:none!important}.orders-ui-parity.seller-compliance-page .flagged-review-button svg{width:17px!important;height:17px!important}
+.orders-ui-parity.seller-compliance-page #compliancePanel-warnings>div>table{min-width:1060px}.orders-ui-parity.seller-compliance-page #compliancePanel-warnings th{padding:13px 16px!important;font-size:11px!important;line-height:1.4;letter-spacing:.075em;background:#F8FAFC!important;color:#8591A0!important}
+.orders-ui-parity.seller-compliance-page #compliancePanel-warnings td{padding:17px 16px!important;font-size:11.5px!important;line-height:1.5;border-color:#EDF0F3!important}
+.orders-ui-parity .compliance-check{display:inline-flex;align-items:center;justify-content:center;min-width:20px;min-height:32px;cursor:pointer}
+.orders-ui-parity .compliance-check input[type=checkbox]{appearance:none!important;-webkit-appearance:none!important;display:inline-grid!important;place-items:center!important;width:18px!important;height:18px!important;min-width:18px!important;margin:0!important;padding:0!important;border:1.5px solid #CBD5E1!important;border-radius:5px!important;background:#FFF!important;cursor:pointer!important}
+.orders-ui-parity .compliance-check input::after{content:"";width:4px;height:8px;box-sizing:content-box;border:solid #FFF;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg);opacity:0}
+.orders-ui-parity .compliance-check input:checked,.orders-ui-parity .compliance-check input:indeterminate{background:#C88912!important;border-color:#C88912!important}.orders-ui-parity .compliance-check input:checked::after{opacity:1}.orders-ui-parity .compliance-check input:indeterminate::after{opacity:1;width:9px;height:2px;border:0;background:#FFF;transform:none}
+.orders-ui-parity .compliance-check input:focus-visible{outline:2px solid #C88912;outline-offset:3px}.orders-ui-parity .compliance-product-check{position:absolute;right:16px;top:14px;z-index:1}
+.orders-ui-parity .compliance-selection{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 19px;border-bottom:1px solid #E5E7EB;background:#F8FAFC;color:#465362;font-size:11.5px;font-weight:600}
+.orders-ui-parity .compliance-selection[hidden]{display:none!important}.orders-ui-parity .compliance-selection-actions{display:flex;gap:6px;flex-wrap:wrap}.orders-ui-parity .compliance-selection button{min-height:32px;padding:0 12px;border:1px solid #DCE2E8;border-radius:9px;background:#FFF;color:#465362;font:650 11px Poppins,sans-serif}.orders-ui-parity .compliance-selection button:first-child{background:#C88912;border-color:#C88912;color:#FFF}
+.orders-ui-parity .compliance-selection button:focus-visible,.orders-ui-parity .compliance-pagination button:focus-visible{outline:2px solid #C88912;outline-offset:3px}
+.orders-ui-parity.seller-compliance-page .compliance-pagination{display:flex;min-height:64px;padding:13px 20px!important;gap:12px;border-top:1px solid #E9EDF1;color:#7B8794;font-size:11px;font-weight:550;background:#FFF}
+.orders-ui-parity.seller-compliance-page .compliance-pagination-actions{gap:6px!important}.orders-ui-parity.seller-compliance-page .compliance-pagination button{display:grid;place-items:center;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:0!important;border:1px solid #E5E7EB!important;border-radius:10px!important;background:#FFF;color:#7B8794;font-size:11.5px!important}
+.orders-ui-parity.seller-compliance-page .compliance-pagination button[aria-current=page]{background:#C88912!important;border-color:#C88912!important;color:#FFF!important}.orders-ui-parity.seller-compliance-page .compliance-pagination button:disabled{opacity:.42!important;cursor:not-allowed}
+@media(max-width:1180px){.orders-ui-parity.seller-compliance-page .compliance-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:1100px){.orders-ui-parity.seller-compliance-page .compliance-master-filter{grid-template-columns:minmax(0,1fr) 185px 155px!important}.orders-ui-parity .master-search{grid-column:1/-1!important}}
+@media(max-width:900px){.orders-ui-parity.seller-compliance-page .compliance-master-filter{grid-template-columns:repeat(2,minmax(0,1fr))!important}.orders-ui-parity .master-search,.orders-ui-parity [data-compliance-queue-dropdown],.orders-ui-parity [data-risk-dropdown]{grid-column:1/-1!important}.orders-ui-parity .master-filter-apply,.orders-ui-parity .master-filter-reset{width:100%!important}}
+@media(max-width:767px){.orders-ui-parity.seller-compliance-page .compliance-page-header{flex-direction:column!important;align-items:flex-start!important;gap:10px!important}.orders-ui-parity.seller-compliance-page .compliance-page-title{font-size:25px!important}.orders-ui-parity.seller-compliance-page .compliance-eyebrow{font-size:9.5px!important}.orders-ui-parity .compliance-heading-actions{justify-content:flex-start}.orders-ui-parity.seller-compliance-page .compliance-account-control,.orders-ui-parity .compliance-heading-link{font-size:10.5px!important}}
+@media(max-width:540px){.orders-ui-parity.seller-compliance-page .compliance-summary-grid{grid-template-columns:1fr!important;gap:11px!important}.orders-ui-parity.seller-compliance-page .compliance-summary-card{min-height:100px!important}.orders-ui-parity .compliance-table-heading{align-items:flex-start;flex-direction:column;padding:17px 16px}.orders-ui-parity.seller-compliance-page .compliance-pagination{align-items:flex-start;flex-direction:column}.orders-ui-parity .compliance-pagination-actions{align-self:flex-end}.orders-ui-parity .compliance-selection{padding:10px 13px}.orders-ui-parity .compliance-selection-actions{width:100%}}
+@media(prefers-reduced-motion:reduce){.orders-ui-parity *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.orders-ui-parity [data-compliance-panel] [hidden]{display:none!important}
+.orders-ui-parity .compliance-filter-empty{padding:48px 20px;text-align:center;color:#8793A1;font-size:12px;line-height:1.6}
+
+
+.orders-ui-parity.seller-compliance-page .compliance-records-scroll{width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;background:#FFF}
+.orders-ui-parity.seller-compliance-page .compliance-records-scroll:focus-visible{outline:2px solid #C88912;outline-offset:-2px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table{width:100%;min-width:1060px;border-collapse:collapse;table-layout:fixed;text-align:left;font:400 11.5px/1.5 Poppins,ui-sans-serif,system-ui,sans-serif;color:#667383;background:#FFF}
+.orders-ui-parity.seller-compliance-page .compliance-records-table th{height:48px;padding:13px 16px;border:0;border-bottom:1px solid #E9EDF1;background:#F8FAFC;color:#8591A0;font-size:11px;font-weight:750;line-height:1.4;letter-spacing:.075em;text-transform:uppercase;vertical-align:middle}
+.orders-ui-parity.seller-compliance-page .compliance-records-table td{padding:17px 16px;border:0;border-bottom:1px solid #EDF0F3;background:transparent;font-size:11.5px;line-height:1.5;vertical-align:middle;overflow-wrap:anywhere}
+.orders-ui-parity.seller-compliance-page .compliance-records-table th:first-child,.orders-ui-parity.seller-compliance-page .compliance-records-table td:first-child{width:58px;padding-right:8px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table tbody tr{background:#FFF;transition:background-color .14s ease}
+.orders-ui-parity.seller-compliance-page .compliance-records-table tbody tr:hover,.orders-ui-parity.seller-compliance-page .compliance-records-table tbody tr.is-selected{background:#F8FAFC}
+.orders-ui-parity.seller-compliance-page .compliance-records-table tbody tr:last-child td{border-bottom:0}
+.orders-ui-parity.seller-compliance-page .compliance-records-table td>strong{display:block;color:#293440;font-size:12px;font-weight:650;line-height:1.5}
+.orders-ui-parity.seller-compliance-page .compliance-records-table td>small{display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#8793A1}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-date{width:145px;white-space:nowrap}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-date strong{font-size:11.5px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-text{white-space:pre-wrap;line-height:1.65}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-status{display:inline-flex;align-items:center;min-height:27px;padding:5px 10px;border:1px solid #DCE3EC;border-radius:999px;background:#F1F5F9;color:#475569;font-size:10.5px;font-weight:700;line-height:1.3;letter-spacing:0;white-space:nowrap}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .is-danger{background:#FEF2F2;border-color:#FECACA;color:#B91C1C}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .is-warning{background:#F8FAFC;border-color:#E2D3B1;color:#A56D0A}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .is-purple{background:#F5F3FF;border-color:#DDD6FE;color:#6D28D9}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .is-blue{background:#EFF6FF;border-color:#BFDBFE;color:#1D4ED8}
+.orders-ui-parity.seller-compliance-page .compliance-records-messages th:nth-child(2){width:220px}.orders-ui-parity.seller-compliance-page .compliance-records-messages th:nth-child(3){width:150px}.orders-ui-parity.seller-compliance-page .compliance-records-messages th:last-child{width:150px}
+.orders-ui-parity.seller-compliance-page .compliance-records-suspended{min-width:1180px}.orders-ui-parity.seller-compliance-page .compliance-records-suspended th:nth-child(2){width:220px}.orders-ui-parity.seller-compliance-page .compliance-records-suspended th:nth-child(3){width:125px}.orders-ui-parity.seller-compliance-page .compliance-records-suspended th:nth-child(4){width:100px}.orders-ui-parity.seller-compliance-page .compliance-records-suspended th:nth-child(5){width:150px}.orders-ui-parity.seller-compliance-page .compliance-records-suspended th:last-child{width:175px}
+.orders-ui-parity.seller-compliance-page .compliance-records-warnings th:nth-child(2){width:220px}.orders-ui-parity.seller-compliance-page .compliance-records-warnings th:nth-child(3){width:105px}.orders-ui-parity.seller-compliance-page .compliance-records-warnings th:last-child{width:150px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-message-copy{margin:0;color:#526173;font-size:11.5px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form{display:flex;align-items:center;gap:8px;margin:10px 0 0}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-action form{margin:0}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form input{height:40px;min-height:40px;min-width:0;flex:1;padding:0 12px;border:1px solid #DCE2E8;border-radius:10px;background:#FFF;color:#3F4B59;font:400 11.5px Poppins,sans-serif;box-shadow:none}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form button{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:auto;min-height:36px;height:auto;padding:9px 12px;border:1px solid #DCE2E8;border-radius:10px;background:#FFF;color:#59636E;font:650 11px/1.4 Poppins,sans-serif;white-space:nowrap;box-shadow:none;transform:none}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-message form button{border-color:#C88912;background:#C88912;color:#FFF}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form button:hover{border-color:#C88912;color:#A56D0A;background:#F8FAFC}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-cell-message form button:hover{background:#B47B0E;color:#FFF}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form button svg{width:15px;height:15px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table form input:focus,.orders-ui-parity.seller-compliance-page .compliance-records-table form button:focus-visible{outline:2px solid #C88912;outline-offset:2px}
+.orders-ui-parity.seller-compliance-page .compliance-records-table .compliance-records-empty{padding:64px 20px!important;text-align:center;color:#9CA3AF;background:#FFF!important}
+.orders-ui-parity .compliance-records-empty svg{display:block;margin:0 auto;background:transparent;border:0;box-shadow:none}.orders-ui-parity .compliance-records-empty p{margin:14px 0 0;font-size:13px;color:#667383}
+
+</style>
+
+<div class="seller-compliance-page orders-ui-parity mx-auto w-full max-w-[1800px]">
 
     {{-- FLASH MESSAGES --}}
     @if (session('success'))
@@ -2696,12 +2888,12 @@
                     <span class="compliance-title-accent">Compliance</span>
                 </h2>
 
-                <p class="compliance-page-subtitle">
-                    Review flagged listings, seller warnings, suspensions, and compliance appeals from one moderation workspace.
-                </p>
+             
             </div>
         </div>
 
+        <div class="compliance-heading-actions">
+            <a href="{{ route('admin.product-reviews') }}" wire:navigate class="compliance-heading-link">Products for Review <span class="compliance-heading-arrow" aria-hidden="true">&gt;</span></a>
         <a
             href="{{ route('admin.seller-accounts.control') }}"
             wire:navigate
@@ -2712,8 +2904,9 @@
                 <path d="M5 20a7 7 0 0 1 14 0"></path>
                 <path d="M18 7h4"></path>
             </svg>
-            Seller Account Control
+            Seller Account Control <span class="compliance-heading-arrow" aria-hidden="true">&gt;</span>
         </a>
+        </div>
     </section>
 
     {{-- SUMMARY --}}
@@ -2793,7 +2986,6 @@
                 <div class="filter-dropdown" data-compliance-queue-dropdown>
                     <select id="complianceViewFilter" class="sr-only" aria-label="Compliance queue" tabindex="-1">
                         <option value="flagged">Flagged Sellers ({{ $flaggedSellerCount }})</option>
-                        <option value="pending">Product Review ({{ $reviewProducts->count() }})</option>
                         <option value="warnings">Warning History ({{ $recentWarnings->count() }})</option>
                         <option value="suspended">Suspended Sellers ({{ $suspendedSellers->count() }})</option>
                         <option value="messages">Appeals / Messages ({{ $complianceMessages->count() }})</option>
@@ -2817,7 +3009,6 @@
                     <div class="filter-dropdown-menu" data-compliance-queue-menu role="listbox">
                         @foreach([
                             'flagged' => 'Flagged Sellers (' . $flaggedSellerCount . ')',
-                            'pending' => 'Product Review (' . $reviewProducts->count() . ')',
                             'warnings' => 'Warning History (' . $recentWarnings->count() . ')',
                             'suspended' => 'Suspended Sellers (' . $suspendedSellers->count() . ')',
                             'messages' => 'Appeals / Messages (' . $complianceMessages->count() . ')',
@@ -2910,9 +3101,11 @@
         {{-- FLAGGED SELLERS --}}
         <div id="compliancePanel-flagged" data-compliance-panel>
             <div class="flagged-table-wrap">
+                <div class="compliance-table-heading"><div><h2>Flagged Seller Records</h2><p>Flagged listings and seller compliance activity.</p></div></div>
                 {{-- DESKTOP COLUMN LABELS --}}
                 <div class="flagged-list-shell">
                     <div class="flagged-table-head hidden border-b border-[#eee8df] bg-[#faf9f6] px-5 py-3.5 text-xs font-semibold xl:grid xl:grid-cols-[minmax(280px,1.7fr)_140px_120px_130px_170px_72px] xl:gap-4">
+                        <label class="compliance-check"><input type="checkbox" data-compliance-select-all aria-label="Select sellers on this page"></label>
                         <p>Seller</p>
                         <p>Flagged Listings</p>
                         <p>Warnings</p>
@@ -2976,6 +3169,7 @@
                     >
                         <div class="grid grid-cols-1 xl:grid-cols-[minmax(280px,1.7fr)_140px_120px_130px_170px_72px] xl:items-center xl:gap-4">
 
+                            <label class="compliance-check"><input type="checkbox" data-compliance-select aria-label="Select {{ $sellerName }}"></label>
                             {{-- SELLER --}}
                             <div class="flex min-w-0 items-center gap-3.5 border-b border-[#f0ebe4] px-4 py-4 xl:border-b-0 xl:px-5">
                                 <div class="flagged-seller-avatar grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-bold">
@@ -3219,6 +3413,7 @@
                                                 }
                                             }
 
+                                            $productReviewMedia = $reviewMedia->get($product->id, ['cover_url' => null, 'images' => []]);
                                             $productRisk = strtolower((string) ($product->screening_risk ?: 'review'));
 
                                             $productRiskClass = match ($productRisk) {
@@ -3246,23 +3441,27 @@
                                             {{-- PRODUCT SUMMARY --}}
                                             <div class="seller-review-product-summary flex flex-col gap-4 p-4 sm:flex-row">
                                                 <div class="seller-review-product-image h-[118px] w-full shrink-0 overflow-hidden rounded-[14px] border border-[#ebe4da] bg-[#faf8f4] sm:w-[118px]">
-                                                    @if($product->image_path)
-                                                        <img
-                                                            src="{{ route('seller.products.image', $product) }}"
-                                                            alt="{{ $product->name }}"
-                                                            width="108"
-                                                            height="108"
-                                                            loading="lazy"
-                                                            decoding="async"
-                                                            fetchpriority="low"
-                                                            class="h-full w-full object-cover"
-                                                        >
+                                                    @if($productReviewMedia['cover_url'])
+                                                        <a href="{{ $productReviewMedia['cover_url'] }}" target="_blank" rel="noopener noreferrer" class="seller-review-image-frame block h-full w-full" data-review-image-frame aria-label="Open full-size cover image for {{ $product->name }}">
+                                                            <img
+                                                                data-review-media
+                                                                data-review-src="{{ $productReviewMedia['cover_url'] }}"
+                                                                alt="Cover image for {{ $product->name }}"
+                                                                width="118"
+                                                                height="118"
+                                                                loading="eager"
+                                                                decoding="async"
+                                                                class="h-full w-full object-contain"
+                                                            >
+                                                            <span class="seller-review-image-status" data-review-image-status>Loading photo…</span>
+                                                        </a>
                                                     @else
-                                                        <div class="grid h-full w-full place-items-center text-[#a79d91]">
-                                                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.6">
+                                                        <div class="flex h-full w-full flex-col items-center justify-center gap-1 text-[#a79d91]" title="No image file is available for this product">
+                                                            <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                                                                 <rect x="3" y="4" width="18" height="16" rx="2"></rect>
                                                                 <path d="m4 17 5-5 4 4 2-2 5 4"></path>
                                                             </svg>
+                                                            <span class="text-[8px]">No photo</span>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -3281,6 +3480,9 @@
                                                             <p class="mt-1 text-[8px] text-[#81786c]">
                                                                 {{ $product->category }}{{ $product->brand ? ' · ' . $product->brand : '' }}
                                                             </p>
+                                                            @if(($product->seller?->store_status ?: 'open') !== 'open')
+                                                                <p class="mt-1 text-[8px] text-[#a8731f]">Seller store is paused — approved listings stay hidden from Buyers.</p>
+                                                            @endif
                                                         </div>
 
                                                         <span class="rounded-full border px-2.5 py-1 text-[7px] font-bold {{ $productRiskClass }}">
@@ -3311,6 +3513,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {{-- Every available listing photo is inspectable before moderation. --}}
+                                            <div class="seller-review-subsection border-t border-[#eee8df] bg-[#faf9f6] px-4 py-3">
+                                                <p class="text-[8px] font-bold text-[#514a42]">Product images for review</p>
+                                                <p class="mt-0.5 text-[7px] text-[#91887d]">Cover, gallery, variant images, and size guide. Select an image to inspect it in full resolution.</p>
+                                            </div>
+                                            @if(!empty($productReviewMedia['images']))
+                                                <div class="seller-review-media-grid">
+                                                    @foreach($productReviewMedia['images'] as $media)
+                                                        <a href="{{ $media['url'] }}" target="_blank" rel="noopener noreferrer" class="seller-review-media-card seller-review-image-frame" data-review-image-frame title="Open {{ $media['label'] }} in full resolution">
+                                                            <img data-review-media data-review-src="{{ $media['url'] }}" alt="{{ $media['label'] }} for {{ $product->name }}" loading="eager" decoding="async" style="object-fit: {{ $media['fit'] }};">
+                                                            <span class="seller-review-image-status" data-review-image-status>Loading photo…</span>
+                                                            <span>{{ $media['label'] }}</span>
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <p class="border-t border-[#eee9e3] bg-white px-4 py-3 text-[9px] text-[#8f8173]">No uploaded image files were found for this listing. Verify the seller's uploads before approving.</p>
+                                            @endif
 
                                             <div class="seller-review-subsection border-t border-[#eee8df] bg-[#faf9f6] px-4 py-3">
                                                 <p class="text-[8px] font-bold text-[#514a42]">Screening Insights</p>
@@ -3629,13 +3850,11 @@
                     </div>
                 @empty
                     <div class="px-5 py-12 text-center">
-                        <div class="mx-auto grid h-10 w-10 place-items-center rounded-full border border-[#e9e1d7] bg-[#faf9f6] text-[#91887d]">
-                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" style="display:block;width:72px;height:72px;margin:0 auto;color:#9CA3AF;background:transparent;border:0;border-radius:0;box-shadow:none" fill="none" stroke="currentColor" stroke-width="1.6">
                                 <path d="M12 9v4"></path>
                                 <path d="M12 17h.01"></path>
                                 <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path>
                             </svg>
-                        </div>
 
                         <p class="mt-3 text-sm font-bold text-[#514a42]">No flagged sellers</p>
                         <p class="mt-1 text-xs text-[#91887d]">Sellers with flagged listings will appear here.</p>
@@ -3677,253 +3896,71 @@
             </div>
         </div>
 
-        {{-- PRODUCT REVIEW — ALL PENDING + FLAGGED SUBMISSIONS --}}
-        <div id="compliancePanel-pending" data-compliance-panel hidden>
-            <div class="border-b border-[#eee8df] px-5 py-4">
-                <p class="text-[11px] font-bold text-[#302a24]">Product Review Queue</p>
-                <p class="mt-1 text-[8px] text-[#8d8478]">All active seller listings awaiting an administrator decision, including pending and screening-flagged submissions.</p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-3 p-4 sm:p-5 xl:grid-cols-2">
-                @forelse($reviewProducts as $product)
-                    @php
-                        $pendingRawSpecs = $product->specifications ?? [];
-                        $pendingSpecs = is_array($pendingRawSpecs)
-                            ? $pendingRawSpecs
-                            : (json_decode((string) $pendingRawSpecs, true) ?: []);
-                        $pendingVariants = $complianceVariantGroups->get($product->id, collect());
-
-                        $reviewStatus = strtolower((string) ($product->moderation_status ?: 'pending'));
-                        $reviewIsFlagged = $reviewStatus === 'flagged';
-
-                        $reviewStatusClass = $reviewIsFlagged
-                            ? 'border-[#ebcaca] bg-[#fff3f3] text-[#a64f4f]'
-                            : 'border-[#e8ddc4] bg-[#fff8e9] text-[#9b6a14]';
-
-                        $reviewStatusLabel = $reviewIsFlagged
-                            ? 'FLAGGED'
-                            : ($product->requires_re_review ? 'RE-REVIEW' : 'PENDING');
-
-                        $reviewRisk = strtolower((string) ($product->screening_risk ?: 'review'));
-
-                        $reviewRiskClass = match ($reviewRisk) {
-                            'high' => 'border-[#efd5d5] bg-[#fff5f5] text-[#a65d5d]',
-                            'medium' => 'border-[#eee0c5] bg-[#fff8ec] text-[#a8731f]',
-                            'low' => 'border-[#d7e7dd] bg-[#f3f8f5] text-[#56816a]',
-                            default => 'border-[#dfe4ea] bg-[#f5f7f9] text-[#65798b]',
-                        };
-                    @endphp
-                    <article
-                        class="compliance-card rounded-[17px] border border-[#ebe4da] bg-white p-4"
-                        data-review-product-id="{{ $product->id }}"
-                        data-review-product-status="{{ $reviewStatus }}"
-                    >
-                        <div class="flex gap-3">
-                            <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[#e9e2d8] bg-[#faf8f4]">
-                                @if($product->image_path)
-                                    <img
-                                        src="{{ route('seller.products.image', $product) }}"
-                                        alt="{{ $product->name }}"
-                                        width="64"
-                                        height="64"
-                                        loading="lazy"
-                                        decoding="async"
-                                        fetchpriority="low"
-                                        class="h-full w-full object-cover"
-                                    >
-                                @else
-                                    <div class="grid h-full w-full place-items-center text-[#a79d91]"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="m4 17 5-5 4 4 2-2 5 4"></path></svg></div>
-                                @endif
-                            </div>
-
-                            <div class="seller-review-product-main min-w-0 flex-1">
-                                <div class="flex flex-wrap items-start justify-between gap-2">
-                                    <div>
-                                        <h3 class="text-[10px] font-bold text-[#3b352e]">{{ $product->name }}</h3>
-                                        <p class="mt-1 text-[8px] text-[#81786c]">{{ $product->seller->store_name ?: $product->seller->email }}{{ $product->brand ? ' · ' . $product->brand : '' }}</p>
-                                    </div>
-
-                                    <div class="flex flex-wrap items-center justify-end gap-1.5">
-                                        <span class="rounded-full border px-2 py-1 text-[7px] font-bold {{ $reviewStatusClass }}">
-                                            {{ $reviewStatusLabel }}
-                                        </span>
-
-                                        <span class="rounded-full border px-2 py-1 text-[7px] font-bold {{ $reviewRiskClass }}">
-                                            {{ strtoupper($reviewRisk === 'review' ? 'REVIEW' : $reviewRisk) }} RISK
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 flex flex-wrap items-center gap-2 text-[8px] text-[#756d63]">
-                                    <span>{{ $product->category }}</span>
-                                    <span>·</span>
-                                    <span class="font-semibold text-[#3b352e]">₱{{ number_format((float) $product->price, 2) }}</span>
-                                    @if($pendingVariants->isNotEmpty())
-                                        <span class="rounded-full border border-[#ddd8e8] bg-[#f8f5fb] px-2 py-1 text-[7px] font-semibold text-[#77698a]">{{ $pendingVariants->count() }} variants</span>
-                                    @endif
-                                    @if(!empty($pendingSpecs))
-                                        <span class="rounded-full border border-[#e4ddd3] bg-[#faf8f4] px-2 py-1 text-[7px] font-semibold text-[#7d7368]">{{ count($pendingSpecs) }} specs</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 grid grid-cols-1 gap-2 border-t border-[#f0ebe4] pt-3 sm:grid-cols-3">
-                            <form method="POST" action="{{ route('admin.compliance.products.approve', $product) }}">
-                                @csrf
-                                <button type="submit" class="seller-action-btn seller-action-approve inline-flex w-full items-center justify-center">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="m7 12 3 3 7-7"></path>
-                                    </svg>
-                                    Approve
-                                </button>
-                            </form>
-
-                            <form method="POST" action="{{ route('admin.compliance.products.reject', $product) }}">
-                                @csrf
-                                <input type="hidden" name="reason" value="Product rejected after administrator review.">
-                                <button type="submit" class="seller-action-btn seller-action-reject inline-flex w-full items-center justify-center">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="m8 8 8 8"></path>
-                                        <path d="m16 8-8 8"></path>
-                                    </svg>
-                                    Reject
-                                </button>
-                            </form>
-
-                            <button
-                                type="button"
-                                data-warning-open
-                                data-product-id="{{ $product->id }}"
-                                data-product-name="{{ $product->name }}"
-                                data-seller-name="{{ $product->seller?->store_name ?: ($product->seller?->email ?: 'Seller') }}"
-                                data-warning-count="{{ (int) ($product->seller?->warning_count ?? 0) }}"
-                                class="seller-action-btn seller-action-warn inline-flex w-full items-center justify-center"
-                            >
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-                                    <circle cx="12" cy="12" r="9"></circle>
-                                    <path d="M12 7v6"></path>
-                                    <path d="M12 17h.01"></path>
-                                </svg>
-                                Issue Warning
-                            </button>
-                        </div>
-                    </article>
-                @empty
-                    <div class="col-span-full rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center text-[8px] text-[#91887d]">No products are currently awaiting review.</div>
-                @endforelse
-            </div>
-        </div>
-
-        {{-- WARNING HISTORY --}}
         <div id="compliancePanel-warnings" data-compliance-panel hidden>
-            <div class="border-b border-[#eee8df] px-5 py-4">
-                <p class="text-[11px] font-bold text-[#302a24]">Seller Warning History</p>
-                <p class="mt-1 text-[8px] text-[#8d8478]">Every warning is retained. Warning #3 automatically triggers a 30-day seller suspension.</p>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full min-w-[900px] text-left">
-                    <thead>
-                        <tr class="border-b border-[#eee8df] bg-[#fcfaf7] text-[8px] font-bold uppercase tracking-[.06em] text-[#948b7f]">
-                            <th class="px-5 py-4">Seller</th>
-                            <th class="px-5 py-4">Warning</th>
-                            <th class="px-5 py-4">Product</th>
-                            <th class="px-5 py-4">Reason</th>
-                            <th class="px-5 py-4">Issued</th>
+            <div class="border-b border-[#E9EDF1] px-5 py-4"><p>Seller Warning History</p><p>Every warning is retained. Warning #3 automatically triggers a 30-day seller suspension.</p></div>
+            <div class="compliance-records-scroll" tabindex="0" aria-label="Seller Warning History; scroll horizontally for all columns">
+                <table class="compliance-records-table compliance-records-warnings">
+                    <thead><tr><th scope="col"><label class="compliance-check"><input type="checkbox" data-compliance-select-all aria-label="Select records on this page"></label></th><th scope="col">Seller</th><th scope="col">Warning</th><th scope="col">Product</th><th scope="col">Reason</th><th scope="col">Issued</th></tr></thead>
+                    <tbody>
+                    @forelse($recentWarnings as $warning)
+                        <tr data-compliance-record>
+                            <td><label class="compliance-check"><input type="checkbox" data-compliance-select aria-label="Select warning {{ $warning->id }}"></label></td>
+                            <td><strong>{{ $warning->seller?->store_name ?: ($warning->seller?->email ?: 'Seller unavailable') }}</strong><small>{{ $warning->seller?->email }}</small></td>
+                            <td><span class="compliance-status {{ $warning->warning_number >= 3 ? 'is-danger' : 'is-warning' }}">{{ $warning->warning_number }} / 3</span></td>
+                            <td class="compliance-cell-product">{{ $warning->product?->name ?? 'Product removed' }}</td>
+                            <td class="compliance-cell-text">{{ $warning->reason }}</td>
+                            <td class="compliance-cell-date"><strong>{{ $warning->issued_at?->format('M d, Y') }}</strong><small>{{ $warning->issued_at?->format('h:i A') }}</small></td>
                         </tr>
-                    </thead>
-                    <tbody class="text-[9px]">
-                        @forelse($recentWarnings as $warning)
-                            <tr class="border-b border-[#f1ece5] last:border-0">
-                                <td class="px-5 py-4 font-semibold text-[#3b352e]">{{ $warning->seller->store_name ?: $warning->seller->email }}</td>
-                                <td class="px-5 py-4">
-                                    <span class="rounded-full border px-2.5 py-1 text-[7px] font-bold {{ $warning->warning_number >= 3 ? 'border-[#ecdada] bg-[#fff3f3] text-[#a65d5d]' : 'border-[#eee0c5] bg-[#fff8ec] text-[#a8731f]' }}">{{ $warning->warning_number }} / 3</span>
-                                </td>
-                                <td class="px-5 py-4 text-[#71695f]">{{ $warning->product?->name ?? 'Product removed' }}</td>
-                                <td class="px-5 py-4 text-[#71695f]">{{ $warning->reason }}</td>
-                                <td class="px-5 py-4 text-[#91887d]">{{ $warning->issued_at->format('M d, Y h:i A') }}</td>
-                            </tr>
-                        @empty
-                            <tr><td colspan="5" class="px-5 py-10 text-center text-[8px] text-[#91887d]">No warnings issued yet.</td></tr>
-                        @endforelse
+                    @empty
+                        <tr><td colspan="6" class="compliance-records-empty"><svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><p>No warnings issued yet.</p></td></tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-
-        {{-- SUSPENDED SELLERS --}}
         <div id="compliancePanel-suspended" data-compliance-panel hidden>
-            <div class="border-b border-[#eee8df] px-5 py-4">
-                <p class="text-[11px] font-bold text-[#302a24]">Suspended Sellers</p>
-                <p class="mt-1 text-[8px] text-[#8d8478]">Review active suspensions and lift them manually when appropriate.</p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-3 p-4 sm:p-5 xl:grid-cols-2">
-                @forelse($suspendedSellers as $seller)
-                    <article class="compliance-card rounded-[17px] border border-[#e5dde9] bg-white p-4">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="flex items-start gap-3">
-                                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#f7f3f9] text-[#806992]">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="m8 8 8 8"></path></svg>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] font-bold text-[#312b25]">{{ $seller->store_name ?: $seller->email }}</p>
-                                    <p class="mt-1 text-[8px] text-[#81786c]">{{ $seller->email }}</p>
-                                </div>
-                            </div>
-
-                            <span class="rounded-full border border-[#e4dce9] bg-[#f7f3f9] px-2.5 py-1 text-[7px] font-bold text-[#806992]">SUSPENDED</span>
-                        </div>
-
-                        <div class="mt-4 grid grid-cols-2 gap-2">
-                            <div class="seller-review-product-metric rounded-xl bg-[#faf9f6] p-3"><p class="text-[7px] text-[#958c80]">Warnings</p><p class="mt-1 text-[10px] font-bold text-[#a65d5d]">{{ $seller->warning_count }} / 3</p></div>
-                            <div class="seller-review-product-metric rounded-xl bg-[#faf9f6] p-3"><p class="text-[7px] text-[#958c80]">Suspended Until</p><p class="mt-1 text-[9px] font-bold text-[#3d3730]">{{ $seller->suspended_until?->format('M d, Y') }}</p></div>
-                        </div>
-
-                        <p class="mt-3 text-[8px] leading-4 text-[#756d63]">{{ $seller->suspension_reason }}</p>
-
-                        <form method="POST" action="{{ route('admin.compliance.sellers.unsuspend', $seller) }}" class="mt-4">
+            <div class="border-b border-[#E9EDF1] px-5 py-4"><p>Suspended Sellers</p><p>Review active suspensions and lift them manually when appropriate.</p></div>
+            <div class="compliance-records-scroll" tabindex="0" aria-label="Suspended Sellers; scroll horizontally for all columns">
+                <table class="compliance-records-table compliance-records-suspended">
+                    <thead><tr><th scope="col"><label class="compliance-check"><input type="checkbox" data-compliance-select-all aria-label="Select records on this page"></label></th><th scope="col">Seller</th><th scope="col">Status</th><th scope="col">Warnings</th><th scope="col">Suspended Until</th><th scope="col">Reason</th><th scope="col">Action</th></tr></thead>
+                    <tbody>
+                    @forelse($suspendedSellers as $seller)
+                        <tr data-compliance-record>
+                            <td><label class="compliance-check"><input type="checkbox" data-compliance-select aria-label="Select {{ $seller->store_name ?: $seller->email }}"></label></td>
+                            <td><strong>{{ $seller->store_name ?: $seller->email }}</strong><small>{{ $seller->email }}</small></td>
+                            <td><span class="compliance-status is-purple">Suspended</span></td>
+                            <td><span class="compliance-status is-danger">{{ $seller->warning_count }} / 3</span></td>
+                            <td class="compliance-cell-date"><strong>{{ $seller->suspended_until?->format('M d, Y') ?: '—' }}</strong></td>
+                            <td class="compliance-cell-text">{{ $seller->suspension_reason }}</td>
+                            <td class="compliance-cell-action"><form method="POST" action="{{ route('admin.compliance.sellers.unsuspend', $seller) }}" class="mt-4">
                             @csrf
                             <button class="inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-[#d8cde0] bg-white text-[8px] font-bold text-[#735f84] transition hover:bg-[#f5f1f7]">
                                 <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>
                                 Lift Suspension
                             </button>
-                        </form>
-                    </article>
-                @empty
-                    <div class="col-span-full rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center text-[8px] text-[#91887d]">No active suspensions.</div>
-                @endforelse
+                        </form></td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="7" class="compliance-records-empty"><svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><p>No active suspensions.</p></td></tr>
+                    @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        {{-- MESSAGES --}}
         <div id="compliancePanel-messages" data-compliance-panel hidden>
-            <div class="border-b border-[#eee8df] px-5 py-4">
-                <p class="text-[11px] font-bold text-[#302a24]">Compliance Appeals & Messages</p>
-                <p class="mt-1 text-[8px] text-[#8d8478]">Review seller messages and send a direct compliance response.</p>
-            </div>
-
-            <div class="space-y-3 p-4 sm:p-5">
-                @forelse($complianceMessages as $message)
-                    <article class="rounded-[16px] border {{ $message->sender_role === 'seller' ? 'border-[#e5ddd1] bg-[#fcfbf8]' : 'border-[#eadfc9] bg-[#fffaf2]' }} p-4">
-                        <div class="flex flex-wrap items-start justify-between gap-3">
-                            <div class="flex items-start gap-3">
-                                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white text-[#7e7468] shadow-sm">
-                                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                </div>
-                                <div>
-                                    <p class="text-[9px] font-bold text-[#403a33]">{{ $message->seller->store_name ?: $message->seller->email }}</p>
-                                    <p class="mt-1 text-[7px] uppercase tracking-[.08em] text-[#9b9287]">{{ $message->sender_role === 'seller' ? 'Seller message' : 'Admin message' }}</p>
-                                </div>
-                            </div>
-                            <span class="text-[7px] text-[#91887d]">{{ $message->created_at->format('M d, Y h:i A') }}</span>
-                        </div>
-
-                        <p class="mt-3 text-[9px] leading-5 text-[#625a50]">{{ $message->message }}</p>
-
-                        @if($message->sender_role === 'seller')
-                            <form method="POST" action="{{ route('admin.compliance.sellers.reply', $message->seller) }}" class="mt-4 flex flex-col gap-2 sm:flex-row">
+            <div class="border-b border-[#E9EDF1] px-5 py-4"><p>Compliance Appeals & Messages</p><p>Review seller messages and send a direct compliance response.</p></div>
+            <div class="compliance-records-scroll" tabindex="0" aria-label="Compliance Appeals & Messages; scroll horizontally for all columns">
+                <table class="compliance-records-table compliance-records-messages">
+                    <thead><tr><th scope="col"><label class="compliance-check"><input type="checkbox" data-compliance-select-all aria-label="Select records on this page"></label></th><th scope="col">Seller</th><th scope="col">Sender</th><th scope="col">Message / Reply</th><th scope="col">Date</th></tr></thead>
+                    <tbody>
+                    @forelse($complianceMessages as $message)
+                        <tr data-compliance-record>
+                            <td><label class="compliance-check"><input type="checkbox" data-compliance-select aria-label="Select message {{ $message->id }}"></label></td>
+                            <td><strong>{{ $message->seller?->store_name ?: ($message->seller?->email ?: 'Seller unavailable') }}</strong><small>{{ $message->seller?->email }}</small></td>
+                            <td><span class="compliance-status {{ $message->sender_role === 'seller' ? 'is-blue' : 'is-neutral' }}">{{ $message->sender_role === 'seller' ? 'Seller message' : 'Admin message' }}</span></td>
+                            <td class="compliance-cell-message"><p class="compliance-message-copy">{{ $message->message }}</p>
+                                @if($message->sender_role === 'seller')
+<form method="POST" action="{{ route('admin.compliance.sellers.reply', $message->seller) }}" class="mt-4 flex flex-col gap-2 sm:flex-row">
                                 @csrf
                                 <input name="message" required placeholder="Reply to seller..." class="compliance-control h-10 flex-1 rounded-xl border border-[#e6dfd5] px-3 text-[8px]">
                                 <button class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#c99128] px-4 text-[8px] font-bold text-white transition hover:bg-[#b88020]">
@@ -3931,13 +3968,18 @@
                                     Send Reply
                                 </button>
                             </form>
-                        @endif
-                    </article>
-                @empty
-                    <div class="rounded-[18px] border border-dashed border-[#ded5c9] bg-[#fcfbf8] p-10 text-center text-[8px] text-[#91887d]">No compliance messages yet.</div>
-                @endforelse
+                                @endif
+                            </td>
+                            <td class="compliance-cell-date"><strong>{{ $message->created_at?->format('M d, Y') }}</strong><small>{{ $message->created_at?->format('h:i A') }}</small></td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="5" class="compliance-records-empty"><svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><p>No compliance messages yet.</p></td></tr>
+                    @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
+
     </section>
 </div>
 
@@ -4001,6 +4043,44 @@
 @push('scripts')
 <script>
 (function () {
+    // Activate real image requests only for currently visible Admin review UI.
+    // This avoids Chrome deferring images in initially hidden review panels.
+    function loadReviewImages(root) {
+        if (!root) return;
+
+        root.querySelectorAll('img[data-review-media]').forEach(function (image) {
+            if (image.dataset.reviewStarted === '1') return;
+
+            const source = image.dataset.reviewSrc;
+            if (!source) return;
+
+            image.dataset.reviewStarted = '1';
+            const frame = image.closest('[data-review-image-frame]');
+            const status = frame?.querySelector('[data-review-image-status]');
+
+            frame?.classList.add('is-loading');
+            image.addEventListener('load', function () {
+                if (image.naturalWidth > 0) {
+                    frame?.classList.remove('is-loading', 'is-error');
+                    frame?.classList.add('is-ready');
+                } else {
+                    frame?.classList.remove('is-loading');
+                    frame?.classList.add('is-error');
+                    if (status) status.textContent = 'Unable to display photo · open to inspect';
+                }
+            }, { once: true });
+
+            image.addEventListener('error', function () {
+                frame?.classList.remove('is-loading');
+                frame?.classList.add('is-error');
+                if (status) status.textContent = 'Unable to load photo · open to inspect';
+            }, { once: true });
+
+            image.loading = 'eager';
+            image.src = source;
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | COMPLIANCE VIEW FILTER
@@ -4137,6 +4217,7 @@
         });
 
         selectedPanel.scrollTop = 0;
+
     }
 
     applyComplianceViewFilter?.addEventListener('click', function () {
@@ -4146,9 +4227,7 @@
         syncQueueDropdown();
         syncFlaggedFilterAvailability(selectedView);
 
-        if (selectedView === 'flagged') {
-            filterFlaggedSellers();
-        }
+        filterFlaggedSellers();
     });
 
     complianceViewFilter?.addEventListener('keydown', function (event) {
@@ -4189,7 +4268,8 @@
         const enabled = viewName === 'flagged';
 
         if (flaggedSellerSearch) {
-            flaggedSellerSearch.disabled = !enabled;
+            flaggedSellerSearch.disabled = false;
+            flaggedSellerSearch.placeholder = enabled ? 'Search seller, email, product, brand, or SKU...' : 'Search seller, message, product, or reason...';
         }
 
         if (flaggedSellerRiskFilter) {
@@ -4229,6 +4309,11 @@
     let flaggedFilterFrame = 0;
 
     function filterFlaggedSellers() {
+        const activePanel = panels.find(panel => !panel.hidden);
+        if (activePanel && activePanel.id !== 'compliancePanel-flagged') {
+            window.dispatchEvent(new CustomEvent('sari:compliance-filtered', { detail: { panelId: activePanel.id, query: flaggedSellerSearch?.value || '' } }));
+            return;
+        }
         const query = (flaggedSellerSearch?.value || '').trim().toLowerCase();
         const risk = (flaggedSellerRiskFilter?.value || '').trim().toLowerCase();
 
@@ -4264,6 +4349,7 @@
                 flaggedSellerList?.classList.toggle('hidden', visible === 0);
                 flaggedSellerFilterEmpty?.classList.toggle('hidden', visible !== 0);
             }
+            window.dispatchEvent(new Event('sari:flagged-filtered'));
         });
     }
 
@@ -4309,9 +4395,7 @@
         activateCompliancePanel(selectedView);
         syncFlaggedFilterAvailability(selectedView);
 
-        if (selectedView === 'flagged') {
-            filterFlaggedSellers();
-        }
+        filterFlaggedSellers();
     });
 
     filterFlaggedSellers();
@@ -4347,6 +4431,8 @@
         modal.classList.add('flex');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('overflow-hidden');
+
+        loadReviewImages(modal);
 
         window.requestAnimationFrame(function () {
             modal.querySelector('[data-flagged-seller-close]')?.focus({ preventScroll: true });
@@ -4450,5 +4536,104 @@
         closeAllSellerDetails();
     });
 })();
+
+    // Main-page selection and pagination; existing moderation actions stay explicit.
+    function mountCompliancePager(panelId, containerSelector, itemSelector) {
+        const panel = document.getElementById(panelId);
+        const container = panel?.querySelector(containerSelector);
+        if (!container) return;
+        const rows = Array.from(container.querySelectorAll(itemSelector));
+        if (!rows.length) return;
+        let page = 1, onlySelected = false;
+        const selected = new Set();
+        const selectable = rows.some(row => row.querySelector('[data-compliance-select]'));
+        const pager = document.createElement('nav'); pager.className = 'compliance-pagination';
+        pager.setAttribute('aria-label', 'Pagination for ' + panelId.replace('compliancePanel-', ''));
+        // Keep table pagination outside its horizontal scroller.
+        (container.tagName === 'TBODY' ? container.closest('.overflow-x-auto, .compliance-records-scroll') : panelId === 'compliancePanel-flagged' ? container.closest('.flagged-list-shell') : container).insertAdjacentElement('afterend', pager);
+        const empty = document.createElement('p'); empty.className = 'compliance-filter-empty'; empty.textContent = 'No matching records. Try another search or filter.'; empty.hidden = true; pager.insertAdjacentElement('beforebegin', empty);
+        let toolbar, count, showSelected;
+        const selectAll = panel.querySelector('[data-compliance-select-all]');
+        if (selectable) {
+            toolbar = document.createElement('div'); toolbar.className = 'compliance-selection'; toolbar.hidden = true;
+            toolbar.setAttribute('aria-live', 'polite'); count = document.createElement('span'); toolbar.append(count);
+            const controls = document.createElement('div'); controls.className = 'compliance-selection-actions';
+            function control(text, callback) { const button = document.createElement('button'); button.type = 'button'; button.textContent = text; button.addEventListener('click', callback); controls.append(button); return button; }
+            control('Review selected', () => {
+                const row = rows.find(row => selected.has(row));
+                if (!row) return;
+                const open = row.querySelector('[data-flagged-seller-open]');
+                if (open) open.click();
+                else {
+                    onlySelected = true; page = 1; render();
+                    row.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+                    row.tabIndex = -1; row.focus({ preventScroll: true });
+                }
+            });
+            showSelected = control('Show selected only', () => { onlySelected = !onlySelected; page = 1; render(); });
+            showSelected.setAttribute('aria-pressed', 'false');
+            control('Clear selection', () => { selected.clear(); onlySelected = false; page = 1; render(); });
+            toolbar.append(controls);
+            const anchor = container.tagName === 'TBODY' ? container.closest('.compliance-records-scroll') : panelId === 'compliancePanel-flagged' ? container.closest('.flagged-list-shell') : container;
+            anchor.insertAdjacentElement('beforebegin', toolbar);
+            if (!selectAll) {
+                const label = document.createElement('label'); label.className = 'compliance-check';
+                const input = document.createElement('input'); input.type = 'checkbox'; input.dataset.complianceSelectAll = '';
+                input.setAttribute('aria-label', 'Select products on this page'); label.append(input, document.createTextNode(' Select page'));
+                toolbar.insertAdjacentElement('beforebegin', label);
+            }
+            rows.forEach(row => row.querySelector('[data-compliance-select]')?.addEventListener('change', event => {
+                event.target.checked ? selected.add(row) : selected.delete(row);
+                if (!selected.size) onlySelected = false;
+                render();
+            }));
+            panel.querySelector('[data-compliance-select-all]').addEventListener('change', event => {
+                rows.filter(row => !row.hidden && !row.classList.contains('hidden')).forEach(row => { event.target.checked ? selected.add(row) : selected.delete(row); });
+                if (!selected.size) onlySelected = false;
+                render();
+            });
+        }
+        function render() {
+            const eligible = rows.filter(row => !row.dataset.complianceFilterHidden && (!onlySelected || selected.has(row)));
+            empty.hidden = eligible.length > 0;
+            const pages = Math.max(1, Math.ceil(eligible.length / 10)); page = Math.max(1, Math.min(page, pages));
+            rows.forEach(row => { row.hidden = true; const checkbox = row.querySelector('[data-compliance-select]'); if (checkbox) checkbox.checked = selected.has(row); row.classList.toggle('is-selected', selected.has(row)); });
+            const visible = eligible.slice((page - 1) * 10, page * 10); visible.forEach(row => { row.hidden = false; });
+            if (selectable) {
+                toolbar.hidden = selected.size === 0; count.textContent = selected.size + ' selected';
+                showSelected.textContent = onlySelected ? 'Show all records' : 'Show selected only'; showSelected.setAttribute('aria-pressed', String(onlySelected));
+                const all = panel.querySelector('[data-compliance-select-all]'); const checked = visible.filter(row => selected.has(row)).length;
+                all.disabled = visible.length === 0; all.checked = visible.length > 0 && checked === visible.length; all.indeterminate = checked > 0 && checked < visible.length;
+            }
+            pager.replaceChildren();
+            const range = document.createElement('span'); range.textContent = `Showing ${eligible.length ? (page - 1) * 10 + 1 : 0}–${Math.min(page * 10, eligible.length)} of ${eligible.length}`; pager.append(range);
+            if (pages <= 1) return;
+            const controls = document.createElement('div'); controls.className = 'compliance-pagination-actions';
+            function button(label, target, disabled, current = false, ariaLabel = label) {
+                const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = label; btn.disabled = disabled; btn.setAttribute('aria-label', ariaLabel);
+                if (current) btn.setAttribute('aria-current', 'page');
+                btn.addEventListener('click', () => { page = target; render(); pager.querySelector('[aria-current="page"]')?.focus(); }); controls.append(btn);
+            }
+            button('‹', page - 1, page === 1, false, 'Previous page');
+            const from = Math.max(1, Math.min(page - 2, pages - 4)); const to = Math.min(pages, from + 4);
+            for (let i = from; i <= to; i++) button(String(i), i, false, i === page, 'Page ' + i);
+            button('›', page + 1, page === pages, false, 'Next page'); pager.append(controls);
+        }
+        if (panelId === 'compliancePanel-flagged') window.addEventListener('sari:flagged-filtered', () => {
+            rows.forEach(row => { row.dataset.complianceFilterHidden = row.classList.contains('hidden') ? '1' : ''; }); page = 1; render();
+        });
+        window.addEventListener('sari:compliance-filtered', event => {
+            if (event.detail?.panelId !== panelId || panelId === 'compliancePanel-flagged') return;
+            const query = String(event.detail.query || '').trim().toLowerCase();
+            rows.forEach(row => { row.dataset.complianceFilterHidden = !query || row.textContent.toLowerCase().includes(query) ? '' : '1'; });
+            page = 1; render();
+        });
+        render();
+    }
+    mountCompliancePager('compliancePanel-flagged', '#flaggedSellerList', ':scope > article');
+    mountCompliancePager('compliancePanel-warnings', 'tbody', ':scope > tr[data-compliance-record]');
+    mountCompliancePager('compliancePanel-suspended', 'tbody', ':scope > tr[data-compliance-record]');
+    mountCompliancePager('compliancePanel-messages', 'tbody', ':scope > tr[data-compliance-record]');
+
 </script>
 @endpush

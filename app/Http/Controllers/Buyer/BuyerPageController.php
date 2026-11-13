@@ -38,7 +38,7 @@ class BuyerPageController extends Controller
         // not add unnecessary order, cart, and notification reads here.
         return view('buyer.home', [
             'homepageBanners' => $this->homepageBanners->banners(),
-            'featuredProducts' => $this->catalog->catalog(8),
+            'featuredProducts' => $this->catalog->catalog(),
             'buyerAccount' => $buyerAccount,
         ]);
     }

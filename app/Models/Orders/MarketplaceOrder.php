@@ -52,6 +52,7 @@ class MarketplaceOrder extends Model
         'subtotal',
         'original_delivery_fee',
         'shipping_discount_amount',
+        'platform_shipping_discount_amount',
         'seller_free_shipping_promotion_id',
         'shipping_discount_funder',
         'delivery_fee',
@@ -85,6 +86,7 @@ class MarketplaceOrder extends Model
         'subtotal' => 'decimal:2',
         'original_delivery_fee' => 'decimal:2',
         'shipping_discount_amount' => 'decimal:2',
+        'platform_shipping_discount_amount' => 'decimal:2',
         'delivery_fee' => 'decimal:2',
         'total' => 'decimal:2',
         'accepted_at' => 'datetime',
@@ -99,11 +101,23 @@ class MarketplaceOrder extends Model
 
     protected static function booted(): void
     {
+        static::updating(function (self $order): void {
+            if ($order->isDirty('status') && $order->getRawOriginal('status') === 'cancelled'
+                && $order->status !== 'cancelled' && (float) $order->platform_shipping_discount_amount > 0) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'order' => 'Cancelled subsidized orders cannot be reopened. Create a new checkout.',
+                ]);
+            }
+        });
+
         static::created(function (self $order): void {
             $order->broadcastSellerRealtimeUpdate();
         });
 
         static::updated(function (self $order): void {
+            if ($order->wasChanged('status')) {
+                app(\App\Services\Promotions\PlatformShippingBudgetService::class)->syncOrder($order);
+            }
             if (!$order->wasChanged([
                 'status',
                 'logistics_account_id',
@@ -249,6 +263,12 @@ class MarketplaceOrder extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(ProductReview::class, 'marketplace_order_id');
+    }
+
+    public function sellerFundedShippingDiscount(): float
+    {
+        return round(max(0, (float) $this->shipping_discount_amount
+            - (float) $this->platform_shipping_discount_amount), 2);
     }
 
     public function courierDeliveryFee(): float

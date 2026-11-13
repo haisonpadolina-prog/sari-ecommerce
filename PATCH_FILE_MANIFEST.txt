@@ -1,0 +1,42 @@
+INSTALL_LARAVEL_PATCH.md
+MOBILE_API_ENDPOINTS.md
+PATCH_FILE_MANIFEST.txt
+REVIEW_FIXES_AND_VERIFICATION.md
+app/Console/Commands/DispatchMobilePush.php
+app/Console/Commands/PruneMobileData.php
+app/Http/Controllers/Api/V1/MobileAuthController.php
+app/Http/Controllers/Api/V1/MobileBuyerAddressConfirmationController.php
+app/Http/Controllers/Api/V1/MobileBuyerAiController.php
+app/Http/Controllers/Api/V1/MobileBuyerMessageController.php
+app/Http/Controllers/Api/V1/MobileBuyerNotificationController.php
+app/Http/Controllers/Api/V1/MobileBuyerRecentActivityController.php
+app/Http/Controllers/Api/V1/MobileCatalogController.php
+app/Http/Controllers/Api/V1/MobileDeviceController.php
+app/Http/Controllers/Api/V1/MobileGoogleAuthController.php
+app/Http/Controllers/Api/V1/MobileLogisticsController.php
+app/Http/Controllers/Api/V1/MobileRiderLocationController.php
+app/Http/Controllers/Api/V1/MobileRiderNotificationController.php
+app/Http/Controllers/Api/V1/MobileUpdatesController.php
+app/Http/Middleware/Api/RecordMobileBuyerActivity.php
+app/Services/Accounts/GoogleMobileIdTokenVerifier.php
+app/Services/Mobile/MobileBuyerActionLogger.php
+app/Services/Mobile/MobileBuyerSessionBridge.php
+app/Services/Mobile/MobileFcmSender.php
+app/Services/Mobile/MobilePushAccess.php
+app/Services/Mobile/MobileRiderTracking.php
+config/services.php
+database/migrations/2026_11_12_170000_create_mobile_sync_infrastructure.php
+routes/api.php
+routes/console.php
+tests/Feature/MobileBackendPatchTest.php
+
+# Baseline SHA-256 for replaced PHP files (compare before overwriting later local changes)
+# app/Http/Controllers/Api/V1/MobileAuthController.php 0a106415bde42ac048f9c6157511740f51f79aaf17a67c40291e855ad944ff41
+# app/Http/Controllers/Api/V1/MobileBuyerMessageController.php 603a9bcf46f368a0f22d6dc9837d1777106fc7331981ce95e3d776289535843d
+# app/Http/Controllers/Api/V1/MobileBuyerNotificationController.php 6e69a95fcba3fea4b4199c002d70ba23604f502c98fb170664e8f956789120c1
+# app/Http/Controllers/Api/V1/MobileCatalogController.php 9825ed757880022437af6666108814fcf08c5fd8bf8086536eb8d93a6e2b3162
+# app/Http/Controllers/Api/V1/MobileLogisticsController.php ae0f2a01ebc7ca234605cb1d15d40f77a72f45b8607c4ed282762794e05f7ceb
+# app/Http/Controllers/Api/V1/MobileRiderNotificationController.php 220d480b84e38c9d20a25b7496f2e08acea0d5ec1528abe1fc96c6b243a5ab21
+# config/services.php 390fea2277241816ff7837d51599e23f7d68ec70ebc4206055823016cc518178
+# routes/api.php dd314505118a925018f3919043bd22f05ff405beeed633b088c586e03dbe7edd
+# routes/console.php ba2a26c39eb02d555431e3ddccf8655d982c28dcee0eada8b2b224e22a1fc907

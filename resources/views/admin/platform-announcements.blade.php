@@ -1,12 +1,8 @@
 @extends('layouts.admin')
 
-
-
 @section('title', 'Platform Announcements — SARI Admin')
 
 @section('page-title', 'Platform Announcements')
-
-
 
 @section('content')
 
@@ -24,166 +20,409 @@
 
 @endphp
 
-
-
 <div class="ann-page mx-auto w-full max-w-[1500px] pb-8">
 
     <style>
+
     .ann-page{
+
         --gold:#D59617;
+
         --gold-strong:#B97805;
+
         --ink:#111827;
+
         --text:#344054;
+
         --muted:#7C8592;
+
         --line:#E5E7EB;
+
         --divider:#EEF0F3;
+
         --soft:#F8FAFC;
+
         --blue:#1677FF;
+
         --red:#FF334B;
+
         --shadow:0 2px 5px rgba(15,23,42,.04),0 10px 24px rgba(15,23,42,.07),0 24px 54px rgba(15,23,42,.08);
+
         --shadow-soft:0 1px 3px rgba(15,23,42,.03),0 7px 18px rgba(15,23,42,.05);
+
         width:100%;
+
         max-width:1540px;
+
         margin:0 auto;
+
         padding-bottom:30px;
+
         color:var(--ink);
+
         font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+
     }
+
     .ann-page *, .ann-page *::before, .ann-page *::after{box-sizing:border-box}
 
     /* Header */
+
     .ann-head{padding:2px 2px 17px;border-bottom:1px solid #E7E9EC}
+
     .ann-eyebrow{margin:0;color:#9A6F23;font-size:8px;font-weight:800;line-height:1.15;letter-spacing:.16em;text-transform:uppercase}
+
     .ann-title{margin:5px 0 0;font-size:clamp(30px,2.2vw,37px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--ink)}
+
     .ann-title span{color:var(--gold)}
+
     .ann-copy{max-width:900px;margin:8px 0 0;color:var(--muted);font-size:10.5px;line-height:1.65}
+
     .ann-clock{display:inline-flex;align-items:center;gap:6px;margin-top:10px;border:1px solid var(--line);border-radius:999px;background:#F8F9FA;padding:6px 10px;color:#667085;font-size:7.5px;font-weight:700;box-shadow:none}
+
     .ann-clock::before{content:"";width:6px;height:6px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 3px rgba(213,150,23,.10)}
 
     /* Grid / surfaces */
+
     .ann-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr);gap:16px;margin-top:16px;align-items:start}
+
     .ann-panel{overflow:visible;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+
     .ann-panel-head{display:flex;min-height:66px;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-bottom:1px solid var(--divider);background:#fff;border-radius:14px 14px 0 0}
+
     .ann-panel-head h2{margin:0;color:#1D2939;font-size:12px;font-weight:700;line-height:1.3}
+
     .ann-panel-head p{max-width:760px;margin:4px 0 0;color:#8A94A3;font-size:8.5px;line-height:1.55}
+
     .ann-body{padding:16px}
+
     .ann-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+
     .ann-field{display:block;min-width:0}
+
     .ann-field.full{grid-column:1/-1}
+
     .ann-label{display:block;margin-bottom:6px;color:#475467;font-size:8.8px;font-weight:700;line-height:1.35}
 
     /* Inputs */
+
     .ann-input,.ann-select,.ann-textarea,.ann-select-trigger{
+
         width:100%;border:1px solid #DDE2E7;border-radius:10px;background:#fff;color:#29313B;
+
         font:500 9.6px 'Poppins',sans-serif;outline:none;box-shadow:none;
+
         transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+
     }
+
     .ann-input,.ann-select,.ann-select-trigger{height:42px}
+
     .ann-input,.ann-select{padding:0 11px}
+
     .ann-textarea{min-height:118px;padding:11px 12px;resize:vertical;line-height:1.55}
+
     .ann-input::placeholder,.ann-textarea::placeholder{color:#A0A8B2}
+
     .ann-input:hover,.ann-textarea:hover,.ann-select-trigger:hover{border-color:#CBD2D9}
+
     .ann-input:focus,.ann-textarea:focus,.ann-select-trigger:focus-visible,.ann-select-wrap.is-open .ann-select-trigger{border-color:var(--gold);box-shadow:0 0 0 3px rgba(213,150,23,.09)}
+
     .ann-input[type="datetime-local"]{color:#475467}
+
     .ann-input[type="file"]{height:auto;min-height:42px;padding:5px 6px;color:#667085;background:#FAFBFC}
+
     .ann-input[type="file"]::file-selector-button{height:30px;margin-right:8px;border:1px solid #DDE2E7;border-radius:8px;background:#fff;padding:0 10px;color:#475467;font:700 7.8px 'Poppins',sans-serif;cursor:pointer}
+
     .ann-input[type="file"]::file-selector-button:hover{border-color:#C9D0D7;background:#F8FAFC}
 
     /* Custom dropdown */
+
     .ann-select-wrap{position:relative;min-width:0;z-index:20}
+
     .ann-select-wrap.is-open{z-index:80}
+
     .ann-select.ann-native-select{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;opacity:0!important;pointer-events:none!important}
+
     .ann-select-trigger{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 11px;text-align:left;cursor:pointer}
+
     .ann-select-trigger-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#344054}
+
     .ann-select-chevron{width:14px;height:14px;flex:0 0 14px;color:#667085;transition:transform .15s ease}
+
     .ann-select-wrap.is-open .ann-select-chevron{transform:rotate(180deg)}
+
     .ann-select-menu{position:absolute;z-index:120;top:calc(100% + 6px);right:0;left:0;max-height:220px;overflow:auto;padding:5px;border:1px solid #E1E5EA;border-radius:11px;background:#fff;box-shadow:0 14px 34px rgba(15,23,42,.13),0 4px 12px rgba(15,23,42,.05);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px);transition:opacity .14s ease,transform .14s ease,visibility .14s ease}
+
     .ann-select-wrap.is-open .ann-select-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+
     .ann-select-option{display:flex;width:100%;min-height:35px;align-items:center;justify-content:space-between;gap:10px;border:0;border-radius:8px;background:transparent;padding:0 9px;color:#475467;font:600 8.4px 'Poppins',sans-serif;text-align:left;cursor:pointer}
+
     .ann-select-option:hover,.ann-select-option:focus-visible{outline:none;background:#F7F8FA;color:#1D2939}
+
     .ann-select-check{display:grid;width:17px;height:17px;flex:0 0 17px;place-items:center;border-radius:5px;background:transparent;color:transparent}
+
     .ann-select-option.is-selected{background:#FFF9EC;color:#8A5C07}
+
     .ann-select-option.is-selected .ann-select-check{background:var(--gold);color:#fff}
+
     .ann-select-check svg{width:11px;height:11px}
 
     /* Audience */
+
     .ann-audiences{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+
     .ann-audience{display:flex;min-height:42px;align-items:center;gap:8px;border:1px solid #E2E6EA;border-radius:10px;background:#FAFBFC;padding:0 10px;color:#475467;font-size:8.2px;font-weight:700;cursor:pointer;transition:border-color .15s ease,background-color .15s ease}
+
     .ann-audience:hover{border-color:#D4DAE0;background:#F8F9FA}
+
     .ann-audience:has(input:checked){border-color:#E6C875;background:#FFF9EC;color:#7F570C}
+
     .ann-audience input,.ann-remove input{appearance:none;-webkit-appearance:none;position:relative;width:16px;height:16px;flex:0 0 16px;margin:0;border:1px solid #C9D0D7;border-radius:5px;background:#fff;cursor:pointer;outline:none}
+
     .ann-audience input:checked,.ann-remove input:checked{border-color:var(--gold);background:var(--gold)}
+
     .ann-audience input:checked::after,.ann-remove input:checked::after{content:"";position:absolute;left:4px;top:1.5px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+
     .ann-audience input:focus-visible,.ann-remove input:focus-visible{box-shadow:0 0 0 3px rgba(213,150,23,.12)}
 
     /* Image area */
+
     .ann-media{display:grid;grid-template-columns:132px minmax(0,1fr);gap:13px;align-items:start}
+
     .ann-preview{position:relative;display:flex;width:132px;height:96px;align-items:center;justify-content:center;overflow:hidden;border:1px dashed #CCD3DB;border-radius:12px;background:#F8F9FA;color:#8A94A3;padding:8px;font-size:7.3px;font-weight:700;line-height:1.45;text-align:center}
+
     .ann-preview img{display:block;width:100%;height:100%;object-fit:cover}
+
     .ann-upload-copy{margin:6px 0 0;color:#8A94A3;font-size:7.1px;line-height:1.55}
+
     .ann-remove{display:inline-flex;align-items:center;gap:7px;margin-top:8px;color:#667085;font-size:7.5px;font-weight:700;cursor:pointer}
 
     /* Buttons */
+
     .ann-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:16px;padding-top:14px;border-top:1px solid var(--divider)}
+
     .ann-btn{display:inline-flex;min-height:40px;align-items:center;justify-content:center;border-radius:9px;padding:0 13px;font-size:8.5px;font-weight:750;text-decoration:none;cursor:pointer;transition:border-color .15s ease,background-color .15s ease,color .15s ease}
+
     .ann-btn.primary{border:1px solid var(--gold);background:var(--gold);color:#fff;box-shadow:0 5px 13px rgba(194,132,10,.12)}
+
     .ann-btn.primary:hover,.ann-btn.primary:focus-visible{outline:none;border-color:var(--gold-strong);background:var(--gold-strong)}
+
     .ann-btn.secondary{border:1px solid #DDE2E7;background:#fff;color:#667085;box-shadow:none}
+
     .ann-btn.secondary:hover,.ann-btn.secondary:focus-visible{outline:none;border-color:#CBD2D9;background:#F8FAFC;color:#344054}
 
     /* Schedule list */
+
     .ann-panel > .ann-row{background:#fff}
+
     .ann-row{position:relative;padding:15px 16px;border-bottom:1px solid var(--divider);transition:background-color .15s ease}
+
     .ann-row:last-of-type{border-bottom:0}
+
     .ann-row:hover{background:#FCFCFD}
+
     .ann-row-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+
     .ann-name{color:#172033;font-size:10.8px;font-weight:750;line-height:1.35}
+
     .ann-sub{max-width:620px;margin-top:4px;color:#7C8796;font-size:7.7px;line-height:1.55}
+
     .ann-badges{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:9px}
+
     .ann-badge{display:inline-flex;min-height:22px;align-items:center;border:1px solid #E3E7EB;border-radius:999px;background:#F8F9FA;padding:0 8px;color:#667085;font-size:6.8px;font-weight:750;white-space:nowrap}
+
     .ann-badge.live{border-color:#D7E8DC;background:#F3F9F5;color:#3F7A54}
+
     .ann-badge.scheduled{border-color:#EBD9A9;background:#FFF8E6;color:#8A6414}
+
     .ann-badge.paused,.ann-badge.draft{border-color:#E1E5E9;background:#F7F8F9;color:#667085}
+
     .ann-badge.ended{border-color:#F0D4D4;background:#FFF7F7;color:#A34E4E}
+
     .ann-panel-head > .ann-badge{background:#F8F9FA;color:#667085}
 
     .ann-row-actions{display:flex;align-items:center;gap:5px;margin-top:11px}
+
     .ann-row-actions form{display:inline-flex;margin:0}
+
     .ann-icon-action{display:inline-grid;width:30px;height:30px;place-items:center;border:0;border-radius:8px;background:transparent;padding:0;text-decoration:none;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+
     .ann-icon-action svg{width:16px;height:16px;stroke:currentColor}
+
     .ann-icon-action.edit{color:var(--blue)}
+
     .ann-icon-action.edit:hover,.ann-icon-action.edit:focus-visible{outline:none;background:#EEF6FF;color:#006BEE}
+
     .ann-icon-action.toggle{color:#111827}
+
     .ann-icon-action.toggle:hover,.ann-icon-action.toggle:focus-visible{outline:none;background:#F1F3F5;color:#000}
+
     .ann-icon-action.delete{color:var(--red)}
+
     .ann-icon-action.delete:hover,.ann-icon-action.delete:focus-visible{outline:none;background:#FFF0F2;color:#F5002E}
 
     .ann-flash{margin-top:13px;border-radius:10px;padding:10px 12px;font-size:8.5px;font-weight:650}
+
     .ann-flash.ok{border:1px solid #D7E7DC;background:#F5FAF6;color:#51715D}
+
     .ann-flash.err{border:1px solid #EAD2CC;background:#FFF6F3;color:#9A5A49}
+
     .ann-empty{padding:38px 18px;color:#7D8792;font-size:8.5px;text-align:center}
 
     @media(max-width:1100px){
+
         .ann-grid{grid-template-columns:1fr}
+
         .ann-audiences{grid-template-columns:repeat(2,minmax(0,1fr))}
+
     }
+
     @media(max-width:640px){
+
         .ann-page{padding-bottom:20px}
+
         .ann-title{font-size:clamp(28px,8vw,34px)}
+
         .ann-fields{grid-template-columns:1fr}
+
         .ann-field.full{grid-column:auto}
+
         .ann-audiences{grid-template-columns:1fr 1fr}
+
         .ann-media{grid-template-columns:1fr}
+
         .ann-preview{width:100%;height:160px}
+
         .ann-panel-head{align-items:flex-start;flex-direction:column}
+
         .ann-actions{align-items:stretch;flex-direction:column}
+
         .ann-btn{width:100%}
+
         .ann-actions > span{width:100%}
+
+    }
+
+
+    /* SARI reference parity — announcement presentation only. */
+    .ann-page {
+        --gold: #c88912;
+        --gold-strong: #a96d08;
+        --ink: #29323b;
+        --text: #4c545e;
+        --muted: #707b86;
+        --shadow: 0 2px 5px rgba(15,23,42,.045),0 10px 24px rgba(15,23,42,.075),0 24px 54px rgba(15,23,42,.095),inset 0 1px 0 rgba(255,255,255,.92);
+        max-width: 1640px !important;
+        min-width: 0;
+        padding: 2px 2px 32px;
+        font-size: 12px;
+        line-height: 1.5;
+        container-type: inline-size;
+    }
+    .ann-page :is(button,input,select,textarea) { font-family: inherit; }
+    .ann-page .ann-head { padding: 2px 0 16px; border-bottom: 0; }
+    .ann-page .ann-eyebrow { color: #a87316; font-size: 10.5px; font-weight: 800; line-height: 1.2; letter-spacing: .14em; }
+    .ann-page .ann-title { font-size: clamp(29px,2.35vw,34px); font-weight: 750; line-height: 1.04; letter-spacing: -.035em; }
+    .ann-page .ann-copy { max-width: 920px; margin-top: 7px; color: #707b86; font-size: 11.5px; line-height: 1.6; }
+    .ann-page .ann-clock { font-size: 10.5px; padding: 7px 10px; }
+    .ann-page .ann-grid { grid-template-columns: minmax(0,1.08fr) minmax(350px,.92fr); gap: 18px; margin-top: 18px; }
+    .ann-page .ann-panel { min-width: 0; border: 1px solid #e5e7eb; border-radius: 17px; box-shadow: var(--shadow); }
+    .ann-page .ann-panel-head { min-height: 72px; padding: 16px 18px; border-radius: 17px 17px 0 0; flex-wrap: wrap; gap: 12px; }
+    .ann-page .ann-panel-head h2 { color: #29323b; font-size: 14px; font-weight: 750; }
+    .ann-page .ann-panel-head p { color: #707b86; font-size: 10.5px; line-height: 1.55; }
+    .ann-page .ann-body { padding: 18px; }
+    .ann-page .ann-fields { gap: 14px; }
+    .ann-page .ann-label { color: #4b5560; font-size: 11px; font-weight: 750; line-height: 1.35; }
+    .ann-page :is(.ann-input,.ann-select:not(.ann-native-select),.ann-textarea,.ann-select-trigger) {
+        min-width: 0;
+        border: 1px solid #dfe3e8;
+        border-radius: 9px;
+        background: #fff;
+        color: #333d47;
+        font: 550 12px 'Poppins',ui-sans-serif,system-ui,sans-serif;
+        box-shadow: none;
+    }
+    .ann-page :is(.ann-input,.ann-select-trigger,.ann-select:not(.ann-native-select)) { min-height: 42px; height: 42px; }
+    .ann-page .ann-textarea { min-height: 128px; padding: 11px; line-height: 1.6; }
+    .ann-page :is(.ann-input,.ann-textarea)::placeholder { color: #79838e; font-size: 11.5px; }
+    .ann-page .ann-select.ann-native-select { min-height: 0 !important; border: 0 !important; padding: 0 !important; margin: -1px !important; }
+    .ann-page .ann-select-trigger { font-weight: 650; }
+    .ann-page .ann-select-trigger-label { color: #333d47; }
+    .ann-page .ann-select-menu { max-height: 270px; border-color: #e1e5e9; border-radius: 12px; box-shadow: 0 18px 42px rgba(31,41,55,.13),0 4px 12px rgba(31,41,55,.04); }
+    .ann-page .ann-select-option { min-height: 39px; padding: 8px 10px; font-size: 11.5px; font-weight: 550; line-height: 1.4; }
+    .ann-page .ann-select-option:hover { background: #f5f6f8; color: #22282f; }
+    .ann-page .ann-select-option.is-selected { background: #f7f3eb; color: #8e5d0e; font-weight: 700; }
+    .ann-page .ann-audiences { gap: 8px; grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .ann-page .ann-audience { min-height: 42px; padding: 8px 10px; font-size: 11px; background: #fff; }
+    .ann-page .ann-audience span { min-width: 0; overflow-wrap: anywhere; }
+    .ann-page :is(.ann-audience,.ann-remove) input { width: 17px; height: 17px; flex-basis: 17px; }
+    .ann-page .ann-media { grid-template-columns: 144px minmax(0,1fr); gap: 14px; }
+    .ann-page .ann-media > div { min-width: 0; }
+    .ann-page .ann-preview { width: 144px; height: 108px; font-size: 10.5px; }
+    .ann-page .ann-input[type="file"] { min-height: 44px; height: auto; padding: 5px 6px !important; font-size: 11px; }
+    .ann-page .ann-input[type="file"]::file-selector-button { min-height: 32px; font-size: 10.5px; }
+    .ann-page .ann-upload-copy { color: #707b86; font-size: 10.5px; line-height: 1.6; }
+    .ann-page .ann-remove { color: #707b86; font-size: 10.5px; }
+    .ann-page .ann-btn { min-height: 42px; padding-inline: 13px; font-size: 11px; font-weight: 650; }
+    .ann-page .ann-btn.primary { box-shadow: 0 6px 16px rgba(201,132,8,.14); }
+    .ann-page .ann-actions { gap: 10px; }
+    .ann-page .ann-actions > span { min-width: 0; color: #707b86; font-size: 10.5px; line-height: 1.6; }
+    .ann-page .ann-row { padding: 17px 18px; }
+    .ann-page .ann-row:last-of-type { border-radius: 0 0 17px 17px; }
+    .ann-page .ann-row-top { gap: 10px; flex-wrap: wrap; }
+    .ann-page .ann-row-top > div { min-width: 0; }
+    .ann-page .ann-name { color: #29323b; font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
+    .ann-page .ann-sub { color: #707b86; font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+    .ann-page .ann-badges { gap: 7px; }
+    .ann-page .ann-badge { min-height: 26px; padding: 3px 9px; font-size: 10px; white-space: normal; overflow-wrap: anywhere; }
+    .ann-page .ann-row-actions { flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .ann-page .ann-icon-action { width: 34px; height: 34px; }
+    .ann-page :is(.ann-flash,.ann-empty) { font-size: 11.5px; line-height: 1.6; }
+    .ann-page .ann-panel nav { padding-top: 5px; font-size: 11px; }
+    .ann-page .ann-panel nav p { color: #707b86; font-size: 11px; }
+    .ann-page .ann-panel nav a,
+    .ann-page .ann-panel nav [aria-disabled] > span,
+    .ann-page .ann-panel nav [aria-current] > span { min-height: 34px; font-size: 11px; }
+    .ann-page .ann-panel nav [aria-current] > span { background: #c88912; border-color: #c88912; color: #fff; }
+    .ann-page .ann-panel nav svg { width: 16px; height: 16px; }
+    .ann-page :is(button,a,input,select,textarea):focus-visible { outline: 2px solid #9b6710; outline-offset: 3px; }
+    @container (max-width: 1100px) {
+        .ann-page .ann-grid { grid-template-columns: 1fr; }
+    }
+    @container (max-width: 600px) {
+        .ann-page .ann-fields { grid-template-columns: 1fr; }
+        .ann-page .ann-field.full { grid-column: 1 / -1; }
+        .ann-page .ann-media { grid-template-columns: 1fr; }
+        .ann-page .ann-preview { width: 100%; height: 160px; }
+        .ann-page .ann-actions { flex-direction: column; align-items: stretch; }
+        .ann-page .ann-btn { width: 100%; }
+    }
+    @media (max-width: 767px) {
+        .ann-page .ann-title { font-size: 29px; }
+        .ann-page .ann-eyebrow { font-size: 9.5px; }
+        .ann-page .ann-grid { gap: 14px; margin-top: 14px; }
+        .ann-page .ann-panel { border-radius: 14px; box-shadow: 0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07); }
+        .ann-page .ann-panel-head { border-radius: 14px 14px 0 0; }
+        .ann-page :is(.ann-panel-head,.ann-body,.ann-row) { padding: 14px; }
+        .ann-page :is(.ann-input,.ann-select-trigger,.ann-btn,.ann-audience) { min-height: 44px; }
+        .ann-page .ann-input:not([type="file"]),.ann-page .ann-select-trigger { height: 44px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ann-page * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+
+    /* Hide the browser filename caption; retain the upload control and preview. */
+    .ann-page .ann-input[type="file"] {
+        font-size: 0 !important;
+        color: transparent !important;
+    }
+    .ann-page .ann-input[type="file"]::file-selector-button {
+        font-size: 10.5px !important;
+        color: #475467 !important;
     }
 </style>
-
-
-
 
     <div class="ann-head">
 
@@ -191,19 +430,15 @@
 
         <h1 class="ann-title">Platform <span>Announcements</span></h1>
 
-        <p class="ann-copy">Publish scheduled SARI notices to Buyers, Sellers, Logistics providers, and Riders. Announcements use Philippine time and appear only to the selected audiences while live.</p>
+        
 
-        <div class="ann-clock">Philippine Standard Time · {{ $philippineNow->format('M j, Y h:i:s A') }} PHT</div>
+        
 
     </div>
-
-
 
     @if(session('success'))<div class="ann-flash ok">{{ session('success') }}</div>@endif
 
     @if($errors->any())<div class="ann-flash err">{{ $errors->first() }}</div>@endif
-
-
 
     <div class="ann-grid">
 
@@ -215,7 +450,7 @@
 
                     <h2>{{ $editing ? 'Edit announcement' : 'Create announcement' }}</h2>
 
-                    <p>Publish is the default. Choose Save as draft only when you do not want the announcement visible yet. Future start times are automatically scheduled in Philippine time.</p>
+                    
 
                 </div>
 
@@ -248,8 +483,6 @@
                             <textarea class="ann-textarea" name="message" maxlength="3000" required>{{ old('message', $editing?->message) }}</textarea>
 
                         </label>
-
-
 
                         <div class="ann-field full">
 
@@ -297,7 +530,7 @@
 
                                     >
 
-                                    <p class="ann-upload-copy">JPG, JPEG, PNG, or WebP · maximum 5 MB · maximum 5000 × 5000 px. The image appears inside the announcement popup.</p>
+                                    
 
                                     @if($editing?->image_path)
 
@@ -425,8 +658,6 @@
 
         </section>
 
-
-
         <section class="ann-panel">
 
             <div class="ann-panel-head">
@@ -442,8 +673,6 @@
                 <span class="ann-badge">{{ number_format($announcements->total()) }} total</span>
 
             </div>
-
-
 
             @forelse($announcements as $announcement)
 
@@ -492,33 +721,57 @@
                     </div>
 
                     <div class="ann-row-actions" aria-label="Announcement actions">
+
                         <a class="ann-icon-action edit" href="{{ route('admin.announcements',['edit'=>$announcement->id]) }}" title="Edit announcement" aria-label="Edit announcement">
+
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>
+
                         </a>
 
                         @if($announcement->status === 'published')
+
                             <form method="POST" action="{{ route('admin.announcements.pause',$announcement) }}">
+
                                 @csrf
+
                                 <button class="ann-icon-action toggle" type="submit" title="Pause announcement" aria-label="Pause announcement">
+
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6v12"></path><path d="M15 6v12"></path></svg>
+
                                 </button>
+
                             </form>
+
                         @else
+
                             <form method="POST" action="{{ route('admin.announcements.publish',$announcement) }}">
+
                                 @csrf
+
                                 <button class="ann-icon-action toggle" type="submit" title="Publish / resume announcement" aria-label="Publish or resume announcement">
+
                                     <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5.4v13.2c0 .8.9 1.3 1.6.9l9.7-6.6a1.1 1.1 0 0 0 0-1.8L9.6 4.5A1.1 1.1 0 0 0 8 5.4Z"></path></svg>
+
                                 </button>
+
                             </form>
+
                         @endif
 
                         <form method="POST" action="{{ route('admin.announcements.destroy',$announcement) }}" onsubmit="return confirm('Delete this announcement?')">
+
                             @csrf
+
                             @method('DELETE')
+
                             <button class="ann-icon-action delete" type="submit" title="Delete announcement" aria-label="Delete announcement">
+
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="m6 7 1 13h10l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+
                             </button>
+
                         </form>
+
                     </div>
 
                 </article>
@@ -528,8 +781,6 @@
                 <div class="ann-empty">No platform announcements have been created yet.</div>
 
             @endforelse
-
-
 
             @if($announcements->hasPages())
 
@@ -543,8 +794,6 @@
 
 </div>
 
-
-
 <script>
 
     (() => {
@@ -555,17 +804,11 @@
 
         const remove = document.querySelector('[data-announcement-remove-image]');
 
-
-
         if (!input || !preview) return;
-
-
 
         let objectUrl = null;
 
-        const originalMarkup = preview\.innerHTML;
-
-
+        const originalMarkup = preview.innerHTML;
 
         const clearObjectUrl = () => {
 
@@ -579,27 +822,19 @@
 
         };
 
-
-
         const restoreOriginal = () => {
 
             clearObjectUrl();
 
-            preview\.innerHTML = originalMarkup;
+            preview.innerHTML = originalMarkup;
 
         };
-
-
 
         input.addEventListener('change', () => {
 
             clearObjectUrl();
 
-
-
             const file = input.files?.[0];
-
-
 
             if (!file) {
 
@@ -608,8 +843,6 @@
                 return;
 
             }
-
-
 
             if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
 
@@ -621,8 +854,6 @@
 
             }
 
-
-
             objectUrl = URL.createObjectURL(file);
 
             const image = document.createElement('img');
@@ -631,9 +862,7 @@
 
             image.alt = 'Announcement image preview';
 
-            preview\.replaceChildren(image);
-
-
+            preview.replaceChildren(image);
 
             if (remove) {
 
@@ -642,8 +871,6 @@
             }
 
         });
-
-
 
         remove?.addEventListener('change', () => {
 
@@ -663,133 +890,216 @@
 
         });
 
-
-
-        window\.addEventListener('beforeunload', clearObjectUrl, { once: true });
+        window.addEventListener('beforeunload', clearObjectUrl, { once: true });
 
     })();
 
-
-
     (() => {
+
         const SELECT_SELECTOR = '.ann-select';
 
         function closeAll(except = null) {
+
             document.querySelectorAll('.ann-select-wrap.is-open').forEach(wrap => {
+
                 if (wrap === except) return;
+
                 wrap.classList.remove('is-open');
+
                 wrap.querySelector('.ann-select-trigger')?.setAttribute('aria-expanded','false');
+
             });
+
         }
 
         function enhanceSelect(select) {
+
             if (!select || select.dataset.enhanced === '1') return;
+
             select.dataset.enhanced = '1';
+
             select.classList.add('ann-native-select');
 
             const wrap = document.createElement('div');
+
             wrap.className = 'ann-select-wrap';
+
             select.parentNode.insertBefore(wrap, select);
+
             wrap.appendChild(select);
 
             const trigger = document.createElement('button');
+
             trigger.type = 'button';
+
             trigger.className = 'ann-select-trigger';
+
             trigger.setAttribute('aria-haspopup','listbox');
+
             trigger.setAttribute('aria-expanded','false');
+
             trigger.innerHTML = '<span class="ann-select-trigger-label"></span><svg class="ann-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 10 5 5 5-5"></path></svg>';
 
             const menu = document.createElement('div');
+
             menu.className = 'ann-select-menu';
+
             menu.setAttribute('role','listbox');
 
             const sync = () => {
+
                 const selected = select.options[select.selectedIndex] || select.options[0];
+
                 trigger.querySelector('.ann-select-trigger-label').textContent = selected?.textContent?.trim() || 'Select';
+
                 [...menu.querySelectorAll('.ann-select-option')].forEach((button, index) => {
+
                     const active = index === select.selectedIndex;
+
                     button.classList.toggle('is-selected',active);
+
                     button.setAttribute('aria-selected',active ? 'true' : 'false');
+
                 });
+
             };
 
             [...select.options].forEach((option,index) => {
+
                 const button = document.createElement('button');
+
                 button.type = 'button';
+
                 button.className = 'ann-select-option';
+
                 button.setAttribute('role','option');
+
                 button.dataset.index = String(index);
+
                 button.innerHTML = `<span>${option.textContent.trim()}</span><span class="ann-select-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 12 4 4 8-9"></path></svg></span>`;
+
                 button.addEventListener('click',() => {
+
                     select.selectedIndex = index;
+
                     select.dispatchEvent(new Event('change',{bubbles:true}));
+
                     sync();
+
                     wrap.classList.remove('is-open');
+
                     trigger.setAttribute('aria-expanded','false');
+
                     trigger.focus();
+
                 });
+
                 menu.appendChild(button);
+
             });
 
             trigger.addEventListener('click',event => {
+
                 event.preventDefault();
+
                 event.stopPropagation();
+
                 const willOpen = !wrap.classList.contains('is-open');
+
                 closeAll(wrap);
+
                 wrap.classList.toggle('is-open',willOpen);
+
                 trigger.setAttribute('aria-expanded',willOpen ? 'true' : 'false');
+
                 if (willOpen) menu.querySelector('.ann-select-option.is-selected')?.focus({preventScroll:true});
+
             });
 
             trigger.addEventListener('keydown',event => {
+
                 if (!['ArrowDown','ArrowUp','Enter',' '].includes(event.key)) return;
+
                 event.preventDefault();
+
                 if (!wrap.classList.contains('is-open')) trigger.click();
+
             });
 
             menu.addEventListener('keydown',event => {
+
                 const options = [...menu.querySelectorAll('.ann-select-option')];
+
                 const current = options.indexOf(document.activeElement);
+
                 if (event.key === 'Escape') {
+
                     event.preventDefault();
+
                     wrap.classList.remove('is-open');
+
                     trigger.setAttribute('aria-expanded','false');
+
                     trigger.focus();
+
                     return;
+
                 }
+
                 if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+
                     event.preventDefault();
+
                     const step = event.key === 'ArrowDown' ? 1 : -1;
+
                     const next = Math.max(0,Math.min(options.length-1,current + step));
+
                     options[next]?.focus();
+
                     return;
+
                 }
+
                 if ((event.key === 'Enter' || event.key === ' ') && current >= 0) {
+
                     event.preventDefault();
+
                     options[current].click();
+
                 }
+
             });
 
             select.addEventListener('change',sync);
+
             wrap.appendChild(trigger);
+
             wrap.appendChild(menu);
+
             sync();
+
         }
 
         function initAnnouncementSelects() {
+
             document.querySelectorAll(SELECT_SELECTOR).forEach(enhanceSelect);
+
         }
 
         document.addEventListener('click',event => {
+
             if (!event.target.closest('.ann-select-wrap')) closeAll();
+
         });
+
         document.addEventListener('keydown',event => { if (event.key === 'Escape') closeAll(); });
+
         document.addEventListener('livewire:navigated',initAnnouncementSelects);
+
         initAnnouncementSelects();
+
     })();
 
 </script>
-
-
 
 @endsection

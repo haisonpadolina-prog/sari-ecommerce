@@ -9132,9 +9132,254 @@
         }
     }
 
+
+    /* SARI dashboard parity: white containers, gray supporting surfaces. */
+    .sari-admin-dashboard {
+        --dashboard-surface-shadow: 0 2px 5px rgba(15,23,42,.045),0 10px 24px rgba(15,23,42,.075),0 24px 54px rgba(15,23,42,.095),inset 0 1px 0 rgba(255,255,255,.92);
+        width: 100%;
+        max-width: 1640px !important;
+        min-width: 0;
+        padding-bottom: 32px;
+        color: #29323b;
+        container-type: inline-size;
+    }
+    .sari-admin-dashboard :is(.admin-kpi,.admin-panel,.sari-sales-clean-card,.sari-reg-clean-card,.sari-health-card,.sari-ops-card,.sari-monitor-card) {
+        min-width: 0;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 17px !important;
+        background: #fff !important;
+        box-shadow: var(--dashboard-surface-shadow) !important;
+        transform: none !important;
+    }
+    .sari-admin-dashboard :is(.sari-dashboard-primary-grid,.sari-dashboard-secondary-grid,.sari-dashboard-focus-journey-grid,.sari-dashboard-bottom-grid) { gap: 18px !important; margin-top: 18px !important; }
+    .sari-admin-dashboard .sari-dashboard-health-role-grid { grid-template-columns: minmax(0,1fr) !important; }
+    .sari-admin-dashboard #adminRoleControl { width: 100% !important; min-width: 0 !important; }
+    .sari-admin-dashboard .admin-kpi { min-height: 110px; padding: 17px 16px !important; }
+    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:first-child { font-size: 11.5px !important; color: #707b86 !important; }
+    .sari-admin-dashboard .admin-kpi > div:first-child > div:first-child > p:nth-child(2) { font-size: clamp(22px,1.6vw,26px) !important; line-height: 1.2 !important; white-space: normal; overflow-wrap: anywhere; }
+    .sari-admin-dashboard .admin-kpi > div:last-child { flex-wrap: wrap; }
+    .sari-admin-dashboard .admin-kpi > div:last-child > span { font-size: 10px !important; }
+    .sari-admin-dashboard .admin-kpi .admin-icon-box,
+    .sari-admin-dashboard .admin-kpi .admin-icon-box svg { width: 22px !important; height: 22px !important; min-width: 22px !important; min-height: 22px !important; flex-basis: 22px !important; }
+    .sari-admin-dashboard :is(.sari-sales-clean-title,.sari-reg-clean-title,.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title,.sari-platform-activity-title) { color: #29323b !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35 !important; }
+    .sari-admin-dashboard :is(.sari-sales-clean-subtitle,.sari-reg-clean-subtitle,.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle,.sari-platform-activity-subtitle) { color: #707b86 !important; font-size: 10.5px !important; line-height: 1.55 !important; }
+    .sari-admin-dashboard :is(.sari-sales-clean-head,.sari-reg-clean-head,.sari-ops-head,.sari-monitor-head,.sari-category-head,.sari-platform-activity-head) { padding: 16px 18px !important; gap: 12px !important; flex-wrap: wrap; }
+    .sari-admin-dashboard :is(.sari-health-card,.sari-ops-card,.sari-monitor-card) { padding: 18px !important; }
+    .sari-admin-dashboard .sari-health-card .sari-health-header { gap: 12px; flex-wrap: wrap; }
+    .sari-admin-dashboard :is(.admin-focus-chip,.admin-view-button,.sari-health-action,.sari-ops-action,.sari-category-action) { min-height: 34px !important; font-size: 11px !important; border-radius: 9px !important; }
+    .sari-admin-dashboard .admin-focus-chip { border-color: #dfe3e8 !important; background: #fff !important; color: #596579 !important; box-shadow: none !important; }
+    .sari-admin-dashboard .admin-focus-chip.is-active { background: #eef2f6 !important; border-color: #d7dee6 !important; color: #29323b !important; }
+    .sari-admin-dashboard :is(.admin-focus-chip,.admin-view-button,.sari-health-action,.sari-ops-action,.sari-category-action):hover { background: #f3f5f7 !important; color: #475467 !important; }
+    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row) { background: #fff !important; }
+    .sari-admin-dashboard :is(.sari-role-row,.sari-reg-clean-row,.sari-platform-activity-row):hover { background: #f7f9fb !important; }
+    .sari-admin-dashboard :is(.sari-role-name,.sari-reg-clean-name,.sari-platform-activity-name,.sari-category-name) { color: #29323b !important; font-size: 12px !important; line-height: 1.45 !important; }
+    .sari-admin-dashboard :is(.sari-reg-clean-time,.sari-platform-activity-body,.sari-platform-activity-time,.sari-category-subtitle) { color: #707b86 !important; font-size: 10.5px !important; }
+    .sari-admin-dashboard :is(.sari-role-pending,.sari-sales-clean-period) { background: #f3f5f7 !important; border-color: #dfe5ec !important; color: #596579 !important; }
+    .sari-admin-dashboard .sari-sales-period-option.is-active { background: #eef2f6 !important; color: #475467 !important; }
+    .sari-admin-dashboard .sari-sales-period-popover { border-radius: 12px; background: #fff !important; box-shadow: 0 18px 42px rgba(31,41,55,.13),0 4px 12px rgba(31,41,55,.04) !important; }
+    .sari-admin-dashboard .sari-sales-period-option { min-height: 39px; font-size: 11.5px; }
+    .sari-admin-dashboard :is(button,a,input,summary):focus-visible { outline: 2px solid #64748b !important; outline-offset: 3px; }
+    #adminFocusDrawer > .p-5 > div:first-child { border-color: #e5e7eb !important; background: #f7f9fb !important; }
+    #adminDrawerRole { background: #eef2f6 !important; color: #596579 !important; }
+    #adminMarkReviewed { border-color: #dfe5ec !important; background: #f3f5f7 !important; color: #475467 !important; }
+    @container (max-width: 1100px) {
+        .sari-admin-dashboard .sari-dashboard-primary-grid,
+        .sari-admin-dashboard .sari-dashboard-focus-journey-grid,
+        .sari-admin-dashboard .sari-dashboard-bottom-grid { grid-template-columns: minmax(0,1fr) !important; }
+    }
+    @media (max-width: 767px) {
+        .sari-admin-dashboard :is(.admin-kpi,.admin-panel,.sari-sales-clean-card,.sari-reg-clean-card,.sari-health-card,.sari-ops-card,.sari-monitor-card) { border-radius: 14px !important; box-shadow: 0 2px 4px rgba(15,23,42,.035),0 8px 18px rgba(15,23,42,.06),0 18px 38px rgba(15,23,42,.07) !important; }
+        .sari-admin-dashboard :is(.sari-dashboard-primary-grid,.sari-dashboard-secondary-grid,.sari-dashboard-focus-journey-grid,.sari-dashboard-bottom-grid) { gap: 14px !important; margin-top: 14px !important; }
+        .sari-admin-dashboard :is(.sari-sales-clean-title,.sari-reg-clean-title,.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title,.sari-platform-activity-title) { font-size: 15px !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .sari-admin-dashboard * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+/* Clean operational panels — no icon tiles, cream surfaces or decorative gradients. */
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){min-width:0!important;border:1px solid #E5E7EB!important;border-radius:18px!important;background:#FFF!important;background-image:none!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important;transform:none!important;overflow:hidden!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus{padding:20px!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){padding:0!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-ops-head,.sari-monitor-head,.sari-category-head){display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;flex-wrap:wrap!important;margin:0!important;padding:20px 20px 16px!important;border:0!important;border-bottom:1px solid #EDF0F3!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-title,.sari-ops-title,.sari-monitor-title,.sari-category-title){margin:0!important;color:#293440!important;font-size:16px!important;font-weight:650!important;line-height:1.4!important;letter-spacing:-.02em!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-subtitle,.sari-ops-subtitle,.sari-monitor-subtitle,.sari-category-subtitle){margin:5px 0 0!important;font-size:11.5px!important;line-height:1.6!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-health-action,.sari-ops-action,.sari-monitor-action,.sari-category-action){display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:32px!important;padding:6px 10px!important;border:1px solid #E5E7EB!important;border-radius:9px!important;background:#FFF!important;color:#526173!important;box-shadow:none!important;font-size:10.5px!important;font-weight:600!important;line-height:1.4!important;text-decoration:none!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(button,a):hover{transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(button,a):focus-visible{outline:2px solid #64748B!important;outline-offset:3px!important}
+/* Icons remain, their old circles/tiles do not. */
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-focus-icon-v2,.sari-journey-icon,.sari-journey-status-icon,.sari-risk-state-icon,.sari-risk-empty-icon,.sari-category-icon,.sari-category-head-icon,.sari-monitor-head-icon,.sari-ops-head-icon){display:inline-flex!important;align-items:center!important;justify-content:center!important;width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;flex:0 0 26px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-focus-icon-v2,.sari-journey-icon,.sari-journey-status-icon,.sari-risk-state-icon,.sari-risk-empty-icon,.sari-category-icon,.sari-category-head-icon) svg{width:23px!important;height:23px!important;stroke-width:1.7!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-health-header{padding:0 0 16px!important;border-bottom:1px solid #EDF0F3!important;gap:12px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-list-v2{margin:0!important;padding:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2{display:grid!important;grid-template-columns:26px minmax(0,1fr) 34px 62px 14px!important;align-items:center!important;gap:12px!important;min-height:78px!important;padding:16px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-align:left!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2:last-child{border-bottom:0!important;padding-bottom:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-title-v2{font-size:12px!important;font-weight:600!important;line-height:1.5!important;color:#344254!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-copy-v2{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:#788598!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-count-v2{font-size:20px!important;line-height:1.2!important;font-weight:600!important;color:#293440!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid #E2E8F0!important;border-radius:7px!important;background:#F1F5F9!important;color:#475569!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:#F0FDF4!important;border-color:#DCFCE7!important;color:#166534!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-chevron-v2{color:#94A3B8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2{margin-top:16px!important;padding:18px 0!important;border:0!important;background:transparent!important;color:#526173!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-empty-v2 span:first-child{width:26px!important;height:26px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#64748B!important;box-shadow:none!important}
+/* Six recorded stages, plain icons and fine connectors. */
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-body{padding:20px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-scroll{overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:thin!important;padding:0 0 4px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-track{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:0!important;min-width:480px!important;width:100%!important;margin:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step{padding:4px 3px!important;text-align:center!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-icon{margin:0 auto!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:not(:last-child)::after{top:17px!important;left:calc(50% + 20px)!important;width:calc(100% - 40px)!important;height:1px!important;background:#E2E8F0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-name{margin-top:10px!important;color:#788598!important;font-size:10.5px!important;line-height:1.5!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-count{margin-top:5px!important;color:#293440!important;font-size:23px!important;font-weight:600!important;line-height:1.25!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:18px 0 0!important;padding:14px!important;border:1px solid #E5E7EB!important;border-radius:12px!important;background:#F8FAFC!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title{font-size:11.5px!important;font-weight:600!important;line-height:1.5!important;color:#475569!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status-copy,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:4px!important;font-size:10.5px!important;line-height:1.65!important;color:#788598!important}
+/* Risk rows: compact, unclipped and readable. */
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:4px 20px 20px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-list{gap:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) 42px!important;gap:12px!important;align-items:center!important;min-height:64px!important;padding:14px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:11.5px!important;font-weight:500!important;line-height:1.65!important;color:#475569!important;white-space:normal!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{font-size:9px!important;color:#788598!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#3F9275!important;width:5px!important;height:5px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-empty{background:transparent!important;border:0!important;padding:20px 0!important}
+/* Rider capacity remains a real chart, with a neutral supporting surface. */
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-body{padding:20px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{display:grid!important;grid-template-columns:150px minmax(0,1fr)!important;align-items:center!important;gap:24px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2{width:144px!important;height:144px!important;border:0!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-center{background:#FFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:#293440!important;font-size:29px!important;line-height:1.2!important;font-weight:600!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total-label{font-size:10.5px!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat{padding:9px 0!important;border-bottom:1px solid #EDF0F3!important;background:transparent!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-name{font-size:11.5px!important;color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-stat-value{font-size:13px!important;font-weight:600!important;color:#344254!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;margin-top:20px!important;padding:16px 0 0!important;border:0!important;border-top:1px solid #EDF0F3!important;background:transparent!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item{padding:0 12px!important;border:0!important;border-right:1px solid #EDF0F3!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:first-child{padding-left:0!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:last-child{border-right:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-label{font-size:10.5px!important;line-height:1.5!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-value{font-size:22px!important;font-weight:600!important;line-height:1.3!important;color:#344254!important;margin-top:5px!important}
+/* Category chart colors are functional; icon backgrounds are removed. */
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-layout{display:grid!important;grid-template-columns:180px minmax(0,1fr)!important;gap:24px!important;padding:22px 20px!important;align-items:center!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut{width:160px!important;height:160px!important;box-shadow:none!important;border:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::before{inset:13px!important;background:#FFF!important;box-shadow:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut::after{display:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-value{font-size:30px!important;font-weight:600!important;color:#293440!important;line-height:1.2!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown :is(.sari-category-donut-label,.sari-category-donut-meta){font-size:10.5px!important;line-height:1.5!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-accent{display:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-row{display:flex!important;align-items:center!important;gap:14px!important;min-height:65px!important;padding:12px 0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-row:last-child{border-bottom:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-name{font-size:12px!important;font-weight:500!important;color:#475569!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-percent{font-size:11.5px!important;font-weight:600!important;color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-progress{height:4px!important;margin-top:9px!important;border-radius:99px!important;background:#EEF2F6!important;box-shadow:none!important}
+@media(max-width:640px){.sari-admin-dashboard.dashboard-clean-ops :is(#adminTodayFocus,#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown){border-radius:14px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops :is(#adminOrderJourney,#adminInterventionRadar,#adminRiderOverview,#adminCategoryBreakdown) :is(.sari-ops-head,.sari-monitor-head,.sari-category-head){padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-row-v2{grid-template-columns:24px minmax(0,1fr) 30px!important;gap:10px!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-badge-v2{grid-column:2!important;justify-self:start!important}.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus .sari-focus-chevron-v2{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-body,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-body{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 16px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{grid-template-columns:60px minmax(0,1fr)!important;gap:10px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{grid-template-columns:120px minmax(0,1fr)!important;gap:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2{width:116px!important;height:116px!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-layout{grid-template-columns:minmax(0,1fr)!important;gap:18px!important;padding:18px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminCategoryBreakdown .sari-category-donut-wrap{justify-self:center!important}}
+@media(max-width:380px){.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-main{grid-template-columns:minmax(0,1fr)!important}.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-wrap{justify-self:center!important}}
+
+
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-donut-v2::after{inset:17px!important;background:#FFF!important;box-shadow:none!important}
+
+/* Compact Role Control Center: one strip instead of a tall four-row table. */
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl{padding:0!important;height:auto!important;min-height:0!important;align-self:start!important;border-radius:16px!important;background:#FFF!important;border:1px solid #E5E7EB!important;box-shadow:0 3px 10px rgba(15,23,42,.035),0 12px 30px rgba(15,23,42,.055)!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:13px 16px!important;margin:0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-title{font-size:15px!important;line-height:1.35!important;font-weight:650!important;margin:0!important;color:#293440!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-subtitle{font-size:10.5px!important;line-height:1.45!important;margin-top:3px!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-action{display:inline-flex!important;align-items:center!important;gap:5px!important;min-height:30px!important;padding:5px 9px!important;border:1px solid #E5E7EB!important;border-radius:8px!important;background:#FFF!important;color:#526173!important;font-size:10px!important;font-weight:600!important;box-shadow:none!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-action svg{width:12px!important;height:12px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;padding:0!important;margin:0!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table-head{display:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-content:start!important;align-items:center!important;gap:6px 12px!important;min-width:0!important;min-height:86px!important;height:auto!important;padding:15px 16px!important;border:0!important;border-right:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;transform:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:last-child{border-right:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:hover{background:#F8FAFC!important;transform:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:focus-visible{outline:2px solid #64748B!important;outline-offset:-3px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-name{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;color:#526173!important;font-size:11.5px!important;line-height:1.5!important;font-weight:600!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:20px!important;height:20px!important;min-width:20px!important;flex:0 0 20px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-icon svg{width:18px!important;height:18px!important;stroke-width:1.7!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-value{font-size:22px!important;line-height:1.2!important;font-weight:600!important;color:#293440!important;font-variant-numeric:tabular-nums}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-pending{grid-column:1/-1!important;display:block!important;width:auto!important;min-width:0!important;min-height:0!important;height:auto!important;margin:0!important;padding:0 0 0 28px!important;border:0!important;border-radius:0!important;background:transparent!important;color:#788598!important;box-shadow:none!important;font-size:10px!important;line-height:1.5!important;font-weight:400!important;white-space:normal!important;text-align:left!important;overflow:visible!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-chevron{display:none!important}
+@media(max-width:1000px){.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-table{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(2){border-right:0!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row:nth-of-type(-n+2){border-bottom:1px solid #EDF0F3!important}}
+@media(max-width:480px){.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-head{align-items:flex-start!important;padding:12px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-ops-subtitle{max-width:210px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-row{padding:12px!important;gap:6px 8px!important}.sari-admin-dashboard.dashboard-clean-ops #adminRoleControl .sari-role-value{font-size:20px!important}}
+
+
+/* Semantic red/blue/gold accents — Radar and Rider Overview only. */
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{border-color:#E8D7B2!important;color:#92600B!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.high{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{background:#FFF!important;border-color:#E8D7B2!important;color:#92600B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{background:#EFF6FF!important;border-color:#BFDBFE!important;color:#1D4ED8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#2563EB!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{background:#FFF!important;border-color:#E8D7B2!important;border-left:3px solid #C88912!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{color:#92600B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-monitor-action{border-color:#BFDBFE!important;color:#1D4ED8!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-total{color:#1D4ED8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="On Delivery"] .sari-rider-stat-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Logistics"] .sari-rider-stat-value{color:#1D4ED8!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Idle"] .sari-rider-stat-value{color:#92600B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Offline"] .sari-rider-stat-value{color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Open Issues"] .sari-rider-stat-value{color:#B91C1C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:first-child .sari-rider-summary-value{color:#92600B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(2) .sari-rider-summary-value,.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview .sari-rider-summary-item:nth-child(3) .sari-rider-summary-value{color:#1D4ED8!important}
+
+
+/* Intervention Radar — larger readable rows, requested badge colors, neutral callout edges. */
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-head{align-items:center!important;gap:14px!important;padding:20px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-title{font-size:19px!important;font-weight:650!important;line-height:1.35!important;color:#293440!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-subtitle{font-size:12px!important;line-height:1.6!important;margin-top:5px!important;color:#727D8C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-action{min-height:36px!important;padding:7px 12px!important;font-size:11.5px!important;line-height:1.4!important;color:#92600B!important;border:1px solid #E2D2AE!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 20px 20px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-list{display:grid!important;gap:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{display:grid!important;grid-template-columns:76px minmax(0,1fr) 44px!important;align-items:center!important;gap:14px!important;min-height:76px!important;margin:0!important;padding:18px 0!important;border:0!important;border-bottom:1px solid #EDF0F3!important;border-radius:0!important;background:#FFF!important;box-shadow:none!important;text-decoration:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item:hover{background:#F8FAFC!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item:last-child{border-bottom:0!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill{min-height:29px!important;padding:5px 10px!important;font-size:11.5px!important;line-height:1.4!important;font-weight:600!important;border-radius:8px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.low{color:#B91C1C!important;border:1px solid #FECACA!important;background:#FEF2F2!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{color:#92600B!important;border:1px solid #E2D2AE!important;background:#FFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-name{font-size:13px!important;line-height:1.65!important;font-weight:500!important;letter-spacing:0!important;color:#3F4B5A!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:inline-flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;font-size:10.5px!important;line-height:1.4!important;color:#788598!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{width:5px!important;height:5px!important;background:#94A3B8!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert{display:flex!important;align-items:flex-start!important;gap:12px!important;margin:10px 0 0!important;padding:16px!important;border:1px solid #E5E7EB!important;border-left:1px solid #E5E7EB!important;border-radius:12px!important;background:#F8FAFC!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state::before,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state::after{display:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state .sari-risk-state-icon,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-icon{width:24px!important;height:24px!important;min-width:24px!important;flex-basis:24px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-title,.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state.is-alert .sari-risk-state-title{font-size:14px!important;font-weight:600!important;line-height:1.5!important;color:#344254!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state-copy{margin-top:5px!important;font-size:12px!important;line-height:1.7!important;color:#727D8C!important}
+@media(max-width:640px){.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-head{padding:16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-monitor-title{font-size:18px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-body{padding:0 16px 16px!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-item{grid-template-columns:72px minmax(0,1fr)!important;gap:12px!important;min-height:72px!important;padding:16px 0!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live{display:none!important}.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-state{padding:14px!important}}
+
+
+/* Focus and journey — requested status colors, plain icons and neutral borders. */
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-badge-v2{background:#FEF2F2!important;border-color:#FECACA!important;color:#B91C1C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-badge-v2{background:#FEF9C3!important;border-color:#FDE68A!important;color:#854D0E!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="High"] .sari-focus-icon-v2{color:#B91C1C!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Medium"] .sari-focus-icon-v2{color:#B58118!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminTodayFocus [data-severity="Low"] .sari-focus-icon-v2{color:#B35C57!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(1) .sari-journey-icon{color:#64748B!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(2) .sari-journey-icon{color:#A97920!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(3) .sari-journey-icon{color:#B18A42!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(4) .sari-journey-icon{color:#B35C57!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(5) .sari-journey-icon{color:#4F6F95!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-step:nth-child(6) .sari-journey-icon{color:#50806A!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert{background:#FFF!important;border:1px solid #E5E7EB!important;border-left:1px solid #E5E7EB!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-title{color:#B91C1C!important;font-size:13px!important;font-weight:600!important;line-height:1.5!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-copy{color:#A64B46!important;font-size:11.5px!important;line-height:1.65!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminOrderJourney .sari-journey-status.is-alert .sari-journey-status-icon{color:#B91C1C!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+
+
+/* Match the Focus Medium badge exactly; online/live indicators use green. */
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-pill.medium{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:25px!important;padding:4px 8px!important;border:1px solid #FDE68A!important;border-radius:7px!important;background:#FEF9C3!important;color:#854D0E!important;font-size:10px!important;font-weight:600!important;line-height:1.3!important;white-space:nowrap!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminInterventionRadar .sari-risk-live-dot{background:#16A34A!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-dot{background:#16A34A!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-value{color:#15803D!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminRiderOverview [data-stat="Online"] .sari-rider-stat-name{color:#15803D!important}
+
+
+/* Unfilled header actions, raised registration link, black focus buttons. */
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action{background:transparent!important;background-image:none!important;border:1px solid #E5E7EB!important;color:#4B5563!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops :is(#adminInterventionRadar,#adminRiderOverview) .sari-monitor-head > .sari-monitor-action:hover{background:transparent!important;border-color:#9CA3AF!important;color:#111827!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head{display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:space-between!important;flex-wrap:nowrap!important;gap:12px!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > div{flex:1 1 auto!important;min-width:0!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all{display:inline-flex!important;align-items:center!important;justify-content:center!important;align-self:flex-start!important;flex:0 0 auto!important;margin:-8px 0 0 auto!important;position:static!important;float:none!important;white-space:nowrap!important;font-size:12px!important;font-weight:600!important;line-height:1.4!important;min-height:34px!important;padding:8px 12px!important;border:1px solid #E5E7EB!important;border-radius:8px!important;background:transparent!important;background-image:none!important;color:#374151!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops .sari-reg-clean-card .sari-reg-clean-head > .sari-reg-clean-view-all:hover{background:transparent!important;border-color:#9CA3AF!important;color:#111827!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip,.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{background:#111111!important;background-image:none!important;border:1px solid #111111!important;color:#FFFFFF!important;box-shadow:none!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip:hover{background:#292929!important;border-color:#292929!important;color:#FFFFFF!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip.is-active{outline:2px solid #9CA3AF!important;outline-offset:2px!important}
+.sari-admin-dashboard.dashboard-clean-ops #adminControlTower button.admin-focus-chip:focus-visible{outline:2px solid #B18A42!important;outline-offset:3px!important}
+
 </style>
 
-<div class="sari-admin-dashboard mx-auto w-full max-w-[1800px]">
+<div class="sari-admin-dashboard dashboard-clean-ops mx-auto w-full max-w-[1800px]">
 
     @php
         $live = $adminDashboardLive ?? [];
@@ -9185,7 +9430,7 @@
                 return $item;
             });
 
-        $categoryColors = ['#d7a325', '#284b73', '#2f9b7c', '#c38a42'];
+        $categoryColors = ['#64748B', '#3B82F6', '#0D9488', '#94A3B8'];
         $categoryRows = collect($liveCategories['items'] ?? [])->take(4)->values()->map(function ($item, $index) use ($categoryColors) {
             return [
                 'name' => $item['name'] ?? 'Uncategorized',
@@ -9221,7 +9466,7 @@
                 <p class="sari-hero-kicker">SARI Marketplace</p>
 
                 <h2 id="adminGreeting" class="sari-hero-title">
-                    <span id="adminGreetingText">Good morning, Admin!</span>
+                    <span id="adminGreetingText" data-admin-name="{{ trim((string) (\App\Models\Accounts\AdminAccount::query()->find((int) session('admin_account_id'))?->name ?? 'Admin')) }}">Welcome, Admin!</span>
                     <span class="sari-hero-wave" aria-hidden="true">
                         <i class="fi fi-ts-hand-wave"></i>
                     </span>
@@ -9430,247 +9675,7 @@
         <div class="sari-dashboard-secondary-grid sari-dashboard-health-role-grid">
 
 {{-- Marketplace Health --}}
-        <section id="adminMarketplaceHealth" class="sari-health-card p-5 sm:p-6">
-            <div class="sari-health-header">
-                <div class="sari-health-heading">
-                    <div class="min-w-0">
-                        <h4 class="sari-health-title">Marketplace Health</h4>
-                        <p class="sari-health-subtitle">Operational health across the full marketplace</p>
-                    </div>
-                </div>
-
-                <div class="sari-health-actions">
-                    <span class="sari-health-stable">
-                        <span class="h-2 w-2 rounded-full bg-[#3d9666]"></span>
-                        Stable
-                    </span>
-                    <a href="{{ $liveUrls['reports'] ?? '#' }}" class="sari-health-action">
-                        View Details
-                        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            @php
-                $healthMetrics = [
-                    [
-                        'key' => 'order_success',
-                        'label' => 'Order Success Rate',
-                        'value' => number_format((float) ($liveHealth['order_success'] ?? 0), 1) . '%',
-                        'width' => max(0, min(100, (float) ($liveHealth['order_success'] ?? 0))) . '%',
-                        'note' => 'Delivered vs terminal orders',
-                        'icon' => 'cart',
-                    ],
-                    [
-                        'key' => 'fulfillment',
-                        'label' => 'Fulfillment Health',
-                        'value' => number_format((float) ($liveHealth['fulfillment'] ?? 0), 1) . '%',
-                        'width' => max(0, min(100, (float) ($liveHealth['fulfillment'] ?? 0))) . '%',
-                        'note' => 'Current delivery flow',
-                        'icon' => 'box',
-                    ],
-                    [
-                        'key' => 'seller_active',
-                        'label' => 'Seller Active Rate',
-                        'value' => number_format((float) ($liveHealth['seller_active'] ?? 0), 1) . '%',
-                        'width' => max(0, min(100, (float) ($liveHealth['seller_active'] ?? 0))) . '%',
-                        'note' => 'Active seller accounts',
-                        'icon' => 'users',
-                    ],
-                    [
-                        'key' => 'registration_approval',
-                        'label' => 'Registration Approval',
-                        'value' => number_format((float) ($liveHealth['registration_approval'] ?? 0), 1) . '%',
-                        'width' => max(0, min(100, (float) ($liveHealth['registration_approval'] ?? 0))) . '%',
-                        'note' => 'Reviewed applications',
-                        'icon' => 'file',
-                    ],
-                ];
-            @endphp
-
-            @php
-                $chartMetrics = collect($healthMetrics)->map(function ($metric) use ($liveHealth) {
-                    $shortLabel = match ($metric['key']) {
-                        'order_success' => 'Order Success',
-                        'fulfillment' => 'Fulfillment',
-                        'seller_active' => 'Seller Active',
-                        'registration_approval' => 'Approval',
-                        default => $metric['label'],
-                    };
-
-                    return [
-                        'key' => $metric['key'],
-                        'label' => $shortLabel,
-                        'raw' => max(0, min(100, (float) ($liveHealth[$metric['key']] ?? 0))),
-                        'display' => $metric['value'],
-                    ];
-                })->values();
-
-                $chartWidth = 760;
-                $chartHeight = 246;
-                $chartPadLeft = 38;
-                $chartPadRight = 24;
-                $chartPadTop = 18;
-                $chartPadBottom = 16;
-                $plotWidth = $chartWidth - $chartPadLeft - $chartPadRight;
-                $plotHeight = $chartHeight - $chartPadTop - $chartPadBottom;
-                $chartBaseline = $chartPadTop + $plotHeight;
-                $chartGridValues = [20, 40, 60, 80];
-
-                $seriesStyles = [
-                    ['class' => 'is-order', 'peakA' => 78, 'peakB' => 34, 'peakC' => 66],
-                    ['class' => 'is-fulfillment', 'peakA' => 56, 'peakB' => 82, 'peakC' => 44],
-                    ['class' => 'is-seller', 'peakA' => 24, 'peakB' => 64, 'peakC' => 18],
-                    ['class' => 'is-approval', 'peakA' => 12, 'peakB' => 20, 'peakC' => 10],
-                ];
-
-                $profileXs = [
-                    $chartPadLeft,
-                    round($chartPadLeft + ($plotWidth * .16), 1),
-                    round($chartPadLeft + ($plotWidth * .32), 1),
-                    round($chartPadLeft + ($plotWidth * .50), 1),
-                    round($chartPadLeft + ($plotWidth * .70), 1),
-                    round($chartPadLeft + ($plotWidth * .86), 1),
-                    $chartWidth - $chartPadRight,
-                ];
-
-                $chartSeries = $chartMetrics->values()->map(function ($metric, $index) use (
-                    $seriesStyles,
-                    $profileXs,
-                    $chartBaseline,
-                    $plotHeight,
-                    $chartPadTop
-                ) {
-                    $style = $seriesStyles[$index] ?? $seriesStyles[0];
-
-                    $values = [
-                        6,
-                        $style['peakA'],
-                        max(8, $style['peakA'] - 18),
-                        $style['peakB'],
-                        max(10, $style['peakC']),
-                        max(8, $style['peakC'] - 10),
-                        6,
-                    ];
-
-                    $points = collect($profileXs)->map(function ($x, $pointIndex) use ($values, $chartBaseline, $plotHeight, $chartPadTop) {
-                        $value = $values[$pointIndex] ?? 6;
-                        $y = $chartBaseline - (($value / 100) * $plotHeight);
-                        $y = max($chartPadTop + 5, min($chartBaseline - 4, $y));
-
-                        return ['x' => round($x, 1), 'y' => round($y, 1)];
-                    })->values()->all();
-
-                    $linePath = '';
-                    if (count($points) > 0) {
-                        $linePath = 'M ' . $points[0]['x'] . ' ' . $points[0]['y'];
-
-                        for ($i = 1; $i < count($points); $i++) {
-                            $previous = $points[$i - 1];
-                            $current = $points[$i];
-                            $midX = round(($previous['x'] + $current['x']) / 2, 1);
-
-                            $linePath .= ' C '
-                                . $midX . ' ' . $previous['y'] . ', '
-                                . $midX . ' ' . $current['y'] . ', '
-                                . $current['x'] . ' ' . $current['y'];
-                        }
-                    }
-
-                    $areaPath = $linePath !== ''
-                        ? $linePath
-                            . ' L ' . $profileXs[count($profileXs) - 1] . ' ' . $chartBaseline
-                            . ' L ' . $profileXs[0] . ' ' . $chartBaseline
-                            . ' Z'
-                        : '';
-
-                    return array_merge($metric, [
-                        'class' => $style['class'],
-                        'line_path' => $linePath,
-                        'area_path' => $areaPath,
-                    ]);
-                })->all();
-            @endphp
-
-            <div class="sari-health-main sari-health-main--graph-only">
-                <div class="sari-health-graph-panel sari-health-graph-panel--compact sari-health-graph-panel--white">
-                    <div class="sari-health-graph-head sari-health-graph-head--compact">
-                        <div class="sari-health-graph-copy">
-                            <p class="sari-health-graph-kicker">Health score</p>
-                            <div class="sari-health-graph-score-line">
-                                <strong>{{ $healthScore }}</strong>
-                                <span>out of 100</span>
-                                <em>{{ $healthLabel }}</em>
-                            </div>
-                            <p class="sari-health-graph-description">
-                                {{ $healthScore >= 85
-                                    ? 'Your marketplace is performing well across key operational areas.'
-                                    : ($healthScore >= 70
-                                        ? 'Marketplace performance is stable, with a few areas worth monitoring.'
-                                        : 'Marketplace health needs attention across multiple operational areas.') }}
-                            </p>
-                        </div>
-
-                        <div class="sari-health-graph-side">
-                            <span class="sari-health-graph-side-label">Health profile</span>
-                            <strong>{{ $healthLabel }}</strong>
-                        </div>
-                    </div>
-
-                    <div class="sari-health-graph-canvas sari-health-graph-canvas--compact sari-health-graph-canvas--white">
-                        <svg viewBox="0 0 {{ $chartWidth }} {{ $chartHeight }}" class="sari-health-graph-svg" role="img" aria-label="Current marketplace health mountain profile">
-                            <defs>
-                                <linearGradient id="mhAreaOrder" x1="0" x2="0" y1="0" y2="1">
-                                    <stop offset="0%" stop-color="#A96F10" stop-opacity="0.28"></stop>
-                                    <stop offset="100%" stop-color="#A96F10" stop-opacity="0"></stop>
-                                </linearGradient>
-                                <linearGradient id="mhAreaFulfillment" x1="0" x2="0" y1="0" y2="1">
-                                    <stop offset="0%" stop-color="#D59617" stop-opacity="0.22"></stop>
-                                    <stop offset="100%" stop-color="#D59617" stop-opacity="0"></stop>
-                                </linearGradient>
-                                <linearGradient id="mhAreaSeller" x1="0" x2="0" y1="0" y2="1">
-                                    <stop offset="0%" stop-color="#E2B24B" stop-opacity="0.20"></stop>
-                                    <stop offset="100%" stop-color="#E2B24B" stop-opacity="0"></stop>
-                                </linearGradient>
-                                <linearGradient id="mhAreaApproval" x1="0" x2="0" y1="0" y2="1">
-                                    <stop offset="0%" stop-color="#C79B45" stop-opacity="0.16"></stop>
-                                    <stop offset="100%" stop-color="#C79B45" stop-opacity="0"></stop>
-                                </linearGradient>
-                            </defs>
-
-                            @foreach ($chartGridValues as $gridValue)
-                                @php
-                                    $gridY = $chartBaseline - (($gridValue / 100) * $plotHeight);
-                                @endphp
-                                <line
-                                    x1="{{ $chartPadLeft }}"
-                                    y1="{{ $gridY }}"
-                                    x2="{{ $chartWidth - $chartPadRight }}"
-                                    y2="{{ $gridY }}"
-                                    class="sari-health-graph-grid-line"
-                                ></line>
-                            @endforeach
-
-                            @foreach ($chartSeries as $series)
-                                <path
-                                    d="{{ $series['area_path'] }}"
-                                    class="sari-health-profile-area {{ $series['class'] }}"
-                                ></path>
-                            @endforeach
-
-                            @foreach ($chartSeries as $series)
-                                <path
-                                    d="{{ $series['line_path'] }}"
-                                    class="sari-health-profile-line {{ $series['class'] }}"
-                                ></path>
-                            @endforeach
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
 {{-- Role Control Center --}}
             <section id="adminRoleControl" class="sari-ops-card">
@@ -9779,7 +9784,7 @@
         <div class="sari-ops-pair mt-4 sari-dashboard-focus-journey-grid">
 
 {{-- Today's Focus --}}
-        <section class="sari-health-card p-5 sm:p-6">
+        <section id="adminTodayFocus" class="sari-health-card p-5 sm:p-6">
             <div class="sari-health-header">
                 <div class="sari-health-heading">
                     <div class="min-w-0">
@@ -10097,10 +10102,10 @@
                         $riderSegments = [];
 
                         foreach ([
-                            ['count' => $riderOnDelivery, 'color' => '#3f9275'],
-                            ['count' => $riderIdle, 'color' => '#c99524'],
-                            ['count' => $riderOffline, 'color' => '#8b9295'],
-                            ['count' => $riderAvailable, 'color' => '#73b59c'],
+                            ['count' => $riderOnDelivery, 'color' => '#2563EB'],
+                            ['count' => $riderIdle, 'color' => '#C88912'],
+                            ['count' => $riderOffline, 'color' => '#94A3B8'],
+                            ['count' => $riderAvailable, 'color' => '#60A5FA'],
                         ] as $segment) {
                             if ($segment['count'] <= 0) {
                                 continue;
@@ -10113,18 +10118,18 @@
 
                         $riderDonut = count($riderSegments) > 0
                             ? 'conic-gradient(' . implode(',', $riderSegments) . ')'
-                            : 'conic-gradient(#ece7df 0deg 360deg)';
+                            : 'conic-gradient(#E5E7EB 0deg 360deg)';
                     } else {
-                        $riderDonut = 'conic-gradient(#ece7df 0deg 360deg)';
+                        $riderDonut = 'conic-gradient(#E5E7EB 0deg 360deg)';
                     }
 
                     $riderStats = [
-                        ['label' => 'Online', 'value' => $formatNumber($liveRiders['online'] ?? 0), 'dot' => '#3f9275'],
-                        ['label' => 'On Delivery', 'value' => $formatNumber($liveRiders['on_delivery'] ?? 0), 'dot' => '#3f9275'],
-                        ['label' => 'Idle', 'value' => $formatNumber($liveRiders['idle'] ?? 0), 'dot' => '#c99524'],
-                        ['label' => 'Offline', 'value' => $formatNumber($liveRiders['offline'] ?? 0), 'dot' => '#8b9295'],
-                        ['label' => 'Open Issues', 'value' => $formatNumber($liveRiders['open_issues'] ?? 0), 'dot' => '#d94f4f'],
-                        ['label' => 'Logistics', 'value' => $formatNumber($liveRiders['active_logistics'] ?? 0), 'dot' => '#284b73'],
+                        ['label' => 'Online', 'value' => $formatNumber($liveRiders['online'] ?? 0), 'dot' => '#2563EB'],
+                        ['label' => 'On Delivery', 'value' => $formatNumber($liveRiders['on_delivery'] ?? 0), 'dot' => '#2563EB'],
+                        ['label' => 'Idle', 'value' => $formatNumber($liveRiders['idle'] ?? 0), 'dot' => '#C88912'],
+                        ['label' => 'Offline', 'value' => $formatNumber($liveRiders['offline'] ?? 0), 'dot' => '#94A3B8'],
+                        ['label' => 'Open Issues', 'value' => $formatNumber($liveRiders['open_issues'] ?? 0), 'dot' => '#DC2626'],
+                        ['label' => 'Logistics', 'value' => $formatNumber($liveRiders['active_logistics'] ?? 0), 'dot' => '#2563EB'],
                     ];
                 @endphp
 
@@ -10141,7 +10146,7 @@
 
                         <div class="sari-rider-stats">
                             @foreach ($riderStats as $stat)
-                                <div class="sari-rider-stat">
+                                <div class="sari-rider-stat" data-stat="{{ $stat['label'] }}">
                                     <div class="sari-rider-stat-name">
                                         <span class="sari-rider-stat-dot" style="background: {{ $stat['dot'] }}"></span>
                                         <span>{{ $stat['label'] }}</span>
@@ -10447,14 +10452,16 @@
             hour:'numeric',
             minute:'2-digit',
             hour12:true,
+            timeZone:'Asia/Manila',
         });
-        const dayFormatter = new Intl.DateTimeFormat('en-US', { weekday:'long' });
+        const dayFormatter = new Intl.DateTimeFormat('en-US', { weekday:'long', timeZone:'Asia/Manila' });
         const dateFormatter = new Intl.DateTimeFormat('en-US', {
             month:'long',
             day:'numeric',
             year:'numeric',
+            timeZone:'Asia/Manila',
         });
-        const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local time';
+        const localTimezone = 'Asia/Manila';
 
         function readWeatherCache() {
             try {
@@ -10574,12 +10581,12 @@
 
         function updateAdminClock() {
             const now = new Date();
-            const hour = now.getHours();
+            const hour = Number(new Intl.DateTimeFormat('en-GB', { hour:'numeric', hourCycle:'h23', timeZone:'Asia/Manila' }).format(now));
             const label = hour < 12
                 ? 'Good morning'
                 : (hour < 18 ? 'Good afternoon' : 'Good evening');
 
-            if (greeting) greeting.textContent = `${label}, Admin!`;
+            if (greeting) greeting.textContent = `${label}, ${greeting.dataset.adminName || 'Admin'}!`;
             if (timeNode) timeNode.textContent = timeFormatter.format(now);
             if (dayNode) dayNode.textContent = dayFormatter.format(now);
             if (dateNode) dateNode.textContent = dateFormatter.format(now);
@@ -10674,7 +10681,7 @@
         });
 
         const focusMap = {
-            overview: 'adminMarketplaceHealth',
+            overview: 'adminRoleControl',
             operations: 'adminOrderJourney',
             risk: 'adminInterventionRadar',
             growth: 'adminSalesOverview',

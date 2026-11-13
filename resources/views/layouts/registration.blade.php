@@ -2,6 +2,11 @@
 
 @section('title', 'Register — SARI')
 
+{{-- Same optimized photo as the login page, requested early for the role picker. --}}
+@push('preloads')
+<link rel="preload" as="image" href="{{ asset('images/login-bg-1536.webp') }}" fetchpriority="high">
+@endpush
+
 @section('content')
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -6268,19 +6273,299 @@
     .sari-role-name { font-size: 13px !important; line-height: 1.35 !important; }
     .sari-role-description { font-size: 11px !important; line-height: 1.45 !important; margin-top: 2px !important; }
 
+    /* ============================================================
+       SARI ROLE PICKER — PREMIUM COMPACT, CLEAR PHOTO, CONSISTENT ICONS
+       Presentation only. The existing role selection and links remain intact.
+       ============================================================ */
+
+    /* No photo overlay or CSS blur. The image retains its native sharpness. */
+    .sari-register-shell {
+        max-width: 850px !important;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+    }
+    .sari-register-shell > a[aria-label="Back to SARI home"] {
+        margin-bottom: 11px !important;
+    }
+    .sari-register-shell > a[aria-label="Back to SARI home"] img {
+        width: 130px !important;
+        filter: brightness(0) !important;
+        opacity: .78;
+    }
+    .sari-register-shell > a[aria-label="Back to SARI home"] > span {
+        color: #654c30 !important;
+        font-size: 8px !important;
+        text-shadow: none !important;
+    }
+    .sari-register-card {
+        max-width: 630px !important;
+        border: 1px solid #eadcc4 !important;
+        border-radius: 20px !important;
+        background: #fff !important;
+        box-shadow: 0 16px 46px rgba(48, 31, 10, .20), 0 3px 12px rgba(48, 31, 10, .06) !important;
+    }
+    .sari-register-card > div:first-child {
+        padding: 17px 24px 14px !important;
+    }
+    .sari-register-card > div:first-child > p:first-child {
+        font-size: 9px !important;
+        font-weight: 700 !important;
+        letter-spacing: .17em !important;
+    }
+    .sari-register-card > div:first-child h1 {
+        margin-top: 5px !important;
+        font-size: clamp(23px, 3vw, 27px) !important;
+        line-height: 1.22 !important;
+        letter-spacing: -.035em !important;
+    }
+    .sari-register-card > div:first-child > p:last-child {
+        max-width: 450px !important;
+        margin-top: 6px !important;
+        font-size: 10.5px !important;
+        line-height: 1.5 !important;
+    }
+    .sari-progress-wrap {
+        padding: 10px 25px 12px !important;
+        border-bottom: 1px solid #f1e7d6 !important;
+        background: #fffdf9 !important;
+    }
+    .sari-progress-title, .sari-progress-counter {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+    .sari-progress-segments {
+        gap: 6px !important;
+        margin-top: 8px !important;
+    }
+    .sari-progress-segment { height: 4px !important; }
+    .sari-register-card > .px-5,
+    .sari-register-card > div.px-5 {
+        padding: 18px 25px 19px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-stage {
+        max-width: 580px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-stage > .text-center h2 {
+        font-size: clamp(18px, 2.2vw, 20px) !important;
+        line-height: 1.32 !important;
+        font-weight: 700 !important;
+        color: #24201c !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-stage > .text-center p {
+        margin-top: 4px !important;
+        font-size: 11px !important;
+        line-height: 1.5 !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-stage > .mt-7 {
+        margin-top: 14px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option {
+        position: relative;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 100%;
+        min-height: 142px !important;
+        padding: 13px 12px 12px !important;
+        gap: 0 !important;
+        border: 1.5px solid #e8dfd1 !important;
+        border-radius: 13px !important;
+        background: #fff !important;
+        box-shadow: 0 1px 3px rgba(37, 28, 14, .03) !important;
+        text-align: center !important;
+        color: #252019 !important;
+        cursor: pointer;
+        text-decoration: none !important;
+        transform: none !important;
+        transition: border-color .16s ease, background .16s ease, box-shadow .16s ease !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option:hover {
+        border-color: #d9b479 !important;
+        background: #fffcf7 !important;
+        box-shadow: 0 4px 13px rgba(115, 74, 12, .08) !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option.is-selected {
+        border-color: #bd8014 !important;
+        background: #fff8ec !important;
+        box-shadow: 0 0 0 2px rgba(205, 143, 35, .20), 0 4px 12px rgba(108, 68, 10, .07) !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option:focus-visible {
+        outline: 2px solid #be841c !important;
+        outline-offset: 3px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option .sari-role-check {
+        position: absolute !important;
+        top: 9px !important;
+        right: 9px !important;
+        width: 18px !important;
+        height: 18px !important;
+        flex: 0 0 18px !important;
+        opacity: 0;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option.is-selected .sari-role-check {
+        opacity: 1;
+        background: #bd8014 !important;
+        border-color: #bd8014 !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option .sari-role-icon {
+        display: grid !important;
+        place-items: center !important;
+        width: 43px !important;
+        height: 43px !important;
+        min-width: 43px !important;
+        flex: 0 0 43px !important;
+        margin-bottom: 9px !important;
+        border: 1px solid #f4e6cc !important;
+        border-radius: 12px !important;
+        background: #fff7e9 !important;
+        color: #ad710c !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option.is-selected .sari-role-icon {
+        background: #bf8219 !important;
+        color: white !important;
+        border-color: #bf8219 !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option .sari-role-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+        display: block;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-option .sari-role-copy {
+        width: 100%;
+        min-width: 0;
+        flex: 0 1 auto !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-name {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-description {
+        display: block;
+        margin-top: 4px !important;
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+        color: #756c60 !important;
+        text-wrap: pretty;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-arrow { display: none !important; }
+    .sari-wizard-step[data-step="role"] .sari-role-actions {
+        display: block !important;
+        margin-top: 13px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-continue {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        min-height: 44px !important;
+        border: 1px solid #c48a24 !important;
+        border-radius: 10px !important;
+        background: #d29221 !important;
+        color: #fff !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        box-shadow: 0 6px 15px rgba(166, 101, 13, .16) !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-continue:hover:not(:disabled) {
+        background: #be7d0f !important;
+        border-color: #be7d0f !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-continue:disabled {
+        opacity: .52 !important;
+        cursor: not-allowed !important;
+        box-shadow: none !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-continue:focus-visible {
+        outline: 2px solid #a86b09 !important;
+        outline-offset: 3px !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-continue .sari-button-icon {
+        display: none !important;
+    }
+    .sari-wizard-step[data-step="role"] .sari-role-preview-wrap {
+        margin-top: 10px !important;
+        border: 1px solid #eee4d6 !important;
+        border-radius: 11px !important;
+        background: #fffcf8 !important;
+    }
+    .sari-signin-shortcut {
+        margin-top: 10px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+    }
+    .sari-register-footer { margin-top: 9px !important; color: #614e37 !important; }
+
+    @media (max-width: 520px) {
+        .sari-register-shell { padding: 12px 10px 18px !important; }
+        .sari-register-shell > a[aria-label="Back to SARI home"] { margin-bottom: 9px !important; }
+        .sari-register-shell > a[aria-label="Back to SARI home"] img { width: 116px !important; }
+        .sari-register-card { border-radius: 17px !important; }
+        .sari-register-card > div:first-child { padding: 15px 14px 12px !important; }
+        .sari-register-card > div:first-child h1 { font-size: 22px !important; }
+        .sari-register-card > div:first-child > p:last-child { font-size: 10px !important; }
+        .sari-progress-wrap { padding: 10px 15px 11px !important; }
+        .sari-register-card > .px-5,
+        .sari-register-card > div.px-5 { padding: 15px 14px 17px !important; }
+        .sari-wizard-step[data-step="role"] .sari-role-grid { gap: 8px !important; }
+        .sari-wizard-step[data-step="role"] .sari-role-option {
+            min-height: 149px !important;
+            padding: 13px 7px 11px !important;
+            border-radius: 12px !important;
+        }
+        .sari-wizard-step[data-step="role"] .sari-role-name { font-size: 13px !important; }
+        .sari-wizard-step[data-step="role"] .sari-role-description { font-size: 9.5px !important; line-height: 1.38 !important; }
+        .sari-wizard-step[data-step="role"] .sari-role-option .sari-role-icon {
+            width: 41px !important; height: 41px !important;
+            min-width: 41px !important; flex-basis: 41px !important;
+            margin-bottom: 8px !important;
+        }
+        .sari-wizard-step[data-step="role"] .sari-role-continue { min-height: 44px !important; }
+    }
+    @media (max-width: 350px) {
+        .sari-wizard-step[data-step="role"] .sari-role-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+        .sari-wizard-step[data-step="role"] .sari-role-option {
+            min-height: 164px !important;
+        }
+        .sari-wizard-step[data-step="role"] .sari-role-description { font-size: 9px !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .sari-wizard-step[data-step="role"] .sari-role-option { transition: none !important; }
+    }
+
 </style>
 
 <div class="relative min-h-screen min-h-[100dvh] overflow-x-hidden bg-[#f7f4ee] font-['Poppins',sans-serif] text-[#17140e]">
 
-    {{-- SAME BACKGROUND PHOTO AS LOGIN --}}
-    <div class="fixed inset-0">
+    {{-- The same login background photo, in its smaller WebP format with PNG fallback. --}}
+    <div class="fixed inset-0 pointer-events-none" aria-hidden="true">
         <img
-            src="{{ asset('images/login-bg.jpg') }}"
+            src="{{ asset('images/login-bg-1536.webp') }}"
             alt=""
+            width="1536"
+            height="1024"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            onerror="this.onerror=null;this.src='{{ asset('images/login-bg.png') }}';"
             class="h-full w-full object-cover object-center"
         >
-        <div class="absolute inset-0 bg-white/68"></div>
-        <div class="absolute inset-0 bg-[#fffaf1]/18"></div>
+
     </div>
 
     <div class="sari-register-shell relative z-10 mx-auto flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-12" data-registration-role="{{ old('role', $defaultRole ?? '') }}">
@@ -6397,14 +6682,14 @@
                         </select>
 
                         <div class="sari-role-grid" role="radiogroup" aria-label="Choose an account type">
-                            <a href="{{ route('register.buyer') }}" class="sari-role-option" data-role-option="buyer" aria-label="Register as Buyer">
+                            <a href="{{ route('register.buyer') }}" class="sari-role-option" data-role-option="buyer" role="radio" aria-checked="false" aria-label="Register as Buyer">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
                                     </svg>
                                 </span>
                                 <span class="sari-role-icon">
-                                    <i class="fi fi-rr-user" aria-hidden="true"></i>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8h15l1 12h-17l1-12Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M9 13h6"/></svg>
                                 </span>
                                 <span class="sari-role-copy">
                                     <span class="sari-role-name">Buyer</span>
@@ -6413,14 +6698,14 @@
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
                             </a>
 
-                            <a href="{{ route('register.seller') }}" class="sari-role-option" data-role-option="seller" aria-label="Register as Seller">
+                            <a href="{{ route('register.seller') }}" class="sari-role-option" data-role-option="seller" role="radio" aria-checked="false" aria-label="Register as Seller">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
                                     </svg>
                                 </span>
                                 <span class="sari-role-icon">
-                                    <i class="fi fi-rr-seller" aria-hidden="true"></i>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v10h16V10"/><path d="M3 10l2.1-6h13.8L21 10"/><path d="M3 10v1a3 3 0 0 0 6 0v-1a3 3 0 0 0 6 0v1a3 3 0 0 0 6 0v-1"/><path d="M9 20v-6h6v6"/></svg>
                                 </span>
                                 <span class="sari-role-copy">
                                     <span class="sari-role-name">Seller</span>
@@ -6429,14 +6714,14 @@
                                 <span class="sari-role-arrow" aria-hidden="true">›</span>
                             </a>
 
-                            <a href="{{ route('register.logistics') }}" class="sari-role-option" data-role-option="logistics" aria-label="Register as Logistics">
+                            <a href="{{ route('register.logistics') }}" class="sari-role-option" data-role-option="logistics" role="radio" aria-checked="false" aria-label="Register as Logistics">
                                 <span class="sari-role-check" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.4">
                                         <path d="m6 12 4 4 8-8"></path>
                                     </svg>
                                 </span>
                                 <span class="sari-role-icon">
-                                    <i class="fi fi-rr-shipping-fast" aria-hidden="true"></i>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h11v12h-11V6Z"/><path d="M13.5 10h4.2l3.8 4.2V18h-8"/><path d="M17 10v4h4"/><circle cx="7" cy="18.5" r="2"/><circle cx="18" cy="18.5" r="2"/></svg>
                                 </span>
                                 <span class="sari-role-copy">
                                     <span class="sari-role-name">Logistics</span>
@@ -6452,7 +6737,7 @@
                                     </svg>
                                 </span>
                                 <span class="sari-role-icon">
-                                    <i class="fi fi-rr-biking-mountain" aria-hidden="true"></i>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="17.5" r="2.5"/><circle cx="19" cy="17.5" r="2.5"/><path d="M7.5 17.5h5l2.5-5.5h3l2 5.5"/><path d="M9 11.5h4.5l-2 6"/><path d="m17 12 1.5-3H21"/><path d="M8.5 9H12"/></svg>
                                 </span>
                                 <span class="sari-role-copy">
                                     <span class="sari-role-name">Rider</span>
@@ -8307,7 +8592,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* Rider selection opens the Logistics page and requests a one-time Lottie intro. */
+    /* The existing Rider destination still opens after Continue. */
     let riderLogisticsNavigating = false;
     function openRiderLogisticsWithIntro() {
         if (riderLogisticsNavigating) return;
@@ -8320,31 +8605,20 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.assign(@json(route('rider.logistics.index')));
     }
 
+    // Match the role-picker reference: select a tile first, then Continue.
+    // Anchor hrefs are retained so navigation still works with JavaScript disabled.
     document.querySelectorAll('[data-role-option]').forEach(function (button) {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function (event) {
+            if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             const role = button.dataset.roleOption || '';
-            if (role === 'buyer' || role === 'seller' || role === 'logistics') return; // Dedicated role registration pages.
+            if (!role) return;
+            if (button.tagName === 'A') event.preventDefault();
             roleSelect.value = role;
             roleSelect.dispatchEvent(new Event('change', { bubbles: true }));
-            if (role === 'rider') {
-                openRiderLogisticsWithIntro();
-            }
         });
     });
 
     roleSelect.addEventListener('change', function () {
-        if (roleSelect.value === 'buyer') {
-            window.location.assign(@json(route('register.buyer')));
-            return;
-        }
-        if (roleSelect.value === 'seller') {
-            window.location.assign(@json(route('register.seller')));
-            return;
-        }
-        if (roleSelect.value === 'logistics') {
-            window.location.assign(@json(route('register.logistics')));
-            return;
-        }
         syncRoleRequirements();
         syncRoleCards();
         updateProgress();

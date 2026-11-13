@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\Pdf\AccountRosterPdf;
+use Illuminate\Http\Response;
 
 use App\Models\Platform\AdminUserActivity;
 use App\Models\Accounts\BuyerAccount;
-use App\Models\Accounts\CourierAccount;
 use App\Models\Accounts\LogisticsAccount;
 use App\Models\Accounts\SellerAccount;
 use App\Models\Accounts\SocialAccount;
@@ -41,6 +42,23 @@ class AdminUsersController extends Controller
             return redirect()->route('login');
         }
 
+        $accounts = $this->managedAccounts();
+
+        $stats = [
+            'total' => $accounts->count(),
+            'buyers' => $accounts->where('role', 'Buyer')->count(),
+            'sellers' => $accounts->where('role', 'Seller')->count(),
+            'logistics' => $accounts->where('role', 'Logistics')->count(),
+            'active' => $accounts->where('status', 'active')->count(),
+            'suspended' => $accounts->where('status', '!=', 'active')->count(),
+        ];
+
+        return view('admin.users', compact('accounts', 'stats'));
+    }
+
+    /** Approved account roster excludes Riders, who are managed by Logistics. */
+    private function managedAccounts(): Collection
+    {
         $activity = Schema::hasTable('admin_user_activities')
             ? AdminUserActivity::query()
                 ->latest('created_at')
@@ -62,22 +80,54 @@ class AdminUsersController extends Controller
         $accounts = collect()
             ->concat($this->mapAccounts(BuyerAccount::query()->with('registrationApplication')->latest()->get(), 'Buyer', $activity, $lastSignIns))
             ->concat($this->mapAccounts(SellerAccount::query()->with('registrationApplication')->latest()->get(), 'Seller', $activity, $lastSignIns))
-            ->concat($this->mapAccounts(CourierAccount::query()->with(['registrationApplication', 'logistics'])->latest()->get(), 'Rider', $activity, $lastSignIns))
             ->concat($this->mapAccounts(LogisticsAccount::query()->with('registrationApplication')->latest()->get(), 'Logistics', $activity, $lastSignIns))
             ->sortByDesc('created_at')
             ->values();
 
-        $stats = [
-            'total' => $accounts->count(),
-            'buyers' => $accounts->where('role', 'Buyer')->count(),
-            'sellers' => $accounts->where('role', 'Seller')->count(),
-            'riders' => $accounts->where('role', 'Rider')->count(),
-            'logistics' => $accounts->where('role', 'Logistics')->count(),
-            'active' => $accounts->where('status', 'active')->count(),
-            'suspended' => $accounts->where('status', '!=', 'active')->count(),
-        ];
 
-        return view('admin.users', compact('accounts', 'stats'));
+        return $accounts;
+    }
+
+    /**
+     * Download a genuine multi-page PDF of the currently filtered admin roster.
+     * The browser submits account keys, not personal data; the server reloads
+     * those accounts from authorized sources before exporting.
+     */
+    public function exportPdf(Request $request): Response
+    {
+        $this->guard($request);
+
+        $validated = $request->validate([
+            'records_json' => ['required', 'string', 'max:250000'],
+        ]);
+
+        $keys = json_decode($validated['records_json'], true);
+        if (!is_array($keys) || !array_is_list($keys) || count($keys) > 10000) {
+            throw ValidationException::withMessages(['records_json' => 'Invalid account selection.']);
+        }
+        foreach ($keys as $key) {
+            if (!is_string($key) || !preg_match('/^(buyer|seller|logistics):[1-9][0-9]*$/D', $key)) {
+                throw ValidationException::withMessages(['records_json' => 'Invalid account selection.']);
+            }
+        }
+
+        $requested = collect($keys)->unique()->values();
+        $byKey = $this->managedAccounts()->keyBy(
+            fn (array $account): string => $account['role_key'].':'.$account['id']
+        );
+        $accounts = $requested->map(fn (string $key): ?array => $byKey->get($key))
+            ->filter()
+            ->values();
+
+        $generated = now('Asia/Manila');
+        $document = AccountRosterPdf::render($accounts, $generated->format('M d, Y h:i A'));
+
+        return response($document, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="sari-approved-accounts-'.$generated->format('Ymd-His').'.pdf"',
+            'Cache-Control' => 'private, no-store, max-age=0',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     public function photo(Request $request, string $role, int $id): \Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -489,7 +539,7 @@ class AdminUsersController extends Controller
         return match ($this->normalizeRole($role)) {
             'buyer' => BuyerAccount::query()->findOrFail($id),
             'seller' => SellerAccount::query()->findOrFail($id),
-            'rider' => CourierAccount::query()->findOrFail($id),
+            'rider' => abort(404, 'Rider accounts are managed by Logistics.'),
             'logistics' => LogisticsAccount::query()->findOrFail($id),
             'social_buyer' => SocialAccount::query()->findOrFail($id),
             default => abort(404),

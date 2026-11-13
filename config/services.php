@@ -40,6 +40,8 @@ return [
 
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
+        // The WEB OAuth client ID used as serverClientId by Flutter Google Sign-In.
+        'mobile_server_client_id' => env('GOOGLE_MOBILE_SERVER_CLIENT_ID', env('GOOGLE_CLIENT_ID')),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env(
             'GOOGLE_REDIRECT_URI',
@@ -62,4 +64,9 @@ return [
         ),
     ],
 
+    // FCM HTTP v1 service account path is SERVER-ONLY, never stored in Flutter.
+    'sari_fcm' => [
+        'project_id' => env('SARI_FIREBASE_PROJECT_ID', ''),
+        'credentials_file' => env('SARI_FIREBASE_CREDENTIALS_FILE', ''),
+    ],
 ];

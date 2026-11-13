@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class SellerProduct extends Model
 {
@@ -143,6 +144,28 @@ class SellerProduct extends Model
     public function latestVersion(): HasOne
     {
         return $this->hasOne(SellerProductVersion::class)->latestOfMany();
+    }
+
+    /**
+     * Prefer the cover uploaded by the Seller. If its file is missing, use the
+     * first available gallery image instead of returning a broken thumbnail.
+     * Never expose this path directly; the caller must still authorize access.
+     */
+    public function availableCoverImagePath(): ?string
+    {
+        $disk = Storage::disk('public');
+
+        if ($this->image_path && $disk->exists($this->image_path)) {
+            return $this->image_path;
+        }
+
+        foreach ($this->galleryImages as $image) {
+            if ($image->path && $disk->exists($image->path)) {
+                return $image->path;
+            }
+        }
+
+        return null;
     }
 
     public function isArchived(): bool

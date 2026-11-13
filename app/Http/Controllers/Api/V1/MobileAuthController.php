@@ -8,6 +8,7 @@ use App\Models\Accounts\CourierAccount;
 use App\Models\Accounts\LogisticsAccount;
 use App\Models\Accounts\SellerAccount;
 use App\Services\Accounts\AccountEmailBanService;
+use App\Services\Mobile\MobileBuyerActionLogger;
 use App\Services\Seller\SellerAccountStatusService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -60,6 +61,10 @@ class MobileAuthController extends Controller
             now()->addDays(30)
         );
 
+        if ($account instanceof BuyerAccount) {
+            app(MobileBuyerActionLogger::class)->record($account, 'login');
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -83,6 +88,9 @@ class MobileAuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
+        if ($request->user() instanceof BuyerAccount) {
+            app(MobileBuyerActionLogger::class)->record($request->user(), 'logout');
+        }
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

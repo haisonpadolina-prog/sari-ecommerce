@@ -367,6 +367,26 @@ class MobileLogisticsController extends Controller
             ->forRecipient((int)$this->provider($request)->id)->unread()->count()]);
     }
 
+    public function notificationSummary(Request $request): JsonResponse
+    {
+        $count = LogisticsNotification::query()
+            ->forRecipient((int) $this->provider($request)->id)
+            ->unread()
+            ->count();
+
+        return $this->ok(['unread_count' => $count]);
+    }
+
+    public function readAllNotifications(Request $request): JsonResponse
+    {
+        $count = LogisticsNotification::query()
+            ->forRecipient((int) $this->provider($request)->id)
+            ->unread()
+            ->update(['read_at' => now()]);
+
+        return $this->ok(['updated_count' => $count, 'unread_count' => 0], 'Notifications marked as read.');
+    }
+
     public function readNotification(Request $request, int $notification): JsonResponse
     {
         $row = LogisticsNotification::query()->forRecipient((int)$this->provider($request)->id)

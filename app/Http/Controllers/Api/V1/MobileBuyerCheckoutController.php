@@ -38,6 +38,8 @@ class MobileBuyerCheckoutController extends Controller
     {
         $buyer = $this->buyer($request);
         $validated = $request->validate([
+            'shipping_code' => ['nullable', 'string', 'max:64'],
+            'buyer_address' => ['nullable', 'string', 'max:1200'],
             'item_ids' => ['nullable', 'array'],
             'item_ids.*' => ['integer', 'exists:buyer_cart_items,id'],
         ]);
@@ -66,6 +68,30 @@ class MobileBuyerCheckoutController extends Controller
         }
 
         $shipping = $this->cart->shippingSummary($items);
+        $shippingCode = strtoupper(trim((string) ($validated['shipping_code'] ?? '')));
+        if ($shippingCode !== '') {
+            $budget = app(\App\Services\Promotions\PlatformShippingBudgetService::class);
+            $address = (string) ($validated['buyer_address'] ?? collect([
+                $buyer->street_address, $buyer->barangay_name, $buyer->municipality_name,
+                $buyer->province_name, 'Philippines',
+            ])->filter()->implode(', '));
+            $totalCents = 0;
+            foreach ($this->cart->groupedBySeller($items) as $sellerId => $group) {
+                $quote = $budget->quote($shippingCode,
+                    $group->map(fn ($item) => ['product' => $item->product, 'buyer_line_total' => $this->cart->lineTotal($item)])->all(),
+                    ['buyer_account_id' => $buyer->id, 'buyer_social_account_id' => null], $address,
+                    (int) round($shipping['groups'][(int) $sellerId]['delivery_fee'] * 100));
+                $totalCents += $quote['amount_cents'];
+                $shipping['groups'][(int) $sellerId]['shipping_discount'] += $quote['amount_cents'] / 100;
+                $shipping['groups'][(int) $sellerId]['delivery_fee'] -= $quote['amount_cents'] / 100;
+            }
+            if ($totalCents > $budget->totals($quote['campaign'])['available']) {
+                throw ValidationException::withMessages(['shipping_code' => 'Not enough campaign budget for all seller orders.']);
+            }
+            $shipping['platform_shipping_discount'] = $totalCents / 100;
+            $shipping['shipping_discount'] += $totalCents / 100;
+            $shipping['delivery_fee'] -= $totalCents / 100;
+        }
         $subtotal = $this->cart->subtotal($items);
 
         return response()->json([
@@ -115,6 +141,7 @@ class MobileBuyerCheckoutController extends Controller
             'checkout_item_ids' => ['nullable', 'array'],
             'checkout_item_ids.*' => ['integer', 'exists:buyer_cart_items,id'],
             'voucher_code' => ['nullable', 'string', 'max:64'],
+            'shipping_code' => ['nullable', 'string', 'max:64'],
         ]);
 
         $createdOrders = DB::transaction(function () use ($buyer, $validated) {
@@ -372,6 +399,11 @@ class MobileBuyerCheckoutController extends Controller
                     'pickup_address' => $pickupAddress !== '' ? $pickupAddress : 'Seller pickup address to be confirmed',
                     'status' => 'new',
                 ]));
+
+                app(\App\Services\Promotions\PlatformShippingBudgetService::class)->applyToOrder(
+                    (string) ($validated['shipping_code'] ?? ''), $order,
+                    $platformVoucherLines->filter(fn ($line) => (int) $line['seller_id'] === (int) $sellerId)->values()->all()
+                );
 
                 if ($sellerVoucher) {
                     SellerVoucherRedemption::create([

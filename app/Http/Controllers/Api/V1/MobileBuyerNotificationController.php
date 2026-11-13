@@ -130,6 +130,58 @@ class MobileBuyerNotificationController extends Controller
         return response()->json(['success' => true, 'message' => 'Notifications marked as read.']);
     }
 
+    public function archive(Request $request, MarketplaceOrderEvent $event): JsonResponse
+    {
+        $buyer = $this->buyer($request);
+        $this->guardEvent($buyer, $event);
+        $identity = [
+            'buyer_key' => $this->buyerKey($buyer),
+            'marketplace_order_event_id' => $event->id,
+        ];
+        abort_if(BuyerNotificationRead::query()->where($identity)->whereNotNull('deleted_at')->exists(), 404);
+
+        BuyerNotificationRead::query()->updateOrCreate($identity, [
+            'read_at' => now(),
+            'archived_at' => now(),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Notification archived.']);
+    }
+
+    public function restore(Request $request, MarketplaceOrderEvent $event): JsonResponse
+    {
+        $buyer = $this->buyer($request);
+        $this->guardEvent($buyer, $event);
+
+        $state = BuyerNotificationRead::query()
+            ->where('buyer_key', $this->buyerKey($buyer))
+            ->where('marketplace_order_event_id', $event->id)
+            ->whereNotNull('archived_at')
+            ->whereNull('deleted_at')
+            ->firstOrFail();
+
+        $state->update(['archived_at' => null]);
+        return response()->json(['success' => true, 'message' => 'Notification restored.']);
+    }
+
+    public function destroy(Request $request, MarketplaceOrderEvent $event): JsonResponse
+    {
+        $buyer = $this->buyer($request);
+        $this->guardEvent($buyer, $event);
+
+        // Hide only this buyer's notification; preserve the order event itself.
+        BuyerNotificationRead::query()->updateOrCreate([
+            'buyer_key' => $this->buyerKey($buyer),
+            'marketplace_order_event_id' => $event->id,
+        ], [
+            'read_at' => now(),
+            'archived_at' => null,
+            'deleted_at' => now(),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Notification deleted from your inbox.']);
+    }
+
     private function notificationQuery(BuyerAccount $buyer, bool $archived = false): Builder
     {
         $buyerKey = $this->buyerKey($buyer);

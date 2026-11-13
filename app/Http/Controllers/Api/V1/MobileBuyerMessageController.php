@@ -8,6 +8,7 @@ use App\Models\Accounts\SellerAccount;
 use App\Models\Catalog\SellerProduct;
 use App\Models\Messaging\BuyerSellerMessage;
 use App\Models\Orders\MarketplaceOrder;
+use App\Models\Platform\SellerNotification;
 use App\Services\Messaging\BuyerSellerOrderConfirmationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -63,6 +64,21 @@ class MobileBuyerMessageController extends Controller
         return response()->json([
             'success' => true,
             'data' => $sellers->values(),
+        ])->header('Cache-Control', 'no-store');
+    }
+
+    public function unread(Request $request): JsonResponse
+    {
+        $buyer = $this->buyer($request);
+        $total = BuyerSellerMessage::query()
+            ->where('buyer_account_id', $buyer->id)
+            ->where('sender_role', 'seller')
+            ->whereNull('read_at')
+            ->count();
+
+        return response()->json([
+            'success' => true,
+            'data' => ['unread_count' => $total],
         ])->header('Cache-Control', 'no-store');
     }
 
@@ -151,6 +167,13 @@ class MobileBuyerMessageController extends Controller
             'body' => $body,
         ], $attachmentData));
 
+        SellerNotification::create([
+            'seller_account_id' => $seller->id,
+            'type' => 'buyer_message',
+            'title' => 'New buyer message',
+            'message' => 'You have a new message from a buyer.',
+            'action_url' => route('seller.messages', ['buyer' => 'account-'.$buyer->id]),
+        ]);
         $this->chat->announce($message);
         $message->loadMissing('order:id,order_number');
 

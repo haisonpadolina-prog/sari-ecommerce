@@ -1158,7 +1158,7 @@ class SellerProductController extends Controller
         }
 
         abort_unless($allowed, 403);
-        return $this->cachedPublicImageResponse($product->image_path);
+        return $this->cachedPublicImageResponse($product->availableCoverImagePath());
     }
 
     public function galleryImage(Request $request, SellerProductImage $image)
@@ -1177,9 +1177,14 @@ class SellerProductController extends Controller
 
     public function sizeGuideImage(Request $request, SellerProduct $product)
     {
-        $seller = $this->resolveSeller($request);
-        $this->ensureOwnership($seller, $product);
-        abort_unless($product->size_guide_image_path, 404);
+        $allowed = $request->session()->get('is_admin');
+
+        if (!$allowed && $request->session()->get('is_seller')) {
+            $allowed = (int) $request->session()->get('seller_account_id')
+                === (int) $product->seller_account_id;
+        }
+
+        abort_unless($allowed, 403);
         return $this->cachedPublicImageResponse($product->size_guide_image_path);
     }
 

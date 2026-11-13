@@ -447,7 +447,11 @@
                 class="hidden items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-[#fff7e9] xl:flex"
             >
                 <span class="grid h-[35px] w-[35px] shrink-0 place-items-center rounded-full bg-[#d9930a] text-[10px] font-bold text-white">
-                    {{ $headerInitials }}
+                    @if(!$headerIsHub && filled($headerProvider->profile_image_path))
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($headerProvider->profile_image_path) }}" alt="{{ $headerName }}" width="35" height="35" style="width:100%;height:100%;object-fit:cover;border-radius:50%">
+                    @else
+                        {{ $headerInitials }}
+                    @endif
                 </span>
 
                 <span class="min-w-0">

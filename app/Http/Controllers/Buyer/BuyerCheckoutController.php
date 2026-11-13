@@ -44,6 +44,8 @@ class BuyerCheckoutController extends Controller
             return redirect()->route('login');
         }
 
+        $request->validate(['shipping_code' => ['nullable', 'string', 'max:64']]);
+
         $buyNowItemId = $request->integer('buy_now') ?: null;
         $selectionRequested = $request->boolean('selection');
         $selectedItemIds = collect((array) $request->input('items', []))
@@ -159,7 +161,41 @@ class BuyerCheckoutController extends Controller
             }
         }
 
+        $shippingCode = strtoupper(trim((string) $request->query('shipping_code', '')));
+        $shippingPreviewError = null;
+        $platformShippingDiscount = 0.0;
+        if ($shippingCode !== '') {
+            $previewShipping = $shipping;
+            try {
+                $shippingBudget = app(\App\Services\Promotions\PlatformShippingBudgetService::class);
+                $totalPlatformCents = 0;
+                foreach ($sellerGroups as $sellerId => $group) {
+                    $lines = $group->map(fn ($item) => ['product' => $item->product, 'buyer_line_total' => $this->cart->lineTotal($item)])->all();
+                    $quote = $shippingBudget->quote($shippingCode, $lines, $this->identity->columns($request),
+                        (string) ($snapshot['address'] ?? ''), (int) round($shipping['groups'][(int) $sellerId]['delivery_fee'] * 100));
+                    $totalPlatformCents += $quote['amount_cents'];
+                    $discount = $quote['amount_cents'] / 100;
+                    $previewShipping['groups'][(int) $sellerId]['shipping_discount'] += $discount;
+                    $previewShipping['groups'][(int) $sellerId]['delivery_fee'] -= $discount;
+                }
+                if ($totalPlatformCents > $shippingBudget->totals($quote['campaign'])['available']) {
+                    throw ValidationException::withMessages(['shipping_code' => 'Not enough campaign budget for all seller orders.']);
+                }
+                $platformShippingDiscount = $totalPlatformCents / 100;
+                $previewShipping['shipping_discount'] += $platformShippingDiscount;
+                $previewShipping['delivery_fee'] -= $platformShippingDiscount;
+                $shipping = $previewShipping;
+                $deliveryFee = (float) $shipping['delivery_fee'];
+            } catch (ValidationException $exception) {
+                $shippingPreviewError = collect($exception->errors())->flatten()->first();
+            }
+        }
+
         return view('buyer.checkout', [
+            'shippingCode' => $shippingCode,
+            'shippingPreviewError' => $shippingPreviewError,
+            'platformShippingDiscount' => $platformShippingDiscount,
+            'shippingVoucherOffers' => \App\Models\Promotions\PlatformCampaign::query()->live()->where('shipping_enabled', true)->get(['shipping_code', 'shipping_cap_cents', 'shipping_minimum_cents']),
             'items' => $items,
             'groups' => $sellerGroups,
             'subtotal' => $subtotal,
@@ -202,6 +238,7 @@ class BuyerCheckoutController extends Controller
             'checkout_item_ids' => ['nullable', 'array'],
             'checkout_item_ids.*' => ['integer', 'exists:buyer_cart_items,id'],
             'voucher_code' => ['nullable', 'string', 'max:64'],
+            'shipping_code' => ['nullable', 'string', 'max:64'],
         ]);
 
         $createdOrders = DB::transaction(function () use ($request, $validated) {
@@ -454,6 +491,11 @@ class BuyerCheckoutController extends Controller
                     'pickup_address' => $pickupAddress !== '' ? $pickupAddress : 'Seller pickup address to be confirmed',
                     'status' => 'new',
                 ]));
+
+                app(\App\Services\Promotions\PlatformShippingBudgetService::class)->applyToOrder(
+                    (string) ($validated['shipping_code'] ?? ''), $order,
+                    $platformVoucherLines->filter(fn ($line) => (int) $line['seller_id'] === (int) $sellerId)->values()->all()
+                );
 
                 if ($sellerVoucher) {
                     SellerVoucherRedemption::create([
