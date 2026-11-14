@@ -1,0 +1,255 @@
+/* SARI Buyer: warm hero in both themes; dark benefits and white sidebar labels.
+ * Theme selectors observe existing classes/attributes; no theme state is written.
+ */
+#buyerMainContent .sari-home .sari-home-hero {
+    background: #ece7df !important;
+    color: #25211d !important;
+    isolation: isolate;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-image {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0 !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-image img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: right center !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-image::after {
+    content: none !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero::before {
+    content: "" !important;
+    position: absolute;
+    inset: 0 !important;
+    width: auto !important;
+    z-index: 1 !important;
+    pointer-events: none;
+    background: linear-gradient(90deg, #ece7df 0%, rgba(236,231,223,.98) 24%, rgba(236,231,223,.88) 38%, rgba(236,231,223,.56) 50%, rgba(236,231,223,.18) 64%, rgba(236,231,223,0) 78%) !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-content {
+    position: relative;
+    z-index: 2 !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-content > div,
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-brand-lockup {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-title {
+    color: #25211d !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-title span {
+    color: #a96d07 !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-description {
+    color: #484039 !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-brand-main {
+    filter: none !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-hero-brand-mark {
+    filter: brightness(0) !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-secondary-btn {
+    background: #fffaf1 !important;
+    color: #393128 !important;
+    border-color: #c9bda9 !important;
+}
+
+#buyerMainContent .sari-home .sari-home-hero .sari-primary-btn,
+#buyerMainContent .sari-home .sari-home-hero .sari-primary-btn span {
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home .sari-benefit-strip {
+    background: #1b1d22 !important;
+    border-color: #39352e !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,.22) !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home .sari-benefit-item {
+    background: #1b1d22 !important;
+    border-color: #39352e !important;
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home a.sari-benefit-item:hover,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home a.sari-benefit-item:focus-visible {
+    background: #292720 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home .sari-benefit-item h3 {
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home .sari-benefit-item p {
+    color: #d1cbc2 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home .sari-benefit-icon {
+    background: #302a1f !important;
+    border-color: #59472b !important;
+    color: #efb944 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarBrand {
+    background: #191b20 !important;
+    border-color: #39352e !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav [data-buyer-sidebar-item],
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav .buyer-sidebar-label,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav [data-buyer-sidebar-item] svg,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerLogoutForm button,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerLogoutForm button .buyer-sidebar-label,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerLogoutForm button svg,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarClose {
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="false"]:hover,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav [data-buyer-sidebar-item]:focus-visible,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerLogoutForm button:hover,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerLogoutForm button:focus-visible {
+    background: #302a20 !important;
+    color: #ffffff !important;
+    border-color: #6d5527 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav [data-buyer-sidebar-item][data-buyer-nav-active="true"] {
+    background: #b77b08 !important;
+    border-color: #d9950b !important;
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav .buyer-sidebar-section-label {
+    color: #edbb5d !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarNav .buyer-sidebar-section-divider {
+    background: #39352e !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarBrand #buyerSidebarLogoFull,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarBrand #buyerSidebarLogoCompact {
+    filter: brightness(0) invert(1) !important;
+}
+
+@media (max-width: 767px) {
+    #buyerMainContent .sari-home .sari-home-hero::before {
+        background: linear-gradient(90deg, #ece7df 0%, rgba(236,231,223,.96) 38%, rgba(236,231,223,.86) 64%, rgba(236,231,223,.58) 100%) !important;
+    }
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerSidebar #buyerSidebarBrand #buyerSidebarLogoCompact {
+    filter: none !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #categories .sari-section-title,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #categories .sari-category-name,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #categories .sari-category-card.is-active .sari-category-name,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogTitle {
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card:hover,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-body {
+    background: #1b1d22 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border-color: #393d46 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-title {
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-meta,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-secondary {
+    color: #c5cad3 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-stock {
+    color: #9ddbb0 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-stock.text-\[\#a97120\] {
+    color: #f2c775 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-stock.text-\[\#c75353\] {
+    color: #f5a0a0 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-price {
+    color: #f3bf54 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-old-price {
+    color: #b5bcc8 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-divider {
+    background: #393d46 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-buy {
+    background: #c88912 !important;
+    color: #ffffff !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-buy:disabled {
+    background: #4a4e57 !important;
+    color: #d0d4db !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-icon-action {
+    background: #25282e !important;
+    border-color: #55503f !important;
+    color: #f3bf54 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-icon-action:disabled {
+    background: #30333a !important;
+    border-color: #464b55 !important;
+    color: #a4aab6 !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-product-media,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-media,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-media-link,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-media-button,
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-media > div.grid {
+    background: #ffffff !important;
+    background-image: none !important;
+}
+
+:is(html.dark, html.dark-mode, html.theme-dark, html.sari-dark, html[data-theme="dark"], html[data-sari-theme="dark"], html[data-bs-theme="dark"], body.dark, body.dark-mode, body.theme-dark, body[data-theme="dark"], body[data-sari-theme="dark"]) #buyerMainContent .sari-home #homeCatalogGrid .sari-product-card .sari-buyer-card-media img {
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    background-color: #ffffff !important;
+}

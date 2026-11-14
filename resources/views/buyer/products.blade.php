@@ -3258,6 +3258,34 @@
         background: transparent; border: 0; box-shadow: none;
     }
     .sari-products-page .sari-insight-heading-icon svg { width: 28px; height: 28px; }
+
+    /* Only product cards participate in catalog grid placement. */
+    .sari-products-page #buyerProductGrid::before,
+    .sari-products-page #buyerProductGrid::after {
+        content: none !important;
+        display: none !important;
+    }
+    .sari-products-page #buyerProductGrid > :not([data-product-card]) {
+        display: none !important;
+    }
+    .sari-products-page #buyerProductGrid > [data-product-card] {
+        min-width: 0;
+        grid-column: auto !important;
+        grid-row: auto !important;
+        filter: none !important;
+    }
+    .sari-products-page #buyerProductGrid .sari-buyer-card-media,
+    .sari-products-page #buyerProductGrid .sari-buyer-card-media-link,
+    .sari-products-page #buyerProductGrid .sari-buyer-card-media-button,
+    .sari-products-page #buyerProductGrid .sari-buyer-card-media > div.grid {
+        background: #ffffff !important;
+        background-image: none !important;
+    }
+    .sari-products-page #buyerProductGrid .sari-buyer-card-media img {
+        background-color: #ffffff !important;
+        filter: none !important;
+        mix-blend-mode: normal !important;
+    }
 </style>
 @endpush
 
@@ -4202,5 +4230,39 @@
 @endsection
 
 @push('scripts')
+    <script>
+    (() => {
+        function initBuyerCatalogGrid() {
+            const grid = document.getElementById('buyerProductGrid');
+            if (window.__sariCatalogGridObserver) {
+                window.__sariCatalogGridObserver.disconnect();
+                window.__sariCatalogGridObserver = null;
+            }
+            if (!grid) return;
+
+            // BOM / zero-width text can become anonymous grid items. Keep the
+            // actual card nodes in place so catalog filtering and sorting work.
+            const removeSpacerText = () => {
+                Array.from(grid.childNodes).forEach(node => {
+                    if (node.nodeType === 3 && /^[\s\uFEFF\u200B]*$/.test(node.textContent || '')) {
+                        node.remove();
+                    }
+                });
+            };
+
+            removeSpacerText();
+            const observer = new MutationObserver(removeSpacerText);
+            observer.observe(grid, { childList: true });
+            window.__sariCatalogGridObserver = observer;
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initBuyerCatalogGrid, { once: true });
+        } else {
+            initBuyerCatalogGrid();
+        }
+        document.addEventListener('livewire:navigated', initBuyerCatalogGrid);
+    })();
+    </script>
     @vite('resources/js/buyer-products.js')
 @endpush

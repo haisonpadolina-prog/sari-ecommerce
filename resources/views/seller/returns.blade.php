@@ -2436,6 +2436,145 @@
     }
 }
 
+
+/* Seller Orders reference parity: visual layout only, Returns workflow retained. */
+.seller-returns-page {
+    max-width: 1520px !important;
+    margin: 0 auto !important;
+    padding-bottom: 28px !important;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif !important;
+    --returns-reference-shadow: 0 3px 10px var(--sari-dark-7593018246, rgba(15,23,42,.035)), 0 12px 30px var(--sari-dark-fbd3b3b9f6, rgba(15,23,42,.055));
+}
+.seller-returns-page .seller-returns-header {
+    min-height: 0 !important; margin: 0 0 20px !important; padding: 0 0 14px !important;
+    border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1) !important;
+}
+.seller-returns-page .seller-returns-eyebrow { font-size: 10.5px !important; font-weight: 800 !important; line-height: 1.4 !important; letter-spacing: .14em !important; }
+.seller-returns-page .seller-returns-title { margin-top: 6px !important; font-size: clamp(27px,2.3vw,31px) !important; font-weight: 760 !important; line-height: 1.08 !important; letter-spacing: -.04em !important; }
+.seller-returns-page .seller-returns-title span:last-child { margin-left: .18em !important; color: var(--sari-dark-19b301f69a, #C88912) !important; }
+.seller-returns-page .seller-returns-summary { grid-template-columns: repeat(4,minmax(0,1fr)) !important; gap: 14px !important; margin: 0 !important; }
+.seller-returns-page .seller-returns-stat,
+.seller-returns-page .seller-returns-stat:hover,
+.seller-returns-page .seller-returns-records,
+.seller-returns-page .seller-returns-records:hover {
+    border: 1px solid var(--sari-dark-d8c2716225, #E5E7EB) !important;
+    border-radius: 18px !important; background: var(--sari-dark-950baec030, #FFF) !important;
+    box-shadow: var(--returns-reference-shadow) !important; transform: none !important;
+}
+.seller-returns-page .seller-returns-stat { min-height: 110px !important; padding: 14px 16px !important; }
+.seller-returns-page .seller-returns-stat-inner { align-items: flex-start !important; gap: 12px !important; }
+.seller-returns-page .seller-returns-stat-label { font-size: 13px !important; font-weight: 650 !important; line-height: 1.4 !important; }
+.seller-returns-page .seller-returns-stat-value { margin-top: 7px !important; font-size: clamp(25px,1.9vw,30px) !important; font-weight: 650 !important; line-height: 1.12 !important; font-variant-numeric: tabular-nums; }
+.seller-returns-page .seller-returns-stat-note { margin-top: 6px !important; font-size: 11.5px !important; line-height: 1.5 !important; white-space: normal !important; }
+.seller-returns-page .seller-returns-stat-icon { width: 27px !important; height: 27px !important; flex: 0 0 27px !important; }
+.seller-returns-page .seller-returns-stat-icon svg { width: 27px !important; height: 27px !important; }
+.seller-returns-page .seller-returns-filter-panel,
+.seller-returns-page .seller-returns-filter-panel:hover,
+.seller-returns-page .seller-returns-filter-panel:focus-within {
+    position: relative; z-index: 15; margin-top: 20px !important; padding: 0 !important;
+    border: 0 !important; background: transparent !important; box-shadow: none !important; transform: none !important; translate: none !important;
+}
+.seller-returns-page .seller-returns-filter-form { grid-template-columns: minmax(0,1fr) minmax(185px,210px) auto auto !important; align-items: center !important; gap: 12px !important; }
+.seller-returns-page .seller-returns-search-input,
+.seller-returns-page .seller-returns-status-button,
+.seller-returns-page .seller-returns-apply-filter,
+.seller-returns-page .seller-returns-reset-filter {
+    height: 48px !important; min-height: 48px !important; border-radius: 14px !important;
+    margin-top: 0 !important; margin-bottom: 0 !important; transform: none !important; translate: none !important;
+}
+.seller-returns-page .seller-returns-search-input,
+.seller-returns-page .seller-returns-status-button { font-size: 11.5px !important; font-weight: 600 !important; box-shadow: none !important; }
+.seller-returns-page .seller-returns-search-input { padding: 0 14px 0 46px !important; }
+.seller-returns-page .seller-returns-search-field > svg { left: 16px !important; width: 21px !important; height: 21px !important; }
+.seller-returns-page .seller-returns-search-input::placeholder { font-size: 11.5px !important; }
+.seller-returns-page .seller-returns-status-button { padding: 0 16px !important; }
+.seller-returns-page .seller-returns-status-chevron { width: 17px !important; height: 17px !important; }
+.seller-returns-page .seller-returns-status-dropdown { position: relative; z-index: 50; }
+.seller-returns-page .seller-returns-status-menu { top: calc(100% + 8px) !important; left: 0 !important; right: 0 !important; width: 100% !important; min-width: 100% !important; padding: 8px !important; border-radius: 14px !important; z-index: 100 !important; box-shadow: 0 16px 32px var(--sari-dark-3b2338cbf0, rgba(15,23,42,.12)), 0 2px 6px var(--sari-dark-1df26971b5, rgba(15,23,42,.05)) !important; }
+.seller-returns-page .seller-returns-status-option { min-height: 38px !important; padding: 0 12px !important; border-radius: 10px !important; display: flex !important; align-items: center !important; }
+.seller-returns-page .seller-returns-status-option-copy strong { font-size: 11.5px !important; font-weight: 600 !important; }
+/* The full option descriptions remain in the source; the reference uses single-line options. */
+.seller-returns-page .seller-returns-status-option-copy small { display: none !important; }
+.seller-returns-page .seller-returns-status-option.is-selected .seller-returns-status-option-copy strong { font-weight: 700 !important; }
+.seller-returns-page .seller-returns-search-input:focus,
+.seller-returns-page .seller-returns-status-button:focus-visible,
+.seller-returns-page .seller-returns-status-button[aria-expanded="true"] { border-color: #C88912 !important; box-shadow: 0 0 0 1px var(--sari-dark-3b2338cbf0, rgba(200,137,18,.12)) !important; }
+.seller-returns-page .seller-returns-apply-filter,
+.seller-returns-page .seller-returns-reset-filter { padding: 0 18px !important; font-size: 12px !important; font-weight: 700 !important; box-shadow: none !important; }
+.seller-returns-page .seller-returns-reset-filter { min-width: 86px !important; }
+.seller-returns-page .seller-returns-apply-filter { gap: 8px !important; }
+.seller-returns-page .seller-returns-records { margin-top: 20px !important; overflow: hidden !important; }
+.seller-returns-page .seller-returns-records-header { padding: 21px 23px !important; gap: 20px !important; }
+.seller-returns-page .seller-returns-records-title { font-size: 18px !important; font-weight: 780 !important; }
+.seller-returns-page .seller-returns-records-subtitle { margin-top: 4px !important; font-size: 11.5px !important; }
+.seller-returns-page .seller-returns-records-count { font-size: 12px !important; font-weight: 600 !important; }
+.seller-returns-page .seller-returns-table-scroll { width: 100%; overflow-x: auto; scrollbar-width: thin; }
+.seller-returns-page .seller-returns-table-scroll:focus-visible { outline: 2px solid #C88912; outline-offset: -2px; }
+.seller-returns-page .seller-returns-table-head,
+.seller-returns-page .seller-return-card-main {
+    display: grid !important; grid-template-columns: minmax(230px,1.1fr) minmax(260px,1.5fr) 112px 140px !important;
+    min-width: 950px !important; gap: 12px !important; align-items: center !important; padding-left: 16px !important; padding-right: 16px !important;
+}
+.seller-returns-page .seller-returns-table-head { min-height: 48px; padding-top: 13px; padding-bottom: 13px; border-bottom: 1px solid var(--sari-dark-d8c2716225, #E9EDF1); background: var(--sari-dark-950baec030, #F8FAFC); }
+.seller-returns-page .seller-returns-table-head > span { font-size: 11px; font-weight: 750; line-height: 1.4; letter-spacing: .075em; text-transform: uppercase; color: var(--sari-dark-a63aa16d7c, #8591A0); }
+.seller-returns-page .seller-return-card { min-width: 950px; }
+.seller-returns-page .seller-return-card-main { padding-top: 17px !important; padding-bottom: 17px !important; }
+.seller-returns-page .seller-return-order-number { font-size: 12.5px !important; font-weight: 750 !important; line-height: 1.5 !important; }
+.seller-returns-page .seller-return-reason { margin-top: 3px !important; font-size: 11.5px !important; line-height: 1.5 !important; }
+.seller-returns-page .seller-return-details { margin-top: 0 !important; font-size: 11.5px !important; line-height: 1.5 !important; }
+.seller-returns-page .seller-return-status { min-height: 27px !important; padding: 5px 10px !important; font-size: 10.5px !important; font-weight: 700 !important; line-height: 1.3 !important; }
+.seller-returns-page .seller-return-amount-value { margin: 0 !important; font-size: 12.5px !important; font-weight: 750 !important; }
+.seller-returns-page .seller-return-action { padding: 15px 16px !important; }
+.seller-returns-page .seller-return-input,
+.seller-returns-page .seller-return-select,
+.seller-returns-page .seller-return-button { height: 48px !important; min-height: 48px !important; border-radius: 14px !important; font-size: 11.5px !important; }
+.seller-returns-page .seller-returns-footer { min-height: 64px !important; padding: 13px 20px !important; justify-content: space-between !important; text-align: left !important; }
+.seller-returns-page .seller-returns-footer-count { font-size: 11px !important; font-weight: 550 !important; }
+/* Style Laravel's actual page links, not its layout/count wrapper spans. */
+.seller-returns-page .seller-returns-pagination nav a,
+.seller-returns-page .seller-returns-pagination nav [aria-current="page"] > span,
+.seller-returns-page .seller-returns-pagination nav [aria-disabled="true"] > span {
+    display: inline-grid !important; place-items: center; width: 34px !important; min-width: 34px !important; height: 34px !important;
+    padding: 0 !important; border-radius: 10px !important; margin: 0 3px !important; font-size: 11.5px !important;
+}
+.seller-returns-page .seller-returns-pagination nav svg { width: 12px !important; height: 12px !important; }
+.seller-returns-page .seller-returns-pagination nav [aria-disabled="true"] { opacity: .42; }
+/* Laravel's standard Tailwind paginator: one numbered navigation at all widths. */
+.seller-returns-page .seller-returns-pagination nav > .sm\:hidden { display: none !important; }
+.seller-returns-page .seller-returns-pagination nav > .sm\:flex { display: flex !important; }
+.seller-returns-page .seller-returns-pagination nav > .sm\:flex > div:first-child { display: none !important; }
+.seller-returns-page .seller-returns-pagination nav [aria-current="page"] { background: transparent !important; border: 0 !important; }
+.seller-returns-page .seller-returns-pagination nav [aria-current="page"] > span { background: #C88912 !important; border: 1px solid #C88912 !important; color: #FFF !important; font-weight: 700 !important; }
+@media (max-width: 1180px) { .seller-returns-page .seller-returns-summary { grid-template-columns: repeat(2,minmax(0,1fr)) !important; } }
+@media (max-width: 900px) {
+    .seller-returns-page .seller-returns-filter-form { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+    .seller-returns-page .seller-returns-search-field,
+    .seller-returns-page .seller-returns-status-dropdown { grid-column: 1 / -1 !important; }
+    .seller-returns-page .seller-returns-apply-filter,
+    .seller-returns-page .seller-returns-reset-filter { width: 100% !important; }
+}
+@media (max-width: 767px) {
+    .seller-returns-page .seller-returns-title { font-size: 25px !important; }
+    .seller-returns-page .seller-returns-eyebrow { font-size: 9.5px !important; }
+    .seller-returns-page .seller-returns-stat-label { font-size: 12.5px !important; }
+    .seller-returns-page .seller-returns-stat-note { font-size: 11px !important; }
+    .seller-returns-page .seller-return-review-form { grid-template-columns: 1fr !important; }
+    .seller-returns-page .seller-return-review-form .seller-return-button { width: 100% !important; }
+}
+@media (max-width: 540px) {
+    .seller-returns-page .seller-returns-summary { grid-template-columns: 1fr !important; gap: 11px !important; }
+    .seller-returns-page .seller-returns-stat { min-height: 100px !important; }
+    .seller-returns-page .seller-returns-records-header { flex-direction: column !important; align-items: flex-start !important; padding: 17px 16px !important; gap: 6px !important; }
+    .seller-returns-page .seller-returns-footer { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+    .seller-returns-page .seller-returns-pagination { align-self: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .seller-returns-page * { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media print {
+    .seller-returns-page .seller-returns-stat,
+    .seller-returns-page .seller-returns-records { box-shadow: none !important; }
+    .seller-returns-page .seller-returns-table-scroll { overflow: visible; }
+}
+
 @endverbatim
 </style>
 
@@ -2844,6 +2983,15 @@
 
         </header>
 
+        <div class="seller-returns-table-scroll" tabindex="0" aria-label="Return requests, scroll horizontally to see all columns">
+        @if($returns->count() > 0)
+        <div class="seller-returns-table-head" aria-hidden="true">
+            <span>Order / Reason</span>
+            <span>Details</span>
+            <span>Status</span>
+            <span>Requested refund</span>
+        </div>
+        @endif
         <div class="seller-returns-list">
 
         @forelse($returns as $return)
@@ -2851,47 +2999,18 @@
             <article class="seller-return-card">
 
                 <div class="seller-return-card-main">
-
                     <div class="min-w-0">
-
-                        <div class="seller-return-order-row">
-
-                            <p class="seller-return-order-number">
-
-                                {{ $return->order?->order_number ?: 'Order unavailable' }}
-
-                            </p>
-
-                            <span class="seller-return-status {{ $returnStatusClass($return->status) }}">
-
-                                {{ ucfirst($return->status) }}
-
-                            </span>
-
-                        </div>
-
+                        <p class="seller-return-order-number">{{ $return->order?->order_number ?: 'Order unavailable' }}</p>
                         <p class="seller-return-reason">{{ $return->reason }}</p>
-
-                        <p class="seller-return-details">
-
-                            {{ $return->details ?: 'No additional details.' }}
-
-                        </p>
-
                     </div>
-
+                    <p class="seller-return-details">{{ $return->details ?: 'No additional details.' }}</p>
+                    <div>
+                        <span class="seller-return-status {{ $returnStatusClass($return->status) }}">{{ ucfirst($return->status) }}</span>
+                    </div>
                     <div class="seller-return-amount">
-
-                        <div class="seller-return-amount-label">Requested refund</div>
-
-                        <div class="seller-return-amount-value">
-
-                            ₱{{ number_format((float) $return->requested_amount, 2) }}
-
-                        </div>
-
+                        <span class="sr-only">Requested refund</span>
+                        <div class="seller-return-amount-value">₱{{ number_format((float) $return->requested_amount, 2) }}</div>
                     </div>
-
                 </div>
 
                 @if($return->status === 'requested')
@@ -3087,6 +3206,8 @@
         @endforelse
 
         </div>
+
+        </div>{{-- /seller-returns-table-scroll --}}
 
         <footer class="seller-returns-footer">
 

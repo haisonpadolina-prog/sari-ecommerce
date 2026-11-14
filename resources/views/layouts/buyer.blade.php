@@ -342,6 +342,7 @@
     <link rel="stylesheet" href="{{ asset('css/buyer/sari-toast.css') }}?v=20261101-buyer-unified-alert-v8">
     {{-- Load the notification engine during document parsing; defer executes after HTML is ready. --}}
     <script defer src="{{ asset('js/buyer/sari-toast.js') }}?v=20261101-buyer-unified-alert-v8" data-sounds-base="{{ asset('sounds/buyer') }}"></script>
+    <link id="sariBuyerHomeThemeFixes" rel="stylesheet" href="{{ asset('css/buyer/home-theme-fixes.css') }}?v=20261114-2">
 </head>
 
 <body
